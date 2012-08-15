@@ -39,36 +39,66 @@
 
     <target name="extract-dependency">
         <java classname="com.taobao.f2e.ExtractDependency">
+
             <arg value="-baseUrls"/>
-            <arg value="${kissy.src.dir}"/>
+            <!--
+            换行被转成空格 xml spec
+            http://stackoverflow.com/questions/2004386/
+            how-to-save-newlines-in-xml-attribute-->
+            <arg value="
+            ${kissy.src.dir}/ajax/src/,
+            ${kissy.src.dir}/anim/src/,
+            ${kissy.src.dir}/base/src/,
+            ${kissy.src.dir}/button/src/,
+            ${kissy.src.dir}/calendar/src/,
+            ${kissy.src.dir}/color/src/,
+            ${kissy.src.dir}/combobox/src/,
+            ${kissy.src.dir}/component/src/,
+            ${kissy.src.dir}/cookie/src/,
+            ${kissy.src.dir}/datalazyload/src/,
+            ${kissy.src.dir}/dd/src/,
+            ${kissy.src.dir}/dom/src/,
+            ${kissy.src.dir}/editor/src/editor/core/,
+            ${kissy.src.dir}/event/src/,
+            ${kissy.src.dir}/flash/src/,
+            ${kissy.src.dir}/htmlparser/src/,
+            ${kissy.src.dir}/imagezoom/src/,
+            ${kissy.src.dir}/input-selection/src/,
+            ${kissy.src.dir}/json/src/,
+             ${kissy.src.dir}/menu/src/,
+            ${kissy.src.dir}/menubutton/src/,
+            ${kissy.src.dir}/mvc/src/,
+            ${kissy.src.dir}/node/src/,
+             ${kissy.src.dir}/overlay/src/,
+            ${kissy.src.dir}/resizable/src/,
+            ${kissy.src.dir}/separator/src/,
+            ${kissy.src.dir}/sizzle/src/,
+            ${kissy.src.dir}/split-button/src/,
+            ${kissy.src.dir}/stylesheet/src/,
+            ${kissy.src.dir}/suggest/src/,
+            ${kissy.src.dir}/switchable/src/,
+            ${kissy.src.dir}/tabs/src/,
+            ${kissy.src.dir}/template/src/,
+            ${kissy.src.dir}/toolbar/src/,
+             ${kissy.src.dir}/tree/src/,
+            ${kissy.src.dir}/ua/src/,
+            ${kissy.src.dir}/validation/src/,
+            ${kissy.src.dir}/waterfall/src/
+            "/>
+
 
             <arg value="-encodings"/>
             <arg value="${charset}"/>
-
-            <arg value="-includeReg"/>
-            <!--换行被转成空格 xml spec http://stackoverflow.com/questions/2004386/how-to-save-newlines-in-xml-attribute-->
-            <arg value="(
-            ajax|anim|base|button|calendar|combobox|component|
-            cookie|datalazyload|dd|dom|event|flash|htmlparser|imagezoom|
-            input-selection|json|menu|menubutton|mvc|node|overlay|
-            resizable|separator|sizzle|
-            split-button|stylesheet|suggest|switchable|
-            template|toolbar|tree|ua|validation|waterfall|editor
-            )(?:/.*)"/>
-
-            <arg value="-excludeReg"/>
-            <!--换行被转成空格 xml spec http://stackoverflow.com/questions/2004386/how-to-save-newlines-in-xml-attribute-->
-            <arg value="(
-            editor/plugin/.*
-            )(?:/.*)"/>
 
             <arg value="-nameMap"/>
             <arg value="([\w-]+)(?:/.*)?||$1"/>
 
             <arg value="-outputEncoding"/>
             <arg value="utf-8"/>
+
             <arg value="-output"/>
             <arg value="${kissy.src.dir}/seed/src/deps.js"/>
+
             <classpath>
                 <pathelement path="${kissy-tools.dir}/module-compiler/module-compiler.jar"/>
                 <pathelement path="${java.class.path}"/>

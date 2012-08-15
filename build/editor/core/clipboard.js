@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 15 19:31
+build time: Aug 15 21:52
 */
 /**
  * monitor user's paste key ,clear user input,modified from ckeditor
@@ -20,7 +20,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
     }
 
     S.augment(Paste, {
-        _init:function () {
+        _init: function () {
             var self = this,
                 editor = self.editor,
                 editorBody = editor.get("document")[0].body;
@@ -47,7 +47,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
             editor.addCommand("paste", new cutCopyCmd("paste"));
 
         },
-        _paste:function (ev) {
+        _paste: function (ev) {
 
             if (depressBeforeEvent) {
                 return;
@@ -84,13 +84,13 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
             doc.body.appendChild(pastebin[0]);
 
             pastebin.css({
-                position:'absolute',
+                position: 'absolute',
                 // Position the bin exactly at the position of the selected element
                 // to avoid any subsequent document scroll.
-                top:sel.getStartElement().offset().top + 'px',
-                width:'1px',
-                height:'1px',
-                overflow:'hidden'
+                top: sel.getStartElement().offset().top + 'px',
+                width: '1px',
+                height: '1px',
+                overflow: 'hidden'
             });
 
             // It's definitely a better user experience if we make the paste-bin pretty unnoticed
@@ -137,8 +137,8 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 S.log("paste " + html);
 
                 var re = editor.fire("paste", {
-                    html:html,
-                    holder:pastebin
+                    html: html,
+                    holder: pastebin
                 });
 
                 if (re !== undefined) {
@@ -149,7 +149,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 // MS-WORD format sniffing.
                 if (/(class="?Mso|style="[^"]*\bmso\-|w:WordDocument)/.test(html)) {
                     // 动态载入 word 过滤规则
-                    S.use("editor/core/dynamic/wordFilter", function (S, wordFilter) {
+                    S.use("editor/plugin/word-filter/dynamic/", function (S, wordFilter) {
                         editor.insertHtml(wordFilter.toDataFormat(html, editor));
                     });
                 } else {
@@ -202,9 +202,9 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
         };
 
     var error_types = {
-        "cut":"您的浏览器安全设置不允许编辑器自动执行剪切操作，请使用键盘快捷键(Ctrl/Cmd+X)来完成",
-        "copy":"您的浏览器安全设置不允许编辑器自动执行复制操作，请使用键盘快捷键(Ctrl/Cmd+C)来完成",
-        "paste":"您的浏览器安全设置不允许编辑器自动执行粘贴操作，请使用键盘快捷键(Ctrl/Cmd+V)来完成"
+        "cut": "您的浏览器安全设置不允许编辑器自动执行剪切操作，请使用键盘快捷键(Ctrl/Cmd+X)来完成",
+        "copy": "您的浏览器安全设置不允许编辑器自动执行复制操作，请使用键盘快捷键(Ctrl/Cmd+C)来完成",
+        "paste": "您的浏览器安全设置不允许编辑器自动执行粘贴操作，请使用键盘快捷键(Ctrl/Cmd+V)来完成"
     };
 
     // A class that represents one of the cut or copy commands.
@@ -213,7 +213,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
     };
 
     cutCopyCmd.prototype = {
-        exec:function (editor) {
+        exec: function (editor) {
             this.type == 'cut' && fixCut(editor);
 
             var success = tryToCutCopy(editor, this.type);
@@ -252,20 +252,20 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
     }
 
     var lang = {
-        "copy":"复制",
-        "paste":"粘贴",
-        "cut":"剪切"
+        "copy": "复制",
+        "paste": "粘贴",
+        "cut": "剪切"
     };
 
     var depressBeforeEvent;
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             editor.docReady(function () {
                 new Paste(editor);
             });
 
-            var pastes = {"copy":1, "cut":1, "paste":1};
+            var pastes = {"copy": 1, "cut": 1, "paste": 1};
 
             /**
              * 给所有右键都加入复制粘贴
@@ -282,9 +282,9 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 for (var i in pastes) {
                     if (pastes.hasOwnProperty(i)) {
                         contextmenu.addChild({
-                            xclass:'menuitem',
-                            content:lang[i],
-                            value:i
+                            xclass: 'menuitem',
+                            content: lang[i],
+                            value: i
                         });
                     }
                 }
@@ -304,5 +304,5 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
         }
     };
 }, {
-    requires:['./base', './range', './selection']
+    requires: ['./base', './range', './selection']
 });

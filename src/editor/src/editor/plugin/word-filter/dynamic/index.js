@@ -2,7 +2,7 @@
  * clean html pasted from word. modified from ckeditor.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
+KISSY.add("editor/plugin/word-filter/dynamic/index", function (S, HtmlParser) {
     var $ = S.all,
         UA = S.UA,
         dtd = HtmlParser.DTD,
@@ -14,20 +14,20 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
         lowerRomanLiteralRegex = new RegExp(romanLiteralPattern),
         upperRomanLiteralRegex = new RegExp(romanLiteralPattern.toUpperCase()),
         orderedPatterns = {
-            'decimal':/\d+/,
-            'lower-roman':lowerRomanLiteralRegex,
-            'upper-roman':upperRomanLiteralRegex,
-            'lower-alpha':/^[a-z]+$/,
-            'upper-alpha':/^[A-Z]+$/
+            'decimal': /\d+/,
+            'lower-roman': lowerRomanLiteralRegex,
+            'upper-roman': upperRomanLiteralRegex,
+            'lower-alpha': /^[a-z]+$/,
+            'upper-alpha': /^[A-Z]+$/
         },
         unorderedPatterns = {
-            'disc':/[l\u00B7\u2002]/,
-            'circle':/[\u006F\u00D8]/,
-            'square':/[\u006E\u25C6]/
+            'disc': /[l\u00B7\u2002]/,
+            'circle': /[\u006F\u00D8]/,
+            'square': /[\u006E\u25C6]/
         },
         listMarkerPatterns = {
-            'ol':orderedPatterns,
-            'ul':unorderedPatterns
+            'ol': orderedPatterns,
+            'ul': unorderedPatterns
         },
         romans = [
             [1000, 'M'],
@@ -51,8 +51,9 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
         str = str.toUpperCase();
         var l = romans.length, retVal = 0;
         for (var i = 0; i < l; ++i) {
-            for (var j = romans[i], k = j[1].length; str.substr(0, k) == j[1]; str = str.substr(k))
+            for (var j = romans[i], k = j[1].length; str.substr(0, k) == j[1]; str = str.substr(k)) {
                 retVal += j[ 0 ];
+            }
         }
         return retVal;
     }
@@ -211,7 +212,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
         // E.g. <ul><li>level1<ol><li>level2</li></ol></li> =>
         // <ke:li ke:listtype="ul" ke:indent="1">level1</ke:li>
         // <ke:li ke:listtype="ol" ke:indent="2">level2</ke:li>
-        flattenList:function (element, level) {
+        flattenList: function (element, level) {
             level = typeof level == 'number' ? level : 1;
 
             var listStyleType;
@@ -282,8 +283,9 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                     arguments.callee.apply(this, [ child, level + 1 ]);
                     children = children.slice(0, i).concat(child.childNodes).concat(children.slice(i + 1));
                     element.empty();
-                    for (var j = 0, num = children.length; j < num; j++)
+                    for (var j = 0, num = children.length; j < num; j++) {
                         element.appendChild(children[j]);
+                    }
                 }
             }
 
@@ -298,7 +300,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
          *  or more HTML list structures for them.
          * @param element
          */
-        assembleList:function (element) {
+        assembleList: function (element) {
             var children = element.childNodes || [],
                 child,
                 listItem, // The current processing ke:li element.
@@ -459,7 +461,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
         /**
          * A simple filter which always rejecting.
          */
-        falsyFilter:function () {
+        falsyFilter: function () {
             return false;
         },
 
@@ -470,7 +472,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
          *  parameter is mandatory.
          * @param [whitelist] {Boolean} Whether the {@param styles} will be considered as a white-list.
          */
-        stylesFilter:function (styles, whitelist) {
+        stylesFilter: function (styles, whitelist) {
             return function (styleText, element) {
                 var rules = [];
                 // html-encoded quote might be introduced by 'font-family'
@@ -535,7 +537,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
          * A filter which will be used to apply inline css style according the stylesheet
          * definition rules, is generated lazily when filtering.
          */
-        applyStyleFilter:null
+        applyStyleFilter: null
 
     };
 
@@ -591,27 +593,27 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
 
     var utils = {
         // Create a <ke:listbullet> which indicate an list item type.
-        createListBulletMarker:function (bullet, bulletText) {
+        createListBulletMarker: function (bullet, bulletText) {
             var marker = new HtmlParser.Tag('ke:listbullet');
             marker.setAttribute("ke:listsymbol", bullet[ 0 ]);
             marker.appendChild(new HtmlParser.Text(bulletText));
             return marker;
         },
 
-        isListBulletIndicator:function (element) {
+        isListBulletIndicator: function (element) {
             var styleText = element.getAttribute("style");
             if (/mso-list\s*:\s*Ignore/i.test(styleText)) {
                 return true;
             }
         },
 
-        isContainingOnlySpaces:function (element) {
+        isContainingOnlySpaces: function (element) {
             var text;
             return ( ( text = onlyChild(element) )
                 && ( /^(:?\s|&nbsp;)+$/ ).test(text.nodeValue) );
         },
 
-        resolveList:function (element) {
+        resolveList: function (element) {
             // <ke:listbullet> indicate a list item.
             var listMarker;
 
@@ -683,7 +685,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
         },
 
         // Providing a shorthand style then retrieve one or more style component values.
-        getStyleComponents:(function () {
+        getStyleComponents: (function () {
             var calculator = $(
                 '<div style="position:absolute;left:-9999px;top:-9999px;"></div>').prependTo("body");
 
@@ -691,14 +693,15 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                 calculator.css(name, styleValue);
                 var styles = {},
                     count = fetchList.length;
-                for (var i = 0; i < count; i++)
+                for (var i = 0; i < count; i++) {
                     styles[ fetchList[ i ] ] = calculator.css(fetchList[ i ]);
+                }
 
                 return styles;
             };
         })(),
 
-        listDtdParents:parentOf('ol')
+        listDtdParents: parentOf('ol')
     };
 
     (function () {
@@ -720,25 +723,25 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
 
         wordFilter.addRules({
 
-            tagNames:[
+            tagNames: [
                 // Remove script, meta and link elements.
                 [ ( /meta|link|script/ ), '' ]
             ],
 
-            root:function (element) {
+            root: function (element) {
                 element.filterChildren();
                 assembleList(element);
             },
 
-            tags:{
-                '^':function (element) {
+            tags: {
+                '^': function (element) {
                     // Transform CSS style declaration to inline style.
                     var applyStyleFilter;
                     if (UA.gecko && ( applyStyleFilter = filters.applyStyleFilter ))
                         applyStyleFilter(element);
                 },
 
-                $:function (element) {
+                $: function (element) {
                     var tagName = element.nodeName || '';
 
                     // Convert length unit of width/height on blocks to
@@ -793,7 +796,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                 // We'll drop any style sheet, but Firefox conclude
                 // certain styles in a single style element, which are
                 // required to be changed into inline ones.
-                'style':function (element) {
+                'style': function (element) {
                     if (UA.gecko) {
                         // Grab only the style definition section.
                         var styleDefSection = onlyChild(element).nodeValue
@@ -852,7 +855,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                     return false;
                 },
 
-                'p':function (element) {
+                'p': function (element) {
                     // This's a fall-back approach to recognize list item in FF3.6,
                     // as it's not perfect as not all list style (e.g. "heading list") is shipped
                     // with this pattern. (#6662)
@@ -869,7 +872,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                     resolveListItem(element)
                 },
 
-                'div':function (element) {
+                'div': function (element) {
                     // Aligned table with no text surrounded is represented by a wrapper div, from which
                     // table cells inherit as text-align styles, which is wrong.
                     // Instead we use a clear-float div after the table to properly achieve the same layout.
@@ -892,7 +895,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                     }
                 },
 
-                'td':function (element) {
+                'td': function (element) {
                     // 'td' in 'thead' is actually <th>.
                     if (getAncestor(element, 'thead'))
                         element.setTagName('th');
@@ -900,11 +903,11 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
 
                 // MS-Word sometimes present list as a mixing of normal list
                 // and pseudo-list, normalize the previous ones into pseudo form.
-                'ol':flattenList,
-                'ul':flattenList,
-                'dl':flattenList,
+                'ol': flattenList,
+                'ul': flattenList,
+                'dl': flattenList,
 
-                'font':function (element) {
+                'font': function (element) {
                     // Drop the font tag if it comes from list bullet text.
                     if (isListBulletIndicator(element.parentNode)) {
                         element.setTagName(null);
@@ -950,7 +953,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                     }
                 },
 
-                'span':function (element) {
+                'span': function (element) {
                     // Remove the span if it comes from list bullet text.
                     if (isListBulletIndicator(element.parentNode)) {
                         return false;
@@ -1006,7 +1009,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                 },
                 // Editor doesn't support anchor with content currently (#3582),
                 // drop such anchors with content preserved.
-                'a':function (element) {
+                'a': function (element) {
                     var href;
                     if (!(href = element.getAttribute("href")) && element.getAttribute("name")) {
                         element.setTagName(null);
@@ -1014,14 +1017,14 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                         element.setAttribute("href", href.replace(/file:\/\/\/[^#]+/i, ''));
                     }
                 },
-                'ke:listbullet':function (element) {
+                'ke:listbullet': function (element) {
                     if (getAncestor(element, /h\d/)) {
                         element.setTagName(null);
                     }
                 }
             },
 
-            attributeNames:[
+            attributeNames: [
                 // Remove onmouseover and onmouseout events (from MS Word comments effect)
                 [ ( /^onmouse(:?out|over)/ ), '' ],
                 // Onload on image element.
@@ -1032,8 +1035,8 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                 [ ( /^lang/ ), '' ]
             ],
 
-            attributes:{
-                'style':stylesFilter(
+            attributes: {
+                'style': stylesFilter(
                     // Provide a white-list of styles that we preserve, those should
                     // be the ones that could later be altered with editor tools.
                     [
@@ -1042,7 +1045,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
 
                         // Preserve margin-left/right which used as default indent style in the editor.
                         [ ( /^margin$|^margin-(?!bottom|top)/ ), null, function (value, element, name) {
-                            if (element.nodeName in { p:1, div:1 }) {
+                            if (element.nodeName in { p: 1, div: 1 }) {
                                 var indentStyleName = 'margin-left';
 
                                 // Extract component value from 'margin' shorthand.
@@ -1072,18 +1075,18 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
 
                         [ (/^width|height$/ ), null,
                             function (value, element) {
-                                if (element.nodeName in { table:1, td:1, th:1, img:1 })
+                                if (element.nodeName in { table: 1, td: 1, th: 1, img: 1 })
                                     return value;
                             } ]
                     ], 1),
 
                 // Prefer width styles over 'width' attributes.
-                'width':function (value, element) {
+                'width': function (value, element) {
                     if (element.nodeName in dtd.$tableContent)
                         return false;
                 },
                 // Prefer border styles over table 'border' attributes.
-                'border':function (value, element) {
+                'border': function (value, element) {
                     if (element.nodeName in dtd.$tableContent)
                         return false;
                 },
@@ -1091,14 +1094,14 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
                 // Only Firefox carry style sheet from MS-Word, which
                 // will be applied by us manually. For other browsers
                 // the css className is useless.
-                'class':falsyFilter,
+                'class': falsyFilter,
 
                 // MS-Word always generate 'background-color' along with 'bgcolor',
                 // simply drop the deprecated attributes.
-                'bgcolor':falsyFilter,
+                'bgcolor': falsyFilter,
 
                 // Deprecate 'valign' attribute in favor of 'vertical-align'.
-                'valign':function (value, element) {
+                'valign': function (value, element) {
                     addStyle(element, 'vertical-align', value);
                     return false;
                 }
@@ -1108,7 +1111,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
             // Fore none-IE, some useful data might be buried under these IE-conditional
             // comments where RegExp were the right approach to dig them out where usual approach
             // is transform it into a fake element node which hold the desired data.
-            comment:UA.ie ?
+            comment: UA.ie ?
                 function (value, node) {
                     var imageInfo = value.match(/<img.*?>/),
                         listInfo = value.match(/^\[if !supportLists\]([\s\S]*?)\[endif\]$/);
@@ -1142,7 +1145,7 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
 
     return {
 
-        toDataFormat:function (html, editor) {
+        toDataFormat: function (html, editor) {
             // Firefox will be confused by those downlevel-revealed IE conditional
             // comments, fixing them first( convert it to upperlevel-revealed one ).
             // e.g. <![if !vml]>...<![endif]>
@@ -1174,5 +1177,5 @@ KISSY.add("editor/core/dynamic/wordFilter", function (S, KEStyle, HtmlParser) {
 
 
 }, {
-    requires:['../styles', 'htmlparser']
+    requires: ['htmlparser']
 });
