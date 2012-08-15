@@ -37,7 +37,7 @@
   padding-bottom: 8px;
   padding-right: 12px;
   padding-left: 12px;
-  margin-right: 2px;
+  margin: 0;
   border: 1px solid transparent;
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   background: none;
@@ -45,6 +45,7 @@
 .ks-tabs-tab.ks-tabs-tab-hover,
 .ks-tabs-tab:hover {
   background-color: #eeeeee;
+  border-color: #eeeeee;
 }
 .ks-tabs-tab.ks-tabs-tab-selected,
 .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
@@ -55,29 +56,58 @@
   -moz-box-shadow: none;
   box-shadow: none;
 }
-.ks-tabs-top .ks-tabs-bar {
+.ks-tabs-top  > .ks-tabs-bar {
+  *zoom: 1;
   border-bottom: 1px solid #DDD;
 }
-.ks-tabs-top .ks-tabs-tab {
+.ks-tabs-top  > .ks-tabs-bar:before,
+.ks-tabs-top  > .ks-tabs-bar:after {
+  display: table;
+  content: "";
+}
+.ks-tabs-top  > .ks-tabs-bar:after {
+  clear: both;
+}
+.ks-tabs-top  > .ks-tabs-bar > .ks-tabs-tab {
+  /*
+    inline-block cause whitespace in ie67
+    float is perfect
+    */
+
+  float: left;
+  margin-right: 2px;
+  display: inline;
   margin-bottom: -1px;
   border-radius: 4px 4px 0 0;
 }
-.ks-tabs-top .ks-tabs-tab.ks-tabs-tab-selected,
-.ks-tabs-top .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
+.ks-tabs-top  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
+.ks-tabs-top  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
   border-color: #ddd #ddd transparent #ddd;
-  /* ie67 do not support transparent */
+  /* ie7 transparent border makes bar border leaks*/
 
   *border-bottom-color: white;
 }
 .ks-tabs-bottom  > .ks-tabs-bar {
+  *zoom: 1;
   border-top: 1px solid #DDD;
 }
-.ks-tabs-bottom .ks-tabs-tab {
+.ks-tabs-bottom  > .ks-tabs-bar:before,
+.ks-tabs-bottom  > .ks-tabs-bar:after {
+  display: table;
+  content: "";
+}
+.ks-tabs-bottom  > .ks-tabs-bar:after {
+  clear: both;
+}
+.ks-tabs-bottom  > .ks-tabs-bar > .ks-tabs-tab {
+  float: left;
+  margin-right: 2px;
+  display: inline;
   margin-top: -1px;
   border-radius: 0 0 4px 4px;
 }
-.ks-tabs-bottom .ks-tabs-tab.ks-tabs-tab-selected,
-.ks-tabs-bottom .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
+.ks-tabs-bottom  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
+.ks-tabs-bottom  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
   border-color: transparent #ddd #ddd #ddd;
   *border-top-color: white;
 }
@@ -86,13 +116,14 @@
   border-right: 1px solid #ddd;
   float: left;
 }
-.ks-tabs-left .ks-tabs-tab {
+.ks-tabs-left  > .ks-tabs-bar > .ks-tabs-tab {
   margin-right: -1px;
   border-radius: 4px 0 0 4px;
   display: block;
+  margin-bottom: 2px;
 }
-.ks-tabs-left .ks-tabs-tab.ks-tabs-tab-selected,
-.ks-tabs-left .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
+.ks-tabs-left  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
+.ks-tabs-left  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
   border-color: #DDD transparent #DDD #DDD;
   *border-right-color: white;
 }
@@ -101,13 +132,14 @@
   border-left: 1px solid #ddd;
   float: right;
 }
-.ks-tabs-right .ks-tabs-tab {
+.ks-tabs-right  > .ks-tabs-bar > .ks-tabs-tab {
   margin-left: -1px;
   border-radius: 0 4px 4px 0;
   display: block;
+  margin-bottom: 2px;
 }
-.ks-tabs-right .ks-tabs-tab.ks-tabs-tab-selected,
-.ks-tabs-right .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
+.ks-tabs-right  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
+.ks-tabs-right  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
   border-color: #DDD #DDD #DDD transparent;
   *border-left-color: white;
 }
