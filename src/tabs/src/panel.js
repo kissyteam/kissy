@@ -17,6 +17,9 @@ KISSY.add("tabs/panel", function (S, Component, PanelRender) {
             allowTextSelection: {
                 value: true
             },
+            selectedCls: {
+                view: 1
+            },
             xrender: {
                 value: PanelRender
             }

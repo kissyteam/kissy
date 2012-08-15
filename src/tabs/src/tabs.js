@@ -9,6 +9,10 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             var self = this,
                 selected,
                 items,
+                tabSelectedCls = self.get("tabSelectedCls"),
+                panelSelectedCls = self.get("panelSelectedCls"),
+                tabItem,
+                panelItem,
                 bar = {
                     xclass: 'tabs-bar',
                     changeType: self.get("changeType"),
@@ -24,16 +28,22 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             if (items = self.get("items")) {
                 S.each(items, function (item) {
                     selected = selected || item.selected;
-                    barChildren.push({
+                    barChildren.push(tabItem = {
                         xclass: 'tabs-tab',
                         content: item.title,
                         selected: item.selected
                     });
-                    panels.push({
+                    panels.push(panelItem = {
                         xclass: 'tabs-panel',
                         content: item.content,
                         selected: item.selected
                     });
+                    if (tabSelectedCls) {
+                        tabItem.selectedCls = tabSelectedCls;
+                    }
+                    if (panelSelectedCls) {
+                        panelItem.selectedCls = panelSelectedCls;
+                    }
                 });
             }
 
@@ -52,17 +62,33 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
                 bar = tabs.get("bar"),
                 selectedTab,
                 selectedPanel,
+                tabSelectedCls = self.get("tabSelectedCls"),
+                panelSelectedCls = self.get("panelSelectedCls"),
+                tabItem,
+                panelItem,
                 body = tabs.get("body");
 
-            selectedTab = bar.addChild({
+            tabItem = {
                 xclass: 'tabs-tab',
                 content: item.title
-            }, index);
+            };
 
-            selectedPanel = body.addChild({
+            panelItem = {
                 xclass: 'tabs-panel',
                 content: item.content
-            }, index);
+            };
+
+            if (tabSelectedCls) {
+                tabItem.selectedCls = tabSelectedCls;
+            }
+
+            if (panelSelectedCls) {
+                panelItem.selectedCls = panelSelectedCls;
+            }
+
+            selectedTab = bar.addChild(tabItem, index);
+
+            selectedPanel = body.addChild(panelItem, index);
 
             if (item.selected) {
                 bar.set('selectedTab', selectedTab);
@@ -169,8 +195,8 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
 
         decorateInternal: function (el) {
             var self = this,
-                bar = el.one(".ks-tabs-bar"),
-                body = el.one(".ks-tabs-body");
+                bar = el.children(".ks-tabs-bar"),
+                body = el.children(".ks-tabs-body");
             self.set("el", el);
             self.set("bar", new Bar({
                 srcNode: bar
@@ -197,6 +223,10 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             items: {
             },
             changeType: {
+            },
+            tabSelectedCls: {
+            },
+            panelSelectedCls: {
             },
 
 
@@ -237,6 +267,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             barOrientation: {
                 view: 1
             },
+
             xrender: {
                 value: Render
             }

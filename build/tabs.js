@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 22:03
+build time: Aug 15 23:38
 */
 /**
  * @fileOverview TabBar for KISSY.
@@ -158,8 +158,6 @@ KISSY.add("tabs/body", function (S, Component) {
  */
 KISSY.add("tabs/panel-render", function (S, Component) {
 
-    var SELECTED_CLS = "ks-tabs-panel-selected";
-
     return Component.Render.extend({
 
         createDom: function () {
@@ -168,7 +166,7 @@ KISSY.add("tabs/panel-render", function (S, Component) {
 
         _uiSetSelected: function (v) {
             var el = this.get("el");
-            el[v ? "addClass" : "removeClass"](SELECTED_CLS);
+            el[v ? "addClass" : "removeClass"](this.get("selectedCls"));
             el.attr("aria-hidden", !v);
         }
 
@@ -176,12 +174,15 @@ KISSY.add("tabs/panel-render", function (S, Component) {
         ATTRS: {
             selected: {
                 value: false
+            },
+            selectedCls: {
+                value: "ks-tabs-panel-selected"
             }
         },
 
         HTML_PARSER: {
             selected: function (el) {
-                return el.hasClass(SELECTED_CLS);
+                return el.hasClass(this.get("selectedCls"));
             }
         }
     }, {
@@ -208,6 +209,9 @@ KISSY.add("tabs/panel", function (S, Component, PanelRender) {
             },
             allowTextSelection: {
                 value: true
+            },
+            selectedCls: {
+                view: 1
             },
             xrender: {
                 value: PanelRender
@@ -253,26 +257,27 @@ KISSY.add("tabs/render", function (S, Component) {
  */
 KISSY.add("tabs/tab-render", function (S, Button) {
 
-    var CLS = 'ks-tabs-tab-selected';
-
     return Button.Render.extend({
         createDom: function () {
             this.get("el").attr("role", "tab");
         },
         _uiSetSelected: function (v) {
             var el = this.get("el");
-            el[v ? 'addClass' : 'removeClass'](CLS);
+            el[v ? 'addClass' : 'removeClass'](this.get("selectedCls"));
             el.attr('aria-selected', !!v);
         }
     }, {
         ATTRS: {
             selected: {
                 value: false
+            },
+            selectedCls: {
+                value: 'ks-tabs-tab-selected'
             }
         },
         HTML_PARSER: {
             selected: function (el) {
-                return el.hasClass(CLS);
+                return el.hasClass(this.get("selectedCls"));
             }
         }
     }, {
@@ -308,13 +313,16 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
             selected: {
                 view: 1
             },
+            selectedCls: {
+                view: 1
+            },
             xrender: {
                 value: TabRender
             }
         }
     }, {
         xclass: 'tabs-tab',
-        priority:30
+        priority: 30
     });
 
 }, {
@@ -330,6 +338,10 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             var self = this,
                 selected,
                 items,
+                tabSelectedCls = self.get("tabSelectedCls"),
+                panelSelectedCls = self.get("panelSelectedCls"),
+                tabItem,
+                panelItem,
                 bar = {
                     xclass: 'tabs-bar',
                     changeType: self.get("changeType"),
@@ -345,16 +357,22 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             if (items = self.get("items")) {
                 S.each(items, function (item) {
                     selected = selected || item.selected;
-                    barChildren.push({
+                    barChildren.push(tabItem = {
                         xclass: 'tabs-tab',
                         content: item.title,
                         selected: item.selected
                     });
-                    panels.push({
+                    panels.push(panelItem = {
                         xclass: 'tabs-panel',
                         content: item.content,
                         selected: item.selected
                     });
+                    if (tabSelectedCls) {
+                        tabItem.selectedCls = tabSelectedCls;
+                    }
+                    if (panelSelectedCls) {
+                        panelItem.selectedCls = panelSelectedCls;
+                    }
                 });
             }
 
@@ -373,17 +391,33 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
                 bar = tabs.get("bar"),
                 selectedTab,
                 selectedPanel,
+                tabSelectedCls = self.get("tabSelectedCls"),
+                panelSelectedCls = self.get("panelSelectedCls"),
+                tabItem,
+                panelItem,
                 body = tabs.get("body");
 
-            selectedTab = bar.addChild({
+            tabItem = {
                 xclass: 'tabs-tab',
                 content: item.title
-            }, index);
+            };
 
-            selectedPanel = body.addChild({
+            panelItem = {
                 xclass: 'tabs-panel',
                 content: item.content
-            }, index);
+            };
+
+            if (tabSelectedCls) {
+                tabItem.selectedCls = tabSelectedCls;
+            }
+
+            if (panelSelectedCls) {
+                panelItem.selectedCls = panelSelectedCls;
+            }
+
+            selectedTab = bar.addChild(tabItem, index);
+
+            selectedPanel = body.addChild(panelItem, index);
 
             if (item.selected) {
                 bar.set('selectedTab', selectedTab);
@@ -490,8 +524,8 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
 
         decorateInternal: function (el) {
             var self = this,
-                bar = el.one(".ks-tabs-bar"),
-                body = el.one(".ks-tabs-body");
+                bar = el.children(".ks-tabs-bar"),
+                body = el.children(".ks-tabs-body");
             self.set("el", el);
             self.set("bar", new Bar({
                 srcNode: bar
@@ -518,6 +552,10 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             items: {
             },
             changeType: {
+            },
+            tabSelectedCls: {
+            },
+            panelSelectedCls: {
             },
 
 
@@ -558,6 +596,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             barOrientation: {
                 view: 1
             },
+
             xrender: {
                 value: Render
             }

@@ -25,13 +25,16 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
             selected: {
                 view: 1
             },
+            selectedCls: {
+                view: 1
+            },
             xrender: {
                 value: TabRender
             }
         }
     }, {
         xclass: 'tabs-tab',
-        priority:30
+        priority: 30
     });
 
 }, {
