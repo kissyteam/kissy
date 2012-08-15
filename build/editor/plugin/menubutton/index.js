@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 7 22:12
+build time: Aug 15 19:31
 */
 /**
  * select component for kissy editor.
@@ -30,9 +30,6 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
         }
 
         var s = new SelectType(S.mix({
-            elAttrs:{
-                hideFocus:'hideFocus'
-            },
             render:self.get("toolBarEl"),
             prefixCls:prefixCls,
             autoRender:true

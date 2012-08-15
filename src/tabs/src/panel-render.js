@@ -23,11 +23,16 @@ KISSY.add("tabs/panel-render", function (S, Component) {
             selected: {
                 value: false
             }
+        },
 
+        HTML_PARSER: {
+            selected: function (el) {
+                return el.hasClass(SELECTED_CLS);
+            }
         }
     }, {
         xclass: 'tabs-panel'
-    })
+    });
 
 }, {
     requires: ['component']

@@ -30,7 +30,8 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
             }
         }
     }, {
-        xclass: 'tabs-tab'
+        xclass: 'tabs-tab',
+        priority:30
     });
 
 }, {

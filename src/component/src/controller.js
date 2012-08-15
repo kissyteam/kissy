@@ -347,22 +347,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             },
 
             /**
-             * Returns the child by given id.
-             * @param {String} id child id.
-             * @return {Component.Controller} The child at the given index; null if none.
-             */
-            getChildById: function (id) {
-                var children = this.get("children"), i = children.length - 1;
-                while (i >= 0) {
-                    if (children[i].get("id") == id) {
-                        return children[i];
-                    }
-                    --i;
-                }
-                return null;
-            },
-
-            /**
              * Handle dblclick events. By default, this performs its associated action by calling
              * {@link Component.Controller#performActionInternal}.
              * @protected

@@ -11,12 +11,24 @@ KISSY.add("tabs/body", function (S, Component) {
             self.set("selectedPanel", children[index]);
         },
 
+        renderUI: function () {
+            var self = this,
+                children = self.get("children");
+            S.each(children, function (c) {
+                if (c.get("selected")) {
+                    self.set("selectedPanel", c);
+                }
+            });
+        },
+
         bindUI: function () {
             this.on("afterSelectedPanelChange", function (e) {
-                if (e.prevVal) {
-                    e.prevVal.set("selected", false);
+                if (e.newVal) {
+                    if (e.prevVal) {
+                        e.prevVal.set("selected", false);
+                    }
+                    e.newVal.set("selected", true);
                 }
-                e.newVal.set("selected", true);
             });
         }
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 7 22:12
+build time: Aug 15 19:31
 */
 /**
  * Use style to gen element and wrap range's elements.Modified from CKEditor.
@@ -506,7 +506,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
      */
     function mergePre(preBlock) {
         var previousBlock;
-        if (!( ( previousBlock = preBlock._4e_previousSourceNode(TRUE, DOM.ELEMENT_NODE) )
+        if (!( ( previousBlock = preBlock._4e_previousSourceNode(TRUE, DOM.NodeType.ELEMENT_NODE) )
             && previousBlock.nodeName() == 'pre' ))
             return;
 
@@ -618,7 +618,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
             }
             else {
                 var nodeType = currentNode[0].nodeType,
-                    nodeName = nodeType == DOM.ELEMENT_NODE ?
+                    nodeName = nodeType == DOM.NodeType.ELEMENT_NODE ?
                         currentNode.nodeName() : NULL;
 
                 if (nodeName && currentNode.attr('_ke_bookmark')) {
@@ -685,8 +685,8 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
                         // Non element nodes, or empty elements can be added
                         // completely to the range.
-                        if (nodeType == DOM.TEXT_NODE ||
-                            ( nodeType == DOM.ELEMENT_NODE &&
+                        if (nodeType == DOM.NodeType.TEXT_NODE ||
+                            ( nodeType == DOM.NodeType.ELEMENT_NODE &&
                                 !currentNode[0].childNodes.length )) {
                             var includedNode = currentNode,
                                 parentNode = null;
@@ -1001,7 +1001,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                  */
                 var nextNode = currentNode._4e_nextSourceNode();
                 if (currentNode[0] &&
-                    currentNode[0].nodeType == DOM.ELEMENT_NODE &&
+                    currentNode[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
                     this.checkElementRemovable(currentNode)) {
                     // Remove style from element or overriding element.
                     if (currentNode.nodeName() == this["element"])
@@ -1019,7 +1019,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                      * contain startNode and we'll have to call breakNodes() again and also
                      * reassign the nextNode to something after startNode.
                      */
-                    if (nextNode[0].nodeType == DOM.ELEMENT_NODE &&
+                    if (nextNode[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
                         nextNode.contains(startNode)) {
                         breakNodes();
                         nextNode = new Node(startNode[0].nextSibling);
@@ -1366,11 +1366,11 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
             if (firstChild) {
                 // Check the cached nodes for merging.
-                firstChild.nodeType == DOM.ELEMENT_NODE &&
+                firstChild.nodeType == DOM.NodeType.ELEMENT_NODE &&
                 DOM._4e_mergeSiblings(firstChild);
 
                 if (lastChild && firstChild != lastChild
-                    && lastChild.nodeType == DOM.ELEMENT_NODE)
+                    && lastChild.nodeType == DOM.NodeType.ELEMENT_NODE)
                     DOM._4e_mergeSiblings(lastChild);
             }
         }

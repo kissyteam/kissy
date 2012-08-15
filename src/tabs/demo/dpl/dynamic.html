@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Demo - DPL Tabs</title>
+    <link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../../../css/src/dpl/forms.css" rel="stylesheet"/>
+    <link href="../../../css/demo/dpl/assets/docs.css" rel="stylesheet"/>
+    <link href="../../../button/assets/dpl.css" rel="stylesheet"/>
+    <link href="../../assets/dpl.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>增删改查 Tabs - click</h1>
+
+    <div id="tabs">
+
+
+    </div>
+
+    <form class="form-horizontal well" onsubmit="return false;">
+
+        <div class="control-group">
+            <label class="control-label" for="index">tab 位置</label>
+
+            <div class="controls">
+                <input type="text" class="input-xlarge" id="index" style="width:200px">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="selected">是否选中</label>
+
+            <div class="controls">
+                <label class="checkbox control-inline">
+                    <input type="checkbox" value="option1" id="selected"> 是
+                </label>
+
+                <p class="help-block">添加操作时起作用</p>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="tab">tab title</label>
+
+            <div class="controls">
+                <input type="text" class="input-xlarge" id="tab" style="width:200px">
+
+                <p class="help-block">添加操作时起作用</p>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="panel">panel content</label>
+
+            <div class="controls">
+                <textarea type="text" class="input-xlarge" id="panel" style="width:200px"></textarea>
+
+                <p class="help-block">添加操作时起作用</p>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button class="ks-button ks-button-primary" id="add">添加</button>
+            <button class="ks-button ks-button-primary" id="delete">删除</button>
+            <button class="ks-button ks-button-primary" id="info">选中tab info</button>
+        </div>
+
+    </form>
+
+</div>
+<script src="../../../../build/kissy.js"></script>
+<script src="../../src/bar.js"></script>
+<script src="../../src/body.js"></script>
+<script src="../../src/panel-render.js"></script>
+<script src="../../src/panel.js"></script>
+<script src="../../src/tab.js"></script>
+<script src="../../src/tab-render.js"></script>
+<script src="../../src/render.js"></script>
+<script src="../../src/tabs.js"></script>
+<script>
+    KISSY.use("tabs", function (S, Tabs) {
+
+        var $ = S.all;
+
+        var tabs = new Tabs({
+            render: "#tabs",
+            items: [
+                {
+                    title: 'tab-1',
+                    selected: true,
+                    content: '<p>panel-1</p>'
+                },
+                {
+                    title: 'tab-2',
+                    content: '<p>panel-2</p>'
+                }
+            ]
+        }).render();
+
+
+        $("#add").on("click", function () {
+            var index = parseInt($("#index").val()),
+                    tabContent = S.trim($("#tab").val()),
+                    panelContent = S.trim($("#panel").val());
+
+            if (isNaN(index)) {
+                index = undefined;
+            }
+
+            if (tabContent && panelContent) {
+                tabs.addItem({
+                    title: tabContent,
+                    content: panelContent,
+                    selected: $("#selected").attr("checked")
+                }, index);
+            }
+        });
+
+        $('#delete').on("click", function () {
+            var index = parseInt($("#index").val());
+            if (isNaN(index)) {
+                index = undefined;
+            }
+            if (index !== undefined) {
+                tabs.removeItemAt(index, true);
+            }
+        });
+
+        $("#info").on("click", function () {
+            var tab = tabs.getSelectedTab();
+            var panel = tabs.getSelectedPanel();
+            S.log("title: " + tab.get("content"));
+            S.log("panel: " + panel.get("content"));
+        });
+
+    });
+</script>
+</body>
+</html>

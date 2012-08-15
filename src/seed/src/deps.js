@@ -4,7 +4,6 @@ KISSY.config('modules', {
 'flash': {requires: ['ua','dom','json']},
 'anim': {requires: ['dom','event','ua']},
 'combobox': {requires: ['component','node','input-selection','menu','ajax']},
-'toolbar': {requires: ['component','separator']},
 'dom': {requires: ['ua']},
 'menubutton': {requires: ['menu','node','button','component']},
 'waterfall': {requires: ['node','base']},
@@ -20,8 +19,8 @@ KISSY.config('modules', {
 'validation': {requires: ['dom','event','node']},
 'imagezoom': {requires: ['node','overlay']},
 'menu': {requires: ['event','component','separator','node','ua']},
-'node': {requires: ['dom','event','anim']},
 'editor': {requires: ['htmlparser','component','core']},
+'node': {requires: ['dom','event','anim']},
 'mvc': {requires: ['base','node','template','event','ajax','json']},
 'overlay': {requires: ['anim','dom','node','event','ua','component']},
 'separator': {requires: ['component']}

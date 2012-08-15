@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 7 22:12
+build time: Aug 15 19:31
 */
 /**
  * Add table plugin for KISSY.
@@ -30,7 +30,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader) {
             }
             // If we are exiting from the first </td>, then the td should definitely be
             // included.
-            if (node[0].nodeType == DOM.ELEMENT_NODE &&
+            if (node[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
                 cellNodeRegex.test(node.nodeName()) &&
                 !node.data('selected_cell')) {
                 node._4e_setMarker(database, 'selected_cell', true, undefined);

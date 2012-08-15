@@ -20,6 +20,11 @@ KISSY.add("tabs/tab-render", function (S, Button) {
             selected: {
                 value: false
             }
+        },
+        HTML_PARSER: {
+            selected: function (el) {
+                return el.hasClass(CLS);
+            }
         }
     }, {
         xclass: 'tabs-tab'

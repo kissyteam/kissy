@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 14 18:18
+build time: Aug 15 18:17
 */
 /**
  * @ignore
@@ -496,11 +496,11 @@ build time: Aug 14 18:18
 
         /**
          * The build time of the library.
-         * NOTICE: '20120814181818' will replace with current timestamp when compressing.
+         * NOTICE: '20120815181747' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120814181818';
+        S.__BUILD_TIME = '20120815181747';
     })();
 
     return S;
@@ -5193,7 +5193,7 @@ build time: Aug 14 18:18
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120814181818'
+        tag: '20120815181747'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5463,7 +5463,6 @@ KISSY.config('modules', {
 'flash': {requires: ['ua','dom','json']},
 'anim': {requires: ['dom','event','ua']},
 'combobox': {requires: ['component','node','input-selection','menu','ajax']},
-'toolbar': {requires: ['component','separator']},
 'dom': {requires: ['ua']},
 'menubutton': {requires: ['menu','node','button','component']},
 'waterfall': {requires: ['node','base']},
@@ -5479,8 +5478,8 @@ KISSY.config('modules', {
 'validation': {requires: ['dom','event','node']},
 'imagezoom': {requires: ['node','overlay']},
 'menu': {requires: ['event','component','separator','node','ua']},
-'node': {requires: ['dom','event','anim']},
 'editor': {requires: ['htmlparser','component','core']},
+'node': {requires: ['dom','event','anim']},
 'mvc': {requires: ['base','node','template','event','ajax','json']},
 'overlay': {requires: ['anim','dom','node','event','ua','component']},
 'separator': {requires: ['component']}
