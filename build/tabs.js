@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 15 21:54
+build time: Aug 15 22:26
 */
 /**
  * @fileOverview TabBar for KISSY.
@@ -490,8 +490,8 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
 
         decorateInternal: function (el) {
             var self = this,
-                bar = el.one(".ks-tabs-bar"),
-                body = el.one(".ks-tabs-body");
+                bar = el.children(".ks-tabs-bar"),
+                body = el.children(".ks-tabs-body");
             self.set("el", el);
             self.set("bar", new Bar({
                 srcNode: bar

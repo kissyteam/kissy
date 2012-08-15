@@ -169,8 +169,8 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
 
         decorateInternal: function (el) {
             var self = this,
-                bar = el.one(".ks-tabs-bar"),
-                body = el.one(".ks-tabs-body");
+                bar = el.children(".ks-tabs-bar"),
+                body = el.children(".ks-tabs-body");
             self.set("el", el);
             self.set("bar", new Bar({
                 srcNode: bar
