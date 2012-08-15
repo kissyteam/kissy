@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:23
+build time: Aug 15 21:59
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -64,14 +64,14 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
                 value:{},
                 /**
                  *Aria-describedby attribute.
-                 * @type String
+                 * @type {String}
                  */
                 describedby:{
                     view:1
                 },
                 /**
                  * Tooltip for button.
-                 * @type String
+                 * @type {String}
                  */
                 tooltip:{
                     view:1
@@ -80,7 +80,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
                 /**
                  * Whether button can be checkable(toggle).
                  * @default false.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 checkable:{
                 },
@@ -88,7 +88,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
                 /**
                  * Whether button is checked(toggle).
                  * @default false.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 checked:{
                     view:1

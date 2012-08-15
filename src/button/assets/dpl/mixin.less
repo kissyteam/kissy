@@ -9,7 +9,8 @@
 
 // in these cases the gradient won't cover the background, so we override
 // :active ie 不支持
-    &.ks-button-hover {
+    &.ks-button-hover,
+    &:hover{
         background-position: 0 -15px;
     /*
     transition is only when going to hover, otherwise the background
@@ -21,6 +22,7 @@
 
 // IE 7 + 8 can't handle box-shadow to show active, so we darken a bit ourselves
     &.ks-button-active,
+    &:active,
     &.ks-button-checked,
     // TODO menu-button 耦合
     &.ks-menu-button-open {

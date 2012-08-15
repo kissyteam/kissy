@@ -1,29 +1,34 @@
 /**
+ * @ignore
  * @fileOverview scalable event framework for kissy (refer DOM3 Events)
- *               how to fire event just like browser?
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * how to fire event just like browser?
+ * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 
     var isValidTarget = Utils.isValidTarget,
+        NodeType = DOM.NodeType,
         splitAndRun = Utils.splitAndRun,
         getNodeName = DOM.nodeName,
         trim = S.trim,
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
     /**
-     * @namespace The event utility provides functions to add and remove event listeners.
-     * @name Event
+     * The event utility provides functions to add and remove event listeners.
+     * @class KISSY.Event
+     * @singleton
      */
     var Event =
-    /**
-     * @lends Event
-     */
     {
+        /**
+         * copy event from src to dest
+         * @param {HTMLElement} src srcElement
+         * @param {HTMLElement} dest destElement
+         * @private
+         */
+        _clone: function (src, dest) {
 
-        _clone:function (src, dest) {
-
-            if (dest.nodeType !== DOM.ELEMENT_NODE ||
+            if (dest.nodeType !== NodeType.ELEMENT_NODE ||
                 !_data._hasData(src)) {
                 return;
             }
@@ -33,13 +38,13 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
                 S.each(handlers, function (handler) {
                     // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
                     Event.on(dest, type, {
-                        data:handler.data,
-                        fn:handler.fn,
-                        groups:handler.groups,
-                        last:handler.last,
-                        originalType:handler.originalType,
-                        scope:handler.scope,
-                        selector:handler.selector
+                        data: handler.data,
+                        fn: handler.fn,
+                        groups: handler.groups,
+                        last: handler.last,
+                        originalType: handler.originalType,
+                        scope: handler.scope,
+                        selector: handler.selector
                     });
                 });
             });
@@ -47,22 +52,21 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
         /**
          * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
-         * @memberOf Event
          * @param targets html nodes
-         * @param {String|Event.Object} eventType event type
+         * @param {String|KISSY.Event.Object} eventType event type
          * @param [eventData] additional event data
          * @param {Boolean} [onlyHandlers] only fire handlers
-         * @returns {Boolean} The return value of fire/dispatchEvent indicates
-         *                 whether any of the listeners which handled the event called preventDefault.
-         *                 If preventDefault was called the value is false, else the value is true.
+         * @return {Boolean} The return value of fire/dispatchEvent indicates
+         * whether any of the listeners which handled the event called preventDefault.
+         * If preventDefault was called the value is false, else the value is true.
          */
-        fire:function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
+        fire: function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
             var ret = true, r;
             // custom event firing moved to target.js
             eventData = eventData || {};
             if (S.isString(eventType)) {
                 eventType = trim(eventType);
-                if (eventType.indexOf(" ") > -1) {
+                if (eventType.indexOf(' ') > -1) {
                     splitAndRun(eventType, function (t) {
                         r = Event.fire(targets, t, eventData, onlyHandlers);
                         if (ret !== false) {
@@ -88,8 +92,8 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
             eventType = typedGroups[0];
 
             S.mix(eventData, {
-                type:eventType,
-                _ks_groups:_ks_groups
+                type: eventType,
+                _ks_groups: _ks_groups
             });
 
             targets = DOM.query(targets);
@@ -103,22 +107,23 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
         },
 
         /**
-         * does not cause default behavior to occur
-         * does not bubble up the DOM hierarchy
+         * same with fire but:
+         * does not cause default behavior to occur.
+         * does not bubble up the DOM hierarchy.
          * @param targets
-         * @param {Event.Object | String} eventType
+         * @param {KISSY.Event.Object | String} eventType
          * @param [eventData]
          */
-        fireHandler:function (targets, eventType, eventData) {
+        fireHandler: function (targets, eventType, eventData) {
             return Event.fire(targets, eventType, eventData, 1);
         }
     };
 
-    /**
-     * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
-     * @return {Boolean} The return value of dispatchEvent indicates
-     *                 whether any of the listeners which handled the event called preventDefault.
-     *                 If preventDefault was called the value is false, else the value is true.
+    /*
+     fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
+     @return {Boolean} The return value of dispatchEvent indicates
+     whether any of the listeners which handled the event called preventDefault.
+     If preventDefault was called the value is false, else the value is true.
      */
     function fireDOMEvent(target, eventType, eventData, onlyHandlers) {
         if (!isValidTarget(target)) {
@@ -140,6 +145,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
         }
         /**
          * identify event as fired manually
+         * @ignore
          */
         event._ks_fired = 1;
         /*
@@ -157,7 +163,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
         var cur = target,
             t,
             win = DOM._getWin(cur.ownerDocument || cur),
-            ontype = "on" + eventType;
+            ontype = 'on' + eventType;
 
         //bubble up dom tree
         do {
@@ -177,8 +183,8 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
         } while (!onlyHandlers && cur && !event.isPropagationStopped);
 
         if (!onlyHandlers && !event.isDefaultPrevented) {
-            if (!(eventType === "click" &&
-                getNodeName(target) == "a")) {
+            if (!(eventType === 'click' &&
+                getNodeName(target) == 'a')) {
                 var old;
                 try {
                     // execute default action on dom node
@@ -187,7 +193,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
                     if (ontype &&
                         target[ eventType ] &&
                         (
-                            (eventType !== "focus" && eventType !== "blur") ||
+                            (eventType !== 'focus' && eventType !== 'blur') ||
                                 target.offsetWidth !== 0
                             ) &&
                         !S.isWindow(target)) {
@@ -206,7 +212,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
                         target[ eventType ]();
                     }
                 } catch (ieError) {
-                    S.log("trigger action error : ");
+                    S.log('trigger action error : ');
                     S.log(ieError);
                 }
 
@@ -222,21 +228,21 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
     return Event;
 }, {
-    requires:["dom", "./object", "./utils", './handle', './data', './special']
+    requires: ['dom', './object', './utils', './handle', './data', './special']
 });
 
-/**
- * yiminghe@gmail.com : 2011-12-15
- *  - 重构，粒度更细，新的架构
- *
- * 2011-11-24
- *  - 自定义事件和 dom 事件操作彻底分离
- *  - TODO: group event from DOM3 Event
- *
- * 2011-06-07
- *  - refer : http://www.w3.org/TR/2001/WD-DOM-Level-3-Events-20010823/events.html
- *  - 重构
- *  - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
- *  - 减少闭包使用，prevent ie 内存泄露？
- *  - 增加 fire ，模拟冒泡处理 dom 事件
+/*
+ yiminghe@gmail.com : 2011-12-15
+ - 重构，粒度更细，新的架构
+
+ 2011-11-24
+ - 自定义事件和 dom 事件操作彻底分离
+ - TODO: group event from DOM3 Event
+
+ 2011-06-07
+ - refer : http://www.w3.org/TR/2001/WD-DOM-Level-3-Events-20010823/events.html
+ - 重构
+ - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
+ - 减少闭包使用，prevent ie 内存泄露？
+ - 增加 fire ，模拟冒泡处理 dom 事件
  */

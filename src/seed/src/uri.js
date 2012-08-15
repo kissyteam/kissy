@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Uri class for KISSY.
  * @author yiminghe@gmail.com
  */
@@ -15,15 +16,15 @@
                 /*
                  Scheme names consist of a sequence of characters beginning with a
                  letter and followed by any combination of letters, digits, plus
-                 ("+"), period ("."), or hyphen ("-").
+                 ('+'), period ('.'), or hyphen ('-').
                  */
                 '(?:([\\w\\d+.-]+):)?' + // scheme
 
                 '(?://' +
                 /*
-                 The authority component is preceded by a double slash ("//") and is
-                 terminated by the next slash ("/"), question mark ("?"), or number
-                 sign ("#") character, or by the end of the URI.
+                 The authority component is preceded by a double slash ('//') and is
+                 terminated by the next slash ('/'), question mark ('?'), or number
+                 sign ('#') character, or by the end of the URI.
                  */
                 '(?:([^/?#@]*)@)?' + // userInfo
 
@@ -39,13 +40,13 @@
                 ')?' +
                 /*
                  The path is terminated
-                 by the first question mark ("?") or number sign ("#") character, or
+                 by the first question mark ('?') or number sign ('#') character, or
                  by the end of the URI.
                  */
                 '([^?#]+)?' + // path. hierarchical part
                 /*
                  The query component is indicated by the first question
-                 mark ("?") character and terminated by a number sign ("#") character
+                 mark ('?') character and terminated by a number sign ('#') character
                  or by the end of the URI.
                  */
                 '(?:\\?([^#]*))?' + // query. non-hierarchical data
@@ -56,7 +57,7 @@
 
                  A
                  fragment identifier component is indicated by the presence of a
-                 number sign ("#") character and terminated by the end of the URI.
+                 number sign ('#') character and terminated by the end of the URI.
                  */
                 '(?:#(.*))?' + // fragment
                 '$'),
@@ -64,13 +65,13 @@
         Path = S.Path,
 
         REG_INFO = {
-            scheme:1,
-            userInfo:2,
-            hostname:3,
-            port:4,
-            path:5,
-            query:6,
-            fragment:7
+            scheme: 1,
+            userInfo: 2,
+            hostname: 3,
+            port: 4,
+            path: 5,
+            query: 6,
+            fragment: 7
         };
 
     function parseQuery(self) {
@@ -80,28 +81,24 @@
     }
 
     /**
-     * @class
+     * @class KISSY.Uri.Query
      * Query data structure.
      * @param {String} [query] encoded query string(without question mask).
-     * @memberOf KISSY.Uri
      */
     function Query(query) {
-        this._query = query || "";
+        this._query = query || '';
     }
 
 
     Query.prototype =
-    /**
-     * @lends KISSY.Uri.Query#
-     */
     {
-        constructor:Query,
+        constructor: Query,
 
         /**
          * Cloned new instance.
-         * @return {Query}
+         * @return {KISSY.Uri.Query}
          */
-        clone:function () {
+        clone: function () {
             return new Query(this.toString());
         },
 
@@ -110,9 +107,9 @@
          * reset to a new query string
          * @param {String} query
          */
-        reset:function (query) {
+        reset: function (query) {
             var self = this;
-            self._query = query || "";
+            self._query = query || '';
             self._queryMap = 0;
         },
 
@@ -120,7 +117,7 @@
          * Parameter count.
          * @return {Number}
          */
-        count:function () {
+        count: function () {
             var self = this, count = 0,
                 _queryMap = self._queryMap,
                 k;
@@ -141,7 +138,7 @@
          * Return parameter value corresponding to current key
          * @param {String} key
          */
-        get:function (key) {
+        get: function (key) {
             var self = this;
             parseQuery(self);
             if (key) {
@@ -155,7 +152,7 @@
          * Parameter names.
          * @return {String[]}
          */
-        keys:function () {
+        keys: function () {
             var self = this;
             parseQuery(self);
             return S.keys(self._queryMap);
@@ -166,7 +163,7 @@
          * @param {String} key
          * @param value
          */
-        set:function (key, value) {
+        set: function (key, value) {
             var self = this, _queryMap;
             parseQuery(self);
             _queryMap = self._queryMap;
@@ -187,7 +184,7 @@
          * Remove parameter with specified name.
          * @param {String} key
          */
-        remove:function (key) {
+        remove: function (key) {
             var self = this;
             parseQuery(self);
             if (key) {
@@ -204,7 +201,7 @@
          * @param {String} key
          * @param value
          */
-        add:function (key, value) {
+        add: function (key, value) {
             var self = this,
                 _queryMap,
                 currentValue;
@@ -234,7 +231,7 @@
          * @param {Boolean} [serializeArray=true]
          * whether append [] to key name when value 's type is array
          */
-        toString:function (serializeArray) {
+        toString: function (serializeArray) {
             var self = this;
             parseQuery(self);
             return S.param(self._queryMap, undefined, undefined, serializeArray);
@@ -242,7 +239,7 @@
     };
 
     function padding2(str) {
-        return str.length == 1 ? "0" + str : str;
+        return str.length == 1 ? '0' + str : str;
     }
 
     function equalsIgnoreCase(str1, str2) {
@@ -258,17 +255,16 @@
         // which have special meaning in URIs, are not escaped either:
         // ; / ? : @ & = + $ , #
         return encodeURI(str).replace(specialCharsReg, function (m) {
-            return "%" + padding2(m.charCodeAt(0).toString(16));
+            return '%' + padding2(m.charCodeAt(0).toString(16));
         });
     }
 
 
     /**
-     * @class
+     * @class KISSY.Uri
      * Uri class for KISSY.
      * Most of its interfaces are same with window.location.
      * @param {String|KISSY.Uri} [uriStr] Encoded uri string.
-     * @memberOf KISSY
      */
     function Uri(uriStr) {
 
@@ -279,52 +275,49 @@
         var m, self = this;
 
         S.mix(self,
-            /**
-             * @lends KISSY.Uri#
-             */
             {
                 /**
-                 * scheme such as "http:". aka protocol without colon
-                 * @type String
-                 */
-                scheme:"",
-                /**
-                 * User credentials such as "yiminghe:gmail"
+                 * scheme such as 'http:'. aka protocol without colon
                  * @type {String}
                  */
-                userInfo:"",
+                scheme: '',
                 /**
-                 * hostname such as "docs.kissyui.com". aka domain
+                 * User credentials such as 'yiminghe:gmail'
                  * @type {String}
                  */
-                hostname:"",
+                userInfo: '',
                 /**
-                 * Port such as "8080"
+                 * hostname such as 'docs.kissyui.com'. aka domain
                  * @type {String}
                  */
-                port:"",
+                hostname: '',
                 /**
-                 * path such as "/index.htm". aka pathname
+                 * Port such as '8080'
                  * @type {String}
                  */
-                path:"",
+                port: '',
+                /**
+                 * path such as '/index.htm'. aka pathname
+                 * @type {String}
+                 */
+                path: '',
                 /**
                  * Query object for search string. aka search
                  * @type {KISSY.Uri.Query}
                  */
-                query:"",
+                query: '',
                 /**
-                 * fragment such as "#!/test/2". aka hash
+                 * fragment such as '#!/test/2'. aka hash
                  */
-                fragment:""
+                fragment: ''
             });
 
-        uriStr = uriStr || "";
+        uriStr = uriStr || '';
         m = uriStr.match(URI_SPLIT_REG) || [];
 
         S.each(REG_INFO, function (index, key) {
-            var match = m[index] || "";
-            if (key == "query") {
+            var match = m[index] || '';
+            if (key == 'query') {
                 // need encoded content
                 self.query = new Query(match);
             } else {
@@ -336,18 +329,15 @@
     }
 
     Uri.prototype =
-    /**
-     * @lends KISSY.Uri#
-     */
     {
 
-        constructor:Uri,
+        constructor: Uri,
 
         /**
          * Return a cloned new instance.
          * @return {KISSY.Uri}
          */
-        clone:function () {
+        clone: function () {
             var uri = new Uri(), self = this;
             S.each(REG_INFO, function (index, key) {
                 uri[key] = self[key];
@@ -361,19 +351,20 @@
          * The reference resolution algorithm.rfc 5.2
          * return a resolved uri corresponding to current uri
          * @param {KISSY.Uri|String} relativeUri
-         * @example
-         * <code>
-         *   this: "http://y/yy/z.com?t=1#v=2"
-         *   "https:/y/" => "https:/y/"
-         *   "//foo" => "http://foo"
-         *   "foo" => "http://y/yy/foo"
-         *   "/foo" => "http://y/foo"
-         *   "?foo" => "http://y/yy/z.com?foo"
-         *   "#foo" => http://y/yy/z.com?t=1#foo"
-         * </code>
+         *
+         * for example:
+         *      @example
+         *      this: 'http://y/yy/z.com?t=1#v=2'
+         *      'https:/y/' => 'https:/y/'
+         *      '//foo' => 'http://foo'
+         *      'foo' => 'http://y/yy/foo'
+         *      '/foo' => 'http://y/foo'
+         *      '?foo' => 'http://y/yy/z.com?foo'
+         *      '#foo' => http://y/yy/z.com?t=1#foo'
+         *
          * @return {KISSY.Uri}
          */
-        resolve:function (relativeUri) {
+        resolve: function (relativeUri) {
 
             if (S.isString(relativeUri)) {
                 relativeUri = new Uri(relativeUri);
@@ -382,11 +373,11 @@
             var self = this,
                 override = 0,
                 lastSlashIndex,
-                order = ["scheme", "userInfo", "hostname", "port", "path", "query", "fragment"],
+                order = ['scheme', 'userInfo', 'hostname', 'port', 'path', 'query', 'fragment'],
                 target = self.clone();
 
             S.each(order, function (o) {
-                if (o == "path") {
+                if (o == 'path') {
                     // relativeUri does not set for scheme/userInfo/hostname/port
                     if (override) {
                         target[o] = relativeUri[o];
@@ -395,10 +386,10 @@
                         if (path) {
                             // force to override target 's query with relative
                             override = 1;
-                            if (!S.startsWith(path, "/")) {
+                            if (!S.startsWith(path, '/')) {
                                 if (target.hostname && !target.path) {
                                     // RFC 3986, section 5.2.3, case 1
-                                    path = "/" + path;
+                                    path = '/' + path;
                                 } else if (target.path) {
                                     // RFC 3986, section 5.2.3, case 2
                                     lastSlashIndex = target.path.lastIndexOf('/');
@@ -411,7 +402,7 @@
                             target.path = Path.normalize(path);
                         }
                     }
-                } else if (o == "query") {
+                } else if (o == 'query') {
                     if (override || relativeUri['query'].toString()) {
                         target.query = relativeUri['query'].clone();
                         override = 1;
@@ -429,7 +420,7 @@
         /**
          * Get scheme part
          */
-        getScheme:function () {
+        getScheme: function () {
             return this.scheme;
         },
 
@@ -438,7 +429,7 @@
          * @param {String} scheme
          * @return this
          */
-        setScheme:function (scheme) {
+        setScheme: function (scheme) {
             this.scheme = scheme;
             return this;
         },
@@ -447,7 +438,7 @@
          * Return hostname
          * @return {String}
          */
-        getHostname:function () {
+        getHostname: function () {
             return this.hostname;
         },
 
@@ -456,7 +447,7 @@
          * @param {String} hostname
          * @return this
          */
-        setHostname:function (hostname) {
+        setHostname: function (hostname) {
             this.hostname = hostname;
             return this;
         },
@@ -466,7 +457,7 @@
          * @param {String} userInfo
          * @return this
          */
-        setUserInfo:function (userInfo) {
+        setUserInfo: function (userInfo) {
             this.userInfo = userInfo;
             return this;
         },
@@ -475,7 +466,7 @@
          * Get user info
          * @return {String}
          */
-        getUserInfo:function () {
+        getUserInfo: function () {
             return this.userInfo;
         },
 
@@ -484,7 +475,7 @@
          * @param {String} port
          * @return this
          */
-        setPort:function (port) {
+        setPort: function (port) {
             this.port = port;
             return this;
         },
@@ -493,7 +484,7 @@
          * Get port
          * @return {String}
          */
-        getPort:function () {
+        getPort: function () {
             return this.port;
         },
 
@@ -502,7 +493,7 @@
          * @param {string} path
          * @return this
          */
-        setPath:function (path) {
+        setPath: function (path) {
             this.path = path;
             return this;
         },
@@ -511,7 +502,7 @@
          * Get path
          * @return {String}
          */
-        getPath:function () {
+        getPath: function () {
             return this.path;
         },
 
@@ -520,9 +511,9 @@
          * @param {String|KISSY.Uri.Query} query
          * @return this
          */
-        setQuery:function (query) {
+        setQuery: function (query) {
             if (S.isString(query)) {
-                if (S.startsWith(query, "?")) {
+                if (S.startsWith(query, '?')) {
                     query = query.slice(1);
                 }
                 query = new Query(encodeSpecialChars(query, reDisallowedInQuery));
@@ -535,7 +526,7 @@
          * Get query
          * @return {KISSY.Uri.Query}
          */
-        getQuery:function () {
+        getQuery: function () {
             return this.query;
         },
 
@@ -543,7 +534,7 @@
          * Get fragment
          * @return {String}
          */
-        getFragment:function () {
+        getFragment: function () {
             return this.fragment;
         },
 
@@ -552,9 +543,9 @@
          * @param {String} fragment
          * @return this
          */
-        setFragment:function (fragment) {
-            if (!S.startsWith(fragment, "#")) {
-                fragment = "#" + fragment;
+        setFragment: function (fragment) {
+            if (!S.startsWith(fragment, '#')) {
+                fragment = '#' + fragment;
             }
             this.fragment = fragment;
             return this;
@@ -565,7 +556,7 @@
          * @param {KISSY.Uri} other
          * @return {Boolean}
          */
-        hasSameDomainAs:function (other) {
+        hasSameDomainAs: function (other) {
             var self = this;
             // port and hostname has to be same
             return equalsIgnoreCase(self.hostname, other['hostname']) &&
@@ -574,14 +565,14 @@
         },
 
         /**
-         * serialize to string.
-         * rfc 5.3 Component Recomposition.
-         * but kissy does not differentiate between undefined and empty.
+         * Serialize to string.
+         * See rfc 5.3 Component Recomposition.
+         * But kissy does not differentiate between undefined and empty.
          * @param {boolean} [serializeArray=true]
          * whether append [] to key name when value 's type is array
          * @return {String}
          */
-        toString:function (serializeArray) {
+        toString: function (serializeArray) {
 
             var out = [], self = this,
                 scheme,
@@ -594,43 +585,43 @@
 
             if (scheme = self.scheme) {
                 out.push(encodeSpecialChars(scheme, reDisallowedInSchemeOrUserInfo));
-                out.push(":");
+                out.push(':');
             }
 
             if (hostname = self.hostname) {
-                out.push("//");
+                out.push('//');
                 if (userInfo = self.userInfo) {
                     out.push(encodeSpecialChars(userInfo, reDisallowedInSchemeOrUserInfo));
-                    out.push("@");
+                    out.push('@');
                 }
 
                 out.push(encodeURIComponent(hostname));
 
                 if (port = self.port) {
-                    out.push(":");
+                    out.push(':');
                     out.push(port);
                 }
             }
 
             if (path = self.path) {
-                if (hostname && !S.startsWith(path, "/")) {
-                    path = "/" + path;
+                if (hostname && !S.startsWith(path, '/')) {
+                    path = '/' + path;
                 }
                 path = Path.normalize(path);
                 out.push(encodeSpecialChars(path, reDisallowedInPathName));
             }
 
             if (query = ( self.query.toString(serializeArray))) {
-                out.push("?");
+                out.push('?');
                 out.push(query);
             }
 
             if (fragment = self.fragment) {
-                out.push("#");
+                out.push('#');
                 out.push(encodeSpecialChars(fragment, reDisallowedInFragment))
             }
 
-            return out.join("");
+            return out.join('');
         }
     };
 
@@ -639,8 +630,8 @@
     S.Uri = Uri;
 
 })(KISSY);
-/**
- * Refer
- *  - http://www.ietf.org/rfc/rfc3986.txt
- *  - http://en.wikipedia.org/wiki/URI_scheme
+/*
+ Refer
+ - http://www.ietf.org/rfc/rfc3986.txt
+ - http://en.wikipedia.org/wiki/URI_scheme
  */

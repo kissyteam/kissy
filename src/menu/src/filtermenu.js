@@ -195,7 +195,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
                 /**
                  * Hit info string
-                 * @type String
+                 * @type {String}
                  */
                 label:{
                     view:1
@@ -203,14 +203,14 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
                 /**
                  * Filter string
-                 * @type String
+                 * @type {String}
                  */
                 filterStr:{
                 },
 
                 /**
                  * user entered string list when allowMultiple.
-                 * @type String[]
+                 * @type {String[]}
                  */
                 enteredItems:{
                     value:[]
@@ -218,7 +218,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
                 /**
                  * Whether to allow input multiple.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 allowMultiple:{
                     value:false

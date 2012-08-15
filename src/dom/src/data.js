@@ -1,6 +1,7 @@
 /**
+ * @ignore
  * @fileOverview dom-data
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/data', function (S, DOM, undefined) {
 
@@ -140,7 +141,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                     delete elem[EXPANDO];
                 } catch (e) {
                     elem[EXPANDO] = undefined;
-                    //S.log("delete expando error : ");
+                    //S.log('delete expando error : ');
                     //S.log(e);
                 }
                 if (elem.removeAttribute) {
@@ -153,7 +154,9 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
 
     S.mix(DOM,
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
 
@@ -163,7 +166,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * Determine whether an element has any data or specified data name associated with it.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String} [name] A string naming the piece of data to set.
-             * @returns {Boolean}
+             * @return {Boolean}
              */
             hasData:function (selector, name) {
                 var ret = false,
@@ -191,7 +194,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String} [name] A string naming the piece of data to set.
              * @param [data] The new data value.
-             * @returns {Object|undefined}
+             * @return {Object|undefined}
              */
             data:function (selector, name, data) {
 
@@ -252,9 +255,9 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
     return DOM;
 
 }, {
-    requires:["./base"]
+    requires:['./base']
 });
-/**
- * 承玉：2011-05-31
- *  - 分层 ，节点和普通对象分开处理
- **/
+/*
+  承玉：2011-05-31
+   - 分层 ，节点和普通对象分开处理
+ */

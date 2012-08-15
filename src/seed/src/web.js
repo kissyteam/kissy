@@ -1,6 +1,7 @@
 /**
+ * @ignore
  * @fileOverview web.js
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  * @description this code can only run at browser environment
  */
 (function (S, undefined) {
@@ -33,16 +34,14 @@
         RE_NOT_WHITE = /\S/;
 
     S.mix(S,
-        /**
-         * @lends KISSY
-         */
         {
 
 
             /**
              * A crude way of determining if an object is a window
+             * @member KISSY
              */
-            isWindow:function (o) {
+            isWindow: function (o) {
                 return S.type(o) === 'object'
                     && 'setInterval' in o
                     && 'document' in o
@@ -53,8 +52,9 @@
             /**
              * get xml representation of data
              * @param {String} data
+             * @member KISSY
              */
-            parseXML:function (data) {
+            parseXML: function (data) {
                 // already a xml
                 if (data.documentElement) {
                     return data;
@@ -63,31 +63,32 @@
                 try {
                     // Standard
                     if (win['DOMParser']) {
-                        xml = new DOMParser().parseFromString(data, "text/xml");
+                        xml = new DOMParser().parseFromString(data, 'text/xml');
                     } else { // IE
-                        xml = new ActiveXObject("Microsoft.XMLDOM");
-                        xml.async = "false";
+                        xml = new ActiveXObject('Microsoft.XMLDOM');
+                        xml.async = 'false';
                         xml.loadXML(data);
                     }
                 } catch (e) {
-                    S.log("parseXML error : ");
+                    S.log('parseXML error : ');
                     S.log(e);
                     xml = undefined;
                 }
-                if (!xml || !xml.documentElement || xml.getElementsByTagName("parsererror").length) {
-                    S.error("Invalid XML: " + data);
+                if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
+                    S.error('Invalid XML: ' + data);
                 }
                 return xml;
             },
 
             /**
              * Evalulates a script in a global context.
+             * @member KISSY
              */
-            globalEval:function (data) {
+            globalEval: function (data) {
                 if (data && RE_NOT_WHITE.test(data)) {
                     // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
                     ( win.execScript || function (data) {
-                        win[ "eval" ].call(win, data);
+                        win[ 'eval' ].call(win, data);
                     } )(data);
                 }
             },
@@ -95,12 +96,15 @@
             /**
              * Specify a function to execute when the DOM is fully loaded.
              * @param fn {Function} A function to execute after the DOM is ready
-             * <code>
-             * KISSY.ready(function(S){ });
-             * </code>
+             *
+             * for example:
+             *      @example
+             *      KISSY.ready(function(S){});
+             *
              * @return {KISSY}
+             * @member KISSY
              */
-            ready:function (fn) {
+            ready: function (fn) {
 
                 readyPromise.then(fn);
 
@@ -111,8 +115,9 @@
              * Executes the supplied callback when the item with the supplied id is found.
              * @param id <String> The id of the element, or an array of ids to look for.
              * @param fn <Function> What to execute when the element is found.
+             * @member KISSY
              */
-            available:function (id, fn) {
+            available: function (id, fn) {
                 id = (id + EMPTY).match(RE_IDSTR)[1];
                 if (!id || !S.isFunction(fn)) {
                     return;
@@ -132,6 +137,7 @@
 
     /**
      * Binds ready events.
+     * @ignore
      */
     function _bindReady() {
         var doScroll = docElem.doScroll,
@@ -182,7 +188,7 @@
             try {
                 notframe = (win['frameElement'] === null);
             } catch (e) {
-                S.log("get frameElement error : ");
+                S.log('get frameElement error : ');
                 S.log(e);
                 notframe = false;
             }
@@ -195,7 +201,7 @@
                         doScroll('left');
                         fire();
                     } catch (ex) {
-                        //S.log("detect document ready : " + ex);
+                        //S.log('detect document ready : ' + ex);
                         setTimeout(readyScroll, POLL_INTERVAL);
                     }
                 }
@@ -211,17 +217,16 @@
         S.Config.debug = true;
     }
 
-    /**
-     * bind on start
-     * in case when you bind but the DOMContentLoaded has triggered
-     * then you has to wait onload
-     * worst case no callback at all
-     */
+
+//     bind on start
+//     in case when you bind but the DOMContentLoaded has triggered
+//     then you has to wait onload
+//     worst case no callback at all
     _bindReady();
 
     if (navigator && navigator.userAgent.match(/MSIE/)) {
         try {
-            doc.execCommand("BackgroundImageCache", false, true);
+            doc.execCommand('BackgroundImageCache', false, true);
         } catch (e) {
         }
     }

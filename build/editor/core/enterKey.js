@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:26
+build time: Aug 15 22:02
 */
 /**
  * monitor user's enter and shift enter keydown,modified from ckeditor

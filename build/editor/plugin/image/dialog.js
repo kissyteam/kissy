@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:26
+build time: Aug 15 22:02
 */
 /**
  * image dialog (support upload and remote)
@@ -231,9 +231,6 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             self.imgRatio = content.one(".ks-editor-img-ratio");
             self.imgAlign = MenuButton.Select.decorate(content.one(".ks-editor-img-align"), {
                 prefixCls:'ks-editor-big-',
-                elAttrs:{
-                    hideFocus:"hideFocus"
-                },
                 width:80,
                 menuCfg:{
                     prefixCls:'ks-editor-',

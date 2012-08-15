@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:26
+build time: Aug 15 22:02
 */
 /**
  * @fileOverview 图片放大效果 ImageZoom.
@@ -290,7 +290,7 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
 
         /**
          * 大图高宽
-         * @type {number}
+         * @type {Number}
          */
         bigImageWidth:{},
 

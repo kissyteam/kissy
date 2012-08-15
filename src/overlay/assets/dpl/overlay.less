@@ -1,0 +1,27 @@
+@import "../../../css/src/dpl/variables.less";
+@import "../../../css/src/dpl/icons-mixin.less";
+
+.ks-overlay {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    visibility: hidden;
+}
+
+.ks-ext-close {
+    .icon-base_();
+    .icon-remove_();
+    text-shadow: 0 1px 0 white;
+    .opacity(20);
+    position: absolute;
+    right: 15px;
+    top: 9px;
+}
+
+.ks-ext-close:hover {
+    .opacity(100);
+}
+
+.ks-ext-close-x {
+    display: none;
+}

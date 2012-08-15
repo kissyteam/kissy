@@ -146,7 +146,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
     /**
      * @name IO
      * @namespace Provides utility that brokers HTTP requests through a simplified interface
-     * @function
+     * @method
      *
      * @param {Object} c <br/>name-value of object to config this io request.<br/>
      *  all values are optional.<br/>
@@ -295,7 +295,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * 2. b.t.cn/proxy.htm 's content is &lt;script>document.domain='t.cn'&lt;/script><br/>
      * 3. in a.htm , call io({xdr:{subDomain:{proxy:'/proxy.htm'}}})
      *
-     * @returns {IO.XhrObject} current request object
+     * @return {IO.XhrObject} current request object
      */
     function io(c) {
 
@@ -422,7 +422,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
             /**
              * whether current application is a local application
              * (protocal is file://,widget://,about://)
-             * @type Boolean
+             * @type {Boolean}
              * @field
              */
             isLocal:isLocal,
@@ -449,7 +449,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
             },
             /**
              * get default config value for io request
-             * @returns {Object}
+             * @return {Object}
              */
             getConfig:function () {
                 return defaultConfig;

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview simple event target for loader
  * @author yiminghe@gmail.com
  */
@@ -9,7 +10,7 @@
     }
 
     var time = S.now(),
-        p = "__events__" + time;
+        p = '__events__' + time;
 
     function getHolder(self) {
         return self[p] || (self[p] = {});
@@ -23,17 +24,18 @@
         return holder[name];
     }
 
-    S.Loader.Target =
     /**
-     * @lends KISSY.Loader#
+     * @class KISSY.Loader.Target
+     * Event Target For KISSY Loader.
+     * @singleton
      */
-    {
+    KISSY.Loader.Target = {
         /**
          * register callback for specified eventName from loader
          * @param {String} eventName event name from kissy loader
          * @param {Function} callback function to be executed when event of eventName is fired
          */
-        on:function (eventName, callback) {
+        on: function (eventName, callback) {
             getEventHolder(this, eventName, 1).push(callback);
         },
 
@@ -44,7 +46,7 @@
          * @param {Function } [callback] function to be executed when event of eventName is fired.
          * if undefined remove all callbacks fro this event
          */
-        detach:function (eventName, callback) {
+        detach: function (eventName, callback) {
             var self = this, fns, index;
             if (!eventName) {
                 delete self[p];
@@ -65,9 +67,12 @@
         },
 
         /**
+         * Fire specified event.
+         * @param eventName
+         * @param obj
          * @private
          */
-        fire:function (eventName, obj) {
+        fire: function (eventName, obj) {
             var fns = getEventHolder(this, eventName);
             S.each(fns, function (f) {
                 f.call(null, obj);

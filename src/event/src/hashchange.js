@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview event-hashchange
  * @author yiminghe@gmail.com , xiaomacji@gmail.com
  */
@@ -23,8 +24,8 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         }
 
         var POLL_INTERVAL = 50,
-            IFRAME_TEMPLATE = "<html><head><title>" + (doc.title || "") +
-                " - {hash}</title>{head}</head><body>{hash}</body></html>",
+            IFRAME_TEMPLATE = '<html><head><title>' + (doc.title || '') +
+                ' - {hash}</title>{head}</head><body>{hash}</body></html>',
 
             getHash = function () {
                 // 不能 location.hash
@@ -43,7 +44,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
             poll = function () {
                 var hash = getHash();
                 if (hash !== lastHash) {
-                    // S.log("poll success :" + hash + " :" + lastHash);
+                    // S.log('poll success :' + hash + ' :' + lastHash);
                     // 通知完调用者 hashchange 事件前设置 lastHash
                     lastHash = hash;
                     // ie<8 同步 : hashChange -> onIframeLoad
@@ -53,15 +54,17 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
             },
 
             hashChange = ie && ie < 8 ? function (hash) {
-                // S.log("set iframe html :" + hash);
+                // S.log('set iframe html :' + hash);
                 var html = S.substitute(IFRAME_TEMPLATE, {
                         // 防止 hash 里有代码造成 xss
                         // 后面通过 innerText，相当于 unEscapeHTML
-                        hash:S.escapeHTML(hash),
+                        hash: S.escapeHTML(hash),
                         // 一定要加哦
-                        head:DOM.isCustomDomain() ? ("<script>document.domain = '" +
+                        head: DOM.isCustomDomain() ? ("<script>" +
+                            "document." +
+                            "domain = '" +
                             doc.domain
-                            + "';</script>") : ""
+                            + "';</script>") : ''
                     }),
                     iframeDoc = getIframeDoc(iframe);
                 try {
@@ -81,7 +84,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
             },
 
             notifyHashChange = function () {
-                // S.log("hash changed : " + getHash());
+                // S.log('hash changed : ' + getHash());
                 Event.fire(win, HASH_CHANGE);
             },
             setup = function () {
@@ -120,25 +123,25 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                     DOM.prepend(iframe, doc.documentElement);
 
                     // init，第一次触发，以后都是 onIframeLoad
-                    Event.add(iframe, "load", function () {
-                        Event.remove(iframe, "load");
+                    Event.add(iframe, 'load', function () {
+                        Event.remove(iframe, 'load');
                         // Update the iframe with the initial location hash, if any. This
                         // will create an initial history entry that the user can return to
                         // after the state has changed.
                         hashChange(getHash());
-                        Event.add(iframe, "load", onIframeLoad);
+                        Event.add(iframe, 'load', onIframeLoad);
                         poll();
                     });
 
                     // Whenever `document.title` changes, update the Iframe's title to
                     // prettify the back/next history menu entries. Since IE sometimes
-                    // errors with "Unspecified error" the very first time this is set
+                    // errors with 'Unspecified error' the very first time this is set
                     // (yes, very useful) wrap this with a try/catch block.
                     doc.onpropertychange = function () {
                         try {
                             if (event.propertyName === 'title') {
                                 getIframeDoc(iframe).title =
-                                    doc.title + " - " + getHash();
+                                    doc.title + ' - ' + getHash();
                             }
                         } catch (e) {
                         }
@@ -161,9 +164,9 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                         // 后退时不等
                         // 定时器调用 hashChange() 修改 iframe 同步调用过来的(手动改变 location)则相等
                         if (c != ch) {
-                            S.log("set loc hash :" + c);
+                            S.log('set loc hash :' + c);
                             location.hash = c;
-                            // 使lasthash为 iframe 历史， 不然重新写iframe，
+                            // 使 last hash 为 iframe 历史， 不然重新写iframe，
                             // 会导致最新状态（丢失前进状态）
 
                             // 后退则立即触发 hashchange，
@@ -185,7 +188,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         }
 
         special[HASH_CHANGE] = {
-            setup:function () {
+            setup: function () {
                 if (this !== win) {
                     return;
                 }
@@ -195,7 +198,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                 // 不用注册 dom 事件
                 setup();
             },
-            tearDown:function () {
+            tearDown: function () {
                 if (this !== win) {
                     return;
                 }
@@ -204,15 +207,15 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         };
     }
 }, {
-    requires:["./base", "dom", "ua", "./special"]
+    requires: ['./base', 'dom', 'ua', './special']
 });
 
-/**
- * 已知 bug :
- * - ie67 有时后退后取得的 location.hash 不和地址栏一致，导致必须后退两次才能触发 hashchange
- *
- * v1 : 2010-12-29
- * v1.1: 支持非IE，但不支持onhashchange事件的浏览器(例如低版本的firefox、safari)
- * refer : http://yiminghe.javaeye.com/blog/377867
- *         https://github.com/cowboy/jquery-hashchange
+/*
+  已知 bug :
+  - ie67 有时后退后取得的 location.hash 不和地址栏一致，导致必须后退两次才能触发 hashchange
+
+  v1 : 2010-12-29
+  v1.1: 支持非IE，但不支持onhashchange事件的浏览器(例如低版本的firefox、safari)
+  refer : http://yiminghe.javaeye.com/blog/377867
+          https://github.com/cowboy/jquery-hashchange
  */

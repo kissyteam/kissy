@@ -22,7 +22,7 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
          * v.target (String|KISS.Node): The target node from which overlay should animate from while showing. Since KISSY 1.3.<br>
          * v.duration (Number): in seconds. Default:0.5. <br>
          * v.easing (String): see {@link Anim.Easing} <br>
-         * @type Object
+         * @type {Object}
          */
         effect:{
             value:{

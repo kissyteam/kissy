@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:26
+build time: Aug 15 22:02
 */
 /**
  * Add ul and ol command identifier for KISSY Editor.
@@ -73,7 +73,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
             if (contents.length == 1
                 && contents[0][0] === groupObj.root[0]) {
                 var divBlock = new Node(doc.createElement('div'));
-                contents[0][0].nodeType != DOM.TEXT_NODE &&
+                contents[0][0].nodeType != DOM.NodeType.TEXT_NODE &&
                 contents[0]._4e_moveChildren(divBlock, undefined, undefined);
                 contents[0][0].appendChild(divBlock[0]);
                 contents[0] = divBlock;
@@ -185,11 +185,11 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
 
             function compensateBrs(isStart) {
                 if (( boundaryNode = new Node(docFragment[ isStart ? 'firstChild' : 'lastChild' ]) )
-                    && !( boundaryNode[0].nodeType == DOM.ELEMENT_NODE &&
+                    && !( boundaryNode[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
                     boundaryNode._4e_isBlockBoundary(undefined, undefined) )
                     && ( siblingNode = groupObj.root[ isStart ? 'prev' : 'next' ]
                     (Walker.whitespaces(true), 1) )
-                    && !( boundaryNode[0].nodeType == DOM.ELEMENT_NODE &&
+                    && !( boundaryNode[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
                     siblingNode._4e_isBlockBoundary({ br:1 }, undefined) )) {
                     boundaryNode[ isStart ? 'before' : 'after' ](editor.get("document")[0].createElement('br'));
                 }
@@ -228,10 +228,10 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
                     startNode = boundaryNodes.startNode,
                     endNode = boundaryNodes.endNode;
 
-                if (startNode[0].nodeType == DOM.ELEMENT_NODE && startNode.nodeName() == 'td')
+                if (startNode[0].nodeType == DOM.NodeType.ELEMENT_NODE && startNode.nodeName() == 'td')
                     range.setStartAt(boundaryNodes.startNode, KER.POSITION_AFTER_START);
 
-                if (endNode[0].nodeType == DOM.ELEMENT_NODE && endNode.nodeName() == 'td')
+                if (endNode[0].nodeType == DOM.NodeType.ELEMENT_NODE && endNode.nodeName() == 'td')
                     range.setEndAt(boundaryNodes.endNode, KER.POSITION_BEFORE_END);
 
                 var iterator = range.createIterator(),

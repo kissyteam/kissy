@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>淘宝首页模式</title>
+<link href="../../../../build/css/dpl/base.css" rel="stylesheet"/>
+<link href="../assets/default.css" rel="stylesheet"/>
+<style>
+    h5 {
+        margin: 0;
+        padding: 0;
+        font-size: 100%;
+    }
+
+    .item-wrapper {
+        overflow: hidden;
+        zoom: 1;
+    }
+
+    .item-text {
+        float: left;
+        text-align: left;
+        padding-left: 5px;
+    }
+
+    .item-count {
+        float: right;
+        text-align: right;
+        padding-right: 5px;
+        color: green;
+    }
+
+    .ks-menuitem-highlight .item-count,
+    .ks-menuitem-hover .item-count {
+        color: white;
+    }
+</style>
+</head>
+<body>
+
+<div style="margin:10px auto; width:800px;text-align: center" id="container">
+    <h1>taobao 首页模式</h1>
+</div>
+
+<script src="../../../../build/kissy.js"></script>
+<script src="../../src/baseRender.js"></script>
+<script src="../../src/base.js"></script>
+<script src="../../src/combobox.js"></script>
+
+
+<script src="../../src/localDataSource.js"></script>
+<script src="../../src/remoteDataSource.js"></script>
+<script>
+    KISSY.use("event,combobox", function (S, Event, ComboBox) {
+
+        /*
+         remote dataSource
+         */
+        (function () {
+
+            var tmpl = "<div class='item-wrapper'>" +
+                    "<span class='item-text'>{text}</span>" +
+                    "<span class='item-count'>约{count}个宝贝</span>" +
+                    "</div>"
+
+            var basicComboBox = new ComboBox({
+                render:S.one("#container"),
+                hasTrigger:false,
+                width:500,
+                dataSource:{
+                    xclass:'combobox-RemoteDataSource',
+                    xhrCfg:{
+                        url:'http://suggest.taobao.com/sug',
+                        dataType:'jsonp',
+                        data:{
+                            code:"utf-8"
+                        }
+                    },
+                    paramName:"q",
+                    parse:function (query, results) {
+                        // 返回结果对象数组
+                        return results.result;
+                    },
+                    cache:true
+                },
+                format:function (query, results) {
+                    var ret = [];
+                    S.each(results, function (r) {
+                        ret.push({
+                            // 点击菜单项后要放入 input 中的内容
+                            textContent:r[0],
+                            // 菜单项的
+                            content:S.substitute(tmpl, {
+                                text:r[0],
+                                count:r[1]
+                            })
+                        });
+                    });
+                    return ret;
+                }
+            });
+            basicComboBox.render();
+
+            S.DOM.addStyleSheet(
+                    // 搜索同店购
+                    '.ks-combobox-menu-footer { background: #f4f8fb; ' +
+                            'border-top: 1px solid #dfeffc; padding: 5px !important;zoom: 1;}' +
+                            '.ks-combobox-menu-footer .tdg-box {height:22px;}' +
+                            '.ks-combobox-menu-footer h5,' +
+                            '.ks-combobox-menu-footer em,' +
+                            '.ks-combobox-menu-footer input { float: left;}' +
+                            '.ks-combobox-menu-footer h5,' +
+                            '.ks-combobox-menu-footer ' +
+                            '.tdg-btn {' +
+                            'background: transparent ' +
+                            'url(http://img04.taobaocdn.com/tps/i4/T1NpJOXiVpXXXXXXXX.png) ' +
+                            'no-repeat 999em 0; text-indent: -999em;}' +
+                            '.ks-combobox-menu-footer h5 ' +
+                            '{float: left; width: 49px; height: 20px; ' +
+                            'background-position: 0 0; margin-right: 11px;}' +
+                            '.ks-combobox-menu-footer em ' +
+                            '{font: bold 14px tahoma; color: #a7a7a7;padding: 2px 3px;}' +
+                            '.ks-combobox-menu-footer .tdg-btn ' +
+                            '{width: 60px;height: 20px; border: none; ' +
+                            'background-position: -49.5px 0; position: absolute;right: 5px;' +
+                            ' cursor: pointer;}' +
+                            '.ks-combobox-menu-footer .tdg-input ' +
+                            '{border: 1px solid #a6a6a6;padding: 1px; width: 80px; height: 18px;}'
+            );
+
+            var html = '<div class="tdg-box">' +
+                    '<h5>同店购：</h5>' +
+                    '<input type="text" class="tdg-input" ' +
+                    'placeholder="第一件宝贝" >' +
+                    '<em>+</em><input type="text" ' +
+                    ' class="tdg-input" placeholder="另一宝贝">' +
+                    '<em>+</em><input type="text" placeholder="另一宝贝"' +
+                    ' class="tdg-input" ' +
+                    'placeholder="另一宝贝"><button class="tdg-btn" ' +
+                    'type="submit" onclick="return false">搜索</button>' +
+                    '</div>';
+
+            basicComboBox.on("afterCollapsedChange", function (e) {
+                var self = this;
+                if (!e.newVal) {
+                    var menu = self.get("menu");
+                    var menuEl = menu.get("el"), footer;
+                    if (!(footer = menuEl.one(".ks-combobox-menu-footer"))) {
+                        footer = new S.Node("<div class='ks-combobox-menu-footer'></div>").appendTo(menuEl);
+                    }
+                    if (!footer.children().length) {
+                        footer.append(html);
+                        var el = footer.one(".tdg-input"),
+                                oel = basicComboBox.get("el");
+                        el.on("keyup", function (e) {
+                            if (e.keyCode != Event.KeyCodes.DOWN &&
+                                    e.keyCode != Event.KeyCodes.UP) {
+                                el.val(el.val());
+                            }
+                        });
+                    }
+                    footer.one(".tdg-input")
+                            .val(basicComboBox.get("input").val())
+                }
+            });
+        })();
+    });
+</script>
+</body>
+</html>

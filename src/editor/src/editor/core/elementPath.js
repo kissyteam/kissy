@@ -48,7 +48,7 @@ KISSY.add("editor/core/elementPath", function (S) {
             var childNodes = element[0].childNodes;
             for (var i = 0, count = childNodes.length; i < count; i++) {
                 var child = childNodes[i];
-                if (child.nodeType == DOM.ELEMENT_NODE
+                if (child.nodeType == DOM.NodeType.ELEMENT_NODE
                     && dtd.$block[ child.nodeName.toLowerCase() ])
                     return TRUE;
             }
@@ -67,7 +67,7 @@ KISSY.add("editor/core/elementPath", function (S) {
             e = lastNode;
 
         while (e) {
-            if (e[0].nodeType == DOM.ELEMENT_NODE) {
+            if (e[0].nodeType == DOM.NodeType.ELEMENT_NODE) {
                 if (!this.lastElement)
                     this.lastElement = e;
 

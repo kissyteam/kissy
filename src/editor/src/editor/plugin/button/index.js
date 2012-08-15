@@ -17,9 +17,6 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
             prefixCls = self.get("prefixCls") + "editor-",
             b = new ButtonType(S.mix({
                 render:self.get("toolBarEl"),
-                elAttrs:{
-                    hideFocus:'hideFocus'
-                },
                 autoRender:true,
                 content:'<span ' +
                     'class="' + prefixCls + 'toolbar-item ' +

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:27
+build time: Aug 15 22:03
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -330,7 +330,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * Whether to force current tree node as a leaf.
                  * @defaultfalse.
                  * It will change as children are added.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 isLeaf:{
                     view:1
@@ -354,7 +354,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
                 /**
                  * Whether current tree node is selected.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 selected:{
                     view:1
@@ -362,7 +362,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
                 /**
                  * Whether current tree node is expanded.
-                 * @type Boolean.
+                 * @type {Boolean.}
                  * @default false.
                  */
                 expanded:{
@@ -371,7 +371,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
                 /**
                  * Whether current tree node is collapsed.
-                 * @type Boolean.
+                 * @type {Boolean.}
                  * @default true.
                  */
                 collapsed:{
@@ -385,7 +385,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
                 /**
                  * Html title for current tree node.
-                 * @type String
+                 * @type {String}
                  */
                 tooltip:{
                     view:1
@@ -393,7 +393,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
                 /**
                  * Tree instance current tree node belongs to.
-                 * @type Tree
+                 * @type {Tree}
                  */
                 tree:{
                     getter:function () {
@@ -407,7 +407,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
                 /**
                  * depth of node.
-                 * @type Number
+                 * @type {Number}
                  */
                 depth:{
                     view:1
@@ -875,7 +875,7 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
                  * CheckNode.PARTIAL_CHECK: checked partly.
                  * CheckNode.CHECK: checked completely.
                  * CheckNode.EMPTY: not checked.
-                 * @type Number
+                 * @type {Number}
                  */
                 checkState:{
                     view:1
@@ -985,7 +985,7 @@ KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, 
             {
                 /**
                  * Readonly. Render class.
-                 * @type function
+                 * @type {Function}
                  */
                 xrender:{
                     value:CheckTreeRender
@@ -1043,7 +1043,7 @@ KISSY.add("tree/treemgr", function (S, Event) {
         /**
          * Whether show root node.
          * @defaulttrue.
-         * @type Boolean
+         * @type {Boolean}
          */
         showRootNode:{
             value:true,
@@ -1051,7 +1051,7 @@ KISSY.add("tree/treemgr", function (S, Event) {
         },
         /**
          * Current selected tree node.
-         * @type Tree.Node
+         * @type {Tree.Node}
          */
         selectedItem:{},
 
@@ -1158,7 +1158,7 @@ KISSY.add("tree/treemgrRender", function (S) {
     S.augment(TreeMgrRender, {
         __renderUI:function () {
             var self = this;
-            self.get("el").attr("role", "tree")[0]['hideFocus'] = true;
+            self.get("el").attr("role", "tree");
             self.get("rowEl").addClass("ks-tree-row");
         },
 

@@ -1,13 +1,14 @@
 /**
+ * @ignore
  * @fileOverview 提供事件发布和订阅机制
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefined) {
-    var KS_PUBLISH = "__~ks_publish",
+    var KS_PUBLISH = '__~ks_publish',
         trim = S.trim,
         splitAndRun = Utils.splitAndRun,
-        KS_BUBBLE_TARGETS = "__~ks_bubble_targets",
-        ALL_EVENT = "*";
+        KS_BUBBLE_TARGETS = '__~ks_bubble_targets',
+        ALL_EVENT = '*';
 
     function getCustomEvent(self, type, eventData) {
         if (eventData instanceof EventObject) {
@@ -40,36 +41,31 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
             var self = this;
             type = trim(type);
             splitAndRun(type, function (t) {
-                Event["__" + method](false, self, t, fn, scope);
+                Event['__' + method](false, self, t, fn, scope);
             });
             return self; // chain
         };
     }
 
     /**
-     * @namespace
+     * @class KISSY.Event.Target
+     * @singleton
      * EventTarget provides the implementation for any object to publish, subscribe and fire to custom events,
      * and also allows other EventTargets to target the object with events sourced from the other object.
      * EventTarget is designed to be used with S.augment to allow events to be listened to and fired by name.
      * This makes it possible for implementing code to subscribe to an event that either has not been created yet,
      * or will not be created at all.
-     * @name Target
-     * @memberOf Event
      */
-    var Target =
-    /**
-     * @lends Event.Target
-     */
-    {
+    var Target = {
         /**
          * Fire a custom event by name.
          * The callback functions will be executed from the context specified when the event was created,
-         * and the {@link Event.Object} created will be mixed with eventData
+         * and the {@link KISSY.Event.Object} created will be mixed with eventData
          * @param {String} type The type of the event
-         * @param {Object} [eventData] The data will be mixed with {@link Event.Object} created
-         * @returns {Boolean|*} If any listen returns false, then the returned value is false. else return the last listener's returned value
+         * @param {Object} [eventData] The data will be mixed with {@link KISSY.Event.Object} created
+         * @return {Boolean|*} If any listen returns false, then the returned value is false. else return the last listener's returned value
          */
-        fire:function (type, eventData) {
+        fire: function (type, eventData) {
             var self = this,
                 ret = undefined,
                 r2,
@@ -81,7 +77,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
             type = trim(type);
 
-            if (type.indexOf(" ") > 0) {
+            if (type.indexOf(' ') > 0) {
                 splitAndRun(type, function (t) {
                     r2 = self.fire(t, eventData);
                     if (ret !== false) {
@@ -102,8 +98,8 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
             S.mix(eventData, {
                 // protect type
-                type:type,
-                _ks_groups:_ks_groups
+                type: type,
+                _ks_groups: _ks_groups
             });
 
             customEvent = getCustomEvent(self, type, eventData);
@@ -132,7 +128,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
          * @param {Object} cfg Config params
          * @param {Boolean} [cfg.bubbles=false] whether or not this event bubbles
          */
-        publish:function (type, cfg) {
+        publish: function (type, cfg) {
             var self = this,
                 publish = getEventPublishObj(self);
             type = trim(type);
@@ -149,7 +145,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
          * @param eventData
          * @private
          */
-        bubble:function (type, eventData) {
+        bubble: function (type, eventData) {
             var self = this,
                 ret = undefined,
                 targets = getBubbleTargetsObj(self);
@@ -164,9 +160,9 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
         /**
          * Registers another EventTarget as a bubble target.
-         * @param {Event.Target} target Another EventTarget instance to add
+         * @param {KISSY.Event.Target} target Another EventTarget instance to add
          */
-        addTarget:function (target) {
+        addTarget: function (target) {
             var self = this,
                 targets = getBubbleTargetsObj(self);
             targets[S.stamp(target)] = target;
@@ -174,9 +170,9 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
         /**
          * Removes a bubble target
-         * @param {Event.Target} target Another EventTarget instance to remove
+         * @param {KISSY.Event.Target} target Another EventTarget instance to remove
          */
-        removeTarget:function (target) {
+        removeTarget: function (target) {
             var self = this,
                 targets = getBubbleTargetsObj(self);
             delete targets[S.stamp(target)];
@@ -184,27 +180,27 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
         /**
          * Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
-         * @function
+         * @method
          * @param {String} type The name of the event
          * @param {Function} fn The callback to execute in response to the event
          * @param {Object} [scope] this object in callback
          */
-        on:attach("add"),
+        on: attach('add'),
         /**
          * Detach one or more listeners the from the specified event
-         * @function
+         * @method
          * @param {String} type The name of the event
          * @param {Function} [fn] The subscribed function to unsubscribe. if not supplied, all subscribers will be removed.
          * @param {Object} [scope] The custom object passed to subscribe.
          */
-        detach:attach("remove")
+        detach: attach('remove')
     };
 
     return Target;
 }, {
-    requires:["./base", './object', './utils', './handle']
+    requires: ['./base', './object', './utils', './handle']
 });
-/**
- *  yiminghe: 2011-10-17
- *   - implement bubble for custom event
- **/
+/*
+   yiminghe: 2011-10-17
+    - implement bubble for custom event
+*/

@@ -187,6 +187,8 @@
 .opacity(@opacity: 100){
     opacity: @opacity / 100;
     filter: ~"alpha(opacity=@{opacity})";
+    // ie67 need to hasLayout
+    *zoom:1;
 }
 
 // Reset filters for IE

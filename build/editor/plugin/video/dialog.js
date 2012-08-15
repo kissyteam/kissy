@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:26
+build time: Aug 15 22:02
 */
 /**
  * video dialog
@@ -98,9 +98,6 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             self.dUrl = el.one(".ks-editor-video-url");
             self.dAlign = MenuButton.Select.decorate(el.one(".ks-editor-video-align"), {
                 prefixCls:'ks-editor-big-',
-                elAttrs:{
-                    hideFocus:"hideFocus"
-                },
                 width:80,
                 menuCfg:{
                     prefixCls:'ks-editor-',

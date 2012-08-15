@@ -21,7 +21,7 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
 
         /**
          * field对象
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         self.el = el;
 

@@ -37,7 +37,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     {
         /**
          * Get root element for current view instance.
-         * @type String
+         * @type {String}
          * @example
          * <code>
          * //  selector :
@@ -59,7 +59,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
 
         /**
          * Delegate event on root element.
-         * @type Object
+         * @type {Object}
          * @example
          * <code>
          * events:{

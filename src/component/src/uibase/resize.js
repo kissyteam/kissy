@@ -32,7 +32,7 @@ KISSY.add("component/uibase/resize", function (S) {
          *    handlers:["b","t","r","l","tr","tl","br","bl"]
          *  }
          * </code>
-         * @type Object
+         * @type {Object}
          */
         resize:{
             value:{

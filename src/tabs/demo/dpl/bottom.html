@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Demo - DPL Tabs</title>
+    <link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../../../css/demo/dpl/assets/docs.css" rel="stylesheet"/>
+    <link href="../../../button/assets/dpl.css" rel="stylesheet"/>
+    <link href="../../assets/dpl.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>完全程序产生 Tabs - click</h1>
+
+    <div id="tabs">
+
+
+    </div>
+
+</div>
+<script src="../../../../build/kissy.js"></script>
+<script src="../../src/bar.js"></script>
+<script src="../../src/body.js"></script>
+<script src="../../src/panel-render.js"></script>
+<script src="../../src/panel.js"></script>
+<script src="../../src/tab.js"></script>
+<script src="../../src/tab-render.js"></script>
+<script src="../../src/render.js"></script>
+<script src="../../src/tabs.js"></script>
+<script>
+    KISSY.use("tabs", function (S, Tabs) {
+
+        var tabs = new Tabs({
+            barOrientation:Tabs.Orientation.BOTTOM,
+            render: "#tabs",
+            items: [
+                {
+                    title: 'tab-1',
+                    selected: true,
+                    content: '<p>panel-1</p>'
+                },
+                {
+                    title: 'tab-2',
+                    content: '<p>panel-2</p>'
+                }
+            ]
+        }).render();
+
+    });
+</script>
+</body>
+</html>

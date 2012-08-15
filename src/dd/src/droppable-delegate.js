@@ -49,7 +49,7 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
              * 根据鼠标位置得到真正的可放目标，暂时不考虑 mode，只考虑鼠标
              * @param ev
              * @private
-             * @override
+             *
              */
             getNodeFromTarget:function (ev, dragNode, proxyNode) {
                 var pointer = {
@@ -147,7 +147,7 @@ KISSY.add("dd/droppable-delegate", function (S, DDM, Droppable, DOM, Node) {
                 /**
                  * a selector query to get the children of container to make droppable elements from.
                  * usually as for tag.cls.
-                 * @type String
+                 * @type {String}
                  */
                 selector:{
                 },

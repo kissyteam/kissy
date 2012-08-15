@@ -1,19 +1,20 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:26
+build time: Aug 15 22:02
 */
 /**
+ * @ignore
  * @fileOverview responsible for registering event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _data, specials) {
+KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _data, specials) {
     var simpleAdd = Utils.simpleAdd,
         isValidTarget = Utils.isValidTarget,
         isIdenticalHandler = Utils.isIdenticalHandler;
 
-    /**
-     * dom node need eventHandler attached to dom node
+    /*
+     dom node need eventHandler attached to dom node
      */
     function addDomEvent(target, type, eventHandler, handlers, handleObj) {
         var special = specials[type] || {};
@@ -27,25 +28,23 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
         }
     }
 
-    /**
-     * @exports Event as Event
-     */
-
     S.mix(Event,
         /**
-         * @lends Event
+         * @override KISSY.Event
+         * @class KISSY.Event.AddMod
+         * @singleton
          */
         {
             // single type , single target , fixed native
-            __add:function (isNativeTarget, target, type, fn, scope) {
+            __add: function (isNativeTarget, target, type, fn, scope) {
                 var typedGroups = Utils.getTypedGroups(type);
                 type = typedGroups[0];
                 var groups = typedGroups[1],
                     eventDesc,
                     data,
                     s = specials[type],
-                    // in case overwrite by delegateFix/onFix in specials events
-                    // (mouseenter/leave,focusin/out)
+                // in case overwrite by delegateFix/onFix in specials events
+                // (mouseenter/leave,focusin/out)
                     originalType,
                     last,
                     selector;
@@ -88,13 +87,13 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
                 var events = eventDesc.events = eventDesc.events || {},
                     handlers = events[type] = events[type] || [],
                     handleObj = {
-                        fn:fn,
-                        scope:scope,
-                        selector:selector,
-                        last:last,
-                        data:data,
-                        groups:groups,
-                        originalType:originalType
+                        fn: fn,
+                        scope: scope,
+                        selector: selector,
+                        last: last,
+                        data: data,
+                        groups: groups,
+                        originalType: originalType
                     },
                     eventHandler = eventDesc.handler;
                 // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
@@ -103,7 +102,7 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
                         // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
                         // 已经在 fire 中 bubble 过一次了
                         // incase after page has unloaded
-                        if (typeof KISSY == "undefined" ||
+                        if (typeof KISSY == 'undefined' ||
                             event && event.type == Utils.Event_Triggered) {
                             return;
                         }
@@ -126,12 +125,12 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
                 }
 
                 for (var i = handlers.length - 1; i >= 0; --i) {
-                    /**
-                     * If multiple identical EventListeners are registered on the same EventTarget
-                     * with the same parameters the duplicate instances are discarded.
-                     * They do not cause the EventListener to be called twice
-                     * and since they are discarded
-                     * they do not need to be removed with the removeEventListener method.
+                    /*
+                     If multiple identical EventListeners are registered on the same EventTarget
+                     with the same parameters the duplicate instances are discarded.
+                     They do not cause the EventListener to be called twice
+                     and since they are discarded
+                     they do not need to be removed with the removeEventListener method.
                      */
                     if (isIdenticalHandler(handlers[i], handleObj, target)) {
                         return;
@@ -165,11 +164,12 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
             /**
              * Adds an event listener.similar to addEventListener in DOM3 Events
              * @param targets KISSY selector
+             * @member KISSY.Event
              * @param type {String} The type of event to append.use space to separate multiple event types.
              * @param fn {Function} The event handler/listener.
              * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
              */
-            add:function (targets, type, fn, scope) {
+            add: function (targets, type, fn, scope) {
                 type = S.trim(type);
                 // data : 附加在回调后面的数据，delegate 检查使用
                 // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
@@ -184,33 +184,38 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
             }
         });
 }, {
-    requires:['./base', 'dom', './utils', './object', './handle', './data', './special']
+    requires: ['./base', 'dom', './utils', './object', './handle', './data', './special']
 });/**
+ * @ignore
  * @fileOverview scalable event framework for kissy (refer DOM3 Events)
- *               how to fire event just like browser?
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * how to fire event just like browser?
+ * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 
     var isValidTarget = Utils.isValidTarget,
+        NodeType = DOM.NodeType,
         splitAndRun = Utils.splitAndRun,
         getNodeName = DOM.nodeName,
         trim = S.trim,
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
     /**
-     * @namespace The event utility provides functions to add and remove event listeners.
-     * @name Event
+     * The event utility provides functions to add and remove event listeners.
+     * @class KISSY.Event
+     * @singleton
      */
     var Event =
-    /**
-     * @lends Event
-     */
     {
+        /**
+         * copy event from src to dest
+         * @param {HTMLElement} src srcElement
+         * @param {HTMLElement} dest destElement
+         * @private
+         */
+        _clone: function (src, dest) {
 
-        _clone:function (src, dest) {
-
-            if (dest.nodeType !== DOM.ELEMENT_NODE ||
+            if (dest.nodeType !== NodeType.ELEMENT_NODE ||
                 !_data._hasData(src)) {
                 return;
             }
@@ -220,13 +225,13 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
                 S.each(handlers, function (handler) {
                     // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
                     Event.on(dest, type, {
-                        data:handler.data,
-                        fn:handler.fn,
-                        groups:handler.groups,
-                        last:handler.last,
-                        originalType:handler.originalType,
-                        scope:handler.scope,
-                        selector:handler.selector
+                        data: handler.data,
+                        fn: handler.fn,
+                        groups: handler.groups,
+                        last: handler.last,
+                        originalType: handler.originalType,
+                        scope: handler.scope,
+                        selector: handler.selector
                     });
                 });
             });
@@ -234,22 +239,21 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
         /**
          * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
-         * @memberOf Event
          * @param targets html nodes
-         * @param {String|Event.Object} eventType event type
+         * @param {String|KISSY.Event.Object} eventType event type
          * @param [eventData] additional event data
          * @param {Boolean} [onlyHandlers] only fire handlers
-         * @returns {Boolean} The return value of fire/dispatchEvent indicates
-         *                 whether any of the listeners which handled the event called preventDefault.
-         *                 If preventDefault was called the value is false, else the value is true.
+         * @return {Boolean} The return value of fire/dispatchEvent indicates
+         * whether any of the listeners which handled the event called preventDefault.
+         * If preventDefault was called the value is false, else the value is true.
          */
-        fire:function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
+        fire: function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
             var ret = true, r;
             // custom event firing moved to target.js
             eventData = eventData || {};
             if (S.isString(eventType)) {
                 eventType = trim(eventType);
-                if (eventType.indexOf(" ") > -1) {
+                if (eventType.indexOf(' ') > -1) {
                     splitAndRun(eventType, function (t) {
                         r = Event.fire(targets, t, eventData, onlyHandlers);
                         if (ret !== false) {
@@ -275,8 +279,8 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
             eventType = typedGroups[0];
 
             S.mix(eventData, {
-                type:eventType,
-                _ks_groups:_ks_groups
+                type: eventType,
+                _ks_groups: _ks_groups
             });
 
             targets = DOM.query(targets);
@@ -290,22 +294,23 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
         },
 
         /**
-         * does not cause default behavior to occur
-         * does not bubble up the DOM hierarchy
+         * same with fire but:
+         * does not cause default behavior to occur.
+         * does not bubble up the DOM hierarchy.
          * @param targets
-         * @param {Event.Object | String} eventType
+         * @param {KISSY.Event.Object | String} eventType
          * @param [eventData]
          */
-        fireHandler:function (targets, eventType, eventData) {
+        fireHandler: function (targets, eventType, eventData) {
             return Event.fire(targets, eventType, eventData, 1);
         }
     };
 
-    /**
-     * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
-     * @return {Boolean} The return value of dispatchEvent indicates
-     *                 whether any of the listeners which handled the event called preventDefault.
-     *                 If preventDefault was called the value is false, else the value is true.
+    /*
+     fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
+     @return {Boolean} The return value of dispatchEvent indicates
+     whether any of the listeners which handled the event called preventDefault.
+     If preventDefault was called the value is false, else the value is true.
      */
     function fireDOMEvent(target, eventType, eventData, onlyHandlers) {
         if (!isValidTarget(target)) {
@@ -327,6 +332,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
         }
         /**
          * identify event as fired manually
+         * @ignore
          */
         event._ks_fired = 1;
         /*
@@ -344,7 +350,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
         var cur = target,
             t,
             win = DOM._getWin(cur.ownerDocument || cur),
-            ontype = "on" + eventType;
+            ontype = 'on' + eventType;
 
         //bubble up dom tree
         do {
@@ -364,8 +370,8 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
         } while (!onlyHandlers && cur && !event.isPropagationStopped);
 
         if (!onlyHandlers && !event.isDefaultPrevented) {
-            if (!(eventType === "click" &&
-                getNodeName(target) == "a")) {
+            if (!(eventType === 'click' &&
+                getNodeName(target) == 'a')) {
                 var old;
                 try {
                     // execute default action on dom node
@@ -374,7 +380,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
                     if (ontype &&
                         target[ eventType ] &&
                         (
-                            (eventType !== "focus" && eventType !== "blur") ||
+                            (eventType !== 'focus' && eventType !== 'blur') ||
                                 target.offsetWidth !== 0
                             ) &&
                         !S.isWindow(target)) {
@@ -393,7 +399,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
                         target[ eventType ]();
                     }
                 } catch (ieError) {
-                    S.log("trigger action error : ");
+                    S.log('trigger action error : ');
                     S.log(ieError);
                 }
 
@@ -409,42 +415,43 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
     return Event;
 }, {
-    requires:["dom", "./object", "./utils", './handle', './data', './special']
+    requires: ['dom', './object', './utils', './handle', './data', './special']
 });
 
-/**
- * yiminghe@gmail.com : 2011-12-15
- *  - 重构，粒度更细，新的架构
- *
- * 2011-11-24
- *  - 自定义事件和 dom 事件操作彻底分离
- *  - TODO: group event from DOM3 Event
- *
- * 2011-06-07
- *  - refer : http://www.w3.org/TR/2001/WD-DOM-Level-3-Events-20010823/events.html
- *  - 重构
- *  - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
- *  - 减少闭包使用，prevent ie 内存泄露？
- *  - 增加 fire ，模拟冒泡处理 dom 事件
+/*
+ yiminghe@gmail.com : 2011-12-15
+ - 重构，粒度更细，新的架构
+
+ 2011-11-24
+ - 自定义事件和 dom 事件操作彻底分离
+ - TODO: group event from DOM3 Event
+
+ 2011-06-07
+ - refer : http://www.w3.org/TR/2001/WD-DOM-Level-3-Events-20010823/events.html
+ - 重构
+ - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
+ - 减少闭包使用，prevent ie 内存泄露？
+ - 增加 fire ，模拟冒泡处理 dom 事件
  */
 /**
+ * @ignore
  * @fileOverview  change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/change", function (S, UA, Event, DOM, special) {
+KISSY.add('event/change', function (S, UA, Event, DOM, special) {
     var mode = S.Env.host.document['documentMode'];
 
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
 
-        var rformElems = /^(?:textarea|input|select)$/i;
+        var R_FORM_EL = /^(?:textarea|input|select)$/i;
 
         function isFormElement(n) {
-            return rformElems.test(n.nodeName);
+            return R_FORM_EL.test(n.nodeName);
         }
 
         function isCheckBoxOrRadio(el) {
             var type = el.type;
-            return type == "checkbox" || type == "radio";
+            return type == 'checkbox' || type == 'radio';
         }
 
         special['change'] = {
@@ -456,8 +463,8 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
                     if (isCheckBoxOrRadio(el)) {
                         // change in ie<9
                         // change = propertychange -> click
-                        Event.on(el, "propertychange", propertyChange);
-                        Event.on(el, "click", onClick);
+                        Event.on(el, 'propertychange', propertyChange);
+                        Event.on(el, 'click', onClick);
                     } else {
                         // other form elements use native , do not bubble
                         return false;
@@ -466,24 +473,24 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
                     // if bind on parentNode ,lazy bind change event to its form elements
                     // note event order : beforeactivate -> change
                     // note 2: checkbox/radio is exceptional
-                    Event.on(el, "beforeactivate", beforeActivate);
+                    Event.on(el, 'beforeactivate', beforeActivate);
                 }
             },
             tearDown:function () {
                 var el = this;
                 if (isFormElement(el)) {
                     if (isCheckBoxOrRadio(el)) {
-                        Event.remove(el, "propertychange", propertyChange);
-                        Event.remove(el, "click", onClick);
+                        Event.remove(el, 'propertychange', propertyChange);
+                        Event.remove(el, 'click', onClick);
                     } else {
                         return false;
                     }
                 } else {
-                    Event.remove(el, "beforeactivate", beforeActivate);
-                    S.each(DOM.query("textarea,input,select", el), function (fel) {
+                    Event.remove(el, 'beforeactivate', beforeActivate);
+                    S.each(DOM.query('textarea,input,select', el), function (fel) {
                         if (fel.__changeHandler) {
                             fel.__changeHandler = 0;
-                            Event.remove(fel, "change", {fn:changeHandler, last:1});
+                            Event.remove(fel, 'change', {fn:changeHandler, last:1});
                         }
                     });
                 }
@@ -491,7 +498,7 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
         };
 
         function propertyChange(e) {
-            if (e.originalEvent.propertyName == "checked") {
+            if (e.originalEvent.propertyName == 'checked') {
                 this.__changed = 1;
             }
         }
@@ -500,7 +507,7 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
             if (this.__changed) {
                 this.__changed = 0;
                 // fire from itself
-                Event.fire(this, "change", e);
+                Event.fire(this, 'change', e);
             }
         }
 
@@ -509,7 +516,7 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
             if (isFormElement(t) && !t.__changeHandler) {
                 t.__changeHandler = 1;
                 // lazy bind change , always as last handler among user's handlers
-                Event.on(t, "change", {fn:changeHandler, last:1});
+                Event.on(t, 'change', {fn:changeHandler, last:1});
             }
         }
 
@@ -528,18 +535,19 @@ KISSY.add("event/change", function (S, UA, Event, DOM, special) {
             var p;
             if (p = fel.parentNode) {
                 // fire from parent , itself is handled natively
-                Event.fire(p, "change", e);
+                Event.fire(p, 'change', e);
             }
         }
 
     }
 }, {
-    requires:["ua", "./base", "dom", './special']
+    requires:['ua', './base', 'dom', './special']
 });/**
+ * @ignore
  * @fileOverview for other kissy core usage
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/data", function (S, DOM, Utils) {
+KISSY.add('event/data', function (S, DOM, Utils) {
     var EVENT_GUID = Utils.EVENT_GUID,
         data,
         makeArray = S.makeArray;
@@ -564,28 +572,42 @@ KISSY.add("event/data", function (S, DOM, Utils) {
 }, {
     requires:['dom', './utils']
 });/**
+ * @ignore
  * @fileOverview KISSY Scalable Event Framework
  * @author yiminghe@gmail.com
  */
-KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
+KISSY.add('event', function (S, _data, KeyCodes, Event, Target, Object) {
     S.mix(Event,
         /**
-         * @lends Event
+         * @override KISSY.Event
+         * @class KISSY.Event.EventMod
+         * @singleton
          */
         {
             KeyCodes:KeyCodes,
             Target:Target,
             Object:Object,
+            /**
+             * Same with {@link KISSY.Event#add}
+             * @method
+             * @member KISSY.Event
+             */
             on:Event.add,
+            /**
+             * Same with {@link KISSY.Event#remove}
+             * @method
+             * @member KISSY.Event
+             */
             detach:Event.remove,
             /**
-             *
-             * @param targets KISSY selector
+             * Delegate event.
+             * @param targets KISSY selector             *
+             * @param {String|Function} selector filter selector string or function to find right element
              * @param {String} [eventType] The type of event to delegate.
              * use space to separate multiple event types.
-             * @param {String|Function} selector filter selector string or function to find right element
              * @param {Function} [fn] The event handler/listener.
              * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
+             * @member KISSY.Event
              */
             delegate:function (targets, eventType, selector, fn, scope) {
                 return Event.add(targets, eventType, {
@@ -595,12 +617,14 @@ KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
                 });
             },
             /**
+             * undelegate event.
              * @param targets KISSY selector
              * @param {String} [eventType] The type of event to undelegate.
              * use space to separate multiple event types.
-             * @param {String|Function} selector filter selector string or function to find right element
+             * @param {String|Function} [selector] filter selector string or function to find right element
              * @param {Function} [fn] The event handler/listener.
              * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
+             * @member KISSY.Event
              */
             undelegate:function (targets, eventType, selector, fn, scope) {
                 return Event.remove(targets, eventType, {
@@ -622,28 +646,29 @@ KISSY.add("event", function (S, _data, KeyCodes, Event, Target, Object) {
     return Event;
 }, {
     requires:[
-        "event/data",
-        "event/keycodes",
-        "event/base",
-        "event/target",
-        "event/object",
-        "event/focusin",
-        "event/hashchange",
-        "event/valuechange",
-        "event/mouseenter",
-        "event/submit",
-        "event/change",
-        "event/mousewheel",
-        "event/add",
-        "event/remove"
+        'event/data',
+        'event/key-codes',
+        'event/base',
+        'event/target',
+        'event/object',
+        'event/focusin',
+        'event/hashchange',
+        'event/valuechange',
+        'event/mouseenter',
+        'event/submit',
+        'event/change',
+        'event/mousewheel',
+        'event/add',
+        'event/remove'
     ]
 });
 
-/**
- *  2012-02-12 yiminghe@gmail.com note:
- *   - 普通 remove() 不管 selector 都会查，如果 fn scope 相等就移除
- *   - undelegate() selector 为 ""，那么去除所有委托绑定的 handler
+/*
+   2012-02-12 yiminghe@gmail.com note:
+    - 普通 remove() 不管 selector 都会查，如果 fn scope 相等就移除
+    - undelegate() selector 为 ''，那么去除所有委托绑定的 handler
  *//**
+ * @ignore
  * @fileOverview event-focusin
  * @author yiminghe@gmail.com
  */
@@ -654,7 +679,7 @@ KISSY.add('event/focusin', function (S, UA, Event, special) {
             { name:'focusin', fix:'focus' },
             { name:'focusout', fix:'blur' }
         ], function (o) {
-            var key = S.guid("attaches_" + S.now() + "_")
+            var key = S.guid('attaches_' + S.now() + '_');
             special[o.name] = {
                 // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
                 // 达到和 focusin 一样的效果 focusin -> focus
@@ -688,31 +713,32 @@ KISSY.add('event/focusin', function (S, UA, Event, special) {
         });
     }
 
-    special["focus"] = {
-        delegateFix:"focusin"
+    special['focus'] = {
+        delegateFix:'focusin'
     };
 
-    special["blur"] = {
-        delegateFix:"focusout"
+    special['blur'] = {
+        delegateFix:'focusout'
     };
 
     return Event;
 }, {
-    requires:["ua", "./base", './special']
+    requires:['ua', './base', './special']
 });
 
-/**
- * 承玉:2011-06-07
- * - refactor to jquery , 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
- *
- * NOTES:
- *  - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
+/*
+  承玉:2011-06-07
+  - refactor to jquery , 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
+
+  NOTES:
+   - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
  */
 /**
+ * @ignore
  * @fileOverview responsible for handling event from browser to KISSY Event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/handle", function (S, DOM, _data, special) {
+KISSY.add('event/handle', function (S, DOM, _data, special) {
 
     function getEvents(target) {
         // 获取事件描述
@@ -732,8 +758,8 @@ KISSY.add("event/handle", function (S, DOM, _data, special) {
          let's make a copy of all listeners, so we are
          sure we'll call all of them.
          */
-        /**
-         * DOM3 Events: EventListenerList objects in the DOM are live. ??
+        /*
+          DOM3 Events: EventListenerList objects in the DOM are live. ??
          */
         var handlers = getHandlers(currentTarget, event.type),
             target = event.target,
@@ -767,7 +793,7 @@ KISSY.add("event/handle", function (S, DOM, _data, special) {
                 if (currentTargetHandlers.length) {
                     allHandlers.push({
                         currentTarget:target,
-                        "currentTargetHandlers":currentTargetHandlers
+                        'currentTargetHandlers':currentTargetHandlers
                     });
                 }
                 target = target.parentNode || currentTarget;
@@ -845,6 +871,7 @@ KISSY.add("event/handle", function (S, DOM, _data, special) {
 }, {
     requires:['dom', './data', './special']
 });/**
+ * @ignore
  * @fileOverview event-hashchange
  * @author yiminghe@gmail.com , xiaomacji@gmail.com
  */
@@ -869,8 +896,8 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         }
 
         var POLL_INTERVAL = 50,
-            IFRAME_TEMPLATE = "<html><head><title>" + (doc.title || "") +
-                " - {hash}</title>{head}</head><body>{hash}</body></html>",
+            IFRAME_TEMPLATE = '<html><head><title>' + (doc.title || '') +
+                ' - {hash}</title>{head}</head><body>{hash}</body></html>',
 
             getHash = function () {
                 // 不能 location.hash
@@ -889,7 +916,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
             poll = function () {
                 var hash = getHash();
                 if (hash !== lastHash) {
-                    // S.log("poll success :" + hash + " :" + lastHash);
+                    // S.log('poll success :' + hash + ' :' + lastHash);
                     // 通知完调用者 hashchange 事件前设置 lastHash
                     lastHash = hash;
                     // ie<8 同步 : hashChange -> onIframeLoad
@@ -899,15 +926,17 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
             },
 
             hashChange = ie && ie < 8 ? function (hash) {
-                // S.log("set iframe html :" + hash);
+                // S.log('set iframe html :' + hash);
                 var html = S.substitute(IFRAME_TEMPLATE, {
                         // 防止 hash 里有代码造成 xss
                         // 后面通过 innerText，相当于 unEscapeHTML
-                        hash:S.escapeHTML(hash),
+                        hash: S.escapeHTML(hash),
                         // 一定要加哦
-                        head:DOM.isCustomDomain() ? ("<script>document.domain = '" +
+                        head: DOM.isCustomDomain() ? ("<script>" +
+                            "document." +
+                            "domain = '" +
                             doc.domain
-                            + "';</script>") : ""
+                            + "';</script>") : ''
                     }),
                     iframeDoc = getIframeDoc(iframe);
                 try {
@@ -927,7 +956,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
             },
 
             notifyHashChange = function () {
-                // S.log("hash changed : " + getHash());
+                // S.log('hash changed : ' + getHash());
                 Event.fire(win, HASH_CHANGE);
             },
             setup = function () {
@@ -966,25 +995,25 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                     DOM.prepend(iframe, doc.documentElement);
 
                     // init，第一次触发，以后都是 onIframeLoad
-                    Event.add(iframe, "load", function () {
-                        Event.remove(iframe, "load");
+                    Event.add(iframe, 'load', function () {
+                        Event.remove(iframe, 'load');
                         // Update the iframe with the initial location hash, if any. This
                         // will create an initial history entry that the user can return to
                         // after the state has changed.
                         hashChange(getHash());
-                        Event.add(iframe, "load", onIframeLoad);
+                        Event.add(iframe, 'load', onIframeLoad);
                         poll();
                     });
 
                     // Whenever `document.title` changes, update the Iframe's title to
                     // prettify the back/next history menu entries. Since IE sometimes
-                    // errors with "Unspecified error" the very first time this is set
+                    // errors with 'Unspecified error' the very first time this is set
                     // (yes, very useful) wrap this with a try/catch block.
                     doc.onpropertychange = function () {
                         try {
                             if (event.propertyName === 'title') {
                                 getIframeDoc(iframe).title =
-                                    doc.title + " - " + getHash();
+                                    doc.title + ' - ' + getHash();
                             }
                         } catch (e) {
                         }
@@ -1007,9 +1036,9 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                         // 后退时不等
                         // 定时器调用 hashChange() 修改 iframe 同步调用过来的(手动改变 location)则相等
                         if (c != ch) {
-                            S.log("set loc hash :" + c);
+                            S.log('set loc hash :' + c);
                             location.hash = c;
-                            // 使lasthash为 iframe 历史， 不然重新写iframe，
+                            // 使 last hash 为 iframe 历史， 不然重新写iframe，
                             // 会导致最新状态（丢失前进状态）
 
                             // 后退则立即触发 hashchange，
@@ -1031,7 +1060,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         }
 
         special[HASH_CHANGE] = {
-            setup:function () {
+            setup: function () {
                 if (this !== win) {
                     return;
                 }
@@ -1041,7 +1070,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                 // 不用注册 dom 事件
                 setup();
             },
-            tearDown:function () {
+            tearDown: function () {
                 if (this !== win) {
                     return;
                 }
@@ -1050,131 +1079,456 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         };
     }
 }, {
-    requires:["./base", "dom", "ua", "./special"]
+    requires: ['./base', 'dom', 'ua', './special']
 });
 
-/**
- * 已知 bug :
- * - ie67 有时后退后取得的 location.hash 不和地址栏一致，导致必须后退两次才能触发 hashchange
- *
- * v1 : 2010-12-29
- * v1.1: 支持非IE，但不支持onhashchange事件的浏览器(例如低版本的firefox、safari)
- * refer : http://yiminghe.javaeye.com/blog/377867
- *         https://github.com/cowboy/jquery-hashchange
+/*
+  已知 bug :
+  - ie67 有时后退后取得的 location.hash 不和地址栏一致，导致必须后退两次才能触发 hashchange
+
+  v1 : 2010-12-29
+  v1.1: 支持非IE，但不支持onhashchange事件的浏览器(例如低版本的firefox、safari)
+  refer : http://yiminghe.javaeye.com/blog/377867
+          https://github.com/cowboy/jquery-hashchange
  *//**
- * @fileOverview some keycodes definition and utils from closure-library
+ * @ignore
+ * @fileOverview some key-codes definition and utils from closure-library
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/keycodes", function() {
+KISSY.add('event/key-codes', function (S, UA) {
+    /**
+     * @enum {Number} KISSY.Event.KeyCodes
+     * All key codes.
+     */
     var KeyCodes = {
+        /**
+         * MAC_ENTER
+         */
         MAC_ENTER: 3,
+        /**
+         * BACKSPACE
+         */
         BACKSPACE: 8,
+        /**
+         * TAB
+         */
         TAB: 9,
-        NUM_CENTER: 12,  // NUMLOCK on FF/Safari Mac
+        /**
+         * NUMLOCK on FF/Safari Mac
+         */
+        NUM_CENTER: 12, // NUMLOCK on FF/Safari Mac
+        /**
+         * ENTER
+         */
         ENTER: 13,
+        /**
+         * SHIFT
+         */
         SHIFT: 16,
+        /**
+         * CTRL
+         */
         CTRL: 17,
+        /**
+         * ALT
+         */
         ALT: 18,
+        /**
+         * PAUSE
+         */
         PAUSE: 19,
+        /**
+         * CAPS_LOCK
+         */
         CAPS_LOCK: 20,
+        /**
+         * ESC
+         */
         ESC: 27,
+        /**
+         * SPACE
+         */
         SPACE: 32,
-        PAGE_UP: 33,     // also NUM_NORTH_EAST
-        PAGE_DOWN: 34,   // also NUM_SOUTH_EAST
-        END: 35,         // also NUM_SOUTH_WEST
-        HOME: 36,        // also NUM_NORTH_WEST
-        LEFT: 37,        // also NUM_WEST
-        UP: 38,          // also NUM_NORTH
-        RIGHT: 39,       // also NUM_EAST
-        DOWN: 40,        // also NUM_SOUTH
+        /**
+         * PAGE_UP
+         */
+        PAGE_UP: 33, // also NUM_NORTH_EAST
+        /**
+         * PAGE_DOWN
+         */
+        PAGE_DOWN: 34, // also NUM_SOUTH_EAST
+        /**
+         * END
+         */
+        END: 35, // also NUM_SOUTH_WEST
+        /**
+         * HOME
+         */
+        HOME: 36, // also NUM_NORTH_WEST
+        /**
+         * LEFT
+         */
+        LEFT: 37, // also NUM_WEST
+        /**
+         * UP
+         */
+        UP: 38, // also NUM_NORTH
+        /**
+         * RIGHT
+         */
+        RIGHT: 39, // also NUM_EAST
+        /**
+         * DOWN
+         */
+        DOWN: 40, // also NUM_SOUTH
+        /**
+         * PRINT_SCREEN
+         */
         PRINT_SCREEN: 44,
-        INSERT: 45,      // also NUM_INSERT
-        DELETE: 46,      // also NUM_DELETE
+        /**
+         * INSERT
+         */
+        INSERT: 45, // also NUM_INSERT
+        /**
+         * DELETE
+         */
+        DELETE: 46, // also NUM_DELETE
+        /**
+         * ZERO
+         */
         ZERO: 48,
+        /**
+         * ONE
+         */
         ONE: 49,
+        /**
+         * TWO
+         */
         TWO: 50,
+        /**
+         * THREE
+         */
         THREE: 51,
+        /**
+         * FOUR
+         */
         FOUR: 52,
+        /**
+         * FIVE
+         */
         FIVE: 53,
+        /**
+         * SIX
+         */
         SIX: 54,
+        /**
+         * SEVEN
+         */
         SEVEN: 55,
+        /**
+         * EIGHT
+         */
         EIGHT: 56,
+        /**
+         * NINE
+         */
         NINE: 57,
+        /**
+         * QUESTION_MARK
+         */
         QUESTION_MARK: 63, // needs localization
+        /**
+         * A
+         */
         A: 65,
+        /**
+         * B
+         */
         B: 66,
+        /**
+         * C
+         */
         C: 67,
+        /**
+         * D
+         */
         D: 68,
+        /**
+         * E
+         */
         E: 69,
+        /**
+         * F
+         */
         F: 70,
+        /**
+         * G
+         */
         G: 71,
+        /**
+         * H
+         */
         H: 72,
+        /**
+         * I
+         */
         I: 73,
+        /**
+         * J
+         */
         J: 74,
+        /**
+         * K
+         */
         K: 75,
+        /**
+         * L
+         */
         L: 76,
+        /**
+         * M
+         */
         M: 77,
+        /**
+         * N
+         */
         N: 78,
+        /**
+         * O
+         */
         O: 79,
+        /**
+         * P
+         */
         P: 80,
+        /**
+         * Q
+         */
         Q: 81,
+        /**
+         * R
+         */
         R: 82,
+        /**
+         * S
+         */
         S: 83,
+        /**
+         * T
+         */
         T: 84,
+        /**
+         * U
+         */
         U: 85,
+        /**
+         * V
+         */
         V: 86,
+        /**
+         * W
+         */
         W: 87,
+        /**
+         * X
+         */
         X: 88,
+        /**
+         * Y
+         */
         Y: 89,
+        /**
+         * Z
+         */
         Z: 90,
+        /**
+         * META
+         */
         META: 91, // WIN_KEY_LEFT
+        /**
+         * WIN_KEY_RIGHT
+         */
         WIN_KEY_RIGHT: 92,
+        /**
+         * CONTEXT_MENU
+         */
         CONTEXT_MENU: 93,
+        /**
+         * NUM_ZERO
+         */
         NUM_ZERO: 96,
+        /**
+         * NUM_ONE
+         */
         NUM_ONE: 97,
+        /**
+         * NUM_TWO
+         */
         NUM_TWO: 98,
+        /**
+         * NUM_THREE
+         */
         NUM_THREE: 99,
+        /**
+         * NUM_FOUR
+         */
         NUM_FOUR: 100,
+        /**
+         * NUM_FIVE
+         */
         NUM_FIVE: 101,
+        /**
+         * NUM_SIX
+         */
         NUM_SIX: 102,
+        /**
+         * NUM_SEVEN
+         */
         NUM_SEVEN: 103,
+        /**
+         * NUM_EIGHT
+         */
         NUM_EIGHT: 104,
+        /**
+         * NUM_NINE
+         */
         NUM_NINE: 105,
+        /**
+         * NUM_MULTIPLY
+         */
         NUM_MULTIPLY: 106,
+        /**
+         * NUM_PLUS
+         */
         NUM_PLUS: 107,
+        /**
+         * NUM_MINUS
+         */
         NUM_MINUS: 109,
+        /**
+         * NUM_PERIOD
+         */
         NUM_PERIOD: 110,
+        /**
+         * NUM_DIVISION
+         */
         NUM_DIVISION: 111,
+        /**
+         * F1
+         */
         F1: 112,
+        /**
+         * F2
+         */
         F2: 113,
+        /**
+         * F3
+         */
         F3: 114,
+        /**
+         * F4
+         */
         F4: 115,
+        /**
+         * F5
+         */
         F5: 116,
+        /**
+         * F6
+         */
         F6: 117,
+        /**
+         * F7
+         */
         F7: 118,
+        /**
+         * F8
+         */
         F8: 119,
+        /**
+         * F9
+         */
         F9: 120,
+        /**
+         * F10
+         */
         F10: 121,
+        /**
+         * F11
+         */
         F11: 122,
+        /**
+         * F12
+         */
         F12: 123,
+        /**
+         * NUMLOCK
+         */
         NUMLOCK: 144,
-        SEMICOLON: 186,            // needs localization
-        DASH: 189,                 // needs localization
-        EQUALS: 187,               // needs localization
-        COMMA: 188,                // needs localization
-        PERIOD: 190,               // needs localization
-        SLASH: 191,                // needs localization
-        APOSTROPHE: 192,           // needs localization
-        SINGLE_QUOTE: 222,         // needs localization
-        OPEN_SQUARE_BRACKET: 219,  // needs localization
-        BACKSLASH: 220,            // needs localization
+        /**
+         * SEMICOLON
+         */
+        SEMICOLON: 186, // needs localization
+        /**
+         * DASH
+         */
+        DASH: 189, // needs localization
+        /**
+         * EQUALS
+         */
+        EQUALS: 187, // needs localization
+        /**
+         * COMMA
+         */
+        COMMA: 188, // needs localization
+        /**
+         * PERIOD
+         */
+        PERIOD: 190, // needs localization
+        /**
+         * SLASH
+         */
+        SLASH: 191, // needs localization
+        /**
+         * APOSTROPHE
+         */
+        APOSTROPHE: 192, // needs localization
+        /**
+         * SINGLE_QUOTE
+         */
+        SINGLE_QUOTE: 222, // needs localization
+        /**
+         * OPEN_SQUARE_BRACKET
+         */
+        OPEN_SQUARE_BRACKET: 219, // needs localization
+        /**
+         * BACKSLASH
+         */
+        BACKSLASH: 220, // needs localization
+        /**
+         * CLOSE_SQUARE_BRACKET
+         */
         CLOSE_SQUARE_BRACKET: 221, // needs localization
+        /**
+         * WIN_KEY
+         */
         WIN_KEY: 224,
+        /**
+         * MAC_FF_META
+         */
         MAC_FF_META: 224, // Firefox (Gecko) fires this for the meta key instead of 91
+        /**
+         * WIN_IME
+         */
         WIN_IME: 229
     };
 
-    KeyCodes.isTextModifyingKeyEvent = function(e) {
+    /**
+     * whether text and modified key is entered at the same time.
+     * @param {KISSY.Event.Object} e event object
+     * @return {Boolean}
+     */
+    KeyCodes.isTextModifyingKeyEvent = function (e) {
         if (e.altKey && !e.ctrlKey ||
             e.metaKey ||
             // Function keys don't generate text
@@ -1203,7 +1557,6 @@ KISSY.add("event/keycodes", function() {
             case KeyCodes.PAGE_DOWN:
             case KeyCodes.PAGE_UP:
             case KeyCodes.PAUSE:
-            case KeyCodes.PHANTOM:
             case KeyCodes.PRINT_SCREEN:
             case KeyCodes.RIGHT:
             case KeyCodes.SHIFT:
@@ -1216,7 +1569,12 @@ KISSY.add("event/keycodes", function() {
         }
     };
 
-    KeyCodes.isCharacterKey = function(keyCode) {
+    /**
+     * whether character is entered.
+     * @param {KISSY.Event.KeyCodes} keyCode
+     * @return {Boolean}
+     */
+    KeyCodes.isCharacterKey = function (keyCode) {
         if (keyCode >= KeyCodes.ZERO &&
             keyCode <= KeyCodes.NINE) {
             return true;
@@ -1233,7 +1591,7 @@ KISSY.add("event/keycodes", function() {
         }
 
         // Safari sends zero key code for non-latin characters.
-        if (goog.userAgent.WEBKIT && keyCode == 0) {
+        if (UA.webkit && keyCode == 0) {
             return true;
         }
 
@@ -1263,7 +1621,10 @@ KISSY.add("event/keycodes", function() {
 
     return KeyCodes;
 
+}, {
+    requires: ['ua']
 });/**
+ * @ignore
  * @fileOverview event-mouseenter
  * @author yiminghe@gmail.com
  */
@@ -1304,27 +1665,28 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
 
     return Event;
 }, {
-    requires:["./base", "dom", "ua", "./special"]
+    requires:['./base', 'dom', 'ua', './special']
 });
 
-/**
- * yiminghe@gmail.com:2011-12-15
- * - 借鉴 jq 1.7 新的架构
- *
- * 承玉：2011-06-07
- * - 根据新结构，调整 mouseenter 兼容处理
- * - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
+/*
+  yiminghe@gmail.com:2011-12-15
+  - 借鉴 jq 1.7 新的架构
+
+  承玉：2011-06-07
+  - 根据新结构，调整 mouseenter 兼容处理
+  - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
  */
 /**
+ * @ignore
  * @fileOverview normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle, _data, special) {
+KISSY.add('event/mousewheel', function (S, Event, UA, Utils, EventObject, handle, _data, special) {
 
     var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
         simpleRemove = Utils.simpleRemove,
         simpleAdd = Utils.simpleAdd,
-        MOUSE_WHEEL_HANDLER = "mousewheelHandler";
+        MOUSE_WHEEL_HANDLER = 'mousewheelHandler';
 
     function handler(e) {
         var deltaX,
@@ -1401,10 +1763,10 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
 }, {
     requires:['./base', 'ua', './utils',
         './object', './handle',
-        './data', "./special"]
+        './data', './special']
 });
 
-/**
+/*
  note:
  not perfect in osx : accelerated scroll
  refer:
@@ -1417,9 +1779,10 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
  http://plugins.jquery.com/project/mousewheel
  http://www.cnblogs.com/aiyuchen/archive/2011/04/19/2020843.html
  http://www.w3.org/TR/DOM-Level-3-Events/#events-mousewheelevents
- **//**
+*//**
+ * @ignore
  * @fileOverview EventObject
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('event/object', function (S, undefined) {
 
@@ -1434,12 +1797,12 @@ KISSY.add('event/object', function (S, undefined) {
             'target toElement view wheelDelta which axis').split(' ');
 
     /**
-     * @class KISSY 's event system normalizes the event object according to
+     * @class KISSY.Event.Object
+     *
+     * KISSY 's event system normalizes the event object according to
      * W3C standards. The event object is guaranteed to be passed to
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
-     * @name Object
-     * @memberOf Event
      */
     function EventObject(currentTarget, domEvent, type) {
         var self = this;
@@ -1461,170 +1824,169 @@ KISSY.add('event/object', function (S, undefined) {
         self.fixed = TRUE;
     }
 
-    S.augment(EventObject,
+    EventObject.prototype = {
+        constructor: EventObject,
         /**
-         * @lends Event.Object#
+         * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
+         * @type {Boolean}
          */
-        {
+        isDefaultPrevented: FALSE,
+        /**
+         * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
+         * @type {Boolean}
+         */
+        isPropagationStopped: FALSE,
+        /**
+         * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
+         * @type {Boolean}
+         */
+        isImmediatePropagationStopped: FALSE,
 
-            /**
-             * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
-             * @type Boolean
-             */
-            isDefaultPrevented:FALSE,
-            /**
-             * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
-             * @type Boolean
-             */
-            isPropagationStopped:FALSE,
-            /**
-             * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
-             * @type Boolean
-             */
-            isImmediatePropagationStopped:FALSE,
+        _fix: function () {
+            var self = this,
+                originalEvent = self.originalEvent,
+                l = props.length, prop,
+                ct = self.currentTarget,
+                ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
 
-            _fix:function () {
-                var self = this,
-                    originalEvent = self.originalEvent,
-                    l = props.length, prop,
-                    ct = self.currentTarget,
-                    ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
-
-                // clone properties of the original event object
-                while (l) {
-                    prop = props[--l];
-                    self[prop] = originalEvent[prop];
-                }
-
-                // fix target property, if necessary
-                if (!self.target) {
-                    self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
-                }
-
-                // check if target is a textnode (safari)
-                if (self.target.nodeType === 3) {
-                    self.target = self.target.parentNode;
-                }
-
-                // add relatedTarget, if necessary
-                if (!self.relatedTarget && self.fromElement) {
-                    self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
-                }
-
-                // calculate pageX/Y if missing and clientX/Y available
-                if (self.pageX === undefined && self.clientX !== undefined) {
-                    var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
-                    self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
-                    self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
-                }
-
-                // add which for key events
-                if (self.which === undefined) {
-                    self.which = (self.charCode === undefined) ? self.keyCode : self.charCode;
-                }
-
-                // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
-                if (self.metaKey === undefined) {
-                    self.metaKey = self.ctrlKey;
-                }
-
-                // add which for click: 1 === left; 2 === middle; 3 === right
-                // Note: button is not normalized, so don't use it
-                if (!self.which && self.button !== undefined) {
-                    self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
-                }
-            },
-
-            /**
-             * Prevents the event's default behavior
-             */
-            preventDefault:function () {
-                var e = this.originalEvent;
-
-                // if preventDefault exists run it on the original event
-                if (e.preventDefault) {
-                    e.preventDefault();
-                }
-                // otherwise set the returnValue property of the original event to FALSE (IE)
-                else {
-                    e.returnValue = FALSE;
-                }
-
-                this.isDefaultPrevented = TRUE;
-            },
-
-            /**
-             * Stops the propagation to the next bubble target
-             */
-            stopPropagation:function () {
-                var e = this.originalEvent;
-
-                // if stopPropagation exists run it on the original event
-                if (e.stopPropagation) {
-                    e.stopPropagation();
-                }
-                // otherwise set the cancelBubble property of the original event to TRUE (IE)
-                else {
-                    e.cancelBubble = TRUE;
-                }
-
-                this.isPropagationStopped = TRUE;
-            },
-
-
-            /**
-             * Stops the propagation to the next bubble target and
-             * prevents any additional listeners from being exectued
-             * on the current target.
-             */
-            stopImmediatePropagation:function () {
-                var self = this;
-                self.isImmediatePropagationStopped = TRUE;
-                // fixed 1.2
-                // call stopPropagation implicitly
-                self.stopPropagation();
-            },
-
-            /**
-             * Stops the event propagation and prevents the default
-             * event behavior.
-             * @param  {Boolean} [immediate] if true additional listeners on the current target will not be executed
-             */
-            halt:function (immediate) {
-                var self = this;
-                if (immediate) {
-                    self.stopImmediatePropagation();
-                } else {
-                    self.stopPropagation();
-                }
-                self.preventDefault();
+            // clone properties of the original event object
+            while (l) {
+                prop = props[--l];
+                self[prop] = originalEvent[prop];
             }
-        });
+
+            // fix target property, if necessary
+            if (!self.target) {
+                self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
+            }
+
+            // check if target is a textnode (safari)
+            if (self.target.nodeType === 3) {
+                self.target = self.target.parentNode;
+            }
+
+            // add relatedTarget, if necessary
+            if (!self.relatedTarget && self.fromElement) {
+                self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
+            }
+
+            // calculate pageX/Y if missing and clientX/Y available
+            if (self.pageX === undefined && self.clientX !== undefined) {
+                var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
+                self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
+                self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
+            }
+
+            // add which for key events
+            if (self.which === undefined) {
+                self.which = (self.charCode === undefined) ? self.keyCode : self.charCode;
+            }
+
+            // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
+            if (self.metaKey === undefined) {
+                self.metaKey = self.ctrlKey;
+            }
+
+            // add which for click: 1 === left; 2 === middle; 3 === right
+            // Note: button is not normalized, so don't use it
+            if (!self.which && self.button !== undefined) {
+                self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
+            }
+        },
+
+        /**
+         * Prevents the event's default behavior
+         */
+        preventDefault: function () {
+            var e = this.originalEvent;
+
+            // if preventDefault exists run it on the original event
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            // otherwise set the returnValue property of the original event to FALSE (IE)
+            else {
+                e.returnValue = FALSE;
+            }
+
+            this.isDefaultPrevented = TRUE;
+        },
+
+        /**
+         * Stops the propagation to the next bubble target
+         */
+        stopPropagation: function () {
+            var e = this.originalEvent;
+
+            // if stopPropagation exists run it on the original event
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            // otherwise set the cancelBubble property of the original event to TRUE (IE)
+            else {
+                e.cancelBubble = TRUE;
+            }
+
+            this.isPropagationStopped = TRUE;
+        },
+
+
+        /**
+         * Stops the propagation to the next bubble target and
+         * prevents any additional listeners from being exectued
+         * on the current target.
+         */
+        stopImmediatePropagation: function () {
+            var self = this;
+            self.isImmediatePropagationStopped = TRUE;
+            // fixed 1.2
+            // call stopPropagation implicitly
+            self.stopPropagation();
+        },
+
+        /**
+         * Stops the event propagation and prevents the default
+         * event behavior.
+         * @param  {Boolean} [immediate] if true additional listeners on the current target will not be executed
+         */
+        halt: function (immediate) {
+            var self = this;
+            if (immediate) {
+                self.stopImmediatePropagation();
+            } else {
+                self.stopPropagation();
+            }
+            self.preventDefault();
+        }
+    };
 
     return EventObject;
 
 });
 
-/**
- * NOTES:
- *
- *  2010.04
- *   - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
- *
- * TODO:
- *   - pageX, clientX, scrollLeft, clientLeft 的详细测试
+/*
+  NOTES:
+
+   2010.04
+    - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
+
+  TODO:
+    - pageX, clientX, scrollLeft, clientLeft 的详细测试
  */
 /**
+ * @ignore
  * @fileOverview responsible for un-registering event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) {
+KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) {
     var isValidTarget = Utils.isValidTarget,
         simpleRemove = Utils.simpleRemove;
 
     S.mix(Event,
         /**
-         * @lends Event
+         * @override KISSY.Event
+         * @class KISSY.Event.RemoveMod
+         * @singleton
          */
         {
             // single target, single type, fixed native
@@ -1645,7 +2007,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
 
                 if (S.isObject(fn)) {
                     scope = fn.scope;
-                    hasSelector = ("selector" in fn);
+                    hasSelector = ('selector' in fn);
                     selector = fn.selector;
                     fn = fn.fn;
                     if (selector) {
@@ -1780,6 +2142,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
             /**
              * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
              * @param targets KISSY selector
+             * @member KISSY.Event
              * @param {String} [type] The type of event to remove.
              * use space to separate multiple event types.
              * @param {Function} [fn] The event handler/listener.
@@ -1806,16 +2169,18 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
 }, {
     requires:['./base', 'dom', './utils', './data', './special']
 });/**
+ * @ignore
  * @fileOverview special house for special events
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/special", function () {
+KISSY.add('event/special', function () {
     return {};
 });/**
+ * @ignore
  * @fileOverview patch for ie<9 submit : does not bubble !
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
+KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
     var mode = S.Env.host.document['documentMode'];
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
         var getNodeName = DOM.nodeName;
@@ -1823,25 +2188,25 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
             setup:function () {
                 var el = this;
                 // form use native
-                if (getNodeName(el) == "form") {
+                if (getNodeName(el) == 'form') {
                     return false;
                 }
                 // lazy add submit for inside forms
                 // note event order : click/keypress -> submit
                 // keypoint : find the forms
-                Event.on(el, "click keypress", detector);
+                Event.on(el, 'click keypress', detector);
             },
             tearDown:function () {
                 var el = this;
                 // form use native
-                if (getNodeName(el) == "form") {
+                if (getNodeName(el) == 'form') {
                     return false;
                 }
-                Event.remove(el, "click keypress", detector);
-                S.each(DOM.query("form", el), function (form) {
+                Event.remove(el, 'click keypress', detector);
+                S.each(DOM.query('form', el), function (form) {
                     if (form.__submit__fix) {
                         form.__submit__fix = 0;
-                        Event.remove(form, "submit", {
+                        Event.remove(form, 'submit', {
                             fn:submitBubble,
                             last:1
                         });
@@ -1854,11 +2219,11 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
         function detector(e) {
             var t = e.target,
                 nodeName = getNodeName(t),
-                form = (nodeName == "input" || nodeName == "button") ? t.form : null;
+                form = (nodeName == 'input' || nodeName == 'button') ? t.form : null;
 
             if (form && !form.__submit__fix) {
                 form.__submit__fix = 1;
-                Event.on(form, "submit", {
+                Event.on(form, 'submit', {
                     fn:submitBubble,
                     last:1
                 });
@@ -1873,28 +2238,29 @@ KISSY.add("event/submit", function (S, UA, Event, DOM, special) {
                 // it is not fired manually
                 !e._ks_fired) {
                 // simulated bubble for submit
-                // fire from parentNode. if form.on("submit") , this logic is never run!
-                Event.fire(form.parentNode, "submit", e);
+                // fire from parentNode. if form.on('submit') , this logic is never run!
+                Event.fire(form.parentNode, 'submit', e);
             }
         }
     }
 
 }, {
-    requires:["ua", "./base", "dom", "./special"]
+    requires:['ua', './base', 'dom', './special']
 });
-/**
- * modified from jq ,fix submit in ie<9
- *  - http://bugs.jquery.com/ticket/11049
- **//**
+/*
+  modified from jq ,fix submit in ie<9
+   - http://bugs.jquery.com/ticket/11049
+ *//**
+ * @ignore
  * @fileOverview 提供事件发布和订阅机制
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefined) {
-    var KS_PUBLISH = "__~ks_publish",
+    var KS_PUBLISH = '__~ks_publish',
         trim = S.trim,
         splitAndRun = Utils.splitAndRun,
-        KS_BUBBLE_TARGETS = "__~ks_bubble_targets",
-        ALL_EVENT = "*";
+        KS_BUBBLE_TARGETS = '__~ks_bubble_targets',
+        ALL_EVENT = '*';
 
     function getCustomEvent(self, type, eventData) {
         if (eventData instanceof EventObject) {
@@ -1927,36 +2293,31 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
             var self = this;
             type = trim(type);
             splitAndRun(type, function (t) {
-                Event["__" + method](false, self, t, fn, scope);
+                Event['__' + method](false, self, t, fn, scope);
             });
             return self; // chain
         };
     }
 
     /**
-     * @namespace
+     * @class KISSY.Event.Target
+     * @singleton
      * EventTarget provides the implementation for any object to publish, subscribe and fire to custom events,
      * and also allows other EventTargets to target the object with events sourced from the other object.
      * EventTarget is designed to be used with S.augment to allow events to be listened to and fired by name.
      * This makes it possible for implementing code to subscribe to an event that either has not been created yet,
      * or will not be created at all.
-     * @name Target
-     * @memberOf Event
      */
-    var Target =
-    /**
-     * @lends Event.Target
-     */
-    {
+    var Target = {
         /**
          * Fire a custom event by name.
          * The callback functions will be executed from the context specified when the event was created,
-         * and the {@link Event.Object} created will be mixed with eventData
+         * and the {@link KISSY.Event.Object} created will be mixed with eventData
          * @param {String} type The type of the event
-         * @param {Object} [eventData] The data will be mixed with {@link Event.Object} created
-         * @returns {Boolean|*} If any listen returns false, then the returned value is false. else return the last listener's returned value
+         * @param {Object} [eventData] The data will be mixed with {@link KISSY.Event.Object} created
+         * @return {Boolean|*} If any listen returns false, then the returned value is false. else return the last listener's returned value
          */
-        fire:function (type, eventData) {
+        fire: function (type, eventData) {
             var self = this,
                 ret = undefined,
                 r2,
@@ -1968,7 +2329,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
             type = trim(type);
 
-            if (type.indexOf(" ") > 0) {
+            if (type.indexOf(' ') > 0) {
                 splitAndRun(type, function (t) {
                     r2 = self.fire(t, eventData);
                     if (ret !== false) {
@@ -1989,8 +2350,8 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
             S.mix(eventData, {
                 // protect type
-                type:type,
-                _ks_groups:_ks_groups
+                type: type,
+                _ks_groups: _ks_groups
             });
 
             customEvent = getCustomEvent(self, type, eventData);
@@ -2019,7 +2380,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
          * @param {Object} cfg Config params
          * @param {Boolean} [cfg.bubbles=false] whether or not this event bubbles
          */
-        publish:function (type, cfg) {
+        publish: function (type, cfg) {
             var self = this,
                 publish = getEventPublishObj(self);
             type = trim(type);
@@ -2036,7 +2397,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
          * @param eventData
          * @private
          */
-        bubble:function (type, eventData) {
+        bubble: function (type, eventData) {
             var self = this,
                 ret = undefined,
                 targets = getBubbleTargetsObj(self);
@@ -2051,9 +2412,9 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
         /**
          * Registers another EventTarget as a bubble target.
-         * @param {Event.Target} target Another EventTarget instance to add
+         * @param {KISSY.Event.Target} target Another EventTarget instance to add
          */
-        addTarget:function (target) {
+        addTarget: function (target) {
             var self = this,
                 targets = getBubbleTargetsObj(self);
             targets[S.stamp(target)] = target;
@@ -2061,9 +2422,9 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
         /**
          * Removes a bubble target
-         * @param {Event.Target} target Another EventTarget instance to remove
+         * @param {KISSY.Event.Target} target Another EventTarget instance to remove
          */
-        removeTarget:function (target) {
+        removeTarget: function (target) {
             var self = this,
                 targets = getBubbleTargetsObj(self);
             delete targets[S.stamp(target)];
@@ -2071,39 +2432,42 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
         /**
          * Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
-         * @function
+         * @method
          * @param {String} type The name of the event
          * @param {Function} fn The callback to execute in response to the event
          * @param {Object} [scope] this object in callback
          */
-        on:attach("add"),
+        on: attach('add'),
         /**
          * Detach one or more listeners the from the specified event
-         * @function
+         * @method
          * @param {String} type The name of the event
          * @param {Function} [fn] The subscribed function to unsubscribe. if not supplied, all subscribers will be removed.
          * @param {Object} [scope] The custom object passed to subscribe.
          */
-        detach:attach("remove")
+        detach: attach('remove')
     };
 
     return Target;
 }, {
-    requires:["./base", './object', './utils', './handle']
+    requires: ['./base', './object', './utils', './handle']
 });
-/**
- *  yiminghe: 2011-10-17
- *   - implement bubble for custom event
- **//**
+/*
+   yiminghe: 2011-10-17
+    - implement bubble for custom event
+*//**
+ * @ignore
  * @fileOverview utils for event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/utils", function (S, DOM) {
+KISSY.add('event/utils', function (S, DOM) {
 
-    /**
-     * whether two event listens are the same
-     * @param h1 已有的 handler 描述
-     * @param h2 用户提供的 handler 描述
+    var NodeType = DOM.NodeType;
+
+    /*
+     whether two event listens are the same
+     @param h1 已有的 handler 描述
+     @param h2 用户提供的 handler 描述
      */
     function isIdenticalHandler(h1, h2, el) {
         var scope1 = h1.scope || el,
@@ -2128,14 +2492,14 @@ KISSY.add("event/utils", function (S, DOM) {
         // 3 - is text node
         // 8 - is comment node
         return target &&
-            target.nodeType !== DOM.TEXT_NODE &&
-            target.nodeType !== DOM.COMMENT_NODE;
+            target.nodeType !== NodeType.TEXT_NODE &&
+            target.nodeType !== NodeType.COMMENT_NODE;
     }
 
 
     function batchForType(fn, targets, types) {
         // on(target, 'click focus', fn)
-        if (types && types.indexOf(" ") > 0) {
+        if (types && types.indexOf(' ') > 0) {
             var args = S.makeArray(arguments);
             S.each(types.split(/\s+/), function (type) {
                 var args2 = [].concat(args);
@@ -2181,39 +2545,40 @@ KISSY.add("event/utils", function (S, DOM) {
         // 记录手工 fire(domElement,type) 时的 type
         // 再在浏览器通知的系统 eventHandler 中检查
         // 如果相同，那么证明已经 fire 过了，不要再次触发了
-        Event_Triggered:"",
-        TRIGGERED_NONE:"trigger-none-" + S.now(),
-        EVENT_GUID:'ksEventTargetId' + S.now(),
-        splitAndRun:splitAndRun,
-        batchForType:batchForType,
-        isValidTarget:isValidTarget,
-        isIdenticalHandler:isIdenticalHandler,
-        simpleAdd:simpleAdd,
-        simpleRemove:simpleRemove,
-        getTypedGroups:function (type) {
-            if (type.indexOf(".") < 0) {
-                return [type, ""];
+        Event_Triggered: '',
+        TRIGGERED_NONE: 'trigger-none-' + S.now(),
+        EVENT_GUID: 'ksEventTargetId' + S.now(),
+        splitAndRun: splitAndRun,
+        batchForType: batchForType,
+        isValidTarget: isValidTarget,
+        isIdenticalHandler: isIdenticalHandler,
+        simpleAdd: simpleAdd,
+        simpleRemove: simpleRemove,
+        getTypedGroups: function (type) {
+            if (type.indexOf('.') < 0) {
+                return [type, ''];
             }
             var m = type.match(/([^.]+)?(\..+)?$/),
                 t = m[1],
                 ret = [t],
                 gs = m[2];
             if (gs) {
-                gs = gs.split(".").sort();
-                ret.push(gs.join("."));
+                gs = gs.split('.').sort();
+                ret.push(gs.join('.'));
             } else {
-                ret.push("");
+                ret.push('');
             }
             return ret;
         },
-        getGroupsRe:function (groups) {
-            return new RegExp(groups.split(".").join(".*\\.") + "(?:\\.|$)");
+        getGroupsRe: function (groups) {
+            return new RegExp(groups.split('.').join('.*\\.') + '(?:\\.|$)');
         }
     };
 
 }, {
-    requires:['dom']
+    requires: ['dom']
 });/**
+ * @ignore
  * @fileOverview inspired by yui3
  * Synthetic event that fires when the <code>value</code> property of an input
  * field or textarea changes as a result of a keystroke, mouse operation, or
@@ -2227,11 +2592,11 @@ KISSY.add("event/utils", function (S, DOM) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/valuechange', function (S, Event, DOM, special) {
-    var VALUE_CHANGE = "valuechange",
+    var VALUE_CHANGE = 'valuechange',
         getNodeName = DOM.nodeName,
-        KEY = "event/valuechange",
-        HISTORY_KEY = KEY + "/history",
-        POLL_KEY = KEY + "/poll",
+        KEY = 'event/valuechange',
+        HISTORY_KEY = KEY + '/history',
+        POLL_KEY = KEY + '/poll',
         interval = 50;
 
     function clearPollTimer(target) {
@@ -2257,8 +2622,8 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
         if (v !== h) {
             // 只触发自己绑定的 handler
             Event.fire(target, VALUE_CHANGE, {
-                prevVal:h,
-                newVal:v
+                prevVal: h,
+                newVal: v
             }, true);
             DOM.data(target, HISTORY_KEY, v);
         }
@@ -2277,7 +2642,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
     function startPollHandler(ev) {
         var target = ev.target;
         // when focus ,record its current value immediately
-        if (ev.type == "focus") {
+        if (ev.type == 'focus') {
             DOM.data(target, HISTORY_KEY, target.value);
         }
         startPoll(target);
@@ -2289,41 +2654,41 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 
     function monitor(target) {
         unmonitored(target);
-        Event.on(target, "blur", stopPollHandler);
+        Event.on(target, 'blur', stopPollHandler);
         // fix #94
         // see note 2012-02-08
-        Event.on(target, "webkitspeechchange", webkitSpeechChangeHandler);
-        Event.on(target, "mousedown keyup keydown focus", startPollHandler);
+        Event.on(target, 'webkitspeechchange', webkitSpeechChangeHandler);
+        Event.on(target, 'mousedown keyup keydown focus', startPollHandler);
     }
 
     function unmonitored(target) {
         stopPoll(target);
-        Event.remove(target, "blur", stopPollHandler);
-        Event.remove(target, "webkitspeechchange", webkitSpeechChangeHandler);
-        Event.remove(target, "mousedown keyup keydown focus", startPollHandler);
+        Event.remove(target, 'blur', stopPollHandler);
+        Event.remove(target, 'webkitspeechchange', webkitSpeechChangeHandler);
+        Event.remove(target, 'mousedown keyup keydown focus', startPollHandler);
     }
 
     special[VALUE_CHANGE] = {
-        setup:function () {
+        setup: function () {
             var target = this, nodeName = getNodeName(target);
-            if (nodeName == "input" || nodeName == "textarea") {
+            if (nodeName == 'input' || nodeName == 'textarea') {
                 monitor(target);
             }
         },
-        tearDown:function () {
+        tearDown: function () {
             var target = this;
             unmonitored(target);
         }
     };
     return Event;
 }, {
-    requires:["./base", "dom", "./special"]
+    requires: ['./base', 'dom', './special']
 });
 
-/**
- * 2012-02-08 yiminghe@gmail.com note about webkitspeechchange :
- *  当 input 没焦点立即点击语音
- *   -> mousedown -> blur -> focus -> blur -> webkitspeechchange -> focus
- *  第二次：
- *   -> mousedown -> blur -> webkitspeechchange -> focus
- **/
+/*
+  2012-02-08 yiminghe@gmail.com note about webkitspeechchange :
+   当 input 没焦点立即点击语音
+    -> mousedown -> blur -> focus -> blur -> webkitspeechchange -> focus
+   第二次：
+    -> mousedown -> blur -> webkitspeechchange -> focus
+ */

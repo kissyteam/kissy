@@ -11,15 +11,16 @@ KISSY.add("menu/separator", function (S, Component, Separator) {
      * xclass: 'menuseparator'.
      * @memberOf Menu
      * @name Separator
+     * @deprecated use separator instead.
      */
     var MenuSeparator = Separator.extend({
     }, {}, {
-        xclass:'menuseparator',
-        priority:20
+        xclass: 'menuseparator',
+        priority: 20
     });
 
     return MenuSeparator;
 
 }, {
-    requires:['component', 'separator']
+    requires: ['component', 'separator']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:26
+build time: Aug 15 22:03
 */
 /**
  * @fileOverview resizable support for kissy
@@ -173,7 +173,7 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
             {
                 /**
                  * KISSY Node to be resizable.
-                 * @type Node
+                 * @type {Node}
                  */
                 node:{
                     setter:function (v) {
@@ -182,28 +182,28 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
                 },
                 /**
                  * Minimum width can current node resize to.
-                 * @type Number
+                 * @type {Number}
                  */
                 minWidth:{
                     value:0
                 },
                 /**
                  * Minimum height can current node resize to.
-                 * @type Number
+                 * @type {Number}
                  */
                 minHeight:{
                     value:0
                 },
                 /**
                  * Maximum width can current node resize to.
-                 * @type Number
+                 * @type {Number}
                  */
                 maxWidth:{
                     value:Number.MAX_VALUE
                 },
                 /**
                  * Maximum height can current node resize to.
-                 * @type Number
+                 * @type {Number}
                  */
                 maxHeight:{
                     value:Number.MAX_VALUE
@@ -219,7 +219,7 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
                  * "tl": top-left.
                  * "bl": bottom-left.
                  * "br": bottom-right.
-                 * @type String[]
+                 * @type {String[]}
                  */
                 handlers:{
                     // t,tr,r,br,b,bl,l,tl

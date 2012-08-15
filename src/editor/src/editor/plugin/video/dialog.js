@@ -93,9 +93,6 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             self.dUrl = el.one(".ks-editor-video-url");
             self.dAlign = MenuButton.Select.decorate(el.one(".ks-editor-video-align"), {
                 prefixCls:'ks-editor-big-',
-                elAttrs:{
-                    hideFocus:"hideFocus"
-                },
                 width:80,
                 menuCfg:{
                     prefixCls:'ks-editor-',

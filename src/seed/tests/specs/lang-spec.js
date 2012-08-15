@@ -1,16 +1,16 @@
 describe('lang.js', function () {
     beforeEach(function () {
         this.addMatchers({
-            toBeAlmostEqual:function (expected) {
+            toBeAlmostEqual: function (expected) {
                 return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
             },
 
 
-            toBeEqual:function (expected) {
+            toBeEqual: function (expected) {
                 return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
             },
 
-            toBeArrayEq:function (expected) {
+            toBeArrayEq: function (expected) {
                 var actual = this.actual;
                 if (expected.length != actual.length) return false;
                 for (var i = 0; i < expected.length; i++) {
@@ -31,7 +31,7 @@ describe('lang.js', function () {
         var o;
 
         // 普通对象(无 length 属性)转换为 [obj]
-        o = {a:1};
+        o = {a: 1};
         expect(S.makeArray(o)[0]).toBe(o);
 
         // string 转换为 [str]
@@ -42,8 +42,8 @@ describe('lang.js', function () {
         expect(S.makeArray(o)[0]).toBe(o);
 
         // array-like 对象，转换为数组
-        expect(S.makeArray({'0':0, '1':1, length:2}).length).toBe(2);
-        expect(S.makeArray({'0':0, '1':1, length:2})[1]).toBe(1);
+        expect(S.makeArray({'0': 0, '1': 1, length: 2}).length).toBe(2);
+        expect(S.makeArray({'0': 0, '1': 1, length: 2})[1]).toBe(1);
 
         // nodeList 转换为普通数组
         o = document.getElementsByTagName('body');
@@ -56,33 +56,33 @@ describe('lang.js', function () {
         expect(S.makeArray(o).length).toBe(0);
 
         // 伪 array-like 对象
-        o = S.makeArray({a:1, b:2, length:2});
+        o = S.makeArray({a: 1, b: 2, length: 2});
         expect(o.length).toBe(2);
         expect(o[0]).toBe(undefined);
         expect(o[1]).toBe(undefined);
     });
 
     it('S.param', function () {
-        expect(S.param({foo:1, bar:2})).toBe('foo=1&bar=2');
-        expect(S.param({foo:1, bar:[2, 3]}, '&', '=', false)).toBe('foo=1&bar=2&bar=3');
+        expect(S.param({foo: 1, bar: 2})).toBe('foo=1&bar=2');
+        expect(S.param({foo: 1, bar: [2, 3]}, '&', '=', false)).toBe('foo=1&bar=2&bar=3');
 
-        expect(S.param({'&#':'!#='})).toBe('%26%23=!%23%3D');
+        expect(S.param({'&#': '!#='})).toBe('%26%23=!%23%3D');
 
-        expect(S.param({foo:1, bar:[]})).toBe('foo=1');
-        expect(S.param({foo:{}, bar:2})).toBe('bar=2');
-        expect(S.param({foo:function () {
-        }, bar:2})).toBe('bar=2');
+        expect(S.param({foo: 1, bar: []})).toBe('foo=1');
+        expect(S.param({foo: {}, bar: 2})).toBe('bar=2');
+        expect(S.param({foo: function () {
+        }, bar: 2})).toBe('bar=2');
 
-        expect(S.param({foo:undefined, bar:2})).toBe('foo&bar=2');
-        expect(S.param({foo:null, bar:2})).toBe('foo=null&bar=2');
-        expect(S.param({foo:true, bar:2})).toBe('foo=true&bar=2');
-        expect(S.param({foo:false, bar:2})).toBe('foo=false&bar=2');
-        expect(S.param({foo:'', bar:2})).toBe('foo=&bar=2');
-        expect(S.param({foo:NaN, bar:2})).toBe('foo=NaN&bar=2');
+        expect(S.param({foo: undefined, bar: 2})).toBe('foo&bar=2');
+        expect(S.param({foo: null, bar: 2})).toBe('foo=null&bar=2');
+        expect(S.param({foo: true, bar: 2})).toBe('foo=true&bar=2');
+        expect(S.param({foo: false, bar: 2})).toBe('foo=false&bar=2');
+        expect(S.param({foo: '', bar: 2})).toBe('foo=&bar=2');
+        expect(S.param({foo: NaN, bar: 2})).toBe('foo=NaN&bar=2');
 
-        expect(S.param({b:[2, 3]})).toBe('b%5B%5D=2&b%5B%5D=3');
+        expect(S.param({b: [2, 3]})).toBe('b%5B%5D=2&b%5B%5D=3');
 
-        expect(S.param({b:undefined})).toBe("b")
+        expect(S.param({b: undefined})).toBe("b")
     });
 
     it('S.unparam', function () {
@@ -102,6 +102,8 @@ describe('lang.js', function () {
         expect(S.unparam('foo=1&bar=2&foo=3').foo[1]).toBe('3');
 
         expect(S.unparam('foo=1&bar[]=2&bar[]=3').bar[0]).toBe('2');
+
+        expect(S.unparam('foo=1&bar=2=6').bar).toBe('2=6');
     });
 
     it("S.escapeHTML", function () {
@@ -279,7 +281,7 @@ describe('lang.js', function () {
         expect(S.isEmptyObject({})).toBe(true);
         expect(S.isEmptyObject(new Object())).toBe(true);
 
-        expect(S.isEmptyObject({ a:1 })).toBe(false);
+        expect(S.isEmptyObject({ a: 1 })).toBe(false);
         expect(S.isEmptyObject([])).toBe(true);
 
         // Failed in Safari/Opera
@@ -331,7 +333,7 @@ describe('lang.js', function () {
 
 
         // clone plain object
-        var t = { a:0, b:{ b1:1, b2:'a' } };
+        var t = { a: 0, b: { b1: 1, b2: 'a' } };
         var t2 = S.clone(t);
         t.a = 1;
         expect(t2.a).toBe(0);
@@ -350,11 +352,11 @@ describe('lang.js', function () {
         // recursive clone
         var CLONE_MARKER = '__~ks_cloned',
             Tom = {
-                x:1
+                x: 1
             },
             Green = {
-                father:Tom,
-                x:1
+                father: Tom,
+                x: 1
             };
         Tom.son = Green;
 
@@ -384,11 +386,11 @@ describe('lang.js', function () {
 
         // array of object
         var t7 = [],
-            t20 = {x:6},
-            t21 = {x:7},
+            t20 = {x: 6},
+            t21 = {x: 7},
             t22 = [t20, t21],
-            t8 = {x:1, z:t7, q:t22},
-            t9 = {y:1, z:t7, q:t22};
+            t8 = {x: 1, z: t7, q: t22},
+            t9 = {y: 1, z: t7, q: t22};
         t7.push(t8, t9);
         var t10 = S.clone(t7);
         expect(t10).not.toBe(t7);
@@ -431,7 +433,7 @@ describe('lang.js', function () {
 
     it('S.substitute', function () {
         var myString = "{subject} is {property_1} and {property_2}.";
-        var myObject = {subject:'Jack Bauer', property_1:'our lord', property_2:'savior'};
+        var myObject = {subject: 'Jack Bauer', property_1: 'our lord', property_2: 'savior'};
 
         expect(S.substitute(myString, myObject)).toBe('Jack Bauer is our lord and savior.');
 
@@ -651,10 +653,10 @@ describe('lang.js', function () {
     it('S.keys', function () {
 
         var x = {
-            toString:function () {
+            toString: function () {
                 return "ha";
             },
-            "x":2
+            "x": 2
         };
 
         var ret = S.keys(x);

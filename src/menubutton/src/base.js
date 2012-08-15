@@ -128,7 +128,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @param {Event.Object} e key event to handle.
              * @return {Boolean} True Whether the key event was handled.
              * @protected
-             * @override
+             *
              */
             handleKeyEventInternal:function (e) {
                 var self = this,
@@ -170,7 +170,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * Toggle the drop down menu to show or hide.
              * Protected, should only be overridden by subclasses.
              * @protected
-             * @override
+             *
              */
             performActionInternal:function () {
                 var self = this;
@@ -183,7 +183,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @param {Event.Object} e Blur event.
              * Protected, should only be overridden by subclasses.
              * @protected
-             * @override
+             *
              */
             handleBlur:function (e) {
                 var self = this;
@@ -209,7 +209,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              */
             removeItem:function (c, destroy) {
                 /**
-                 * @type Controller
+                 * @type {Controller}
                  */
                 var menu = getMenu(this);
                 if (menu) {
@@ -252,7 +252,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @param {Function} UI Child component's constructor
              * @param {NodeList} el Child component's root element.
              * @protected
-             * @override
+             *
              */
             decorateChildrenInternal:function (UI, el) {
                 // 不能用 display:none , menu 的隐藏是靠 visibility
@@ -288,7 +288,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             {
                 /**
                  * Current active menu item.
-                 * @type Menu.Item
+                 * @type {Menu.Item}
                  */
                 activeItem:{
                     view:1
@@ -323,7 +323,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 },
                 /**
                  * Drop down menu associated with this menubutton.
-                 * @type Menu
+                 * @type {Menu}
                  */
                 menu:{
                     value:{
@@ -337,7 +337,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 },
                 /**
                  * Whether drop menu is shown.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 collapsed:{
                     view:1

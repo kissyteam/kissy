@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:26
+build time: Aug 15 22:03
 */
 /**
  * @fileOverview 提示补全组件
@@ -67,7 +67,7 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
              *         <a class='ks-suggest-close-btn'>...</a>
              *     </div>
              * </div>
-             * @type String
+             * @type {String}
              */
             containerCls:EMPTY,
 
@@ -75,50 +75,50 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
              * 提示层的宽度
              * 注意：默认情况下，提示层的宽度和input输入框的宽度保持一致
              * 示范取值：'200px', '10%' 等，必须带单位
-             * @type String
+             * @type {String}
              */
             //containerWidth: EMPTY,
 
             /**
              * result 的格式
-             * @type String
+             * @type {String}
              */
             resultFormat:'%result%',
 
             /**
              * 是否显示关闭按钮
-             * @type Boolean
+             * @type {Boolean}
              */
             //closeBtn: false,
 
             /**
              * 关闭按钮上的文字
-             * @type String
+             * @type {String}
              */
             closeBtnText:'关闭',
 
             /**
              * 是否需要 iframe shim 默认只在 ie6 下显示
-             * @type Boolean
+             * @type {Boolean}
              */
             shim:ie6,
 
             /**
              * 初始化后，自动激活
-             * @type Boolean
+             * @type {Boolean}
              */
             //autoFocus: false,
 
             /**
              * 选择某项时，是否自动提交表单
-             * @type Boolean
+             * @type {Boolean}
              */
             submitOnSelect:true,
 
             /**
              * 提示悬浮层和输入框的垂直偏离
              * 默认向上偏差 1px, 使得悬浮层刚好覆盖输入框的下边框
-             * @type Boolean
+             * @type {Boolean}
              */
             offset:-1,
 
@@ -143,10 +143,11 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
             queryName:'q',
 
             /**
-             * @type Number 数据源标志, 默认为 0 , 可取 0, 1, 2
+             * 数据源标志, 默认为 0 , 可取 0, 1, 2
              * - 0: 数据来自远程, 且请求回来后存入 _dataCache
              * - 1: 数据来自远程, 且不存入 _dataCache, 每次请求的数据是否需要缓存, 防止在公用同一个 suggest , 但数据源不一样时, 出现相同内容
              * - 2: 数据来自静态, 不存在时, 不显示提示浮层
+             * @type {Number}
              */
             dataType:0
             /**
@@ -175,13 +176,13 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
 
         /**
          * 文本输入框
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         self.textInput = DOM.get(textInput);
 
         /**
          * 配置参数
-         * @type Object
+         * @type {Object}
          */
         self.config = config = S.merge(defaultConfig, config);
 
@@ -207,13 +208,13 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
 
         /**
          * 通过 jsonp 返回的数据
-         * @type Object
+         * @type {Object}
          */
         //self.returnedData = undefined;
 
         /**
          * 存放提示信息的容器
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         //self.container = undefined;
         //self.content = undefined;
@@ -221,58 +222,58 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
 
         /**
          * 输入框的值
-         * @type String
+         * @type {String}
          */
         self.query = EMPTY;
 
         /**
          * 获取数据时的参数
-         * @type String
+         * @type {String}
          */
         self.queryParams = EMPTY;
 
         /**
          * 内部定时器
          * @private
-         * @type Object
+         * @type {Object}
          */
         //self._timer = undefined;
 
         /**
          * 计时器是否处于运行状态
          * @private
-         * @type Boolean
+         * @type {Boolean}
          */
         //self._isRunning = false;
 
         /**
          * 获取数据的 script 元素
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         //self.dataScript = undefined;
 
         /**
          * 数据缓存
          * @private
-         * @type Object
+         * @type {Object}
          */
         self._dataCache = { };
 
         /**
          * 最新 script 的时间戳
-         * @type String
+         * @type {String}
          */
         //self._latestScriptTime = EMPTY;
 
         /**
          * script返回的数据是否已经过期
-         * @type Boolean
+         * @type {Boolean}
          */
         //self._scriptDataIsOut = false;
 
         /**
          * 提示层的当前选中项
-         * @type Boolean
+         * @type {Boolean}
          */
         //self.selectedItem = undefined;
 

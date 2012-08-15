@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:26
+build time: Aug 15 22:02
 */
 /**
  * table dialog
@@ -186,9 +186,6 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             d.tcaption = dbody.one(".ks-editor-table-caption");
             d.talign = MenuButton.Select.decorate(dbody.one(".ks-editor-table-align"), {
                 prefixCls:'ks-editor-big-',
-                elAttrs:{
-                    hideFocus:"hideFocus"
-                },
                 width:80,
                 menuCfg:{
                     prefixCls:'ks-editor-',
@@ -199,9 +196,6 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             d.tcols = dbody.one(".ks-editor-table-cols");
             d.thead = MenuButton.Select.decorate(dbody.one(".ks-editor-table-head"), {
                 prefixCls:'ks-editor-big-',
-                elAttrs:{
-                    hideFocus:"hideFocus"
-                },
                 width:80,
                 menuCfg:{
                     prefixCls:'ks-editor-',
@@ -215,9 +209,6 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
                 tclose = foot.one(".ks-editor-table-cancel");
             d.twidthunit = MenuButton.Select.decorate(dbody.one(".ks-editor-table-width-unit"), {
                 prefixCls:'ks-editor-big-',
-                elAttrs:{
-                    hideFocus:"hideFocus"
-                },
                 width:80,
                 menuCfg:{
                     prefixCls:'ks-editor-',

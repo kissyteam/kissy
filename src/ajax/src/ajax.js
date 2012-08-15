@@ -32,15 +32,15 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
             XhrObject:XhrObject,
             /**
              * form serialization
-             * @function
+             * @method
              * @param formElement {HTMLElement[]|HTMLElement|NodeList} form elements
-             * @returns {String} serialized string represent form elements
+             * @return {String} serialized string represent form elements
              */
             serialize:serializer.serialize,
 
             /**
              * perform a get request
-             * @function
+             * @method
              * @param {String} url request destination
              * @param {Object} [data] name-value object associated with this request
              * @param {Function()} callback <br/>
@@ -51,7 +51,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
              * @param {String} [dataType] the type of data returns from this request
              * ("xml" or "json" or "text")
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             get:get,
 
@@ -67,7 +67,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
              * @param {String} [dataType] the type of data returns from this request
              * ("xml" or "json" or "text")
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             post:function (url, data, callback, dataType) {
                 if (S.isFunction(data)) {
@@ -88,7 +88,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 1. data returned from this request with type specified by dataType<br/>
              * 2. status of this request with type String<br/>
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             jsonp:function (url, data, callback) {
                 if (S.isFunction(data)) {
@@ -116,7 +116,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 1. data returned from this request with type JSON<br/>
              * 2. status of this request with type String<br/>
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             getJSON:function (url, data, callback) {
                 if (S.isFunction(data)) {
@@ -138,7 +138,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
              * @param {String} [dataType] the type of data returns from this request
              * ("xml" or "json" or "text")
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             upload:function (url, form, data, callback, dataType) {
                 if (S.isFunction(data)) {

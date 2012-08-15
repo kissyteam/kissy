@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:26
+build time: Aug 15 22:03
 */
 /**
  * @fileOverview collection of models
@@ -41,14 +41,14 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
     {
         /**
          * Model constructor with in current collection.
-         * @type MVC.Model
+         * @type {MVC.Model}
          */
         model:{
             value:Model
         },
         /**
          * Model list.
-         * @type MVC.Model[]
+         * @type {MVC.Model[]}
          */
         models:{
             /*
@@ -65,7 +65,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
         },
         /**
          * Get url for sending data to server.
-         * @type String|Function
+         * @type {String|Function}
          */
         url:{
             value:""
@@ -73,13 +73,13 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
         /**
          * Comparator function for index getter when adding model.
          * default to append to last of current model list.
-         * @type Function
+         * @type {Function}
          */
         comparator:{},
         /**
          * Sync function to sync data with server.
          * Default to call {@link MVC.sync}
-         * @type Function
+         * @type {Function}
          */
         sync:{
             value:function () {
@@ -89,7 +89,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
         /**
          * Get structured data from raw data returned from server.
          * default to return raw data from server.
-         * @type Function
+         * @type {Function}
          */
         parse:{
             value:function (resp) {
@@ -128,7 +128,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
             /**
              * Add a model to current collection.
              * @param {Object|MVC.Model} model Model or json data to be added.
-             * @param {object} [opts] Add config
+             * @param {Object} [opts] Add config
              * @param {Function} opts.silent Whether to fire add event.
              */
             add:function (model, opts) {
@@ -149,7 +149,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
             /**
              * Remove an existing model from current collection.
              * @param {MVC.Model} model Model to be removed.
-             * @param {object} [opts] Remove config.
+             * @param {Object} [opts] Remove config.
              * @param {Function} opts.silent Whether to fire remove event.
              */
             remove:function (model, opts) {
@@ -187,7 +187,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
 
             /**
              * Initialize model list by loading data using sync mechanism.
-             * @param {object} opts Load config.
+             * @param {Object} opts Load config.
              * @param {Function} opts.success Callback when load is successful.
              * @param {Function} opts.error Callback when error occurs on loading.
              * @param {Function} opts.complete Callback when load is complete.
@@ -219,7 +219,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
             /**
              * Add a model to current collection by provide json data.
              * @param {Object} model Json data represent model data.
-             * @param {object} opts Create config.
+             * @param {Object} opts Create config.
              * @param {Function} opts.success Callback when create is successful.
              * @param {Function} opts.error Callback when error occurs on creating.
              * @param {Function} opts.complete Callback when create is complete.
@@ -521,7 +521,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 /**
                  * Attribute name used to store id from server.
                  * @default "id".
-                 * @type String
+                 * @type {String}
                  */
                 idAttribute:{
                     value:'id'
@@ -530,7 +530,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 /**
                  * Generated client id.
                  * Default call S.guid()
-                 * @type Function
+                 * @type {Function}
                  */
                 clientId:{
                     valueFn:function () {
@@ -540,7 +540,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 /**
                  * Called to get url for delete/edit/new current model.
                  * @default collection.url+"/"+mode.id
-                 * @type Function
+                 * @type {Function}
                  */
                 url:{
                     value:url
@@ -548,7 +548,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 /**
                  * If current model does not belong to any collection.
                  * Use this attribute value as collection.url in {@link MVC.Model#url}
-                 * @type String
+                 * @type {String}
                  */
                 urlRoot:{
                     value:""
@@ -556,7 +556,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 /**
                  * Sync model data with server.
                  * Default to call {@link MVC.sync}
-                 * @type Function
+                 * @type {Function}
                  */
                 sync:{
                     value:function () {
@@ -566,7 +566,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 /**
                  * parse json from server to get attr/value pairs.
                  * Default to return raw data from server.
-                 * @type function
+                 * @type {Function}
                  */
                 parse:{
                     value:function (resp) {
@@ -948,7 +948,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
     {
         /**
          * Route and action config.
-         * @type Object
+         * @type {Object}
          * @example
          * <code>
          *   {
@@ -1020,7 +1020,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
             },
             /**
              * Start router (url monitor).
-             * @param {object} opts
+             * @param {Object} opts
              * @param {Function} opts.success Callback function to be called after router is started.
              * @param {String} opts.urlRoot Specify url root for html5 history management.
              * @param {Boolean} opts.nativeHistory Whether enable html5 history management.
@@ -1195,7 +1195,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     {
         /**
          * Get root element for current view instance.
-         * @type String
+         * @type {String}
          * @example
          * <code>
          * //  selector :
@@ -1217,7 +1217,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
 
         /**
          * Delegate event on root element.
-         * @type Object
+         * @type {Object}
          * @example
          * <code>
          * events:{

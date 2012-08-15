@@ -1,14 +1,15 @@
 /**
+ * @ignore
  * @fileOverview responsible for registering event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _data, specials) {
+KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _data, specials) {
     var simpleAdd = Utils.simpleAdd,
         isValidTarget = Utils.isValidTarget,
         isIdenticalHandler = Utils.isIdenticalHandler;
 
-    /**
-     * dom node need eventHandler attached to dom node
+    /*
+     dom node need eventHandler attached to dom node
      */
     function addDomEvent(target, type, eventHandler, handlers, handleObj) {
         var special = specials[type] || {};
@@ -22,25 +23,23 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
         }
     }
 
-    /**
-     * @exports Event as Event
-     */
-
     S.mix(Event,
         /**
-         * @lends Event
+         * @override KISSY.Event
+         * @class KISSY.Event.AddMod
+         * @singleton
          */
         {
             // single type , single target , fixed native
-            __add:function (isNativeTarget, target, type, fn, scope) {
+            __add: function (isNativeTarget, target, type, fn, scope) {
                 var typedGroups = Utils.getTypedGroups(type);
                 type = typedGroups[0];
                 var groups = typedGroups[1],
                     eventDesc,
                     data,
                     s = specials[type],
-                    // in case overwrite by delegateFix/onFix in specials events
-                    // (mouseenter/leave,focusin/out)
+                // in case overwrite by delegateFix/onFix in specials events
+                // (mouseenter/leave,focusin/out)
                     originalType,
                     last,
                     selector;
@@ -83,13 +82,13 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
                 var events = eventDesc.events = eventDesc.events || {},
                     handlers = events[type] = events[type] || [],
                     handleObj = {
-                        fn:fn,
-                        scope:scope,
-                        selector:selector,
-                        last:last,
-                        data:data,
-                        groups:groups,
-                        originalType:originalType
+                        fn: fn,
+                        scope: scope,
+                        selector: selector,
+                        last: last,
+                        data: data,
+                        groups: groups,
+                        originalType: originalType
                     },
                     eventHandler = eventDesc.handler;
                 // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
@@ -98,7 +97,7 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
                         // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
                         // 已经在 fire 中 bubble 过一次了
                         // incase after page has unloaded
-                        if (typeof KISSY == "undefined" ||
+                        if (typeof KISSY == 'undefined' ||
                             event && event.type == Utils.Event_Triggered) {
                             return;
                         }
@@ -121,12 +120,12 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
                 }
 
                 for (var i = handlers.length - 1; i >= 0; --i) {
-                    /**
-                     * If multiple identical EventListeners are registered on the same EventTarget
-                     * with the same parameters the duplicate instances are discarded.
-                     * They do not cause the EventListener to be called twice
-                     * and since they are discarded
-                     * they do not need to be removed with the removeEventListener method.
+                    /*
+                     If multiple identical EventListeners are registered on the same EventTarget
+                     with the same parameters the duplicate instances are discarded.
+                     They do not cause the EventListener to be called twice
+                     and since they are discarded
+                     they do not need to be removed with the removeEventListener method.
                      */
                     if (isIdenticalHandler(handlers[i], handleObj, target)) {
                         return;
@@ -160,11 +159,12 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
             /**
              * Adds an event listener.similar to addEventListener in DOM3 Events
              * @param targets KISSY selector
+             * @member KISSY.Event
              * @param type {String} The type of event to append.use space to separate multiple event types.
              * @param fn {Function} The event handler/listener.
              * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
              */
-            add:function (targets, type, fn, scope) {
+            add: function (targets, type, fn, scope) {
                 type = S.trim(type);
                 // data : 附加在回调后面的数据，delegate 检查使用
                 // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
@@ -179,5 +179,5 @@ KISSY.add("event/add", function (S, Event, DOM, Utils, EventObject, handle, _dat
             }
         });
 }, {
-    requires:['./base', 'dom', './utils', './object', './handle', './data', './special']
+    requires: ['./base', 'dom', './utils', './object', './handle', './data', './special']
 });

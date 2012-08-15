@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>KISSY Overlay</title>
+<link href="../../../../src/css/src/dpl/base.css" rel="stylesheet"/>
+<link href="../../assets/dpl.css" rel="stylesheet"/>
+<link href="../../../../src/button/assets/dpl.css" rel="stylesheet"/>
+<script src="../../../../build/kissy.js"></script>
+</head>
+<body>
+<div class="container">
+
+
+    <h1>模态对话框</h1>
+
+    <div class="row">
+        <div class="span6">
+            <h3>模态对话框</h3>
+            <p>带遮罩的模态对话框</p>
+        </div>
+        <div class="span18">
+            <h2>demo</h2>
+
+            <div class="ks-button ks-button-primary" id="ok">弹出对话框</div>
+
+        </div>
+    </div>
+
+    <script>
+        KISSY.use("overlay,button", function (S, Overlay, Button) {
+            var d = new Overlay.Dialog({
+                headerContent:"头部",
+                width:500,
+                mask:true,
+                bodyContent:"<div>内容</div>",
+                align:{
+                    points:['cc', 'cc']
+                }
+            });
+
+            d.on("afterRenderUI", function () {
+                new Button({
+                    content:"关闭",
+                    elCls:"ks-button-primary",
+                    listeners:{
+                        click:function () {
+                            d.hide();
+                        }
+                    },
+                    render:d.get("footer")
+                }).render();
+                new Button({
+                    content:"保存",
+                    render:d.get("footer")
+                }).render();
+            });
+
+            new Button({
+                srcNode:'#ok',
+                listeners:{
+                    click:function () {
+                        d.show();
+                    }
+                }
+            }).render();
+
+        });
+    </script>
+
+
+    <h1>popup</h1>
+
+    <div class="row">
+        <div class="span6">
+            <h3>popup</h3>
+            <p>一些小的内容浮出展示</p>
+        </div>
+        <div class="span18">
+            <h2>demo</h2>
+
+            <div class="ks-button ks-button-danger" id="hover">hover for popup</div>
+
+        </div>
+    </div>
+
+    <script type="x-template" id="hoverTpl">
+        <div class="ks-popup-arrow"></div>
+        <div class="ks-popup-inner">
+            <h3 class="ks-popup-title">A Title</h3>
+            <div class="ks-popup-content">
+                <p>And here's some amazing content. It's very engaging. right?</p>
+            </div>
+        </div>
+    </script>
+
+    <script>
+        KISSY.use("overlay,button", function (S, Overlay, Button) {
+            var $= S.all;
+
+            var b=new Button({
+                srcNode:'#hover'
+            }).render();
+
+            var d = new Overlay.Popup({
+                trigger:"#hover",
+                elCls:"ks-popup-right",
+                triggerType:"mouse",
+                content:$("#hoverTpl").html(),
+                effect:{
+                    effect:"fade",
+                    duration:0.3
+                },
+                align:{
+                    node:'#hover',
+                    points:['cr', 'cl']
+                }
+            });
+
+        });
+    </script>
+
+
+
+    <h1>tooltip</h1>
+
+    <div class="row">
+        <div class="span6">
+            <h3>tooltip</h3>
+            <p>一些更小的内容提示</p>
+        </div>
+        <div class="span18">
+            <h2>demo</h2>
+
+            <a id="tip" href="#">hover for tip</a>
+
+        </div>
+    </div>
+
+    <script type="x-template" id="tipTpl">
+            <div class="ks-popup-arrow"></div>
+            <div class="ks-tooltip-inner">first tooltip</div>
+    </script>
+
+    <script>
+        KISSY.use("overlay,button", function (S, Overlay, Button) {
+            var $= S.all;
+
+            var d = new Overlay.Popup({
+                trigger:"#tip",
+                elCls:"ks-popup-top",
+                triggerType:"mouse",
+                content:$("#tipTpl").html(),
+                effect:{
+                    effect:"fade",
+                    duration:0.3
+                },
+                align:{
+                    node:'#tip',
+                    points:['tc', 'bc']
+                }
+            });
+
+        });
+    </script>
+
+</div>
+
+
+</body>
+</html>

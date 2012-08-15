@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview for other kissy core usage
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/data", function (S, DOM, Utils) {
+KISSY.add('event/data', function (S, DOM, Utils) {
     var EVENT_GUID = Utils.EVENT_GUID,
         data,
         makeArray = S.makeArray;

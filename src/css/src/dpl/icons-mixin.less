@@ -1,0 +1,598 @@
+// SPRITES
+// Glyphs and icons for buttons, nav, and more
+// -------------------------------------------
+
+// ICONS
+// -----
+
+// All icons receive the styles of the <i> tag with a base class
+// of .i and are then given a unique class to add width, height,
+// and background-position. Your resulting HTML will look like
+// <i class="icon-inbox"></i>.
+
+// For the white version of the icons, just add the .icon-white class:
+// <i class="icon-inbox icon-white"></i>
+
+@import "variables.less";
+@import "mixins.less";
+
+.icon-base_() {
+    .ks-inline-block_();
+    width: 14px;
+    height: 14px;
+    vertical-align: text-top;
+    background-image: ~"url(@{iconSpritePath})";
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+    .ie67-restore-right-whitespace();
+}
+
+.icon-white_() {
+    background-image: ~"url(@{iconWhiteSpritePath})";
+}
+
+.icon-glass_() {
+    background-position: 0 0;
+}
+
+.icon-music_() {
+    background-position: -24px 0;
+}
+
+
+.icon-search_() {
+    background-position: -48px 0;
+}
+
+.icon-envelope_() {
+    background-position: -72px 0;
+}
+
+.icon-heart_() {
+    background-position: -96px 0;
+}
+
+.icon-star_() {
+    background-position: -120px 0;
+}
+
+.icon-star-empty_() {
+    background-position: -144px 0;
+}
+
+.icon-user_() {
+    background-position: -168px 0;
+}
+
+.icon-film_() {
+    background-position: -192px 0;
+}
+
+.icon-th-large_() {
+    background-position: -216px 0;
+}
+
+.icon-th_() {
+    background-position: -240px 0;
+}
+
+.icon-th-list_() {
+    background-position: -264px 0;
+}
+
+.icon-ok_() {
+    background-position: -288px 0;
+}
+
+.icon-remove_() {
+    background-position: -312px 0;
+}
+
+.icon-zoom-in_() {
+    background-position: -336px 0;
+}
+
+.icon-zoom-out_() {
+    background-position: -360px 0;
+}
+
+.icon-off_() {
+    background-position: -384px 0;
+}
+
+.icon-signal_() {
+    background-position: -408px 0;
+}
+
+.icon-cog_() {
+    background-position: -432px 0;
+}
+
+.icon-trash_() {
+    background-position: -456px 0;
+}
+
+.icon-home_() {
+    background-position: 0      -24px;
+}
+
+.icon-file_() {
+    background-position: -24px  -24px;
+}
+
+.icon-time_() {
+    background-position: -48px  -24px;
+}
+
+.icon-road_() {
+    background-position: -72px  -24px;
+}
+
+.icon-download-alt_() {
+    background-position: -96px  -24px;
+}
+
+.icon-download_() {
+    background-position: -120px -24px;
+}
+
+.icon-upload_() {
+    background-position: -144px -24px;
+}
+
+.icon-inbox_() {
+    background-position: -168px -24px;
+}
+
+.icon-play-circle_() {
+    background-position: -192px -24px;
+}
+
+.icon-repeat_() {
+    background-position: -216px -24px;
+}
+
+.icon-refresh_() {
+    background-position: -240px -24px;
+}
+
+.icon-list-alt_() {
+    background-position: -264px -24px;
+}
+
+.icon-lock_() {
+    background-position: -287px -24px;
+}
+
+// 1px off
+.icon-flag_() {
+    background-position: -312px -24px;
+}
+
+.icon-headphones_() {
+    background-position: -336px -24px;
+}
+
+.icon-volume-off_() {
+    background-position: -360px -24px;
+}
+
+.icon-volume-down_() {
+    background-position: -384px -24px;
+}
+
+.icon-volume-up_() {
+    background-position: -408px -24px;
+}
+
+.icon-qrcode_() {
+    background-position: -432px -24px;
+}
+
+.icon-barcode_() {
+    background-position: -456px -24px;
+}
+
+.icon-tag_() {
+    background-position: 0      -48px;
+}
+
+.icon-tags_() {
+    background-position: -25px  -48px;
+}
+
+// 1px off
+.icon-book_() {
+    background-position: -48px  -48px;
+}
+
+.icon-bookmark_() {
+    background-position: -72px  -48px;
+}
+
+.icon-print_() {
+    background-position: -96px  -48px;
+}
+
+.icon-camera_() {
+    background-position: -120px -48px;
+}
+
+.icon-font_() {
+    background-position: -144px -48px;
+}
+
+.icon-bold_() {
+    background-position: -167px -48px;
+}
+
+// 1px off
+.icon-italic_() {
+    background-position: -192px -48px;
+}
+
+.icon-text-height_() {
+    background-position: -216px -48px;
+}
+
+.icon-text-width_() {
+    background-position: -240px -48px;
+}
+
+.icon-align-left_() {
+    background-position: -264px -48px;
+}
+
+.icon-align-center_() {
+    background-position: -288px -48px;
+}
+
+.icon-align-right_() {
+    background-position: -312px -48px;
+}
+
+.icon-align-justify_() {
+    background-position: -336px -48px;
+}
+
+.icon-list_() {
+    background-position: -360px -48px;
+}
+
+.icon-indent-left_() {
+    background-position: -384px -48px;
+}
+
+.icon-indent-right_() {
+    background-position: -408px -48px;
+}
+
+.icon-facetime-video_() {
+    background-position: -432px -48px;
+}
+
+.icon-picture_() {
+    background-position: -456px -48px;
+}
+
+.icon-pencil_() {
+    background-position: 0      -72px;
+}
+
+.icon-map-marker_() {
+    background-position: -24px  -72px;
+}
+
+.icon-adjust_() {
+    background-position: -48px  -72px;
+}
+
+.icon-tint_() {
+    background-position: -72px  -72px;
+}
+
+.icon-edit_() {
+    background-position: -96px  -72px;
+}
+
+.icon-share_() {
+    background-position: -120px -72px;
+}
+
+.icon-check_() {
+    background-position: -144px -72px;
+}
+
+.icon-move_() {
+    background-position: -168px -72px;
+}
+
+.icon-step-backward_() {
+    background-position: -192px -72px;
+}
+
+.icon-fast-backward_() {
+    background-position: -216px -72px;
+}
+
+.icon-backward_() {
+    background-position: -240px -72px;
+}
+
+.icon-play_() {
+    background-position: -264px -72px;
+}
+
+.icon-pause_() {
+    background-position: -288px -72px;
+}
+
+.icon-stop_() {
+    background-position: -312px -72px;
+}
+
+.icon-forward_() {
+    background-position: -336px -72px;
+}
+
+.icon-fast-forward_() {
+    background-position: -360px -72px;
+}
+
+.icon-step-forward_() {
+    background-position: -384px -72px;
+}
+
+.icon-eject_() {
+    background-position: -408px -72px;
+}
+
+.icon-chevron-left_() {
+    background-position: -432px -72px;
+}
+
+.icon-chevron-right_() {
+    background-position: -456px -72px;
+}
+
+.icon-plus-sign_() {
+    background-position: 0      -96px;
+}
+
+.icon-minus-sign_() {
+    background-position: -24px  -96px;
+}
+
+.icon-remove-sign_() {
+    background-position: -48px  -96px;
+}
+
+.icon-ok-sign_() {
+    background-position: -72px  -96px;
+}
+
+.icon-question-sign_() {
+    background-position: -96px  -96px;
+}
+
+.icon-info-sign_() {
+    background-position: -120px -96px;
+}
+
+.icon-screenshot_() {
+    background-position: -144px -96px;
+}
+
+.icon-remove-circle_() {
+    background-position: -168px -96px;
+}
+
+.icon-ok-circle_() {
+    background-position: -192px -96px;
+}
+
+.icon-ban-circle_() {
+    background-position: -216px -96px;
+}
+
+.icon-arrow-left_() {
+    background-position: -240px -96px;
+}
+
+.icon-arrow-right_() {
+    background-position: -264px -96px;
+}
+
+.icon-arrow-up_() {
+    background-position: -289px -96px;
+}
+
+// 1px off
+.icon-arrow-down_() {
+    background-position: -312px -96px;
+}
+
+.icon-share-alt_() {
+    background-position: -336px -96px;
+}
+
+.icon-resize-full_() {
+    background-position: -360px -96px;
+}
+
+.icon-resize-small_() {
+    background-position: -384px -96px;
+}
+
+.icon-plus_() {
+    background-position: -408px -96px;
+}
+
+.icon-minus_() {
+    background-position: -433px -96px;
+}
+
+.icon-asterisk_() {
+    background-position: -456px -96px;
+}
+
+.icon-exclamation-sign_() {
+    background-position: 0      -120px;
+}
+
+.icon-gift_() {
+    background-position: -24px  -120px;
+}
+
+.icon-leaf_() {
+    background-position: -48px  -120px;
+}
+
+.icon-fire_() {
+    background-position: -72px  -120px;
+}
+
+.icon-eye-open_() {
+    background-position: -96px  -120px;
+}
+
+.icon-eye-close_() {
+    background-position: -120px -120px;
+}
+
+.icon-warning-sign_() {
+    background-position: -144px -120px;
+}
+
+.icon-plane_() {
+    background-position: -168px -120px;
+}
+
+.icon-calendar_() {
+    background-position: -192px -120px;
+}
+
+.icon-random_() {
+    background-position: -216px -120px;
+}
+
+.icon-comment_() {
+    background-position: -240px -120px;
+}
+
+.icon-magnet_() {
+    background-position: -264px -120px;
+}
+
+.icon-chevron-up_() {
+    background-position: -288px -120px;
+}
+
+.icon-chevron-down_() {
+    background-position: -313px -119px;
+}
+
+// 1px off
+.icon-retweet_() {
+    background-position: -336px -120px;
+}
+
+.icon-shopping-cart_() {
+    background-position: -360px -120px;
+}
+
+.icon-folder-close_() {
+    background-position: -384px -120px;
+}
+
+.icon-folder-open_() {
+    background-position: -408px -120px;
+}
+
+.icon-resize-vertical_() {
+    background-position: -432px -119px;
+}
+
+.icon-resize-horizontal_() {
+    background-position: -456px -118px;
+}
+
+.icon-hdd_() {
+    background-position: 0 -144px;
+}
+
+.icon-bullhorn_() {
+    background-position: -24px -144px;
+}
+
+.icon-bell_() {
+    background-position: -48px -144px;
+}
+
+.icon-certificate_() {
+    background-position: -72px -144px;
+}
+
+.icon-thumbs-up_() {
+    background-position: -96px -144px;
+}
+
+.icon-thumbs-down_() {
+    background-position: -120px -144px;
+}
+
+.icon-hand-right_() {
+    background-position: -144px -144px;
+}
+
+.icon-hand-left_() {
+    background-position: -168px -144px;
+}
+
+.icon-hand-up_() {
+    background-position: -192px -144px;
+}
+
+.icon-hand-down_() {
+    background-position: -216px -144px;
+}
+
+.icon-circle-arrow-right_() {
+    background-position: -240px -144px;
+}
+
+.icon-circle-arrow-left_() {
+    background-position: -264px -144px;
+}
+
+.icon-circle-arrow-up_() {
+    background-position: -288px -144px;
+}
+
+.icon-circle-arrow-down_() {
+    background-position: -312px -144px;
+}
+
+.icon-globe_() {
+    background-position: -336px -144px;
+}
+
+.icon-wrench_() {
+    background-position: -360px -144px;
+}
+
+.icon-tasks_() {
+    background-position: -384px -144px;
+}
+
+.icon-filter_() {
+    background-position: -408px -144px;
+}
+
+.icon-briefcase_() {
+    background-position: -432px -144px;
+}
+
+.icon-fullscreen_() {
+    background-position: -456px -144px;
+}

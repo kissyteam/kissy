@@ -26,6 +26,7 @@
   border-top: 4px solid #000000;
   opacity: 0.3;
   filter: alpha(opacity=30);
+  *zoom: 1;
   display: inline-block;
   *display: inline;
   *zoom: 1;
@@ -41,11 +42,13 @@
   border-top-color: white;
   opacity: 0.75;
   filter: alpha(opacity=75);
+  *zoom: 1;
 }
 .ks-button-hover .ks-menu-button-dropdown,
 .ks-menu-button-open .ks-menu-button-dropdown {
   opacity: 1;
   filter: alpha(opacity=100);
+  *zoom: 1;
 }
 .ks-menu-button-caption {
   display: inline-block;

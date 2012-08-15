@@ -56,8 +56,8 @@ T = {
         var HOST = { },
             SEED1 = { },
             SEED2 = { mix: this.mix },
-            SEED3 = { Env.host: this.SCOPE },
-            SEED4 = { Env.host: HOST, mix: this.mix };
+            SEED3 = { "Env.host": this.SCOPE },
+            SEED4 = { "Env.host": HOST, mix: this.mix };
 
         // seed is blank kissy.
         this.SCOPE[S] = SEED1;

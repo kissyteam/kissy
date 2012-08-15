@@ -4,8 +4,6 @@
  */
 KISSY.add("component/uibase/positionrender", function () {
 
-    var Z_INDEX = 9999;
-
     function Position() {
     }
 
@@ -28,7 +26,6 @@ KISSY.add("component/uibase/positionrender", function () {
             }
         },
         zIndex:{
-            value:Z_INDEX
         },
         /**
          * see {@link Component.UIBase.Box#visibleMode}.

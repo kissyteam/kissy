@@ -5,6 +5,7 @@
 
 @import "../../css/src/dpl/variables.less";
 @import "../../css/src/dpl/mixins.less";
+@import "../../css/src/dpl/icons-mixin.less";
 @import "./dpl/variable.less";
 
 .ks-submenu-arrow {
@@ -31,12 +32,7 @@
     margin: ((@baseFontSize*@baseLineHeight / 2) - 1) 1px; // 8px 1px
     overflow: hidden;
     background-color: #e5e5e5;
-    border-bottom: 1px solid @white; // IE7 needs a set width since we gave a height. Restricting just
-// to IE7 to keep the 1px left/right space in other browsers.
-// It is unclear where IE is getting the extra space that we need
-// to negative-margin away, but so it goes.
-    *width: 100%;
-    *margin: -5px 0 5px;
+    border-bottom: 1px solid @white;
 }
 
 // The menu (ul)
@@ -45,8 +41,8 @@
 .ks-popupmenu {
     position: absolute;
     z-index: @zindexDropdown;
-    left:-9999px;
-    top:-9999px;
+    left: -9999px;
+    top: -9999px;
 }
 
 .ks-menu {
@@ -94,19 +90,13 @@
     }
 }
 
-.ks-menuitem-disabled {
+.ks-menu .ks-menuitem-disabled {
     .opacity(30);
 }
 
-.ks-menuitem-checkbox, .ks-menuitem-icon {
-    width: 14px;
-    height: 14px;
+.ks-menuitem-checked .ks-menuitem-checkbox {
     position: absolute;
-    left:6px;
-    line-height: 14px;
-    vertical-align: text-top;
-}
-
-.ks-menuitem-checked .ks-menuitem-checkbox, .ks-menuitem-checked.ks-menuitem-icon {
-    background: url(@iconSpritePath) no-repeat -288px 0;
+    left: 6px;
+    .icon-base_();
+    .icon-ok_();
 }

@@ -39,7 +39,7 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
     {
         /**
          * array of static data for comboBox
-         * @type Object[]
+         * @type {Object[]}
          */
         data:{
             value:[]
@@ -47,7 +47,7 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
         /**
          * parse data function.
          * @default index of match.
-         * @type Function
+         * @type {Function}
          */
         parse:{
             value:parser
@@ -61,7 +61,7 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
         {
         /**
          * Data source interface. How to get data for comboBox
-         * @function
+         * @method
          * @name ComboBox.LocalDataSource#fetchData
          * @param {String} inputVal current active input's value
          * @param {Function} callback callback to notify comboBox when data is ready

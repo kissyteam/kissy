@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:26
+build time: Aug 15 22:03
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -67,7 +67,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
              * @return {Boolean} Whether the event was handled by the container (or one of
              *     its children).
              * @protected
-             * @override
+             *
              */
             handleKeyEventInternal:function (e) {
 
@@ -177,12 +177,12 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
             {
                 /**
                  * Current highlighted child menu item.
-                 * @type Menu.Item
+                 * @type {Menu.Item}
                  */
                 highlightedItem:{},
                 /**
                  * Current active menu item. Maybe a descendant but not a child of current menu.
-                 * @type Menu.Item
+                 * @type {Menu.Item}
                  */
                 activeItem:{
                     view:1
@@ -405,7 +405,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
                 /**
                  * Hit info string
-                 * @type String
+                 * @type {String}
                  */
                 label:{
                     view:1
@@ -413,14 +413,14 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
                 /**
                  * Filter string
-                 * @type String
+                 * @type {String}
                  */
                 filterStr:{
                 },
 
                 /**
                  * user entered string list when allowMultiple.
-                 * @type String[]
+                 * @type {String[]}
                  */
                 enteredItems:{
                     value:[]
@@ -428,7 +428,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
                 /**
                  * Whether to allow input multiple.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 allowMultiple:{
                     value:false
@@ -621,7 +621,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * Protected, should only be overridden by subclasses.
              * @param {Event.Object} e Mouseenter event object.
              * @protected
-             * @override
+             *
              */
             handleMouseEnter:function (e) {
                 // 父亲不允许自己处理
@@ -636,7 +636,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * Protected, should only be overridden by subclasses.
              * @param {Event.Object} e Mouseleave event object.
              * @protected
-             * @override
+             *
              */
             handleMouseLeave:function (e) {
                 // 父亲不允许自己处理
@@ -652,7 +652,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * If checkable, then toggle it.
              * Finally fire click on its parent menu.
              * @protected
-             * @override
+             *
              */
             performActionInternal:function () {
                 var self = this;
@@ -709,7 +709,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 /**
                  * Whether the menu item is selectable or not.
                  * Set to true for option.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 selectable:{
                     view:1
@@ -718,7 +718,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 /**
                  * Whether the menu item is checkable or not.
                  * Set to true for checkbox option.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 checkable:{
                     view:1
@@ -731,7 +731,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
 
                 /**
                  * Whether the menu item is checked.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 checked:{
                     view:1
@@ -739,7 +739,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
 
                 /**
                  * Whether the menu item is selected.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 selected:{
                     view:1
@@ -871,7 +871,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
              * Handle mouseleave event.Make parent subMenu item unHighlighted.
              * Protected, should only be overridden by subclasses.
              * @protected
-             * @override
+             *
              */
             handleMouseLeave:function () {
                 var self = this;
@@ -886,7 +886,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
              * Suppose it has focus (as a context menu), then it must hide when lose focus.
              * Protected, should only be overridden by subclasses.
              * @protected
-             * @override
+             *
              */
             handleBlur:function () {
                 var self = this;
@@ -902,7 +902,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                 /**
                  * Whether the popup menu is focusable.
                  * @default false.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 focusable:{
                     value:false
@@ -911,7 +911,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
                  * Whether the popup menu hides when mouseleave.
                  * Only valid for submenu.
                  * @default false.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 autoHideOnMouseLeave:{},
                 xrender:{
@@ -953,17 +953,18 @@ KISSY.add("menu/separator", function (S, Component, Separator) {
      * xclass: 'menuseparator'.
      * @memberOf Menu
      * @name Separator
+     * @deprecated use separator instead.
      */
     var MenuSeparator = Separator.extend({
     }, {}, {
-        xclass:'menuseparator',
-        priority:20
+        xclass: 'menuseparator',
+        priority: 20
     });
 
     return MenuSeparator;
 
 }, {
-    requires:['component', 'separator']
+    requires: ['component', 'separator']
 });/**
  * @fileOverview submenu model and control for kissy , transfer item's keycode to menu
  * @author yiminghe@gmail.com
@@ -1225,7 +1226,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                  * arbitrary, it would be good to get some user studies or a designer to play
                  * with some numbers).
                  * @default 0.15
-                 * @type {number}
+                 * @type {Number}
                  */
                 menuDelay:{
                     value:MENU_DELAY

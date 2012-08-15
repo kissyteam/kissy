@@ -13,11 +13,9 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
 
     /**
-     * @name UIBase
-     * @memberOf Component
-     * @extends Base
-     * @class
      * UIBase for class-based component.
+     * @extends Base
+     * @class Component.UIBase
      */
     function UIBase(config) {
         var self = this, id, srcNode;
@@ -29,7 +27,6 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         if (id = self.get("id")) {
             Manager.addComponent(id, self);
         }
-
 
         // 根据 srcNode 设置属性值
         // 按照类层次执行初始函数，主类执行 initializer 函数，扩展类执行构造器函数
@@ -65,6 +62,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
     /**
      * 模拟多继承
      * init attr using constructors ATTRS meta info
+     * @ignore
      */
     function initHierarchy(host, config) {
 
@@ -139,8 +137,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
     }
 
     /**
-     * 销毁组件
-     * 顺序： 子类 destructor -> 子类扩展 destructor -> 父类 destructor -> 父类扩展 destructor
+     * 销毁组件顺序： 子类 destructor -> 子类扩展 destructor -> 父类 destructor -> 父类扩展 destructor
+     * @ignore
      */
     function destroyHierarchy(host) {
         var c = host.constructor,
@@ -193,6 +191,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
     /**
      * 根据属性变化设置 UI
+     * @ignore
      */
     function bindUI(self) {
         var attrs = self.getAttrs(),
@@ -218,6 +217,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
     /**
      * 根据当前（初始化）状态来设置 UI
+     * @ignore
      */
     function syncUI(self) {
         var v,
@@ -246,23 +246,21 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             /**
              * Create dom structure of this component.
              */
-            create:function () {
+            create: function () {
                 var self = this;
                 // 是否生成过节点
                 if (!self.get("created")) {
                     /**
-                     * @name Component.UIBase#beforeCreateDom
-                     * @description fired before root node is created
-                     * @event
+                     * @event beforeCreateDom
+                     * fired before root node is created
                      * @param e
                      */
                     self.fire('beforeCreateDom');
                     callMethodByHierarchy(self, "createDom", "__createDom");
                     self.__set("created", true);
                     /**
-                     * @name Component.UIBase#afterCreateDom
-                     * @description fired when root node is created
-                     * @event
+                     * @event afterCreateDom
+                     * fired when root node is created
                      * @param e
                      */
                     self.fire('afterCreateDom');
@@ -274,7 +272,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             /**
              * Put dom structure of this component to document and bind event.
              */
-            render:function () {
+            render: function () {
                 var self = this;
                 // 是否已经渲染过
                 if (!self.get("rendered")) {
@@ -282,9 +280,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                     self.create(undefined);
 
                     /**
-                     * @name Component.UIBase#beforeRenderUI
-                     * @description fired when root node is ready
-                     * @event
+                     * @event beforeRenderUI
+                     * fired when root node is ready
                      * @param e
                      */
 
@@ -292,9 +289,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                     callMethodByHierarchy(self, "renderUI", "__renderUI");
 
                     /**
-                     * @name Component.UIBase#afterRenderUI
-                     * @description fired after root node is rendered into dom
-                     * @event
+                     * @event afterRenderUI
+                     * fired after root node is rendered into dom
                      * @param e
                      */
 
@@ -302,9 +298,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                     actionPlugins(self, plugins, "renderUI");
 
                     /**
-                     * @name Component.UIBase#beforeBindUI
-                     * @description fired before component 's internal event is bind.
-                     * @event
+                     * @event beforeBindUI
+                     * fired before component 's internal event is bind.
                      * @param e
                      */
 
@@ -313,9 +308,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                     callMethodByHierarchy(self, "bindUI", "__bindUI");
 
                     /**
-                     * @name Component.UIBase#afterBindUI
-                     * @description fired when component 's internal event is bind.
-                     * @event
+                     * @event afterBindUI
+                     * fired when component 's internal event is bind.
                      * @param e
                      */
 
@@ -323,9 +317,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                     actionPlugins(self, plugins, "bindUI");
 
                     /**
-                     * @name Component.UIBase#beforeSyncUI
-                     * @description fired before component 's internal state is synchronized.
-                     * @event
+                     * @event beforeSyncUI
+                     * fired before component 's internal state is synchronized.
                      * @param e
                      */
 
@@ -335,9 +328,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                     callMethodByHierarchy(self, "syncUI", "__syncUI");
 
                     /**
-                     * @name Component.UIBase#afterSyncUI
-                     * @description fired after component 's internal state is synchronized.
-                     * @event
+                     * @event afterSyncUI
+                     * fired after component 's internal state is synchronized.
                      * @param e
                      */
 
@@ -351,36 +343,36 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             /**
              * For overridden. DOM creation logic of subclass component.
              * @protected
-             * @function
+             * @method
              */
-            createDom:noop,
+            createDom: noop,
 
             /**
              * For overridden. Render logic of subclass component.
              * @protected
-             * @function
+             * @method
              */
-            renderUI:noop,
+            renderUI: noop,
 
             /**
              * For overridden. Bind logic for subclass component.
              * @protected
-             * @function
+             * @method
              */
-            bindUI:noop,
+            bindUI: noop,
 
             /**
              * For overridden. Sync attribute with ui.
-             * protected
-             * @function
+             * @protected
+             * @method
              */
-            syncUI:noop,
+            syncUI: noop,
 
 
             /**
              * Destroy this component.
              */
-            destroy:function () {
+            destroy: function () {
                 var self = this,
                     id,
                     plugins = self.get("plugins");
@@ -396,23 +388,23 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             }
         }, {
 
-            ATTRS:/**
+            ATTRS: /**
              * @lends Component.UIBase#
              */
             {
                 /**
                  * Whether this component is rendered.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
-                rendered:{
-                    value:false
+                rendered: {
+                    value: false
                 },
                 /**
                  * Whether this component 's dom structure is created.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
-                created:{
-                    value:false
+                created: {
+                    value: false
                 },
 
                 /**
@@ -435,25 +427,25 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                  * }
                  * </code>
                  */
-                listeners:{
-                    value:{}
+                listeners: {
+                    value: {}
                 },
 
                 /**
                  * Plugins
-                 * @type Function[]|Object[]
+                 * @type {Function[]/Object[]}
                  */
-                plugins:{
-                    value:[]
+                plugins: {
+                    value: []
                 },
 
                 /**
                  * Get xclass of current component instance.
                  * Readonly and only for json config.
-                 * @type String
+                 * @type {String}
                  */
-                xclass:{
-                    valueFn:function () {
+                xclass: {
+                    valueFn: function () {
                         return Manager.getXClassByConstructor(this.constructor);
                     }
                 }
@@ -525,7 +517,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                             // 但是值是对象的话会深度合并
                             // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题(用 function return 出来)!
                             S.mix(desc[K], ext[K], {
-                                deep:true
+                                deep: true
                             });
                         }
                     });
@@ -561,30 +553,30 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
 
     S.mix(UIBase,
-        /**
-         * @lends Component.UIBase
-         */
         {
             /**
+             * @static
              * Parse attribute from existing dom node.
-             * @example
-             * Overlay.HTML_PARSER={
-             *    // el: root element of current component.
-             *    "isRed":function(el){
-             *       return el.hasClass("ks-red");
-             *    }
-             * };
+             *
+             *     @example
+             *     Overlay.HTML_PARSER={
+             *          // el: root element of current component.
+             *          "isRed":function(el){
+             *              return el.hasClass("ks-red");
+             *          }
+             *      };
              */
-            HTML_PARSER:{},
+            HTML_PARSER: {},
 
             /**
              * Create a new class which extends UIBase .
              * @param {Function[]} extensions Class constructors for extending.
              * @param {Object} px Object to be mixed into new class 's prototype.
              * @param {Object} sx Object to be mixed into new class.
-             * @returns {UIBase} A new class which extends UIBase .
+             * @static
+             * @return {Component.UIBase} A new class which extends UIBase .
              */
-            extend:function extend(extensions, px, sx) {
+            extend: function extend(extensions, px, sx) {
                 var args = S.makeArray(arguments),
                     ret,
                     last = args[args.length - 1];
@@ -596,8 +588,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 ret = create.apply(UIBase, args);
                 if (last.xclass) {
                     Manager.setConstructorByXClass(last.xclass, {
-                        constructor:ret,
-                        priority:last.priority
+                        constructor: ret,
+                        priority: last.priority
                     });
                 }
                 ret.extend = extend;
@@ -607,7 +599,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
     return UIBase;
 }, {
-    requires:["base", "node", "../manager"]
+    requires: ["base", "node", "../manager"]
 });
 /**
  * Refer:

@@ -1,17 +1,19 @@
 /**
+ * @ignore
  * @fileOverview dom-offset
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     var win = S.Env.host,
         doc = win.document,
+        NodeType=DOM.NodeType,
         docElem = doc.documentElement,
         getWin = DOM._getWin,
-        CSS1Compat = "CSS1Compat",
-        compatMode = "compatMode",
+        CSS1Compat = 'CSS1Compat',
+        compatMode = 'compatMode',
         MAX = Math.max,
-        PARSEINT = parseInt,
+        myParseInt = parseInt,
         POSITION = 'position',
         RELATIVE = 'relative',
         DOCUMENT = 'document',
@@ -29,7 +31,9 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     S.mix(DOM,
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
 
@@ -45,7 +49,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * @param {window} [relativeWin] The window to measure relative to. If relativeWin
              *     is not in the ancestor frame chain of the element, we measure relative to
              *     the top-most window.
-             * @returns {Object|undefined} if Get, the format of returned value is same with coordinates.
+             * @return {Object|undefined} if Get, the format of returned value is same with coordinates.
              */
             offset:function (selector, coordinates, relativeWin) {
                 // getter
@@ -68,7 +72,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
             /**
              * Makes the first of matched elements visible in the container
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|HTMLElement|Document} [container=window] Container element
+             * @param {String|HTMLElement|HTMLDocument} [container=window] Container element
              * @param {Boolean} [top=true] Whether align with top of container.
              * @param {Boolean} [hscroll=true] Whether trigger horizontal scroll.
              * @param {Boolean} [auto=false] Whether adjust element automatically
@@ -98,7 +102,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                 }
 
                 // document 归一化到 window
-                if (container.nodeType == DOM.DOCUMENT_NODE) {
+                if (container.nodeType == NodeType.DOCUMENT_NODE) {
                     container = getWin(container);
                 }
 
@@ -148,17 +152,17 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                     // 注意边框 , offset 是边框到根节点
                     diffTop = {
                         left:elemOffset[LEFT] - containerOffset[LEFT] -
-                            (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
+                            (myParseInt(DOM.css(container, 'borderLeftWidth')) || 0),
                         top:elemOffset[TOP] - containerOffset[TOP] -
-                            (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0)
+                            (myParseInt(DOM.css(container, 'borderTopWidth')) || 0)
                     };
                     diffBottom = {
                         left:elemOffset[LEFT] + ew -
                             (containerOffset[LEFT] + cw +
-                                (PARSEINT(DOM.css(container, 'borderRightWidth')) || 0)),
+                                (myParseInt(DOM.css(container, 'borderRightWidth')) || 0)),
                         top:elemOffset[TOP] + eh -
                             (containerOffset[TOP] + ch +
-                                (PARSEINT(DOM.css(container, 'borderBottomWidth')) || 0))
+                                (myParseInt(DOM.css(container, 'borderBottomWidth')) || 0))
                     };
                 }
 
@@ -199,25 +203,25 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
             /**
              * Get the width of document
              * @param {window} [win=window] Window to be referred.
-             * @function
+             * @method
              */
             docWidth:0,
             /**
              * Get the height of document
              * @param {window} [win=window] Window to be referred.
-             * @function
+             * @method
              */
             docHeight:0,
             /**
              * Get the height of window
              * @param {window} [win=window] Window to be referred.
-             * @function
+             * @method
              */
             viewportHeight:0,
             /**
              * Get the width of document
              * @param {window} [win=window] Window to be referred.
-             * @function
+             * @method
              */
             viewportWidth:0,
             /**
@@ -226,7 +230,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * Set the current vertical position of the scroll bar for each of the set of matched elements.
              * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
-             * @function
+             * @method
              */
             scrollTop:0,
             /**
@@ -235,7 +239,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * Set the current horizontal position of the scroll bar for each of the set of matched elements.
              * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
-             * @function
+             * @method
              */
             scrollLeft:0
         });
@@ -258,8 +262,8 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                 if (v !== undefined) {
                     v = parseFloat(v);
                     // 注意多 windw 情况，不能简单取 win
-                    var left = name == "Left" ? v : DOM.scrollLeft(w),
-                        top = name == "Top" ? v : DOM.scrollTop(w);
+                    var left = name == 'Left' ? v : DOM.scrollLeft(w),
+                        top = name == 'Top' ? v : DOM.scrollTop(w);
                     w['scrollTo'](left, top);
                 } else {
                     //标准
@@ -276,7 +280,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                         }
                     }
                 }
-            } else if (elem.nodeType == DOM.ELEMENT_NODE) {
+            } else if (elem.nodeType == NodeType.ELEMENT_NODE) {
                 if (v !== undefined) {
                     elem[method] = parseFloat(v)
                 } else {
@@ -315,12 +319,6 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
             return doc[compatMode] === CSS1Compat
                 && documentElementProp ||
                 body && body[ prop ] || documentElementProp;
-//            return (prop in w) ?
-//                // 标准 = documentElement.clientHeight
-//                w[prop] :
-//                // ie 标准 documentElement.clientHeight , 在 documentElement.clientHeight 上滚动？
-//                // ie quirks body.clientHeight: 在 body 上？
-//                (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
         }
     });
 
@@ -416,7 +414,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         var old = getOffset(elem), ret = { }, current, key;
 
         for (key in offset) {
-            current = PARSEINT(DOM.css(elem, key), 10) || 0;
+            current = myParseInt(DOM.css(elem, key), 10) || 0;
             ret[key] = current + offset[key] - old[key];
         }
         DOM.css(elem, ret);
@@ -424,23 +422,23 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-    requires:["./base", "ua"]
+    requires:['./base', 'ua']
 });
 
-/**
- * 2012-03-30
- *  - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
- *  - http://help.dottoro.com/ljkfqbqj.php
- *  - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
- *
- * 2011-05-24
- *  - 承玉：
- *  - 调整 docWidth , docHeight ,
- *      viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
- *      便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
- *
- *
- * TODO:
- *  - 考虑是否实现 jQuery 的 position, offsetParent 等功能
- *  - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
+/*
+  2012-03-30
+   - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
+   - http://help.dottoro.com/ljkfqbqj.php
+   - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
+
+  2011-05-24
+   - 承玉：
+   - 调整 docWidth , docHeight ,
+       viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
+       便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
+
+
+  TODO:
+   - 考虑是否实现 jQuery 的 position, offsetParent 等功能
+   - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
  */

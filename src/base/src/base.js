@@ -1,6 +1,6 @@
 /**
  * @fileOverview attribute management and event in one
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base', function (S, Attribute, Event) {
 
@@ -36,7 +36,7 @@ KISSY.add('base', function (S, Attribute, Event) {
      * protect the default value.
      *
      * @name Base.ATTRS
-     * @type Object
+     * @type {Object}
      */
 
 
@@ -44,7 +44,7 @@ KISSY.add('base', function (S, Attribute, Event) {
      * see {@link Attribute#set}
      * @name set
      * @memberOf Base#
-     * @function
+     * @method
      */
 
 

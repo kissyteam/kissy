@@ -208,7 +208,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 /**
                  * Attribute name used to store id from server.
                  * @default "id".
-                 * @type String
+                 * @type {String}
                  */
                 idAttribute:{
                     value:'id'
@@ -217,7 +217,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 /**
                  * Generated client id.
                  * Default call S.guid()
-                 * @type Function
+                 * @type {Function}
                  */
                 clientId:{
                     valueFn:function () {
@@ -227,7 +227,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 /**
                  * Called to get url for delete/edit/new current model.
                  * @default collection.url+"/"+mode.id
-                 * @type Function
+                 * @type {Function}
                  */
                 url:{
                     value:url
@@ -235,7 +235,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 /**
                  * If current model does not belong to any collection.
                  * Use this attribute value as collection.url in {@link MVC.Model#url}
-                 * @type String
+                 * @type {String}
                  */
                 urlRoot:{
                     value:""
@@ -243,7 +243,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 /**
                  * Sync model data with server.
                  * Default to call {@link MVC.sync}
-                 * @type Function
+                 * @type {Function}
                  */
                 sync:{
                     value:function () {
@@ -253,7 +253,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 /**
                  * parse json from server to get attr/value pairs.
                  * Default to return raw data from server.
-                 * @type function
+                 * @type {Function}
                  */
                 parse:{
                     value:function (resp) {

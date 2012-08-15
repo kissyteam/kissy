@@ -23,19 +23,19 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
      * 父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
      * @param ev
      */
-    function handleMouseDown(ev) {
+    var handlePreDragStart = DDM._normalHandlePreDragStart(function (ev) {
         var self = this,
             handler,
             node;
 
-        if (!self._checkMouseDown(ev)) {
+        if (!self._checkDragStartValid(ev)) {
             return;
         }
 
         var handlers = self.get("handlers"),
             target = new Node(ev.target);
 
-        // 不需要像 Draggble 一样，判断 target 是否在 handler 内
+        // 不需要像 Draggable 一样，判断 target 是否在 handler 内
         // 委托时，直接从 target 开始往上找 handler
         if (handlers.length) {
             handler = self._getHandler(target);
@@ -59,19 +59,19 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
         self.__set("node", node);
         self.__set("dragNode", node);
         self._prepare(ev);
-    }
+    });
 
     S.extend(DraggableDelegate, Draggable, {
 
-            _uiSetDisabledChange:function (d) {
+            _uiSetDisabledChange: function (d) {
                 this.get("container")[d ? 'addClass' :
                     'removeClass'](PREFIX_CLS + '-disabled');
             },
 
-            _init:function () {
+            _init: function () {
                 var self = this,
                     node = self.get('container');
-                node.on('mousedown', handleMouseDown, self)
+                node.on(DDM.DRAG_START_EVENT, handlePreDragStart, self)
                     .on('dragstart', self._fixDragStart);
             },
 
@@ -79,7 +79,7 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
              * 得到适合 handler，从这里开始启动拖放，对于 handlers 选择器字符串数组
              * @param target
              */
-            _getHandler:function (target) {
+            _getHandler: function (target) {
                 var self = this,
                     ret = undefined,
                     node = self.get("container"),
@@ -103,22 +103,22 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
              * 找到真正应该移动的节点，对应 selector 属性选择器字符串
              * @param h
              */
-            _getNode:function (h) {
+            _getNode: function (h) {
                 return h.closest(this.get("selector"), this.get("container"));
             },
 
-            destroy:function () {
+            destroy: function () {
                 var self = this;
                 self.get("container")
-                    .detach('mousedown',
-                    handleMouseDown,
+                    .detach(DDM.DRAG_START_EVENT,
+                    handlePreDragStart,
                     self)
                     .detach('dragstart', self._fixDragStart);
                 self.detach();
             }
         },
         {
-            ATTRS:/**
+            ATTRS: /**
              * @lends DD.DraggableDelegate#
              */
             {
@@ -127,8 +127,8 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
                  * All "draggable selector" should be a child of this container
                  * @type {HTMLElement|String}
                  */
-                container:{
-                    setter:function (v) {
+                container: {
+                    setter: function (v) {
                         return Node.one(v);
                     }
                 },
@@ -138,24 +138,24 @@ KISSY.add("dd/draggable-delegate", function (S, DDM, Draggable, DOM, Node) {
                  * usually as for tag.cls.
                  * @type {String}
                  */
-                selector:{
+                selector: {
                 },
 
                 /**
                  * handlers to initiate drag operation.
                  * can only be as form of tag.cls.
-                 * @default[selector]
+                 * @default selector
                  * @type {String[]}
                  **/
-                handlers:{
-                    value:[],
+                handlers: {
+                    value: [],
                     // 覆盖父类的 getter ，这里 normalize 成节点
-                    getter:0
+                    getter: 0
                 }
             }
         });
 
     return DraggableDelegate;
 }, {
-    requires:['./ddm', './draggable', 'dom', 'node']
+    requires: ['./ddm', './draggable', 'dom', 'node']
 });

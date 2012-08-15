@@ -62,7 +62,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
              * @return {Boolean} Whether the event was handled by the container (or one of
              *     its children).
              * @protected
-             * @override
+             *
              */
             handleKeyEventInternal:function (e) {
 
@@ -172,12 +172,12 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
             {
                 /**
                  * Current highlighted child menu item.
-                 * @type Menu.Item
+                 * @type {Menu.Item}
                  */
                 highlightedItem:{},
                 /**
                  * Current active menu item. Maybe a descendant but not a child of current menu.
-                 * @type Menu.Item
+                 * @type {Menu.Item}
                  */
                 activeItem:{
                     view:1

@@ -1,0 +1,138 @@
+@import "../../css/src/dpl/variables.less";
+@import "../../css/src/dpl/mixins.less";
+
+.ks-tabs {
+    .ks-clear_();
+}
+
+.ks-tabs-bar {
+    outline: none;
+    margin-bottom: 18px;
+}
+
+.ks-tabs-body {
+    overflow: auto;
+
+    & > .ks-tabs-panel {
+        display: none;
+    }
+    & > .ks-tabs-panel-selected {
+        display: block;
+    }
+}
+
+.ks-tabs-tab {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 12px;
+    padding-left: 12px;
+    margin: 0;
+    border: 1px solid transparent;
+
+    .reset-filter();
+    background: none;
+
+    &.ks-tabs-tab-hover,
+    &:hover {
+        background-color: @grayLighter;
+        border-color: @grayLighter;
+    }
+
+    &.ks-tabs-tab-selected,
+    &.ks-tabs-tab-selected.ks-tabs-tab-active {
+        color: @gray;
+        background-color: @white;
+        cursor: default;
+        .box-shadow(none);
+    }
+}
+
+
+.ks-tabs-top {
+    & > .ks-tabs-bar {
+        .ks-clear_();
+        border-bottom: 1px solid #DDD;
+    }
+
+    & > .ks-tabs-bar > .ks-tabs-tab {
+    /*
+    inline-block cause whitespace in ie67
+    float is perfect
+    */
+        float: left;
+        margin-right: 2px;
+        display: inline;
+        margin-bottom: -1px;
+        border-radius: 4px 4px 0 0;
+        &.ks-tabs-tab-selected,
+        &.ks-tabs-tab-selected.ks-tabs-tab-active {
+            border-color: #ddd #ddd transparent #ddd;
+        /* ie7 transparent border makes bar border leaks*/
+            *border-bottom-color: white;
+        }
+    }
+}
+
+.ks-tabs-bottom {
+    & > .ks-tabs-bar {
+        .ks-clear_();
+        border-top: 1px solid #DDD;
+    }
+
+    & > .ks-tabs-bar > .ks-tabs-tab {
+        float: left;
+        margin-right: 2px;
+        display: inline;
+        margin-top: -1px;
+        border-radius: 0 0 4px 4px; //*margin-top: -2px;
+        &.ks-tabs-tab-selected,
+        &.ks-tabs-tab-selected.ks-tabs-tab-active {
+            border-color: transparent #ddd #ddd #ddd;
+            *border-top-color: white;
+        }
+    }
+}
+
+.ks-tabs-left {
+
+    & > .ks-tabs-bar {
+        margin-right: 19px;
+        border-right: 1px solid #ddd;
+        float: left;
+    }
+
+    & > .ks-tabs-bar > .ks-tabs-tab {
+        margin-right: -1px;
+        border-radius: 4px 0 0 4px; //*margin-top: -2px;
+        display: block;
+        margin-bottom: 2px;
+        &.ks-tabs-tab-selected,
+        &.ks-tabs-tab-selected.ks-tabs-tab-active {
+            border-color: #DDD transparent #DDD #DDD;
+            *border-right-color: white;
+        }
+    }
+
+}
+
+.ks-tabs-right {
+
+    & > .ks-tabs-bar {
+        margin-left: 19px;
+        border-left: 1px solid #ddd;
+        float: right;
+    }
+
+    & > .ks-tabs-bar > .ks-tabs-tab {
+        margin-left: -1px;
+        border-radius: 0 4px 4px 0; //*margin-top: -2px;
+        display: block;
+        margin-bottom: 2px;
+        &.ks-tabs-tab-selected,
+        &.ks-tabs-tab-selected.ks-tabs-tab-active {
+            border-color: #DDD #DDD #DDD transparent;
+            *border-left-color: white;
+        }
+    }
+
+}

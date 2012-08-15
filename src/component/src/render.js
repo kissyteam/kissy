@@ -6,16 +6,11 @@
 KISSY.add("component/render", function (S, Component, UIBase, Manager) {
 
     /**
-     * @memberOf Component
-     * @name Render
      * @extends Component.UIBase
-     * @class
+     * @class Component.Render
      * Base Render class for KISSY Component.
      */
     return UIBase.extend([UIBase.Box.Render],
-        /**
-         * @lends Component.Render#
-         */
         {
 
             /**
@@ -23,7 +18,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              * the css class names are prefixed with component name.
              * @param {String} [state] This component's state info.
              */
-            getComponentCssClassWithState:function (state) {
+            getComponentCssClassWithState: function (state) {
                 var self = this,
                     componentCls = self.get("ksComponentCss");
                 state = state || "";
@@ -33,13 +28,13 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
             /**
              * Get full class name (with prefix) for current component
              * @param classes {String} class names without prefixCls. Separated by space.
-             * @function
+             * @method
              * @return {String} class name with prefixCls
              * @private
              */
-            getCssClassWithPrefix:Manager.getCssClassWithPrefix,
+            getCssClassWithPrefix: Manager.getCssClassWithPrefix,
 
-            createDom:function () {
+            createDom: function () {
                 var self = this;
                 self.get("el").addClass(self.getComponentCssClassWithState());
             },
@@ -48,14 +43,14 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              * Returns the dom element which is responsible for listening keyboard events.
              * @return {NodeList}
              */
-            getKeyEventTarget:function () {
+            getKeyEventTarget: function () {
                 return this.get("el");
             },
 
             /**
              * @protected
              */
-            _uiSetHighlighted:function (v) {
+            _uiSetHighlighted: function (v) {
                 var self = this,
                     componentCls = self.getComponentCssClassWithState("-hover"),
                     el = self.get("el");
@@ -65,7 +60,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
             /**
              * @protected
              */
-            _uiSetDisabled:function (v) {
+            _uiSetDisabled: function (v) {
                 var self = this,
                     componentCls = self.getComponentCssClassWithState("-disabled"),
                     el = self.get("el");
@@ -79,7 +74,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
             /**
              * @protected
              */
-            _uiSetActive:function (v) {
+            _uiSetActive: function (v) {
                 var self = this,
                     componentCls = self.getComponentCssClassWithState("-active");
                 self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
@@ -88,7 +83,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
             /**
              * @protected
              */
-            _uiSetFocused:function (v) {
+            _uiSetFocused: function (v) {
                 var self = this,
                     el = self.get("el"),
                     componentCls = self.getComponentCssClassWithState("-focused");
@@ -99,51 +94,51 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              * Return the dom element into which child component to be rendered.
              * @return {NodeList}
              */
-            getContentElement:function () {
+            getContentElement: function () {
                 return this.get("contentEl") || this.get("el");
             }
 
         }, {//  screen state
-            ATTRS:/**
+            ATTRS: /**
              * @lends Component.Render#
              */
             {
                 /**
                  * see {@link Component.Controller#prefixCls}
                  */
-                prefixCls:{
-                    value:"ks-"
+                prefixCls: {
+                    value: "ks-"
                 },
                 /**
                  * see {@link Component.Controller#focusable}
                  */
-                focusable:{
-                    value:true
+                focusable: {
+                    value: true
                 },
                 /**
                  * see {@link Component.Controller#focused}
                  */
-                focused:{},
+                focused: {},
                 /**
                  * see {@link Component.Controller#active}
                  */
-                active:{},
+                active: {},
                 /**
                  * see {@link Component.Controller#disabled}
                  */
-                disabled:{},
+                disabled: {},
                 /**
                  * see {@link Component.Controller#highlighted}
                  */
-                highlighted:{}
+                highlighted: {}
             },
-            HTML_PARSER:{
-                disabled:function (el) {
+            HTML_PARSER: {
+                disabled: function (el) {
                     var self = this, componentCls = self.getComponentCssClassWithState("-disabled");
                     return self.get("el").hasClass(componentCls);
                 }
             }
         });
 }, {
-    requires:['./base', './uibase', './manager']
+    requires: ['./base', './uibase', './manager']
 });

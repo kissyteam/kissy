@@ -1,13 +1,14 @@
 /**
+ * @ignore
  * @fileOverview normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle, _data, special) {
+KISSY.add('event/mousewheel', function (S, Event, UA, Utils, EventObject, handle, _data, special) {
 
     var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
         simpleRemove = Utils.simpleRemove,
         simpleAdd = Utils.simpleAdd,
-        MOUSE_WHEEL_HANDLER = "mousewheelHandler";
+        MOUSE_WHEEL_HANDLER = 'mousewheelHandler';
 
     function handler(e) {
         var deltaX,
@@ -84,10 +85,10 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
 }, {
     requires:['./base', 'ua', './utils',
         './object', './handle',
-        './data', "./special"]
+        './data', './special']
 });
 
-/**
+/*
  note:
  not perfect in osx : accelerated scroll
  refer:
@@ -100,4 +101,4 @@ KISSY.add("event/mousewheel", function (S, Event, UA, Utils, EventObject, handle
  http://plugins.jquery.com/project/mousewheel
  http://www.cnblogs.com/aiyuchen/archive/2011/04/19/2020843.html
  http://www.w3.org/TR/DOM-Level-3-Events/#events-mousewheelevents
- **/
+*/

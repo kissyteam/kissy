@@ -22,7 +22,7 @@ KISSY.add("component/uibase/drag", function (S) {
     {
         /**
          * Whether current element is draggable.
-         * @type Boolean
+         * @type {Boolean}
          */
         draggable:{
             setter:function (v) {
@@ -56,7 +56,7 @@ KISSY.add("component/uibase/drag", function (S) {
                 });
 
                 if (dragCfg.proxy) {
-                    dragCfg.proxy.moveOnEnd = false;
+                    dragCfg.proxy.moveOnEnd = true;
 
                     p = self.__proxy = new DD.Proxy(dragCfg.proxy);
                     p.attachDrag(d);
@@ -66,14 +66,13 @@ KISSY.add("component/uibase/drag", function (S) {
 
                 d.on("dragend", function () {
                     var proxyOffset;
-                    if (p) {
-                        proxyOffset = p.get("proxyNode").offset();
-                        el.css("visibility", "");
-                    } else {
-                        proxyOffset = el.offset();
-                    }
+                    proxyOffset = el.offset();
                     self.set("x", proxyOffset.left);
                     self.set("y", proxyOffset.top);
+                    // 存在代理时
+                    if (p) {
+                        el.css("visibility", "visible");
+                    }
                 });
 
                 if (dragCfg.scroll) {

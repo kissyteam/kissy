@@ -31,7 +31,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
                 /**
                  * Whether this option can be selected.
                  * @default true.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 selectable:{
                     value:true
@@ -39,7 +39,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
 
                 /**
                  * String will be used as select 's content if selected.
-                 * @type String
+                 * @type {String}
                  */
                 textContent:{
 

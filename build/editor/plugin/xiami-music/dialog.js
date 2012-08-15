@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:26
+build time: Aug 15 22:02
 */
 /**
  * xiami-music dialog
@@ -157,9 +157,6 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
             self.dAlign = MenuButton.Select.decorate(del.one(".ks-editor-xiami-align"), {
                 prefixCls:'ks-editor-big-',
                 width:80,
-                elAttrs:{
-                    hideFocus:"hideFocus"
-                },
                 menuCfg:{
                     prefixCls:'ks-editor-',
                     render:del

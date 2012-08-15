@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>静态简单模式</title>
+<link href="../../../../build/css/dpl/base.css" rel="stylesheet"/>
+<link href="../assets/default.css" rel="stylesheet"/>
+
+</head>
+<body>
+<h1>从已有节点渲染</h1>
+<div style="margin:10px auto; width:80%;text-align: center">
+    <h2>
+        static : input a or b or c or d or 3
+    </h2>
+    <div class="ks-combobox" id="combobox">
+        <div class="ks-combobox-input-wrap">
+            <input style="width:100%;height:100%;" aria-haspopup="true"
+                   aria-combobox="list" role="combobox" combobox="off"
+                   class="ks-combobox-input" tabindex="0"
+                   id="inp"
+                    />
+        </div>
+    </div>
+
+</div>
+
+<h1>全新产生新节点</h1>
+<div style="margin:10px auto; width:800px;text-align: center" id="newNew">
+    <h2>
+        static : input a or b or c or d or 3
+    </h2>
+</div>
+<script src="../../../../build/kissy.js"></script>
+<script src="../../src/baseRender.js"></script>
+<script src="../../src/base.js"></script>
+<script src="../../src/combobox.js"></script>
+
+
+<script src="../../src/localDataSource.js"></script>
+<script src="../../src/remoteDataSource.js"></script>
+<script>
+    KISSY.use("combobox", function (S, ComboBox) {
+
+        /*
+         local dataSource
+         */
+        (function () {
+            var data = ["a123456", "b12345", "c3464356", "d23434"];
+
+            var basicComboBox = new ComboBox({
+                width:100,
+                srcNode:S.one("#combobox"),
+                // 初始就聚焦
+                focused:true,
+                hasTrigger:false,
+                dataSource:{
+                    data:data,
+                    xclass:'combobox-LocalDataSource'
+                }
+            });
+            basicComboBox.render();
+
+            // 得到焦点时展示全部
+            S.one("#inp").on("focus", function () {
+                basicComboBox.sendRequest('');
+            });
+        })();
+
+
+        (function () {
+            var data = ["a123456", "b12345", "c3464356", "d23434"];
+
+            var basicComboBox = new ComboBox({
+                render:"#newNew",
+                // width:S.one("#inp").css("width"),
+                dataSource:{
+                    xclass:'combobox-LocalDataSource',
+                    data:data
+                },
+                hasTrigger:false,
+                maxItemCount:2,
+                format:function (query, data) {
+                    var ret = [];
+                    for (var i = 0; i < data.length; i++) {
+                        ret[i] = {
+                            content:(data[i] + "")
+                                    .replace(new RegExp(S.escapeRegExp(query), "g"),
+                                    "<b>$&</b>"),
+                            disabled:(i % 2 ? true : false)
+                        };
+                    }
+                    return ret;
+                }
+            });
+            basicComboBox.render();
+
+            basicComboBox.on("click", function (e) {
+                var item = e.target;
+                S.log(item.get("value") + "\n" + item.get("content") +
+                        "\n" + item.get("textContent"));
+            });
+        })();
+    });
+</script>
+</body>
+</html>

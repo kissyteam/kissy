@@ -354,6 +354,14 @@ KISSY.use("dom", function (S, DOM) {
             DOM.remove(s);
         });
 
+        // https://github.com/kissyteam/kissy/issues/198
+        it("do not change text when change link", function () {
+            var a = DOM.create("<a href='#'>haha@haha</a>");
+            DOM.attr(a, "href", "http://www.g.cn");
+            expect(DOM.attr(a,"href")).toBe("http://www.g.cn");
+            expect(DOM.html(a)).toBe("haha@haha");
+        });
+
         runs(function () {
             //S.get('#test-data').innerHTML = '';
         });

@@ -1,22 +1,24 @@
 /**
+ * @ignore
  * @fileOverview dom-create
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
         var doc = S.Env.host.document,
+            NodeType=DOM.NodeType,
             ie = UA['ie'],
             isString = S.isString,
             DIV = 'div',
             PARENT_NODE = 'parentNode',
             DEFAULT_DIV = doc.createElement(DIV),
-            rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
+            R_XHTML_TAG = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
             RE_TAG = /<([\w:]+)/,
-            rtbody = /<tbody/i,
-            rleadingWhitespace = /^\s+/,
+            R_TBODY = /<tbody/i,
+            R_LEADING_WHITESPACE = /^\s+/,
             lostLeadingWhitespace = ie && ie < 9,
-            rhtml = /<|&#?\w+;/,
-            supportOuterHTML = "outerHTML" in doc.documentElement,
+            R_HTML = /<|&#?\w+;/,
+            supportOuterHTML = 'outerHTML' in doc.documentElement,
             RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
 
         // help compression
@@ -25,7 +27,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         }
 
         function cleanData(els) {
-            var Event = S.require("event");
+            var Event = S.require('event');
             if (Event) {
                 Event.detach(els);
             }
@@ -34,7 +36,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
         S.mix(DOM,
             /**
-             * @lends DOM
+             * @override KISSY.DOM
+             * @class
+             * @singleton
              */
             {
 
@@ -42,8 +46,8 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * Creates DOM elements on the fly from the provided string of raw HTML.
                  * @param {String} html A string of HTML to create on the fly. Note that this parses HTML, not XML.
                  * @param {Object} [props] An map of attributes on the newly-created element.
-                 * @param {Document} [ownerDoc] A document in which the new elements will be created
-                 * @returns {DocumentFragment|HTMLElement}
+                 * @param {HTMLDocument} [ownerDoc] A document in which the new elements will be created
+                 * @return {DocumentFragment|HTMLElement}
                  */
                 create:function (html, props, ownerDoc, _trim/*internal*/) {
 
@@ -80,17 +84,17 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         k,
                         nodes;
 
-                    if (!rhtml.test(html)) {
+                    if (!R_HTML.test(html)) {
                         ret = context.createTextNode(html);
                     }
                     // 简单 tag, 比如 DOM.create('<p>')
                     else if ((m = RE_SIMPLE_TAG.exec(html))) {
                         ret = context.createElement(m[1]);
                     }
-                    // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
+                    // 复杂情况，比如 DOM.create('<img src='sprite.png' />')
                     else {
-                        // Fix "XHTML"-style tags in all browsers
-                        html = html.replace(rxhtmlTag, "<$1><" + "/$2>");
+                        // Fix 'XHTML'-style tags in all browsers
+                        html = html.replace(R_XHTML_TAG, '<$1><' + '/$2>');
 
                         if ((m = RE_TAG.exec(html)) && (k = m[1])) {
                             tag = k.toLowerCase();
@@ -98,20 +102,20 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                         holder = (creators[tag] || creators[DIV])(html, context);
                         // ie 把前缀空白吃掉了
-                        if (lostLeadingWhitespace && (whitespaceMatch = html.match(rleadingWhitespace))) {
+                        if (lostLeadingWhitespace && (whitespaceMatch = html.match(R_LEADING_WHITESPACE))) {
                             holder.insertBefore(context.createTextNode(whitespaceMatch[0]), holder.firstChild);
                         }
                         nodes = holder.childNodes;
 
                         if (nodes.length === 1) {
-                            // return single node, breaking parentNode ref from "fragment"
+                            // return single node, breaking parentNode ref from 'fragment'
                             ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
                         }
                         else if (nodes.length) {
                             // return multiple nodes as a fragment
                             ret = nodeListToFragment(nodes);
                         } else {
-                            S.error(html + " : create node error");
+                            S.error(html + ' : create node error');
                         }
                     }
 
@@ -122,7 +126,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     div:function (html, ownerDoc) {
                         var frag = ownerDoc && ownerDoc != doc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
                         // html 为 <style></style> 时不行，必须有其他元素？
-                        frag['innerHTML'] = "m<div>" + html + "<" + "/div>";
+                        frag['innerHTML'] = 'm<div>' + html + '<' + '/div>';
                         return frag.lastChild;
                     }
                 },
@@ -131,7 +135,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * Get the HTML contents of the first element in the set of matched elements.
                  * or
                  * Set the HTML contents of each element in the set of matched elements.
-                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  * @param {String} htmlString  A string of HTML to set as the content of each matched element.
                  * @param {Boolean} [loadScripts=false] True to look for and process scripts
                  */
@@ -145,7 +149,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     // getter
                     if (htmlString === undefined) {
                         // only gets value on the first of element nodes
-                        if (el.nodeType == DOM.ELEMENT_NODE) {
+                        if (el.nodeType == NodeType.ELEMENT_NODE) {
                             return el.innerHTML;
                         } else {
                             return null;
@@ -155,25 +159,25 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     else {
 
                         var success = false, i, elem;
-                        htmlString += "";
+                        htmlString += '';
 
                         // faster
                         // fix #103,some html element can not be set through innerHTML
                         if (!htmlString.match(/<(?:script|style|link)/i) &&
-                            (!lostLeadingWhitespace || !htmlString.match(rleadingWhitespace)) &&
-                            !creatorsMap[ (htmlString.match(RE_TAG) || ["", ""])[1].toLowerCase() ]) {
+                            (!lostLeadingWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) &&
+                            !creatorsMap[ (htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase() ]) {
 
                             try {
                                 for (i = els.length - 1; i >= 0; i--) {
                                     elem = els[i];
-                                    if (elem.nodeType == DOM.ELEMENT_NODE) {
-                                        cleanData(getElementsByTagName(elem, "*"));
+                                    if (elem.nodeType == NodeType.ELEMENT_NODE) {
+                                        cleanData(getElementsByTagName(elem, '*'));
                                         elem.innerHTML = htmlString;
                                     }
                                 }
                                 success = true;
                             } catch (e) {
-                                // a <= "<a>"
+                                // a <= '<a>'
                                 // a.innerHTML='<p>1</p>';
                             }
 
@@ -192,7 +196,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * Get the outerHTML of the first element in the set of matched elements.
                  * or
                  * Set the outerHTML of each element in the set of matched elements.
-                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  * @param {String} htmlString  A string of HTML to set as outerHTML of each matched element.
                  * @param {Boolean} [loadScripts=false] True to look for and process scripts
                  */
@@ -211,18 +215,18 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         if (supportOuterHTML) {
                             return el.outerHTML
                         } else {
-                            holder = el.ownerDocument.createElement("div");
+                            holder = el.ownerDocument.createElement('div');
                             holder.appendChild(DOM.clone(el, true));
                             return holder.innerHTML;
                         }
                     } else {
-                        htmlString += "";
+                        htmlString += '';
                         if (!htmlString.match(/<(?:script|style|link)/i) && supportOuterHTML) {
                             for (i = length - 1; i >= 0; i--) {
                                 el = els[i];
-                                if (el.nodeType == DOM.ELEMENT_NODE) {
+                                if (el.nodeType == NodeType.ELEMENT_NODE) {
                                     cleanData(el);
-                                    cleanData(getElementsByTagName(el, "*"));
+                                    cleanData(getElementsByTagName(el, '*'));
                                     el.outerHTML = htmlString;
                                 }
                             }
@@ -236,16 +240,16 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                 /**
                  * Remove the set of matched elements from the DOM.
-                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  * @param {Boolean} [keepData=false] whether keep bound events and jQuery data associated with the elements from removed.
                  */
                 remove:function (selector, keepData) {
                     var el, els = DOM.query(selector), i;
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (!keepData && el.nodeType == DOM.ELEMENT_NODE) {
+                        if (!keepData && el.nodeType == NodeType.ELEMENT_NODE) {
                             // 清理数据
-                            var elChildren = getElementsByTagName(el, "*");
+                            var elChildren = getElementsByTagName(el, '*');
                             cleanData(elChildren);
                             cleanData(el);
                         }
@@ -258,7 +262,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                 /**
                  * Create a deep copy of the first of matched elements.
-                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  * @param {Boolean|Object} [deep=false] whether perform deep copy or copy config.
                  * @param {Boolean} [deep.deep] whether perform deep copy
                  * @param {Boolean} [deep.withDataAndEvent=false] A Boolean indicating
@@ -272,7 +276,8 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
                  * if set true then deep argument must be set true as well.
                  * @see https://developer.mozilla.org/En/DOM/Node.cloneNode
-                 * @returns {HTMLElement}
+                 * @return {HTMLElement}
+                 * @member KISSY.DOM
                  */
                 clone:function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
 
@@ -294,14 +299,14 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     // 2. ie will execute external script
                     var clone = elem.cloneNode(deep);
 
-                    if (elem.nodeType == DOM.ELEMENT_NODE ||
-                        elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+                    if (elem.nodeType == NodeType.ELEMENT_NODE ||
+                        elem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
                         // IE copies events bound via attachEvent when using cloneNode.
                         // Calling detachEvent on the clone will also remove the events
                         // from the original. In order to get around this, we use some
                         // proprietary methods to clear the events. Thanks to MooTools
                         // guys for this hotness.
-                        if (elem.nodeType == DOM.ELEMENT_NODE) {
+                        if (elem.nodeType == NodeType.ELEMENT_NODE) {
                             fixAttributes(elem, clone);
                         }
 
@@ -321,7 +326,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                 /**
                  * Remove(include data and event handlers) all child nodes of the set of matched elements from the DOM.
-                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  */
                 empty:function (selector) {
                     var els = DOM.query(selector), el, i;
@@ -335,7 +340,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             });
 
         function processAll(fn, elem, clone) {
-            if (elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+            if (elem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
                 var eCs = elem.childNodes,
                     cloneCs = clone.childNodes,
                     fIndex = 0;
@@ -345,9 +350,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                     fIndex++;
                 }
-            } else if (elem.nodeType == DOM.ELEMENT_NODE) {
-                var elemChildren = getElementsByTagName(elem, "*"),
-                    cloneChildren = getElementsByTagName(clone, "*"),
+            } else if (elem.nodeType == NodeType.ELEMENT_NODE) {
+                var elemChildren = getElementsByTagName(elem, '*'),
+                    cloneChildren = getElementsByTagName(clone, '*'),
                     cIndex = 0;
                 while (elemChildren[cIndex]) {
                     if (cloneChildren[cIndex]) {
@@ -363,7 +368,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         function cloneWithDataAndEvent(src, dest) {
             var Event = S.require('event');
 
-            if (dest.nodeType == DOM.ELEMENT_NODE && !DOM.hasData(src)) {
+            if (dest.nodeType == NodeType.ELEMENT_NODE && !DOM.hasData(src)) {
                 return;
             }
 
@@ -404,12 +409,12 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             // IE6-8 fail to clone children inside object elements that use
             // the proprietary classid attribute value (rather than the type
             // attribute) to identify the type of content to display
-            if (nodeName === "object" && !dest.childNodes.length) {
+            if (nodeName === 'object' && !dest.childNodes.length) {
                 for (var i = 0; i < srcChilds.length; i++) {
                     dest.appendChild(srcChilds[i].cloneNode(true));
                 }
                 // dest.outerHTML = src.outerHTML;
-            } else if (nodeName === "input" && (src.type === "checkbox" || src.type === "radio")) {
+            } else if (nodeName === 'input' && (src.type === 'checkbox' || src.type === 'radio')) {
                 // IE6-8 fails to persist the checked state of a cloned checkbox
                 // or radio button. Worse, IE6-7 fail to give the cloned element
                 // a checked appearance if the defaultChecked value isn't also set
@@ -418,18 +423,18 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                 }
 
                 // IE6-7 get confused and end up setting the value of a cloned
-                // checkbox/radio button to an empty string instead of "on"
+                // checkbox/radio button to an empty string instead of 'on'
                 if (dest.value !== src.value) {
                     dest.value = src.value;
                 }
 
                 // IE6-8 fails to return the selected option to the default selected
                 // state when cloning options
-            } else if (nodeName === "option") {
+            } else if (nodeName === 'option') {
                 dest.selected = src.defaultSelected;
                 // IE6-8 fails to set the defaultValue to the correct value when
                 // cloning other types of input fields
-            } else if (nodeName === "input" || nodeName === "textarea") {
+            } else if (nodeName === 'input' || nodeName === 'textarea') {
                 dest.defaultValue = src.defaultValue;
             }
 
@@ -442,11 +447,11 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         // 添加成员到元素中
         function attachProps(elem, props) {
             if (S.isPlainObject(props)) {
-                if (elem.nodeType == DOM.ELEMENT_NODE) {
+                if (elem.nodeType == NodeType.ELEMENT_NODE) {
                     DOM.attr(elem, props, true);
                 }
                 // document fragment
-                else if (elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+                else if (elem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
                     DOM.attr(elem.childNodes, props, true);
                 }
             }
@@ -509,14 +514,14 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             // https://github.com/kissyteam/kissy/issues/88 : spurious tbody in ie<8
             creators.table = function (html, ownerDoc) {
                 var frag = creators[DIV](html, ownerDoc),
-                    hasTBody = rtbody.test(html);
+                    hasTBody = R_TBODY.test(html);
                 if (hasTBody) {
                     return frag;
                 }
                 var table = frag.firstChild,
                     tableChildren = S.makeArray(table.childNodes);
                 S.each(tableChildren, function (c) {
-                    if (DOM.nodeName(c) == "tbody" && !c.childNodes.length) {
+                    if (DOM.nodeName(c) == 'tbody' && !c.childNodes.length) {
                         table.removeChild(c);
                     }
                 });
@@ -527,27 +532,27 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         return DOM;
     },
     {
-        requires:["./base", "ua"]
+        requires:['./base', 'ua']
     });
 
-/**
- * 2012-01-31
- * remove spurious tbody
- *
- * 2011-10-13
- * empty , html refactor
- *
- * 2011-08-22
- * clone 实现，参考 jq
- *
- * 2011-08
- *  remove 需要对子孙节点以及自身清除事件以及自定义 data
- *  create 修改，支持 <style></style> ie 下直接创建
- *  TODO: jquery clone ,clean 实现
- *
- * TODO:
- *  - 研究 jQuery 的 buildFragment 和 clean
- *  - 增加 cache, 完善 test cases
- *  - 支持更多 props
- *  - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
+/*
+  2012-01-31
+  remove spurious tbody
+
+  2011-10-13
+  empty , html refactor
+
+  2011-08-22
+  clone 实现，参考 jq
+
+  2011-08
+   remove 需要对子孙节点以及自身清除事件以及自定义 data
+   create 修改，支持 <style></style> ie 下直接创建
+   TODO: jquery clone ,clean 实现
+
+  TODO:
+   - 研究 jQuery 的 buildFragment 和 clean
+   - 增加 cache, 完善 test cases
+   - 支持更多 props
+   - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
  */

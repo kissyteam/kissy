@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:26
+build time: Aug 15 22:02
 */
 /**
  * custom overlay  for kissy editor
@@ -41,11 +41,6 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix)
         }
     }, {
         ATTRS:{
-            elAttrs:{
-                value:{
-                    hideFocus:'hideFocus'
-                }
-            },
             prefixCls:{
                 value:"ks-editor-"
             },

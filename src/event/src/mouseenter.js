@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview event-mouseenter
  * @author yiminghe@gmail.com
  */
@@ -39,14 +40,14 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
 
     return Event;
 }, {
-    requires:["./base", "dom", "ua", "./special"]
+    requires:['./base', 'dom', 'ua', './special']
 });
 
-/**
- * yiminghe@gmail.com:2011-12-15
- * - 借鉴 jq 1.7 新的架构
- *
- * 承玉：2011-06-07
- * - 根据新结构，调整 mouseenter 兼容处理
- * - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
+/*
+  yiminghe@gmail.com:2011-12-15
+  - 借鉴 jq 1.7 新的架构
+
+  承玉：2011-06-07
+  - 根据新结构，调整 mouseenter 兼容处理
+  - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
  */

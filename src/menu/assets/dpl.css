@@ -17,6 +17,16 @@
 *
 * @author yiminghe@gmail.com
 */
+/**
+* Snippets of reusable CSS to develop faster and keep code readable from KISSY and Bootstrap.
+*
+* @author yiminghe@gmail.com
+*/
+/**
+* Variables to customize the look and feel from Bootstrap.
+*
+* @author yiminghe@gmail.com
+*/
 .ks-submenu-arrow {
   width: 0;
   height: 0;
@@ -27,6 +37,10 @@
   vertical-align: top;
   opacity: 0.3;
   filter: alpha(opacity=30);
+  *zoom: 1;
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+  *zoom: 1;
   right: 0;
   border-left: 4px solid black;
   border-bottom: 4px solid transparent;
@@ -35,6 +49,10 @@
 .ks-menuitem-hover .ks-submenu-arrow {
   opacity: 1;
   filter: alpha(opacity=100);
+  *zoom: 1;
+  opacity: 1;
+  filter: alpha(opacity=100);
+  *zoom: 1;
 }
 .ks-popupmenu {
   position: absolute;
@@ -54,6 +72,9 @@
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   -webkit-background-clip: padding-box;
   -moz-background-clip: padding;
   background-clip: padding-box;
@@ -66,8 +87,6 @@
   overflow: hidden;
   background-color: #e5e5e5;
   border-bottom: 1px solid #ffffff;
-  *width: 100%;
-  *margin: -5px 0 5px;
 }
 .ks-menu .ks-menuitem {
   position: relative;
@@ -88,21 +107,45 @@
 .ks-menuitem-disabled .ks-menuitem {
   opacity: 0.3;
   filter: alpha(opacity=30);
-}
-.ks-menuitem-disabled {
+  *zoom: 1;
   opacity: 0.3;
   filter: alpha(opacity=30);
+  *zoom: 1;
 }
-.ks-menuitem-checkbox,
-.ks-menuitem-icon {
-  width: 14px;
-  height: 14px;
+.ks-menu .ks-menuitem-disabled {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+  *zoom: 1;
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+  *zoom: 1;
+}
+.ks-menuitem-checked .ks-menuitem-checkbox {
   position: absolute;
   left: 6px;
-  line-height: 14px;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  *display: inline;
+  *zoom: 1;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  *display: inline;
+  *zoom: 1;
+  width: 14px;
+  height: 14px;
   vertical-align: text-top;
+  background-image: url(http://img04.taobaocdn.com/tps/i4/T1bxYzXmxeXXcIVv2D-469-159.png);
+  background-position: 14px 14px;
+  background-repeat: no-repeat;
+  *margin-right: .3em;
+  *margin-right: .3em;
+  background-position: -288px 0;
 }
-.ks-menuitem-checked .ks-menuitem-checkbox,
-.ks-menuitem-checked.ks-menuitem-icon {
-  background: url("http://img04.taobaocdn.com/tps/i4/T1bxYzXmxeXXcIVv2D-469-159.png") no-repeat -288px 0;
+.ks-menuitem-checked .ks-menuitem-checkbox:last-child {
+  *margin-left: 0;
+}
+.ks-menuitem-checked .ks-menuitem-checkbox:last-child {
+  *margin-left: 0;
 }

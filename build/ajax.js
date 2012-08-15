@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:23
+build time: Aug 15 21:59
 */
 /**
  * @fileOverview form data  serialization util
@@ -774,7 +774,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
 
             /**
              * get all response headers as string after request is completed
-             * @returns {String}
+             * @return {String}
              */
             getAllResponseHeaders:function () {
                 var self = this;
@@ -1195,15 +1195,15 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
             XhrObject:XhrObject,
             /**
              * form serialization
-             * @function
+             * @method
              * @param formElement {HTMLElement[]|HTMLElement|NodeList} form elements
-             * @returns {String} serialized string represent form elements
+             * @return {String} serialized string represent form elements
              */
             serialize:serializer.serialize,
 
             /**
              * perform a get request
-             * @function
+             * @method
              * @param {String} url request destination
              * @param {Object} [data] name-value object associated with this request
              * @param {Function()} callback <br/>
@@ -1214,7 +1214,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
              * @param {String} [dataType] the type of data returns from this request
              * ("xml" or "json" or "text")
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             get:get,
 
@@ -1230,7 +1230,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
              * @param {String} [dataType] the type of data returns from this request
              * ("xml" or "json" or "text")
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             post:function (url, data, callback, dataType) {
                 if (S.isFunction(data)) {
@@ -1251,7 +1251,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 1. data returned from this request with type specified by dataType<br/>
              * 2. status of this request with type String<br/>
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             jsonp:function (url, data, callback) {
                 if (S.isFunction(data)) {
@@ -1279,7 +1279,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 1. data returned from this request with type JSON<br/>
              * 2. status of this request with type String<br/>
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             getJSON:function (url, data, callback) {
                 if (S.isFunction(data)) {
@@ -1301,7 +1301,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
              * @param {String} [dataType] the type of data returns from this request
              * ("xml" or "json" or "text")
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             upload:function (url, form, data, callback, dataType) {
                 if (S.isFunction(data)) {
@@ -1487,7 +1487,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
     /**
      * @name IO
      * @namespace Provides utility that brokers HTTP requests through a simplified interface
-     * @function
+     * @method
      *
      * @param {Object} c <br/>name-value of object to config this io request.<br/>
      *  all values are optional.<br/>
@@ -1636,7 +1636,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * 2. b.t.cn/proxy.htm 's content is &lt;script>document.domain='t.cn'&lt;/script><br/>
      * 3. in a.htm , call io({xdr:{subDomain:{proxy:'/proxy.htm'}}})
      *
-     * @returns {IO.XhrObject} current request object
+     * @return {IO.XhrObject} current request object
      */
     function io(c) {
 
@@ -1763,7 +1763,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
             /**
              * whether current application is a local application
              * (protocal is file://,widget://,about://)
-             * @type Boolean
+             * @type {Boolean}
              * @field
              */
             isLocal:isLocal,
@@ -1790,7 +1790,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
             },
             /**
              * get default config value for io request
-             * @returns {Object}
+             * @return {Object}
              */
             getConfig:function () {
                 return defaultConfig;

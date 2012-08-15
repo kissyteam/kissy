@@ -166,7 +166,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
 
             /**
              * get all response headers as string after request is completed
-             * @returns {String}
+             * @return {String}
              */
             getAllResponseHeaders:function () {
                 var self = this;

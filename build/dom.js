@@ -1,49 +1,52 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 7 22:23
+build time: Aug 15 22:00
 */
 /**
+ * @ignore
  * @fileOverview dom-attr
- * @author yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
     var doc = S.Env.host.document,
+        NodeType=DOM.NodeType,
         docElement = doc.documentElement,
-        oldIE = !docElement.hasAttribute,
+        IE_VERSION = UA.ie && (doc.documentMode || UA.ie),
         TEXT = docElement.textContent === undefined ?
             'innerText' : 'textContent',
         EMPTY = '',
+        HREF = 'href',
         nodeName = DOM.nodeName,
-        rboolean = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,
-        rfocusable = /^(?:button|input|object|select|textarea)$/i,
-        rclickable = /^a(?:rea)?$/i,
-        rinvalidChar = /:|^on/,
-        rreturn = /\r/g,
+        R_BOOLEAN = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,
+        R_FOCUSABLE = /^(?:button|input|object|select|textarea)$/i,
+        R_CLICKABLE = /^a(?:rea)?$/i,
+        R_INVALID_CHAR = /:|^on/,
+        R_RETURN = /\r/g,
         attrFix = {
         },
         attrFn = {
-            val:1,
-            css:1,
-            html:1,
-            text:1,
-            data:1,
-            width:1,
-            height:1,
-            offset:1,
-            scrollTop:1,
-            scrollLeft:1
+            val: 1,
+            css: 1,
+            html: 1,
+            text: 1,
+            data: 1,
+            width: 1,
+            height: 1,
+            offset: 1,
+            scrollTop: 1,
+            scrollLeft: 1
         },
         attrHooks = {
             // http://fluidproject.org/blog/2008/01/09/getting-setting-and-removing-tabindex-values-with-javascript/
-            tabindex:{
-                get:function (el) {
+            tabindex: {
+                get: function (el) {
                     // elem.tabIndex doesn't always return the correct value when it hasn't been explicitly set
-                    var attributeNode = el.getAttributeNode("tabindex");
+                    var attributeNode = el.getAttributeNode('tabindex');
                     return attributeNode && attributeNode.specified ?
                         parseInt(attributeNode.value, 10) :
-                        rfocusable.test(el.nodeName) || rclickable.test(el.nodeName) && el.href ?
+                        R_FOCUSABLE.test(el.nodeName) || R_CLICKABLE.test(el.nodeName) && el.href ?
                             0 :
                             undefined;
                 }
@@ -51,29 +54,29 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
             // 在标准浏览器下，用 getAttribute 获取 style 值
             // IE7- 下，需要用 cssText 来获取
             // 统一使用 cssText
-            style:{
-                get:function (el) {
+            style: {
+                get: function (el) {
                     return el.style.cssText;
                 },
-                set:function (el, val) {
+                set: function (el, val) {
                     el.style.cssText = val;
                 }
             }
         },
         propFix = {
-            "hidefocus":"hideFocus",
-            tabindex:"tabIndex",
-            readonly:"readOnly",
-            "for":"htmlFor",
-            "class":"className",
-            maxlength:"maxLength",
-            "cellspacing":"cellSpacing",
-            "cellpadding":"cellPadding",
-            rowspan:"rowSpan",
-            colspan:"colSpan",
-            usemap:"useMap",
-            "frameborder":"frameBorder",
-            "contenteditable":"contentEditable"
+            'hidefocus': 'hideFocus',
+            tabindex: 'tabIndex',
+            readonly: 'readOnly',
+            'for': 'htmlFor',
+            'class': 'className',
+            maxlength: 'maxLength',
+            'cellspacing': 'cellSpacing',
+            'cellpadding': 'cellPadding',
+            rowspan: 'rowSpan',
+            colspan: 'colSpan',
+            usemap: 'useMap',
+            'frameborder': 'frameBorder',
+            'contenteditable': 'contentEditable'
         },
     // Hook for boolean attributes
     // if bool is false
@@ -81,14 +84,14 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
     //  - ie<8 return false
     //   - so norm to undefined
         boolHook = {
-            get:function (elem, name) {
+            get: function (elem, name) {
                 // 转发到 prop 方法
                 return DOM.prop(elem, name) ?
                     // 根据 w3c attribute , true 时返回属性名字符串
                     name.toLowerCase() :
                     undefined;
             },
-            set:function (elem, value, name) {
+            set: function (elem, value, name) {
                 var propName;
                 if (value === false) {
                     // Remove boolean attributes when set to false
@@ -110,20 +113,20 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
         attrNodeHook = {
         },
         valHooks = {
-            option:{
-                get:function (elem) {
+            option: {
+                get: function (elem) {
                     // 当没有设定 value 时，标准浏览器 option.value === option.text
                     // ie7- 下，没有设定 value 时，option.value === '', 需要用 el.attributes.value 来判断是否有设定 value
                     var val = elem.attributes.value;
                     return !val || val.specified ? elem.value : elem.text;
                 }
             },
-            select:{
+            select: {
                 // 对于 select, 特别是 multiple type, 存在很严重的兼容性问题
-                get:function (elem) {
+                get: function (elem) {
                     var index = elem.selectedIndex,
                         options = elem.options,
-                        one = elem.type === "select-one";
+                        one = elem.type === 'select-one';
 
                     // Nothing was selected
                     if (index < 0) {
@@ -143,7 +146,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     return ret;
                 },
 
-                set:function (elem, value) {
+                set: function (elem, value) {
                     var values = S.makeArray(value),
                         opts = elem.options;
                     S.each(opts, function (opt) {
@@ -157,23 +160,23 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 }
             }};
 
-    if (oldIE) {
+    if (IE_VERSION && IE_VERSION < 8) {
 
         // get attribute value from attribute node for ie
         attrNodeHook = {
-            get:function (elem, name) {
+            get: function (elem, name) {
                 var ret;
                 ret = elem.getAttributeNode(name);
                 // Return undefined if attribute node specified by user
                 return ret && (
                     // fix #100
                     ret.specified
-                        // input.attr("value")
+                        // input.attr('value')
                         || ret.nodeValue) ?
                     ret.nodeValue :
                     undefined;
             },
-            set:function (elem, value, name) {
+            set: function (elem, value, name) {
                 // Check form objects in IE (multiple bugs related)
                 // Only use nodeValue if the attribute node exists on the form
                 var ret = elem.getAttributeNode(name);
@@ -203,9 +206,9 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
         // fix ie bugs
         // 不光是 href, src, 还有 rowspan 等非 mapping 属性，也需要用第 2 个参数来获取原始值
         // 注意 colSpan rowSpan 已经由 propFix 转为大写
-        S.each([ "href", "src", "width", "height", "colSpan", "rowSpan" ], function (name) {
+        S.each([ HREF, 'src', 'width', 'height', 'colSpan', 'rowSpan' ], function (name) {
             attrHooks[ name ] = {
-                get:function (elem) {
+                get: function (elem) {
                     var ret = elem.getAttribute(name, 2);
                     return ret === null ? undefined : ret;
                 }
@@ -216,15 +219,47 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
         valHooks.button = attrHooks.value = attrNodeHook;
     }
 
+    if (IE_VERSION && IE_VERSION < 9) {
+        // https://github.com/kissyteam/kissy/issues/198
+        // http://social.msdn.microsoft.com/Forums/en-US/iewebdevelopment/thread/aa6bf9a5-0c0b-4a02-a115-c5b85783ca8c
+// http://gabriel.nagmay.com/2008/11/javascript-href-bug-in-ie/
+        // https://groups.google.com/group/jquery-dev/browse_thread/thread/22029e221fe635c6?pli=1
+        var hrefFix = attrHooks[HREF] = attrHooks[HREF] || {};
+        hrefFix.set = function (el, val, name) {
+            var childNodes = el.childNodes,
+                b,
+                len = childNodes.length,
+                allText = len > 0;
+
+            for (len = len - 1; len >= 0; len--) {
+                if (childNodes[len].nodeType != NodeType.TEXT_NODE) {
+                    allText = 0;
+                }
+            }
+
+            if (allText) {
+                b = el.ownerDocument.createElement('b');
+                b.style.display = 'none';
+                el.appendChild(b);
+            }
+
+            el.setAttribute(name, EMPTY + val);
+
+            if (b) {
+                el.removeChild(b);
+            }
+        };
+    }
+
     // Radios and checkboxes getter/setter
 
-    S.each([ "radio", "checkbox" ], function (r) {
+    S.each([ 'radio', 'checkbox' ], function (r) {
         valHooks[ r ] = {
-            get:function (elem) {
-                // Handle the case where in Webkit "" is returned instead of "on" if a value isn't specified
-                return elem.getAttribute("value") === null ? "on" : elem.value;
+            get: function (elem) {
+                // Handle the case where in Webkit '' is returned instead of 'on' if a value isn't specified
+                return elem.getAttribute('value') === null ? 'on' : elem.value;
             },
-            set:function (elem, value) {
+            set: function (elem, value) {
                 if (S.isArray(value)) {
                     return elem.checked = S.inArray(DOM.val(elem), value);
                 }
@@ -246,29 +281,31 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
     S.mix(DOM,
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
             /**
              * Get the value of a property for the first element in the set of matched elements.
              * or
              * Set one or more properties for the set of matched elements.
-             * @param {Array<HTMLElement>|String|HTMLElement} selector matched elements
+             * @param {HTMLElement[]|String|HTMLElement} selector matched elements
              * @param {String|Object} name
              * The name of the property to set.
              * or
              * A map of property-value pairs to set.
              * @param [value] A value to set for the property.
-             * @returns {String|undefined|Boolean}
+             * @return {String|undefined|Boolean}
              */
-            prop:function (selector, name, value) {
+            prop: function (selector, name, value) {
                 var elems = DOM.query(selector);
 
                 // supports hash
                 if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        DOM.prop(elems, k, name[k]);
-                    }
+                    S.each(name, function (v, k) {
+                        DOM.prop(elems, k, v);
+                    });
                     return undefined;
                 }
 
@@ -294,11 +331,11 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
             /**
              * Whether one of the matched elements has specified property name
-             * @param {Array<HTMLElement>|String|HTMLElement} selector 元素
+             * @param {HTMLElement[]|String|HTMLElement} selector 元素
              * @param {String} name The name of property to test
              * @return {Boolean}
              */
-            hasProp:function (selector, name) {
+            hasProp: function (selector, name) {
                 var elems = DOM.query(selector);
                 for (var i = 0; i < elems.length; i++) {
                     var el = elems[i];
@@ -311,10 +348,10 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
             /**
              * Remove a property for the set of matched elements.
-             * @param {Array<HTMLElement>|String|HTMLElement} selector matched elements
+             * @param {HTMLElement[]|String|HTMLElement} selector matched elements
              * @param {String} name The name of the property to remove.
              */
-            removeProp:function (selector, name) {
+            removeProp: function (selector, name) {
                 name = propFix[ name ] || name;
                 var elems = DOM.query(selector);
                 for (var i = elems.length - 1; i >= 0; i--) {
@@ -323,7 +360,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                         el[ name ] = undefined;
                         delete el[ name ];
                     } catch (e) {
-                        // S.log("delete el property error : ");
+                        // S.log('delete el property error : ');
                         // S.log(e);
                     }
                 }
@@ -333,12 +370,12 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * Get the value of an attribute for the first element in the set of matched elements.
              * or
              * Set one or more attributes for the set of matched elements.
-             * @param {HTMLElement[]|HTMLElement|String|Element} selector matched elements
+             * @param {HTMLElement[]|HTMLElement|String} selector matched elements
              * @param {String|Object} name The name of the attribute to set. or A map of attribute-value pairs to set.
              * @param [val] A value to set for the attribute.
-             * @returns {String}
+             * @return {String}
              */
-            attr:function (selector, name, val, pass) {
+            attr: function (selector, name, val, pass) {
                 /*
                  Hazards From Caja Note:
 
@@ -366,7 +403,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                  - In IE[67], setAttribute is case-sensitive, unless you pass 0 as a
                  3rd argument.  setAttributeNode is case-insensitive.
 
-                 - Trying to set an invalid name like ":" is supposed to throw an
+                 - Trying to set an invalid name like ':' is supposed to throw an
                  error.  In IE[678] and Opera 10, it fails without an error.
                  */
 
@@ -406,11 +443,11 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     el = els[0],
                     ret;
 
-                if (rboolean.test(name)) {
+                if (R_BOOLEAN.test(name)) {
                     attrNormalizer = boolHook;
                 }
                 // only old ie?
-                else if (rinvalidChar.test(name)) {
+                else if (R_INVALID_CHAR.test(name)) {
                     attrNormalizer = attrNodeHook;
                 } else {
                     attrNormalizer = attrHooks[name];
@@ -418,9 +455,9 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
 
                 if (val === undefined) {
-                    if (el && el.nodeType === DOM.ELEMENT_NODE) {
+                    if (el && el.nodeType === NodeType.ELEMENT_NODE) {
                         // browsers index elements by id/name on forms, give priority to attributes.
-                        if (nodeName(el) == "form") {
+                        if (nodeName(el) == 'form') {
                             attrNormalizer = attrNodeHook;
                         }
                         if (attrNormalizer && attrNormalizer.get) {
@@ -437,8 +474,8 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 } else {
                     for (var i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (el && el.nodeType === DOM.ELEMENT_NODE) {
-                            if (nodeName(el) == "form") {
+                        if (el && el.nodeType === NodeType.ELEMENT_NODE) {
+                            if (nodeName(el) == 'form') {
                                 attrNormalizer = attrNodeHook;
                             }
                             if (attrNormalizer && attrNormalizer.set) {
@@ -455,20 +492,20 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
             /**
              * Remove an attribute from each element in the set of matched elements.
-             * @param {Array<HTMLElement>|String} selector matched elements
+             * @param {HTMLElement[]|String} selector matched elements
              * @param {String} name An attribute to remove
              */
-            removeAttr:function (selector, name) {
+            removeAttr: function (selector, name) {
                 name = name.toLowerCase();
                 name = attrFix[name] || name;
                 var els = DOM.query(selector), el, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
-                    if (el.nodeType == DOM.ELEMENT_NODE) {
+                    if (el.nodeType == NodeType.ELEMENT_NODE) {
                         var propName;
                         el.removeAttribute(name);
                         // Set corresponding property to false for boolean attributes
-                        if (rboolean.test(name) && (propName = propFix[ name ] || name) in el) {
+                        if (R_BOOLEAN.test(name) && (propName = propFix[ name ] || name) in el) {
                             el[ propName ] = false;
                         }
                     }
@@ -477,12 +514,12 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
             /**
              * Whether one of the matched elements has specified attribute
-             * @function
-             * @param {Array<HTMLElement>|String} selector matched elements
+             * @method
+             * @param {HTMLElement[]|String} selector matched elements
              * @param {String} name The attribute to be tested
-             * @returns {Boolean}
+             * @return {Boolean}
              */
-            hasAttr:oldIE ?
+            hasAttr: !docElement.hasAttribute ?
                 function (selector, name) {
                     name = name.toLowerCase();
                     var elems = DOM.query(selector);
@@ -515,11 +552,11 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * Get the current value of the first element in the set of matched elements.
              * or
              * Set the value of each element in the set of matched elements.
-             * @param {Array<HTMLElement>|String} selector matched elements
-             * @param {String|Array<String>} [value] A string of text or an array of strings corresponding to the value of each matched element to set as selected/checked.
-             * @returns {undefined|String|Array<String>|Number}
+             * @param {HTMLElement[]|String} selector matched elements
+             * @param {String|String[]} [value] A string of text or an array of strings corresponding to the value of each matched element to set as selected/checked.
+             * @return {undefined|String|String[]|Number}
              */
-            val:function (selector, value) {
+            val: function (selector, value) {
                 var hook, ret;
 
                 //getter
@@ -530,17 +567,17 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     if (elem) {
                         hook = valHooks[ nodeName(elem) ] || valHooks[ elem.type ];
 
-                        if (hook && "get" in hook && (ret = hook.get(elem, "value")) !== undefined) {
+                        if (hook && 'get' in hook && (ret = hook.get(elem, 'value')) !== undefined) {
                             return ret;
                         }
 
                         ret = elem.value;
 
-                        return typeof ret === "string" ?
+                        return typeof ret === 'string' ?
                             // handle most common string cases
-                            ret.replace(rreturn, "") :
+                            ret.replace(R_RETURN, '') :
                             // handle cases where value is null/undefined or number
-                            ret == null ? "" : ret;
+                            ret == null ? '' : ret;
                     }
 
                     return undefined;
@@ -555,28 +592,28 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
                     var val = value;
 
-                    // Treat null/undefined as ""; convert numbers to string
+                    // Treat null/undefined as ''; convert numbers to string
                     if (val == null) {
-                        val = "";
-                    } else if (typeof val === "number") {
-                        val += "";
+                        val = '';
+                    } else if (typeof val === 'number') {
+                        val += '';
                     } else if (S.isArray(val)) {
                         val = S.map(val, function (value) {
-                            return value == null ? "" : value + "";
+                            return value == null ? '' : value + '';
                         });
                     }
 
                     hook = valHooks[ nodeName(elem)] || valHooks[ elem.type ];
 
                     // If set returns undefined, fall back to normal setting
-                    if (!hook || !("set" in hook) || hook.set(elem, val, "value") === undefined) {
+                    if (!hook || !('set' in hook) || hook.set(elem, val, 'value') === undefined) {
                         elem.value = val;
                     }
                 }
                 return undefined;
             },
 
-            _propHooks:propHooks,
+            _propHooks: propHooks,
 
             /**
              * Get the combined text contents of each element in the set of matched elements, including their descendants.
@@ -584,19 +621,19 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * Set the content of each element in the set of matched elements to the specified text.
              * @param {HTMLElement[]|HTMLElement|String} selector matched elements
              * @param {String} [val] A string of text to set as the content of each matched element.
-             * @returns {String|undefined}
+             * @return {String|undefined}
              */
-            text:function (selector, val) {
+            text: function (selector, val) {
                 // getter
                 if (val === undefined) {
                     // supports css selector/Node/NodeList
                     var el = DOM.get(selector);
 
                     // only gets value on supported nodes
-                    if (el.nodeType == DOM.ELEMENT_NODE) {
+                    if (el.nodeType == NodeType.ELEMENT_NODE) {
                         return el[TEXT] || EMPTY;
                     }
-                    else if (el.nodeType == DOM.TEXT_NODE) {
+                    else if (el.nodeType == NodeType.TEXT_NODE) {
                         return el.nodeValue;
                     }
                     return undefined;
@@ -606,10 +643,10 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     var els = DOM.query(selector), i;
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (el.nodeType == DOM.ELEMENT_NODE) {
+                        if (el.nodeType == NodeType.ELEMENT_NODE) {
                             el[TEXT] = val;
                         }
-                        else if (el.nodeType == DOM.TEXT_NODE) {
+                        else if (el.nodeType == NodeType.TEXT_NODE) {
                             el.nodeValue = val;
                         }
                     }
@@ -617,32 +654,31 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 return undefined;
             }
         });
-    if (1 > 2) {
-        DOM.removeProp("j", "1");
-    }
+
     return DOM;
 }, {
-    requires:["./base", "ua"]
+    requires: ['./base', 'ua']
 });
-/**
- * NOTES:
- * yiminghe@gmail.com：2011-06-03
- *  - 借鉴 jquery 1.6,理清 attribute 与 property
- *
- * yiminghe@gmail.com：2011-01-28
- *  - 处理 tabindex，顺便重构
- *
- * 2010.03
- *  - 在 jquery/support.js 中，special attrs 里还有 maxlength, cellspacing,
- *    rowspan, colspan, useap, frameboder, 但测试发现，在 Grade-A 级浏览器中
- *    并无兼容性问题。
- *  - 当 colspan/rowspan 属性值设置有误时，ie7- 会自动纠正，和 href 一样，需要传递
- *    第 2 个参数来解决。jQuery 未考虑，存在兼容性 bug.
- *  - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
- *  - jquery/attributes.js: Safari mis-reports the default selected
- *    property of an option 在 Safari 4 中已修复。
- *
+/*
+  NOTES:
+  yiminghe@gmail.com：2011-06-03
+   - 借鉴 jquery 1.6,理清 attribute 与 property
+ 
+  yiminghe@gmail.com：2011-01-28
+   - 处理 tabindex，顺便重构
+ 
+  2010.03
+   - 在 jquery/support.js 中，special attrs 里还有 maxlength, cellspacing,
+     rowspan, colspan, useap, frameboder, 但测试发现，在 Grade-A 级浏览器中
+     并无兼容性问题。
+   - 当 colspan/rowspan 属性值设置有误时，ie7- 会自动纠正，和 href 一样，需要传递
+     第 2 个参数来解决。jQuery 未考虑，存在兼容性 bug.
+   - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
+   - jquery/attributes.js: Safari mis-reports the default selected
+     property of an option 在 Safari 4 中已修复。
+ 
  *//**
+ * @ignore
  * @fileOverview dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
@@ -650,24 +686,66 @@ KISSY.add('dom/base', function (S, UA, undefined) {
 
     var WINDOW = S.Env.host;
 
-    var NODE_TYPE =
     /**
-     * @lends DOM
+     * DOM Element node type.
+     * @enum {Number} KISSY.DOM.NodeType
      */
-    {
-        ELEMENT_NODE:1,
-        "ATTRIBUTE_NODE":2,
-        TEXT_NODE:3,
-        "CDATA_SECTION_NODE":4,
-        "ENTITY_REFERENCE_NODE":5,
-        "ENTITY_NODE":6,
-        "PROCESSING_INSTRUCTION_NODE":7,
-        COMMENT_NODE:8,
-        DOCUMENT_NODE:9,
-        "DOCUMENT_TYPE_NODE":10,
-        DOCUMENT_FRAGMENT_NODE:11,
-        "NOTATION_NODE":12
+    var NodeType = {
+        /**
+         * element type
+         */
+        ELEMENT_NODE: 1,
+        /**
+         * attribute node type
+         */
+        'ATTRIBUTE_NODE': 2,
+        /**
+         * text node type
+         */
+        TEXT_NODE: 3,
+        /**
+         * cdata node type
+         */
+        'CDATA_SECTION_NODE': 4,
+        /**
+         * entity reference node type
+         */
+        'ENTITY_REFERENCE_NODE': 5,
+        /**
+         * entity node type
+         */
+        'ENTITY_NODE': 6,
+        /**
+         * processing instruction node type
+         */
+        'PROCESSING_INSTRUCTION_NODE': 7,
+        /**
+         * comment node type
+         */
+        COMMENT_NODE: 8,
+        /**
+         * document node type
+         */
+        DOCUMENT_NODE: 9,
+        /**
+         * document type
+         */
+        'DOCUMENT_TYPE_NODE': 10,
+        /**
+         * document fragment type
+         */
+        DOCUMENT_FRAGMENT_NODE: 11,
+        /**
+         * notation type
+         */
+        'NOTATION_NODE': 12
     };
+    /**
+     * KISSY DOM Utils.
+     * Provides DOM helper methods.
+     * @class KISSY.DOM
+     * @singleton
+     */
     var DOM = {
 
         /**
@@ -675,7 +753,7 @@ KISSY.add('dom/base', function (S, UA, undefined) {
          * @param {window} [win] Test window. Default current window.
          * @return {Boolean}
          */
-        isCustomDomain:function (win) {
+        isCustomDomain: function (win) {
             win = win || WINDOW;
             var domain = win.document.domain,
                 hostname = win.location.hostname;
@@ -689,39 +767,40 @@ KISSY.add('dom/base', function (S, UA, undefined) {
          * @param {window} [win] Window new iframe will be inserted into.
          * @return {String} Src for iframe.
          */
-        getEmptyIframeSrc:function (win) {
+        getEmptyIframeSrc: function (win) {
             win = win || WINDOW;
             if (UA['ie'] && DOM.isCustomDomain(win)) {
-                return  'javascript:void(function(){' + encodeURIComponent("" +
-                    "document.open();" +
-                    "document.domain='" +
-                    win.document.domain
-                    + "';" +
-                    "document.close();") + "}())";
+                return  'javascript:void(function(){' + encodeURIComponent(
+                    'document.open();' +
+                        "document.domain='" +
+                        win.document.domain
+                        + "';" +
+                        'document.close();') + '}())';
             }
             return undefined;
         },
 
-        NodeTypes:NODE_TYPE,
+        NodeType: NodeType,
 
         /**
          * Return corresponding window if elem is document or window or undefined.
          * Else return false.
-         * @param {undefined|window|document} elem
+         * @private
+         * @param {undefined|window|HTMLDocument} elem
          * @return {window|Boolean}
          */
-        _getWin:function (elem) {
+        _getWin: function (elem) {
             if (elem == null) {
                 return WINDOW;
             }
             return ('scrollTo' in elem && elem['document']) ?
-                elem : elem.nodeType == DOM.DOCUMENT_NODE ?
+                elem : elem.nodeType == NodeType.DOCUMENT_NODE ?
                 elem.defaultView || elem.parentWindow :
                 false;
         },
 
         // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
-        _isNodeList:function (o) {
+        _isNodeList: function (o) {
             // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
             // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
             // 注3：通过 namedItem 来判断不可靠
@@ -732,10 +811,10 @@ KISSY.add('dom/base', function (S, UA, undefined) {
 
         /**
          * Get node 's nodeName in lowercase.
-         * @param {HTMLElement[]|String|HTMLElement|Node} selector Matched elements.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
          * @return {String} el 's nodeName in lowercase
          */
-        nodeName:function (selector) {
+        nodeName: function (selector) {
             var el = DOM.get(selector),
                 nodeName = el.nodeName.toLowerCase();
             // http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
@@ -749,25 +828,27 @@ KISSY.add('dom/base', function (S, UA, undefined) {
         }
     };
 
-    S.mix(DOM, NODE_TYPE);
+    S.mix(DOM, NodeType);
 
     return DOM;
 
 }, {
-    requires:['ua']
+    requires: ['ua']
 });
 
-/**
- * 2011-08
- *  - 添加键盘枚举值，方便依赖程序清晰
+/*
+ 2011-08
+ - 添加键盘枚举值，方便依赖程序清晰
  */
 /**
+ * @ignore
  * @fileOverview dom-class
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/class', function (S, DOM, undefined) {
 
     var SPACE = ' ',
+        NodeType=DOM.NodeType,
         REG_SPLIT = /[\.\s]\s*\.?/,
         REG_CLASS = /[\n\t]/g;
 
@@ -778,12 +859,14 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
     S.mix(DOM,
 
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
             /**
              * Determine whether any of the matched elements are assigned the given classes.
-             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
              * @param {String} className One or more class names to search for.
              * multiple class names is separated by space
              * @return {Boolean}
@@ -810,7 +893,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
 
             /**
              * Adds the specified class(es) to each of the set of matched elements.
-             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
              * @param {String} className One or more class names to be added to the class attribute of each matched element.
              * multiple class names is separated by space
              */
@@ -835,7 +918,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
 
             /**
              * Remove a single class, multiple classes, or all classes from each element in the set of matched elements.
-             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
              * @param {String} className One or more class names to be removed from the class attribute of each matched element.
              * multiple class names is separated by space
              */
@@ -865,7 +948,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
             /**
              * Replace a class with another class for matched elements.
              * If no oldClassName is present, the newClassName is simply added.
-             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
              * @param {String} oldClassName One or more class names to be removed from the class attribute of each matched element.
              * multiple class names is separated by space
              * @param {String} newClassName One or more class names to be added to the class attribute of each matched element.
@@ -880,7 +963,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
              * Add or remove one or more classes from each element in the set of
              * matched elements, depending on either the class's presence or the
              * value of the switch argument.
-             * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+             * @param {HTMLElement|String|HTMLElement[]} selector matched elements
              * @param {String} className One or more class names to be added to the class attribute of each matched element.
              * multiple class names is separated by space
              * @param [state] {Boolean} optional boolean to indicate whether class
@@ -920,7 +1003,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
         }
         for (i = 0; i < len; i++) {
             elem = elems[i];
-            if (elem.nodeType==DOM.ELEMENT_NODE) {
+            if (elem.nodeType==NodeType.ELEMENT_NODE) {
                 ret = fn(elem, classNames, classNames.length);
                 if (ret !== undefined) {
                     return ret;
@@ -936,33 +1019,35 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
 
     return DOM;
 }, {
-    requires:["dom/base"]
+    requires:['dom/base']
 });
 
-/**
- * NOTES:
- *   - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
- *   - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
+/*
+  NOTES:
+    - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
+    - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
  */
 /**
+ * @ignore
  * @fileOverview dom-create
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
         var doc = S.Env.host.document,
+            NodeType=DOM.NodeType,
             ie = UA['ie'],
             isString = S.isString,
             DIV = 'div',
             PARENT_NODE = 'parentNode',
             DEFAULT_DIV = doc.createElement(DIV),
-            rxhtmlTag = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
+            R_XHTML_TAG = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
             RE_TAG = /<([\w:]+)/,
-            rtbody = /<tbody/i,
-            rleadingWhitespace = /^\s+/,
+            R_TBODY = /<tbody/i,
+            R_LEADING_WHITESPACE = /^\s+/,
             lostLeadingWhitespace = ie && ie < 9,
-            rhtml = /<|&#?\w+;/,
-            supportOuterHTML = "outerHTML" in doc.documentElement,
+            R_HTML = /<|&#?\w+;/,
+            supportOuterHTML = 'outerHTML' in doc.documentElement,
             RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
 
         // help compression
@@ -971,7 +1056,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         }
 
         function cleanData(els) {
-            var Event = S.require("event");
+            var Event = S.require('event');
             if (Event) {
                 Event.detach(els);
             }
@@ -980,7 +1065,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
         S.mix(DOM,
             /**
-             * @lends DOM
+             * @override KISSY.DOM
+             * @class
+             * @singleton
              */
             {
 
@@ -988,8 +1075,8 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * Creates DOM elements on the fly from the provided string of raw HTML.
                  * @param {String} html A string of HTML to create on the fly. Note that this parses HTML, not XML.
                  * @param {Object} [props] An map of attributes on the newly-created element.
-                 * @param {Document} [ownerDoc] A document in which the new elements will be created
-                 * @returns {DocumentFragment|HTMLElement}
+                 * @param {HTMLDocument} [ownerDoc] A document in which the new elements will be created
+                 * @return {DocumentFragment|HTMLElement}
                  */
                 create:function (html, props, ownerDoc, _trim/*internal*/) {
 
@@ -1026,17 +1113,17 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         k,
                         nodes;
 
-                    if (!rhtml.test(html)) {
+                    if (!R_HTML.test(html)) {
                         ret = context.createTextNode(html);
                     }
                     // 简单 tag, 比如 DOM.create('<p>')
                     else if ((m = RE_SIMPLE_TAG.exec(html))) {
                         ret = context.createElement(m[1]);
                     }
-                    // 复杂情况，比如 DOM.create('<img src="sprite.png" />')
+                    // 复杂情况，比如 DOM.create('<img src='sprite.png' />')
                     else {
-                        // Fix "XHTML"-style tags in all browsers
-                        html = html.replace(rxhtmlTag, "<$1><" + "/$2>");
+                        // Fix 'XHTML'-style tags in all browsers
+                        html = html.replace(R_XHTML_TAG, '<$1><' + '/$2>');
 
                         if ((m = RE_TAG.exec(html)) && (k = m[1])) {
                             tag = k.toLowerCase();
@@ -1044,20 +1131,20 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                         holder = (creators[tag] || creators[DIV])(html, context);
                         // ie 把前缀空白吃掉了
-                        if (lostLeadingWhitespace && (whitespaceMatch = html.match(rleadingWhitespace))) {
+                        if (lostLeadingWhitespace && (whitespaceMatch = html.match(R_LEADING_WHITESPACE))) {
                             holder.insertBefore(context.createTextNode(whitespaceMatch[0]), holder.firstChild);
                         }
                         nodes = holder.childNodes;
 
                         if (nodes.length === 1) {
-                            // return single node, breaking parentNode ref from "fragment"
+                            // return single node, breaking parentNode ref from 'fragment'
                             ret = nodes[0][PARENT_NODE].removeChild(nodes[0]);
                         }
                         else if (nodes.length) {
                             // return multiple nodes as a fragment
                             ret = nodeListToFragment(nodes);
                         } else {
-                            S.error(html + " : create node error");
+                            S.error(html + ' : create node error');
                         }
                     }
 
@@ -1068,7 +1155,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     div:function (html, ownerDoc) {
                         var frag = ownerDoc && ownerDoc != doc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
                         // html 为 <style></style> 时不行，必须有其他元素？
-                        frag['innerHTML'] = "m<div>" + html + "<" + "/div>";
+                        frag['innerHTML'] = 'm<div>' + html + '<' + '/div>';
                         return frag.lastChild;
                     }
                 },
@@ -1077,7 +1164,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * Get the HTML contents of the first element in the set of matched elements.
                  * or
                  * Set the HTML contents of each element in the set of matched elements.
-                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  * @param {String} htmlString  A string of HTML to set as the content of each matched element.
                  * @param {Boolean} [loadScripts=false] True to look for and process scripts
                  */
@@ -1091,7 +1178,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     // getter
                     if (htmlString === undefined) {
                         // only gets value on the first of element nodes
-                        if (el.nodeType == DOM.ELEMENT_NODE) {
+                        if (el.nodeType == NodeType.ELEMENT_NODE) {
                             return el.innerHTML;
                         } else {
                             return null;
@@ -1101,25 +1188,25 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     else {
 
                         var success = false, i, elem;
-                        htmlString += "";
+                        htmlString += '';
 
                         // faster
                         // fix #103,some html element can not be set through innerHTML
                         if (!htmlString.match(/<(?:script|style|link)/i) &&
-                            (!lostLeadingWhitespace || !htmlString.match(rleadingWhitespace)) &&
-                            !creatorsMap[ (htmlString.match(RE_TAG) || ["", ""])[1].toLowerCase() ]) {
+                            (!lostLeadingWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) &&
+                            !creatorsMap[ (htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase() ]) {
 
                             try {
                                 for (i = els.length - 1; i >= 0; i--) {
                                     elem = els[i];
-                                    if (elem.nodeType == DOM.ELEMENT_NODE) {
-                                        cleanData(getElementsByTagName(elem, "*"));
+                                    if (elem.nodeType == NodeType.ELEMENT_NODE) {
+                                        cleanData(getElementsByTagName(elem, '*'));
                                         elem.innerHTML = htmlString;
                                     }
                                 }
                                 success = true;
                             } catch (e) {
-                                // a <= "<a>"
+                                // a <= '<a>'
                                 // a.innerHTML='<p>1</p>';
                             }
 
@@ -1138,7 +1225,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * Get the outerHTML of the first element in the set of matched elements.
                  * or
                  * Set the outerHTML of each element in the set of matched elements.
-                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  * @param {String} htmlString  A string of HTML to set as outerHTML of each matched element.
                  * @param {Boolean} [loadScripts=false] True to look for and process scripts
                  */
@@ -1157,18 +1244,18 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                         if (supportOuterHTML) {
                             return el.outerHTML
                         } else {
-                            holder = el.ownerDocument.createElement("div");
+                            holder = el.ownerDocument.createElement('div');
                             holder.appendChild(DOM.clone(el, true));
                             return holder.innerHTML;
                         }
                     } else {
-                        htmlString += "";
+                        htmlString += '';
                         if (!htmlString.match(/<(?:script|style|link)/i) && supportOuterHTML) {
                             for (i = length - 1; i >= 0; i--) {
                                 el = els[i];
-                                if (el.nodeType == DOM.ELEMENT_NODE) {
+                                if (el.nodeType == NodeType.ELEMENT_NODE) {
                                     cleanData(el);
-                                    cleanData(getElementsByTagName(el, "*"));
+                                    cleanData(getElementsByTagName(el, '*'));
                                     el.outerHTML = htmlString;
                                 }
                             }
@@ -1182,16 +1269,16 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                 /**
                  * Remove the set of matched elements from the DOM.
-                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  * @param {Boolean} [keepData=false] whether keep bound events and jQuery data associated with the elements from removed.
                  */
                 remove:function (selector, keepData) {
                     var el, els = DOM.query(selector), i;
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (!keepData && el.nodeType == DOM.ELEMENT_NODE) {
+                        if (!keepData && el.nodeType == NodeType.ELEMENT_NODE) {
                             // 清理数据
-                            var elChildren = getElementsByTagName(el, "*");
+                            var elChildren = getElementsByTagName(el, '*');
                             cleanData(elChildren);
                             cleanData(el);
                         }
@@ -1204,7 +1291,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                 /**
                  * Create a deep copy of the first of matched elements.
-                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  * @param {Boolean|Object} [deep=false] whether perform deep copy or copy config.
                  * @param {Boolean} [deep.deep] whether perform deep copy
                  * @param {Boolean} [deep.withDataAndEvent=false] A Boolean indicating
@@ -1218,7 +1305,8 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
                  * if set true then deep argument must be set true as well.
                  * @see https://developer.mozilla.org/En/DOM/Node.cloneNode
-                 * @returns {HTMLElement}
+                 * @return {HTMLElement}
+                 * @member KISSY.DOM
                  */
                 clone:function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
 
@@ -1240,14 +1328,14 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     // 2. ie will execute external script
                     var clone = elem.cloneNode(deep);
 
-                    if (elem.nodeType == DOM.ELEMENT_NODE ||
-                        elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+                    if (elem.nodeType == NodeType.ELEMENT_NODE ||
+                        elem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
                         // IE copies events bound via attachEvent when using cloneNode.
                         // Calling detachEvent on the clone will also remove the events
                         // from the original. In order to get around this, we use some
                         // proprietary methods to clear the events. Thanks to MooTools
                         // guys for this hotness.
-                        if (elem.nodeType == DOM.ELEMENT_NODE) {
+                        if (elem.nodeType == NodeType.ELEMENT_NODE) {
                             fixAttributes(elem, clone);
                         }
 
@@ -1267,7 +1355,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
                 /**
                  * Remove(include data and event handlers) all child nodes of the set of matched elements from the DOM.
-                 * @param {HTMLElement|String|HTMLElement[]} [selector] matched elements
+                 * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  */
                 empty:function (selector) {
                     var els = DOM.query(selector), el, i;
@@ -1281,7 +1369,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             });
 
         function processAll(fn, elem, clone) {
-            if (elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+            if (elem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
                 var eCs = elem.childNodes,
                     cloneCs = clone.childNodes,
                     fIndex = 0;
@@ -1291,9 +1379,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                     fIndex++;
                 }
-            } else if (elem.nodeType == DOM.ELEMENT_NODE) {
-                var elemChildren = getElementsByTagName(elem, "*"),
-                    cloneChildren = getElementsByTagName(clone, "*"),
+            } else if (elem.nodeType == NodeType.ELEMENT_NODE) {
+                var elemChildren = getElementsByTagName(elem, '*'),
+                    cloneChildren = getElementsByTagName(clone, '*'),
                     cIndex = 0;
                 while (elemChildren[cIndex]) {
                     if (cloneChildren[cIndex]) {
@@ -1309,7 +1397,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         function cloneWithDataAndEvent(src, dest) {
             var Event = S.require('event');
 
-            if (dest.nodeType == DOM.ELEMENT_NODE && !DOM.hasData(src)) {
+            if (dest.nodeType == NodeType.ELEMENT_NODE && !DOM.hasData(src)) {
                 return;
             }
 
@@ -1350,12 +1438,12 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             // IE6-8 fail to clone children inside object elements that use
             // the proprietary classid attribute value (rather than the type
             // attribute) to identify the type of content to display
-            if (nodeName === "object" && !dest.childNodes.length) {
+            if (nodeName === 'object' && !dest.childNodes.length) {
                 for (var i = 0; i < srcChilds.length; i++) {
                     dest.appendChild(srcChilds[i].cloneNode(true));
                 }
                 // dest.outerHTML = src.outerHTML;
-            } else if (nodeName === "input" && (src.type === "checkbox" || src.type === "radio")) {
+            } else if (nodeName === 'input' && (src.type === 'checkbox' || src.type === 'radio')) {
                 // IE6-8 fails to persist the checked state of a cloned checkbox
                 // or radio button. Worse, IE6-7 fail to give the cloned element
                 // a checked appearance if the defaultChecked value isn't also set
@@ -1364,18 +1452,18 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                 }
 
                 // IE6-7 get confused and end up setting the value of a cloned
-                // checkbox/radio button to an empty string instead of "on"
+                // checkbox/radio button to an empty string instead of 'on'
                 if (dest.value !== src.value) {
                     dest.value = src.value;
                 }
 
                 // IE6-8 fails to return the selected option to the default selected
                 // state when cloning options
-            } else if (nodeName === "option") {
+            } else if (nodeName === 'option') {
                 dest.selected = src.defaultSelected;
                 // IE6-8 fails to set the defaultValue to the correct value when
                 // cloning other types of input fields
-            } else if (nodeName === "input" || nodeName === "textarea") {
+            } else if (nodeName === 'input' || nodeName === 'textarea') {
                 dest.defaultValue = src.defaultValue;
             }
 
@@ -1388,11 +1476,11 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         // 添加成员到元素中
         function attachProps(elem, props) {
             if (S.isPlainObject(props)) {
-                if (elem.nodeType == DOM.ELEMENT_NODE) {
+                if (elem.nodeType == NodeType.ELEMENT_NODE) {
                     DOM.attr(elem, props, true);
                 }
                 // document fragment
-                else if (elem.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+                else if (elem.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
                     DOM.attr(elem.childNodes, props, true);
                 }
             }
@@ -1455,14 +1543,14 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             // https://github.com/kissyteam/kissy/issues/88 : spurious tbody in ie<8
             creators.table = function (html, ownerDoc) {
                 var frag = creators[DIV](html, ownerDoc),
-                    hasTBody = rtbody.test(html);
+                    hasTBody = R_TBODY.test(html);
                 if (hasTBody) {
                     return frag;
                 }
                 var table = frag.firstChild,
                     tableChildren = S.makeArray(table.childNodes);
                 S.each(tableChildren, function (c) {
-                    if (DOM.nodeName(c) == "tbody" && !c.childNodes.length) {
+                    if (DOM.nodeName(c) == 'tbody' && !c.childNodes.length) {
                         table.removeChild(c);
                     }
                 });
@@ -1473,33 +1561,34 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         return DOM;
     },
     {
-        requires:["./base", "ua"]
+        requires:['./base', 'ua']
     });
 
-/**
- * 2012-01-31
- * remove spurious tbody
- *
- * 2011-10-13
- * empty , html refactor
- *
- * 2011-08-22
- * clone 实现，参考 jq
- *
- * 2011-08
- *  remove 需要对子孙节点以及自身清除事件以及自定义 data
- *  create 修改，支持 <style></style> ie 下直接创建
- *  TODO: jquery clone ,clean 实现
- *
- * TODO:
- *  - 研究 jQuery 的 buildFragment 和 clean
- *  - 增加 cache, 完善 test cases
- *  - 支持更多 props
- *  - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
+/*
+  2012-01-31
+  remove spurious tbody
+
+  2011-10-13
+  empty , html refactor
+
+  2011-08-22
+  clone 实现，参考 jq
+
+  2011-08
+   remove 需要对子孙节点以及自身清除事件以及自定义 data
+   create 修改，支持 <style></style> ie 下直接创建
+   TODO: jquery clone ,clean 实现
+
+  TODO:
+   - 研究 jQuery 的 buildFragment 和 clean
+   - 增加 cache, 完善 test cases
+   - 支持更多 props
+   - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
  */
 /**
+ * @ignore
  * @fileOverview dom-data
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/data', function (S, DOM, undefined) {
 
@@ -1639,7 +1728,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                     delete elem[EXPANDO];
                 } catch (e) {
                     elem[EXPANDO] = undefined;
-                    //S.log("delete expando error : ");
+                    //S.log('delete expando error : ');
                     //S.log(e);
                 }
                 if (elem.removeAttribute) {
@@ -1652,7 +1741,9 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
 
     S.mix(DOM,
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
 
@@ -1662,7 +1753,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * Determine whether an element has any data or specified data name associated with it.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String} [name] A string naming the piece of data to set.
-             * @returns {Boolean}
+             * @return {Boolean}
              */
             hasData:function (selector, name) {
                 var ret = false,
@@ -1690,7 +1781,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String} [name] A string naming the piece of data to set.
              * @param [data] The new data value.
-             * @returns {Object|undefined}
+             * @return {Object|undefined}
              */
             data:function (selector, name, data) {
 
@@ -1751,22 +1842,19 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
     return DOM;
 
 }, {
-    requires:["./base"]
+    requires:['./base']
 });
-/**
- * 承玉：2011-05-31
- *  - 分层 ，节点和普通对象分开处理
- **//**
+/*
+  承玉：2011-05-31
+   - 分层 ，节点和普通对象分开处理
+ *//**
+ * @ignore
  * @fileOverview dom
  * @author yiminghe@gmail.com
  */
-KISSY.add("dom", function (S, DOM) {
+KISSY.add('dom', function (S, DOM) {
 
-    /**
-     * @namespace Provides DOM helper methods
-     * @name DOM
-     */
-    S.mix(S,{
+   S.mix(S,{
         DOM:DOM,
         get:DOM.get,
         query:DOM.query
@@ -1774,46 +1862,48 @@ KISSY.add("dom", function (S, DOM) {
 
     return DOM;
 }, {
-    requires:["dom/attr",
-        "dom/class",
-        "dom/create",
-        "dom/data",
-        "dom/insertion",
-        "dom/offset",
-        "dom/style",
-        "dom/selector",
-        "dom/style-ie",
-        "dom/traversal"]
+    requires:['dom/attr',
+        'dom/class',
+        'dom/create',
+        'dom/data',
+        'dom/insertion',
+        'dom/offset',
+        'dom/style',
+        'dom/selector',
+        'dom/style-ie',
+        'dom/traversal']
 });/**
+ * @ignore
  * @fileOverview dom-insertion
- * @author yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/insertion', function (S, UA, DOM) {
 
     var PARENT_NODE = 'parentNode',
-        rformEls = /^(?:button|input|object|select|textarea)$/i,
+        NodeType = DOM.NodeType,
+        R_FORM_EL = /^(?:button|input|object|select|textarea)$/i,
         getNodeName = DOM.nodeName,
         makeArray = S.makeArray,
         splice = [].splice,
         NEXT_SIBLING = 'nextSibling';
 
-    /**
+    /*
      ie 6,7 lose checked status when append to dom
-     var c=S.all("<input />");
-     c.attr("type","radio");
-     c.attr("checked",true);
-     S.all("#t").append(c);
+     var c=S.all('<input />');
+     c.attr('type','radio');
+     c.attr('checked',true);
+     S.all('#t').append(c);
      alert(c[0].checked);
      */
     function fixChecked(ret) {
         for (var i = 0; i < ret.length; i++) {
             var el = ret[i];
-            if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+            if (el.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
                 fixChecked(el.childNodes);
-            } else if (getNodeName(el) == "input") {
+            } else if (getNodeName(el) == 'input') {
                 fixCheckedInternal(el);
-            } else if (el.nodeType == DOM.ELEMENT_NODE) {
-                var cs = el.getElementsByTagName("input");
+            } else if (el.nodeType == NodeType.ELEMENT_NODE) {
+                var cs = el.getElementsByTagName('input');
                 for (var j = 0; j < cs.length; j++) {
                     fixChecked(cs[j]);
                 }
@@ -1822,16 +1912,16 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
     }
 
     function fixCheckedInternal(el) {
-        if (el.type === "checkbox" || el.type === "radio") {
+        if (el.type === 'checkbox' || el.type === 'radio') {
             // after insert , in ie6/7 checked is decided by defaultChecked !
             el.defaultChecked = el.checked;
         }
     }
 
-    var rscriptType = /\/(java|ecma)script/i;
+    var R_SCRIPT_TYPE = /\/(java|ecma)script/i;
 
     function isJs(el) {
-        return !el.type || rscriptType.test(el.type);
+        return !el.type || R_SCRIPT_TYPE.test(el.type);
     }
 
     // extract script nodes and execute alone later
@@ -1840,9 +1930,9 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         for (i = 0; nodes[i]; i++) {
             el = nodes[i];
             nodeName = getNodeName(el);
-            if (el.nodeType == DOM.DOCUMENT_FRAGMENT_NODE) {
+            if (el.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
                 ret.push.apply(ret, filterScripts(makeArray(el.childNodes), scripts));
-            } else if (nodeName === "script" && isJs(el)) {
+            } else if (nodeName === 'script' && isJs(el)) {
                 // remove script to make sure ie9 does not invoke when append
                 if (el.parentNode) {
                     el.parentNode.removeChild(el)
@@ -1851,13 +1941,13 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                     scripts.push(el);
                 }
             } else {
-                if (el.nodeType == DOM.ELEMENT_NODE &&
+                if (el.nodeType == NodeType.ELEMENT_NODE &&
                     // ie checkbox getElementsByTagName 后造成 checked 丢失
-                    !rformEls.test(nodeName)) {
+                    !R_FORM_EL.test(nodeName)) {
                     var tmp = [],
                         s,
                         j,
-                        ss = el.getElementsByTagName("script");
+                        ss = el.getElementsByTagName('script');
                     for (j = 0; j < ss.length; j++) {
                         s = ss[j];
                         if (isJs(s)) {
@@ -1877,7 +1967,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         if (el.src) {
             S.getScript(el.src);
         } else {
-            var code = S.trim(el.text || el.textContent || el.innerHTML || "");
+            var code = S.trim(el.text || el.textContent || el.innerHTML || '');
             if (code) {
                 S.globalEval(code);
             }
@@ -1932,7 +2022,9 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
     // loadScripts default to false to prevent xss
     S.mix(DOM,
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
 
@@ -1941,7 +2033,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
              */
-            insertBefore:function (newNodes, refNodes, loadScripts) {
+            insertBefore: function (newNodes, refNodes, loadScripts) {
                 insertion(newNodes, refNodes, function (newNode, refNode) {
                     if (refNode[PARENT_NODE]) {
                         refNode[PARENT_NODE].insertBefore(newNode, refNode);
@@ -1954,7 +2046,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
              */
-            insertAfter:function (newNodes, refNodes, loadScripts) {
+            insertAfter: function (newNodes, refNodes, loadScripts) {
                 insertion(newNodes, refNodes, function (newNode, refNode) {
                     if (refNode[PARENT_NODE]) {
                         refNode[PARENT_NODE].insertBefore(newNode, refNode[NEXT_SIBLING]);
@@ -1967,7 +2059,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
              */
-            appendTo:function (newNodes, parents, loadScripts) {
+            appendTo: function (newNodes, parents, loadScripts) {
                 insertion(newNodes, parents, function (newNode, parent) {
                     parent.appendChild(newNode);
                 }, loadScripts);
@@ -1978,7 +2070,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
              */
-            prependTo:function (newNodes, parents, loadScripts) {
+            prependTo: function (newNodes, parents, loadScripts) {
                 insertion(newNodes, parents, function (newNode, parent) {
                     parent.insertBefore(newNode, parent.firstChild);
                 }, loadScripts);
@@ -1989,7 +2081,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
              * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
              */
-            wrapAll:function (wrappedNodes, wrapperNode) {
+            wrapAll: function (wrappedNodes, wrapperNode) {
                 // deep clone
                 wrapperNode = DOM.clone(DOM.get(wrapperNode), true);
                 wrappedNodes = DOM.query(wrappedNodes);
@@ -2008,7 +2100,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
              * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
              */
-            wrap:function (wrappedNodes, wrapperNode) {
+            wrap: function (wrappedNodes, wrapperNode) {
                 wrappedNodes = DOM.query(wrappedNodes);
                 wrapperNode = DOM.get(wrapperNode);
                 S.each(wrappedNodes, function (w) {
@@ -2021,7 +2113,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
              * @param {HTMLElement|String} wrapperNode html node or selector to get the node wrapper
              */
-            wrapInner:function (wrappedNodes, wrapperNode) {
+            wrapInner: function (wrappedNodes, wrapperNode) {
                 wrappedNodes = DOM.query(wrappedNodes);
                 wrapperNode = DOM.get(wrapperNode);
                 S.each(wrappedNodes, function (w) {
@@ -2039,7 +2131,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * leaving the matched elements in their place.
              * @param {HTMLElement|HTMLElement[]|String} wrappedNodes set of matched elements
              */
-            unwrap:function (wrappedNodes) {
+            unwrap: function (wrappedNodes) {
                 wrappedNodes = DOM.query(wrappedNodes);
                 S.each(wrappedNodes, function (w) {
                     var p = w.parentNode;
@@ -2052,7 +2144,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
              * @param {HTMLElement|HTMLElement[]|String} selector set of matched elements
              * @param {HTMLElement|HTMLElement[]|String} newNodes new nodes to replace the matched elements
              */
-            replaceWith:function (selector, newNodes) {
+            replaceWith: function (selector, newNodes) {
                 var nodes = DOM.query(selector);
                 newNodes = DOM.query(newNodes);
                 DOM.remove(newNodes, true);
@@ -2060,43 +2152,44 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
                 DOM.remove(nodes);
             }
         });
-    var alias = {
-        "prepend":"prependTo",
-        "append":"appendTo",
-        "before":"insertBefore",
-        "after":"insertAfter"
-    };
-    for (var a in alias) {
-        DOM[a] = DOM[alias[a]];
-    }
+    S.each({
+        'prepend': 'prependTo',
+        'append': 'appendTo',
+        'before': 'insertBefore',
+        'after': 'insertAfter'
+    }, function (value, key) {
+        DOM[key] = DOM[value];
+    });
     return DOM;
 }, {
-    requires:["ua", "./create"]
+    requires: ['ua', './create']
 });
 
-/**
- * 2012-04-05 yiminghe@gmail.com
- *  - 增加 replaceWith/wrap/wrapAll/wrapInner/unwrap
- *
- * 2011-05-25
- *  - 承玉：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
- *      DOM.append(".multi1",".multi2");
- *
+/*
+ 2012-04-05 yiminghe@gmail.com
+ - 增加 replaceWith/wrap/wrapAll/wrapInner/unwrap
+
+ 2011-05-25
+ - 承玉：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
+ DOM.append('.multi1','.multi2');
+
  */
 /**
+ * @ignore
  * @fileOverview dom-offset
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     var win = S.Env.host,
         doc = win.document,
+        NodeType=DOM.NodeType,
         docElem = doc.documentElement,
         getWin = DOM._getWin,
-        CSS1Compat = "CSS1Compat",
-        compatMode = "compatMode",
+        CSS1Compat = 'CSS1Compat',
+        compatMode = 'compatMode',
         MAX = Math.max,
-        PARSEINT = parseInt,
+        myParseInt = parseInt,
         POSITION = 'position',
         RELATIVE = 'relative',
         DOCUMENT = 'document',
@@ -2114,7 +2207,9 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     S.mix(DOM,
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
 
@@ -2130,7 +2225,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * @param {window} [relativeWin] The window to measure relative to. If relativeWin
              *     is not in the ancestor frame chain of the element, we measure relative to
              *     the top-most window.
-             * @returns {Object|undefined} if Get, the format of returned value is same with coordinates.
+             * @return {Object|undefined} if Get, the format of returned value is same with coordinates.
              */
             offset:function (selector, coordinates, relativeWin) {
                 // getter
@@ -2153,7 +2248,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
             /**
              * Makes the first of matched elements visible in the container
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|HTMLElement|Document} [container=window] Container element
+             * @param {String|HTMLElement|HTMLDocument} [container=window] Container element
              * @param {Boolean} [top=true] Whether align with top of container.
              * @param {Boolean} [hscroll=true] Whether trigger horizontal scroll.
              * @param {Boolean} [auto=false] Whether adjust element automatically
@@ -2183,7 +2278,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                 }
 
                 // document 归一化到 window
-                if (container.nodeType == DOM.DOCUMENT_NODE) {
+                if (container.nodeType == NodeType.DOCUMENT_NODE) {
                     container = getWin(container);
                 }
 
@@ -2233,17 +2328,17 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                     // 注意边框 , offset 是边框到根节点
                     diffTop = {
                         left:elemOffset[LEFT] - containerOffset[LEFT] -
-                            (PARSEINT(DOM.css(container, 'borderLeftWidth')) || 0),
+                            (myParseInt(DOM.css(container, 'borderLeftWidth')) || 0),
                         top:elemOffset[TOP] - containerOffset[TOP] -
-                            (PARSEINT(DOM.css(container, 'borderTopWidth')) || 0)
+                            (myParseInt(DOM.css(container, 'borderTopWidth')) || 0)
                     };
                     diffBottom = {
                         left:elemOffset[LEFT] + ew -
                             (containerOffset[LEFT] + cw +
-                                (PARSEINT(DOM.css(container, 'borderRightWidth')) || 0)),
+                                (myParseInt(DOM.css(container, 'borderRightWidth')) || 0)),
                         top:elemOffset[TOP] + eh -
                             (containerOffset[TOP] + ch +
-                                (PARSEINT(DOM.css(container, 'borderBottomWidth')) || 0))
+                                (myParseInt(DOM.css(container, 'borderBottomWidth')) || 0))
                     };
                 }
 
@@ -2284,25 +2379,25 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
             /**
              * Get the width of document
              * @param {window} [win=window] Window to be referred.
-             * @function
+             * @method
              */
             docWidth:0,
             /**
              * Get the height of document
              * @param {window} [win=window] Window to be referred.
-             * @function
+             * @method
              */
             docHeight:0,
             /**
              * Get the height of window
              * @param {window} [win=window] Window to be referred.
-             * @function
+             * @method
              */
             viewportHeight:0,
             /**
              * Get the width of document
              * @param {window} [win=window] Window to be referred.
-             * @function
+             * @method
              */
             viewportWidth:0,
             /**
@@ -2311,7 +2406,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * Set the current vertical position of the scroll bar for each of the set of matched elements.
              * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
-             * @function
+             * @method
              */
             scrollTop:0,
             /**
@@ -2320,7 +2415,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * Set the current horizontal position of the scroll bar for each of the set of matched elements.
              * @param {HTMLElement[]|String|HTMLElement|window} selector matched elements
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
-             * @function
+             * @method
              */
             scrollLeft:0
         });
@@ -2343,8 +2438,8 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                 if (v !== undefined) {
                     v = parseFloat(v);
                     // 注意多 windw 情况，不能简单取 win
-                    var left = name == "Left" ? v : DOM.scrollLeft(w),
-                        top = name == "Top" ? v : DOM.scrollTop(w);
+                    var left = name == 'Left' ? v : DOM.scrollLeft(w),
+                        top = name == 'Top' ? v : DOM.scrollTop(w);
                     w['scrollTo'](left, top);
                 } else {
                     //标准
@@ -2361,7 +2456,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                         }
                     }
                 }
-            } else if (elem.nodeType == DOM.ELEMENT_NODE) {
+            } else if (elem.nodeType == NodeType.ELEMENT_NODE) {
                 if (v !== undefined) {
                     elem[method] = parseFloat(v)
                 } else {
@@ -2400,12 +2495,6 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
             return doc[compatMode] === CSS1Compat
                 && documentElementProp ||
                 body && body[ prop ] || documentElementProp;
-//            return (prop in w) ?
-//                // 标准 = documentElement.clientHeight
-//                w[prop] :
-//                // ie 标准 documentElement.clientHeight , 在 documentElement.clientHeight 上滚动？
-//                // ie quirks body.clientHeight: 在 body 上？
-//                (isStrict ? d[DOC_ELEMENT][CLIENT + name] : d[BODY][CLIENT + name]);
         }
     });
 
@@ -2501,7 +2590,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         var old = getOffset(elem), ret = { }, current, key;
 
         for (key in offset) {
-            current = PARSEINT(DOM.css(elem, key), 10) || 0;
+            current = myParseInt(DOM.css(elem, key), 10) || 0;
             ret[key] = current + offset[key] - old[key];
         }
         DOM.css(elem, ret);
@@ -2509,33 +2598,35 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-    requires:["./base", "ua"]
+    requires:['./base', 'ua']
 });
 
-/**
- * 2012-03-30
- *  - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
- *  - http://help.dottoro.com/ljkfqbqj.php
- *  - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
- *
- * 2011-05-24
- *  - 承玉：
- *  - 调整 docWidth , docHeight ,
- *      viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
- *      便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
- *
- *
- * TODO:
- *  - 考虑是否实现 jQuery 的 position, offsetParent 等功能
- *  - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
+/*
+  2012-03-30
+   - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
+   - http://help.dottoro.com/ljkfqbqj.php
+   - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
+
+  2011-05-24
+   - 承玉：
+   - 调整 docWidth , docHeight ,
+       viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
+       便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
+
+
+  TODO:
+   - 考虑是否实现 jQuery 的 position, offsetParent 等功能
+   - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
  */
 /**
+ * @ignore
  * @fileOverview selector
- * @author lifesinger@gmail.com , yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
+        NodeType=DOM.NodeType,
         filter = S.filter,
         require = function (selector) {
             return S.require(selector);
@@ -2563,21 +2654,21 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         }
     }
 
-    /**
-     * Accepts a string containing a CSS selector which is then used to match a set of elements.
-     * @param {String|HTMLElement[]} selector
-     * A string containing a selector expression.
-     * or
-     * array of HTMLElements.
-     * @param {String|HTMLElement[]|Document} [context] context under which to find elements matching selector.
-     * @return {HTMLElement[]} The array of found HTMLElements
+    /*
+     Accepts a string containing a CSS selector which is then used to match a set of elements.
+     @param {String|HTMLElement[]} selector
+     A string containing a selector expression.
+     or
+     array of HTMLElements.
+     @param {String|HTMLElement[]|HTMLDocument} [context] context under which to find elements matching selector.
+     @return {HTMLElement[]} The array of found HTMLElements
      */
     function query(selector, context) {
         var ret,
             i,
             simpleContext,
             isSelectorString = isString(selector),
-            // optimize common usage
+        // optimize common usage
             contexts = (context === undefined && (simpleContext = 1)) ?
                 [doc] :
                 tuneContext(context);
@@ -2586,11 +2677,11 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             ret = [];
         }
         // 常见的选择器
-        // DOM.query("#x")
+        // DOM.query('#x')
         else if (isSelectorString) {
             selector = trim(selector);
             // shortcut
-            if (simpleContext && selector == "body") {
+            if (simpleContext && selector == 'body') {
                 ret = [doc.body]
             } else if (contexts.length == 1 && selector) {
                 ret = quickFindBySelectorStr(selector, contexts[0]);
@@ -2599,7 +2690,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         // 不写 context，就是包装一下
         else if (simpleContext) {
             // 1.常见的单个元素
-            // DOM.query(document.getElementById("xx"))
+            // DOM.query(document.getElementById('xx'))
             if (selector['nodeType'] || selector['setTimeout']) {
                 ret = [selector];
             }
@@ -2608,15 +2699,15 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                 return selector;
             }
             // 3.常见的数组
-            // var x=DOM.query(".l");
-            // DOM.css(x,"color","red");
+            // var x=DOM.query('.l');
+            // DOM.css(x,'color','red');
             else if (isArray(selector)) {
                 ret = selector;
             }
             // 4.selector.item
-            // DOM.query(document.getElementsByTagName("a"))
+            // DOM.query(document.getElementsByTagName('a'))
             // note:
-            // document.createElement("select").item 已经在 1 处理了
+            // document.createElement('select').item 已经在 1 处理了
             // S.all().item 已经在 2 处理了
             else if (isNodeList(selector)) {
                 ret = S.makeArray(selector);
@@ -2671,7 +2762,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
     // 交给 sizzle 模块处理
     function queryBySizzle(selector, context) {
         var ret = [],
-            sizzle = require("sizzle");
+            sizzle = require('sizzle');
         if (sizzle) {
             sizzle(selector, context, ret);
         } else {
@@ -2851,7 +2942,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
     function getElementById(id, context) {
         var doc = context,
             el;
-        if (context.nodeType !== DOM.DOCUMENT_NODE) {
+        if (context.nodeType !== NodeType.DOCUMENT_NODE) {
             doc = context.ownerDocument;
         }
         el = doc.getElementById(id);
@@ -2864,7 +2955,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             // 不能直接 el.id ，否则 input shadow form attribute
             if (!idEq(el, id)) {
                 // 直接在 context 下的所有节点找
-                el = DOM.filter(ANY, "#" + id, context)[0] || null;
+                el = DOM.filter(ANY, '#' + id, context)[0] || null;
             }
             // ie 特殊情况下以及指明在 context 下找了，不需要再判断
             // 如果指定了 context node , 还要判断 id 是否处于 context 内
@@ -2911,7 +3002,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     // query .cls
     var getElementsByClassName = doc.getElementsByClassName ? function (cls, tag, context) {
-        // query("#id1 xx","#id2")
+        // query('#id1 xx','#id2')
         // #id2 内没有 #id1 , context 为 null , 这里防御下
         if (!context) {
             return [];
@@ -2926,7 +3017,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             ret = [];
             for (; i < len; ++i) {
                 el = els[i];
-                if (getNodeName(el)==tag) {
+                if (getNodeName(el) == tag) {
                     ret.push(el);
                 }
             }
@@ -2957,7 +3048,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     function hasClass(el, cls) {
         var className;
-        return (className = el.className) && (" " + className + " ").indexOf(" " + cls + " ") !== -1;
+        return (className = el.className) && (' ' + className + ' ').indexOf(' ' + cls + ' ') !== -1;
     }
 
     // throw exception
@@ -2967,7 +3058,9 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     S.mix(DOM,
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
 
@@ -2977,10 +3070,11 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
              * A string containing a selector expression.
              * or
              * array of HTMLElements.
-             * @param {String|HTMLElement[]|Document|HTMLElement} [context] context under which to find elements matching selector.
+             * @param {String|HTMLElement[]|HTMLDocument|HTMLElement} [context] context under which to find elements matching selector.
              * @return {HTMLElement[]} The array of found HTMLElements
+             * @method
              */
-            query:query,
+            query: query,
 
             /**
              * Accepts a string containing a CSS selector which is then used to match a set of elements.
@@ -2988,10 +3082,10 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
              * A string containing a selector expression.
              * or
              * array of HTMLElements.
-             * @param {String|HTMLElement[]|Document|HTMLElement|window} [context] context under which to find elements matching selector.
+             * @param {String|HTMLElement[]|HTMLDocument|HTMLElement|window} [context] context under which to find elements matching selector.
              * @return {HTMLElement} The first of found HTMLElements
              */
-            get:function (selector, context) {
+            get: function (selector, context) {
                 return query(selector, context)[0] || null;
             },
 
@@ -2999,21 +3093,23 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
              * Sorts an array of DOM elements, in place, with the duplicates removed.
              * Note that this only works on arrays of DOM elements, not strings or numbers.
              * @param {HTMLElement[]} The Array of DOM elements.
-             * @function
+             * @method
              * @return {HTMLElement[]}
+             * @member KISSY.DOM
              */
-            unique:unique,
+            unique: unique,
 
             /**
              * Reduce the set of matched elements to those that match the selector or pass the function's test.
              * @param {String|HTMLElement[]|NodeList} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
-             * @param {String|HTMLElement[]|Document} [context] Context under which to find matched elements
+             * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {HTMLElement[]}
+             * @memeber DOM
              */
-            filter:function (selector, filter, context) {
+            filter: function (selector, filter, context) {
                 var elems = query(selector, context),
-                    sizzle = require("sizzle"),
+                    sizzle = require('sizzle'),
                     match,
                     tag,
                     id,
@@ -3033,7 +3129,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
                             // 指定 tag 才进行判断
                             if (tag) {
-                                tagRe = getNodeName(elem)==tag;
+                                tagRe = getNodeName(elem) == tag;
                             }
 
                             // 指定 cls 才进行判断
@@ -3069,10 +3165,10 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
              * Returns true if the matched element(s) pass the filter test
              * @param {String|HTMLElement[]} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
-             * @param {String|HTMLElement[]|Document} [context] Context under which to find matched elements
-             * @returns {Boolean}
+             * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
+             * @return {Boolean}
              */
-            test:function (selector, filter, context) {
+            test: function (selector, filter, context) {
                 var elements = query(selector, context);
                 return elements.length && (DOM.filter(elements, filter, context).length === elements.length);
             }
@@ -3081,102 +3177,103 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     function idEq(elem, id) {
         // form !
-        var idNode = elem.getAttributeNode("id");
+        var idNode = elem.getAttributeNode('id');
         return idNode && idNode.nodeValue === id;
     }
 
     return DOM;
 }, {
-    requires:["./base"]
+    requires: ['./base']
 });
 
-/**
- * NOTES:
- *
- * 2011.08.02
- *  - 利用 sizzle 重构选择器
- *  - 1.1.6 修正，原来 context 只支持 #id 以及 document
- *    1.2 context 支持任意，和 selector 格式一致
- *  - 简单选择器也和 jquery 保持一致 DOM.query("xx","yy") 支持
- *    - context 不提供则为当前 document ，否则通过 query 递归取得
- *    - 保证选择出来的节点（除了 document window）都是位于 context 范围内
- *
- *
- * 2010.01
- *  - 对 reg exec 的结果(id, tag, className)做 cache, 发现对性能影响很小，去掉。
- *  - getElementById 使用频率最高，使用直达通道优化。
- *  - getElementsByClassName 性能优于 querySelectorAll, 但 IE 系列不支持。
- *  - instanceof 对性能有影响。
- *  - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无需冗余“防卫”。
- *  - query 方法中的条件判断考虑了“频率优先”原则。最有可能出现的情况放在前面。
- *  - Array 的 push 方法可以用 j++ 来替代，性能有提升。
- *  - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组。
- *
- *  - 从压缩角度考虑，还可以将 getElmentsByTagName 和 getElementsByClassName 定义为常量，
- *    不过感觉这样做太“压缩控”，还是保留不替换的好。
- *
- *  - 调整 getElementsByClassName 的降级写法，性能最差的放最后。
- *
- * 2010.02
- *  - 添加对分组选择器的支持（主要参考 Sizzle 的代码，代去除了对非 Grade A 级浏览器的支持）
- *
- * 2010.03
- *  - 基于原生 dom 的两个 api: S.query 返回数组; S.get 返回第一个。
- *    基于 Node 的 api: S.one, 在 Node 中实现。
- *    基于 NodeList 的 api: S.all, 在 NodeList 中实现。
- *    通过 api 的分层，同时满足初级用户和高级用户的需求。
- *
- * 2010.05
- *  - 去掉给 S.query 返回值默认添加的 each 方法，保持纯净。
- *  - 对于不支持的 selector, 采用外部耦合进来的 Selector.
- *
- * 2010.06
- *  - 增加 filter 和 test 方法
- *
- * 2010.07
- *  - 取消对 , 分组的支持，group 直接用 Sizzle
- *
- * 2010.08
- *  - 给 S.query 的结果 attach each 方法
- *
- * 2011.05
- *  - 承玉：恢复对简单分组支持
- *
- * Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
- * 考虑 2/8 原则，仅支持以下选择器：
- * #id
- * tag
- * .cls
- * #id tag
- * #id .cls
- * tag.cls
- * #id tag.cls
- * 注 1：REG_QUERY 还会匹配 #id.cls
- * 注 2：tag 可以为 * 字符
- * 注 3: 支持 , 号分组
- *
- *
- * Bugs:
- *  - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
- *
- * References:
- *  - http://ejohn.org/blog/selectors-that-people-actually-use/
- *  - http://ejohn.org/blog/thoughts-on-queryselectorall/
- *  - MDC: querySelector, querySelectorAll, getElementsByClassName
- *  - Sizzle: http://github.com/jeresig/sizzle
- *  - MINI: http://james.padolsey.com/javascript/mini/
- *  - Peppy: http://jamesdonaghue.com/?p=40
- *  - Sly: http://github.com/digitarald/sly
- *  - XPath, TreeWalker：http://www.cnblogs.com/rubylouvre/archive/2009/07/24/1529640.html
- *
- *  - http://www.quirksmode.org/blog/archives/2006/01/contains_for_mo.html
- *  - http://www.quirksmode.org/dom/getElementsByTagNames.html
- *  - http://ejohn.org/blog/comparing-document-position/
- *  - http://github.com/jeresig/sizzle/blob/master/sizzle.js
+/*
+ NOTES:
+
+ 2011.08.02
+ - 利用 sizzle 重构选择器
+ - 1.1.6 修正，原来 context 只支持 #id 以及 document
+ 1.2 context 支持任意，和 selector 格式一致
+ - 简单选择器也和 jquery 保持一致 DOM.query('xx','yy') 支持
+ - context 不提供则为当前 document ，否则通过 query 递归取得
+ - 保证选择出来的节点（除了 document window）都是位于 context 范围内
+
+
+ 2010.01
+ - 对 reg exec 的结果(id, tag, className)做 cache, 发现对性能影响很小，去掉。
+ - getElementById 使用频率最高，使用直达通道优化。
+ - getElementsByClassName 性能优于 querySelectorAll, 但 IE 系列不支持。
+ - instanceof 对性能有影响。
+ - 内部方法的参数，比如 cls, context 等的异常情况，已经在 query 方法中有保证，无需冗余“防卫”。
+ - query 方法中的条件判断考虑了“频率优先”原则。最有可能出现的情况放在前面。
+ - Array 的 push 方法可以用 j++ 来替代，性能有提升。
+ - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组。
+
+ - 从压缩角度考虑，还可以将 getElmentsByTagName 和 getElementsByClassName 定义为常量，
+ 不过感觉这样做太“压缩控”，还是保留不替换的好。
+
+ - 调整 getElementsByClassName 的降级写法，性能最差的放最后。
+
+ 2010.02
+ - 添加对分组选择器的支持（主要参考 Sizzle 的代码，代去除了对非 Grade A 级浏览器的支持）
+
+ 2010.03
+ - 基于原生 dom 的两个 api: S.query 返回数组; S.get 返回第一个。
+ 基于 Node 的 api: S.one, 在 Node 中实现。
+ 基于 NodeList 的 api: S.all, 在 NodeList 中实现。
+ 通过 api 的分层，同时满足初级用户和高级用户的需求。
+
+ 2010.05
+ - 去掉给 S.query 返回值默认添加的 each 方法，保持纯净。
+ - 对于不支持的 selector, 采用外部耦合进来的 Selector.
+
+ 2010.06
+ - 增加 filter 和 test 方法
+
+ 2010.07
+ - 取消对 , 分组的支持，group 直接用 Sizzle
+
+ 2010.08
+ - 给 S.query 的结果 attach each 方法
+
+ 2011.05
+ - 承玉：恢复对简单分组支持
+
+ Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
+ 考虑 2/8 原则，仅支持以下选择器：
+ #id
+ tag
+ .cls
+ #id tag
+ #id .cls
+ tag.cls
+ #id tag.cls
+ 注 1：REG_QUERY 还会匹配 #id.cls
+ 注 2：tag 可以为 * 字符
+ 注 3: 支持 , 号分组
+
+
+ Bugs:
+ - S.query('#test-data *') 等带 * 号的选择器，在 IE6 下返回的值不对。jQuery 等类库也有此 bug, 诡异。
+
+ References:
+ - http://ejohn.org/blog/selectors-that-people-actually-use/
+ - http://ejohn.org/blog/thoughts-on-queryselectorall/
+ - MDC: querySelector, querySelectorAll, getElementsByClassName
+ - Sizzle: http://github.com/jeresig/sizzle
+ - MINI: http://james.padolsey.com/javascript/mini/
+ - Peppy: http://jamesdonaghue.com/?p=40
+ - Sly: http://github.com/digitarald/sly
+ - XPath, TreeWalker：http://www.cnblogs.com/rubylouvre/archive/2009/07/24/1529640.html
+
+ - http://www.quirksmode.org/blog/archives/2006/01/contains_for_mo.html
+ - http://www.quirksmode.org/dom/getElementsByTagNames.html
+ - http://ejohn.org/blog/comparing-document-position/
+ - http://github.com/jeresig/sizzle/blob/master/sizzle.js
  */
 /**
+ * @ignore
  * @fileOverview style for ie
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
 
@@ -3191,25 +3288,25 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
         docElem = doc.documentElement,
         OPACITY = 'opacity',
         STYLE = 'style',
-        FILTER = "filter",
+        FILTER = 'filter',
         CURRENT_STYLE = 'currentStyle',
         RUNTIME_STYLE = 'runtimeStyle',
         LEFT = 'left',
         PX = 'px',
         CUSTOM_STYLES = Style._CUSTOM_STYLES,
-        RE_NUMPX = /^-?\d+(?:px)?$/i,
+        RE_NUM_PX = /^-?\d+(?:px)?$/i,
         RE_NUM = /^-?\d/,
-        backgroundPosition = "backgroundPosition",
-        ropacity = /opacity=([^)]*)/,
-        ralpha = /alpha\([^)]*\)/i;
+        backgroundPosition = 'backgroundPosition',
+        R_OPACITY = /opacity=([^)]*)/,
+        R_ALPHA = /alpha\([^)]*\)/i;
 
     // odd backgroundPosition
     CUSTOM_STYLES[backgroundPosition] = {
-        get:function (elem, computed) {
+        get: function (elem, computed) {
             if (computed) {
-                return elem[CURRENT_STYLE][backgroundPosition + "X"] +
-                    " " +
-                    elem[CURRENT_STYLE][backgroundPosition + "Y"];
+                return elem[CURRENT_STYLE][backgroundPosition + 'X'] +
+                    ' ' +
+                    elem[CURRENT_STYLE][backgroundPosition + 'Y'];
             } else {
                 return elem[STYLE][backgroundPosition];
             }
@@ -3222,34 +3319,34 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
 
             CUSTOM_STYLES[OPACITY] = {
 
-                get:function (elem, computed) {
+                get: function (elem, computed) {
                     // 没有设置过 opacity 时会报错，这时返回 1 即可
                     // 如果该节点没有添加到 dom ，取不到 filters 结构
                     // val = elem[FILTERS]['DXImageTransform.Microsoft.Alpha'][OPACITY];
-                    return ropacity.test((
+                    return R_OPACITY.test((
                         computed && elem[CURRENT_STYLE] ?
                             elem[CURRENT_STYLE][FILTER] :
-                            elem[STYLE][FILTER]) || "") ?
-                        ( parseFloat(RegExp.$1) / HUNDRED ) + "" :
-                        computed ? "1" : "";
+                            elem[STYLE][FILTER]) || '') ?
+                        ( parseFloat(RegExp.$1) / HUNDRED ) + '' :
+                        computed ? '1' : '';
                 },
 
-                set:function (elem, val) {
+                set: function (elem, val) {
                     val = parseFloat(val);
 
                     var style = elem[STYLE],
                         currentStyle = elem[CURRENT_STYLE],
-                        opacity = isNaN(val) ? "" : "alpha(" + OPACITY + "=" + val * HUNDRED + ")",
-                        filter = S.trim(currentStyle && currentStyle[FILTER] || style[FILTER] || "");
+                        opacity = isNaN(val) ? '' : 'alpha(' + OPACITY + '=' + val * HUNDRED + ')',
+                        filter = S.trim(currentStyle && currentStyle[FILTER] || style[FILTER] || '');
 
                     // ie  has layout
                     style.zoom = 1;
 
                     // if setting opacity to 1, and no other filters exist - attempt to remove filter attribute
-                    if (val >= 1 && S.trim(filter.replace(ralpha, "")) === "") {
+                    if (val >= 1 && S.trim(filter.replace(R_ALPHA, '')) === '') {
 
-                        // Setting style.filter to null, "" & " " still leave "filter:" in the cssText
-                        // if "filter:" is present at all, clearType is disabled, we want to avoid this
+                        // Setting style.filter to null, '' & ' ' still leave 'filter:' in the cssText
+                        // if 'filter:' is present at all, clearType is disabled, we want to avoid this
                         // style.removeAttribute is IE Only, but so apparently is this code path...
                         style.removeAttribute(FILTER);
 
@@ -3261,9 +3358,9 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
 
                     // otherwise, set new filter values
                     // 如果 >=1 就不设，就不能覆盖外部样式表定义的样式，一定要设
-                    style.filter = ralpha.test(filter) ?
-                        filter.replace(ralpha, opacity) :
-                        filter + (filter ? ", " : "") + opacity;
+                    style.filter = R_ALPHA.test(filter) ?
+                        filter.replace(R_ALPHA, opacity) :
+                        filter + (filter ? ', ' : '') + opacity;
                 }
             };
         }
@@ -3275,32 +3372,29 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
     /*
      border fix
      ie 不设置数值，则 computed style 不返回数值，只返回 thick? medium ...
-     (default is "medium")
+     (default is 'medium')
      */
     var IE8 = UA['ie'] == 8,
         BORDER_MAP = {
         },
-        BORDERS = ["", "Top", "Left", "Right", "Bottom"];
+        BORDERS = ['', 'Top', 'Left', 'Right', 'Bottom'];
     BORDER_MAP['thin'] = IE8 ? '1px' : '2px';
     BORDER_MAP['medium'] = IE8 ? '3px' : '4px';
     BORDER_MAP['thick'] = IE8 ? '5px' : '6px';
 
     S.each(BORDERS, function (b) {
-        var name = "border" + b + "Width",
-            styleName = "border" + b + "Style";
+        var name = 'border' + b + 'Width',
+            styleName = 'border' + b + 'Style';
 
-        /**
-         * @ignore
-         */
         CUSTOM_STYLES[name] = {
-            get:function (elem, computed) {
+            get: function (elem, computed) {
                 // 只有需要计算样式的时候才转换，否则取原值
                 var currentStyle = computed ? elem[CURRENT_STYLE] : 0,
                     current = currentStyle && String(currentStyle[name]) || undefined;
                 // look up keywords if a border exists
-                if (current && current.indexOf("px") < 0) {
+                if (current && current.indexOf('px') < 0) {
                     // 边框没有隐藏
-                    if (BORDER_MAP[current] && currentStyle[styleName] !== "none") {
+                    if (BORDER_MAP[current] && currentStyle[styleName] !== 'none') {
                         current = BORDER_MAP[current];
                     } else {
                         // otherwise no border
@@ -3322,7 +3416,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
             var ret = elem[CURRENT_STYLE] && elem[CURRENT_STYLE][name];
 
             // 当 width/height 设置为百分比时，通过 pixelLeft 方式转换的 width/height 值
-            // 一开始就处理了! CUSTOM_STYLE["height"],CUSTOM_STYLE["width"] ,cssHook 解决@2011-08-19
+            // 一开始就处理了! CUSTOM_STYLE['height'],CUSTOM_STYLE['width'] ,cssHook 解决@2011-08-19
             // 在 ie 下不对，需要直接用 offset 方式
             // borderWidth 等值也有问题，但考虑到 borderWidth 设为百分比的概率很小，这里就不考虑了
 
@@ -3330,10 +3424,10 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
             // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
-            if ((!RE_NUMPX.test(ret) &&
+            if ((!RE_NUM_PX.test(ret) &&
                 RE_NUM.test(ret)) &&
-                // "0px 0px"
-                ret.indexOf(" ") == -1) {
+                // '0px 0px'
+                ret.indexOf(' ') == -1) {
                 // Remember the original values
                 var style = elem[STYLE],
                     left = style[LEFT],
@@ -3352,35 +3446,34 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
                     elem[RUNTIME_STYLE][LEFT] = rsLeft;
                 }
             }
-            return ret === "" ? "auto" : ret;
+            return ret === '' ? 'auto' : ret;
         };
     }
     return DOM;
 }, {
-    requires:["./base", "ua", "./style"]
+    requires: ['./base', 'ua', './style']
 });
-/**
- * NOTES:
- *
- * yiminghe@gmail.com: 2011.12.21 backgroundPosition in ie
- *  - currentStyle['backgroundPosition'] undefined
- *  - currentStyle['backgroundPositionX'] ok
- *  - currentStyle['backgroundPositionY'] ok
- *
- *
- * yiminghe@gmail.com： 2011.05.19 opacity in ie
- *  - 如果节点是动态创建，设置opacity，没有加到 dom 前，取不到 opacity 值
- *  - 兼容：border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值。
- *
- *  - opacity 的实现，参考自 jquery
- *
+/*
+  NOTES:
+
+  yiminghe@gmail.com: 2011.12.21 backgroundPosition in ie
+   - currentStyle['backgroundPosition'] undefined
+   - currentStyle['backgroundPositionX'] ok
+   - currentStyle['backgroundPositionY'] ok
+
+
+  yiminghe@gmail.com： 2011.05.19 opacity in ie
+   - 如果节点是动态创建，设置opacity，没有加到 dom 前，取不到 opacity 值
+   - 兼容：border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值
+   - opacity 的实现，参考自 jquery
+
  */
 /**
+ * @ignore
  * @fileOverview dom/style
- * @author yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/style', function (S, DOM, UA, undefined) {
-    "use strict";
     var WINDOW = S.Env.host,
         doc = WINDOW.document,
         docElem = doc.documentElement,
@@ -3395,32 +3488,32 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         DISPLAY = 'display',
         OLD_DISPLAY = DISPLAY + S.now(),
         NONE = 'none',
-        PARSEINT = parseInt,
-        RE_NUMPX = /^-?\d+(?:px)?$/i,
+        myParseInt = parseInt,
+        RE_NUM_PX = /^-?\d+(?:px)?$/i,
         cssNumber = {
-            "fillOpacity":1,
-            "fontWeight":1,
-            "lineHeight":1,
-            "opacity":1,
-            "orphans":1,
-            "widows":1,
-            "zIndex":1,
-            "zoom":1
+            'fillOpacity': 1,
+            'fontWeight': 1,
+            'lineHeight': 1,
+            'opacity': 1,
+            'orphans': 1,
+            'widows': 1,
+            'zIndex': 1,
+            'zoom': 1
         },
         rmsPrefix = /^-ms-/,
         RE_DASH = /-([a-z])/ig,
-        CAMELCASE_FN = function (all, letter) {
+        CAMEL_CASE_FN = function (all, letter) {
             return letter.toUpperCase();
         },
-        // 考虑 ie9 ...
-        rupper = /([A-Z]|^ms)/g,
+    // 考虑 ie9 ...
+        R_UPPER = /([A-Z]|^ms)/g,
         EMPTY = '',
         DEFAULT_UNIT = 'px',
         CUSTOM_STYLES = {},
         cssProps = {},
         defaultDisplay = {};
 
-    // normalize reserved word float alternatives ("cssFloat" or "styleFloat")
+    // normalize reserved word float alternatives ('cssFloat' or 'styleFloat')
     if (docElem[STYLE][CSS_FLOAT] !== undefined) {
         cssProps[FLOAT] = CSS_FLOAT;
     }
@@ -3430,7 +3523,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     function camelCase(name) {
         // fix #92, ms!
-        return name.replace(rmsPrefix, "ms-").replace(RE_DASH, CAMELCASE_FN);
+        return name.replace(rmsPrefix, 'ms-').replace(RE_DASH, CAMEL_CASE_FN);
     }
 
     var defaultDisplayDetectIframe,
@@ -3445,14 +3538,14 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             body = doc.body || doc.documentElement;
             elem = doc.createElement(tagName);
             DOM.prepend(elem, body);
-            var oldDisplay = DOM.css(elem, "display");
+            var oldDisplay = DOM.css(elem, 'display');
             body.removeChild(elem);
             // If the simple way fails,
             // get element's real default display by attaching it to a temp iframe
-            if (oldDisplay == "none" || oldDisplay == "") {
+            if (oldDisplay == 'none' || oldDisplay == '') {
                 // No iframe to use yet, so create it
                 if (!defaultDisplayDetectIframe) {
-                    defaultDisplayDetectIframe = doc.createElement("iframe");
+                    defaultDisplayDetectIframe = doc.createElement('iframe');
 
                     defaultDisplayDetectIframe.frameBorder =
                         defaultDisplayDetectIframe.width =
@@ -3474,19 +3567,22 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
                     try {
                         defaultDisplayDetectIframeDoc = defaultDisplayDetectIframe.contentWindow.document;
-                        defaultDisplayDetectIframeDoc.write(( doc.compatMode === "CSS1Compat" ? "<!doctype html>" : "" )
-                            + "<html><head>" +
+                        defaultDisplayDetectIframeDoc.write(( doc.compatMode === 'CSS1Compat' ? '<!doctype html>' : '' )
+                            + '<html><head>' +
                             (UA['ie'] && DOM.isCustomDomain() ?
-                                "<script>document.domain = '" +
+                                '<script>' +
+                                    'document.' +
+                                    'domain' +
+                                    "= '" +
                                     doc.domain
-                                    + "';</script>" : "")
+                                    + "';</script>" : '')
                             +
-                            "</head><body>");
+                            '</head><body>');
                         defaultDisplayDetectIframeDoc.close();
                     } catch (e) {
                         // ie6 need a breath , such as alert(8) or setTimeout;
                         // 同时需要同步，所以无解，勉强返回
-                        return "block";
+                        return 'block';
                     }
                 }
 
@@ -3494,7 +3590,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
                 defaultDisplayDetectIframeDoc.body.appendChild(elem);
 
-                oldDisplay = DOM.css(elem, "display");
+                oldDisplay = DOM.css(elem, 'display');
 
                 body.removeChild(defaultDisplayDetectIframe);
             }
@@ -3508,19 +3604,21 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     S.mix(DOM,
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
-            _camelCase:camelCase,
+            _camelCase: camelCase,
             // _cssNumber:cssNumber,
-            _CUSTOM_STYLES:CUSTOM_STYLES,
-            _cssProps:cssProps,
-            _getComputedStyle:function (elem, name) {
-                var val = "",
+            _CUSTOM_STYLES: CUSTOM_STYLES,
+            _cssProps: cssProps,
+            _getComputedStyle: function (elem, name) {
+                var val = '',
                     computedStyle,
                     d = elem.ownerDocument;
 
-                name = name.replace(rupper, "-$1").toLowerCase();
+                name = name.replace(R_UPPER, '-$1').toLowerCase();
 
                 // https://github.com/kissyteam/kissy/issues/61
                 if (computedStyle = d.defaultView.getComputedStyle(elem, null)) {
@@ -3528,7 +3626,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
 
                 // 还没有加入到 document，就取行内
-                if (val == "" && !DOM.contains(d.documentElement, elem)) {
+                if (val == '' && !DOM.contains(d.documentElement, elem)) {
                     name = cssProps[name] || name;
                     val = elem[STYLE][name];
                 }
@@ -3543,15 +3641,17 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              *  @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              *  @param {String|Object} name A CSS property. or A map of property-value pairs to set.
              *  @param [val] A value to set for the property.
-             *  @returns {undefined|String}
+             *  @return {undefined|String}
              */
-            style:function (selector, name, val) {
+            style: function (selector, name, val) {
                 var els = DOM.query(selector), elem = els[0], i;
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        for (i = els.length - 1; i >= 0; i--) {
-                            style(els[i], k, name[k]);
+                        if (name.hasOwnProperty(k)) {
+                            for (i = els.length - 1; i >= 0; i--) {
+                                style(els[i], k, name[k]);
+                            }
                         }
                     }
                     return undefined;
@@ -3574,20 +3674,22 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Get the computed value of a style property for the first element in the set of matched elements.
              * or
              * Set one or more CSS properties for the set of matched elements.
-             * @param {HTMLElement[]|String|HTMLElement|Element} selector 选择器或节点或节点数组
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
              * @param {String|Object} name A CSS property. or A map of property-value pairs to set.
              * @param [val] A value to set for the property.
-             * @returns {undefined|String}
+             * @return {undefined|String}
              */
-            css:function (selector, name, val) {
+            css: function (selector, name, val) {
                 var els = DOM.query(selector),
                     elem = els[0],
                     i;
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        for (i = els.length - 1; i >= 0; i--) {
-                            style(els[i], k, name[k]);
+                        if (name.hasOwnProperty(k)) {
+                            for (i = els.length - 1; i >= 0; i--) {
+                                style(els[i], k, name[k]);
+                            }
                         }
                     }
                     return undefined;
@@ -3601,7 +3703,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     var ret = '';
                     if (elem) {
                         // If a hook was provided get the computed value from there
-                        if (hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined) {
+                        if (hook && 'get' in hook && (ret = hook.get(elem, true)) !== undefined) {
                         } else {
                             ret = DOM._getComputedStyle(elem, name);
                         }
@@ -3621,7 +3723,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Display the matched elements.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
-            show:function (selector) {
+            show: function (selector) {
                 var els = DOM.query(selector), elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
@@ -3641,7 +3743,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Hide the matched elements.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
-            hide:function (selector) {
+            hide: function (selector) {
                 var els = DOM.query(selector), elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
@@ -3659,7 +3761,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Display or hide the matched elements.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
-            toggle:function (selector) {
+            toggle: function (selector) {
                 var els = DOM.query(selector), elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
@@ -3675,10 +3777,10 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
              * @param {window} [refWin=window] Window which will accept this stylesheet
-             * @param {String} cssText The text containing the css rules
+             * @param {String} [cssText] The text containing the css rules
              * @param {String} [id] An id to add to the stylesheet for later removal
              */
-            addStyleSheet:function (refWin, cssText, id) {
+            addStyleSheet: function (refWin, cssText, id) {
                 refWin = refWin || WINDOW;
                 if (S.isString(refWin)) {
                     id = cssText;
@@ -3699,7 +3801,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     return;
                 }
 
-                elem = DOM.create('<style>', { id:id }, doc);
+                elem = DOM.create('<style>', { id: id }, doc);
 
                 // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
                 DOM.get('head', doc).appendChild(elem);
@@ -3715,7 +3817,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Make matched elements unselectable
              * @param {HTMLElement[]|String|HTMLElement} selector  Matched elements.
              */
-            unselectable:function (selector) {
+            unselectable: function (selector) {
                 var _els = DOM.query(selector), elem, j;
                 for (j = _els.length - 1; j >= 0; j--) {
                     elem = _els[j];
@@ -3727,8 +3829,8 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     } else {
                         if (UA['ie'] || UA['opera']) {
                             var e, i = 0,
-                                els = elem.getElementsByTagName("*");
-                            elem.setAttribute("unselectable", 'on');
+                                els = elem.getElementsByTagName('*');
+                            elem.setAttribute('unselectable', 'on');
                             while (( e = els[ i++ ] )) {
                                 switch (e.tagName.toLowerCase()) {
                                     case 'iframe' :
@@ -3738,7 +3840,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                                         /* Ignore the above tags */
                                         break;
                                     default :
-                                        e.setAttribute("unselectable", 'on');
+                                        e.setAttribute('unselectable', 'on');
                                 }
                             }
                         }
@@ -3748,56 +3850,56 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
             /**
              * Get the current computed width for the first element in the set of matched elements, including padding but not border.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @returns {Number}
+             * @return {Number}
              */
-            innerWidth:0,
+            innerWidth: 0,
             /**
              * Get the current computed height for the first element in the set of matched elements, including padding but not border.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @returns {Number}
+             * @return {Number}
              */
-            innerHeight:0,
+            innerHeight: 0,
             /**
              *  Get the current computed width for the first element in the set of matched elements, including padding and border, and optionally margin.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {Boolean} [includeMargin] A Boolean indicating whether to include the element's margin in the calculation.
-             * @returns {Number}
+             * @return {Number}
              */
-            outerWidth:0,
+            outerWidth: 0,
             /**
              * Get the current computed height for the first element in the set of matched elements, including padding, border, and optionally margin.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {Boolean} [includeMargin] A Boolean indicating whether to include the element's margin in the calculation.
-             * @returns {Number}
+             * @return {Number}
              */
-            outerHeight:0,
+            outerHeight: 0,
             /**
              * Get the current computed width for the first element in the set of matched elements.
              * or
              * Set the CSS width of each element in the set of matched elements.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Number} [value]
              * An integer representing the number of pixels, or an integer along with an optional unit of measure appended (as a string).
-             * @returns {Number|undefined}
+             * @return {Number|undefined}
              */
-            width:0,
+            width: 0,
             /**
              * Get the current computed height for the first element in the set of matched elements.
              * or
              * Set the CSS height of each element in the set of matched elements.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Number} [value]
              * An integer representing the number of pixels, or an integer along with an optional unit of measure appended (as a string).
-             * @returns {Number|undefined}
+             * @return {Number|undefined}
              */
-            height:0
+            height: 0
         });
 
     function capital(str) {
@@ -3805,14 +3907,14 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     }
 
     S.each([WIDTH, HEIGHT], function (name) {
-        DOM["inner" + capital(name)] = function (selector) {
+        DOM['inner' + capital(name)] = function (selector) {
             var el = DOM.get(selector);
-            return el && getWHIgnoreDisplay(el, name, "padding");
+            return el && getWHIgnoreDisplay(el, name, 'padding');
         };
 
-        DOM["outer" + capital(name)] = function (selector, includeMargin) {
+        DOM['outer' + capital(name)] = function (selector, includeMargin) {
             var el = DOM.get(selector);
-            return el && getWHIgnoreDisplay(el, name, includeMargin ? "margin" : "border");
+            return el && getWHIgnoreDisplay(el, name, includeMargin ? 'margin' : 'border');
         };
 
         DOM[name] = function (selector, val) {
@@ -3824,12 +3926,12 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         };
     });
 
-    var cssShow = { position:"absolute", visibility:"hidden", display:"block" };
+    var cssShow = { position: 'absolute', visibility: 'hidden', display: 'block' };
 
     /*
      css height,width 永远都是计算值
      */
-    S.each(["height", "width"], function (name) {
+    S.each(['height', 'width'], function (name) {
         /**
          * @ignore
          */
@@ -3837,16 +3939,16 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             /**
              * @ignore
              */
-            get:function (elem, computed) {
+            get: function (elem, computed) {
                 if (computed) {
-                    return getWHIgnoreDisplay(elem, name) + "px";
+                    return getWHIgnoreDisplay(elem, name) + 'px';
                 }
             },
-            set:function (elem, value) {
-                if (RE_NUMPX.test(value)) {
+            set: function (elem, value) {
+                if (RE_NUM_PX.test(value)) {
                     value = parseFloat(value);
                     if (value >= 0) {
-                        return value + "px";
+                        return value + 'px';
                     }
                 } else {
                     return value;
@@ -3855,12 +3957,10 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         };
     });
 
-    S.each(["left", "top"], function (name) {
-        /**
-         * @ignore
-         */
+    S.each(['left', 'top'], function (name) {
+
         CUSTOM_STYLES[ name ] = {
-            get:function (elem, computed) {
+            get: function (elem, computed) {
                 if (computed) {
                     var val = DOM._getComputedStyle(elem, name), offset;
 
@@ -3881,13 +3981,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                                 // 否则减去 borderTop 其实也是 clientTop
                                 // http://msdn.microsoft.com/en-us/library/aa752288%28v=vs.85%29.aspx
                                 // ie<9 注意有时候 elem.offsetParent 为 null ...
-                                // 比如 DOM.append(DOM.create("<div class='position:absolute'></div>"),document.body)
+                                // 比如 DOM.append(DOM.create('<div class='position:absolute'></div>'),document.body)
                                 offset -= elem.offsetParent && elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
                                     || 0;
                             }
-                            val = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
+                            val = offset - (myParseInt(DOM.css(elem, 'margin-' + name)) || 0);
                         }
-                        val += "px";
+                        val += 'px';
                     }
                     return val;
                 }
@@ -3900,15 +4000,19 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
         // Remember the old values, and insert the new ones
         for (var name in options) {
-            old[ name ] = elem[STYLE][ name ];
-            elem[STYLE][ name ] = options[ name ];
+            if (options.hasOwnProperty(name)) {
+                old[ name ] = elem[STYLE][ name ];
+                elem[STYLE][ name ] = options[ name ];
+            }
         }
 
         callback.call(elem);
 
         // Revert the old values
         for (name in options) {
-            elem[STYLE][ name ] = old[ name ];
+            if (options.hasOwnProperty(name)) {
+                elem[STYLE][ name ] = old[ name ];
+            }
         }
     }
 
@@ -3922,7 +4026,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         name = cssProps[name] || name;
         // setter
         if (val !== undefined) {
-            // normalize unsetting
+            // normalize unset
             if (val === null || val === EMPTY) {
                 val = EMPTY;
             }
@@ -3938,7 +4042,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 try {
                     style[name] = val;
                 } catch (e) {
-                    S.log("css set error :" + e);
+                    S.log('css set error :' + e);
                 }
                 // #80 fix,font-family
                 if (val === EMPTY && style.removeAttribute) {
@@ -3953,13 +4057,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         //getter
         else {
             // If a hook was provided get the non-computed value from there
-            if (hook && "get" in hook && (ret = hook.get(elem, false)) !== undefined) {
+            if (hook && 'get' in hook && (ret = hook.get(elem, false)) !== undefined) {
 
             } else {
                 // Otherwise just get the value from the style object
                 ret = style[ name ];
             }
-            return ret === undefined ? "" : ret;
+            return ret === undefined ? '' : ret;
         }
     }
 
@@ -3979,13 +4083,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     }
 
 
-    /**
-     * 得到元素的大小信息
-     * @param elem
-     * @param name
-     * @param {String} [extra]  "padding" : (css width) + padding
-     *                          "border" : (css width) + padding + border
-     *                          "margin" : (css width) + padding + border + margin
+    /*
+      得到元素的大小信息
+      @param elem
+      @param name
+      @param {String} [extra]  'padding' : (css width) + padding
+                               'border' : (css width) + padding + border
+                               'margin' : (css width) + padding + border + margin
      */
     function getWH(elem, name, extra) {
         if (S.isWindow(elem)) {
@@ -3997,15 +4101,15 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
 
         if (val > 0) {
-            if (extra !== "border") {
+            if (extra !== 'border') {
                 S.each(which, function (w) {
                     if (!extra) {
-                        val -= parseFloat(DOM.css(elem, "padding" + w)) || 0;
+                        val -= parseFloat(DOM.css(elem, 'padding' + w)) || 0;
                     }
-                    if (extra === "margin") {
+                    if (extra === 'margin') {
                         val += parseFloat(DOM.css(elem, extra + w)) || 0;
                     } else {
-                        val -= parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                        val -= parseFloat(DOM.css(elem, 'border' + w + 'Width')) || 0;
                     }
                 });
             }
@@ -4018,17 +4122,17 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         if (val == null || (Number(val)) < 0) {
             val = elem.style[ name ] || 0;
         }
-        // Normalize "", auto, and prepare for extra
+        // Normalize '', auto, and prepare for extra
         val = parseFloat(val) || 0;
 
         // Add padding, border, margin
         if (extra) {
             S.each(which, function (w) {
-                val += parseFloat(DOM.css(elem, "padding" + w)) || 0;
-                if (extra !== "padding") {
-                    val += parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                val += parseFloat(DOM.css(elem, 'padding' + w)) || 0;
+                if (extra !== 'padding') {
+                    val += parseFloat(DOM.css(elem, 'border' + w + 'Width')) || 0;
                 }
-                if (extra === "margin") {
+                if (extra === 'margin') {
                     val += parseFloat(DOM.css(elem, extra + w)) || 0;
                 }
             });
@@ -4039,39 +4143,41 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-    requires:["dom/base", "ua"]
+    requires: ['dom/base', 'ua']
 });
 
-/**
- * 2011-12-21
- *  - backgroundPositionX, backgroundPositionY firefox/w3c 不支持
- *  - w3c 为准，这里不 fix 了
- *
- *
- * 2011-08-19
- *  - 调整结构，减少耦合
- *  - fix css("height") == auto
- *
- * NOTES:
- *  - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
- *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
- *
- *
- *  - getComputedStyle 在 webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输出 float 值。
- *
- *  - color: blue 继承值，getComputedStyle, 在 ie 下返回 blue, opera 返回 #0000ff, 其它浏览器
- *    返回 rgb(0, 0, 255)
- *
- *  - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未“追求完美”。YUI3 做了部分完美处理，但
- *    依旧存在浏览器差异。
+/*
+  2011-12-21
+   - backgroundPositionX, backgroundPositionY firefox/w3c 不支持
+   - w3c 为准，这里不 fix 了
+
+
+  2011-08-19
+   - 调整结构，减少耦合
+   - fix css('height') == auto
+
+  NOTES:
+   - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
+   - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
+
+
+   - getComputedStyle 在 webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输出 float 值。
+
+   - color: blue 继承值，getComputedStyle, 在 ie 下返回 blue, opera 返回 #0000ff, 其它浏览器
+     返回 rgb(0, 0, 255)
+
+   - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未“追求完美”。YUI3 做了部分完美处理，但
+     依旧存在浏览器差异。
  */
 /**
+ * @ignore
  * @fileOverview dom-traversal
- * @author lifesinger@gmail.com,yiminghe@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
+        NodeType = DOM.NodeType,
         documentElement = doc.documentElement,
         CONTAIN_MASK = 16,
         __contains =
@@ -4081,7 +4187,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 } :
                 documentElement.contains ?
                     function (a, b) {
-                        if (a.nodeType == DOM.DOCUMENT_NODE) {
+                        if (a.nodeType == NodeType.DOCUMENT_NODE) {
                             a = a.documentElement;
                         }
                         // !a.contains => a===document || text
@@ -4093,7 +4199,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                         }
 
                         // when b is document, a.contains(b) 不支持的接口 in ie
-                        if (b && b.nodeType == DOM.ELEMENT_NODE) {
+                        if (b && b.nodeType == NodeType.ELEMENT_NODE) {
                             return a.contains && a.contains(b);
                         } else {
                             return false;
@@ -4103,7 +4209,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     S.mix(DOM,
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
 
@@ -4112,12 +4220,12 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * beginning at the first element of matched elements and progressing up through the DOM tree.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
-             * @param {HTMLElement|String|Document|HTMLElement[]} [context] Search bound element
-             * @returns {HTMLElement}
+             * @param {HTMLElement|String|HTMLDocument|HTMLElement[]} [context] Search bound element
+             * @return {HTMLElement}
              */
-            closest:function (selector, filter, context, allowTextNode) {
+            closest: function (selector, filter, context, allowTextNode) {
                 return nth(selector, filter, 'parentNode', function (elem) {
-                    return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
+                    return elem.nodeType != NodeType.DOCUMENT_FRAGMENT_NODE;
                 }, context, true, allowTextNode);
             },
 
@@ -4125,12 +4233,12 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * Get the parent of the first element in the current set of matched elements, optionally filtered by a selector.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @param {HTMLElement|String|Document|HTMLElement[]} [context] Search bound element
-             * @returns {HTMLElement}
+             * @param {HTMLElement|String|HTMLDocument|HTMLElement[]} [context] Search bound element
+             * @return {HTMLElement}
              */
-            parent:function (selector, filter, context) {
+            parent: function (selector, filter, context) {
                 return nth(selector, filter, 'parentNode', function (elem) {
-                    return elem.nodeType != DOM.DOCUMENT_FRAGMENT_NODE;
+                    return elem.nodeType != NodeType.DOCUMENT_FRAGMENT_NODE;
                 }, context, undefined);
             },
 
@@ -4139,9 +4247,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * If a filter is provided, it retrieves the next child only if it matches that filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {HTMLElement}
+             * @return {HTMLElement}
              */
-            first:function (selector, filter, allowTextNode) {
+            first: function (selector, filter, allowTextNode) {
                 var elem = DOM.get(selector);
                 return nth(elem && elem.firstChild, filter, 'nextSibling',
                     undefined, undefined, true, allowTextNode);
@@ -4152,9 +4260,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * If a filter is provided, it retrieves the previous child only if it matches that filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {HTMLElement}
+             * @return {HTMLElement}
              */
-            last:function (selector, filter, allowTextNode) {
+            last: function (selector, filter, allowTextNode) {
                 var elem = DOM.get(selector);
                 return nth(elem && elem.lastChild, filter, 'previousSibling',
                     undefined, undefined, true, allowTextNode);
@@ -4165,9 +4273,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * If a filter is provided, it retrieves the next child only if it matches that filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {HTMLElement}
+             * @return {HTMLElement}
              */
-            next:function (selector, filter, allowTextNode) {
+            next: function (selector, filter, allowTextNode) {
                 return nth(selector, filter, 'nextSibling', undefined,
                     undefined, undefined, allowTextNode);
             },
@@ -4177,9 +4285,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * If a filter is provided, it retrieves the previous child only if it matches that filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {HTMLElement}
+             * @return {HTMLElement}
              */
-            prev:function (selector, filter, allowTextNode) {
+            prev: function (selector, filter, allowTextNode) {
                 return nth(selector, filter, 'previousSibling',
                     undefined, undefined, undefined, allowTextNode);
             },
@@ -4188,9 +4296,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * Get the siblings of the first element in the set of matched elements, optionally filtered by a filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {HTMLElement[]}
+             * @return {HTMLElement[]}
              */
-            siblings:function (selector, filter, allowTextNode) {
+            siblings: function (selector, filter, allowTextNode) {
                 return getSiblings(selector, filter, true, allowTextNode);
             },
 
@@ -4198,9 +4306,9 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * Get the children of the first element in the set of matched elements, optionally filtered by a filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {HTMLElement[]}
+             * @return {HTMLElement[]}
              */
-            children:function (selector, filter) {
+            children: function (selector, filter) {
                 return getSiblings(selector, filter, undefined);
             },
 
@@ -4209,19 +4317,19 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * optionally filtered by a filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
-             * @returns {Node[]}
+             * @return {HTMLElement[]}
              */
-            contents:function (selector, filter) {
+            contents: function (selector, filter) {
                 return getSiblings(selector, filter, undefined, 1);
             },
 
             /**
              * Check to see if a DOM node is within another DOM node.
-             * @param {HTMLElement|String|Element} container The DOM element that may contain the other element.
-             * @param {HTMLElement|String|Element} contained The DOM element that may be contained by the other element.
-             * @returns {Boolean}
+             * @param {HTMLElement|String} container The DOM element that may contain the other element.
+             * @param {HTMLElement|String} contained The DOM element that may be contained by the other element.
+             * @return {Boolean}
              */
-            contains:function (container, contained) {
+            contains: function (container, contained) {
                 container = DOM.get(container);
                 contained = DOM.get(contained);
                 if (container && contained) {
@@ -4232,11 +4340,12 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
             /**
              * Check to see if a DOM node is equal with another DOM node.
-             * @param {HTMLElement|String|Element} n1
-             * @param {HTMLElement|String|Element} n2
-             * @returns {Boolean}
+             * @param {HTMLElement|String} n1
+             * @param {HTMLElement|String} n2
+             * @return {Boolean}
+             * @member KISSY.DOM
              */
-            equals:function (n1, n2) {
+            equals: function (n1, n2) {
                 n1 = DOM.query(n1);
                 n2 = DOM.query(n2);
                 if (n1.length != n2.length) {
@@ -4290,8 +4399,8 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
         // 概念统一，都是 context 上下文，只过滤子孙节点，自己不管
         while (elem && elem != context) {
             if ((
-                elem.nodeType == DOM.ELEMENT_NODE ||
-                    elem.nodeType == DOM.TEXT_NODE && allowTextNode
+                elem.nodeType == NodeType.ELEMENT_NODE ||
+                    elem.nodeType == NodeType.TEXT_NODE && allowTextNode
                 ) &&
                 testFilter(elem, filter) &&
                 (!extraFilter || extraFilter(elem))) {
@@ -4339,7 +4448,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             tmp = S.makeArray(parentNode.childNodes);
             for (i = 0; i < tmp.length; i++) {
                 el = tmp[i];
-                if (!allowText && el.nodeType != DOM.ELEMENT_NODE) {
+                if (!allowText && el.nodeType != NodeType.ELEMENT_NODE) {
                     continue;
                 }
                 if (el == elem) {
@@ -4357,21 +4466,21 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     return DOM;
 }, {
-    requires:["./base"]
+    requires: ['./base']
 });
 
-/**
- * 2012-04-05 yiminghe@gmail.com
- * - 增加 contents 方法
- *
- *
- * 2011-08 yiminghe@gmail.com
- * - 添加 closest , first ,last 完全摆脱原生属性
- *
- * NOTES:
- * - jquery does not return null ,it only returns empty array , but kissy does.
- *
- *  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
- *    遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
- *
+/*
+ 2012-04-05 yiminghe@gmail.com
+ - 增加 contents 方法
+
+
+ 2011-08 yiminghe@gmail.com
+ - 添加 closest , first ,last 完全摆脱原生属性
+
+ NOTES:
+ - jquery does not return null ,it only returns empty array , but kissy does.
+
+ - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
+ 遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
+
  */

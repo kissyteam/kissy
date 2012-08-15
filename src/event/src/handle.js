@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview responsible for handling event from browser to KISSY Event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/handle", function (S, DOM, _data, special) {
+KISSY.add('event/handle', function (S, DOM, _data, special) {
 
     function getEvents(target) {
         // 获取事件描述
@@ -22,8 +23,8 @@ KISSY.add("event/handle", function (S, DOM, _data, special) {
          let's make a copy of all listeners, so we are
          sure we'll call all of them.
          */
-        /**
-         * DOM3 Events: EventListenerList objects in the DOM are live. ??
+        /*
+          DOM3 Events: EventListenerList objects in the DOM are live. ??
          */
         var handlers = getHandlers(currentTarget, event.type),
             target = event.target,
@@ -57,7 +58,7 @@ KISSY.add("event/handle", function (S, DOM, _data, special) {
                 if (currentTargetHandlers.length) {
                     allHandlers.push({
                         currentTarget:target,
-                        "currentTargetHandlers":currentTargetHandlers
+                        'currentTargetHandlers':currentTargetHandlers
                     });
                 }
                 target = target.parentNode || currentTarget;
