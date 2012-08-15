@@ -4,8 +4,6 @@
  */
 KISSY.add("tabs/panel-render", function (S, Component) {
 
-    var SELECTED_CLS = "ks-tabs-panel-selected";
-
     return Component.Render.extend({
 
         createDom: function () {
@@ -14,7 +12,7 @@ KISSY.add("tabs/panel-render", function (S, Component) {
 
         _uiSetSelected: function (v) {
             var el = this.get("el");
-            el[v ? "addClass" : "removeClass"](SELECTED_CLS);
+            el[v ? "addClass" : "removeClass"](this.get("selectedCls"));
             el.attr("aria-hidden", !v);
         }
 
@@ -22,12 +20,15 @@ KISSY.add("tabs/panel-render", function (S, Component) {
         ATTRS: {
             selected: {
                 value: false
+            },
+            selectedCls: {
+                value: "ks-tabs-panel-selected"
             }
         },
 
         HTML_PARSER: {
             selected: function (el) {
-                return el.hasClass(SELECTED_CLS);
+                return el.hasClass(this.get("selectedCls"));
             }
         }
     }, {
