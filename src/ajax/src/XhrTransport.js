@@ -1,5 +1,5 @@
 /**
- * @fileOverview ajax xhr transport class , route subdomain , xdr
+ * @fileOverview ajax xhr transport class, route subdomain, xdr
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {

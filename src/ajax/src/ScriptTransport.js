@@ -112,7 +112,7 @@ KISSY.add("ajax/ScriptTransport", function (S, io, _, undefined) {
                 }
                 // 非 ie<9 可以判断出来
                 else if (event == "error") {
-                    xhrObj._xhrReady(ERROR_CODE, "scripterror");
+                    xhrObj._xhrReady(ERROR_CODE, "script error");
                 }
             }
         },

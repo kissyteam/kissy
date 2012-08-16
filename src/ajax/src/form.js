@@ -26,6 +26,10 @@ KISSY.add("ajax/form", function (S, io, DOM, FormSerializer) {
                 } else {
                     // get 直接加到 url
                     c.uri.query.add(formParam);
+                    // update ifModifiedKey if necessary
+                    if (c.ifModifiedKeyUri) {
+                        c.ifModifiedKeyUri.query.add(formParam);
+                    }
                 }
             } else {
                 dataType = c.dataType;
@@ -43,5 +47,5 @@ KISSY.add("ajax/form", function (S, io, DOM, FormSerializer) {
     return io;
 
 }, {
-    requires:['./base', "dom", "./FormSerializer"]
+    requires: ['./base', "dom", "./FormSerializer"]
 });

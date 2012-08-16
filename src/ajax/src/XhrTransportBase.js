@@ -11,8 +11,12 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
         NOT_FOUND_CODE = 404,
         NO_CONTENT_CODE2 = 1223,
         XhrTransportBase = {
-            proto:{}
-        };
+            proto: {}
+        }, lastModifiedCached = {},
+        eTagCached = {};
+
+    io.__lastModifiedCached = lastModifiedCached;
+    io.__eTagCached = eTagCached;
 
     function createStandardXHR(_, refWin) {
         try {
@@ -45,7 +49,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
     }
 
     S.mix(XhrTransportBase.proto, {
-        sendInternal:function () {
+        sendInternal: function () {
 
             var self = this,
                 xhrObj = self.xhrObj,
@@ -56,11 +60,29 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                 username,
                 crossDomain = c.crossDomain,
                 mimeType = xhrObj.mimeType,
-                requestHeaders = xhrObj.requestHeaders,
-                serializeArray= c.serializeArray,
+                requestHeaders = xhrObj.requestHeaders || {},
+                serializeArray = c.serializeArray,
                 url = c.uri.toString(serializeArray),
                 xhrFields,
+                ifModifiedKey,
+                cacheValue,
                 i;
+
+            if (ifModifiedKey =
+                (c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString())) {
+                // if ajax want a conditional load
+                // (response status is 304 and responseText is null)
+                // u need to set if-modified-since manually!
+                // or else
+                // u will always get response status 200 and full responseText
+                // which is also conditional load but process transparently by browser
+                if (cacheValue = lastModifiedCached[ifModifiedKey]) {
+                    requestHeaders["If-Modified-Since"] = cacheValue;
+                }
+                if (cacheValue = eTagCached[ifModifiedKey]) {
+                    requestHeaders["If-None-Match"] = cacheValue;
+                }
+            }
 
             if (username = c['username']) {
                 nativeXhr.open(type, url, async, username, c.password)
@@ -95,7 +117,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                     }
                 }
             } catch (e) {
-                S.log("setRequestHeader in xhr error : ");
+                S.log("setRequestHeader in xhr error: ");
                 S.log(e);
             }
 
@@ -124,11 +146,11 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
             }
         },
         // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
-        abort:function () {
+        abort: function () {
             this._callback(0, 1);
         },
 
-        _callback:function (event, abort) {
+        _callback: function (event, abort) {
             // Firefox throws exceptions when accessing properties
             // of an xhr when a network error occured
             // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
@@ -139,7 +161,6 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                     c = xhrObj.config;
                 //abort or complete
                 if (abort || nativeXhr.readyState == 4) {
-
                     // ie6 ActiveObject 设置不恰当属性导致出错
                     if (isInstanceOfXDomainRequest(nativeXhr)) {
                         nativeXhr.onerror = S.noop;
@@ -155,11 +176,28 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                             nativeXhr.abort();
                         }
                     } else {
+                        var ifModifiedKey =
+                            c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString();
+
+                        ///debugger
                         var status = nativeXhr.status;
 
                         // _XDomainRequest 不能获取响应头
                         if (!isInstanceOfXDomainRequest(nativeXhr)) {
                             xhrObj.responseHeadersString = nativeXhr.getAllResponseHeaders();
+                        }
+
+                        if (ifModifiedKey) {
+                            var lastModified = nativeXhr.getResponseHeader("Last-Modified"),
+                                eTag = nativeXhr.getResponseHeader("ETag");
+                            // if u want to set if-modified-since manually
+                            // u need to save last-modified after the first request
+                            if (lastModified) {
+                                lastModifiedCached[ifModifiedKey] = lastModified;
+                            }
+                            if (eTag) {
+                                eTagCached[eTag] = eTag;
+                            }
                         }
 
                         var xml = nativeXhr.responseXML;
@@ -175,7 +213,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                         try {
                             var statusText = nativeXhr.statusText;
                         } catch (e) {
-                            S.log("xhr statusText error : ");
+                            S.log("xhr statusText error: ");
                             S.log(e);
                             // We normalize with Webkit giving an empty statusText
                             statusText = "";
@@ -206,5 +244,5 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
 
     return XhrTransportBase;
 }, {
-    requires:['./base']
+    requires: ['./base']
 });

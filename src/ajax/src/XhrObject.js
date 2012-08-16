@@ -8,7 +8,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
         Promise = S.Promise,
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
-    // get individual response header from responseheader str
+    // get individual response header from response header str
         rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
     function handleResponseData(xhrObject) {
@@ -58,7 +58,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             else if (dataType[0] == "xml" && xml !== undefined) {
                 responseData = xml;
             } else {
-                var rawData = {text:text, xml:xml};
+                var rawData = {text: text, xml: xml};
                 // 看能否从 text xml 转换到合适数据，并设置起始类型为 text/xml
                 S.each(["text", "xml"], function (prevType) {
                     var type = dataType[0],
@@ -101,25 +101,25 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
         Promise.call(this);
         S.mix(this, {
             // 结构化数据，如 json
-            responseData:null,
-            config:c || {},
-            timeoutTimer:null,
+            responseData: null,
+            config: c || {},
+            timeoutTimer: null,
 
             /**
              * @field
              * @memberOf IO.XhrObject#
              * @description String typed data returned from server
              */
-            responseText:null,
+            responseText: null,
             /**
              * @field
              * @memberOf IO.XhrObject#
              * @description xml typed data returned from server
              */
-            responseXML:null,
-            responseHeadersString:"",
-            responseHeaders:null,
-            requestHeaders:{},
+            responseXML: null,
+            responseHeadersString: "",
+            responseHeaders: null,
+            requestHeaders: {},
             /**
              * @field
              * @memberOf IO.XhrObject#
@@ -129,14 +129,14 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
              * 1: send <br>
              * 4: completed<br>
              */
-            readyState:0,
-            state:0,
+            readyState: 0,
+            state: 0,
             /**
              * @field
              * @memberOf IO.XhrObject#
              * @description HTTP statusText of current request
              */
-            statusText:null,
+            statusText: null,
             /**
              * @field
              * @memberOf IO.XhrObject#
@@ -146,9 +146,9 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
              * 404 : Not Found<br>
              * 500 : Server Error<br>
              */
-            status:0,
-            transport:null,
-            _defer:new S.Defer(this)
+            status: 0,
+            transport: null,
+            _defer: new S.Defer(this)
         });
     }
 
@@ -158,7 +158,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
          */
         {
             // Caches the header
-            setRequestHeader:function (name, value) {
+            setRequestHeader: function (name, value) {
                 var self = this;
                 self.requestHeaders[ name ] = value;
                 return self;
@@ -168,7 +168,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
              * get all response headers as string after request is completed
              * @return {String}
              */
-            getAllResponseHeaders:function () {
+            getAllResponseHeaders: function () {
                 var self = this;
                 return self.state === 2 ? self.responseHeadersString : null;
             },
@@ -178,11 +178,11 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
              * @param {String} name header name
              * @return {String} header value
              */
-            getResponseHeader:function (name) {
-                var match, self = this,responseHeaders;
+            getResponseHeader: function (name) {
+                var match, self = this, responseHeaders;
                 if (self.state === 2) {
-                    if (!(responseHeaders=self.responseHeaders)) {
-                        responseHeaders=self.responseHeaders = {};
+                    if (!(responseHeaders = self.responseHeaders)) {
+                        responseHeaders = self.responseHeaders = {};
                         while (( match = rheaders.exec(self.responseHeadersString) )) {
                             responseHeaders[ match[1] ] = match[ 2 ];
                         }
@@ -193,7 +193,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             },
 
             // Overrides response content-type header
-            overrideMimeType:function (type) {
+            overrideMimeType: function (type) {
                 var self = this;
                 if (!self.state) {
                     self.mimeType = type;
@@ -205,7 +205,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
              * cancel this request
              * @param {String} [statusText=abort] error reason as current request object's statusText
              */
-            abort:function (statusText) {
+            abort: function (statusText) {
                 var self = this;
                 statusText = statusText || "abort";
                 if (self.transport) {
@@ -219,14 +219,14 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
              * get native XMLHttpRequest
              * @since 1.3
              */
-            getNativeXhr:function () {
+            getNativeXhr: function () {
                 var transport;
                 if (transport = this.transport) {
                     return transport.nativeXhr;
                 }
             },
 
-            _xhrReady:function (status, statusText) {
+            _xhrReady: function (status, statusText) {
                 var self = this;
                 // 只能执行一次，防止重复执行
                 // 例如完成后，调用 abort
@@ -241,9 +241,10 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 self.readyState = 4;
                 var isSuccess;
                 if (status >= OK_CODE && status < MULTIPLE_CHOICES || status == NOT_MODIFIED) {
-
+                    // note: not same with nativeStatusText, such as "OK"/"Not Modified"
+                    // 为了整个框架的和谐以及兼容性，用小写，并改变写法
                     if (status == NOT_MODIFIED) {
-                        statusText = "notmodified";
+                        statusText = "not modified";
                         isSuccess = true;
                     } else {
                         try {
@@ -252,7 +253,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                             isSuccess = true;
                         } catch (e) {
                             S.log(e.stack || e, "error");
-                            statusText = "parsererror : " + e;
+                            statusText = "parser error";
                         }
                     }
 
@@ -266,7 +267,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 self.statusText = statusText;
 
                 var defer = self._defer;
-                defer[isSuccess ? "resolve" : "reject"]([self.responseData, self.statusText, self]);
+                defer[isSuccess ? "resolve" : "reject"]([self.responseData, statusText, self]);
             }
         }
     );

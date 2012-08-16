@@ -4,7 +4,139 @@
  **/
 KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
     var $ = Node.all;
+
+    var pageUri = new S.Uri(location.href);
+
     describe("Advanced IO", function () {
+
+
+        it("should support last-modified from server", function () {
+
+            var ok = 0;
+
+            io({
+                url: '../data/ifModified.php',
+                dataType: "text",
+                success: function (data, status, xhr) {
+                    expect(data).toBe("0");
+                    expect(status).toBe("success");
+                    expect(xhr.status).toBe(200);
+                    io({
+                        url: '../data/ifModified.php',
+                        dataType: "text",
+                        success: function (data, status, xhr) {
+                            expect(data).toBe("0");
+                            expect(status).toBe("success");
+                            expect(xhr.status).toBe(200);
+
+
+                            expect(S.isEmptyObject(
+                                io.__lastModifiedCached)).toBe(true);
+
+
+                            ok = 1;
+                        }
+                    });
+                }
+            });
+
+            waitsFor(function () {
+                return ok;
+            });
+
+        });
+
+
+        it("should support ifModified config", function () {
+
+            var ok = 0;
+
+            io({
+                url: '../data/ifModified.php',
+                dataType: "text",
+                cache: false,
+                ifModified: true,
+                success: function (data, status, xhr) {
+                    expect(data).toBe("0");
+                    expect(status).toBe("success");
+                    expect(xhr.status).toBe(200);
+                    io({
+                        url: '../data/ifModified.php',
+                        dataType: "text",
+                        cache: false,
+                        ifModified: true,
+                        success: function (data, status, xhr) {
+                            expect(data).toBe(null);
+                            expect(xhr.status).toBe(304);
+                            expect(status).toBe("not modified");
+
+                            expect(io.__lastModifiedCached[
+                                pageUri.resolve('../data/ifModified.php').toString()
+                                ])
+                                .toBe('Thu, 18 Jul 2002 15:48:32 GMT');
+
+                            ok = 1;
+                        }
+                    });
+                }
+            });
+
+            waitsFor(function () {
+                return ok;
+            });
+
+        });
+
+
+        it("should support ifModified config for form", function () {
+
+            var ok = 0;
+
+            var form = $("<form><input name='t' value='t'/></form>").appendTo("body");
+
+            io({
+                url: '../data/ifModified.php',
+                dataType: "text",
+                cache: false,
+                ifModified: true,
+                form: form,
+                success: function (data, status, xhr) {
+                    expect(data).toBe("0");
+                    expect(status).toBe("success");
+                    expect(xhr.status).toBe(200);
+                    io({
+                        url: '../data/ifModified.php',
+                        dataType: "text",
+                        cache: false,
+                        form: form,
+                        ifModified: true,
+                        success: function (data, status, xhr) {
+                            expect(data).toBe(null);
+                            expect(xhr.status).toBe(304);
+                            expect(status).toBe("not modified");
+
+                            var uri = pageUri.resolve('../data/ifModified.php');
+                            uri.query.add("t", "t");
+
+                            expect(io.__lastModifiedCached[
+                                uri.toString()
+                                ]).toBe('Thu, 18 Jul 2002 15:48:32 GMT');
+
+                            ok = 1;
+                        }
+                    });
+                }
+            });
+
+            waitsFor(function () {
+                return ok;
+            });
+
+            runs(function () {
+                form.remove();
+            });
+
+        });
 
         it("should jsonp with array arguments", function () {
             var re = false, data;
@@ -25,17 +157,17 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
         it("should abort for xhr", function () {
             var re = [];
             var xhr = io({
-                url:'../data/ajax.php',
-                cache:false,
-                success:function (data, status) {
+                url: '../data/ajax.php',
+                cache: false,
+                success: function (data, status) {
                     var args = S.makeArray(arguments);
                     re.push(status);
                 },
-                error:function (data, status) {
+                error: function (data, status) {
                     var args = S.makeArray(arguments);
                     re.push(status);
                 },
-                complete:function (data, status) {
+                complete: function (data, status) {
                     var args = S.makeArray(arguments);
                     re.push(status);
                 }
@@ -55,18 +187,18 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             var re = [], ok = false;
 
             var xhr = io({
-                url:'../data/ajax.php',
-                cache:false,
-                success:function (data, status) {
+                url: '../data/ajax.php',
+                cache: false,
+                success: function (data, status) {
                     ok = true;
                     var args = S.makeArray(arguments);
                     re.push(status);
                 },
-                error:function (data, status) {
+                error: function (data, status) {
                     var args = S.makeArray(arguments);
                     re.push(status);
                 },
-                complete:function (data, status) {
+                complete: function (data, status) {
                     var args = S.makeArray(arguments);
                     re.push(status);
                 }
@@ -90,19 +222,19 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
             var re = [];
             var xhr = io({
-                forceScript:!(UA.ie == 6),
-                dataType:'jsonp',
-                url:'../data/jsonp.php',
-                cache:false,
-                success:function (data, status) {
+                forceScript: !(UA.ie == 6),
+                dataType: 'jsonp',
+                url: '../data/jsonp.php',
+                cache: false,
+                success: function (data, status) {
                     var args = S.makeArray(arguments);
                     re.push(status);
                 },
-                error:function (data, status) {
+                error: function (data, status) {
                     re.push(status);
                     var args = S.makeArray(arguments);
                 },
-                complete:function (data, status) {
+                complete: function (data, status) {
                     var args = S.makeArray(arguments);
                     re.push(status);
                 }
@@ -122,19 +254,19 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             var re = [], ok;
 
             var xhr = io({
-                forceScript:!(UA.ie == 6),
-                url:'../data/ajax.php',
-                cache:false,
-                success:function (data, status) {
+                forceScript: !(UA.ie == 6),
+                url: '../data/ajax.php',
+                cache: false,
+                success: function (data, status) {
                     ok = true;
                     var args = S.makeArray(arguments);
                     re.push(status);
                 },
-                error:function (data, status) {
+                error: function (data, status) {
                     var args = S.makeArray(arguments);
                     re.push(status);
                 },
-                complete:function (data, status) {
+                complete: function (data, status) {
                     var args = S.makeArray(arguments);
                     re.push(status);
                 }
@@ -157,21 +289,21 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
             var re = [], ok;
             var xhr = io({
-                url:'../data/ajax.php',
+                url: '../data/ajax.php',
                 // ie 默认会缓存，可能直接触发 success
                 // fiddler 看不到请求，自带网络捕获为 304
-                cache:false,
-                dataType:'json',
-                timeout:0.1,
-                success:function (d, status, r) {
+                cache: false,
+                dataType: 'json',
+                timeout: 0.1,
+                success: function (d, status, r) {
                     var args = S.makeArray(arguments);
                     re.push(status);
                 },
-                error:function (data, status) {
+                error: function (data, status) {
                     var args = S.makeArray(arguments);
                     re.push(status);
                 },
-                complete:function (data, status) {
+                complete: function (data, status) {
                     ok = true;
                     var args = S.makeArray(arguments);
                     re.push(status);
@@ -202,22 +334,22 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                 '</form>').appendTo("body");
 
 
-            var  ok, d;
+            var ok, d;
 
             var xhr = io({
-                url:'../others/form/upload.php',
-                form:"#" + f.prop("id"),
-                type:'post',
-                dataType:'json',
-                data:{
-                    "test2":["t2", "t3"],
-                    "test3":"t4"
+                url: '../others/form/upload.php',
+                form: "#" + f.prop("id"),
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    "test2": ["t2", "t3"],
+                    "test3": "t4"
                 },
-                success:function (data) {
+                success: function (data) {
                     ok = true;
                     d = data;
                 },
-                complete:function () {
+                complete: function () {
                     ok = true
                 }
             });
@@ -252,19 +384,19 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
             var re = [], ok, d;
             var xhr = io({
-                url:'../others/form/upload.php',
-                form:"#" + f.prop("id"),
-                type:'post',
-                dataType:'json',
-                data:{
-                    "test2":["t2", "t3"],
-                    "test3":"t4"
+                url: '../others/form/upload.php',
+                form: "#" + f.prop("id"),
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    "test2": ["t2", "t3"],
+                    "test3": "t4"
                 },
-                success:function (data) {
+                success: function (data) {
                     ok = true;
                     d = data;
                 },
-                complete:function () {
+                complete: function () {
                     ok = true
                 }
             });
@@ -295,21 +427,21 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             var re = [], ok, d;
 
             var xhr = io({
-                url:'../others/form/upload.php',
-                form:"#" + f.prop("id"),
-                type:'post',
-                dataType:'json',
-                data:{
-                    "test2":["t2", "t3"]
+                url: '../others/form/upload.php',
+                form: "#" + f.prop("id"),
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    "test2": ["t2", "t3"]
                 },
-                error:function (d, s) {
+                error: function (d, s) {
                     re.push(s);
                 },
-                success:function (data, s) {
+                success: function (data, s) {
                     d = data;
                     re.push(s);
                 },
-                complete:function (d, s) {
+                complete: function (d, s) {
                     ok = true;
                     re.push(s);
                 }
@@ -342,21 +474,21 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             var re = [], ok, d;
 
             var xhr = io({
-                url:'../others/form/upload.php',
-                form:"#" + f.prop("id"),
-                type:'post',
-                dataType:'json',
-                data:{
-                    "test2":["t2", "t3"]
+                url: '../others/form/upload.php',
+                form: "#" + f.prop("id"),
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    "test2": ["t2", "t3"]
                 },
-                error:function (d, s) {
+                error: function (d, s) {
                     re.push(s);
                 },
-                success:function (data, s) {
+                success: function (data, s) {
                     d = data;
                     re.push(s);
                 },
-                complete:function (d, s) {
+                complete: function (d, s) {
                     ok = true;
                     re.push(s);
                 }
@@ -383,10 +515,10 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             var ok = 0;
 
             io({
-                form:form[0],
-                dataType:'xml',
-                url:'../others/form/ret.php',
-                success:function (data) {
+                form: form[0],
+                dataType: 'xml',
+                url: '../others/form/ret.php',
+                success: function (data) {
                     expect(data.nodeType).toBe(9);
                     expect(data.documentElement.nodeType).toBe(1);
                     ok = 1;

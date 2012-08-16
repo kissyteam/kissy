@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:00
+build time: Aug 16 19:08
 */
 /**
  * @fileOverview form data  serialization util
@@ -12,17 +12,23 @@ KISSY.add("ajax/FormSerializer", function (S, DOM) {
         rCRLF = /\r?\n/g,
         FormSerializer,
         rinput = /^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;
+
+    function normalizeCRLF(v) {
+        return v.replace(rCRLF, "\r\n");
+    }
+
     return FormSerializer = {
         /*
          序列化表单元素
          @param {String|HTMLElement[]|HTMLElement|NodeList} forms
          */
-        serialize:function (forms) {
+        serialize: function (forms, serializeArray) {
             // 名值键值对序列化,数组元素名字前不加 []
-            return S.param(FormSerializer.getFormData(forms), undefined, undefined, false);
+            return S.param(FormSerializer.getFormData(forms), undefined, undefined,
+                serializeArray || false);
         },
 
-        getFormData:function (forms) {
+        getFormData: function (forms) {
             var elements = [], data = {};
             S.each(DOM.query(forms), function (el) {
                 // form 取其表单元素集合
@@ -49,19 +55,30 @@ KISSY.add("ajax/FormSerializer", function (S, DOM) {
             });
             S.each(elements, function (el) {
                 var val = DOM.val(el), vs;
+
                 // 字符串换行平台归一化
-                val = S.map(S.makeArray(val), function (v) {
-                    return v.replace(rCRLF, "\r\n");
-                });
-                // 全部搞成数组，防止同名
-                vs = data[el.name] = data[el.name] || [];
-                vs.push.apply(vs, val);
+                if (S.isArray(val)) {
+                    val = S.map(val, normalizeCRLF);
+                } else {
+                    val = normalizeCRLF(val);
+                }
+
+                vs = data[el.name];
+                if (!vs) {
+                    data[el.name] = val;
+                    return;
+                }
+                if (vs && !S.isArray(vs)) {
+                    // 多个元素重名时搞成数组
+                    vs = data[el.name] = [vs];
+                }
+                vs.push.apply(vs, S.makeArray(val));
             });
             return data;
         }
     };
 }, {
-    requires:['dom']
+    requires: ['dom']
 });/**
  * @fileOverview non-refresh upload file with form by iframe
  * @author  yiminghe@gmail.com
@@ -367,7 +384,7 @@ KISSY.add("ajax/ScriptTransport", function (S, io, _, undefined) {
                 }
                 // 非 ie<9 可以判断出来
                 else if (event == "error") {
-                    xhrObj._xhrReady(ERROR_CODE, "scripterror");
+                    xhrObj._xhrReady(ERROR_CODE, "script error");
                 }
             }
         },
@@ -616,7 +633,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
         Promise = S.Promise,
         MULTIPLE_CHOICES = 300,
         NOT_MODIFIED = 304,
-    // get individual response header from responseheader str
+    // get individual response header from response header str
         rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
 
     function handleResponseData(xhrObject) {
@@ -666,7 +683,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             else if (dataType[0] == "xml" && xml !== undefined) {
                 responseData = xml;
             } else {
-                var rawData = {text:text, xml:xml};
+                var rawData = {text: text, xml: xml};
                 // 看能否从 text xml 转换到合适数据，并设置起始类型为 text/xml
                 S.each(["text", "xml"], function (prevType) {
                     var type = dataType[0],
@@ -709,25 +726,25 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
         Promise.call(this);
         S.mix(this, {
             // 结构化数据，如 json
-            responseData:null,
-            config:c || {},
-            timeoutTimer:null,
+            responseData: null,
+            config: c || {},
+            timeoutTimer: null,
 
             /**
              * @field
              * @memberOf IO.XhrObject#
              * @description String typed data returned from server
              */
-            responseText:null,
+            responseText: null,
             /**
              * @field
              * @memberOf IO.XhrObject#
              * @description xml typed data returned from server
              */
-            responseXML:null,
-            responseHeadersString:"",
-            responseHeaders:null,
-            requestHeaders:{},
+            responseXML: null,
+            responseHeadersString: "",
+            responseHeaders: null,
+            requestHeaders: {},
             /**
              * @field
              * @memberOf IO.XhrObject#
@@ -737,14 +754,14 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
              * 1: send <br>
              * 4: completed<br>
              */
-            readyState:0,
-            state:0,
+            readyState: 0,
+            state: 0,
             /**
              * @field
              * @memberOf IO.XhrObject#
              * @description HTTP statusText of current request
              */
-            statusText:null,
+            statusText: null,
             /**
              * @field
              * @memberOf IO.XhrObject#
@@ -754,9 +771,9 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
              * 404 : Not Found<br>
              * 500 : Server Error<br>
              */
-            status:0,
-            transport:null,
-            _defer:new S.Defer(this)
+            status: 0,
+            transport: null,
+            _defer: new S.Defer(this)
         });
     }
 
@@ -766,7 +783,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
          */
         {
             // Caches the header
-            setRequestHeader:function (name, value) {
+            setRequestHeader: function (name, value) {
                 var self = this;
                 self.requestHeaders[ name ] = value;
                 return self;
@@ -774,9 +791,9 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
 
             /**
              * get all response headers as string after request is completed
-             * @returns {String}
+             * @return {String}
              */
-            getAllResponseHeaders:function () {
+            getAllResponseHeaders: function () {
                 var self = this;
                 return self.state === 2 ? self.responseHeadersString : null;
             },
@@ -786,11 +803,11 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
              * @param {String} name header name
              * @return {String} header value
              */
-            getResponseHeader:function (name) {
-                var match, self = this,responseHeaders;
+            getResponseHeader: function (name) {
+                var match, self = this, responseHeaders;
                 if (self.state === 2) {
-                    if (!(responseHeaders=self.responseHeaders)) {
-                        responseHeaders=self.responseHeaders = {};
+                    if (!(responseHeaders = self.responseHeaders)) {
+                        responseHeaders = self.responseHeaders = {};
                         while (( match = rheaders.exec(self.responseHeadersString) )) {
                             responseHeaders[ match[1] ] = match[ 2 ];
                         }
@@ -801,7 +818,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
             },
 
             // Overrides response content-type header
-            overrideMimeType:function (type) {
+            overrideMimeType: function (type) {
                 var self = this;
                 if (!self.state) {
                     self.mimeType = type;
@@ -813,7 +830,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
              * cancel this request
              * @param {String} [statusText=abort] error reason as current request object's statusText
              */
-            abort:function (statusText) {
+            abort: function (statusText) {
                 var self = this;
                 statusText = statusText || "abort";
                 if (self.transport) {
@@ -827,14 +844,14 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
              * get native XMLHttpRequest
              * @since 1.3
              */
-            getNativeXhr:function () {
+            getNativeXhr: function () {
                 var transport;
                 if (transport = this.transport) {
                     return transport.nativeXhr;
                 }
             },
 
-            _xhrReady:function (status, statusText) {
+            _xhrReady: function (status, statusText) {
                 var self = this;
                 // 只能执行一次，防止重复执行
                 // 例如完成后，调用 abort
@@ -849,9 +866,10 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 self.readyState = 4;
                 var isSuccess;
                 if (status >= OK_CODE && status < MULTIPLE_CHOICES || status == NOT_MODIFIED) {
-
+                    // note: not same with nativeStatusText, such as "OK"/"Not Modified"
+                    // 为了整个框架的和谐以及兼容性，用小写，并改变写法
                     if (status == NOT_MODIFIED) {
-                        statusText = "notmodified";
+                        statusText = "not modified";
                         isSuccess = true;
                     } else {
                         try {
@@ -860,7 +878,7 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                             isSuccess = true;
                         } catch (e) {
                             S.log(e.stack || e, "error");
-                            statusText = "parsererror : " + e;
+                            statusText = "parser error";
                         }
                     }
 
@@ -874,14 +892,14 @@ KISSY.add("ajax/XhrObject", function (S, undefined) {
                 self.statusText = statusText;
 
                 var defer = self._defer;
-                defer[isSuccess ? "resolve" : "reject"]([self.responseData, self.statusText, self]);
+                defer[isSuccess ? "resolve" : "reject"]([self.responseData, statusText, self]);
             }
         }
     );
 
     return XhrObject;
 });/**
- * @fileOverview ajax xhr transport class , route subdomain , xdr
+ * @fileOverview ajax xhr transport class, route subdomain, xdr
  * @author yiminghe@gmail.com
  */
 KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
@@ -965,8 +983,12 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
         NOT_FOUND_CODE = 404,
         NO_CONTENT_CODE2 = 1223,
         XhrTransportBase = {
-            proto:{}
-        };
+            proto: {}
+        }, lastModifiedCached = {},
+        eTagCached = {};
+
+    io.__lastModifiedCached = lastModifiedCached;
+    io.__eTagCached = eTagCached;
 
     function createStandardXHR(_, refWin) {
         try {
@@ -999,7 +1021,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
     }
 
     S.mix(XhrTransportBase.proto, {
-        sendInternal:function () {
+        sendInternal: function () {
 
             var self = this,
                 xhrObj = self.xhrObj,
@@ -1010,11 +1032,29 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                 username,
                 crossDomain = c.crossDomain,
                 mimeType = xhrObj.mimeType,
-                requestHeaders = xhrObj.requestHeaders,
-                serializeArray= c.serializeArray,
+                requestHeaders = xhrObj.requestHeaders || {},
+                serializeArray = c.serializeArray,
                 url = c.uri.toString(serializeArray),
                 xhrFields,
+                ifModifiedKey,
+                cacheValue,
                 i;
+
+            if (ifModifiedKey =
+                (c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString())) {
+                // if ajax want a conditional load
+                // (response status is 304 and responseText is null)
+                // u need to set if-modified-since manually!
+                // or else
+                // u will always get response status 200 and full responseText
+                // which is also conditional load but process transparently by browser
+                if (cacheValue = lastModifiedCached[ifModifiedKey]) {
+                    requestHeaders["If-Modified-Since"] = cacheValue;
+                }
+                if (cacheValue = eTagCached[ifModifiedKey]) {
+                    requestHeaders["If-None-Match"] = cacheValue;
+                }
+            }
 
             if (username = c['username']) {
                 nativeXhr.open(type, url, async, username, c.password)
@@ -1049,7 +1089,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                     }
                 }
             } catch (e) {
-                S.log("setRequestHeader in xhr error : ");
+                S.log("setRequestHeader in xhr error: ");
                 S.log(e);
             }
 
@@ -1078,11 +1118,11 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
             }
         },
         // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
-        abort:function () {
+        abort: function () {
             this._callback(0, 1);
         },
 
-        _callback:function (event, abort) {
+        _callback: function (event, abort) {
             // Firefox throws exceptions when accessing properties
             // of an xhr when a network error occured
             // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
@@ -1093,7 +1133,6 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                     c = xhrObj.config;
                 //abort or complete
                 if (abort || nativeXhr.readyState == 4) {
-
                     // ie6 ActiveObject 设置不恰当属性导致出错
                     if (isInstanceOfXDomainRequest(nativeXhr)) {
                         nativeXhr.onerror = S.noop;
@@ -1109,11 +1148,28 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                             nativeXhr.abort();
                         }
                     } else {
+                        var ifModifiedKey =
+                            c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString();
+
+                        ///debugger
                         var status = nativeXhr.status;
 
                         // _XDomainRequest 不能获取响应头
                         if (!isInstanceOfXDomainRequest(nativeXhr)) {
                             xhrObj.responseHeadersString = nativeXhr.getAllResponseHeaders();
+                        }
+
+                        if (ifModifiedKey) {
+                            var lastModified = nativeXhr.getResponseHeader("Last-Modified"),
+                                eTag = nativeXhr.getResponseHeader("ETag");
+                            // if u want to set if-modified-since manually
+                            // u need to save last-modified after the first request
+                            if (lastModified) {
+                                lastModifiedCached[ifModifiedKey] = lastModified;
+                            }
+                            if (eTag) {
+                                eTagCached[eTag] = eTag;
+                            }
                         }
 
                         var xml = nativeXhr.responseXML;
@@ -1129,7 +1185,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                         try {
                             var statusText = nativeXhr.statusText;
                         } catch (e) {
-                            S.log("xhr statusText error : ");
+                            S.log("xhr statusText error: ");
                             S.log(e);
                             // We normalize with Webkit giving an empty statusText
                             statusText = "";
@@ -1160,7 +1216,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
 
     return XhrTransportBase;
 }, {
-    requires:['./base']
+    requires: ['./base']
 });/**
  * @fileOverview io shortcut
  * @author yiminghe@gmail.com
@@ -1195,15 +1251,15 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
             XhrObject:XhrObject,
             /**
              * form serialization
-             * @function
+             * @method
              * @param formElement {HTMLElement[]|HTMLElement|NodeList} form elements
-             * @returns {String} serialized string represent form elements
+             * @return {String} serialized string represent form elements
              */
             serialize:serializer.serialize,
 
             /**
              * perform a get request
-             * @function
+             * @method
              * @param {String} url request destination
              * @param {Object} [data] name-value object associated with this request
              * @param {Function()} callback <br/>
@@ -1214,7 +1270,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
              * @param {String} [dataType] the type of data returns from this request
              * ("xml" or "json" or "text")
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             get:get,
 
@@ -1230,7 +1286,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
              * @param {String} [dataType] the type of data returns from this request
              * ("xml" or "json" or "text")
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             post:function (url, data, callback, dataType) {
                 if (S.isFunction(data)) {
@@ -1251,7 +1307,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 1. data returned from this request with type specified by dataType<br/>
              * 2. status of this request with type String<br/>
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             jsonp:function (url, data, callback) {
                 if (S.isFunction(data)) {
@@ -1279,7 +1335,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 1. data returned from this request with type JSON<br/>
              * 2. status of this request with type String<br/>
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             getJSON:function (url, data, callback) {
                 if (S.isFunction(data)) {
@@ -1301,7 +1357,7 @@ KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
              * 3. XhrObject of this request , for details {@link IO.XhrObject}
              * @param {String} [dataType] the type of data returns from this request
              * ("xml" or "json" or "text")
-             * @returns {IO.XhrObject}
+             * @return {IO.XhrObject}
              */
             upload:function (url, form, data, callback, dataType) {
                 if (S.isFunction(data)) {
@@ -1361,7 +1417,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
     try {
         curLocation = location.href;
     } catch (e) {
-        S.log("ajax/base get curLocation error : ");
+        S.log("ajax/base get curLocation error: ");
         S.log(e);
         // Use the href attribute of an A element
         // since IE will modify it given document.location
@@ -1375,30 +1431,30 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
     var isLocal = rlocalProtocol.test(simulatedLocation.getScheme()),
         transports = {},
         defaultConfig = {
-            type:"GET",
-            contentType:"application/x-www-form-urlencoded; charset=UTF-8",
-            async:true,
-            serializeArray:true,
-            processData:true,
-            accepts:{
-                xml:"application/xml, text/xml",
-                html:"text/html",
-                text:"text/plain",
-                json:"application/json, text/javascript",
-                "*":"*/*"
+            type: "GET",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            async: true,
+            serializeArray: true,
+            processData: true,
+            accepts: {
+                xml: "application/xml, text/xml",
+                html: "text/html",
+                text: "text/plain",
+                json: "application/json, text/javascript",
+                "*": "*/*"
             },
-            converters:{
-                text:{
-                    json:JSON.parse,
-                    html:mirror,
-                    text:mirror,
-                    xml:S.parseXML
+            converters: {
+                text: {
+                    json: JSON.parse,
+                    html: mirror,
+                    text: mirror,
+                    xml: S.parseXML
                 }
             },
-            contents:{
-                xml:/xml/,
-                html:/html/,
-                json:/json/
+            contents: {
+                xml: /xml/,
+                html: /html/,
+                json: /json/
             }
         };
 
@@ -1407,12 +1463,14 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
     function setUpConfig(c) {
         // deep mix,exclude context!
 
-        var context= c.context;
+        var context = c.context,
+            ifModified = c['ifModified'];
+
         delete c.context;
         c = S.mix(S.clone(defaultConfig), c, {
-            deep:true
+            deep: true
         });
-        c.context=context||c;
+        c.context = context || c;
 
         var data, uri, type = c.type, dataType = c.dataType, query;
 
@@ -1443,13 +1501,23 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
             c.cache = false;
         }
 
+        var ifModifiedKeyUri;
+
         if (!c.hasContent) {
             if (query.count()) {
                 uri.query.add(query);
             }
+            if (ifModified) {
+                // isModifiedKey should ignore random timestamp
+                ifModifiedKeyUri = uri.clone();
+            }
             if (c.cache === false) {
                 uri.query.set("_ksTS", (S.now() + "_" + S.guid()));
             }
+        }
+        // TODO: consider form ?
+        if (ifModified) {
+            c.ifModifiedKeyUri = ifModifiedKeyUri || uri.clone();
         }
         return c;
     }
@@ -1481,13 +1549,13 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
          * @param {Object} e.ajaxConfig current request 's config
          * @param {IO.XhrObject} e.xhr current xhr object
          */
-        io.fire(eventType, { ajaxConfig:xhrObject.config, xhr:xhrObject});
+        io.fire(eventType, { ajaxConfig: xhrObject.config, xhr: xhrObject});
     }
 
     /**
      * @name IO
      * @namespace Provides utility that brokers HTTP requests through a simplified interface
-     * @function
+     * @method
      *
      * @param {Object} c <br/>name-value of object to config this io request.<br/>
      *  all values are optional.<br/>
@@ -1561,7 +1629,11 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * set "customCall" , then jsonp url will append "callback=customCall"
      *
      * @param {String} c.mimeType <br/>
-     * override xhr's mime type
+     * override xhr 's mime type
+     *
+     * @param {String} c.ifModified <br/>
+     * whether enter if modified mode.
+     * Defaults to false.
      *
      * @param {Boolean} c.processData <br/>
      * Default: true<br/>
@@ -1636,7 +1708,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * 2. b.t.cn/proxy.htm 's content is &lt;script>document.domain='t.cn'&lt;/script><br/>
      * 3. in a.htm , call io({xdr:{subDomain:{proxy:'/proxy.htm'}}})
      *
-     * @returns {IO.XhrObject} current request object
+     * @return {IO.XhrObject} current request object
      */
     function io(c) {
 
@@ -1763,46 +1835,52 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
             /**
              * whether current application is a local application
              * (protocal is file://,widget://,about://)
-             * @type Boolean
+             * @type {Boolean}
              * @field
              */
-            isLocal:isLocal,
+            isLocal: isLocal,
             /**
              * name-value object that set default config value for io request
              * @param {Object} setting for details see {@link io}
              */
-            setupConfig:function (setting) {
+            setupConfig: function (setting) {
                 S.mix(defaultConfig, setting, {
-                    deep:true
+                    deep: true
                 });
             },
             /**
              * @private
              */
-            setupTransport:function (name, fn) {
+            setupTransport: function (name, fn) {
                 transports[name] = fn;
             },
             /**
              * @private
              */
-            getTransport:function (name) {
+            getTransport: function (name) {
                 return transports[name];
             },
             /**
              * get default config value for io request
-             * @returns {Object}
+             * @return {Object}
              */
-            getConfig:function () {
+            getConfig: function () {
                 return defaultConfig;
             }
         });
 
     return io;
 }, {
-    requires:["json", "event", "./XhrObject"]
+    requires: ["json", "event", "./XhrObject"]
 });
 
 /**
+ * 2012-08-16
+ *  - support ifModified
+ *      - http://bugs.jquery.com/ticket/8394
+ *      - http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+ *      - https://github.com/kissyteam/kissy/issues/203
+ *
  * 2012-07-18 yiminghe@gmail.com
  *  - refactor by KISSY.Uri
  *
@@ -1812,12 +1890,6 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
  * 2011 yiminghe@gmail.com
  *  - 借鉴 jquery，优化减少闭包使用
  *
- * TODO:
- *  - ifModified mode 是否需要？
- *      优点：
- *          不依赖浏览器处理，ajax 请求浏览不会自动加 If-Modified-Since If-None-Match ??
- *      缺点：
- *          内存占用
  **//**
  * @fileOverview process form config
  * @author yiminghe@gmail.com
@@ -1846,6 +1918,10 @@ KISSY.add("ajax/form", function (S, io, DOM, FormSerializer) {
                 } else {
                     // get 直接加到 url
                     c.uri.query.add(formParam);
+                    // update ifModifiedKey if necessary
+                    if (c.ifModifiedKeyUri) {
+                        c.ifModifiedKeyUri.query.add(formParam);
+                    }
                 }
             } else {
                 dataType = c.dataType;
@@ -1863,7 +1939,7 @@ KISSY.add("ajax/form", function (S, io, DOM, FormSerializer) {
     return io;
 
 }, {
-    requires:['./base', "dom", "./FormSerializer"]
+    requires: ['./base', "dom", "./FormSerializer"]
 });/**
  * @fileOverview jsonp transport based on script transport
  * @author  yiminghe@gmail.com
@@ -1932,7 +2008,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
             // and KISSY will notify user by error callback
             converters.script.json = function () {
                 if (!response) {
-                    S.error(" not call jsonpCallback : " + jsonpCallback)
+                    S.error(" not call jsonpCallback: " + jsonpCallback)
                 }
                 return response[0];
             };

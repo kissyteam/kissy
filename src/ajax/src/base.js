@@ -20,7 +20,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
     try {
         curLocation = location.href;
     } catch (e) {
-        S.log("ajax/base get curLocation error : ");
+        S.log("ajax/base get curLocation error: ");
         S.log(e);
         // Use the href attribute of an A element
         // since IE will modify it given document.location
@@ -34,30 +34,30 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
     var isLocal = rlocalProtocol.test(simulatedLocation.getScheme()),
         transports = {},
         defaultConfig = {
-            type:"GET",
-            contentType:"application/x-www-form-urlencoded; charset=UTF-8",
-            async:true,
-            serializeArray:true,
-            processData:true,
-            accepts:{
-                xml:"application/xml, text/xml",
-                html:"text/html",
-                text:"text/plain",
-                json:"application/json, text/javascript",
-                "*":"*/*"
+            type: "GET",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            async: true,
+            serializeArray: true,
+            processData: true,
+            accepts: {
+                xml: "application/xml, text/xml",
+                html: "text/html",
+                text: "text/plain",
+                json: "application/json, text/javascript",
+                "*": "*/*"
             },
-            converters:{
-                text:{
-                    json:JSON.parse,
-                    html:mirror,
-                    text:mirror,
-                    xml:S.parseXML
+            converters: {
+                text: {
+                    json: JSON.parse,
+                    html: mirror,
+                    text: mirror,
+                    xml: S.parseXML
                 }
             },
-            contents:{
-                xml:/xml/,
-                html:/html/,
-                json:/json/
+            contents: {
+                xml: /xml/,
+                html: /html/,
+                json: /json/
             }
         };
 
@@ -66,12 +66,14 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
     function setUpConfig(c) {
         // deep mix,exclude context!
 
-        var context= c.context;
+        var context = c.context,
+            ifModified = c['ifModified'];
+
         delete c.context;
         c = S.mix(S.clone(defaultConfig), c, {
-            deep:true
+            deep: true
         });
-        c.context=context||c;
+        c.context = context || c;
 
         var data, uri, type = c.type, dataType = c.dataType, query;
 
@@ -102,13 +104,23 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
             c.cache = false;
         }
 
+        var ifModifiedKeyUri;
+
         if (!c.hasContent) {
             if (query.count()) {
                 uri.query.add(query);
             }
+            if (ifModified) {
+                // isModifiedKey should ignore random timestamp
+                ifModifiedKeyUri = uri.clone();
+            }
             if (c.cache === false) {
                 uri.query.set("_ksTS", (S.now() + "_" + S.guid()));
             }
+        }
+        // TODO: consider form ?
+        if (ifModified) {
+            c.ifModifiedKeyUri = ifModifiedKeyUri || uri.clone();
         }
         return c;
     }
@@ -140,7 +152,7 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
          * @param {Object} e.ajaxConfig current request 's config
          * @param {IO.XhrObject} e.xhr current xhr object
          */
-        io.fire(eventType, { ajaxConfig:xhrObject.config, xhr:xhrObject});
+        io.fire(eventType, { ajaxConfig: xhrObject.config, xhr: xhrObject});
     }
 
     /**
@@ -220,7 +232,11 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
      * set "customCall" , then jsonp url will append "callback=customCall"
      *
      * @param {String} c.mimeType <br/>
-     * override xhr's mime type
+     * override xhr 's mime type
+     *
+     * @param {String} c.ifModified <br/>
+     * whether enter if modified mode.
+     * Defaults to false.
      *
      * @param {Boolean} c.processData <br/>
      * Default: true<br/>
@@ -425,43 +441,49 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
              * @type {Boolean}
              * @field
              */
-            isLocal:isLocal,
+            isLocal: isLocal,
             /**
              * name-value object that set default config value for io request
              * @param {Object} setting for details see {@link io}
              */
-            setupConfig:function (setting) {
+            setupConfig: function (setting) {
                 S.mix(defaultConfig, setting, {
-                    deep:true
+                    deep: true
                 });
             },
             /**
              * @private
              */
-            setupTransport:function (name, fn) {
+            setupTransport: function (name, fn) {
                 transports[name] = fn;
             },
             /**
              * @private
              */
-            getTransport:function (name) {
+            getTransport: function (name) {
                 return transports[name];
             },
             /**
              * get default config value for io request
              * @return {Object}
              */
-            getConfig:function () {
+            getConfig: function () {
                 return defaultConfig;
             }
         });
 
     return io;
 }, {
-    requires:["json", "event", "./XhrObject"]
+    requires: ["json", "event", "./XhrObject"]
 });
 
 /**
+ * 2012-08-16
+ *  - support ifModified
+ *      - http://bugs.jquery.com/ticket/8394
+ *      - http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+ *      - https://github.com/kissyteam/kissy/issues/203
+ *
  * 2012-07-18 yiminghe@gmail.com
  *  - refactor by KISSY.Uri
  *
@@ -471,10 +493,4 @@ KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
  * 2011 yiminghe@gmail.com
  *  - 借鉴 jquery，优化减少闭包使用
  *
- * TODO:
- *  - ifModified mode 是否需要？
- *      优点：
- *          不依赖浏览器处理，ajax 请求浏览不会自动加 If-Modified-Since If-None-Match ??
- *      缺点：
- *          内存占用
  **/

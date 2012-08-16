@@ -1,0 +1,54 @@
+<meta charset='utf-8'/>
+<script type="text/javascript" src="../../../../../build/seed.js"></script>
+
+<script type="text/javascript" src="../../../src/base.js"></script>
+<script type="text/javascript" src="../../../src/ajax.js"></script>
+<script type="text/javascript" src="../../../src/form.js"></script>
+<script type="text/javascript" src="../../../src/FormSerializer.js"></script>
+<script type="text/javascript" src="../../../src/IframeTransport.js"></script>
+<script type="text/javascript" src="../../../src/jsonp.js"></script>
+<script type="text/javascript" src="../../../src/ScriptTransport.js"></script>
+<script type="text/javascript" src="../../../src/SubDomainTransport.js"></script>
+<script type="text/javascript" src="../../../src/XdrFlashTransport.js"></script>
+<script type="text/javascript" src="../../../src/XhrObject.js"></script>
+<script type="text/javascript" src="../../../src/XhrTransport.js"></script>
+<script type="text/javascript" src="../../../src/XhrTransportBase.js"></script>
+
+<script type="text/javascript">
+    KISSY.ready(function (S) {
+        S.use("ajax", function (S, io) {
+            io({
+                url: "t.php",
+                ifModified: true,
+                dataType: 'text',
+                complete: function (data, s, jq) {
+                    alert(data);
+                    alert(s);
+                    alert(jq.getAllResponseHeaders());
+                    alert("next .........");
+
+                    setTimeout(function () {
+
+                        io({
+                            url: "t.php",
+                            ifModified: true,
+                            headers: {
+                                "If-Modified-Since": "Thu, 18 Jul 2002 15:48:32 GMT"
+                            },
+                            dataType: 'text',
+                            complete: function (data, status, jq) {
+                                alert(data);
+                                alert(status);
+                                alert(jq.getAllResponseHeaders());
+                                //console.log(arguments);
+                            }
+                        });
+
+                    }, 100);
+
+
+                }
+            });
+        });
+    });
+</script>

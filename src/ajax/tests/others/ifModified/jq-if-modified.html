@@ -1,0 +1,39 @@
+<meta charset='utf-8'/>
+<script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
+
+<script type="text/javascript">
+
+    $.ajax({
+        url: "t.php",
+        ifModified: true,
+        dataType: 'text',
+        success: function (data, s, jq) {
+            alert(data);
+            alert(jq.statusText);
+            alert(jq.getAllResponseHeaders());
+            alert("next .........");
+
+            setTimeout(function () {
+
+                $.ajax({
+                    url: "t.php",
+                    ifModified: true,
+                    // same with
+//                    headers: {
+//                        "If-Modified-Since": "Thu, 18 Jul 2002 15:48:32 GMT"
+//                    },
+                    dataType: 'text',
+                    success: function (data, status, jq) {
+                        alert(data);
+                        alert(jq.statusText);
+                        alert(jq.getAllResponseHeaders());
+                        //console.log(arguments);
+                    }
+                });
+
+            }, 100);
+
+
+        }
+    });
+</script>

@@ -66,7 +66,7 @@ KISSY.add("ajax/jsonp", function (S, io) {
             // and KISSY will notify user by error callback
             converters.script.json = function () {
                 if (!response) {
-                    S.error(" not call jsonpCallback : " + jsonpCallback)
+                    S.error(" not call jsonpCallback: " + jsonpCallback)
                 }
                 return response[0];
             };
