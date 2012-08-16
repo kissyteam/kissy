@@ -711,18 +711,18 @@
              * @param {Object} o json data
              * @param {String} [sep='&'] separator between each pair of data
              * @param {String} [eq='='] separator between key and value of data
-             * @param {Boolean} [arr=true] whether add '[]' to array key of data
+             * @param {Boolean} [serializeArray =true] whether add '[]' to array key of data
              * @return {String}
              * @member KISSY
              */
-            param: function (o, sep, eq, arr) {
+            param: function (o, sep, eq, serializeArray) {
                 if (!S.isPlainObject(o)) {
                     return EMPTY;
                 }
                 sep = sep || SEP;
                 eq = eq || EQ;
-                if (S.isUndefined(arr)) {
-                    arr = TRUE;
+                if (S.isUndefined(serializeArray)) {
+                    serializeArray = TRUE;
                 }
                 var buf = [], key, i, v, len, val;
                 for (key in o) {
@@ -743,7 +743,7 @@
                             for (i = 0, len = val.length; i < len; ++i) {
                                 v = val[i];
                                 if (isValidParamValue(v)) {
-                                    buf.push(key, (arr ? encode('[]') : EMPTY));
+                                    buf.push(key, (serializeArray ? encode('[]') : EMPTY));
                                     if (v !== undefined) {
                                         buf.push(eq, encode(v + EMPTY));
                                     }
@@ -782,7 +782,7 @@
                 var ret = {},
                     eqIndex,
                     pairs = str.split(sep),
-                    pair, key, val,
+                    key, val,
                     i = 0, len = pairs.length;
 
                 for (; i < len; ++i) {

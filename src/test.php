@@ -12,7 +12,7 @@ header("Cache-Control:private, max-age=0, must-revalidate");
 <iframe id="test" src=''
         style="width:100%;height:600px;border:1px solid red;"></iframe>
 <script src='test.js'></script>
-<script type="text/javascript">
+<script >
 <?php
 
     $baseDir = "./";

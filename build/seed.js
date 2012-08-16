@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 15 18:17
+build time: Aug 16 22:56
 */
 /**
  * @ignore
@@ -496,11 +496,11 @@ build time: Aug 15 18:17
 
         /**
          * The build time of the library.
-         * NOTICE: '20120815181747' will replace with current timestamp when compressing.
+         * NOTICE: '20120816225615' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120815181747';
+        S.__BUILD_TIME = '20120816225615';
     })();
 
     return S;
@@ -1219,18 +1219,18 @@ build time: Aug 15 18:17
              * @param {Object} o json data
              * @param {String} [sep='&'] separator between each pair of data
              * @param {String} [eq='='] separator between key and value of data
-             * @param {Boolean} [arr=true] whether add '[]' to array key of data
+             * @param {Boolean} [serializeArray =true] whether add '[]' to array key of data
              * @return {String}
              * @member KISSY
              */
-            param: function (o, sep, eq, arr) {
+            param: function (o, sep, eq, serializeArray) {
                 if (!S.isPlainObject(o)) {
                     return EMPTY;
                 }
                 sep = sep || SEP;
                 eq = eq || EQ;
-                if (S.isUndefined(arr)) {
-                    arr = TRUE;
+                if (S.isUndefined(serializeArray)) {
+                    serializeArray = TRUE;
                 }
                 var buf = [], key, i, v, len, val;
                 for (key in o) {
@@ -1251,7 +1251,7 @@ build time: Aug 15 18:17
                             for (i = 0, len = val.length; i < len; ++i) {
                                 v = val[i];
                                 if (isValidParamValue(v)) {
-                                    buf.push(key, (arr ? encode('[]') : EMPTY));
+                                    buf.push(key, (serializeArray ? encode('[]') : EMPTY));
                                     if (v !== undefined) {
                                         buf.push(eq, encode(v + EMPTY));
                                     }
@@ -1290,7 +1290,7 @@ build time: Aug 15 18:17
                 var ret = {},
                     eqIndex,
                     pairs = str.split(sep),
-                    pair, key, val,
+                    key, val,
                     i = 0, len = pairs.length;
 
                 for (; i < len; ++i) {
@@ -5193,7 +5193,7 @@ build time: Aug 15 18:17
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120815181747'
+        tag: '20120816225615'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5461,27 +5461,37 @@ build time: Aug 15 18:17
 if(KISSY.Loader){
 KISSY.config('modules', {
 'flash': {requires: ['ua','dom','json']},
-'anim': {requires: ['dom','event','ua']},
 'combobox': {requires: ['component','node','input-selection','menu','ajax']},
+'anim': {requires: ['dom','event','ua']},
+'toolbar': {requires: ['component','node']},
 'dom': {requires: ['ua']},
 'menubutton': {requires: ['menu','node','button','component']},
 'waterfall': {requires: ['node','base']},
 'dd': {requires: ['ua','dom','event','node','base']},
-'switchable': {requires: ['dom','anim','event','json']},
+'switchable': {requires: ['dom','anim','event']},
 'tree': {requires: ['node','event','component']},
+'button': {requires: ['component','event']},
 'component': {requires: ['ua','node','event','dom','base']},
 'json': {requires: ['ua']},
-'button': {requires: ['component','event']},
 'event': {requires: ['ua','dom']},
-'ajax': {requires: ['event','dom','json']},
+'ajax': {requires: ['json','event','dom']},
+'resizable': {requires: ['node','base','dd']},
+'stylesheet': {requires: ['dom']},
+'input-selection': {requires: ['dom']},
+'datalazyload': {requires: ['dom','event','base']},
 'calendar': {requires: ['node','ua','event']},
 'validation': {requires: ['dom','event','node']},
 'imagezoom': {requires: ['node','overlay']},
 'menu': {requires: ['event','component','separator','node','ua']},
+'suggest': {requires: ['dom','event','ua']},
+'node': {requires: ['event','dom','anim']},
 'editor': {requires: ['htmlparser','component','core']},
-'node': {requires: ['dom','event','anim']},
-'mvc': {requires: ['base','node','template','event','ajax','json']},
+'split-button': {requires: ['component','button','menubutton']},
+'mvc': {requires: ['base','event','node','ajax','json']},
+'color': {requires: ['base']},
 'overlay': {requires: ['anim','dom','node','event','ua','component']},
-'separator': {requires: ['component']}
+'base': {requires: ['event']},
+'separator': {requires: ['component']},
+'tabs': {requires: ['button','component','toolbar']}
 });
 }

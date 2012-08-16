@@ -15,7 +15,7 @@ KISSY.config('modules', {
 'component': {requires: ['ua','node','event','dom','base']},
 'json': {requires: ['ua']},
 'event': {requires: ['ua','dom']},
-'ajax': {requires: ['event','dom','json']},
+'ajax': {requires: ['json','event','dom']},
 'resizable': {requires: ['node','base','dd']},
 'stylesheet': {requires: ['dom']},
 'input-selection': {requires: ['dom']},

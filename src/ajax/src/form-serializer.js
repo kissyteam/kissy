@@ -1,21 +1,27 @@
 /**
+ * @ignore
  * @fileOverview form data  serialization util
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/FormSerializer", function (S, DOM) {
+KISSY.add('ajax/form-serializer', function (S, DOM) {
     var rselectTextarea = /^(?:select|textarea)/i,
         rCRLF = /\r?\n/g,
         FormSerializer,
         rinput = /^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;
 
     function normalizeCRLF(v) {
-        return v.replace(rCRLF, "\r\n");
+        return v.replace(rCRLF, '\r\n');
     }
 
     return FormSerializer = {
-        /*
-         序列化表单元素
-         @param {String|HTMLElement[]|HTMLElement|NodeList} forms
+        /**
+         * form serialization
+         * @method
+         * @param {HTMLElement[]|HTMLElement|NodeList} forms form elements
+         * @return {String} serialized string represent form elements
+         * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
+         * @member KISSY.IO
+         * @static
          */
         serialize: function (forms, serializeArray) {
             // 名值键值对序列化,数组元素名字前不加 []

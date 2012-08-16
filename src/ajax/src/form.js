@@ -1,24 +1,25 @@
 /**
+ * @ignore
  * @fileOverview process form config
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/form", function (S, io, DOM, FormSerializer) {
+KISSY.add('ajax/form', function (S, io, DOM, FormSerializer) {
 
-    io.on("start", function (e) {
-        var xhrObject = e.xhr,
+    io.on('start', function (e) {
+        var io = e.io,
             form,
             d,
             enctype,
             dataType,
             formParam,
             tmpForm,
-            c = xhrObject.config;
+            c = io.config;
         // serialize form if needed
         if (tmpForm = c.form) {
             form = DOM.get(tmpForm);
             enctype = form['encoding'] || form.enctype;
             // 上传有其他方法
-            if (enctype.toLowerCase() != "multipart/form-data") {
+            if (enctype.toLowerCase() != 'multipart/form-data') {
                 // when get need encode
                 formParam = FormSerializer.getFormData(form);
                 if (c.hasContent) {
@@ -34,11 +35,11 @@ KISSY.add("ajax/form", function (S, io, DOM, FormSerializer) {
             } else {
                 dataType = c.dataType;
                 d = dataType[0];
-                if (d == "*") {
-                    d = "text";
+                if (d == '*') {
+                    d = 'text';
                 }
                 dataType.length = 2;
-                dataType[0] = "iframe";
+                dataType[0] = 'iframe';
                 dataType[1] = d;
             }
         }
@@ -47,5 +48,5 @@ KISSY.add("ajax/form", function (S, io, DOM, FormSerializer) {
     return io;
 
 }, {
-    requires: ['./base', "dom", "./FormSerializer"]
+    requires: ['./base', 'dom', './form-serializer']
 });
