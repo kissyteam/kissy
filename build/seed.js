@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 16 22:56
+build time: Aug 17 19:20
 */
 /**
  * @ignore
@@ -496,11 +496,11 @@ build time: Aug 16 22:56
 
         /**
          * The build time of the library.
-         * NOTICE: '20120816225615' will replace with current timestamp when compressing.
+         * NOTICE: '20120817192025' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120816225615';
+        S.__BUILD_TIME = '20120817192025';
     })();
 
     return S;
@@ -5193,7 +5193,7 @@ build time: Aug 16 22:56
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120816225615'
+        tag: '20120817192025'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5482,7 +5482,7 @@ KISSY.config('modules', {
 'calendar': {requires: ['node','ua','event']},
 'validation': {requires: ['dom','event','node']},
 'imagezoom': {requires: ['node','overlay']},
-'menu': {requires: ['event','component','separator','node','ua']},
+'menu': {requires: ['event','component','node','ua']},
 'suggest': {requires: ['dom','event','ua']},
 'node': {requires: ['event','dom','anim']},
 'editor': {requires: ['htmlparser','component','core']},

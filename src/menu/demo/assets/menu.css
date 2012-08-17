@@ -28,7 +28,7 @@
     z-index: 20000; /* Arbitrary, but some apps depend on it... */
 }
 
-.ks-menu > .ks-separator {
+.ks-menu .ks-separator {
     border-top: 1px solid #ccc;
     margin: 4px 0;
     padding: 0;

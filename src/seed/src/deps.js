@@ -23,7 +23,7 @@ KISSY.config('modules', {
 'calendar': {requires: ['node','ua','event']},
 'validation': {requires: ['dom','event','node']},
 'imagezoom': {requires: ['node','overlay']},
-'menu': {requires: ['event','component','separator','node','ua']},
+'menu': {requires: ['event','component','node','ua']},
 'suggest': {requires: ['dom','event','ua']},
 'node': {requires: ['event','dom','anim']},
 'editor': {requires: ['htmlparser','component','core']},
