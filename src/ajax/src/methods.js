@@ -159,7 +159,6 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
             /**
              * get native XMLHttpRequest
              * @member KISSY.IO
-             * @since 1.3
              * @return {XMLHttpRequest}
              */
             getNativeXhr: function () {

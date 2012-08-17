@@ -191,7 +191,6 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
          * Whether destroy this component when all lazy loaded elements are loaded.
          * @default true
          * @type {Boolean}
-         * @since 1.3
          */
         autoDestroy:{
             value:true
@@ -415,7 +414,6 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              * @param {HTMLElement|String} el Html element to be monitored.
              * @param {Function} [fn] Callback function to be called when el is in viewport.
              *                        If not specified, remove all callbacks associated with el.
-             * @since 1.3
              */
             removeCallback:function (el, fn) {
                 var callbacks = this._callbacks,
@@ -443,7 +441,6 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             /**
              * Add a array of imgs or textareas to be lazy loaded to monitor list.
              * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
-             * @since 1.3
              */
             addElements:function (els) {
                 if (!S.isArray(els)) {
@@ -471,7 +468,6 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             /**
              * Remove a array of element from monitor list. See {@link DataLazyload#addElements}.
              * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
-             * @since 1.3
              */
             removeElements:function (els) {
                 if (!S.isArray(els)) {

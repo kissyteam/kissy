@@ -101,7 +101,6 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
             /**
              * Start monitor scroll on window.
-             * @since 1.3
              */
             start:function () {
                 var self = this;
