@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Jun 13 20:26
+build time: Aug 17 11:34
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: Jun 13 20:26
          */
         version:'1.20',
 
-        buildTime:'20120613202636',
+        buildTime:'20120817113409',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2936,71 +2936,71 @@ build time: Jun 13 20:26
         }
     });
 })(KISSY);
-/*
- Combined modules by KISSY Module Compiler : 
+/**
+ combined files : 
 
- ua/base
- ua/extra
- ua
- dom/base
- dom/attr
- dom/class
- dom/create
- dom/data
- dom/insertion
- dom/offset
- dom/style
- dom/selector
- dom/style-ie
- dom/traversal
- dom
- event/keycodes
- event/object
- event/utils
- event/base
- event/target
- event/focusin
- event/hashchange
- event/valuechange
- event/delegate
- event/mouseenter
- event/submit
- event/change
- event/mousewheel
- event
- node/base
- node/attach
- node/override
- anim/easing
- anim/manager
- anim/fx
- anim/queue
- anim/base
- anim/color
- anim
- node/anim
- node
- json/json2
- json
- ajax/form-serializer
- ajax/xhrobject
- ajax/base
- ajax/xhrbase
- ajax/subdomain
- ajax/xdr
- ajax/xhr
- ajax/script
- ajax/jsonp
- ajax/form
- ajax/iframe-upload
- ajax
- base/attribute
- base/base
- base
- cookie/base
- cookie
- core
-*/
+D:\code\kissy_git\kissy1.2\src\ua\base.js
+D:\code\kissy_git\kissy1.2\src\ua\extra.js
+D:\code\kissy_git\kissy1.2\src\ua.js
+D:\code\kissy_git\kissy1.2\src\dom\base.js
+D:\code\kissy_git\kissy1.2\src\dom\attr.js
+D:\code\kissy_git\kissy1.2\src\dom\class.js
+D:\code\kissy_git\kissy1.2\src\dom\create.js
+D:\code\kissy_git\kissy1.2\src\dom\data.js
+D:\code\kissy_git\kissy1.2\src\dom\insertion.js
+D:\code\kissy_git\kissy1.2\src\dom\offset.js
+D:\code\kissy_git\kissy1.2\src\dom\style.js
+D:\code\kissy_git\kissy1.2\src\dom\selector.js
+D:\code\kissy_git\kissy1.2\src\dom\style-ie.js
+D:\code\kissy_git\kissy1.2\src\dom\traversal.js
+D:\code\kissy_git\kissy1.2\src\dom.js
+D:\code\kissy_git\kissy1.2\src\event\keycodes.js
+D:\code\kissy_git\kissy1.2\src\event\object.js
+D:\code\kissy_git\kissy1.2\src\event\utils.js
+D:\code\kissy_git\kissy1.2\src\event\base.js
+D:\code\kissy_git\kissy1.2\src\event\target.js
+D:\code\kissy_git\kissy1.2\src\event\focusin.js
+D:\code\kissy_git\kissy1.2\src\event\hashchange.js
+D:\code\kissy_git\kissy1.2\src\event\valuechange.js
+D:\code\kissy_git\kissy1.2\src\event\delegate.js
+D:\code\kissy_git\kissy1.2\src\event\mouseenter.js
+D:\code\kissy_git\kissy1.2\src\event\submit.js
+D:\code\kissy_git\kissy1.2\src\event\change.js
+D:\code\kissy_git\kissy1.2\src\event\mousewheel.js
+D:\code\kissy_git\kissy1.2\src\event.js
+D:\code\kissy_git\kissy1.2\src\node\base.js
+D:\code\kissy_git\kissy1.2\src\node\attach.js
+D:\code\kissy_git\kissy1.2\src\node\override.js
+D:\code\kissy_git\kissy1.2\src\anim\easing.js
+D:\code\kissy_git\kissy1.2\src\anim\manager.js
+D:\code\kissy_git\kissy1.2\src\anim\fx.js
+D:\code\kissy_git\kissy1.2\src\anim\queue.js
+D:\code\kissy_git\kissy1.2\src\anim\base.js
+D:\code\kissy_git\kissy1.2\src\anim\color.js
+D:\code\kissy_git\kissy1.2\src\anim.js
+D:\code\kissy_git\kissy1.2\src\node\anim.js
+D:\code\kissy_git\kissy1.2\src\node.js
+D:\code\kissy_git\kissy1.2\src\json\json2.js
+D:\code\kissy_git\kissy1.2\src\json.js
+D:\code\kissy_git\kissy1.2\src\ajax\form-serializer.js
+D:\code\kissy_git\kissy1.2\src\ajax\xhrobject.js
+D:\code\kissy_git\kissy1.2\src\ajax\base.js
+D:\code\kissy_git\kissy1.2\src\ajax\xhrbase.js
+D:\code\kissy_git\kissy1.2\src\ajax\subdomain.js
+D:\code\kissy_git\kissy1.2\src\ajax\xdr.js
+D:\code\kissy_git\kissy1.2\src\ajax\xhr.js
+D:\code\kissy_git\kissy1.2\src\ajax\script.js
+D:\code\kissy_git\kissy1.2\src\ajax\jsonp.js
+D:\code\kissy_git\kissy1.2\src\ajax\form.js
+D:\code\kissy_git\kissy1.2\src\ajax\iframe-upload.js
+D:\code\kissy_git\kissy1.2\src\ajax.js
+D:\code\kissy_git\kissy1.2\src\base\attribute.js
+D:\code\kissy_git\kissy1.2\src\base\base.js
+D:\code\kissy_git\kissy1.2\src\base.js
+D:\code\kissy_git\kissy1.2\src\cookie\base.js
+D:\code\kissy_git\kissy1.2\src\cookie.js
+D:\code\kissy_git\kissy1.2\src\core.js
+**/
 
 /**
  * @module  ua
@@ -7134,93 +7134,6 @@ KISSY.add("event/keycodes", function() {
         WIN_KEY: 224,
         MAC_FF_META: 224, // Firefox (Gecko) fires this for the meta key instead of 91
         WIN_IME: 229
-    };
-
-    KeyCodes.isTextModifyingKeyEvent = function(e) {
-        if (e.altKey && !e.ctrlKey ||
-            e.metaKey ||
-            // Function keys don't generate text
-            e.keyCode >= KeyCodes.F1 &&
-                e.keyCode <= KeyCodes.F12) {
-            return false;
-        }
-
-        // The following keys are quite harmless, even in combination with
-        // CTRL, ALT or SHIFT.
-        switch (e.keyCode) {
-            case KeyCodes.ALT:
-            case KeyCodes.CAPS_LOCK:
-            case KeyCodes.CONTEXT_MENU:
-            case KeyCodes.CTRL:
-            case KeyCodes.DOWN:
-            case KeyCodes.END:
-            case KeyCodes.ESC:
-            case KeyCodes.HOME:
-            case KeyCodes.INSERT:
-            case KeyCodes.LEFT:
-            case KeyCodes.MAC_FF_META:
-            case KeyCodes.META:
-            case KeyCodes.NUMLOCK:
-            case KeyCodes.NUM_CENTER:
-            case KeyCodes.PAGE_DOWN:
-            case KeyCodes.PAGE_UP:
-            case KeyCodes.PAUSE:
-            case KeyCodes.PHANTOM:
-            case KeyCodes.PRINT_SCREEN:
-            case KeyCodes.RIGHT:
-            case KeyCodes.SHIFT:
-            case KeyCodes.UP:
-            case KeyCodes.WIN_KEY:
-            case KeyCodes.WIN_KEY_RIGHT:
-                return false;
-            default:
-                return true;
-        }
-    };
-
-    KeyCodes.isCharacterKey = function(keyCode) {
-        if (keyCode >= KeyCodes.ZERO &&
-            keyCode <= KeyCodes.NINE) {
-            return true;
-        }
-
-        if (keyCode >= KeyCodes.NUM_ZERO &&
-            keyCode <= KeyCodes.NUM_MULTIPLY) {
-            return true;
-        }
-
-        if (keyCode >= KeyCodes.A &&
-            keyCode <= KeyCodes.Z) {
-            return true;
-        }
-
-        // Safari sends zero key code for non-latin characters.
-        if (goog.userAgent.WEBKIT && keyCode == 0) {
-            return true;
-        }
-
-        switch (keyCode) {
-            case KeyCodes.SPACE:
-            case KeyCodes.QUESTION_MARK:
-            case KeyCodes.NUM_PLUS:
-            case KeyCodes.NUM_MINUS:
-            case KeyCodes.NUM_PERIOD:
-            case KeyCodes.NUM_DIVISION:
-            case KeyCodes.SEMICOLON:
-            case KeyCodes.DASH:
-            case KeyCodes.EQUALS:
-            case KeyCodes.COMMA:
-            case KeyCodes.PERIOD:
-            case KeyCodes.SLASH:
-            case KeyCodes.APOSTROPHE:
-            case KeyCodes.SINGLE_QUOTE:
-            case KeyCodes.OPEN_SQUARE_BRACKET:
-            case KeyCodes.BACKSLASH:
-            case KeyCodes.CLOSE_SQUARE_BRACKET:
-                return true;
-            default:
-                return false;
-        }
     };
 
     return KeyCodes;

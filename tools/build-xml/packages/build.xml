@@ -49,7 +49,7 @@
             <arg value="-output"/>
             <arg value="${src.dir}/core-pkg.js"/>
             <classpath>
-                <pathelement location="${kissy-tools.dir}/module-compiler/module-compiler.jar"/>
+                <pathelement location="${kissy-tools.dir}/module-compiler/module-compiler1.2.jar"/>
                 <pathelement path="${java.class.path}"/>
             </classpath>
         </java>

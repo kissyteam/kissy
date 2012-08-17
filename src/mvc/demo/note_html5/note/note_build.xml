@@ -19,7 +19,7 @@ build example for kissy loader
     <property name="ks.tools" value="../../../../../../kissy-tools"/>
     <!--第三方工具-->
     <property name="yui.compiler" value="${ks.tools}\yuicompressor\yuicompressor.jar"/>
-    <property name="module.compiler" value="${ks.tools}\module-compiler\module-compiler.jar"/>
+    <property name="module.compiler" value="${ks.tools}\module-compiler\module-compiler1.2.jar"/>
     <property name="closure.compiler" value="${ks.tools}\closure-compiler\compiler.jar"/>
 
     <!-- js 构建-->
