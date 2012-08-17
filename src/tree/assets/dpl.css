@@ -1,0 +1,198 @@
+/**
+ * Tree style for KISSY
+ * @author yiminghe@gmail.com
+ */
+/**
+* Variables to customize the look and feel from Bootstrap.
+*
+* @author yiminghe@gmail.com
+*/
+/**
+* Snippets of reusable CSS to develop faster and keep code readable from KISSY and Bootstrap.
+*
+* @author yiminghe@gmail.com
+*/
+.ks-tree-hide-root {
+  display: none;
+}
+.ks-treeitem-focused {
+  outline: none;
+}
+.ks-treeitem-row {
+  white-space: nowrap;
+  line-height: 16px;
+  height: 16px;
+}
+.ks-tree-lchildren {
+  padding-left: 19px;
+}
+.ks-tree-children {
+  padding-left: 19px;
+  background-repeat: repeat-y;
+  background-image: url("dpl/I.png");
+}
+.ks-tree-expand-icon-plus {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background-position: 0 0;
+}
+.ks-tree-expand-icon-minus {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background-position: -222px 0;
+}
+.ks-tree-expand-icon-tplus {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background-position: -246px 0;
+}
+.ks-tree-expand-icon-tminus {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background-position: -270px 0;
+}
+.ks-tree-expand-icon-lplus {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background-position: -294px 0;
+}
+.ks-tree-expand-icon-lminus {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background-position: -318px 0;
+}
+.ks-tree-expand-icon-t {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background-position: -342px 0;
+}
+.ks-tree-expand-icon-l {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background-position: -366px 0;
+}
+.ks-tree-collapsed-folder-icon {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 16px;
+  background-position: -198px -24px;
+}
+.ks-tree-expanded-folder-icon {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 16px;
+  background-position: -222px -24px;
+}
+.ks-tree-file-icon {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  width: 16px;
+  background-position: -246px -24px;
+}
+.ks-treeitem-content {
+  margin-left: 3px;
+  padding: 1px 2px 1px 2px;
+  text-decoration: none;
+}
+.ks-treeitem-content:hover {
+  text-decoration: underline;
+}
+.ks-treeitem-selected .ks-treeitem-content {
+  background: #08c;
+  color: white;
+}
+.ks-treeitem-focused .ks-treeitem-selected .ks-treeitem-content {
+  background: highlight;
+  color: highlighttext;
+}
+.ks-treeitem-checked0 {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background: url(dpl/dpl.png);
+  width: 16px;
+  background-position: 0 -2px;
+}
+.ks-treeitem-checked1 {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background: url(dpl/dpl.png);
+  width: 16px;
+  background-position: -66px -2px;
+}
+.ks-treeitem-checked2 {
+  width: 19px;
+  height: 16px;
+  vertical-align: middle;
+  background-image: url("dpl/dpl.png");
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  background: url(dpl/dpl.png);
+  width: 16px;
+  background-position: -132px -2px;
+}

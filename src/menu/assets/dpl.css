@@ -81,7 +81,7 @@
   *border-right-width: 2px;
   *border-bottom-width: 2px;
 }
-.ks-menu .ks-menuseparator {
+.ks-menu > .ks-separator {
   height: 1px;
   margin: 8px 1px;
   overflow: hidden;

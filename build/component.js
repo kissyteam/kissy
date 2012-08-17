@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 14 20:43
+build time: Aug 17 18:20
 */
 /**
  * Setup component namespace.
@@ -263,6 +263,8 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
     var Controller = UIBase.extend([UIBase.Box],
         {
 
+            isController: true,
+
             /**
              * Get full class name for current component
              * @param classes {String} class names without prefixCls. Separated by space.
@@ -415,9 +417,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 if (self.get("rendered")) {
                     c.render();
                 }
-                self.fire("addChild", {
-                    child: c
-                });
                 return c;
             },
 
@@ -446,9 +445,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     c.destroy) {
                     c.destroy();
                 }
-                self.fire("removeChild", {
-                    child: c
-                });
                 return c;
             },
 
@@ -475,22 +471,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             getChildAt: function (index) {
                 var children = this.get("children");
                 return children[index] || null;
-            },
-
-            /**
-             * Returns the child by given id.
-             * @param {String} id child id.
-             * @return {Component.Controller} The child at the given index; null if none.
-             */
-            getChildById: function (id) {
-                var children = this.get("children"), i = children.length - 1;
-                while (i >= 0) {
-                    if (children[i].get("id") == id) {
-                        return children[i];
-                    }
-                    --i;
-                }
-                return null;
             },
 
             /**
@@ -1152,7 +1132,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              * the css class names are prefixed with component name.
              * @param {String} [state] This component's state info.
              */
-            getComponentCssClassWithState:function (state) {
+            getComponentCssClassWithState: function (state) {
                 var self = this,
                     componentCls = self.get("ksComponentCss");
                 state = state || "";
@@ -1166,9 +1146,9 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              * @return {String} class name with prefixCls
              * @private
              */
-            getCssClassWithPrefix:Manager.getCssClassWithPrefix,
+            getCssClassWithPrefix: Manager.getCssClassWithPrefix,
 
-            createDom:function () {
+            createDom: function () {
                 var self = this;
                 self.get("el").addClass(self.getComponentCssClassWithState());
             },
@@ -1177,14 +1157,14 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              * Returns the dom element which is responsible for listening keyboard events.
              * @return {NodeList}
              */
-            getKeyEventTarget:function () {
+            getKeyEventTarget: function () {
                 return this.get("el");
             },
 
             /**
              * @protected
              */
-            _uiSetHighlighted:function (v) {
+            _uiSetHighlighted: function (v) {
                 var self = this,
                     componentCls = self.getComponentCssClassWithState("-hover"),
                     el = self.get("el");
@@ -1194,7 +1174,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
             /**
              * @protected
              */
-            _uiSetDisabled:function (v) {
+            _uiSetDisabled: function (v) {
                 var self = this,
                     componentCls = self.getComponentCssClassWithState("-disabled"),
                     el = self.get("el");
@@ -1208,7 +1188,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
             /**
              * @protected
              */
-            _uiSetActive:function (v) {
+            _uiSetActive: function (v) {
                 var self = this,
                     componentCls = self.getComponentCssClassWithState("-active");
                 self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
@@ -1217,7 +1197,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
             /**
              * @protected
              */
-            _uiSetFocused:function (v) {
+            _uiSetFocused: function (v) {
                 var self = this,
                     el = self.get("el"),
                     componentCls = self.getComponentCssClassWithState("-focused");
@@ -1228,53 +1208,53 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              * Return the dom element into which child component to be rendered.
              * @return {NodeList}
              */
-            getContentElement:function () {
+            getContentElement: function () {
                 return this.get("contentEl") || this.get("el");
             }
 
         }, {//  screen state
-            ATTRS:/**
+            ATTRS: /**
              * @lends Component.Render#
              */
             {
                 /**
                  * see {@link Component.Controller#prefixCls}
                  */
-                prefixCls:{
-                    value:"ks-"
+                prefixCls: {
+                    value: "ks-"
                 },
                 /**
                  * see {@link Component.Controller#focusable}
                  */
-                focusable:{
-                    value:true
+                focusable: {
+                    value: true
                 },
                 /**
                  * see {@link Component.Controller#focused}
                  */
-                focused:{},
+                focused: {},
                 /**
                  * see {@link Component.Controller#active}
                  */
-                active:{},
+                active: {},
                 /**
                  * see {@link Component.Controller#disabled}
                  */
-                disabled:{},
+                disabled: {},
                 /**
                  * see {@link Component.Controller#highlighted}
                  */
-                highlighted:{}
+                highlighted: {}
             },
-            HTML_PARSER:{
-                disabled:function (el) {
+            HTML_PARSER: {
+                disabled: function (el) {
                     var self = this, componentCls = self.getComponentCssClassWithState("-disabled");
                     return self.get("el").hasClass(componentCls);
                 }
             }
         });
 }, {
-    requires:['./base', './uibase', './manager']
+    requires: ['./base', './uibase', './manager']
 });/**
  * @fileOverview uibase
  * @author yiminghe@gmail.com
@@ -1787,7 +1767,6 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             Manager.addComponent(id, self);
         }
 
-
         // 根据 srcNode 设置属性值
         // 按照类层次执行初始函数，主类执行 initializer 函数，扩展类执行构造器函数
         initHierarchy(self, config);
@@ -2006,7 +1985,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             /**
              * Create dom structure of this component.
              */
-            create:function () {
+            create: function () {
                 var self = this;
                 // 是否生成过节点
                 if (!self.get("created")) {
@@ -2032,7 +2011,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             /**
              * Put dom structure of this component to document and bind event.
              */
-            render:function () {
+            render: function () {
                 var self = this;
                 // 是否已经渲染过
                 if (!self.get("rendered")) {
@@ -2105,34 +2084,34 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
              * @protected
              * @method
              */
-            createDom:noop,
+            createDom: noop,
 
             /**
              * For overridden. Render logic of subclass component.
              * @protected
              * @method
              */
-            renderUI:noop,
+            renderUI: noop,
 
             /**
              * For overridden. Bind logic for subclass component.
              * @protected
              * @method
              */
-            bindUI:noop,
+            bindUI: noop,
 
             /**
              * For overridden. Sync attribute with ui.
              * @protected
              * @method
              */
-            syncUI:noop,
+            syncUI: noop,
 
 
             /**
              * Destroy this component.
              */
-            destroy:function () {
+            destroy: function () {
                 var self = this,
                     id,
                     plugins = self.get("plugins");
@@ -2148,7 +2127,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             }
         }, {
 
-            ATTRS:/**
+            ATTRS: /**
              * @lends Component.UIBase#
              */
             {
@@ -2156,15 +2135,15 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                  * Whether this component is rendered.
                  * @type {Boolean}
                  */
-                rendered:{
-                    value:false
+                rendered: {
+                    value: false
                 },
                 /**
                  * Whether this component 's dom structure is created.
                  * @type {Boolean}
                  */
-                created:{
-                    value:false
+                created: {
+                    value: false
                 },
 
                 /**
@@ -2187,16 +2166,16 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                  * }
                  * </code>
                  */
-                listeners:{
-                    value:{}
+                listeners: {
+                    value: {}
                 },
 
                 /**
                  * Plugins
                  * @type {Function[]/Object[]}
                  */
-                plugins:{
-                    value:[]
+                plugins: {
+                    value: []
                 },
 
                 /**
@@ -2204,8 +2183,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                  * Readonly and only for json config.
                  * @type {String}
                  */
-                xclass:{
-                    valueFn:function () {
+                xclass: {
+                    valueFn: function () {
                         return Manager.getXClassByConstructor(this.constructor);
                     }
                 }
@@ -2277,7 +2256,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                             // 但是值是对象的话会深度合并
                             // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题(用 function return 出来)!
                             S.mix(desc[K], ext[K], {
-                                deep:true
+                                deep: true
                             });
                         }
                     });
@@ -2326,7 +2305,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
              *          }
              *      };
              */
-            HTML_PARSER:{},
+            HTML_PARSER: {},
 
             /**
              * Create a new class which extends UIBase .
@@ -2336,7 +2315,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
              * @static
              * @return {Component.UIBase} A new class which extends UIBase .
              */
-            extend:function extend(extensions, px, sx) {
+            extend: function extend(extensions, px, sx) {
                 var args = S.makeArray(arguments),
                     ret,
                     last = args[args.length - 1];
@@ -2348,8 +2327,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 ret = create.apply(UIBase, args);
                 if (last.xclass) {
                     Manager.setConstructorByXClass(last.xclass, {
-                        constructor:ret,
-                        priority:last.priority
+                        constructor: ret,
+                        priority: last.priority
                     });
                 }
                 ret.extend = extend;
@@ -2359,7 +2338,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
     return UIBase;
 }, {
-    requires:["base", "node", "../manager"]
+    requires: ["base", "node", "../manager"]
 });
 /**
  * Refer:

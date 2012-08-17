@@ -132,6 +132,8 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
     var Controller = UIBase.extend([UIBase.Box],
         {
 
+            isController: true,
+
             /**
              * Get full class name for current component
              * @param classes {String} class names without prefixCls. Separated by space.
@@ -284,9 +286,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 if (self.get("rendered")) {
                     c.render();
                 }
-                self.fire("addChild", {
-                    child: c
-                });
                 return c;
             },
 
@@ -315,9 +314,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     c.destroy) {
                     c.destroy();
                 }
-                self.fire("removeChild", {
-                    child: c
-                });
                 return c;
             },
 

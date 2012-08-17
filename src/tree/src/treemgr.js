@@ -12,24 +12,29 @@ KISSY.add("tree/treemgr", function (S, Event) {
      * @lends Tree#
      */
     {
+        // 覆盖 baseNode 处配置
+        delegateChildren: {
+            value: true
+        },
+
         /**
          * Whether show root node.
          * @defaulttrue.
          * @type {Boolean}
          */
-        showRootNode:{
-            value:true,
-            view:1
+        showRootNode: {
+            value: true,
+            view: 1
         },
         /**
          * Current selected tree node.
          * @type {Tree.Node}
          */
-        selectedItem:{},
+        selectedItem: {},
 
         // only root node is focusable
-        focusable:{
-            value:true
+        focusable: {
+            value: true
         }
     };
 
@@ -44,28 +49,25 @@ KISSY.add("tree/treemgr", function (S, Event) {
 
     S.augment(TreeMgr, {
 
-        __isTree:1,
+        isTree: 1,
 
-        /*
-         加快从事件代理获取原事件节点
-         */
-        __getAllNodes:function () {
-            var self = this;
-            if (!self._allNodes) {
-                self._allNodes = {};
+        _register: function (c) {
+            if (!c.__isRegisted) {
+                getAllNodes(this)[getIdFromNode(c)] = c;
+                c.__isRegisted = 1;
+                S.log("_register for " + c.get("content"));
             }
-            return self._allNodes;
         },
 
-        _register:function (c) {
-            this.__getAllNodes()[getIdFromNode(c)] = c;
+        _unRegister: function (c) {
+            if (c.__isRegisted) {
+                delete getAllNodes(this)[getIdFromNode(c)];
+                c.__isRegisted = 0;
+                S.log("_unRegister for " + c.get("content"));
+            }
         },
 
-        _unRegister:function (c) {
-            delete this.__getAllNodes()[getIdFromNode(c)];
-        },
-
-        handleKeyEventInternal:function (e) {
+        handleKeyEventInternal: function (e) {
             var current = this.get("selectedItem");
             if (e.keyCode == Event.KeyCodes.ENTER) {
                 // 传递给真正的单个子节点
@@ -74,31 +76,38 @@ KISSY.add("tree/treemgr", function (S, Event) {
             return current._keyNav(e);
         },
 
-        // 重写 delegateChildren ，缓存加快从节点获取对象速度
-        getOwnerControl:function (node, e) {
+
+        /**
+         * Get tree child node by comparing cached child nodes.
+         * Faster than default mechanism.
+         * @protected
+         * @param target
+         */
+        getOwnerControl: function (target) {
             var self = this,
                 n,
-                allNodes = self.__getAllNodes(),
+                allNodes = getAllNodes(self),
                 elem = self.get("el")[0];
-            while (node && node !== elem) {
-                if (n = allNodes[node.id]) {
+            while (target && target !== elem) {
+                if (n = allNodes[target.id]) {
                     return n;
                 }
-                node = node.parentNode;
+                target = target.parentNode;
             }
             // 最终自己处理
+            // 所以根节点不用注册！
             return self;
         },
 
         // 单选
-        _uiSetSelectedItem:function (n, ev) {
+        _uiSetSelectedItem: function (n, ev) {
             if (ev.prevVal) {
                 ev.prevVal.set("selected", false);
             }
             n.set("selected", true);
         },
 
-        _uiSetFocused:function (v) {
+        _uiSetFocused: function (v) {
             var self = this;
             // 得到焦点时没有选择节点
             // 默认选择自己
@@ -108,7 +117,17 @@ KISSY.add("tree/treemgr", function (S, Event) {
         }
     });
 
+    /*
+     加快从事件代理获取原事件节点
+     */
+    function getAllNodes(self) {
+        if (!self._allNodes) {
+            self._allNodes = {};
+        }
+        return self._allNodes;
+    }
+
     return TreeMgr;
 }, {
-    requires:['event']
+    requires: ['event']
 });

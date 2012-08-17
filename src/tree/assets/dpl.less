@@ -1,0 +1,145 @@
+/**
+ * Tree style for KISSY
+ * @author yiminghe@gmail.com
+ */
+
+@import "../../css/src/dpl/variables.less";
+@import "../../css/src/dpl/mixins.less";
+
+.ks-tree-icon(){
+    width: 19px;
+    height: 16px;
+    vertical-align: middle;
+    background-image: url("dpl/dpl.png");
+    .ks-inline-block_();
+}
+
+.ks-tree-hide-root {
+    display: none;
+}
+
+.ks-treeitem-focused {
+    outline: none;
+}
+
+.ks-treeitem-row {
+    white-space: nowrap;
+    line-height: 16px;
+    height: 16px;
+}
+
+.ks-tree-lchildren {
+    padding-left: 19px;
+}
+
+.ks-tree-children {
+    padding-left: 19px;
+    background-repeat: repeat-y;
+    background-image: url("dpl/I.png");
+}
+
+.ks-tree-expand-icon-plus {
+    .ks-tree-icon();
+    background-position: 0 0;
+}
+
+.ks-tree-expand-icon-minus {
+    .ks-tree-icon();
+    background-position: -222px 0;
+}
+
+.ks-tree-expand-icon-tplus {
+    .ks-tree-icon();
+    background-position: -246px 0;
+}
+
+.ks-tree-expand-icon-tminus {
+    .ks-tree-icon();
+    background-position: -270px 0;
+}
+
+.ks-tree-expand-icon-lplus {
+    .ks-tree-icon();
+    background-position: -294px 0;
+}
+
+.ks-tree-expand-icon-lminus {
+    .ks-tree-icon();
+    background-position: -318px 0;
+}
+
+.ks-tree-expand-icon-t {
+    .ks-tree-icon();
+    background-position: -342px 0;
+}
+
+.ks-tree-expand-icon-l {
+    .ks-tree-icon();
+    background-position: -366px 0;
+}
+
+.ks-tree-collapsed-folder-icon {
+    .ks-tree-icon();
+    width: 16px;
+    background-position: -198px -24px;
+}
+
+.ks-tree-expanded-folder-icon {
+    .ks-tree-icon();
+    width: 16px;
+    background-position: -222px -24px;
+}
+
+.ks-tree-file-icon {
+    .ks-tree-icon();
+    width: 16px;
+    background-position: -246px -24px;
+}
+
+.ks-treeitem-content {
+    margin-left: 3px;
+    padding: 1px 2px 1px 2px;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.ks-treeitem-selected {
+    .ks-treeitem-content {
+        background: #08c;
+        color: white;
+    }
+}
+
+.ks-treeitem-focused {
+    .ks-treeitem-selected {
+        .ks-treeitem-content {
+            background: highlight;
+            color: highlighttext;
+        }
+    }
+}
+
+.ks-treeitem-check(){
+    .ks-tree-icon();
+    background: url(dpl/dpl.png);
+    width: 16px;
+
+}
+
+.ks-treeitem-checked0 {
+    .ks-treeitem-check();
+    background-position: 0 -2px;
+
+}
+
+.ks-treeitem-checked1 {
+    .ks-treeitem-check();
+    background-position: -66px -2px;
+}
+
+.ks-treeitem-checked2 {
+    .ks-treeitem-check();
+    background-position: -132px -2px;
+}

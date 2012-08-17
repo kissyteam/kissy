@@ -1,23 +1,23 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
-<title>Demo - DPL Button</title>
-<link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
-<link href="../../../css/src/dpl/tables.css" rel="stylesheet"/>
-<link href="../../assets/dpl.css" rel="stylesheet"/>
-<link href="../../../css/demo/dpl/assets/docs.css" rel="stylesheet"/>
-<style>
-    .para {
-        margin: 1em 0;
-    }
-</style>
+    <meta charset="utf-8"/>
+    <title>Demo - DPL Button</title>
+    <link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../../../css/src/dpl/tables.css" rel="stylesheet"/>
+    <link href="../../assets/dpl.css" rel="stylesheet"/>
+    <link href="../../../css/demo/dpl/assets/docs.css" rel="stylesheet"/>
+    <style>
+        .para {
+            margin: 1em 0;
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
     <div class="page-header">
-        <h1>渐进增强的按钮</h1>
+        <h1>html element</h1>
     </div>
     <table class="table table-bordered table-striped" id="table">
         <thead>
@@ -30,49 +30,49 @@
         <tbody>
         <tr>
             <td>
-                <div class="ks-button">Default</div>
+                <a class="ks-button">Default</a>
             </td>
             <td><code>ks-button</code></td>
             <td>默认的灰色按钮，并带有渐变色</td>
         </tr>
         <tr>
             <td>
-                <div class="ks-button ks-button-primary">Primary</div>
+                <a class="ks-button ks-button-primary">Primary</a>
             </td>
             <td><code>ks-button ks-button-primary</code></td>
             <td>提供更深的色度来表明在按钮组中是最重要的行为</td>
         </tr>
         <tr>
             <td>
-                <div class="ks-button ks-button-info">Info</div>
+                <a class="ks-button ks-button-info">Info</a>
             </td>
             <td><code>ks-button ks-button-info</code></td>
             <td>默认样式的一种替代方案</td>
         </tr>
         <tr>
             <td>
-                <div class="ks-button ks-button-success">Success</div>
+                <button class="ks-button ks-button-success">Success</button>
             </td>
             <td><code>ks-button ks-button-success</code></td>
             <td>表示一个成功的或者有积极意义的行为</td>
         </tr>
         <tr>
             <td>
-                <div class="ks-button ks-button-warning">Warning</div>
+                <button class="ks-button ks-button-warning">Warning</button>
             </td>
             <td><code>ks-button ks-button-warning</code></td>
             <td>表明警告，并需要采取这种行为的操作</td>
         </tr>
         <tr>
             <td>
-                <div class="ks-button ks-button-danger">Danger</div>
+                <button class="ks-button ks-button-danger">Danger</button>
             </td>
             <td><code>ks-button ks-button-danger</code></td>
             <td>表明一个危险的或者潜在的有消极意义的行为</td>
         </tr>
         <tr>
             <td>
-                <div class="ks-button ks-button-inverse">Inverse</div>
+                <button class="ks-button ks-button-inverse">Inverse</button>
             </td>
             <td><code>ks-button ks-button-inverse</code></td>
             <td>深灰色的按钮，默认按钮的一种替代按钮，跟语义无关的操作</td>
@@ -83,6 +83,7 @@
     <div class="row" id="common">
         <div class="span8">
             <h3>按钮的行为</h3>
+
             <p>
                 一般而言，按钮仅当链接作为一个行为对象时来使用时。
                 例如“下载”应当为一个按钮，“最近活动”应该是一个链接。
@@ -90,36 +91,29 @@
         </div>
         <div class="span8">
             <h3>多种尺寸</h3>
-            <p>你喜欢大的还是小的按钮？添加样式<code>.ks-button-large</code>, <code>.ks-button-small</code>或者 <code>.ks-button-mini</code>实现不同的样式。</p>
-            <div class="para">
-                <div class="ks-button ks-button-large ks-button-primary">
-                    Primary action
-                </div>
-                <div class="ks-button ks-button-large">Action</div>
-            </div>
-            <div class="para">
-                <div class="ks-button ks-button-small ks-button-primary">
-                    Primary action
-                </div>
-                <div class="ks-button ks-button-small">Action</div>
-            </div>
-            <div class="para">
-                <div class="ks-button ks-button-mini ks-button-primary">
-                    Primary action
-                </div>
-                <div class="ks-button ks-button-mini">Action</div>
-            </div>
-            <br>
-            <h3>不可用状态</h3>
-            <p>对于不可用的按钮来说,
-                添加 <code>ks-button-disabled</code>
-            </p>
+
+            <p>你喜欢大的还是小的按钮？添加样式<code>.ks-button-large</code>, <code>.ks-button-small</code>或者
+                <code>.ks-button-mini</code>实现不同的样式。</p>
 
             <div class="para">
-                <div class="ks-button ks-button-large ks-button-primary ks-button-disabled">
-                    Primary link
-                </div>
+                <button class="ks-button ks-button-large ks-button-primary">
+                    Primary action
+                </button>
+                <button class="ks-button ks-button-large">Action</button>
             </div>
+            <div class="para">
+                <button class="ks-button ks-button-small ks-button-primary">
+                    Primary action
+                </button>
+                <button class="ks-button ks-button-small">Action</button>
+            </div>
+            <div class="para">
+                <button class="ks-button ks-button-mini ks-button-primary">
+                    Primary action
+                </button>
+                <button class="ks-button ks-button-mini">Action</button>
+            </div>
+
         </div>
 
     </div>
@@ -135,30 +129,13 @@
             <h3>Button Group demo</h3>
 
             <div class="ks-button-group">
-                <div class="ks-button">left</div>
-                <div class="ks-button">middle</div>
-                <div class="ks-button">right</div>
+                <button class="ks-button">left</button>
+                <button class="ks-button">middle</button>
+                <button class="ks-button">right</button>
             </div>
         </span>
 
     </div>
 </div>
-<script src='../../../../build/kissy.js'></script>
-<script>
-    KISSY.use("button", function (S, Button) {
-        S.all("#table .ks-button,#common .ks-button").each(function (n) {
-            new Button({
-                srcNode:n
-            }).render();
-        });
-
-        S.all("#checkable .ks-button").each(function (n) {
-            new Button({
-                srcNode:n,
-                checkable:true
-            }).render();
-        });
-    });
-</script>
 </body>
 </html>

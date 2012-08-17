@@ -69,8 +69,7 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
         }
     }
 
-    function processChild(e) {
-        var c = e.child;
+    function processChild(c) {
         // 交给容器代理
         c.set("handleMouseEvents", false);
         c.set("focusable", false);
@@ -93,8 +92,9 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
          */
         {
 
-            initializer: function () {
-                this.on("addChild", processChild);
+            addChild:function(){
+              var c=  Toolbar.superclass.addChild.apply(this,arguments);
+                processChild(c);
             },
 
             createDom: function () {

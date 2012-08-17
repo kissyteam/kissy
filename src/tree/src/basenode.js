@@ -14,64 +14,27 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
      * @memberOf Tree
      * @extends Component.Controller
      */
-    var BaseNode = Component.Controller.extend(
-        /*
-         * 可多继承从某个子节点开始装饰儿子组件
-         */
-        [Component.DecorateChild],
+    var BaseNode = Component.Container.extend(
+        [
+            // 不是所有的子节点都是子组件
+            Component.DecorateChild
+        ],
         /**
          * @lends Tree.Node#
          */
         {
-
-            initializer:function () {
-
-                var self = this;
-
-                self.on("addChild", function (e) {
-                    var c = e.child,
-                        tree = self.get("tree");
-                    c.set("depth", self.get('depth') + 1);
-                    if (tree) {
-                        recursive(tree, c, '_register');
-                    }
-                    refreshCssForSelfAndChildren(self);
-                });
-
-                function recursive(tree, node, action) {
-                    tree[action](node);
-                    var children = node.get("children"), i, c;
-                    for (i = 0; i < children.length; i++) {
-                        c = children[i];
-                        if (action == '_register') {
-                            c.set("depth", node.get('depth') + 1);
-                        }
-                        tree[action](c);
-                    }
-                }
-
-                self.on("removeChild", function (e) {
-                    var tree = self.get("tree");
-                    if (tree) {
-                        recursive(tree, e.child, '_unRegister');
-                    }
-                    refreshCssForSelfAndChildren(self);
-                });
-
-            },
-
-            bindUI:function () {
+            bindUI: function () {
                 this.publish("click expand collapse", {
-                    bubbles:1
+                    bubbles: 1
                 });
             },
 
-            syncUI:function () {
+            syncUI: function () {
                 // 集中设置样式
                 refreshCss(this);
             },
 
-            _keyNav:function (e) {
+            _keyNav: function (e) {
                 var self = this,
                     processed = true,
                     tree = self.get("tree"),
@@ -141,7 +104,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                 return processed;
             },
 
-            next:function () {
+            next: function () {
                 var self = this,
                     parent = self.get("parent"),
                     siblings,
@@ -157,7 +120,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                 return siblings[index + 1];
             },
 
-            prev:function () {
+            prev: function () {
                 var self = this,
                     parent = self.get("parent"),
                     siblings,
@@ -176,13 +139,12 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             /**
              * Select current tree node.
              */
-            select:function () {
+            select: function () {
                 var self = this;
                 self.get("tree").set("selectedItem", self);
             },
 
-            performActionInternal:function (e) {
-
+            performActionInternal: function (e) {
                 var self = this,
                     target = $(e.target),
                     type = e.type,
@@ -196,34 +158,52 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                     }
                 } else if (type == 'dblclick') {
                     self.set("expanded", !expanded);
-                }
-                else {
+                } else {
                     self.select();
                     self.fire("click");
                 }
             },
 
-            // 默认 addChild，这里需要设置 tree 属性
-            decorateChildrenInternal:function (UI, c) {
+            decorateChildrenInternal: function (UI, c) {
                 var self = this;
                 self.addChild(new UI({
-                    srcNode:c,
-                    prefixCls:self.get("prefixCls")
+                    srcNode: c,
+                    prefixCls: self.get("prefixCls")
                 }));
             },
 
-            removeChild:function (c) {
+            /**
+             * override controller 's addChild to apply depth and css recursively
+             */
+            addChild: function () {
                 var self = this,
-                    tree = self.get("tree");
-                tree._unRegister(c);
-                S.each(c.get("children"), function (cc) {
-                    tree._unRegister(cc);
-                });
-                BaseNode.superclass.removeChild.apply(self, S.makeArray(arguments));
-                refreshCssForSelfAndChildren(self);
+                    c;
+                c = BaseNode.superclass.addChild.apply(self, S.makeArray(arguments));
+                // after default addChild then parent is accessible
+                // if first build a node subtree, no root is constructed yet!
+                var tree = self.get("tree");
+                if (tree) {
+                    recursiveRegister(tree, c, "_register", self.get("depth") + 1);
+                    refreshCssForSelfAndChildren(self);
+                }
+                return c;
             },
 
-            _uiSetExpanded:function (v) {
+            /**
+             * override controller 's removeChild to apply depth and css recursively
+             */
+            removeChild: function (c) {
+                var self = this,
+                    tree = self.get("tree");
+                if (tree) {
+                    recursiveRegister(tree, c, "_unRegister");
+                    BaseNode.superclass.removeChild.apply(self, S.makeArray(arguments));
+                    refreshCssForSelfAndChildren(self);
+                }
+                return c;
+            },
+
+            _uiSetExpanded: function (v) {
                 var self = this,
                     tree = self.get("tree");
                 if (self.get("rendered")) {
@@ -235,7 +215,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             /**
              * Expand all descend nodes of current node
              */
-            expandAll:function () {
+            expandAll: function () {
                 var self = this;
                 self.set("expanded", true);
                 S.each(self.get("children"), function (c) {
@@ -246,7 +226,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             /**
              * Collapse all descend nodes of current node
              */
-            collapseAll:function () {
+            collapseAll: function () {
                 var self = this;
                 self.set("expanded", false);
                 S.each(self.get("children"), function (c) {
@@ -256,51 +236,57 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
         },
 
         {
-            ATTRS:/**
+            ATTRS: /**
              * @lends Tree.Node#
              */
             {
-                xrender:{
-                    value:BaseNodeRender
+                // 一般节点不需要代理事件，统统交给 root(tree) 代理
+                delegateChildren: {
+                    value: false
                 },
+
+                xrender: {
+                    value: BaseNodeRender
+                },
+
                 // 事件代理
-                handleMouseEvents:{
-                    value:false
+                handleMouseEvents: {
+                    value: false
                 },
 
                 /**
                  * Only For Config.
-                 * Whether to force current tree node as a leaf.
-                 * @defaultfalse.
+                 * Whether to force current tree node as a leaf.                 *
                  * It will change as children are added.
+                 *
                  * @type {Boolean}
                  */
-                isLeaf:{
-                    view:1
+                isLeaf: {
+                    view: 1
                 },
 
                 /**
                  * Element for expand icon.
                  * @type {NodeList}
                  */
-                expandIconEl:{
-                    view:1
+                expandIconEl: {
+                    view: 1
                 },
 
                 /**
                  * Element for icon.
                  * @type {NodeList}
                  */
-                iconEl:{
-                    view:1
+                iconEl: {
+                    view: 1
                 },
 
                 /**
                  * Whether current tree node is selected.
                  * @type {Boolean}
                  */
-                selected:{
-                    view:1
+                selected: {
+                    view: 1
                 },
 
                 /**
@@ -308,8 +294,8 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type {Boolean.}
                  * @default false.
                  */
-                expanded:{
-                    view:1
+                expanded: {
+                    view: 1
                 },
 
                 /**
@@ -317,11 +303,11 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type {Boolean.}
                  * @default true.
                  */
-                collapsed:{
-                    getter:function () {
+                collapsed: {
+                    getter: function () {
                         return !this.get("expanded");
                     },
-                    setter:function (v) {
+                    setter: function (v) {
                         this.set("expanded", !v);
                     }
                 },
@@ -330,18 +316,18 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * Html title for current tree node.
                  * @type {String}
                  */
-                tooltip:{
-                    view:1
+                tooltip: {
+                    view: 1
                 },
 
                 /**
                  * Tree instance current tree node belongs to.
                  * @type {Tree}
                  */
-                tree:{
-                    getter:function () {
+                tree: {
+                    getter: function () {
                         var from = this;
-                        while (from && !from.__isTree) {
+                        while (from && !from.isTree) {
                             from = from.get("parent");
                         }
                         return from;
@@ -352,23 +338,42 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * depth of node.
                  * @type {Number}
                  */
-                depth:{
-                    view:1
+                depth: {
+                    view: 1
                 },
-                focusable:{
-                    value:false
+
+                focusable: {
+                    value: false
                 },
-                decorateChildCls:{
-                    value:"ks-tree-children"
+
+                decorateChildCls: {
+                    value: "ks-tree-children"
                 }
             }
         }, {
-            xclass:'treeitem',
-            priority:10
+            xclass: 'treeitem',
+            priority: 10
         });
 
 
     // # ------------------- private start
+
+    function recursiveRegister(tree, c, action, setDepth) {
+        tree[action](c);
+        if (setDepth !== undefined) {
+            c.set("depth", setDepth);
+        }
+        S.each(c.get("children"), function (child) {
+            // xclass 的情况，在对应 xclass render 时自然会处理
+            if (child.isController) {
+                if (setDepth) {
+                    recursiveRegister(tree, child, action, setDepth + 1);
+                } else {
+                    recursiveRegister(tree, child, action);
+                }
+            }
+        });
+    }
 
     function isNodeSingleOrLast(self) {
         var parent = self.get("parent"),
@@ -458,7 +463,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
     return BaseNode;
 
 }, {
-    requires:['node', 'component', './basenodeRender']
+    requires: ['node', 'component', './basenodeRender']
 });
 
 /**

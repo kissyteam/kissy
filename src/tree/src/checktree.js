@@ -11,7 +11,7 @@ KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, 
      * xclass: 'check-tree'.
      * @memberOf Tree
      */
-    var CheckTree = CheckNode.extend([Component.DelegateChildren, TreeMgr],
+    var CheckTree = CheckNode.extend([TreeMgr],
         /**
          * @lends Tree.CheckTree#
          */

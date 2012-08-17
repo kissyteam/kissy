@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 10 00:30
+build time: Aug 17 18:37
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -22,7 +22,7 @@ KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
      * xclass: 'tree'.
      * @extends Tree.Node
      */
-    return BaseNode.extend([Component.DelegateChildren, TreeMgr],
+    return BaseNode.extend([TreeMgr],
         /**
          * @lends Tree#
          */
@@ -48,14 +48,33 @@ KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
     requires:['component', './basenode', './treeRender', './treemgr']
 });
 
-/**
- * Refer:
- *  - http://www.w3.org/TR/wai-aria-practices/#TreeView
- *
- * note bug:
- *  1. checked tree 根节点总是 selected ！
- *  2. 根节点 hover 后取消不了了
- **//**
+/*
+ Refer:
+  - http://www.w3.org/TR/wai-aria-practices/#TreeView
+
+ note bug:
+  1. checked tree 根节点总是 selected ！
+  2. 根节点 hover 后取消不了了
+
+
+
+ 支持 aria
+  重用组件框架
+  键盘操作指南
+
+ tab 到树，自动选择根节点
+
+ 上下键在可视节点间深度遍历
+ 左键
+ 已展开节点：关闭节点
+ 已关闭节点: 移动到父亲节点
+ 右键
+ 已展开节点：移动到该节点的第一个子节点
+ 已关闭节点: 无效
+ enter : 触发 click 事件
+ home : 移动到根节点
+ end : 移动到前序遍历最后一个节点
+*//**
  * @fileOverview abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
@@ -71,64 +90,23 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
      * @memberOf Tree
      * @extends Component.Controller
      */
-    var BaseNode = Component.Controller.extend(
-        /*
-         * 可多继承从某个子节点开始装饰儿子组件
-         */
-        [Component.DecorateChild],
+    var BaseNode = Component.Container.extend(
         /**
          * @lends Tree.Node#
          */
         {
-
-            initializer:function () {
-
-                var self = this;
-
-                self.on("addChild", function (e) {
-                    var c = e.child,
-                        tree = self.get("tree");
-                    c.set("depth", self.get('depth') + 1);
-                    if (tree) {
-                        recursive(tree, c, '_register');
-                    }
-                    refreshCssForSelfAndChildren(self);
-                });
-
-                function recursive(tree, node, action) {
-                    tree[action](node);
-                    var children = node.get("children"), i, c;
-                    for (i = 0; i < children.length; i++) {
-                        c = children[i];
-                        if (action == '_register') {
-                            c.set("depth", node.get('depth') + 1);
-                        }
-                        tree[action](c);
-                    }
-                }
-
-                self.on("removeChild", function (e) {
-                    var tree = self.get("tree");
-                    if (tree) {
-                        recursive(tree, e.child, '_unRegister');
-                    }
-                    refreshCssForSelfAndChildren(self);
-                });
-
-            },
-
-            bindUI:function () {
+            bindUI: function () {
                 this.publish("click expand collapse", {
-                    bubbles:1
+                    bubbles: 1
                 });
             },
 
-            syncUI:function () {
+            syncUI: function () {
                 // 集中设置样式
                 refreshCss(this);
             },
 
-            _keyNav:function (e) {
+            _keyNav: function (e) {
                 var self = this,
                     processed = true,
                     tree = self.get("tree"),
@@ -198,7 +176,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                 return processed;
             },
 
-            next:function () {
+            next: function () {
                 var self = this,
                     parent = self.get("parent"),
                     siblings,
@@ -214,7 +192,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                 return siblings[index + 1];
             },
 
-            prev:function () {
+            prev: function () {
                 var self = this,
                     parent = self.get("parent"),
                     siblings,
@@ -233,13 +211,12 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             /**
              * Select current tree node.
              */
-            select:function () {
+            select: function () {
                 var self = this;
                 self.get("tree").set("selectedItem", self);
             },
 
-            performActionInternal:function (e) {
-
+            performActionInternal: function (e) {
                 var self = this,
                     target = $(e.target),
                     type = e.type,
@@ -253,34 +230,46 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                     }
                 } else if (type == 'dblclick') {
                     self.set("expanded", !expanded);
-                }
-                else {
+                } else {
                     self.select();
                     self.fire("click");
                 }
             },
 
-            // 默认 addChild，这里需要设置 tree 属性
-            decorateChildrenInternal:function (UI, c) {
+            decorateChildrenInternal: function (UI, c) {
                 var self = this;
                 self.addChild(new UI({
-                    srcNode:c,
-                    prefixCls:self.get("prefixCls")
+                    srcNode: c,
+                    prefixCls: self.get("prefixCls")
                 }));
             },
 
-            removeChild:function (c) {
+            /**
+             * override controller 's addChild to apply depth and css recursively
+             */
+            addChild: function () {
                 var self = this,
+                    c,
                     tree = self.get("tree");
-                tree._unRegister(c);
-                S.each(c.get("children"), function (cc) {
-                    tree._unRegister(cc);
-                });
-                BaseNode.superclass.removeChild.apply(self, S.makeArray(arguments));
+                c = BaseNode.superclass.addChild.apply(self, S.makeArray(arguments));
+                recursive(tree, c, "_register", self.get("depth") + 1);
                 refreshCssForSelfAndChildren(self);
+                return c;
             },
 
-            _uiSetExpanded:function (v) {
+            /**
+             * override controller 's removeChild to apply depth and css recursively
+             */
+            removeChild: function (c) {
+                var self = this,
+                    tree = self.get("tree");
+                recursive(tree, c, "_unRegister");
+                BaseNode.superclass.removeChild.apply(self, S.makeArray(arguments));
+                refreshCssForSelfAndChildren(self);
+                return c;
+            },
+
+            _uiSetExpanded: function (v) {
                 var self = this,
                     tree = self.get("tree");
                 if (self.get("rendered")) {
@@ -292,7 +281,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             /**
              * Expand all descend nodes of current node
              */
-            expandAll:function () {
+            expandAll: function () {
                 var self = this;
                 self.set("expanded", true);
                 S.each(self.get("children"), function (c) {
@@ -303,7 +292,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             /**
              * Collapse all descend nodes of current node
              */
-            collapseAll:function () {
+            collapseAll: function () {
                 var self = this;
                 self.set("expanded", false);
                 S.each(self.get("children"), function (c) {
@@ -313,51 +302,57 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
         },
 
         {
-            ATTRS:/**
+            ATTRS: /**
              * @lends Tree.Node#
              */
             {
-                xrender:{
-                    value:BaseNodeRender
+                // 一般节点不需要代理事件，统统交给 root(tree) 代理
+                delegateChildren: {
+                    value: false
                 },
+
+                xrender: {
+                    value: BaseNodeRender
+                },
+
                 // 事件代理
-                handleMouseEvents:{
-                    value:false
+                handleMouseEvents: {
+                    value: false
                 },
 
                 /**
                  * Only For Config.
-                 * Whether to force current tree node as a leaf.
-                 * @defaultfalse.
+                 * Whether to force current tree node as a leaf.                 *
                  * It will change as children are added.
+                 *
                  * @type {Boolean}
                  */
-                isLeaf:{
-                    view:1
+                isLeaf: {
+                    view: 1
                 },
 
                 /**
                  * Element for expand icon.
                  * @type {NodeList}
                  */
-                expandIconEl:{
-                    view:1
+                expandIconEl: {
+                    view: 1
                 },
 
                 /**
                  * Element for icon.
                  * @type {NodeList}
                  */
-                iconEl:{
-                    view:1
+                iconEl: {
+                    view: 1
                 },
 
                 /**
                  * Whether current tree node is selected.
                  * @type {Boolean}
                  */
-                selected:{
-                    view:1
+                selected: {
+                    view: 1
                 },
 
                 /**
@@ -365,8 +360,8 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type {Boolean.}
                  * @default false.
                  */
-                expanded:{
-                    view:1
+                expanded: {
+                    view: 1
                 },
 
                 /**
@@ -374,11 +369,11 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * @type {Boolean.}
                  * @default true.
                  */
-                collapsed:{
-                    getter:function () {
+                collapsed: {
+                    getter: function () {
                         return !this.get("expanded");
                     },
-                    setter:function (v) {
+                    setter: function (v) {
                         this.set("expanded", !v);
                     }
                 },
@@ -387,18 +382,18 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * Html title for current tree node.
                  * @type {String}
                  */
-                tooltip:{
-                    view:1
+                tooltip: {
+                    view: 1
                 },
 
                 /**
                  * Tree instance current tree node belongs to.
                  * @type {Tree}
                  */
-                tree:{
-                    getter:function () {
+                tree: {
+                    getter: function () {
                         var from = this;
-                        while (from && !from.__isTree) {
+                        while (from && !from.isTree) {
                             from = from.get("parent");
                         }
                         return from;
@@ -409,23 +404,43 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                  * depth of node.
                  * @type {Number}
                  */
-                depth:{
-                    view:1
+                depth: {
+                    view: 1
                 },
-                focusable:{
-                    value:false
+
+                focusable: {
+                    value: false
                 },
-                decorateChildCls:{
-                    value:"ks-tree-children"
+
+                decorateChildCls: {
+                    value: "ks-tree-children"
                 }
             }
         }, {
-            xclass:'treeitem',
-            priority:10
+            xclass: 'treeitem',
+            priority: 10
         });
 
 
     // # ------------------- private start
+
+    function recursive(tree, c, action, setDepth) {
+        S.log("recursive " + action + " for " + c.get("content"));
+        tree[action](c);
+        if (setDepth !== undefined) {
+            c.set("depth", setDepth);
+        }
+        S.each(c.get("children"), function (child) {
+            // xclass 的情况，在对应 xclass render 时自然会处理
+            if (child.isController) {
+                if (setDepth) {
+                    recursive(tree, child, action, setDepth + 1);
+                } else {
+                    recursive(tree, child, action);
+                }
+            }
+        });
+    }
 
     function isNodeSingleOrLast(self) {
         var parent = self.get("parent"),
@@ -515,7 +530,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
     return BaseNode;
 
 }, {
-    requires:['node', 'component', './basenodeRender']
+    requires: ['node', 'component', './basenodeRender']
 });
 
 /**
@@ -963,7 +978,7 @@ KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, 
      * xclass: 'check-tree'.
      * @memberOf Tree
      */
-    var CheckTree = CheckNode.extend([Component.DelegateChildren, TreeMgr],
+    var CheckTree = CheckNode.extend([TreeMgr],
         /**
          * @lends Tree.CheckTree#
          */
@@ -1040,24 +1055,29 @@ KISSY.add("tree/treemgr", function (S, Event) {
      * @lends Tree#
      */
     {
+        // 覆盖 baseNode 处配置
+        delegateChildren: {
+            value: true
+        },
+
         /**
          * Whether show root node.
          * @defaulttrue.
          * @type {Boolean}
          */
-        showRootNode:{
-            value:true,
-            view:1
+        showRootNode: {
+            value: true,
+            view: 1
         },
         /**
          * Current selected tree node.
          * @type {Tree.Node}
          */
-        selectedItem:{},
+        selectedItem: {},
 
         // only root node is focusable
-        focusable:{
-            value:true
+        focusable: {
+            value: true
         }
     };
 
@@ -1072,28 +1092,17 @@ KISSY.add("tree/treemgr", function (S, Event) {
 
     S.augment(TreeMgr, {
 
-        __isTree:1,
+        isTree: 1,
 
-        /*
-         加快从事件代理获取原事件节点
-         */
-        __getAllNodes:function () {
-            var self = this;
-            if (!self._allNodes) {
-                self._allNodes = {};
-            }
-            return self._allNodes;
+        _register: function (c) {
+            getAllNodes(this)[getIdFromNode(c)] = c;
         },
 
-        _register:function (c) {
-            this.__getAllNodes()[getIdFromNode(c)] = c;
+        _unRegister: function (c) {
+            delete getAllNodes(this)[getIdFromNode(c)];
         },
 
-        _unRegister:function (c) {
-            delete this.__getAllNodes()[getIdFromNode(c)];
-        },
-
-        handleKeyEventInternal:function (e) {
+        handleKeyEventInternal: function (e) {
             var current = this.get("selectedItem");
             if (e.keyCode == Event.KeyCodes.ENTER) {
                 // 传递给真正的单个子节点
@@ -1102,31 +1111,38 @@ KISSY.add("tree/treemgr", function (S, Event) {
             return current._keyNav(e);
         },
 
-        // 重写 delegateChildren ，缓存加快从节点获取对象速度
-        getOwnerControl:function (node, e) {
+
+        /**
+         * Get tree child node by comparing cached child nodes.
+         * Faster than default mechanism.
+         * @protected
+         * @param target
+         */
+        getOwnerControl: function (target) {
             var self = this,
                 n,
-                allNodes = self.__getAllNodes(),
+                allNodes = getAllNodes(self),
                 elem = self.get("el")[0];
-            while (node && node !== elem) {
-                if (n = allNodes[node.id]) {
+            while (target && target !== elem) {
+                if (n = allNodes[target.id]) {
                     return n;
                 }
-                node = node.parentNode;
+                target = target.parentNode;
             }
             // 最终自己处理
+            // 所以根节点不用注册！
             return self;
         },
 
         // 单选
-        _uiSetSelectedItem:function (n, ev) {
+        _uiSetSelectedItem: function (n, ev) {
             if (ev.prevVal) {
                 ev.prevVal.set("selected", false);
             }
             n.set("selected", true);
         },
 
-        _uiSetFocused:function (v) {
+        _uiSetFocused: function (v) {
             var self = this;
             // 得到焦点时没有选择节点
             // 默认选择自己
@@ -1136,9 +1152,19 @@ KISSY.add("tree/treemgr", function (S, Event) {
         }
     });
 
+    /*
+     加快从事件代理获取原事件节点
+     */
+    function getAllNodes(self) {
+        if (!self._allNodes) {
+            self._allNodes = {};
+        }
+        return self._allNodes;
+    }
+
     return TreeMgr;
 }, {
-    requires:['event']
+    requires: ['event']
 });/**
  * @fileOverview tree management utils render
  * @author yiminghe@gmail.com
