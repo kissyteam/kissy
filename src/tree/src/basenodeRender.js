@@ -6,9 +6,9 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
 
     //<div class='ks-treeitem'>
     //<div class='ks-treeitem-row'>
-    //<div class='ks-tree-icon ks-tree-expand-icon ks-tree-expand-icon-t'></div>
-    //<div class='ks-tree-icon ks-treeitem-checked0'></div>
-    //<div class='ks-tree-icon ks-tree-file-icon'></div>
+    //<div class='ks-tree-expand-icon-t'></div>
+    //<div class='ks-treeitem-checked0'></div>
+    //<div class='ks-tree-file-icon'></div>
     //<span class='ks-treeitem-content'></span>
     //</div>
     //</div>

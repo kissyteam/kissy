@@ -4,7 +4,6 @@
  */
 KISSY.add("tree/checknodeRender", function (S, Node, BaseNodeRender) {
     var $ = Node.all,
-        ICON_CLS = "ks-tree-icon",
         CHECK_CLS = "ks-treeitem-checked",
         ALL_STATES_CLS = "ks-treeitem-checked0 ks-treeitem-checked1 ks-treeitem-checked2";
     return BaseNodeRender.extend({
@@ -12,7 +11,7 @@ KISSY.add("tree/checknodeRender", function (S, Node, BaseNodeRender) {
         createDom:function () {
             var self = this,
                 expandIconEl = self.get("expandIconEl"),
-                checkIconEl = $("<div class='" + ICON_CLS + "'/>").insertAfter(expandIconEl);
+                checkIconEl = $("<div>").insertAfter(expandIconEl);
             self.__set("checkIconEl", checkIconEl);
         },
 
