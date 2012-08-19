@@ -31,8 +31,8 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
          * @default clone the node itself deeply.
          * @type {Function}
          */
-        node:{
-            value:function (drag) {
+        node: {
+            value: function (drag) {
                 return new Node(drag.get("node").clone(true));
             }
         },
@@ -41,8 +41,8 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
          * @default false
          * @type {Boolean}
          */
-        destroyOnEnd:{
-            value:false
+        destroyOnEnd: {
+            value: false
         },
 
         /**
@@ -50,15 +50,15 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
          * @default true
          * @type {Boolean}
          */
-        moveOnEnd:{
-            value:true
+        moveOnEnd: {
+            value: true
         },
 
         /**
          * Current proxy node.
          * @type {NodeList}
          */
-        proxyNode:{
+        proxyNode: {
 
         }
     };
@@ -72,12 +72,13 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
              * make this draggable object can be proxied.
              * @param {DD.Draggable} drag
              */
-            attachDrag:function (drag) {
+            attachDrag: function (drag) {
 
                 var self = this,
-                    tag = stamp(drag, 1, MARKER);
+                    destructors = self[DESTRUCTOR_ID],
+                    tag = stamp(drag, 0, MARKER);
 
-                if (tag && self[DESTRUCTOR_ID][tag]) {
+                if (destructors[tag]) {
                     return self;
                 }
 
@@ -120,11 +121,9 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
                 drag.on("dragstart", start);
                 drag.on("dragend", end);
 
-                tag = stamp(drag, 0, MARKER);
-
-                self[DESTRUCTOR_ID][tag] = {
-                    drag:drag,
-                    fn:function () {
+                destructors[tag] = {
+                    drag: drag,
+                    fn: function () {
                         drag.detach("dragstart", start);
                         drag.detach("dragend", end);
                     }
@@ -135,7 +134,7 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
              * make this draggable object unproxied
              * @param {DD.Draggable} drag
              */
-            detachDrag:function (drag) {
+            detachDrag: function (drag) {
                 var self = this,
                     tag = stamp(drag, 1, MARKER),
                     destructors = self[DESTRUCTOR_ID];
@@ -149,7 +148,7 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
             /**
              * make all draggable object associated with this proxy object unproxied
              */
-            destroy:function () {
+            destroy: function () {
                 var self = this,
                     node = self.get("node"),
                     destructors = self[DESTRUCTOR_ID];
@@ -169,5 +168,5 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
 
     return Proxy;
 }, {
-    requires:['node', 'base', './ddm']
+    requires: ['node', 'base', './ddm']
 });

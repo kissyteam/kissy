@@ -16,6 +16,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
      */
     function Constrain() {
         Constrain.superclass.constructor.apply(this, arguments);
+        this[DESTRUCTOR_ID] = {};
     }
 
     function onDragStart(e) {
@@ -25,13 +26,18 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
             dragNode = drag.get("dragNode"),
             constrain = self.get("constrain");
         if (constrain) {
-            if (constrain === true) {
-                var win = $(WIN);
+            if (constrain === true || constrain.setTimeout) {
+                var win;
+                if (constrain === true) {
+                    win = $(WIN);
+                } else {
+                    win = $(constrain);
+                }
                 self.__constrainRegion = {
-                    left:l = win.scrollLeft(),
-                    top:t = win.scrollTop(),
-                    right:l + win.width(),
-                    bottom:t + win.height()
+                    left: l = win.scrollLeft(),
+                    top: t = win.scrollTop(),
+                    right: l + win.width(),
+                    bottom: t + win.height()
                 };
             }
             if (constrain.nodeType || S.isString(constrain)) {
@@ -40,10 +46,10 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
             if (constrain.getDOMNode) {
                 lt = constrain.offset();
                 self.__constrainRegion = {
-                    left:lt.left,
-                    top:lt.top,
-                    right:lt.left + constrain.outerWidth(),
-                    bottom:lt.top + constrain.outerHeight()
+                    left: lt.left,
+                    top: lt.top,
+                    right: lt.left + constrain.outerWidth(),
+                    bottom: lt.top + constrain.outerHeight()
                 };
             } else if (S.isPlainObject(constrain)) {
                 self.__constrainRegion = constrain;
@@ -76,19 +82,21 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
          * @lends DD.Constrain#
          */
         {
-            __constrainRegion:null,
+            __constrainRegion: null,
 
             /**
              * start monitoring drag
              * @param {DD.Draggable} drag
              */
-            attachDrag:function (drag) {
+            attachDrag: function (drag) {
                 var self = this,
-                    tag = stamp(drag, 1, MARKER);
+                    destructors = self[DESTRUCTOR_ID],
+                    tag = stamp(drag, 0, MARKER);
 
-                if (tag && self[DESTRUCTOR_ID][tag]) {
+                if (destructors[tag]) {
                     return self;
                 }
+                destructors[tag] = drag;
                 drag.on("dragstart", onDragStart, self)
                     .on("dragend", onDragEnd, self)
                     .on("dragalign", onDragAlign, self);
@@ -100,7 +108,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
              * stop monitoring drag
              * @param {DD.Draggable} drag
              */
-            detachDrag:function (drag) {
+            detachDrag: function (drag) {
                 var self = this,
                     tag = stamp(drag, 1, MARKER),
                     destructors = self[DESTRUCTOR_ID];
@@ -113,7 +121,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
                 return self;
             },
 
-            destroy:function () {
+            destroy: function () {
                 var self = this,
                     destructors = S.merge(self[DESTRUCTOR_ID]);
                 S.each(destructors, function (drag) {
@@ -121,7 +129,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
                 });
             }
         }, {
-            ATTRS:/**
+            ATTRS: /**
              * @lends DD.Constrain#
              */
             {
@@ -129,13 +137,13 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
                  * constrained container
                  * @type {Boolean|HTMLElement|String}
                  */
-                constrain:{
-                    value:true
+                constrain: {
+                    value: true
                 }
             }
         });
 
     return Constrain;
 }, {
-    requires:['base', 'node']
+    requires: ['base', 'node']
 });
