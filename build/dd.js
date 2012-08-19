@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 14 14:53
+build time: Aug 19 23:49
 */
 /**
  * @fileOverview Config constrain region for drag and drop
@@ -21,6 +21,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
      */
     function Constrain() {
         Constrain.superclass.constructor.apply(this, arguments);
+        this[DESTRUCTOR_ID] = {};
     }
 
     function onDragStart(e) {
@@ -30,13 +31,18 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
             dragNode = drag.get("dragNode"),
             constrain = self.get("constrain");
         if (constrain) {
-            if (constrain === true) {
-                var win = $(WIN);
+            if (constrain === true || constrain.setTimeout) {
+                var win;
+                if (constrain === true) {
+                    win = $(WIN);
+                } else {
+                    win = $(constrain);
+                }
                 self.__constrainRegion = {
-                    left:l = win.scrollLeft(),
-                    top:t = win.scrollTop(),
-                    right:l + win.width(),
-                    bottom:t + win.height()
+                    left: l = win.scrollLeft(),
+                    top: t = win.scrollTop(),
+                    right: l + win.width(),
+                    bottom: t + win.height()
                 };
             }
             if (constrain.nodeType || S.isString(constrain)) {
@@ -45,10 +51,10 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
             if (constrain.getDOMNode) {
                 lt = constrain.offset();
                 self.__constrainRegion = {
-                    left:lt.left,
-                    top:lt.top,
-                    right:lt.left + constrain.outerWidth(),
-                    bottom:lt.top + constrain.outerHeight()
+                    left: lt.left,
+                    top: lt.top,
+                    right: lt.left + constrain.outerWidth(),
+                    bottom: lt.top + constrain.outerHeight()
                 };
             } else if (S.isPlainObject(constrain)) {
                 self.__constrainRegion = constrain;
@@ -81,19 +87,21 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
          * @lends DD.Constrain#
          */
         {
-            __constrainRegion:null,
+            __constrainRegion: null,
 
             /**
              * start monitoring drag
              * @param {DD.Draggable} drag
              */
-            attachDrag:function (drag) {
+            attachDrag: function (drag) {
                 var self = this,
-                    tag = stamp(drag, 1, MARKER);
+                    destructors = self[DESTRUCTOR_ID],
+                    tag = stamp(drag, 0, MARKER);
 
-                if (tag && self[DESTRUCTOR_ID][tag]) {
+                if (destructors[tag]) {
                     return self;
                 }
+                destructors[tag] = drag;
                 drag.on("dragstart", onDragStart, self)
                     .on("dragend", onDragEnd, self)
                     .on("dragalign", onDragAlign, self);
@@ -105,7 +113,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
              * stop monitoring drag
              * @param {DD.Draggable} drag
              */
-            detachDrag:function (drag) {
+            detachDrag: function (drag) {
                 var self = this,
                     tag = stamp(drag, 1, MARKER),
                     destructors = self[DESTRUCTOR_ID];
@@ -118,7 +126,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
                 return self;
             },
 
-            destroy:function () {
+            destroy: function () {
                 var self = this,
                     destructors = S.merge(self[DESTRUCTOR_ID]);
                 S.each(destructors, function (drag) {
@@ -126,7 +134,7 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
                 });
             }
         }, {
-            ATTRS:/**
+            ATTRS: /**
              * @lends DD.Constrain#
              */
             {
@@ -134,15 +142,15 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
                  * constrained container
                  * @type {Boolean|HTMLElement|String}
                  */
-                constrain:{
-                    value:true
+                constrain: {
+                    value: true
                 }
             }
         });
 
     return Constrain;
 }, {
-    requires:['base', 'node']
+    requires: ['base', 'node']
 });/**
  * @fileOverview dd support for kissy
  * @author yiminghe@gmail.com
@@ -1955,8 +1963,8 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
          * @default clone the node itself deeply.
          * @type {Function}
          */
-        node:{
-            value:function (drag) {
+        node: {
+            value: function (drag) {
                 return new Node(drag.get("node").clone(true));
             }
         },
@@ -1965,8 +1973,8 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
          * @default false
          * @type {Boolean}
          */
-        destroyOnEnd:{
-            value:false
+        destroyOnEnd: {
+            value: false
         },
 
         /**
@@ -1974,15 +1982,15 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
          * @default true
          * @type {Boolean}
          */
-        moveOnEnd:{
-            value:true
+        moveOnEnd: {
+            value: true
         },
 
         /**
          * Current proxy node.
          * @type {NodeList}
          */
-        proxyNode:{
+        proxyNode: {
 
         }
     };
@@ -1996,12 +2004,13 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
              * make this draggable object can be proxied.
              * @param {DD.Draggable} drag
              */
-            attachDrag:function (drag) {
+            attachDrag: function (drag) {
 
                 var self = this,
-                    tag = stamp(drag, 1, MARKER);
+                    destructors = self[DESTRUCTOR_ID],
+                    tag = stamp(drag, 0, MARKER);
 
-                if (tag && self[DESTRUCTOR_ID][tag]) {
+                if (destructors[tag]) {
                     return self;
                 }
 
@@ -2044,11 +2053,9 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
                 drag.on("dragstart", start);
                 drag.on("dragend", end);
 
-                tag = stamp(drag, 0, MARKER);
-
-                self[DESTRUCTOR_ID][tag] = {
-                    drag:drag,
-                    fn:function () {
+                destructors[tag] = {
+                    drag: drag,
+                    fn: function () {
                         drag.detach("dragstart", start);
                         drag.detach("dragend", end);
                     }
@@ -2059,7 +2066,7 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
              * make this draggable object unproxied
              * @param {DD.Draggable} drag
              */
-            detachDrag:function (drag) {
+            detachDrag: function (drag) {
                 var self = this,
                     tag = stamp(drag, 1, MARKER),
                     destructors = self[DESTRUCTOR_ID];
@@ -2073,7 +2080,7 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
             /**
              * make all draggable object associated with this proxy object unproxied
              */
-            destroy:function () {
+            destroy: function () {
                 var self = this,
                     node = self.get("node"),
                     destructors = self[DESTRUCTOR_ID];
@@ -2093,7 +2100,7 @@ KISSY.add("dd/proxy", function (S, Node, Base, DDM) {
 
     return Proxy;
 }, {
-    requires:['node', 'base', './ddm']
+    requires: ['node', 'base', './ddm']
 });/**
  * @fileOverview auto scroll for drag object's container
  * @author yiminghe@gmail.com
