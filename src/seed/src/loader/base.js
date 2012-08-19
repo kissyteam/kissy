@@ -12,6 +12,7 @@
 
     /**
      * @class KISSY.Loader
+     * @private
      * @mixins KISSY.Loader.Target
      * This class should not be instantiated manually.
      */
@@ -29,6 +30,7 @@
 
     /**
      * @class KISSY.Loader.Package
+     * @private
      * This class should not be instantiated manually.
      */
     function Package(cfg) {
@@ -100,6 +102,7 @@
 
     /**
      * @class KISSY.Loader.Module
+     * @private
      * This class should not be instantiated manually.
      */
     function Module(cfg) {
@@ -254,6 +257,7 @@
 
     /**
      * Loader Status Enum
+     * @private
      * @enum {Number} KISSY.Loader.STATUS
      */
     Loader.STATUS = {

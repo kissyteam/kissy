@@ -1,31 +1,48 @@
-/**
- * @ignore
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
  * @fileOverview special patch for making color gradual change
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
+KISSY.add(&quot;anim/color&quot;, function (S, DOM, Anim, Fx) {
 
     var HEX_BASE = 16,
 
         floor = Math.floor,
 
         KEYWORDS = {
-            "black":[0, 0, 0],
-            "silver":[192, 192, 192],
-            "gray":[128, 128, 128],
-            "white":[255, 255, 255],
-            "maroon":[128, 0, 0],
-            "red":[255, 0, 0],
-            "purple":[128, 0, 128],
-            "fuchsia":[255, 0, 255],
-            "green":[0, 128, 0],
-            "lime":[0, 255, 0],
-            "olive":[128, 128, 0],
-            "yellow":[255, 255, 0],
-            "navy":[0, 0, 128],
-            "blue":[0, 0, 255],
-            "teal":[0, 128, 128],
-            "aqua":[0, 255, 255]
+            &quot;black&quot;:[0, 0, 0],
+            &quot;silver&quot;:[192, 192, 192],
+            &quot;gray&quot;:[128, 128, 128],
+            &quot;white&quot;:[255, 255, 255],
+            &quot;maroon&quot;:[128, 0, 0],
+            &quot;red&quot;:[255, 0, 0],
+            &quot;purple&quot;:[128, 0, 128],
+            &quot;fuchsia&quot;:[255, 0, 255],
+            &quot;green&quot;:[0, 128, 0],
+            &quot;lime&quot;:[0, 255, 0],
+            &quot;olive&quot;:[128, 128, 0],
+            &quot;yellow&quot;:[255, 255, 0],
+            &quot;navy&quot;:[0, 0, 128],
+            &quot;blue&quot;:[0, 0, 255],
+            &quot;teal&quot;:[0, 128, 128],
+            &quot;aqua&quot;:[0, 255, 255]
         },
         re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
 
@@ -80,7 +97,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
 
     //得到颜色的数值表示，红绿蓝数字数组
     function numericColor(val) {
-        val = (val + "");
+        val = (val + &quot;&quot;);
         var match;
         if (match = val.match(re_RGB)) {
             return [
@@ -98,8 +115,8 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
             ];
         }
         else if (match = val.match(re_hex)) {
-            for (var i = 1; i < match.length; i++) {
-                if (match[i].length < 2) {
+            for (var i = 1; i &lt; match.length; i++) {
+                if (match[i].length &lt; 2) {
                     match[i] += match[i];
                 }
             }
@@ -114,7 +131,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
         }
 
         //transparent 或者 颜色字符串返回
-        S.log("only allow rgb or hex color string : " + val, "warn");
+        S.log(&quot;only allow rgb or hex color string : &quot; + val, &quot;warn&quot;);
         return [255, 255, 255];
     }
 
@@ -137,7 +154,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
 
         interpolate:function (from, to, pos) {
             var interpolate = ColorFx.superclass.interpolate;
-            if (from.length == 3 && to.length == 3) {
+            if (from.length == 3 &amp;&amp; to.length == 3) {
                 return 'rgb(' + [
                     floor(interpolate(from[0], to[0], pos)),
                     floor(interpolate(from[1], to[1], pos)),
@@ -152,7 +169,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
                     floor(interpolate(from[3] || 1, to[3] || 1, pos))
                 ].join(', ') + ')';
             } else {
-                S.log("anim/color unknown value : " + from);
+                S.log(&quot;anim/color unknown value : &quot; + from);
             }
         }
 
@@ -165,11 +182,13 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
     return ColorFx;
 
 }, {
-    requires:["dom", "./base", "./fx"]
+    requires:[&quot;dom&quot;, &quot;./base&quot;, &quot;./fx&quot;]
 });
 
 /*
   TODO
   支持 hsla
    - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
-*/
+*/</pre>
+</body>
+</html>

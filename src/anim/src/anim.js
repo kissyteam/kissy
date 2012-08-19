@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview anim
  */
 KISSY.add("anim", function (S, Anim, Easing) {
@@ -9,5 +10,5 @@ KISSY.add("anim", function (S, Anim, Easing) {
     });
     return Anim;
 }, {
-    requires:["anim/base", "anim/easing", "anim/color", "anim/backgroundPosition"]
+    requires:["anim/base", "anim/easing", "anim/color", "anim/background-position"]
 });

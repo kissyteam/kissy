@@ -21,7 +21,7 @@
 <script src="../src/color.js"></script>
 <script src="../src/fx.js"></script>
 <script src="../src/queue.js"></script>
-<script src="../src/backgroundPosition.js"></script>
+<script src="../src/background-position.js"></script>
 <script src="../src/anim.js"></script>
 <script src="../../../build/node.js"></script>
 <script >
@@ -34,9 +34,9 @@
                 t = $("#t");
 
 
-        function Slot(elem, multiple, num, duration) {
-            elem = $(elem);
-            var height = elem.height();
+        function Slot(el, multiple, num, duration) {
+            el = $(el);
+            var height = el.height();
 
             function anim(next) {
                 var nextDuration = duration
@@ -46,19 +46,19 @@
                             (0 - currentY ) *
                             multiple;
                 }
-                elem.animate({
+                el.animate({
                     backgroundPosition:"0 0"
                 }, {
                     duration:nextDuration,
                     complete:function () {
-                        elem.css("backgroundPosition",
+                        el.css("backgroundPosition",
                                 "0px " + (-(height * (num - 1))) + "px");
                         if (next !== undefined) {
                             // 比平时慢 multiple 倍
                             var nextDuration2 = ((duration / (num - 1))) *
                                     (num - next - 1) *
                                     multiple * 2;
-                            elem.animate({
+                            el.animate({
                                 backgroundPosition:"0px " +
                                         (-height * next + "px") + "px"
                             }, {

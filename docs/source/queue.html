@@ -1,16 +1,33 @@
-/**
- * @ignore
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
  * @fileOverview queue of anim objects
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/queue", function (S, DOM) {
+KISSY.add(&quot;anim/queue&quot;, function (S, DOM) {
 
     var // 队列集合容器
-        queueCollectionKey = S.guid("ks-queue-" + S.now() + "-"),
+        queueCollectionKey = S.guid(&quot;ks-queue-&quot; + S.now() + &quot;-&quot;),
     // 默认队列
-        queueKey = S.guid("ks-queue-" + S.now() + "-"),
+        queueKey = S.guid(&quot;ks-queue-&quot; + S.now() + &quot;-&quot;),
     // 当前队列是否有动画正在执行
-        processing = "...";
+        processing = &quot;...&quot;;
 
     function getQueue(el, name, readOnly) {
         name = name || queueKey;
@@ -18,13 +35,13 @@ KISSY.add("anim/queue", function (S, DOM) {
         var qu,
             quCollection = DOM.data(el, queueCollectionKey);
 
-        if (!quCollection && !readOnly) {
+        if (!quCollection &amp;&amp; !readOnly) {
             DOM.data(el, queueCollectionKey, quCollection = {});
         }
 
         if (quCollection) {
             qu = quCollection[name];
-            if (!qu && !readOnly) {
+            if (!qu &amp;&amp; !readOnly) {
                 qu = quCollection[name] = [];
             }
         }
@@ -64,7 +81,7 @@ KISSY.add("anim/queue", function (S, DOM) {
                 qu = getQueue(el, name, 1), index;
             if (qu) {
                 index = S.indexOf(anim, qu);
-                if (index > -1) {
+                if (index &gt; -1) {
                     qu.splice(index, 1);
                 }
             }
@@ -80,7 +97,7 @@ KISSY.add("anim/queue", function (S, DOM) {
             var el = anim.config.el,
                 name = anim.config.queue,
                 qu = getQueue(el, name, 1),
-                nextAnim = qu && qu.shift();
+                nextAnim = qu &amp;&amp; qu.shift();
 
             if (nextAnim == processing) {
                 nextAnim = qu.shift();
@@ -99,4 +116,6 @@ KISSY.add("anim/queue", function (S, DOM) {
     return q;
 }, {
     requires: ['dom']
-});
+});</pre>
+</body>
+</html>

@@ -392,7 +392,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             /**
              * Register callback function.
              * When el is in viewport, then fn is called.
-             * @param {HTMLElement|String} el Html element to be monitored.
+             * @param {HTMLElement|String} el html element to be monitored.
              * @param {Function} fn Callback function to be called when el is in viewport.
              */
             addCallback:function (el, fn) {
@@ -411,7 +411,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
             /**
              * Remove a callback function. See {@link DataLazyload#addCallback}
-             * @param {HTMLElement|String} el Html element to be monitored.
+             * @param {HTMLElement|String} el html element to be monitored.
              * @param {Function} [fn] Callback function to be called when el is in viewport.
              *                        If not specified, remove all callbacks associated with el.
              */

@@ -313,7 +313,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                 },
 
                 /**
-                 * Html title for current tree node.
+                 * html title for current tree node.
                  * @type {String}
                  */
                 tooltip: {

@@ -1,12 +1,29 @@
-/**
- * @ignore
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
  * @fileOverview animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/fx", function (S, DOM, undefined) {
+KISSY.add(&quot;anim/fx&quot;, function (S, DOM, undefined) {
 
-    /**
-     * basic animation about single css property or element attribute
+<span id='KISSY-Anim-Fx'>    /**
+</span>     * basic animation about single css property or element attribute
      * @class KISSY.Anim.Fx
      * @private
      */
@@ -18,19 +35,19 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
 
         constructor: Fx,
 
-        /**
-         * reset config.
+<span id='KISSY-Anim-Fx-method-load'>        /**
+</span>         * reset config.
          * @param cfg
          */
         load: function (cfg) {
             var self = this;
             S.mix(self, cfg);
             self.pos = 0;
-            self.unit = self.unit || "";
+            self.unit = self.unit || &quot;&quot;;
         },
 
-        /**
-         * process current anim frame.
+<span id='KISSY-Anim-Fx-method-frame'>        /**
+</span>         * process current anim frame.
          * @param {Boolean} end whether this anim is ended
          * @return {Number}
          *
@@ -46,7 +63,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             var t = S.now(),
                 _startTime = anim._startTime,
                 duration = anim._duration;
-            if (end || t >= duration + _startTime) {
+            if (end || t &gt;= duration + _startTime) {
                 self.pos = 1;
                 endFlag = 1;
             } else {
@@ -58,8 +75,8 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             return endFlag;
         },
 
-        /**
-         * interpolate function
+<span id='KISSY-Anim-Fx-method-interpolate'>        /**
+</span>         * interpolate function
          *
          * @param {Number} from current css value
          * @param {Number} to end css value
@@ -68,7 +85,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
          */
         interpolate: function (from, to, pos) {
             // 默认只对数字进行 easing
-            if (S.isNumber(from) &&
+            if (S.isNumber(from) &amp;&amp;
                 S.isNumber(to)) {
                 return (from + (to - from) * pos).toFixed(3);
             } else {
@@ -76,8 +93,8 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             }
         },
 
-        /**
-         * update dom according to current frame css value.
+<span id='KISSY-Anim-Fx-method-update'>        /**
+</span>         * update dom according to current frame css value.
          *
          */
         update: function () {
@@ -94,7 +111,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
                 if (!self.finished) {
                     self.finished = 1;
                     DOM.css(el, prop, to);
-                    S.log(self.prop + " update directly ! : " + val + " : " + from + " : " + to);
+                    S.log(self.prop + &quot; update directly ! : &quot; + val + &quot; : &quot; + from + &quot; : &quot; + to);
                 }
             } else {
                 val += self.unit;
@@ -106,8 +123,8 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             }
         },
 
-        /**
-         * current value
+<span id='KISSY-Anim-Fx-method-cur'>        /**
+</span>         * current value
          *
          */
         cur: function () {
@@ -119,18 +136,18 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             }
             var parsed,
                 r = DOM.css(el, prop);
-            // Empty strings, null, undefined and "auto" are converted to 0,
-            // complex values such as "rotate(1rad)" or "0px 10px" are returned as is,
-            // simple values such as "10px" are parsed to Float.
+            // Empty strings, null, undefined and &quot;auto&quot; are converted to 0,
+            // complex values such as &quot;rotate(1rad)&quot; or &quot;0px 10px&quot; are returned as is,
+            // simple values such as &quot;10px&quot; are parsed to Float.
             return isNaN(parsed = parseFloat(r)) ?
-                !r || r === "auto" ? 0 : r
+                !r || r === &quot;auto&quot; ? 0 : r
                 : parsed;
         }
     };
 
     function isAttr(el, prop) {
         // support scrollTop/Left now!
-        if ((!el.style || el.style[ prop ] == null) &&
+        if ((!el.style || el.style[ prop ] == null) &amp;&amp;
             DOM.attr(el, prop, undefined, 1) != null) {
             return 1;
         }
@@ -158,4 +175,6 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
  - ie: http://www.useragentman.com/IETransformsTranslator/
  - wiki: http://en.wikipedia.org/wiki/Transformation_matrix
  - jq 插件: http://plugins.jquery.com/project/2d-transform
- */
+ */</pre>
+</body>
+</html>

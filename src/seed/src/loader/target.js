@@ -27,6 +27,7 @@
     /**
      * @class KISSY.Loader.Target
      * Event Target For KISSY Loader.
+     * @private
      * @singleton
      */
     KISSY.Loader.Target = {
