@@ -55,6 +55,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     /**
      * @class KISSY.Anim
      * A class for constructing animation instances.
+     * @mixins KISSY.Event.Target
      * @cfg {HTMLElement|window} el html dom node or window
      * (window can only animate scrollTop/scrollLeft)
      * @cfg {Object} props end css style value.
@@ -62,8 +63,6 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @cfg {String|Function} [easing='easeNone'] easing fn or string
      * @cfg {Function} [complete] callback function when this animation is complete
      * @cfg {String|Boolean} [queue] current animation's queue, if false then no queue
-     * @extends KISSY.Event.Target
-     *
      */
     function Anim(el, props, duration, easing, complete) {
 
