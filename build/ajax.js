@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 16 23:08
+build time: Aug 20 15:06
 */
 /**
  * @ignore
@@ -527,6 +527,12 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         S.mix(self, {
             // 结构化数据，如 json
             responseData: null,
+            /**
+             * config of current IO instance.
+             * @member KISSY.IO
+             * @property config
+             * @type Object
+             */
             config: c || {},
             timeoutTimer: null,
 
@@ -1320,7 +1326,6 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
             /**
              * get native XMLHttpRequest
              * @member KISSY.IO
-             * @since 1.3
              * @return {XMLHttpRequest}
              */
             getNativeXhr: function () {
@@ -1915,7 +1920,6 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                         var ifModifiedKey =
                             c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString();
 
-                        ///debugger
                         var status = nativeXhr.status;
 
                         // _XDomainRequest 不能获取响应头

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 9 23:30
+build time: Aug 20 15:07
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -891,7 +891,7 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
         {
         /**
          * Data source interface. How to get data for comboBox
-         * @function
+         * @method
          * @name ComboBox.LocalDataSource#fetchData
          * @param {String} inputVal current active input's value
          * @param {Function} callback callback to notify comboBox when data is ready
@@ -976,7 +976,7 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
          */{
             /**
              * Data source interface. How to get data for comboBox
-             * @function
+             * @method
              * @name ComboBox.RemoteDataSource#fetchData
              * @param {String} inputVal current active input's value
              * @param {Function} callback callback to notify comboBox when data is ready

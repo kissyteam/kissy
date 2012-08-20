@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 1 22:21
+build time: Aug 20 15:11
 */
 /**
  * @fileOverview Make Elements flow like waterfall.
@@ -78,7 +78,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
     {
         /**
          * Container which contains waterfall elements.
-         * @type Node
+         * @type {Node}
          */
         container:{
             setter:function (v) {
@@ -89,7 +89,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         /**
          * Array of height of current waterfall cols.
          * @protected
-         * @type Number[]
+         * @type {Number[]}
          */
         curColHeights:{
             value:[]
@@ -97,9 +97,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Horizontal alignment of waterfall items with container.
-         * Enum: 'left','center','right'.
-         * @type String
-         * @since 1.3
+         * Enum: 'left','center','right','justify'.
+         * @type {String}
          */
         align:{
             value:'center'
@@ -109,7 +108,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
          * Minimum col count of waterfall items.
          * Event window resize to 0.
          * @default 1.
-         * @type Number
+         * @type {Number}
          */
         minColCount:{
             value:1
@@ -118,7 +117,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         /**
          * Effect config object when waterfall item is added to container.
          * @default { effect:"fadeIn",duration:1 }
-         * @type Object
+         * @type {Object}
          * @example
          * <code>
          *      {
@@ -136,7 +135,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Column's width.
-         * @type Number
+         * @type {Number}
          */
         colWidth:{},
 
@@ -156,7 +155,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         /**
          * Effect config object when waterfall item is adjusted on window resize.
          * @default { easing:"",duration:1 }
-         * @type Object
+         * @type {Object}
          * @example
          * <code>
          *      {
@@ -321,7 +320,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         {
             /**
              * Whether is adjusting waterfall items.
-             * @returns Boolean
+             * @return Boolean
              */
             isAdjusting:function () {
                 return !!this._adjuster;
@@ -329,8 +328,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
             /**
              * Whether is adding waterfall item.
-             * @since 1.3
-             * @returns Boolean
+             * @return Boolean
              */
             isAdding:function () {
                 return !!this._adder;
@@ -651,7 +649,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         /**
          * Preload distance below viewport.
          * @default 0.
-         * @type Number
+         * @type {Number}
          */
         diff:{
             value:0
@@ -675,7 +673,6 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
             /**
              * Start monitor scroll on window.
-             * @since 1.3
              */
             start:function () {
                 var self = this;

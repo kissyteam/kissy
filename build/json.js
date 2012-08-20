@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:04
+build time: Aug 20 15:10
 */
 /**
  * @fileOverview adapt json2 to kissy

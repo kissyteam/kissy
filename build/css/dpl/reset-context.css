@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 1 18:54
+build time: Aug 20 15:07
 */
 /**
 * KISSY New DPL CSS Reset With context Based on
@@ -210,12 +210,6 @@ build time: Aug 1 18:54
  * 1. Corrects color not being inherited in IE6/7/8/9.
  * 2. Corrects text not wrapping in FF3.
  * 3. Corrects alignment displayed oddly in IE6/7.
- */
-
-  /*
- * 1. Corrects font size not being inherited in all browsers.
- * 2. Addresses margins set differently in IE6/7, FF3+, S5, Chrome.
- * 3. Improves appearance and consistency in all browsers.
  */
 
   /*
@@ -502,14 +496,7 @@ build time: Aug 1 18:54
 .ks-cssreset select,
 .ks-cssreset textarea {
   margin: 0;
-  /* 2 */
-
-  vertical-align: baseline;
-  /* 3 */
-
-  *vertical-align: middle;
-  /* 3 */
-
+  vertical-align: middle;
 }
 .ks-cssreset textarea {
   overflow: auto;

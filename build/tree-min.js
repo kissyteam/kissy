@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 11:43
+build time: Aug 20 15:11
 */
 KISSY.add("tree/base",function(f,c,e,d,b){return e.extend([b],{expandAll:function(){return e.prototype.expandAll.apply(this,arguments)}},{ATTRS:{xrender:{value:d}}},{xclass:"tree",priority:30})},{requires:["component","./node","./tree-render","./tree-manager"]});
 KISSY.add("tree/check-node-render",function(f,c,e){var d=c.all;return e.extend({createDom:function(){var b=this.get("expandIconEl");this.__set("checkIconEl",d("<div>").insertAfter(b))},_uiSetCheckState:function(b){this.get("checkIconEl").removeClass("ks-tree-node-checked0 ks-tree-node-checked1 ks-tree-node-checked2").addClass("ks-tree-node-checked"+b)}},{ATTRS:{checkIconEl:{},checkState:{value:0}}})},{requires:["node","./node-render"]});

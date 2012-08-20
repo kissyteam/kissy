@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:00
+build time: Aug 20 15:07
 */
 /**
  * @fileOverview 数据延迟加载组件
@@ -115,21 +115,21 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
         /**
          * 需要延迟下载的图片
-         * @type Array
+         * @type {Array}
          * @private
          */
         //self._images
 
         /*
          * 需要延迟处理的 textarea
-         * @type Array
+         * @type {Array}
          * @private
          */
         //self._areaes
 
         /**
          * 和延迟项绑定的回调函数
-         * @type object
+         * @type {Object}
          */
         self._callbacks = {els:[], fns:[]};
 
@@ -147,7 +147,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         /**
          * Distance outside viewport or specified container to pre load.
          * @default pre load one screen height and width.
-         * @type Number|Object
+         * @type {Number|Object}
          * @example
          * <code>
          *  diff : 50 // pre load 50px outside viewport or specified container
@@ -166,7 +166,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         /**
          * Placeholder img url for lazy loaded _images.
          * @default empty
-         * @type String
+         * @type {String}
          */
         placeholder:{
             value:NONE
@@ -175,7 +175,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         /**
          * Whether execute script in lazy loaded textarea.
          * @default true
-         * @type Boolean
+         * @type {Boolean}
          */
         execScript:{
             value:true
@@ -184,7 +184,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         /**
          * Containers which will be monitor scroll event to lazy load elements within it.
          * @default [ document ]
-         * @type HTMLElement[]
+         * @type {HTMLElement[]}
          */
         containers:{
             valueFn:function () {
@@ -195,8 +195,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         /**
          * Whether destroy this component when all lazy loaded elements are loaded.
          * @default true
-         * @type Boolean
-         * @since 1.3
+         * @type {Boolean}
          */
         autoDestroy:{
             value:true
@@ -398,7 +397,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             /**
              * Register callback function.
              * When el is in viewport, then fn is called.
-             * @param {HTMLElement|String} el Html element to be monitored.
+             * @param {HTMLElement|String} el html element to be monitored.
              * @param {Function} fn Callback function to be called when el is in viewport.
              */
             addCallback:function (el, fn) {
@@ -417,10 +416,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
             /**
              * Remove a callback function. See {@link DataLazyload#addCallback}
-             * @param {HTMLElement|String} el Html element to be monitored.
+             * @param {HTMLElement|String} el html element to be monitored.
              * @param {Function} [fn] Callback function to be called when el is in viewport.
              *                        If not specified, remove all callbacks associated with el.
-             * @since 1.3
              */
             removeCallback:function (el, fn) {
                 var callbacks = this._callbacks,
@@ -448,7 +446,6 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             /**
              * Add a array of imgs or textareas to be lazy loaded to monitor list.
              * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
-             * @since 1.3
              */
             addElements:function (els) {
                 if (!S.isArray(els)) {
@@ -476,7 +473,6 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             /**
              * Remove a array of element from monitor list. See {@link DataLazyload#addElements}.
              * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
-             * @since 1.3
              */
             removeElements:function (els) {
                 if (!S.isArray(els)) {
@@ -623,7 +619,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
     /**
      * Load lazyload textarea and imgs manually.
      * @name loadCustomLazyData
-     * @function
+     * @method
      * @memberOf DataLazyload
      * @param {HTMLElement[]} containers Containers with in which lazy loaded elements are loaded.
      * @param {String} type Type of lazy loaded element. "img" or "textarea"

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:04
+build time: Aug 20 15:10
 */
 /**
  * @fileOverview anim-node-plugin
@@ -304,6 +304,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
 
     var AP = Array.prototype,
         slice = AP.slice,
+        NodeType = DOM.NodeType,
         push = AP.push,
         makeArray = S.makeArray,
         isNodeList = DOM._isNodeList;
@@ -330,7 +331,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
             // create from html
             domNode = DOM.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
-            if (domNode.nodeType === DOM.DOCUMENT_FRAGMENT_NODE) { // fragment
+            if (domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) { // fragment
                 push.apply(this, makeArray(domNode.childNodes));
                 return undefined;
             }
@@ -359,9 +360,9 @@ KISSY.add("node/base", function (S, DOM, undefined) {
 
             /**
              * length of nodelist
-             * @type Number
+             * @type {Number}
              */
-            length:0,
+            length: 0,
 
 
             /**
@@ -369,7 +370,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * @param {Number} index Index position.
              * @return {NodeList}
              */
-            item:function (index) {
+            item: function (index) {
                 var self = this;
                 if (S.isNumber(index)) {
                     if (index >= self.length) {
@@ -385,11 +386,11 @@ KISSY.add("node/base", function (S, DOM, undefined) {
             /**
              * Add existing node list.
              * @param {String|HTMLElement[]|NodeList} selector Selector string or html string or common dom node.
-             * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] Search context for selector
+             * @param {String|HTMLElement[]|NodeList|HTMLElement|Document} [context] Search context for selector
              * @param {Number} [index] Insert position.
              * @return {NodeList}
              */
-            add:function (selector, context, index) {
+            add: function (selector, context, index) {
                 if (S.isNumber(context)) {
                     index = context;
                     context = undefined;
@@ -412,7 +413,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * @param {number} end End position.
              * @return {NodeList}
              */
-            slice:function (start, end) {
+            slice: function (start, end) {
                 // ie<9 : [1,2].slice(-2,undefined) => []
                 // ie<9 : [1,2].slice(-2) => []
                 // fix #85
@@ -422,7 +423,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
             /**
              * Retrieves the DOMNodes.
              */
-            getDOMNodes:function () {
+            getDOMNodes: function () {
                 return slice.call(this);
             },
 
@@ -431,7 +432,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
              * @param [context] An optional context to apply the function with Default context is the current NodeList instance
              */
-            each:function (fn, context) {
+            each: function (fn, context) {
                 var self = this;
 
                 S.each(self, function (n, i) {
@@ -444,7 +445,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
             /**
              * Retrieves the DOMNode.
              */
-            getDOMNode:function () {
+            getDOMNode: function () {
                 return this[0];
             },
 
@@ -452,7 +453,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * return last stack node list.
              * @return {NodeList}
              */
-            end:function () {
+            end: function () {
                 var self = this;
                 return self.__parent || self;
             },
@@ -462,7 +463,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * @param {String} selector Selector string
              * @return {NodeList}
              */
-            all:function (selector) {
+            all: function (selector) {
                 var ret, self = this;
                 if (self.length > 0) {
                     ret = NodeList.all(selector, self);
@@ -473,7 +474,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
                 return ret;
             },
 
-            one:function (selector) {
+            one: function (selector) {
                 var self = this, all = self.all(selector),
                     ret = all.length ? all.slice(0, 1) : null;
                 if (ret) {
@@ -492,10 +493,10 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * Get node list from selector or construct new node list from html string.
              * Can also called from KISSY.all
              * @param {String|HTMLElement[]|NodeList} selector Selector string or html string or common dom node.
-             * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] Search context for selector
-             * @returns {NodeList}
+             * @param {String|HTMLElement[]|NodeList|HTMLElement|Document} [context] Search context for selector
+             * @return {NodeList}
              */
-            all:function (selector, context) {
+            all: function (selector, context) {
                 // are we dealing with html string ?
                 // TextNode 仍需要自己 new Node
 
@@ -517,17 +518,21 @@ KISSY.add("node/base", function (S, DOM, undefined) {
                 }
                 return new NodeList(DOM.query(selector, context));
             },
-            one:function (selector, context) {
+            one: function (selector, context) {
                 var all = NodeList.all(selector, context);
                 return all.length ? all.slice(0, 1) : null;
             }
         });
 
-    S.mix(NodeList, DOM.NodeTypes);
+    /**
+     * Same with {@link KISSY.DOM.NodeType}
+     * @enum {Number}
+     */
+    NodeList.NodeType = NodeType;
 
     return NodeList;
 }, {
-    requires:["dom"]
+    requires: ["dom"]
 });
 
 

@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 15 21:52
+build time: Aug 20 15:10
 */
 KISSY.add("editor/core/range",function(o,u,I,m,t){function J(a){var b=a.nodeType!=g.NodeType.TEXT_NODE&&g.nodeName(a)in y.$removeEmpty,c=a.nodeType==g.NodeType.TEXT_NODE&&!o.trim(a.nodeValue),a=!!a.parentNode.getAttribute("_ke_bookmark");return b||c||a}function C(a){return!D(a)&&!z(a)}function E(a){var b=p;return function(c){if(z(c))return h;if(c.nodeType==g.NodeType.TEXT_NODE){if(o.trim(c.nodeValue).length)return p}else if(c.nodeType==g.NodeType.ELEMENT_NODE&&(c=g.nodeName(c),!K[c]))if(!a&&!A.ie&&
 "br"==c&&!b)b=h;else return p;return h}}function B(a,b){var c=a.startContainer,d=a.endContainer,f=a.startOffset,i=a.endOffset,e,G=p,l=p,q=void 0,n=a.document,o;0<b&&(q=n.createDocumentFragment());if(a.collapsed)return q;a.optimizeBookmark();d[0].nodeType==g.NodeType.TEXT_NODE?(l=h,d=d._4e_splitText(i)):0<d[0].childNodes.length&&(i>=d[0].childNodes.length?(d=new v(d[0].appendChild(n.createTextNode(""))),o=h):d=new v(d[0].childNodes[i]));c[0].nodeType==g.NodeType.TEXT_NODE?(G=h,c._4e_splitText(f)):

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 9 23:50
+build time: Aug 20 15:10
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -84,7 +84,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 	var BarItem = Component.Controller.extend({
 		/* render baritem 's dom
 		* @protected
-        * @override
+        *
 		*/
 		createDom:function() {
             var el = this.get("el");
@@ -99,7 +99,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 
 			/**
 			* Whether this component can get focus.
-			* @overrided
+			* d
 			* @default {boolean} false
 			*/
 			focusable : {
@@ -200,7 +200,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 	var SeparatorBarItem = BarItem.extend({
 		/* render separator's dom
 		* @protected
-        * @override
+        *
 		*/
 		renderUI:function() {
             var el = this.get("el");
@@ -342,7 +342,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
         /*
          * For overridden.
          * @protected
-         * @override
+         *
          */
         renderUI:function () {
             var _self = this;
@@ -656,7 +656,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
                 toBody:true
             },
             /**
-             * @override
+             *
              * when set this grid's width ,the header and body changed
              */
             width:{
@@ -903,7 +903,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
      */
     var columnRender = Component.Render.extend({
         /**
-         * @override
+         *
          */
         renderUI:function () {
             this._setContent();
@@ -1120,7 +1120,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 },
                 /**
                  * The width of this component in pixels.
-                 * @override
+                 *
                  * @type {Number}
                  * @default {Number} 80
                  */
@@ -1896,7 +1896,7 @@ KISSY.add('grid/editor', function (S, Component,Overlay) {
             },
             /**
              * @private
-             * @override
+             *
              */
             focusable:{
                 value:false
@@ -2132,7 +2132,7 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 		ATTRS : {
 			/**
 			* @private 
-			* @override
+			*
 			*/	
 			focusable:{
 				value : false
@@ -2817,7 +2817,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
             /**
              * when setting the component width,the table's width also changed
              * @private
-             * @override
+             *
              */
             _uiSetWidth:function () {
                 var _self = this;
@@ -3155,7 +3155,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
             /*
              * For overridden.
              * @protected
-             * @override
+             *
              */
             initializer:function () {
                 var _self = this,
@@ -3508,7 +3508,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 		/**
 		* get the initial items of paging bar
 		* @protected
-		* @override
+		*
 		*/
 		_getItems : function(){
 			var _self = this,
@@ -3541,7 +3541,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 		/**
 		* bind buttons event
 		* @protected
-		* @override
+		*
 		*/
 		_bindButtonEvent : function(){
 			var _self = this,
@@ -3646,7 +3646,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 		ATTRS:{
 			/**
 			* the text for skip page button
-			* @override
+			*
 			* @default {String} "确定"
 			*/
 			skipText : {
@@ -3679,7 +3679,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			},
 			/**
 			* the template of current page info
-			* @override
+			*
 			* @default {String} '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			*/
 			curPageTpl : {
@@ -3726,7 +3726,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
         {
             /**
              * From Bar, Initialize this paging bar items.
-             * @override
+             *
              * @protected
              */
             initializer:function () {
@@ -3743,7 +3743,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
             },
             /**
              * bind page change and store events
-             * @override
+             *
              * @protected
              */
             bindUI:function () {
@@ -5175,7 +5175,7 @@ KISSY.add('grid/util', function (S) {
         /**
          @description 文本截取函数，当文本超出一定数字时，会截取文本，添加...
          @param {Number} length 截取多少字符
-         @return {function} 返回处理函数 返回截取后的字符串，如果本身小于指定的数字，返回原字符串。如果大于，则返回截断后的字符串，并附加...
+         @return {Function} 返回处理函数 返回截取后的字符串，如果本身小于指定的数字，返回原字符串。如果大于，则返回截断后的字符串，并附加...
          */
         cutTextRenderer:function (length) {
             return function (value) {

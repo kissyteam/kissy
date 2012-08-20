@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:04
+build time: Aug 20 15:11
 */
 /**
  * @fileOverview validation
@@ -253,7 +253,7 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
 
         /**
          * field对象
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         self.el = el;
 
@@ -1276,7 +1276,7 @@ KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
 
         /**
          * 目标对象
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         self.target = S.isArray(target) ? target[target.length - 1] : target;
         self.el = target;

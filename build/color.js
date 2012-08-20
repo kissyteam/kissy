@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:00
+build time: Aug 20 15:07
 */
 /**
  * Color For KISSY.
@@ -29,7 +29,7 @@ KISSY.add("color", function (S, Base) {
     {
         /**
          * Red.
-         * @type Number
+         * @type {Number}
          */
         r:{
             getter:function (v) {
@@ -41,7 +41,7 @@ KISSY.add("color", function (S, Base) {
         },
         /**
          * Green.
-         * @type Number
+         * @type {Number}
          */
         g:{
             getter:function (v) {
@@ -53,7 +53,7 @@ KISSY.add("color", function (S, Base) {
         },
         /**
          * Blue.
-         * @type Number
+         * @type {Number}
          */
         b:{
             getter:function (v) {
@@ -66,7 +66,7 @@ KISSY.add("color", function (S, Base) {
         /**
          * Alpha.
          * @default 1
-         * @type Number
+         * @type {Number}
          */
         a:{
             getter:function (v) {

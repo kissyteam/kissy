@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:04
+build time: Aug 20 15:10
 */
 /**
  * LALR grammar parser
@@ -864,7 +864,7 @@ KISSY.add("kison/Lexer", function (S, Base) {
     Lexer.ATTRS = {
         /**
          * Input languages
-         * @type String
+         * @type {String}
          */
         input:{
             value:""
@@ -872,7 +872,7 @@ KISSY.add("kison/Lexer", function (S, Base) {
 
         /**
          * lex rules.
-         * @type Object[]
+         * @type {Object[]}
          * @example
          * [
          *  {

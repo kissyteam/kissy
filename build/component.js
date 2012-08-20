@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 11:42
+build time: Aug 20 15:07
 */
 /**
  * Setup component namespace.

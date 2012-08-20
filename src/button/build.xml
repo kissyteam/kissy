@@ -13,6 +13,10 @@
                 <deletecharacters chars="&#xFEFF;" />
             </filterchain>
         </concat>
+
+        <copy todir="${component.src.dir.tmp}">
+            <fileset dir="." includes="assets/**/dpl.css"/>
+        </copy>
     </target>
 
     <target name="build" depends="concat,common.build">

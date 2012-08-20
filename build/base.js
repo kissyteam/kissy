@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:00
+build time: Aug 20 15:06
 */
 /**
  * @fileOverview attribute management
@@ -279,13 +279,13 @@ KISSY.add('base/attribute', function (S, undefined) {
              * @param {Object} attrConfig The config supports the following properties
              * @param [attrConfig.value] simple object or system native object
              * @param [attrConfig.valueFn] a function which can return current attribute's default value
-             * @param {Function(*)} [attrConfig.setter] call when set attribute's value
+             * @param {Function} [attrConfig.setter] call when set attribute's value
              *                                          pass current attribute's value as parameter
              *                                          if return value is not undefined,set returned value as real value
-             * @param {Function(*)} [attrConfig.getter] call when get attribute's value
+             * @param {Function} [attrConfig.getter] call when get attribute's value
              *                                          pass current attribute's value as parameter
              *                                          return getter's returned value to invoker
-             * @param {Function(*)} [attrConfig.validator]  call before set attribute's value
+             * @param {Function} [attrConfig.validator]  call before set attribute's value
              *                                              if return false,cancel this set action
              * @param {Boolean} [override] whether override existing attribute config ,default true
              */
@@ -345,7 +345,7 @@ KISSY.add('base/attribute', function (S, undefined) {
              * @param [value] attribute's value
              * @param {Object} [opts] some options
              * @param {Boolean} [opts.silent] whether fire change event
-             * @returns {Boolean} whether pass validator
+             * @return {Boolean} whether pass validator
              */
             set:function (name, value, opts) {
                 var self = this;
@@ -570,7 +570,7 @@ KISSY.add('base/attribute', function (S, undefined) {
  */
 /**
  * @fileOverview attribute management and event in one
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base', function (S, Attribute, Event) {
 
@@ -606,7 +606,7 @@ KISSY.add('base', function (S, Attribute, Event) {
      * protect the default value.
      *
      * @name Base.ATTRS
-     * @type Object
+     * @type {Object}
      */
 
 
@@ -614,7 +614,7 @@ KISSY.add('base', function (S, Attribute, Event) {
      * see {@link Attribute#set}
      * @name set
      * @memberOf Base#
-     * @function
+     * @method
      */
 
 

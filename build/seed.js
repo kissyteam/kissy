@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 19 22:54
+build time: Aug 20 15:11
 */
 /**
  * @ignore
@@ -496,11 +496,11 @@ build time: Aug 19 22:54
 
         /**
          * The build time of the library.
-         * NOTICE: '20120819225358' will replace with current timestamp when compressing.
+         * NOTICE: '20120820151122' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120819225358';
+        S.__BUILD_TIME = '20120820151122';
     })();
 
     return S;
@@ -2910,6 +2910,7 @@ build time: Aug 19 22:54
 
     /**
      * @class KISSY.Loader
+     * @private
      * @mixins KISSY.Loader.Target
      * This class should not be instantiated manually.
      */
@@ -2927,6 +2928,7 @@ build time: Aug 19 22:54
 
     /**
      * @class KISSY.Loader.Package
+     * @private
      * This class should not be instantiated manually.
      */
     function Package(cfg) {
@@ -2998,6 +3000,7 @@ build time: Aug 19 22:54
 
     /**
      * @class KISSY.Loader.Module
+     * @private
      * This class should not be instantiated manually.
      */
     function Module(cfg) {
@@ -3152,6 +3155,7 @@ build time: Aug 19 22:54
 
     /**
      * Loader Status Enum
+     * @private
      * @enum {Number} KISSY.Loader.STATUS
      */
     Loader.STATUS = {
@@ -3198,6 +3202,7 @@ build time: Aug 19 22:54
     /**
      * @class KISSY.Loader.Target
      * Event Target For KISSY Loader.
+     * @private
      * @singleton
      */
     KISSY.Loader.Target = {
@@ -3271,6 +3276,7 @@ build time: Aug 19 22:54
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
          * @singleton
+         * @private
          */
             Utils = {},
         host = S.Env.host,
@@ -4600,6 +4606,7 @@ build time: Aug 19 22:54
      * @class KISSY.Loader.ComboLoader
      * using combo to load module files
      * @param SS KISSY
+     * @private
      * @mixins KISSY.Loader.Target
      */
     function ComboLoader(SS) {
@@ -5193,7 +5200,7 @@ build time: Aug 19 22:54
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120819225358'
+        tag: '20120820151122'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5469,7 +5476,7 @@ KISSY.config('modules', {
 'waterfall': {requires: ['node','base']},
 'dd': {requires: ['ua','dom','event','node','base']},
 'switchable': {requires: ['dom','anim','event']},
-'tree': {requires: ['node','event','component']},
+'tree': {requires: ['node','component','event']},
 'button': {requires: ['component','event']},
 'component': {requires: ['ua','node','event','dom','base']},
 'json': {requires: ['ua']},

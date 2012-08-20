@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 19 22:54
+build time: Aug 20 15:11
 */
 /**
  * @ignore
@@ -496,11 +496,11 @@ build time: Aug 19 22:54
 
         /**
          * The build time of the library.
-         * NOTICE: '20120819225358' will replace with current timestamp when compressing.
+         * NOTICE: '20120820151122' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120819225358';
+        S.__BUILD_TIME = '20120820151122';
     })();
 
     return S;
@@ -2910,6 +2910,7 @@ build time: Aug 19 22:54
 
     /**
      * @class KISSY.Loader
+     * @private
      * @mixins KISSY.Loader.Target
      * This class should not be instantiated manually.
      */
@@ -2927,6 +2928,7 @@ build time: Aug 19 22:54
 
     /**
      * @class KISSY.Loader.Package
+     * @private
      * This class should not be instantiated manually.
      */
     function Package(cfg) {
@@ -2998,6 +3000,7 @@ build time: Aug 19 22:54
 
     /**
      * @class KISSY.Loader.Module
+     * @private
      * This class should not be instantiated manually.
      */
     function Module(cfg) {
@@ -3152,6 +3155,7 @@ build time: Aug 19 22:54
 
     /**
      * Loader Status Enum
+     * @private
      * @enum {Number} KISSY.Loader.STATUS
      */
     Loader.STATUS = {
@@ -3198,6 +3202,7 @@ build time: Aug 19 22:54
     /**
      * @class KISSY.Loader.Target
      * Event Target For KISSY Loader.
+     * @private
      * @singleton
      */
     KISSY.Loader.Target = {
@@ -3271,6 +3276,7 @@ build time: Aug 19 22:54
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
          * @singleton
+         * @private
          */
             Utils = {},
         host = S.Env.host,
@@ -4600,6 +4606,7 @@ build time: Aug 19 22:54
      * @class KISSY.Loader.ComboLoader
      * using combo to load module files
      * @param SS KISSY
+     * @private
      * @mixins KISSY.Loader.Target
      */
     function ComboLoader(SS) {
@@ -5193,7 +5200,7 @@ build time: Aug 19 22:54
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120819225358'
+        tag: '20120820151122'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5469,7 +5476,7 @@ KISSY.config('modules', {
 'waterfall': {requires: ['node','base']},
 'dd': {requires: ['ua','dom','event','node','base']},
 'switchable': {requires: ['dom','anim','event']},
-'tree': {requires: ['node','event','component']},
+'tree': {requires: ['node','component','event']},
 'button': {requires: ['component','event']},
 'component': {requires: ['ua','node','event','dom','base']},
 'json': {requires: ['ua']},
@@ -5498,7 +5505,7 @@ KISSY.config('modules', {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 14 18:01
+build time: Aug 20 15:11
 */
 /**
  * @ignore
@@ -5883,7 +5890,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 14 18:01
+build time: Aug 20 15:07
 */
 /**
  * @ignore
@@ -10369,7 +10376,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 14 18:01
+build time: Aug 20 15:10
 */
 /**
  * @ignore
@@ -13063,7 +13070,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:04
+build time: Aug 20 15:10
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -13573,7 +13580,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 16 23:08
+build time: Aug 20 15:06
 */
 /**
  * @ignore
@@ -14099,6 +14106,12 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         S.mix(self, {
             // 结构化数据，如 json
             responseData: null,
+            /**
+             * config of current IO instance.
+             * @member KISSY.IO
+             * @property config
+             * @type Object
+             */
             config: c || {},
             timeoutTimer: null,
 
@@ -14892,7 +14905,6 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
             /**
              * get native XMLHttpRequest
              * @member KISSY.IO
-             * @since 1.3
              * @return {XMLHttpRequest}
              */
             getNativeXhr: function () {
@@ -15487,7 +15499,6 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                         var ifModifiedKey =
                             c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString();
 
-                        ///debugger
                         var status = nativeXhr.status;
 
                         // _XDomainRequest 不能获取响应头
@@ -15630,7 +15641,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:00
+build time: Aug 20 15:07
 */
 /**
  * @fileOverview cookie
@@ -15744,7 +15755,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:00
+build time: Aug 20 15:06
 */
 /**
  * @fileOverview attribute management
@@ -16022,13 +16033,13 @@ KISSY.add('base/attribute', function (S, undefined) {
              * @param {Object} attrConfig The config supports the following properties
              * @param [attrConfig.value] simple object or system native object
              * @param [attrConfig.valueFn] a function which can return current attribute's default value
-             * @param {Function(*)} [attrConfig.setter] call when set attribute's value
+             * @param {Function} [attrConfig.setter] call when set attribute's value
              *                                          pass current attribute's value as parameter
              *                                          if return value is not undefined,set returned value as real value
-             * @param {Function(*)} [attrConfig.getter] call when get attribute's value
+             * @param {Function} [attrConfig.getter] call when get attribute's value
              *                                          pass current attribute's value as parameter
              *                                          return getter's returned value to invoker
-             * @param {Function(*)} [attrConfig.validator]  call before set attribute's value
+             * @param {Function} [attrConfig.validator]  call before set attribute's value
              *                                              if return false,cancel this set action
              * @param {Boolean} [override] whether override existing attribute config ,default true
              */
@@ -16088,7 +16099,7 @@ KISSY.add('base/attribute', function (S, undefined) {
              * @param [value] attribute's value
              * @param {Object} [opts] some options
              * @param {Boolean} [opts.silent] whether fire change event
-             * @returns {Boolean} whether pass validator
+             * @return {Boolean} whether pass validator
              */
             set:function (name, value, opts) {
                 var self = this;
@@ -16313,7 +16324,7 @@ KISSY.add('base/attribute', function (S, undefined) {
  */
 /**
  * @fileOverview attribute management and event in one
- * @author  yiminghe@gmail.com,lifesinger@gmail.com
+ * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base', function (S, Attribute, Event) {
 
@@ -16349,7 +16360,7 @@ KISSY.add('base', function (S, Attribute, Event) {
      * protect the default value.
      *
      * @name Base.ATTRS
-     * @type Object
+     * @type {Object}
      */
 
 
@@ -16357,7 +16368,7 @@ KISSY.add('base', function (S, Attribute, Event) {
      * see {@link Attribute#set}
      * @name set
      * @memberOf Base#
-     * @function
+     * @method
      */
 
 
@@ -16399,7 +16410,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 19 22:53
+build time: Aug 20 15:06
 */
 /**
  * @ignore
@@ -16547,6 +16558,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     /**
      * @class KISSY.Anim
      * A class for constructing animation instances.
+     * @mixins KISSY.Event.Target
      * @cfg {HTMLElement|window} el html dom node or window
      * (window can only animate scrollTop/scrollLeft)
      * @cfg {Object} props end css style value.
@@ -16554,8 +16566,6 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @cfg {String|Function} [easing='easeNone'] easing fn or string
      * @cfg {Function} [complete] callback function when this animation is complete
      * @cfg {String|Boolean} [queue] current animation's queue, if false then no queue
-     * @extends KISSY.Event.Target
-     *
      */
     function Anim(el, props, duration, easing, complete) {
 
@@ -17945,7 +17955,7 @@ KISSY.add("anim/queue", function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:04
+build time: Aug 20 15:10
 */
 /**
  * @fileOverview anim-node-plugin
@@ -18248,6 +18258,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
 
     var AP = Array.prototype,
         slice = AP.slice,
+        NodeType = DOM.NodeType,
         push = AP.push,
         makeArray = S.makeArray,
         isNodeList = DOM._isNodeList;
@@ -18274,7 +18285,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
             // create from html
             domNode = DOM.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
-            if (domNode.nodeType === DOM.DOCUMENT_FRAGMENT_NODE) { // fragment
+            if (domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) { // fragment
                 push.apply(this, makeArray(domNode.childNodes));
                 return undefined;
             }
@@ -18303,9 +18314,9 @@ KISSY.add("node/base", function (S, DOM, undefined) {
 
             /**
              * length of nodelist
-             * @type Number
+             * @type {Number}
              */
-            length:0,
+            length: 0,
 
 
             /**
@@ -18313,7 +18324,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * @param {Number} index Index position.
              * @return {NodeList}
              */
-            item:function (index) {
+            item: function (index) {
                 var self = this;
                 if (S.isNumber(index)) {
                     if (index >= self.length) {
@@ -18329,11 +18340,11 @@ KISSY.add("node/base", function (S, DOM, undefined) {
             /**
              * Add existing node list.
              * @param {String|HTMLElement[]|NodeList} selector Selector string or html string or common dom node.
-             * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] Search context for selector
+             * @param {String|HTMLElement[]|NodeList|HTMLElement|Document} [context] Search context for selector
              * @param {Number} [index] Insert position.
              * @return {NodeList}
              */
-            add:function (selector, context, index) {
+            add: function (selector, context, index) {
                 if (S.isNumber(context)) {
                     index = context;
                     context = undefined;
@@ -18356,7 +18367,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * @param {number} end End position.
              * @return {NodeList}
              */
-            slice:function (start, end) {
+            slice: function (start, end) {
                 // ie<9 : [1,2].slice(-2,undefined) => []
                 // ie<9 : [1,2].slice(-2) => []
                 // fix #85
@@ -18366,7 +18377,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
             /**
              * Retrieves the DOMNodes.
              */
-            getDOMNodes:function () {
+            getDOMNodes: function () {
                 return slice.call(this);
             },
 
@@ -18375,7 +18386,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
              * @param [context] An optional context to apply the function with Default context is the current NodeList instance
              */
-            each:function (fn, context) {
+            each: function (fn, context) {
                 var self = this;
 
                 S.each(self, function (n, i) {
@@ -18388,7 +18399,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
             /**
              * Retrieves the DOMNode.
              */
-            getDOMNode:function () {
+            getDOMNode: function () {
                 return this[0];
             },
 
@@ -18396,7 +18407,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * return last stack node list.
              * @return {NodeList}
              */
-            end:function () {
+            end: function () {
                 var self = this;
                 return self.__parent || self;
             },
@@ -18406,7 +18417,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * @param {String} selector Selector string
              * @return {NodeList}
              */
-            all:function (selector) {
+            all: function (selector) {
                 var ret, self = this;
                 if (self.length > 0) {
                     ret = NodeList.all(selector, self);
@@ -18417,7 +18428,7 @@ KISSY.add("node/base", function (S, DOM, undefined) {
                 return ret;
             },
 
-            one:function (selector) {
+            one: function (selector) {
                 var self = this, all = self.all(selector),
                     ret = all.length ? all.slice(0, 1) : null;
                 if (ret) {
@@ -18436,10 +18447,10 @@ KISSY.add("node/base", function (S, DOM, undefined) {
              * Get node list from selector or construct new node list from html string.
              * Can also called from KISSY.all
              * @param {String|HTMLElement[]|NodeList} selector Selector string or html string or common dom node.
-             * @param {String|Array<HTMLElement>|NodeList|HTMLElement|Document} [context] Search context for selector
-             * @returns {NodeList}
+             * @param {String|HTMLElement[]|NodeList|HTMLElement|Document} [context] Search context for selector
+             * @return {NodeList}
              */
-            all:function (selector, context) {
+            all: function (selector, context) {
                 // are we dealing with html string ?
                 // TextNode 仍需要自己 new Node
 
@@ -18461,17 +18472,21 @@ KISSY.add("node/base", function (S, DOM, undefined) {
                 }
                 return new NodeList(DOM.query(selector, context));
             },
-            one:function (selector, context) {
+            one: function (selector, context) {
                 var all = NodeList.all(selector, context);
                 return all.length ? all.slice(0, 1) : null;
             }
         });
 
-    S.mix(NodeList, DOM.NodeTypes);
+    /**
+     * Same with {@link KISSY.DOM.NodeType}
+     * @enum {Number}
+     */
+    NodeList.NodeType = NodeType;
 
     return NodeList;
 }, {
-    requires:["dom"]
+    requires: ["dom"]
 });
 
 

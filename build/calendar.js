@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:00
+build time: Aug 20 15:28
 */
 /**
  * @fileOverview KISSY Calendar
@@ -959,8 +959,8 @@ KISSY.add('calendar/page', function (S, UA, Node, Calendar) {
             /**
              * 子日历构造器
              * @constructor S.Calendar.Page
-             * @param {object} config ,参数列表，需要指定子日历所需的年月
-             * @param {object} father,指向Y.Calendar实例的指针，需要共享父框的参数
+             * @param {Object} config ,参数列表，需要指定子日历所需的年月
+             * @param {Object} father,指向Y.Calendar实例的指针，需要共享父框的参数
              * @return 子日历的实例
              */
 
@@ -1562,8 +1562,8 @@ KISSY.add('calendar/time', function(S, Node,Calendar) {
          * 时间选择构造器
 
          * @constructor S.Calendar.TimerSelector
-         * @param {object} ft ,timer所在的容器
-         * @param {object} father 指向S.Calendar实例的指针，需要共享父框的参数
+         * @param {Object} ft ,timer所在的容器
+         * @param {Object} father 指向S.Calendar实例的指针，需要共享父框的参数
          */
         TimeSelector:function(ft, father) {
             //属性
