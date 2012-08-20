@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview special patch for making color gradual change
  * @author  yiminghe@gmail.com
  */
@@ -167,8 +168,8 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
     requires:["dom", "./base", "./fx"]
 });
 
-/**
- * TODO
- * 支持 hsla
- *  - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
- **/
+/*
+  TODO
+  支持 hsla
+   - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
+*/

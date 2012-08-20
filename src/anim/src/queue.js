@@ -1,24 +1,25 @@
 /**
+ * @ignore
  * @fileOverview queue of anim objects
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/queue", function(S, DOM) {
+KISSY.add("anim/queue", function (S, DOM) {
 
-    var /*队列集合容器*/
+    var // 队列集合容器
         queueCollectionKey = S.guid("ks-queue-" + S.now() + "-"),
-        /*默认队列*/
+    // 默认队列
         queueKey = S.guid("ks-queue-" + S.now() + "-"),
-        // 当前队列是否有动画正在执行
+    // 当前队列是否有动画正在执行
         processing = "...";
 
-    function getQueue(elem, name, readOnly) {
+    function getQueue(el, name, readOnly) {
         name = name || queueKey;
 
         var qu,
-            quCollection = DOM.data(elem, queueCollectionKey);
+            quCollection = DOM.data(el, queueCollectionKey);
 
         if (!quCollection && !readOnly) {
-            DOM.data(elem, queueCollectionKey, quCollection = {});
+            DOM.data(el, queueCollectionKey, quCollection = {});
         }
 
         if (quCollection) {
@@ -31,25 +32,25 @@ KISSY.add("anim/queue", function(S, DOM) {
         return qu;
     }
 
-    function removeQueue(elem, name) {
+    function removeQueue(el, name) {
         name = name || queueKey;
-        var quCollection = DOM.data(elem, queueCollectionKey);
+        var quCollection = DOM.data(el, queueCollectionKey);
         if (quCollection) {
             delete quCollection[name];
         }
         if (S.isEmptyObject(quCollection)) {
-            DOM.removeData(elem, queueCollectionKey);
+            DOM.removeData(el, queueCollectionKey);
         }
     }
 
     var q = {
 
-        queueCollectionKey:queueCollectionKey,
+        queueCollectionKey: queueCollectionKey,
 
-        queue:function(anim) {
-            var elem = anim.elem,
+        queue: function (anim) {
+            var el = anim.config.el,
                 name = anim.config.queue,
-                qu = getQueue(elem, name);
+                qu = getQueue(el, name);
             qu.push(anim);
             if (qu[0] !== processing) {
                 q.dequeue(anim);
@@ -57,10 +58,10 @@ KISSY.add("anim/queue", function(S, DOM) {
             return qu;
         },
 
-        remove:function(anim) {
-            var elem = anim.elem,
+        remove: function (anim) {
+            var el = anim.config.el,
                 name = anim.config.queue,
-                qu = getQueue(elem, name, 1),index;
+                qu = getQueue(el, name, 1), index;
             if (qu) {
                 index = S.indexOf(anim, qu);
                 if (index > -1) {
@@ -69,16 +70,16 @@ KISSY.add("anim/queue", function(S, DOM) {
             }
         },
 
-        removeQueues:function(elem) {
-            DOM.removeData(elem, queueCollectionKey);
+        removeQueues: function (el) {
+            DOM.removeData(el, queueCollectionKey);
         },
 
-        removeQueue:removeQueue,
+        removeQueue: removeQueue,
 
-        dequeue:function(anim) {
-            var elem = anim.elem,
+        dequeue: function (anim) {
+            var el = anim.config.el,
                 name = anim.config.queue,
-                qu = getQueue(elem, name, 1),
+                qu = getQueue(el, name, 1),
                 nextAnim = qu && qu.shift();
 
             if (nextAnim == processing) {
@@ -90,12 +91,12 @@ KISSY.add("anim/queue", function(S, DOM) {
                 nextAnim._runInternal();
             } else {
                 // remove queue data
-                removeQueue(elem, name);
+                removeQueue(el, name);
             }
         }
 
     };
     return q;
 }, {
-    requires:['dom']
+    requires: ['dom']
 });

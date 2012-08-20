@@ -14,7 +14,7 @@
             </filterchain>
         </concat>
         <copy todir="${component.src.dir.tmp}">
-            <fileset dir="." includes="assets/**/*"/>
+            <fileset dir="." includes="assets/**/*.css"/>
         </copy>
     </target>
 

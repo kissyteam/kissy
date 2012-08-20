@@ -33,6 +33,7 @@
      * @class KISSY.Loader.ComboLoader
      * using combo to load module files
      * @param SS KISSY
+     * @private
      * @mixins KISSY.Loader.Target
      */
     function ComboLoader(SS) {

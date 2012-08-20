@@ -1,16 +1,16 @@
-/**
- combined files : 
+/*
+ Combined modules by KISSY Module Compiler: 
 
-D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\NoteView.js
-D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\NotesView.js
-D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\EditView.js
-D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\NoteModel.js
-D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\NotesCollection.js
-D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\SearchView.js
-D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\router.js
-D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\mods\sync.js
-D:\code\kissy_git\kissy\src\mvc\demo\note_html5\note\main2.js
-**/
+ note/mods/NoteView
+ note/mods/NotesView
+ note/mods/EditView
+ note/mods/NoteModel
+ note/mods/NotesCollection
+ note/mods/SearchView
+ note/mods/router
+ note/mods/sync
+ note/main2
+*/
 
 KISSY.add("note/mods/NoteView", function(S, Node, mvc, Template) {
   var noteTpl = Template(Node.all("#noteTpl").html());
@@ -30,7 +30,6 @@ KISSY.add("note/mods/NoteView", function(S, Node, mvc, Template) {
   }});
   return NoteView
 }, {requires:["node", "mvc", "template"]});
-
 KISSY.add("note/mods/NotesView", function(S, Node, mvc, Template, NoteView) {
   var $ = Node.all, tmpl = Template($("#listTpl").html());
   function NotesView() {
@@ -81,7 +80,6 @@ KISSY.add("note/mods/NotesView", function(S, Node, mvc, Template, NoteView) {
   }}, {ATTRS:{el:{value:"#list"}, events:{value:{".edit":{click:"editNote"}, ".newNote":{click:"newNote"}, ".delete":{click:"deleteNode"}, ".refreshNote":{click:"refreshNote"}, ".searchNote":{click:"search"}, ".searchInput":{keyup:"keyup"}}}}});
   return NotesView
 }, {requires:["node", "mvc", "template", "./NoteView"]});
-
 KISSY.add("note/mods/EditView", function(S, Node, mvc, Template) {
   var detailTpl = Template(Node.all("#detailTpl").html());
   function EditView() {
@@ -98,7 +96,6 @@ KISSY.add("note/mods/EditView", function(S, Node, mvc, Template) {
   }}, {ATTRS:{el:{value:"#edit"}, events:{value:{".submit":{click:"submit"}}}}});
   return EditView
 }, {requires:["node", "mvc", "template"]});
-
 KISSY.add("note/mods/NoteModel", function(S, mvc) {
   function NoteModel() {
     NoteModel.superclass.constructor.apply(this, arguments)
@@ -106,7 +103,6 @@ KISSY.add("note/mods/NoteModel", function(S, mvc) {
   S.extend(NoteModel, mvc.Model);
   return NoteModel
 }, {requires:["mvc"]});
-
 KISSY.add("note/mods/NotesCollection", function(S, mvc, NoteModel) {
   function NotesModel() {
     NotesModel.superclass.constructor.apply(this, arguments)
@@ -114,7 +110,6 @@ KISSY.add("note/mods/NotesCollection", function(S, mvc, NoteModel) {
   S.extend(NotesModel, mvc.Collection, {ATTRS:{Model:{value:NoteModel}}});
   return NotesModel
 }, {requires:["mvc", "./NoteModel"]});
-
 KISSY.add("note/mods/SearchView", function(S, Node, mvc, Template) {
   var $ = Node.all, tmpl = Template($("#searchTpl").html());
   function SearchView() {
@@ -142,7 +137,6 @@ KISSY.add("note/mods/SearchView", function(S, Node, mvc, Template) {
   }}, {ATTRS:{el:{value:"#search"}, events:{value:{".searchBtn":{click:"search"}, ".backBtn":{click:"back"}, ".searchInput":{keyup:"keyup"}}}}});
   return SearchView
 }, {requires:["node", "mvc", "template"]});
-
 KISSY.add("note/mods/router", function(S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel, SearchView) {
   var $ = S.Node.all;
   function NoteRouter() {
@@ -194,7 +188,6 @@ KISSY.add("note/mods/router", function(S, Node, mvc, NotesView, EditView, NotesC
   }}, {ATTRS:{routes:{value:{"/":"index", "":"index", "/edit/:id":"editNote", "/new/":"newNote", "/search/":"search"}}}});
   return NoteRouter
 }, {requires:["node", "mvc", "./NotesView", "./EditView", "./NotesCollection", "./NoteModel", "./SearchView"]});
-
 KISSY.add("note/mods/sync", function(S, mvc) {
   var KEY = "KISSY_Note";
   function isModel(m) {
@@ -284,12 +277,10 @@ KISSY.add("note/mods/sync", function(S, mvc) {
   };
   return sync
 }, {requires:["mvc"]});
-
 KISSY.add("note/main2", function(S, Node, NoteRouter, Sy, MVC) {
   new NoteRouter;
   MVC.Router.start({triggerRoute:1, nativeHistory:1, urlRoot:location.hostname == "localhost" ? "/kissy_git/kissy1.3/src/mvc/demo/note_html5" : "/kissy/src/mvc/demo/note_html5", success:function() {
     Node.all("#loading").hide()
   }})
 }, {requires:["node", "./mods/router", "./mods/sync", "mvc"]});
-
 

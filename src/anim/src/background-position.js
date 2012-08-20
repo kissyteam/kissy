@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview special patch for anim backgroundPosition
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
+KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
 
     function numeric(bp) {
         bp = bp.replace(/left|top/g, '0px')
@@ -52,17 +53,17 @@ KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
         },
 
         cur:function () {
-            return DOM.css(this.anim.elem, "backgroundPosition");
+            return DOM.css(this.anim.config.el, "backgroundPosition");
         },
 
         update:function () {
             var self = this,
                 prop = self.prop,
-                elem = self.anim.elem,
+                el = self.anim.config.el,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
-            DOM.css(elem, prop, val);
+            DOM.css(el, prop, val);
         }
 
     });

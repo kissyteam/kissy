@@ -42,7 +42,7 @@ build example for kissy loader
                 </echo>
                 <java classname="com.taobao.f2e.Main">
 
-                    <arg value="-requires"/>
+                    <arg value="-require"/>
                     <!-- 入口模块 -->
                     <arg value="note/${var.modname}"/>
                     <arg value="-baseUrls"/>

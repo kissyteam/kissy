@@ -64,7 +64,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             if (attrs.hasOwnProperty(attrName)) {
                 attrCfg = attrs[attrName];
                 if (attrCfg.view) {
-
                     // 先取后 getter
                     // 防止死循环
                     if (( v = self.get(attrName) ) !== undefined) {
@@ -131,6 +130,8 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
      */
     var Controller = UIBase.extend([UIBase.Box],
         {
+
+            isController: true,
 
             /**
              * Get full class name for current component
@@ -284,9 +285,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 if (self.get("rendered")) {
                     c.render();
                 }
-                self.fire("addChild", {
-                    child: c
-                });
                 return c;
             },
 
@@ -315,9 +313,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     c.destroy) {
                     c.destroy();
                 }
-                self.fire("removeChild", {
-                    child: c
-                });
                 return c;
             },
 

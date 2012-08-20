@@ -44,13 +44,15 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
                     return S.all(CAPTION_TMPL);
                 }
             },
-            contentElCls:{
-                value:"ks-menu-button-caption"
-            },
             activeItem:{
             },
             collapsed:{
                 value:true
+            }
+        },
+        HTML_PARSER:{
+            contentEl:function(el){
+                return el.children(".ks-menu-button-caption");
             }
         }
     });

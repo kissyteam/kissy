@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview non-refresh upload file with form by iframe
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
+KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
 
     var doc = S.Env.host.document,
         OK_CODE = 200,
@@ -11,18 +12,18 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
 
     // iframe 内的内容就是 body.innerText
     io.setupConfig({
-        converters:{
+        converters: {
             // iframe 到其他类型的转化和 text 一样
-            iframe:io.getConfig().converters.text,
-            text:{
+            iframe: io.getConfig().converters.text,
+            text: {
                 // fake type, just mirror
-                iframe:function (text) {
+                iframe: function (text) {
                     return text;
                 }
             },
-            xml:{
+            xml: {
                 // fake type, just mirror
-                iframe:function (xml) {
+                iframe: function (xml) {
                     return xml;
                 }
             }
@@ -30,17 +31,17 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
     });
 
     function createIframe(xhr) {
-        var id = S.guid("ajax-iframe"),
+        var id = S.guid('ajax-iframe'),
             iframe,
             src = DOM.getEmptyIframeSrc();
 
-        iframe = xhr.iframe = DOM.create("<iframe " +
+        iframe = xhr.iframe = DOM.create('<iframe ' +
             // ie6 need this when cross domain
-            (src ? (" src=\"" + src + "\" ") : "") +
-            " id='" + id + "'" +
+            (src ? (' src="' + src + '" ') : '') +
+            ' id="' + id + '"' +
             // need name for target of form
-            " name='" + id + "'" +
-            " style='position:absolute;left:-9999px;top:-9999px;'/>");
+            ' name="' + id + '"' +
+            ' style="position:absolute;left:-9999px;top:-9999px;"/>');
 
         DOM.prepend(iframe, doc.body || doc.documentElement);
         return iframe;
@@ -54,9 +55,9 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
             vs = S.makeArray(data);
             // 数组和原生一样对待，创建多个同名输入域
             for (i = 0; i < vs.length; i++) {
-                e = doc.createElement("input");
+                e = doc.createElement('input');
                 e.type = 'hidden';
-                e.name = k + (isArray && serializeArray ? "[]" : "");
+                e.name = k + (isArray && serializeArray ? '[]' : '');
                 e.value = vs[i];
                 DOM.append(e, form);
                 ret.push(e);
@@ -69,38 +70,38 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
         DOM.remove(fields);
     }
 
-    function IframeTransport(xhrObject) {
-        this.xhrObject = xhrObject;
+    function IframeTransport(io) {
+        this.io = io;
     }
 
     S.augment(IframeTransport, {
-        send:function () {
+        send: function () {
 
             var self = this,
-                xhrObject = self.xhrObject,
-                c = xhrObject.config,
+                io = self.io,
+                c = io.config,
                 fields,
                 iframe,
                 query = c.query,
                 form = DOM.get(c.form);
 
             self.attrs = {
-                target:DOM.attr(form, "target") || "",
-                action:DOM.attr(form, "action") || "",
+                target: DOM.attr(form, 'target') || '',
+                action: DOM.attr(form, 'action') || '',
                 // enctype 区分 iframe 与 serialize
-                //encoding:DOM.attr(form, "encoding"),
-                //enctype:DOM.attr(form, "enctype"),
-                method:DOM.attr(form, "method")
+                //encoding:DOM.attr(form, 'encoding'),
+                //enctype:DOM.attr(form, 'enctype'),
+                method: DOM.attr(form, 'method')
             };
             self.form = form;
 
-            iframe = createIframe(xhrObject);
+            iframe = createIframe(io);
 
             // set target to iframe to avoid main page refresh
             DOM.attr(form, {
-                target:iframe.id,
-                action:c.uri.toString(c.serializeArray),
-                method:"post"
+                target: iframe.id,
+                action: c.uri.toString(c.serializeArray),
+                method: 'post'
                 //enctype:'multipart/form-data',
                 //encoding:'multipart/form-data'
             });
@@ -112,19 +113,19 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
             self.fields = fields;
             // ie6 need a setTimeout to avoid handling load triggered if set iframe src
             setTimeout(function () {
-                Event.on(iframe, "load error", self._callback, self);
+                Event.on(iframe, 'load error', self._callback, self);
                 form.submit();
             }, 10);
 
         },
 
-        _callback:function (event/*, abort*/) {
+        _callback: function (event/*, abort*/) {
             var self = this,
                 form = self.form,
-                xhrObject = self.xhrObject,
+                io = self.io,
                 eventType = event.type,
                 iframeDoc,
-                iframe = xhrObject.iframe;
+                iframe = io.iframe;
 
             // 防止重复调用 , 成功后 abort
             if (!iframe) {
@@ -143,16 +144,16 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
             }, BREATH_INTERVAL);
 
             // nullify to prevent memory leak?
-            xhrObject.iframe = null;
+            io.iframe = null;
 
-            if (eventType == "load") {
+            if (eventType == 'load') {
                 iframeDoc = iframe.contentWindow.document;
                 // ie<9
                 if (iframeDoc && iframeDoc.body) {
-                    xhrObject.responseText = S.trim(DOM.text(iframeDoc.body));
+                    io.responseText = S.trim(DOM.text(iframeDoc.body));
                     // ie still can retrieve xml 's responseText
-                    if (S.startsWith(xhrObject.responseText, "<?xml")) {
-                        xhrObject.responseText = undefined;
+                    if (S.startsWith(io.responseText, '<?xml')) {
+                        io.responseText = undefined;
                     }
                 }
                 // ie<9
@@ -165,28 +166,28 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
                  Note that the support for the XMLDocument property has been removed in Internet Explorer 9.
                  */
                 if (iframeDoc && iframeDoc['XMLDocument']) {
-                    xhrObject.responseXML = iframeDoc['XMLDocument'];
+                    io.responseXML = iframeDoc['XMLDocument'];
                 }
                 // ie9 firefox chrome
                 else {
-                    xhrObject.responseXML = iframeDoc;
+                    io.responseXML = iframeDoc;
                 }
 
-                xhrObject._xhrReady(OK_CODE, "success");
+                io._ioReady(OK_CODE, 'success');
             } else if (eventType == 'error') {
-                xhrObject._xhrReady(ERROR_CODE, "error");
+                io._ioReady(ERROR_CODE, 'error');
             }
         },
 
-        abort:function () {
+        abort: function () {
             this._callback({});
         }
     });
 
-    io.setupTransport("iframe", IframeTransport);
+    io.setupTransport('iframe', IframeTransport);
 
     return io;
 
 }, {
-    requires:["dom", "event", "./base"]
+    requires: ['dom', 'event', './base']
 });

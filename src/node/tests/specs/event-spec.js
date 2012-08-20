@@ -70,7 +70,7 @@ KISSY.use("node", function(S, Node) {
                 }
 
                 node.on('click', t);
-                //debugger
+
                 Node.one('#link-detach').detach('click', t);
 
                 simulate('#link-detach', 'click');

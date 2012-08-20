@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 22:03
+build time: Aug 20 15:38
 */
 /**
  * @fileOverview Make Elements flow like waterfall.
@@ -99,7 +99,6 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
          * Horizontal alignment of waterfall items with container.
          * Enum: 'left','center','right','justify'.
          * @type {String}
-         * @since 1.3
          */
         align:{
             value:'center'
@@ -329,7 +328,6 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
             /**
              * Whether is adding waterfall item.
-             * @since 1.3
              * @return Boolean
              */
             isAdding:function () {
@@ -675,7 +673,6 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
             /**
              * Start monitor scroll on window.
-             * @since 1.3
              */
             start:function () {
                 var self = this;

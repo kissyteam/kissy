@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/XhrTransportBase", function (S, io) {
+KISSY.add('ajax/xhr-transport-base', function (S, io) {
     var OK_CODE = 200,
         win = S.Env.host,
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
@@ -11,23 +12,27 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
         NOT_FOUND_CODE = 404,
         NO_CONTENT_CODE2 = 1223,
         XhrTransportBase = {
-            proto:{}
-        };
+            proto: {}
+        }, lastModifiedCached = {},
+        eTagCached = {};
+
+    io.__lastModifiedCached = lastModifiedCached;
+    io.__eTagCached = eTagCached;
 
     function createStandardXHR(_, refWin) {
         try {
             return new (refWin || win)['XMLHttpRequest']();
         } catch (e) {
-            //S.log("createStandardXHR error");
+            //S.log('createStandardXHR error');
         }
         return undefined;
     }
 
     function createActiveXHR(_, refWin) {
         try {
-            return new (refWin || win)['ActiveXObject']("Microsoft.XMLHTTP");
+            return new (refWin || win)['ActiveXObject']('Microsoft.XMLHTTP');
         } catch (e) {
-            S.log("createActiveXHR error");
+            S.log('createActiveXHR error');
         }
         return undefined;
     }
@@ -45,22 +50,40 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
     }
 
     S.mix(XhrTransportBase.proto, {
-        sendInternal:function () {
+        sendInternal: function () {
 
             var self = this,
-                xhrObj = self.xhrObj,
-                c = xhrObj.config,
+                io = self.io,
+                c = io.config,
                 nativeXhr = self.nativeXhr,
                 type = c.type,
                 async = c.async,
                 username,
                 crossDomain = c.crossDomain,
-                mimeType = xhrObj.mimeType,
-                requestHeaders = xhrObj.requestHeaders,
-                serializeArray= c.serializeArray,
+                mimeType = io.mimeType,
+                requestHeaders = io.requestHeaders || {},
+                serializeArray = c.serializeArray,
                 url = c.uri.toString(serializeArray),
                 xhrFields,
+                ifModifiedKey,
+                cacheValue,
                 i;
+
+            if (ifModifiedKey =
+                (c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString())) {
+                // if ajax want a conditional load
+                // (response status is 304 and responseText is null)
+                // u need to set if-modified-since manually!
+                // or else
+                // u will always get response status 200 and full responseText
+                // which is also conditional load but process transparently by browser
+                if (cacheValue = lastModifiedCached[ifModifiedKey]) {
+                    requestHeaders['If-Modified-Since'] = cacheValue;
+                }
+                if (cacheValue = eTagCached[ifModifiedKey]) {
+                    requestHeaders['If-None-Match'] = cacheValue;
+                }
+            }
 
             if (username = c['username']) {
                 nativeXhr.open(type, url, async, username, c.password)
@@ -81,8 +104,8 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                 nativeXhr.overrideMimeType(mimeType);
             }
             // yui3 and jquery both have
-            if (!crossDomain && !requestHeaders["X-Requested-With"]) {
-                requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
+            if (!crossDomain && !requestHeaders['X-Requested-With']) {
+                requestHeaders[ 'X-Requested-With' ] = 'XMLHttpRequest';
             }
             try {
                 // 跨域时，不能设，否则请求变成
@@ -95,7 +118,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                     }
                 }
             } catch (e) {
-                S.log("setRequestHeader in xhr error : ");
+                S.log('setRequestHeader in xhr error: ');
                 S.log(e);
             }
 
@@ -123,23 +146,22 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                 }
             }
         },
-        // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
-        abort:function () {
+        // 由 io.abort 调用，自己不可以调用 io.abort
+        abort: function () {
             this._callback(0, 1);
         },
 
-        _callback:function (event, abort) {
+        _callback: function (event, abort) {
             // Firefox throws exceptions when accessing properties
             // of an xhr when a network error occured
             // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
             try {
                 var self = this,
                     nativeXhr = self.nativeXhr,
-                    xhrObj = self.xhrObj,
-                    c = xhrObj.config;
+                    io = self.io,
+                    c = io.config;
                 //abort or complete
                 if (abort || nativeXhr.readyState == 4) {
-
                     // ie6 ActiveObject 设置不恰当属性导致出错
                     if (isInstanceOfXDomainRequest(nativeXhr)) {
                         nativeXhr.onerror = S.noop;
@@ -155,30 +177,46 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                             nativeXhr.abort();
                         }
                     } else {
+                        var ifModifiedKey =
+                            c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString();
+
                         var status = nativeXhr.status;
 
                         // _XDomainRequest 不能获取响应头
                         if (!isInstanceOfXDomainRequest(nativeXhr)) {
-                            xhrObj.responseHeadersString = nativeXhr.getAllResponseHeaders();
+                            io.responseHeadersString = nativeXhr.getAllResponseHeaders();
+                        }
+
+                        if (ifModifiedKey) {
+                            var lastModified = nativeXhr.getResponseHeader('Last-Modified'),
+                                eTag = nativeXhr.getResponseHeader('ETag');
+                            // if u want to set if-modified-since manually
+                            // u need to save last-modified after the first request
+                            if (lastModified) {
+                                lastModifiedCached[ifModifiedKey] = lastModified;
+                            }
+                            if (eTag) {
+                                eTagCached[eTag] = eTag;
+                            }
                         }
 
                         var xml = nativeXhr.responseXML;
 
                         // Construct response list
                         if (xml && xml.documentElement /* #4958 */) {
-                            xhrObj.responseXML = xml;
+                            io.responseXML = xml;
                         }
-                        xhrObj.responseText = nativeXhr.responseText;
+                        io.responseText = nativeXhr.responseText;
 
                         // Firefox throws an exception when accessing
                         // statusText for faulty cross-domain requests
                         try {
                             var statusText = nativeXhr.statusText;
                         } catch (e) {
-                            S.log("xhr statusText error : ");
+                            S.log('xhr statusText error: ');
                             S.log(e);
                             // We normalize with Webkit giving an empty statusText
-                            statusText = "";
+                            statusText = '';
                         }
 
                         // Filter status for non standard behaviors
@@ -186,19 +224,19 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                         // (success with no data won't get notified, that's the best we
                         // can do given current implementations)
                         if (!status && io.isLocal && !c.crossDomain) {
-                            status = xhrObj.responseText ? OK_CODE : NOT_FOUND_CODE;
+                            status = io.responseText ? OK_CODE : NOT_FOUND_CODE;
                             // IE - #1450: sometimes returns 1223 when it should be 204
                         } else if (status === NO_CONTENT_CODE2) {
                             status = NO_CONTENT_CODE;
                         }
 
-                        xhrObj._xhrReady(status, statusText);
+                        io._ioReady(status, statusText);
                     }
                 }
             } catch (firefoxAccessException) {
                 nativeXhr.onreadystatechange = S.noop;
                 if (!abort) {
-                    xhrObj._xhrReady(-1, firefoxAccessException);
+                    io._ioReady(-1, firefoxAccessException);
                 }
             }
         }
@@ -206,5 +244,5 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
 
     return XhrTransportBase;
 }, {
-    requires:['./base']
+    requires: ['./base']
 });

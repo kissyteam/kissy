@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 22:03
+build time: Aug 20 15:38
 */
 /**
  * @ignore
@@ -496,11 +496,11 @@ build time: Aug 15 22:03
 
         /**
          * The build time of the library.
-         * NOTICE: '20120815220335' will replace with current timestamp when compressing.
+         * NOTICE: '20120820153805' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120815220335';
+        S.__BUILD_TIME = '20120820153805';
     })();
 
     return S;
@@ -1219,18 +1219,18 @@ build time: Aug 15 22:03
              * @param {Object} o json data
              * @param {String} [sep='&'] separator between each pair of data
              * @param {String} [eq='='] separator between key and value of data
-             * @param {Boolean} [arr=true] whether add '[]' to array key of data
+             * @param {Boolean} [serializeArray =true] whether add '[]' to array key of data
              * @return {String}
              * @member KISSY
              */
-            param: function (o, sep, eq, arr) {
+            param: function (o, sep, eq, serializeArray) {
                 if (!S.isPlainObject(o)) {
                     return EMPTY;
                 }
                 sep = sep || SEP;
                 eq = eq || EQ;
-                if (S.isUndefined(arr)) {
-                    arr = TRUE;
+                if (S.isUndefined(serializeArray)) {
+                    serializeArray = TRUE;
                 }
                 var buf = [], key, i, v, len, val;
                 for (key in o) {
@@ -1251,7 +1251,7 @@ build time: Aug 15 22:03
                             for (i = 0, len = val.length; i < len; ++i) {
                                 v = val[i];
                                 if (isValidParamValue(v)) {
-                                    buf.push(key, (arr ? encode('[]') : EMPTY));
+                                    buf.push(key, (serializeArray ? encode('[]') : EMPTY));
                                     if (v !== undefined) {
                                         buf.push(eq, encode(v + EMPTY));
                                     }
@@ -1290,7 +1290,7 @@ build time: Aug 15 22:03
                 var ret = {},
                     eqIndex,
                     pairs = str.split(sep),
-                    pair, key, val,
+                    key, val,
                     i = 0, len = pairs.length;
 
                 for (; i < len; ++i) {
@@ -2910,6 +2910,7 @@ build time: Aug 15 22:03
 
     /**
      * @class KISSY.Loader
+     * @private
      * @mixins KISSY.Loader.Target
      * This class should not be instantiated manually.
      */
@@ -2927,6 +2928,7 @@ build time: Aug 15 22:03
 
     /**
      * @class KISSY.Loader.Package
+     * @private
      * This class should not be instantiated manually.
      */
     function Package(cfg) {
@@ -2998,6 +3000,7 @@ build time: Aug 15 22:03
 
     /**
      * @class KISSY.Loader.Module
+     * @private
      * This class should not be instantiated manually.
      */
     function Module(cfg) {
@@ -3152,6 +3155,7 @@ build time: Aug 15 22:03
 
     /**
      * Loader Status Enum
+     * @private
      * @enum {Number} KISSY.Loader.STATUS
      */
     Loader.STATUS = {
@@ -3198,6 +3202,7 @@ build time: Aug 15 22:03
     /**
      * @class KISSY.Loader.Target
      * Event Target For KISSY Loader.
+     * @private
      * @singleton
      */
     KISSY.Loader.Target = {
@@ -3271,6 +3276,7 @@ build time: Aug 15 22:03
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
          * @singleton
+         * @private
          */
             Utils = {},
         host = S.Env.host,
@@ -4600,6 +4606,7 @@ build time: Aug 15 22:03
      * @class KISSY.Loader.ComboLoader
      * using combo to load module files
      * @param SS KISSY
+     * @private
      * @mixins KISSY.Loader.Target
      */
     function ComboLoader(SS) {
@@ -5193,7 +5200,7 @@ build time: Aug 15 22:03
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120815220335'
+        tag: '20120820153805'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5469,12 +5476,12 @@ KISSY.config('modules', {
 'waterfall': {requires: ['node','base']},
 'dd': {requires: ['ua','dom','event','node','base']},
 'switchable': {requires: ['dom','anim','event']},
-'tree': {requires: ['node','event','component']},
+'tree': {requires: ['node','component','event']},
 'button': {requires: ['component','event']},
 'component': {requires: ['ua','node','event','dom','base']},
 'json': {requires: ['ua']},
 'event': {requires: ['ua','dom']},
-'ajax': {requires: ['event','dom','json']},
+'ajax': {requires: ['json','event','dom']},
 'resizable': {requires: ['node','base','dd']},
 'stylesheet': {requires: ['dom']},
 'input-selection': {requires: ['dom']},
@@ -5482,7 +5489,7 @@ KISSY.config('modules', {
 'calendar': {requires: ['node','ua','event']},
 'validation': {requires: ['dom','event','node']},
 'imagezoom': {requires: ['node','overlay']},
-'menu': {requires: ['event','component','separator','node','ua']},
+'menu': {requires: ['event','component','node','ua']},
 'suggest': {requires: ['dom','event','ua']},
 'node': {requires: ['event','dom','anim']},
 'editor': {requires: ['htmlparser','component','core']},
@@ -5498,7 +5505,7 @@ KISSY.config('modules', {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 22:03
+build time: Aug 20 15:38
 */
 /**
  * @ignore
@@ -5883,7 +5890,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 22:00
+build time: Aug 20 15:34
 */
 /**
  * @ignore
@@ -10369,7 +10376,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 22:02
+build time: Aug 20 15:37
 */
 /**
  * @ignore
@@ -13063,7 +13070,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 22:03
+build time: Aug 20 15:37
 */
 /**
  * @fileOverview adapt json2 to kissy
@@ -13573,28 +13580,792 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 21:59
+build time: Aug 20 15:33
 */
 /**
+ * @ignore
+ * @fileOverview io shortcut
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('ajax', function (S, serializer, IO) {
+    var undef = undefined;
+
+    function get(url, data, callback, dataType, type) {
+        // data 参数可省略
+        if (S.isFunction(data)) {
+            dataType = callback;
+            callback = data;
+            data = undef;
+        }
+
+        return IO({
+            type: type || 'get',
+            url: url,
+            data: data,
+            success: callback,
+            dataType: dataType
+        });
+    }
+
+    // some shortcut
+    S.mix(IO,
+        {
+
+            serialize: serializer.serialize,
+
+            /**
+             * perform a get request
+             * @method
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback] success callback when this request is done
+             * @param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @param {String} [dataType] the type of data returns from this request
+             * ('xml' or 'json' or 'text')
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            get: get,
+
+            /**
+             * preform a post request
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback] success callback when this request is done.
+             * @param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @param {String} [dataType] the type of data returns from this request
+             * ('xml' or 'json' or 'text')
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            post: function (url, data, callback, dataType) {
+                if (S.isFunction(data)) {
+                    dataType = callback;
+                    callback = data;
+                    data = undef;
+                }
+                return get(url, data, callback, dataType, 'post');
+            },
+
+            /**
+             * preform a jsonp request
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback] success callback when this request is done.
+             * @param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            jsonp: function (url, data, callback) {
+                if (S.isFunction(data)) {
+                    callback = data;
+                    data = undef;
+                }
+                return get(url, data, callback, 'jsonp');
+            },
+
+            // 和 S.getScript 保持一致
+            // 更好的 getScript 可以用
+            /*
+             IO({
+             dataType:'script'
+             });
+             */
+            getScript: S.getScript,
+
+            /**
+             * perform a get request to fetch json data from server
+             * @param {String} url request destination
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback] success callback when this request is done.@param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            getJSON: function (url, data, callback) {
+                if (S.isFunction(data)) {
+                    callback = data;
+                    data = undef;
+                }
+                return get(url, data, callback, 'json');
+            },
+
+            /**
+             * submit form without page refresh
+             * @param {String} url request destination
+             * @param {HTMLElement|NodeList} form element tobe submited
+             * @param {Object} [data] name-value object associated with this request
+             * @param {Function} [callback]  success callback when this request is done.@param callback.data returned from this request with type specified by dataType
+             * @param {String} callback.status status of this request with type String
+             * @param {KISSY.IO} callback.io io object of this request
+             * @param {String} [dataType] the type of data returns from this request
+             * ('xml' or 'json' or 'text')
+             * @return {KISSY.IO}
+             * @member KISSY.IO
+             * @static
+             */
+            upload: function (url, form, data, callback, dataType) {
+                if (S.isFunction(data)) {
+                    dataType = callback;
+                    callback = data;
+                    data = undef;
+                }
+                return IO({
+                    url: url,
+                    type: 'post',
+                    dataType: dataType,
+                    form: form,
+                    data: data,
+                    success: callback
+                });
+            }
+        });
+
+    S.mix(S, {
+        'Ajax': IO,
+        'IO': IO,
+        ajax: IO,
+        io: IO,
+        jsonp: IO.jsonp
+    });
+
+    return IO;
+}, {
+    requires: [
+        'ajax/form-serializer',
+        'ajax/base',
+        'ajax/xhr-transport',
+        'ajax/script-transport',
+        'ajax/jsonp',
+        'ajax/form',
+        'ajax/iframe-transport',
+        'ajax/methods']
+});/**
+ * @ignore
+ * @fileOverview a scalable client io framework
+ * @author  yiminghe@gmail.com
+ */
+KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
+
+    var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
+        rspace = /\s+/,
+        mirror = function (s) {
+            return s;
+        },
+        Promise = S.Promise,
+        rnoContent = /^(?:GET|HEAD)$/,
+        curLocation,
+        Uri = S.Uri,
+        win = S.Env.host,
+        doc = win.document,
+        location = win.location,
+        simulatedLocation;
+
+    try {
+        curLocation = location.href;
+    } catch (e) {
+        S.log('ajax/base get curLocation error: ');
+        S.log(e);
+        // Use the href attribute of an A element
+        // since IE will modify it given document.location
+        curLocation = doc.createElement('a');
+        curLocation.href = '';
+        curLocation = curLocation.href;
+    }
+
+    simulatedLocation = new Uri(curLocation);
+
+    var isLocal = rlocalProtocol.test(simulatedLocation.getScheme()),
+        transports = {},
+        defaultConfig = {
+            type: 'GET',
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            async: true,
+            serializeArray: true,
+            processData: true,
+            accepts: {
+                xml: 'application/xml, text/xml',
+                html: 'text/html',
+                text: 'text/plain',
+                json: 'application/json, text/javascript',
+                '*': '*/*'
+            },
+            converters: {
+                text: {
+                    json: JSON.parse,
+                    html: mirror,
+                    text: mirror,
+                    xml: S.parseXML
+                }
+            },
+            contents: {
+                xml: /xml/,
+                html: /html/,
+                json: /json/
+            }
+        };
+
+    defaultConfig.converters.html = defaultConfig.converters.text;
+
+    function setUpConfig(c) {
+        // deep mix,exclude context!
+
+        var context = c.context,
+            ifModified = c['ifModified'];
+
+        delete c.context;
+        c = S.mix(S.clone(defaultConfig), c, {
+            deep: true
+        });
+        c.context = context || c;
+
+        var data, uri, type = c.type, dataType = c.dataType, query;
+
+        query = c.query = new S.Uri.Query();
+
+        uri = c.uri = simulatedLocation.resolve(c.url);
+
+        if (!('crossDomain' in c)) {
+            c.crossDomain = !c.uri.hasSameDomainAs(simulatedLocation);
+        }
+
+        if (c.processData && (data = c.data)) {
+            // 必须 encodeURIComponent 编码 utf-8
+            if (S.isObject(data)) {
+                query.add(data);
+            } else {
+                query.reset(data);
+            }
+        }
+
+        type = c.type = type.toUpperCase();
+        c.hasContent = !rnoContent.test(type);
+
+        // 数据类型处理链，一步步将前面的数据类型转化成最后一个
+        dataType = c.dataType = S.trim(dataType || '*').split(rspace);
+
+        if (!('cache' in c) && S.inArray(dataType[0], ['script', 'jsonp'])) {
+            c.cache = false;
+        }
+
+        var ifModifiedKeyUri;
+
+        if (!c.hasContent) {
+            if (query.count()) {
+                uri.query.add(query);
+            }
+            if (ifModified) {
+                // isModifiedKey should ignore random timestamp
+                ifModifiedKeyUri = uri.clone();
+            }
+            if (c.cache === false) {
+                uri.query.set('_ksTS', (S.now() + '_' + S.guid()));
+            }
+        }
+        // TODO: consider form ?
+        if (ifModified) {
+            c.ifModifiedKeyUri = ifModifiedKeyUri || uri.clone();
+        }
+        return c;
+    }
+
+    function fire(eventType, self) {
+        /**
+         * fired after request completes (success or error)
+         * @event complete
+         * @member KISSY.IO
+         * @static
+         * @param {KISSY.Event.Object} e
+         * @param {KISSY.IO} e.io current io
+         */
+
+        /**
+         * fired after request succeeds
+         * @event success
+         * @member KISSY.IO
+         * @static
+         * @param {KISSY.Event.Object} e
+         * @param {KISSY.IO} e.io current io
+         */
+
+        /**
+         * fired after request occurs error
+         * @event error
+         * @member KISSY.IO
+         * @static
+         * @param {KISSY.Event.Object} e
+         * @param {KISSY.IO} e.io current io
+         */
+        IO.fire(eventType, {
+            // 兼容
+            ajaxConfig: self.config,
+            // 兼容
+            xhr: self,
+            io: self
+        });
+    }
+
+    /**
+     * Return a io object and send request by config.
+     *
+     * @class KISSY.IO
+     * @extends KISSY.Promise
+     *
+     * @cfg {String} url
+     * request destination
+     *
+     * @cfg {String} type request type.
+     * eg: 'get','post'
+     * Default to: 'get'
+     *
+     * @cfg {String} contentType
+     * Default to: 'application/x-www-form-urlencoded; charset=UTF-8'
+     * Data will always be transmitted to the server using UTF-8 charset
+     *
+     * @cfg {Object} accepts
+     * Default to: depends on DataType.
+     * The content type sent in request header that tells the server
+     * what kind of response it will accept in return.
+     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
+     *
+     * @cfg {Boolean} async
+     * Default to: true
+     * whether request is sent asynchronously
+     *
+     * @cfg {Boolean} cache
+     * Default to: true ,false for dataType 'script' and 'jsonp'
+     * if set false,will append _ksTs=Date.now() to url automatically
+     *
+     * @cfg {Object} contents
+     * a name-regexp map to determine request data's dataType
+     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
+     *
+     * @cfg {Object} context
+     * specify the context of this request 's callback (success,error,complete)
+     *
+     * @cfg {Object} converters
+     * Default to: {text:{json:JSON.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}
+     * specified how to transform one dataType to another dataType
+     * It is recommended to do so once in the {@link KISSY.IO#method-setupConfig}
+     *
+     * @cfg {Boolean} crossDomain
+     * Default to: false for same-domain request,true for cross-domain request
+     * if server-side jsonp redirect to another domain ,you should set this to true
+     *
+     * @cfg {Object} data
+     * Data sent to server.if processData is true,data will be serialized to String type.
+     * if value if an Array, serialization will be based on serializeArray.
+     *
+     * @cfg {String} dataType
+     * return data as a specified type
+     * Default to: Based on server contentType header
+     * 'xml' : a XML document
+     * 'text'/'html': raw server data
+     * 'script': evaluate the return data as script
+     * 'json': parse the return data as json and return the result as final data
+     * 'jsonp': load json data via jsonp
+     *
+     * @cfg {Object} headers
+     * additional name-value header to send along with this request.
+     *
+     * @cfg {String} jsonp
+     * Default to: 'callback'
+     * Override the callback function name in a jsonp request. eg:
+     * set 'callback2' , then jsonp url will append  'callback2=?'.
+     *
+     * @cfg {String} jsonpCallback
+     * Specify the callback function name for a jsonp request.
+     * set this value will replace the auto generated function name.
+     * eg:
+     * set 'customCall' , then jsonp url will append 'callback=customCall'
+     *
+     * @cfg {String} mimeType
+     * override xhr 's mime type
+     *
+     * @cfg {String} ifModified
+     * whether enter if modified mode.
+     * Defaults to false.
+     *
+     * @cfg {Boolean} processData
+     * Default to: true
+     * whether data will be serialized as String
+     *
+     * @cfg {String} scriptCharset
+     * only for dataType 'jsonp' and 'script' and 'get' type.
+     * force the script to certain charset.
+     *
+     * @cfg {Function} beforeSend
+     * beforeSend(io,config)
+     * callback function called before the request is sent.this function has 2 arguments
+     *
+     * 1. current KISSY io object
+     *
+     * 2. current io config
+     *
+     * note: can be used for add progress event listener for native xhr's upload attribute
+     * see <a href='http://www.w3.org/TR/XMLHttpRequest/#event-xhr-progress'>XMLHttpRequest2</a>
+     *
+     * @cfg {Function} success
+     * success(data,textStatus,xhr)
+     * callback function called if the request succeeds.this function has 3 arguments
+     *
+     * 1. data returned from this request with type specified by dataType
+     *
+     * 2. status of this request with type String
+     *
+     * 3. io object of this request , for details {@link KISSY.IO}
+     *
+     * @cfg {Function} error
+     * success(data,textStatus,xhr)
+     * callback function called if the request occurs error.this function has 3 arguments
+     *
+     * 1. null value
+     *
+     * 2. status of this request with type String,such as 'timeout','Not Found','parsererror:...'
+     *
+     * 3. io object of this request , for details {@link KISSY.IO}
+     *
+     * @cfg {Function} complete
+     * success(data,textStatus,xhr)
+     * callback function called if the request finished(success or error).this function has 3 arguments
+     *
+     * 1. null value if error occurs or data returned from server
+     *
+     * 2. status of this request with type String,such as success:'ok',
+     * error:'timeout','Not Found','parsererror:...'
+     *
+     * 3. io object of this request , for details {@link KISSY.IO}
+     *
+     * @cfg {Number} timeout
+     * Set a timeout(in seconds) for this request.if will call error when timeout
+     *
+     * @cfg {Boolean} serializeArray
+     * whether add [] to data's name when data's value is array in serialization
+     *
+     * @cfg {Object} xhrFields
+     * name-value to set to native xhr.set as xhrFields:{withCredentials:true}
+     *
+     * @cfg {String} username
+     * a username tobe used in response to HTTP access authentication request
+     *
+     * @cfg {String} password
+     * a password tobe used in response to HTTP access authentication request
+     *
+     * @cfg {Object} xdr
+     * cross domain request config object, contains sub config:
+     *
+     * xdr.src
+     * Default to: KISSY 's flash url
+     * flash sender url
+     *
+     * xdr.use
+     * if set to 'use', it will always use flash for cross domain request even in chrome/firefox
+     *
+     * xdr.subDomain
+     * cross sub domain request config object
+     *
+     * xdr.subDomain.proxy
+     * proxy page,eg:     *
+     * a.t.cn/a.htm send request to b.t.cn/b.htm:
+     *
+     * 1. a.htm set <code> document.domain='t.cn' </code>
+     *
+     * 2. b.t.cn/proxy.htm 's content is <code> &lt;script>document.domain='t.cn'&lt;/script> </code>
+     *
+     * 3. in a.htm , call <code> IO({xdr:{subDomain:{proxy:'/proxy.htm'}}}) </code>
+     *
+     */
+    function IO(c) {
+
+        var self = this;
+
+        if (!c.url) {
+            return undefined;
+        }
+
+        if (!(self instanceof IO)) {
+            return new IO(c);
+        }
+
+
+        Promise.call(self);
+
+        c = setUpConfig(c);
+
+        S.mix(self, {
+            // 结构化数据，如 json
+            responseData: null,
+            /**
+             * config of current IO instance.
+             * @member KISSY.IO
+             * @property config
+             * @type Object
+             */
+            config: c || {},
+            timeoutTimer: null,
+
+            /**
+             * String typed data returned from server
+             * @type String
+             */
+            responseText: null,
+            /**
+             * xml typed data returned from server
+             * @type String
+             */
+            responseXML: null,
+            responseHeadersString: '',
+            responseHeaders: null,
+            requestHeaders: {},
+            /**
+             * readyState of current request
+             * 0: initialized
+             * 1: send
+             * 4: completed
+             * @type Number
+             */
+            readyState: 0,
+            state: 0,
+            /**
+             * HTTP statusText of current request
+             * @type String
+             */
+            statusText: null,
+            /**
+             * HTTP Status Code of current request
+             * eg:
+             * 200: ok
+             * 404: Not Found
+             * 500: Server Error
+             * @type String
+             */
+            status: 0,
+            transport: null,
+            _defer: new S.Defer(this)
+        });
+
+
+        var transportConstructor,
+            transport;
+
+        /**
+         * fired before generating request object
+         * @event start
+         * @member KISSY.IO
+         * @static
+         * @param {KISSY.Event.Object} e
+         * @param {KISSY.IO} e.io current io
+         */
+
+        fire('start', self);
+
+        transportConstructor = transports[c.dataType[0]] || transports['*'];
+        transport = new transportConstructor(self);
+
+        self.transport = transport;
+
+        if (c.contentType) {
+            self.setRequestHeader('Content-Type', c.contentType);
+        }
+
+        var dataType = c.dataType[0],
+            timeoutTimer,
+            i,
+            timeout = c.timeout,
+            context = c.context,
+            headers = c.headers,
+            accepts = c.accepts;
+
+        // Set the Accepts header for the server, depending on the dataType
+        self.setRequestHeader(
+            'Accept',
+            dataType && accepts[dataType] ?
+                accepts[ dataType ] + (dataType === '*' ? '' : ', */*; q=0.01'  ) :
+                accepts[ '*' ]
+        );
+
+        // Check for headers option
+        for (i in headers) {
+            if (headers.hasOwnProperty(i)) {
+                self.setRequestHeader(i, headers[ i ]);
+            }
+        }
+
+
+        // allow setup native listener
+        // such as xhr.upload.addEventListener('progress', function (ev) {})
+        if (c.beforeSend && ( c.beforeSend.call(context, self, c) === false)) {
+            return undefined;
+        }
+
+        function genHandler(handleStr) {
+            return function (v) {
+                if (timeoutTimer = self.timeoutTimer) {
+                    clearTimeout(timeoutTimer);
+                    self.timeoutTimer = 0;
+                }
+                var h = c[handleStr];
+                h && h.apply(context, v);
+                fire(handleStr, self);
+            };
+        }
+
+        self.then(genHandler('success'), genHandler('error'));
+
+        self.fin(genHandler('complete'));
+
+        self.readyState = 1;
+
+        /**
+         * fired before sending request
+         * @event send
+         * @member KISSY.IO
+         * @static
+         * @param {KISSY.Event.Object} e
+         * @param {KISSY.IO} e.io current io
+         */
+
+        fire('send', self);
+
+        // Timeout
+        if (c.async && timeout > 0) {
+            self.timeoutTimer = setTimeout(function () {
+                self.abort('timeout');
+            }, timeout * 1000);
+        }
+
+        try {
+            // flag as sending
+            self.state = 1;
+            transport.send();
+        } catch (e) {
+            // Propagate exception as error if not done
+            if (self.state < 2) {
+                self._ioReady(-1, e);
+                // Simply rethrow otherwise
+            } else {
+                S.error(e);
+            }
+        }
+
+        return undefined;
+    }
+
+    S.mix(IO, Event.Target);
+
+    S.mix(IO,
+        {
+            /**
+             * whether current application is a local application
+             * (protocal is file://,widget://,about://)
+             * @type {Boolean}
+             * @member KISSY.IO
+             * @static
+             */
+            isLocal: isLocal,
+            /**
+             * name-value object that set default config value for io class
+             * @param {Object} setting
+             * @member KISSY.IO
+             * @static
+             */
+            setupConfig: function (setting) {
+                S.mix(defaultConfig, setting, {
+                    deep: true
+                });
+            },
+            /**
+             * @private
+             * @member KISSY.IO
+             * @static
+             */
+            setupTransport: function (name, fn) {
+                transports[name] = fn;
+            },
+            /**
+             * @private
+             * @member KISSY.IO
+             * @static
+             */
+            getTransport: function (name) {
+                return transports[name];
+            },
+            /**
+             * get default config value for io request
+             * @return {Object}
+             * @member KISSY.IO
+             * @static
+             */
+            getConfig: function () {
+                return defaultConfig;
+            }
+        });
+
+    return IO;
+}, {
+    requires: ['json', 'event']
+});
+
+/*
+ 2012-08-16
+ - transform IO to class, remove XhrObject class.
+ - support ifModified
+ - http://bugs.jquery.com/ticket/8394
+ - http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+ - https://github.com/kissyteam/kissy/issues/203
+
+ 2012-07-18 yiminghe@gmail.com
+ - refactor by KISSY.Uri
+
+ 2012-2-07 yiminghe@gmail.com
+ - 返回 Promise 类型对象，可以链式操作啦！
+
+ 2011 yiminghe@gmail.com
+ - 借鉴 jquery，优化减少闭包使用
+
+ *//**
+ * @ignore
  * @fileOverview form data  serialization util
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/FormSerializer", function (S, DOM) {
+KISSY.add('ajax/form-serializer', function (S, DOM) {
     var rselectTextarea = /^(?:select|textarea)/i,
         rCRLF = /\r?\n/g,
         FormSerializer,
         rinput = /^(?:color|date|datetime|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i;
+
+    function normalizeCRLF(v) {
+        return v.replace(rCRLF, '\r\n');
+    }
+
     return FormSerializer = {
-        /*
-         序列化表单元素
-         @param {String|HTMLElement[]|HTMLElement|NodeList} forms
+        /**
+         * form serialization
+         * @method
+         * @param {HTMLElement[]|HTMLElement|NodeList} forms form elements
+         * @return {String} serialized string represent form elements
+         * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
+         * @member KISSY.IO
+         * @static
          */
-        serialize:function (forms) {
+        serialize: function (forms, serializeArray) {
             // 名值键值对序列化,数组元素名字前不加 []
-            return S.param(FormSerializer.getFormData(forms), undefined, undefined, false);
+            return S.param(FormSerializer.getFormData(forms), undefined, undefined,
+                serializeArray || false);
         },
 
-        getFormData:function (forms) {
+        getFormData: function (forms) {
             var elements = [], data = {};
             S.each(DOM.query(forms), function (el) {
                 // form 取其表单元素集合
@@ -13621,24 +14392,87 @@ KISSY.add("ajax/FormSerializer", function (S, DOM) {
             });
             S.each(elements, function (el) {
                 var val = DOM.val(el), vs;
+
                 // 字符串换行平台归一化
-                val = S.map(S.makeArray(val), function (v) {
-                    return v.replace(rCRLF, "\r\n");
-                });
-                // 全部搞成数组，防止同名
-                vs = data[el.name] = data[el.name] || [];
-                vs.push.apply(vs, val);
+                if (S.isArray(val)) {
+                    val = S.map(val, normalizeCRLF);
+                } else {
+                    val = normalizeCRLF(val);
+                }
+
+                vs = data[el.name];
+                if (!vs) {
+                    data[el.name] = val;
+                    return;
+                }
+                if (vs && !S.isArray(vs)) {
+                    // 多个元素重名时搞成数组
+                    vs = data[el.name] = [vs];
+                }
+                vs.push.apply(vs, S.makeArray(val));
             });
             return data;
         }
     };
 }, {
-    requires:['dom']
+    requires: ['dom']
 });/**
+ * @ignore
+ * @fileOverview process form config
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('ajax/form', function (S, io, DOM, FormSerializer) {
+
+    io.on('start', function (e) {
+        var io = e.io,
+            form,
+            d,
+            enctype,
+            dataType,
+            formParam,
+            tmpForm,
+            c = io.config;
+        // serialize form if needed
+        if (tmpForm = c.form) {
+            form = DOM.get(tmpForm);
+            enctype = form['encoding'] || form.enctype;
+            // 上传有其他方法
+            if (enctype.toLowerCase() != 'multipart/form-data') {
+                // when get need encode
+                formParam = FormSerializer.getFormData(form);
+                if (c.hasContent) {
+                    c.query.add(formParam);
+                } else {
+                    // get 直接加到 url
+                    c.uri.query.add(formParam);
+                    // update ifModifiedKey if necessary
+                    if (c.ifModifiedKeyUri) {
+                        c.ifModifiedKeyUri.query.add(formParam);
+                    }
+                }
+            } else {
+                dataType = c.dataType;
+                d = dataType[0];
+                if (d == '*') {
+                    d = 'text';
+                }
+                dataType.length = 2;
+                dataType[0] = 'iframe';
+                dataType[1] = d;
+            }
+        }
+    });
+
+    return io;
+
+}, {
+    requires: ['./base', 'dom', './form-serializer']
+});/**
+ * @ignore
  * @fileOverview non-refresh upload file with form by iframe
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
+KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
 
     var doc = S.Env.host.document,
         OK_CODE = 200,
@@ -13647,18 +14481,18 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
 
     // iframe 内的内容就是 body.innerText
     io.setupConfig({
-        converters:{
+        converters: {
             // iframe 到其他类型的转化和 text 一样
-            iframe:io.getConfig().converters.text,
-            text:{
+            iframe: io.getConfig().converters.text,
+            text: {
                 // fake type, just mirror
-                iframe:function (text) {
+                iframe: function (text) {
                     return text;
                 }
             },
-            xml:{
+            xml: {
                 // fake type, just mirror
-                iframe:function (xml) {
+                iframe: function (xml) {
                     return xml;
                 }
             }
@@ -13666,17 +14500,17 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
     });
 
     function createIframe(xhr) {
-        var id = S.guid("ajax-iframe"),
+        var id = S.guid('ajax-iframe'),
             iframe,
             src = DOM.getEmptyIframeSrc();
 
-        iframe = xhr.iframe = DOM.create("<iframe " +
+        iframe = xhr.iframe = DOM.create('<iframe ' +
             // ie6 need this when cross domain
-            (src ? (" src=\"" + src + "\" ") : "") +
-            " id='" + id + "'" +
+            (src ? (' src="' + src + '" ') : '') +
+            ' id="' + id + '"' +
             // need name for target of form
-            " name='" + id + "'" +
-            " style='position:absolute;left:-9999px;top:-9999px;'/>");
+            ' name="' + id + '"' +
+            ' style="position:absolute;left:-9999px;top:-9999px;"/>');
 
         DOM.prepend(iframe, doc.body || doc.documentElement);
         return iframe;
@@ -13690,9 +14524,9 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
             vs = S.makeArray(data);
             // 数组和原生一样对待，创建多个同名输入域
             for (i = 0; i < vs.length; i++) {
-                e = doc.createElement("input");
+                e = doc.createElement('input');
                 e.type = 'hidden';
-                e.name = k + (isArray && serializeArray ? "[]" : "");
+                e.name = k + (isArray && serializeArray ? '[]' : '');
                 e.value = vs[i];
                 DOM.append(e, form);
                 ret.push(e);
@@ -13705,38 +14539,38 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
         DOM.remove(fields);
     }
 
-    function IframeTransport(xhrObject) {
-        this.xhrObject = xhrObject;
+    function IframeTransport(io) {
+        this.io = io;
     }
 
     S.augment(IframeTransport, {
-        send:function () {
+        send: function () {
 
             var self = this,
-                xhrObject = self.xhrObject,
-                c = xhrObject.config,
+                io = self.io,
+                c = io.config,
                 fields,
                 iframe,
                 query = c.query,
                 form = DOM.get(c.form);
 
             self.attrs = {
-                target:DOM.attr(form, "target") || "",
-                action:DOM.attr(form, "action") || "",
+                target: DOM.attr(form, 'target') || '',
+                action: DOM.attr(form, 'action') || '',
                 // enctype 区分 iframe 与 serialize
-                //encoding:DOM.attr(form, "encoding"),
-                //enctype:DOM.attr(form, "enctype"),
-                method:DOM.attr(form, "method")
+                //encoding:DOM.attr(form, 'encoding'),
+                //enctype:DOM.attr(form, 'enctype'),
+                method: DOM.attr(form, 'method')
             };
             self.form = form;
 
-            iframe = createIframe(xhrObject);
+            iframe = createIframe(io);
 
             // set target to iframe to avoid main page refresh
             DOM.attr(form, {
-                target:iframe.id,
-                action:c.uri.toString(c.serializeArray),
-                method:"post"
+                target: iframe.id,
+                action: c.uri.toString(c.serializeArray),
+                method: 'post'
                 //enctype:'multipart/form-data',
                 //encoding:'multipart/form-data'
             });
@@ -13748,19 +14582,19 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
             self.fields = fields;
             // ie6 need a setTimeout to avoid handling load triggered if set iframe src
             setTimeout(function () {
-                Event.on(iframe, "load error", self._callback, self);
+                Event.on(iframe, 'load error', self._callback, self);
                 form.submit();
             }, 10);
 
         },
 
-        _callback:function (event/*, abort*/) {
+        _callback: function (event/*, abort*/) {
             var self = this,
                 form = self.form,
-                xhrObject = self.xhrObject,
+                io = self.io,
                 eventType = event.type,
                 iframeDoc,
-                iframe = xhrObject.iframe;
+                iframe = io.iframe;
 
             // 防止重复调用 , 成功后 abort
             if (!iframe) {
@@ -13779,16 +14613,16 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
             }, BREATH_INTERVAL);
 
             // nullify to prevent memory leak?
-            xhrObject.iframe = null;
+            io.iframe = null;
 
-            if (eventType == "load") {
+            if (eventType == 'load') {
                 iframeDoc = iframe.contentWindow.document;
                 // ie<9
                 if (iframeDoc && iframeDoc.body) {
-                    xhrObject.responseText = S.trim(DOM.text(iframeDoc.body));
+                    io.responseText = S.trim(DOM.text(iframeDoc.body));
                     // ie still can retrieve xml 's responseText
-                    if (S.startsWith(xhrObject.responseText, "<?xml")) {
-                        xhrObject.responseText = undefined;
+                    if (S.startsWith(io.responseText, '<?xml')) {
+                        io.responseText = undefined;
                     }
                 }
                 // ie<9
@@ -13801,59 +14635,362 @@ KISSY.add("ajax/IframeTransport", function (S, DOM, Event, io) {
                  Note that the support for the XMLDocument property has been removed in Internet Explorer 9.
                  */
                 if (iframeDoc && iframeDoc['XMLDocument']) {
-                    xhrObject.responseXML = iframeDoc['XMLDocument'];
+                    io.responseXML = iframeDoc['XMLDocument'];
                 }
                 // ie9 firefox chrome
                 else {
-                    xhrObject.responseXML = iframeDoc;
+                    io.responseXML = iframeDoc;
                 }
 
-                xhrObject._xhrReady(OK_CODE, "success");
+                io._ioReady(OK_CODE, 'success');
             } else if (eventType == 'error') {
-                xhrObject._xhrReady(ERROR_CODE, "error");
+                io._ioReady(ERROR_CODE, 'error');
             }
         },
 
-        abort:function () {
+        abort: function () {
             this._callback({});
         }
     });
 
-    io.setupTransport("iframe", IframeTransport);
+    io.setupTransport('iframe', IframeTransport);
 
     return io;
 
 }, {
-    requires:["dom", "event", "./base"]
+    requires: ['dom', 'event', './base']
 });/**
+ * @ignore
+ * @fileOverview jsonp transport based on script transport
+ * @author  yiminghe@gmail.com
+ */
+KISSY.add('ajax/jsonp', function (S, io) {
+    var win = S.Env.host;
+    io.setupConfig({
+        jsonp: 'callback',
+        jsonpCallback: function () {
+            // 不使用 now() ，极端情况下可能重复
+            return S.guid('jsonp');
+        }
+    });
+
+    io.on('start', function (e) {
+        var io = e.io,
+            c = io.config,
+            dataType = c.dataType;
+        if (dataType[0] == 'jsonp') {
+            var response,
+                cJsonpCallback = c.jsonpCallback,
+                converters,
+                jsonpCallback = S.isFunction(cJsonpCallback) ?
+                    cJsonpCallback() :
+                    cJsonpCallback,
+                previous = win[ jsonpCallback ];
+
+            c.uri.query.set(c.jsonp, jsonpCallback);
+
+            // build temporary JSONP function
+            win[jsonpCallback] = function (r) {
+                // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
+                // jsonp 返回了数组
+                if (arguments.length > 1) {
+                    r = S.makeArray(arguments);
+                }
+                // 先存在内存里, onload 后再读出来处理
+                response = [r];
+            };
+
+            // cleanup whether success or failure
+            io.fin(function () {
+                win[ jsonpCallback ] = previous;
+                if (previous === undefined) {
+                    try {
+                        delete win[ jsonpCallback ];
+                    } catch (e) {
+                        //S.log('delete window variable error : ');
+                        //S.log(e);
+                    }
+                } else if (response) {
+                    // after io success handler called
+                    // then call original existed jsonpcallback
+                    previous(response[0]);
+                }
+            });
+
+            converters = io.converters = io.converters || {};
+            converters.script = converters.script || {};
+
+            // script -> jsonp ,jsonp need to see json not as script
+            // if ie onload a 404 file or all browsers onload an invalid script
+            // 404/invalid will be caught here
+            // because response is undefined( jsonp callback is never called)
+            // error throwed will be caught in conversion step
+            // and KISSY will notify user by error callback
+            converters.script.json = function () {
+                if (!response) {
+                    S.error(' not call jsonpCallback: ' + jsonpCallback)
+                }
+                return response[0];
+            };
+
+            dataType.length = 2;
+            // 利用 script transport 发送 script 请求
+            dataType[0] = 'script';
+            dataType[1] = 'json';
+        }
+    });
+
+    return io;
+}, {
+    requires: ['./base']
+});
+/**
+ * @ignore
+ * @fileOverview encapsulation of io object . as transaction object in yui3
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('ajax/methods', function (S, IO, undefined) {
+
+    var OK_CODE = 200,
+        Promise = S.Promise,
+        MULTIPLE_CHOICES = 300,
+        NOT_MODIFIED = 304,
+    // get individual response header from response header str
+        rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
+
+    function handleResponseData(io) {
+
+        // text xml 是否原生转化支持
+        var text = io.responseText,
+            xml = io.responseXML,
+            c = io.config,
+            cConverts = c.converters,
+            xConverts = io.converters || {},
+            type,
+            contentType,
+            responseData,
+            contents = c.contents,
+            dataType = c.dataType;
+
+        // 例如 script 直接是js引擎执行，没有返回值，不需要自己处理初始返回值
+        // jsonp 时还需要把 script 转换成 json，后面还得自己来
+        if (text || xml) {
+
+            contentType = io.mimeType || io.getResponseHeader('Content-Type');
+
+            // 去除无用的通用格式
+            while (dataType[0] == '*') {
+                dataType.shift();
+            }
+
+            if (!dataType.length) {
+                // 获取源数据格式，放在第一个
+                for (type in contents) {
+                    if (contents.hasOwnProperty(type) && contents[type].test(contentType)) {
+                        if (dataType[0] != type) {
+                            dataType.unshift(type);
+                        }
+                        break;
+                    }
+                }
+            }
+            // 服务器端没有告知（并且客户端没有 mimetype ）默认 text 类型
+            dataType[0] = dataType[0] || 'text';
+
+            //获得合适的初始数据
+            if (dataType[0] == 'text' && text !== undefined) {
+                responseData = text;
+            }
+            // 有 xml 值才直接取，否则可能还要从 xml 转
+            else if (dataType[0] == 'xml' && xml !== undefined) {
+                responseData = xml;
+            } else {
+                var rawData = {text: text, xml: xml};
+                // 看能否从 text xml 转换到合适数据，并设置起始类型为 text/xml
+                S.each(['text', 'xml'], function (prevType) {
+                    var type = dataType[0],
+                        converter = xConverts[prevType] && xConverts[prevType][type] ||
+                            cConverts[prevType] && cConverts[prevType][type];
+                    if (converter && rawData[prevType]) {
+                        dataType.unshift(prevType);
+                        responseData = prevType == 'text' ? text : xml;
+                        return false;
+                    }
+                });
+            }
+        }
+        var prevType = dataType[0];
+
+        // 按照转化链把初始数据转换成我们想要的数据类型
+        for (var i = 1; i < dataType.length; i++) {
+            type = dataType[i];
+
+            var converter = xConverts[prevType] && xConverts[prevType][type] ||
+                cConverts[prevType] && cConverts[prevType][type];
+
+            if (!converter) {
+                throw 'no covert for ' + prevType + ' => ' + type;
+            }
+            responseData = converter(responseData);
+
+            prevType = type;
+        }
+
+        io.responseData = responseData;
+    }
+
+    S.extend(IO, Promise,
+        {
+            // Caches the header
+            setRequestHeader: function (name, value) {
+                var self = this;
+                self.requestHeaders[ name ] = value;
+                return self;
+            },
+
+            /**
+             * get all response headers as string after request is completed.
+             * @member KISSY.IO
+             * @return {String}
+             */
+            getAllResponseHeaders: function () {
+                var self = this;
+                return self.state === 2 ? self.responseHeadersString : null;
+            },
+
+            /**
+             * get header value in response to specified header name
+             * @param {String} name header name
+             * @return {String} header value
+             * @member KISSY.IO
+             */
+            getResponseHeader: function (name) {
+                var match, self = this, responseHeaders;
+                if (self.state === 2) {
+                    if (!(responseHeaders = self.responseHeaders)) {
+                        responseHeaders = self.responseHeaders = {};
+                        while (( match = rheaders.exec(self.responseHeadersString) )) {
+                            responseHeaders[ match[1] ] = match[ 2 ];
+                        }
+                    }
+                    match = responseHeaders[ name ];
+                }
+                return match === undefined ? null : match;
+            },
+
+            // Overrides response content-type header
+            overrideMimeType: function (type) {
+                var self = this;
+                if (!self.state) {
+                    self.mimeType = type;
+                }
+                return self;
+            },
+
+            /**
+             * cancel this request
+             * @member KISSY.IO
+             * @param {String} [statusText=abort] error reason as current request object's statusText
+             */
+            abort: function (statusText) {
+                var self = this;
+                statusText = statusText || 'abort';
+                if (self.transport) {
+                    self.transport.abort(statusText);
+                }
+                self._ioReady(0, statusText);
+                return self;
+            },
+
+            /**
+             * get native XMLHttpRequest
+             * @member KISSY.IO
+             * @return {XMLHttpRequest}
+             */
+            getNativeXhr: function () {
+                var transport;
+                if (transport = this.transport) {
+                    return transport.nativeXhr;
+                }
+            },
+
+            _ioReady: function (status, statusText) {
+                var self = this;
+                // 只能执行一次，防止重复执行
+                // 例如完成后，调用 abort
+
+                // 到这要么成功，调用success
+                // 要么失败，调用 error
+                // 最终都会调用 complete
+                if (self.state == 2) {
+                    return;
+                }
+                self.state = 2;
+                self.readyState = 4;
+                var isSuccess;
+                if (status >= OK_CODE && status < MULTIPLE_CHOICES || status == NOT_MODIFIED) {
+                    // note: not same with nativeStatusText, such as 'OK'/'Not Modified'
+                    // 为了整个框架的和谐以及兼容性，用小写，并改变写法
+                    if (status == NOT_MODIFIED) {
+                        statusText = 'not modified';
+                        isSuccess = true;
+                    } else {
+                        try {
+                            handleResponseData(self);
+                            statusText = 'success';
+                            isSuccess = true;
+                        } catch (e) {
+                            S.log(e.stack || e, 'error');
+                            statusText = 'parser error';
+                        }
+                    }
+
+                } else {
+                    if (status < 0) {
+                        status = 0;
+                    }
+                }
+
+                self.status = status;
+                self.statusText = statusText;
+
+                var defer = self._defer;
+                defer[isSuccess ? 'resolve' : 'reject']([self.responseData, statusText, self]);
+            }
+        }
+    );
+}, {
+    requires: ['./base']
+});/**
+ * @ignore
  * @fileOverview script transport for kissy io
  * @description: modified version of S.getScript , add abort ability
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/ScriptTransport", function (S, io, _, undefined) {
+KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
 
     var win = S.Env.host,
         doc = win.document,
         OK_CODE = 200,
         ERROR_CODE = 500;
 
-    io.setupConfig({
-        accepts:{
-            script:"text/javascript, " +
-                "application/javascript, " +
-                "application/ecmascript, " +
-                "application/x-ecmascript"
+    IO.setupConfig({
+        accepts: {
+            script: 'text/javascript, ' +
+                'application/javascript, ' +
+                'application/ecmascript, ' +
+                'application/x-ecmascript'
         },
 
-        contents:{
-            script:/javascript|ecmascript/
+        contents: {
+            script: /javascript|ecmascript/
         },
-        converters:{
-            text:{
+        converters: {
+            text: {
                 // 如果以 xhr+eval 需要下面的，
                 // 否则直接 script node 不需要，引擎自己执行了，
                 // 不需要手动 eval
-                script:function (text) {
+                script: function (text) {
                     S.globalEval(text);
                     return text;
                 }
@@ -13861,29 +14998,29 @@ KISSY.add("ajax/ScriptTransport", function (S, io, _, undefined) {
         }
     });
 
-    function ScriptTransport(xhrObj) {
+    function ScriptTransport(io) {
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
-        if (!xhrObj.config.crossDomain) {
-            return new (io.getTransport("*"))(xhrObj);
+        if (!io.config.crossDomain) {
+            return new (IO.getTransport('*'))(io);
         }
-        this.xhrObj = xhrObj;
+        this.io = io;
         return 0;
     }
 
     S.augment(ScriptTransport, {
-        send:function () {
+        send: function () {
             var self = this,
                 script,
-                xhrObj = self.xhrObj,
-                c = xhrObj.config,
+                io = self.io,
+                c = io.config,
                 head = doc['head'] ||
-                    doc.getElementsByTagName("head")[0] ||
+                    doc.getElementsByTagName('head')[0] ||
                     doc.documentElement;
 
             self.head = head;
-            script = doc.createElement("script");
+            script = doc.createElement('script');
             self.script = script;
-            script.async = "async";
+            script.async = 'async';
 
             if (c['scriptCharset']) {
                 script.charset = c['scriptCharset'];
@@ -13896,16 +15033,16 @@ KISSY.add("ajax/ScriptTransport", function (S, io, _, undefined) {
                     script.onreadystatechange = function (e) {
                         e = e || win.event;
                         // firefox onerror 没有 type ?!
-                        self._callback((e.type || "error").toLowerCase());
+                        self._callback((e.type || 'error').toLowerCase());
                     };
 
             head.insertBefore(script, head.firstChild);
         },
 
-        _callback:function (event, abort) {
+        _callback: function (event, abort) {
             var self = this,
                 script = self.script,
-                xhrObj = self.xhrObj,
+                io = self.io,
                 head = self.head;
 
             // 防止重复调用,成功后 abort
@@ -13917,7 +15054,7 @@ KISSY.add("ajax/ScriptTransport", function (S, io, _, undefined) {
                 abort ||
                     !script.readyState ||
                     /loaded|complete/.test(script.readyState) ||
-                    event == "error"
+                    event == 'error'
                 ) {
 
                 script['onerror'] = script.onload = script.onreadystatechange = null;
@@ -13926,7 +15063,7 @@ KISSY.add("ajax/ScriptTransport", function (S, io, _, undefined) {
                 if (head && script.parentNode) {
                     // ie 报错载入无效 js
                     // 怎么 abort ??
-                    // script.src = "#";
+                    // script.src = '#';
                     head.removeChild(script);
                 }
 
@@ -13934,44 +15071,45 @@ KISSY.add("ajax/ScriptTransport", function (S, io, _, undefined) {
                 self.head = undefined;
 
                 // Callback if not abort
-                if (!abort && event != "error") {
-                    xhrObj._xhrReady(OK_CODE, "success");
+                if (!abort && event != 'error') {
+                    io._ioReady(OK_CODE, 'success');
                 }
                 // 非 ie<9 可以判断出来
-                else if (event == "error") {
-                    xhrObj._xhrReady(ERROR_CODE, "scripterror");
+                else if (event == 'error') {
+                    io._ioReady(ERROR_CODE, 'script error');
                 }
             }
         },
 
-        abort:function () {
+        abort: function () {
             this._callback(0, 1);
         }
     });
 
-    io.setupTransport("script", ScriptTransport);
+    IO.setupTransport('script', ScriptTransport);
 
-    return io;
+    return IO;
 
 }, {
-    requires:['./base', './XhrTransport']
+    requires: ['./base', './xhr-transport']
 });/**
+ * @ignore
  * @fileOverview solve io between sub domains using proxy page
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) {
+KISSY.add('ajax/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) {
 
     var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-        PROXY_PAGE = "/sub_domain_proxy.html",
+        PROXY_PAGE = '/sub_domain_proxy.html',
         doc = S.Env.host.document,
         iframeMap = {
             // hostname:{iframe: , ready:}
         };
 
-    function SubDomainTransport(xhrObj) {
+    function SubDomainTransport(io) {
         var self = this,
-            c = xhrObj.config;
-        self.xhrObj = xhrObj;
+            c = io.config;
+        self.io = io;
         c.crossDomain = false;
     }
 
@@ -13979,9 +15117,9 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
     S.augment(SubDomainTransport, XhrTransportBase.proto, {
         // get nativeXhr from iframe document
         // not from current document directly like XhrTransport
-        send:function () {
+        send: function () {
             var self = this,
-                c = self.xhrObj.config,
+                c = self.io.config,
                 uri = c.uri,
                 hostname = uri.getHostname(),
                 iframe,
@@ -13999,18 +15137,18 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
                 if (self.nativeXhr) {
                     self.sendInternal();
                 } else {
-                    S.error("document.domain not set correctly!");
+                    S.error('document.domain not set correctly!');
                 }
                 return;
             }
 
             if (!iframeDesc) {
                 iframeDesc = iframeMap[hostname] = {};
-                iframe = iframeDesc.iframe = doc.createElement("iframe");
+                iframe = iframeDesc.iframe = doc.createElement('iframe');
                 DOM.css(iframe, {
-                    position:'absolute',
-                    left:'-9999px',
-                    top:'-9999px'
+                    position: 'absolute',
+                    left: '-9999px',
+                    top: '-9999px'
                 });
                 DOM.prepend(iframe, doc.body || doc.documentElement);
                 iframeUri = new S.Uri();
@@ -14022,39 +15160,40 @@ KISSY.add("ajax/SubDomainTransport", function (S, XhrTransportBase, Event, DOM) 
                 iframe = iframeDesc.iframe;
             }
 
-            Event.on(iframe, "load", _onLoad, self);
+            Event.on(iframe, 'load', _onLoad, self);
 
         }
     });
 
     function _onLoad() {
         var self = this,
-            c = self.xhrObj.config,
+            c = self.io.config,
             uri = c.uri,
             hostname = uri.getHostname(),
             iframeDesc = iframeMap[hostname];
         iframeDesc.ready = 1;
-        Event.detach(iframeDesc.iframe, "load", _onLoad, self);
+        Event.detach(iframeDesc.iframe, 'load', _onLoad, self);
         self.send();
     }
 
     return SubDomainTransport;
 
 }, {
-    requires:['./XhrTransportBase', 'event', 'dom']
+    requires: ['./xhr-transport-base', 'event', 'dom']
 });/**
+ * @ignore
  * @fileOverview use flash to accomplish cross domain request, usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
+KISSY.add('ajax/xdr-flash-transport', function (S, io, DOM) {
 
     var // current running request instances
         maps = {},
-        ID = "io_swf",
-        // flash transporter
+        ID = 'io_swf',
+    // flash transporter
         flash,
         doc = S.Env.host.document,
-        // whether create the flash transporter
+    // whether create the flash transporter
         init = false;
 
     // create the flash transporter
@@ -14064,38 +15203,38 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
         }
         init = true;
         var o = '<object id="' + ID +
-            '" type="application/x-shockwave-flash" data="' +
-            uri + '" width="0" height="0">' +
-            '<param name="movie" value="' +
-            uri + '" />' +
-            '<param name="FlashVars" value="yid=' +
-            _ + '&uid=' +
-            uid +
-            '&host=KISSY.require(\'ajax\')" />' +
-            '<param name="allowScriptAccess" value="always" />' +
-            '</object>',
+                '" type="application/x-shockwave-flash" data="' +
+                uri + '" width="0" height="0">' +
+                '<param name="movie" value="' +
+                uri + '" />' +
+                '<param name="FlashVars" value="yid=' +
+                _ + '&uid=' +
+                uid +
+                '&host=KISSY.require(\'ajax\')" />' +
+                '<param name="allowScriptAccess" value="always" />' +
+                '</object>',
             c = doc.createElement('div');
         DOM.prepend(c, doc.body || doc.documentElement);
         c.innerHTML = o;
     }
 
-    function XdrFlashTransport(xhrObj) {
-        S.log("use flash xdr");
-        this.xhrObj = xhrObj;
+    function XdrFlashTransport(io) {
+        S.log('use flash xdr');
+        this.io = io;
     }
 
     S.augment(XdrFlashTransport, {
         // rewrite send to support flash xdr
-        send:function () {
+        send: function () {
             var self = this,
-                xhrObj = self.xhrObj,
-                c = xhrObj.config,
+                io = self.io,
+                c = io.config,
                 xdr = c['xdr'] || {};
             // 不提供则使用 cdn 默认的 flash
-            _swf(xdr.src || (S.Config.base + "ajax/io.swf"), 1, 1);
+            _swf(xdr.src || (S.Config.base + 'ajax/io.swf'), 1, 1);
             // 简便起见，用轮训
             if (!flash) {
-                // S.log("detect xdr flash");
+                // S.log('detect xdr flash');
                 setTimeout(function () {
                     self.send();
                 }, 200);
@@ -14106,30 +15245,30 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
 
             // ie67 send 出错？
             flash.send(c.uri.toString(c.serializeArray), {
-                id:self._uid,
-                uid:self._uid,
-                method:c.type,
-                data:c.hasContent && c.query.toString(c.serializeArray) || {}
+                id: self._uid,
+                uid: self._uid,
+                method: c.type,
+                data: c.hasContent && c.query.toString(c.serializeArray) || {}
             });
         },
 
-        abort:function () {
+        abort: function () {
             flash.abort(this._uid);
         },
 
-        _xdrResponse:function (e, o) {
+        _xdrResponse: function (e, o) {
             // S.log(e);
             var self = this,
                 ret,
-                id= o.id,
-                xhrObj = self.xhrObj;
+                id = o.id,
+                io = self.io;
 
             // need decodeURI to get real value from flash returned value
-            xhrObj.responseText = decodeURI(o.c.responseText);
+            io.responseText = decodeURI(o.c.responseText);
 
             switch (e) {
                 case 'success':
-                    ret = { status:200, statusText:"success" };
+                    ret = { status: 200, statusText: 'success' };
                     delete maps[id];
                     break;
                 case 'abort':
@@ -14139,19 +15278,19 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
                 case 'transport error':
                 case 'failure':
                     delete maps[id];
-                    ret = { status:500, statusText:e };
+                    ret = { status: 500, statusText: e };
                     break;
             }
             if (ret) {
-                xhrObj._xhrReady(ret.status, ret.statusText);
+                io._ioReady(ret.status, ret.statusText);
             }
         }
     });
 
     /*called by flash*/
     io['applyTo'] = function (_, cmd, args) {
-        // S.log(cmd + " execute");
-        var cmds = cmd.split(".").slice(1),
+        // S.log(cmd + ' execute');
+        var cmds = cmd.split('.').slice(1),
             func = io;
         S.each(cmds, function (c) {
             func = func[c];
@@ -14164,10 +15303,10 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
         flash = doc.getElementById(ID);
     };
 
-    /**
-     * when response is returned from server
-     * @param e response status
-     * @param o internal data
+    /*
+     when response is returned from server
+     @param e response status
+     @param o internal data
      */
     io['xdrResponse'] = function (e, o) {
         var xhr = maps[o.uid];
@@ -14177,358 +15316,13 @@ KISSY.add("ajax/XdrFlashTransport", function (S, io, DOM) {
     return XdrFlashTransport;
 
 }, {
-    requires:["./base", 'dom']
+    requires: ['./base', 'dom']
 });/**
- * @fileOverview encapsulation of io object . as transaction object in yui3
- * @author yiminghe@gmail.com
- */
-KISSY.add("ajax/XhrObject", function (S, undefined) {
-
-    var OK_CODE = 200,
-        Promise = S.Promise,
-        MULTIPLE_CHOICES = 300,
-        NOT_MODIFIED = 304,
-    // get individual response header from responseheader str
-        rheaders = /^(.*?):[ \t]*([^\r\n]*)\r?$/mg;
-
-    function handleResponseData(xhrObject) {
-
-        // text xml 是否原生转化支持
-        var text = xhrObject.responseText,
-            xml = xhrObject.responseXML,
-            c = xhrObject.config,
-            cConverts = c.converters,
-            xConverts = xhrObject.converters || {},
-            type,
-            contentType,
-            responseData,
-            contents = c.contents,
-            dataType = c.dataType;
-
-        // 例如 script 直接是js引擎执行，没有返回值，不需要自己处理初始返回值
-        // jsonp 时还需要把 script 转换成 json，后面还得自己来
-        if (text || xml) {
-
-            contentType = xhrObject.mimeType || xhrObject.getResponseHeader("Content-Type");
-
-            // 去除无用的通用格式
-            while (dataType[0] == "*") {
-                dataType.shift();
-            }
-
-            if (!dataType.length) {
-                // 获取源数据格式，放在第一个
-                for (type in contents) {
-                    if (contents.hasOwnProperty(type) && contents[type].test(contentType)) {
-                        if (dataType[0] != type) {
-                            dataType.unshift(type);
-                        }
-                        break;
-                    }
-                }
-            }
-            // 服务器端没有告知（并且客户端没有 mimetype ）默认 text 类型
-            dataType[0] = dataType[0] || "text";
-
-            //获得合适的初始数据
-            if (dataType[0] == "text" && text !== undefined) {
-                responseData = text;
-            }
-            // 有 xml 值才直接取，否则可能还要从 xml 转
-            else if (dataType[0] == "xml" && xml !== undefined) {
-                responseData = xml;
-            } else {
-                var rawData = {text:text, xml:xml};
-                // 看能否从 text xml 转换到合适数据，并设置起始类型为 text/xml
-                S.each(["text", "xml"], function (prevType) {
-                    var type = dataType[0],
-                        converter = xConverts[prevType] && xConverts[prevType][type] ||
-                            cConverts[prevType] && cConverts[prevType][type];
-                    if (converter && rawData[prevType]) {
-                        dataType.unshift(prevType);
-                        responseData = prevType == "text" ? text : xml;
-                        return false;
-                    }
-                });
-            }
-        }
-        var prevType = dataType[0];
-
-        // 按照转化链把初始数据转换成我们想要的数据类型
-        for (var i = 1; i < dataType.length; i++) {
-            type = dataType[i];
-
-            var converter = xConverts[prevType] && xConverts[prevType][type] ||
-                cConverts[prevType] && cConverts[prevType][type];
-
-            if (!converter) {
-                throw "no covert for " + prevType + " => " + type;
-            }
-            responseData = converter(responseData);
-
-            prevType = type;
-        }
-
-        xhrObject.responseData = responseData;
-    }
-
-    /**
-     * @class A class for constructing io request instances. !Do Not New By Yourself!
-     * @extends KISSY.Promise
-     * @memberOf IO
-     */
-    function XhrObject(c) {
-        Promise.call(this);
-        S.mix(this, {
-            // 结构化数据，如 json
-            responseData:null,
-            config:c || {},
-            timeoutTimer:null,
-
-            /**
-             * @field
-             * @memberOf IO.XhrObject#
-             * @description String typed data returned from server
-             */
-            responseText:null,
-            /**
-             * @field
-             * @memberOf IO.XhrObject#
-             * @description xml typed data returned from server
-             */
-            responseXML:null,
-            responseHeadersString:"",
-            responseHeaders:null,
-            requestHeaders:{},
-            /**
-             * @field
-             * @memberOf IO.XhrObject#
-             * @description <br>
-             * readyState of current request<br>
-             * 0: initialized<br>
-             * 1: send <br>
-             * 4: completed<br>
-             */
-            readyState:0,
-            state:0,
-            /**
-             * @field
-             * @memberOf IO.XhrObject#
-             * @description HTTP statusText of current request
-             */
-            statusText:null,
-            /**
-             * @field
-             * @memberOf IO.XhrObject#
-             * @description <br> HTTP Status Code of current request <br>
-             * eg:<br>
-             * 200 : ok<br>
-             * 404 : Not Found<br>
-             * 500 : Server Error<br>
-             */
-            status:0,
-            transport:null,
-            _defer:new S.Defer(this)
-        });
-    }
-
-    S.extend(XhrObject, Promise,
-        /**
-         * @lends IO.XhrObject.prototype
-         */
-        {
-            // Caches the header
-            setRequestHeader:function (name, value) {
-                var self = this;
-                self.requestHeaders[ name ] = value;
-                return self;
-            },
-
-            /**
-             * get all response headers as string after request is completed
-             * @return {String}
-             */
-            getAllResponseHeaders:function () {
-                var self = this;
-                return self.state === 2 ? self.responseHeadersString : null;
-            },
-
-            /**
-             * get header value in response to specified header name
-             * @param {String} name header name
-             * @return {String} header value
-             */
-            getResponseHeader:function (name) {
-                var match, self = this,responseHeaders;
-                if (self.state === 2) {
-                    if (!(responseHeaders=self.responseHeaders)) {
-                        responseHeaders=self.responseHeaders = {};
-                        while (( match = rheaders.exec(self.responseHeadersString) )) {
-                            responseHeaders[ match[1] ] = match[ 2 ];
-                        }
-                    }
-                    match = responseHeaders[ name ];
-                }
-                return match === undefined ? null : match;
-            },
-
-            // Overrides response content-type header
-            overrideMimeType:function (type) {
-                var self = this;
-                if (!self.state) {
-                    self.mimeType = type;
-                }
-                return self;
-            },
-
-            /**
-             * cancel this request
-             * @param {String} [statusText=abort] error reason as current request object's statusText
-             */
-            abort:function (statusText) {
-                var self = this;
-                statusText = statusText || "abort";
-                if (self.transport) {
-                    self.transport.abort(statusText);
-                }
-                self._xhrReady(0, statusText);
-                return self;
-            },
-
-            /**
-             * get native XMLHttpRequest
-             * @since 1.3
-             */
-            getNativeXhr:function () {
-                var transport;
-                if (transport = this.transport) {
-                    return transport.nativeXhr;
-                }
-            },
-
-            _xhrReady:function (status, statusText) {
-                var self = this;
-                // 只能执行一次，防止重复执行
-                // 例如完成后，调用 abort
-
-                // 到这要么成功，调用success
-                // 要么失败，调用 error
-                // 最终都会调用 complete
-                if (self.state == 2) {
-                    return;
-                }
-                self.state = 2;
-                self.readyState = 4;
-                var isSuccess;
-                if (status >= OK_CODE && status < MULTIPLE_CHOICES || status == NOT_MODIFIED) {
-
-                    if (status == NOT_MODIFIED) {
-                        statusText = "notmodified";
-                        isSuccess = true;
-                    } else {
-                        try {
-                            handleResponseData(self);
-                            statusText = "success";
-                            isSuccess = true;
-                        } catch (e) {
-                            S.log(e.stack || e, "error");
-                            statusText = "parsererror : " + e;
-                        }
-                    }
-
-                } else {
-                    if (status < 0) {
-                        status = 0;
-                    }
-                }
-
-                self.status = status;
-                self.statusText = statusText;
-
-                var defer = self._defer;
-                defer[isSuccess ? "resolve" : "reject"]([self.responseData, self.statusText, self]);
-            }
-        }
-    );
-
-    return XhrObject;
-});/**
- * @fileOverview ajax xhr transport class , route subdomain , xdr
- * @author yiminghe@gmail.com
- */
-KISSY.add("ajax/XhrTransport", function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
-
-    var win = S.Env.host,
-        _XDomainRequest = win['XDomainRequest'],
-        detectXhr = XhrTransportBase.nativeXhr();
-
-    if (detectXhr) {
-
-        // xx.taobao.com => taobao.com
-        // xx.sina.com.cn => sina.com.cn
-        function getMainDomain(host) {
-            var t = host.split('.'), len = t.length, limit = len > 3 ? 3 : 2;
-            if (len < limit) {
-                return t.join(".");
-            } else {
-                return t.reverse().slice(0, limit).reverse().join('.');
-            }
-        }
-
-
-        function XhrTransport(xhrObj) {
-            var c = xhrObj.config,
-                crossDomain= c.crossDomain,
-                self=this,
-                xdrCfg = c['xdr'] || {};
-
-            if (crossDomain) {
-
-                // 跨子域
-                if (getMainDomain(location.hostname) == getMainDomain(c.uri.getHostname())) {
-                    return new SubDomainTransport(xhrObj);
-                }
-
-                /**
-                 * ie>7 通过配置 use='flash' 强制使用 flash xdr
-                 * 使用 withCredentials 检测是否支持 CORS
-                 * http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
-                 */
-                if (!("withCredentials" in detectXhr) &&
-                    (String(xdrCfg.use) === "flash" || !_XDomainRequest)) {
-                    return new XdrFlashTransport(xhrObj);
-                }
-            }
-
-            self.xhrObj = xhrObj;
-            self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
-            return undefined;
-        }
-
-        S.augment(XhrTransport, XhrTransportBase.proto, {
-
-            send:function () {
-                this.sendInternal();
-            }
-
-        });
-
-        io.setupTransport("*", XhrTransport);
-    }
-
-    return io;
-}, {
-    requires:["./base", './XhrTransportBase', './SubDomainTransport', "./XdrFlashTransport"]
-});
-
-/**
- * 借鉴 jquery，优化使用原型替代闭包
- * CORS : http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/
- **//**
+ * @ignore
  * @fileOverview base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax/XhrTransportBase", function (S, io) {
+KISSY.add('ajax/xhr-transport-base', function (S, io) {
     var OK_CODE = 200,
         win = S.Env.host,
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
@@ -14537,23 +15331,27 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
         NOT_FOUND_CODE = 404,
         NO_CONTENT_CODE2 = 1223,
         XhrTransportBase = {
-            proto:{}
-        };
+            proto: {}
+        }, lastModifiedCached = {},
+        eTagCached = {};
+
+    io.__lastModifiedCached = lastModifiedCached;
+    io.__eTagCached = eTagCached;
 
     function createStandardXHR(_, refWin) {
         try {
             return new (refWin || win)['XMLHttpRequest']();
         } catch (e) {
-            //S.log("createStandardXHR error");
+            //S.log('createStandardXHR error');
         }
         return undefined;
     }
 
     function createActiveXHR(_, refWin) {
         try {
-            return new (refWin || win)['ActiveXObject']("Microsoft.XMLHTTP");
+            return new (refWin || win)['ActiveXObject']('Microsoft.XMLHTTP');
         } catch (e) {
-            S.log("createActiveXHR error");
+            S.log('createActiveXHR error');
         }
         return undefined;
     }
@@ -14571,22 +15369,40 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
     }
 
     S.mix(XhrTransportBase.proto, {
-        sendInternal:function () {
+        sendInternal: function () {
 
             var self = this,
-                xhrObj = self.xhrObj,
-                c = xhrObj.config,
+                io = self.io,
+                c = io.config,
                 nativeXhr = self.nativeXhr,
                 type = c.type,
                 async = c.async,
                 username,
                 crossDomain = c.crossDomain,
-                mimeType = xhrObj.mimeType,
-                requestHeaders = xhrObj.requestHeaders,
-                serializeArray= c.serializeArray,
+                mimeType = io.mimeType,
+                requestHeaders = io.requestHeaders || {},
+                serializeArray = c.serializeArray,
                 url = c.uri.toString(serializeArray),
                 xhrFields,
+                ifModifiedKey,
+                cacheValue,
                 i;
+
+            if (ifModifiedKey =
+                (c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString())) {
+                // if ajax want a conditional load
+                // (response status is 304 and responseText is null)
+                // u need to set if-modified-since manually!
+                // or else
+                // u will always get response status 200 and full responseText
+                // which is also conditional load but process transparently by browser
+                if (cacheValue = lastModifiedCached[ifModifiedKey]) {
+                    requestHeaders['If-Modified-Since'] = cacheValue;
+                }
+                if (cacheValue = eTagCached[ifModifiedKey]) {
+                    requestHeaders['If-None-Match'] = cacheValue;
+                }
+            }
 
             if (username = c['username']) {
                 nativeXhr.open(type, url, async, username, c.password)
@@ -14607,8 +15423,8 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                 nativeXhr.overrideMimeType(mimeType);
             }
             // yui3 and jquery both have
-            if (!crossDomain && !requestHeaders["X-Requested-With"]) {
-                requestHeaders[ "X-Requested-With" ] = "XMLHttpRequest";
+            if (!crossDomain && !requestHeaders['X-Requested-With']) {
+                requestHeaders[ 'X-Requested-With' ] = 'XMLHttpRequest';
             }
             try {
                 // 跨域时，不能设，否则请求变成
@@ -14621,7 +15437,7 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                     }
                 }
             } catch (e) {
-                S.log("setRequestHeader in xhr error : ");
+                S.log('setRequestHeader in xhr error: ');
                 S.log(e);
             }
 
@@ -14649,23 +15465,22 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                 }
             }
         },
-        // 由 xhrObj.abort 调用，自己不可以调用 xhrObj.abort
-        abort:function () {
+        // 由 io.abort 调用，自己不可以调用 io.abort
+        abort: function () {
             this._callback(0, 1);
         },
 
-        _callback:function (event, abort) {
+        _callback: function (event, abort) {
             // Firefox throws exceptions when accessing properties
             // of an xhr when a network error occured
             // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
             try {
                 var self = this,
                     nativeXhr = self.nativeXhr,
-                    xhrObj = self.xhrObj,
-                    c = xhrObj.config;
+                    io = self.io,
+                    c = io.config;
                 //abort or complete
                 if (abort || nativeXhr.readyState == 4) {
-
                     // ie6 ActiveObject 设置不恰当属性导致出错
                     if (isInstanceOfXDomainRequest(nativeXhr)) {
                         nativeXhr.onerror = S.noop;
@@ -14681,30 +15496,46 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                             nativeXhr.abort();
                         }
                     } else {
+                        var ifModifiedKey =
+                            c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString();
+
                         var status = nativeXhr.status;
 
                         // _XDomainRequest 不能获取响应头
                         if (!isInstanceOfXDomainRequest(nativeXhr)) {
-                            xhrObj.responseHeadersString = nativeXhr.getAllResponseHeaders();
+                            io.responseHeadersString = nativeXhr.getAllResponseHeaders();
+                        }
+
+                        if (ifModifiedKey) {
+                            var lastModified = nativeXhr.getResponseHeader('Last-Modified'),
+                                eTag = nativeXhr.getResponseHeader('ETag');
+                            // if u want to set if-modified-since manually
+                            // u need to save last-modified after the first request
+                            if (lastModified) {
+                                lastModifiedCached[ifModifiedKey] = lastModified;
+                            }
+                            if (eTag) {
+                                eTagCached[eTag] = eTag;
+                            }
                         }
 
                         var xml = nativeXhr.responseXML;
 
                         // Construct response list
                         if (xml && xml.documentElement /* #4958 */) {
-                            xhrObj.responseXML = xml;
+                            io.responseXML = xml;
                         }
-                        xhrObj.responseText = nativeXhr.responseText;
+                        io.responseText = nativeXhr.responseText;
 
                         // Firefox throws an exception when accessing
                         // statusText for faulty cross-domain requests
                         try {
                             var statusText = nativeXhr.statusText;
                         } catch (e) {
-                            S.log("xhr statusText error : ");
+                            S.log('xhr statusText error: ');
                             S.log(e);
                             // We normalize with Webkit giving an empty statusText
-                            statusText = "";
+                            statusText = '';
                         }
 
                         // Filter status for non standard behaviors
@@ -14712,19 +15543,19 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
                         // (success with no data won't get notified, that's the best we
                         // can do given current implementations)
                         if (!status && io.isLocal && !c.crossDomain) {
-                            status = xhrObj.responseText ? OK_CODE : NOT_FOUND_CODE;
+                            status = io.responseText ? OK_CODE : NOT_FOUND_CODE;
                             // IE - #1450: sometimes returns 1223 when it should be 204
                         } else if (status === NO_CONTENT_CODE2) {
                             status = NO_CONTENT_CODE;
                         }
 
-                        xhrObj._xhrReady(status, statusText);
+                        io._ioReady(status, statusText);
                     }
                 }
             } catch (firefoxAccessException) {
                 nativeXhr.onreadystatechange = S.noop;
                 if (!abort) {
-                    xhrObj._xhrReady(-1, firefoxAccessException);
+                    io._ioReady(-1, firefoxAccessException);
                 }
             }
         }
@@ -14732,798 +15563,85 @@ KISSY.add("ajax/XhrTransportBase", function (S, io) {
 
     return XhrTransportBase;
 }, {
-    requires:['./base']
+    requires: ['./base']
 });/**
- * @fileOverview io shortcut
+ * @ignore
+ * @fileOverview ajax xhr transport class, route subdomain, xdr
  * @author yiminghe@gmail.com
  */
-KISSY.add("ajax", function (S, serializer, IO, XhrObject) {
-    var undef = undefined;
+KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
 
-    function get(url, data, callback, dataType, type) {
-        // data 参数可省略
-        if (S.isFunction(data)) {
-            dataType = callback;
-            callback = data;
-            data = undef;
-        }
+    var win = S.Env.host,
+        _XDomainRequest = win['XDomainRequest'],
+        detectXhr = XhrTransportBase.nativeXhr();
 
-        return IO({
-            type:type || "get",
-            url:url,
-            data:data,
-            success:callback,
-            dataType:dataType
-        });
-    }
+    if (detectXhr) {
 
-    // some shortcut
-    S.mix(IO,
-
-        /**
-         * @lends IO
-         */
-        {
-            XhrObject:XhrObject,
-            /**
-             * form serialization
-             * @method
-             * @param formElement {HTMLElement[]|HTMLElement|NodeList} form elements
-             * @return {String} serialized string represent form elements
-             */
-            serialize:serializer.serialize,
-
-            /**
-             * perform a get request
-             * @method
-             * @param {String} url request destination
-             * @param {Object} [data] name-value object associated with this request
-             * @param {Function()} callback <br/>
-             * success callback when this request is done
-             * with parameter <br/>
-             * 1. data returned from this request with type specified by dataType <br/>
-             * 2. status of this request with type String <br/>
-             * 3. XhrObject of this request , for details {@link IO.XhrObject}
-             * @param {String} [dataType] the type of data returns from this request
-             * ("xml" or "json" or "text")
-             * @return {IO.XhrObject}
-             */
-            get:get,
-
-            /**
-             * preform a post request
-             * @param {String} url request destination
-             * @param {Object} [data] name-value object associated with this request
-             * @param {Function()} callback <br/>
-             * success callback when this request is done<br/>
-             * with parameter<br/>
-             * 1. data returned from this request with type specified by dataType<br/>
-             * 2. status of this request with type String<br/>
-             * 3. XhrObject of this request , for details {@link IO.XhrObject}
-             * @param {String} [dataType] the type of data returns from this request
-             * ("xml" or "json" or "text")
-             * @return {IO.XhrObject}
-             */
-            post:function (url, data, callback, dataType) {
-                if (S.isFunction(data)) {
-                    dataType = callback;
-                    callback = data;
-                    data = undef;
-                }
-                return get(url, data, callback, dataType, "post");
-            },
-
-            /**
-             * preform a jsonp request
-             * @param {String} url request destination
-             * @param {Object} [data] name-value object associated with this request
-             * @param {Function()} callback
-             *  <br/>success callback when this request is done<br/>
-             * with parameter<br/>
-             * 1. data returned from this request with type specified by dataType<br/>
-             * 2. status of this request with type String<br/>
-             * 3. XhrObject of this request , for details {@link IO.XhrObject}
-             * @return {IO.XhrObject}
-             */
-            jsonp:function (url, data, callback) {
-                if (S.isFunction(data)) {
-                    callback = data;
-                    data = undef;
-                }
-                return get(url, data, callback, "jsonp");
-            },
-
-            // 和 S.getScript 保持一致
-            // 更好的 getScript 可以用
-            /*
-             IO({
-             dataType:'script'
-             });
-             */
-            getScript:S.getScript,
-
-            /**
-             * perform a get request to fetch json data from server
-             * @param {String} url request destination
-             * @param {Object} [data] name-value object associated with this request
-             * @param {Function()} callback  <br/>success callback when this request is done<br/>
-             * with parameter<br/>
-             * 1. data returned from this request with type JSON<br/>
-             * 2. status of this request with type String<br/>
-             * 3. XhrObject of this request , for details {@link IO.XhrObject}
-             * @return {IO.XhrObject}
-             */
-            getJSON:function (url, data, callback) {
-                if (S.isFunction(data)) {
-                    callback = data;
-                    data = undef;
-                }
-                return get(url, data, callback, "json");
-            },
-
-            /**
-             * submit form without page refresh
-             * @param {String} url request destination
-             * @param {HTMLElement|NodeList} form element tobe submited
-             * @param {Object} [data] name-value object associated with this request
-             * @param {Function()} callback  <br/>success callback when this request is done<br/>
-             * with parameter<br/>
-             * 1. data returned from this request with type specified by dataType<br/>
-             * 2. status of this request with type String<br/>
-             * 3. XhrObject of this request , for details {@link IO.XhrObject}
-             * @param {String} [dataType] the type of data returns from this request
-             * ("xml" or "json" or "text")
-             * @return {IO.XhrObject}
-             */
-            upload:function (url, form, data, callback, dataType) {
-                if (S.isFunction(data)) {
-                    dataType = callback;
-                    callback = data;
-                    data = undef;
-                }
-                return IO({
-                    url:url,
-                    type:'post',
-                    dataType:dataType,
-                    form:form,
-                    data:data,
-                    success:callback
-                });
-            }
-        });
-
-    S.mix(S, {
-        "Ajax":IO,
-        "IO":IO,
-        ajax:IO,
-        io:IO,
-        jsonp:IO.jsonp
-    });
-
-    return IO;
-}, {
-    requires:[
-        "ajax/FormSerializer",
-        "ajax/base",
-        "ajax/XhrObject",
-        "ajax/XhrTransport",
-        "ajax/ScriptTransport",
-        "ajax/jsonp",
-        "ajax/form",
-        "ajax/IframeTransport"]
-});/**
- * @fileOverview a scalable client io framework
- * @author  yiminghe@gmail.com
- */
-KISSY.add("ajax/base", function (S, JSON, Event, XhrObject, undefined) {
-
-    var rlocalProtocol = /^(?:about|app|app\-storage|.+\-extension|file|widget)$/,
-        rspace = /\s+/,
-        mirror = function (s) {
-            return s;
-        },
-        rnoContent = /^(?:GET|HEAD)$/,
-        curLocation,
-        Uri = S.Uri,
-        win = S.Env.host,
-        doc = win.document,
-        location = win.location,
-        simulatedLocation;
-
-    try {
-        curLocation = location.href;
-    } catch (e) {
-        S.log("ajax/base get curLocation error : ");
-        S.log(e);
-        // Use the href attribute of an A element
-        // since IE will modify it given document.location
-        curLocation = doc.createElement("a");
-        curLocation.href = "";
-        curLocation = curLocation.href;
-    }
-
-    simulatedLocation = new Uri(curLocation);
-
-    var isLocal = rlocalProtocol.test(simulatedLocation.getScheme()),
-        transports = {},
-        defaultConfig = {
-            type:"GET",
-            contentType:"application/x-www-form-urlencoded; charset=UTF-8",
-            async:true,
-            serializeArray:true,
-            processData:true,
-            accepts:{
-                xml:"application/xml, text/xml",
-                html:"text/html",
-                text:"text/plain",
-                json:"application/json, text/javascript",
-                "*":"*/*"
-            },
-            converters:{
-                text:{
-                    json:JSON.parse,
-                    html:mirror,
-                    text:mirror,
-                    xml:S.parseXML
-                }
-            },
-            contents:{
-                xml:/xml/,
-                html:/html/,
-                json:/json/
-            }
-        };
-
-    defaultConfig.converters.html = defaultConfig.converters.text;
-
-    function setUpConfig(c) {
-        // deep mix,exclude context!
-
-        var context= c.context;
-        delete c.context;
-        c = S.mix(S.clone(defaultConfig), c, {
-            deep:true
-        });
-        c.context=context||c;
-
-        var data, uri, type = c.type, dataType = c.dataType, query;
-
-        query = c.query = new S.Uri.Query();
-
-        uri = c.uri = simulatedLocation.resolve(c.url);
-
-        if (!("crossDomain" in c)) {
-            c.crossDomain = !c.uri.hasSameDomainAs(simulatedLocation);
-        }
-
-        if (c.processData && (data = c.data)) {
-            // 必须 encodeURIComponent 编码 utf-8
-            if (S.isObject(data)) {
-                query.add(data);
+        // xx.taobao.com => taobao.com
+        // xx.sina.com.cn => sina.com.cn
+        function getMainDomain(host) {
+            var t = host.split('.'), len = t.length, limit = len > 3 ? 3 : 2;
+            if (len < limit) {
+                return t.join('.');
             } else {
-                query.reset(data);
+                return t.reverse().slice(0, limit).reverse().join('.');
             }
         }
 
-        type = c.type = type.toUpperCase();
-        c.hasContent = !rnoContent.test(type);
 
-        // 数据类型处理链，一步步将前面的数据类型转化成最后一个
-        dataType = c.dataType = S.trim(dataType || "*").split(rspace);
+        function XhrTransport(io) {
+            var c = io.config,
+                crossDomain = c.crossDomain,
+                self = this,
+                xdrCfg = c['xdr'] || {};
 
-        if (!("cache" in c) && S.inArray(dataType[0], ["script", "jsonp"])) {
-            c.cache = false;
-        }
+            if (crossDomain) {
 
-        if (!c.hasContent) {
-            if (query.count()) {
-                uri.query.add(query);
+                // 跨子域
+                if (getMainDomain(location.hostname) == getMainDomain(c.uri.getHostname())) {
+                    return new SubDomainTransport(io);
+                }
+
+                /*
+                 ie>7 通过配置 use='flash' 强制使用 flash xdr
+                 使用 withCredentials 检测是否支持 CORS
+                 http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
+                 */
+                if (!('withCredentials' in detectXhr) &&
+                    (String(xdrCfg.use) === 'flash' || !_XDomainRequest)) {
+                    return new XdrFlashTransport(io);
+                }
             }
-            if (c.cache === false) {
-                uri.query.set("_ksTS", (S.now() + "_" + S.guid()));
-            }
-        }
-        return c;
-    }
 
-    function fire(eventType, xhrObject) {
-        /**
-         * @name IO#complete
-         * @description fired after request completes (success or error)
-         * @event
-         * @param {Event.Object} e
-         * @param {Object} e.ajaxConfig current request 's config
-         * @param {IO.XhrObject} e.xhr current xhr object
-         */
-
-        /**
-         * @name IO#success
-         * @description  fired after request succeeds
-         * @event
-         * @param {Event.Object} e
-         * @param {Object} e.ajaxConfig current request 's config
-         * @param {IO.XhrObject} e.xhr current xhr object
-         */
-
-        /**
-         * @name IO#error
-         * @description fired after request occurs error
-         * @event
-         * @param {Event.Object} e
-         * @param {Object} e.ajaxConfig current request 's config
-         * @param {IO.XhrObject} e.xhr current xhr object
-         */
-        io.fire(eventType, { ajaxConfig:xhrObject.config, xhr:xhrObject});
-    }
-
-    /**
-     * @name IO
-     * @namespace Provides utility that brokers HTTP requests through a simplified interface
-     * @method
-     *
-     * @param {Object} c <br/>name-value of object to config this io request.<br/>
-     *  all values are optional.<br/>
-     *  default value can be set through {@link io.setupConfig}<br/>
-     *
-     * @param {String} c.url <br/>request destination
-     *
-     * @param {String} c.type <br/>request type.
-     * eg: "get","post"<br/>
-     * Default: "get"<br/>
-     *
-     * @param {String} c.contentType <br/>
-     * Default: "application/x-www-form-urlencoded; charset=UTF-8"<br/>
-     * Data will always be transmitted to the server using UTF-8 charset<br/>
-     *
-     * @param {Object} c.accepts <br/>
-     * Default: depends on DataType.<br/>
-     * The content type sent in request header that tells the server<br/>
-     * what kind of response it will accept in return.<br/>
-     * It is recommended to do so once in the {@link io.setupConfig}
-     *
-     * @param {Boolean} c.async <br/>
-     * Default: true<br/>
-     * whether request is sent asynchronously<br/>
-     *
-     * @param {Boolean} c.cache <br/>
-     * Default: true ,false for dataType "script" and "jsonp"<br/>
-     * if set false,will append _ksTs=Date.now() to url automatically<br/>
-     *
-     * @param {Object} c.contents <br/>
-     * a name-regexp map to determine request data's dataType<br/>
-     * It is recommended to do so once in the {@link io.setupConfig}<br/>
-     *
-     * @param {Object} c.context <br/>
-     * specify the context of this request's callback (success,error,complete)
-     *
-     * @param {Object} c.converters <br/>
-     * Default:{text:{json:JSON.parse,html:mirror,text:mirror,xml:KISSY.parseXML}}<br/>
-     * specified how to transform one dataType to another dataType<br/>
-     * It is recommended to do so once in the {@link io.setupConfig}
-     *
-     * @param {Boolean} c.crossDomain <br/>
-     * Default: false for same-domain request,true for cross-domain request<br/>
-     * if server-side jsonp redirect to another domain ,you should set this to true
-     *
-     * @param {Object} c.data <br/>
-     * Data sent to server.if processData is true,data will be serialized to String type.<br/>
-     * if value if an Array, serialization will be based on serializeArray.
-     *
-     * @param {String} c.dataType <br/>
-     * return data as a specified type<br/>
-     * Default: Based on server contentType header<br/>
-     * "xml" : a XML document<br/>
-     * "text"/"html": raw server data <br/>
-     * "script": evaluate the return data as script<br/>
-     * "json": parse the return data as json and return the result as final data<br/>
-     * "jsonp": load json data via jsonp
-     *
-     * @param {Object} c.headers <br/>
-     * additional name-value header to send along with this request.
-     *
-     * @param {String} c.jsonp <br/>
-     * Default: "callback"<br/>
-     * Override the callback function name in a jsonp request. eg:<br/>
-     * set "callback2" , then jsonp url will append  "callback2=?".
-     *
-     * @param {String} c.jsonpCallback <br/>
-     * Specify the callback function name for a jsonp request.<br/>
-     * set this value will replace the auto generated function name.<br/>
-     * eg:<br/>
-     * set "customCall" , then jsonp url will append "callback=customCall"
-     *
-     * @param {String} c.mimeType <br/>
-     * override xhr's mime type
-     *
-     * @param {Boolean} c.processData <br/>
-     * Default: true<br/>
-     * whether data will be serialized as String
-     *
-     * @param {String} c.scriptCharset <br/>
-     * only for dataType "jsonp" and "script" and "get" type.<br/>
-     * force the script to certain charset.
-     *
-     * @param {Function} c.beforeSend <br/>
-     * beforeSend(xhrObject,config)<br/>
-     * callback function called before the request is sent.this function has 2 arguments<br/>
-     * 1. current KISSY xhrObject<br/>
-     * 2. current io config<br/>
-     * note: can be used for add progress event listener for native xhr's upload attribute
-     * see <a href="http://www.w3.org/TR/XMLHttpRequest/#event-xhr-progress">XMLHttpRequest2</a>
-     *
-     * @param {Function} c.success <br/>
-     * success(data,textStatus,xhr)<br/>
-     * callback function called if the request succeeds.this function has 3 arguments<br/>
-     * 1. data returned from this request with type specified by dataType<br/>
-     * 2. status of this request with type String<br/>
-     * 3. XhrObject of this request , for details {@link IO.XhrObject}
-     *
-     * @param {Function} c.error <br/>
-     * success(data,textStatus,xhr) <br/>
-     * callback function called if the request occurs error.this function has 3 arguments<br/>
-     * 1. null value<br/>
-     * 2. status of this request with type String,such as "timeout","Not Found","parsererror:..."<br/>
-     * 3. XhrObject of this request , for details {@link IO.XhrObject}
-     *
-     * @param {Function} c.complete <br/>
-     * success(data,textStatus,xhr)<br/>
-     * callback function called if the request finished(success or error).this function has 3 arguments<br/>
-     * 1. null value if error occurs or data returned from server<br/>
-     * 2. status of this request with type String,such as success:"ok",
-     * error:"timeout","Not Found","parsererror:..."<br/>
-     * 3. XhrObject of this request , for details {@link IO.XhrObject}
-     *
-     * @param {Number} c.timeout <br/>
-     * Set a timeout(in seconds) for this request.if will call error when timeout
-     *
-     * @param {Boolean} c.serializeArray <br/>
-     * whether add [] to data's name when data's value is array in serialization
-     *
-     * @param {Object} c.xhrFields <br/>
-     * name-value to set to native xhr.set as xhrFields:{withCredentials:true}
-     *
-     * @param {String} c.username <br/>
-     * a username tobe used in response to HTTP access authentication request
-     *
-     * @param {String} c.password <br/>
-     * a password tobe used in response to HTTP access authentication request
-     *
-     * @param {Object} c.xdr <br/>
-     * cross domain request config object
-     *
-     * @param {String} c.xdr.src <br/>
-     * Default: KISSY 's flash url
-     * flash sender url
-     *
-     * @param {String} c.xdr.use <br/>
-     * if set to "use", it will always use flash for cross domain request even in chrome/firefox
-     *
-     * @param {Object} c.xdr.subDomain <br/>
-     * cross sub domain request config object
-     *
-     * @param {String} c.xdr.subDomain.proxy <br/>
-     * proxy page,eg:<br/>
-     * a.t.cn/a.htm send request to b.t.cn/b.htm: <br/>
-     * 1. a.htm set document.domain='t.cn'<br/>
-     * 2. b.t.cn/proxy.htm 's content is &lt;script>document.domain='t.cn'&lt;/script><br/>
-     * 3. in a.htm , call io({xdr:{subDomain:{proxy:'/proxy.htm'}}})
-     *
-     * @return {IO.XhrObject} current request object
-     */
-    function io(c) {
-
-        if (!c.url) {
+            self.io = io;
+            self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
             return undefined;
         }
 
-        c = setUpConfig(c);
+        S.augment(XhrTransport, XhrTransportBase.proto, {
 
-        var xhrObject = new XhrObject(c),
-            transportConstructor,
-            transport;
-
-        /**
-         * @name IO#start
-         * @description fired before generating request object
-         * @event
-         * @param {Event.Object} e
-         * @param {Object} e.ajaxConfig current request 's config
-         * @param {IO.XhrObject} e.xhr current xhr object
-         */
-
-        fire("start", xhrObject);
-
-        transportConstructor = transports[c.dataType[0]] || transports["*"];
-        transport = new transportConstructor(xhrObject);
-
-        xhrObject.transport = transport;
-
-        if (c.contentType) {
-            xhrObject.setRequestHeader("Content-Type", c.contentType);
-        }
-
-        var dataType = c.dataType[0],
-            timeoutTimer,
-            i,
-            timeout = c.timeout,
-            context = c.context,
-            headers = c.headers,
-            accepts = c.accepts;
-
-        // Set the Accepts header for the server, depending on the dataType
-        xhrObject.setRequestHeader(
-            "Accept",
-            dataType && accepts[dataType] ?
-                accepts[ dataType ] + (dataType === "*" ? "" : ", */*; q=0.01"  ) :
-                accepts[ "*" ]
-        );
-
-        // Check for headers option
-        for (i in headers) {
-            if (headers.hasOwnProperty(i)) {
-                xhrObject.setRequestHeader(i, headers[ i ]);
+            send: function () {
+                this.sendInternal();
             }
-        }
 
-
-        // allow setup native listener
-        // such as xhr.upload.addEventListener('progress', function (ev) {})
-        if (c.beforeSend && ( c.beforeSend.call(context, xhrObject, c) === false)) {
-            return undefined;
-        }
-
-        function genHandler(handleStr) {
-            return function (v) {
-                if (timeoutTimer = xhrObject.timeoutTimer) {
-                    clearTimeout(timeoutTimer);
-                    xhrObject.timeoutTimer = 0;
-                }
-                var h = c[handleStr];
-                h && h.apply(context, v);
-                fire(handleStr, xhrObject);
-            };
-        }
-
-        xhrObject.then(genHandler("success"), genHandler("error"));
-
-        xhrObject.fin(genHandler("complete"));
-
-        xhrObject.readyState = 1;
-
-        /**
-         * @name IO#send
-         * @description fired before sending request
-         * @event
-         * @param {Event.Object} e
-         * @param {Object} e.ajaxConfig current request 's config
-         * @param {IO.XhrObject} e.xhr current xhr object
-         */
-
-        fire("send", xhrObject);
-
-        // Timeout
-        if (c.async && timeout > 0) {
-            xhrObject.timeoutTimer = setTimeout(function () {
-                xhrObject.abort("timeout");
-            }, timeout * 1000);
-        }
-
-        try {
-            // flag as sending
-            xhrObject.state = 1;
-            transport.send();
-        } catch (e) {
-            // Propagate exception as error if not done
-            if (xhrObject.state < 2) {
-                xhrObject._xhrReady(-1, e);
-                // Simply rethrow otherwise
-            } else {
-                S.error(e);
-            }
-        }
-
-        return xhrObject;
-    }
-
-    S.mix(io, Event.Target);
-
-    S.mix(io,
-        /**
-         * @lends IO
-         */
-        {
-            /**
-             * whether current application is a local application
-             * (protocal is file://,widget://,about://)
-             * @type {Boolean}
-             * @field
-             */
-            isLocal:isLocal,
-            /**
-             * name-value object that set default config value for io request
-             * @param {Object} setting for details see {@link io}
-             */
-            setupConfig:function (setting) {
-                S.mix(defaultConfig, setting, {
-                    deep:true
-                });
-            },
-            /**
-             * @private
-             */
-            setupTransport:function (name, fn) {
-                transports[name] = fn;
-            },
-            /**
-             * @private
-             */
-            getTransport:function (name) {
-                return transports[name];
-            },
-            /**
-             * get default config value for io request
-             * @return {Object}
-             */
-            getConfig:function () {
-                return defaultConfig;
-            }
         });
 
+        io.setupTransport('*', XhrTransport);
+    }
+
     return io;
 }, {
-    requires:["json", "event", "./XhrObject"]
+    requires: ['./base', './xhr-transport-base', './sub-domain-transport', './xdr-flash-transport']
 });
 
-/**
- * 2012-07-18 yiminghe@gmail.com
- *  - refactor by KISSY.Uri
- *
- * 2012-2-07 yiminghe@gmail.com
- *  - 返回 Promise 类型对象，可以链式操作啦！
- *
- * 2011 yiminghe@gmail.com
- *  - 借鉴 jquery，优化减少闭包使用
- *
- * TODO:
- *  - ifModified mode 是否需要？
- *      优点：
- *          不依赖浏览器处理，ajax 请求浏览不会自动加 If-Modified-Since If-None-Match ??
- *      缺点：
- *          内存占用
- **//**
- * @fileOverview process form config
- * @author yiminghe@gmail.com
+/*
+ 借鉴 jquery，优化使用原型替代闭包
+ CORS : http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/
  */
-KISSY.add("ajax/form", function (S, io, DOM, FormSerializer) {
-
-    io.on("start", function (e) {
-        var xhrObject = e.xhr,
-            form,
-            d,
-            enctype,
-            dataType,
-            formParam,
-            tmpForm,
-            c = xhrObject.config;
-        // serialize form if needed
-        if (tmpForm = c.form) {
-            form = DOM.get(tmpForm);
-            enctype = form['encoding'] || form.enctype;
-            // 上传有其他方法
-            if (enctype.toLowerCase() != "multipart/form-data") {
-                // when get need encode
-                formParam = FormSerializer.getFormData(form);
-                if (c.hasContent) {
-                    c.query.add(formParam);
-                } else {
-                    // get 直接加到 url
-                    c.uri.query.add(formParam);
-                }
-            } else {
-                dataType = c.dataType;
-                d = dataType[0];
-                if (d == "*") {
-                    d = "text";
-                }
-                dataType.length = 2;
-                dataType[0] = "iframe";
-                dataType[1] = d;
-            }
-        }
-    });
-
-    return io;
-
-}, {
-    requires:['./base', "dom", "./FormSerializer"]
-});/**
- * @fileOverview jsonp transport based on script transport
- * @author  yiminghe@gmail.com
- */
-KISSY.add("ajax/jsonp", function (S, io) {
-    var win = S.Env.host;
-    io.setupConfig({
-        jsonp:"callback",
-        jsonpCallback:function () {
-            // 不使用 now() ，极端情况下可能重复
-            return S.guid("jsonp");
-        }
-    });
-
-    io.on("start", function (e) {
-        var xhrObject = e.xhr,
-            c = xhrObject.config,
-            dataType= c.dataType;
-        if (dataType[0] == "jsonp") {
-            var response,
-                cJsonpCallback = c.jsonpCallback,
-                converters,
-                jsonpCallback = S.isFunction(cJsonpCallback) ?
-                    cJsonpCallback() :
-                    cJsonpCallback,
-                previous = win[ jsonpCallback ];
-
-            c.uri.query.set(c.jsonp,jsonpCallback);
-
-            // build temporary JSONP function
-            win[jsonpCallback] = function (r) {
-                // 使用数组，区别：故意调用了 jsonpCallback(undefined) 与 根本没有调用
-                // jsonp 返回了数组
-                if (arguments.length > 1) {
-                    r = S.makeArray(arguments);
-                }
-                // 先存在内存里, onload 后再读出来处理
-                response = [r];
-            };
-
-            // cleanup whether success or failure
-            xhrObject.fin(function () {
-                win[ jsonpCallback ] = previous;
-                if (previous === undefined) {
-                    try {
-                        delete win[ jsonpCallback ];
-                    } catch (e) {
-                        //S.log("delete window variable error : ");
-                        //S.log(e);
-                    }
-                } else if (response) {
-                    // after io success handler called
-                    // then call original existed jsonpcallback
-                    previous(response[0]);
-                }
-            });
-
-            converters=xhrObject.converters = xhrObject.converters || {};
-            converters.script = converters.script || {};
-
-            // script -> jsonp ,jsonp need to see json not as script
-            // if ie onload a 404 file or all browsers onload an invalid script
-            // 404/invalid will be caught here
-            // because response is undefined( jsonp callback is never called)
-            // error throwed will be caught in conversion step
-            // and KISSY will notify user by error callback
-            converters.script.json = function () {
-                if (!response) {
-                    S.error(" not call jsonpCallback : " + jsonpCallback)
-                }
-                return response[0];
-            };
-
-            dataType.length = 2;
-            // 利用 script transport 发送 script 请求
-            dataType[0] = 'script';
-            dataType[1] = 'json';
-        }
-    });
-
-    return io;
-}, {
-    requires:['./base']
-});
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 21:59
+build time: Aug 20 15:33
 */
 /**
  * @fileOverview cookie
@@ -15637,7 +15755,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 21:59
+build time: Aug 20 15:33
 */
 /**
  * @fileOverview attribute management
@@ -16292,9 +16410,10 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 21:59
+build time: Aug 20 15:33
 */
 /**
+ * @ignore
  * @fileOverview anim
  */
 KISSY.add("anim", function (S, Anim, Easing) {
@@ -16305,12 +16424,13 @@ KISSY.add("anim", function (S, Anim, Easing) {
     });
     return Anim;
 }, {
-    requires:["anim/base", "anim/easing", "anim/color", "anim/backgroundPosition"]
+    requires:["anim/base", "anim/easing", "anim/color", "anim/background-position"]
 });/**
+ * @ignore
  * @fileOverview special patch for anim backgroundPosition
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
+KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
 
     function numeric(bp) {
         bp = bp.replace(/left|top/g, '0px')
@@ -16360,17 +16480,17 @@ KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
         },
 
         cur:function () {
-            return DOM.css(this.anim.elem, "backgroundPosition");
+            return DOM.css(this.anim.config.el, "backgroundPosition");
         },
 
         update:function () {
             var self = this,
                 prop = self.prop,
-                elem = self.anim.elem,
+                el = self.anim.config.el,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
-            DOM.css(elem, prop, val);
+            DOM.css(el, prop, val);
         }
 
     });
@@ -16382,44 +16502,45 @@ KISSY.add("anim/backgroundPosition", function (S, DOM, Anim, Fx) {
 }, {
     requires:["dom", "./base", "./fx"]
 });/**
+ * @ignore
  * @fileOverview animation framework for KISSY
  * @author   yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     var camelCase = DOM._camelCase,
-        NodeType=DOM.NodeType,
+        NodeType = DOM.NodeType,
         specialVals = ["hide", "show", "toggle"],
     // shorthand css properties
         SHORT_HANDS = {
             // http://www.w3.org/Style/CSS/Tracker/issues/9
             // http://snook.ca/archives/html_and_css/background-position-x-y
             // backgroundPositionX  backgroundPositionY does not support
-            background:[
+            background: [
                 "backgroundPosition"
             ],
-            border:[
+            border: [
                 "borderBottomWidth",
                 "borderLeftWidth",
                 'borderRightWidth',
                 // 'borderSpacing', 组合属性？
                 'borderTopWidth'
             ],
-            "borderBottom":["borderBottomWidth"],
-            "borderLeft":["borderLeftWidth"],
-            borderTop:["borderTopWidth"],
-            borderRight:["borderRightWidth"],
-            font:[
+            "borderBottom": ["borderBottomWidth"],
+            "borderLeft": ["borderLeftWidth"],
+            borderTop: ["borderTopWidth"],
+            borderRight: ["borderRightWidth"],
+            font: [
                 'fontSize',
                 'fontWeight'
             ],
-            margin:[
+            margin: [
                 'marginBottom',
                 'marginLeft',
                 'marginRight',
                 'marginTop'
             ],
-            padding:[
+            padding: [
                 'paddingBottom',
                 'paddingLeft',
                 'paddingRight',
@@ -16427,46 +16548,48 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             ]
         },
         defaultConfig = {
-            duration:1,
-            easing:'easeNone'
+            duration: 1,
+            easing: 'easeNone'
         },
-        rfxnum = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
+        NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
     Anim.SHORT_HANDS = SHORT_HANDS;
 
-
     /**
-     * @class A class for constructing animation instances.
-     * @param {HTMLElement|window} elem Html dom node or window
+     * @class KISSY.Anim
+     * A class for constructing animation instances.
+     * @mixins KISSY.Event.Target
+     * @cfg {HTMLElement|window} el html dom node or window
      * (window can only animate scrollTop/scrollLeft)
-     * @param {Object} props style map
-     * @param {Number|Object} [duration] duration(s) or anim config
-     * @param {String|Function} [duration.easing] easing fn or string
-     * @param {Function} [duration.complete] callback function when this animation is complete
-     * @param {Number} [duration.duration] duration(s)
-     * @param {String|Boolean} [duration.queue] current animation's queue, if false then no queue
-     * @param {Function|String} [easing] easing fn or string
-     * @param {Function} [callback] callback function when this animation is complete
-     * @extends Event.Target
-     * @name Anim
-     *
+     * @cfg {Object} props end css style value.
+     * @cfg {Number} [duration=1] duration(second) or anim config
+     * @cfg {String|Function} [easing='easeNone'] easing fn or string
+     * @cfg {Function} [complete] callback function when this animation is complete
+     * @cfg {String|Boolean} [queue] current animation's queue, if false then no queue
      */
-    function Anim(elem, props, duration, easing, callback) {
+    function Anim(el, props, duration, easing, complete) {
+
+        if (el.el) {
+            var realEl = el.el;
+            props = el.props;
+            delete el.el;
+            delete  el.props;
+            return new Anim(realEl, props, el);
+        }
+
         var self = this, config;
 
         // ignore non-exist element
-        if (!(elem = DOM.get(elem))) {
+        if (!(el = DOM.get(el))) {
             return;
         }
 
         // factory or constructor
         if (!(self instanceof Anim)) {
-            return new Anim(elem, props, duration, easing, callback);
+            return new Anim(el, props, duration, easing, complete);
         }
 
-        /**
-         * the transition properties
-         */
+        // the transition properties
         if (S.isString(props)) {
             props = S.unparam(String(props), ";", ":");
         } else {
@@ -16474,43 +16597,46 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             props = S.clone(props);
         }
 
-        /**
-         * 驼峰属性名
-         */
-        for (var prop in props) {
-            var camelProp = camelCase(S.trim(prop));
+        // camel case uniformity
+        S.each(props, function (v, prop) {
+            var camelProp = camelCase(prop);
             if (prop != camelProp) {
                 props[camelProp] = props[prop];
                 delete props[prop];
             }
-        }
+        });
 
-        /**
-         * animation config
-         */
+        // animation config
         if (S.isPlainObject(duration)) {
             config = S.clone(duration);
         } else {
             config = {
-                duration:parseFloat(duration) || undefined,
-                easing:easing,
-                complete:callback
+                duration: parseFloat(duration) || undefined,
+                easing: easing,
+                complete: complete
             };
         }
 
         config = S.merge(defaultConfig, config);
+        config.el = el;
+        config.props = props;
+
+        /**
+         * config object of current anim instance
+         * @type {Object}
+         */
         self.config = config;
-        config.duration *= 1000;
+        self._duration = config.duration * 1000;
 
         // domEl deprecated!
-        self.elem = self['domEl'] = elem;
-        self.props = props;
+        self['domEl'] = el;
+        // self.props = props;
 
         // 实例属性
         self._backupProps = {};
         self._fxs = {};
 
-        // register callback
+        // register complete
         self.on("complete", onComplete);
     }
 
@@ -16518,15 +16644,16 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     function onComplete(e) {
         var self = this,
             _backupProps,
+            complete,
             config = self.config;
 
         // only recover after complete anim
         if (!S.isEmptyObject(_backupProps = self._backupProps)) {
-            DOM.css(self.elem, _backupProps);
+            DOM.css(config.el, _backupProps);
         }
 
-        if (config.complete) {
-            config.complete.call(self, e);
+        if (complete = config.complete) {
+            complete.call(self, e);
         }
     }
 
@@ -16534,59 +16661,61 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         var self = this,
             config = self.config,
             _backupProps = self._backupProps,
-            elem = self.elem,
-            elemStyle,
+            el = config.el,
+            elStyle,
             hidden,
             val,
             prop,
             specialEasing = (config['specialEasing'] || {}),
             fxs = self._fxs,
-            props = self.props;
+            props = config.props;
 
         // 进入该函数即代表执行（q[0] 已经是 ...）
         saveRunning(self);
 
-        if (self.fire("start") === false) {
+        if (self.fire("beforeStart") === false) {
             // no need to invoke complete
             self.stop(0);
             return;
         }
 
-        if (elem.nodeType == NodeType.ELEMENT_NODE) {
-            hidden = (DOM.css(elem, "display") === "none");
+        if (el.nodeType == NodeType.ELEMENT_NODE) {
+            hidden = (DOM.css(el, "display") === "none");
             for (prop in props) {
-                val = props[prop];
-                // 直接结束
-                if (val == "hide" && hidden || val == 'show' && !hidden) {
-                    // need to invoke complete
-                    self.stop(1);
-                    return;
+                if (props.hasOwnProperty(prop)) {
+                    val = props[prop];
+                    // 直接结束
+                    if (val == "hide" && hidden || val == 'show' && !hidden) {
+                        // need to invoke complete
+                        self.stop(1);
+                        return;
+                    }
                 }
             }
         }
 
         // 放在前面，设置 overflow hidden，否则后面 ie6  取 width/height 初值导致错误
         // <div style='width:0'><div style='width:100px'></div></div>
-        if (elem.nodeType == NodeType.ELEMENT_NODE &&
+        if (el.nodeType == NodeType.ELEMENT_NODE &&
             (props.width || props.height)) {
             // Make sure that nothing sneaks out
             // Record all 3 overflow attributes because IE does not
             // change the overflow attribute when overflowX and
             // overflowY are set to the same value
-            elemStyle = elem.style;
+            elStyle = el.style;
             S.mix(_backupProps, {
-                overflow:elemStyle.overflow,
-                "overflow-x":elemStyle.overflowX,
-                "overflow-y":elemStyle.overflowY
+                overflow: elStyle.overflow,
+                "overflow-x": elStyle.overflowX,
+                "overflow-y": elStyle.overflowY
             });
-            elemStyle.overflow = "hidden";
+            elStyle.overflow = "hidden";
             // inline element should has layout/inline-block
-            if (DOM.css(elem, "display") === "inline" &&
-                DOM.css(elem, "float") === "none") {
+            if (DOM.css(el, "display") === "inline" &&
+                DOM.css(el, "float") === "none") {
                 if (UA['ie']) {
-                    elemStyle.zoom = 1;
+                    elStyle.zoom = 1;
                 } else {
-                    elemStyle.display = "inline-block";
+                    elStyle.display = "inline-block";
                 }
             }
         }
@@ -16612,23 +16741,22 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // 扩展分属性
         S.each(SHORT_HANDS, function (shortHands, p) {
-            var sh,
-                origin,
+            var origin,
                 val;
             if (val = props[p]) {
                 origin = {};
                 S.each(shortHands, function (sh) {
                     // 得到原始分属性之前值
-                    origin[sh] = DOM.css(elem, sh);
+                    origin[sh] = DOM.css(el, sh);
                     specialEasing[sh] = specialEasing[p];
                 });
-                DOM.css(elem, p, val);
-                for (sh in origin) {
+                DOM.css(el, p, val);
+                S.each(origin, function (val, sh) {
                     // 得到期待的分属性最后值
-                    props[sh] = DOM.css(elem, sh);
+                    props[sh] = DOM.css(el, sh);
                     // 还原
-                    DOM.css(elem, sh, origin[sh]);
-                }
+                    DOM.css(el, sh, val);
+                });
                 // 删除复合属性
                 delete props[p];
             }
@@ -16636,7 +16764,6 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // 取得单位，并对单个属性构建 Fx 对象
         for (prop in props) {
-
             if (!props.hasOwnProperty(prop)) {
                 continue;
             }
@@ -16646,16 +16773,16 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             var to,
                 from,
                 propCfg = {
-                    prop:prop,
-                    anim:self,
-                    easing:specialEasing[prop]
+                    prop: prop,
+                    anim: self,
+                    easing: specialEasing[prop]
                 },
                 fx = Fx.getFx(propCfg);
 
             // hide/show/toggle : special treat!
             if (S.inArray(val, specialVals)) {
-                // backup original value
-                _backupProps[prop] = DOM.style(elem, prop);
+                // backup original inline css value
+                _backupProps[prop] = DOM.style(el, prop);
                 if (val == "toggle") {
                     val = hidden ? "show" : "hide";
                 }
@@ -16668,8 +16795,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                     from = 0;
                     to = fx.cur();
                     // prevent flash of content
-                    DOM.css(elem, prop, from);
-                    DOM.show(elem);
+                    DOM.css(el, prop, from);
+                    DOM.show(el);
                 }
                 val = to;
             } else {
@@ -16680,7 +16807,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             val += "";
 
             var unit = "",
-                parts = val.match(rfxnum);
+                parts = val.match(NUMBER_REG);
 
             if (parts) {
                 to = parseFloat(parts[2]);
@@ -16688,9 +16815,9 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
                 // 有单位但单位不是 px
                 if (unit && unit !== "px") {
-                    DOM.css(elem, prop, val);
+                    DOM.css(el, prop, val);
                     from = (to / fx.cur()) * from;
-                    DOM.css(elem, prop, from + unit);
+                    DOM.css(el, prop, from + unit);
                 }
 
                 // 相对
@@ -16711,180 +16838,198 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         AM.start(self);
     }
 
+    Anim.prototype = {
 
-    S.augment(Anim, Event.Target,
+        constructor: Anim,
+
         /**
-         * @lends Anim.prototype
+         * whether this animation is running
+         * @return {Boolean}
          */
-        {
+        isRunning: function () {
+            return isRunning(this);
+        },
 
-            /**
-             * @return {Boolean} whether this animation is running
-             */
-            isRunning:function () {
-                return isRunning(this);
-            },
+        /**
+         * whether this animation is paused
+         * @return {Boolean}
+         */
+        isPaused: function () {
+            return isPaused(this);
+        },
 
-            isPaused:function () {
-                return isPaused(this);
-            },
+        /**
+         * pause current anim
+         * @return this
+         */
+        pause: function () {
+            var self = this;
+            if (self.isRunning()) {
+                self._pauseDiff = S.now() - self._startTime;
+                AM.stop(self);
+                removeRunning(self);
+                savePaused(self);
+            }
+            return self;
+        },
 
-            pause:function () {
-                var self = this;
-                if (self.isRunning()) {
-                    self._pauseDiff = S.now() - self._startTime;
-                    AM.stop(self);
-                    removeRunning(self);
-                    savePaused(self);
+        /**
+         * resume current anim
+         * @return this
+         */
+        resume: function () {
+            var self = this;
+            if (self.isPaused()) {
+                self._startTime = S.now() - self._pauseDiff;
+                removePaused(self);
+                saveRunning(self);
+                AM.start(self);
+            }
+            return self;
+        },
+
+        /**
+         * @ignore
+         */
+        _runInternal: runInternal,
+
+        /**
+         * start this animation
+         */
+        run: function () {
+            var self = this,
+                queueName = self.config.queue;
+
+            if (queueName === false) {
+                runInternal.call(self);
+            } else {
+                // 当前动画对象加入队列
+                Q.queue(self);
+            }
+
+            return self;
+        },
+
+        /**
+         * @ignore
+         */
+        _frame: function () {
+            var self = this,
+                prop,
+                config = self.config,
+                end = 1,
+                c,
+                fx,
+                fxs = self._fxs;
+
+            for (prop in fxs) {
+                if (fxs.hasOwnProperty(prop) &&
+                    // 当前属性没有结束
+                    !((fx = fxs[prop]).finished)) {
+                    // 非短路
+                    if (config.frame) {
+                        c = config.frame(fx);
+                    }
+                    // 结束
+                    if (c == 1 ||
+                        // 不执行自带
+                        c == 0) {
+                        fx.finished = c;
+                        end &= c;
+                    } else {
+                        end &= fx.frame();
+                        // 最后通知下
+                        if (end && config.frame) {
+                            config.frame(fx);
+                        }
+                    }
+                }
+            }
+
+            if ((self.fire("step") === false) || end) {
+                // complete 事件只在动画到达最后一帧时才触发
+                self.stop(end);
+            }
+        },
+
+        /**
+         * stop this animation
+         * @param {Boolean} [finish] whether jump to the last position of this animation
+         * @return this;
+         */
+        stop: function (finish) {
+            var self = this,
+                config = self.config,
+                queueName = config.queue,
+                prop,
+                fx,
+                fxs = self._fxs;
+
+            // already stopped
+            if (!self.isRunning()) {
+                // 从自己的队列中移除
+                if (queueName !== false) {
+                    Q.remove(self);
                 }
                 return self;
-            },
+            }
 
-            resume:function () {
-                var self = this;
-                if (self.isPaused()) {
-                    self._startTime = S.now() - self._pauseDiff;
-                    removePaused(self);
-                    saveRunning(self);
-                    AM.start(self);
-                }
-                return self;
-            },
-
-            _runInternal:runInternal,
-
-            /**
-             * start this animation
-             */
-            run:function () {
-                var self = this,
-                    queueName = self.config.queue;
-
-                if (queueName === false) {
-                    runInternal.call(self);
-                } else {
-                    // 当前动画对象加入队列
-                    Q.queue(self);
-                }
-
-                return self;
-            },
-
-            _frame:function () {
-
-                var self = this,
-                    prop,
-                    config = self.config,
-                    end = 1,
-                    c,
-                    fx,
-                    fxs = self._fxs;
-
+            if (finish) {
                 for (prop in fxs) {
                     if (fxs.hasOwnProperty(prop) &&
                         // 当前属性没有结束
                         !((fx = fxs[prop]).finished)) {
                         // 非短路
                         if (config.frame) {
-                            c = config.frame(fx);
-                        }
-                        // 结束
-                        if (c == 1 ||
-                            // 不执行自带
-                            c == 0) {
-                            fx.finished = c;
-                            end &= c;
+                            config.frame(fx, 1);
                         } else {
-                            end &= fx.frame();
-                            // 最后通知下
-                            if (end && config.frame) {
-                                config.frame(fx);
-                            }
+                            fx.frame(1);
                         }
                     }
                 }
-
-                if ((self.fire("step") === false) || end) {
-                    // complete 事件只在动画到达最后一帧时才触发
-                    self.stop(end);
-                }
-            },
-
-            /**
-             * stop this animation
-             * @param {Boolean} [finish] whether jump to the last position of this animation
-             */
-            stop:function (finish) {
-                var self = this,
-                    config = self.config,
-                    queueName = config.queue,
-                    prop,
-                    fx,
-                    fxs = self._fxs;
-
-                // already stopped
-                if (!self.isRunning()) {
-                    // 从自己的队列中移除
-                    if (queueName !== false) {
-                        Q.remove(self);
-                    }
-                    return;
-                }
-
-                if (finish) {
-                    for (prop in fxs) {
-                        if (fxs.hasOwnProperty(prop) &&
-                            // 当前属性没有结束
-                            !((fx = fxs[prop]).finished)) {
-                            // 非短路
-                            if (config.frame) {
-                                config.frame(fx, 1);
-                            } else {
-                                fx.frame(1);
-                            }
-                        }
-                    }
-                    self.fire("complete");
-                }
-
-                AM.stop(self);
-
-                removeRunning(self);
-
-                if (queueName !== false) {
-                    // notify next anim to run in the same queue
-                    Q.dequeue(self);
-                }
-
-                return self;
+                self.fire("complete");
             }
-        });
+
+            AM.stop(self);
+
+            removeRunning(self);
+
+            if (queueName !== false) {
+                // notify next anim to run in the same queue
+                Q.dequeue(self);
+            }
+
+            return self;
+        }
+    };
+
+    S.augment(Anim, Event.Target);
 
     var runningKey = S.guid("ks-anim-unqueued-" + S.now() + "-");
 
     function saveRunning(anim) {
-        var elem = anim.elem,
-            allRunning = DOM.data(elem, runningKey);
+        var el = anim.config.el,
+            allRunning = DOM.data(el, runningKey);
         if (!allRunning) {
-            DOM.data(elem, runningKey, allRunning = {});
+            DOM.data(el, runningKey, allRunning = {});
         }
         allRunning[S.stamp(anim)] = anim;
     }
 
     function removeRunning(anim) {
-        var elem = anim.elem,
-            allRunning = DOM.data(elem, runningKey);
+        var el = anim.config.el,
+            allRunning = DOM.data(el, runningKey);
         if (allRunning) {
             delete allRunning[S.stamp(anim)];
             if (S.isEmptyObject(allRunning)) {
-                DOM.removeData(elem, runningKey);
+                DOM.removeData(el, runningKey);
             }
         }
     }
 
     function isRunning(anim) {
-        var elem = anim.elem,
-            allRunning = DOM.data(elem, runningKey);
+        var el = anim.config.el,
+            allRunning = DOM.data(el, runningKey);
         if (allRunning) {
             return !!allRunning[S.stamp(anim)];
         }
@@ -16895,28 +17040,28 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     var pausedKey = S.guid("ks-anim-paused-" + S.now() + "-");
 
     function savePaused(anim) {
-        var elem = anim.elem,
-            paused = DOM.data(elem, pausedKey);
+        var el = anim.config.el,
+            paused = DOM.data(el, pausedKey);
         if (!paused) {
-            DOM.data(elem, pausedKey, paused = {});
+            DOM.data(el, pausedKey, paused = {});
         }
         paused[S.stamp(anim)] = anim;
     }
 
     function removePaused(anim) {
-        var elem = anim.elem,
-            paused = DOM.data(elem, pausedKey);
+        var el = anim.config.el,
+            paused = DOM.data(el, pausedKey);
         if (paused) {
             delete paused[S.stamp(anim)];
             if (S.isEmptyObject(paused)) {
-                DOM.removeData(elem, pausedKey);
+                DOM.removeData(el, pausedKey);
             }
         }
     }
 
     function isPaused(anim) {
-        var elem = anim.elem,
-            paused = DOM.data(elem, pausedKey);
+        var el = anim.config.el,
+            paused = DOM.data(el, pausedKey);
         if (paused) {
             return !!paused[S.stamp(anim)];
         }
@@ -16925,13 +17070,13 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     /**
      * stop all the anims currently running
-     * @param {HTMLElement} elem element which anim belongs to
+     * @static
+     * @param {HTMLElement} el element which anim belongs to
      * @param {Boolean} end whether jump to last position
      * @param {Boolean} clearQueue whether clean current queue
      * @param {String|Boolean} queueName current queue's name to be cleared
-     * @private
      */
-    Anim.stop = function (elem, end, clearQueue, queueName) {
+    Anim.stop = function (el, end, clearQueue, queueName) {
         if (
         // default queue
             queueName === null ||
@@ -16944,18 +17089,37 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         }
         // first stop first anim in queues
         if (clearQueue) {
-            Q.removeQueues(elem);
+            Q.removeQueues(el);
         }
-        var allRunning = DOM.data(elem, runningKey),
+        var allRunning = DOM.data(el, runningKey),
         // can not stop in for/in , stop will modified allRunning too
             anims = S.merge(allRunning);
-        for (var k in anims) {
-            anims[k].stop(end);
-        }
+        S.each(anims, function (anim) {
+            anim.stop(end);
+        });
     };
 
+
+    /**
+     * pause all the anims currently running
+     * @param {HTMLElement} el element which anim belongs to
+     * @param {String|Boolean} queueName current queue's name to be cleared
+     * @method pause
+     * @member KISSY.Anim
+     * @static
+     */
+
+    /**
+     * resume all the anims currently running
+     * @param {HTMLElement} el element which anim belongs to
+     * @param {String|Boolean} queueName current queue's name to be cleared
+     * @method resume
+     * @member KISSY.Anim
+     * @static
+     */
+
     S.each(["pause", "resume"], function (action) {
-        Anim[action] = function (elem, queueName) {
+        Anim[action] = function (el, queueName) {
             if (
             // default queue
                 queueName === null ||
@@ -16964,97 +17128,102 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                     // anims not belong to any queue
                     queueName === false
                 ) {
-                return pauseResumeQueue(elem, queueName, action);
+                return pauseResumeQueue(el, queueName, action);
             }
-            pauseResumeQueue(elem, undefined, action);
+            pauseResumeQueue(el, undefined, action);
         };
     });
 
-    function pauseResumeQueue(elem, queueName, action) {
-        var allAnims = DOM.data(elem, action == 'resume' ? pausedKey : runningKey),
+    function pauseResumeQueue(el, queueName, action) {
+        var allAnims = DOM.data(el, action == 'resume' ? pausedKey : runningKey),
         // can not stop in for/in , stop will modified allRunning too
             anims = S.merge(allAnims);
-        for (var k in anims) {
-            var anim = anims[k];
+
+        S.each(anims, function (anim) {
             if (queueName === undefined ||
                 anim.config.queue == queueName) {
                 anim[action]();
             }
-        }
+        });
     }
 
     /**
      *
-     * @param elem element which anim belongs to
+     * @param el element which anim belongs to
      * @param queueName queue'name if set to false only remove
      * @param end
      * @param clearQueue
-     * @private
+     * @ignore
      */
-    function stopQueue(elem, end, clearQueue, queueName) {
+    function stopQueue(el, end, clearQueue, queueName) {
         if (clearQueue && queueName !== false) {
-            Q.removeQueue(elem, queueName);
+            Q.removeQueue(el, queueName);
         }
-        var allRunning = DOM.data(elem, runningKey),
+        var allRunning = DOM.data(el, runningKey),
             anims = S.merge(allRunning);
-        for (var k in anims) {
-            var anim = anims[k];
+        S.each(anims, function (anim) {
             if (anim.config.queue == queueName) {
                 anim.stop(end);
             }
-        }
+        });
     }
 
     /**
-     * whether elem is running anim
-     * @param {HTMLElement} elem
-     * @private
+     * whether el is running anim
+     * @param {HTMLElement} el
+     * @return {Boolean}
+     * @static
      */
-    Anim.isRunning = function (elem) {
-        var allRunning = DOM.data(elem, runningKey);
+    Anim.isRunning = function (el) {
+        var allRunning = DOM.data(el, runningKey);
         return allRunning && !S.isEmptyObject(allRunning);
     };
 
     /**
-     * whether elem has paused anim
-     * @param {HTMLElement} elem
-     * @private
+     * whether el has paused anim
+     * @param {HTMLElement} el
+     * @return {Boolean}
+     * @static
      */
-    Anim.isPaused = function (elem) {
-        var paused = DOM.data(elem, pausedKey);
+    Anim.isPaused = function (el) {
+        var paused = DOM.data(el, pausedKey);
         return paused && !S.isEmptyObject(paused);
     };
 
+    /**
+     * @ignore
+     */
     Anim.Q = Q;
 
     if (SHORT_HANDS) {
     }
     return Anim;
 }, {
-    requires:["dom", "event", "./easing", "ua", "./manager", "./fx", "./queue"]
+    requires: ["dom", "event", "./easing", "ua", "./manager", "./fx", "./queue"]
 });
 
-/**
- * 2011-11
- * - 重构，抛弃 emile，优化性能，只对需要的属性进行动画
- * - 添加 stop/stopQueue/isRunning，支持队列管理
- *
- * 2011-04
- * - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
- * - 支持配置 scrollTop/scrollLeft
- *
- *
- * TODO:
- *  - 效率需要提升，当使用 nativeSupport 时仍做了过多动作
- *  - opera nativeSupport 存在 bug ，浏览器自身 bug ?
- *  - 实现 jQuery Effects 的 queue / specialEasing / += / 等特性
- *
- * NOTES:
- *  - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
- *  - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
- *  - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile *
+/*
+ 2011-11
+ - 重构，抛弃 emile，优化性能，只对需要的属性进行动画
+ - 添加 stop/stopQueue/isRunning，支持队列管理
+
+ 2011-04
+ - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
+ - 支持配置 scrollTop/scrollLeft
+
+
+ TODO:
+ - 效率需要提升，当使用 nativeSupport 时仍做了过多动作
+ - opera nativeSupport 存在 bug ，浏览器自身 bug ?
+ - 实现 jQuery Effects 的 queue / specialEasing / += / 等特性
+
+ NOTES:
+ - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
+ - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
+ - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile *
  */
 /**
+ * @ignore
  * @fileOverview special patch for making color gradual change
  * @author  yiminghe@gmail.com
  */
@@ -17223,11 +17392,12 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
     requires:["dom", "./base", "./fx"]
 });
 
-/**
- * TODO
- * 支持 hsla
- *  - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
- **//**
+/*
+  TODO
+  支持 hsla
+   - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
+*//**
+ * @ignore
  * @fileOverview Easing equation from yui3
  */
 KISSY.add('anim/easing', function () {
@@ -17236,58 +17406,57 @@ KISSY.add('anim/easing', function () {
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
     // Preview: http://www.robertpenner.com/Easing/easing_demo.html
 
-    /**
-     * 和 YUI 的 Easing 相比，S.Easing 进行了归一化处理，参数调整为：
-     * @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
-     * @param {Number} b Starting value  b = 0
-     * @param {Number} c Delta between start and end values  c = 1
-     * @param {Number} d Total length of animation d = 1
-     */
+
+// 和 YUI 的 Easing 相比，S.Easing 进行了归一化处理，参数调整为：
+// @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
+// @param {Number} b Starting value  b = 0
+// @param {Number} c Delta between start and end values  c = 1
+// @param {Number} d Total length of animation d = 1
+
 
     var PI = Math.PI,
         pow = Math.pow,
         sin = Math.sin,
         BACK_CONST = 1.70158;
     /**
-     * @memberOf Anim
-     * @name Easing
-     * @namespace Provides methods for customizing how an animation behaves during each run.
+     * Provides methods for customizing how an animation behaves during each run.
+     * @class KISSY.Anim.Easing
+     * @singleton
      */
-    var Easing =
-    /**
-     * @lends Anim.Easing
-     */
-    {
+    var Easing = {
 
-        swing:function (t) {
+        /**
+         * swing effect.
+         */
+        swing: function (t) {
             return ( -Math.cos(t * PI) / 2 ) + 0.5;
         },
 
         /**
          * Uniform speed between points.
          */
-        "easeNone":function (t) {
+        "easeNone": function (t) {
             return t;
         },
 
         /**
          * Begins slowly and accelerates towards end. (quadratic)
          */
-        "easeIn":function (t) {
+        "easeIn": function (t) {
             return t * t;
         },
 
         /**
          * Begins quickly and decelerates towards end.  (quadratic)
          */
-        easeOut:function (t) {
+        easeOut: function (t) {
             return ( 2 - t) * t;
         },
 
         /**
          * Begins slowly and decelerates towards end. (quadratic)
          */
-        easeBoth:function (t) {
+        easeBoth: function (t) {
             return (t *= 2) < 1 ?
                 .5 * t * t :
                 .5 * (1 - (--t) * (t - 2));
@@ -17296,21 +17465,21 @@ KISSY.add('anim/easing', function () {
         /**
          * Begins slowly and accelerates towards end. (quartic)
          */
-        "easeInStrong":function (t) {
+        "easeInStrong": function (t) {
             return t * t * t * t;
         },
 
         /**
          * Begins quickly and decelerates towards end.  (quartic)
          */
-        easeOutStrong:function (t) {
+        easeOutStrong: function (t) {
             return 1 - (--t) * t * t * t;
         },
 
         /**
          * Begins slowly and decelerates towards end. (quartic)
          */
-        "easeBothStrong":function (t) {
+        "easeBothStrong": function (t) {
             return (t *= 2) < 1 ?
                 .5 * t * t * t * t :
                 .5 * (2 - (t -= 2) * t * t * t);
@@ -17320,7 +17489,7 @@ KISSY.add('anim/easing', function () {
          * Snap in elastic effect.
          */
 
-        "elasticIn":function (t) {
+        "elasticIn": function (t) {
             var p = .3, s = p / 4;
             if (t === 0 || t === 1) return t;
             return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
@@ -17329,7 +17498,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Snap out elastic effect.
          */
-        elasticOut:function (t) {
+        elasticOut: function (t) {
             var p = .3, s = p / 4;
             if (t === 0 || t === 1) return t;
             return pow(2, -10 * t) * sin((t - s) * (2 * PI) / p) + 1;
@@ -17338,7 +17507,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Snap both elastic effect.
          */
-        "elasticBoth":function (t) {
+        "elasticBoth": function (t) {
             var p = .45, s = p / 4;
             if (t === 0 || (t *= 2) === 2) return t;
 
@@ -17353,7 +17522,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Backtracks slightly, then reverses direction and moves to end.
          */
-        "backIn":function (t) {
+        "backIn": function (t) {
             if (t === 1) t -= .001;
             return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
         },
@@ -17361,7 +17530,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Overshoots end, then reverses and comes back to end.
          */
-        backOut:function (t) {
+        backOut: function (t) {
             return (t -= 1) * t * ((BACK_CONST + 1) * t + BACK_CONST) + 1;
         },
 
@@ -17369,7 +17538,7 @@ KISSY.add('anim/easing', function () {
          * Backtracks slightly, then reverses direction, overshoots end,
          * then reverses and comes back to end.
          */
-        "backBoth":function (t) {
+        "backBoth": function (t) {
             var s = BACK_CONST;
             var m = (s *= 1.525) + 1;
 
@@ -17383,14 +17552,14 @@ KISSY.add('anim/easing', function () {
         /**
          * Bounce off of start.
          */
-        bounceIn:function (t) {
+        bounceIn: function (t) {
             return 1 - Easing.bounceOut(1 - t);
         },
 
         /**
          * Bounces off end.
          */
-        bounceOut:function (t) {
+        bounceOut: function (t) {
             var s = 7.5625, r;
 
             if (t < (1 / 2.75)) {
@@ -17412,7 +17581,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Bounces off start and end.
          */
-        "bounceBoth":function (t) {
+        "bounceBoth": function (t) {
             if (t < .5) {
                 return Easing.bounceIn(t * 2) * .5;
             }
@@ -17423,33 +17592,34 @@ KISSY.add('anim/easing', function () {
     return Easing;
 });
 
-/**
- * TODO:
- *  - test-Easing.html 详细的测试 + 曲线可视化
- *
- * NOTES:
- *  - 综合比较 jQuery UI/scripty2/YUI 的 Easing 命名，还是觉得 YUI 的对用户
- *    最友好。因此这次完全照搬 YUI 的 Easing, 只是代码上做了点压缩优化。
- *  - 和原生对应关系：
- *     Easing.NativeTimeFunction = {
- *      easeNone: 'linear',
- *      ease: 'ease',
- *
- *      easeIn: 'ease-in',
- *      easeOut: 'ease-out',
- *      easeBoth: 'ease-in-out',
- *
- *      // Ref:
- *      //  1. http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
- *      //  2. http://www.robertpenner.com/Easing/easing_demo.html
- *      //  3. assets/cubic-bezier-timing-function.html
- *      // 注：是模拟值，非精确推导值
- *      easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
- *      easeOutStrong: 'cubic-bezier(0.1, 0.5, 0.1, 1.0)',
- *      easeBothStrong: 'cubic-bezier(0.9, 0.0, 0.1, 1.0)'
- *    };
+/*
+ 2012-06-04
+ - easing.html 曲线可视化
+
+ NOTES:
+ - 综合比较 jQuery UI/scripty2/YUI 的 Easing 命名，还是觉得 YUI 的对用户
+ 最友好。因此这次完全照搬 YUI 的 Easing, 只是代码上做了点压缩优化。
+ - 和原生对应关系：
+ Easing.NativeTimeFunction = {
+ easeNone: 'linear',
+ ease: 'ease',
+
+ easeIn: 'ease-in',
+ easeOut: 'ease-out',
+ easeBoth: 'ease-in-out',
+
+ // Ref:
+ //  1. http://www.w3.org/TR/css3-transitions/#transition-timing-function_tag
+ //  2. http://www.robertpenner.com/Easing/easing_demo.html
+ //  3. assets/cubic-bezier-timing-function.html
+ // 注：是模拟值，非精确推导值
+ easeInStrong: 'cubic-bezier(0.9, 0.0, 0.9, 0.5)',
+ easeOutStrong: 'cubic-bezier(0.1, 0.5, 0.1, 1.0)',
+ easeBothStrong: 'cubic-bezier(0.9, 0.0, 0.1, 1.0)'
+ };
  */
 /**
+ * @ignore
  * @fileOverview animate on single property
  * @author yiminghe@gmail.com
  */
@@ -17457,22 +17627,35 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
 
     /**
      * basic animation about single css property or element attribute
-     * @param cfg
+     * @class KISSY.Anim.Fx
+     * @private
      */
     function Fx(cfg) {
         this.load(cfg);
     }
 
-    S.augment(Fx, {
+    Fx.prototype = {
 
-        load:function (cfg) {
+        constructor: Fx,
+
+        /**
+         * reset config.
+         * @param cfg
+         */
+        load: function (cfg) {
             var self = this;
             S.mix(self, cfg);
             self.pos = 0;
             self.unit = self.unit || "";
         },
 
-        frame:function (end) {
+        /**
+         * process current anim frame.
+         * @param {Boolean} end whether this anim is ended
+         * @return {Number}
+         *
+         */
+        frame: function (end) {
             var self = this,
                 anim = self.anim,
                 endFlag = 0,
@@ -17482,7 +17665,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             }
             var t = S.now(),
                 _startTime = anim._startTime,
-                duration = anim.config.duration;
+                duration = anim._duration;
             if (end || t >= duration + _startTime) {
                 self.pos = 1;
                 endFlag = 1;
@@ -17496,13 +17679,14 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
         },
 
         /**
-         * 数值插值函数
-         * @param {Number} from 源值
-         * @param {Number} to 目的值
-         * @param {Number} pos 当前位置，从 easing 得到 0~1
-         * @return {Number} 当前值
+         * interpolate function
+         *
+         * @param {Number} from current css value
+         * @param {Number} to end css value
+         * @param {Number} pos current position from easing 0~1
+         * @return {Number} value corresponding to position
          */
-        interpolate:function (from, to, pos) {
+        interpolate: function (from, to, pos) {
             // 默认只对数字进行 easing
             if (S.isNumber(from) &&
                 S.isNumber(to)) {
@@ -17512,11 +17696,15 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             }
         },
 
-        update:function () {
+        /**
+         * update dom according to current frame css value.
+         *
+         */
+        update: function () {
             var self = this,
                 anim = self.anim,
                 prop = self.prop,
-                elem = anim.elem,
+                el = anim.config.el,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
@@ -17525,31 +17713,32 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
                 // 插值出错，直接设置为最终值
                 if (!self.finished) {
                     self.finished = 1;
-                    DOM.css(elem, prop, to);
+                    DOM.css(el, prop, to);
                     S.log(self.prop + " update directly ! : " + val + " : " + from + " : " + to);
                 }
             } else {
                 val += self.unit;
-                if (isAttr(elem, prop)) {
-                    DOM.attr(elem, prop, val, 1);
+                if (isAttr(el, prop)) {
+                    DOM.attr(el, prop, val, 1);
                 } else {
-                    DOM.css(elem, prop, val);
+                    DOM.css(el, prop, val);
                 }
             }
         },
 
         /**
          * current value
+         *
          */
-        cur:function () {
+        cur: function () {
             var self = this,
                 prop = self.prop,
-                elem = self.anim.elem;
-            if (isAttr(elem, prop)) {
-                return DOM.attr(elem, prop, undefined, 1);
+                el = self.anim.config.el;
+            if (isAttr(el, prop)) {
+                return DOM.attr(el, prop, undefined, 1);
             }
             var parsed,
-                r = DOM.css(elem, prop);
+                r = DOM.css(el, prop);
             // Empty strings, null, undefined and "auto" are converted to 0,
             // complex values such as "rotate(1rad)" or "0px 10px" are returned as is,
             // simple values such as "10px" are parsed to Float.
@@ -17557,12 +17746,12 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
                 !r || r === "auto" ? 0 : r
                 : parsed;
         }
-    });
+    };
 
-    function isAttr(elem, prop) {
+    function isAttr(el, prop) {
         // support scrollTop/Left now!
-        if ((!elem.style || elem.style[ prop ] == null) &&
-            DOM.attr(elem, prop, undefined, 1) != null) {
+        if ((!el.style || el.style[ prop ] == null) &&
+            DOM.attr(el, prop, undefined, 1) != null) {
             return 1;
         }
         return 0;
@@ -17578,18 +17767,19 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
     return Fx;
 
 }, {
-    requires:['dom']
+    requires: ['dom']
 });
-/**
- * TODO
- * 支持 transform ,ie 使用 matrix
- *  - http://shawphy.com/2011/01/transformation-matrix-in-front-end.html
- *  - http://www.cnblogs.com/winter-cn/archive/2010/12/29/1919266.html
- *  - 标准：http://www.zenelements.com/blog/css3-transform/
- *  - ie: http://www.useragentman.com/IETransformsTranslator/
- *  - wiki: http://en.wikipedia.org/wiki/Transformation_matrix
- *  - jq 插件: http://plugins.jquery.com/project/2d-transform
- **//**
+/*
+ TODO
+ 支持 transform ,ie 使用 matrix
+ - http://shawphy.com/2011/01/transformation-matrix-in-front-end.html
+ - http://www.cnblogs.com/winter-cn/archive/2010/12/29/1919266.html
+ - 标准：http://www.zenelements.com/blog/css3-transform/
+ - ie: http://www.useragentman.com/IETransformsTranslator/
+ - wiki: http://en.wikipedia.org/wiki/Transformation_matrix
+ - jq 插件: http://plugins.jquery.com/project/2d-transform
+ *//**
+ * @ignore
  * @fileOverview single timer for the whole anim module
  * @author  yiminghe@gmail.com
  */
@@ -17661,26 +17851,27 @@ KISSY.add("anim/manager", function(S) {
         }
     };
 });/**
+ * @ignore
  * @fileOverview queue of anim objects
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/queue", function(S, DOM) {
+KISSY.add("anim/queue", function (S, DOM) {
 
-    var /*队列集合容器*/
+    var // 队列集合容器
         queueCollectionKey = S.guid("ks-queue-" + S.now() + "-"),
-        /*默认队列*/
+    // 默认队列
         queueKey = S.guid("ks-queue-" + S.now() + "-"),
-        // 当前队列是否有动画正在执行
+    // 当前队列是否有动画正在执行
         processing = "...";
 
-    function getQueue(elem, name, readOnly) {
+    function getQueue(el, name, readOnly) {
         name = name || queueKey;
 
         var qu,
-            quCollection = DOM.data(elem, queueCollectionKey);
+            quCollection = DOM.data(el, queueCollectionKey);
 
         if (!quCollection && !readOnly) {
-            DOM.data(elem, queueCollectionKey, quCollection = {});
+            DOM.data(el, queueCollectionKey, quCollection = {});
         }
 
         if (quCollection) {
@@ -17693,25 +17884,25 @@ KISSY.add("anim/queue", function(S, DOM) {
         return qu;
     }
 
-    function removeQueue(elem, name) {
+    function removeQueue(el, name) {
         name = name || queueKey;
-        var quCollection = DOM.data(elem, queueCollectionKey);
+        var quCollection = DOM.data(el, queueCollectionKey);
         if (quCollection) {
             delete quCollection[name];
         }
         if (S.isEmptyObject(quCollection)) {
-            DOM.removeData(elem, queueCollectionKey);
+            DOM.removeData(el, queueCollectionKey);
         }
     }
 
     var q = {
 
-        queueCollectionKey:queueCollectionKey,
+        queueCollectionKey: queueCollectionKey,
 
-        queue:function(anim) {
-            var elem = anim.elem,
+        queue: function (anim) {
+            var el = anim.config.el,
                 name = anim.config.queue,
-                qu = getQueue(elem, name);
+                qu = getQueue(el, name);
             qu.push(anim);
             if (qu[0] !== processing) {
                 q.dequeue(anim);
@@ -17719,10 +17910,10 @@ KISSY.add("anim/queue", function(S, DOM) {
             return qu;
         },
 
-        remove:function(anim) {
-            var elem = anim.elem,
+        remove: function (anim) {
+            var el = anim.config.el,
                 name = anim.config.queue,
-                qu = getQueue(elem, name, 1),index;
+                qu = getQueue(el, name, 1), index;
             if (qu) {
                 index = S.indexOf(anim, qu);
                 if (index > -1) {
@@ -17731,16 +17922,16 @@ KISSY.add("anim/queue", function(S, DOM) {
             }
         },
 
-        removeQueues:function(elem) {
-            DOM.removeData(elem, queueCollectionKey);
+        removeQueues: function (el) {
+            DOM.removeData(el, queueCollectionKey);
         },
 
-        removeQueue:removeQueue,
+        removeQueue: removeQueue,
 
-        dequeue:function(anim) {
-            var elem = anim.elem,
+        dequeue: function (anim) {
+            var el = anim.config.el,
                 name = anim.config.queue,
-                qu = getQueue(elem, name, 1),
+                qu = getQueue(el, name, 1),
                 nextAnim = qu && qu.shift();
 
             if (nextAnim == processing) {
@@ -17752,19 +17943,19 @@ KISSY.add("anim/queue", function(S, DOM) {
                 nextAnim._runInternal();
             } else {
                 // remove queue data
-                removeQueue(elem, name);
+                removeQueue(el, name);
             }
         }
 
     };
     return q;
 }, {
-    requires:['dom']
+    requires: ['dom']
 });
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 22:03
+build time: Aug 20 15:37
 */
 /**
  * @fileOverview anim-node-plugin

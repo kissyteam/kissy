@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 22:03
+build time: Aug 20 15:37
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -405,13 +405,15 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
                     return S.all(CAPTION_TMPL);
                 }
             },
-            contentElCls:{
-                value:"ks-menu-button-caption"
-            },
             activeItem:{
             },
             collapsed:{
                 value:true
+            }
+        },
+        HTML_PARSER:{
+            contentEl:function(el){
+                return el.children(".ks-menu-button-caption");
             }
         }
     });

@@ -63,21 +63,21 @@ KISSY.add("component/uibase/stdmod", function () {
             view:1
         },
         /**
-         * Html content of header element.
+         * html content of header element.
          * @type {NodeList|String}
          */
         headerContent:{
             view:1
         },
         /**
-         * Html content of body element.
+         * html content of body element.
          * @type {NodeList|String}
          */
         bodyContent:{
             view:1
         },
         /**
-         * Html content of footer element.
+         * html content of footer element.
          * @type {NodeList|String}
          */
         footerContent:{

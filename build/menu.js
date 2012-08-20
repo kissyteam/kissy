@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 22:03
+build time: Aug 20 15:37
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -144,7 +144,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
 
             /**
              * Whether this menu contains specified html element.
-             * @param {NodeList} element Html Element to be tested.
+             * @param {NodeList} element html Element to be tested.
              * @return {Boolean}
              */
             containsElement:function (element) {
@@ -523,13 +523,12 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
  * @fileOverview menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, PopupMenu, PopupMenuRender, FilterMenu) {
+KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, PopupMenu, PopupMenuRender, FilterMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
     Item.Render = ItemRender;
     Menu.SubMenu = SubMenu;
     SubMenu.Render = SubMenuRender;
-    Menu.Separator = Separator;
     Menu.PopupMenu = PopupMenu;
     PopupMenu.Render = PopupMenuRender;
     Menu.FilterMenu = FilterMenu;
@@ -542,7 +541,6 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
         'menu/menuitemRender',
         'menu/submenu',
         'menu/submenuRender',
-        'menu/separator',
         'menu/popupmenu',
         'menu/popupmenuRender',
         'menu/filtermenu'
@@ -941,31 +939,6 @@ KISSY.add("menu/popupmenuRender", function (S, UA, Component, MenuRender) {
 }, {
     requires:['ua', 'component', './menuRender']
 });/**
- * @fileOverview menu separator def
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/separator", function (S, Component, Separator) {
-
-    /**
-     * @extends Separator
-     * @class
-     * Menu separator.
-     * xclass: 'menuseparator'.
-     * @memberOf Menu
-     * @name Separator
-     * @deprecated use separator instead.
-     */
-    var MenuSeparator = Separator.extend({
-    }, {}, {
-        xclass: 'menuseparator',
-        priority: 20
-    });
-
-    return MenuSeparator;
-
-}, {
-    requires: ['component', 'separator']
-});/**
  * @fileOverview submenu model and control for kissy , transfer item's keycode to menu
  * @author yiminghe@gmail.com
  */
@@ -1358,27 +1331,29 @@ KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
         ARROW_TMPL = '<span class="ks-submenu-arrow">►<' + '/span>';
 
     SubMenuRender = MenuItemRender.extend({
-        createDom:function () {
+        createDom: function () {
             var self = this,
                 el = self.get("el");
             el.attr("aria-haspopup", "true")
                 .append(ARROW_TMPL);
         }
     }, {
-        ATTRS:{
-            arrowEl:{},
-            contentElCls:{
-                value:"ks-menuitem-content"
-            },
-            contentEl:{
-                valueFn:function () {
+        ATTRS: {
+            arrowEl: {},
+            contentEl: {
+                valueFn: function () {
                     return S.all(CONTENT_TMPL);
                 }
+            }
+        },
+        HTML_PARSER: {
+            contentEl: function (el) {
+                return el.children(".ks-menuitem-content");
             }
         }
     });
 
     return SubMenuRender;
 }, {
-    requires:['./menuitemRender']
+    requires: ['./menuitemRender']
 });

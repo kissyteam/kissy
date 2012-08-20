@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 15 22:03
+build time: Aug 20 15:38
 */
 /**
  * @ignore
@@ -496,11 +496,11 @@ build time: Aug 15 22:03
 
         /**
          * The build time of the library.
-         * NOTICE: '20120815220335' will replace with current timestamp when compressing.
+         * NOTICE: '20120820153805' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120815220335';
+        S.__BUILD_TIME = '20120820153805';
     })();
 
     return S;
@@ -1219,18 +1219,18 @@ build time: Aug 15 22:03
              * @param {Object} o json data
              * @param {String} [sep='&'] separator between each pair of data
              * @param {String} [eq='='] separator between key and value of data
-             * @param {Boolean} [arr=true] whether add '[]' to array key of data
+             * @param {Boolean} [serializeArray =true] whether add '[]' to array key of data
              * @return {String}
              * @member KISSY
              */
-            param: function (o, sep, eq, arr) {
+            param: function (o, sep, eq, serializeArray) {
                 if (!S.isPlainObject(o)) {
                     return EMPTY;
                 }
                 sep = sep || SEP;
                 eq = eq || EQ;
-                if (S.isUndefined(arr)) {
-                    arr = TRUE;
+                if (S.isUndefined(serializeArray)) {
+                    serializeArray = TRUE;
                 }
                 var buf = [], key, i, v, len, val;
                 for (key in o) {
@@ -1251,7 +1251,7 @@ build time: Aug 15 22:03
                             for (i = 0, len = val.length; i < len; ++i) {
                                 v = val[i];
                                 if (isValidParamValue(v)) {
-                                    buf.push(key, (arr ? encode('[]') : EMPTY));
+                                    buf.push(key, (serializeArray ? encode('[]') : EMPTY));
                                     if (v !== undefined) {
                                         buf.push(eq, encode(v + EMPTY));
                                     }
@@ -1290,7 +1290,7 @@ build time: Aug 15 22:03
                 var ret = {},
                     eqIndex,
                     pairs = str.split(sep),
-                    pair, key, val,
+                    key, val,
                     i = 0, len = pairs.length;
 
                 for (; i < len; ++i) {
@@ -2910,6 +2910,7 @@ build time: Aug 15 22:03
 
     /**
      * @class KISSY.Loader
+     * @private
      * @mixins KISSY.Loader.Target
      * This class should not be instantiated manually.
      */
@@ -2927,6 +2928,7 @@ build time: Aug 15 22:03
 
     /**
      * @class KISSY.Loader.Package
+     * @private
      * This class should not be instantiated manually.
      */
     function Package(cfg) {
@@ -2998,6 +3000,7 @@ build time: Aug 15 22:03
 
     /**
      * @class KISSY.Loader.Module
+     * @private
      * This class should not be instantiated manually.
      */
     function Module(cfg) {
@@ -3152,6 +3155,7 @@ build time: Aug 15 22:03
 
     /**
      * Loader Status Enum
+     * @private
      * @enum {Number} KISSY.Loader.STATUS
      */
     Loader.STATUS = {
@@ -3198,6 +3202,7 @@ build time: Aug 15 22:03
     /**
      * @class KISSY.Loader.Target
      * Event Target For KISSY Loader.
+     * @private
      * @singleton
      */
     KISSY.Loader.Target = {
@@ -3271,6 +3276,7 @@ build time: Aug 15 22:03
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
          * @singleton
+         * @private
          */
             Utils = {},
         host = S.Env.host,
@@ -4600,6 +4606,7 @@ build time: Aug 15 22:03
      * @class KISSY.Loader.ComboLoader
      * using combo to load module files
      * @param SS KISSY
+     * @private
      * @mixins KISSY.Loader.Target
      */
     function ComboLoader(SS) {
@@ -5193,7 +5200,7 @@ build time: Aug 15 22:03
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120815220335'
+        tag: '20120820153805'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5469,12 +5476,12 @@ KISSY.config('modules', {
 'waterfall': {requires: ['node','base']},
 'dd': {requires: ['ua','dom','event','node','base']},
 'switchable': {requires: ['dom','anim','event']},
-'tree': {requires: ['node','event','component']},
+'tree': {requires: ['node','component','event']},
 'button': {requires: ['component','event']},
 'component': {requires: ['ua','node','event','dom','base']},
 'json': {requires: ['ua']},
 'event': {requires: ['ua','dom']},
-'ajax': {requires: ['event','dom','json']},
+'ajax': {requires: ['json','event','dom']},
 'resizable': {requires: ['node','base','dd']},
 'stylesheet': {requires: ['dom']},
 'input-selection': {requires: ['dom']},
@@ -5482,7 +5489,7 @@ KISSY.config('modules', {
 'calendar': {requires: ['node','ua','event']},
 'validation': {requires: ['dom','event','node']},
 'imagezoom': {requires: ['node','overlay']},
-'menu': {requires: ['event','component','separator','node','ua']},
+'menu': {requires: ['event','component','node','ua']},
 'suggest': {requires: ['dom','event','ua']},
 'node': {requires: ['event','dom','anim']},
 'editor': {requires: ['htmlparser','component','core']},

@@ -116,7 +116,7 @@
     <script>
 
         KISSY.ready(function (S) {
-            KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
+            KISSY.use("menubutton,menu,separator", function (S, MenuButton, Menu,Separator) {
                 var $ = S.all;
 
                 var sb = new Menu.PopupMenu();
@@ -155,7 +155,7 @@
                         xclass:'popupmenu',
                         children:[
                             b,
-                            new Menu.Separator(),
+                            new Separator(),
                             alone,
                             new Menu.Item({content:"我要卖"})
                         ]
