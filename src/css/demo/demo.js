@@ -328,6 +328,10 @@ KISSY.use("menu", function (S, Menu) {
             }
         });
 
+        if(!finalMods.length){
+            finalMods=["base"];
+        }
+
         var urls = S.map(finalMods, callbackRule);
 
         if (urls.length) {
