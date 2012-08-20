@@ -2,7 +2,7 @@
  * @fileOverview root node represent a check tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, TreeMgr) {
+KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender, TreeManager) {
     /**
      * @name CheckTree
      * @extends Tree.CheckNode
@@ -11,7 +11,7 @@ KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, 
      * xclass: 'check-tree'.
      * @memberOf Tree
      */
-    var CheckTree = CheckNode.extend([TreeMgr],
+    var CheckTree = CheckNode.extend([TreeManager],
         /**
          * @lends Tree.CheckTree#
          */
@@ -46,5 +46,5 @@ KISSY.add("tree/checktree", function (S, Component, CheckNode, CheckTreeRender, 
     return CheckTree;
 
 }, {
-    requires:['component', './checknode', './checktreeRender', './treemgr']
+    requires:['component', './check-node', './check-tree-render', './tree-manager']
 });

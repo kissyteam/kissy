@@ -2,20 +2,20 @@
  * @fileOverview common render for node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/basenodeRender", function (S, Node, Component) {
+KISSY.add("tree/node-render", function (S, Node, Component) {
 
-    //<div class='ks-treeitem'>
-    //<div class='ks-treeitem-row'>
+    //<div class='ks-tree-node'>
+    //<div class='ks-tree-node-row'>
     //<div class='ks-tree-expand-icon-t'></div>
-    //<div class='ks-treeitem-checked0'></div>
+    //<div class='ks-tree-node-checked0'></div>
     //<div class='ks-tree-file-icon'></div>
-    //<span class='ks-treeitem-content'></span>
+    //<span class='ks-tree-node-content'></span>
     //</div>
     //</div>
 
     var $ = Node.all,
-        SELECTED_CLS = "ks-treeitem-selected",
-        ROW_CLS = "ks-treeitem-row",
+        SELECTED_CLS = "ks-tree-node-selected",
+        ROW_CLS = "ks-tree-node-row",
         COMMON_EXPAND_EL_CLS = "ks-tree-expand-icon-{t}",
 
     // refreshCss 实际使用顺序
@@ -42,7 +42,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
         ].join(" "),
     // 实际使用，结束
 
-        CONTENT_EL_CLS = "ks-treeitem-content",
+        CONTENT_EL_CLS = "ks-tree-node-content",
         CHILDREN_CLS = "ks-tree-children",
         CHILDREN_CLS_L = "ks-tree-lchildren";
 
@@ -93,7 +93,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
             id = contentEl.attr("id");
 
             if (!id) {
-                contentEl.attr("id", id = S.guid("ks-treeitem"));
+                contentEl.attr("id", id = S.guid("ks-tree-node"));
             }
 
             expandIconEl = $("<div>").appendTo(rowEl);
@@ -103,7 +103,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
             contentEl.appendTo(rowEl);
 
             el.attr({
-                "role": "treeitem",
+                "role": "tree-node",
                 "aria-labelledby": id
             }).prepend(rowEl);
 
@@ -169,7 +169,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
             },
             contentEl: {
                 valueFn: function () {
-                    return $("<span id='" + S.guid("ks-treeitem") + "' class='" + CONTENT_EL_CLS + "'/>");
+                    return $("<span id='" + S.guid("ks-tree-node") + "' class='" + CONTENT_EL_CLS + "'/>");
                 }
             },
             isLeaf: {},
@@ -185,10 +185,10 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
             },
             isLeaf: function (el) {
                 var self = this;
-                if (el.hasClass(self.getCssClassWithPrefix("treeitem-leaf"))) {
+                if (el.hasClass(self.getCssClassWithPrefix("tree-node-leaf"))) {
                     return true;
                 }
-                if (el.hasClass(self.getCssClassWithPrefix("treeitem-folder"))) {
+                if (el.hasClass(self.getCssClassWithPrefix("tree-node-folder"))) {
                     return false;
                 }
             },

@@ -18,11 +18,11 @@
     display: none;
 }
 
-.ks-treeitem-focused {
+.ks-tree-node-focused {
     outline: none;
 }
 
-.ks-treeitem-row {
+.ks-tree-node-row {
     white-space: nowrap;
     line-height: 16px;
     height: 16px;
@@ -96,7 +96,7 @@
     background-position: -246px -24px;
 }
 
-.ks-treeitem-content {
+.ks-tree-node-content {
     margin-left: 3px;
     padding: 1px 2px 1px 2px;
     text-decoration: none;
@@ -105,41 +105,41 @@
     }
 }
 
-.ks-treeitem-selected {
-    .ks-treeitem-content {
+.ks-tree-node-selected {
+    .ks-tree-node-content {
         background: #08c;
         color: white;
     }
 }
 
-.ks-treeitem-focused {
-    .ks-treeitem-selected {
-        .ks-treeitem-content {
+.ks-tree-node-focused {
+    .ks-tree-node-selected {
+        .ks-tree-node-content {
             background: highlight;
             color: highlighttext;
         }
     }
 }
 
-.ks-treeitem-check(){
+.ks-tree-node-check(){
     .ks-tree-icon();
     background: url(dpl/dpl.png);
     width: 16px;
 
 }
 
-.ks-treeitem-checked0 {
-    .ks-treeitem-check();
+.ks-tree-node-checked0 {
+    .ks-tree-node-check();
     background-position: 0 -2px;
 
 }
 
-.ks-treeitem-checked1 {
-    .ks-treeitem-check();
+.ks-tree-node-checked1 {
+    .ks-tree-node-check();
     background-position: -66px -2px;
 }
 
-.ks-treeitem-checked2 {
-    .ks-treeitem-check();
+.ks-tree-node-checked2 {
+    .ks-tree-node-check();
     background-position: -132px -2px;
 }

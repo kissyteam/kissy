@@ -2,12 +2,12 @@
  * @fileOverview tree management utils
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/treemgr", function (S, Event) {
+KISSY.add("tree/tree-manager", function (S, Event) {
 
-    function TreeMgr() {
+    function TreeManager() {
     }
 
-    TreeMgr.ATTRS =
+    TreeManager.ATTRS =
     /**
      * @lends Tree#
      */
@@ -47,7 +47,7 @@ KISSY.add("tree/treemgr", function (S, Event) {
         return id;
     }
 
-    S.augment(TreeMgr, {
+    S.augment(TreeManager, {
 
         isTree: 1,
 
@@ -127,7 +127,7 @@ KISSY.add("tree/treemgr", function (S, Event) {
         return self._allNodes;
     }
 
-    return TreeMgr;
+    return TreeManager;
 }, {
     requires: ['event']
 });

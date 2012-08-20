@@ -2,7 +2,7 @@
  * @fileOverview root node represent a simple tree
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
+KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager) {
 
     /*多继承
      1. 继承基节点（包括可装饰儿子节点功能）
@@ -17,7 +17,7 @@ KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
      * xclass: 'tree'.
      * @extends Tree.Node
      */
-    return BaseNode.extend([TreeMgr],
+    return TreeNode.extend([TreeManager],
         /**
          * @lends Tree#
          */
@@ -26,7 +26,7 @@ KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
              * See {@link Tree.Node#expandAll}
              */
             expandAll:function () {
-                return BaseNode.prototype.expandAll.apply(this, arguments);
+                return TreeNode.prototype.expandAll.apply(this, arguments);
             }
         }, {
             ATTRS:{
@@ -40,7 +40,7 @@ KISSY.add("tree/base", function (S, Component, BaseNode, TreeRender, TreeMgr) {
         });
 
 }, {
-    requires:['component', './basenode', './treeRender', './treemgr']
+    requires:['component', './node', './tree-render', './tree-manager']
 });
 
 /*

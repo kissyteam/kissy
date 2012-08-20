@@ -2,19 +2,19 @@
  * @fileOverview abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
+KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
     var $ = Node.all,
         KeyCodes = Node.KeyCodes;
 
     /**
      * @class
      * Tree Node.
-     * xclass: 'treeitem'.
+     * xclass: 'tree-node'.
      * @name Node
      * @memberOf Tree
      * @extends Component.Controller
      */
-    var BaseNode = Component.Container.extend(
+    var TreeNode = Component.Container.extend(
         [
             // 不是所有的子节点都是子组件
             Component.DecorateChild
@@ -178,7 +178,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
             addChild: function () {
                 var self = this,
                     c;
-                c = BaseNode.superclass.addChild.apply(self, S.makeArray(arguments));
+                c = TreeNode.superclass.addChild.apply(self, S.makeArray(arguments));
                 // after default addChild then parent is accessible
                 // if first build a node subtree, no root is constructed yet!
                 var tree = self.get("tree");
@@ -197,7 +197,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                     tree = self.get("tree");
                 if (tree) {
                     recursiveRegister(tree, c, "_unRegister");
-                    BaseNode.superclass.removeChild.apply(self, S.makeArray(arguments));
+                    TreeNode.superclass.removeChild.apply(self, S.makeArray(arguments));
                     refreshCssForSelfAndChildren(self);
                 }
                 return c;
@@ -246,7 +246,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                 },
 
                 xrender: {
-                    value: BaseNodeRender
+                    value: TreeNodeRender
                 },
 
                 // 事件代理
@@ -351,7 +351,7 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
                 }
             }
         }, {
-            xclass: 'treeitem',
+            xclass: 'tree-node',
             priority: 10
         });
 
@@ -460,10 +460,10 @@ KISSY.add("tree/basenode", function (S, Node, Component, BaseNodeRender) {
 
     // # ------------------- private end
 
-    return BaseNode;
+    return TreeNode;
 
 }, {
-    requires: ['node', 'component', './basenodeRender']
+    requires: ['node', 'component', './node-render']
 });
 
 /**
