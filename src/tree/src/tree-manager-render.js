@@ -2,19 +2,19 @@
  * @fileOverview tree management utils render
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/treemgrRender", function (S) {
+KISSY.add("tree/tree-manager-render", function (S) {
 
-    function TreeMgrRender() {
+    function TreeManagerRender() {
     }
 
-    TreeMgrRender.ATTRS = {
+    TreeManagerRender.ATTRS = {
         // 默认 true
         // 是否显示根节点
         showRootNode:{
         }
     };
 
-    S.augment(TreeMgrRender, {
+    S.augment(TreeManagerRender, {
         __renderUI:function () {
             var self = this;
             self.get("el").attr("role", "tree");
@@ -26,5 +26,5 @@ KISSY.add("tree/treemgrRender", function (S) {
         }
     });
 
-    return TreeMgrRender;
+    return TreeManagerRender;
 });

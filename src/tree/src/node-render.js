@@ -2,22 +2,20 @@
  * @fileOverview common render for node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/basenodeRender", function (S, Node, Component) {
+KISSY.add("tree/node-render", function (S, Node, Component) {
 
-    //<div class='ks-treeitem'>
-    //<div class='ks-treeitem-row'>
-    //<div class='ks-tree-icon ks-tree-expand-icon ks-tree-expand-icon-t'></div>
-    //<div class='ks-tree-icon ks-treeitem-checked0'></div>
-    //<div class='ks-tree-icon ks-tree-file-icon'></div>
-    //<span class='ks-treeitem-content'></span>
+    //<div class='ks-tree-node'>
+    //<div class='ks-tree-node-row'>
+    //<div class='ks-tree-expand-icon-t'></div>
+    //<div class='ks-tree-node-checked0'></div>
+    //<div class='ks-tree-file-icon'></div>
+    //<span class='ks-tree-node-content'></span>
     //</div>
     //</div>
 
     var $ = Node.all,
-        SELECTED_CLS = "ks-treeitem-selected",
-        COMMON_ICON_CLS = "ks-tree-icon",
-        ROW_CLS = "ks-treeitem-row",
-        COMMON_EXPAND_ICON_CLS = "ks-tree-expand-icon",
+        SELECTED_CLS = "ks-tree-node-selected",
+        ROW_CLS = "ks-tree-node-row",
         COMMON_EXPAND_EL_CLS = "ks-tree-expand-icon-{t}",
 
     // refreshCss 实际使用顺序
@@ -25,41 +23,32 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
     // iconEl
     // contentEl
         EXPAND_ICON_EL_FILE_CLS = [
-            COMMON_ICON_CLS,
-            COMMON_EXPAND_ICON_CLS,
             COMMON_EXPAND_EL_CLS
         ].join(" "),
         EXPAND_ICON_EL_FOLDER_EXPAND_CLS = [
-            COMMON_ICON_CLS,
-            COMMON_EXPAND_ICON_CLS,
             COMMON_EXPAND_EL_CLS + "minus"
         ].join(" "),
         EXPAND_ICON_EL_FOLDER_COLLAPSE_CLS = [
-            COMMON_ICON_CLS,
-            COMMON_EXPAND_ICON_CLS,
             COMMON_EXPAND_EL_CLS + "plus"
         ].join(" "),
         ICON_EL_FILE_CLS = [
-            COMMON_ICON_CLS,
             "ks-tree-file-icon"
         ].join(" "),
         ICON_EL_FOLDER_EXPAND_CLS = [
-            COMMON_ICON_CLS,
             "ks-tree-expanded-folder-icon"
         ].join(" "),
         ICON_EL_FOLDER_COLLAPSE_CLS = [
-            COMMON_ICON_CLS,
             "ks-tree-collapsed-folder-icon"
         ].join(" "),
     // 实际使用，结束
 
-        CONTENT_EL_CLS = "ks-treeitem-content",
+        CONTENT_EL_CLS = "ks-tree-node-content",
         CHILDREN_CLS = "ks-tree-children",
         CHILDREN_CLS_L = "ks-tree-lchildren";
 
     return Component.Render.extend({
 
-        refreshCss:function (isNodeSingleOrLast, isNodeLeaf) {
+        refreshCss: function (isNodeSingleOrLast, isNodeLeaf) {
             var self = this,
                 expanded = self.get("expanded"),
                 iconEl = self.get("iconEl"),
@@ -83,14 +72,14 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
 
             iconEl.attr("class", iconElCss);
             expandIconEl.attr("class", S.substitute(expandElCss, {
-                "t":isNodeSingleOrLast ? "l" : "t"
+                "t": isNodeSingleOrLast ? "l" : "t"
             }));
             if (childrenEl) {
                 childrenEl.attr("class", (isNodeSingleOrLast ? CHILDREN_CLS_L : CHILDREN_CLS));
             }
         },
 
-        createDom:function () {
+        createDom: function () {
             var self = this,
                 el = self.get("el"),
                 id,
@@ -104,7 +93,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
             id = contentEl.attr("id");
 
             if (!id) {
-                contentEl.attr("id", id = S.guid("ks-treeitem"));
+                contentEl.attr("id", id = S.guid("ks-tree-node"));
             }
 
             expandIconEl = $("<div>").appendTo(rowEl);
@@ -114,8 +103,8 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
             contentEl.appendTo(rowEl);
 
             el.attr({
-                "role":"treeitem",
-                "aria-labelledby":id
+                "role": "tree-node",
+                "aria-labelledby": id
             }).prepend(rowEl);
 
             self.__set("rowEl", rowEl);
@@ -123,7 +112,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
             self.__set("iconEl", iconEl);
         },
 
-        _uiSetExpanded:function (v) {
+        _uiSetExpanded: function (v) {
             var self = this,
                 childrenEl = self.get("childrenEl");
             if (childrenEl) {
@@ -132,18 +121,18 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
             self.get("el").attr("aria-expanded", v);
         },
 
-        _uiSetSelected:function (v) {
+        _uiSetSelected: function (v) {
             var self = this,
                 rowEl = self.get("rowEl");
             rowEl[v ? "addClass" : "removeClass"](SELECTED_CLS);
             self.get("el").attr("aria-selected", v);
         },
 
-        _uiSetDepth:function (v) {
+        _uiSetDepth: function (v) {
             this.get("el").attr("aria-level", v);
         },
 
-        _uiSetTooltip:function (v) {
+        _uiSetTooltip: function (v) {
             this.get("el").attr("title", v);
         },
 
@@ -154,7 +143,7 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
          * @protected
          * @return {NodeList}
          */
-        getContentElement:function () {
+        getContentElement: function () {
             var self = this, c;
             if (c = self.get("childrenEl")) {
                 return c;
@@ -166,44 +155,44 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
             return c;
         }
     }, {
-        ATTRS:{
-            childrenEl:{},
-            expandIconEl:{},
-            tooltip:{},
-            iconEl:{},
-            expanded:{
-                value:false
+        ATTRS: {
+            childrenEl: {},
+            expandIconEl: {},
+            tooltip: {},
+            iconEl: {},
+            expanded: {
+                value: false
             },
-            rowEl:{},
-            depth:{
-                value:0
+            rowEl: {},
+            depth: {
+                value: 0
             },
-            contentEl:{
-                valueFn:function () {
-                    return $("<span id='" + S.guid("ks-treeitem") + "' class='" + CONTENT_EL_CLS + "'/>");
+            contentEl: {
+                valueFn: function () {
+                    return $("<span id='" + S.guid("ks-tree-node") + "' class='" + CONTENT_EL_CLS + "'/>");
                 }
             },
-            isLeaf:{},
-            selected:{}
+            isLeaf: {},
+            selected: {}
         },
 
-        HTML_PARSER:{
-            childrenEl:function (el) {
+        HTML_PARSER: {
+            childrenEl: function (el) {
                 return el.children("." + CHILDREN_CLS);
             },
-            contentEl:function (el) {
+            contentEl: function (el) {
                 return el.children("." + CONTENT_EL_CLS);
             },
-            isLeaf:function (el) {
+            isLeaf: function (el) {
                 var self = this;
-                if (el.hasClass(self.getCssClassWithPrefix("treeitem-leaf"))) {
+                if (el.hasClass(self.getCssClassWithPrefix("tree-node-leaf"))) {
                     return true;
                 }
-                if (el.hasClass(self.getCssClassWithPrefix("treeitem-folder"))) {
+                if (el.hasClass(self.getCssClassWithPrefix("tree-node-folder"))) {
                     return false;
                 }
             },
-            expanded:function (el) {
+            expanded: function (el) {
                 var children = el.one(".ks-tree-children");
                 if (!children) {
                     return false;
@@ -215,5 +204,5 @@ KISSY.add("tree/basenodeRender", function (S, Node, Component) {
     });
 
 }, {
-    requires:['node', 'component']
+    requires: ['node', 'component']
 });

@@ -2,7 +2,7 @@
  * @fileOverview checkable tree node
  * @author yiminghe@gmail.com
  */
-KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
+KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
     var $ = Node.all,
         PARTIAL_CHECK = 2,
         CHECK = 1,
@@ -13,10 +13,10 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
      * @memberOf Tree
      * @class
      * Checked tree node.
-     * xclass: 'check-treeitem'.
+     * xclass: 'check-tree-node'.
      * @extends Tree.Node
      */
-    var CheckNode = BaseNode.extend(
+    var CheckNode = TreeNode.extend(
         /**
          * @lends Tree.CheckNode#
          */
@@ -145,7 +145,7 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
                 }
             }
         }, {
-            xclass:"check-treeitem",
+            xclass:"check-tree-node",
             priority:20
         });
 
@@ -170,5 +170,5 @@ KISSY.add("tree/checknode", function (S, Node, BaseNode, CheckNodeRender) {
 
     return CheckNode;
 }, {
-    requires:['node', './basenode', './checknodeRender']
+    requires:['node', './node', './check-node-render']
 });
