@@ -1,11 +1,12 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
-<title>combobox</title>
-<link href="../../../../src/css/src/dpl/base.css" rel="stylesheet"/>
-<link href="../../../menu/assets/dpl.css" rel="stylesheet"/>
-<link href="../../assets/dpl.css" rel="stylesheet"/>
+    <meta charset="utf-8"/>
+    <title>combobox</title>
+    <link href="../../../../src/css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../../../button/assets/dpl.css" rel="stylesheet"/>
+    <link href="../../../menu/assets/dpl.css" rel="stylesheet"/>
+    <link href="../../assets/dpl.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
@@ -18,22 +19,27 @@
         <div class="row">
             <div class="span6">
                 <h3>关于 suggest</h3>
+
                 <p>当用户输入文本时，显示相关联的提示选项，包括：suggest,combobox等方式</p>
             </div>
             <div class="span9">
                 <h3>suggest 示例</h3>
+
                 <p>使用已有DOM生成 combobox</p>
+
                 <div>
-                    <div class="ks-combobox" id="J_AutoComplete" style="width: 100px; " aria-disabled="false">
+                    <div class="ks-combobox" id="J_AutoComplete" style="width: 100px; ">
                         <div class="ks-combobox-input-wrap">
-                            <input class="ks-combobox-input" id="inp" aria-expanded="true" tabindex="0">
+                            <input class="ks-combobox-input" id="inp">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="span9">
                 <h3>suggest 示例</h3>
+
                 <p>使用已有js生成 combobox,可以通过配置格式化函数，格式化建议项，并且可以禁用建议项(输入 a 试试)</p>
+
                 <div id="inp_container">
                 </div>
 
@@ -42,18 +48,21 @@
         <div class="row">
             <div class="span6">
                 <h3>关于combobox</h3>
+
                 <p>组合框，是一个输入框和下拉菜单构成，一起组合使用更方便用户</p>
             </div>
             <div class="span9">
                 <h3>combobox示例</h3>
+
                 <p>利用现有DOM生成combobox</p>
+
                 <div>
-                    <div class="ks-combobox" id="J_Combox" style="" aria-disabled="false">
-                        <div class="ks-combobox-trigger" style="-webkit-user-select: none; ">
+                    <div class="ks-combobox" id="J_Combox">
+                        <div class="ks-combobox-trigger">
                             <div class="ks-combobox-trigger-inner">▼</div>
                         </div>
                         <div class="ks-combobox-input-wrap">
-                            <input class="ks-combobox-input" aria-expanded="true" tabindex="0">
+                            <input class="ks-combobox-input">
                         </div>
                     </div>
                 </div>
@@ -61,9 +70,49 @@
             </div>
             <div class="span9">
                 <h3>combobox 示例</h3>
+
                 <p>利用js生成 combobox</p>
+
                 <div id="inp-combobox-container">
 
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="span6">
+                <h3>可验证的 combobox</h3>
+
+                <p>相当于带过滤功能的 select</p>
+            </div>
+            <div class="span9">
+                <h3>可验证的 combobox 示例</h3>
+
+                <p>利用现有DOM生成combobox</p>
+
+                <div>
+                    <div class="ks-combobox" id="J_Combox_Check">
+                        <div class="ks-combobox-input-wrap">
+                            <input class="ks-combobox-input">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="span9">
+                <h3>combobox 示例</h3>
+
+                <p>利用js生成 combobox</p>
+
+                <div id="inp-combobox-container-check">
+
+                </div>
+
+                <div style="margin: 10px 0; ">
+                    <button id="check" class="ks-button">是否验证通过</button>
+
+                    <label><input type="checkbox" id="disable"/>禁用</label>
                 </div>
 
             </div>
@@ -71,19 +120,24 @@
     </section>
 </div>
 <script src="../../../../build/kissy.js"></script>
+<script src="../../src/base.js"></script>
+<script src="../../src/baseRender.js"></script>
+<script src="../../src/combobox.js"></script>
+<script src="../../src/localDataSource.js"></script>
+<script src="../../src/remoteDataSource.js"></script>
 <script>
     /**/
     KISSY.use('combobox', function (S, ComboBox) {
         var data = ["a123456", "b12345", "c3464356", "d23434"];
         var basicComboBox = new ComboBox({
-            srcNode:S.one("#J_AutoComplete"),
-            width:200,
+            srcNode: S.one("#J_AutoComplete"),
+            width: 200,
             // 初始就聚焦
             // focused:true,
-            hasTrigger:false,
-            dataSource:{
-                data:data,
-                xclass:'combobox-LocalDataSource'
+            hasTrigger: false,
+            dataSource: {
+                data: data,
+                xclass: 'combobox-LocalDataSource'
             }
         });
         basicComboBox.render();
@@ -99,22 +153,22 @@
         var data = ["a123456", "b12345", "c3464356", "d23434"];
 
         var basicComboBox = new ComboBox({
-            render:"#inp_container",
-            width:200,
-            dataSource:{
-                xclass:'combobox-LocalDataSource',
-                data:data
+            render: "#inp_container",
+            width: 200,
+            dataSource: {
+                xclass: 'combobox-LocalDataSource',
+                data: data
             },
-            hasTrigger:false,
-            maxItemCount:2,
-            format:function (query, data) {
+            hasTrigger: false,
+            maxItemCount: 2,
+            format: function (query, data) {
                 var ret = [];
                 for (var i = 0; i < data.length; i++) {
                     ret[i] = {
-                        content:(data[i] + "")
+                        content: (data[i] + "")
                                 .replace(new RegExp(S.escapeRegExp(query), "g"),
                                 "<b>$&</b>"),
-                        disabled:(i % 2 ? true : false)
+                        disabled: (i % 2 ? true : false)
                     };
                 }
                 return ret;
@@ -133,11 +187,11 @@
         var data = ["a123456", "b12345", "c3464356", "d23434"];
 
         var basicComboBox = new ComboBox({
-            srcNode:S.one("#J_Combox"),
-            width:200,
-            dataSource:{
-                data:data,
-                xclass:'combobox-LocalDataSource'
+            srcNode: S.one("#J_Combox"),
+            width: 200,
+            dataSource: {
+                data: data,
+                xclass: 'combobox-LocalDataSource'
             }
         });
         basicComboBox.render();
@@ -147,25 +201,88 @@
         var data = ["a123456", "b12345", "c3464356", "d23434"];
 
         var basicComboBox = new ComboBox({
-            render:"#inp-combobox-container",
-            dataSource:{
-                xclass:'combobox-LocalDataSource',
-                data:data
+            render: "#inp-combobox-container",
+            autoHighlightFirst:true,
+            dataSource: {
+                xclass: 'combobox-LocalDataSource',
+                data: data
             },
-            width:200,
-            maxItemCount:5,
-            format:function (query, data) {
+            width: 200,
+            maxItemCount: 5,
+            format: function (query, data) {
                 var ret = [];
                 for (var i = 0; i < data.length; i++) {
                     ret[i] = {
-                        content:(data[i] + "")
+                        content: (data[i] + "")
                                 .replace(new RegExp(S.escapeRegExp(query), "g"),
                                 "<b>$&</b>"),
-                        disabled:(i % 2 ? true : false)
+                        disabled: (i % 2 ? true : false)
                     };
                 }
                 return ret;
             }
+        });
+        basicComboBox.render();
+    });
+
+    /**
+     * checked combobox
+     */
+
+    KISSY.use('combobox', function (S, ComboBox) {
+        var $ = S.all;
+        var data = ["a123456", "b12345", "c3464356", "d23434"];
+
+        var basicComboBox = new ComboBox({
+            render: "#inp-combobox-container-check",
+            invalidMessage: "输入值无效！",
+            placeholder: "请输入",
+            //inputValue: "c3464356",
+            dataSource: {
+                xclass: 'combobox-LocalDataSource',
+                data: data
+            },
+            width: 200,
+            maxItemCount: 5,
+            format: function (query, data) {
+                var ret = [];
+                for (var i = 0; i < data.length; i++) {
+                    ret[i] = {
+                        content: (data[i] + "")
+                                .replace(new RegExp(S.escapeRegExp(query), "g"),
+                                "<b>$&</b>"),
+                        disabled: (i % 2 ? true : false)
+                    };
+                }
+                return ret;
+            }
+        });
+        basicComboBox.render();
+
+        $("#check").on("click", function () {
+            basicComboBox.checkValid(function (v) {
+                alert((!v ? "没通过" : v.value) + " : " + basicComboBox.getInputValue());
+            });
+        });
+
+        $("#disable").on("click", function () {
+            basicComboBox.set("disabled", this.checked);
+        });
+    });
+
+    KISSY.use('combobox', function (S, ComboBox) {
+        var data = ["a123456", "b12345", "c3464356", "d23434"];
+        var basicComboBox = new ComboBox({
+            srcNode: '#J_Combox_Check',
+            invalidMessage: "输入值无效！",
+            placeholder: "请输入",
+            //inputValue: "c3464356",
+            dataSource: {
+                xclass: 'combobox-LocalDataSource',
+                data: data
+            },
+            width: 200,
+            maxItemCount: 5
         });
         basicComboBox.render();
     });
