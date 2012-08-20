@@ -2,7 +2,7 @@
  * @fileOverview Render aria properties to input element.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/baseRender", function (S, Component) {
+KISSY.add("combobox/render", function (S, Component) {
 
     var $ = S.all,
         tpl = '<div class="ks-combobox-input-wrap">' +
