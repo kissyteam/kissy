@@ -92,9 +92,10 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
          */
         {
 
-            addChild:function(){
-              var c=  Toolbar.superclass.addChild.apply(this,arguments);
+            addChild: function () {
+                var c = Toolbar.superclass.addChild.apply(this, arguments);
                 processChild(c);
+                return c;
             },
 
             createDom: function () {
@@ -213,7 +214,7 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
             }
         }, {
             xclass: 'toolbar',
-            priority:10
+            priority: 10
         });
 
     return Toolbar;

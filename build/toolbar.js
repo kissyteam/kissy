@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 15 18:17
+build time: Aug 20 11:13
 */
 /**
  * Toolbar for KISSY.
@@ -74,8 +74,7 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
         }
     }
 
-    function processChild(e) {
-        var c = e.child;
+    function processChild(c) {
         // 交给容器代理
         c.set("handleMouseEvents", false);
         c.set("focusable", false);
@@ -98,8 +97,10 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
          */
         {
 
-            initializer: function () {
-                this.on("addChild", processChild);
+            addChild: function () {
+                var c = Toolbar.superclass.addChild.apply(this, arguments);
+                processChild(c);
+                return c;
             },
 
             createDom: function () {
@@ -218,7 +219,7 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
             }
         }, {
             xclass: 'toolbar',
-            priority:10
+            priority: 10
         });
 
     return Toolbar;
