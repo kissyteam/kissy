@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:11
+build time: Aug 20 15:49
 */
 /**
  * @fileOverview TabBar for KISSY.
@@ -387,15 +387,15 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
 
 
         addItem: function (item, index) {
-            var tabs = this,
-                bar = tabs.get("bar"),
+            var self = this,
+                bar = self.get("bar"),
                 selectedTab,
                 selectedPanel,
                 tabSelectedCls = self.get("tabSelectedCls"),
                 panelSelectedCls = self.get("panelSelectedCls"),
                 tabItem,
                 panelItem,
-                body = tabs.get("body");
+                body = self.get("body");
 
             tabItem = {
                 xclass: 'tabs-tab',
@@ -424,7 +424,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
                 body.set('selectedPanel', selectedPanel);
             }
 
-            return tabs;
+            return self;
         },
 
         removeItemAt: function (index, destroy) {
