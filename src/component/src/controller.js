@@ -64,7 +64,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             if (attrs.hasOwnProperty(attrName)) {
                 attrCfg = attrs[attrName];
                 if (attrCfg.view) {
-
                     // 先取后 getter
                     // 防止死循环
                     if (( v = self.get(attrName) ) !== undefined) {

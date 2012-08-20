@@ -8,27 +8,29 @@ KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
         ARROW_TMPL = '<span class="ks-submenu-arrow">►<' + '/span>';
 
     SubMenuRender = MenuItemRender.extend({
-        createDom:function () {
+        createDom: function () {
             var self = this,
                 el = self.get("el");
             el.attr("aria-haspopup", "true")
                 .append(ARROW_TMPL);
         }
     }, {
-        ATTRS:{
-            arrowEl:{},
-            contentElCls:{
-                value:"ks-menuitem-content"
-            },
-            contentEl:{
-                valueFn:function () {
+        ATTRS: {
+            arrowEl: {},
+            contentEl: {
+                valueFn: function () {
                     return S.all(CONTENT_TMPL);
                 }
+            }
+        },
+        HTML_PARSER: {
+            contentEl: function (el) {
+                return el.children(".ks-menuitem-content");
             }
         }
     });
 
     return SubMenuRender;
 }, {
-    requires:['./menuitemRender']
+    requires: ['./menuitemRender']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 15 23:37
+build time: Aug 20 11:43
 */
 /**
  * @fileOverview TabBar for KISSY.

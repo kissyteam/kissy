@@ -1,17 +1,17 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 31 22:33
+build time: Aug 20 11:43
 */
 /**
- * SplitButton for KISSY.
+ * SplitButton for KISSY. Combination of button and menubutton.
  * @author yiminghe@gmail.com
  */
 KISSY.add("split-button", function (S, Component, Button, MenuButton) {
 
     return Component.Controller.extend([], {
 
-        renderUI:function () {
+        renderUI: function () {
             var self = this,
                 alignWithEl = self.get("alignWithEl"),
                 children = self.get("children");
@@ -29,58 +29,59 @@ KISSY.add("split-button", function (S, Component, Button, MenuButton) {
             }
         },
 
-        decorateInternal:function () {
+        decorateInternal: function (el) {
             var self = this,
                 button = self.get("button"),
-                menuButton = self.get("menuButton"),
-                children = self.get("el").children();
+                menuButton = self.get("menuButton");
+            self.set("el", el);
+            var children = el.children();
             self.__set("button", new Button(S.mix({
-                srcNode:children[0]
+                srcNode: children[0]
             }, button)));
             self.__set("menuButton", new MenuButton(S.mix({
-                srcNode:children[1]
+                srcNode: children[1]
             }, menuButton)));
         }
 
     }, {
 
-        ATTRS:{
-            handleMouseEvents:{
-                value:false
+        ATTRS: {
+            handleMouseEvents: {
+                value: false
             },
-            focusable:{
-                value:false
+            focusable: {
+                value: false
             },
-            alignWithEl:{
-                value:true
+            alignWithEl: {
+                value: true
             },
-            children:{
-                value:[
+            children: {
+                value: [
                     {
-                        xclass:'button'
+                        xclass: 'button'
                     },
                     {
-                        xclass:'menu-button'
+                        xclass: 'menu-button'
                     }
                 ]
             },
-            button:{
-                setter:function (v) {
+            button: {
+                setter: function (v) {
                     this.get("children")[0] = v;
                 }
             },
-            menuButton:{
-                setter:function (v) {
+            menuButton: {
+                setter: function (v) {
                     this.get("children")[1] = v;
                 }
             }
         }
 
     }, {
-        xclass:'split-button'
+        xclass: 'split-button'
     });
 
 
 }, {
-    requires:['component', 'button', 'menubutton']
+    requires: ['component', 'button', 'menubutton']
 });

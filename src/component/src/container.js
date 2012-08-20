@@ -37,10 +37,12 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
              * @memberOf Component.Container#
              * @param {HTMLElement} target Current event target node.
              */
+        }, {
+            xclass: 'container'
         });
 
 }, {
-    requires:['./controller', './delegate-children', './decorate-children']
+    requires: ['./controller', './delegate-children', './decorate-children']
 });
 
 /**

@@ -180,7 +180,6 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                         var ifModifiedKey =
                             c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString();
 
-                        ///debugger
                         var status = nativeXhr.status;
 
                         // _XDomainRequest 不能获取响应头

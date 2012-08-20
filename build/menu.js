@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 17 19:20
+build time: Aug 20 11:43
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -144,7 +144,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
 
             /**
              * Whether this menu contains specified html element.
-             * @param {NodeList} element Html Element to be tested.
+             * @param {NodeList} element html Element to be tested.
              * @return {Boolean}
              */
             containsElement:function (element) {
@@ -1331,27 +1331,29 @@ KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
         ARROW_TMPL = '<span class="ks-submenu-arrow">►<' + '/span>';
 
     SubMenuRender = MenuItemRender.extend({
-        createDom:function () {
+        createDom: function () {
             var self = this,
                 el = self.get("el");
             el.attr("aria-haspopup", "true")
                 .append(ARROW_TMPL);
         }
     }, {
-        ATTRS:{
-            arrowEl:{},
-            contentElCls:{
-                value:"ks-menuitem-content"
-            },
-            contentEl:{
-                valueFn:function () {
+        ATTRS: {
+            arrowEl: {},
+            contentEl: {
+                valueFn: function () {
                     return S.all(CONTENT_TMPL);
                 }
+            }
+        },
+        HTML_PARSER: {
+            contentEl: function (el) {
+                return el.children(".ks-menuitem-content");
             }
         }
     });
 
     return SubMenuRender;
 }, {
-    requires:['./menuitemRender']
+    requires: ['./menuitemRender']
 });
