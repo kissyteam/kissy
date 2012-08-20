@@ -335,7 +335,9 @@ KISSY.use("menu", function (S, Menu) {
         var urls = S.map(finalMods, callbackRule);
 
         if (urls.length) {
+
             var f = base + "??" + urls.join(",");
+
             return ('<p><a href="' + f + '" target="_blank">' +
                 f
                 + '</p>');
