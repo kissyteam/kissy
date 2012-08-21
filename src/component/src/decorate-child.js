@@ -10,7 +10,7 @@ KISSY.add("component/decorate-child", function (S, DecorateChildren) {
     S.augment(DecorateChild, DecorateChildren, {
         decorateInternal:function (element) {
             var self = this;
-            // 不用 __set , 通知 view 更新
+            // 不用 setInternal , 通知 view 更新
             self.set("el", element);
             var ui = self.get("decorateChildCls"),
                 child = element.one("." + ui);

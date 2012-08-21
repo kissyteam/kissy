@@ -31,7 +31,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
 
             el.append(contentEl);
 
-            self.__set("contentEl", contentEl);
+            self.setInternal("contentEl", contentEl);
         }
     };
 

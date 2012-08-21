@@ -12,7 +12,7 @@ KISSY.add("tree/check-node-render", function (S, Node, TreeNodeRender) {
             var self = this,
                 expandIconEl = self.get("expandIconEl"),
                 checkIconEl = $("<div>").insertAfter(expandIconEl);
-            self.__set("checkIconEl", checkIconEl);
+            self.setInternal("checkIconEl", checkIconEl);
         },
 
         _uiSetCheckState:function (s) {

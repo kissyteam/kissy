@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 15:59
+build time: Aug 21 20:53
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -307,7 +307,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Input element of current combobox.
-                 * @type {NodeList}
+                 * @type {KISSY.NodeList}
                  */
                 input: {
                     view: 1
@@ -375,7 +375,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                     },
                     setter: function (m) {
                         if (m instanceof Component.Controller) {
-                            m.__set("parent", this);
+                            m.setInternal("parent", this);
                         }
                     }
                 },
@@ -546,7 +546,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
         if (m && m.xclass) {
             if (init) {
                 m = Component.create(m, self);
-                self.__set("menu", m);
+                self.setInternal("menu", m);
             } else {
                 return null;
             }
@@ -942,7 +942,7 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
     /**
      * @name LocalDataSource
      * @memberOf ComboBox
-     * @extends Base
+     * @extends KISSY.Base
      * @class
      * Local dataSource for comboBox.
      * xclass: 'combobox-LocalDataSource'.
@@ -1026,7 +1026,7 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
      * @class
      * dataSource which wrap {@link IO} utility.
      * xclass: 'combobox-RemoteDataSource'.
-     * @extends Base
+     * @extends KISSY.Base
      * @memberOf ComboBox
      */
     function RemoteDataSource() {
@@ -1114,7 +1114,7 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
                     if (parse) {
                         data = parse(inputVal, data);
                     }
-                    self.__set("data", data);
+                    self.setInternal("data", data);
                     if (cache) {
                         self.caches[inputVal] = data;
                     }
@@ -1164,11 +1164,11 @@ KISSY.add("combobox/render", function (S, Component) {
                 wrap = el.one(".ks-combobox-input-wrap");
                 input = input || S.all(inputTpl);
                 wrap.append(input);
-                self.__set("input", input);
+                self.setInternal("input", input);
             }
 
             if (!trigger) {
-                self.__set("trigger", S.all(triggerTpl));
+                self.setInternal("trigger", S.all(triggerTpl));
             }
 
             self.get("trigger").unselectable();
@@ -1177,7 +1177,7 @@ KISSY.add("combobox/render", function (S, Component) {
                 "class='ks-combobox-invalid-el'>" +
                 "<div class='ks-combobox-invalid-inner'></div>" +
                 "</div>").insertBefore(input.parent());
-            self.__set("invalidEl", invalidEl);
+            self.setInternal("invalidEl", invalidEl);
 
             var placeholder;
 
@@ -1185,7 +1185,7 @@ KISSY.add("combobox/render", function (S, Component) {
                 if (!(inputId = input.attr("id"))) {
                     input.attr("id", inputId = S.guid("ks-combobox-input"));
                 }
-                self.__set('placeholderEl', $('<label for="' +
+                self.setInternal('placeholderEl', $('<label for="' +
                     inputId + '" ' +
                     'class="ks-combobox-placeholder">' +
                     placeholder + '</label>').appendTo(el));

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:10
+build time: Aug 21 20:57
 */
 /**
  * modified from ckeditor ,elementPath represents element's tree path from body
@@ -62,7 +62,7 @@ KISSY.add("editor/core/elementPath", function (S) {
 
     /**
      * @constructor
-     * @param lastNode {NodeList}
+     * @param lastNode {KISSY.NodeList}
      */
     function ElementPath(lastNode) {
         var self = this,

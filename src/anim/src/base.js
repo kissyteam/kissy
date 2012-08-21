@@ -7,26 +7,26 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     var camelCase = DOM._camelCase,
         NodeType = DOM.NodeType,
-        specialVals = ["hide", "show", "toggle"],
+        specialVals = ['hide', 'show', 'toggle'],
     // shorthand css properties
         SHORT_HANDS = {
             // http://www.w3.org/Style/CSS/Tracker/issues/9
             // http://snook.ca/archives/html_and_css/background-position-x-y
             // backgroundPositionX  backgroundPositionY does not support
             background: [
-                "backgroundPosition"
+                'backgroundPosition'
             ],
             border: [
-                "borderBottomWidth",
-                "borderLeftWidth",
+                'borderBottomWidth',
+                'borderLeftWidth',
                 'borderRightWidth',
                 // 'borderSpacing', 组合属性？
                 'borderTopWidth'
             ],
-            "borderBottom": ["borderBottomWidth"],
-            "borderLeft": ["borderLeftWidth"],
-            borderTop: ["borderTopWidth"],
-            borderRight: ["borderRightWidth"],
+            'borderBottom': ['borderBottomWidth'],
+            'borderLeft': ['borderLeftWidth'],
+            borderTop: ['borderTopWidth'],
+            borderRight: ['borderRightWidth'],
             font: [
                 'fontSize',
                 'fontWeight'
@@ -88,7 +88,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // the transition properties
         if (S.isString(props)) {
-            props = S.unparam(String(props), ";", ":");
+            props = S.unparam(String(props), ';', ':');
         } else {
             // clone to prevent collision within multiple instance
             props = S.clone(props);
@@ -134,7 +134,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         self._fxs = {};
 
         // register complete
-        self.on("complete", onComplete);
+        self.on('complete', onComplete);
     }
 
 
@@ -170,19 +170,19 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         // 进入该函数即代表执行（q[0] 已经是 ...）
         saveRunning(self);
 
-        if (self.fire("beforeStart") === false) {
+        if (self.fire('beforeStart') === false) {
             // no need to invoke complete
             self.stop(0);
             return;
         }
 
         if (el.nodeType == NodeType.ELEMENT_NODE) {
-            hidden = (DOM.css(el, "display") === "none");
+            hidden = (DOM.css(el, 'display') === 'none');
             for (prop in props) {
                 if (props.hasOwnProperty(prop)) {
                     val = props[prop];
                     // 直接结束
-                    if (val == "hide" && hidden || val == 'show' && !hidden) {
+                    if (val == 'hide' && hidden || val == 'show' && !hidden) {
                         // need to invoke complete
                         self.stop(1);
                         return;
@@ -202,17 +202,17 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             elStyle = el.style;
             S.mix(_backupProps, {
                 overflow: elStyle.overflow,
-                "overflow-x": elStyle.overflowX,
-                "overflow-y": elStyle.overflowY
+                'overflow-x': elStyle.overflowX,
+                'overflow-y': elStyle.overflowY
             });
-            elStyle.overflow = "hidden";
+            elStyle.overflow = 'hidden';
             // inline element should has layout/inline-block
-            if (DOM.css(el, "display") === "inline" &&
-                DOM.css(el, "float") === "none") {
+            if (DOM.css(el, 'display') === 'inline' &&
+                DOM.css(el, 'float') === 'none') {
                 if (UA['ie']) {
                     elStyle.zoom = 1;
                 } else {
-                    elStyle.display = "inline-block";
+                    elStyle.display = 'inline-block';
                 }
             }
         }
@@ -280,10 +280,10 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             if (S.inArray(val, specialVals)) {
                 // backup original inline css value
                 _backupProps[prop] = DOM.style(el, prop);
-                if (val == "toggle") {
-                    val = hidden ? "show" : "hide";
+                if (val == 'toggle') {
+                    val = hidden ? 'show' : 'hide';
                 }
-                if (val == "hide") {
+                if (val == 'hide') {
                     to = 0;
                     from = fx.cur();
                     // 执行完后隐藏
@@ -301,9 +301,9 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 from = fx.cur();
             }
 
-            val += "";
+            val += '';
 
-            var unit = "",
+            var unit = '',
                 parts = val.match(NUMBER_REG);
 
             if (parts) {
@@ -311,7 +311,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 unit = parts[3];
 
                 // 有单位但单位不是 px
-                if (unit && unit !== "px") {
+                if (unit && unit !== 'px') {
                     DOM.css(el, prop, val);
                     from = (to / fx.cur()) * from;
                     DOM.css(el, prop, from + unit);
@@ -319,7 +319,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
                 // 相对
                 if (parts[1]) {
-                    to = ( (parts[ 1 ] === "-=" ? -1 : 1) * to ) + from;
+                    to = ( (parts[ 1 ] === '-=' ? -1 : 1) * to ) + from;
                 }
             }
 
@@ -443,7 +443,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 }
             }
 
-            if ((self.fire("step") === false) || end) {
+            if ((self.fire('step') === false) || end) {
                 // complete 事件只在动画到达最后一帧时才触发
                 self.stop(end);
             }
@@ -484,7 +484,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                         }
                     }
                 }
-                self.fire("complete");
+                self.fire('complete');
             }
 
             AM.stop(self);
@@ -502,7 +502,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     S.augment(Anim, Event.Target);
 
-    var runningKey = S.guid("ks-anim-unqueued-" + S.now() + "-");
+    var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
 
     function saveRunning(anim) {
         var el = anim.config.el,
@@ -534,7 +534,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
 
 
-    var pausedKey = S.guid("ks-anim-paused-" + S.now() + "-");
+    var pausedKey = S.guid('ks-anim-paused-' + S.now() + '-');
 
     function savePaused(anim) {
         var el = anim.config.el,
@@ -615,7 +615,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @static
      */
 
-    S.each(["pause", "resume"], function (action) {
+    S.each(['pause', 'resume'], function (action) {
         Anim[action] = function (el, queueName) {
             if (
             // default queue
@@ -696,7 +696,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
     return Anim;
 }, {
-    requires: ["dom", "event", "./easing", "ua", "./manager", "./fx", "./queue"]
+    requires: ['dom', 'event', './easing', 'ua', './manager', './fx', './queue']
 });
 
 /*

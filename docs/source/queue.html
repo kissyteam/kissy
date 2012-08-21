@@ -20,14 +20,14 @@
  * @fileOverview queue of anim objects
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;anim/queue&quot;, function (S, DOM) {
+KISSY.add('anim/queue', function (S, DOM) {
 
     var // 队列集合容器
-        queueCollectionKey = S.guid(&quot;ks-queue-&quot; + S.now() + &quot;-&quot;),
+        queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
     // 默认队列
-        queueKey = S.guid(&quot;ks-queue-&quot; + S.now() + &quot;-&quot;),
+        queueKey = S.guid('ks-queue-' + S.now() + '-'),
     // 当前队列是否有动画正在执行
-        processing = &quot;...&quot;;
+        processing = '...';
 
     function getQueue(el, name, readOnly) {
         name = name || queueKey;

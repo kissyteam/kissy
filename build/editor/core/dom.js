@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:10
+build time: Aug 21 20:57
 */
 /**
  * dom utils for kissy editor,mainly from ckeditor
@@ -821,7 +821,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param doc
              * @param address
              * @param [normalized]
-             * @return {NodeList}
+             * @return {KISSY.NodeList}
              */
             _4e_getByAddress: function (doc, address, normalized) {
                 var $ = doc.documentElement;

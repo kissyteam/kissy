@@ -20,7 +20,7 @@
  * @fileOverview animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;anim/fx&quot;, function (S, DOM, undefined) {
+KISSY.add('anim/fx', function (S, DOM, undefined) {
 
 <span id='KISSY-Anim-Fx'>    /**
 </span>     * basic animation about single css property or element attribute
@@ -43,7 +43,7 @@ KISSY.add(&quot;anim/fx&quot;, function (S, DOM, undefined) {
             var self = this;
             S.mix(self, cfg);
             self.pos = 0;
-            self.unit = self.unit || &quot;&quot;;
+            self.unit = self.unit || '';
         },
 
 <span id='KISSY-Anim-Fx-method-frame'>        /**
@@ -111,7 +111,7 @@ KISSY.add(&quot;anim/fx&quot;, function (S, DOM, undefined) {
                 if (!self.finished) {
                     self.finished = 1;
                     DOM.css(el, prop, to);
-                    S.log(self.prop + &quot; update directly ! : &quot; + val + &quot; : &quot; + from + &quot; : &quot; + to);
+                    S.log(self.prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
                 }
             } else {
                 val += self.unit;
@@ -136,11 +136,11 @@ KISSY.add(&quot;anim/fx&quot;, function (S, DOM, undefined) {
             }
             var parsed,
                 r = DOM.css(el, prop);
-            // Empty strings, null, undefined and &quot;auto&quot; are converted to 0,
-            // complex values such as &quot;rotate(1rad)&quot; or &quot;0px 10px&quot; are returned as is,
-            // simple values such as &quot;10px&quot; are parsed to Float.
+            // Empty strings, null, undefined and 'auto' are converted to 0,
+            // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
+            // simple values such as '10px' are parsed to Float.
             return isNaN(parsed = parseFloat(r)) ?
-                !r || r === &quot;auto&quot; ? 0 : r
+                !r || r === 'auto' ? 0 : r
                 : parsed;
         }
     };

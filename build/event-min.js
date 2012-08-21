@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:10
+build time: Aug 21 20:57
 */
 KISSY.add("event/add",function(g,h,a,c,p,b,e,j){function m(a,b,e,l,f){var i=j[b]||{};!l.length&&(!i.setup||!1===i.setup.call(a))&&d(a,b,e);i.add&&i.add.call(a,f)}var d=c.simpleAdd,n=c.isValidTarget,q=c.isIdenticalHandler;g.mix(h,{__add:function(a,d,k,l,f){var i=c.getTypedGroups(k),k=i[0],y=i[1],t,x,i=j[k],w,v,s;g.isObject(l)&&(v=l.last,f=l.scope,x=l.data,s=l.selector,w=l.originalType,l=l.fn,s&&!w&&i&&i.delegateFix&&(w=k,k=i.delegateFix));!s&&!w&&i&&i.onFix&&(w=k,k=i.onFix);if(k&&d&&g.isFunction(l)&&
 (!a||n(d))){(t=h._data(d))||e._data(d,t={});var i=t.events=t.events||{},i=i[k]=i[k]||[],l={fn:l,scope:f,selector:s,last:v,data:x,groups:y,originalType:w},u=t.handler;u||(u=t.handler=function(f,a){if(!(typeof KISSY=="undefined"||f&&f.type==c.Event_Triggered)){var i=u.target,d;if(!f||!f.fixed)f=new p(i,f);d=f.type;g.isPlainObject(a)&&g.mix(f,a);if(d)f.type=d;return b(i,f)}},u.target=d);for(f=i.length-1;0<=f;--f)if(q(i[f],l,d))return;a&&(m(d,k,u,i,l),d=null);s?(a=i.delegateCount=i.delegateCount||0,i.splice(a,

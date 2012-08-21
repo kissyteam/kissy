@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:11
+build time: Aug 21 20:58
 */
 /**
  * @fileOverview Make Elements flow like waterfall.
@@ -349,7 +349,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
             /**
              * Ajust the height of one specified item.
-             * @param {NodeList} item Waterfall item to be adjusted.
+             * @param {KISSY.NodeList} item Waterfall item to be adjusted.
              * @param {Object} cfg Config object.
              * @param {Function} cfg.callback Callback function after the item is adjusted.
              * @param {Function} cfg.process Adjust logic function.
@@ -447,7 +447,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
             /**
              * Remove a waterfall item.
-             * @param {NodeList} item Waterfall item to be removed.
+             * @param {KISSY.NodeList} item Waterfall item to be removed.
              * @param {Object} cfg Config object.
              * @param {Function} cfg.callback Callback function to be called after remove.
              * @param {Object} cfg.effect Same as {@link Waterfall#adjustEffect}

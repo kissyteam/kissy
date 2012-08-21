@@ -3,14 +3,14 @@
  * @fileOverview queue of anim objects
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/queue", function (S, DOM) {
+KISSY.add('anim/queue', function (S, DOM) {
 
     var // 队列集合容器
-        queueCollectionKey = S.guid("ks-queue-" + S.now() + "-"),
+        queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
     // 默认队列
-        queueKey = S.guid("ks-queue-" + S.now() + "-"),
+        queueKey = S.guid('ks-queue-' + S.now() + '-'),
     // 当前队列是否有动画正在执行
-        processing = "...";
+        processing = '...';
 
     function getQueue(el, name, readOnly) {
         name = name || queueKey;

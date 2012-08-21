@@ -41,7 +41,7 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
                 btn = self.get("closeBtn");
             if (v) {
                 if (!btn) {
-                    self.__set("closeBtn", btn = getCloseRenderBtn());
+                    self.setInternal("closeBtn", btn = getCloseRenderBtn());
                 }
                 btn.appendTo(self.get("el"), undefined);
             } else {

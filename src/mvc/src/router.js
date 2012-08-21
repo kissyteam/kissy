@@ -297,7 +297,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
      * @class
      * Router used to route url to responding action callbacks.
      * @memberOf MVC
-     * @extends Base
+     * @extends KISSY.Base
      */
     function Router() {
         var self = this;

@@ -111,11 +111,11 @@ KISSY.add('component/uibase/boxrender', function (S) {
                     el.append(contentEl);
                 }
 
-                self.__set("el", el);
+                self.setInternal("el", el);
 
                 if (!contentEl) {
                     // 没取到,这里设下值, uiSet 时可以 set("content")  取到
-                    self.__set("contentEl", el);
+                    self.setInternal("contentEl", el);
                 }
             }
         },

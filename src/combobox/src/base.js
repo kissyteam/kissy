@@ -302,7 +302,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Input element of current combobox.
-                 * @type {NodeList}
+                 * @type {KISSY.NodeList}
                  */
                 input: {
                     view: 1
@@ -370,7 +370,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                     },
                     setter: function (m) {
                         if (m instanceof Component.Controller) {
-                            m.__set("parent", this);
+                            m.setInternal("parent", this);
                         }
                     }
                 },
@@ -541,7 +541,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
         if (m && m.xclass) {
             if (init) {
                 m = Component.create(m, self);
-                self.__set("menu", m);
+                self.setInternal("menu", m);
             } else {
                 return null;
             }

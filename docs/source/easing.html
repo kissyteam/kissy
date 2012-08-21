@@ -54,14 +54,14 @@ KISSY.add('anim/easing', function () {
 <span id='KISSY-Anim-Easing-method-easeNone'>        /**
 </span>         * Uniform speed between points.
          */
-        &quot;easeNone&quot;: function (t) {
+        'easeNone': function (t) {
             return t;
         },
 
 <span id='KISSY-Anim-Easing-method-easeIn'>        /**
 </span>         * Begins slowly and accelerates towards end. (quadratic)
          */
-        &quot;easeIn&quot;: function (t) {
+        'easeIn': function (t) {
             return t * t;
         },
 
@@ -84,7 +84,7 @@ KISSY.add('anim/easing', function () {
 <span id='KISSY-Anim-Easing-method-easeInStrong'>        /**
 </span>         * Begins slowly and accelerates towards end. (quartic)
          */
-        &quot;easeInStrong&quot;: function (t) {
+        'easeInStrong': function (t) {
             return t * t * t * t;
         },
 
@@ -98,7 +98,7 @@ KISSY.add('anim/easing', function () {
 <span id='KISSY-Anim-Easing-method-easeBothStrong'>        /**
 </span>         * Begins slowly and decelerates towards end. (quartic)
          */
-        &quot;easeBothStrong&quot;: function (t) {
+        'easeBothStrong': function (t) {
             return (t *= 2) &lt; 1 ?
                 .5 * t * t * t * t :
                 .5 * (2 - (t -= 2) * t * t * t);
@@ -108,7 +108,7 @@ KISSY.add('anim/easing', function () {
 </span>         * Snap in elastic effect.
          */
 
-        &quot;elasticIn&quot;: function (t) {
+        'elasticIn': function (t) {
             var p = .3, s = p / 4;
             if (t === 0 || t === 1) return t;
             return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
@@ -126,7 +126,7 @@ KISSY.add('anim/easing', function () {
 <span id='KISSY-Anim-Easing-method-elasticBoth'>        /**
 </span>         * Snap both elastic effect.
          */
-        &quot;elasticBoth&quot;: function (t) {
+        'elasticBoth': function (t) {
             var p = .45, s = p / 4;
             if (t === 0 || (t *= 2) === 2) return t;
 
@@ -141,7 +141,7 @@ KISSY.add('anim/easing', function () {
 <span id='KISSY-Anim-Easing-method-backIn'>        /**
 </span>         * Backtracks slightly, then reverses direction and moves to end.
          */
-        &quot;backIn&quot;: function (t) {
+        'backIn': function (t) {
             if (t === 1) t -= .001;
             return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
         },
@@ -157,7 +157,7 @@ KISSY.add('anim/easing', function () {
 </span>         * Backtracks slightly, then reverses direction, overshoots end,
          * then reverses and comes back to end.
          */
-        &quot;backBoth&quot;: function (t) {
+        'backBoth': function (t) {
             var s = BACK_CONST;
             var m = (s *= 1.525) + 1;
 
@@ -200,7 +200,7 @@ KISSY.add('anim/easing', function () {
 <span id='KISSY-Anim-Easing-method-bounceBoth'>        /**
 </span>         * Bounces off start and end.
          */
-        &quot;bounceBoth&quot;: function (t) {
+        'bounceBoth': function (t) {
             if (t &lt; .5) {
                 return Easing.bounceIn(t * 2) * .5;
             }

@@ -17,167 +17,94 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview dom
- * @author yiminghe@gmail.com, lifesinger@gmail.com
+ * @fileOverview attribute management and event in one
+ * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/base', function (S, UA, undefined) {
+KISSY.add('base', function (S, Attribute, Event) {
 
-    var WINDOW = S.Env.host;
-
-<span id='KISSY-DOM-NodeType'>    /**
-</span>     * DOM Element node type.
-     * @enum {Number} KISSY.DOM.NodeType
+<span id='KISSY-Base'>    /**
+</span>     * @class KISSY.Base
+     * @mixins KISSY.Event.Target
+     * @mixins KISSY.Base.Attribute
+     *
+     * A base class which objects requiring attributes and custom event support can
+     * extend. attributes configured
+     * through the static {@link KISSY.Base#static-ATTRS} property for each class
+     * in the hierarchy will be initialized by Base.
      */
-    var NodeType = {
-<span id='KISSY-DOM-NodeType-property-ELEMENT_NODE'>        /**
-</span>         * element type
-         */
-        ELEMENT_NODE: 1,
-<span id='KISSY-DOM-NodeType-property-ATTRIBUTE_NODE'>        /**
-</span>         * attribute node type
-         */
-        'ATTRIBUTE_NODE': 2,
-<span id='KISSY-DOM-NodeType-property-TEXT_NODE'>        /**
-</span>         * text node type
-         */
-        TEXT_NODE: 3,
-<span id='KISSY-DOM-NodeType-property-CDATA_SECTION_NODE'>        /**
-</span>         * cdata node type
-         */
-        'CDATA_SECTION_NODE': 4,
-<span id='KISSY-DOM-NodeType-property-ENTITY_REFERENCE_NODE'>        /**
-</span>         * entity reference node type
-         */
-        'ENTITY_REFERENCE_NODE': 5,
-<span id='KISSY-DOM-NodeType-property-ENTITY_NODE'>        /**
-</span>         * entity node type
-         */
-        'ENTITY_NODE': 6,
-<span id='KISSY-DOM-NodeType-property-PROCESSING_INSTRUCTION_NODE'>        /**
-</span>         * processing instruction node type
-         */
-        'PROCESSING_INSTRUCTION_NODE': 7,
-<span id='KISSY-DOM-NodeType-property-COMMENT_NODE'>        /**
-</span>         * comment node type
-         */
-        COMMENT_NODE: 8,
-<span id='KISSY-DOM-NodeType-property-DOCUMENT_NODE'>        /**
-</span>         * document node type
-         */
-        DOCUMENT_NODE: 9,
-<span id='KISSY-DOM-NodeType-property-DOCUMENT_TYPE_NODE'>        /**
-</span>         * document type
-         */
-        'DOCUMENT_TYPE_NODE': 10,
-<span id='KISSY-DOM-NodeType-property-DOCUMENT_FRAGMENT_NODE'>        /**
-</span>         * document fragment type
-         */
-        DOCUMENT_FRAGMENT_NODE: 11,
-<span id='KISSY-DOM-NodeType-property-NOTATION_NODE'>        /**
-</span>         * notation type
-         */
-        'NOTATION_NODE': 12
-    };
-<span id='KISSY-DOM'>    /**
-</span>     * KISSY DOM Utils.
-     * Provides DOM helper methods.
-     * @class KISSY.DOM
-     * @singleton
+    function Base(config) {
+        var self = this,
+            c = self.constructor;
+        // define
+        while (c) {
+            addAttrs(self, c['ATTRS']);
+            c = c.superclass ? c.superclass.constructor : null;
+        }
+        // initial
+        initAttrs(self, config);
+    }
+
+
+<span id='KISSY-Base-static-property-ATTRS'>    /**
+</span>     * The default set of attributes which will be available for instances of this class, and
+     * their configuration
+     *
+     * By default if the value is an object literal or an array it will be 'shallow' cloned, to
+     * protect the default value.
+     *
+     *      for example:
+     *      @example
+     *      {
+     *          x:{
+     *              value: // default value
+     *              valueFn: // default function to get value
+     *              getter: // getter function
+     *              setter: // setter function
+     *          }
+     *      }
+     *
+     * @property ATTRS
+     * @member KISSY.Base
+     * @static
+     * @type {Object}
      */
-    var DOM = {
 
-<span id='KISSY-DOM-method-isCustomDomain'>        /**
-</span>         * Whether has been set a custom domain,
-         * @param {window} [win] Test window. Default current window.
-         * @return {Boolean}
-         */
-        isCustomDomain: function (win) {
-            win = win || WINDOW;
-            var domain = win.document.domain,
-                hostname = win.location.hostname;
-            return domain != hostname &amp;&amp;
-                domain != ( '[' + hostname + ']' );	// IPv6 IP support
-        },
 
-<span id='KISSY-DOM-method-getEmptyIframeSrc'>        /**
-</span>         * Get appropriate src for new empty iframe.
-         * Consider custom domain.
-         * @param {window} [win] Window new iframe will be inserted into.
-         * @return {String} Src for iframe.
-         */
-        getEmptyIframeSrc: function (win) {
-            win = win || WINDOW;
-            if (UA['ie'] &amp;&amp; DOM.isCustomDomain(win)) {
-                return  'javascript:void(function(){' + encodeURIComponent(
-                    'document.open();' +
-                        &quot;document.domain='&quot; +
-                        win.document.domain
-                        + &quot;';&quot; +
-                        'document.close();') + '}())';
-            }
-            return undefined;
-        },
-
-        NodeType: NodeType,
-
-<span id='KISSY-DOM-method-_getWin'>        /**
-</span>         * Return corresponding window if elem is document or window or undefined.
-         * Else return false.
-         * @private
-         * @param {undefined|window|HTMLDocument} elem
-         * @return {window|Boolean}
-         */
-        _getWin: function (elem) {
-            if (elem == null) {
-                return WINDOW;
-            }
-            return ('scrollTo' in elem &amp;&amp; elem['document']) ?
-                elem : elem.nodeType == NodeType.DOCUMENT_NODE ?
-                elem.defaultView || elem.parentWindow :
-                false;
-        },
-
-        // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
-        _isNodeList: function (o) {
-            // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
-            // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
-            // 注3：通过 namedItem 来判断不可靠
-            // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
-            // 注5: 考虑 iframe.contentWindow
-            return o &amp;&amp; !o.nodeType &amp;&amp; o.item &amp;&amp; !o.setTimeout;
-        },
-
-<span id='KISSY-DOM-method-nodeName'>        /**
-</span>         * Get node 's nodeName in lowercase.
-         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
-         * @return {String} el 's nodeName in lowercase
-         */
-        nodeName: function (selector) {
-            var el = DOM.get(selector),
-                nodeName = el.nodeName.toLowerCase();
-            // http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
-            if (UA['ie']) {
-                var scopeName = el['scopeName'];
-                if (scopeName &amp;&amp; scopeName != 'HTML') {
-                    nodeName = scopeName.toLowerCase() + ':' + nodeName;
+    function addAttrs(host, attrs) {
+        if (attrs) {
+            for (var attr in attrs) {
+                // 子类上的 ATTRS 配置优先
+                if (attrs.hasOwnProperty(attr)) {
+                    // 父类后加，父类不覆盖子类的相同设置
+                    // 属性对象会 merge   a: {y:{getter:fn}}, b:{y:{value:3}}, b extends a =&gt; b {y:{value:3}}
+                    host.addAttr(attr, attrs[attr], false);
                 }
             }
-            return nodeName;
         }
-    };
+    }
 
-    S.mix(DOM, NodeType);
+    function initAttrs(host, config) {
+        if (config) {
+            for (var attr in config) {
+                if (config.hasOwnProperty(attr)) {
+                    // 用户设置会调用 setter/validator 的，但不会触发属性变化事件
+                    host.setInternal(attr, config[attr]);
+                }
 
-    return DOM;
+            }
+        }
+    }
 
+    S.augment(Base, Event.Target, Attribute);
+
+    Base.Attribute = Attribute;
+
+    S.Base = Base;
+
+    return Base;
 }, {
-    requires: ['ua']
+    requires: ['base/attribute', 'event']
 });
-
-/*
- 2011-08
- - 添加键盘枚举值，方便依赖程序清晰
- */
 </pre>
 </body>
 </html>

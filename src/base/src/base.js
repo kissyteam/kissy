@@ -1,19 +1,19 @@
 /**
+ * @ignore
  * @fileOverview attribute management and event in one
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base', function (S, Attribute, Event) {
 
     /**
-     * @name Base
-     * @extends Event.Target
-     * @extends Attribute
-     * @class <p>
+     * @class KISSY.Base
+     * @mixins KISSY.Event.Target
+     * @mixins KISSY.Base.Attribute
+     *
      * A base class which objects requiring attributes and custom event support can
      * extend. attributes configured
-     * through the static {@link Base.ATTRS} property for each class
+     * through the static {@link KISSY.Base#static-ATTRS} property for each class
      * in the hierarchy will be initialized by Base.
-     * </p>
      */
     function Base(config) {
         var self = this,
@@ -32,19 +32,24 @@ KISSY.add('base', function (S, Attribute, Event) {
      * The default set of attributes which will be available for instances of this class, and
      * their configuration
      *
-     * By default if the value is an object literal or an array it will be "shallow" cloned, to
+     * By default if the value is an object literal or an array it will be 'shallow' cloned, to
      * protect the default value.
      *
-     * @name Base.ATTRS
+     *      for example:
+     *      @example
+     *      {
+     *          x:{
+     *              value: // default value
+     *              valueFn: // default function to get value
+     *              getter: // getter function
+     *              setter: // setter function
+     *          }
+     *      }
+     *
+     * @property ATTRS
+     * @member KISSY.Base
+     * @static
      * @type {Object}
-     */
-
-
-    /**
-     * see {@link Attribute#set}
-     * @name set
-     * @memberOf Base#
-     * @method
      */
 
 
@@ -66,7 +71,7 @@ KISSY.add('base', function (S, Attribute, Event) {
             for (var attr in config) {
                 if (config.hasOwnProperty(attr)) {
                     // 用户设置会调用 setter/validator 的，但不会触发属性变化事件
-                    host.__set(attr, config[attr]);
+                    host.setInternal(attr, config[attr]);
                 }
 
             }
@@ -81,5 +86,5 @@ KISSY.add('base', function (S, Attribute, Event) {
 
     return Base;
 }, {
-    requires:["base/attribute", "event"]
+    requires: ['base/attribute', 'event']
 });

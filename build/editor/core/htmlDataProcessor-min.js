@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:10
+build time: Aug 21 20:57
 */
 KISSY.add("editor/core/htmlDataProcessor",function(g,q){return{init:function(m){function k(a){if((a.getAttribute("class")+"").match(/Apple-\w+-span/)||!a.attributes.length)a.setTagName(null);else if(!a.childNodes.length&&!a.attributes.length)return!1}function r(a){return a.replace(s,function(a,b,o){return"<"+b+o.replace(t,function(a,c){return-1==o.indexOf("_ke_saved_"+c)?" _ke_saved_"+a+" "+a:a})+">"})}function u(a){return a.replace(v,function(a){return"<ke:encoded>"+encodeURIComponent(a)+"</ke:encoded>"})}
 function w(a){return a.replace(x,function(a,b){return decodeURIComponent(b)})}var y=g.Node,n=g.UA,b=g.require("htmlparser"),i=new b.Filter,l=new b.Filter;(function(){function a(a){a=b.serialize(a);return new b.Comment(j+encodeURIComponent(a).replace(/--/g,"%2D%2D"))}var c={tagNames:[[/^\?xml.*$/i,""],[/^.*namespace.*$/i,""]],attributeNames:[[/^on/,"ke_on"],[/^lang$/,""]],tags:{script:a,noscript:a,span:k}},e={tagNames:[[/^ke:/,""],[/^\?xml:namespace$/,""]],tags:{$:function(a){if(a.attributes.length)for(var b=

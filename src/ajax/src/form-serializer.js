@@ -17,7 +17,7 @@ KISSY.add('ajax/form-serializer', function (S, DOM) {
         /**
          * form serialization
          * @method
-         * @param {HTMLElement[]|HTMLElement|NodeList} forms form elements
+         * @param {HTMLElement[]|HTMLElement|KISSY.NodeList} forms form elements
          * @return {String} serialized string represent form elements
          * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
          * @member KISSY.IO

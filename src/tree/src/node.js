@@ -267,7 +267,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
 
                 /**
                  * Element for expand icon.
-                 * @type {NodeList}
+                 * @type {KISSY.NodeList}
                  */
                 expandIconEl: {
                     view: 1
@@ -275,7 +275,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
 
                 /**
                  * Element for icon.
-                 * @type {NodeList}
+                 * @type {KISSY.NodeList}
                  */
                 iconEl: {
                     view: 1

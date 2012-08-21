@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:10
+build time: Aug 21 20:57
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -144,7 +144,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
 
             /**
              * Whether this menu contains specified html element.
-             * @param {NodeList} element html Element to be tested.
+             * @param {KISSY.NodeList} element html Element to be tested.
              * @return {Boolean}
              */
             containsElement:function (element) {
@@ -684,7 +684,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
 
             /**
              * Check whether this menu item contains specified element.
-             * @param {NodeList} element Element to be tested.
+             * @param {KISSY.NodeList} element Element to be tested.
              */
             containsElement:function (element) {
                 return this.get('view') && this.get('view').containsElement(element);
@@ -1164,7 +1164,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     srcNode:el,
                     prefixCls:self.get("prefixCls")
                 });
-                self.__set("menu", menu);
+                self.setInternal("menu", menu);
             },
 
             destructor:function () {
@@ -1211,7 +1211,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 menu:{
                     setter:function (m) {
                         if (m instanceof  Component.Controller) {
-                            m.__set("parent", this);
+                            m.setInternal("parent", this);
                         }
                     }
                 },
@@ -1236,7 +1236,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         if (m && m.xclass) {
             if (init) {
                 m = Component.create(m, self);
-                self.__set("menu", m);
+                self.setInternal("menu", m);
             } else {
                 return null;
             }

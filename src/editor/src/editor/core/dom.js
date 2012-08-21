@@ -816,7 +816,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param doc
              * @param address
              * @param [normalized]
-             * @return {NodeList}
+             * @return {KISSY.NodeList}
              */
             _4e_getByAddress: function (doc, address, normalized) {
                 var $ = doc.documentElement;

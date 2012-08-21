@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:11
+build time: Aug 21 20:58
 */
 /**
  * @ignore
@@ -496,11 +496,11 @@ build time: Aug 20 15:11
 
         /**
          * The build time of the library.
-         * NOTICE: '20120820151122' will replace with current timestamp when compressing.
+         * NOTICE: '20120821205806' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120820151122';
+        S.__BUILD_TIME = '20120821205806';
     })();
 
     return S;
@@ -5200,7 +5200,7 @@ build time: Aug 20 15:11
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120820151122'
+        tag: '20120821205806'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5505,7 +5505,7 @@ KISSY.config('modules', {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:11
+build time: Aug 21 20:58
 */
 /**
  * @ignore
@@ -5890,7 +5890,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:07
+build time: Aug 21 20:54
 */
 /**
  * @ignore
@@ -8990,7 +8990,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
             /**
              * Reduce the set of matched elements to those that match the selector or pass the function's test.
-             * @param {String|HTMLElement[]|NodeList} selector Matched elements
+             * @param {String|HTMLElement[]} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {HTMLElement[]}
@@ -10376,7 +10376,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:10
+build time: Aug 21 20:57
 */
 /**
  * @ignore
@@ -13070,27 +13070,43 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:10
+build time: Aug 21 20:57
 */
 /**
+ * @ignore
  * @fileOverview adapt json2 to kissy
  */
 KISSY.add('json', function (S, JSON) {
 
+    /**
+     * Provide json utils for KISSY.
+     * @class KISSY.JSON
+     * @singleton
+     */
     return S.JSON = {
 
-        parse:function (text) {
+        /**
+         * Parse json object from string.
+         * @param text
+         * @return {Object}
+         */
+        parse: function (text) {
             // 当输入为 undefined / null / '' 时，返回 null
             if (text == null || text === '') {
                 return null;
             }
             return JSON.parse(text);
         },
-
-        stringify:JSON.stringify
+        /**
+         * serialize json object to string.
+         * @method
+         * @param {Object} jsonObject
+         * @return {String}
+         */
+        stringify: JSON.stringify
     };
 }, {
-    requires:["json/json2"]
+    requires: ["json/json2"]
 });
 /*
  @fileOverview  http://www.JSON.org/json2.js
@@ -13580,7 +13596,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:06
+build time: Aug 21 20:53
 */
 /**
  * @ignore
@@ -13704,7 +13720,7 @@ KISSY.add('ajax', function (S, serializer, IO) {
             /**
              * submit form without page refresh
              * @param {String} url request destination
-             * @param {HTMLElement|NodeList} form element tobe submited
+             * @param {HTMLElement|KISSY.NodeList} form element tobe submited
              * @param {Object} [data] name-value object associated with this request
              * @param {Function} [callback]  success callback when this request is done.@param callback.data returned from this request with type specified by dataType
              * @param {String} callback.status status of this request with type String
@@ -14353,7 +14369,7 @@ KISSY.add('ajax/form-serializer', function (S, DOM) {
         /**
          * form serialization
          * @method
-         * @param {HTMLElement[]|HTMLElement|NodeList} forms form elements
+         * @param {HTMLElement[]|HTMLElement|KISSY.NodeList} forms form elements
          * @return {String} serialized string represent form elements
          * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
          * @member KISSY.IO
@@ -15641,40 +15657,36 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:07
+build time: Aug 21 20:53
 */
 /**
+ * @ignore
  * @fileOverview cookie
  * @author lifesinger@gmail.com
  */
 KISSY.add('cookie', function (S) {
-
-    /**
-     * @name Cookie
-     * @namespace Provide Cookie utilities.
-     */
 
     var doc = S.Env.host.document,
         MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
         encode = encodeURIComponent,
         decode = decodeURIComponent;
 
-
     function isNotEmptyString(val) {
         return S.isString(val) && val !== '';
     }
 
-    return S.Cookie =
     /**
-     * @lends Cookie
+     * Provide Cookie utilities.
+     * @class KISSY.Cookie
+     * @singleton
      */
-    {
+    return S.Cookie = {
 
         /**
          * Returns the cookie value for given name
          * @return {String} name The name of the cookie to retrieve
          */
-        get:function (name) {
+        get: function (name) {
             var ret, m;
 
             if (isNotEmptyString(name)) {
@@ -15696,7 +15708,7 @@ KISSY.add('cookie', function (S) {
          * @param {String} path set cookie's path
          * @param {Boolean} secure whether this cookie can only be sent to server on https
          */
-        set:function (name, val, expires, domain, path, secure) {
+        set: function (name, val, expires, domain, path, secure) {
             var text = String(encode(val)), date = expires;
 
             // 从当前时间开始，多少天后过期
@@ -15734,30 +15746,31 @@ KISSY.add('cookie', function (S) {
          * @param {String} path The cookie's path
          * @param {String} secure The cookie's secure option
          */
-        remove:function (name, domain, path, secure) {
+        remove: function (name, domain, path, secure) {
             this.set(name, '', -1, domain, path, secure);
         }
     };
 
 });
 
-/**
- *  2012.02.14 yiminghe@gmail.com
- *   - jsdoc added
- *
- *  2010.04
- *   - get 方法要考虑 ie 下，
- *     值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
- *     除了正则获取，还可以 split 字符串的方式来获取。
- *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
- *     独立成静态工具类的方式更优。
+/*
+ 2012.02.14 yiminghe@gmail.com
+ - jsdoc added
+
+ 2010.04
+ - get 方法要考虑 ie 下，
+ 值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
+ 除了正则获取，还可以 split 字符串的方式来获取。
+ - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
+ 独立成静态工具类的方式更优。
  */
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:06
+build time: Aug 21 20:53
 */
 /**
+ * @ignore
  * @fileOverview attribute management
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
@@ -15768,12 +15781,6 @@ KISSY.add('base/attribute', function (S, undefined) {
 
     var INVALID = Attribute.INVALID;
 
-    /**
-     *
-     * @param host
-     * @param method
-     * @return method if fn or host[method]
-     */
     function normalFn(host, method) {
         if (S.isString(method)) {
             return host[method];
@@ -15781,28 +15788,17 @@ KISSY.add('base/attribute', function (S, undefined) {
         return method;
     }
 
-
-    /**
-     * fire attribute value change
-     */
+    // fire attribute value change
     function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName) {
         attrName = attrName || name;
         return self.fire(when + S.ucfirst(name) + 'Change', {
-            attrName:attrName,
-            subAttrName:subAttrName,
-            prevVal:prevVal,
-            newVal:newVal
+            attrName: attrName,
+            subAttrName: subAttrName,
+            prevVal: prevVal,
+            newVal: newVal
         });
     }
 
-
-    /**
-     *
-     * @param obj
-     * @param name
-     * @param [create]
-     * @return non-empty property value of obj
-     */
     function ensureNonEmpty(obj, name, create) {
         var ret = obj[name] || {};
         if (create) {
@@ -15811,14 +15807,9 @@ KISSY.add('base/attribute', function (S, undefined) {
         return ret;
     }
 
-    /**
-     *
-     * @param self
-     * @return non-empty attr config holder
-     */
     function getAttrs(self) {
-        /**
-         * attribute meta information
+        /*
+         attribute meta information
          {
          attrName: {
          getter: function,
@@ -15829,28 +15820,22 @@ KISSY.add('base/attribute', function (S, undefined) {
          }
          }
          */
-        return ensureNonEmpty(self, "__attrs", true);
+        return ensureNonEmpty(self, '__attrs', true);
     }
 
-    /**
-     *
-     * @param self
-     * @return non-empty attr value holder
-     */
+
     function getAttrVals(self) {
-        /**
-         * attribute value
+        /*
+         attribute value
          {
          attrName: attrVal
          }
          */
-        return ensureNonEmpty(self, "__attrVals", true);
+        return ensureNonEmpty(self, '__attrVals', true);
     }
 
-    /**
-     * o, [x,y,z] => o[x][y][z]
-     * @param o
-     * @param path
+    /*
+     o, [x,y,z] => o[x][y][z]
      */
     function getValueByPath(o, path) {
         for (var i = 0, len = path.length;
@@ -15861,11 +15846,8 @@ KISSY.add('base/attribute', function (S, undefined) {
         return o;
     }
 
-    /**
-     * o, [x,y,z], val => o[x][y][z]=val
-     * @param o
-     * @param path
-     * @param val
+    /*
+     o, [x,y,z], val => o[x][y][z]=val
      */
     function setValueByPath(o, path, val) {
         var len = path.length - 1,
@@ -15889,14 +15871,14 @@ KISSY.add('base/attribute', function (S, undefined) {
         if (
         // 声明过，那么 xx.yy 当做普通属性
             !declared &&
-                name.indexOf(".") !== -1) {
-            path = name.split(".");
+                name.indexOf('.') !== -1) {
+            path = name.split('.');
             name = path.shift();
         }
 
         return {
-            path:path,
-            name:name
+            path: path,
+            name: name
         };
     }
 
@@ -15947,7 +15929,7 @@ KISSY.add('base/attribute', function (S, undefined) {
             }
         }
         // set it
-        ret = self.__set(name, value, opts);
+        ret = self.setInternal(name, value, opts);
 
         if (ret === false) {
             return ret;
@@ -15964,10 +15946,10 @@ KISSY.add('base/attribute', function (S, undefined) {
                     [fullName], [name]);
             } else {
                 attrs.push({
-                    prevVal:prevVal,
-                    newVal:value,
-                    attrName:name,
-                    subAttrName:fullName
+                    prevVal: prevVal,
+                    newVal: value,
+                    attrName: name,
+                    subAttrName: fullName
                 });
             }
         }
@@ -15975,319 +15957,323 @@ KISSY.add('base/attribute', function (S, undefined) {
     }
 
     /**
-     * @class <p>
-     * Attribute provides configurable attribute support along with attribute change events. It is designed to be
-     * augmented on to a host class, and provides the host with the ability to configure attributes to store and retrieve state,
+     * @class KISSY.Base.Attribute
+     * Attribute provides configurable attribute support along with attribute change events.
+     * It is designed to be augmented on to a host class,
+     * and provides the host with the ability to configure attributes to store and retrieve state,
      * along with attribute change events.
-     * </p>
-     * <p>For example, attributes added to the host can be configured:</p>
-     * <ul>
-     *     <li>With a setter function, which can be used to manipulate
-     *     values passed to Attribute's {@link Attribute#set} method, before they are stored.</li>
-     *     <li>With a getter function, which can be used to manipulate stored values,
-     *     before they are returned by Attribute's {@link Attribute#get} method.</li>
-     *     <li>With a validator function, to validate values before they are stored.</li>
-     * </ul>
      *
-     * <p>See the {@link Attribute#addAttr} method, for the complete set of configuration
-     * options available for attributes</p>.
+     * For example, attributes added to the host can be configured:
      *
-     * <p><strong>NOTE:</strong> Most implementations will be better off extending the {@link Base} class,
-     * instead of augmenting Attribute directly. Base augments Attribute and will handle the initial configuration
-     * of attributes for derived classes, accounting for values passed into the constructor.</p>
-     * @name Attribute
+     *  - With a setter function, which can be used to manipulate
+     *  values passed to attribute 's {@link #set} method, before they are stored.
+     *  - With a getter function, which can be used to manipulate stored values,
+     *  before they are returned by attribute 's {@link #get} method.
+     *  - With a validator function, to validate values before they are stored.
+     *
+     * See the {@link #addAttr} method, for the complete set of configuration
+     * options available for attributes.
+     *
+     * NOTE: Most implementations will be better off extending the {@link KISSY.Base} class,
+     * instead of augmenting Attribute directly.
+     * Base augments Attribute and will handle the initial configuration
+     * of attributes for derived classes, accounting for values passed into the constructor.
      */
     function Attribute() {
     }
 
-    S.augment(Attribute,
+
+    Attribute.prototype = {
+
         /**
-         * @lends Attribute.prototype
+         * get un-cloned attr config collections
+         * @return {Object}
          */
-        {
+        getAttrs: function () {
+            return getAttrs(this);
+        },
 
-            /**
-             * @return un-cloned attr config collections
-             */
-            getAttrs:function () {
-                return getAttrs(this);
-            },
-
-            /**
-             * @return un-cloned attr value collections
-             */
-            getAttrVals:function () {
-                var self = this,
-                    o = {},
-                    a,
-                    attrs = getAttrs(self);
-                for (a in attrs) {
+        /**
+         * get un-cloned attr value collections
+         * @return {Object}
+         */
+        getAttrVals: function () {
+            var self = this,
+                o = {},
+                a,
+                attrs = getAttrs(self);
+            for (a in attrs) {
+                if (attrs.hasOwnProperty(a)) {
                     o[a] = self.get(a);
                 }
-                return o;
-            },
+            }
+            return o;
+        },
 
-            /**
-             * Adds an attribute with the provided configuration to the host object.
-             * @param {String} name attrName
-             * @param {Object} attrConfig The config supports the following properties
-             * @param [attrConfig.value] simple object or system native object
-             * @param [attrConfig.valueFn] a function which can return current attribute's default value
-             * @param {Function} [attrConfig.setter] call when set attribute's value
-             *                                          pass current attribute's value as parameter
-             *                                          if return value is not undefined,set returned value as real value
-             * @param {Function} [attrConfig.getter] call when get attribute's value
-             *                                          pass current attribute's value as parameter
-             *                                          return getter's returned value to invoker
-             * @param {Function} [attrConfig.validator]  call before set attribute's value
-             *                                              if return false,cancel this set action
-             * @param {Boolean} [override] whether override existing attribute config ,default true
-             */
-            addAttr:function (name, attrConfig, override) {
-                var self = this,
-                    attrs = getAttrs(self),
-                    cfg = S.clone(attrConfig);
-                if (!attrs[name]) {
-                    attrs[name] = cfg;
-                } else {
-                    S.mix(attrs[name], cfg, override);
-                }
-                return self;
-            },
+        /**
+         * Adds an attribute with the provided configuration to the host object.
+         * @param {String} name attrName
+         * @param {Object} attrConfig The config supports the following properties
+         * @param [attrConfig.value] simple object or system native object
+         * @param [attrConfig.valueFn] a function which can return current attribute 's default value
+         * @param {Function} [attrConfig.setter] call when set attribute 's value
+         * pass current attribute 's value as parameter
+         * if return value is not undefined,set returned value as real value
+         * @param {Function} [attrConfig.getter] call when get attribute 's value
+         * pass current attribute 's value as parameter
+         * return getter's returned value to invoker
+         * @param {Function} [attrConfig.validator]  call before set attribute 's value
+         * if return false,cancel this set action
+         * @param {Boolean} [override] whether override existing attribute config ,default true
+         */
+        addAttr: function (name, attrConfig, override) {
+            var self = this,
+                attrs = getAttrs(self),
+                cfg = S.clone(attrConfig);
+            if (!attrs[name]) {
+                attrs[name] = cfg;
+            } else {
+                S.mix(attrs[name], cfg, override);
+            }
+            return self;
+        },
 
-            /**
-             * Configures a group of attributes, and sets initial values.
-             * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
-             * @param {Object} initialValues user defined initial values
-             */
-            addAttrs:function (attrConfigs, initialValues) {
-                var self = this;
-                S.each(attrConfigs, function (attrConfig, name) {
-                    self.addAttr(name, attrConfig);
-                });
-                if (initialValues) {
-                    self.set(initialValues);
-                }
-                return self;
-            },
+        /**
+         * Configures a group of attributes, and sets initial values.
+         * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
+         * @param {Object} initialValues user defined initial values
+         */
+        addAttrs: function (attrConfigs, initialValues) {
+            var self = this;
+            S.each(attrConfigs, function (attrConfig, name) {
+                self.addAttr(name, attrConfig);
+            });
+            if (initialValues) {
+                self.set(initialValues);
+            }
+            return self;
+        },
 
-            /**
-             * Checks if the given attribute has been added to the host.
-             */
-            hasAttr:function (name) {
-                return name && getAttrs(this).hasOwnProperty(name);
-            },
+        /**
+         * Checks if the given attribute has been added to the host.
+         */
+        hasAttr: function (name) {
+            return name && getAttrs(this).hasOwnProperty(name);
+        },
 
-            /**
-             * Removes an attribute from the host object.
-             */
-            removeAttr:function (name) {
-                var self = this;
+        /**
+         * Removes an attribute from the host object.
+         */
+        removeAttr: function (name) {
+            var self = this;
 
-                if (self.hasAttr(name)) {
-                    delete getAttrs(self)[name];
-                    delete getAttrVals(self)[name];
-                }
+            if (self.hasAttr(name)) {
+                delete getAttrs(self)[name];
+                delete getAttrVals(self)[name];
+            }
 
-                return self;
-            },
+            return self;
+        },
 
 
-            /**
-             * Sets the value of an attribute.
-             * @param {String|Object} name attribute's name or attribute name and value map
-             * @param [value] attribute's value
-             * @param {Object} [opts] some options
-             * @param {Boolean} [opts.silent] whether fire change event
-             * @return {Boolean} whether pass validator
-             */
-            set:function (name, value, opts) {
-                var self = this;
-                if (S.isPlainObject(name)) {
-                    opts = value;
-                    var all = Object(name),
-                        attrs = [],
-                        e,
-                        errors = [];
-                    for (name in all) {
+        /**
+         * Sets the value of an attribute.
+         * @param {String|Object} name attribute 's name or attribute name and value map
+         * @param [value] attribute 's value
+         * @param {Object} [opts] some options
+         * @param {Boolean} [opts.silent] whether fire change event
+         * @return {Boolean} whether pass validator
+         */
+        set: function (name, value, opts) {
+            var self = this;
+            if (S.isPlainObject(name)) {
+                opts = value;
+                var all = Object(name),
+                    attrs = [],
+                    e,
+                    errors = [];
+                for (name in all) {
+                    if (all.hasOwnProperty(name)) {
                         // bulk validation
                         // if any one failed,all values are not set
                         if ((e = validate(self, name, all[name], all)) !== undefined) {
                             errors.push(e);
                         }
                     }
-                    if (errors.length) {
-                        if (opts && opts.error) {
-                            opts.error(errors);
-                        }
-                        return false;
+                }
+                if (errors.length) {
+                    if (opts && opts.error) {
+                        opts.error(errors);
                     }
-                    for (name in all) {
+                    return false;
+                }
+                for (name in all) {
+                    if (all.hasOwnProperty(name)) {
                         setInternal(self, name, all[name], opts, attrs);
                     }
-                    var attrNames = [],
-                        prevVals = [],
-                        newVals = [],
-                        subAttrNames = [];
-                    S.each(attrs, function (attr) {
-                        prevVals.push(attr.prevVal);
-                        newVals.push(attr.newVal);
-                        attrNames.push(attr.attrName);
-                        subAttrNames.push(attr.subAttrName);
-                    });
-                    if (attrNames.length) {
-                        __fireAttrChange(self,
-                            '',
-                            '*',
-                            prevVals,
-                            newVals,
-                            subAttrNames,
-                            attrNames);
-                    }
-                    return self;
                 }
-                return setInternal(self, name, value, opts);
-            },
-
-            /**
-             * internal use, no event involved, just set.
-             * @protected overriden by mvc/model
-             */
-            __set:function (name, value, opts) {
-                var self = this,
-                    setValue,
-                // if host does not have meta info corresponding to (name,value)
-                // then register on demand in order to collect all data meta info
-                // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
-                // 因为属性在声明注册前可以直接设置值
-                    e,
-                    attrConfig = ensureNonEmpty(getAttrs(self), name, true),
-                    setter = attrConfig['setter'];
-
-                // validator check
-                e = validate(self, name, value);
-
-                if (e !== undefined) {
-                    if (opts.error) {
-                        opts.error(e);
-                    }
-                    return false;
+                var attrNames = [],
+                    prevVals = [],
+                    newVals = [],
+                    subAttrNames = [];
+                S.each(attrs, function (attr) {
+                    prevVals.push(attr.prevVal);
+                    newVals.push(attr.newVal);
+                    attrNames.push(attr.attrName);
+                    subAttrNames.push(attr.subAttrName);
+                });
+                if (attrNames.length) {
+                    __fireAttrChange(self,
+                        '',
+                        '*',
+                        prevVals,
+                        newVals,
+                        subAttrNames,
+                        attrNames);
                 }
-
-                // if setter has effect
-                if (setter && (setter = normalFn(self, setter))) {
-                    setValue = setter.call(self, value, name);
-                }
-
-                if (setValue === INVALID) {
-                    return false;
-                }
-
-                if (setValue !== undefined) {
-                    value = setValue;
-                }
-
-
-                // finally set
-                getAttrVals(self)[name] = value;
-            },
-
-            /**
-             * Gets the current value of the attribute.
-             * @param {String} name attribute's name
-             */
-            get:function (name) {
-                var self = this,
-                    dot = ".",
-                    path,
-                    declared = self.hasAttr(name),
-                    attrVals = getAttrVals(self),
-                    attrConfig,
-                    getter, ret;
-
-                if (!declared && name.indexOf(dot) !== -1) {
-                    path = name.split(dot);
-                    name = path.shift();
-                }
-
-                attrConfig = ensureNonEmpty(getAttrs(self), name);
-                getter = attrConfig['getter'];
-
-                // get user-set value or default value
-                //user-set value takes privilege
-                ret = name in attrVals ?
-                    attrVals[name] :
-                    self.__getDefAttrVal(name);
-
-                // invoke getter for this attribute
-                if (getter && (getter = normalFn(self, getter))) {
-                    ret = getter.call(self, ret, name);
-                }
-
-                if (path) {
-                    ret = getValueByPath(ret, path);
-                }
-
-                return ret;
-            },
-
-            /**
-             * get default attribute value from valueFn/value
-             * @private
-             * @param name
-             */
-            __getDefAttrVal:function (name) {
-                var self = this,
-                    attrs = getAttrs(self),
-                    attrConfig = ensureNonEmpty(attrs, name),
-                    valFn = attrConfig.valueFn,
-                    val;
-
-                if (valFn && (valFn = normalFn(self, valFn))) {
-                    val = valFn.call(self);
-                    if (val !== undefined) {
-                        attrConfig.value = val;
-                    }
-                    delete attrConfig.valueFn;
-                    attrs[name] = attrConfig;
-                }
-
-                return attrConfig.value;
-            },
-
-            /**
-             * Resets the value of an attribute.just reset what addAttr set  (not what invoker set when call new Xx(cfg))
-             * @param {String} name name of attribute
-             * @param {Object} [opts] some options
-             * @param {Boolean} [opts.silent] whether fire change event
-             */
-            reset:function (name, opts) {
-                var self = this;
-
-                if (S.isString(name)) {
-                    if (self.hasAttr(name)) {
-                        // if attribute does not have default value, then set to undefinedined.
-                        return self.set(name, self.__getDefAttrVal(name), opts);
-                    }
-                    else {
-                        return self;
-                    }
-                }
-
-                opts = name;
-
-                var attrs = getAttrs(self),
-                    values = {};
-
-                // reset all
-                for (name in attrs) {
-                    values[name] = self.__getDefAttrVal(name);
-                }
-
-                self.set(values, opts);
                 return self;
             }
-        });
+            return setInternal(self, name, value, opts);
+        },
+
+        /**
+         * internal use, no event involved, just set.
+         * @protected
+         */
+        setInternal: function (name, value, opts) {
+            var self = this,
+                setValue,
+            // if host does not have meta info corresponding to (name,value)
+            // then register on demand in order to collect all data meta info
+            // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
+            // 因为属性在声明注册前可以直接设置值
+                e,
+                attrConfig = ensureNonEmpty(getAttrs(self), name, true),
+                setter = attrConfig['setter'];
+
+            // validator check
+            e = validate(self, name, value);
+
+            if (e !== undefined) {
+                if (opts.error) {
+                    opts.error(e);
+                }
+                return false;
+            }
+
+            // if setter has effect
+            if (setter && (setter = normalFn(self, setter))) {
+                setValue = setter.call(self, value, name);
+            }
+
+            if (setValue === INVALID) {
+                return false;
+            }
+
+            if (setValue !== undefined) {
+                value = setValue;
+            }
+
+
+            // finally set
+            getAttrVals(self)[name] = value;
+        },
+
+        /**
+         * Gets the current value of the attribute.
+         * @param {String} name attribute 's name
+         */
+        get: function (name) {
+            var self = this,
+                dot = '.',
+                path,
+                declared = self.hasAttr(name),
+                attrVals = getAttrVals(self),
+                attrConfig,
+                getter, ret;
+
+            if (!declared && name.indexOf(dot) !== -1) {
+                path = name.split(dot);
+                name = path.shift();
+            }
+
+            attrConfig = ensureNonEmpty(getAttrs(self), name);
+            getter = attrConfig['getter'];
+
+            // get user-set value or default value
+            //user-set value takes privilege
+            ret = name in attrVals ?
+                attrVals[name] :
+                getDefAttrVal(self, name);
+
+            // invoke getter for this attribute
+            if (getter && (getter = normalFn(self, getter))) {
+                ret = getter.call(self, ret, name);
+            }
+
+            if (path) {
+                ret = getValueByPath(ret, path);
+            }
+
+            return ret;
+        },
+
+        /**
+         * Resets the value of an attribute.just reset what addAttr set
+         * (not what invoker set when call new Xx(cfg))
+         * @param {String} name name of attribute
+         * @param {Object} [opts] some options
+         * @param {Boolean} [opts.silent] whether fire change event
+         */
+        reset: function (name, opts) {
+            var self = this;
+
+            if (S.isString(name)) {
+                if (self.hasAttr(name)) {
+                    // if attribute does not have default value, then set to undefined
+                    return self.set(name, getDefAttrVal(self, name), opts);
+                }
+                else {
+                    return self;
+                }
+            }
+
+            opts = name;
+
+            var attrs = getAttrs(self),
+                values = {};
+
+            // reset all
+            for (name in attrs) {
+                if (attrs.hasOwnProperty(name)) {
+                    values[name] = getDefAttrVal(self, name);
+                }
+            }
+
+            self.set(values, opts);
+            return self;
+        }
+    };
+
+
+    // get default attribute value from valueFn/value
+    function getDefAttrVal(self, name) {
+        var attrs = getAttrs(self),
+            attrConfig = ensureNonEmpty(attrs, name),
+            valFn = attrConfig.valueFn,
+            val;
+
+        if (valFn && (valFn = normalFn(self, valFn))) {
+            val = valFn.call(self);
+            if (val !== undefined) {
+                attrConfig.value = val;
+            }
+            delete attrConfig.valueFn;
+            attrs[name] = attrConfig;
+        }
+
+        return attrConfig.value;
+    }
 
     function validate(self, name, value, all) {
         var path, prevVal, pathNamePair;
@@ -16317,27 +16303,27 @@ KISSY.add('base/attribute', function (S, undefined) {
     return Attribute;
 });
 
-/**
- *  2011-10-18
- *    get/set sub attribute value ,set("x.y",val) x 最好为 {} ，不要是 new Clz() 出来的
- *    add validator
+/*
+ 2011-10-18
+ get/set sub attribute value ,set('x.y',val) x 最好为 {} ，不要是 new Clz() 出来的
+ add validator
  */
 /**
+ * @ignore
  * @fileOverview attribute management and event in one
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base', function (S, Attribute, Event) {
 
     /**
-     * @name Base
-     * @extends Event.Target
-     * @extends Attribute
-     * @class <p>
+     * @class KISSY.Base
+     * @mixins KISSY.Event.Target
+     * @mixins KISSY.Base.Attribute
+     *
      * A base class which objects requiring attributes and custom event support can
      * extend. attributes configured
-     * through the static {@link Base.ATTRS} property for each class
+     * through the static {@link KISSY.Base#static-ATTRS} property for each class
      * in the hierarchy will be initialized by Base.
-     * </p>
      */
     function Base(config) {
         var self = this,
@@ -16356,19 +16342,24 @@ KISSY.add('base', function (S, Attribute, Event) {
      * The default set of attributes which will be available for instances of this class, and
      * their configuration
      *
-     * By default if the value is an object literal or an array it will be "shallow" cloned, to
+     * By default if the value is an object literal or an array it will be 'shallow' cloned, to
      * protect the default value.
      *
-     * @name Base.ATTRS
+     *      for example:
+     *      @example
+     *      {
+     *          x:{
+     *              value: // default value
+     *              valueFn: // default function to get value
+     *              getter: // getter function
+     *              setter: // setter function
+     *          }
+     *      }
+     *
+     * @property ATTRS
+     * @member KISSY.Base
+     * @static
      * @type {Object}
-     */
-
-
-    /**
-     * see {@link Attribute#set}
-     * @name set
-     * @memberOf Base#
-     * @method
      */
 
 
@@ -16390,7 +16381,7 @@ KISSY.add('base', function (S, Attribute, Event) {
             for (var attr in config) {
                 if (config.hasOwnProperty(attr)) {
                     // 用户设置会调用 setter/validator 的，但不会触发属性变化事件
-                    host.__set(attr, config[attr]);
+                    host.setInternal(attr, config[attr]);
                 }
 
             }
@@ -16405,18 +16396,18 @@ KISSY.add('base', function (S, Attribute, Event) {
 
     return Base;
 }, {
-    requires:["base/attribute", "event"]
+    requires: ['base/attribute', 'event']
 });
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:06
+build time: Aug 21 20:53
 */
 /**
  * @ignore
  * @fileOverview anim
  */
-KISSY.add("anim", function (S, Anim, Easing) {
+KISSY.add('anim', function (S, Anim, Easing) {
     Anim.Easing = Easing;
     S.mix(S, {
         Anim:Anim,
@@ -16424,18 +16415,18 @@ KISSY.add("anim", function (S, Anim, Easing) {
     });
     return Anim;
 }, {
-    requires:["anim/base", "anim/easing", "anim/color", "anim/background-position"]
+    requires:['anim/base', 'anim/easing', 'anim/color', 'anim/background-position']
 });/**
  * @ignore
  * @fileOverview special patch for anim backgroundPosition
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
+KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
 
     function numeric(bp) {
         bp = bp.replace(/left|top/g, '0px')
             .replace(/right|bottom/g, '100%')
-            .replace(/([0-9\.]+)(\s|\)|$)/g, "$1px$2");
+            .replace(/([0-9\.]+)(\s|\)|$)/g, '$1px$2');
         var res = bp.match(/(-?[0-9\.]+)(px|%|em|pt)\s(-?[0-9\.]+)(px|%|em|pt)/);
         return [parseFloat(res[1]), res[2], parseFloat(res[3]), res[4]];
     }
@@ -16449,7 +16440,7 @@ KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
         load:function () {
             var self = this, fromUnit;
             BackgroundPositionFx.superclass.load.apply(self, arguments);
-            fromUnit = self.unit = ["px", "px"];
+            fromUnit = self.unit = ['px', 'px'];
             if (self.from) {
                 var from = numeric(self.from);
                 self.from = [from[0], from[2]];
@@ -16466,21 +16457,21 @@ KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
             }
             if (fromUnit) {
                 if (fromUnit[0] !== self.unit[0] || fromUnit[1] !== self.unit[1]) {
-                    S.log("BackgroundPosition x y unit is not same :", "warn");
-                    S.log(fromUnit, "warn");
-                    S.log(self.unit, "warn");
+                    S.log('BackgroundPosition x y unit is not same :', 'warn');
+                    S.log(fromUnit, 'warn');
+                    S.log(self.unit, 'warn');
                 }
             }
         },
 
         interpolate:function (from, to, pos) {
             var unit = this.unit, interpolate = BackgroundPositionFx.superclass.interpolate;
-            return interpolate(from[0], to[0], pos) + unit[0] + " " +
+            return interpolate(from[0], to[0], pos) + unit[0] + ' ' +
                 interpolate(from[1], to[1], pos) + unit[1];
         },
 
         cur:function () {
-            return DOM.css(this.anim.config.el, "backgroundPosition");
+            return DOM.css(this.anim.config.el, 'backgroundPosition');
         },
 
         update:function () {
@@ -16495,12 +16486,12 @@ KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
 
     });
 
-    Fx.Factories["backgroundPosition"] = BackgroundPositionFx;
+    Fx.Factories['backgroundPosition'] = BackgroundPositionFx;
 
     return BackgroundPositionFx;
 
 }, {
-    requires:["dom", "./base", "./fx"]
+    requires:['dom', './base', './fx']
 });/**
  * @ignore
  * @fileOverview animation framework for KISSY
@@ -16510,26 +16501,26 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     var camelCase = DOM._camelCase,
         NodeType = DOM.NodeType,
-        specialVals = ["hide", "show", "toggle"],
+        specialVals = ['hide', 'show', 'toggle'],
     // shorthand css properties
         SHORT_HANDS = {
             // http://www.w3.org/Style/CSS/Tracker/issues/9
             // http://snook.ca/archives/html_and_css/background-position-x-y
             // backgroundPositionX  backgroundPositionY does not support
             background: [
-                "backgroundPosition"
+                'backgroundPosition'
             ],
             border: [
-                "borderBottomWidth",
-                "borderLeftWidth",
+                'borderBottomWidth',
+                'borderLeftWidth',
                 'borderRightWidth',
                 // 'borderSpacing', 组合属性？
                 'borderTopWidth'
             ],
-            "borderBottom": ["borderBottomWidth"],
-            "borderLeft": ["borderLeftWidth"],
-            borderTop: ["borderTopWidth"],
-            borderRight: ["borderRightWidth"],
+            'borderBottom': ['borderBottomWidth'],
+            'borderLeft': ['borderLeftWidth'],
+            borderTop: ['borderTopWidth'],
+            borderRight: ['borderRightWidth'],
             font: [
                 'fontSize',
                 'fontWeight'
@@ -16591,7 +16582,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // the transition properties
         if (S.isString(props)) {
-            props = S.unparam(String(props), ";", ":");
+            props = S.unparam(String(props), ';', ':');
         } else {
             // clone to prevent collision within multiple instance
             props = S.clone(props);
@@ -16637,7 +16628,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         self._fxs = {};
 
         // register complete
-        self.on("complete", onComplete);
+        self.on('complete', onComplete);
     }
 
 
@@ -16673,19 +16664,19 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         // 进入该函数即代表执行（q[0] 已经是 ...）
         saveRunning(self);
 
-        if (self.fire("beforeStart") === false) {
+        if (self.fire('beforeStart') === false) {
             // no need to invoke complete
             self.stop(0);
             return;
         }
 
         if (el.nodeType == NodeType.ELEMENT_NODE) {
-            hidden = (DOM.css(el, "display") === "none");
+            hidden = (DOM.css(el, 'display') === 'none');
             for (prop in props) {
                 if (props.hasOwnProperty(prop)) {
                     val = props[prop];
                     // 直接结束
-                    if (val == "hide" && hidden || val == 'show' && !hidden) {
+                    if (val == 'hide' && hidden || val == 'show' && !hidden) {
                         // need to invoke complete
                         self.stop(1);
                         return;
@@ -16705,17 +16696,17 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             elStyle = el.style;
             S.mix(_backupProps, {
                 overflow: elStyle.overflow,
-                "overflow-x": elStyle.overflowX,
-                "overflow-y": elStyle.overflowY
+                'overflow-x': elStyle.overflowX,
+                'overflow-y': elStyle.overflowY
             });
-            elStyle.overflow = "hidden";
+            elStyle.overflow = 'hidden';
             // inline element should has layout/inline-block
-            if (DOM.css(el, "display") === "inline" &&
-                DOM.css(el, "float") === "none") {
+            if (DOM.css(el, 'display') === 'inline' &&
+                DOM.css(el, 'float') === 'none') {
                 if (UA['ie']) {
                     elStyle.zoom = 1;
                 } else {
-                    elStyle.display = "inline-block";
+                    elStyle.display = 'inline-block';
                 }
             }
         }
@@ -16783,10 +16774,10 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             if (S.inArray(val, specialVals)) {
                 // backup original inline css value
                 _backupProps[prop] = DOM.style(el, prop);
-                if (val == "toggle") {
-                    val = hidden ? "show" : "hide";
+                if (val == 'toggle') {
+                    val = hidden ? 'show' : 'hide';
                 }
-                if (val == "hide") {
+                if (val == 'hide') {
                     to = 0;
                     from = fx.cur();
                     // 执行完后隐藏
@@ -16804,9 +16795,9 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 from = fx.cur();
             }
 
-            val += "";
+            val += '';
 
-            var unit = "",
+            var unit = '',
                 parts = val.match(NUMBER_REG);
 
             if (parts) {
@@ -16814,7 +16805,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 unit = parts[3];
 
                 // 有单位但单位不是 px
-                if (unit && unit !== "px") {
+                if (unit && unit !== 'px') {
                     DOM.css(el, prop, val);
                     from = (to / fx.cur()) * from;
                     DOM.css(el, prop, from + unit);
@@ -16822,7 +16813,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
                 // 相对
                 if (parts[1]) {
-                    to = ( (parts[ 1 ] === "-=" ? -1 : 1) * to ) + from;
+                    to = ( (parts[ 1 ] === '-=' ? -1 : 1) * to ) + from;
                 }
             }
 
@@ -16946,7 +16937,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 }
             }
 
-            if ((self.fire("step") === false) || end) {
+            if ((self.fire('step') === false) || end) {
                 // complete 事件只在动画到达最后一帧时才触发
                 self.stop(end);
             }
@@ -16987,7 +16978,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                         }
                     }
                 }
-                self.fire("complete");
+                self.fire('complete');
             }
 
             AM.stop(self);
@@ -17005,7 +16996,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     S.augment(Anim, Event.Target);
 
-    var runningKey = S.guid("ks-anim-unqueued-" + S.now() + "-");
+    var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
 
     function saveRunning(anim) {
         var el = anim.config.el,
@@ -17037,7 +17028,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
 
 
-    var pausedKey = S.guid("ks-anim-paused-" + S.now() + "-");
+    var pausedKey = S.guid('ks-anim-paused-' + S.now() + '-');
 
     function savePaused(anim) {
         var el = anim.config.el,
@@ -17118,7 +17109,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @static
      */
 
-    S.each(["pause", "resume"], function (action) {
+    S.each(['pause', 'resume'], function (action) {
         Anim[action] = function (el, queueName) {
             if (
             // default queue
@@ -17199,7 +17190,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
     return Anim;
 }, {
-    requires: ["dom", "event", "./easing", "ua", "./manager", "./fx", "./queue"]
+    requires: ['dom', 'event', './easing', 'ua', './manager', './fx', './queue']
 });
 
 /*
@@ -17227,29 +17218,29 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
  * @fileOverview special patch for making color gradual change
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
+KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
 
     var HEX_BASE = 16,
 
         floor = Math.floor,
 
         KEYWORDS = {
-            "black":[0, 0, 0],
-            "silver":[192, 192, 192],
-            "gray":[128, 128, 128],
-            "white":[255, 255, 255],
-            "maroon":[128, 0, 0],
-            "red":[255, 0, 0],
-            "purple":[128, 0, 128],
-            "fuchsia":[255, 0, 255],
-            "green":[0, 128, 0],
-            "lime":[0, 255, 0],
-            "olive":[128, 128, 0],
-            "yellow":[255, 255, 0],
-            "navy":[0, 0, 128],
-            "blue":[0, 0, 255],
-            "teal":[0, 128, 128],
-            "aqua":[0, 255, 255]
+            'black':[0, 0, 0],
+            'silver':[192, 192, 192],
+            'gray':[128, 128, 128],
+            'white':[255, 255, 255],
+            'maroon':[128, 0, 0],
+            'red':[255, 0, 0],
+            'purple':[128, 0, 128],
+            'fuchsia':[255, 0, 255],
+            'green':[0, 128, 0],
+            'lime':[0, 255, 0],
+            'olive':[128, 128, 0],
+            'yellow':[255, 255, 0],
+            'navy':[0, 0, 128],
+            'blue':[0, 0, 255],
+            'teal':[0, 128, 128],
+            'aqua':[0, 255, 255]
         },
         re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
 
@@ -17304,7 +17295,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
 
     //得到颜色的数值表示，红绿蓝数字数组
     function numericColor(val) {
-        val = (val + "");
+        val = (val + '');
         var match;
         if (match = val.match(re_RGB)) {
             return [
@@ -17338,7 +17329,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
         }
 
         //transparent 或者 颜色字符串返回
-        S.log("only allow rgb or hex color string : " + val, "warn");
+        S.log('only allow rgb or hex color string : ' + val, 'warn');
         return [255, 255, 255];
     }
 
@@ -17376,7 +17367,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
                     floor(interpolate(from[3] || 1, to[3] || 1, pos))
                 ].join(', ') + ')';
             } else {
-                S.log("anim/color unknown value : " + from);
+                S.log('anim/color unknown value : ' + from);
             }
         }
 
@@ -17389,7 +17380,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
     return ColorFx;
 
 }, {
-    requires:["dom", "./base", "./fx"]
+    requires:['dom', './base', './fx']
 });
 
 /*
@@ -17435,14 +17426,14 @@ KISSY.add('anim/easing', function () {
         /**
          * Uniform speed between points.
          */
-        "easeNone": function (t) {
+        'easeNone': function (t) {
             return t;
         },
 
         /**
          * Begins slowly and accelerates towards end. (quadratic)
          */
-        "easeIn": function (t) {
+        'easeIn': function (t) {
             return t * t;
         },
 
@@ -17465,7 +17456,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Begins slowly and accelerates towards end. (quartic)
          */
-        "easeInStrong": function (t) {
+        'easeInStrong': function (t) {
             return t * t * t * t;
         },
 
@@ -17479,7 +17470,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Begins slowly and decelerates towards end. (quartic)
          */
-        "easeBothStrong": function (t) {
+        'easeBothStrong': function (t) {
             return (t *= 2) < 1 ?
                 .5 * t * t * t * t :
                 .5 * (2 - (t -= 2) * t * t * t);
@@ -17489,7 +17480,7 @@ KISSY.add('anim/easing', function () {
          * Snap in elastic effect.
          */
 
-        "elasticIn": function (t) {
+        'elasticIn': function (t) {
             var p = .3, s = p / 4;
             if (t === 0 || t === 1) return t;
             return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
@@ -17507,7 +17498,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Snap both elastic effect.
          */
-        "elasticBoth": function (t) {
+        'elasticBoth': function (t) {
             var p = .45, s = p / 4;
             if (t === 0 || (t *= 2) === 2) return t;
 
@@ -17522,7 +17513,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Backtracks slightly, then reverses direction and moves to end.
          */
-        "backIn": function (t) {
+        'backIn': function (t) {
             if (t === 1) t -= .001;
             return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
         },
@@ -17538,7 +17529,7 @@ KISSY.add('anim/easing', function () {
          * Backtracks slightly, then reverses direction, overshoots end,
          * then reverses and comes back to end.
          */
-        "backBoth": function (t) {
+        'backBoth': function (t) {
             var s = BACK_CONST;
             var m = (s *= 1.525) + 1;
 
@@ -17581,7 +17572,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Bounces off start and end.
          */
-        "bounceBoth": function (t) {
+        'bounceBoth': function (t) {
             if (t < .5) {
                 return Easing.bounceIn(t * 2) * .5;
             }
@@ -17623,7 +17614,7 @@ KISSY.add('anim/easing', function () {
  * @fileOverview animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/fx", function (S, DOM, undefined) {
+KISSY.add('anim/fx', function (S, DOM, undefined) {
 
     /**
      * basic animation about single css property or element attribute
@@ -17646,7 +17637,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             var self = this;
             S.mix(self, cfg);
             self.pos = 0;
-            self.unit = self.unit || "";
+            self.unit = self.unit || '';
         },
 
         /**
@@ -17714,7 +17705,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
                 if (!self.finished) {
                     self.finished = 1;
                     DOM.css(el, prop, to);
-                    S.log(self.prop + " update directly ! : " + val + " : " + from + " : " + to);
+                    S.log(self.prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
                 }
             } else {
                 val += self.unit;
@@ -17739,11 +17730,11 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             }
             var parsed,
                 r = DOM.css(el, prop);
-            // Empty strings, null, undefined and "auto" are converted to 0,
-            // complex values such as "rotate(1rad)" or "0px 10px" are returned as is,
-            // simple values such as "10px" are parsed to Float.
+            // Empty strings, null, undefined and 'auto' are converted to 0,
+            // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
+            // simple values such as '10px' are parsed to Float.
             return isNaN(parsed = parseFloat(r)) ?
-                !r || r === "auto" ? 0 : r
+                !r || r === 'auto' ? 0 : r
                 : parsed;
         }
     };
@@ -17783,7 +17774,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
  * @fileOverview single timer for the whole anim module
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/manager", function(S) {
+KISSY.add('anim/manager', function(S) {
     var stamp = S.stamp;
 
     return {
@@ -17855,14 +17846,14 @@ KISSY.add("anim/manager", function(S) {
  * @fileOverview queue of anim objects
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/queue", function (S, DOM) {
+KISSY.add('anim/queue', function (S, DOM) {
 
     var // 队列集合容器
-        queueCollectionKey = S.guid("ks-queue-" + S.now() + "-"),
+        queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
     // 默认队列
-        queueKey = S.guid("ks-queue-" + S.now() + "-"),
+        queueKey = S.guid('ks-queue-' + S.now() + '-'),
     // 当前队列是否有动画正在执行
-        processing = "...";
+        processing = '...';
 
     function getQueue(el, name, readOnly) {
         name = name || queueKey;
@@ -17955,9 +17946,10 @@ KISSY.add("anim/queue", function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:10
+build time: Aug 21 20:57
 */
 /**
+ * @ignore
  * @fileOverview anim-node-plugin
  * @author yiminghe@gmail.com,
  *         lifesinger@gmail.com,
@@ -17968,11 +17960,11 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
 
     var FX = [
         // height animations
-        [ "height", "marginTop", "marginBottom", "paddingTop", "paddingBottom" ],
+        [ 'height', 'marginTop', 'marginBottom', 'paddingTop', 'paddingBottom' ],
         // width animations
-        [ "width", "marginLeft", "marginRight", "paddingLeft", "paddingRight" ],
+        [ 'width', 'marginLeft', 'marginRight', 'paddingLeft', 'paddingRight' ],
         // opacity animations
-        [ "opacity" ]
+        [ 'opacity' ]
     ];
 
     function getFxs(type, num, from) {
@@ -17987,76 +17979,211 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         return obj;
     }
 
-    S.augment(Node, {
-        animate:function () {
-            var self = this,
-                args = S.makeArray(arguments);
-            S.each(self, function (elem) {
-                Anim.apply(undefined, [elem].concat(args)).run();
-            });
-            return self;
-        },
-        stop:function (end, clearQueue, queue) {
-            var self = this;
-            S.each(self, function (elem) {
-                Anim.stop(elem, end, clearQueue, queue);
-            });
-            return self;
-        },
-        pause:function (end, queue) {
-            var self = this;
-            S.each(self, function (elem) {
-                Anim.pause(elem, queue);
-            });
-            return self;
-        },
-        resume:function (end, queue) {
-            var self = this;
-            S.each(self, function (elem) {
-                Anim.resume(elem, queue);
-            });
-            return self;
-        },
-        isRunning:function () {
-            var self = this;
-            for (var i = 0; i < self.length; i++) {
-                if (Anim.isRunning(self[i])) {
-                    return 1;
+    S.augment(Node,
+        /**
+         * @class
+         * @singleton
+         * @override KISSY.NodeList
+         */
+        {
+            /**
+             * animate for current node list.
+             * @param var_args see {@link KISSY.Anim}
+             * @return {KISSY.NodeList} this
+             */
+            animate: function (var_args) {
+                var self = this,
+                    originArgs = S.makeArray(arguments);
+                S.each(self, function (elem) {
+                    var args = S.clone(originArgs),
+                        arg0 = args[0];
+                    if (arg0.props) {
+                        arg0.el = elem;
+                        Anim(arg0);
+                    } else {
+                        Anim.apply(undefined, [elem].concat(args)).run();
+                    }
+                });
+                return self;
+            },
+            /**
+             * stop anim of current node list.
+             * @param {Boolean} [end] see {@link KISSY.Anim#static-method-stop}
+             * @param [clearQueue]
+             * @param [queue]
+             * @return {KISSY.NodeList} this
+             */
+            stop: function (end, clearQueue, queue) {
+                var self = this;
+                S.each(self, function (elem) {
+                    Anim.stop(elem, end, clearQueue, queue);
+                });
+                return self;
+            },
+            /**
+             * pause anim of current node list.
+             * @param {Boolean} end see {@link KISSY.Anim#static-method-pause}
+             * @param queue
+             * @return {KISSY.NodeList} this
+             */
+            pause: function (end, queue) {
+                var self = this;
+                S.each(self, function (elem) {
+                    Anim.pause(elem, queue);
+                });
+                return self;
+            },
+            /**
+             * resume anim of current node list.
+             * @param {Boolean} end see {@link KISSY.Anim#static-method-resume}
+             * @param queue
+             * @return {KISSY.NodeList} this
+             */
+            resume: function (end, queue) {
+                var self = this;
+                S.each(self, function (elem) {
+                    Anim.resume(elem, queue);
+                });
+                return self;
+            },
+            /**
+             * whether one of current node list is animating.
+             * @return {Boolean}
+             */
+            isRunning: function () {
+                var self = this;
+                for (var i = 0; i < self.length; i++) {
+                    if (Anim.isRunning(self[i])) {
+                        return true;
+                    }
                 }
-            }
-            return 0;
-        },
-        isPaused:function () {
-            var self = this;
-            for (var i = 0; i < self.length; i++) {
-                if (Anim.isPaused(self[i])) {
-                    return 1;
+                return false;
+            },
+            /**
+             * whether one of current node list 's animation is paused.
+             * @return {Boolean}
+             */
+            isPaused: function () {
+                var self = this;
+                for (var i = 0; i < self.length; i++) {
+                    if (Anim.isPaused(self[i])) {
+                        return 1;
+                    }
                 }
+                return 0;
             }
-            return 0;
-        }
-    });
+        });
+
+    /**
+     * animate show effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method show
+     */
+
+    /**
+     * animate hide effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method hide
+     */
+
+    /**
+     * toggle show and hide effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method toggle
+     */
+
+    /**
+     * animate fadeIn effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method fadeIn
+     */
+
+    /**
+     * animate fadeOut effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method fadeOut
+     */
+
+    /**
+     * toggle fadeIn and fadeOut effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method fadeToggle
+     */
+
+    /**
+     * animate slideUp effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method slideUp
+     */
+
+    /**
+     * animate slideDown effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method slideDown
+     */
+
+    /**
+     * toggle slideUp and slideDown effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method slideToggle
+     */
 
     S.each({
-            show:getFxs("show", 3),
-            hide:getFxs("hide", 3),
-            toggle:getFxs("toggle", 3),
-            fadeIn:getFxs("show", 3, 2),
-            fadeOut:getFxs("hide", 3, 2),
-            fadeToggle:getFxs("toggle", 3, 2),
-            slideDown:getFxs("show", 1),
-            slideUp:getFxs("hide", 1),
-            slideToggle:getFxs("toggle", 1)
+            show: getFxs('show', 3),
+            hide: getFxs('hide', 3),
+            toggle: getFxs('toggle', 3),
+            fadeIn: getFxs('show', 3, 2),
+            fadeOut: getFxs('hide', 3, 2),
+            fadeToggle: getFxs('toggle', 3, 2),
+            slideDown: getFxs('show', 1),
+            slideUp: getFxs('hide', 1),
+            slideToggle: getFxs('toggle', 1)
         },
         function (v, k) {
-            Node.prototype[k] = function (speed, callback, easing) {
+            Node.prototype[k] = function (duration, complete, easing) {
                 var self = this;
                 // 没有参数时，调用 DOM 中的对应方法
-                if (DOM[k] && !speed) {
+                if (DOM[k] && !duration) {
                     DOM[k](self);
                 } else {
                     S.each(self, function (elem) {
-                        Anim(elem, v, speed, easing || 'easeOut', callback).run();
+                        Anim(elem, v, duration, easing || 'easeOut', complete).run();
                     });
                 }
                 return self;
@@ -18064,19 +18191,20 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         });
 
 }, {
-    requires:["dom", "anim", "./base"]
+    requires: ['dom', 'anim', './base']
 });
-/**
- * 2011-11-10
- *  - 重写，逻辑放到 Anim 模块，这边只进行转发
- *
- * 2011-05-17
- *  - 承玉：添加 stop ，随时停止动画
- *
- *  TODO
- *  - anim needs queue mechanism ?
+/*
+ 2011-11-10
+ - 重写，逻辑放到 Anim 模块，这边只进行转发
+
+ 2011-05-17
+ - 承玉：添加 stop ，随时停止动画
+
+ TODO
+ - anim needs queue mechanism ?
  */
 /**
+ * @ignore
  * @fileOverview import methods from DOM to NodeList.prototype
  * @author yiminghe@gmail.com
  */
@@ -18084,91 +18212,91 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
         makeArray = S.makeArray,
-        // DOM 添加到 NP 上的方法
-        // if DOM methods return undefined , Node methods need to transform result to itself
+    // DOM 添加到 NP 上的方法
+    // if DOM methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
-            "nodeName",
-            "equals",
-            "contains",
-            "scrollTop",
-            "scrollLeft",
-            "height",
-            "width",
-            "innerHeight",
-            "innerWidth",
-            "outerHeight",
-            "outerWidth",
-            "addStyleSheet",
-            // "append" will be overridden
-            "appendTo",
-            // "prepend" will be overridden
-            "prependTo",
-            "insertBefore",
-            "before",
-            "after",
-            "insertAfter",
-            "test",
-            "hasClass",
-            "addClass",
-            "removeClass",
-            "replaceClass",
-            "toggleClass",
-            "removeAttr",
-            "hasAttr",
-            "hasProp",
+            'nodeName',
+            'equals',
+            'contains',
+            'scrollTop',
+            'scrollLeft',
+            'height',
+            'width',
+            'innerHeight',
+            'innerWidth',
+            'outerHeight',
+            'outerWidth',
+            'addStyleSheet',
+            // 'append' will be overridden
+            'appendTo',
+            // 'prepend' will be overridden
+            'prependTo',
+            'insertBefore',
+            'before',
+            'after',
+            'insertAfter',
+            'test',
+            'hasClass',
+            'addClass',
+            'removeClass',
+            'replaceClass',
+            'toggleClass',
+            'removeAttr',
+            'hasAttr',
+            'hasProp',
             // anim override
-//            "show",
-//            "hide",
-//            "toggle",
-            "scrollIntoView",
-            "remove",
-            "empty",
-            "removeData",
-            "hasData",
-            "unselectable",
+//            'show',
+//            'hide',
+//            'toggle',
+            'scrollIntoView',
+            'remove',
+            'empty',
+            'removeData',
+            'hasData',
+            'unselectable',
 
-            "wrap",
-            "wrapAll",
-            "replaceWith",
-            "wrapInner",
-            "unwrap"
+            'wrap',
+            'wrapAll',
+            'replaceWith',
+            'wrapInner',
+            'unwrap'
         ],
-        // if return array ,need transform to nodelist
+    // if return array ,need transform to nodelist
         DOM_INCLUDES_NORM_NODE_LIST = [
-            "filter",
-            "first",
-            "last",
-            "parent",
-            "closest",
-            "next",
-            "prev",
-            "clone",
-            "siblings",
-            "contents",
-            "children"
+            'filter',
+            'first',
+            'last',
+            'parent',
+            'closest',
+            'next',
+            'prev',
+            'clone',
+            'siblings',
+            'contents',
+            'children'
         ],
-        // if set return this else if get return true value ,no nodelist transform
+    // if set return this else if get return true value ,no nodelist transform
         DOM_INCLUDES_NORM_IF = {
             // dom method : set parameter index
-            "attr":1,
-            "text":0,
-            "css":1,
-            "style":1,
-            "val":0,
-            "prop":1,
-            "offset":0,
-            "html":0,
-            "outerHTML":0,
-            "data":1
+            'attr': 1,
+            'text': 0,
+            'css': 1,
+            'style': 1,
+            'val': 0,
+            'prop': 1,
+            'offset': 0,
+            'html': 0,
+            'outerHTML': 0,
+            'data': 1
         },
-        // Event 添加到 NP 上的方法
+    // Event 添加到 NP 上的方法
         EVENT_INCLUDES = [
-            "on",
-            "detach",
-            "fire",
-            "fireHandler",
-            "delegate",
-            "undelegate"
+            'on',
+            'detach',
+            'fire',
+            'fireHandler',
+            'delegate',
+            'undelegate'
         ];
 
 
@@ -18238,23 +18366,24 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
     });
 
 }, {
-    requires:["dom", "event", "./base"]
+    requires: ['dom', 'event', './base']
 });
 
-/**
- * 2011-05-24
- *  - 承玉：
- *  - 将 DOM 中的方法包装成 NodeList 方法
- *  - Node 方法调用参数中的 KISSY NodeList 要转换成第一个 HTML Node
- *  - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
- *  - 实际上可以完全使用 NodeList 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
- *  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
+/*
+ 2011-05-24
+ - 承玉：
+ - 将 DOM 中的方法包装成 NodeList 方法
+ - Node 方法调用参数中的 KISSY NodeList 要转换成第一个 HTML Node
+ - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
+ - 实际上可以完全使用 NodeList 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
+ - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
  */
 /**
+ * @ignore
  * @fileOverview definition for node and nodelist
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add("node/base", function (S, DOM, undefined) {
+KISSY.add('node/base', function (S, DOM, undefined) {
 
     var AP = Array.prototype,
         slice = AP.slice,
@@ -18264,9 +18393,18 @@ KISSY.add("node/base", function (S, DOM, undefined) {
         isNodeList = DOM._isNodeList;
 
     /**
-     * @class The NodeList class provides a wrapper for manipulating DOM Node.
-     * use KISSY.all/one to retrieve NodeList instances
-     * @name NodeList
+     * The NodeList class provides a {@link KISSY.DOM} wrapper for manipulating DOM Node.
+     * use KISSY.all/one to retrieve NodeList instances.
+     *
+     *  for example:
+     *      @example
+     *      KISSY.all('a').attr('href','http://docs.kissyui.com');
+     *
+     * is equal to
+     *      @example
+     *      KISSY.DOM.attr('a','href','http://docs.kissyui.com');
+     *
+     * @class KISSY.NodeList
      */
     function NodeList(html, props, ownerDocument) {
         var self = this,
@@ -18306,209 +18444,226 @@ KISSY.add("node/base", function (S, DOM, undefined) {
         return undefined;
     }
 
-    S.augment(NodeList,
+    NodeList.prototype = {
+
         /**
-         * @lends NodeList#
+         * length of nodelist
+         * @type {Number}
          */
-        {
-
-            /**
-             * length of nodelist
-             * @type {Number}
-             */
-            length: 0,
+        length: 0,
 
 
-            /**
-             * Get one node at index
-             * @param {Number} index Index position.
-             * @return {NodeList}
-             */
-            item: function (index) {
-                var self = this;
-                if (S.isNumber(index)) {
-                    if (index >= self.length) {
-                        return null;
-                    } else {
-                        return new NodeList(self[index]);
-                    }
+        /**
+         * Get one node at index
+         * @param {Number} index Index position.
+         * @return {KISSY.NodeList}
+         */
+        item: function (index) {
+            var self = this;
+            if (S.isNumber(index)) {
+                if (index >= self.length) {
+                    return null;
                 } else {
-                    return new NodeList(index);
+                    return new NodeList(self[index]);
                 }
-            },
+            } else {
+                return new NodeList(index);
+            }
+        },
 
-            /**
-             * Add existing node list.
-             * @param {String|HTMLElement[]|NodeList} selector Selector string or html string or common dom node.
-             * @param {String|HTMLElement[]|NodeList|HTMLElement|Document} [context] Search context for selector
-             * @param {Number} [index] Insert position.
-             * @return {NodeList}
-             */
-            add: function (selector, context, index) {
-                if (S.isNumber(context)) {
-                    index = context;
-                    context = undefined;
-                }
-                var list = NodeList.all(selector, context).getDOMNodes(),
-                    ret = new NodeList(this);
-                if (index === undefined) {
-                    push.apply(ret, list);
-                } else {
-                    var args = [index, 0];
-                    args.push.apply(args, list);
-                    AP.splice.apply(ret, args);
-                }
-                return ret;
-            },
+        /**
+         * Add existing node list.
+         * @param {KISSY.NodeList} selector Selector string or html string or common dom node.
+         * @param {KISSY.NodeList} [context] Search context for selector
+         * @param {Number} [index] Insert position.
+         * @return {KISSY.NodeList}
+         */
+        add: function (selector, context, index) {
+            if (S.isNumber(context)) {
+                index = context;
+                context = undefined;
+            }
+            var list = NodeList.all(selector, context).getDOMNodes(),
+                ret = new NodeList(this);
+            if (index === undefined) {
+                push.apply(ret, list);
+            } else {
+                var args = [index, 0];
+                args.push.apply(args, list);
+                AP.splice.apply(ret, args);
+            }
+            return ret;
+        },
 
-            /**
-             * Get part of node list.
-             * @param {Number} start Start position.
-             * @param {number} end End position.
-             * @return {NodeList}
-             */
-            slice: function (start, end) {
-                // ie<9 : [1,2].slice(-2,undefined) => []
-                // ie<9 : [1,2].slice(-2) => []
-                // fix #85
-                return new NodeList(slice.apply(this, arguments));
-            },
+        /**
+         * Get part of node list.
+         * @param {Number} start Start position.
+         * @param {number} end End position.
+         * @return {KISSY.NodeList}
+         */
+        slice: function (start, end) {
+            // ie<9 : [1,2].slice(-2,undefined) => []
+            // ie<9 : [1,2].slice(-2) => []
+            // fix #85
+            return new NodeList(slice.apply(this, arguments));
+        },
 
-            /**
-             * Retrieves the DOMNodes.
-             */
-            getDOMNodes: function () {
-                return slice.call(this);
-            },
+        /**
+         * Retrieves the DOMNodes.
+         */
+        getDOMNodes: function () {
+            return slice.call(this);
+        },
 
-            /**
-             * Applies the given function to each Node in the NodeList.
-             * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
-             * @param [context] An optional context to apply the function with Default context is the current NodeList instance
-             */
-            each: function (fn, context) {
-                var self = this;
+        /**
+         * Applies the given function to each Node in the NodeList.
+         * @param {Function} fn The function to apply. It receives 3 arguments:
+         * the current node instance, the node's index,
+         * and the NodeList instance
+         * @param [context] An optional context to
+         * apply the function with Default context is the current NodeList instance
+         * @return {KISSY.NodeList}
+         */
+        each: function (fn, context) {
+            var self = this;
 
-                S.each(self, function (n, i) {
-                    n = new NodeList(n);
-                    return fn.call(context || n, n, i, self);
-                });
+            S.each(self, function (n, i) {
+                n = new NodeList(n);
+                return fn.call(context || n, n, i, self);
+            });
 
-                return self;
-            },
-            /**
-             * Retrieves the DOMNode.
-             */
-            getDOMNode: function () {
-                return this[0];
-            },
+            return self;
+        },
+        /**
+         * Retrieves the DOMNode.
+         * @return {HTMLElement}
+         */
+        getDOMNode: function () {
+            return this[0];
+        },
 
-            /**
-             * return last stack node list.
-             * @return {NodeList}
-             */
-            end: function () {
-                var self = this;
-                return self.__parent || self;
-            },
+        /**
+         * return last stack node list.
+         * @return {KISSY.NodeList}
+         */
+        end: function () {
+            var self = this;
+            return self.__parent || self;
+        },
 
-            /**
-             * Get node list which are descendants of current node list.
-             * @param {String} selector Selector string
-             * @return {NodeList}
-             */
-            all: function (selector) {
-                var ret, self = this;
-                if (self.length > 0) {
-                    ret = NodeList.all(selector, self);
-                } else {
-                    ret = new NodeList();
-                }
+        /**
+         * Get node list which are descendants of current node list.
+         * @param {String} selector Selector string
+         * @return {KISSY.NodeList}
+         */
+        all: function (selector) {
+            var ret, self = this;
+            if (self.length > 0) {
+                ret = NodeList.all(selector, self);
+            } else {
+                ret = new NodeList();
+            }
+            ret.__parent = self;
+            return ret;
+        },
+
+        /**
+         * Get node list which match selector under current node list sub tree.
+         * @param {String} selector
+         * @return {KISSY.NodeList}
+         */
+        one: function (selector) {
+            var self = this, all = self.all(selector),
+                ret = all.length ? all.slice(0, 1) : null;
+            if (ret) {
                 ret.__parent = self;
-                return ret;
-            },
-
-            one: function (selector) {
-                var self = this, all = self.all(selector),
-                    ret = all.length ? all.slice(0, 1) : null;
-                if (ret) {
-                    ret.__parent = self;
-                }
-                return ret;
             }
-        });
+            return ret;
+        }
+    };
 
-    S.mix(NodeList,
+    S.mix(NodeList, {
         /**
-         * @lends NodeList
+         * Get node list from selector or construct new node list from html string.
+         * Can also called from KISSY.all
+         * @param {String|KISSY.NodeList} selector Selector string or html string or common dom node.
+         * @param {String|KISSY.NodeList} [context] Search context for selector
+         * @return {KISSY.NodeList}
+         * @member KISSY.NodeList
+         * @static
          */
-        {
-            /**
-             * Get node list from selector or construct new node list from html string.
-             * Can also called from KISSY.all
-             * @param {String|HTMLElement[]|NodeList} selector Selector string or html string or common dom node.
-             * @param {String|HTMLElement[]|NodeList|HTMLElement|Document} [context] Search context for selector
-             * @return {NodeList}
-             */
-            all: function (selector, context) {
-                // are we dealing with html string ?
-                // TextNode 仍需要自己 new Node
+        all: function (selector, context) {
+            // are we dealing with html string ?
+            // TextNode 仍需要自己 new Node
 
-                if (S.isString(selector)
-                    && (selector = S.trim(selector))
-                    && selector.length >= 3
-                    && S.startsWith(selector, "<")
-                    && S.endsWith(selector, ">")
-                    ) {
-                    if (context) {
-                        if (context.getDOMNode) {
-                            context = context.getDOMNode();
-                        }
-                        if (context.ownerDocument) {
-                            context = context.ownerDocument;
-                        }
+            if (S.isString(selector)
+                && (selector = S.trim(selector))
+                && selector.length >= 3
+                && S.startsWith(selector, '<')
+                && S.endsWith(selector, '>')
+                ) {
+                if (context) {
+                    if (context['getDOMNode']) {
+                        context = context[0];
                     }
-                    return new NodeList(selector, undefined, context);
+                    if (context.ownerDocument) {
+                        context = context.ownerDocument;
+                    }
                 }
-                return new NodeList(DOM.query(selector, context));
-            },
-            one: function (selector, context) {
-                var all = NodeList.all(selector, context);
-                return all.length ? all.slice(0, 1) : null;
+                return new NodeList(selector, undefined, context);
             }
-        });
+            return new NodeList(DOM.query(selector, context));
+        },
+
+        /**
+         * Get node list with length of one
+         * from selector or construct new node list from html string.
+         * @param {String|KISSY.NodeList} selector Selector string or html string or common dom node.
+         * @param {String|KISSY.NodeList} [context] Search context for selector
+         * @return {KISSY.NodeList}
+         * @member KISSY.NodeList
+         * @static
+         */
+        one: function (selector, context) {
+            var all = NodeList.all(selector, context);
+            return all.length ? all.slice(0, 1) : null;
+        }
+    });
 
     /**
      * Same with {@link KISSY.DOM.NodeType}
-     * @enum {Number}
+     * @member KISSY.NodeList
+     * @property NodeType
+     * @static
      */
     NodeList.NodeType = NodeType;
 
     return NodeList;
 }, {
-    requires: ["dom"]
+    requires: ['dom']
 });
 
 
-/**
- * Notes:
- * 2011-05-25
- *  - 承玉：参考 jquery，只有一个 NodeList 对象，Node 就是 NodeList 的别名
- *
- *  2010.04
- *   - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。
- *     但从用户角度讲，this 的第一直觉是 $(this), kissy 和 yui3 保持一致，牺牲
- *     性能，以易用为首。
- *   - 有了 each 方法，似乎不再需要 import 所有 dom 方法，意义不大。
- *   - dom 是低级 api, node 是中级 api, 这是分层的一个原因。还有一个原因是，如果
- *     直接在 node 里实现 dom 方法，则不大好将 dom 的方法耦合到 nodelist 里。可
- *     以说，技术成本会制约 api 设计。
+/*
+ Notes:
+ 2011-05-25
+ - 承玉：参考 jquery，只有一个 NodeList 对象，Node 就是 NodeList 的别名
+
+ 2010.04
+ - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。
+ 但从用户角度讲，this 的第一直觉是 $(this), kissy 和 yui3 保持一致，牺牲
+ 性能，以易用为首。
+ - 有了 each 方法，似乎不再需要 import 所有 dom 方法，意义不大。
+ - dom 是低级 api, node 是中级 api, 这是分层的一个原因。还有一个原因是，如果
+ 直接在 node 里实现 dom 方法，则不大好将 dom 的方法耦合到 nodelist 里。可
+ 以说，技术成本会制约 api 设计。
  */
 /**
+ * @ignore
  * @fileOverview node
  * @author yiminghe@gmail.com
  */
-KISSY.add("node", function (S, Event, Node) {
+KISSY.add('node', function (S, Event, Node) {
     Node.KeyCodes = Event.KeyCodes;
     S.mix(S, {
         Node:Node,
@@ -18519,25 +18674,40 @@ KISSY.add("node", function (S, Event, Node) {
     return Node;
 }, {
     requires:[
-        "event",
-        "node/base",
-        "node/attach",
-        "node/override",
-        "node/anim"
+        'event',
+        'node/base',
+        'node/attach',
+        'node/override',
+        'node/anim'
     ]
 });/**
+ * @ignore
  * @fileOverview overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add("node/override", function (S, DOM, Event, NodeList) {
+KISSY.add('node/override', function (S, DOM, Event, NodeList) {
 
     var NLP = NodeList.prototype;
 
     /**
-     * append(node ,parent) : 参数顺序反过来了
-     * appendTo(parent,node) : 才是正常
-     *
+     * Insert every element in the set of newNodes to the end of every element in the set of current node list.
+     * @param {KISSY.NodeList} newNodes Nodes to be inserted
+     * @return {KISSY.NodeList} this
+     * @method append
+     * @member KISSY.NodeList
      */
+
+    /**
+     * Insert every element in the set of newNodes to the beginning of every element in the set of current node list.
+     * @param {KISSY.NodeList} newNodes Nodes to be inserted
+     * @return {KISSY.NodeList} this
+     * @method prepend
+     * @member KISSY.NodeList
+     */
+
+
+        // append(node ,parent) : 参数顺序反过来了
+        // appendTo(parent,node) : 才是正常
     S.each(['append', 'prepend', 'before', 'after'], function (insertType) {
         NLP[insertType] = function (html) {
             var newNode = html, self = this;
@@ -18552,7 +18722,7 @@ KISSY.add("node/override", function (S, DOM, Event, NodeList) {
         };
     });
 
-    S.each(["wrap", "wrapAll", "replaceWith", "wrapInner"], function (fixType) {
+    S.each(['wrap', 'wrapAll', 'replaceWith', 'wrapInner'], function (fixType) {
         var orig = NLP[fixType];
         NLP[fixType] = function (others) {
             var self = this;
@@ -18564,19 +18734,19 @@ KISSY.add("node/override", function (S, DOM, Event, NodeList) {
     })
 
 }, {
-    requires:["dom", "event", "./base", "./attach"]
+    requires: ['dom', 'event', './base', './attach']
 });
 
-/**
- * 2011-04-05 yiminghe@gmail.com
- * - 增加 wrap/wrapAll/replaceWith/wrapInner/unwrap/contents
- *
- * 2011-05-24
- * - 承玉：
- * - 重写 NodeList 的某些方法
- * - 添加 one ,all ，从当前 NodeList 往下开始选择节点
- * - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
- * - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
+/*
+ 2011-04-05 yiminghe@gmail.com
+ - 增加 wrap/wrapAll/replaceWith/wrapInner/unwrap/contents
+
+ 2011-05-24
+ - 承玉：
+ - 重写 NodeList 的某些方法
+ - 添加 one ,all ，从当前 NodeList 往下开始选择节点
+ - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
+ - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
  */
 
 KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie");

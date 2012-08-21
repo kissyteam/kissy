@@ -558,7 +558,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
             /**
              * Insert a element into current editor.
-             * @param {NodeList} element
+             * @param {KISSY.NodeList} element
              */
             insertElement: function (element) {
 
@@ -1114,8 +1114,8 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
         run();
         function run() {
             doc = win.document;
-            self.__set("document", new Node(doc));
-            self.__set("window", new Node(win));
+            self.setInternal("document", new Node(doc));
+            self.setInternal("window", new Node(win));
             iframe.detach();
             // Don't leave any history log in IE. (#5657)
             doc['open']("text/html", "replace");

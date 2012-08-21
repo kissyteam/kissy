@@ -29,7 +29,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         self.create();
         var contentEl = self.getContentElement();
         c = Component.create(c, self);
-        c.__set("parent", self);
+        c.setInternal("parent", self);
         // set 通知 view 也更新对应属性
         c.set("render", contentEl);
         c.set("elBefore", renderBefore);
@@ -148,7 +148,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              */
             initializer: function () {
                 // initialize view
-                this.__set("view", constructView(this));
+                this.setInternal("view", constructView(this));
             },
 
             /**

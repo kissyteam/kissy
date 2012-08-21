@@ -57,7 +57,7 @@ KISSY.add("editor/core/elementPath", function (S) {
 
     /**
      * @constructor
-     * @param lastNode {NodeList}
+     * @param lastNode {KISSY.NodeList}
      */
     function ElementPath(lastNode) {
         var self = this,

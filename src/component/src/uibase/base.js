@@ -14,7 +14,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
     /**
      * UIBase for class-based component.
-     * @extends Base
+     * @extends KISSY.Base
      * @class Component.UIBase
      */
     function UIBase(config) {
@@ -175,15 +175,15 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 v = parser[p];
                 // 函数
                 if (S.isFunction(v)) {
-                    host.__set(p, v.call(host, srcNode));
+                    host.setInternal(p, v.call(host, srcNode));
                 }
                 // 单选选择器
                 else if (S.isString(v)) {
-                    host.__set(p, srcNode.one(v));
+                    host.setInternal(p, srcNode.one(v));
                 }
                 // 多选选择器
                 else if (S.isArray(v) && v[0]) {
-                    host.__set(p, srcNode.all(v[0]))
+                    host.setInternal(p, srcNode.all(v[0]))
                 }
             }
         }
@@ -257,7 +257,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                      */
                     self.fire('beforeCreateDom');
                     callMethodByHierarchy(self, "createDom", "__createDom");
-                    self.__set("created", true);
+                    self.setInternal("created", true);
                     /**
                      * @event afterCreateDom
                      * fired when root node is created
@@ -335,7 +335,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
                     self.fire('afterSyncUI');
                     actionPlugins(self, plugins, "syncUI");
-                    self.__set("rendered", true);
+                    self.setInternal("rendered", true);
                 }
                 return self;
             },

@@ -81,7 +81,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
      * @name DataLazyload
      * @class
      * LazyLoad elements which are out of current viewPort.
-     * @extends Base
+     * @extends KISSY.Base
      */
     function DataLazyload(containers, config) {
         var self = this;

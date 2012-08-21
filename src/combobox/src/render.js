@@ -33,11 +33,11 @@ KISSY.add("combobox/render", function (S, Component) {
                 wrap = el.one(".ks-combobox-input-wrap");
                 input = input || S.all(inputTpl);
                 wrap.append(input);
-                self.__set("input", input);
+                self.setInternal("input", input);
             }
 
             if (!trigger) {
-                self.__set("trigger", S.all(triggerTpl));
+                self.setInternal("trigger", S.all(triggerTpl));
             }
 
             self.get("trigger").unselectable();
@@ -46,7 +46,7 @@ KISSY.add("combobox/render", function (S, Component) {
                 "class='ks-combobox-invalid-el'>" +
                 "<div class='ks-combobox-invalid-inner'></div>" +
                 "</div>").insertBefore(input.parent());
-            self.__set("invalidEl", invalidEl);
+            self.setInternal("invalidEl", invalidEl);
 
             var placeholder;
 
@@ -54,7 +54,7 @@ KISSY.add("combobox/render", function (S, Component) {
                 if (!(inputId = input.attr("id"))) {
                     input.attr("id", inputId = S.guid("ks-combobox-input"));
                 }
-                self.__set('placeholderEl', $('<label for="' +
+                self.setInternal('placeholderEl', $('<label for="' +
                     inputId + '" ' +
                     'class="ks-combobox-placeholder">' +
                     placeholder + '</label>').appendTo(el));

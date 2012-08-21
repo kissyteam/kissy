@@ -23,7 +23,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
      * @class
      * Collection. A list of model.
      * @memberOf MVC
-     * @extends Base
+     * @extends KISSY.Base
      */
     function Collection() {
         Collection.superclass.constructor.apply(this, arguments);

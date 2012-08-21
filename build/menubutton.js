@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:10
+build time: Aug 21 20:57
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -16,7 +16,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         if (m && m.xclass) {
             if (init) {
                 m = Component.create(m, self);
-                self.__set("menu", m);
+                self.setInternal("menu", m);
             } else {
                 return null;
             }
@@ -255,7 +255,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             /**
              * Decorate child element to from a child component.
              * @param {Function} UI Child component's constructor
-             * @param {NodeList} el Child component's root element.
+             * @param {KISSY.NodeList} el Child component's root element.
              * @protected
              *
              */
@@ -272,7 +272,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     srcNode:el,
                     prefixCls:self.get("prefixCls")
                 }, menuCfg));
-                self.__set("menu", menu);
+                self.setInternal("menu", menu);
             },
 
             destructor:function () {
@@ -336,7 +336,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     },
                     setter:function (v) {
                         if (v instanceof Menu) {
-                            v.__set("parent", this);
+                            v.setInternal("parent", this);
                         }
                     }
                 },

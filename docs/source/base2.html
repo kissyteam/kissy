@@ -24,26 +24,26 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     var camelCase = DOM._camelCase,
         NodeType = DOM.NodeType,
-        specialVals = [&quot;hide&quot;, &quot;show&quot;, &quot;toggle&quot;],
+        specialVals = ['hide', 'show', 'toggle'],
     // shorthand css properties
         SHORT_HANDS = {
             // http://www.w3.org/Style/CSS/Tracker/issues/9
             // http://snook.ca/archives/html_and_css/background-position-x-y
             // backgroundPositionX  backgroundPositionY does not support
             background: [
-                &quot;backgroundPosition&quot;
+                'backgroundPosition'
             ],
             border: [
-                &quot;borderBottomWidth&quot;,
-                &quot;borderLeftWidth&quot;,
+                'borderBottomWidth',
+                'borderLeftWidth',
                 'borderRightWidth',
                 // 'borderSpacing', 组合属性？
                 'borderTopWidth'
             ],
-            &quot;borderBottom&quot;: [&quot;borderBottomWidth&quot;],
-            &quot;borderLeft&quot;: [&quot;borderLeftWidth&quot;],
-            borderTop: [&quot;borderTopWidth&quot;],
-            borderRight: [&quot;borderRightWidth&quot;],
+            'borderBottom': ['borderBottomWidth'],
+            'borderLeft': ['borderLeftWidth'],
+            borderTop: ['borderTopWidth'],
+            borderRight: ['borderRightWidth'],
             font: [
                 'fontSize',
                 'fontWeight'
@@ -105,7 +105,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // the transition properties
         if (S.isString(props)) {
-            props = S.unparam(String(props), &quot;;&quot;, &quot;:&quot;);
+            props = S.unparam(String(props), ';', ':');
         } else {
             // clone to prevent collision within multiple instance
             props = S.clone(props);
@@ -151,7 +151,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         self._fxs = {};
 
         // register complete
-        self.on(&quot;complete&quot;, onComplete);
+        self.on('complete', onComplete);
     }
 
 
@@ -187,19 +187,19 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         // 进入该函数即代表执行（q[0] 已经是 ...）
         saveRunning(self);
 
-        if (self.fire(&quot;beforeStart&quot;) === false) {
+        if (self.fire('beforeStart') === false) {
             // no need to invoke complete
             self.stop(0);
             return;
         }
 
         if (el.nodeType == NodeType.ELEMENT_NODE) {
-            hidden = (DOM.css(el, &quot;display&quot;) === &quot;none&quot;);
+            hidden = (DOM.css(el, 'display') === 'none');
             for (prop in props) {
                 if (props.hasOwnProperty(prop)) {
                     val = props[prop];
                     // 直接结束
-                    if (val == &quot;hide&quot; &amp;&amp; hidden || val == 'show' &amp;&amp; !hidden) {
+                    if (val == 'hide' &amp;&amp; hidden || val == 'show' &amp;&amp; !hidden) {
                         // need to invoke complete
                         self.stop(1);
                         return;
@@ -219,17 +219,17 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             elStyle = el.style;
             S.mix(_backupProps, {
                 overflow: elStyle.overflow,
-                &quot;overflow-x&quot;: elStyle.overflowX,
-                &quot;overflow-y&quot;: elStyle.overflowY
+                'overflow-x': elStyle.overflowX,
+                'overflow-y': elStyle.overflowY
             });
-            elStyle.overflow = &quot;hidden&quot;;
+            elStyle.overflow = 'hidden';
             // inline element should has layout/inline-block
-            if (DOM.css(el, &quot;display&quot;) === &quot;inline&quot; &amp;&amp;
-                DOM.css(el, &quot;float&quot;) === &quot;none&quot;) {
+            if (DOM.css(el, 'display') === 'inline' &amp;&amp;
+                DOM.css(el, 'float') === 'none') {
                 if (UA['ie']) {
                     elStyle.zoom = 1;
                 } else {
-                    elStyle.display = &quot;inline-block&quot;;
+                    elStyle.display = 'inline-block';
                 }
             }
         }
@@ -297,10 +297,10 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             if (S.inArray(val, specialVals)) {
                 // backup original inline css value
                 _backupProps[prop] = DOM.style(el, prop);
-                if (val == &quot;toggle&quot;) {
-                    val = hidden ? &quot;show&quot; : &quot;hide&quot;;
+                if (val == 'toggle') {
+                    val = hidden ? 'show' : 'hide';
                 }
-                if (val == &quot;hide&quot;) {
+                if (val == 'hide') {
                     to = 0;
                     from = fx.cur();
                     // 执行完后隐藏
@@ -318,9 +318,9 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 from = fx.cur();
             }
 
-            val += &quot;&quot;;
+            val += '';
 
-            var unit = &quot;&quot;,
+            var unit = '',
                 parts = val.match(NUMBER_REG);
 
             if (parts) {
@@ -328,7 +328,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 unit = parts[3];
 
                 // 有单位但单位不是 px
-                if (unit &amp;&amp; unit !== &quot;px&quot;) {
+                if (unit &amp;&amp; unit !== 'px') {
                     DOM.css(el, prop, val);
                     from = (to / fx.cur()) * from;
                     DOM.css(el, prop, from + unit);
@@ -336,7 +336,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
                 // 相对
                 if (parts[1]) {
-                    to = ( (parts[ 1 ] === &quot;-=&quot; ? -1 : 1) * to ) + from;
+                    to = ( (parts[ 1 ] === '-=' ? -1 : 1) * to ) + from;
                 }
             }
 
@@ -460,7 +460,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 }
             }
 
-            if ((self.fire(&quot;step&quot;) === false) || end) {
+            if ((self.fire('step') === false) || end) {
                 // complete 事件只在动画到达最后一帧时才触发
                 self.stop(end);
             }
@@ -501,7 +501,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                         }
                     }
                 }
-                self.fire(&quot;complete&quot;);
+                self.fire('complete');
             }
 
             AM.stop(self);
@@ -519,7 +519,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     S.augment(Anim, Event.Target);
 
-    var runningKey = S.guid(&quot;ks-anim-unqueued-&quot; + S.now() + &quot;-&quot;);
+    var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
 
     function saveRunning(anim) {
         var el = anim.config.el,
@@ -551,7 +551,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
 
 
-    var pausedKey = S.guid(&quot;ks-anim-paused-&quot; + S.now() + &quot;-&quot;);
+    var pausedKey = S.guid('ks-anim-paused-' + S.now() + '-');
 
     function savePaused(anim) {
         var el = anim.config.el,
@@ -632,7 +632,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @static
      */
 
-    S.each([&quot;pause&quot;, &quot;resume&quot;], function (action) {
+    S.each(['pause', 'resume'], function (action) {
         Anim[action] = function (el, queueName) {
             if (
             // default queue
@@ -713,7 +713,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
     return Anim;
 }, {
-    requires: [&quot;dom&quot;, &quot;event&quot;, &quot;./easing&quot;, &quot;ua&quot;, &quot;./manager&quot;, &quot;./fx&quot;, &quot;./queue&quot;]
+    requires: ['dom', 'event', './easing', 'ua', './manager', './fx', './queue']
 });
 
 /*
