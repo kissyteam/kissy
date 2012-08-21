@@ -25,7 +25,7 @@
             <div class="span9">
                 <h3>suggest 示例</h3>
 
-                <p>使用已有DOM生成 combobox</p>
+                <p>使用已有DOM生成 suggest（附带验证）</p>
 
                 <div>
                     <div class="ks-combobox" id="J_AutoComplete" style="width: 100px; ">
@@ -38,7 +38,7 @@
             <div class="span9">
                 <h3>suggest 示例</h3>
 
-                <p>使用已有js生成 combobox,可以通过配置格式化函数，格式化建议项，并且可以禁用建议项(输入 a 试试)</p>
+                <p>使用已有js生成 suggest,可以通过配置格式化函数，格式化建议项，并且可以禁用建议项(输入 a 试试)</p>
 
                 <div id="inp_container">
                 </div>
@@ -82,14 +82,14 @@
 
         <div class="row">
             <div class="span6">
-                <h3>可验证的 combobox</h3>
+                <h3>Filter Select</h3>
 
                 <p>相当于带过滤功能的 select</p>
             </div>
             <div class="span9">
-                <h3>可验证的 combobox 示例</h3>
+                <h3>FilterSelect</h3>
 
-                <p>利用现有DOM生成combobox</p>
+                <p>利用现有 DOM 生成 Filter Select</p>
 
                 <div>
                     <div class="ks-combobox" id="J_Combox_Check">
@@ -101,9 +101,9 @@
 
             </div>
             <div class="span9">
-                <h3>combobox 示例</h3>
+                <h3>Filter Select 示例</h3>
 
-                <p>利用js生成 combobox</p>
+                <p>利用js生成 Filter Select</p>
 
                 <div id="inp-combobox-container-check">
 
@@ -124,6 +124,7 @@
 <script src="../../src/render.js"></script>
 <script src="../../src/combobox.js"></script>
 <script src="../../src/local-data-source.js"></script>
+<script src="../../src/filter-select.js"></script>
 <script src="../../src/remote-data-source.js"></script>
 <script>
     /**/
@@ -131,6 +132,9 @@
         var data = ["a123456", "b12345", "c3464356", "d23434"];
         var basicComboBox = new ComboBox({
             srcNode: S.one("#J_AutoComplete"),
+            validator: function (v, complete) {
+                complete(!v ? "必填" : "");
+            },
             width: 200,
             // 初始就聚焦
             // focused:true,
@@ -202,7 +206,7 @@
 
         var basicComboBox = new ComboBox({
             render: "#inp-combobox-container",
-            autoHighlightFirst:true,
+            autoHighlightFirst: true,
             dataSource: {
                 xclass: 'combobox-LocalDataSource',
                 data: data
@@ -231,12 +235,12 @@
 
     KISSY.use('combobox', function (S, ComboBox) {
         var $ = S.all;
-        var data = ["a123456", "b12345", "c3464356", "d23434"];
+        var data = ["a1234567", "a123456", "b12345", "c3464356", "d23434"];
 
-        var basicComboBox = new ComboBox({
+        var basicComboBox = new ComboBox.FilterSelect({
             render: "#inp-combobox-container-check",
-            invalidMessage: "输入值无效！",
             placeholder: "请输入",
+            invalidMessage: "请选择提示框内容",
             //inputValue: "c3464356",
             dataSource: {
                 xclass: 'combobox-LocalDataSource',
@@ -260,8 +264,8 @@
         basicComboBox.render();
 
         $("#check").on("click", function () {
-            basicComboBox.checkValid(function (v) {
-                alert((!v ? "没通过" : v.value) + " : " + basicComboBox.getInputValue());
+            basicComboBox.validate(function (v, val, d) {
+                alert((v ? "没通过" : d.value) + " : " + basicComboBox.get("input").val());
             });
         });
 
@@ -272,11 +276,11 @@
 
     KISSY.use('combobox', function (S, ComboBox) {
         var data = ["a123456", "b12345", "c3464356", "d23434"];
-        var basicComboBox = new ComboBox({
+        var basicComboBox = new ComboBox.FilterSelect({
             srcNode: '#J_Combox_Check',
-            invalidMessage: "输入值无效！",
             placeholder: "请输入",
-            //inputValue: "c3464356",
+            invalidMessage: "请选择提示框内容",
+            // inputValue: "c3464356",
             dataSource: {
                 xclass: 'combobox-LocalDataSource',
                 data: data

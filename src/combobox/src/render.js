@@ -36,23 +36,17 @@ KISSY.add("combobox/render", function (S, Component) {
                 self.__set("input", input);
             }
 
-
             if (!trigger) {
                 self.__set("trigger", S.all(triggerTpl));
             }
 
             self.get("trigger").unselectable();
 
-            var invalidMessage;
-
-            if (invalidMessage = self.get("invalidMessage")) {
-                var invalidEl = $("<div " +
-                    "title='" + invalidMessage + "' " +
-                    "class='ks-combobox-invalid-el'>" +
-                    "<div class='ks-combobox-invalid-inner'></div>" +
-                    "</div>").insertBefore(input.parent());
-                self.__set("invalidEl", invalidEl);
-            }
+            var invalidEl = $("<div " +
+                "class='ks-combobox-invalid-el'>" +
+                "<div class='ks-combobox-invalid-inner'></div>" +
+                "</div>").insertBefore(input.parent());
+            self.__set("invalidEl", invalidEl);
 
             var placeholder;
 
@@ -110,9 +104,6 @@ KISSY.add("combobox/render", function (S, Component) {
 
             placeholderEl: {
 
-            },
-
-            invalidMessage: {
             },
 
             invalidEl: {
