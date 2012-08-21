@@ -35,9 +35,10 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
                 var typedGroups = Utils.getTypedGroups(type);
                 type = typedGroups[0];
                 var groups = typedGroups[1],
+                    isCustomEvent = !isNativeTarget,
                     eventDesc,
                     data,
-                    s = specials[type],
+                    s = isNativeTarget&&specials[type],
                 // in case overwrite by delegateFix/onFix in specials events
                 // (mouseenter/leave,focusin/out)
                     originalType,
@@ -74,9 +75,9 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
                     return;
                 }
                 // 获取事件描述
-                eventDesc = Event._data(target);
+                eventDesc = _data._data(target,undefined, isCustomEvent);
                 if (!eventDesc) {
-                    _data._data(target, eventDesc = {});
+                    _data._data(target, eventDesc = {}, isCustomEvent);
                 }
                 //事件 listeners , similar to eventListeners in DOM3 Events
                 var events = eventDesc.events = eventDesc.events || {},
@@ -92,11 +93,15 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
                     },
                     eventHandler = eventDesc.handler;
                 // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
-                if (!eventHandler) {
+                if (
+                // 自定义事件不需要 eventHandler
+                    isNativeTarget &&
+                        !eventHandler
+                    ) {
                     eventHandler = eventDesc.handler = function (event, data) {
                         // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
                         // 已经在 fire 中 bubble 过一次了
-                        // incase after page has unloaded
+                        // in case after page has unloaded
                         if (typeof KISSY == 'undefined' ||
                             event && event.type == Utils.Event_Triggered) {
                             return;

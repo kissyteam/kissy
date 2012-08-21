@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:58
+build time: Aug 21 23:54
 */
 /**
  * @ignore
@@ -496,11 +496,11 @@ build time: Aug 21 20:58
 
         /**
          * The build time of the library.
-         * NOTICE: '20120821205806' will replace with current timestamp when compressing.
+         * NOTICE: '20120821235452' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120821205806';
+        S.__BUILD_TIME = '20120821235452';
     })();
 
     return S;
@@ -5200,7 +5200,7 @@ build time: Aug 21 20:58
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120821205806'
+        tag: '20120821235452'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -10376,7 +10376,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:57
+build time: Aug 21 23:54
 */
 /**
  * @ignore
@@ -10415,9 +10415,10 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
                 var typedGroups = Utils.getTypedGroups(type);
                 type = typedGroups[0];
                 var groups = typedGroups[1],
+                    isCustomEvent = !isNativeTarget,
                     eventDesc,
                     data,
-                    s = specials[type],
+                    s = isNativeTarget&&specials[type],
                 // in case overwrite by delegateFix/onFix in specials events
                 // (mouseenter/leave,focusin/out)
                     originalType,
@@ -10454,9 +10455,9 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
                     return;
                 }
                 // 获取事件描述
-                eventDesc = Event._data(target);
+                eventDesc = _data._data(target,undefined, isCustomEvent);
                 if (!eventDesc) {
-                    _data._data(target, eventDesc = {});
+                    _data._data(target, eventDesc = {}, isCustomEvent);
                 }
                 //事件 listeners , similar to eventListeners in DOM3 Events
                 var events = eventDesc.events = eventDesc.events || {},
@@ -10472,11 +10473,15 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
                     },
                     eventHandler = eventDesc.handler;
                 // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
-                if (!eventHandler) {
+                if (
+                // 自定义事件不需要 eventHandler
+                    isNativeTarget &&
+                        !eventHandler
+                    ) {
                     eventHandler = eventDesc.handler = function (event, data) {
                         // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
                         // 已经在 fire 中 bubble 过一次了
-                        // incase after page has unloaded
+                        // in case after page has unloaded
                         if (typeof KISSY == 'undefined' ||
                             event && event.type == Utils.Event_Triggered) {
                             return;
@@ -10569,7 +10574,6 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
 KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 
     var isValidTarget = Utils.isValidTarget,
-        NodeType = DOM.NodeType,
         splitAndRun = Utils.splitAndRun,
         getNodeName = DOM.nodeName,
         trim = S.trim,
@@ -10589,12 +10593,10 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
          * @private
          */
         _clone: function (src, dest) {
-
-            if (dest.nodeType !== NodeType.ELEMENT_NODE ||
-                !_data._hasData(src)) {
+            if (!isValidTarget(dest) || !isValidTarget(src) || !_data._hasData(src, false)) {
                 return;
             }
-            var eventDesc = _data._data(src),
+            var eventDesc = _data._data(src, undefined, false),
                 events = eventDesc.events;
             S.each(events, function (handlers, type) {
                 S.each(handlers, function (handler) {
@@ -10924,28 +10926,40 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
  */
 KISSY.add('event/data', function (S, DOM, Utils) {
     var EVENT_GUID = Utils.EVENT_GUID,
-        data,
-        makeArray = S.makeArray;
+        data;
+
     data = {
-        _hasData:function (elem) {
-            return DOM.hasData(elem, EVENT_GUID);
+        _hasData: function (elem, isCustomEvent) {
+            if (isCustomEvent) {
+                return elem[EVENT_GUID] && (!S.isEmptyObject(elem[EVENT_GUID]));
+            } else {
+                return DOM.hasData(elem, EVENT_GUID);
+            }
         },
 
-        _data:function (elem) {
-            var args = makeArray(arguments);
-            args.splice(1, 0, EVENT_GUID);
-            return DOM.data.apply(DOM, args);
+        _data: function (elem, v, isCustomEvent) {
+            if (isCustomEvent) {
+                if (v !== undefined) {
+                    return elem[EVENT_GUID] = v;
+                } else {
+                    return elem[EVENT_GUID];
+                }
+            } else {
+                return DOM.data(elem, EVENT_GUID, v);
+            }
         },
 
-        _removeData:function (elem) {
-            var args = makeArray(arguments);
-            args.splice(1, 0, EVENT_GUID);
-            return DOM.removeData.apply(DOM, args);
+        _removeData: function (elem, isCustomEvent) {
+            if (isCustomEvent) {
+                delete elem[EVENT_GUID];
+            } else {
+                return DOM.removeData(elem, EVENT_GUID);
+            }
         }
     };
     return data;
 }, {
-    requires:['dom', './utils']
+    requires: ['dom', './utils']
 });/**
  * @ignore
  * @fileOverview KISSY Scalable Event Framework
@@ -11010,6 +11024,7 @@ KISSY.add('event', function (S, _data, KeyCodes, Event, Target, Object) {
             }
         });
 
+    // for debugger
     S.mix(Event, _data);
 
     S.mix(S, {
@@ -11115,18 +11130,18 @@ KISSY.add('event/focusin', function (S, UA, Event, special) {
  */
 KISSY.add('event/handle', function (S, DOM, _data, special) {
 
-    function getEvents(target) {
+    function getEvents(target, isCustomEvent) {
         // 获取事件描述
-        var eventDesc = _data._data(target);
+        var eventDesc = _data._data(target, undefined,isCustomEvent);
         return eventDesc && eventDesc.events;
     }
 
-    function getHandlers(target, type) {
-        var events = getEvents(target) || {};
+    function getHandlers(target, type, isCustomEvent) {
+        var events = getEvents(target, isCustomEvent) || {};
         return events[type] || [];
     }
 
-    return function (currentTarget, event) {
+    return function (currentTarget, event, isCustomEvent) {
         /*
          As some listeners may remove themselves from the
          event, the original array length is dynamic. So,
@@ -11134,9 +11149,9 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
          sure we'll call all of them.
          */
         /*
-          DOM3 Events: EventListenerList objects in the DOM are live. ??
+         DOM3 Events: EventListenerList objects in the DOM are live. ??
          */
-        var handlers = getHandlers(currentTarget, event.type),
+        var handlers = getHandlers(currentTarget, event.type, isCustomEvent),
             target = event.target,
             currentTarget0,
             allHandlers = [],
@@ -11167,8 +11182,8 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
                 }
                 if (currentTargetHandlers.length) {
                     allHandlers.push({
-                        currentTarget:target,
-                        'currentTargetHandlers':currentTargetHandlers
+                        currentTarget: target,
+                        'currentTargetHandlers': currentTargetHandlers
                     });
                 }
                 target = target.parentNode || currentTarget;
@@ -11178,8 +11193,8 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
         // root node's handlers is placed at end position of add handlers
         // in case child node stopPropagation of root node's handlers
         allHandlers.push({
-            currentTarget:currentTarget,
-            currentTargetHandlers:handlers.slice(delegateCount)
+            currentTarget: currentTarget,
+            currentTargetHandlers: handlers.slice(delegateCount)
         });
 
         // backup eventType
@@ -11187,6 +11202,7 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
             s,
             t,
             _ks_groups = event._ks_groups;
+
         for (i = 0, len = allHandlers.length;
              !event.isPropagationStopped && i < len;
              ++i) {
@@ -11195,8 +11211,9 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
             currentTargetHandlers = handlerObj.currentTargetHandlers;
             currentTarget0 = handlerObj.currentTarget;
             event.currentTarget = currentTarget0;
-            for (j = 0; !event.isImmediatePropagationStopped &&
-                j < currentTargetHandlers.length;
+
+            for (j = 0;
+                 !event.isImmediatePropagationStopped && j < currentTargetHandlers.length;
                  j++) {
 
                 currentTargetHandler = currentTargetHandlers[j];
@@ -11214,7 +11231,10 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
                 event.type = currentTargetHandler.originalType || eventType;
 
                 // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
-                if ((s = special[event.type]) && s.handle) {
+                if (// 非自定义事件
+                    !isCustomEvent &&
+                        (s = special[event.type]) &&
+                        s.handle) {
                     t = s.handle(event, currentTargetHandler, data);
                     // can handle
                     if (t.length > 0) {
@@ -11244,7 +11264,7 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
         return gRet;
     }
 }, {
-    requires:['dom', './data', './special']
+    requires: ['dom', './data', './special']
 });/**
  * @ignore
  * @fileOverview event-hashchange
@@ -12120,7 +12140,7 @@ KISSY.add('event/mousewheel', function (S, Event, UA, Utils, EventObject, handle
         setup:function () {
             var el = this,
                 mousewheelHandler,
-                eventDesc = _data._data(el);
+                eventDesc = _data._data(el,undefined,false);
             // solve this in ie
             mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER] = S.bind(handler, el);
             simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
@@ -12128,7 +12148,7 @@ KISSY.add('event/mousewheel', function (S, Event, UA, Utils, EventObject, handle
         tearDown:function () {
             var el = this,
                 mousewheelHandler,
-                eventDesc = _data._data(el);
+                eventDesc = _data._data(el,undefined,false);
             mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER];
             simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
             delete eventDesc[mousewheelHandler];
@@ -12185,7 +12205,7 @@ KISSY.add('event/object', function (S, undefined) {
         self.currentTarget = currentTarget;
         if (domEvent) { // html element
             self.type = domEvent.type;
-            // incase dom event has been mark as default prevented by lower dom node
+            // in case dom event has been mark as default prevented by lower dom node
             self.isDefaultPrevented = ( domEvent['defaultPrevented'] || domEvent.returnValue === FALSE ||
                 domEvent['getPreventDefault'] && domEvent['getPreventDefault']() ) ? TRUE : FALSE;
             self._fix();
@@ -12365,7 +12385,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
          */
         {
             // single target, single type, fixed native
-            __remove:function (isNativeTarget, target, type, fn, scope) {
+            __remove: function (isNativeTarget, target, type, fn, scope) {
 
                 if (!target || (isNativeTarget && !isValidTarget(target))) {
                     return;
@@ -12374,8 +12394,9 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                 var typedGroups = Utils.getTypedGroups(type);
                 type = typedGroups[0];
                 var groups = typedGroups[1],
+                    isCustomEvent = !isNativeTarget,
                     selector,
-                    // in case type is undefined
+                // in case type is undefined
                     originalFn = fn,
                     originalScope = scope,
                     hasSelector, s = EVENT_SPECIAL[type];
@@ -12398,7 +12419,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                     }
                 }
 
-                var eventDesc = _data._data(target),
+                var eventDesc = _data._data(target, undefined, isCustomEvent),
                     events = eventDesc && eventDesc.events,
                     handlers,
                     handler,
@@ -12507,10 +12528,10 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
 
                 // remove target's  all events description
                 if (S.isEmptyObject(events)) {
-                    eventDesc.handler.target = null;
+                    (eventDesc.handler || {}).target = null;
                     delete eventDesc.handler;
                     delete eventDesc.events;
-                    Event._removeData(target);
+                    _data._removeData(target, isCustomEvent);
                 }
             },
 
@@ -12523,7 +12544,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
              * @param {Function} [fn] The event handler/listener.
              * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
              */
-            remove:function (targets, type, fn, scope) {
+            remove: function (targets, type, fn, scope) {
 
                 type = S.trim(type);
 
@@ -12542,7 +12563,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
             }
         });
 }, {
-    requires:['./base', 'dom', './utils', './data', './special']
+    requires: ['./base', 'dom', './utils', './data', './special']
 });/**
  * @ignore
  * @fileOverview special house for special events
@@ -12658,7 +12679,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
         return self[KS_BUBBLE_TARGETS];
     }
 
-    function isBubblable(self, eventType) {
+    function canBubble(self, eventType) {
         var publish = getEventPublishObj(self);
         return publish[eventType] && publish[eventType].bubbles || publish[ALL_EVENT] && publish[ALL_EVENT].bubbles
     }
@@ -12731,12 +12752,12 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
             customEvent = getCustomEvent(self, type, eventData);
 
-            ret = handle(self, customEvent);
+            ret = handle(self, customEvent,true);
 
             if (!customEvent.isPropagationStopped && (
                 // 冒泡过来的，不检查继续冒泡
                 customEvent.target != self ||
-                    isBubblable(self, type))) {
+                    canBubble(self, type))) {
 
                 r2 = self.bubble(type, customEvent);
 

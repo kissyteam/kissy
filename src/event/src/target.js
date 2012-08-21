@@ -31,7 +31,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
         return self[KS_BUBBLE_TARGETS];
     }
 
-    function isBubblable(self, eventType) {
+    function canBubble(self, eventType) {
         var publish = getEventPublishObj(self);
         return publish[eventType] && publish[eventType].bubbles || publish[ALL_EVENT] && publish[ALL_EVENT].bubbles
     }
@@ -104,12 +104,12 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
             customEvent = getCustomEvent(self, type, eventData);
 
-            ret = handle(self, customEvent);
+            ret = handle(self, customEvent,true);
 
             if (!customEvent.isPropagationStopped && (
                 // 冒泡过来的，不检查继续冒泡
                 customEvent.target != self ||
-                    isBubblable(self, type))) {
+                    canBubble(self, type))) {
 
                 r2 = self.bubble(type, customEvent);
 

@@ -7,7 +7,6 @@
 KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 
     var isValidTarget = Utils.isValidTarget,
-        NodeType = DOM.NodeType,
         splitAndRun = Utils.splitAndRun,
         getNodeName = DOM.nodeName,
         trim = S.trim,
@@ -27,12 +26,10 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
          * @private
          */
         _clone: function (src, dest) {
-
-            if (dest.nodeType !== NodeType.ELEMENT_NODE ||
-                !_data._hasData(src)) {
+            if (!isValidTarget(dest) || !isValidTarget(src) || !_data._hasData(src, false)) {
                 return;
             }
-            var eventDesc = _data._data(src),
+            var eventDesc = _data._data(src, undefined, false),
                 events = eventDesc.events;
             S.each(events, function (handlers, type) {
                 S.each(handlers, function (handler) {
