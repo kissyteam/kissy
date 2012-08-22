@@ -379,8 +379,8 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
             // 新区域位置发生了变化
             if (newElRegion.left != elRegion.left) {
-                self.__set("x", null);
-                self.get("view").__set("x", null);
+                self.setInternal("x", null);
+                self.get("view").setInternal("x", null);
                 self.set("x", newElRegion.left);
             }
 
@@ -389,8 +389,8 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
                 // 相对于屏幕位置没变，而 left/top 变了
                 // 例如 <div 'relative'><el absolute></div>
                 // el.align(div)
-                self.__set("y", null);
-                self.get("view").__set("y", null);
+                self.setInternal("y", null);
+                self.get("view").setInternal("y", null);
                 self.set("y", newElRegion.top);
             }
 
@@ -407,7 +407,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
         /**
          * Make current element center within node.
-         * @param {undefined|String|HTMLElement|NodeList} node
+         * @param {undefined|String|HTMLElement|KISSY.NodeList} node
          * Same as node config of {@link Component.UIBase.Align#align} .
          */
         center:function (node) {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 20 15:37
+build time: Aug 22 23:29
 */
 /**
  * @fileOverview 图片放大效果 ImageZoom.
@@ -91,7 +91,7 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                             if (!align.node) {
                                 align.node = self.image;
                             }
-                            self.__set("align", undefined);
+                            self.setInternal("align", undefined);
                             self.set("align", align);
                             timer = undefined;
                         }, 50);

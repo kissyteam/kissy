@@ -3,7 +3,7 @@
  * @fileOverview animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/fx", function (S, DOM, undefined) {
+KISSY.add('anim/fx', function (S, DOM, undefined) {
 
     /**
      * basic animation about single css property or element attribute
@@ -26,7 +26,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             var self = this;
             S.mix(self, cfg);
             self.pos = 0;
-            self.unit = self.unit || "";
+            self.unit = self.unit || '';
         },
 
         /**
@@ -94,7 +94,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
                 if (!self.finished) {
                     self.finished = 1;
                     DOM.css(el, prop, to);
-                    S.log(self.prop + " update directly ! : " + val + " : " + from + " : " + to);
+                    S.log(self.prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
                 }
             } else {
                 val += self.unit;
@@ -119,11 +119,11 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             }
             var parsed,
                 r = DOM.css(el, prop);
-            // Empty strings, null, undefined and "auto" are converted to 0,
-            // complex values such as "rotate(1rad)" or "0px 10px" are returned as is,
-            // simple values such as "10px" are parsed to Float.
+            // Empty strings, null, undefined and 'auto' are converted to 0,
+            // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
+            // simple values such as '10px' are parsed to Float.
             return isNaN(parsed = parseFloat(r)) ?
-                !r || r === "auto" ? 0 : r
+                !r || r === 'auto' ? 0 : r
                 : parsed;
         }
     };

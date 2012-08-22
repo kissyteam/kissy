@@ -328,34 +328,41 @@ KISSY.use("menu", function (S, Menu) {
             }
         });
 
+        if (!finalMods.length && mode == 'simple') {
+            finalMods = ["base"];
+        }
+
         var urls = S.map(finalMods, callbackRule);
 
         if (urls.length) {
+
             var f = base + "??" + urls.join(",");
-            $("#result").append('<p><a href="' + f + '" target="_blank">' +
+
+            return ('<p><a href="' + f + '" target="_blank">' +
                 f
                 + '</p>');
+        } else {
+            return "";
         }
     }
 
     $("#gen").on("click", function () {
 
-        $("#result").html('');
-
-        var min = $("#min").attr("checked");
+        var min = $("#min").attr("checked"), html = "";
 
         var base = $("#cdn").attr("checked") ?
             "http://a.tbcdn.cn/s/kissy/1.3.0rc/" :
             S.config("base");
 
-        gen(base + 'css/dpl/', 'simple', function (m) {
+        html += gen(base + 'css/dpl/', 'simple', function (m) {
             return m + (min ? "-min" : "") + ".css";
         });
 
-        gen(base, 'complex', function (m) {
+        html += gen(base, 'complex', function (m) {
             return m + "/assets/dpl" + (min ? "-min" : "") + ".css";
         });
 
+        $("#result").html(html);
     });
 
 });

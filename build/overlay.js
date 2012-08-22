@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 20 15:37
+build time: Aug 22 23:29
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -696,7 +696,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             {
                 /**
                  * Trigger elements to show popup.
-                 * @type {NodeList}
+                 * @type {KISSY.NodeList}
                  */
                 trigger:{                          // 触发器
                     setter:function (v) {

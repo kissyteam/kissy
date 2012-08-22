@@ -9,7 +9,7 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
      * @class
      * dataSource which wrap {@link IO} utility.
      * xclass: 'combobox-RemoteDataSource'.
-     * @extends Base
+     * @extends KISSY.Base
      * @memberOf ComboBox
      */
     function RemoteDataSource() {
@@ -97,7 +97,7 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
                     if (parse) {
                         data = parse(inputVal, data);
                     }
-                    self.__set("data", data);
+                    self.setInternal("data", data);
                     if (cache) {
                         self.caches[inputVal] = data;
                     }

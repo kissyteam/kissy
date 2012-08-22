@@ -86,7 +86,7 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                             if (!align.node) {
                                 align.node = self.image;
                             }
-                            self.__set("align", undefined);
+                            self.setInternal("align", undefined);
                             self.set("align", align);
                             timer = undefined;
                         }, 50);

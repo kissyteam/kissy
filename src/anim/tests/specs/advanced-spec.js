@@ -42,7 +42,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             waits(300);
 
             runs(function () {
-                expect(test.isRunning()).toBe(0);
+                expect(test.isRunning()).toBeFalsy();
                 var anims = test.data(ANIM_KEY);
                 expect(test.hasData(ANIM_KEY)).toBe(false);
                 expect(anims).toBe(undefined);
@@ -79,7 +79,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             waits(300);
 
             runs(function () {
-                expect(test.isRunning()).toBe(0);
+                expect(test.isRunning()).toBeFalsy();
                 var anims = test.data(ANIM_KEY);
                 expect(test.hasData(ANIM_KEY)).toBe(false);
                 expect(anims).toBe(undefined);
@@ -115,7 +115,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             waits(200);
 
             runs(function () {
-                expect(test.isRunning()).toBe(0);
+                expect(test.isRunning()).toBeFalsy();
                 var anims = test.data(ANIM_KEY);
                 expect(test.hasData(ANIM_KEY)).toBe(false);
                 expect(anims).toBe(undefined);
@@ -148,7 +148,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             waits(200);
 
             runs(function () {
-                expect(test.isRunning()).toBe(0);
+                expect(test.isRunning()).toBeFalsy();
                 var anims = test.data(ANIM_KEY);
                 expect(test.hasData(ANIM_KEY)).toBe(false);
                 expect(anims).toBe(undefined);
@@ -193,7 +193,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             waits(400);
 
             runs(function () {
-                expect(test.isRunning()).toBe(0);
+                expect(test.isRunning()).toBeFalsy();
                 var anims = test.data(ANIM_KEY);
                 expect(test.hasData(ANIM_KEY)).toBe(false);
                 expect(anims).toBe(undefined);
@@ -246,7 +246,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             waits(500);
 
             runs(function () {
-                expect(test.isRunning()).toBe(0);
+                expect(test.isRunning()).toBeFalsy();
                 var anims = test.data(ANIM_KEY);
                 expect(test.hasData(ANIM_KEY)).toBe(false);
                 expect(anims).toBe(undefined);
@@ -292,7 +292,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
 
             waits(300);
             runs(function () {
-                expect(test.isRunning()).toBe(0);
+                expect(test.isRunning()).toBeFalsy();
                 expect(test.width()).not.toBe(width);
                 expect(test.height()).not.toBe(height);
                 expect(test.width()).not.toBe(200);
@@ -344,7 +344,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             });
             waits(300);
             runs(function () {
-                expect(test.isRunning()).toBe(0);
+                expect(test.isRunning()).toBeFalsy();
                 expect(test.width()).toBe(200);
                 expect(test.height()).toBe(200);
                 var anims = test.data(ANIM_KEY);
@@ -359,7 +359,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             test.hide(0.2);
             waits(300);
             runs(function () {
-                expect(test.isRunning()).toBe(0);
+                expect(test.isRunning()).toBeFalsy();
                 expect(test.style("height")).toBe("");
                 var anims = test.data(ANIM_KEY);
                 expect(test.hasData(ANIM_KEY)).toBe(false);
@@ -373,7 +373,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             test.hide(1);
             waits(100);
             runs(function () {
-                expect(test.isRunning()).toBe(1);
+                expect(test.isRunning()).toBeTruthy();
                 test.stop();
                 var anims = test.data(ANIM_KEY);
                 // stop 后清空
@@ -387,7 +387,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             waits(200);
 
             runs(function () {
-                expect(test.isRunning()).toBe(0);
+                expect(test.isRunning()).toBeFalsy();
                 var anims = test.data(ANIM_KEY);
                 // stop 后清空
                 expect(test.hasData(ANIM_KEY)).toBe(false);

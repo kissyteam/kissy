@@ -18,7 +18,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
      * @class
      * View for delegating event on root element.
      * @memberOf MVC
-     * @extends Base
+     * @extends KISSY.Base
      */
     function View() {
         View.superclass.constructor.apply(this, arguments);
@@ -51,7 +51,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
             getter:function (s) {
                 if (S.isString(s)) {
                     s = $(s);
-                    this.__set("el", s);
+                    this.setInternal("el", s);
                 }
                 return s;
             }

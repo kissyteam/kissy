@@ -10,8 +10,8 @@ KISSY.add("split-button", function (S, Component, Button, MenuButton) {
             var self = this,
                 alignWithEl = self.get("alignWithEl"),
                 children = self.get("children");
-            self.__set("menuButton", children[1]);
-            self.__set("button", children[0]);
+            self.setInternal("menuButton", children[1]);
+            self.setInternal("button", children[0]);
             var menuButton = children[1],
                 menu = menuButton.get("menu");
             if (alignWithEl) {
@@ -30,10 +30,10 @@ KISSY.add("split-button", function (S, Component, Button, MenuButton) {
                 menuButton = self.get("menuButton");
             self.set("el", el);
             var children = el.children();
-            self.__set("button", new Button(S.mix({
+            self.setInternal("button", new Button(S.mix({
                 srcNode: children[0]
             }, button)));
-            self.__set("menuButton", new MenuButton(S.mix({
+            self.setInternal("menuButton", new MenuButton(S.mix({
                 srcNode: children[1]
             }, menuButton)));
         }

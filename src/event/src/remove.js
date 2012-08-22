@@ -15,7 +15,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
          */
         {
             // single target, single type, fixed native
-            __remove:function (isNativeTarget, target, type, fn, scope) {
+            __remove: function (isNativeTarget, target, type, fn, scope) {
 
                 if (!target || (isNativeTarget && !isValidTarget(target))) {
                     return;
@@ -24,8 +24,9 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                 var typedGroups = Utils.getTypedGroups(type);
                 type = typedGroups[0];
                 var groups = typedGroups[1],
+                    isCustomEvent = !isNativeTarget,
                     selector,
-                    // in case type is undefined
+                // in case type is undefined
                     originalFn = fn,
                     originalScope = scope,
                     hasSelector, s = EVENT_SPECIAL[type];
@@ -48,7 +49,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                     }
                 }
 
-                var eventDesc = _data._data(target),
+                var eventDesc = _data._data(target, undefined, isCustomEvent),
                     events = eventDesc && eventDesc.events,
                     handlers,
                     handler,
@@ -157,10 +158,10 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
 
                 // remove target's  all events description
                 if (S.isEmptyObject(events)) {
-                    eventDesc.handler.target = null;
+                    (eventDesc.handler || {}).target = null;
                     delete eventDesc.handler;
                     delete eventDesc.events;
-                    Event._removeData(target);
+                    _data._removeData(target, isCustomEvent);
                 }
             },
 
@@ -173,7 +174,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
              * @param {Function} [fn] The event handler/listener.
              * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
              */
-            remove:function (targets, type, fn, scope) {
+            remove: function (targets, type, fn, scope) {
 
                 type = S.trim(type);
 
@@ -192,5 +193,5 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
             }
         });
 }, {
-    requires:['./base', 'dom', './utils', './data', './special']
+    requires: ['./base', 'dom', './utils', './data', './special']
 });

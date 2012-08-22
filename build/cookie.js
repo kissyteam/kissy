@@ -1,40 +1,36 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 20 15:33
+build time: Aug 22 23:25
 */
 /**
+ * @ignore
  * @fileOverview cookie
  * @author lifesinger@gmail.com
  */
 KISSY.add('cookie', function (S) {
-
-    /**
-     * @name Cookie
-     * @namespace Provide Cookie utilities.
-     */
 
     var doc = S.Env.host.document,
         MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
         encode = encodeURIComponent,
         decode = decodeURIComponent;
 
-
     function isNotEmptyString(val) {
         return S.isString(val) && val !== '';
     }
 
-    return S.Cookie =
     /**
-     * @lends Cookie
+     * Provide Cookie utilities.
+     * @class KISSY.Cookie
+     * @singleton
      */
-    {
+    return S.Cookie = {
 
         /**
          * Returns the cookie value for given name
          * @return {String} name The name of the cookie to retrieve
          */
-        get:function (name) {
+        get: function (name) {
             var ret, m;
 
             if (isNotEmptyString(name)) {
@@ -56,7 +52,7 @@ KISSY.add('cookie', function (S) {
          * @param {String} path set cookie's path
          * @param {Boolean} secure whether this cookie can only be sent to server on https
          */
-        set:function (name, val, expires, domain, path, secure) {
+        set: function (name, val, expires, domain, path, secure) {
             var text = String(encode(val)), date = expires;
 
             // 从当前时间开始，多少天后过期
@@ -94,21 +90,21 @@ KISSY.add('cookie', function (S) {
          * @param {String} path The cookie's path
          * @param {String} secure The cookie's secure option
          */
-        remove:function (name, domain, path, secure) {
+        remove: function (name, domain, path, secure) {
             this.set(name, '', -1, domain, path, secure);
         }
     };
 
 });
 
-/**
- *  2012.02.14 yiminghe@gmail.com
- *   - jsdoc added
- *
- *  2010.04
- *   - get 方法要考虑 ie 下，
- *     值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
- *     除了正则获取，还可以 split 字符串的方式来获取。
- *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
- *     独立成静态工具类的方式更优。
+/*
+ 2012.02.14 yiminghe@gmail.com
+ - jsdoc added
+
+ 2010.04
+ - get 方法要考虑 ie 下，
+ 值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
+ 除了正则获取，还可以 split 字符串的方式来获取。
+ - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
+ 独立成静态工具类的方式更优。
  */

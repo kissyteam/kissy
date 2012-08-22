@@ -53,7 +53,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
                 " >" +
                 "</div>");
             partEl.appendTo(el);
-            self.__set(part, partEl);
+            self.setInternal(part, partEl);
         }
     }
 

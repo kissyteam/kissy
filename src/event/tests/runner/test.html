@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Test Runner</title>
-<link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
-<script src="../../../../tools/jasmine/jasmine.js"></script>
-<script src="../../../../tools/jasmine/jasmine-html.js"></script>
-<script src="../../../../tools/jasmine/event-simulate.js"></script>
+    <meta charset="utf-8">
+    <title>Test Runner</title>
+    <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
+    <script src="../../../../tools/jasmine/jasmine.js"></script>
+    <script src="../../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../../tools/jasmine/event-simulate.js"></script>
 
-<script src="../../../../build/seed.js"></script>
-<script src="../../../../build/ua.js"></script>
-<script src="../../../../build/dom.js"></script>
-<script src="../../../../build/node.js"></script>
-<script src="../../../../build/anim.js"></script>
-<script src="../../src/base.js"></script>
-<script src="../../src/object.js"></script>
-<script src="../../src/target.js"></script>
-<script src="../../src/focusin.js"></script>
-<script src="../../src/mouseenter.js"></script>
-<script src="../../src/add.js"></script>
-<script src="../../src/remove.js"></script>
-<script src="../../src/handle.js"></script>
-<script src="../../src/data.js"></script>
-<script src="../../src/valuechange.js"></script>
-<script src="../../src/hashchange.js"></script>
-<script src="../../src/keycodes.js"></script>
-<script src="../../src/submit.js"></script>
-<script src="../../src/change.js"></script>
-<script src="../../src/mousewheel.js"></script>
-<script src="../../src/utils.js"></script>
-<script src="../../src/special.js"></script>
-<script src="../../src/event.js"></script>
+    <script src="../../../../build/seed.js"></script>
+    <script src="../../../../build/ua.js"></script>
+    <script src="../../../../build/dom.js"></script>
+    <script src="../../../../build/node.js"></script>
+    <script src="../../../../build/anim.js"></script>
+    <script src="../../src/base.js"></script>
+    <script src="../../src/object.js"></script>
+    <script src="../../src/target.js"></script>
+    <script src="../../src/focusin.js"></script>
+    <script src="../../src/mouseenter.js"></script>
+    <script src="../../src/add.js"></script>
+    <script src="../../src/remove.js"></script>
+    <script src="../../src/handle.js"></script>
+    <script src="../../src/data.js"></script>
+    <script src="../../src/valuechange.js"></script>
+    <script src="../../src/hashchange.js"></script>
+    <script src="../../src/key-codes.js"></script>
+    <script src="../../src/submit.js"></script>
+    <script src="../../src/change.js"></script>
+    <script src="../../src/mousewheel.js"></script>
+    <script src="../../src/utils.js"></script>
+    <script src="../../src/special.js"></script>
+    <script src="../../src/event.js"></script>
 </head>
 <body>
 <!-- test data -->
 <div style="border: 1px solid #ccc; height: 50px; overflow-y: auto; padding: 5px; margin-bottom: 20px">
     <p>Test Data:</p>
+
     <div id="foo">
         <ul id="bar">
             <li><a id="link-a" href="#">link a</a></li>
@@ -56,6 +57,7 @@
         test focusin: <input type="text" value="点击我"/>
     </div>
     <input id="test-focusin-input" type="text" value="另一个输入框"/>
+
     <div style="margin-top: 10px; padding: 30px; background-color: #e3e4e5">
         <div id="outer" style="padding: 20px; background-color: #D6EDFC">
             <div id="inner" style="padding: 20px; background-color: #FFCC00"></div>
@@ -78,7 +80,9 @@
 </div>
 
 <h1>KISSY.Event Test Cases</h1>
+
 <script src="../specs/event-spec.js"></script>
+
 <script src="../specs/custom-event-spec.js"></script>
 <script src="../specs/delegate-spec.js"></script>
 <script src="../specs/fire-spec.js"></script>

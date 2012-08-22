@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 22:20
+build time: Aug 22 23:28
 */
 KISSY.Loader&&KISSY.config("modules",{"editor/plugin/heading/cmd":{requires:["editor"]},"editor/plugin/page-break/index":{requires:["editor","editor/plugin/fake-objects/"]},"editor/plugin/italic/cmd":{requires:["editor","editor/plugin/font/cmd"]},"editor/plugin/font-size/cmd":{requires:["editor","editor/plugin/font/cmd"]},"editor/plugin/image/dialog":{requires:["ajax","editor","editor/plugin/overlay/","switchable","editor/plugin/menubutton/"]},"editor/plugin/underline/index":{requires:["editor","editor/plugin/font/ui",
 "editor/plugin/underline/cmd"]},"editor/plugin/maximize/cmd":{requires:["editor"]},"editor/plugin/contextmenu/index":{requires:["editor","menu","editor/plugin/focus-fix/"]},"editor/plugin/heading/index":{requires:["editor","editor/plugin/heading/cmd"]},"editor/plugin/drag-upload/index":{requires:["editor"]},"editor/plugin/color/cmd":{requires:["editor"]},"editor/plugin/flash/dialog":{requires:["editor","editor/plugin/flash-common/utils","editor/plugin/overlay/","editor/plugin/menubutton/"]},"editor/plugin/strike-through/cmd":{requires:["editor",

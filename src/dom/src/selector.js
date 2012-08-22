@@ -481,7 +481,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
             /**
              * Reduce the set of matched elements to those that match the selector or pass the function's test.
-             * @param {String|HTMLElement[]|NodeList} selector Matched elements
+             * @param {String|HTMLElement[]} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {HTMLElement[]}

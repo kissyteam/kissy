@@ -20,7 +20,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
     noData['embed'] = 1;
 
     var commonOps = {
-        hasData:function (cache, name) {
+        hasData: function (cache, name) {
             if (cache) {
                 if (name !== undefined) {
                     if (name in cache) {
@@ -35,7 +35,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
     };
 
     var objectOps = {
-        hasData:function (ob, name) {
+        hasData: function (ob, name) {
             // 只判断当前窗口，iframe 窗口内数据直接放入全局变量
             if (ob == win) {
                 return objectOps.hasData(winDataCache, name);
@@ -45,7 +45,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
             return commonOps.hasData(thisCache, name);
         },
 
-        data:function (ob, name, value) {
+        data: function (ob, name, value) {
             if (ob == win) {
                 return objectOps.data(winDataCache, name, value);
             }
@@ -62,7 +62,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                 }
             }
         },
-        removeData:function (ob, name) {
+        removeData: function (ob, name) {
             if (ob == win) {
                 return objectOps.removeData(winDataCache, name);
             }
@@ -85,7 +85,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
     };
 
     var domOps = {
-        hasData:function (elem, name) {
+        hasData: function (elem, name) {
             var key = elem[EXPANDO];
             if (!key) {
                 return false;
@@ -94,7 +94,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
             return commonOps.hasData(thisCache, name);
         },
 
-        data:function (elem, name, value) {
+        data: function (elem, name, value) {
             if (noData[elem.nodeName.toLowerCase()]) {
                 return undefined;
             }
@@ -124,7 +124,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
             }
         },
 
-        removeData:function (elem, name) {
+        removeData: function (elem, name) {
             var key = elem[EXPANDO], cache;
             if (!key) {
                 return;
@@ -160,7 +160,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
          */
         {
 
-            __EXPANDO:EXPANDO,
+            __EXPANDO: EXPANDO,
 
             /**
              * Determine whether an element has any data or specified data name associated with it.
@@ -168,7 +168,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * @param {String} [name] A string naming the piece of data to set.
              * @return {Boolean}
              */
-            hasData:function (selector, name) {
+            hasData: function (selector, name) {
                 var ret = false,
                     elems = DOM.query(selector);
                 for (var i = 0; i < elems.length; i++) {
@@ -176,6 +176,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                     if (elem.nodeType) {
                         ret = domOps.hasData(elem, name);
                     } else {
+                        // window
                         ret = objectOps.hasData(elem, name);
                     }
                     if (ret) {
@@ -196,14 +197,16 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * @param [data] The new data value.
              * @return {Object|undefined}
              */
-            data:function (selector, name, data) {
+            data: function (selector, name, data) {
 
                 var elems = DOM.query(selector), elem = elems[0];
 
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        DOM.data(elems, k, name[k]);
+                        if (name.hasOwnProperty(k)) {
+                            DOM.data(elems, k, name[k]);
+                        }
                     }
                     return undefined;
                 }
@@ -212,9 +215,10 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                 if (data === undefined) {
                     if (elem) {
                         if (elem.nodeType) {
-                            return domOps.data(elem, name, data);
+                            return domOps.data(elem, name);
                         } else {
-                            return objectOps.data(elem, name, data);
+                            // window
+                            return objectOps.data(elem, name);
                         }
                     }
                 }
@@ -225,6 +229,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                         if (elem.nodeType) {
                             domOps.data(elem, name, data);
                         } else {
+                            // window
                             objectOps.data(elem, name, data);
                         }
                     }
@@ -239,13 +244,14 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String} [name] A string naming the piece of data to delete.
              */
-            removeData:function (selector, name) {
+            removeData: function (selector, name) {
                 var els = DOM.query(selector), elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
                     if (elem.nodeType) {
                         domOps.removeData(elem, name);
                     } else {
+                        // window
                         objectOps.removeData(elem, name);
                     }
                 }
@@ -255,9 +261,9 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
     return DOM;
 
 }, {
-    requires:['./base']
+    requires: ['./base']
 });
 /*
-  承玉：2011-05-31
-   - 分层 ，节点和普通对象分开处理
+ 承玉：2011-05-31
+ - 分层 ，节点和普通对象分开处理
  */

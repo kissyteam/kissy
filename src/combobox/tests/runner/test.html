@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>KISSY ComboBox Test Runner</title>
-<link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
-<script src="../../../../tools/jasmine/jasmine.js"></script>
-<script src="../../../../tools/jasmine/jasmine-html.js"></script>
-<script src="../../../../tools/jasmine/event-simulate.js"></script>
+    <meta charset="utf-8">
+    <title>KISSY ComboBox Test Runner</title>
+    <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
+    <script src="../../../../tools/jasmine/jasmine.js"></script>
+    <script src="../../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../../tools/jasmine/event-simulate.js"></script>
 
-<script src="../../../../build/kissy.js"></script>
-<script src="../../../../build/component.js"></script>
-<script src="../../../../build/menu.js"></script>
-<script src="../../src/baseRender.js"></script>
-<script src="../../src/base.js"></script>
-<script src="../../src/combobox.js"></script>
-<script src="../../src/localDataSource.js"></script>
-<script src="../../src/remoteDataSource.js"></script>
-<script src="../../../input-selection/src/input-selection.js"></script>
-<link rel="stylesheet" href="../../demo/assets/default.css">
+    <script src="../../../../build/kissy.js"></script>
+    <script src="../../../../build/component.js"></script>
+    <script src="../../../../build/menu.js"></script>
+    <script src="../../src/render.js"></script>
+    <script src="../../src/base.js"></script>
+    <script src="../../src/combobox.js"></script>
+    <script src="../../src/local-data-source.js"></script>
+    <script src="../../src/remote-data-source.js"></script>
+    <script src="../../src/filter-select.js"></script>
+    <script src="../../../input-selection/src/input-selection.js"></script>
+    <link rel="stylesheet" href="../../../css/src/dpl/base.css">
+    <link rel="stylesheet" href="../../../menu/assets/dpl.css">
+    <link rel="stylesheet" href="../../assets/dpl.css">
+    <link rel="stylesheet" href="../../assets/dpl.css">
 </head>
 <body>
 <h1>KISSY ComboBox TC</h1>
@@ -27,6 +31,7 @@
 
 </div>
 <script src="../specs/simple-spec.js"></script>
+<script src="../specs/validator-spec.js"></script>
 <script>
     KISSY.use("combobox", function (S, ComboBox) {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());

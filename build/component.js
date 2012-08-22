@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 20 15:33
+build time: Aug 22 23:25
 */
 /**
  * Setup component namespace.
@@ -109,7 +109,7 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
              * @method
              * @name decorateInternal
              * @memberOf Component.Container#
-             * @param {NodeList} element Root element of current component.
+             * @param {KISSY.NodeList} element Root element of current component.
              */
 
             /**
@@ -162,7 +162,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         self.create();
         var contentEl = self.getContentElement();
         c = Component.create(c, self);
-        c.__set("parent", self);
+        c.setInternal("parent", self);
         // set 通知 view 也更新对应属性
         c.set("render", contentEl);
         c.set("elBefore", renderBefore);
@@ -281,7 +281,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              */
             initializer: function () {
                 // initialize view
-                this.__set("view", constructView(this));
+                this.setInternal("view", constructView(this));
             },
 
             /**
@@ -841,7 +841,7 @@ KISSY.add("component/decorate-child", function (S, DecorateChildren) {
     S.augment(DecorateChild, DecorateChildren, {
         decorateInternal:function (element) {
             var self = this;
-            // 不用 __set , 通知 view 更新
+            // 不用 setInternal , 通知 view 更新
             self.set("el", element);
             var ui = self.get("decorateChildCls"),
                 child = element.one("." + ui);
@@ -876,7 +876,7 @@ KISSY.add("component/decorate-children", function (S, Manager) {
     S.augment(DecorateChildren, {
         decorateInternal:function (el) {
             var self = this;
-            // 不用 __set , 通知 view 更新
+            // 不用 setInternal , 通知 view 更新
             self.set("el", el);
             self.decorateChildren(el);
         },
@@ -884,7 +884,7 @@ KISSY.add("component/decorate-children", function (S, Manager) {
         /**
          * Get component's constructor from KISSY Node.
          * @protected
-         * @param {NodeList} childNode Child component's root node.
+         * @param {KISSY.NodeList} childNode Child component's root node.
          */
         findUIConstructorByNode:function (childNode, ignoreError) {
             var self = this,
@@ -1162,7 +1162,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
 
             /**
              * Returns the dom element which is responsible for listening keyboard events.
-             * @return {NodeList}
+             * @return {KISSY.NodeList}
              */
             getKeyEventTarget: function () {
                 return this.get("el");
@@ -1213,7 +1213,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
 
             /**
              * Return the dom element into which child component to be rendered.
-             * @return {NodeList}
+             * @return {KISSY.NodeList}
              */
             getContentElement: function () {
                 return this.get("contentEl") || this.get("el");
@@ -1691,8 +1691,8 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
             // 新区域位置发生了变化
             if (newElRegion.left != elRegion.left) {
-                self.__set("x", null);
-                self.get("view").__set("x", null);
+                self.setInternal("x", null);
+                self.get("view").setInternal("x", null);
                 self.set("x", newElRegion.left);
             }
 
@@ -1701,8 +1701,8 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
                 // 相对于屏幕位置没变，而 left/top 变了
                 // 例如 <div 'relative'><el absolute></div>
                 // el.align(div)
-                self.__set("y", null);
-                self.get("view").__set("y", null);
+                self.setInternal("y", null);
+                self.get("view").setInternal("y", null);
                 self.set("y", newElRegion.top);
             }
 
@@ -1719,7 +1719,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
         /**
          * Make current element center within node.
-         * @param {undefined|String|HTMLElement|NodeList} node
+         * @param {undefined|String|HTMLElement|KISSY.NodeList} node
          * Same as node config of {@link Component.UIBase.Align#align} .
          */
         center:function (node) {
@@ -1760,7 +1760,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
     /**
      * UIBase for class-based component.
-     * @extends Base
+     * @extends KISSY.Base
      * @class Component.UIBase
      */
     function UIBase(config) {
@@ -1921,15 +1921,15 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 v = parser[p];
                 // 函数
                 if (S.isFunction(v)) {
-                    host.__set(p, v.call(host, srcNode));
+                    host.setInternal(p, v.call(host, srcNode));
                 }
                 // 单选选择器
                 else if (S.isString(v)) {
-                    host.__set(p, srcNode.one(v));
+                    host.setInternal(p, srcNode.one(v));
                 }
                 // 多选选择器
                 else if (S.isArray(v) && v[0]) {
-                    host.__set(p, srcNode.all(v[0]))
+                    host.setInternal(p, srcNode.all(v[0]))
                 }
             }
         }
@@ -2003,7 +2003,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                      */
                     self.fire('beforeCreateDom');
                     callMethodByHierarchy(self, "createDom", "__createDom");
-                    self.__set("created", true);
+                    self.setInternal("created", true);
                     /**
                      * @event afterCreateDom
                      * fired when root node is created
@@ -2081,7 +2081,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
                     self.fire('afterSyncUI');
                     actionPlugins(self, plugins, "syncUI");
-                    self.__set("rendered", true);
+                    self.setInternal("rendered", true);
                 }
                 return self;
             },
@@ -2376,7 +2376,7 @@ KISSY.add('component/uibase/box', function (S) {
         /**
          * component's html content.
          * Note: content and srcNode can not be set both!
-         * @type {String|NodeList}
+         * @type {String|KISSY.NodeList}
          */
         content:{
             view:1
@@ -2418,7 +2418,7 @@ KISSY.add('component/uibase/box', function (S) {
         },
         /**
          * archor element where component insert before
-         * @type {NodeList}
+         * @type {KISSY.NodeList}
          */
         elBefore:{
             // better named to renderBefore, too late !
@@ -2426,7 +2426,7 @@ KISSY.add('component/uibase/box', function (S) {
         },
         /**
          * readonly. root element of current component
-         * @type {NodeList}
+         * @type {KISSY.NodeList}
          */
         el:{
             view:1
@@ -2434,7 +2434,7 @@ KISSY.add('component/uibase/box', function (S) {
 
         /**
          * archor element where component append to
-         * @type {NodeList}
+         * @type {KISSY.NodeList}
          */
         render:{
             view:1
@@ -2460,7 +2460,7 @@ KISSY.add('component/uibase/box', function (S) {
 
         /**
          * the node to parse for configuration values,passed to component's HTML_PARSER definition
-         * @type {NodeList}
+         * @type {KISSY.NodeList}
          */
         srcNode:{
             view:1
@@ -2614,11 +2614,11 @@ KISSY.add('component/uibase/boxrender', function (S) {
                     el.append(contentEl);
                 }
 
-                self.__set("el", el);
+                self.setInternal("el", el);
 
                 if (!contentEl) {
                     // 没取到,这里设下值, uiSet 时可以 set("content")  取到
-                    self.__set("contentEl", el);
+                    self.setInternal("contentEl", el);
                 }
             }
         },
@@ -2795,7 +2795,7 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
                 btn = self.get("closeBtn");
             if (v) {
                 if (!btn) {
-                    self.__set("closeBtn", btn = getCloseRenderBtn());
+                    self.setInternal("closeBtn", btn = getCloseRenderBtn());
                 }
                 btn.appendTo(self.get("el"), undefined);
             } else {
@@ -2834,7 +2834,7 @@ KISSY.add("component/uibase/contentbox", function () {
 
         /**
          * readonly! content box's element of component
-         * @type {NodeList}
+         * @type {KISSY.NodeList}
          */
         contentEl:{
             view:1
@@ -2875,7 +2875,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
 
             el.append(contentEl);
 
-            self.__set("contentEl", contentEl);
+            self.setInternal("contentEl", contentEl);
         }
     };
 
@@ -3106,7 +3106,7 @@ KISSY.add("component/uibase/mask", function () {
         },
         /**
          * Mask node for current overlay 's mask.
-         * @type {NodeList}
+         * @type {KISSY.NodeList}
          */
         maskNode:{
             view:1
@@ -3233,7 +3233,7 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
                 } else {
                     mask = initMask(maskCls);
                 }
-                self.__set("maskNode", mask);
+                self.setInternal("maskNode", mask);
             }
             if (zIndex = self.get("zIndex")) {
                 mask.css("z-index", zIndex - 1);
@@ -3689,7 +3689,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
                 " >" +
                 "</div>");
             partEl.appendTo(el);
-            self.__set(part, partEl);
+            self.setInternal(part, partEl);
         }
     }
 

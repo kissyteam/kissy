@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 20 15:33
+build time: Aug 22 23:25
 */
 /**
  * @ignore
@@ -125,7 +125,7 @@ KISSY.add('ajax', function (S, serializer, IO) {
             /**
              * submit form without page refresh
              * @param {String} url request destination
-             * @param {HTMLElement|NodeList} form element tobe submited
+             * @param {HTMLElement|KISSY.NodeList} form element tobe submited
              * @param {Object} [data] name-value object associated with this request
              * @param {Function} [callback]  success callback when this request is done.@param callback.data returned from this request with type specified by dataType
              * @param {String} callback.status status of this request with type String
@@ -774,7 +774,7 @@ KISSY.add('ajax/form-serializer', function (S, DOM) {
         /**
          * form serialization
          * @method
-         * @param {HTMLElement[]|HTMLElement|NodeList} forms form elements
+         * @param {HTMLElement[]|HTMLElement|KISSY.NodeList} forms form elements
          * @return {String} serialized string represent form elements
          * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
          * @member KISSY.IO

@@ -12,7 +12,7 @@ KISSY.add("component/decorate-children", function (S, Manager) {
     S.augment(DecorateChildren, {
         decorateInternal:function (el) {
             var self = this;
-            // 不用 __set , 通知 view 更新
+            // 不用 setInternal , 通知 view 更新
             self.set("el", el);
             self.decorateChildren(el);
         },
@@ -20,7 +20,7 @@ KISSY.add("component/decorate-children", function (S, Manager) {
         /**
          * Get component's constructor from KISSY Node.
          * @protected
-         * @param {NodeList} childNode Child component's root node.
+         * @param {KISSY.NodeList} childNode Child component's root node.
          */
         findUIConstructorByNode:function (childNode, ignoreError) {
             var self = this,

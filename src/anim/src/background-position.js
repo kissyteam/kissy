@@ -3,12 +3,12 @@
  * @fileOverview special patch for anim backgroundPosition
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
+KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
 
     function numeric(bp) {
         bp = bp.replace(/left|top/g, '0px')
             .replace(/right|bottom/g, '100%')
-            .replace(/([0-9\.]+)(\s|\)|$)/g, "$1px$2");
+            .replace(/([0-9\.]+)(\s|\)|$)/g, '$1px$2');
         var res = bp.match(/(-?[0-9\.]+)(px|%|em|pt)\s(-?[0-9\.]+)(px|%|em|pt)/);
         return [parseFloat(res[1]), res[2], parseFloat(res[3]), res[4]];
     }
@@ -22,7 +22,7 @@ KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
         load:function () {
             var self = this, fromUnit;
             BackgroundPositionFx.superclass.load.apply(self, arguments);
-            fromUnit = self.unit = ["px", "px"];
+            fromUnit = self.unit = ['px', 'px'];
             if (self.from) {
                 var from = numeric(self.from);
                 self.from = [from[0], from[2]];
@@ -39,21 +39,21 @@ KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
             }
             if (fromUnit) {
                 if (fromUnit[0] !== self.unit[0] || fromUnit[1] !== self.unit[1]) {
-                    S.log("BackgroundPosition x y unit is not same :", "warn");
-                    S.log(fromUnit, "warn");
-                    S.log(self.unit, "warn");
+                    S.log('BackgroundPosition x y unit is not same :', 'warn');
+                    S.log(fromUnit, 'warn');
+                    S.log(self.unit, 'warn');
                 }
             }
         },
 
         interpolate:function (from, to, pos) {
             var unit = this.unit, interpolate = BackgroundPositionFx.superclass.interpolate;
-            return interpolate(from[0], to[0], pos) + unit[0] + " " +
+            return interpolate(from[0], to[0], pos) + unit[0] + ' ' +
                 interpolate(from[1], to[1], pos) + unit[1];
         },
 
         cur:function () {
-            return DOM.css(this.anim.config.el, "backgroundPosition");
+            return DOM.css(this.anim.config.el, 'backgroundPosition');
         },
 
         update:function () {
@@ -68,10 +68,10 @@ KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
 
     });
 
-    Fx.Factories["backgroundPosition"] = BackgroundPositionFx;
+    Fx.Factories['backgroundPosition'] = BackgroundPositionFx;
 
     return BackgroundPositionFx;
 
 }, {
-    requires:["dom", "./base", "./fx"]
+    requires:['dom', './base', './fx']
 });

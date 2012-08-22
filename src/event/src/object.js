@@ -29,7 +29,7 @@ KISSY.add('event/object', function (S, undefined) {
         self.currentTarget = currentTarget;
         if (domEvent) { // html element
             self.type = domEvent.type;
-            // incase dom event has been mark as default prevented by lower dom node
+            // in case dom event has been mark as default prevented by lower dom node
             self.isDefaultPrevented = ( domEvent['defaultPrevented'] || domEvent.returnValue === FALSE ||
                 domEvent['getPreventDefault'] && domEvent['getPreventDefault']() ) ? TRUE : FALSE;
             self._fix();

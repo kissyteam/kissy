@@ -26,7 +26,7 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
              * @method
              * @name decorateInternal
              * @memberOf Component.Container#
-             * @param {NodeList} element Root element of current component.
+             * @param {KISSY.NodeList} element Root element of current component.
              */
 
             /**

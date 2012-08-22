@@ -191,14 +191,14 @@ KISSY.use("component", function (S, Component) {
                             }
                             else  if (arg == "view") {
                                return {
-                                   __set:function(){}
+                                   setInternal:function(){}
                                };
                             }
                             else {
                                 alert('error')
                             }
                         },
-                        __set:function(){},
+                        setInternal:function(){},
                         set:function (arg, v) {
                             if (arg == "x") {
                                 target.offset({
@@ -276,14 +276,14 @@ KISSY.use("component", function (S, Component) {
                             }
                             else  if (arg == "view") {
                                 return {
-                                    __set:function(){}
+                                    setInternal:function(){}
                                 };
                             }
                             else {
                                 alert('error')
                             }
                         },
-                        __set:function(){},
+                        setInternal:function(){},
                         set:function (arg, v) {
                             if (arg == "x") {
                                 target.offset({

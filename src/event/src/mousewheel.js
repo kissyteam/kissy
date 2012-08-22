@@ -67,7 +67,7 @@ KISSY.add('event/mousewheel', function (S, Event, UA, Utils, EventObject, handle
         setup:function () {
             var el = this,
                 mousewheelHandler,
-                eventDesc = _data._data(el);
+                eventDesc = _data._data(el,undefined,false);
             // solve this in ie
             mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER] = S.bind(handler, el);
             simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
@@ -75,7 +75,7 @@ KISSY.add('event/mousewheel', function (S, Event, UA, Utils, EventObject, handle
         tearDown:function () {
             var el = this,
                 mousewheelHandler,
-                eventDesc = _data._data(el);
+                eventDesc = _data._data(el,undefined,false);
             mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER];
             simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
             delete eventDesc[mousewheelHandler];

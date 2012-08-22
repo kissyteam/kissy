@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview node
  * @author yiminghe@gmail.com
  */
-KISSY.add("node", function (S, Event, Node) {
+KISSY.add('node', function (S, Event, Node) {
     Node.KeyCodes = Event.KeyCodes;
     S.mix(S, {
         Node:Node,
@@ -13,10 +14,10 @@ KISSY.add("node", function (S, Event, Node) {
     return Node;
 }, {
     requires:[
-        "event",
-        "node/base",
-        "node/attach",
-        "node/override",
-        "node/anim"
+        'event',
+        'node/base',
+        'node/attach',
+        'node/override',
+        'node/anim'
     ]
 });

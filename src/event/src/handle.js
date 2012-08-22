@@ -5,18 +5,18 @@
  */
 KISSY.add('event/handle', function (S, DOM, _data, special) {
 
-    function getEvents(target) {
+    function getEvents(target, isCustomEvent) {
         // 获取事件描述
-        var eventDesc = _data._data(target);
+        var eventDesc = _data._data(target, undefined,isCustomEvent);
         return eventDesc && eventDesc.events;
     }
 
-    function getHandlers(target, type) {
-        var events = getEvents(target) || {};
+    function getHandlers(target, type, isCustomEvent) {
+        var events = getEvents(target, isCustomEvent) || {};
         return events[type] || [];
     }
 
-    return function (currentTarget, event) {
+    return function (currentTarget, event, isCustomEvent) {
         /*
          As some listeners may remove themselves from the
          event, the original array length is dynamic. So,
@@ -24,9 +24,9 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
          sure we'll call all of them.
          */
         /*
-          DOM3 Events: EventListenerList objects in the DOM are live. ??
+         DOM3 Events: EventListenerList objects in the DOM are live. ??
          */
-        var handlers = getHandlers(currentTarget, event.type),
+        var handlers = getHandlers(currentTarget, event.type, isCustomEvent),
             target = event.target,
             currentTarget0,
             allHandlers = [],
@@ -57,8 +57,8 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
                 }
                 if (currentTargetHandlers.length) {
                     allHandlers.push({
-                        currentTarget:target,
-                        'currentTargetHandlers':currentTargetHandlers
+                        currentTarget: target,
+                        'currentTargetHandlers': currentTargetHandlers
                     });
                 }
                 target = target.parentNode || currentTarget;
@@ -68,8 +68,8 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
         // root node's handlers is placed at end position of add handlers
         // in case child node stopPropagation of root node's handlers
         allHandlers.push({
-            currentTarget:currentTarget,
-            currentTargetHandlers:handlers.slice(delegateCount)
+            currentTarget: currentTarget,
+            currentTargetHandlers: handlers.slice(delegateCount)
         });
 
         // backup eventType
@@ -77,6 +77,7 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
             s,
             t,
             _ks_groups = event._ks_groups;
+
         for (i = 0, len = allHandlers.length;
              !event.isPropagationStopped && i < len;
              ++i) {
@@ -85,8 +86,9 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
             currentTargetHandlers = handlerObj.currentTargetHandlers;
             currentTarget0 = handlerObj.currentTarget;
             event.currentTarget = currentTarget0;
-            for (j = 0; !event.isImmediatePropagationStopped &&
-                j < currentTargetHandlers.length;
+
+            for (j = 0;
+                 !event.isImmediatePropagationStopped && j < currentTargetHandlers.length;
                  j++) {
 
                 currentTargetHandler = currentTargetHandlers[j];
@@ -104,7 +106,10 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
                 event.type = currentTargetHandler.originalType || eventType;
 
                 // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
-                if ((s = special[event.type]) && s.handle) {
+                if (// 非自定义事件
+                    !isCustomEvent &&
+                        (s = special[event.type]) &&
+                        s.handle) {
                     t = s.handle(event, currentTargetHandler, data);
                     // can handle
                     if (t.length > 0) {
@@ -134,5 +139,5 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
         return gRet;
     }
 }, {
-    requires:['dom', './data', './special']
+    requires: ['dom', './data', './special']
 });

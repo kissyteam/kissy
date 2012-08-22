@@ -107,9 +107,9 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
                 "aria-labelledby": id
             }).prepend(rowEl);
 
-            self.__set("rowEl", rowEl);
-            self.__set("expandIconEl", expandIconEl);
-            self.__set("iconEl", iconEl);
+            self.setInternal("rowEl", rowEl);
+            self.setInternal("expandIconEl", expandIconEl);
+            self.setInternal("iconEl", iconEl);
         },
 
         _uiSetExpanded: function (v) {
@@ -141,7 +141,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
          * 默认调用 Component.Render.prototype.getContentElement 为当前节点的容器
          * 而对于子树节点，它有自己的子树节点容器（单独的div），而不是儿子都直接放在自己的容器里面
          * @protected
-         * @return {NodeList}
+         * @return {KISSY.NodeList}
          */
         getContentElement: function () {
             var self = this, c;
@@ -151,7 +151,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
             c = $("<div " + (self.get("expanded") ? "" : "style='display:none'")
                 + " role='group'><" + "/div>")
                 .appendTo(self.get("el"));
-            self.__set("childrenEl", c);
+            self.setInternal("childrenEl", c);
             return c;
         }
     }, {

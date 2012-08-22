@@ -168,7 +168,7 @@
   display: inline-block;
   *display: inline;
   *zoom: 1;
-  background: url("http://img02.taobaocdn.com/tps/i2/T1S_TEXc4nXXasE3se-390-192.png");
+  background-image: url("http://img02.taobaocdn.com/tps/i2/T1S_TEXc4nXXasE3se-390-192.png");
   width: 16px;
   background-position: 0 -2px;
 }
@@ -180,7 +180,7 @@
   display: inline-block;
   *display: inline;
   *zoom: 1;
-  background: url("http://img02.taobaocdn.com/tps/i2/T1S_TEXc4nXXasE3se-390-192.png");
+  background-image: url("http://img02.taobaocdn.com/tps/i2/T1S_TEXc4nXXasE3se-390-192.png");
   width: 16px;
   background-position: -66px -2px;
 }
@@ -192,7 +192,7 @@
   display: inline-block;
   *display: inline;
   *zoom: 1;
-  background: url("http://img02.taobaocdn.com/tps/i2/T1S_TEXc4nXXasE3se-390-192.png");
+  background-image: url("http://img02.taobaocdn.com/tps/i2/T1S_TEXc4nXXasE3se-390-192.png");
   width: 16px;
   background-position: -132px -2px;
 }

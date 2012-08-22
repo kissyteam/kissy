@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 20 15:37
+build time: Aug 22 23:29
 */
 /**
  * @fileOverview collection of models
@@ -28,7 +28,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
      * @class
      * Collection. A list of model.
      * @memberOf MVC
-     * @extends Base
+     * @extends KISSY.Base
      */
     function Collection() {
         Collection.superclass.constructor.apply(this, arguments);
@@ -331,7 +331,7 @@ KISSY.add("mvc/model", function (S, Base) {
      * @class
      * Model represent a data record.
      * @memberOf MVC
-     * @extends Base
+     * @extends KISSY.Base
      */
     function Model() {
         var self = this;
@@ -383,9 +383,9 @@ KISSY.add("mvc/model", function (S, Base) {
                 return this.set(this.get("idAttribute"), id);
             },
 
-            __set:function () {
+            setInternal:function () {
                 this.__isModified = 1;
-                return Model.superclass.__set.apply(this, arguments);
+                return Model.superclass.setInternal.apply(this, arguments);
             },
 
             /**
@@ -931,7 +931,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
      * @class
      * Router used to route url to responding action callbacks.
      * @memberOf MVC
-     * @extends Base
+     * @extends KISSY.Base
      */
     function Router() {
         var self = this;
@@ -1176,7 +1176,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
      * @class
      * View for delegating event on root element.
      * @memberOf MVC
-     * @extends Base
+     * @extends KISSY.Base
      */
     function View() {
         View.superclass.constructor.apply(this, arguments);
@@ -1209,7 +1209,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
             getter:function (s) {
                 if (S.isString(s)) {
                     s = $(s);
-                    this.__set("el", s);
+                    this.setInternal("el", s);
                 }
                 return s;
             }

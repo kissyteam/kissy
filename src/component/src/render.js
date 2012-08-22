@@ -41,7 +41,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
 
             /**
              * Returns the dom element which is responsible for listening keyboard events.
-             * @return {NodeList}
+             * @return {KISSY.NodeList}
              */
             getKeyEventTarget: function () {
                 return this.get("el");
@@ -92,7 +92,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
 
             /**
              * Return the dom element into which child component to be rendered.
-             * @return {NodeList}
+             * @return {KISSY.NodeList}
              */
             getContentElement: function () {
                 return this.get("contentEl") || this.get("el");

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 22:20
+build time: Aug 22 23:28
 */
 /**
  * Use style to gen element and wrap range's elements.Modified from CKEditor.

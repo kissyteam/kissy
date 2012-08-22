@@ -62,6 +62,7 @@ KISSY.add('event', function (S, _data, KeyCodes, Event, Target, Object) {
             }
         });
 
+    // for debugger
     S.mix(Event, _data);
 
     S.mix(S, {

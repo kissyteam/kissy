@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 20 15:33
+build time: Aug 22 23:25
 */
 /**
  * @ignore
  * @fileOverview anim
  */
-KISSY.add("anim", function (S, Anim, Easing) {
+KISSY.add('anim', function (S, Anim, Easing) {
     Anim.Easing = Easing;
     S.mix(S, {
         Anim:Anim,
@@ -15,18 +15,18 @@ KISSY.add("anim", function (S, Anim, Easing) {
     });
     return Anim;
 }, {
-    requires:["anim/base", "anim/easing", "anim/color", "anim/background-position"]
+    requires:['anim/base', 'anim/easing', 'anim/color', 'anim/background-position']
 });/**
  * @ignore
  * @fileOverview special patch for anim backgroundPosition
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
+KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
 
     function numeric(bp) {
         bp = bp.replace(/left|top/g, '0px')
             .replace(/right|bottom/g, '100%')
-            .replace(/([0-9\.]+)(\s|\)|$)/g, "$1px$2");
+            .replace(/([0-9\.]+)(\s|\)|$)/g, '$1px$2');
         var res = bp.match(/(-?[0-9\.]+)(px|%|em|pt)\s(-?[0-9\.]+)(px|%|em|pt)/);
         return [parseFloat(res[1]), res[2], parseFloat(res[3]), res[4]];
     }
@@ -40,7 +40,7 @@ KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
         load:function () {
             var self = this, fromUnit;
             BackgroundPositionFx.superclass.load.apply(self, arguments);
-            fromUnit = self.unit = ["px", "px"];
+            fromUnit = self.unit = ['px', 'px'];
             if (self.from) {
                 var from = numeric(self.from);
                 self.from = [from[0], from[2]];
@@ -57,21 +57,21 @@ KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
             }
             if (fromUnit) {
                 if (fromUnit[0] !== self.unit[0] || fromUnit[1] !== self.unit[1]) {
-                    S.log("BackgroundPosition x y unit is not same :", "warn");
-                    S.log(fromUnit, "warn");
-                    S.log(self.unit, "warn");
+                    S.log('BackgroundPosition x y unit is not same :', 'warn');
+                    S.log(fromUnit, 'warn');
+                    S.log(self.unit, 'warn');
                 }
             }
         },
 
         interpolate:function (from, to, pos) {
             var unit = this.unit, interpolate = BackgroundPositionFx.superclass.interpolate;
-            return interpolate(from[0], to[0], pos) + unit[0] + " " +
+            return interpolate(from[0], to[0], pos) + unit[0] + ' ' +
                 interpolate(from[1], to[1], pos) + unit[1];
         },
 
         cur:function () {
-            return DOM.css(this.anim.config.el, "backgroundPosition");
+            return DOM.css(this.anim.config.el, 'backgroundPosition');
         },
 
         update:function () {
@@ -86,12 +86,12 @@ KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
 
     });
 
-    Fx.Factories["backgroundPosition"] = BackgroundPositionFx;
+    Fx.Factories['backgroundPosition'] = BackgroundPositionFx;
 
     return BackgroundPositionFx;
 
 }, {
-    requires:["dom", "./base", "./fx"]
+    requires:['dom', './base', './fx']
 });/**
  * @ignore
  * @fileOverview animation framework for KISSY
@@ -101,26 +101,26 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     var camelCase = DOM._camelCase,
         NodeType = DOM.NodeType,
-        specialVals = ["hide", "show", "toggle"],
+        specialVals = ['hide', 'show', 'toggle'],
     // shorthand css properties
         SHORT_HANDS = {
             // http://www.w3.org/Style/CSS/Tracker/issues/9
             // http://snook.ca/archives/html_and_css/background-position-x-y
             // backgroundPositionX  backgroundPositionY does not support
             background: [
-                "backgroundPosition"
+                'backgroundPosition'
             ],
             border: [
-                "borderBottomWidth",
-                "borderLeftWidth",
+                'borderBottomWidth',
+                'borderLeftWidth',
                 'borderRightWidth',
                 // 'borderSpacing', 组合属性？
                 'borderTopWidth'
             ],
-            "borderBottom": ["borderBottomWidth"],
-            "borderLeft": ["borderLeftWidth"],
-            borderTop: ["borderTopWidth"],
-            borderRight: ["borderRightWidth"],
+            'borderBottom': ['borderBottomWidth'],
+            'borderLeft': ['borderLeftWidth'],
+            borderTop: ['borderTopWidth'],
+            borderRight: ['borderRightWidth'],
             font: [
                 'fontSize',
                 'fontWeight'
@@ -182,7 +182,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // the transition properties
         if (S.isString(props)) {
-            props = S.unparam(String(props), ";", ":");
+            props = S.unparam(String(props), ';', ':');
         } else {
             // clone to prevent collision within multiple instance
             props = S.clone(props);
@@ -228,7 +228,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         self._fxs = {};
 
         // register complete
-        self.on("complete", onComplete);
+        self.on('complete', onComplete);
     }
 
 
@@ -264,19 +264,19 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         // 进入该函数即代表执行（q[0] 已经是 ...）
         saveRunning(self);
 
-        if (self.fire("beforeStart") === false) {
+        if (self.fire('beforeStart') === false) {
             // no need to invoke complete
             self.stop(0);
             return;
         }
 
         if (el.nodeType == NodeType.ELEMENT_NODE) {
-            hidden = (DOM.css(el, "display") === "none");
+            hidden = (DOM.css(el, 'display') === 'none');
             for (prop in props) {
                 if (props.hasOwnProperty(prop)) {
                     val = props[prop];
                     // 直接结束
-                    if (val == "hide" && hidden || val == 'show' && !hidden) {
+                    if (val == 'hide' && hidden || val == 'show' && !hidden) {
                         // need to invoke complete
                         self.stop(1);
                         return;
@@ -296,17 +296,17 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             elStyle = el.style;
             S.mix(_backupProps, {
                 overflow: elStyle.overflow,
-                "overflow-x": elStyle.overflowX,
-                "overflow-y": elStyle.overflowY
+                'overflow-x': elStyle.overflowX,
+                'overflow-y': elStyle.overflowY
             });
-            elStyle.overflow = "hidden";
+            elStyle.overflow = 'hidden';
             // inline element should has layout/inline-block
-            if (DOM.css(el, "display") === "inline" &&
-                DOM.css(el, "float") === "none") {
+            if (DOM.css(el, 'display') === 'inline' &&
+                DOM.css(el, 'float') === 'none') {
                 if (UA['ie']) {
                     elStyle.zoom = 1;
                 } else {
-                    elStyle.display = "inline-block";
+                    elStyle.display = 'inline-block';
                 }
             }
         }
@@ -374,10 +374,10 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             if (S.inArray(val, specialVals)) {
                 // backup original inline css value
                 _backupProps[prop] = DOM.style(el, prop);
-                if (val == "toggle") {
-                    val = hidden ? "show" : "hide";
+                if (val == 'toggle') {
+                    val = hidden ? 'show' : 'hide';
                 }
-                if (val == "hide") {
+                if (val == 'hide') {
                     to = 0;
                     from = fx.cur();
                     // 执行完后隐藏
@@ -395,9 +395,9 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 from = fx.cur();
             }
 
-            val += "";
+            val += '';
 
-            var unit = "",
+            var unit = '',
                 parts = val.match(NUMBER_REG);
 
             if (parts) {
@@ -405,7 +405,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 unit = parts[3];
 
                 // 有单位但单位不是 px
-                if (unit && unit !== "px") {
+                if (unit && unit !== 'px') {
                     DOM.css(el, prop, val);
                     from = (to / fx.cur()) * from;
                     DOM.css(el, prop, from + unit);
@@ -413,7 +413,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
                 // 相对
                 if (parts[1]) {
-                    to = ( (parts[ 1 ] === "-=" ? -1 : 1) * to ) + from;
+                    to = ( (parts[ 1 ] === '-=' ? -1 : 1) * to ) + from;
                 }
             }
 
@@ -537,7 +537,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 }
             }
 
-            if ((self.fire("step") === false) || end) {
+            if ((self.fire('step') === false) || end) {
                 // complete 事件只在动画到达最后一帧时才触发
                 self.stop(end);
             }
@@ -578,7 +578,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                         }
                     }
                 }
-                self.fire("complete");
+                self.fire('complete');
             }
 
             AM.stop(self);
@@ -596,7 +596,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     S.augment(Anim, Event.Target);
 
-    var runningKey = S.guid("ks-anim-unqueued-" + S.now() + "-");
+    var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
 
     function saveRunning(anim) {
         var el = anim.config.el,
@@ -628,7 +628,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
 
 
-    var pausedKey = S.guid("ks-anim-paused-" + S.now() + "-");
+    var pausedKey = S.guid('ks-anim-paused-' + S.now() + '-');
 
     function savePaused(anim) {
         var el = anim.config.el,
@@ -709,7 +709,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @static
      */
 
-    S.each(["pause", "resume"], function (action) {
+    S.each(['pause', 'resume'], function (action) {
         Anim[action] = function (el, queueName) {
             if (
             // default queue
@@ -790,7 +790,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
     return Anim;
 }, {
-    requires: ["dom", "event", "./easing", "ua", "./manager", "./fx", "./queue"]
+    requires: ['dom', 'event', './easing', 'ua', './manager', './fx', './queue']
 });
 
 /*
@@ -818,29 +818,29 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
  * @fileOverview special patch for making color gradual change
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
+KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
 
     var HEX_BASE = 16,
 
         floor = Math.floor,
 
         KEYWORDS = {
-            "black":[0, 0, 0],
-            "silver":[192, 192, 192],
-            "gray":[128, 128, 128],
-            "white":[255, 255, 255],
-            "maroon":[128, 0, 0],
-            "red":[255, 0, 0],
-            "purple":[128, 0, 128],
-            "fuchsia":[255, 0, 255],
-            "green":[0, 128, 0],
-            "lime":[0, 255, 0],
-            "olive":[128, 128, 0],
-            "yellow":[255, 255, 0],
-            "navy":[0, 0, 128],
-            "blue":[0, 0, 255],
-            "teal":[0, 128, 128],
-            "aqua":[0, 255, 255]
+            'black':[0, 0, 0],
+            'silver':[192, 192, 192],
+            'gray':[128, 128, 128],
+            'white':[255, 255, 255],
+            'maroon':[128, 0, 0],
+            'red':[255, 0, 0],
+            'purple':[128, 0, 128],
+            'fuchsia':[255, 0, 255],
+            'green':[0, 128, 0],
+            'lime':[0, 255, 0],
+            'olive':[128, 128, 0],
+            'yellow':[255, 255, 0],
+            'navy':[0, 0, 128],
+            'blue':[0, 0, 255],
+            'teal':[0, 128, 128],
+            'aqua':[0, 255, 255]
         },
         re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
 
@@ -895,7 +895,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
 
     //得到颜色的数值表示，红绿蓝数字数组
     function numericColor(val) {
-        val = (val + "");
+        val = (val + '');
         var match;
         if (match = val.match(re_RGB)) {
             return [
@@ -929,7 +929,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
         }
 
         //transparent 或者 颜色字符串返回
-        S.log("only allow rgb or hex color string : " + val, "warn");
+        S.log('only allow rgb or hex color string : ' + val, 'warn');
         return [255, 255, 255];
     }
 
@@ -967,7 +967,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
                     floor(interpolate(from[3] || 1, to[3] || 1, pos))
                 ].join(', ') + ')';
             } else {
-                S.log("anim/color unknown value : " + from);
+                S.log('anim/color unknown value : ' + from);
             }
         }
 
@@ -980,7 +980,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
     return ColorFx;
 
 }, {
-    requires:["dom", "./base", "./fx"]
+    requires:['dom', './base', './fx']
 });
 
 /*
@@ -1026,14 +1026,14 @@ KISSY.add('anim/easing', function () {
         /**
          * Uniform speed between points.
          */
-        "easeNone": function (t) {
+        'easeNone': function (t) {
             return t;
         },
 
         /**
          * Begins slowly and accelerates towards end. (quadratic)
          */
-        "easeIn": function (t) {
+        'easeIn': function (t) {
             return t * t;
         },
 
@@ -1056,7 +1056,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Begins slowly and accelerates towards end. (quartic)
          */
-        "easeInStrong": function (t) {
+        'easeInStrong': function (t) {
             return t * t * t * t;
         },
 
@@ -1070,7 +1070,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Begins slowly and decelerates towards end. (quartic)
          */
-        "easeBothStrong": function (t) {
+        'easeBothStrong': function (t) {
             return (t *= 2) < 1 ?
                 .5 * t * t * t * t :
                 .5 * (2 - (t -= 2) * t * t * t);
@@ -1080,7 +1080,7 @@ KISSY.add('anim/easing', function () {
          * Snap in elastic effect.
          */
 
-        "elasticIn": function (t) {
+        'elasticIn': function (t) {
             var p = .3, s = p / 4;
             if (t === 0 || t === 1) return t;
             return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
@@ -1098,7 +1098,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Snap both elastic effect.
          */
-        "elasticBoth": function (t) {
+        'elasticBoth': function (t) {
             var p = .45, s = p / 4;
             if (t === 0 || (t *= 2) === 2) return t;
 
@@ -1113,7 +1113,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Backtracks slightly, then reverses direction and moves to end.
          */
-        "backIn": function (t) {
+        'backIn': function (t) {
             if (t === 1) t -= .001;
             return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
         },
@@ -1129,7 +1129,7 @@ KISSY.add('anim/easing', function () {
          * Backtracks slightly, then reverses direction, overshoots end,
          * then reverses and comes back to end.
          */
-        "backBoth": function (t) {
+        'backBoth': function (t) {
             var s = BACK_CONST;
             var m = (s *= 1.525) + 1;
 
@@ -1172,7 +1172,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Bounces off start and end.
          */
-        "bounceBoth": function (t) {
+        'bounceBoth': function (t) {
             if (t < .5) {
                 return Easing.bounceIn(t * 2) * .5;
             }
@@ -1214,7 +1214,7 @@ KISSY.add('anim/easing', function () {
  * @fileOverview animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/fx", function (S, DOM, undefined) {
+KISSY.add('anim/fx', function (S, DOM, undefined) {
 
     /**
      * basic animation about single css property or element attribute
@@ -1237,7 +1237,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             var self = this;
             S.mix(self, cfg);
             self.pos = 0;
-            self.unit = self.unit || "";
+            self.unit = self.unit || '';
         },
 
         /**
@@ -1305,7 +1305,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
                 if (!self.finished) {
                     self.finished = 1;
                     DOM.css(el, prop, to);
-                    S.log(self.prop + " update directly ! : " + val + " : " + from + " : " + to);
+                    S.log(self.prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
                 }
             } else {
                 val += self.unit;
@@ -1330,11 +1330,11 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             }
             var parsed,
                 r = DOM.css(el, prop);
-            // Empty strings, null, undefined and "auto" are converted to 0,
-            // complex values such as "rotate(1rad)" or "0px 10px" are returned as is,
-            // simple values such as "10px" are parsed to Float.
+            // Empty strings, null, undefined and 'auto' are converted to 0,
+            // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
+            // simple values such as '10px' are parsed to Float.
             return isNaN(parsed = parseFloat(r)) ?
-                !r || r === "auto" ? 0 : r
+                !r || r === 'auto' ? 0 : r
                 : parsed;
         }
     };
@@ -1374,7 +1374,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
  * @fileOverview single timer for the whole anim module
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/manager", function(S) {
+KISSY.add('anim/manager', function(S) {
     var stamp = S.stamp;
 
     return {
@@ -1446,14 +1446,14 @@ KISSY.add("anim/manager", function(S) {
  * @fileOverview queue of anim objects
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/queue", function (S, DOM) {
+KISSY.add('anim/queue', function (S, DOM) {
 
     var // 队列集合容器
-        queueCollectionKey = S.guid("ks-queue-" + S.now() + "-"),
+        queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
     // 默认队列
-        queueKey = S.guid("ks-queue-" + S.now() + "-"),
+        queueKey = S.guid('ks-queue-' + S.now() + '-'),
     // 当前队列是否有动画正在执行
-        processing = "...";
+        processing = '...';
 
     function getQueue(el, name, readOnly) {
         name = name || queueKey;

@@ -94,7 +94,7 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
                 } else {
                     mask = initMask(maskCls);
                 }
-                self.__set("maskNode", mask);
+                self.setInternal("maskNode", mask);
             }
             if (zIndex = self.get("zIndex")) {
                 mask.css("z-index", zIndex - 1);
