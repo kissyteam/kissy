@@ -149,9 +149,9 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
                 if (self.get("attachForm") &&
                     (form = textarea[0].form)) {
-                    DOM.on(form, "submit", self.sync, self);
+                    Event.on(form, "submit", self.sync, self);
                     self.on("destroy", function () {
-                        DOM.detach(form, "submit", self.sync, self);
+                        Event.detach(form, "submit", self.sync, self);
                     });
                 }
 

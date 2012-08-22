@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:57
+build time: Aug 22 22:19
 */
 /**
  * Set up editor constructor
@@ -1920,9 +1920,9 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
                 if (self.get("attachForm") &&
                     (form = textarea[0].form)) {
-                    DOM.on(form, "submit", self.sync, self);
+                    Event.on(form, "submit", self.sync, self);
                     self.on("destroy", function () {
-                        DOM.detach(form, "submit", self.sync, self);
+                        Event.detach(form, "submit", self.sync, self);
                     });
                 }
 
