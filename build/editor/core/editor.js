@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 20 15:37
+build time: Aug 22 22:20
 */
 /**
  * Editor For KISSY 1.3
@@ -154,9 +154,9 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
                 if (self.get("attachForm") &&
                     (form = textarea[0].form)) {
-                    DOM.on(form, "submit", self.sync, self);
+                    Event.on(form, "submit", self.sync, self);
                     self.on("destroy", function () {
-                        DOM.detach(form, "submit", self.sync, self);
+                        Event.detach(form, "submit", self.sync, self);
                     });
                 }
 
@@ -563,7 +563,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
             /**
              * Insert a element into current editor.
-             * @param {NodeList} element
+             * @param {KISSY.NodeList} element
              */
             insertElement: function (element) {
 
@@ -1119,8 +1119,8 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
         run();
         function run() {
             doc = win.document;
-            self.__set("document", new Node(doc));
-            self.__set("window", new Node(win));
+            self.setInternal("document", new Node(doc));
+            self.setInternal("window", new Node(win));
             iframe.detach();
             // Don't leave any history log in IE. (#5657)
             doc['open']("text/html", "replace");

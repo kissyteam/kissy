@@ -185,7 +185,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              *
-             * @param inp {NodeList}
+             * @param inp {KISSY.NodeList}
              */
             resetInput:function (inp) {
                 var placeholder = inp.attr("placeholder");
@@ -199,7 +199,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              *
-             * @param inp  {NodeList}
+             * @param inp  {KISSY.NodeList}
              * @param [val]
              */
             valInput:function (inp, val) {
@@ -217,7 +217,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              *
-             * @param inp {NodeList}
+             * @param inp {KISSY.NodeList}
              * @param tip {string}
              */
             placeholder:function (inp, tip) {

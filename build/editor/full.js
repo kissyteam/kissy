@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 20 15:37
+build time: Aug 22 22:20
 */
 /**
  * Set up editor constructor
@@ -1357,7 +1357,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
              * @param doc
              * @param address
              * @param [normalized]
-             * @return {NodeList}
+             * @return {KISSY.NodeList}
              */
             _4e_getByAddress: function (doc, address, normalized) {
                 var $ = doc.documentElement;
@@ -1920,9 +1920,9 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
                 if (self.get("attachForm") &&
                     (form = textarea[0].form)) {
-                    DOM.on(form, "submit", self.sync, self);
+                    Event.on(form, "submit", self.sync, self);
                     self.on("destroy", function () {
-                        DOM.detach(form, "submit", self.sync, self);
+                        Event.detach(form, "submit", self.sync, self);
                     });
                 }
 
@@ -2329,7 +2329,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
             /**
              * Insert a element into current editor.
-             * @param {NodeList} element
+             * @param {KISSY.NodeList} element
              */
             insertElement: function (element) {
 
@@ -2885,8 +2885,8 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
         run();
         function run() {
             doc = win.document;
-            self.__set("document", new Node(doc));
-            self.__set("window", new Node(win));
+            self.setInternal("document", new Node(doc));
+            self.setInternal("window", new Node(win));
             iframe.detach();
             // Don't leave any history log in IE. (#5657)
             doc['open']("text/html", "replace");
@@ -3037,7 +3037,7 @@ KISSY.add("editor/core/elementPath", function (S) {
 
     /**
      * @constructor
-     * @param lastNode {NodeList}
+     * @param lastNode {KISSY.NodeList}
      */
     function ElementPath(lastNode) {
         var self = this,
@@ -4305,28 +4305,28 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Set range start after node
-             * @param {NodeList} node
+             * @param {KISSY.NodeList} node
              */
             setStartAfter:function (node) {
                 this.setStart(node.parent(), node._4e_index() + 1);
             },
             /**
              * Set range start before node
-             * @param {NodeList} node
+             * @param {KISSY.NodeList} node
              */
             setStartBefore:function (node) {
                 this.setStart(node.parent(), node._4e_index());
             },
             /**
              * Set range end after node
-             * @param {NodeList} node
+             * @param {KISSY.NodeList} node
              */
             setEndAfter:function (node) {
                 this.setEnd(node.parent(), node._4e_index() + 1);
             },
             /**
              * Set range end before node
-             * @param {NodeList} node
+             * @param {KISSY.NodeList} node
              */
             setEndBefore:function (node) {
                 this.setEnd(node.parent(), node._4e_index());
@@ -4354,7 +4354,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Sets the start position of a Range.
-             * @param {NodeList} startNode The node to start the range.
+             * @param {KISSY.NodeList} startNode The node to start the range.
              * @param {Number} startOffset An integer greater than or equal to zero
              *        representing the offset for the start of the range from the start
              *        of startNode.
@@ -4385,7 +4385,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Sets the end position of a Range.
-             * @param {NodeList} endNode The node to end the range.
+             * @param {KISSY.NodeList} endNode The node to end the range.
              * @param {Number} endOffset An integer greater than or equal to zero
              *        representing the offset for the end of the range from the start
              *        of endNode.
@@ -4416,7 +4416,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Sets the start position of a Range by specified rules.
-             * @param {NodeList} node
+             * @param {KISSY.NodeList} node
              * @param {Number} position
              */
             setStartAt:function (node, position) {
@@ -4447,7 +4447,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Sets the end position of a Range by specified rules.
-             * @param {NodeList} node
+             * @param {KISSY.NodeList} node
              * @param {Number} position
              */
             setEndAt:function (node, position) {
@@ -4805,7 +4805,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Set the start posititon and then collapse range.
-             * @param {NodeList} node
+             * @param {KISSY.NodeList} node
              * @param {Number} position
              */
             moveToPosition:function (node, position) {
@@ -4895,7 +4895,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             },
             /**
              * Insert a new node at start position of current range
-             * @param {NodeList} node
+             * @param {KISSY.NodeList} node
              */
             insertNode:function (node) {
                 var self = this;
@@ -5269,7 +5269,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             /**
              * Check whether current range is on the inner edge of the specified element.
              * @param {Number} checkType The checking side.
-             * @param {NodeList} element The target element to check.
+             * @param {KISSY.NodeList} element The target element to check.
              */
             checkBoundaryOfElement:function (element, checkType) {
                 var walkerRange = this.clone();
@@ -5355,7 +5355,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
              * at the start or end of current range into a block element.
              * @param {Boolean} isStart Start or end of current range tobe enlarged.
              * @param {String} blockTag Block element's tag name.
-             * @return {NodeList} Newly generated block element.
+             * @return {KISSY.NodeList} Newly generated block element.
              */
             fixBlock:function (isStart, blockTag) {
                 var self = this,
@@ -5445,8 +5445,8 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Split toSplit element into two parts at current range's start position.
-             * @param {NodeList} toSplit Element to split.
-             * @return {NodeList} The second newly generated element.
+             * @param {KISSY.NodeList} toSplit Element to split.
+             * @return {KISSY.NodeList} The second newly generated element.
              */
             splitElement:function (toSplit) {
                 var self = this;
@@ -5471,7 +5471,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             /**
              * Move the range to the depth-first start/end editing point inside
              * an element.
-             * @param {NodeList} el The element to find edit point into.
+             * @param {KISSY.NodeList} el The element to find edit point into.
              * @param {Boolean} [isMoveToEnd] Find start or end editing point.
              * Set true to find end editing point.
              * @return {Boolean} Whether find edit point
@@ -5520,7 +5520,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Set range surround current node 's content.
-             * @param {NodeList} node
+             * @param {KISSY.NodeList} node
              */
             selectNodeContents:function (node) {
                 var self = this, domNode = node[0];
@@ -5564,7 +5564,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
             /**
              * Insert node by dtd.(not invalidate dtd convention)
-             * @param {NodeList} element
+             * @param {KISSY.NodeList} element
              */
             insertNodeByDtd:function (element) {
                 var current,
@@ -8478,7 +8478,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              *
-             * @param inp {NodeList}
+             * @param inp {KISSY.NodeList}
              */
             resetInput:function (inp) {
                 var placeholder = inp.attr("placeholder");
@@ -8492,7 +8492,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              *
-             * @param inp  {NodeList}
+             * @param inp  {KISSY.NodeList}
              * @param [val]
              */
             valInput:function (inp, val) {
@@ -8510,7 +8510,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              *
-             * @param inp {NodeList}
+             * @param inp {KISSY.NodeList}
              * @param tip {string}
              */
             placeholder:function (inp, tip) {
