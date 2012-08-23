@@ -2,7 +2,7 @@
  * NonTerminal Set for KISON
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison/NonTerminal", function (S, Base) {
+KISSY.add("kison/non-terminal", function (S, Base) {
 
     function NonTerminal() {
         NonTerminal.superclass.constructor.apply(this, arguments);

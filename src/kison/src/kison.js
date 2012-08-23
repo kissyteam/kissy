@@ -11,5 +11,5 @@ KISSY.add("kison", function (S, Grammar, Production, Lexer) {
     return Kison;
 
 }, {
-    requires:['kison/Grammar', 'kison/Production','kison/Lexer']
+    requires:['kison/grammar', 'kison/production','kison/lexer']
 });

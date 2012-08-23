@@ -2,7 +2,7 @@
  * Item Set for KISON
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison/ItemSet", function (S, Base) {
+KISSY.add("kison/item-set", function (S, Base) {
     function ItemSet() {
         ItemSet.superclass.constructor.apply(this, arguments);
     }

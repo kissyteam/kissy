@@ -1,52 +1,54 @@
 x({
-    productions:[
+    productions: [
         {
-            symbol:"expressions",
-            rhs:["e"],
-            action:function (e) {
-                return e;
-            }
+            symbol: "expressions",
+            rhs: ["e"]
         },
 
         {
-            symbol:"e",
-            rhs:["e", "-", "e"],
-            action:function (e1, _, e2) {
-                return e1 - e2;
+            symbol: "e",
+            rhs: ["e", "-", "e"],
+            action: function () {
+                return this.$1 - this.$3;
             }
         },
         {
-            symbol:"e",
-            rhs:["e", "+", "e"],
-            action:function (e1, _, e2) {
-                return e1 + e2;
+            symbol: "e",
+            rhs: ["e", "+", "e"],
+            action: function () {
+                return this.$1 + this.$3;
             }
         },
         {
-            symbol:"e",
-            rhs:["NUMBER"],
-            action:function (e) {
-                return Number(e);
+            symbol: "e",
+            rhs: ["NUMBER"],
+            action: function () {
+                return Number(this.$1);
             }
         }
     ],
 
-    lexer:{
-        rules:[
+    lexer: {
+        rules: [
             {
-                regexp:/^\s+/
+                regexp: /^\s+/
             },
             {
-                regexp:/^[0-9]+(\.[0-9]+)?\b/,
-                token:'NUMBER'
+                regexp: /^[0-9]+(\.[0-9]+)?\b/,
+                token: 'NUMBER'
             },
             {
-                regexp:/^\+/,
-                token:'+'
+                regexp: /^\+/,
+                token: '+'
             },
             {
-                regexp:/^-/,
-                token:'-'
+                regexp: /^-/,
+                token: '-'
+            },
+            {
+                // force to match one for error message
+                regexp: /^./,
+                token: 'ERROR_LA'
             }
         ]
     }

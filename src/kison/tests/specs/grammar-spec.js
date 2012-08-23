@@ -12,35 +12,35 @@ KISSY.use("kison", function (S, Kison) {
         it("generate goto map ok", function () {
 
             var grammar = new Grammar({
-                productions:[
+                productions: [
                     {
-                        symbol:"S0",
-                        rhs:[
+                        symbol: "S0",
+                        rhs: [
                             "S"
                         ]
                     },
                     {
-                        symbol:"S",
-                        rhs:[
+                        symbol: "S",
+                        rhs: [
                             "C", "C"
                         ]
                     },
                     {
-                        symbol:"C",
-                        rhs:[
+                        symbol: "C",
+                        rhs: [
                             "c", "C"
                         ]
                     },
                     {
-                        symbol:"C",
-                        rhs:[
+                        symbol: "C",
+                        rhs: [
                             "d"
                         ]
                     }
                 ],
-                terminals:{
-                    "c":1,
-                    "d":1
+                terminals: {
+                    "c": 1,
+                    "d": 1
                 }
             });
 
@@ -86,35 +86,35 @@ KISSY.use("kison", function (S, Kison) {
             S.log('it("generate table ok", function () {');
 
             var grammar = new Grammar({
-                productions:[
+                productions: [
                     {
-                        symbol:"S0",
-                        rhs:[
+                        symbol: "S0",
+                        rhs: [
                             "S"
                         ]
                     },
                     {
-                        symbol:"S",
-                        rhs:[
+                        symbol: "S",
+                        rhs: [
                             "C", "C"
                         ]
                     },
                     {
-                        symbol:"C",
-                        rhs:[
+                        symbol: "C",
+                        rhs: [
                             "c", "C"
                         ]
                     },
                     {
-                        symbol:"C",
-                        rhs:[
+                        symbol: "C",
+                        rhs: [
                             "d"
                         ]
                     }
                 ],
-                terminals:{
-                    "c":1,
-                    "d":1
+                terminals: {
+                    "c": 1,
+                    "d": 1
                 }
             });
 
@@ -127,94 +127,98 @@ KISSY.use("kison", function (S, Kison) {
         it("parse ok", function () {
 
             var grammar = new Grammar({
-                productions:[
+                productions: [
                     {
-                        symbol:"S0",
-                        rhs:[
+                        symbol: "S0",
+                        rhs: [
                             "S"
                         ]
                     },
                     {
-                        symbol:"S",
-                        rhs:[
+                        symbol: "S",
+                        rhs: [
                             "C", "C"
                         ]
                     },
                     {
-                        symbol:"C",
-                        rhs:[
+                        symbol: "C",
+                        rhs: [
                             "c", "C"
                         ]
                     },
                     {
-                        symbol:"C",
-                        rhs:[
+                        symbol: "C",
+                        rhs: [
                             "d"
                         ]
                     }
                 ],
-                lexer:{
-                    rules:[
+                lexer: {
+                    rules: [
                         {
-                            regexp:/^c/,
-                            token:'c'
+                            regexp: /^c/,
+                            token: 'c'
                         },
                         {
-                            regexp:/^d/,
-                            token:'d'
+                            regexp: /^d/,
+                            token: 'd'
                         }
                     ]
                 }
             });
 
-            expect(grammar.parse("ccdd")).not.toBe(false);
+            expect(new Function(grammar.genCode())().parse("ccdd")).not.toBe(false);
         });
 
 
         it("can not parse invalid input", function () {
 
             var grammar = new Grammar({
-                productions:[
+                productions: [
                     {
-                        symbol:"S0",
-                        rhs:[
+                        symbol: "S0",
+                        rhs: [
                             "S"
                         ]
                     },
                     {
-                        symbol:"S",
-                        rhs:[
+                        symbol: "S",
+                        rhs: [
                             "C", "C"
                         ]
                     },
                     {
-                        symbol:"C",
-                        rhs:[
+                        symbol: "C",
+                        rhs: [
                             "c", "C"
                         ]
                     },
                     {
-                        symbol:"C",
-                        rhs:[
+                        symbol: "C",
+                        rhs: [
                             "d"
                         ]
                     }
                 ],
-                lexer:{
-                    rules:[
+                lexer: {
+                    rules: [
                         {
-                            regexp:/^c/,
-                            token:'c'
+                            regexp: /^c/,
+                            token: 'c'
                         },
                         {
-                            regexp:/^d/,
-                            token:'d'
+                            regexp: /^d/,
+                            token: 'd'
                         }
                     ]
                 }
             });
 
-            expect(grammar.parse("dc")).toBe(false);
+            expect(function () {
+                new Function(grammar.genCode())().parse("dc")
+            })
+                .toThrow('parse error at line 1:\ndc\n-^\nexpect c, d');
+
         });
 
 
@@ -231,75 +235,81 @@ KISSY.use("kison", function (S, Kison) {
             // S => CC
             // C => cC
             // C => d
-            var ret = [];
+
 
             var grammar = new Grammar({
-                productions:[
+                productions: [
                     {
-                        symbol:"S0",
-                        rhs:[
+                        symbol: "S0",
+                        rhs: [
                             "S"
                         ],
-                        action:function (S) {
+                        action: function () {
+                            var ret = window.TEST_RET || (window.TEST_RET = []);
                             ret.push("S0 => S");
-                            ret.push("|_____ " + S + " -> S0");
+                            ret.push("|_____ " + this.$1 + " -> S0");
                             ret.push("");
                         }
                     },
                     {
-                        symbol:"S",
-                        rhs:[
+                        symbol: "S",
+                        rhs: [
                             "C", "C"
                         ],
-                        action:function (C1, C2) {
+                        action: function () {
+                            var ret = window.TEST_RET || (window.TEST_RET = []);
                             ret.push("S => C C");
-                            ret.push("|_____ " + C1 + " + " + C2 + " -> S");
+                            ret.push("|_____ " + this.$1 + " + " + this.$2 + " -> S");
                             ret.push("");
-                            return C1 + C2;
+                            return this.$1 + this.$2;
                         }
                     },
                     {
-                        symbol:"C",
-                        rhs:[
+                        symbol: "C",
+                        rhs: [
                             "c", "C"
                         ],
-                        action:function (c, C) {
+                        action: function () {
+                            var ret = window.TEST_RET || (window.TEST_RET = []);
                             ret.push("C => c C");
-                            ret.push("|_____ " + c + " + " + C + " -> C");
+                            ret.push("|_____ " + this.$1 + " + " + this.$2 + " -> C");
                             ret.push("");
-                            return c + C;
+                            return this.$1 + this.$2;
                         }
                     },
                     {
-                        symbol:"C",
-                        rhs:[
+                        symbol: "C",
+                        rhs: [
                             "d"
                         ],
-                        action:function (d) {
+                        action: function () {
+                            var ret = window.TEST_RET || (window.TEST_RET = []);
                             ret.push("C => d");
-                            ret.push("|_____ " + d + " -> C");
+                            ret.push("|_____ " + this.$1 + " -> C");
                             ret.push("");
-                            return d;
+                            return this.$1;
                         }
                     }
                 ],
-                lexer:{
-                    rules:[
+                lexer: {
+                    rules: [
                         {
-                            regexp:/^c/,
-                            token:'c'
+                            regexp: /^c/,
+                            token: 'c'
                         },
                         {
-                            regexp:/^d/,
-                            token:'d'
+                            regexp: /^d/,
+                            token: 'd'
                         }
                     ]
                 }
             });
 
-            expect(grammar.parse("ccdd")).not.toBe(false);
+            expect(function () {
+                new Function(grammar.genCode())().parse("ccdd")
+            }).not.toThrow();
 
-            S.log(ret.join("\n"));
+            S.log(window.TEST_RET.join("\n"));
         });
 
 
