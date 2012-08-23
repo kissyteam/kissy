@@ -119,6 +119,8 @@ KISSY.add("kison/lexer", function (S, Utils) {
                 lines,
                 rules = self.getCurrentRules();
 
+            self.match = self.text = "";
+
             if (!S.trim(input)) {
                 return  Lexer.STATIC.END_TAG;
             }

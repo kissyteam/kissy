@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 23 22:09
+build time: Aug 23 22:28
 */
 /**
  * LALR grammar parser
@@ -1026,6 +1026,8 @@ KISSY.add("kison/lexer", function (S, Utils) {
                 ret,
                 lines,
                 rules = self.getCurrentRules();
+
+            self.match = self.text = "";
 
             if (!S.trim(input)) {
                 return  Lexer.STATIC.END_TAG;
