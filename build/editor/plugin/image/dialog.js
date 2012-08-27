@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 22 22:19
+build time: Aug 27 10:38
 */
 /**
  * image dialog (support upload and remote)
@@ -203,15 +203,15 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
     }
 
     S.augment(ImageDialog, {
-        _prepare:function () {
+        _prepare: function () {
             var self = this;
             self.dialog = self.d = new Overlay4E.Dialog({
-                autoRender:true,
-                width:500,
-                headerContent:"图片",
-                bodyContent:IMAGE_DIALOG_BODY_HTML,
-                footerContent:IMAGE_DIALOG_FOOT_HTML,
-                mask:true
+                autoRender: true,
+                width: 500,
+                headerContent: "图片",
+                bodyContent: IMAGE_DIALOG_BODY_HTML,
+                footerContent: IMAGE_DIALOG_FOOT_HTML,
+                mask: true
             });
 
             var content = self.d.get("el"),
@@ -222,7 +222,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             self.uploadForm = content.one(".ks-editor-img-upload-form");
             self.imgLocalUrl = content.one(".ks-editor-img-local-url");
             self.tab = new Switchable['Tabs'](self.d.get("body")[0], {
-                "triggerType":"click"
+                "triggerType": "click"
             });
             self.imgLocalUrl.val(warning);
             self.imgUrl = content.one(".ks-editor-img-url");
@@ -230,11 +230,11 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             self.imgWidth = content.one(".ks-editor-img-width");
             self.imgRatio = content.one(".ks-editor-img-ratio");
             self.imgAlign = MenuButton.Select.decorate(content.one(".ks-editor-img-align"), {
-                prefixCls:'ks-editor-big-',
-                width:80,
-                menuCfg:{
-                    prefixCls:'ks-editor-',
-                    render:content
+                prefixCls: 'ks-editor-big-',
+                width: 80,
+                menuCfg: {
+                    prefixCls: 'ks-editor-',
+                    render: content
                 }
             });
             self.imgMargin = content.one(".ks-editor-img-margin");
@@ -343,22 +343,22 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                     serverParams['document-domain'] = document.domain;
 
                     var uploadIO = IO({
-                        data:serverParams,
-                        url:self.cfg['serverUrl'],
-                        form:self.uploadForm[0],
-                        dataType:'json',
-                        type:'post',
-                        complete:function (data, status) {
+                        data: serverParams,
+                        url: self.cfg['serverUrl'],
+                        form: self.uploadForm[0],
+                        dataType: 'json',
+                        type: 'post',
+                        complete: function (data, status) {
                             loadingCancel.css({
-                                left:-9999,
-                                top:-9999
+                                left: -9999,
+                                top: -9999
                             });
                             self.d.unloading();
                             if (status == "abort") {
                                 return;
                             }
                             if (!data) {
-                                data = {error:"服务器出错，请重试"};
+                                data = {error: "服务器出错，请重试"};
                             }
                             if (data.error) {
                                 alert(data.error);
@@ -378,8 +378,8 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                         height = loadingMaskEl[0].offsetHeight;
 
                     loadingCancel.css({
-                        left:(offset.left + width / 2.5),
-                        top:(offset.top + height / 1.5)
+                        left: (offset.left + width / 2.5),
+                        top: (offset.top + height / 1.5)
                     });
 
                 } else {
@@ -437,7 +437,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             self._prepare = S.noop;
         },
 
-        _insert:function () {
+        _insert: function () {
             var self = this,
                 url = valInput(self.imgUrl),
                 img,
@@ -471,10 +471,10 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
                 img = self.selectedEl;
                 self.editor.execCommand("save");
                 self.selectedEl.attr({
-                    "src":url,
+                    "src": url,
                     //注意设置，取的话要从 _ke_saved_src 里取
-                    "_ke_saved_src":url,
-                    "style":style
+                    "_ke_saved_src": url,
+                    "style": style
                 });
             } else {
                 img = new Node("<img " +
@@ -529,17 +529,25 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             }, 100);
         },
 
-        _update:function (_selectedEl) {
+        _update: function (_selectedEl) {
             var self = this,
                 active = 0,
                 resetInput = Editor.Utils.resetInput;
             self.selectedEl = _selectedEl;
             if (self.selectedEl && self.imageCfg['remote'] !== false) {
                 valInput(self.imgUrl, self.selectedEl.attr("src"));
-                var w = self.selectedEl.width(),
-                    h = self.selectedEl.height();
-                valInput(self.imgHeight, h);
-                valInput(self.imgWidth, w);
+                var w = parseInt(self.selectedEl.style("width")),
+                    h = parseInt(self.selectedEl.style("height"));
+                if (h) {
+                    valInput(self.imgHeight, h);
+                } else {
+                    resetInput(self.imgHeight);
+                }
+                if (w) {
+                    valInput(self.imgWidth, w);
+                } else {
+                    resetInput(self.imgWidth);
+                }
                 self.imgAlign.set("value", self.selectedEl.style("float") || "none");
                 var margin = parseInt(self.selectedEl.style("margin"))
                     || 0;
@@ -576,13 +584,13 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
             self.imgLocalUrl.val(warning);
             self.tab['switchTo'](active);
         },
-        show:function (_selectedEl) {
+        show: function (_selectedEl) {
             var self = this;
             self._prepare();
             self._update(_selectedEl);
             self.d.show();
         },
-        destroy:function () {
+        destroy: function () {
             var self = this;
             self.d.destroy();
             self.tab.destroy();
@@ -597,5 +605,5 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Swit
 
     return ImageDialog;
 }, {
-    requires:['ajax', 'editor', '../overlay/', 'switchable', '../menubutton/']
+    requires: ['ajax', 'editor', '../overlay/', 'switchable', '../menubutton/']
 });

@@ -99,7 +99,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     editorEl;
 
                 if (!textarea) {
-                    self.set("textarea", textarea = $("<textarea class='ks-editor-textarea'></textarea>"));
+                    self.set("textarea",
+                        textarea = $("<textarea class='ks-editor-textarea'></textarea>"));
+                } else {
+                    // in ie, textarea lose value when parent.innerHTML="xx";
+                    textarea[0].parentNode.removeChild(textarea[0]);
                 }
 
                 editorEl = self.get("el");
