@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 27 10:38
+build time: Aug 27 21:29
 */
 /**
  * smiley button
@@ -21,12 +21,12 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
     }
 
     S.augment(Smiley, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
             editor.addButton("smiley", {
-                tooltip:"插入表情",
-                checkable:true,
-                listeners:{
-                    afterSyncUI:function () {
+                tooltip: "插入表情",
+                checkable: true,
+                listeners: {
+                    afterSyncUI: function () {
                         var self = this;
                         self.on("blur", function () {
                             // make click event fire
@@ -36,18 +36,18 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                         });
 
                     },
-                    click:function () {
+                    click: function () {
                         var self = this, smiley, checked = self.get("checked");
                         if (checked) {
                             if (!(smiley = self.smiley)) {
                                 smiley = self.smiley = new Overlay4E({
-                                    content:smiley_markup,
-                                    focus4e:false,
-                                    width:"297px",
-                                    autoRender:true,
-                                    elCls:"ks-editor-popup",
-                                    zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
-                                    mask:false
+                                    content: smiley_markup,
+                                    focus4e: false,
+                                    width: "297px",
+                                    autoRender: true,
+                                    elCls: "ks-editor-popup",
+                                    zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
+                                    mask: false
                                 });
                                 smiley.get("el").on("click", function (ev) {
                                     var t = new S.Node(ev.target),
@@ -66,27 +66,31 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                                 });
                             }
                             smiley.set("align", {
-                                node:this.get("el"),
-                                points:["bl", "tl"]
+                                node: this.get("el"),
+                                points: ["bl", "tl"],
+                                overflow: {
+                                    adjustX: 1,
+                                    adjustY: 1
+                                }
                             });
                             smiley.show();
                         } else {
                             self.smiley && self.smiley.hide();
                         }
                     },
-                    destroy:function () {
+                    destroy: function () {
                         if (this.smiley) {
                             this.smiley.destroy();
                         }
                     }
 
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode: Editor.WYSIWYG_MODE
             });
         }
     });
 
     return Smiley;
 }, {
-    requires:['editor', '../overlay/']
+    requires: ['editor', '../overlay/']
 });

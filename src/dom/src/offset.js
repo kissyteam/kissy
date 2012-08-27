@@ -7,7 +7,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     var win = S.Env.host,
         doc = win.document,
-        NodeType=DOM.NodeType,
+        NodeType = DOM.NodeType,
         docElem = doc.documentElement,
         getWin = DOM._getWin,
         CSS1Compat = 'CSS1Compat',
@@ -51,7 +51,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              *     the top-most window.
              * @return {Object|undefined} if Get, the format of returned value is same with coordinates.
              */
-            offset:function (selector, coordinates, relativeWin) {
+            offset: function (selector, coordinates, relativeWin) {
                 // getter
                 if (coordinates === undefined) {
                     var elem = DOM.get(selector), ret;
@@ -81,7 +81,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
              *        http://yiminghe.javaeye.com/blog/390732
              */
-            scrollIntoView:function (selector, container, top, hscroll, auto) {
+            scrollIntoView: function (selector, container, top, hscroll, auto) {
                 var elem;
 
                 if (!(elem = DOM.get(selector))) {
@@ -126,17 +126,17 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                     wh = DOM.height(win);
                     ww = DOM.width(win);
                     winScroll = {
-                        left:DOM.scrollLeft(win),
-                        top:DOM.scrollTop(win)
+                        left: DOM.scrollLeft(win),
+                        top: DOM.scrollTop(win)
                     };
                     // elem 相对 container 可视视窗的距离
                     diffTop = {
-                        left:elemOffset[LEFT] - winScroll[LEFT],
-                        top:elemOffset[TOP] - winScroll[TOP]
+                        left: elemOffset[LEFT] - winScroll[LEFT],
+                        top: elemOffset[TOP] - winScroll[TOP]
                     };
                     diffBottom = {
-                        left:elemOffset[LEFT] + ew - (winScroll[LEFT] + ww),
-                        top:elemOffset[TOP] + eh - (winScroll[TOP] + wh)
+                        left: elemOffset[LEFT] + ew - (winScroll[LEFT] + ww),
+                        top: elemOffset[TOP] + eh - (winScroll[TOP] + wh)
                     };
                     containerScroll = winScroll;
                 }
@@ -145,22 +145,22 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                     ch = container.clientHeight;
                     cw = container.clientWidth;
                     containerScroll = {
-                        left:DOM.scrollLeft(container),
-                        top:DOM.scrollTop(container)
+                        left: DOM.scrollLeft(container),
+                        top: DOM.scrollTop(container)
                     };
                     // elem 相对 container 可视视窗的距离
                     // 注意边框 , offset 是边框到根节点
                     diffTop = {
-                        left:elemOffset[LEFT] - containerOffset[LEFT] -
+                        left: elemOffset[LEFT] - containerOffset[LEFT] -
                             (myParseInt(DOM.css(container, 'borderLeftWidth')) || 0),
-                        top:elemOffset[TOP] - containerOffset[TOP] -
+                        top: elemOffset[TOP] - containerOffset[TOP] -
                             (myParseInt(DOM.css(container, 'borderTopWidth')) || 0)
                     };
                     diffBottom = {
-                        left:elemOffset[LEFT] + ew -
+                        left: elemOffset[LEFT] + ew -
                             (containerOffset[LEFT] + cw +
                                 (myParseInt(DOM.css(container, 'borderRightWidth')) || 0)),
-                        top:elemOffset[TOP] + eh -
+                        top: elemOffset[TOP] + eh -
                             (containerOffset[TOP] + ch +
                                 (myParseInt(DOM.css(container, 'borderBottomWidth')) || 0))
                     };
@@ -205,25 +205,25 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * @param {window} [win=window] Window to be referred.
              * @method
              */
-            docWidth:0,
+            docWidth: 0,
             /**
              * Get the height of document
              * @param {window} [win=window] Window to be referred.
              * @method
              */
-            docHeight:0,
+            docHeight: 0,
             /**
              * Get the height of window
              * @param {window} [win=window] Window to be referred.
              * @method
              */
-            viewportHeight:0,
+            viewportHeight: 0,
             /**
              * Get the width of document
              * @param {window} [win=window] Window to be referred.
              * @method
              */
-            viewportWidth:0,
+            viewportWidth: 0,
             /**
              * Get the current vertical position of the scroll bar for the first element in the set of matched elements.
              * or
@@ -232,7 +232,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
              * @method
              */
-            scrollTop:0,
+            scrollTop: 0,
             /**
              * Get the current horizontal position of the scroll bar for the first element in the set of matched elements.
              * or
@@ -241,7 +241,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
              * @method
              */
-            scrollLeft:0
+            scrollLeft: 0
         });
 
     // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
@@ -261,7 +261,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
             if (w) {
                 if (v !== undefined) {
                     v = parseFloat(v);
-                    // 注意多 windw 情况，不能简单取 win
+                    // 注意多 window 情况，不能简单取 win
                     var left = name == 'Left' ? v : DOM.scrollLeft(w),
                         top = name == 'Top' ? v : DOM.scrollTop(w);
                     w['scrollTo'](left, top);
@@ -325,8 +325,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
     function getClientPosition(elem) {
         var box, x , y ,
             doc = elem.ownerDocument,
-            body = doc.body,
-            w = getWin(elem[OWNER_DOCUMENT]);
+            body = doc.body;
 
         // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
         box = elem.getBoundingClientRect();
@@ -358,16 +357,10 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         // ie7 html 即窗口边框改变不了。永远为 2
         // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
 
-        x -= docElem.clientLeft || body.clientLeft;
-        y -= docElem.clientTop || body.clientTop;
+        x -= docElem.clientLeft || body.clientLeft || 0;
+        y -= docElem.clientTop || body.clientTop || 0;
 
-        // iphone/ipad/itouch 下的 Safari 获取 getBoundingClientRect 时，已经加入 scrollTop
-        if (UA.mobile == 'apple') {
-            x -= DOM[SCROLL_LEFT](w);
-            y -= DOM[SCROLL_TOP](w);
-        }
-
-        return { left:x, top:y };
+        return { left: x, top: y };
     }
 
 
@@ -381,7 +374,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     // 获取 elem 相对 elem.ownerDocument 的坐标
     function getOffset(el, relativeWin) {
-        var position = {left:0, top:0};
+        var position = {left: 0, top: 0};
 
         // Iterate up the ancestor frame chain, keeping track of the current window
         // and the current element in that window.
@@ -414,31 +407,33 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         var old = getOffset(elem), ret = { }, current, key;
 
         for (key in offset) {
-            current = myParseInt(DOM.css(elem, key), 10) || 0;
-            ret[key] = current + offset[key] - old[key];
+            if (offset.hasOwnProperty(key)) {
+                current = myParseInt(DOM.css(elem, key), 10) || 0;
+                ret[key] = current + offset[key] - old[key];
+            }
         }
         DOM.css(elem, ret);
     }
 
     return DOM;
 }, {
-    requires:['./base', 'ua']
+    requires: ['./base', 'ua']
 });
 
 /*
-  2012-03-30
-   - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
-   - http://help.dottoro.com/ljkfqbqj.php
-   - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
+ 2012-03-30
+ - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
+ - http://help.dottoro.com/ljkfqbqj.php
+ - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
 
-  2011-05-24
-   - 承玉：
-   - 调整 docWidth , docHeight ,
-       viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
-       便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
+ 2011-05-24
+ - 承玉：
+ - 调整 docWidth , docHeight ,
+ viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
+ 便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
 
 
-  TODO:
-   - 考虑是否实现 jQuery 的 position, offsetParent 等功能
-   - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
+ TODO:
+ - 考虑是否实现 jQuery 的 position, offsetParent 等功能
+ - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
  */

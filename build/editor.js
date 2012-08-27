@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 27 10:38
+build time: Aug 27 21:29
 */
 /**
  * Set up editor constructor
@@ -1826,14 +1826,16 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             "</style>" +
             "{links}" +
             "</head>" +
-            "<body class='ks-editor'>" +
+            "<body class='ks-editor' " +
+            ">" +
             "{data}" +
             "{script}" +
             "</body>" +
             "</html>",
 
         IFRAME_TPL = '<iframe' +
-            ' style="width:100%;height:100%;border:none;" ' +
+            ' style="width:100%;height:100%;border:none;'
+            + '" ' +
             ' frameborder="0" ' +
             ' title="kissy-editor" ' +
             ' allowTransparency="true" ' +
@@ -1842,7 +1844,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             '</iframe>' ,
 
         EDITOR_TPL = '<div class="' + KE_TOOLBAR_CLASS.substring(1) + '"></div>' +
-            '<div class="' + KE_TEXTAREA_WRAP_CLASS.substring(1) + '">' +
+            '<div class="' + KE_TEXTAREA_WRAP_CLASS.substring(1) + '" ' +
+            // http://johanbrook.com/browsers/native-momentum-scrolling-ios-5/
+            // ios 不能放在 iframe 上！
+            (UA.mobile ? 'style="overflow:scroll;-webkit-overflow-scrolling:touch;"' : '') +
+            '>' +
             '</div>' +
             "<div class='" + KE_STATUSBAR_CLASS.substring(1) + "'></div>";
 
@@ -2982,6 +2988,9 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
  * 2012-03-05 重构 by yiminghe@gmail.com
  *  - core
  *  - plugins
+ *
+ * refer
+ *  - http://html5.org/specs/dom-range.html
  *//**
  * modified from ckeditor ,elementPath represents element's tree path from body
  * @author yiminghe@gmail.com
@@ -6734,7 +6743,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
                     && ( parentTag = nativeSel.createRange() )
                     && ( parentTag = parentTag.parentElement() )
                     && ( parentTag = parentTag.nodeName )
-                    && parentTag.toLowerCase() in { input:1, textarea:1 }) {
+                    && parentTag.toLowerCase() in { input: 1, textarea: 1 }) {
                     return;
                 }
                 savedRange = nativeSel && sel.getRanges()[ 0 ];
@@ -6765,7 +6774,13 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
             editor.checkSelectionChange();
         }
 
-        Event.on(doc, 'mouseup keyup', monitor);
+        Event.on(doc, 'mouseup keyup ' +
+            // ios does not fire mouseup/keyup ....
+            // http://stackoverflow.com/questions/8442158/selection-change-event-in-contenteditable
+            // https://www.w3.org/Bugs/Public/show_bug.cgi?id=13952
+            // https://bugzilla.mozilla.org/show_bug.cgi?id=571294
+            // firefox does not has selectionchange
+            'selectionchange', monitor);
     }
 
     /**
@@ -6895,7 +6910,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
     }
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             editor.docReady(function () {
                 // S.log("editor docReady for fix selection");
                 if (UA.ie) {
@@ -6911,7 +6926,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
         }
     };
 }, {
-    requires:['./base', './selection']
+    requires: ['./base', './selection']
 });
 /**
  * Use style to gen element and wrap range's elements.Modified from CKEditor.

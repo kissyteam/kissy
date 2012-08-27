@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 27 10:38
+build time: Aug 27 21:29
 */
 /**
  * Set up editor constructor
@@ -1826,14 +1826,16 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             "</style>" +
             "{links}" +
             "</head>" +
-            "<body class='ks-editor'>" +
+            "<body class='ks-editor' " +
+            ">" +
             "{data}" +
             "{script}" +
             "</body>" +
             "</html>",
 
         IFRAME_TPL = '<iframe' +
-            ' style="width:100%;height:100%;border:none;" ' +
+            ' style="width:100%;height:100%;border:none;'
+            + '" ' +
             ' frameborder="0" ' +
             ' title="kissy-editor" ' +
             ' allowTransparency="true" ' +
@@ -1842,7 +1844,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             '</iframe>' ,
 
         EDITOR_TPL = '<div class="' + KE_TOOLBAR_CLASS.substring(1) + '"></div>' +
-            '<div class="' + KE_TEXTAREA_WRAP_CLASS.substring(1) + '">' +
+            '<div class="' + KE_TEXTAREA_WRAP_CLASS.substring(1) + '" ' +
+            // http://johanbrook.com/browsers/native-momentum-scrolling-ios-5/
+            // ios 不能放在 iframe 上！
+            (UA.mobile ? 'style="overflow:scroll;-webkit-overflow-scrolling:touch;"' : '') +
+            '>' +
             '</div>' +
             "<div class='" + KE_STATUSBAR_CLASS.substring(1) + "'></div>";
 
@@ -2982,6 +2988,9 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
  * 2012-03-05 重构 by yiminghe@gmail.com
  *  - core
  *  - plugins
+ *
+ * refer
+ *  - http://html5.org/specs/dom-range.html
  *//**
  * modified from ckeditor ,elementPath represents element's tree path from body
  * @author yiminghe@gmail.com
@@ -6734,7 +6743,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
                     && ( parentTag = nativeSel.createRange() )
                     && ( parentTag = parentTag.parentElement() )
                     && ( parentTag = parentTag.nodeName )
-                    && parentTag.toLowerCase() in { input:1, textarea:1 }) {
+                    && parentTag.toLowerCase() in { input: 1, textarea: 1 }) {
                     return;
                 }
                 savedRange = nativeSel && sel.getRanges()[ 0 ];
@@ -6765,7 +6774,13 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
             editor.checkSelectionChange();
         }
 
-        Event.on(doc, 'mouseup keyup', monitor);
+        Event.on(doc, 'mouseup keyup ' +
+            // ios does not fire mouseup/keyup ....
+            // http://stackoverflow.com/questions/8442158/selection-change-event-in-contenteditable
+            // https://www.w3.org/Bugs/Public/show_bug.cgi?id=13952
+            // https://bugzilla.mozilla.org/show_bug.cgi?id=571294
+            // firefox does not has selectionchange
+            'selectionchange', monitor);
     }
 
     /**
@@ -6895,7 +6910,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
     }
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             editor.docReady(function () {
                 // S.log("editor docReady for fix selection");
                 if (UA.ie) {
@@ -6911,7 +6926,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
         }
     };
 }, {
-    requires:['./base', './selection']
+    requires: ['./base', './selection']
 });
 /**
  * Use style to gen element and wrap range's elements.Modified from CKEditor.
@@ -9638,7 +9653,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
 
     return Button.extend({
 
-        initializer:function () {
+        initializer: function () {
             var self = this;
             self.on("blur", function () {
                 // make select color works
@@ -9656,21 +9671,21 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             });
         },
 
-        _prepare:function () {
+        _prepare: function () {
             var self = this,
                 editor = self.get("editor"),
                 colorPanel;
 
             self.colorWin = new Overlay4E({
                 // TODO 变成了 -1??
-                elAttrs:{
-                    tabindex:0
+                elAttrs: {
+                    tabindex: 0
                 },
-                elCls:"ks-editor-popup",
-                content:html,
-                autoRender:true,
-                width:170,
-                zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)
+                elCls: "ks-editor-popup",
+                content: html,
+                autoRender: true,
+                width: 170,
+                zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)
             });
 
             var colorWin = self.colorWin;
@@ -9691,15 +9706,23 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             self._show();
         },
 
-        _show:function () {
+        _show: function () {
             var self = this,
                 el = self.get("el"),
                 colorWin = self.colorWin;
-            colorWin.align(el, ["bl", "tl"], [0, 2]);
+            colorWin.set("align", {
+                node: el,
+                points: ["bl", "tl"],
+                offset: [0, 2],
+                overflow: {
+                    adjustX: 1,
+                    adjustY: 1
+                }
+            });
             colorWin.show();
         },
 
-        _selectColor:function (ev) {
+        _selectColor: function (ev) {
             ev.halt();
             var self = this,
                 t = new Node(ev.target);
@@ -9708,25 +9731,25 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             }
         },
 
-        destructor:function () {
+        destructor: function () {
             var self = this;
             if (self.colorWin) {
                 self.colorWin.destroy();
             }
         }
     }, {
-        ATTRS:{
-            checkable:{
-                value:true
+        ATTRS: {
+            checkable: {
+                value: true
             },
-            mode:{
-                value:Editor.WYSIWYG_MODE
+            mode: {
+                value: Editor.WYSIWYG_MODE
             }
         }
     });
 
 }, {
-    requires:['editor', '../button/', '../overlay/', '../dialog-loader/']
+    requires: ['editor', '../button/', '../overlay/', '../dialog-loader/']
 });/**
  * color command.
  * @author yiminghe@gmail.com
@@ -10847,7 +10870,6 @@ KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
                     src:SPACER_GIF,
                     _ke_realelement:encodeURIComponent(outerHTML || realElement._4e_outerHtml(undefined)),
                     _ke_real_node_type:realElement[0].nodeType,
-                    //align : realElement.attr("align") || '',
                     style:style
                 };
 
@@ -14977,12 +14999,12 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
     }
 
     S.augment(Smiley, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
             editor.addButton("smiley", {
-                tooltip:"插入表情",
-                checkable:true,
-                listeners:{
-                    afterSyncUI:function () {
+                tooltip: "插入表情",
+                checkable: true,
+                listeners: {
+                    afterSyncUI: function () {
                         var self = this;
                         self.on("blur", function () {
                             // make click event fire
@@ -14992,18 +15014,18 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                         });
 
                     },
-                    click:function () {
+                    click: function () {
                         var self = this, smiley, checked = self.get("checked");
                         if (checked) {
                             if (!(smiley = self.smiley)) {
                                 smiley = self.smiley = new Overlay4E({
-                                    content:smiley_markup,
-                                    focus4e:false,
-                                    width:"297px",
-                                    autoRender:true,
-                                    elCls:"ks-editor-popup",
-                                    zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
-                                    mask:false
+                                    content: smiley_markup,
+                                    focus4e: false,
+                                    width: "297px",
+                                    autoRender: true,
+                                    elCls: "ks-editor-popup",
+                                    zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
+                                    mask: false
                                 });
                                 smiley.get("el").on("click", function (ev) {
                                     var t = new S.Node(ev.target),
@@ -15022,29 +15044,33 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                                 });
                             }
                             smiley.set("align", {
-                                node:this.get("el"),
-                                points:["bl", "tl"]
+                                node: this.get("el"),
+                                points: ["bl", "tl"],
+                                overflow: {
+                                    adjustX: 1,
+                                    adjustY: 1
+                                }
                             });
                             smiley.show();
                         } else {
                             self.smiley && self.smiley.hide();
                         }
                     },
-                    destroy:function () {
+                    destroy: function () {
                         if (this.smiley) {
                             this.smiley.destroy();
                         }
                     }
 
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode: Editor.WYSIWYG_MODE
             });
         }
     });
 
     return Smiley;
 }, {
-    requires:['editor', '../overlay/']
+    requires: ['editor', '../overlay/']
 });/**
  * source editor for kissy editor
  * @author yiminghe@gmail.com

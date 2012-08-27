@@ -27,7 +27,6 @@ KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
                     src:SPACER_GIF,
                     _ke_realelement:encodeURIComponent(outerHTML || realElement._4e_outerHtml(undefined)),
                     _ke_real_node_type:realElement[0].nodeType,
-                    //align : realElement.attr("align") || '',
                     style:style
                 };
 
