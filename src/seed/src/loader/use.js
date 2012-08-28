@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 

@@ -5,7 +5,7 @@
  */
 (function (S) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 

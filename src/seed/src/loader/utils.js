@@ -3,9 +3,9 @@
  * @fileOverview Utils for kissy loader
  * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
+(function (S) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 

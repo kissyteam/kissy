@@ -474,6 +474,10 @@
          * @type {Object}
          */
         S.Env = S.Env || {};
+
+        S.Env.nodejs = (typeof require !== 'undefined') &&
+            (typeof exports !== 'undefined');
+
         /**
          * KISSY Config.
          * If load kissy.js, Config.debug defaults to true.
