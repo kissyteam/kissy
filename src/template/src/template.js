@@ -7,21 +7,21 @@ KISSY.add('template', function (S) {
     var // Template Cache
         templateCache = {},
 
-        // start/end tag mark
+    // start/end tag mark
         tagStartEnd = {
-            '#':'start',
-            '@':'start',
-            '/':'end'
+            '#': 'start',
+            '@': 'start',
+            '/': 'end'
         },
 
-        // static string
+    // static string
         KS_TEMPL_STAT_PARAM = 'KS_TEMPL_STAT_PARAM',
         KS_TEMPL_STAT_PARAM_REG = new RegExp(KS_TEMPL_STAT_PARAM, "g"),
         KS_TEMPL = 'KS_TEMPL',
         KS_DATA = 'KS_DATA_',
         KS_AS = 'as',
 
-        // note : double quote for generated code
+    // note : double quote for generated code
         PREFIX = '");',
         SUFFIX = KS_TEMPL + '.push("',
 
@@ -37,19 +37,19 @@ KISSY.add('template', function (S) {
             PARSER_RENDER_ERROR + '" + e.message]}};return ' +
             KS_TEMPL + '.join("");',
 
-        // restore double quote in logic template variable
+    // restore double quote in logic template variable
         restoreQuote = function (str) {
             return str.replace(/\\"/g, '"');
         },
 
-        // escape double quote in template
+    // escape double quote in template
         escapeQuote = function (str) {
             return str.replace(/"/g, '\\"');
         },
 
         trim = S.trim,
 
-        // build a static parser
+    // build a static parser
         buildParser = function (tpl) {
             var _parser,
                 _empty_index;
@@ -100,24 +100,24 @@ KISSY.add('template', function (S) {
                 });
         },
 
-        // expression
+    // expression
         Statements = {
-            'if':{
-                start:'if(typeof (' + KS_TEMPL_STAT_PARAM + ') !=="undefined" && ' + KS_TEMPL_STAT_PARAM + '){',
-                end:'}'
+            'if': {
+                start: 'if(typeof (' + KS_TEMPL_STAT_PARAM + ') !=="undefined" && ' + KS_TEMPL_STAT_PARAM + '){',
+                end: '}'
             },
 
-            'else':{
-                start:'}else{'
+            'else': {
+                start: '}else{'
             },
 
-            'elseif':{
-                start:'}else if(' + KS_TEMPL_STAT_PARAM + '){'
+            'elseif': {
+                start: '}else if(' + KS_TEMPL_STAT_PARAM + '){'
             },
 
             // KISSY.each function wrap
-            'each':{
-                start:function (obj, as, v, k) {
+            'each': {
+                start: function (obj, as, v, k) {
                     var _ks_value = '_ks_value',
                         _ks_index = '_ks_index';
                     if (as === KS_AS && v) {
@@ -128,12 +128,12 @@ KISSY.add('template', function (S) {
                         ', function(' + _ks_value +
                         ', ' + _ks_index + '){';
                 },
-                end:'});'
+                end: '});'
             },
 
             // comments
-            '!':{
-                start:'/*' + KS_TEMPL_STAT_PARAM + '*/'
+            '!': {
+                start: '/*' + KS_TEMPL_STAT_PARAM + '*/'
             }
         };
 
@@ -165,10 +165,10 @@ KISSY.add('template', function (S) {
             }
 
             templateCache[tpl] = {
-                name:_ks_data,
-                o:o,
-                parser:_parser.join(""),
-                render:func
+                name: _ks_data,
+                o: o,
+                parser: _parser.join(""),
+                render: func
             };
         }
         return templateCache[tpl];
@@ -179,7 +179,7 @@ KISSY.add('template', function (S) {
          * Logging Compiled Template Codes
          * @param {String} tpl template string.
          */
-        log:function (tpl) {
+        log: function (tpl) {
             if (tpl in templateCache) {
                 //     if ('js_beautify' in window) {
 //                        S.log(js_beautify(templateCache[tpl].parser, {
@@ -204,7 +204,7 @@ KISSY.add('template', function (S) {
          * @param {String} statement tag name.
          * @param {String} o extent tag object.
          */
-        addStatement:function (statement, o) {
+        addStatement: function (statement, o) {
             if (S.isString(statement)) {
                 Statements[statement] = o;
             } else {
@@ -213,6 +213,8 @@ KISSY.add('template', function (S) {
         }
 
     });
+
+    S.Template = Template;
 
     return Template;
 
