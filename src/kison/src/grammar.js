@@ -666,12 +666,13 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
                     var $$ = valueStack[valueStack.length - len]; // default to $$ = $1
 
-                    var desc = {};
+                    var desc = {
+                        $$: $$
+                    };
 
                     for (var i = 0; i < len; i++) {
                         desc["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
                     }
-
 
                     var ret;
 
@@ -681,6 +682,8 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
                     if (ret !== undefined) {
                         $$ = ret;
+                    } else {
+                        $$ = desc.$$;
                     }
 
                     if (len) {

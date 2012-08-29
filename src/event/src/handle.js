@@ -127,7 +127,7 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
                 if (gRet !== false) {
                     gRet = ret;
                 }
-                // return false 等价 preventDefault + stopProgation
+                // return false 等价 preventDefault + stopPropagation
                 if (ret === false) {
                     event.halt();
                 }

@@ -5,8 +5,6 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
     var IMAGEZOOM_ICON_TMPL = "<span class='{iconClass}'></span>",
         IMAGEZOOM_WRAP_TMPL = "<span class='{wrapClass}'></span>";
 
-    var $=Node.all;
-
     function show(obj) {
         obj && obj.show();
     }
@@ -19,7 +17,7 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
         Zoomer
     ], {
 
-            initializer:function () {
+            initializer: function () {
                 var self = this,
                     tmp;
 
@@ -34,7 +32,7 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                 });
             },
 
-            destructor:function () {
+            destructor: function () {
                 var self = this;
                 if (self.imageWrap) {
                     self.image.insertBefore(self.imageWrap, undefined);
@@ -42,19 +40,19 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                 }
             },
 
-            _render:function () {
+            _render: function () {
                 var self = this,
                     image = self.image;
 
                 self.imageWrap = new Node(S.substitute(IMAGEZOOM_WRAP_TMPL, {
-                    wrapClass:self.get('wrapClass')
+                    wrapClass: self.get('wrapClass')
                 })).insertBefore(image, undefined);
 
                 self.imageWrap.prepend(image);
 
                 if (self.get('showIcon')) {
                     self.icon = new Node(S.substitute(IMAGEZOOM_ICON_TMPL, {
-                        iconClass:self.get("iconClass")
+                        iconClass: self.get("iconClass")
                     }));
                     self.imageWrap.append(self.icon);
                 }
@@ -64,7 +62,7 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
              * 绑定鼠标进入/离开/移动事件, 只有进入, 才响应鼠标移动事件
              * @private
              */
-            _bind:function () {
+            _bind: function () {
                 var self = this,
                     timer;
                 self.image.on('mouseenter',
@@ -107,7 +105,7 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                 });
             },
 
-            _uiSetHasZoom:function (v) {
+            _uiSetHasZoom: function (v) {
                 if (v) {
                     show(this.icon);
                 } else {
@@ -115,62 +113,62 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                 }
             },
 
-            _uiSetImageWidth:function (v) {
+            _uiSetImageWidth: function (v) {
                 this.image.width(v);
             },
 
-            _uiSetImageHeight:function (v) {
+            _uiSetImageHeight: function (v) {
                 this.image.height(v);
             }
         },
         {
-            ATTRS:{
-                imageNode:{
-                    setter:function (el) {
+            ATTRS: {
+                imageNode: {
+                    setter: function (el) {
                         return Node.one(el);
                     }
                 },
 
-                wrapClass:{
-                    value:'ks-imagezoom-wrap'
+                wrapClass: {
+                    value: 'ks-imagezoom-wrap'
                 },
 
                 // width/height 默认和原小图大小保持一致
                 // 小图和大图同比例情况下，len 为正方形
-                width:{
-                    valueFn:function () {
+                width: {
+                    valueFn: function () {
                         return this.get("imageWidth");
                     }
                 },
-                height:{
-                    valueFn:function () {
+                height: {
+                    valueFn: function () {
                         return this.get("imageHeight");
                     }
                 },
 
-                imageWidth:{
-                    valueFn:function () {
+                imageWidth: {
+                    valueFn: function () {
                         var img = this.get('imageNode');
                         img = img && img.width();
                         return img || 400;
                     }
                 },
-                imageHeight:{
-                    valueFn:function () {
+                imageHeight: {
+                    valueFn: function () {
                         var img = this.get('imageNode');
                         img = img && img.height();
                         return img || 400;
                     }
                 },
-                imageLeft:{},
-                imageTop:{},
+                imageLeft: {},
+                imageTop: {},
                 /**
                  * 显示放大区域标志
                  * @type {Boolean}
                  */
-                hasZoom:{
-                    value:true,
-                    setter:function (v) {
+                hasZoom: {
+                    value: true,
+                    setter: function (v) {
                         return !!v;
                     }
                 },
@@ -179,19 +177,21 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                  * 是否显示放大镜提示图标
                  * @type {Boolean}
                  */
-                showIcon:{
-                    value:true
+                showIcon: {
+                    value: true
                 },
-                iconClass:{
-                    value:'ks-imagezoom-icon'
+                iconClass: {
+                    value: 'ks-imagezoom-icon'
                 },
-                prefixCls:{
-                    value:'ks-'
+                prefixCls: {
+                    value: 'ks-'
                 }
             }
+        }, {
+            xclass: 'imagezoom-viewer'
         });
 }, {
-    requires:['node', 'overlay', './zoomer']
+    requires: ['node', 'overlay', './zoomer']
 });
 
 

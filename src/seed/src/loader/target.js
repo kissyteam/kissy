@@ -5,9 +5,8 @@
  */
 (function (S) {
 
-    if (S.Env.nodejs) {
-        return;
-    }
+    // in case current code runs on nodejs
+    S.namespace("Loader");
 
     var time = S.now(),
         p = '__events__' + time;
