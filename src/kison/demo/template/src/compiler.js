@@ -5,7 +5,7 @@ KISSY.add("template/compiler", function (S, parser, ast) {
     return {
         compile: function (tpl) {
             var root = parser.parse(tpl);
-            S.log(root);
+            return root;
         }
     };
 

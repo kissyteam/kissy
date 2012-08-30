@@ -24,7 +24,7 @@
     KISSY.use("template/compiler", function (S, compiler) {
         var $= S.all;
         $('#parse').on('click', function () {
-            compiler.compile($('#tpl').val());
+            S.log(compiler.compile($('#tpl').val()));
         });
     });
 </script>
