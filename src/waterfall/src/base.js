@@ -245,6 +245,25 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             top:curColHeights[col]
         };
 
+        function end(){
+            // 加入到 dom 树才能取得高度
+            curColHeights[col] += item.outerHeight(true);
+            var colItems = self.get("colItems");
+            colItems[col] = colItems[col] || [];
+            colItems[col].push(item);
+            item.attr("data-waterfall-col", col);
+            var className = item[0].className
+                .replace(/\s*ks-waterfall-col-(?:first|last|\d+)/g, "");
+            className += " ks-waterfall-col-" + col;
+            if (col == 0) {
+                className += " ks-waterfall-col-first";
+            } else if (col == curColHeights.length - 1) {
+                className += " ks-waterfall-col-last";
+            }
+            item[0].className = className;
+            callback && callback();
+        }
+
 
         /*
          不在容器里，就加上
@@ -257,35 +276,21 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 item.css("visibility", "hidden");
             }
             container.append(item);
-            callback && callback();
+            end();
         }
         // 否则调整，需要动画
         else {
             var adjustEffect = self.get("adjustEffect");
             if (adjustEffect) {
                 item.animate(colProp, adjustEffect.duration,
-                    adjustEffect.easing, callback);
+                    adjustEffect.easing, end);
             } else {
                 item.css(colProp);
-                callback && callback();
+                end();
             }
         }
 
-        // 加入到 dom 树才能取得高度
-        curColHeights[col] += item.outerHeight(true);
-        var colItems = self.get("colItems");
-        colItems[col] = colItems[col] || [];
-        colItems[col].push(item);
-        item.attr("data-waterfall-col", col);
-        var className = item[0].className
-            .replace(/\s*ks-waterfall-col-(?:first|last|\d+)/g, "");
-        className += " ks-waterfall-col-" + col;
-        if (col == 0) {
-            className += " ks-waterfall-col-first";
-        } else if (col == curColHeights.length - 1) {
-            className += " ks-waterfall-col-last";
-        }
-        item[0].className = className;
+
         return item;
     }
 
