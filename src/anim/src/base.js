@@ -96,7 +96,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // camel case uniformity
         S.each(props, function (v, prop) {
-            var camelProp = camelCase(prop);
+            var camelProp = S.trim(camelCase(prop));
             if (prop != camelProp) {
                 props[camelProp] = props[prop];
                 delete props[prop];

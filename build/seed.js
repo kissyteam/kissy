@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:29
+build time: Sep 3 16:50
 */
 /**
  * @ignore
@@ -496,11 +496,11 @@ build time: Aug 22 23:29
 
         /**
          * The build time of the library.
-         * NOTICE: '20120822232948' will replace with current timestamp when compressing.
+         * NOTICE: '20120903164954' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120822232948';
+        S.__BUILD_TIME = '20120903164954';
     })();
 
     return S;
@@ -5200,7 +5200,7 @@ build time: Aug 22 23:29
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120822232948'
+        tag: '20120903164954'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5495,7 +5495,6 @@ KISSY.config('modules', {
 'editor': {requires: ['htmlparser','component','core']},
 'split-button': {requires: ['component','button','menubutton']},
 'mvc': {requires: ['base','event','node','ajax','json']},
-'color': {requires: ['base']},
 'overlay': {requires: ['anim','dom','node','event','ua','component']},
 'base': {requires: ['event']},
 'separator': {requires: ['component']},
