@@ -17,14 +17,15 @@
 
     #article {
         position: relative;
-        width: 530px;
+        width: 100%;
+        min-width: 530px;
         border: 1px solid green;
         margin: 0 auto;
         margin-top: 20px;
     }
 
     #wrapper {
-        width: 950px;
+        width: 90%;
         margin: 0 auto;
         margin-top: 20px;
     }
@@ -65,7 +66,6 @@
 <script>
     KISSY.use("waterfall,ajax,node", function (S, Waterfall, io, Node) {
         var $ = Node.all;
-
         var waterfall = new Waterfall({
             container:"#ColumnContainer",
             minColCount:2,
