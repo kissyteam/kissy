@@ -1,8 +1,9 @@
-KISSY.add('grid/editing',function(S,Component,EditorPanel){
+KISSY.add('grid/editing',function(S,Component,EditorPanel,Overlay){
 	
 	var DOM = S.DOM,
 		Event = S.Event,
-		doc = document;
+		doc = document,
+        CLS_EDITOR_OVERLAY = 'ks-grid-editor-overlay';
 	/**
 	* @name Grid.Plugins.Editing
     * @constructor
@@ -36,12 +37,25 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 		editorPanels : {
 			value : []
 		},
+        /**
+        * the error icon template
+        */
+        errorIconTpl : {
+            value:'<span class="ks-icon ks-icon-error ks-icon-small">!</span>'
+        },
 		/**
 		* @private
 		*/
 		grid : {
 		
 		},
+        /**
+        * The component which show the error message
+        * @private 
+        */
+        overlay : function(){
+            
+        },
 		/**
 		* The event which triggers editing. Maybe one of:
 		* <ul>
@@ -72,6 +86,7 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 			_self.set('grid',grid);	
 			_self._initEditors(columns);
 		},
+        
 		/**
 		* @private
 		*/
@@ -99,6 +114,19 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 				}
 			});
 			
+		},
+        //init the overlay which will show error message
+		_createOverlay : function(){
+			var _self = this,
+				overlay = new Overlay({
+					elCls: CLS_EDITOR_OVERLAY,
+					effect:{
+						effect:"fade", //popup层显示动画效果，slide是展开，也可以"fade"渐变
+						duration:0.5
+					}
+				});
+			_self.set('overlay',overlay);
+			return overlay;
 		},
 		/**
 		* @private
@@ -161,7 +189,35 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 		* @protect
 		*/
 		_initPanelEvent : function(editorPanel){
-
+            
+		},
+        /**
+		* show the error on an overlay
+		*/
+		showValidError : function(editor){
+			var _self = this,
+				msg = editor.getErrorMsg(),
+				errorIconTpl = _self.get('errorIconTpl'),
+				overlay = _self.get('overlay');
+			if(!overlay){
+				overlay = _self._createOverlay();
+			}
+			overlay.set('content',errorIconTpl + msg);
+			overlay.set('align',{
+				node:editor.get('el'),
+				points:["br", "tl"]
+			});
+			overlay.show();
+		},
+        /**
+        * hide the overlay
+        */
+		hideValidError : function(){
+			var _self = this,
+				overlay = _self.get('overlay');
+			if(overlay){
+				overlay.hide();
+			}
 		},
 		destroy : function(){
 			var _self = this,
@@ -254,6 +310,17 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 					val = editor.getValue();
 				store.setValue(record,field,val);
 			});
+            editorPanel.on('editorenter',function(e){
+                var editor = e.target;
+                if(editor.hasError()){
+                    _self.showValidError(editor);
+                }
+            });
+             editorPanel.on('editorleave',function(e){
+                var editor = e.target;
+                _self.hideValidError();
+            });
+            
 		}
 	});
 	
@@ -307,5 +374,5 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 	return Editing;
 	
 },{
-    requires:['component','grid/editorpanel']
+    requires:['component','grid/editorpanel','overlay']
 });

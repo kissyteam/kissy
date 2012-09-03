@@ -16,7 +16,12 @@ KISSY.use('grid/editor,grid/editing,grid/base,grid/store',function(S,Editor,Edit
 				title : '表头3',
 				dataIndex : 'c',
 				editor : {
-					type : 'number'
+					type : 'number',
+                    validator: function(v){
+                        if(Number(v) > 100){
+                            return '不能大于100';
+                        }
+                    }
 				}
 		},{
 			id : 'colhide',

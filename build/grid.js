@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:57
+build time: Sep 3 20:25
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -1247,11 +1247,12 @@ KISSY.add('grid/column', function (S, Component, Template) {
     requires:['component', 'template']
 });
 	
-KISSY.add('grid/editing',function(S,Component,EditorPanel){
+KISSY.add('grid/editing',function(S,Component,EditorPanel,Overlay){
 	
 	var DOM = S.DOM,
 		Event = S.Event,
-		doc = document;
+		doc = document,
+        CLS_EDITOR_OVERLAY = 'ks-grid-editor-overlay';
 	/**
 	* @name Grid.Plugins.Editing
     * @constructor
@@ -1285,12 +1286,25 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 		editorPanels : {
 			value : []
 		},
+        /**
+        * the error icon template
+        */
+        errorIconTpl : {
+            value:'<span class="ks-icon ks-icon-error ks-icon-small">!</span>'
+        },
 		/**
 		* @private
 		*/
 		grid : {
 		
 		},
+        /**
+        * The component which show the error message
+        * @private 
+        */
+        overlay : function(){
+            
+        },
 		/**
 		* The event which triggers editing. Maybe one of:
 		* <ul>
@@ -1321,6 +1335,7 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 			_self.set('grid',grid);	
 			_self._initEditors(columns);
 		},
+        
 		/**
 		* @private
 		*/
@@ -1348,6 +1363,19 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 				}
 			});
 			
+		},
+        //init the overlay which will show error message
+		_createOverlay : function(){
+			var _self = this,
+				overlay = new Overlay({
+					elCls: CLS_EDITOR_OVERLAY,
+					effect:{
+						effect:"fade", //popup����ʾ����Ч��slide��չ����Ҳ����"fade"����
+						duration:0.5
+					}
+				});
+			_self.set('overlay',overlay);
+			return overlay;
 		},
 		/**
 		* @private
@@ -1410,7 +1438,35 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 		* @protect
 		*/
 		_initPanelEvent : function(editorPanel){
-
+            
+		},
+        /**
+		* show the error on an overlay
+		*/
+		showValidError : function(editor){
+			var _self = this,
+				msg = editor.getErrorMsg(),
+				errorIconTpl = _self.get('errorIconTpl'),
+				overlay = _self.get('overlay');
+			if(!overlay){
+				overlay = _self._createOverlay();
+			}
+			overlay.set('content',errorIconTpl + msg);
+			overlay.set('align',{
+				node:editor.get('el'),
+				points:["br", "tl"]
+			});
+			overlay.show();
+		},
+        /**
+        * hide the overlay
+        */
+		hideValidError : function(){
+			var _self = this,
+				overlay = _self.get('overlay');
+			if(overlay){
+				overlay.hide();
+			}
 		},
 		destroy : function(){
 			var _self = this,
@@ -1503,6 +1559,17 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 					val = editor.getValue();
 				store.setValue(record,field,val);
 			});
+            editorPanel.on('editorenter',function(e){
+                var editor = e.target;
+                if(editor.hasError()){
+                    _self.showValidError(editor);
+                }
+            });
+             editorPanel.on('editorleave',function(e){
+                var editor = e.target;
+                _self.hideValidError();
+            });
+            
 		}
 	});
 	
@@ -1556,16 +1623,16 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel){
 	return Editing;
 	
 },{
-    requires:['component','grid/editorpanel']
+    requires:['component','grid/editorpanel','overlay']
 });/**
  * @fileOverview This class specifies the definition for a cell editor of a grid.
  * @author dxq613@gmail.com
  */
-KISSY.add('grid/editor', function (S, Component,Overlay) {
+KISSY.add('grid/editor', function (S, Component) {
 
     var CLS_EDITOR = 'ks-grid-editor',
         CLS_EDITOR_ERROR = CLS_EDITOR + '-error',
-		CLS_EDITOR_OVERLAY = CLS_EDITOR + '-overlay',
+		
         CLS_EDITOR_CONTROL = CLS_EDITOR + '-control',
 		DATA_ERROR = 'data-error';
 
@@ -1618,6 +1685,7 @@ KISSY.add('grid/editor', function (S, Component,Overlay) {
 		*/
 		bindControlEvent : function(){
 			var _self = this,
+                el = _self.get('el'),
 				control = _self.getEditControl(),
 				triggerEvent = _self.get('triggerEvent'),
 				validEvent = _self.get('validEvent');
@@ -1638,14 +1706,10 @@ KISSY.add('grid/editor', function (S, Component,Overlay) {
 			});
 			
 			control.on('mouseenter',function(){
-				if(_self.hasError()){
-					_self.showValidError();
-				}
+				_self.fire('editorenter',{target:_self});
 			});
 			control.on('mouseleave',function(){
-				if(_self.hasError()){
-					_self.hideValidError();
-				}
+				_self.fire('editorleave',{target:_self});
 			});
 			
 		},
@@ -1696,13 +1760,15 @@ KISSY.add('grid/editor', function (S, Component,Overlay) {
         hasError:function () {
             return this.get('el').hasClass(CLS_EDITOR_ERROR);
         },
-		hideValidError : function(){
-			var _self = this,
-				overlay = _self.get('overlay');
-			if(overlay){
-				overlay.hide();
-			}
-		},
+        /**
+        * get the error message of the validation.
+        */
+        getErrorMsg : function(){
+            var _self = this,
+				control = _self.getEditControl(),
+				msg = control.attr(DATA_ERROR);
+            return msg;
+        },
         /**
          * Set the cell's value.
          * When you Inheritance this class,you can override this method.
@@ -1712,25 +1778,7 @@ KISSY.add('grid/editor', function (S, Component,Overlay) {
                 control = _self.getEditControl();
             control.val(v);
         },
-		/**
-		* show the error on an overlay
-		*/
-		showValidError : function(){
-			var _self = this,
-				control = _self.getEditControl(),
-				msg = control.attr(DATA_ERROR),
-				errorIconTpl = _self.get('errorIconTpl'),
-				overlay = _self.get('overlay');
-			if(!overlay){
-				overlay = _self._createOverlay();
-			}
-			overlay.set('content',errorIconTpl + msg);
-			overlay.set('align',{
-				node:control,
-				points:["br", "tl"]
-			});
-			overlay.show();
-		},
+		
 		//remove the error status
 		_clearError : function(){
 			var _self = this,
@@ -1752,24 +1800,12 @@ KISSY.add('grid/editor', function (S, Component,Overlay) {
             record = record || _self.get('record');
             return basicValidator(text) || validator(text, record);
         },
-		_createOverlay : function(){
-			var _self = this,
-				overlay = new Overlay({
-					elCls: CLS_EDITOR_OVERLAY,
-					effect:{
-						effect:"fade", //popup层显示动画效果，slide是展开，也可以"fade"渐变
-						duration:0.5
-					}
-				});
-			_self.set('overlay',overlay);
-			return overlay;
-		},
 		//set the error status
 		_setError:function(errorMsg){
 			var _self = this,
 				control = _self.getEditControl();
-			 _self.get('el').addClass(CLS_EDITOR_ERROR);
-				control.attr(DATA_ERROR,errorMsg);
+			_self.get('el').addClass(CLS_EDITOR_ERROR);
+			control.attr(DATA_ERROR,errorMsg);
 		},
 		
         /**
@@ -1855,36 +1891,53 @@ KISSY.add('grid/editor', function (S, Component,Overlay) {
                     return false;
                 }
             },
-			/**
-			* the error icon template
-			*/
-			errorIconTpl : {
-				value:'<span class="badge badge-error">i</span>'
-			},
             /**
              * the collection of editor's events
              * @type {Array}
              */
             events:{
                 value:[
-                /**
-                 * @event changed
-                 * Fires when this editor's value changed
-                 * @param {event} e the event object
-                 * @param {Grid.Editor} target
-                 * @param {String} text the user's input text
-                 * @param {Object} value format the user's input text to value
-                 */
+                    /**
+                     * @event changed
+                     * Fires when this editor's value changed
+                     * @param {event} e the event object
+                     * @param {Grid.Editor} target
+                     * @param {String} text the user's input text
+                     * @param {Object} value format the user's input text to value
+                     */
                     'changed',
-                /**
-                 * @event error
-                 * Fires when this editor's value changed
-                 * @param {event} e the event object
-                 * @param {Grid.Editor} target
-                 * @param {String} msg the error msg of the user's input
-                 * @param {String} text the user's input text
-                 */
-                    'error'
+                    /**
+                     * @event error
+                     * Fires when this editor's value changed
+                     * @param {event} e the event object
+                     * @param {Grid.Editor} target
+                     * @param {String} msg the error msg of the user's input
+                     * @param {String} text the user's input text
+                     */
+                    'error',
+                    /**
+                     * @event error
+                     * Fires when this editor's value changed
+                     * @param {event} e the event object
+                     * @param {Grid.Editor} target
+                     * @param {String} msg the error msg of the user's input
+                     * @param {String} text the user's input text
+                     */
+                    '',
+                    /**
+                     * @event editorenter
+                     * Fires when mouse entered this editor
+                     * @param {event} e the event object
+                     * @param {Grid.Editor} target
+                     */
+                    'editorenter',
+                    /**
+                     * @event editorleave
+                     * Fires when mouse entered this editor
+                     * @param {event} e the event object
+                     * @param {Grid.Editor} target
+                     */
+                    'editorleave'
                 ]
             },
             /**
@@ -1911,13 +1964,7 @@ KISSY.add('grid/editor', function (S, Component,Overlay) {
                     return v;
                 }
             },
-			/**
-			* The component which show the error message
-			* @private 
-			*/
-			overlay : function(){
-				
-			},
+			
             /**
              * The record which user is editing
              * @type {Object}
@@ -2043,7 +2090,7 @@ KISSY.add('grid/editor', function (S, Component,Overlay) {
 	
     return GridEditor;
 }, {
-    requires:['component','overlay']
+    requires:['component']
 });/**
  * @fileOverview This class specifies the definition for a container of grid editor.
  * @author dxq613@gmail.com
