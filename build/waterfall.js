@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:58
+build time: Sep 3 10:34
 */
 /**
  * @fileOverview Make Elements flow like waterfall.
@@ -250,6 +250,25 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             top:curColHeights[col]
         };
 
+        function end(){
+            // 加入到 dom 树才能取得高度
+            curColHeights[col] += item.outerHeight(true);
+            var colItems = self.get("colItems");
+            colItems[col] = colItems[col] || [];
+            colItems[col].push(item);
+            item.attr("data-waterfall-col", col);
+            var className = item[0].className
+                .replace(/\s*ks-waterfall-col-(?:first|last|\d+)/g, "");
+            className += " ks-waterfall-col-" + col;
+            if (col == 0) {
+                className += " ks-waterfall-col-first";
+            } else if (col == curColHeights.length - 1) {
+                className += " ks-waterfall-col-last";
+            }
+            item[0].className = className;
+            callback && callback();
+        }
+
 
         /*
          不在容器里，就加上
@@ -262,35 +281,21 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 item.css("visibility", "hidden");
             }
             container.append(item);
-            callback && callback();
+            end();
         }
         // 否则调整，需要动画
         else {
             var adjustEffect = self.get("adjustEffect");
             if (adjustEffect) {
                 item.animate(colProp, adjustEffect.duration,
-                    adjustEffect.easing, callback);
+                    adjustEffect.easing, end);
             } else {
                 item.css(colProp);
-                callback && callback();
+                end();
             }
         }
 
-        // 加入到 dom 树才能取得高度
-        curColHeights[col] += item.outerHeight(true);
-        var colItems = self.get("colItems");
-        colItems[col] = colItems[col] || [];
-        colItems[col].push(item);
-        item.attr("data-waterfall-col", col);
-        var className = item[0].className
-            .replace(/\s*ks-waterfall-col-(?:first|last|\d+)/g, "");
-        className += " ks-waterfall-col-" + col;
-        if (col == 0) {
-            className += " ks-waterfall-col-first";
-        } else if (col == curColHeights.length - 1) {
-            className += " ks-waterfall-col-last";
-        }
-        item[0].className = className;
+
         return item;
     }
 
@@ -615,7 +620,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         }
         // 动态载
         // 最小高度(或被用户看到了)低于预加载线
-        if (diff + $(win).scrollTop() + $(win).height() > colHeight) {
+        if (diff + $(win).scrollTop() + $(win).height() >= colHeight) {
             S.log("waterfall:loading");
             loadData.call(self);
         }

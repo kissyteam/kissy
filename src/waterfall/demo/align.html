@@ -58,13 +58,14 @@
             <div class="ks-waterfall">4</div>
             <div class="ks-waterfall">5</div>
             <div class="ks-waterfall">6</div>
-            <div class="ks-waterfall">7</div>
+            <div class="ks-waterfall" style="height: 400px">7</div>
         </div>
     </div>
 </div>
 <script>
     KISSY.use("waterfall,ajax,node", function (S, Waterfall, io, Node) {
         var $ = Node.all;
+
         var waterfall = new Waterfall({
             container:"#ColumnContainer",
             minColCount:2,
