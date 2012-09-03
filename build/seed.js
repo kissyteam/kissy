@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 28 16:50
+build time: Sep 3 17:15
 */
 /**
  * @ignore
@@ -498,11 +498,11 @@ build time: Aug 28 16:50
 
         /**
          * The build time of the library.
-         * NOTICE: '20120828164954' will replace with current timestamp when compressing.
+         * NOTICE: '20120903171541' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120828164954';
+        S.__BUILD_TIME = '20120903171541';
     })();
 
     return S;
@@ -3182,9 +3182,8 @@ build time: Aug 28 16:50
  */
 (function (S) {
 
-    if (S.Env.nodejs) {
-        return;
-    }
+    // in case current code runs on nodejs
+    S.namespace("Loader");
 
     var time = S.now(),
         p = '__events__' + time;
@@ -3262,7 +3261,7 @@ build time: Aug 28 16:50
  * @fileOverview Utils for kissy loader
  * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
+(function (S) {
 
     if (S.Env.nodejs) {
         return;
@@ -5202,7 +5201,7 @@ build time: Aug 28 16:50
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120828164954'
+        tag: '20120903171541'
     }, getBaseInfo()));
 
     // Initializes loader.

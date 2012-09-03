@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 28 11:23
+build time: Sep 3 17:15
 */
 /**
  * @ignore
@@ -479,6 +479,10 @@ build time: Aug 28 11:23
          * @type {Object}
          */
         S.Env = S.Env || {};
+
+        S.Env.nodejs = (typeof require !== 'undefined') &&
+            (typeof exports !== 'undefined');
+
         /**
          * KISSY Config.
          * If load kissy.js, Config.debug defaults to true.
@@ -494,11 +498,11 @@ build time: Aug 28 11:23
 
         /**
          * The build time of the library.
-         * NOTICE: '20120828112337' will replace with current timestamp when compressing.
+         * NOTICE: '20120903171541' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120828112337';
+        S.__BUILD_TIME = '20120903171541';
     })();
 
     return S;
@@ -2900,7 +2904,7 @@ build time: Aug 28 11:23
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -3178,9 +3182,8 @@ build time: Aug 28 11:23
  */
 (function (S) {
 
-    if (typeof require !== 'undefined') {
-        return;
-    }
+    // in case current code runs on nodejs
+    S.namespace("Loader");
 
     var time = S.now(),
         p = '__events__' + time;
@@ -3258,9 +3261,9 @@ build time: Aug 28 11:23
  * @fileOverview Utils for kissy loader
  * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
+(function (S) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -3640,7 +3643,7 @@ build time: Aug 28 11:23
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -3755,7 +3758,7 @@ build time: Aug 28 11:23
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
     var MILLISECONDS_OF_SECOND = 1000,
@@ -3948,7 +3951,7 @@ build time: Aug 28 11:23
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
     var Loader = S.Loader,
@@ -4066,7 +4069,7 @@ build time: Aug 28 11:23
  */
 (function (S, undefined) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -4302,7 +4305,7 @@ build time: Aug 28 11:23
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -4576,7 +4579,7 @@ build time: Aug 28 11:23
  */
 (function (S) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -5054,7 +5057,7 @@ build time: Aug 28 11:23
  */
 (function (S) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -5198,7 +5201,7 @@ build time: Aug 28 11:23
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120828112337'
+        tag: '20120903171541'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -16421,7 +16424,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:53
+build time: Sep 3 17:15
 */
 /**
  * @ignore
@@ -16610,8 +16613,10 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // camel case uniformity
         S.each(props, function (v, prop) {
-            var camelProp = camelCase(prop);
-            if (prop != camelProp) {
+            var camelProp = S.trim(camelCase(prop));
+            if (!camelProp) {
+                delete props[prop];
+            } else if (prop != camelProp) {
                 props[camelProp] = props[prop];
                 delete props[prop];
             }

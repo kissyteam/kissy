@@ -5,14 +5,14 @@ x({
             symbol: 'program',
             rhs: ['statements', 'inverse', 'statements'],
             action: function () {
-                return new this.yy.ProgramNode(this.$1, this.$3);
+                return new this.yy.ProgramNode(this.lexer.lineNumber, this.$1, this.$3);
             }
         },
         {
             symbol: 'program',
             rhs: ['statements'],
             action: function () {
-                return new this.yy.ProgramNode(this.$1);
+                return new this.yy.ProgramNode(this.lexer.lineNumber, this.$1);
             }
         },
         {
@@ -33,14 +33,7 @@ x({
             symbol: 'statement',
             rhs: ['openBlock', 'program', 'closeBlock'],
             action: function () {
-                // 开始没有结束
-                if (!S.equals(this.$1.path.parts, this.$3.parts)) {
-                    var lexer = this.lexer;
-                    S.error("parse error at line " + lexer.lineNumber +
-                        ":\n" + lexer.showDebugInfo() + "\n" +
-                        "expect {{/" + this.$1.path.parts + "}}");
-                }
-                return new this.yy.BlockNode(this.$1, this.$2, this.$3);
+                return new this.yy.BlockNode(this.lexer.lineNumber, this.$1, this.$2, this.$3);
             }
         },
         {
@@ -51,7 +44,7 @@ x({
             symbol: 'statement',
             rhs: ['CONTENT'],
             action: function () {
-                return new this.yy.ContentNode(this.$1);
+                return new this.yy.ContentNode(this.lexer.lineNumber, this.$1);
             }
         },
         {
@@ -91,21 +84,28 @@ x({
             symbol: 'inTpl',
             rhs: ['path', 'params', 'hash'],
             action: function () {
-                return new this.yy.TplNode(this.$1, this.$2, this.$3);
+                return new this.yy.TplNode(this.lexer.lineNumber, this.$1, this.$2, this.$3);
             }
         },
         {
             symbol: 'inTpl',
             rhs: ['path', 'params'],
             action: function () {
-                return new this.yy.TplNode(this.$1, this.$2);
+                return new this.yy.TplNode(this.lexer.lineNumber, this.$1, this.$2);
+            }
+        },
+        {
+            symbol: 'inTpl',
+            rhs: ['path', 'hash'],
+            action: function () {
+                return new this.yy.TplNode(this.lexer.lineNumber, this.$1, null, this.$2);
             }
         },
         {
             symbol: 'inTpl',
             rhs: ['path'],
             action: function () {
-                return new this.yy.TplNode(this.$1);
+                return new this.yy.TplNode(this.lexer.lineNumber, this.$1);
             }
         },
         {
@@ -130,28 +130,28 @@ x({
             symbol: 'param',
             rhs: ['STRING'],
             action: function () {
-                return new this.yy.StringNode(this.$1);
+                return new this.yy.StringNode(this.lexer.lineNumber, this.$1);
             }
         },
         {
             symbol: 'param',
-            rhs: ['INTEGER'],
+            rhs: ['NUMBER'],
             action: function () {
-                return new this.yy.IntegerNode(this.$1);
+                return new this.yy.NumberNode(this.lexer.lineNumber, this.$1);
             }
         },
         {
             symbol: 'param',
             rhs: ['BOOLEAN'],
             action: function () {
-                return new this.yy.BooleanNode(this.$1);
+                return new this.yy.BooleanNode(this.lexer.lineNumber, this.$1);
             }
         },
         {
             symbol: 'hash',
             rhs: ['hashSegments'],
             action: function () {
-                return new this.yy.HashNode(this.$1);
+                return new this.yy.HashNode(this.lexer.lineNumber, this.$1);
             }
         },
         {
@@ -179,28 +179,28 @@ x({
             symbol: 'hashSegment',
             rhs: ['ID', 'EQUALS', 'STRING'],
             action: function () {
-                return [this.$1, new this.yy.StringNode(this.$3)];
+                return [this.$1, new this.yy.StringNode(this.lexer.lineNumber, this.$3)];
             }
         },
         {
             symbol: 'hashSegment',
-            rhs: ['ID', 'EQUALS', 'INTEGER'],
+            rhs: ['ID', 'EQUALS', 'NUMBER'],
             action: function () {
-                return [this.$1, new this.yy.IntegerNode(this.$3)];
+                return [this.$1, new this.yy.NumberNode(this.lexer.lineNumber, this.$3)];
             }
         },
         {
             symbol: 'hashSegment',
             rhs: ['ID', 'EQUALS', 'BOOLEAN'],
             action: function () {
-                return [this.$1, new this.yy.BooleanNode(this.$3)];
+                return [this.$1, new this.yy.BooleanNode(this.lexer.lineNumber, this.$3)];
             }
         },
         {
             symbol: 'path',
             rhs: ['pathSegments'],
             action: function () {
-                return new this.yy.IdNode(this.$1);
+                return new this.yy.IdNode(this.lexer.lineNumber, this.$1);
             }
         },
         {
@@ -265,7 +265,7 @@ x({
             {
                 state: 't',
                 regexp: /^{{{/,
-                token: 'OPEN_UN_ESCAPE'
+                token: 'OPEN_UN_ESCAPED'
             },
             {
                 state: 't',
@@ -329,6 +329,11 @@ x({
                 state: 't',
                 regexp: /^false/,
                 token: 'BOOLEAN'
+            },
+            {
+                state: 't',
+                regexp: /^\d+(\.\d+)?/,
+                token: 'NUMBER'
             },
             {
                 state: 't',

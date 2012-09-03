@@ -183,7 +183,7 @@ var lexer = new Lexer({
     }, {
         "state": "t",
         "regexp": /^{{{/,
-        "token": "OPEN_UN_ESCAPE"
+        "token": "OPEN_UN_ESCAPED"
     }, {
         "state": "t",
         "regexp": /^{{![\s\S]*?}}/,
@@ -236,6 +236,10 @@ var lexer = new Lexer({
         "token": "BOOLEAN"
     }, {
         "state": "t",
+        "regexp": /^\d+(\.\d+)?/,
+        "token": "NUMBER"
+    }, {
+        "state": "t",
         "regexp": /^=/,
         "token": "EQUALS"
     }, {
@@ -272,13 +276,13 @@ parser.productions = [{
     "symbol": "program",
     "rhs": ["statements", "inverse", "statements"],
     "action": function () {
-        return new this.yy.ProgramNode(this.$1, this.$3);
+        return new this.yy.ProgramNode(this.lexer.lineNumber, this.$1, this.$3);
     }
 }, {
     "symbol": "program",
     "rhs": ["statements"],
     "action": function () {
-        return new this.yy.ProgramNode(this.$1);
+        return new this.yy.ProgramNode(this.lexer.lineNumber, this.$1);
     }
 }, {
     "symbol": "statements",
@@ -296,12 +300,7 @@ parser.productions = [{
     "symbol": "statement",
     "rhs": ["openBlock", "program", "closeBlock"],
     "action": function () {
-        // 开始没有结束
-        if (!S.equals(this.$1.path.parts, this.$3.parts)) {
-            var lexer = this.lexer;
-            S.error("parse error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect {{/" + this.$1.path.parts + "}}");
-        }
-        return new this.yy.BlockNode(this.$1, this.$2, this.$3);
+        return new this.yy.BlockNode(this.lexer.lineNumber, this.$1, this.$2, this.$3);
     }
 }, {
     "symbol": "statement",
@@ -311,7 +310,7 @@ parser.productions = [{
     "symbol": "statement",
     "rhs": ["CONTENT"],
     "action": function () {
-        return new this.yy.ContentNode(this.$1);
+        return new this.yy.ContentNode(this.lexer.lineNumber, this.$1);
     }
 }, {
     "symbol": "openBlock",
@@ -346,19 +345,25 @@ parser.productions = [{
     "symbol": "inTpl",
     "rhs": ["path", "params", "hash"],
     "action": function () {
-        return new this.yy.TplNode(this.$1, this.$2, this.$3);
+        return new this.yy.TplNode(this.lexer.lineNumber, this.$1, this.$2, this.$3);
     }
 }, {
     "symbol": "inTpl",
     "rhs": ["path", "params"],
     "action": function () {
-        return new this.yy.TplNode(this.$1, this.$2);
+        return new this.yy.TplNode(this.lexer.lineNumber, this.$1, this.$2);
+    }
+}, {
+    "symbol": "inTpl",
+    "rhs": ["path", "hash"],
+    "action": function () {
+        return new this.yy.TplNode(this.lexer.lineNumber, this.$1, null, this.$2);
     }
 }, {
     "symbol": "inTpl",
     "rhs": ["path"],
     "action": function () {
-        return new this.yy.TplNode(this.$1);
+        return new this.yy.TplNode(this.lexer.lineNumber, this.$1);
     }
 }, {
     "symbol": "params",
@@ -380,25 +385,25 @@ parser.productions = [{
     "symbol": "param",
     "rhs": ["STRING"],
     "action": function () {
-        return new this.yy.StringNode(this.$1);
+        return new this.yy.StringNode(this.lexer.lineNumber, this.$1);
     }
 }, {
     "symbol": "param",
-    "rhs": ["INTEGER"],
+    "rhs": ["NUMBER"],
     "action": function () {
-        return new this.yy.IntegerNode(this.$1);
+        return new this.yy.NumberNode(this.lexer.lineNumber, this.$1);
     }
 }, {
     "symbol": "param",
     "rhs": ["BOOLEAN"],
     "action": function () {
-        return new this.yy.BooleanNode(this.$1);
+        return new this.yy.BooleanNode(this.lexer.lineNumber, this.$1);
     }
 }, {
     "symbol": "hash",
     "rhs": ["hashSegments"],
     "action": function () {
-        return new this.yy.HashNode(this.$1);
+        return new this.yy.HashNode(this.lexer.lineNumber, this.$1);
     }
 }, {
     "symbol": "hashSegments",
@@ -422,25 +427,25 @@ parser.productions = [{
     "symbol": "hashSegment",
     "rhs": ["ID", "EQUALS", "STRING"],
     "action": function () {
-        return [this.$1, new this.yy.StringNode(this.$3)];
+        return [this.$1, new this.yy.StringNode(this.lexer.lineNumber, this.$3)];
     }
 }, {
     "symbol": "hashSegment",
-    "rhs": ["ID", "EQUALS", "INTEGER"],
+    "rhs": ["ID", "EQUALS", "NUMBER"],
     "action": function () {
-        return [this.$1, new this.yy.IntegerNode(this.$3)];
+        return [this.$1, new this.yy.NumberNode(this.lexer.lineNumber, this.$3)];
     }
 }, {
     "symbol": "hashSegment",
     "rhs": ["ID", "EQUALS", "BOOLEAN"],
     "action": function () {
-        return [this.$1, new this.yy.BooleanNode(this.$3)];
+        return [this.$1, new this.yy.BooleanNode(this.lexer.lineNumber, this.$3)];
     }
 }, {
     "symbol": "path",
     "rhs": ["pathSegments"],
     "action": function () {
-        return new this.yy.IdNode(this.$1);
+        return new this.yy.IdNode(this.lexer.lineNumber, this.$1);
     }
 }, {
     "symbol": "pathSegments",
@@ -458,73 +463,81 @@ parser.productions = [{
 parser.table = {
     "gotos": {
         "0": {
-            "program": 4,
-            "statements": 5,
-            "statement": 6,
-            "openBlock": 7,
-            "tpl": 8
+            "program": 5,
+            "statements": 6,
+            "statement": 7,
+            "openBlock": 8,
+            "tpl": 9
         },
         "2": {
-            "inTpl": 10,
-            "path": 11,
-            "pathSegments": 12
+            "inTpl": 11,
+            "path": 12,
+            "pathSegments": 13
         },
         "3": {
-            "inTpl": 13,
-            "path": 11,
-            "pathSegments": 12
+            "inTpl": 14,
+            "path": 12,
+            "pathSegments": 13
         },
-        "5": {
-            "statement": 15,
-            "openBlock": 7,
-            "tpl": 8,
-            "inverse": 16
+        "4": {
+            "inTpl": 15,
+            "path": 12,
+            "pathSegments": 13
         },
-        "7": {
-            "program": 17,
-            "statements": 5,
-            "statement": 6,
-            "openBlock": 7,
-            "tpl": 8
+        "6": {
+            "statement": 17,
+            "openBlock": 8,
+            "tpl": 9,
+            "inverse": 18
         },
-        "11": {
-            "params": 21,
-            "param": 22,
-            "path": 23,
-            "pathSegments": 12
+        "8": {
+            "program": 19,
+            "statements": 6,
+            "statement": 7,
+            "openBlock": 8,
+            "tpl": 9
         },
-        "16": {
-            "statements": 27,
-            "statement": 6,
-            "openBlock": 7,
-            "tpl": 8
+        "12": {
+            "params": 25,
+            "param": 26,
+            "hash": 27,
+            "hashSegments": 28,
+            "hashSegment": 29,
+            "path": 30,
+            "pathSegments": 13
         },
-        "17": {
-            "closeBlock": 29
+        "18": {
+            "statements": 35,
+            "statement": 7,
+            "openBlock": 8,
+            "tpl": 9
         },
-        "21": {
-            "param": 31,
-            "hash": 32,
-            "hashSegments": 33,
-            "hashSegment": 34,
-            "path": 23,
-            "pathSegments": 12
+        "19": {
+            "closeBlock": 37
         },
-        "27": {
-            "statement": 15,
-            "openBlock": 7,
-            "tpl": 8
+        "25": {
+            "param": 39,
+            "hash": 40,
+            "hashSegments": 28,
+            "hashSegment": 29,
+            "path": 30,
+            "pathSegments": 13
         },
         "28": {
-            "path": 36,
-            "pathSegments": 12
+            "hashSegment": 42
         },
-        "33": {
-            "hashSegment": 39
+        "35": {
+            "statement": 17,
+            "openBlock": 8,
+            "tpl": 9
         },
-        "37": {
-            "path": 43,
-            "pathSegments": 12
+        "36": {
+            "path": 44,
+            "pathSegments": 13
+        },
+        "38": {
+            "path": 48,
+            "pathSegments": 13
         }
     },
     "action": {
@@ -537,9 +550,13 @@ parser.table = {
                 "type": 1,
                 "to": 2
             },
-            "OPEN": {
+            "OPEN_UN_ESCAPED": {
                 "type": 1,
                 "to": 3
+            },
+            "OPEN": {
+                "type": 1,
+                "to": 4
             }
         },
         "1": {
@@ -575,21 +592,27 @@ parser.table = {
         "2": {
             "ID": {
                 "type": 1,
-                "to": 9
+                "to": 10
             }
         },
         "3": {
             "ID": {
                 "type": 1,
-                "to": 9
+                "to": 10
             }
         },
         "4": {
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "5": {
             "$EOF": {
                 "type": 0
             }
         },
-        "5": {
+        "6": {
             "CONTENT": {
                 "type": 1,
                 "to": 1
@@ -600,52 +623,56 @@ parser.table = {
             },
             "OPEN_INVERSE": {
                 "type": 1,
-                "to": 14
+                "to": 16
             },
-            "OPEN": {
+            "OPEN_UN_ESCAPED": {
                 "type": 1,
                 "to": 3
             },
-            "$EOF": {
-                "type": 2,
-                "production": 2
-            },
-            "OPEN_END_BLOCK": {
-                "type": 2,
-                "production": 2
-            }
-        },
-        "6": {
-            "$EOF": {
-                "type": 2,
-                "production": 3
-            },
-            "OPEN_INVERSE": {
-                "type": 2,
-                "production": 3
-            },
-            "OPEN_BLOCK": {
-                "type": 2,
-                "production": 3
-            },
             "OPEN": {
-                "type": 2,
-                "production": 3
+                "type": 1,
+                "to": 4
             },
-            "OPEN_UN_ESCAPED": {
+            "$EOF": {
                 "type": 2,
-                "production": 3
-            },
-            "CONTENT": {
-                "type": 2,
-                "production": 3
+                "production": 2
             },
             "OPEN_END_BLOCK": {
                 "type": 2,
-                "production": 3
+                "production": 2
             }
         },
         "7": {
+            "$EOF": {
+                "type": 2,
+                "production": 3
+            },
+            "OPEN_INVERSE": {
+                "type": 2,
+                "production": 3
+            },
+            "OPEN_BLOCK": {
+                "type": 2,
+                "production": 3
+            },
+            "OPEN": {
+                "type": 2,
+                "production": 3
+            },
+            "OPEN_UN_ESCAPED": {
+                "type": 2,
+                "production": 3
+            },
+            "CONTENT": {
+                "type": 2,
+                "production": 3
+            },
+            "OPEN_END_BLOCK": {
+                "type": 2,
+                "production": 3
+            }
+        },
+        "8": {
             "CONTENT": {
                 "type": 1,
                 "to": 1
@@ -654,12 +681,16 @@ parser.table = {
                 "type": 1,
                 "to": 2
             },
-            "OPEN": {
+            "OPEN_UN_ESCAPED": {
                 "type": 1,
                 "to": 3
+            },
+            "OPEN": {
+                "type": 1,
+                "to": 4
             }
         },
-        "8": {
+        "9": {
             "$EOF": {
                 "type": 2,
                 "production": 6
@@ -687,97 +718,107 @@ parser.table = {
             "OPEN_END_BLOCK": {
                 "type": 2,
                 "production": 6
-            }
-        },
-        "9": {
-            "CLOSE": {
-                "type": 2,
-                "production": 31
-            },
-            "STRING": {
-                "type": 2,
-                "production": 31
-            },
-            "INTEGER": {
-                "type": 2,
-                "production": 31
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 31
-            },
-            "ID": {
-                "type": 2,
-                "production": 31
-            },
-            "SEP": {
-                "type": 2,
-                "production": 31
             }
         },
         "10": {
             "CLOSE": {
-                "type": 1,
-                "to": 18
+                "type": 2,
+                "production": 32
+            },
+            "ID": {
+                "type": 2,
+                "production": 32
+            },
+            "STRING": {
+                "type": 2,
+                "production": 32
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 32
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 32
+            },
+            "SEP": {
+                "type": 2,
+                "production": 32
             }
         },
         "11": {
-            "STRING": {
-                "type": 1,
-                "to": 19
-            },
-            "BOOLEAN": {
+            "CLOSE": {
                 "type": 1,
                 "to": 20
-            },
-            "ID": {
-                "type": 1,
-                "to": 9
-            },
-            "CLOSE": {
-                "type": 2,
-                "production": 15
             }
         },
         "12": {
-            "SEP": {
+            "STRING": {
+                "type": 1,
+                "to": 21
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 22
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 23
+            },
+            "ID": {
                 "type": 1,
                 "to": 24
             },
             "CLOSE": {
                 "type": 2,
-                "production": 29
-            },
-            "STRING": {
-                "type": 2,
-                "production": 29
-            },
-            "INTEGER": {
-                "type": 2,
-                "production": 29
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 29
-            },
-            "ID": {
-                "type": 2,
-                "production": 29
+                "production": 16
             }
         },
         "13": {
-            "CLOSE": {
+            "SEP": {
                 "type": 1,
-                "to": 25
+                "to": 31
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 30
+            },
+            "ID": {
+                "type": 2,
+                "production": 30
+            },
+            "STRING": {
+                "type": 2,
+                "production": 30
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 30
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 30
             }
         },
         "14": {
             "CLOSE": {
                 "type": 1,
-                "to": 26
+                "to": 32
             }
         },
         "15": {
+            "CLOSE": {
+                "type": 1,
+                "to": 33
+            }
+        },
+        "16": {
+            "CLOSE": {
+                "type": 1,
+                "to": 34
+            }
+        },
+        "17": {
             "$EOF": {
                 "type": 2,
                 "production": 4
@@ -807,7 +848,7 @@ parser.table = {
                 "production": 4
             }
         },
-        "16": {
+        "18": {
             "CONTENT": {
                 "type": 1,
                 "to": 1
@@ -816,18 +857,22 @@ parser.table = {
                 "type": 1,
                 "to": 2
             },
-            "OPEN": {
+            "OPEN_UN_ESCAPED": {
                 "type": 1,
                 "to": 3
+            },
+            "OPEN": {
+                "type": 1,
+                "to": 4
             }
         },
-        "17": {
+        "19": {
             "OPEN_END_BLOCK": {
                 "type": 1,
-                "to": 28
+                "to": 36
             }
         },
-        "18": {
+        "20": {
             "OPEN_BLOCK": {
                 "type": 2,
                 "production": 8
@@ -845,91 +890,125 @@ parser.table = {
                 "production": 8
             }
         },
-        "19": {
-            "CLOSE": {
-                "type": 2,
-                "production": 19
-            },
-            "ID": {
-                "type": 2,
-                "production": 19
-            },
-            "STRING": {
-                "type": 2,
-                "production": 19
-            },
-            "INTEGER": {
-                "type": 2,
-                "production": 19
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 19
-            }
-        },
-        "20": {
-            "CLOSE": {
-                "type": 2,
-                "production": 21
-            },
-            "ID": {
-                "type": 2,
-                "production": 21
-            },
-            "STRING": {
-                "type": 2,
-                "production": 21
-            },
-            "INTEGER": {
-                "type": 2,
-                "production": 21
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 21
-            }
-        },
         "21": {
+            "CLOSE": {
+                "type": 2,
+                "production": 20
+            },
+            "ID": {
+                "type": 2,
+                "production": 20
+            },
+            "STRING": {
+                "type": 2,
+                "production": 20
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 20
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 20
+            }
+        },
+        "22": {
+            "CLOSE": {
+                "type": 2,
+                "production": 22
+            },
+            "ID": {
+                "type": 2,
+                "production": 22
+            },
+            "STRING": {
+                "type": 2,
+                "production": 22
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 22
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 22
+            }
+        },
+        "23": {
+            "CLOSE": {
+                "type": 2,
+                "production": 21
+            },
+            "ID": {
+                "type": 2,
+                "production": 21
+            },
+            "STRING": {
+                "type": 2,
+                "production": 21
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 21
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 21
+            }
+        },
+        "24": {
+            "EQUALS": {
+                "type": 1,
+                "to": 38
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 32
+            },
+            "ID": {
+                "type": 2,
+                "production": 32
+            },
+            "STRING": {
+                "type": 2,
+                "production": 32
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 32
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 32
+            },
+            "SEP": {
+                "type": 2,
+                "production": 32
+            }
+        },
+        "25": {
             "STRING": {
                 "type": 1,
-                "to": 19
+                "to": 21
             },
             "BOOLEAN": {
                 "type": 1,
-                "to": 20
+                "to": 22
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 23
             },
             "ID": {
                 "type": 1,
-                "to": 30
+                "to": 24
             },
             "CLOSE": {
                 "type": 2,
                 "production": 14
             }
         },
-        "22": {
-            "CLOSE": {
-                "type": 2,
-                "production": 17
-            },
-            "ID": {
-                "type": 2,
-                "production": 17
-            },
-            "STRING": {
-                "type": 2,
-                "production": 17
-            },
-            "INTEGER": {
-                "type": 2,
-                "production": 17
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 17
-            }
-        },
-        "23": {
+        "26": {
             "CLOSE": {
                 "type": 2,
                 "production": 18
@@ -942,7 +1021,7 @@ parser.table = {
                 "type": 2,
                 "production": 18
             },
-            "INTEGER": {
+            "NUMBER": {
                 "type": 2,
                 "production": 18
             },
@@ -951,13 +1030,91 @@ parser.table = {
                 "production": 18
             }
         },
-        "24": {
+        "27": {
+            "CLOSE": {
+                "type": 2,
+                "production": 15
+            }
+        },
+        "28": {
             "ID": {
                 "type": 1,
-                "to": 35
+                "to": 41
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 23
             }
         },
-        "25": {
+        "29": {
+            "CLOSE": {
+                "type": 2,
+                "production": 25
+            },
+            "ID": {
+                "type": 2,
+                "production": 25
+            }
+        },
+        "30": {
+            "CLOSE": {
+                "type": 2,
+                "production": 19
+            },
+            "ID": {
+                "type": 2,
+                "production": 19
+            },
+            "STRING": {
+                "type": 2,
+                "production": 19
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 19
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 19
+            }
+        },
+        "31": {
+            "ID": {
+                "type": 1,
+                "to": 43
+            }
+        },
+        "32": {
+            "$EOF": {
+                "type": 2,
+                "production": 11
+            },
+            "OPEN_INVERSE": {
+                "type": 2,
+                "production": 11
+            },
+            "OPEN_BLOCK": {
+                "type": 2,
+                "production": 11
+            },
+            "OPEN": {
+                "type": 2,
+                "production": 11
+            },
+            "OPEN_UN_ESCAPED": {
+                "type": 2,
+                "production": 11
+            },
+            "CONTENT": {
+                "type": 2,
+                "production": 11
+            },
+            "OPEN_END_BLOCK": {
+                "type": 2,
+                "production": 11
+            }
+        },
+        "33": {
             "$EOF": {
                 "type": 2,
                 "production": 10
@@ -987,7 +1144,7 @@ parser.table = {
                 "production": 10
             }
         },
-        "26": {
+        "34": {
             "OPEN_BLOCK": {
                 "type": 2,
                 "production": 12
@@ -1005,7 +1162,7 @@ parser.table = {
                 "production": 12
             }
         },
-        "27": {
+        "35": {
             "CONTENT": {
                 "type": 1,
                 "to": 1
@@ -1014,9 +1171,13 @@ parser.table = {
                 "type": 1,
                 "to": 2
             },
-            "OPEN": {
+            "OPEN_UN_ESCAPED": {
                 "type": 1,
                 "to": 3
+            },
+            "OPEN": {
+                "type": 1,
+                "to": 4
             },
             "$EOF": {
                 "type": 2,
@@ -1027,13 +1188,13 @@ parser.table = {
                 "production": 1
             }
         },
-        "28": {
+        "36": {
             "ID": {
                 "type": 1,
-                "to": 9
+                "to": 10
             }
         },
-        "29": {
+        "37": {
             "$EOF": {
                 "type": 2,
                 "production": 5
@@ -1063,147 +1224,141 @@ parser.table = {
                 "production": 5
             }
         },
-        "30": {
-            "EQUALS": {
-                "type": 1,
-                "to": 37
-            },
-            "CLOSE": {
-                "type": 2,
-                "production": 31
-            },
-            "ID": {
-                "type": 2,
-                "production": 31
-            },
-            "STRING": {
-                "type": 2,
-                "production": 31
-            },
-            "INTEGER": {
-                "type": 2,
-                "production": 31
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 31
-            },
-            "SEP": {
-                "type": 2,
-                "production": 31
-            }
-        },
-        "31": {
-            "CLOSE": {
-                "type": 2,
-                "production": 16
-            },
-            "ID": {
-                "type": 2,
-                "production": 16
-            },
-            "STRING": {
-                "type": 2,
-                "production": 16
-            },
-            "INTEGER": {
-                "type": 2,
-                "production": 16
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 16
-            }
-        },
-        "32": {
-            "CLOSE": {
-                "type": 2,
-                "production": 13
-            }
-        },
-        "33": {
-            "ID": {
-                "type": 1,
-                "to": 38
-            },
-            "CLOSE": {
-                "type": 2,
-                "production": 22
-            }
-        },
-        "34": {
-            "CLOSE": {
-                "type": 2,
-                "production": 24
-            },
-            "ID": {
-                "type": 2,
-                "production": 24
-            }
-        },
-        "35": {
-            "CLOSE": {
-                "type": 2,
-                "production": 30
-            },
-            "STRING": {
-                "type": 2,
-                "production": 30
-            },
-            "INTEGER": {
-                "type": 2,
-                "production": 30
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 30
-            },
-            "ID": {
-                "type": 2,
-                "production": 30
-            },
-            "SEP": {
-                "type": 2,
-                "production": 30
-            }
-        },
-        "36": {
-            "CLOSE": {
-                "type": 1,
-                "to": 40
-            }
-        },
-        "37": {
-            "STRING": {
-                "type": 1,
-                "to": 41
-            },
-            "BOOLEAN": {
-                "type": 1,
-                "to": 42
-            },
-            "ID": {
-                "type": 1,
-                "to": 9
-            }
-        },
         "38": {
-            "EQUALS": {
+            "STRING": {
                 "type": 1,
-                "to": 37
+                "to": 45
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 46
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 47
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
             }
         },
         "39": {
             "CLOSE": {
                 "type": 2,
-                "production": 23
+                "production": 17
             },
             "ID": {
                 "type": 2,
-                "production": 23
+                "production": 17
+            },
+            "STRING": {
+                "type": 2,
+                "production": 17
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 17
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 17
             }
         },
         "40": {
+            "CLOSE": {
+                "type": 2,
+                "production": 13
+            }
+        },
+        "41": {
+            "EQUALS": {
+                "type": 1,
+                "to": 38
+            }
+        },
+        "42": {
+            "CLOSE": {
+                "type": 2,
+                "production": 24
+            },
+            "ID": {
+                "type": 2,
+                "production": 24
+            }
+        },
+        "43": {
+            "CLOSE": {
+                "type": 2,
+                "production": 31
+            },
+            "ID": {
+                "type": 2,
+                "production": 31
+            },
+            "STRING": {
+                "type": 2,
+                "production": 31
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 31
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 31
+            },
+            "SEP": {
+                "type": 2,
+                "production": 31
+            }
+        },
+        "44": {
+            "CLOSE": {
+                "type": 1,
+                "to": 49
+            }
+        },
+        "45": {
+            "CLOSE": {
+                "type": 2,
+                "production": 27
+            },
+            "ID": {
+                "type": 2,
+                "production": 27
+            }
+        },
+        "46": {
+            "CLOSE": {
+                "type": 2,
+                "production": 29
+            },
+            "ID": {
+                "type": 2,
+                "production": 29
+            }
+        },
+        "47": {
+            "CLOSE": {
+                "type": 2,
+                "production": 28
+            },
+            "ID": {
+                "type": 2,
+                "production": 28
+            }
+        },
+        "48": {
+            "CLOSE": {
+                "type": 2,
+                "production": 26
+            },
+            "ID": {
+                "type": 2,
+                "production": 26
+            }
+        },
+        "49": {
             "$EOF": {
                 "type": 2,
                 "production": 9
@@ -1231,36 +1386,6 @@ parser.table = {
             "OPEN_END_BLOCK": {
                 "type": 2,
                 "production": 9
-            }
-        },
-        "41": {
-            "CLOSE": {
-                "type": 2,
-                "production": 26
-            },
-            "ID": {
-                "type": 2,
-                "production": 26
-            }
-        },
-        "42": {
-            "CLOSE": {
-                "type": 2,
-                "production": 28
-            },
-            "ID": {
-                "type": 2,
-                "production": 28
-            }
-        },
-        "43": {
-            "CLOSE": {
-                "type": 2,
-                "production": 25
-            },
-            "ID": {
-                "type": 2,
-                "production": 25
             }
         }
     }

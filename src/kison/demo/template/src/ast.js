@@ -6,21 +6,30 @@ KISSY.add("template/ast", function (S) {
 
     var ast = {};
 
-    ast.ProgramNode = function (statement, inverse) {
-        this.statement = statement;
+    ast.ProgramNode = function (lineNumber, statements, inverse) {
+        this.lineNumber = lineNumber;
+        this.statements = statements;
         this.inverse = inverse;
     };
 
     ast.ProgramNode.prototype.type = 'program';
 
-    ast.BlockNode = function (tpl, program) {
+    ast.BlockNode = function (lineNumber, tpl, program, close) {
+        // 开始没有结束
+        if (!S.equals(tpl.path.parts, close.parts)) {
+            S.error("parse error at line " + lineNumber +
+                ":\n" + "expect {{/" + tpl.path.parts +
+                "}} not {{/" + close.parts + "}}");
+        }
+        this.lineNumber = lineNumber;
         this.tpl = tpl;
         this.program = program;
     };
 
     ast.BlockNode.prototype.type = 'block';
 
-    ast.TplNode = function (path, params, hash) {
+    ast.TplNode = function (lineNumber, path, params, hash) {
+        this.lineNumber = lineNumber;
         this.path = path;
         this.params = params;
         this.hash = hash;
@@ -29,31 +38,36 @@ KISSY.add("template/ast", function (S) {
 
     ast.TplNode.prototype.type = 'tpl';
 
-    ast.ContentNode = function (value) {
+    ast.ContentNode = function (lineNumber, value) {
+        this.lineNumber = lineNumber;
         this.value = value;
     };
 
     ast.ContentNode.prototype.type = 'content';
 
-    ast.StringNode = function (value) {
+    ast.StringNode = function (lineNumber, value) {
+        this.lineNumber = lineNumber;
         this.value = value;
     };
 
     ast.StringNode.prototype.type = 'string';
 
-    ast.IntegerNode = function (value) {
+    ast.NumberNode = function (lineNumber, value) {
+        this.lineNumber = lineNumber;
         this.value = value;
     };
 
-    ast.IntegerNode.prototype.type = 'integer';
+    ast.NumberNode.prototype.type = 'integer';
 
-    ast.BooleanNode = function (value) {
+    ast.BooleanNode = function (lineNumber, value) {
+        this.lineNumber = lineNumber;
         this.value = value;
     };
 
     ast.BooleanNode.prototype.type = 'boolean';
 
-    ast.HashNode = function (raw) {
+    ast.HashNode = function (lineNumber, raw) {
+        this.lineNumber = lineNumber;
         var value = {};
         S.each(raw, function (r) {
             value[r[0]] = r[1];
@@ -63,7 +77,8 @@ KISSY.add("template/ast", function (S) {
 
     ast.HashNode.prototype.type = 'hash';
 
-    ast.IdNode = function (raw) {
+    ast.IdNode = function (lineNumber, raw) {
+        this.lineNumber = lineNumber;
         var parts = [], depth = 0;
         S.each(raw, function (p) {
             if (p == "..") {
