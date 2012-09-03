@@ -21,7 +21,7 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
          * v.effect (String): Default:none. can be set as "fade" or "slide" <br>
          * v.target (String|KISS.Node): The target node from which overlay should animate from while showing. Since KISSY 1.3.<br>
          * v.duration (Number): in seconds. Default:0.5. <br>
-         * v.easing (String): see {@link Anim.Easing} <br>
+         * v.easing (String): see {@link KISSY.Anim.Easing} <br>
          * @type {Object}
          */
         effect:{
@@ -47,8 +47,7 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
         ghost.style.visibility = "";
         ghost.style.overflow = "hidden";
         ghost.className += " " + self.get("prefixCls") + "overlay-ghost";
-        var body;
-        var elBody
+        var body,elBody;
         if (elBody = self.get("body")) {
             body = DOM.get('.ks-stdmod-body', ghost);
             $(body).css({
@@ -150,7 +149,7 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
     Effect.prototype = {
 
         __bindUI:function () {
-            var self = this
+            var self = this;
             self.on("hide", function () {
                 processEffect(self, 0);
             });

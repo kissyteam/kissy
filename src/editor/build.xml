@@ -31,10 +31,7 @@
     <target name="editor-js">
         <concat destfile="${component.src.dir.tmp}/editor-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <fileset dir="${src.dir}/editor/core"
-                     includes="**/*.js"
-                     excludes="**/dynamic/**/*.js"
-                    />
-            <path location="${src.dir}/editor.js"/>
+                     includes="**/*.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;"/>
             </filterchain>
@@ -67,7 +64,7 @@
         <concat destfile="${component.src.dir.tmp}/full.js">
             <path location="${component.src.dir.tmp}/editor-pkg.js"/>
             <fileset dir="${component.src.dir.tmp}/plugin/"
-                     excludes="**/dialog.js"
+                     excludes="**/dialog.js,**/dynamic/**/*.js"
                      includes="**/*.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;"/>
@@ -83,19 +80,19 @@
 
     <target name="extract-dependency">
         <java classname="com.taobao.f2e.ExtractDependency">
+
             <arg value="-baseUrls"/>
-            <arg value="${src.dir}"/>
+            <arg value="${src.dir}/editor/plugin/"/>
 
             <arg value="-encodings"/>
             <arg value="${charset}"/>
 
-            <arg value="-includeReg"/>
-            <arg value="editor/plugin(?:/.*)"/>
-
             <arg value="-outputEncoding"/>
             <arg value="utf-8"/>
+
             <arg value="-output"/>
-            <arg value="${src.dir}/editor/core/dependency.js"/>
+            <arg value="${src.dir}/editor/core/deps.js"/>
+
             <classpath>
                 <pathelement path="${kissy-tools.dir}/module-compiler/module-compiler.jar"/>
                 <pathelement path="${java.class.path}"/>

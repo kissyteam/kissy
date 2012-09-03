@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 7 22:12
+build time: Aug 27 21:29
 */
 /**
  * color button.
@@ -110,7 +110,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
 
     return Button.extend({
 
-        initializer:function () {
+        initializer: function () {
             var self = this;
             self.on("blur", function () {
                 // make select color works
@@ -128,21 +128,21 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             });
         },
 
-        _prepare:function () {
+        _prepare: function () {
             var self = this,
                 editor = self.get("editor"),
                 colorPanel;
 
             self.colorWin = new Overlay4E({
                 // TODO 变成了 -1??
-                elAttrs:{
-                    tabindex:0
+                elAttrs: {
+                    tabindex: 0
                 },
-                elCls:"ks-editor-popup",
-                content:html,
-                autoRender:true,
-                width:170,
-                zIndex:Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)
+                elCls: "ks-editor-popup",
+                content: html,
+                autoRender: true,
+                width: 170,
+                zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)
             });
 
             var colorWin = self.colorWin;
@@ -163,15 +163,23 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             self._show();
         },
 
-        _show:function () {
+        _show: function () {
             var self = this,
                 el = self.get("el"),
                 colorWin = self.colorWin;
-            colorWin.align(el, ["bl", "tl"], [0, 2]);
+            colorWin.set("align", {
+                node: el,
+                points: ["bl", "tl"],
+                offset: [0, 2],
+                overflow: {
+                    adjustX: 1,
+                    adjustY: 1
+                }
+            });
             colorWin.show();
         },
 
-        _selectColor:function (ev) {
+        _selectColor: function (ev) {
             ev.halt();
             var self = this,
                 t = new Node(ev.target);
@@ -180,23 +188,23 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             }
         },
 
-        destructor:function () {
+        destructor: function () {
             var self = this;
             if (self.colorWin) {
                 self.colorWin.destroy();
             }
         }
     }, {
-        ATTRS:{
-            checkable:{
-                value:true
+        ATTRS: {
+            checkable: {
+                value: true
             },
-            mode:{
-                value:Editor.WYSIWYG_MODE
+            mode: {
+                value: Editor.WYSIWYG_MODE
             }
         }
     });
 
 }, {
-    requires:['editor', '../button/', '../overlay/', '../dialog-loader/']
+    requires: ['editor', '../button/', '../overlay/', '../dialog-loader/']
 });

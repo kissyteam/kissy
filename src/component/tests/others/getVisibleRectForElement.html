@@ -91,7 +91,6 @@ overflow: auto;">
             Event.on(document, "keydown", function (ev) {
                 var index = ev.keyCode - 48;
                 if (index > 0 && index < 7) {
-                    //debugger
                     var id = 'd' + index;
                     var rect = getVisibleRectForElement(DOM.get("#" + id));
                     if (rect) {

@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Simple template</title>
+</head>
+<body>
+
+<textarea style="width: 400px;height: 400px;" id="tpl">
+    my first {{template}} o
+    {{!
+
+    haha
+
+    }}
+    {{#x}} y {{else}} z {{/x}}
+</textarea>
+<button id="parse">parse</button>
+<script src="../../../../../build/kissy.js"></script>
+<script src="../src/ast.js"></script>
+<script src="../src/compiler.js"></script>
+<script src="../src/parser.js"></script>
+<script>
+    KISSY.use("template/compiler", function (S, compiler) {
+        var $= S.all;
+        $('#parse').on('click', function () {
+            S.log(compiler.compile($('#tpl').val()));
+        });
+    });
+</script>
+</body>
+</html>

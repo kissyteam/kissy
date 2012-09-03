@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 10 00:30
+build time: Aug 21 20:57
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -67,7 +67,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
              * @return {Boolean} Whether the event was handled by the container (or one of
              *     its children).
              * @protected
-             * @override
+             *
              */
             handleKeyEventInternal:function (e) {
 
@@ -144,7 +144,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
 
             /**
              * Whether this menu contains specified html element.
-             * @param {NodeList} element Html Element to be tested.
+             * @param {KISSY.NodeList} element html Element to be tested.
              * @return {Boolean}
              */
             containsElement:function (element) {
@@ -523,13 +523,12 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
  * @fileOverview menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, Separator, PopupMenu, PopupMenuRender, FilterMenu) {
+KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, PopupMenu, PopupMenuRender, FilterMenu) {
     Menu.Render = Render;
     Menu.Item = Item;
     Item.Render = ItemRender;
     Menu.SubMenu = SubMenu;
     SubMenu.Render = SubMenuRender;
-    Menu.Separator = Separator;
     Menu.PopupMenu = PopupMenu;
     PopupMenu.Render = PopupMenuRender;
     Menu.FilterMenu = FilterMenu;
@@ -542,7 +541,6 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
         'menu/menuitemRender',
         'menu/submenu',
         'menu/submenuRender',
-        'menu/separator',
         'menu/popupmenu',
         'menu/popupmenuRender',
         'menu/filtermenu'
@@ -621,7 +619,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * Protected, should only be overridden by subclasses.
              * @param {Event.Object} e Mouseenter event object.
              * @protected
-             * @override
+             *
              */
             handleMouseEnter:function (e) {
                 // 父亲不允许自己处理
@@ -636,7 +634,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * Protected, should only be overridden by subclasses.
              * @param {Event.Object} e Mouseleave event object.
              * @protected
-             * @override
+             *
              */
             handleMouseLeave:function (e) {
                 // 父亲不允许自己处理
@@ -652,7 +650,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * If checkable, then toggle it.
              * Finally fire click on its parent menu.
              * @protected
-             * @override
+             *
              */
             performActionInternal:function () {
                 var self = this;
@@ -686,7 +684,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
 
             /**
              * Check whether this menu item contains specified element.
-             * @param {NodeList} element Element to be tested.
+             * @param {KISSY.NodeList} element Element to be tested.
              */
             containsElement:function (element) {
                 return this.get('view') && this.get('view').containsElement(element);
@@ -871,7 +869,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
              * Handle mouseleave event.Make parent subMenu item unHighlighted.
              * Protected, should only be overridden by subclasses.
              * @protected
-             * @override
+             *
              */
             handleMouseLeave:function () {
                 var self = this;
@@ -886,7 +884,7 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
              * Suppose it has focus (as a context menu), then it must hide when lose focus.
              * Protected, should only be overridden by subclasses.
              * @protected
-             * @override
+             *
              */
             handleBlur:function () {
                 var self = this;
@@ -940,30 +938,6 @@ KISSY.add("menu/popupmenuRender", function (S, UA, Component, MenuRender) {
     ]);
 }, {
     requires:['ua', 'component', './menuRender']
-});/**
- * @fileOverview menu separator def
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/separator", function (S, Component, Separator) {
-
-    /**
-     * @extends Separator
-     * @class
-     * Menu separator.
-     * xclass: 'menuseparator'.
-     * @memberOf Menu
-     * @name Separator
-     */
-    var MenuSeparator = Separator.extend({
-    }, {}, {
-        xclass:'menuseparator',
-        priority:20
-    });
-
-    return MenuSeparator;
-
-}, {
-    requires:['component', 'separator']
 });/**
  * @fileOverview submenu model and control for kissy , transfer item's keycode to menu
  * @author yiminghe@gmail.com
@@ -1190,7 +1164,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     srcNode:el,
                     prefixCls:self.get("prefixCls")
                 });
-                self.__set("menu", menu);
+                self.setInternal("menu", menu);
             },
 
             destructor:function () {
@@ -1237,7 +1211,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 menu:{
                     setter:function (m) {
                         if (m instanceof  Component.Controller) {
-                            m.__set("parent", this);
+                            m.setInternal("parent", this);
                         }
                     }
                 },
@@ -1262,7 +1236,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         if (m && m.xclass) {
             if (init) {
                 m = Component.create(m, self);
-                self.__set("menu", m);
+                self.setInternal("menu", m);
             } else {
                 return null;
             }
@@ -1357,27 +1331,29 @@ KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
         ARROW_TMPL = '<span class="ks-submenu-arrow">►<' + '/span>';
 
     SubMenuRender = MenuItemRender.extend({
-        createDom:function () {
+        createDom: function () {
             var self = this,
                 el = self.get("el");
             el.attr("aria-haspopup", "true")
                 .append(ARROW_TMPL);
         }
     }, {
-        ATTRS:{
-            arrowEl:{},
-            contentElCls:{
-                value:"ks-menuitem-content"
-            },
-            contentEl:{
-                valueFn:function () {
+        ATTRS: {
+            arrowEl: {},
+            contentEl: {
+                valueFn: function () {
                     return S.all(CONTENT_TMPL);
                 }
+            }
+        },
+        HTML_PARSER: {
+            contentEl: function (el) {
+                return el.children(".ks-menuitem-content");
             }
         }
     });
 
     return SubMenuRender;
 }, {
-    requires:['./menuitemRender']
+    requires: ['./menuitemRender']
 });

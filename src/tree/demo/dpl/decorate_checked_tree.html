@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>KISSY Decorated Check Tree</title>
+    <link href="../../../../build/css/dpl/base.css" rel="stylesheet"/>
+    <link href="../../../../src/button/assets/dpl.css" rel="stylesheet"/>
+    <link href="../../assets/dpl.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+
+
+    <h1>KISSY Decorated Simple Tree</h1>
+
+
+    <a href="javascript:void(0)" id="expandAll" class="ks-button">展开全部</a>&nbsp;
+    <a href="javascript:void(0)" id="collapseAll" class="ks-button">关闭全部</a>
+
+    <div id="treeContainer" style="width: 200px;margin: 20px 0;">
+
+        <div id='root' class="ks-tree">
+            <span class="ks-tree-node-content">淘宝网</span>
+
+            <div class="ks-tree-children">
+                <div class="ks-tree-node ks-check-tree-node">
+                    <span class="ks-tree-node-content">收藏夹</span>
+
+                    <div class="ks-tree-children">
+                        <div class="ks-tree-node ks-check-tree-node">
+                            <span class="ks-tree-node-content">收藏的宝贝</span>
+                        </div>
+                        <div class="ks-tree-node ks-check-tree-node">
+                            <span class="ks-tree-node-content">收藏的店铺</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ks-tree-node ks-check-tree-node">
+                    <span class="ks-tree-node-content">我要买</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <hr/>
+
+
+    <script src="../../../../build/kissy.js"></script>
+    <script src="../../src/base.js"></script>
+    <script src="../../src/node.js"></script>
+    <script src="../../src/node-render.js"></script>
+    <script src="../../src/check-node.js"></script>
+    <script src="../../src/check-node-render.js"></script>
+    <script src="../../src/check-tree.js"></script>
+    <script src="../../src/check-tree-render.js"></script>
+    <script src="../../src/tree.js"></script>
+    <script src="../../src/tree-manager.js"></script>
+    <script src="../../src/tree-manager-render.js"></script>
+    <script src="../../src/tree-render.js"></script>
+    <script>
+        KISSY.use("tree", function (S, Tree) {
+            var $ = S.all;
+
+            var tree = new Tree.CheckTree({
+                content: "淘宝网",
+
+                expanded: true,
+                // showRootNode:false,
+                srcNode: "#root"
+            });
+
+            tree.render();
+
+            tree.on("click", function (e) {
+                S.log("action : " + e.target.get("content"));
+            });
+
+            $("#expandAll").on("click", function () {
+                tree.expandAll();
+            });
+
+            $("#collapseAll").on("click", function () {
+                tree.collapseAll();
+            });
+        });
+    </script>
+</div>
+</body>
+</html>

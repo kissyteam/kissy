@@ -1,21 +1,53 @@
 /**
+ * @ignore
  * @fileOverview ua-extra
  * @author gonghao@ghsky.com
  */
-KISSY.add('ua/extra', function (S, UA) {
+KISSY.add('ua/extra', function (S, UA, undefined) {
     var win = S.Env.host,
         navigator = win.navigator,
         ua = navigator.userAgent,
         m, external, shell,
-        o = { },
+        o = {
+            /**
+             * 360 browser version
+             * @type undefined|Number
+             * @member KISSY.UA
+             */
+            se360: undefined,
+            /**
+             * maxthon version
+             * @type undefined|Number
+             * @member KISSY.UA
+             */
+            maxthon: undefined,
+            /**
+             * tencent browser version
+             * @type undefined|Number
+             * @member KISSY.UA
+             */
+            tt: undefined,
+            /**
+             * theworld version
+             * @type undefined|Number
+             * @member KISSY.UA
+             */
+            theworld: undefined,
+            /**
+             * sougou browser version
+             * @type undefined|Number
+             * @member KISSY.UA
+             */
+            sougou: undefined
+        },
         numberify = UA._numberify;
 
-    /**
-     * 说明：
-     * @子涯总结的各国产浏览器的判断依据: http://spreadsheets0.google.com/ccc?key=tluod2VGe60_ceDrAaMrfMw&hl=zh_CN#gid=0
-     * 根据 CNZZ 2009 年度浏览器占用率报告，优化了判断顺序：http://www.tanmi360.com/post/230.htm
-     * 如果检测出浏览器，但是具体版本号未知用 0.1 作为标识
-     * 世界之窗 & 360 浏览器，在 3.x 以下的版本都无法通过 UA 或者特性检测进行判断，所以目前只要检测到 UA 关键字就认为起版本号为 3
+    /*
+     说明：
+     @子涯总结的各国产浏览器的判断依据: http://spreadsheets0.google.com/ccc?key=tluod2VGe60_ceDrAaMrfMw&hl=zh_CN#gid=0
+     根据 CNZZ 2009 年度浏览器占用率报告，优化了判断顺序：http://www.tanmi360.com/post/230.htm
+     如果检测出浏览器，但是具体版本号未知用 0.1 作为标识
+     世界之窗 & 360 浏览器，在 3.x 以下的版本都无法通过 UA 或者特性检测进行判断，所以目前只要检测到 UA 关键字就认为起版本号为 3
      */
 
     // 360Browser
@@ -52,5 +84,5 @@ KISSY.add('ua/extra', function (S, UA) {
     S.mix(UA, o);
     return UA;
 }, {
-    requires:["ua/base"]
+    requires: ['ua/base']
 });

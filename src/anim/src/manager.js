@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview single timer for the whole anim module
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/manager", function(S) {
+KISSY.add('anim/manager', function(S) {
     var stamp = S.stamp;
 
     return {

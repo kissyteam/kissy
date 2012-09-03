@@ -34,7 +34,6 @@
 
 <script>
     KISSY.use("dom,event,event/hashchange", function(S, DOM, Event) {
-        debugger
         Event.on(window, "hashchange", function(ev) {
             DOM.get('#test').innerHTML = location.hash;
         });

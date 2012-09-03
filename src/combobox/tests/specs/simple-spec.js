@@ -13,7 +13,7 @@ KISSY.use("combobox", function (S, ComboBox) {
 
         beforeEach(function () {
             this.addMatchers({
-                toBeNearEqual:function (expected) {
+                toBeNearEqual: function (expected) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
                 }
             });
@@ -25,18 +25,18 @@ KISSY.use("combobox", function (S, ComboBox) {
         var KeyCodes = Event.KeyCodes;
 
         var comboBox = new ComboBox({
-            width:200,
-            render:'#container',
-            dataSource:{
-                xclass:'combobox-LocalDataSource',
-                data:data
+            width: 200,
+            render: '#container',
+            dataSource: {
+                xclass: 'combobox-LocalDataSource',
+                data: data
             },
-            format:function (q, data) {
+            format: function (q, data) {
                 var ret = [];
                 S.each(data, function (d) {
                     ret.push({
-                        content:d.replace(new RegExp(S.escapeRegExp(q), "g"), "<b>$&</b>"),
-                        textContent:d
+                        content: d.replace(new RegExp(S.escapeRegExp(q), "g"), "<b>$&</b>"),
+                        textContent: d
                     })
                 });
                 return ret;
@@ -69,9 +69,9 @@ KISSY.use("combobox", function (S, ComboBox) {
             runs(function () {
                 var menuEl = comboBox.get("menu").get("el");
                 expect(comboBox.get("menu").get("visible")).toBe(true);
-                var offsetT = DOM.offset(t);
+                var offsetT = comboBox.get("el").offset();
                 // var width=DOM.outerWidth(t);
-                var height = DOM.outerHeight(t);
+                var height = comboBox.get("el").outerHeight();
                 var expectLeft = offsetT.left;
                 var expectTop = offsetT.top + height;
                 var menuElOffset = menuEl.offset();
@@ -206,7 +206,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 expect(menu.get("activeItem")).toBe(children[0]);
 
                 jasmine.simulate(t, "keydown", {
-                    keyCode:KeyCodes.DOWN
+                    keyCode: KeyCodes.DOWN
                 });
 
             });
@@ -221,7 +221,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 expect(t.value).toBe(children[1].get("textContent"));
 
                 jasmine.simulate(t, "keydown", {
-                    keyCode:KeyCodes.DOWN
+                    keyCode: KeyCodes.DOWN
                 });
             });
 
@@ -232,7 +232,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 // 第3个高亮
                 expect(menu.get("activeItem")).toBe(children[2]);
                 jasmine.simulate(t, "keydown", {
-                    keyCode:KeyCodes.DOWN
+                    keyCode: KeyCodes.DOWN
                 });
             });
             waits(100);
@@ -274,7 +274,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 expect(menu.get("activeItem")).toBe(children[0]);
 
                 jasmine.simulate(children[1].get("el")[0], "mouseover", {
-                    relatedTarget:children[0].get("el")[0]
+                    relatedTarget: children[0].get("el")[0]
                 });
 
             });
@@ -313,7 +313,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
                 jasmine.simulate(t, "keydown", {
-                    keyCode:KeyCodes.DOWN
+                    keyCode: KeyCodes.DOWN
                 });
 
             });
@@ -325,7 +325,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 expect(menu.get("activeItem")).toBe(children[1]);
 
                 jasmine.simulate(t, "keydown", {
-                    keyCode:KeyCodes.ENTER
+                    keyCode: KeyCodes.ENTER
                 });
             });
 
@@ -362,7 +362,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
                 jasmine.simulate(t, "keydown", {
-                    keyCode:KeyCodes.DOWN
+                    keyCode: KeyCodes.DOWN
                 });
 
             });
@@ -374,7 +374,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 expect(menu.get("activeItem")).toBe(children[1]);
                 expect(t.value).toBe(children[1].get("textContent"));
                 jasmine.simulate(t, "keydown", {
-                    keyCode:KeyCodes.ESC
+                    keyCode: KeyCodes.ESC
                 });
             });
 

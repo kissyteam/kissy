@@ -5,11 +5,9 @@
 KISSY.add('component/uibase/box', function (S) {
 
     /**
-     * @name Box
-     * @memberOf Component.UIBase
-     * @class
      * Box extension class.
      * Represent a dom element.
+     * @class Component.UIBase.Box
      */
     function Box() {
     }
@@ -22,7 +20,7 @@ KISSY.add('component/uibase/box', function (S) {
         /**
          * component's html content.
          * Note: content and srcNode can not be set both!
-         * @type {String|NodeList}
+         * @type {String|KISSY.NodeList}
          */
         content:{
             view:1
@@ -64,7 +62,7 @@ KISSY.add('component/uibase/box', function (S) {
         },
         /**
          * archor element where component insert before
-         * @type {NodeList}
+         * @type {KISSY.NodeList}
          */
         elBefore:{
             // better named to renderBefore, too late !
@@ -72,7 +70,7 @@ KISSY.add('component/uibase/box', function (S) {
         },
         /**
          * readonly. root element of current component
-         * @type {NodeList}
+         * @type {KISSY.NodeList}
          */
         el:{
             view:1
@@ -80,7 +78,7 @@ KISSY.add('component/uibase/box', function (S) {
 
         /**
          * archor element where component append to
-         * @type {NodeList}
+         * @type {KISSY.NodeList}
          */
         render:{
             view:1
@@ -106,7 +104,7 @@ KISSY.add('component/uibase/box', function (S) {
 
         /**
          * the node to parse for configuration values,passed to component's HTML_PARSER definition
-         * @type {NodeList}
+         * @type {KISSY.NodeList}
          */
         srcNode:{
             view:1
@@ -114,11 +112,9 @@ KISSY.add('component/uibase/box', function (S) {
     };
 
     Box.prototype =
-    /**
-     * @lends Component.UIBase.Box#
-     */
     {
         /**
+         * bind ui for box
          * @private
          */
         __bindUI:function () {

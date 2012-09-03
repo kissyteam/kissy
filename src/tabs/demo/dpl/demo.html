@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Demo - DPL Tabs</title>
+    <link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../../../css/demo/dpl/assets/docs.css" rel="stylesheet"/>
+    <link href="../../../button/assets/dpl.css" rel="stylesheet"/>
+    <link href="../../assets/dpl.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <h2>KISSY.Tabs</h2>
+
+    <div class="row">
+        <div class="span8">
+            <h3>简介</h3>
+
+            <p>KISSY Tabs 支持四种格式：top(default),left,bottom,left</p>
+
+            <p>只要 new 时配置下或者 markup 中指定不同的 class 即可。</p>
+        </div>
+        <div class="span16">
+
+            <h3>实例</h3>
+
+            <div class="ks-tabs">
+                <div class="ks-tabs-bar">
+                    <div class="ks-tabs-tab ks-button ks-tabs-tab-selected">Section 1</div>
+                    <div class="ks-tabs-tab ks-button">Section 2</div>
+                    <div class="ks-tabs-tab ks-button">Section 3</div>
+                </div>
+                <div class="ks-tabs-body">
+                    <div class="ks-tabs-panel ks-tabs-panel-selected">
+                        <p>I'm in Section 1.</p>
+                    </div>
+                    <div class="ks-tabs-panel">
+                        <p>Howdy, I'm in Section 2.</p>
+                    </div>
+                    <div class="ks-tabs-panel">
+                        <p>What up girl, this is Section 3.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>各种方向的 tab</h3>
+
+
+    <div class="row">
+        <div class="span8">
+            <h4>tab 在底部</h4>
+
+            <p>tabs 体在顶部，tab 在底部</p>
+
+            <div class="ks-tabs ks-tabs-bottom">
+                <div class="ks-tabs-body">
+                    <div class="ks-tabs-panel ks-tabs-panel-selected">
+                        <p>I'm in Section 1.</p>
+                    </div>
+                    <div class="ks-tabs-panel">
+                        <p>Howdy, I'm in Section 2.</p>
+                    </div>
+                    <div class="ks-tabs-panel">
+                        <p>What up girl, this is Section 3.</p>
+                    </div>
+                </div>
+                <div class="ks-tabs-bar">
+                    <div class="ks-tabs-tab ks-button ks-tabs-tab-selected">Section 1</div>
+                    <div class="ks-tabs-tab ks-button">Section 2</div>
+                    <div class="ks-tabs-tab ks-button">Section 3</div>
+                </div>
+            </div>
+        </div>
+        <div class="span8">
+            <h4>tab 在左侧</h4>
+
+            <p>tabs 体在右侧，tab 在左侧</p>
+
+            <div class="ks-tabs ks-tabs-left">
+                <div class="ks-tabs-bar">
+                    <div class="ks-tabs-tab ks-button ks-tabs-tab-selected">Section 1</div>
+                    <div class="ks-tabs-tab ks-button">Section 2</div>
+                    <div class="ks-tabs-tab ks-button">Section 3</div>
+                </div>
+                <div class="ks-tabs-body">
+                    <div class="ks-tabs-panel ks-tabs-panel-selected">
+                        <p>I'm in Section 1.</p>
+                    </div>
+                    <div class="ks-tabs-panel">
+                        <p>Howdy, I'm in Section 2.</p>
+                    </div>
+                    <div class="ks-tabs-panel">
+                        <p>What up girl, this is Section 3.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span8">
+            <h4>tab 在右侧</h4>
+
+            <p>tabs 体在左侧，tab 在右侧</p>
+
+            <div class="ks-tabs ks-tabs-right">
+                <div class="ks-tabs-bar">
+                    <div class="ks-tabs-tab ks-button ks-tabs-tab-selected">Section 1</div>
+                    <div class="ks-tabs-tab ks-button">Section 2</div>
+                    <div class="ks-tabs-tab ks-button">Section 3</div>
+                </div>
+                <div class="ks-tabs-body">
+                    <div class="ks-tabs-panel ks-tabs-panel-selected">
+                        <p>I'm in Section 1.</p>
+                    </div>
+                    <div class="ks-tabs-panel">
+                        <p>Howdy, I'm in Section 2.</p>
+                    </div>
+                    <div class="ks-tabs-panel">
+                        <p>What up girl, this is Section 3.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script src="../../../../build/kissy.js"></script>
+<script src="../../src/bar.js"></script>
+<script src="../../src/body.js"></script>
+<script src="../../src/panel-render.js"></script>
+<script src="../../src/panel.js"></script>
+<script src="../../src/tab.js"></script>
+<script src="../../src/tab-render.js"></script>
+<script src="../../src/render.js"></script>
+<script src="../../src/tabs.js"></script>
+<script>
+    KISSY.use("tabs", function (S, Tabs) {
+
+        S.all(".ks-tabs").each(function (n) {
+            new Tabs({
+                srcNode: n
+            }).render();
+        });
+
+    });
+</script>
+</body>
+</html>

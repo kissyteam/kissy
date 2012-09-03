@@ -27,7 +27,6 @@ KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
                     src:SPACER_GIF,
                     _ke_realelement:encodeURIComponent(outerHTML || realElement._4e_outerHtml(undefined)),
                     _ke_real_node_type:realElement[0].nodeType,
-                    //align : realElement.attr("align") || '',
                     style:style
                 };
 
@@ -46,7 +45,7 @@ KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
         },
 
         restoreRealElement:function (fakeElement) {
-            if (fakeElement.attr('_ke_real_node_type') != DOM.ELEMENT_NODE) {
+            if (fakeElement.attr('_ke_real_node_type') != DOM.NodeType.ELEMENT_NODE) {
                 return null;
             }
 
@@ -122,7 +121,7 @@ KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
             S.mix(dataProcessor, {
 
                 restoreRealElement:function (fakeElement) {
-                    if (fakeElement.attr('_ke_real_node_type') != DOM.ELEMENT_NODE) {
+                    if (fakeElement.attr('_ke_real_node_type') != DOM.NodeType.ELEMENT_NODE) {
                         return null;
                     }
 

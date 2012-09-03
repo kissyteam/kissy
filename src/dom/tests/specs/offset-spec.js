@@ -3,10 +3,10 @@
  * @author yiminghe@gmail.com
  * @description need to be completed
  */
-KISSY.use("dom", function(S, DOM) {
-    describe("offset", function() {
+KISSY.use("dom", function (S, DOM) {
+    describe("offset", function () {
 
-        it("should works", function() {
+        it("should works", function () {
             var test_offset = DOM.get("#test-offset");
             var o = DOM.offset(test_offset);
             DOM.offset(test_offset, o);
@@ -16,7 +16,7 @@ KISSY.use("dom", function(S, DOM) {
             expect(test_offset.style.position).toBe("relative");
         });
 
-        it("should consider html border", function() {
+        it("should consider html border", function () {
             // ie 下应该减去窗口的边框吧，毕竟默认 absolute 都是相对窗口定位的
             // 窗口边框标准是设 documentElement ,quirks 时设置 body
             // 最好禁止在 body 和 html 上边框 ，但 ie < 9 html 默认有 2px ，减去
@@ -35,7 +35,7 @@ KISSY.use("dom", function(S, DOM) {
             // ie < 9 相对于 document.documentElement 即窗口
             expect(DOM.offset(a).top).toBe(0);
             DOM.offset(a, {
-                top:0
+                top: 0
             });
 
             expect(parseInt(DOM.css(a, "top"))).toBe(0);
@@ -46,12 +46,12 @@ KISSY.use("dom", function(S, DOM) {
         });
 
 
-        it("should works for framed element", function() {
+        it("should works for framed element", function () {
             var iframe = DOM.get("#test-iframe");
-            waitsFor(function() {
+            waitsFor(function () {
                 return iframe.contentWindow;
             }, "iframe cano not loaded!");
-            runs(function() {
+            runs(function () {
                 var win = iframe.contentWindow;
                 var inner = DOM.get("#test-inner", win.document);
                 var innerOffsetTop = DOM.offset(inner).top - DOM.scrollTop(win);
@@ -60,7 +60,17 @@ KISSY.use("dom", function(S, DOM) {
                 expect(innerOffsetTop + iframeTop).toBe(totalTop);
             });
 
-        })
+        });
+
+        it("should not change after get and set", function () {
+            var scrollTop = DOM.scrollTop();
+            window.scrollTo(0, 100);
+            var div = DOM.create("<div style='position: absolute;top:200px;'></div>");
+            DOM.append(div, document.body);
+            var originalOffset = DOM.offset(div);
+            expect(Math.abs(originalOffset.top-200)<5).toBe(true);
+            window.scrollTo(0, scrollTop);
+        });
 
     });
 });

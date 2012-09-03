@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview attach ua to class of html
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('ua/css', function (S, UA) {
+    var o = [
+            // browser core type
+            'webkit',
+            'trident',
+            'gecko',
+            'presto',
+            // browser type
+            'chrome',
+            'safari',
+            'firefox',
+            'ie',
+            'opera'
+        ],
+        documentElement = S.Env.host.document.documentElement,
+        className = '',
+        v;
+    S.each(o, function (key) {
+        if (v = UA[key]) {
+            className += ' ks-' + key + (parseInt(v) + '');
+            className += ' ks-' + key;
+        }
+    });
+    documentElement.className = S.trim(documentElement.className + className);
+}, {
+    requires: ['./base']
+});
+
+/*
+  refer :
+   - http://yiminghe.iteye.com/blog/444889
+ */</pre>
+</body>
+</html>

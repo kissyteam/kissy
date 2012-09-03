@@ -1,155 +1,59 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
-<title>KISSY DPL</title>
-<link href="../../src/css/src/dpl/base.css" rel="stylesheet"/>
-<link href="../menu/assets/dpl.css" rel="stylesheet"/>
+    <meta charset="utf-8"/>
+    <title>KISSY DPL</title>
+    <link href="../../src/css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../../src/css/src/dpl/forms.css" rel="stylesheet"/>
+    <link href="../menu/assets/dpl.css" rel="stylesheet"/>
+    <link href="../button/assets/dpl.css" rel="stylesheet"/>
+    <style>
+        .func label {
+            margin: 0 5px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
     <h1>KISSY DPL</h1>
+
+    <div class="row">
+        <div class="span8">
+            <h2>索引</h2>
+
+            <div id="index">
+
+            </div>
+        </div>
+        <div class="span16 func">
+            <h2>
+                选择组件构建
+            </h2>
+
+            <form id="cssContainer" class="form-inline">
+
+            </form>
+            <form class="form-inline">
+                <h3>控制选项</h3>
+
+                <p>
+                    <label><input id="min" type="checkbox" checked/>min</label>
+
+                    <label><input id="cdn" type="checkbox" checked/>cdn</label>
+                </p>
+            </form>
+            <div>
+                <button class="ks-button" id="gen">生成 combo 地址</button>
+            </div>
+            <div id="result" style="margin: 10px 0;">
+
+            </div>
+
+        </div>
+    </div>
+
 </div>
 <script src="../../build/kissy.js"></script>
-<script>
-    KISSY.use("menu", function (S, Menu) {
-        new Menu({
-            width:200,
-            render:'.container',
-            listeners:{
-                "click":function (e) {
-                    var h;
-                    if (h = e.target.get("href")) {
-                        window.open(h);
-                    }
-                }
-            },
-            children:[
-                {
-                    content:"css reset",
-                    href:'demo/dpl/reset.html',
-                    xclass:'menuitem'
-                },
-                {
-                    content:"grids system",
-                    href:'demo/dpl/grids.html',
-                    xclass:'submenu',
-                    menu:{
-                        xclass:'popupmenu',
-                        children:[
-                            {
-                                content:'固定布局',
-                                href:'demo/dpl/grids/fixed.html',
-                                xclass:'menuitem'
-                            },
-                            {
-                                content:'流式布局',
-                                href:'demo/dpl/grids/fluid.html',
-                                xclass:'menuitem'
-                            }
-                        ]
-                    }
-                },
-                {
-                    content:'双飞翼布局',
-                    xclass:'submenu',
-                    menu:{
-                        xclass:'popupmenu',
-                        children:[
-                            {
-                                content:'fly-swing demo',
-                                href:'demo/dpl/fly-swing/demo.html',
-                                xclass:'menuitem'
-                            },
-                            {
-                                content:'layout generator',
-                                href:'demo/dpl/fly-swing/css-generator.html',
-                                xclass:'menuitem'
-                            }
-                        ]
-                    }
-                },
-                {
-                    content:'simple ui',
-                    xclass:'submenu',
-                    menu:{
-                        xclass:'popupmenu',
-                        children:[
-                            {
-                                content:'icons',
-                                href:'demo/dpl/icons.html',
-                                xclass:'menuitem'
-                            },
-                            {
-                                content:'labels',
-                                href:'demo/dpl/labels.html',
-                                xclass:'menuitem'
-                            },
-                            {
-                                content:'badges',
-                                href:'demo/dpl/badges.html',
-                                xclass:'menuitem'
-                            },
-                            {
-                                content:'table',
-                                href:'demo/dpl/tables.html',
-                                xclass:'menuitem'
-                            },
-                            {
-                                content:'form',
-                                href:'demo/dpl/forms.html',
-                                xclass:'menuitem'
-                            }
-                        ]
-                    }
-                },
-                {
-                    content:'complex ui',
-                    xclass:'submenu',
-                    menu:{
-                        xclass:'popupmenu',
-                        children:[
-                            {
-                                content:'overlay',
-                                href:'../overlay/demo.html',
-                                xclass:'menuitem'
-                            },
-                            {
-                                content:'button',
-                                href:'../button/demo.html',
-                                xclass:'menuitem'
-                            },
-                            {
-                                content:'menu',
-                                href:'../menu/demo.html',
-                                xclass:'menuitem'
-                            },
-                            {
-                                content:'menubutton',
-                                href:'../menubutton/demo.html',
-                                xclass:'menuitem'
-                            },
-                            {
-                                content:'split-button',
-                                href:'../split-button/demo.html',
-                                xclass:'menuitem'
-                            },
-                            {
-                                content:'combobox',
-                                href:'../combobox/demo.html',
-                                xclass:'menuitem'
-                            },
-                            {
-                                content:'toolbar',
-                                href:'../toolbar/demo.html',
-                                xclass:'menuitem'
-                            }
-                        ]
-                    }
-                }
-            ]
-        }).render();
-    });
-</script>
+<script src="./demo/demo.js"></script>
 </body>
 </html>

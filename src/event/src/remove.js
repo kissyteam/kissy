@@ -1,18 +1,21 @@
 /**
+ * @ignore
  * @fileOverview responsible for un-registering event
  * @author yiminghe@gmail.com
  */
-KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) {
+KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) {
     var isValidTarget = Utils.isValidTarget,
         simpleRemove = Utils.simpleRemove;
 
     S.mix(Event,
         /**
-         * @lends Event
+         * @override KISSY.Event
+         * @class KISSY.Event.RemoveMod
+         * @singleton
          */
         {
             // single target, single type, fixed native
-            __remove:function (isNativeTarget, target, type, fn, scope) {
+            __remove: function (isNativeTarget, target, type, fn, scope) {
 
                 if (!target || (isNativeTarget && !isValidTarget(target))) {
                     return;
@@ -21,15 +24,16 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                 var typedGroups = Utils.getTypedGroups(type);
                 type = typedGroups[0];
                 var groups = typedGroups[1],
+                    isCustomEvent = !isNativeTarget,
                     selector,
-                    // in case type is undefined
+                // in case type is undefined
                     originalFn = fn,
                     originalScope = scope,
                     hasSelector, s = EVENT_SPECIAL[type];
 
                 if (S.isObject(fn)) {
                     scope = fn.scope;
-                    hasSelector = ("selector" in fn);
+                    hasSelector = ('selector' in fn);
                     selector = fn.selector;
                     fn = fn.fn;
                     if (selector) {
@@ -45,7 +49,7 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                     }
                 }
 
-                var eventDesc = _data._data(target),
+                var eventDesc = _data._data(target, undefined, isCustomEvent),
                     events = eventDesc && eventDesc.events,
                     handlers,
                     handler,
@@ -154,22 +158,23 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
 
                 // remove target's  all events description
                 if (S.isEmptyObject(events)) {
-                    eventDesc.handler.target = null;
+                    (eventDesc.handler || {}).target = null;
                     delete eventDesc.handler;
                     delete eventDesc.events;
-                    Event._removeData(target);
+                    _data._removeData(target, isCustomEvent);
                 }
             },
 
             /**
              * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
              * @param targets KISSY selector
+             * @member KISSY.Event
              * @param {String} [type] The type of event to remove.
              * use space to separate multiple event types.
              * @param {Function} [fn] The event handler/listener.
              * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
              */
-            remove:function (targets, type, fn, scope) {
+            remove: function (targets, type, fn, scope) {
 
                 type = S.trim(type);
 
@@ -188,5 +193,5 @@ KISSY.add("event/remove", function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
             }
         });
 }, {
-    requires:['./base', 'dom', './utils', './data', './special']
+    requires: ['./base', 'dom', './utils', './data', './special']
 });

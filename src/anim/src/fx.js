@@ -1,27 +1,41 @@
 /**
+ * @ignore
  * @fileOverview animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/fx", function (S, DOM, undefined) {
+KISSY.add('anim/fx', function (S, DOM, undefined) {
 
     /**
      * basic animation about single css property or element attribute
-     * @param cfg
+     * @class KISSY.Anim.Fx
+     * @private
      */
     function Fx(cfg) {
         this.load(cfg);
     }
 
-    S.augment(Fx, {
+    Fx.prototype = {
 
-        load:function (cfg) {
+        constructor: Fx,
+
+        /**
+         * reset config.
+         * @param cfg
+         */
+        load: function (cfg) {
             var self = this;
             S.mix(self, cfg);
             self.pos = 0;
-            self.unit = self.unit || "";
+            self.unit = self.unit || '';
         },
 
-        frame:function (end) {
+        /**
+         * process current anim frame.
+         * @param {Boolean} end whether this anim is ended
+         * @return {Number}
+         *
+         */
+        frame: function (end) {
             var self = this,
                 anim = self.anim,
                 endFlag = 0,
@@ -31,7 +45,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             }
             var t = S.now(),
                 _startTime = anim._startTime,
-                duration = anim.config.duration;
+                duration = anim._duration;
             if (end || t >= duration + _startTime) {
                 self.pos = 1;
                 endFlag = 1;
@@ -45,13 +59,14 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
         },
 
         /**
-         * 数值插值函数
-         * @param {Number} from 源值
-         * @param {Number} to 目的值
-         * @param {Number} pos 当前位置，从 easing 得到 0~1
-         * @return {Number} 当前值
+         * interpolate function
+         *
+         * @param {Number} from current css value
+         * @param {Number} to end css value
+         * @param {Number} pos current position from easing 0~1
+         * @return {Number} value corresponding to position
          */
-        interpolate:function (from, to, pos) {
+        interpolate: function (from, to, pos) {
             // 默认只对数字进行 easing
             if (S.isNumber(from) &&
                 S.isNumber(to)) {
@@ -61,11 +76,15 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             }
         },
 
-        update:function () {
+        /**
+         * update dom according to current frame css value.
+         *
+         */
+        update: function () {
             var self = this,
                 anim = self.anim,
                 prop = self.prop,
-                elem = anim.elem,
+                el = anim.config.el,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
@@ -74,44 +93,45 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
                 // 插值出错，直接设置为最终值
                 if (!self.finished) {
                     self.finished = 1;
-                    DOM.css(elem, prop, to);
-                    S.log(self.prop + " update directly ! : " + val + " : " + from + " : " + to);
+                    DOM.css(el, prop, to);
+                    S.log(self.prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
                 }
             } else {
                 val += self.unit;
-                if (isAttr(elem, prop)) {
-                    DOM.attr(elem, prop, val, 1);
+                if (isAttr(el, prop)) {
+                    DOM.attr(el, prop, val, 1);
                 } else {
-                    DOM.css(elem, prop, val);
+                    DOM.css(el, prop, val);
                 }
             }
         },
 
         /**
          * current value
+         *
          */
-        cur:function () {
+        cur: function () {
             var self = this,
                 prop = self.prop,
-                elem = self.anim.elem;
-            if (isAttr(elem, prop)) {
-                return DOM.attr(elem, prop, undefined, 1);
+                el = self.anim.config.el;
+            if (isAttr(el, prop)) {
+                return DOM.attr(el, prop, undefined, 1);
             }
             var parsed,
-                r = DOM.css(elem, prop);
-            // Empty strings, null, undefined and "auto" are converted to 0,
-            // complex values such as "rotate(1rad)" or "0px 10px" are returned as is,
-            // simple values such as "10px" are parsed to Float.
+                r = DOM.css(el, prop);
+            // Empty strings, null, undefined and 'auto' are converted to 0,
+            // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
+            // simple values such as '10px' are parsed to Float.
             return isNaN(parsed = parseFloat(r)) ?
-                !r || r === "auto" ? 0 : r
+                !r || r === 'auto' ? 0 : r
                 : parsed;
         }
-    });
+    };
 
-    function isAttr(elem, prop) {
+    function isAttr(el, prop) {
         // support scrollTop/Left now!
-        if ((!elem.style || elem.style[ prop ] == null) &&
-            DOM.attr(elem, prop, undefined, 1) != null) {
+        if ((!el.style || el.style[ prop ] == null) &&
+            DOM.attr(el, prop, undefined, 1) != null) {
             return 1;
         }
         return 0;
@@ -127,15 +147,15 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
     return Fx;
 
 }, {
-    requires:['dom']
+    requires: ['dom']
 });
-/**
- * TODO
- * 支持 transform ,ie 使用 matrix
- *  - http://shawphy.com/2011/01/transformation-matrix-in-front-end.html
- *  - http://www.cnblogs.com/winter-cn/archive/2010/12/29/1919266.html
- *  - 标准：http://www.zenelements.com/blog/css3-transform/
- *  - ie: http://www.useragentman.com/IETransformsTranslator/
- *  - wiki: http://en.wikipedia.org/wiki/Transformation_matrix
- *  - jq 插件: http://plugins.jquery.com/project/2d-transform
- **/
+/*
+ TODO
+ 支持 transform ,ie 使用 matrix
+ - http://shawphy.com/2011/01/transformation-matrix-in-front-end.html
+ - http://www.cnblogs.com/winter-cn/archive/2010/12/29/1919266.html
+ - 标准：http://www.zenelements.com/blog/css3-transform/
+ - ie: http://www.useragentman.com/IETransformsTranslator/
+ - wiki: http://en.wikipedia.org/wiki/Transformation_matrix
+ - jq 插件: http://plugins.jquery.com/project/2d-transform
+ */

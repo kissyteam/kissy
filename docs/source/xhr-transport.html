@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview ajax xhr transport class, route subdomain, xdr
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
+
+    var win = S.Env.host,
+        _XDomainRequest = win['XDomainRequest'],
+        detectXhr = XhrTransportBase.nativeXhr();
+
+    if (detectXhr) {
+
+        // xx.taobao.com =&gt; taobao.com
+        // xx.sina.com.cn =&gt; sina.com.cn
+        function getMainDomain(host) {
+            var t = host.split('.'), len = t.length, limit = len &gt; 3 ? 3 : 2;
+            if (len &lt; limit) {
+                return t.join('.');
+            } else {
+                return t.reverse().slice(0, limit).reverse().join('.');
+            }
+        }
+
+
+        function XhrTransport(io) {
+            var c = io.config,
+                crossDomain = c.crossDomain,
+                self = this,
+                xdrCfg = c['xdr'] || {};
+
+            if (crossDomain) {
+
+                // 跨子域
+                if (getMainDomain(location.hostname) == getMainDomain(c.uri.getHostname())) {
+                    return new SubDomainTransport(io);
+                }
+
+                /*
+                 ie&gt;7 通过配置 use='flash' 强制使用 flash xdr
+                 使用 withCredentials 检测是否支持 CORS
+                 http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
+                 */
+                if (!('withCredentials' in detectXhr) &amp;&amp;
+                    (String(xdrCfg.use) === 'flash' || !_XDomainRequest)) {
+                    return new XdrFlashTransport(io);
+                }
+            }
+
+            self.io = io;
+            self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
+            return undefined;
+        }
+
+        S.augment(XhrTransport, XhrTransportBase.proto, {
+
+            send: function () {
+                this.sendInternal();
+            }
+
+        });
+
+        io.setupTransport('*', XhrTransport);
+    }
+
+    return io;
+}, {
+    requires: ['./base', './xhr-transport-base', './sub-domain-transport', './xdr-flash-transport']
+});
+
+/*
+ 借鉴 jquery，优化使用原型替代闭包
+ CORS : http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/
+ */</pre>
+</body>
+</html>

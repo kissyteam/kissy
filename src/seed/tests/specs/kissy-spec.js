@@ -7,11 +7,11 @@ describe('kissy.js', function () {
     describe("S.mix", function () {
 
         it("works simply", function () {
-            var o1 = { a:1, b:2 },
-                o2 = { a:1, b:2 },
-                o3 = { a:1, b:2 },
+            var o1 = { a: 1, b: 2 },
+                o2 = { a: 1, b: 2 },
+                o3 = { a: 1, b: 2 },
             //o4 = { a: 1, b: 2 },
-                o = { a:'a', c:true };
+                o = { a: 'a', c: true };
 
             S.mix(o1, o);
             expect(o1.a).toBe('a');
@@ -27,19 +27,19 @@ describe('kissy.js', function () {
 
             // deep object mix testcase
             var r = {
-                x:1,
-                y:{
-                    z:1
+                x: 1,
+                y: {
+                    z: 1
                 },
-                q:[2, 5]
+                q: [2, 5]
             };
 
             S.mix(r, {
-                x:2,
-                y:{
-                    s:1
+                x: 2,
+                y: {
+                    s: 1
                 },
-                q:[6]
+                q: [6]
             });
 
             expect(r.x).toBe(2);
@@ -50,20 +50,57 @@ describe('kissy.js', function () {
 
 
         it('works for deep mix', function () {
-            var r = {
-                x:1,
-                y:{
-                    z:1
+
+            var r, r2;
+
+            r = {
+                x: 1,
+                y: {
+                    z: 1,
+                    q: 4
+                }
+            };
+
+            r2 = {
+                x: 2,
+                y: {
+                    z: 3,
+                    w: r2
+                }
+            };
+
+            r2.y.w=r2;
+
+            S.mix(r, r2, {
+                deep: true,
+                whitelist: ['x', 'y', 'z','w']
+            });
+
+            expect(r).toEqual({
+                x: 2,
+                y: {
+                    z: 3,
+                    q: 4,
+                    w: r
+                }
+            });
+
+            expect(r).toBe(r.y.w);
+
+            r = {
+                x: 1,
+                y: {
+                    z: 1
                 },
-                q:[2, 5]
+                q: [2, 5]
             };
 
             S.mix(r, {
-                x:2,
-                y:{
-                    s:1
+                x: 2,
+                y: {
+                    s: 1
                 },
-                q:[undefined, 6]
+                q: [undefined, 6]
             }, undefined, undefined, true);
 
             expect(r.x).toBe(2);
@@ -72,21 +109,21 @@ describe('kissy.js', function () {
             expect(r.q + "").toBe([2, 6] + "");
 
             r = {
-                x:1,
-                y:{
-                    z:1
+                x: 1,
+                y: {
+                    z: 1
                 },
-                q:[2, 5]
+                q: [2, 5]
             };
 
             S.mix(r, {
-                x:2,
-                y:{
-                    s:1
+                x: 2,
+                y: {
+                    s: 1
                 },
-                q:[undefined, 6]
+                q: [undefined, 6]
             }, {
-                deep:true
+                deep: true
             });
 
             expect(r.x).toBe(2);
@@ -95,23 +132,23 @@ describe('kissy.js', function () {
             expect(r.q + "").toBe([2, 6] + "");
 
             r = {
-                x:1,
-                y:{
-                    z:1
+                x: 1,
+                y: {
+                    z: 1
                 },
-                q:[2, 5]
+                q: [2, 5]
             };
 
             S.mix(r, {
-                x:2,
-                y:{
-                    s:1,
-                    z:2
+                x: 2,
+                y: {
+                    s: 1,
+                    z: 2
                 },
-                q:[undefined, 6]
+                q: [undefined, 6]
             }, {
-                overwrite:false,
-                deep:true
+                overwrite: false,
+                deep: true
             });
 
             expect(r.x).toBe(1);
@@ -148,7 +185,7 @@ describe('kissy.js', function () {
 
         it('solve JsEnumBug', function () {
             var v = {
-                toString:function () {
+                toString: function () {
                     return 1;
                 }
             };
@@ -162,18 +199,18 @@ describe('kissy.js', function () {
 
     it('S.merge', function () {
         var a = {
-                'bool':false,
-                'num':0,
-                'nul':null,
-                'undef':undefined,
-                'str':'blabber'
+                'bool': false,
+                'num': 0,
+                'nul': null,
+                'undef': undefined,
+                'str': 'blabber'
             },
             b = {
-                'bool':'oops',
-                'num':'oops',
-                'nul':'oops',
-                'undef':'oops',
-                'str':'oops'
+                'bool': 'oops',
+                'num': 'oops',
+                'nul': 'oops',
+                'undef': 'oops',
+                'str': 'oops'
             };
 
         var c = S.merge(a, b);
@@ -191,10 +228,10 @@ describe('kissy.js', function () {
         }
 
         Bird.prototype = {
-            getName:function () {
+            getName: function () {
                 return this.name;
             },
-            fly:function () {
+            fly: function () {
             }
         };
 
@@ -202,8 +239,8 @@ describe('kissy.js', function () {
             this.name = name;
         }
 
-        S.augment(Pig, Bird, { prop:'test prop' });
-        S.augment(Pig, { weight:'100kg' });
+        S.augment(Pig, Bird, { prop: 'test prop' });
+        S.augment(Pig, { weight: '100kg' });
         var pig = new Pig('Babe');
 
         expect(typeof pig.fly).toBe('function');
@@ -217,7 +254,7 @@ describe('kissy.js', function () {
         }
 
         Bird.prototype = {
-            getName:function () {
+            getName: function () {
                 return this.name;
             }
         };

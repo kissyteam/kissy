@@ -1,10 +1,11 @@
 /**
+ * @ignore
  * @fileOverview mix loader into S and infer KISSy baseUrl if not set
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -13,31 +14,28 @@
         ComboLoader = S.Loader.Combo;
 
     S.mix(S,
-        /**
-         * @lends KISSY
-         */
         {
             /**
              * Registers a module with the KISSY global.
-             * @param {String} [name] module name.
-             * it must be set if combine is true in {@link KISSY.config}
+             * @param {String} name module name.
+             * it must be set if combine is true in {@link KISSY#config}
              * @param {Function} fn module definition function that is used to return
              * this module value
              * @param {KISSY} fn.S KISSY global instance
-             * @param fn.x... this module's required modules' value
              * @param {Object} [cfg] module optional config data
              * @param {String[]} cfg.requires this module's required module name list
-             * @example
-             * // dom module's definition
-             * <code>
-             * KISSY.add("dom",function(S,UA){
-             *  return { css:function(el,name,val){} };
-             * },{
-             *  requires:["ua"]
-             * });
-             * </code>
+             * @member KISSY
+             *
+             * for example:
+             *      @example
+             *      // dom module's definition
+             *      KISSY.add('dom', function(S, UA){
+             *          return {css: function(el, name, val){}};
+             *      },{
+             *          requires:['ua']
+             *      });
              */
-            add:function (name, fn, cfg) {
+            add: function (name, fn, cfg) {
                 this.getLoader().add(name, fn, cfg);
             },
             /**
@@ -47,18 +45,22 @@
              * when KISSY has the required functionality.
              * @param {KISSY} callback.S KISSY instance
              * @param callback.x... used module values
-             * @example
-             * // loads and attached overlay,dd and its dependencies
-             * KISSY.use("overlay,dd",function(S,Overlay){});
+             * @member KISSY
+             *
+             * for example:
+             *      @example
+             *      // loads and attached overlay,dd and its dependencies
+             *      KISSY.use('overlay,dd', function(S, Overlay){});
              */
-            use:function (names, callback) {
+            use: function (names, callback) {
                 this.getLoader().use(names, callback);
             },
             /**
              * get KISSY 's loader instance
-             * @returns {KISSY.Loader}
+             * @member KISSY
+             * @return {KISSY.Loader}
              */
-            getLoader:function () {
+            getLoader: function () {
                 var self = this, env = self.Env;
                 if (self.Config.combine) {
                     return env._comboLoader;
@@ -69,9 +71,9 @@
             /**
              * get module value defined by define function
              * @param {string} moduleName
-             * @private
+             * @member KISSY
              */
-            require:function (moduleName) {
+            require: function (moduleName) {
                 var self = this,
                     mods = self.Env.mods,
                     mod = mods[moduleName];
@@ -80,19 +82,19 @@
         });
 
     function returnJson(s) {
-        return (new Function("return " + s))();
+        return (new Function('return ' + s))();
     }
 
     /**
      * get base from seed/kissy.js
      * @return base for kissy
-     * @private
-     * @example
-     * <pre>
-     *   http://a.tbcdn.cn/??s/kissy/1.4.0/seed-min.js,p/global/global.js
-     *   note about custom combo rules, such as yui3:
-     *   combo-prefix="combo?" combo-sep="&"
-     * <pre>
+     * @ignore
+     *
+     * for example:
+     *      @example
+     *      http://a.tbcdn.cn/??s/kissy/1.4.0/seed-min.js,p/global/global.js
+     *      note about custom combo rules, such as yui3:
+     *      combo-prefix='combo?' combo-sep='&'
      */
     function getBaseInfo() {
         // get base from current script file path
@@ -104,7 +106,7 @@
             scripts = S.Env.host.document.getElementsByTagName('script'),
             script = scripts[scripts.length - 1],
             src = utils.resolveByPage(script.src).toString(),
-            baseInfo = script.getAttribute("data-config");
+            baseInfo = script.getAttribute('data-config');
 
         if (baseInfo) {
             baseInfo = returnJson(baseInfo);
@@ -115,7 +117,7 @@
         // taobao combo syntax
         // /??seed.js,dom.js
         // /?%3fseed.js%2cdom.js
-        src = src.replace(/%3f/gi, "?").replace(/%2c/gi, ",");
+        src = src.replace(/%3f/gi, '?').replace(/%2c/gi, ',');
 
         comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
         comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
@@ -138,21 +140,19 @@
             });
         }
         return S.mix({
-            base:base,
-            baseUri:new S.Uri(base)
+            base: base,
+            baseUri: new S.Uri(base)
         }, baseInfo);
     }
 
     S.config(S.mix({
         // 2k
-        comboMaxUrlLength:2048,
-        charset:'utf-8',
-        tag:'@TIMESTAMP@'
+        comboMaxUrlLength: 2048,
+        charset: 'utf-8',
+        tag: '@TIMESTAMP@'
     }, getBaseInfo()));
 
-    /**
-     * Initializes loader.
-     */
+    // Initializes loader.
     (function () {
         var env = S.Env;
         env.mods = env.mods || {}; // all added mods

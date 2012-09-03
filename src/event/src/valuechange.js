@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview inspired by yui3
  * Synthetic event that fires when the <code>value</code> property of an input
  * field or textarea changes as a result of a keystroke, mouse operation, or
@@ -12,11 +13,11 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/valuechange', function (S, Event, DOM, special) {
-    var VALUE_CHANGE = "valuechange",
+    var VALUE_CHANGE = 'valuechange',
         getNodeName = DOM.nodeName,
-        KEY = "event/valuechange",
-        HISTORY_KEY = KEY + "/history",
-        POLL_KEY = KEY + "/poll",
+        KEY = 'event/valuechange',
+        HISTORY_KEY = KEY + '/history',
+        POLL_KEY = KEY + '/poll',
         interval = 50;
 
     function clearPollTimer(target) {
@@ -42,8 +43,8 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
         if (v !== h) {
             // 只触发自己绑定的 handler
             Event.fire(target, VALUE_CHANGE, {
-                prevVal:h,
-                newVal:v
+                prevVal: h,
+                newVal: v
             }, true);
             DOM.data(target, HISTORY_KEY, v);
         }
@@ -62,7 +63,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
     function startPollHandler(ev) {
         var target = ev.target;
         // when focus ,record its current value immediately
-        if (ev.type == "focus") {
+        if (ev.type == 'focus') {
             DOM.data(target, HISTORY_KEY, target.value);
         }
         startPoll(target);
@@ -74,41 +75,41 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 
     function monitor(target) {
         unmonitored(target);
-        Event.on(target, "blur", stopPollHandler);
+        Event.on(target, 'blur', stopPollHandler);
         // fix #94
         // see note 2012-02-08
-        Event.on(target, "webkitspeechchange", webkitSpeechChangeHandler);
-        Event.on(target, "mousedown keyup keydown focus", startPollHandler);
+        Event.on(target, 'webkitspeechchange', webkitSpeechChangeHandler);
+        Event.on(target, 'mousedown keyup keydown focus', startPollHandler);
     }
 
     function unmonitored(target) {
         stopPoll(target);
-        Event.remove(target, "blur", stopPollHandler);
-        Event.remove(target, "webkitspeechchange", webkitSpeechChangeHandler);
-        Event.remove(target, "mousedown keyup keydown focus", startPollHandler);
+        Event.remove(target, 'blur', stopPollHandler);
+        Event.remove(target, 'webkitspeechchange', webkitSpeechChangeHandler);
+        Event.remove(target, 'mousedown keyup keydown focus', startPollHandler);
     }
 
     special[VALUE_CHANGE] = {
-        setup:function () {
+        setup: function () {
             var target = this, nodeName = getNodeName(target);
-            if (nodeName == "input" || nodeName == "textarea") {
+            if (nodeName == 'input' || nodeName == 'textarea') {
                 monitor(target);
             }
         },
-        tearDown:function () {
+        tearDown: function () {
             var target = this;
             unmonitored(target);
         }
     };
     return Event;
 }, {
-    requires:["./base", "dom", "./special"]
+    requires: ['./base', 'dom', './special']
 });
 
-/**
- * 2012-02-08 yiminghe@gmail.com note about webkitspeechchange :
- *  当 input 没焦点立即点击语音
- *   -> mousedown -> blur -> focus -> blur -> webkitspeechchange -> focus
- *  第二次：
- *   -> mousedown -> blur -> webkitspeechchange -> focus
- **/
+/*
+  2012-02-08 yiminghe@gmail.com note about webkitspeechchange :
+   当 input 没焦点立即点击语音
+    -> mousedown -> blur -> focus -> blur -> webkitspeechchange -> focus
+   第二次：
+    -> mousedown -> blur -> webkitspeechchange -> focus
+ */

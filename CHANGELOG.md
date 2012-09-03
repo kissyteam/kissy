@@ -106,6 +106,7 @@ History:
  - [+] datalazyload 增加 removeElements/addElements/removeCallback 与 destroy 接口
  - [+] datalazyload 改进, 缓冲检测 scroll 和 resize, 并只加载显示在当前屏幕中的懒加载元素
  - [+] datalazyload 可以监控 div 容器滚动，以及横轴滚动
+ - [+] diff 参数可扩充到四个维度
 
 #### switchable
  - [+] switchable 增加 lazyImgAttribute/lazyTextareaClass 解决嵌套 lazyload 问题 #98
@@ -125,6 +126,21 @@ History:
 
 #### template
  - [+] template 支持 {{@if t}} t {{/if}}, 等价于 {{#if t}} t {{/if}}
+
+#### tabs
+ - [+] 增加 tabs
+
+#### stylesheet
+ - [+] 增加 stylesheet 操作样式表
+
+#### toolbar
+ - [+] 增加 toolbar， button 和 menubutton 的容器
+
+#### split-button
+ - [+] 增加 split-button， button 和 menubutton 的组合
+
+#### dpl
+ - [+] 增加 kissy dpl
 
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive

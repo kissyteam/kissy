@@ -1,9 +1,10 @@
 /**
+ * @ignore
  * @fileOverview use and attach mod
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -15,23 +16,25 @@
         win = S.Env.host,
         LOADING = data.LOADING,
         ERROR = data.ERROR,
-        ALL_REQUIRES = "__allRequires",
-        CURRENT_MODULE = "__currentModule",
+        ALL_REQUIRES = '__allRequires',
+        CURRENT_MODULE = '__currentModule',
         ATTACHED = data.ATTACHED;
 
     S.augment(Loader, {
         /**
          * Start load specific mods, and fire callback when these mods and requires are attached.
-         * @example
-         * <code>
-         * S.use('mod-name', callback, config);
-         * S.use('mod1,mod2', callback, config);
-         * </code>
+         * @member KISSY.Loader
+         *
+         * for example:
+         *      @example
+         *      S.use('mod-name', callback, config);
+         *      S.use('mod1,mod2', callback, config);
+         *
          * @param {String|String[]} modNames names of mods to be loaded,if string then separated by space
          * @param {Function} callback callback when modNames are all loaded,
-         *                   with KISSY as first argument and mod's value as the following arguments
+         * with KISSY as first argument and mod's value as the following arguments
          */
-        use:function (modNames, callback) {
+        use: function (modNames, callback) {
             var self = this,
                 SS = self.SS;
 
@@ -80,9 +83,7 @@
     }
 
 
-    /**
-     * Attach a module and all required modules.
-     */
+    // Attach a module and all required modules.
     function attachModRecursive(self, mod, callback) {
         var SS = self.SS,
             r,
@@ -97,10 +98,8 @@
         // 事先配置的 require ，同 newRequires 有区别
         var requires = utils.normalizeModNames(SS, mod.requires, mod.name);
 
-        /**
-         * check cyclic dependency between mods
-         * @private
-         */
+
+        // check cyclic dependency between mods
         function cyclicCheck() {
             // one mod 's all requires mods to run its callback
             var __allRequires = mod[ALL_REQUIRES] = mod[ALL_REQUIRES] || {},
@@ -117,13 +116,13 @@
             });
 
             if (__allRequires[myName]) {
-                S.log(__allRequires, "error");
+                S.log(__allRequires, 'error');
                 var JSON = win.JSON,
-                    error = "";
+                    error = '';
                 if (JSON) {
                     error = JSON.stringify(__allRequires);
                 }
-                S.error("find cyclic dependency by mod " + myName + " between mods: " + error);
+                S.error('find cyclic dependency by mod ' + myName + ' between mods: ' + error);
             }
         }
 
@@ -201,15 +200,13 @@
     }
 
 
-    /**
-     * Load a single module.
-     */
+    // Load a single module.
     function loadModByScript(self, mod, callback) {
         var SS = self.SS,
             modName = mod.getName(),
             charset = mod.getCharset(),
             url = mod.getFullPath(),
-            isCss = mod.getType() == "css";
+            isCss = mod.getType() == 'css';
 
         mod.status = mod.status || INIT;
 
@@ -222,7 +219,7 @@
             S.getScript(url, {
                 // syntaxError in all browser will trigger this
                 // same as #111 : https://github.com/kissyteam/kissy/issues/111
-                success:function () {
+                success: function () {
                     if (isCss) {
                         // css 不会设置 LOADED! 必须外部设置
                         utils.registerModule(SS, modName, S.noop);
@@ -231,7 +228,7 @@
                         // 载入 css 不需要这步了
                         // 标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
                         if (currentModule = self[CURRENT_MODULE]) {
-                            S.log("standard browser get mod name after load : " + modName);
+                            S.log('standard browser get mod name after load : ' + modName);
                             utils.registerModule(SS,
                                 modName, currentModule.fn,
                                 currentModule.config);
@@ -240,9 +237,9 @@
                     }
                     checkAndHandle();
                 },
-                error:checkAndHandle,
-                // source:mod.name + "-init",
-                charset:charset
+                error: checkAndHandle,
+                // source:mod.name + '-init',
+                charset: charset
             });
         }
         // 已经在加载中，需要添加回调到 script onload 中
@@ -250,9 +247,9 @@
         // 交给 getScript 排队
         else if (mod.status == LOADING) {
             S.getScript(url, {
-                success:checkAndHandle,
-                // source:mod.name + "-loading",
-                charset:charset
+                success: checkAndHandle,
+                // source:mod.name + '-loading',
+                charset: charset
             });
         }
         // loaded/attached/error

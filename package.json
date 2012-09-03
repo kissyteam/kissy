@@ -1,13 +1,13 @@
 {
-    "name":"KISSY",
-    "version":"1.4.0dev",
-    "description":"KISSY UI Library",
-    "author":"yiminghe <yiminghe@gmail.com>",
-    "homepage":"http://docs.kissyui.com",
-    "bugs":{
-        "url":"https://github.com/kissyteam/kissy/issues"
+    "name": "KISSY",
+    "version": "1.4.0dev",
+    "description": "KISSY UI Library",
+    "author": "yiminghe <yiminghe@gmail.com>",
+    "homepage": "http://docs.kissyui.com",
+    "bugs": {
+        "url": "https://github.com/kissyteam/kissy/issues"
     },
-    "contributors":[
+    "contributors": [
         "lifesinger <lifesinger@gmail.com>",
         "Jayli <lijing00333@163.com>",
         "dxq613 <dxq613@gmail.com>",
@@ -16,24 +16,24 @@
         "lizzie <shengyan1985@gmail.com>",
         "satans17 <satans17@gmail.com>"
     ],
-    "engines":{
-        "node":">=0.4.0"
+    "engines": {
+        "node": ">=0.4.0"
     },
-    "directories":{
-        "lib":"./build/"
+    "directories": {
+        "lib": "./build/"
     },
-    "main":"./build/kissy-nodejs.js",
-    "dependencies":{
-        "jsdom":">=0.2.0"
+    "main": "./build/kissy-nodejs.js",
+    "dependencies": {
+        "jsdom": ">=0.2.0"
     },
-    "licenses":[
+    "licenses": [
         {
-            "type":"MIT",
-            "url":"https://github.com/kissyteam/kissy/blob/master/LICENSE.md"
+            "type": "MIT",
+            "url": "https://github.com/kissyteam/kissy/blob/master/LICENSE.md"
         }
     ],
-    "repository":{
-        "type":"git",
-        "url":"http://github.com/kissyteam/kissy.git"
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/kissyteam/kissy.git"
     }
 }

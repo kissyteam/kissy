@@ -75,8 +75,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
          * Container which contains waterfall elements.
          * @type {Node}
          */
-        container:{
-            setter:function (v) {
+        container: {
+            setter: function (v) {
                 return $(v);
             }
         },
@@ -86,18 +86,17 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
          * @protected
          * @type {Number[]}
          */
-        curColHeights:{
-            value:[]
+        curColHeights: {
+            value: []
         },
 
         /**
          * Horizontal alignment of waterfall items with container.
          * Enum: 'left','center','right','justify'.
          * @type {String}
-         * @since 1.3
          */
-        align:{
-            value:'center'
+        align: {
+            value: 'center'
         },
 
         /**
@@ -106,8 +105,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
          * @default 1.
          * @type {Number}
          */
-        minColCount:{
-            value:1
+        minColCount: {
+            value: 1
         },
 
         /**
@@ -122,10 +121,10 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
          *      }
          * </code>
          */
-        effect:{
-            value:{
-                effect:"fadeIn",
-                duration:1
+        effect: {
+            value: {
+                effect: "fadeIn",
+                duration: 1
             }
         },
 
@@ -133,7 +132,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
          * Column's width.
          * @type {Number}
          */
-        colWidth:{},
+        colWidth: {},
 
         /**
          * Waterfall items grouped by col.
@@ -144,8 +143,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
          *  [[node11,node12],[node21,node22]]
          * </code>
          */
-        colItems:{
-            value:[]
+        colItems: {
+            value: []
         },
 
         /**
@@ -160,7 +159,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
          *      }
          * </code>
          */
-        adjustEffect:{}
+        adjustEffect: {}
     };
 
     function doResize() {
@@ -184,7 +183,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             self.get("minColCount"));
         // 当前容器宽度
         self._containerRegion = {
-            width:containerWidth
+            width: containerWidth
         };
         S.each(curColHeights, function (v, i) {
             curColHeights[i] = 0;
@@ -242,9 +241,30 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         colProp = {
             // 元素间固定间隔好点
-            left:col * colWidth + margin,
-            top:curColHeights[col]
+            left: col * colWidth + margin,
+            top: curColHeights[col]
         };
+
+        function end(ifNotCall) {
+            // 加入到 dom 树才能取得高度
+            curColHeights[col] += item.outerHeight(true);
+            var colItems = self.get("colItems");
+            colItems[col] = colItems[col] || [];
+            colItems[col].push(item);
+            item.attr("data-waterfall-col", col);
+            var className = item[0].className
+                .replace(/\s*ks-waterfall-col-(?:first|last|\d+)/g, "");
+            className += " ks-waterfall-col-" + col;
+            if (col == 0) {
+                className += " ks-waterfall-col-first";
+            } else if (col == curColHeights.length - 1) {
+                className += " ks-waterfall-col-last";
+            }
+            item[0].className = className;
+            if (!ifNotCall) {
+                callback && callback();
+            }
+        }
 
 
         /*
@@ -258,35 +278,22 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 item.css("visibility", "hidden");
             }
             container.append(item);
-            callback && callback();
+            end();
         }
         // 否则调整，需要动画
         else {
             var adjustEffect = self.get("adjustEffect");
             if (adjustEffect) {
+                end(1);
                 item.animate(colProp, adjustEffect.duration,
                     adjustEffect.easing, callback);
             } else {
                 item.css(colProp);
-                callback && callback();
+                end();
             }
         }
 
-        // 加入到 dom 树才能取得高度
-        curColHeights[col] += item.outerHeight(true);
-        var colItems = self.get("colItems");
-        colItems[col] = colItems[col] || [];
-        colItems[col].push(item);
-        item.attr("data-waterfall-col", col);
-        var className = item[0].className
-            .replace(/\s*ks-waterfall-col-(?:first|last|\d+)/g, "");
-        className += " ks-waterfall-col-" + col;
-        if (col == 0) {
-            className += " ks-waterfall-col-first";
-        } else if (col == curColHeights.length - 1) {
-            className += " ks-waterfall-col-last";
-        }
-        item[0].className = className;
+
         return item;
     }
 
@@ -316,22 +323,21 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         {
             /**
              * Whether is adjusting waterfall items.
-             * @returns Boolean
+             * @return Boolean
              */
-            isAdjusting:function () {
+            isAdjusting: function () {
                 return !!this._adjuster;
             },
 
             /**
              * Whether is adding waterfall item.
-             * @since 1.3
-             * @returns Boolean
+             * @return Boolean
              */
-            isAdding:function () {
+            isAdding: function () {
                 return !!this._adder;
             },
 
-            _init:function () {
+            _init: function () {
                 var self = this;
                 // 一开始就 adjust 一次，可以对已有静态数据处理
                 doResize.call(self);
@@ -346,7 +352,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
             /**
              * Ajust the height of one specified item.
-             * @param {NodeList} item Waterfall item to be adjusted.
+             * @param {KISSY.NodeList} item Waterfall item to be adjusted.
              * @param {Object} cfg Config object.
              * @param {Function} cfg.callback Callback function after the item is adjusted.
              * @param {Function} cfg.process Adjust logic function.
@@ -356,7 +362,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
              * @param {Number} cfg.effect.duration
              * @param {String} cfg.effect.easing
              */
-            adjustItem:function (item, cfg) {
+            adjustItem: function (item, cfg) {
                 var self = this;
                 cfg = cfg || {};
 
@@ -426,7 +432,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 self._adjuster = timedChunk(items, function (item) {
                     if (effect) {
                         item.animate({
-                                top:parseInt(item.css("top")) + diff
+                                top: parseInt(item.css("top")) + diff
                             },
                             effect.duration,
                             effect.easing,
@@ -444,23 +450,23 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
             /**
              * Remove a waterfall item.
-             * @param {NodeList} item Waterfall item to be removed.
+             * @param {KISSY.NodeList} item Waterfall item to be removed.
              * @param {Object} cfg Config object.
              * @param {Function} cfg.callback Callback function to be called after remove.
              * @param {Object} cfg.effect Same as {@link Waterfall#adjustEffect}
              * @param {Number} cfg.effect.duration
              * @param {String} cfg.effect.easing
              */
-            removeItem:function (item, cfg) {
+            removeItem: function (item, cfg) {
                 cfg = cfg || {};
                 var self = this,
                     callback = cfg.callback;
                 self.adjustItem(item, S.mix(cfg, {
-                    process:function () {
+                    process: function () {
                         item.remove();
                         return 0;
                     },
-                    callback:function () {
+                    callback: function () {
                         var col = parseInt(item.attr("data-waterfall-col")),
                             colItems = self.get("colItems")[col];
                         for (var i = 0; i < colItems.length; i++) {
@@ -478,7 +484,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
              * Readjust existing waterfall item.
              * @param {Function} [callback] Callback function to be called after adjust.
              */
-            adjust:function (callback) {
+            adjust: function (callback) {
                 S.log("waterfall:adjust");
                 var self = this,
                     items = self.get("container").all(".ks-waterfall");
@@ -499,7 +505,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                         self._adjuster = 0;
                         callback && callback.call(self);
                         self.fire('adjustComplete', {
-                            items:items
+                            items: items
                         });
                     }
                 }
@@ -522,7 +528,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
              * @param {NodeList[]} items Waterfall items to be added.
              * @param {Function} [callback] Callback function to be called after waterfall items are added.
              */
-            addItems:function (items, callback) {
+            addItems: function (items, callback) {
                 var self = this;
 
                 /* 正在调整中，直接这次加，和调整的节点一起处理 */
@@ -536,7 +542,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                         self._adder = 0;
                         callback && callback.call(self);
                         self.fire('addComplete', {
-                            items:items
+                            items: items
                         });
                     });
 
@@ -548,7 +554,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             /**
              * Destroy current instance.
              */
-            destroy:function () {
+            destroy: function () {
                 $(win).detach("resize", this.__onResize);
             }
         });
@@ -557,7 +563,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
     return Waterfall;
 
 }, {
-    requires:['node', 'base']
+    requires: ['node', 'base']
 });
 /**
  * 2012-07-10

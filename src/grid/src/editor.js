@@ -323,7 +323,7 @@ KISSY.add('grid/editor', function (S, Component) {
             },
             /**
              * @private
-             * @override
+             *
              */
             focusable:{
                 value:false

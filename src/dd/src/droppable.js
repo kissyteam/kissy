@@ -1,15 +1,15 @@
 /**
+ * @ignore
  * @fileOverview droppable for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
+KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
 
     var PREFIX_CLS = DDM.PREFIX_CLS;
 
     /**
-     * @name Droppable
-     * @memberOf DD
-     * @class
+     * @class KISSY.DD.Droppable
+     * @extends KISSY.Base
      * Make a node droppable.
      */
     function Droppable() {
@@ -18,100 +18,111 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
         self.addTarget(DDM);
         S.each([
         /**
-         * @name DD.DDM#dropexit
-         * @description fired after a draggable leaves a droppable
-         * @event
+         * fired after a draggable leaves a droppable
+         * @event dropexit
+         * @member KISSY.DD.DDM
          * @param e
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
 
         /**
-         * @name DD.Droppable#dropexit
-         * @description fired after a draggable leaves a droppable
-         * @event
+         *
+         * fired after a draggable leaves a droppable
+         * @event dropexit
+         * @member KISSY.DD.Droppable
          * @param e
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            "dropexit",
+            'dropexit',
 
         /**
-         * @name DD.DDM#dropenter
-         * @description fired after a draggable object mouseenter a droppable object
-         * @event
-         * @param e
-         * @param e.drag current draggable object
-         * @param e.drop current droppable object
-         */
-
-        /**
-         * @name DD.Droppable#dropenter
-         * @description fired after a draggable object mouseenter a droppable object
-         * @event
-         * @param e
-         * @param e.drag current draggable object
-         * @param e.drop current droppable object
-         */
-
-            "dropenter",
-
-        /**
-         * @name DD.DDM#dropover
-         * @description fired after a draggable object mouseover a droppable object
-         * @event
+         * fired after a draggable object mouseenter a droppable object
+         * @event dropenter
+         * @member KISSY.DD.DDM
          * @param e
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
 
         /**
-         * @name DD.Droppable#dropover
-         * @description fired after a draggable object mouseover a droppable object
-         * @event
-         * @param e
-         * @param e.drag current draggable object
-         * @param e.drop current droppable object
-         */
-            "dropover",
-
-        /**
-         * @name DD.DDM#drophit
-         * @description fired after drop a draggable onto a droppable object
-         * @event
+         * fired after a draggable object mouseenter a droppable object
+         * @event dropenter
+         * @member KISSY.DD.Droppable
          * @param e
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
 
+            'dropenter',
+
         /**
-         * @name DD.Droppable#drophit
-         * @description fired after drop a draggable onto a droppable object
-         * @event
+         *
+         * fired after a draggable object mouseover a droppable object
+         * @event dropover
+         * @member KISSY.DD.DDM
          * @param e
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            "drophit"
+
+        /**
+         *
+         * fired after a draggable object mouseover a droppable object
+         * @event dropover
+         * @member KISSY.DD.Droppable
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+            'dropover',
+
+        /**
+         *
+         * fired after drop a draggable onto a droppable object
+         * @event drophit
+         * @member KISSY.DD.DDM
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+
+        /**
+         *
+         * fired after drop a draggable onto a droppable object
+         * @event drophit
+         * @member KISSY.DD.Droppable
+         * @param e
+         * @param e.drag current draggable object
+         * @param e.drop current droppable object
+         */
+            'drophit'
         ], function (e) {
             self.publish(e, {
-                bubbles:1
+                bubbles: 1
             });
         });
         self._init();
     }
 
-    Droppable.ATTRS =
-    /**
-     * @lends DD.Droppable#
-     */
-    {
+    Droppable.ATTRS = {
         /**
          * droppable element
-         * @type {String|HTMLElement}
+         * @cfg {String|HTMLElement|KISSY.NodeList} node
+         * @member KISSY.DD.Droppable
          */
-        node:{
-            setter:function (v) {
+        /**
+         * droppable element
+         * @type {KISSY.NodeList}
+         * @property node
+         * @member KISSY.DD.Droppable
+         */
+        /**
+         * @ignore
+         */
+        node: {
+            setter: function (v) {
                 if (v) {
                     return Node.one(v);
                 }
@@ -119,12 +130,16 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
         },
 
         /**
-         * groups this droppable object belongs to.
-         * @default  true
-         * @type {Object|Boolean} true to match any group
+         * groups this droppable object belongs to. true to match any group.
+         * default  true
+         * @cfg {Object|Boolean} groups
+         * @member KISSY.DD.Droppable
          */
-        groups:{
-            value:true
+        /**
+         * @ignore
+         */
+        groups: {
+            value: true
         }
 
     };
@@ -134,24 +149,23 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
             return 1;
         }
         for (var d in dropGroups) {
-            if (dragGroups[d]) {
-                return 1;
+            if (dropGroups.hasOwnProperty(d)) {
+                if (dragGroups[d]) {
+                    return 1;
+                }
             }
         }
         return 0;
     }
 
     S.extend(Droppable, Base,
-        /**
-         * @lends DD.Droppable#
-         */
         {
             /**
-             * override by droppable-delegate override
-             * @private
+             * Get drop node from target
+             * @protected
              */
-            getNodeFromTarget:function (ev, dragNode, proxyNode) {
-                var node = this.get("node"),
+            getNodeFromTarget: function (ev, dragNode, proxyNode) {
+                var node = this.get('node'),
                     domNode = node[0];
                 // 排除当前拖放和代理节点
                 return domNode == dragNode ||
@@ -159,84 +173,83 @@ KISSY.add("dd/droppable", function (S, Node, Base, DDM) {
                     ? null : node;
             },
 
-            _init:function () {
+            _init: function () {
                 DDM._regDrop(this);
             },
 
-            _active:function () {
+            _active: function () {
                 var self = this,
-                    drag = DDM.get("activeDrag"),
-                    node = self.get("node"),
-                    dropGroups = self.get("groups"),
-                    dragGroups = drag.get("groups");
+                    drag = DDM.get('activeDrag'),
+                    node = self.get('node'),
+                    dropGroups = self.get('groups'),
+                    dragGroups = drag.get('groups');
                 if (validDrop(dropGroups, dragGroups)) {
                     DDM._addValidDrop(self);
                     // 委托时取不到节点
                     if (node) {
-                        node.addClass(PREFIX_CLS + "drop-active-valid");
+                        node.addClass(PREFIX_CLS + 'drop-active-valid');
                         DDM.cacheWH(node);
                     }
                 } else if (node) {
-                    node.addClass(PREFIX_CLS + "drop-active-invalid");
+                    node.addClass(PREFIX_CLS + 'drop-active-invalid');
                 }
             },
 
-            _deActive:function () {
-                var node = this.get("node");
+            _deActive: function () {
+                var node = this.get('node');
                 if (node) {
-                    node.removeClass(PREFIX_CLS + "drop-active-valid")
-                        .removeClass(PREFIX_CLS + "drop-active-invalid");
+                    node.removeClass(PREFIX_CLS + 'drop-active-valid')
+                        .removeClass(PREFIX_CLS + 'drop-active-invalid');
                 }
             },
 
-            __getCustomEvt:function (ev) {
+            __getCustomEvt: function (ev) {
                 return S.mix({
-                    drag:DDM.get("activeDrag"),
-                    drop:this
+                    drag: DDM.get('activeDrag'),
+                    drop: this
                 }, ev);
             },
 
-            _handleOut:function () {
+            _handleOut: function () {
                 var self = this,
                     ret = self.__getCustomEvt();
-                self.get("node").removeClass(PREFIX_CLS + "drop-over");
-                /**
-                 * html5 => dragleave
-                 */
-                self.fire("dropexit", ret);
+                self.get('node').removeClass(PREFIX_CLS + 'drop-over');
+
+                // html5 => dragleave
+                self.fire('dropexit', ret);
             },
 
-            _handleEnter:function (ev) {
+            _handleEnter: function (ev) {
                 var self = this,
                     e = self.__getCustomEvt(ev);
                 e.drag._handleEnter(e);
-                self.get("node").addClass(PREFIX_CLS + "drop-over");
-                self.fire("dropenter", e);
+                self.get('node').addClass(PREFIX_CLS + 'drop-over');
+                self.fire('dropenter', e);
             },
 
 
-            _handleOver:function (ev) {
+            _handleOver: function (ev) {
                 var self = this,
                     e = self.__getCustomEvt(ev);
                 e.drag._handleOver(e);
-                self.fire("dropover", e);
+                self.fire('dropover', e);
             },
 
-            _end:function () {
+            _end: function () {
                 var self = this,
                     ret = self.__getCustomEvt();
-                self.get("node").removeClass(PREFIX_CLS + "drop-over");
+                self.get('node').removeClass(PREFIX_CLS + 'drop-over');
                 self.fire('drophit', ret);
             },
 
             /**
              * make this droppable' element undroppable
              */
-            destroy:function () {
+            destroy: function () {
                 DDM._unRegDrop(this);
             }
         });
 
     return Droppable;
 
-}, { requires:["node", "base", "./ddm"] });
+}, { requires: ['node', 'base', './ddm'] });

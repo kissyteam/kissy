@@ -28,7 +28,7 @@ KISSY.add("component/uibase/mask", function () {
         },
         /**
          * Mask node for current overlay 's mask.
-         * @type {NodeList}
+         * @type {KISSY.NodeList}
          */
         maskNode:{
             view:1

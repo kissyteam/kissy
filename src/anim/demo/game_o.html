@@ -14,7 +14,7 @@
 <button id="stop2">stop2</button>
 <script src="../../../build/kissy.js"></script>
 <script src="slot.js"></script>
-<script type="text/javascript">
+<script >
     KISSY.use("node", function (S, Node) {
         var $ = Node.all,
                 height = 270,
@@ -24,9 +24,9 @@
                 t = $("#t");
 
 
-        function Slot(elem, multiple, num, duration) {
-            elem = $(elem);
-            var height = elem.height();
+        function Slot(el, multiple, num, duration) {
+            el = $(el);
+            var height = el.height();
 
             function anim(next) {
                 var nextDuration = duration
@@ -36,18 +36,18 @@
                             (0 - currentY ) *
                             multiple;
                 }
-                elem.animate({
+                el.animate({
                     backgroundPosition:"0 0"
                 }, {
                     duration:nextDuration,
                     complete:function () {
-                        elem.css("backgroundPosition", "0px " + (-(height * (num - 1))) + "px");
+                        el.css("backgroundPosition", "0px " + (-(height * (num - 1))) + "px");
                         if (next !== undefined) {
                             // 比平时慢 multiple 倍
                             var nextDuration2 = ((duration / (num - 1))) *
                                     (num - next - 1) *
                                     multiple * 2;
-                            elem.animate({
+                            el.animate({
                                 backgroundPosition:"0px " + (-height * next + "px") + "px"
                             }, {
                                 easing:"easeBoth",

@@ -14,7 +14,7 @@
 </div>
 <script src="../../../../build/kissy.js"></script>
 <script>
-    KISSY.use("menu", function (S, Menu) {
+    KISSY.use("menu,separator", function (S, Menu,Separator) {
         var context = S.all("#context"), b, bb;
         (function () {
 
@@ -36,7 +36,7 @@
                 prefixCls:"nav-",
                 content:"<a>我要卖</a>"}));
 
-            sb.addChild(new Menu.Separator({
+            sb.addChild(new Separator({
                 prefixCls:"nav-"
             }));
 

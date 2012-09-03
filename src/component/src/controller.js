@@ -29,7 +29,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
         self.create();
         var contentEl = self.getContentElement();
         c = Component.create(c, self);
-        c.__set("parent", self);
+        c.setInternal("parent", self);
         // set 通知 view 也更新对应属性
         c.set("render", contentEl);
         c.set("elBefore", renderBefore);
@@ -43,6 +43,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
     /**
      * 不使用 valueFn，
      * 只有 render 时需要找到默认，其他时候不需要，防止莫名其妙初始化
+     * @ignore
      */
     function constructView(self) {
         // 逐层找默认渲染器
@@ -63,7 +64,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             if (attrs.hasOwnProperty(attrName)) {
                 attrCfg = attrs[attrName];
                 if (attrCfg.view) {
-
                     // 先取后 getter
                     // 防止死循环
                     if (( v = self.get(attrName) ) !== undefined) {
@@ -122,42 +122,41 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
     }
 
     /**
-     * @memberOf Component
-     * @name Controller
-     * @extends Component.UIBase
-     * @extends Component.UIBase.Box
-     * @class
      * Base Controller class for KISSY Component.
      * xclass: 'controller'.
+     * @extends Component.UIBase
+     * @mixins Component.UIBase.Box
+     * @class Component.Controller
      */
     var Controller = UIBase.extend([UIBase.Box],
-        /** @lends Component.Controller# */
         {
+
+            isController: true,
 
             /**
              * Get full class name for current component
              * @param classes {String} class names without prefixCls. Separated by space.
-             * @function
+             * @method
+             * @protected
              * @return {String} class name with prefixCls
              */
-            getCssClassWithPrefix:Manager.getCssClassWithPrefix,
+            getCssClassWithPrefix: Manager.getCssClassWithPrefix,
 
             /**
-             * From UIBase, Initialize this component.
-             * @override
+             * From UIBase, Initialize this component.             *
              * @protected
              */
-            initializer:function () {
+            initializer: function () {
                 // initialize view
-                this.__set("view", constructView(this));
+                this.setInternal("view", constructView(this));
             },
 
             /**
              * From UIBase. Constructor(or get) view object to create ui elements.
              * @protected
-             * @override
+             *
              */
-            createDom:function () {
+            createDom: function () {
                 var self = this,
                     el,
                     view = self.get("view");
@@ -171,9 +170,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * From UIBase. Call view object to render ui elements.
              * @protected
-             * @override
+             *
              */
-            renderUI:function () {
+            renderUI: function () {
                 var self = this, i, children, child;
                 self.get("view").render();
                 // then render my children
@@ -185,7 +184,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 }
             },
 
-            _uiSetFocusable:function (focusable) {
+            _uiSetFocusable: function (focusable) {
                 var self = this,
                     t,
                     el = self.getKeyEventTarget();
@@ -211,7 +210,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 }
             },
 
-            _uiSetHandleMouseEvents:function (handleMouseEvents) {
+            _uiSetHandleMouseEvents: function (handleMouseEvents) {
                 var self = this, el = self.get("el"), t;
                 if (handleMouseEvents) {
                     el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
@@ -236,7 +235,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 }
             },
 
-            _uiSetFocused:function (v) {
+            _uiSetFocused: function (v) {
                 if (v) {
                     this.getKeyEventTarget()[0].focus();
                 }
@@ -244,17 +243,17 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
             /**
              * 子组件将要渲染到的节点，在 render 类上覆盖对应方法
-             * @private
+             * @ignore
              */
-            getContentElement:function () {
+            getContentElement: function () {
                 return this.get('view').getContentElement();
             },
 
             /**
              * 焦点所在元素即键盘事件处理元素，在 render 类上覆盖对应方法
-             * @private
+             * @ignore
              */
-            getKeyEventTarget:function () {
+            getKeyEventTarget: function () {
                 return this.get('view').getKeyEventTarget();
             },
 
@@ -270,7 +269,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * the new child component is to be inserted;
              * If not specified , the new child component will be inserted at last position.
              */
-            addChild:function (c, index) {
+            addChild: function (c, index) {
                 var self = this,
                     children = self.get("children"),
                     renderBefore;
@@ -286,9 +285,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 if (self.get("rendered")) {
                     c.render();
                 }
-                self.fire("addChild", {
-                    child:c
-                });
                 return c;
             },
 
@@ -305,7 +301,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * calls {@link Component.UIBase.#destroy} on the removed child component.
              * @return {Component.Controller} The removed component.
              */
-            removeChild:function (c, destroy) {
+            removeChild: function (c, destroy) {
                 var self = this,
                     children = self.get("children"),
                     index = S.indexOf(c, children);
@@ -317,9 +313,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     c.destroy) {
                     c.destroy();
                 }
-                self.fire("removeChild", {
-                    child:c
-                });
                 return c;
             },
 
@@ -329,7 +322,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @param {Boolean} [destroy] If true,
              * calls {@link Component.UIBase.#destroy} on the removed child component.
              */
-            removeChildren:function (destroy) {
+            removeChildren: function (destroy) {
                 var self = this,
                     i,
                     t = [].concat(self.get("children"));
@@ -343,7 +336,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @param {Number} index 0-based index.
              * @return {Component.Controller} The child at the given index; null if none.
              */
-            getChildAt:function (index) {
+            getChildAt: function (index) {
                 var children = this.get("children");
                 return children[index] || null;
             },
@@ -354,7 +347,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @protected
              * @param {Event.Object} ev DOM event to handle.
              */
-            handleDblClick:function (ev) {
+            handleDblClick: function (ev) {
                 this.performActionInternal(ev);
             },
 
@@ -363,7 +356,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @private
              * @param {Event.Object} ev DOM event to handle.
              */
-            handleMouseOver:function (ev) {
+            handleMouseOver: function (ev) {
                 var self = this,
                     el = self.get("el");
                 if (!isMouseEventWithinElement(ev, el)) {
@@ -376,7 +369,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @private
              * @param {Event.Object} ev DOM event to handle.
              */
-            handleMouseOut:function (ev) {
+            handleMouseOut: function (ev) {
                 var self = this,
                     el = self.get("el");
                 if (!isMouseEventWithinElement(ev, el)) {
@@ -389,7 +382,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @protected
              * @param {Event.Object} ev DOM event to handle.
              */
-            handleMouseEnter:function (ev) {
+            handleMouseEnter: function (ev) {
                 this.set("highlighted", !!ev);
             },
 
@@ -398,7 +391,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @protected
              * @param {Event.Object} ev DOM event to handle.
              */
-            handleMouseLeave:function (ev) {
+            handleMouseLeave: function (ev) {
                 var self = this;
                 self.set("active", false);
                 self.set("highlighted", !ev);
@@ -412,7 +405,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @protected
              * @param {Event.Object} ev DOM event to handle.
              */
-            handleMouseDown:function (ev) {
+            handleMouseDown: function (ev) {
                 var self = this,
                     n,
                     isMouseActionButton = ev['which'] == 1,
@@ -446,7 +439,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @protected
              * @param {Event.Object} ev DOM event to handle.
              */
-            handleMouseUp:function (ev) {
+            handleMouseUp: function (ev) {
                 var self = this;
                 // 左键
                 if (self.get("active") && ev.which == 1) {
@@ -460,7 +453,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @protected
              * @param {Event.Object} ev DOM event to handle.
              */
-            handleContextMenu:function (ev) {
+            handleContextMenu: function (ev) {
             },
 
             /**
@@ -468,7 +461,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @protected
              * @param {Event.Object} ev DOM event to handle.
              */
-            handleFocus:function (ev) {
+            handleFocus: function (ev) {
                 this.set("focused", !!ev);
                 this.fire("focus");
             },
@@ -478,7 +471,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @protected
              * @param {Event.Object} ev DOM event to handle.
              */
-            handleBlur:function (ev) {
+            handleBlur: function (ev) {
                 this.set("focused", !ev);
                 this.fire("blur");
             },
@@ -488,7 +481,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @protected
              * @param {Event.Object} ev DOM event to handle.
              */
-            handleKeyEventInternal:function (ev) {
+            handleKeyEventInternal: function (ev) {
                 if (ev.keyCode == Event.KeyCodes.ENTER) {
                     return this.performActionInternal(ev);
                 }
@@ -500,7 +493,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @protected
              * @param {Event.Object} ev DOM event to handle.
              */
-            handleKeydown:function (ev) {
+            handleKeydown: function (ev) {
                 var self = this;
                 if (self.handleKeyEventInternal(ev)) {
                     ev.halt();
@@ -513,10 +506,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @protected
              * @param {Event.Object} ev DOM event to handle.
              */
-            performActionInternal:function (ev) {
+            performActionInternal: function (ev) {
             },
 
-            destructor:function () {
+            destructor: function () {
                 var self = this,
                     i,
                     view,
@@ -528,10 +521,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             }
         },
         {
-            ATTRS:/**
-             * @lends Component.Controller#
-             */
-            {
+            ATTRS: {
 
                 /**
                  * Enables or disables mouse event handling for the component.
@@ -539,89 +529,100 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * in their child component.
                  * @default true.
                  * @type {Boolean}
+                 * @protected
                  */
-                handleMouseEvents:{
-                    value:true
+                handleMouseEvents: {
+                    value: true
                 },
 
                 /**
                  * Whether this component can get focus.
                  * @default true.
+                 * @protected
                  * @type {Boolean}
                  */
-                focusable:{
-                    value:true,
-                    view:1
+                focusable: {
+                    value: true,
+                    view: 1
                 },
 
                 /**
                  * 1. Whether allow select this component's text.<br/>
                  * 2. Whether not to lose last component's focus if click current one (set false).
-                 * @default false
+                 *
+                 * Defaults to: false.
                  * @type {Boolean}
+                 * @property allowTextSelection
+                 * @protected
                  */
-                allowTextSelection:{
+
+
+                /**
+                 * @ignore
+                 */
+                allowTextSelection: {
                     // 和 focusable 分离
                     // grid 需求：容器允许选择里面内容
-                    value:false
+                    value: false
                 },
 
                 /**
                  * Whether this component can be activated.
                  * @default true.
                  * @type {Boolean}
+                 * @protected
                  */
-                activeable:{
-                    value:true
+                activeable: {
+                    value: true
                 },
 
                 /**
                  * Whether this component has focus.
                  * @type {Boolean}
                  */
-                focused:{
-                    view:1
+                focused: {
+                    view: 1
                 },
 
                 /**
                  * Whether this component is activated.
                  * @type {Boolean}
                  */
-                active:{
-                    view:1
+                active: {
+                    view: 1
                 },
 
                 /**
                  * Whether this component is highlighted.
                  * @type {Boolean}
                  */
-                highlighted:{
-                    view:1
+                highlighted: {
+                    view: 1
                 },
 
                 /**
                  * Array of child components
                  * @type {Component.Controller[]}
                  */
-                children:{
-                    value:[]
+                children: {
+                    value: []
                 },
 
                 /**
                  * This component's prefix css class.
                  * @type {String}
                  */
-                prefixCls:{
-                    value:'ks-', // box srcNode need
-                    view:1
+                prefixCls: {
+                    value: 'ks-', // box srcNode need
+                    view: 1
                 },
 
                 /**
                  * This component's parent component.
                  * @type {Component.Controller}
                  */
-                parent:{
-                    setter:function (p) {
+                parent: {
+                    setter: function (p) {
                         // 事件冒泡源
                         this.addTarget(p);
                     }
@@ -631,63 +632,68 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * Whether this component is disabled.
                  * @type {Boolean}
                  */
-                disabled:{
-                    view:1
+                disabled: {
+                    view: 1
                 },
 
-                xrender:{
-                    value:Render
+                /**
+                 * Render class.
+                 * @protected
+                 * @type {Component.Render}
+                 */
+                xrender: {
+                    value: Render
                 }
             }
         }, {
-            xclass:'controller'
+            xclass: 'controller'
         });
 
     return Controller;
 }, {
-    requires:['event', './base', './uibase', './manager', './render']
+    requires: ['event', './base', './uibase', './manager', './render']
 });
-/**
- * 事件冒泡机制
- *  - child 组件的冒泡源配置为其所属的 parent
- *  - 性能考虑:不是 child 的所有事件都冒泡到 parent，要具体配置哪些事件需要冒泡
- *
- * view 和 controller 的平行关系
- *  - controller 初始化 -> initializer -> new view()
- *  - controller createDom -> createDom -> view.createDom()
- *  - controller renderUI -> renderUI -> view.render()
- *
- *
- * 控制层元属性配置中 view 的作用
- *   - 如果没有属性变化处理函数，自动生成属性变化处理函数，自动转发给 view 层
- *   - 如果没有指定 view 层实例，在生成默认 view 实例时，所有用户设置的 view 的属性都转到默认 view 实例中
- *
- *
- * observer synchronization, model 分成两类
- *  - view 负责监听 view 类 model 变化更新界面
- *  - control 负责监听 control 类变化改变逻辑
- *
- *
- *
- * problem: Observer behavior is hard to understand and debug
- * because it's implicit behavior.
- *
- * Keeping screen state and session state synchronized is an important task
- * Data Binding.
- *
- * In general data binding gets tricky
- * because if you have to avoid cycles where a change to the control,
- * changes the record set, which updates the control,
- * which updates the record set....
- * The flow of usage helps avoid these -
- * we load from the session state to the screen when the screen is opened,
- * after that any changes to the screen state propagate back to the session state.
- * It's unusual for the session state to be updated directly once the screen is up.
- * As a result data binding might not be entirely bi-directional -
- * just confined to initial upload and
- * then propagating changes from the controls to the session state.
- *
- *  Refer
- *    - http://martinfowler.com/eaaDev/uiArchs.html
- *
- **/
+/*
+ 事件冒泡机制
+ - child 组件的冒泡源配置为其所属的 parent
+ - 性能考虑:不是 child 的所有事件都冒泡到 parent，要具体配置哪些事件需要冒泡
+
+ view 和 controller 的平行关系
+ - controller 初始化 -> initializer -> new view()
+ - controller createDom -> createDom -> view.createDom()
+ - controller renderUI -> renderUI -> view.render()
+
+
+ 控制层元属性配置中 view 的作用
+ - 如果没有属性变化处理函数，自动生成属性变化处理函数，自动转发给 view 层
+ - 如果没有指定 view 层实例，在生成默认 view 实例时，所有用户设置的 view 的属性都转到默认 view 实例中
+
+
+ observer synchronization, model 分成两类
+ - view 负责监听 view 类 model 变化更新界面
+ - control 负责监听 control 类变化改变逻辑
+
+
+
+ problem: Observer behavior is hard to understand and debug
+ because it's implicit behavior.
+
+ Keeping screen state and session state synchronized is an important task
+ Data Binding.
+
+ In general data binding gets tricky
+ because if you have to avoid cycles where a change to the control,
+ changes the record set, which updates the control,
+ which updates the record set....
+ The flow of usage helps avoid these -
+ we load from the session state to the screen when the screen is opened,
+ after that any changes to the screen state propagate back to the session state.
+ It's unusual for the session state to be updated directly once the screen is up.
+ As a result data binding might not be entirely bi-directional -
+ just confined to initial upload and
+ then propagating changes from the controls to the session state.
+
+ Refer
+ - http://martinfowler.com/eaaDev/uiArchs.html
+
+ */

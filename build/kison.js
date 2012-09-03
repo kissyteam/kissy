@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jul 30 19:04
+build time: Aug 30 19:21
 */
 /**
  * LALR grammar parser
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer, Production) {
+KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal, Lexer, Production) {
 
     var SHIFT_TYPE = 1;
     var REDUCE_TYPE = 2;
@@ -33,14 +33,13 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             }
 
         }
-
         return -1;
     }
+
 
     function Grammar() {
         var self = this;
         Grammar.superclass.constructor.apply(self, arguments);
-
         self.buildTerminals();
         self.buildNonTerminals();
         self.buildNullAble();
@@ -53,10 +52,10 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
 
     S.extend(Grammar, Base, {
 
-        buildTerminals:function () {
+        buildTerminals: function () {
             var self = this,
                 lexer = self.get("lexer"),
-                rules = lexer && lexer.get("rules"),
+                rules = lexer && lexer.rules,
                 terminals = self.get("terminals");
             terminals[END_TAG] = 1;
             S.each(rules, function (rule) {
@@ -66,7 +65,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             });
         },
 
-        buildNonTerminals:function () {
+        buildNonTerminals: function () {
             var self = this,
                 terminals = self.get("terminals"),
                 nonTerminals = self.get("nonTerminals"),
@@ -78,7 +77,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
 
                 if (!nonTerminal) {
                     nonTerminal = nonTerminals[symbol] = new NonTerminal({
-                        symbol:symbol
+                        symbol: symbol
                     });
                 }
 
@@ -87,14 +86,14 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                 S.each(production.get("handles"), function (handle) {
                     if (!terminals[handle] && !nonTerminals[handle]) {
                         nonTerminals[handle] = new NonTerminal({
-                            symbol:handle
+                            symbol: handle
                         });
                     }
                 });
             });
         },
 
-        buildNullAble:function () {
+        buildNullAble: function () {
             var self = this,
                 i,
                 rhs,
@@ -137,6 +136,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                             for (i = 0; production = productions[i]; i++) {
                                 if (production.get("nullAble")) {
                                     nonTerminals[symbol].set("nullAble", cont = true);
+                                    break;
                                 }
                             }
                         }
@@ -145,7 +145,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             }
         },
 
-        isNullAble:function (symbol) {
+        isNullAble: function (symbol) {
             var self = this,
                 nonTerminals = self.get("nonTerminals");
             // rhs
@@ -165,7 +165,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             }
         },
 
-        findFirst:function (symbol) {
+        findFirst: function (symbol) {
             var self = this,
                 firsts = {},
                 t,
@@ -192,7 +192,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             }
         },
 
-        buildFirsts:function () {
+        buildFirsts: function () {
             var self = this,
                 nonTerminal,
                 productions = self.get("productions"),
@@ -236,11 +236,12 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             }
         },
 
-        closure:function (itemSet) {
+        closure: function (itemSet) {
             var self = this,
                 items = itemSet.get("items"),
-                productions = self.get("productions");
-            var cont = 1;
+                productions = self.get("productions"),
+                cont = 1;
+
             while (cont) {
                 cont = false;
                 S.each(items, function (item) {
@@ -262,7 +263,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                         if (p2.get("symbol") == dotSymbol) {
 
                             var newItem = new Item({
-                                production:p2
+                                production: p2
                             });
 
 
@@ -298,10 +299,11 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                     });
                 });
             }
+
             return itemSet;
         },
 
-        gotos:function (i, x) {
+        gotos: function (i, x) {
             var j = new ItemSet();
             var iItems = i.get("items");
             S.each(iItems, function (item) {
@@ -310,8 +312,8 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                     markSymbol = production.get("rhs")[dotPosition];
                 if (markSymbol == x) {
                     var newItem = new Item({
-                        production:production,
-                        dotPosition:dotPosition + 1
+                        production: production,
+                        dotPosition: dotPosition + 1
                     });
 
                     var itemIndex = j.findItemIndex(newItem, true), findItem;
@@ -328,7 +330,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             return this.closure(j);
         },
 
-        findItemSetIndex:function (itemSet) {
+        findItemSetIndex: function (itemSet) {
             var itemSets = this.get("itemSets");
             for (var i = 0; i < itemSets.length; i++) {
                 if (itemSets[i].equals(itemSet)) {
@@ -343,7 +345,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
          * build item set.
          * algorithm: 4.53
          */
-        buildItemSet:function () {
+        buildItemSet: function () {
             var self = this,
                 itemSets = self.get("itemSets"),
                 lookAheadTmp = {},
@@ -353,10 +355,10 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
 
             var initItemSet = self.closure(
                 new ItemSet({
-                    items:[
+                    items: [
                         new Item({
-                            production:productions[0],
-                            lookAhead:lookAheadTmp
+                            production: productions[0],
+                            lookAhead: lookAheadTmp
                         })
                     ]
                 }));
@@ -409,7 +411,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             }
         },
 
-        buildLalrItemSets:function () {
+        buildLalrItemSets: function () {
             var itemSets = this.get("itemSets");
 
             for (var i = 0; i < itemSets.length; i++) {
@@ -444,10 +446,11 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             }
         },
 
-        buildTable:function () {
+        buildTable: function () {
             var self = this;
             var table = self.get("table");
             var itemSets = self.get("itemSets");
+            var productions = self.get("productions");
             var gotos = {};
             var action = {};
             table.gotos = gotos;
@@ -460,8 +463,8 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                     if (!nonTerminals[symbol]) {
                         action[i] = action[i] || {};
                         action[i][symbol] = {
-                            type:SHIFT_TYPE,
-                            to:indexOf(anotherItemSet, itemSets)
+                            type: SHIFT_TYPE,
+                            to: indexOf(anotherItemSet, itemSets)
                         };
                     } else {
                         gotos[i] = gotos[i] || {};
@@ -476,7 +479,7 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                             if (item.get("lookAhead")[END_TAG]) {
                                 action[i] = action[i] || {};
                                 action[i][END_TAG] = {
-                                    type:ACCEPT_TYPE
+                                    type: ACCEPT_TYPE
                                 };
                             }
                         } else {
@@ -487,10 +490,8 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                             // f !-> e, e 's lookahead does not contain *
                             S.each(item.get("lookAhead"), function (_, l) {
                                 action[i][l] = {
-                                    type:REDUCE_TYPE,
-                                    symbol:production.get("symbol"),
-                                    rhs:production.get("rhs"),
-                                    action:production.get("action")
+                                    type: REDUCE_TYPE,
+                                    production: S.indexOf(production, productions)
                                 };
                             });
                         }
@@ -499,11 +500,11 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             }
         },
 
-
-        visualizeTable:function () {
+        visualizeTable: function () {
             var table = this.get("table");
             var gotos = table.gotos;
             var action = table.action;
+            var productions = this.get("productions");
             var ret = [];
 
             S.each(this.get("itemSets"), function (itemSet, i) {
@@ -522,7 +523,9 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
                     if (type == ACCEPT_TYPE) {
                         str = "acc"
                     } else if (type == REDUCE_TYPE) {
-                        str = "r, " + v.symbol + "=" + v.rhs.join("");
+                        var production = productions[v.production];
+                        str = "r, " + production.get("symbol") + "=" +
+                            production.get("rhs").join(" ");
                     } else if (type == SHIFT_TYPE) {
                         str = "s, " + v.to;
                     }
@@ -541,148 +544,203 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
             return ret;
         },
 
+        genCode: function () {
+            var table = this.get("table");
 
-        parse:function (input) {
+            var lexer = this.get("lexer");
 
-            var self = this,
-                lexer = this.get("lexer"),
-                state,
-                symbol,
-                lexerRet,
-                nonTerminals = self.get("nonTerminals"),
-                action,
-                table = self.get("table"),
-                gotos = table.gotos,
-                tableAction = table.action,
-                valueStack = [null],
-                stack = [0];
+            var productions = [];
+            S.each(this.get("productions"), function (p) {
+                productions.push({
+                    symbol: p.get("symbol"),
+                    rhs: p.get("rhs"),
+                    action: p.get("action")
+                });
+            });
 
-            lexer.set("input", input);
-
-            while (1) {
-                // retrieve state number from top of stack
-                state = stack[stack.length - 1];
-
-                if (!symbol) {
-                    lexerRet = lexer.lex();
-                    symbol = lexerRet.token;
-                }
-
-                if (!symbol) {
-                    S.log("it is not a valid input : " + input, "error");
-                    return false;
-                }
-
-                // read action for current state and first input
-                action = tableAction[state] && tableAction[state][symbol];
-
-                if (!action) {
-                    S.log(" no action for : " + symbol, "error");
-                    S.log("it is not a valid input : " + input, "error");
-                    return false;
-                }
-
-                switch (action.type) {
-
-                    case SHIFT_TYPE:
-
-                        stack.push(symbol);
-
-                        valueStack.push(lexerRet.text);
-
-                        // push state
-                        stack.push(action.to);
-
-                        // allow to read more
-                        symbol = null;
-
-                        break;
-
-                    case REDUCE_TYPE:
-
-                        var reducedSymbol = action.symbol,
-                            reducedAction = action.action,
-                            reducedRhs = action.rhs;
-
-                        var len = reducedRhs.length;
-
-                        var $$ = valueStack[valueStack.length - len]; // default to $$ = $1
-
-                        var args = valueStack.slice(-len);
-
-                        var ret = reducedAction.apply(null, args);
-
-                        if (ret !== undefined) {
-                            $$ = ret;
-                        }
-
-                        if (len) {
-                            stack = stack.slice(0, -1 * len * 2);
-                            valueStack = valueStack.slice(0, -1 * len);
-                        }
-
-                        stack.push(reducedSymbol);
-
-                        valueStack.push($$);
-
-                        var newState = gotos[stack[stack.length - 2]][stack[stack.length - 1]];
-
-                        stack.push(newState);
-
-                        break;
-
-                    case ACCEPT_TYPE:
-
-                        return $$;
-                }
-
-            }
-
+            var code = [];
+            code.push("/* Generated by kison from KISSY */");
+            code.push("var parser={}," +
+                "S=KISSY," +
+                "REDUCE_TYPE=" +
+                REDUCE_TYPE + "," +
+                "SHIFT_TYPE=" + SHIFT_TYPE + "," +
+                "ACCEPT_TYPE=" + ACCEPT_TYPE + ";");
+            code.push(lexer.genCode());
+            code.push("parser.lexer=lexer;");
+            code.push('parser.productions=' + Utils.serializeObject(productions) + ";");
+            code.push("parser.table=" + Utils.serializeObject(table) + ";");
+            code.push("parser.parse=" + parse.toString() + ";");
+            code.push("return parser;");
+            return code.join("\n");
         }
 
     }, {
-        ATTRS:{
-            table:{
-                value:{}
+        ATTRS: {
+            table: {
+                value: {}
             },
-            itemSets:{
-                value:[]
+            itemSets: {
+                value: []
             },
-            productions:{
-                value:[],
-                setter:function (vs) {
+            productions: {
+                value: [],
+                setter: function (vs) {
                     vs.unshift({
-                        symbol:START_TAG,
-                        rhs:[vs[0].symbol]
+                        symbol: START_TAG,
+                        rhs: [vs[0].symbol]
                     });
                     S.each(vs, function (v, index) {
                         vs[index] = new Production(v);
                     });
                 }
             },
-            nonTerminals:{
-                value:{}
+            nonTerminals: {
+                value: {}
             },
-            lexer:{
-                setter:function (v) {
-                    return new Lexer(v);
+            lexer: {
+                setter: function (v) {
+                    if (!(v instanceof  Lexer)) {
+                        return new Lexer(v);
+                    }
                 }
             },
-            terminals:{
-                value:{}
+            terminals: {
+                value: {}
             }
         }
     });
 
+
+    // #-------------- for generation start
+    function parse(input) {
+
+        var self = this,
+            lexer = self.lexer,
+            state,
+            symbol,
+            action,
+            table = self.table,
+            gotos = table.gotos,
+            tableAction = table.action,
+            productions = self.productions,
+            valueStack = [null],
+            stack = [0];
+
+        lexer.resetInput(input);
+
+        while (1) {
+            // retrieve state number from top of stack
+            state = stack[stack.length - 1];
+
+            if (!symbol) {
+                symbol = lexer.lex();
+            }
+
+            if (!symbol) {
+                S.log("it is not a valid input : " + input, "error");
+                return false;
+            }
+
+            // read action for current state and first input
+            action = tableAction[state] && tableAction[state][symbol];
+
+            if (!action) {
+                var expected = [];
+                if (tableAction[state]) {
+                    S.each(tableAction[state], function (_, symbol) {
+                        expected.push(symbol);
+                    });
+                }
+                S.error("parse error at line " + lexer.lineNumber +
+                    ":\n" + lexer.showDebugInfo() + "\n" +
+                    "expect " + expected.join(", "));
+                return false;
+            }
+
+            switch (action.type) {
+
+                case SHIFT_TYPE:
+
+                    stack.push(symbol);
+
+                    valueStack.push(lexer.text);
+
+                    // push state
+                    stack.push(action.to);
+
+                    // allow to read more
+                    symbol = null;
+
+                    break;
+
+                case REDUCE_TYPE:
+
+                    var production = productions[action.production],
+                        reducedSymbol = production.symbol,
+                        reducedAction = production.action,
+                        reducedRhs = production.rhs;
+
+                    var len = reducedRhs.length;
+
+                    var $$ = valueStack[valueStack.length - len]; // default to $$ = $1
+
+                    this.$$ = $$;
+
+                    for (var i = 0; i < len; i++) {
+                        this["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
+                    }
+
+                    var ret;
+
+                    if (reducedAction) {
+                        ret = reducedAction.call(this);
+                    }
+
+                    if (ret !== undefined) {
+                        $$ = ret;
+                    } else {
+                        $$ = this.$$;
+                    }
+
+                    if (len) {
+                        stack = stack.slice(0, -1 * len * 2);
+                        valueStack = valueStack.slice(0, -1 * len);
+                    }
+
+                    stack.push(reducedSymbol);
+
+                    valueStack.push($$);
+
+                    var newState = gotos[stack[stack.length - 2]][stack[stack.length - 1]];
+
+                    stack.push(newState);
+
+                    break;
+
+                case ACCEPT_TYPE:
+
+                    return $$;
+            }
+
+        }
+
+        return undefined;
+
+    }
+
+    // #-------------------- for generation end
+
     return Grammar;
 }, {
-    requires:[
+    requires: [
         'base',
-        './Item',
-        './ItemSet',
-        './NonTerminal',
-        './Lexer',
-        './Production'
+        './utils',
+        './item',
+        './item-set',
+        './non-terminal',
+        './lexer',
+        './production'
     ]
 });
 
@@ -692,78 +750,10 @@ KISSY.add("kison/Grammar", function (S, Base, Item, ItemSet, NonTerminal, Lexer,
  *   - http://zaach.github.com/jison/
  *   - http://www.gnu.org/software/bison/
  *//**
- * Item for KISON
- * @author yiminghe@gmail.com
- */
-KISSY.add("kison/Item", function (S, Base) {
-
-    function Item() {
-        Item.superclass.constructor.apply(this, arguments);
-    }
-
-
-    S.extend(Item, Base, {
-
-        equals:function (other, ignoreLookAhead) {
-            var self = this;
-            if (!other.get("production").equals(self.get("production"))) {
-                return false;
-            }
-            if (other.get("dotPosition") != self.get("dotPosition")) {
-                return false;
-            }
-            if (!ignoreLookAhead) {
-                if (!S.equals(self.get("lookAhead"), other.get("lookAhead"))) {
-                    return false;
-                }
-            }
-            return true;
-        },
-
-        toString:function (ignoreLookAhead) {
-            return this.get("production")
-                .toString(this.get("dotPosition"))
-                + (ignoreLookAhead ? "" :
-                ("," + S.keys(this.get("lookAhead")).join("/")));
-        },
-
-        addLookAhead:function (ls) {
-            var lookAhead = this.get("lookAhead"), ret = 0;
-            S.each(ls, function (_, l) {
-                if (!lookAhead[l]) {
-                    lookAhead[l] = 1;
-                    ret = 1;
-                }
-            });
-            ret = 1;
-        }
-
-    }, {
-        ATTRS:{
-            production:{},
-            dotPosition:{
-                value:0
-            },
-            lookAhead:{
-                /*
-                 2012-07-27
-                 improve performance,use object to compare( equal )
-                 and find( indexOf )
-                 instead of array
-                 */
-                value:{}
-            }
-        }
-    });
-
-    return Item;
-}, {
-    requires:['base']
-});/**
  * Item Set for KISON
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison/ItemSet", function (S, Base) {
+KISSY.add("kison/item-set", function (S, Base) {
     function ItemSet() {
         ItemSet.superclass.constructor.apply(this, arguments);
     }
@@ -850,93 +840,268 @@ KISSY.add("kison/ItemSet", function (S, Base) {
 }, {
     requires:['base']
 });/**
+ * Item for KISON
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("kison/item", function (S, Base) {
+
+    function Item() {
+        Item.superclass.constructor.apply(this, arguments);
+    }
+
+
+    S.extend(Item, Base, {
+
+        equals: function (other, ignoreLookAhead) {
+            var self = this;
+            if (!other.get("production").equals(self.get("production"))) {
+                return false;
+            }
+            if (other.get("dotPosition") != self.get("dotPosition")) {
+                return false;
+            }
+            if (!ignoreLookAhead) {
+                if (!S.equals(self.get("lookAhead"), other.get("lookAhead"))) {
+                    return false;
+                }
+            }
+            return true;
+        },
+
+        toString: function (ignoreLookAhead) {
+            return this.get("production")
+                .toString(this.get("dotPosition"))
+                + (ignoreLookAhead ? "" :
+                ("," + S.keys(this.get("lookAhead")).join("/")));
+        },
+
+        addLookAhead: function (ls) {
+            var lookAhead = this.get("lookAhead"), ret = 0;
+            S.each(ls, function (_, l) {
+                if (!lookAhead[l]) {
+                    lookAhead[l] = 1;
+                    ret = 1;
+                }
+            });
+            return ret;
+        }
+
+    }, {
+        ATTRS: {
+            production: {},
+            dotPosition: {
+                value: 0
+            },
+            lookAhead: {
+                /*
+                 2012-07-27
+                 improve performance,use object to compare( equal )
+                 and find( indexOf )
+                 instead of array
+                 */
+                value: {}
+            }
+        }
+    });
+
+    return Item;
+}, {
+    requires: ['base']
+});/**
+ * Parser generator for kissy.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("kison", function (S, Grammar, Production, Lexer) {
+
+    var Kison = {};
+    Kison.Grammar = Grammar;
+    Kison.Production = Production;
+    Kison.Lexer = Lexer;
+    return Kison;
+
+}, {
+    requires:['kison/grammar', 'kison/production','kison/lexer']
+});/**
  * Lexer to scan token.
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison/Lexer", function (S, Base) {
+KISSY.add("kison/lexer", function (S, Utils) {
 
-    var END_TAG = '$EOF';
-
-    function Lexer() {
-        Lexer.superclass.constructor.apply(this, arguments);
-    }
-
-    Lexer.ATTRS = {
-        /**
-         * Input languages
-         * @type String
-         */
-        input:{
-            value:""
-        },
+    function Lexer(cfg) {
 
         /**
          * lex rules.
-         * @type Object[]
+         * @type {Object[]}
          * @example
          * [
          *  {
-         *   regexp:/^\w+/,
+         *   regexp:'\\w+',
+         *   state:'xx',
          *   token:'c',
-         *   action:function(match){}
+         *   // this => lex
+         *   action:function(){}
          *  }
          * ]
          */
-        rules:{
-            value:[]
-        }
+        this.rules = [];
 
+        S.mix(this, cfg);
+
+        S.each(this.rules, function (r) {
+            if (!r.state) {
+                r.state = Lexer.STATIC.INIT;
+            }
+        });
+
+        /**
+         * Input languages
+         * @type {String}
+         */
+
+        this.resetInput(this.input);
+
+    }
+
+    Lexer.STATIC = {
+        INIT: S.guid("init"),
+        DEBUG_CONTEXT_LIMIT: 20,
+        END_TAG: '$EOF'
     };
 
-    S.extend(Lexer, Base, {
-        lex:function () {
+    Lexer.prototype = {
+
+        resetInput: function (input) {
+            this.input = input;
+            S.mix(this, {
+                matched: "",
+                stateStack: [Lexer.STATIC.INIT],
+                match: "",
+                text: "",
+                firstLine: 1,
+                lineNumber: 1,
+                lastLine: 1,
+                firstColumn: 1,
+                lastColumn: 1
+            });
+        },
+
+        genCode: function () {
+            var code = [];
+
+            code.push(Lexer.toString());
+
+            code.push("Lexer.prototype= " + Utils.serializeObject(Lexer.prototype, /genCode/) + ";");
+
+            code.push("Lexer.STATIC= " + Utils.serializeObject(Lexer.STATIC) + ";");
+
+            code.push("var lexer = new Lexer(" + Utils.serializeObject({rules: this.rules}) + ");");
+
+            return code.join("\n");
+        },
+
+        getCurrentRules: function () {
+            var currentState = this.stateStack[this.stateStack.length - 1];
+            var rules = [];
+            S.each(this.rules, function (r) {
+                if (r.state == currentState) {
+                    rules.push(r);
+                }
+            });
+            return rules;
+        },
+
+        pushState: function (state) {
+            this.stateStack.push(state);
+        },
+
+        popState: function () {
+            this.stateStack.pop();
+        },
+
+        showDebugInfo: function () {
+            var DEBUG_CONTEXT_LIMIT = Lexer.STATIC.DEBUG_CONTEXT_LIMIT;
+            var matched = this.matched,
+                match = this.match,
+                input = this.input;
+            matched = matched.slice(0, matched.length - match.length);
+            var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") +
+                matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " ");
+            var next = match + input;
+            next = next.slice(0, DEBUG_CONTEXT_LIMIT) +
+                (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
+            return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
+        },
+
+        lex: function () {
             var self = this,
-                input = self.get("input"),
+                input = self.input,
                 i,
                 rule,
                 m,
                 ret,
-                rules = self.get("rules");
+                lines,
+                rules = self.getCurrentRules();
+
+            self.match = self.text = "";
 
             if (!S.trim(input)) {
-                return {
-                    token:END_TAG
-                };
+                return  Lexer.STATIC.END_TAG;
             }
 
             for (i = 0; i < rules.length; i++) {
                 rule = rules[i];
                 if (m = input.match(rule.regexp)) {
-                    ret = rule.action && rule.action(m);
-                    if (ret == undefined) {
-                        ret = {
-                            token:rule.token,
-                            text:m[0]
-                        };
+                    lines = m[0].match(/\n.*/g);
+                    if (lines) {
+                        self.lineNumber += lines.length;
                     }
-                    input = input.slice(m[0].length);
-                    self.set("input", input);
-                    if (ret.token) {
+                    S.mix(self, {
+                        firstLine: self.lastLine,
+                        lastLine: self.lineNumber + 1,
+                        firstColumn: self.lastColumn,
+                        lastColumn: lines ?
+                            lines[lines.length - 1].length - 1 :
+                            self.lastColumn + m[0].length
+                    });
+                    var match;
+                    // for error report
+                    match = self.match = m[0];
+
+                    // all matches
+                    self.matches = m;
+                    // may change by user
+                    self.text = match;
+                    // matched content utils now
+                    self.matched += match;
+                    ret = rule.action && rule.action.call(this);
+                    if (ret == undefined) {
+                        ret = rule.token;
+                    }
+                    input = input.slice(match.length);
+                    self.input = input;
+
+                    if (ret) {
                         return ret;
                     } else {
+                        // ignore
                         return self.lex();
                     }
                 }
             }
 
-            S.error("no lex rules for :\n" + input)
+            S.error("lex error at line " + this.lineNumber + ":\n" + this.showDebugInfo());
         }
-    });
+    };
 
     return Lexer;
 
 }, {
-    requires:['base']
+    requires: ['./utils']
 });/**
  * NonTerminal Set for KISON
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison/NonTerminal", function (S, Base) {
+KISSY.add("kison/non-terminal", function (S, Base) {
 
     function NonTerminal() {
         NonTerminal.superclass.constructor.apply(this, arguments);
@@ -969,7 +1134,7 @@ KISSY.add("kison/NonTerminal", function (S, Base) {
  * Production for KISON
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison/Production", function (S, Base) {
+KISSY.add("kison/production", function (S, Base) {
 
     function Production() {
         Production.superclass.constructor.apply(this, arguments);
@@ -977,7 +1142,7 @@ KISSY.add("kison/Production", function (S, Base) {
 
     S.extend(Production, Base, {
 
-        equals:function (other) {
+        equals: function (other) {
             var self = this;
             if (!S.equals(other.get("rhs"), self.get("rhs"))) {
                 return false;
@@ -986,7 +1151,7 @@ KISSY.add("kison/Production", function (S, Base) {
 
         },
 
-        toString:function (dot) {
+        toString: function (dot) {
             var rhsStr = "";
             var rhs = this.get("rhs");
             S.each(rhs, function (r, index) {
@@ -1002,23 +1167,22 @@ KISSY.add("kison/Production", function (S, Base) {
         }
 
     }, {
-        ATTRS:{
-            firsts:{
-                value:{}
+        ATTRS: {
+            firsts: {
+                value: {}
             },
-            follows:{
-                value:[]
+            follows: {
+                value: []
             },
-            symbol:{},
-            rhs:{
-                value:[]
+            symbol: {},
+            rhs: {
+                value: []
             },
-            nullAble:{
-                value:false
+            nullAble: {
+                value: false
             },
-            action:{
+            action: {
                 // action for this production
-                value:S.noop
             }
         }
     });
@@ -1026,19 +1190,50 @@ KISSY.add("kison/Production", function (S, Base) {
     return Production;
 
 }, {
-    requires:['base']
+    requires: ['base']
 });/**
- * Parser generator for kissy.
+ * utils for kison.
  * @author yiminghe@gmail.com
  */
-KISSY.add("kison", function (S, Grammar, Production, Lexer) {
+KISSY.add("kison/utils", function (S) {
 
-    var Kison = {};
-    Kison.Grammar = Grammar;
-    Kison.Production = Production;
-    Kison.Lexer = Lexer;
-    return Kison;
+    return {
+        serializeObject: function serializeObject(obj, excludeReg) {
+            var ret = [];
+            if (S.isString(obj)) {
+                return '"' + obj + '"';
+            } else if (S.isNumber(obj)) {
+                return obj + "";
+            } else if (S.isRegExp(obj)) {
+                return '/' +
+                    obj.source + '/' +
+                    (obj.global ? 'g' : '') +
+                    (obj.ignoreCase ? 'i' : '') +
+                    (obj.multiline ? 'm' : '');
+            } else if (S.isArray(obj)) {
+                ret.push('[');
+                S.each(obj, function (v, i) {
+                    ret.push((i ? ',' : '') + serializeObject(v));
+                });
+                ret.push(']');
+                return ret.join("\n");
+            } else if (S.isObject(obj)) {
+                ret = ['{'];
+                var start = true;
+                for (var i in obj) {
+                    if (obj.hasOwnProperty(i) && (!excludeReg || !(i.match(excludeReg)))) {
+                        var v = obj[i];
+                        ret.push((start ? '' : ',') +
+                            '"' + i + '": ' + serializeObject(v, excludeReg));
+                        start = false;
+                    }
+                }
+                ret.push('}');
+                return ret.join('\n');
+            } else {
+                return obj+'';
+            }
+        }
+    };
 
-}, {
-    requires:['kison/Grammar', 'kison/Production','kison/Lexer']
 });

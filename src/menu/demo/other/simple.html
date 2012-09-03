@@ -66,8 +66,8 @@
 
 
     (function () {
-        KISSY.use("node,menu",
-                function (S, Node, Menu) {
+        KISSY.use("node,menu,separator",
+                function (S, Node, Menu,Separator) {
                     //view
                     //render to container : button_container
 
@@ -90,7 +90,7 @@
                         content:"submenuitem2"
                     }));
 
-                    sb.addChild(new Menu.Separator());
+                    sb.addChild(new Separator());
 
                     if (true) {
                         var sb2 = new Menu.PopupMenu({

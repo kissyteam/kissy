@@ -69,14 +69,13 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
         }
     }
 
-    function processChild(e) {
-        var c = e.child;
+    function processChild(c) {
         // 交给容器代理
         c.set("handleMouseEvents", false);
         c.set("focusable", false);
         // managed by parent toolbar
         c.publish("afterCollapsedChange afterHighlightedChange", {
-            bubbles:1
+            bubbles: 1
         });
     }
 
@@ -93,15 +92,17 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
          */
         {
 
-            initializer:function () {
-                this.on("addChild", processChild);
+            addChild: function () {
+                var c = Toolbar.superclass.addChild.apply(this, arguments);
+                processChild(c);
+                return c;
             },
 
-            createDom:function () {
+            createDom: function () {
                 this.get("el").attr("role", "toolbar");
             },
 
-            _uiSetHighlightedItem:function (item) {
+            _uiSetHighlightedItem: function (item) {
                 var id;
                 if (item) {
                     id = item.get("el").attr("id");
@@ -117,13 +118,13 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
             /**
              * Protected.
              */
-            bindUI:function () {
+            bindUI: function () {
                 var self = this;
                 self.on("afterCollapsedChange", afterCollapsedChange, self);
                 self.on("afterHighlightedChange", afterHighlightedChange, self);
             },
 
-            handleBlur:function () {
+            handleBlur: function () {
 
                 var self = this,
                     highlightedItem,
@@ -136,7 +137,7 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                 }
             },
 
-            handleKeyEventInternal:function (e) {
+            handleKeyEventInternal: function (e) {
                 var self = this,
                     highlightedItem = self.get("highlightedItem"),
                     previous = highlightedItem,
@@ -169,35 +170,19 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                         break;
 
                     case KeyCodes.UP:
-                        if (orientation == Toolbar.VERTICAL) {
-                            highlightedItem = getEnabledHighlightedItem(highlightedChildIndex, -1, self);
-                        } else {
-                            return false;
-                        }
+                        highlightedItem = getEnabledHighlightedItem(highlightedChildIndex, -1, self);
                         break;
 
                     case KeyCodes.LEFT:
-                        if (orientation == Toolbar.HORIZONTAL) {
-                            highlightedItem = getEnabledHighlightedItem(highlightedChildIndex, -1, self);
-                        } else {
-                            return false;
-                        }
+                        highlightedItem = getEnabledHighlightedItem(highlightedChildIndex, -1, self);
                         break;
 
                     case KeyCodes.DOWN:
-                        if (orientation == Toolbar.VERTICAL) {
-                            highlightedItem = getEnabledHighlightedItem(highlightedChildIndex, 1, self);
-                        } else {
-                            return false;
-                        }
+                        highlightedItem = getEnabledHighlightedItem(highlightedChildIndex, 1, self);
                         break;
 
                     case KeyCodes.RIGHT:
-                        if (orientation == Toolbar.HORIZONTAL) {
-                            highlightedItem = getEnabledHighlightedItem(highlightedChildIndex, 1, self);
-                        } else {
-                            return false;
-                        }
+                        highlightedItem = getEnabledHighlightedItem(highlightedChildIndex, 1, self);
                         break;
 
                     default:
@@ -216,39 +201,24 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
             }
 
         }, {
-            ATTRS:/**
+            ATTRS: /**
              * @lends Toolbar#
              */
             {
                 // 当前的高亮项
-                highlightedItem:{
+                highlightedItem: {
                 },
                 // 当前的扩展项，切换高亮项时如要把以前的扩展项收起，并展开当前的高亮项
-                expandedItem:{
-                },
-                /**
-                 * Toolbar orientation.
-                 * Enum: Toolbar.HORIZONTAL or Toolbar.VERTICAL
-                 */
-                orientation:{
-                    value:0
+                expandedItem: {
                 }
             }
         }, {
-            xclass:'toolbar'
-        });
-
-    S.mix(Toolbar,
-        /**
-         * @lends Toolbar
-         */
-        {
-            HORIZONTAL:0,
-            VERTICAL:1
+            xclass: 'toolbar',
+            priority: 10
         });
 
     return Toolbar;
 
 }, {
-    requires:['component', 'node', 'toolbar/separator']
+    requires: ['component', 'node']
 });

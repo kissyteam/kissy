@@ -20,7 +20,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             /**
              * see {@link Component.UIBase.Box#show}
              * @name Overlay.Popup#show
-             * @function
+             * @method
              */
 
 
@@ -154,7 +154,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             {
                 /**
                  * Trigger elements to show popup.
-                 * @type {NodeList}
+                 * @type {KISSY.NodeList}
                  */
                 trigger:{                          // 触发器
                     setter:function (v) {

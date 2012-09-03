@@ -89,7 +89,7 @@ KISSY.add("component/manager", function (S) {
          * @param {Function} constructor Component's constructor.
          * @type {Function}
          * @return {String}
-         * @function
+         * @method
          */
         getXClassByConstructor:getXClassByConstructor,
         /**
@@ -97,7 +97,7 @@ KISSY.add("component/manager", function (S) {
          * @param {String} classNames Class names separated by space.
          * @type {Function}
          * @return {Function}
-         * @function
+         * @method
          */
         getConstructorByXClass:getConstructorByXClass,
         /**
@@ -105,7 +105,7 @@ KISSY.add("component/manager", function (S) {
          * @type {Function}
          * @param {String} className Component's class name.
          * @param {Function} componentConstructor Component's constructor.
-         * @function
+         * @method
          */
         setConstructorByXClass:setConstructorByXClass
     };

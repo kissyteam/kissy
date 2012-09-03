@@ -1,24 +1,27 @@
 /**
+ * @ignore
  * @fileOverview Declare config info for KISSY.
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
-    var Loader = S.Loader, utils = Loader.Utils;
+    var Loader = S.Loader,
+        utils = Loader.Utils,
+        configs = S.configs;
     /*
      modify current module path
-     <code>
+
      [
-     [/(.+-)min(.js(\?t=\d+)?)$/,"$1$2"],
-     [/(.+-)min(.js(\?t=\d+)?)$/,function(_,m1,m2){
-     return m1+m2;
-     }]
+        [/(.+-)min(.js(\?t=\d+)?)$/, '$1$2'],
+        [/(.+-)min(.js(\?t=\d+)?)$/, function(_,m1,m2){
+            return m1+m2;
+        }]
      ]
-     </code>
+
      */
-    S.configs.map = function (rules) {
+    configs.map = function (rules) {
         var self = this;
         return self.Config.mappedRules = (self.Config.mappedRules || []).concat(rules || []);
     };
@@ -30,7 +33,7 @@
      在当前网页路径找 biz/x.js
      @private
      */
-    S.configs.packages = function (cfgs) {
+    configs.packages = function (cfgs) {
         var self = this,
             name,
             base,
@@ -44,8 +47,8 @@
                 base = cfg.base || cfg.path;
 
                 // must be folder
-                if (!S.endsWith(base, "/")) {
-                    base += "/";
+                if (!S.endsWith(base, '/')) {
+                    base += '/';
                 }
 
                 // 注意正则化
@@ -66,29 +69,29 @@
      <code>
 
      KISSY.config({
-     base:'',
-     // dom-min.js
-     debug:'',
-     combine:true,
-     tag:'',
-     packages:{
-     "biz1": {
-     // path change to base
-     base: "haha",
-     // x.js
-     debug:'',
-     tag:'',
-     combine:false,
-     }
-     },
-     modules:{
-     "biz1/main" : {
-     requires: [ "biz1/part1" , "biz1/part2" ]
-     }
-     }
+         base: '',
+         // dom-min.js
+         debug: '',
+         combine: true,
+         tag: '',
+         packages: {
+             'biz1': {
+                 // path change to base
+                 base: 'haha',
+                 // x.js
+                 debug: '',
+                 tag: '',
+                 combine: false,
+             }
+         },
+         modules: {
+             'biz1/main': {
+                requires: ['biz1/part1', 'biz1/part2']
+             }
+         }
      });
      */
-    S.configs.modules = function (modules) {
+    configs.modules = function (modules) {
         var self = this;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
@@ -98,12 +101,12 @@
         }
     };
 
-    S.configs.modules.order = 10;
+    configs.modules.order = 10;
 
     /*
      KISSY 's base path.
      */
-    S.configs.base = function (base) {
+    configs.base = function (base) {
         var self = this, baseUri, Config = self.Config;
         if (!base) {
             return Config.base;

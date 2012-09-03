@@ -1,6 +1,6 @@
 /**
  * @module  event-spec
- * @author  yiminghe@gmail.com gonghao@ghsky.com
+ * @author  yiminghe@gmail.com, gonghao@ghsky.com
  */
 KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
     var EventTarget = Event.Target;
@@ -13,18 +13,19 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
             FIRST = '1',
             SECOND = '2',
             SEP = '-',
-            // simulate mouse event on any element
+        // simulate mouse event on any element
             simulate = function (target, type, relatedTarget) {
                 if (typeof target === 'string') {
                     target = DOM.get(target);
                 }
-                jasmine.simulate(target, type, { relatedTarget:relatedTarget });
+                jasmine.simulate(target, type, { relatedTarget: relatedTarget });
             };
 
         describe('add event', function () {
 
             it('should support batch adding.', function () {
                 var lis = DOM.query('#bar li'), total = lis.length, count = 0;
+
 
                 Event.on(lis, 'click', function () {
                     count++;
@@ -64,11 +65,11 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
             it("should support data bind when on and unbind when remove", function () {
                 var a = DOM.get('#link-a'), data;
                 Event.on(a, "click", {
-                    fn:function (e, d) {
+                    fn: function (e, d) {
                         data = d;
                     },
-                    data:{
-                        y:1
+                    data: {
+                        y: 1
                     }
                 });
                 simulate(a, 'click');
@@ -492,7 +493,7 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
             it('should support using custom object as the scope.', function () {
                 var bar = DOM.get('#bar'),
                     TEST = {
-                        foo:'only for tesing'
+                        foo: 'only for tesing'
                     };
 
                 Event.on(bar, 'click', function () {
@@ -501,8 +502,8 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
             });
 
             it('should guarantee separate event adding function keeps separate scope.', function () {
-                Event.on(doc, 'click', handler, {id:FIRST});
-                Event.on(doc, 'click', handler, {id:SECOND});
+                Event.on(doc, 'click', handler, {id: FIRST});
+                Event.on(doc, 'click', handler, {id: SECOND});
                 var result = [];
 
                 function handler() {
@@ -523,8 +524,8 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
                 Event.detach(doc);
                 var re = [];
 
-                Event.on(doc, 'click keydown', handler, {id:FIRST});
-                Event.on(doc, 'click keydown', handler, {id:SECOND});
+                Event.on(doc, 'click keydown', handler, {id: FIRST});
+                Event.on(doc, 'click keydown', handler, {id: SECOND});
                 function handler() {
                     re.push(this.id);
                 }
@@ -556,7 +557,7 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
             Event.on(domNode, "click", noop3);
             Event.on(domNode, "keydown", noop);
             (function () {
-                var eventDesc = Event._data(domNode);
+                var eventDesc = Event._data(domNode, undefined, false);
                 var num = 0;
                 for (i in eventDesc) {
                     if (eventDesc.hasOwnProperty(i)) {
@@ -584,7 +585,7 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
             Event.remove(domNode, "click", noop);
 
             (function () {
-                var eventDesc = Event._data(domNode);
+                var eventDesc = Event._data(domNode, undefined, false);
                 var num = 0;
                 for (i in eventDesc) {
                     if (eventDesc.hasOwnProperty(i)) {
@@ -612,7 +613,7 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
             Event.remove(domNode, "click");
 
             (function () {
-                var eventDesc = Event._data(domNode);
+                var eventDesc = Event._data(domNode, undefined, false);
                 var num = 0;
                 for (i in eventDesc) {
                     if (eventDesc.hasOwnProperty(i)) {
@@ -640,7 +641,7 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
             Event.remove(domNode);
 
             (function () {
-                var eventDesc = Event._data(domNode);
+                var eventDesc = Event._data(domNode, undefined, false);
                 expect(eventDesc).toBe(undefined);
             })();
 
@@ -657,24 +658,16 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
                 },
                 noop3 = function () {
                 };
-            Event.on(domNode, "click", noop);
-            Event.on(domNode, "click", noop2);
-            Event.on(domNode, "click", noop3);
-            Event.on(domNode, "keydown", noop);
+            domNode.on("click", noop);
+            domNode.on("click", noop2);
+            domNode.on("click", noop3);
+            domNode.on("keydown", noop);
             (function () {
-                var eventDesc = Event._data(domNode);
-                var num = 0;
-                for (i in eventDesc) {
-                    if (eventDesc.hasOwnProperty(i)) {
-                        expect(S.inArray(i, ["handler", "events"]))
-                            .toBe(true);
-                        num++;
-                    }
-                }
-                expect(num).toBe(2);
-                expect(S.isFunction(eventDesc.handler)).toBe(true);
+                var eventDesc = Event._data(domNode, undefined, true);
+                expect(eventDesc.events).not.toBeUndefined();
+                expect(eventDesc.handler).toBeUndefined();
                 var events = eventDesc.events;
-                num = 0;
+                var num = 0;
                 for (i in events) {
                     if (events.hasOwnProperty(i)) {
                         expect(S.inArray(i, ["click", "keydown"]))
@@ -687,22 +680,15 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
                 expect(clickHandlers.length).toBe(3);
             })();
 
-            Event.remove(domNode, "click", noop);
+            domNode.detach("click", noop);
 
             (function () {
-                var eventDesc = Event._data(domNode);
+                var eventDesc = Event._data(domNode, undefined, true);
                 var num = 0;
-                for (i in eventDesc) {
-                    if (eventDesc.hasOwnProperty(i)) {
-                        expect(S.inArray(i, ["handler", "events"]))
-                            .toBe(true);
-                        num++;
-                    }
-                }
-                expect(num).toBe(2);
-                expect(S.isFunction(eventDesc.handler)).toBe(true);
+                expect(eventDesc.events).not.toBeUndefined();
+                expect(eventDesc.handler).toBeUndefined();
                 var events = eventDesc.events;
-                num = 0;
+
                 for (i in events) {
                     if (events.hasOwnProperty(i)) {
                         expect(S.inArray(i, ["click", "keydown"]))
@@ -715,22 +701,14 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
                 expect(clickHandlers.length).toBe(2);
             })();
 
-            Event.remove(domNode, "click");
+            domNode.detach("click");
 
             (function () {
-                var eventDesc = Event._data(domNode);
+                var eventDesc = Event._data(domNode, undefined, true);
                 var num = 0;
-                for (i in eventDesc) {
-                    if (eventDesc.hasOwnProperty(i)) {
-                        expect(S.inArray(i, ["handler", "events"]))
-                            .toBe(true);
-                        num++;
-                    }
-                }
-                expect(num).toBe(2);
-                expect(S.isFunction(eventDesc.handler)).toBe(true);
+                expect(eventDesc.events).not.toBeUndefined();
+                expect(eventDesc.handler).toBeUndefined();
                 var events = eventDesc.events;
-                num = 0;
                 for (i in events) {
                     if (events.hasOwnProperty(i)) {
                         expect(S.inArray(i, ["keydown"]))
@@ -743,10 +721,10 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
                 expect(clickHandlers).toBeUndefined();
             })();
 
-            Event.remove(domNode);
+            domNode.detach();
 
             (function () {
-                var eventDesc = Event._data(domNode);
+                var eventDesc = Event._data(domNode, undefined, true);
                 expect(eventDesc).toBe(undefined);
             })();
         });

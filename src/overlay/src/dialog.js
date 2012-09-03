@@ -30,7 +30,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
             /**
              * see {@link Component.UIBase.Box#show}
              * @name Overlay.Dialog#show
-             * @function
+             * @method
              */
 
             /**

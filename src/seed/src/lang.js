@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview   lang
  * @author  lifesinger@gmail.com, yiminghe@gmail.com
  * @description this code can run in any ecmascript compliant environment
@@ -39,13 +40,13 @@
         class2type = {},
     // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
         htmlEntities = {
-            '&amp;':'&',
-            '&gt;':'>',
-            '&lt;':'<',
-            '&#x60;':'`',
-            '&#x2F;':'/',
-            '&quot;':'"',
-            '&#x27;':"'"
+            '&amp;': '&',
+            '&gt;': '>',
+            '&lt;': '<',
+            '&#x60;': '`',
+            '&#x2F;': '/',
+            '&quot;': '"',
+            '&#x27;': "'"
         },
         reverseEntities = {},
         escapeReg,
@@ -69,7 +70,7 @@
             str += entity + '|';
         });
         str = str.slice(0, -1);
-        return escapeReg = new RegExp(str, "g");
+        return escapeReg = new RegExp(str, 'g');
     }
 
     function getUnEscapeReg() {
@@ -81,7 +82,7 @@
             str += entity + '|';
         });
         str += '&#(\\d{1,5});';
-        return unEscapeReg = new RegExp(str, "g");
+        return unEscapeReg = new RegExp(str, 'g');
     }
 
 
@@ -91,10 +92,8 @@
         return val == null || (t !== 'object' && t !== 'function');
     }
 
+
     S.mix(S,
-        /**
-         * @lends KISSY
-         */
         {
 
             /**
@@ -102,9 +101,10 @@
              * @param {Object} o object needed to be stamped
              * @param {Boolean} [readOnly] while set marker on o if marker does not exist
              * @param {String} [marker] the marker will be set on Object
-             * @return guid associated with this object
+             * @return {String} guid associated with this object
+             * @member KISSY
              */
-            stamp:function (o, readOnly, marker) {
+            stamp: function (o, readOnly, marker) {
                 if (!o) {
                     return o
                 }
@@ -125,14 +125,16 @@
 
             /**
              * empty function
+             * @member KISSY
              */
-            noop:function () {
+            noop: function () {
             },
 
             /**
              * Determine the internal JavaScript [[Class]] of an object.
+             * @member KISSY
              */
-            type:function (o) {
+            type: function (o) {
                 return o == null ?
                     String(o) :
                     class2type[toString.call(o)] || 'object';
@@ -141,23 +143,26 @@
             /**
              * whether o === null
              * @param o
+             * @member KISSY
              */
-            isNull:function (o) {
+            isNull: function (o) {
                 return o === null;
             },
 
             /**
              * whether o === undefined
              * @param o
+             * @member KISSY
              */
-            isUndefined:function (o) {
+            isUndefined: function (o) {
                 return o === undefined;
             },
 
             /**
              * Checks to see if an object is empty.
+             * @member KISSY
              */
-            isEmptyObject:function (o) {
+            isEmptyObject: function (o) {
                 for (var p in o) {
                     if (p !== undefined) {
                         return FALSE;
@@ -167,16 +172,17 @@
             },
 
             /**
-             * Checks to see if an object is a plain object (created using "{}"
-             * or "new Object()" or "new FunctionClass()").
+             * Checks to see if an object is a plain object (created using '{}'
+             * or 'new Object()' or 'new FunctionClass()').
+             * @member KISSY
              */
-            isPlainObject:function (o) {
-                /**
-                 * note by yiminghe
-                 * isPlainObject(node=document.getElementById("xx")) -> false
-                 * toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
-                 * 'isPrototypeOf' in node : ie678 === false ,other === true
-                 * refer http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
+            isPlainObject: function (o) {
+                /*
+                 note by yiminghe
+                 isPlainObject(node=document.getElementById('xx')) -> false
+                 toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
+                 'isPrototypeOf' in node : ie678 === false ,other === true
+                 refer http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
                  */
                 return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
             },
@@ -186,9 +192,10 @@
              * Checks to see whether two object are equals.
              * @param a 比较目标1
              * @param b 比较目标2
-             * @returns {Boolean} a.equals(b)
+             * @return {Boolean} a.equals(b)
+             * @member KISSY
              */
-            equals:function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
+            equals: function (a, b, /*internal use*/mismatchKeys, /*internal use*/mismatchValues) {
                 // inspired by jasmine
                 mismatchKeys = mismatchKeys || [];
                 mismatchValues = mismatchValues || [];
@@ -209,7 +216,7 @@
                 if (S.isNumber(a) && S.isNumber(b)) {
                     return (a == b);
                 }
-                if (typeof a === "object" && typeof b === "object") {
+                if (typeof a === 'object' && typeof b === 'object') {
                     return compareObjects(a, b, mismatchKeys, mismatchValues);
                 }
                 // Straight check
@@ -219,11 +226,12 @@
             /**
              * Creates a deep copy of a plain object or array. Others are returned untouched.
              * @param input
+             * @member KISSY
              * @param {Function} [filter] filter function
-             * @returns the new cloned object
+             * @return {Object} the new cloned object
              * @see http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
              */
-            clone:function (input, filter) {
+            clone: function (input, filter) {
                 // 稍微改改就和规范一样了 :)
                 // Let memory be an association list of pairs of objects,
                 // initially empty. This is used to handle duplicate references.
@@ -238,7 +246,7 @@
                         try {
                             delete v[CLONE_MARKER];
                         } catch (e) {
-                            S.log("delete CLONE_MARKER error : ");
+                            S.log('delete CLONE_MARKER error : ');
                             v[CLONE_MARKER] = undefined;
                         }
                     }
@@ -249,9 +257,10 @@
 
             /**
              * Removes the whitespace from the beginning and end of a string.
-             * @function
+             * @method
+             * @member KISSY
              */
-            trim:trim ?
+            trim: trim ?
                 function (str) {
                     return str == null ? EMPTY : trim.call(str);
                 } :
@@ -264,9 +273,10 @@
              * Removes undefined keywords and ignores escaped keywords.
              * @param {String} str template string
              * @param {Object} o json data
+             * @member KISSY
              * @param {RegExp} [regexp] to match a piece of template string
              */
-            substitute:function (str, o, regexp) {
+            substitute: function (str, o, regexp) {
                 if (!S.isString(str)
                     || !S.isPlainObject(o)) {
                     return str;
@@ -286,8 +296,9 @@
              * @param fn {Function} the function to execute on each item. The function
              *        receives three arguments: the value, the index, the full array.
              * @param {Object} [context]
+             * @member KISSY
              */
-            each:function (object, fn, context) {
+            each: function (object, fn, context) {
                 if (object) {
                     var key,
                         val,
@@ -316,11 +327,12 @@
             /**
              * Search for a specified value within an array.
              * @param item individual item to be searched
-             * @function
+             * @method
+             * @member KISSY
              * @param {Array} arr the array of items where item will be search
-             * @returns {number} item's index in array
+             * @return {number} item's index in array
              */
-            indexOf:indexOf ?
+            indexOf: indexOf ?
                 function (item, arr) {
                     return indexOf.call(arr, item);
                 } :
@@ -337,12 +349,13 @@
              * Returns the index of the last item in the array
              * that contains the specified value, -1 if the
              * value isn't found.
-             * @function
+             * @method
              * @param item individual item to be searched
              * @param {Array} arr the array of items where item will be search
-             * @returns {number} item's last index in array
+             * @return {number} item's last index in array
+             * @member KISSY
              */
-            lastIndexOf:(lastIndexOf) ?
+            lastIndexOf: (lastIndexOf) ?
                 function (item, arr) {
                     return lastIndexOf.call(arr, item);
                 } :
@@ -358,12 +371,12 @@
             /**
              * Returns a copy of the array with the duplicate entries removed
              * @param a {Array} the array to find the subset of unique for
-             * @param [override] {Boolean}
-             *        if override is true, S.unique([a, b, a]) => [b, a]
-             *        if override is false, S.unique([a, b, a]) => [a, b]
+             * @param [override] {Boolean} if override is true, S.unique([a, b, a]) => [b, a].
+             * if override is false, S.unique([a, b, a]) => [a, b]
              * @return {Array} a copy of the array with duplicate entries removed
+             * @member KISSY
              */
-            unique:function (a, override) {
+            unique: function (a, override) {
                 var b = a.slice();
                 if (override) {
                     b.reverse();
@@ -390,9 +403,10 @@
              * Search for a specified value index within an array.
              * @param item individual item to be searched
              * @param {Array} arr the array of items where item will be search
-             * @returns {Boolean} the item exists in arr
+             * @return {Boolean} the item exists in arr
+             * @member KISSY
              */
-            inArray:function (item, arr) {
+            inArray: function (item, arr) {
                 return S.indexOf(item, arr) > -1;
             },
 
@@ -400,15 +414,16 @@
              * Executes the supplied function on each item in the array.
              * Returns a new array containing the items that the supplied
              * function returned true for.
-             * @function
+             * @member KISSY
+             * @method
              * @param arr {Array} the array to iterate
              * @param fn {Function} the function to execute on each item
              * @param [context] {Object} optional context object
-             * @return {Array} The items on which the supplied function
-             *         returned true. If no items matched an empty array is
-             *         returned.
+             * @return {Array} The items on which the supplied function returned true.
+             * If no items matched an empty array is returned.
+             * @member KISSY
              */
-            filter:filter ?
+            filter: filter ?
                 function (arr, fn, context) {
                     return filter.call(arr, fn, context || this);
                 } :
@@ -427,15 +442,15 @@
              * Executes the supplied function on each item in the array.
              * Returns a new array containing the items that the supplied
              * function returned for.
-             * @function
+             * @method
              * @param arr {Array} the array to iterate
              * @param fn {Function} the function to execute on each item
              * @param [context] {Object} optional context object
              * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
-             * @return {Array} The items on which the supplied function
-             *         returned
+             * @return {Array} The items on which the supplied function returned
+             * @member KISSY
              */
-            map:map ?
+            map: map ?
                 function (arr, fn, context) {
                     return map.call(arr, fn, context || this);
                 } :
@@ -465,20 +480,21 @@
              * @param initialValue {number} optional context object
              * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
              * @return {Array} The items on which the supplied function returned
+             * @member KISSY
              */
-            reduce:/*
+            reduce: /*
              NaN ?
              reduce ? function(arr, callback, initialValue) {
              return arr.reduce(callback, initialValue);
              } : */function (arr, callback, initialValue) {
                 var len = arr.length;
-                if (typeof callback !== "function") {
-                    throw new TypeError("callback is not function!");
+                if (typeof callback !== 'function') {
+                    throw new TypeError('callback is not function!');
                 }
 
                 // no value to return if no initial value and an empty array
                 if (len === 0 && arguments.length == 2) {
-                    throw new TypeError("arguments invalid");
+                    throw new TypeError('arguments invalid');
                 }
 
                 var k = 0;
@@ -514,13 +530,14 @@
 
             /**
              * Tests whether all elements in the array pass the test implemented by the provided function.
-             * @function
+             * @method
              * @param arr {Array} the array to iterate
              * @param callback {Function} the function to execute on each item
              * @param [context] {Object} optional context object
-             * @returns {Boolean} whether all elements in the array pass the test implemented by the provided function.
+             * @member KISSY
+             * @return {Boolean} whether all elements in the array pass the test implemented by the provided function.
              */
-            every:every ?
+            every: every ?
                 function (arr, fn, context) {
                     return every.call(arr, fn, context || this);
                 } :
@@ -536,13 +553,14 @@
 
             /**
              * Tests whether some element in the array passes the test implemented by the provided function.
-             * @function
+             * @method
              * @param arr {Array} the array to iterate
              * @param callback {Function} the function to execute on each item
              * @param [context] {Object} optional context object
-             * @returns {Boolean} whether some element in the array passes the test implemented by the provided function.
+             * @member KISSY
+             * @return {Boolean} whether some element in the array passes the test implemented by the provided function.
              */
-            some:some ?
+            some: some ?
                 function (arr, fn, context) {
                     return some.call(arr, fn, context || this);
                 } :
@@ -562,10 +580,11 @@
              * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
              * @param {Function} fn internal called function
              * @param {Object} obj context in which fn runs
-             * @param {...} arg1 extra arguments
-             * @returns {Function} new function with context and arguments
+             * @param {...*} arg1 extra arguments
+             * @member KISSY
+             * @return {Function} new function with context and arguments
              */
-            bind:function (fn, obj, arg1) {
+            bind: function (fn, obj, arg1) {
                 var slice = [].slice,
                     args = slice.call(arguments, 2),
                     fNOP = function () {
@@ -581,26 +600,34 @@
 
             /**
              * Gets current date in milliseconds.
-             * @function
+             * @method
              * @see  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
              * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
              * http://kangax.github.com/es5-compat-table/
+             * @member KISSY
+             * @return {Number} current time
              */
-            now:Date.now || function () {
+            now: Date.now || function () {
                 return +new Date();
             },
             /**
              * frequently used in taobao cookie about nick
+             * @member KISSY
+             * @return {String} un-unicode string.
              */
-            fromUnicode:function (str) {
+            fromUnicode: function (str) {
                 return str.replace(/\\u([a-f\d]{4})/ig, function (m, u) {
                     return  String.fromCharCode(parseInt(u, HEX_BASE));
                 });
             },
 
-
-            ucfirst:function (s) {
-                s += "";
+            /** uppercase first character.
+             * @member KISSY
+             * @param s
+             * @return {String}
+             */
+            ucfirst: function (s) {
+                s += '';
                 return s.charAt(0).toUpperCase() + s.substring(1);
             },
 
@@ -609,8 +636,10 @@
              * @see   http://yiminghe.javaeye.com/blog/788929
              *        http://wonko.com/post/html-escaping
              * @param str {string} text2html show
+             * @member KISSY
+             * @return {String} escaped html
              */
-            escapeHTML:function (str) {
+            escapeHTML: function (str) {
                 return str.replace(getEscapeReg(), function (m) {
                     return reverseEntities[m];
                 });
@@ -619,16 +648,20 @@
             /**
              * get escaped regexp string for construct regexp
              * @param str
+             * @member KISSY
+             * @return {String} escaped regexp
              */
-            escapeRegExp:function (str) {
+            escapeRegExp: function (str) {
                 return str.replace(escapeRegExp, '\\$&');
             },
 
             /**
              * un-escape html to string
              * @param str {string} html2text
+             * @member KISSY
+             * @return {String} un-escaped html
              */
-            unEscapeHTML:function (str) {
+            unEscapeHTML: function (str) {
                 return str.replace(getUnEscapeReg(), function (m, n) {
                     return htmlEntities[m] || String.fromCharCode(+n);
                 });
@@ -637,8 +670,9 @@
              * Converts object to a true array.
              * @param o {object|Array} array like object or array
              * @return {Array} native Array
+             * @member KISSY
              */
-            makeArray:function (o) {
+            makeArray: function (o) {
                 if (o == null) {
                     return [];
                 }
@@ -648,7 +682,7 @@
 
                 // The strings and functions also have 'length'
                 if (typeof o.length !== 'number'
-                    // form.elements in ie78 has nodeName "form"
+                    // form.elements in ie78 has nodeName 'form'
                     // then caution select
                     // || o.nodeName
                     // window
@@ -665,28 +699,30 @@
             },
             /**
              * Creates a serialized string of an array or object.
-             * @example
-             * <code>
-             * {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-             * {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
-             * {foo: '', bar: 2}    // -> 'foo=&bar=2'
-             * {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-             * {foo: true, bar: 2}    // -> 'foo=true&bar=2'
-             * </code>
+             *
+             * for example:
+             *     @example
+             *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+             *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
+             *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
+             *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+             *     {foo: true, bar: 2}    // -> 'foo=true&bar=2'
+             *
              * @param {Object} o json data
              * @param {String} [sep='&'] separator between each pair of data
              * @param {String} [eq='='] separator between key and value of data
-             * @param {Boolean} [arr=true] whether add '[]' to array key of data
+             * @param {Boolean} [serializeArray =true] whether add '[]' to array key of data
              * @return {String}
+             * @member KISSY
              */
-            param:function (o, sep, eq, arr) {
+            param: function (o, sep, eq, serializeArray) {
                 if (!S.isPlainObject(o)) {
                     return EMPTY;
                 }
                 sep = sep || SEP;
                 eq = eq || EQ;
-                if (S.isUndefined(arr)) {
-                    arr = TRUE;
+                if (S.isUndefined(serializeArray)) {
+                    serializeArray = TRUE;
                 }
                 var buf = [], key, i, v, len, val;
                 for (key in o) {
@@ -707,7 +743,7 @@
                             for (i = 0, len = val.length; i < len; ++i) {
                                 v = val[i];
                                 if (isValidParamValue(v)) {
-                                    buf.push(key, (arr ? encode("[]") : EMPTY));
+                                    buf.push(key, (serializeArray ? encode('[]') : EMPTY));
                                     if (v !== undefined) {
                                         buf.push(eq, encode(v + EMPTY));
                                     }
@@ -724,42 +760,45 @@
 
             /**
              * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-             * @example
-             * <code>
-             * 'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-             * 'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
-             * 'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
-             * 'id=45&raw'        // -> {id: '45', raw: ''}
-             * </code>
+             *
+             * for example:
+             *      @example
+             *      'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+             *      'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+             *      'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+             *      'id=45&raw'        // -> {id: '45', raw: ''}
              * @param {String} str param string
              * @param {String} [sep='&'] separator between each pair of data
              * @param {String} [eq='='] separator between key and value of data
-             * @returns {Object} json data
+             * @return {Object} json data
+             * @member KISSY
              */
-            unparam:function (str, sep, eq) {
+            unparam: function (str, sep, eq) {
                 if (!S.isString(str) || !(str = S.trim(str))) {
                     return {};
                 }
                 sep = sep || SEP;
                 eq = eq || EQ;
                 var ret = {},
+                    eqIndex,
                     pairs = str.split(sep),
-                    pair, key, val,
+                    key, val,
                     i = 0, len = pairs.length;
 
                 for (; i < len; ++i) {
-                    pair = pairs[i].split(eq);
-                    key = decode(pair[0]);
-                    if (pair.length == 1) {
+                    eqIndex = pairs[i].indexOf(eq);
+                    if (eqIndex == -1) {
+                        key = decode(pairs[i]);
                         val = undefined;
                     } else {
+                        key = decode(pairs[i].substring(0, eqIndex));
+                        val = pairs[i].substring(eqIndex + 1);
                         try {
-                            val = decode(pair[1] || EMPTY);
+                            val = decode(val);
                         } catch (e) {
-                            S.log(e + "decodeURIComponent error : " + pair[1], "error");
-                            val = pair[1] || EMPTY;
+                            S.log(e + 'decodeURIComponent error : ' + val, 'error');
                         }
-                        if (S.endsWith(key, "[]")) {
+                        if (S.endsWith(key, '[]')) {
                             key = key.substring(0, key.length - 2);
                         }
                     }
@@ -779,20 +818,28 @@
              * Executes the supplied function in the context of the supplied
              * object 'when' milliseconds later. Executes the function a
              * single time unless periodic is set to true.
+             *
              * @param fn {Function|String} the function to execute or the name of the method in
-             *        the 'o' object to execute.
+             * the 'o' object to execute.
+             *
              * @param when {Number} the number of milliseconds to wait until the fn is executed.
+             *
              * @param {Boolean} [periodic] if true, executes continuously at supplied interval
-             *        until canceled.
+             * until canceled.
+             *
              * @param {Object} [context] the context object.
+             *
              * @param [data] that is provided to the function. This accepts either a single
-             *        item or an array. If an array is provided, the function is executed with
-             *        one parameter for each array item. If you need to pass a single array
-             *        parameter, it needs to be wrapped in an array [myarray].
+             * item or an array. If an array is provided, the function is executed with
+             * one parameter for each array item. If you need to pass a single array
+             * parameter, it needs to be wrapped in an array [myarray].
+             *
              * @return {Object} a timer object. Call the cancel() method on this object to stop
-             *         the timer.
+             * the timer.
+             *
+             * @member KISSY
              */
-            later:function (fn, when, periodic, context, data) {
+            later: function (fn, when, periodic, context, data) {
                 when = when || 0;
                 var m = fn,
                     d = S.makeArray(data),
@@ -814,9 +861,9 @@
                 r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
 
                 return {
-                    id:r,
-                    interval:periodic,
-                    cancel:function () {
+                    id: r,
+                    interval: periodic,
+                    cancel: function () {
                         if (this.interval) {
                             clearInterval(r);
                         } else {
@@ -830,9 +877,10 @@
              * test whether a string start with a specified substring
              * @param {String} str the whole string
              * @param {String} prefix a specified substring
-             * @returns {Boolean} whether str start with prefix
+             * @return {Boolean} whether str start with prefix
+             * @member KISSY
              */
-            startsWith:function (str, prefix) {
+            startsWith: function (str, prefix) {
                 return str.lastIndexOf(prefix, 0) === 0;
             },
 
@@ -840,22 +888,24 @@
              * test whether a string end with a specified substring
              * @param {String} str the whole string
              * @param {String} suffix a specified substring
-             * @returns {Boolean} whether str end with suffix
+             * @return {Boolean} whether str end with suffix
+             * @member KISSY
              */
-            endsWith:function (str, suffix) {
+            endsWith: function (str, suffix) {
                 var ind = str.length - suffix.length;
                 return ind >= 0 && str.indexOf(suffix, ind) == ind;
             },
 
             /**
              * Throttles a call to a method based on the time between calls.
-             * @param {function} fn The function call to throttle.
-             * @param {object} [context] context fn to run
+             * @param {Function} fn The function call to throttle.
+             * @param {Object} [context] context fn to run
              * @param {Number} [ms] The number of milliseconds to throttle the method call.
-             *              Passing a -1 will disable the throttle. Defaults to 150.
-             * @return {function} Returns a wrapped function that calls fn throttled.
+             * Passing a -1 will disable the throttle. Defaults to 150.
+             * @return {Function} Returns a wrapped function that calls fn throttled.
+             * @member KISSY
              */
-            throttle:function (fn, ms, context) {
+            throttle: function (fn, ms, context) {
                 ms = ms || 150;
 
                 if (ms === -1) {
@@ -877,12 +927,13 @@
 
             /**
              * buffers a call between a fixed time
-             * @param {function} fn
-             * @param {object} [context]
+             * @param {Function} fn
              * @param {Number} ms
-             * @return {function} Returns a wrapped function that calls fn buffered.
+             * @param {Object} [context]
+             * @return {Function} Returns a wrapped function that calls fn buffered.
+             * @member KISSY
              */
-            buffer:function (fn, ms, context) {
+            buffer: function (fn, ms, context) {
                 ms = ms || 150;
 
                 if (ms === -1) {
@@ -911,66 +962,71 @@
 
     // for idea ..... auto-hint
     S.mix(S,
-        /**
-         * @lends KISSY
-         */
         {
             /**
              * test whether o is boolean
-             * @function
+             * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
-            isBoolean:isValidParamValue,
+            isBoolean: isValidParamValue,
             /**
              * test whether o is number
-             * @function
+             * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
-            isNumber:isValidParamValue,
+            isNumber: isValidParamValue,
             /**
              * test whether o is String
-             * @function
+             * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
-            isString:isValidParamValue,
+            isString: isValidParamValue,
             /**
              * test whether o is function
-             * @function
+             * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
-            isFunction:isValidParamValue,
+            isFunction: isValidParamValue,
             /**
              * test whether o is Array
-             * @function
+             * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
-            isArray:isValidParamValue,
+            isArray: isValidParamValue,
             /**
              * test whether o is Date
-             * @function
+             * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
-            isDate:isValidParamValue,
+            isDate: isValidParamValue,
             /**
              * test whether o is RegExp
-             * @function
+             * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
-            isRegExp:isValidParamValue,
+            isRegExp: isValidParamValue,
             /**
              * test whether o is Object
-             * @function
+             * @method
              * @param  o
-             * @returns {Boolean}
+             * @return {Boolean}
+             * @member KISSY
              */
-            isObject:isValidParamValue
+            isObject: isValidParamValue
         });
 
     S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
@@ -1000,7 +1056,7 @@
         if (input[CLONE_MARKER]) {
             // 对应的克隆后对象
             return memory[input[CLONE_MARKER]].destination;
-        } else if (typeof input === "object") {
+        } else if (typeof input === 'object') {
             // 引用类型要先记录
             var constructor = input.constructor;
             if (S.inArray(constructor, [Boolean, String, Number, Date, RegExp])) {
@@ -1017,13 +1073,13 @@
             // 做标记
             input[CLONE_MARKER] = (stamp = S.guid());
             // 存储源对象以及克隆后的对象
-            memory[stamp] = {destination:destination, input:input};
+            memory[stamp] = {destination: destination, input: input};
         }
         // If input is an Array object or an Object object,
         // then, for each enumerable property in input,
         // add a new property to output having the same name,
         // and having a value created from invoking the internal structured cloning algorithm recursively
-        // with the value of the property as the "input" argument and memory as the "memory" argument.
+        // with the value of the property as the 'input' argument and memory as the 'memory' argument.
         // The order of the properties in the input and output objects must be the same.
 
         // clone it
@@ -1082,7 +1138,7 @@
             }
         }
         if (S.isArray(a) && S.isArray(b) && a.length != b.length) {
-            mismatchValues.push("arrays were not the same length");
+            mismatchValues.push('arrays were not the same length');
         }
         delete a[COMPARE_MARKER];
         delete b[COMPARE_MARKER];

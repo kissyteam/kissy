@@ -43,7 +43,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         }
         // 动态载
         // 最小高度(或被用户看到了)低于预加载线
-        if (diff + $(win).scrollTop() + $(win).height() > colHeight) {
+        if (diff + $(win).scrollTop() + $(win).height() >= colHeight) {
             S.log("waterfall:loading");
             loadData.call(self);
         }
@@ -101,7 +101,6 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
             /**
              * Start monitor scroll on window.
-             * @since 1.3
              */
             start:function () {
                 var self = this;

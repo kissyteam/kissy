@@ -25,7 +25,7 @@
 </div>
 <script src="../../../../build/kissy.js"></script>
 <script>
-    KISSY.use("node,menu", function (S, Node, Menu) {
+    KISSY.use("node,menu,separator", function (S, Node, Menu,Separator) {
 
         var sb = new Menu.PopupMenu({
             // boolean，是否鼠标脱离菜单后自动隐藏
@@ -42,7 +42,7 @@
             disabled:true
         }));
 
-        sb.addChild(new Menu.Separator());
+        sb.addChild(new Separator());
 
 
         var sb2 = new Menu.PopupMenu({
@@ -100,7 +100,7 @@
                     content:"checkable menuitem"
                 },
                 {
-                    xclass:'menuseparator'
+                    xclass:'separator'
                 },
                 {
                     xclass:'submenu',

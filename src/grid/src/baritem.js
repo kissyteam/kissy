@@ -17,7 +17,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 	var BarItem = Component.Controller.extend({
 		/* render baritem 's dom
 		* @protected
-        * @override
+        *
 		*/
 		createDom:function() {
             var el = this.get("el");
@@ -32,7 +32,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 
 			/**
 			* Whether this component can get focus.
-			* @overrided
+			* d
 			* @default {boolean} false
 			*/
 			focusable : {
@@ -133,7 +133,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 	var SeparatorBarItem = BarItem.extend({
 		/* render separator's dom
 		* @protected
-        * @override
+        *
 		*/
 		renderUI:function() {
             var el = this.get("el");

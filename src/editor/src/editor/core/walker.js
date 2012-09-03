@@ -209,7 +209,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
 
             /**
              * Retrieves the next node (at right).
-             * @returns {Boolean} The next node or NULL if no more
+             * @return {Boolean} The next node or NULL if no more
              *        nodes are available.
              */
             next:function () {
@@ -218,7 +218,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
 
             /**
              * Retrieves the previous node (at left).
-             * @returns {Boolean} The previous node or NULL if no more
+             * @return {Boolean} The previous node or NULL if no more
              *        nodes are available.
              */
             previous:function () {
@@ -227,7 +227,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
 
             /**
              * Check all nodes at right, executing the evaluation function.
-             * @returns {Boolean} "FALSE" if the evaluator function returned
+             * @return {Boolean} "FALSE" if the evaluator function returned
              *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
              */
             checkForward:function () {
@@ -237,7 +237,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
             /**
              * Check all nodes at left, executing the evaluation function.
              * 是不是 (不能后退了)
-             * @returns {Boolean} "FALSE" if the evaluator function returned
+             * @return {Boolean} "FALSE" if the evaluator function returned
              *        "FALSE" for any of the matched nodes. Otherwise "TRUE".
              */
             checkBackward:function () {
@@ -248,7 +248,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
             /**
              * Executes a full walk forward (to the right), until no more nodes
              * are available, returning the last valid node.
-             * @returns {Boolean} The last node at the right or NULL
+             * @return {Boolean} The last node at the right or NULL
              *        if no valid nodes are available.
              */
             lastForward:function () {
@@ -258,7 +258,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
             /**
              * Executes a full walk backwards (to the left), until no more nodes
              * are available, returning the last valid node.
-             * @returns {Boolean} The last node at the left or NULL
+             * @return {Boolean} The last node at the left or NULL
              *        if no valid nodes are available.
              */
             lastBackward:function () {
@@ -288,7 +288,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
              */
             blockBoundary:function (customNodeNames) {
                 return function (node) {
-                    return !(node.nodeType == DOM.ELEMENT_NODE &&
+                    return !(node.nodeType == DOM.NodeType.ELEMENT_NODE &&
                         DOM._4e_isBlockBoundary(node, customNodeNames) );
                 };
             },
@@ -311,7 +311,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
                 return function (node) {
                     var isBookmark, parent;
                     // Is bookmark inner text node?
-                    isBookmark = ( node.nodeType == DOM.TEXT_NODE &&
+                    isBookmark = ( node.nodeType == DOM.NodeType.TEXT_NODE &&
                         ( parent = node.parentNode ) &&
                         isBookmarkNode(parent) );
                     // Is bookmark node?
@@ -328,7 +328,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
              */
             whitespaces:function (isReject) {
                 return function (node) {
-                    var isWhitespace = node.nodeType == DOM.TEXT_NODE &&
+                    var isWhitespace = node.nodeType == DOM.NodeType.TEXT_NODE &&
                         !S.trim(node.nodeValue);
                     return !!(isReject ^ isWhitespace);
                 };
@@ -346,7 +346,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
                     // 'offsetHeight' instead of 'offsetWidth' for properly excluding
                     // all sorts of empty paragraph, e.g. <br />.
                     var isInvisible = whitespace(node) ||
-                        node.nodeType == DOM.ELEMENT_NODE && !node.offsetHeight;
+                        node.nodeType == DOM.NodeType.ELEMENT_NODE && !node.offsetHeight;
                     return !!(isReject ^ isInvisible);
                 };
             }

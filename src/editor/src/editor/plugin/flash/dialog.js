@@ -110,7 +110,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
         },
         /**
          * 子类覆盖，如何从flash url得到合适的应用表示地址
-         * @override
+         *
          * @param r flash 元素
          */
         _getFlashUrl:function (r) {
@@ -118,7 +118,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
         },
         /**
          * 触发前初始化窗口 field，子类覆盖
-         * @override
+         *
          */
         _updateD:function () {
             var self = this,
@@ -156,7 +156,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
 
         /**
          * 映射窗口field，子类覆盖
-         * @override
+         *
          */
         _initD:function () {
             var self = this,
@@ -188,7 +188,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
 
         /**
          * 应用子类覆盖，提供 flash 元素的相关信息
-         * @override
+         *
          */
         _getDInfo:function () {
             var self = this;

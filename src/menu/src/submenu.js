@@ -224,7 +224,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     srcNode:el,
                     prefixCls:self.get("prefixCls")
                 });
-                self.__set("menu", menu);
+                self.setInternal("menu", menu);
             },
 
             destructor:function () {
@@ -271,7 +271,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 menu:{
                     setter:function (m) {
                         if (m instanceof  Component.Controller) {
-                            m.__set("parent", this);
+                            m.setInternal("parent", this);
                         }
                     }
                 },
@@ -296,7 +296,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         if (m && m.xclass) {
             if (init) {
                 m = Component.create(m, self);
-                self.__set("menu", m);
+                self.setInternal("menu", m);
             } else {
                 return null;
             }

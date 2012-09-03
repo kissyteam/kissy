@@ -66,7 +66,7 @@
         }
     ];
 
-    KISSY.use("menu", function (S, Menu) {
+    KISSY.use("menu,separator", function (S, Menu) {
         var context = S.all("#context");
 
         function generatePopupMenu(items, cfg) {
@@ -103,7 +103,7 @@
                 } else {
                     if (item.sep) {
                         sb.children.push({
-                            xclass:'menuseparator'
+                            xclass:'separator'
                         });
                     } else {
                         sb.children.push({

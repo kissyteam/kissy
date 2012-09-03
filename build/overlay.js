@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 1 17:20
+build time: Aug 21 20:57
 */
 /**
  * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -20,7 +20,7 @@ KISSY.add("overlay/aria", function (S, Event) {
          * Whether support aria.
          * Focus on show and trap focus in overlay when visible.
          * @default false.
-         * @type Boolean
+         * @type {Boolean}
          */
         aria:{
             view:1
@@ -155,10 +155,9 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
     }
 
     /**
-     * @class
      * KISSY Overlay Component.
      * xclass: 'overlay'.
-     * @name Overlay
+     * @class Overlay
      * @extends Component.Controller
      * @extends Component.UIBase.ContentBox
      * @extends Component.UIBase.Position
@@ -184,7 +183,7 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
         {
             /**
              * see {@link Component.UIBase.Box#show}
-             * @function
+             * @method
              * @name Overlay#show
              */
         }, {
@@ -206,7 +205,7 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
                 /**
                  * whether this component can be closed.
                  * @default false
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 closable:{
                     value:false
@@ -215,7 +214,7 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
                 /**
                  * whether this component can be responsive to mouse.
                  * @default false
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 handleMouseEvents:{
                     value:false
@@ -264,7 +263,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
             /**
              * see {@link Component.UIBase.Box#show}
              * @name Overlay.Dialog#show
-             * @function
+             * @method
              */
 
             /**
@@ -289,7 +288,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
                 /**
                  * whether this component can be closed.
                  * @default true
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 closable:{
                     value:true
@@ -355,7 +354,7 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
          * v.target (String|KISS.Node): The target node from which overlay should animate from while showing. Since KISSY 1.3.<br>
          * v.duration (Number): in seconds. Default:0.5. <br>
          * v.easing (String): see {@link Anim.Easing} <br>
-         * @type Object
+         * @type {Object}
          */
         effect:{
             value:{
@@ -563,7 +562,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             /**
              * see {@link Component.UIBase.Box#show}
              * @name Overlay.Popup#show
-             * @function
+             * @method
              */
 
 
@@ -697,7 +696,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             {
                 /**
                  * Trigger elements to show popup.
-                 * @type NodeList
+                 * @type {KISSY.NodeList}
                  */
                 trigger:{                          // 触发器
                     setter:function (v) {
@@ -710,7 +709,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 /**
                  * How to activate trigger element, "click" or "mouse",
                  * @default "click".
-                 * @type String
+                 * @type {String}
                  */
                 triggerType:{
                     // 触发类型
@@ -719,8 +718,8 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 currentTrigger:{},
                 /**
                  * When trigger type is mouse, the delayed time to show popup.
-                 * @default0.1, in seconds.
-                 * @type Number
+                 * @default 0.1, in seconds.
+                 * @type {Number}
                  */
                 mouseDelay:{
                     // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
@@ -729,7 +728,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 /**
                  * When trigger type is click, whether support toggle.
                  * @default false
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 toggle:{
                     // triggerType 为 click 时, Popup 是否有toggle功能

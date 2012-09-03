@@ -26,7 +26,7 @@ margin:50px auto;">
 <script>
 
 
-    KISSY.use("menu", function (S, Menu) {
+    KISSY.use("menu,separator", function (S, Menu,Separator) {
         var context = S.all("#context");
         var sb = new Menu.PopupMenu({
 
@@ -41,7 +41,7 @@ margin:50px auto;">
 
             content:"submenuitem2"}));
 
-        sb.addChild(new Menu.Separator());
+        sb.addChild(new Separator());
 
 
         var sb2 = new Menu.PopupMenu({

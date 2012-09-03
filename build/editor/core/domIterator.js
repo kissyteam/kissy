@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 7 22:12
+build time: Aug 27 21:29
 */
 /**
  * modified from ckeditor ,dom iterator implementation using walker and nextSourceNode
@@ -96,7 +96,7 @@ KISSY.add("editor/core/domIterator", function (S) {
                 // If that node is the lastNode, it would cause our logic to leak to the
                 // next block.(#3887)
                 if (self._.lastNode &&
-                    self._.lastNode[0].nodeType == DOM.TEXT_NODE &&
+                    self._.lastNode[0].nodeType == DOM.NodeType.TEXT_NODE &&
                     !S.trim(self._.lastNode[0].nodeValue) &&
                     self._.lastNode.parent()._4e_isBlockBoundary()) {
                     var testRange = new KERange(range.document);
@@ -129,7 +129,7 @@ KISSY.add("editor/core/domIterator", function (S) {
 
                 // includeNode indicates that the current node is good to be part
                 // of the range. By default, any non-element node is ok for it.
-                var includeNode = ( currentNode[0].nodeType != DOM.ELEMENT_NODE ),
+                var includeNode = ( currentNode[0].nodeType != DOM.NodeType.ELEMENT_NODE ),
                     continueFromSibling = FALSE;
 
                 // If it is an element node, let's check if it can be part of the
@@ -177,7 +177,7 @@ KISSY.add("editor/core/domIterator", function (S) {
                         includeNode = TRUE;
                     }
                 }
-                else if (currentNode[0].nodeType == DOM.TEXT_NODE) {
+                else if (currentNode[0].nodeType == DOM.NodeType.TEXT_NODE) {
                     // Ignore normal whitespaces (i.e. not including &nbsp; or
                     // other unicode whitespaces) before/after a block node.
                     if (beginWhitespaceRegex.test(currentNode[0].nodeValue))
@@ -292,7 +292,7 @@ KISSY.add("editor/core/domIterator", function (S) {
 
             if (removePreviousBr) {
                 var previousSibling = new Node(block[0].previousSibling);
-                if (previousSibling[0] && previousSibling[0].nodeType == DOM.ELEMENT_NODE) {
+                if (previousSibling[0] && previousSibling[0].nodeType == DOM.NodeType.ELEMENT_NODE) {
                     if (previousSibling.nodeName() == 'br')
                         previousSibling._4e_remove();
                     else if (previousSibling[0].lastChild && DOM.nodeName(previousSibling[0].lastChild) == 'br')
@@ -305,7 +305,7 @@ KISSY.add("editor/core/domIterator", function (S) {
                 var bookmarkGuard = Walker.bookmark(FALSE, TRUE);
 
                 var lastChild = new Node(block[0].lastChild);
-                if (lastChild[0] && lastChild[0].nodeType == DOM.ELEMENT_NODE && lastChild.nodeName() == 'br') {
+                if (lastChild[0] && lastChild[0].nodeType == DOM.NodeType.ELEMENT_NODE && lastChild.nodeName() == 'br') {
                     // Take care not to remove the block expanding <br> in non-IE browsers.
                     if (UA['ie']
                         || lastChild.prev(bookmarkGuard, 1)

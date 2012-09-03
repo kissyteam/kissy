@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 7 21:21
+build time: Aug 21 20:57
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -16,7 +16,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         if (m && m.xclass) {
             if (init) {
                 m = Component.create(m, self);
-                self.__set("menu", m);
+                self.setInternal("menu", m);
             } else {
                 return null;
             }
@@ -133,7 +133,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @param {Event.Object} e key event to handle.
              * @return {Boolean} True Whether the key event was handled.
              * @protected
-             * @override
+             *
              */
             handleKeyEventInternal:function (e) {
                 var self = this,
@@ -175,7 +175,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * Toggle the drop down menu to show or hide.
              * Protected, should only be overridden by subclasses.
              * @protected
-             * @override
+             *
              */
             performActionInternal:function () {
                 var self = this;
@@ -188,7 +188,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @param {Event.Object} e Blur event.
              * Protected, should only be overridden by subclasses.
              * @protected
-             * @override
+             *
              */
             handleBlur:function (e) {
                 var self = this;
@@ -214,7 +214,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              */
             removeItem:function (c, destroy) {
                 /**
-                 * @type Controller
+                 * @type {Controller}
                  */
                 var menu = getMenu(this);
                 if (menu) {
@@ -255,9 +255,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             /**
              * Decorate child element to from a child component.
              * @param {Function} UI Child component's constructor
-             * @param {NodeList} el Child component's root element.
+             * @param {KISSY.NodeList} el Child component's root element.
              * @protected
-             * @override
+             *
              */
             decorateChildrenInternal:function (UI, el) {
                 // 不能用 display:none , menu 的隐藏是靠 visibility
@@ -272,7 +272,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     srcNode:el,
                     prefixCls:self.get("prefixCls")
                 }, menuCfg));
-                self.__set("menu", menu);
+                self.setInternal("menu", menu);
             },
 
             destructor:function () {
@@ -293,7 +293,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             {
                 /**
                  * Current active menu item.
-                 * @type Menu.Item
+                 * @type {Menu.Item}
                  */
                 activeItem:{
                     view:1
@@ -328,7 +328,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 },
                 /**
                  * Drop down menu associated with this menubutton.
-                 * @type Menu
+                 * @type {Menu}
                  */
                 menu:{
                     value:{
@@ -336,13 +336,13 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     },
                     setter:function (v) {
                         if (v instanceof Menu) {
-                            v.__set("parent", this);
+                            v.setInternal("parent", this);
                         }
                     }
                 },
                 /**
                  * Whether drop menu is shown.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 collapsed:{
                     view:1
@@ -405,13 +405,15 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
                     return S.all(CAPTION_TMPL);
                 }
             },
-            contentElCls:{
-                value:"ks-menu-button-caption"
-            },
             activeItem:{
             },
             collapsed:{
                 value:true
+            }
+        },
+        HTML_PARSER:{
+            contentEl:function(el){
+                return el.children(".ks-menu-button-caption");
             }
         }
     });
@@ -464,7 +466,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
                 /**
                  * Whether this option can be selected.
                  * @default true.
-                 * @type Boolean
+                 * @type {Boolean}
                  */
                 selectable:{
                     value:true
@@ -472,7 +474,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
 
                 /**
                  * String will be used as select 's content if selected.
-                 * @type String
+                 * @type {String}
                  */
                 textContent:{
 
@@ -568,7 +570,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
      * Set selected menu item as current selectedItem and hide drop down menu.
      * Protected, should only be overridden by subclasses.
      * @protected
-     * @override
+     *
      * @param {Event.Object} e
      */
     function handleMenuClick(e) {
@@ -618,7 +620,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
             /**
              * Removes all menu items from current select, and set selectedItem to null.
-             * @override
+             *
              */
             removeItems:function () {
                 var self = this;
@@ -629,7 +631,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
             /**
              * Remove specified item from current select.
              * If specified item is selectedItem, then set selectedItem to null.
-             * @override
+             *
              */
             removeItem:function (c) {
                 var self = this;
@@ -663,7 +665,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
                 /**
                  * Default caption to be shown when no option is selected.
-                 * @type String
+                 * @type {String}
                  */
                 defaultCaption:{
                     value:""

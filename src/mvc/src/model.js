@@ -18,7 +18,7 @@ KISSY.add("mvc/model", function (S, Base) {
      * @class
      * Model represent a data record.
      * @memberOf MVC
-     * @extends Base
+     * @extends KISSY.Base
      */
     function Model() {
         var self = this;
@@ -70,9 +70,9 @@ KISSY.add("mvc/model", function (S, Base) {
                 return this.set(this.get("idAttribute"), id);
             },
 
-            __set:function () {
+            setInternal:function () {
                 this.__isModified = 1;
-                return Model.superclass.__set.apply(this, arguments);
+                return Model.superclass.setInternal.apply(this, arguments);
             },
 
             /**

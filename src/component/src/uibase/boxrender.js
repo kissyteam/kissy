@@ -10,66 +10,65 @@ KISSY.add('component/uibase/boxrender', function (S) {
     }
 
     BoxRender.ATTRS = {
-        el:{
+        el: {
             //容器元素
-            setter:function (v) {
+            setter: function (v) {
                 return $(v);
             }
         },
 
         // 构建时批量生成，不需要执行单个
-        elCls:{
+        elCls: {
         },
 
-        elStyle:{
+        elStyle: {
         },
 
-        width:{
+        width: {
         },
 
-        height:{
+        height: {
         },
 
-        elTagName:{
+        elTagName: {
             // 生成标签名字
-            value:"div"
+            value: "div"
         },
 
-        elAttrs:{
+        elAttrs: {
         },
 
-        content:{
+        content: {
         },
 
-        elBefore:{
+        elBefore: {
             // better named to renderBefore, too late !
         },
 
-        render:{},
+        render: {},
 
-        visible:{
-            value:true
+        visible: {
+            value: true
         },
 
-        visibleMode:{
-            value:"display"
+        visibleMode: {
+            value: "display"
         },
         // content 设置的内容节点,默认根节点
-        contentEl:{
-            valueFn:function () {
+        contentEl: {
+            valueFn: function () {
                 return this.get("el");
             }
         }
     };
 
     BoxRender.HTML_PARSER = {
-        el:function (srcNode) {
+        el: function (srcNode) {
             return srcNode;
         },
-        content:function (el) {
-            // 从 contentElCls 的标志中读取
-            var contentElCls = this.get("contentElCls");
-            return (contentElCls ? el.one("." + contentElCls) : el).html();
+        content: function (el) {
+            var contentEl = this.get("contentEl") || el;
+            return contentEl.html();
         }
     };
 
@@ -79,7 +78,7 @@ KISSY.add('component/uibase/boxrender', function (S) {
      */
     {
 
-        __renderUI:function () {
+        __renderUI: function () {
             var self = this;
             // 新建的节点才需要摆放定位
             if (!self.get("srcNode")) {
@@ -100,7 +99,7 @@ KISSY.add('component/uibase/boxrender', function (S) {
          * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失
          * 通过 render 来重建原有的内容
          */
-        __createDom:function () {
+        __createDom: function () {
             var self = this;
             if (!self.get("srcNode")) {
                 var el,
@@ -112,37 +111,37 @@ KISSY.add('component/uibase/boxrender', function (S) {
                     el.append(contentEl);
                 }
 
-                self.__set("el", el);
+                self.setInternal("el", el);
 
                 if (!contentEl) {
                     // 没取到,这里设下值, uiSet 时可以 set("content")  取到
-                    self.__set("contentEl", el);
+                    self.setInternal("contentEl", el);
                 }
             }
         },
 
-        _uiSetElAttrs:function (attrs) {
+        _uiSetElAttrs: function (attrs) {
             this.get("el").attr(attrs);
         },
 
-        _uiSetElCls:function (cls) {
+        _uiSetElCls: function (cls) {
             this.get("el").addClass(cls);
         },
 
-        _uiSetElStyle:function (style) {
+        _uiSetElStyle: function (style) {
             this.get("el").css(style);
         },
 
-        _uiSetWidth:function (w) {
+        _uiSetWidth: function (w) {
             this.get("el").width(w);
         },
 
-        _uiSetHeight:function (h) {
+        _uiSetHeight: function (h) {
             var self = this;
             self.get("el").height(h);
         },
 
-        _uiSetContent:function (c) {
+        _uiSetContent: function (c) {
             var self = this, el;
             // srcNode 时不重新渲染 content
             // 防止内部有改变，而 content 则是老的 html 内容
@@ -157,7 +156,7 @@ KISSY.add('component/uibase/boxrender', function (S) {
             }
         },
 
-        _uiSetVisible:function (isVisible) {
+        _uiSetVisible: function (isVisible) {
             var el = this.get("el"),
                 visibleMode = this.get("visibleMode");
             if (visibleMode == "visibility") {
@@ -167,7 +166,7 @@ KISSY.add('component/uibase/boxrender', function (S) {
             }
         },
 
-        __destructor:function () {
+        __destructor: function () {
             var el = this.get("el");
             if (el) {
                 el.remove();
@@ -177,5 +176,5 @@ KISSY.add('component/uibase/boxrender', function (S) {
 
     return BoxRender;
 }, {
-    requires:['node']
+    requires: ['node']
 });

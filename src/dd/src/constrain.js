@@ -1,37 +1,45 @@
 /**
+ * @ignore
  * @fileOverview Config constrain region for drag and drop
  * @author yiminghe@gmail.com
  */
-KISSY.add("dd/constrain", function (S, Base, Node) {
+KISSY.add('dd/constrain', function (S, Base, Node) {
 
     var $ = Node.all,
-        DESTRUCTOR_ID = "__constrain_destructors",
+        DESTRUCTOR_ID = '__constrain_destructors',
         stamp = S.stamp,
-        MARKER = S.guid("__dd_constrain"),
+        MARKER = S.guid('__dd_constrain'),
         WIN = S.Env.host;
 
     /**
-     * @class Provide ability to constrain draggable to specified region
-     * @memberOf DD
+     * @class KISSY.DD.Constrain
+     * @extends KISSY.Base
+     * Provide ability to constrain draggable to specified region
      */
     function Constrain() {
         Constrain.superclass.constructor.apply(this, arguments);
+        this[DESTRUCTOR_ID] = {};
     }
 
     function onDragStart(e) {
         var self = this,
             drag = e.drag,
             l, t, lt,
-            dragNode = drag.get("dragNode"),
-            constrain = self.get("constrain");
+            dragNode = drag.get('dragNode'),
+            constrain = self.get('constrain');
         if (constrain) {
-            if (constrain === true) {
-                var win = $(WIN);
+            if (constrain === true || constrain.setTimeout) {
+                var win;
+                if (constrain === true) {
+                    win = $(WIN);
+                } else {
+                    win = $(constrain);
+                }
                 self.__constrainRegion = {
-                    left:l = win.scrollLeft(),
-                    top:t = win.scrollTop(),
-                    right:l + win.width(),
-                    bottom:t + win.height()
+                    left: l = win.scrollLeft(),
+                    top: t = win.scrollTop(),
+                    right: l + win.width(),
+                    bottom: t + win.height()
                 };
             }
             if (constrain.nodeType || S.isString(constrain)) {
@@ -40,10 +48,10 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
             if (constrain.getDOMNode) {
                 lt = constrain.offset();
                 self.__constrainRegion = {
-                    left:lt.left,
-                    top:lt.top,
-                    right:lt.left + constrain.outerWidth(),
-                    bottom:lt.top + constrain.outerHeight()
+                    left: lt.left,
+                    top: lt.top,
+                    right: lt.left + constrain.outerWidth(),
+                    bottom: lt.top + constrain.outerHeight()
                 };
             } else if (S.isPlainObject(constrain)) {
                 self.__constrainRegion = constrain;
@@ -71,71 +79,82 @@ KISSY.add("dd/constrain", function (S, Base, Node) {
         this.__constrainRegion = null;
     }
 
-    S.extend(Constrain, Base,
+    S.extend(Constrain, Base, {
+        __constrainRegion: null,
+
         /**
-         * @lends DD.Constrain#
+         * start monitoring drag
+         * @param {KISSY.DD.Draggable} drag
+         * @return {KISSY.DD.Constrain} this
          */
-        {
-            __constrainRegion:null,
+        attachDrag: function (drag) {
+            var self = this,
+                destructors = self[DESTRUCTOR_ID],
+                tag = stamp(drag, 0, MARKER);
+
+            if (destructors[tag]) {
+                return self;
+            }
+            destructors[tag] = drag;
+            drag['on']('dragstart', onDragStart, self)
+                .on('dragend', onDragEnd, self)
+                .on('dragalign', onDragAlign, self);
+            return self;
+        },
+
+
+        /**
+         * stop monitoring drag
+         * @param {KISSY.DD.Draggable} drag
+         * @return {KISSY.DD.Constrain} this
+         */
+        detachDrag: function (drag) {
+            var self = this,
+                tag = stamp(drag, 1, MARKER),
+                destructors = self[DESTRUCTOR_ID];
+            if (tag && destructors[tag]) {
+                drag['detach']('dragstart', onDragStart, self)
+                    .detach('dragend', onDragEnd, self)
+                    .detach('dragalign', onDragAlign, self);
+                delete destructors[tag];
+            }
+            return self;
+        },
+
+        /**
+         * destroy this constrain.
+         */
+        destroy: function () {
+            var self = this,
+                destructors = S.merge(self[DESTRUCTOR_ID]);
+            S.each(destructors, function (drag) {
+                self.detachDrag(drag);
+            });
+        }
+    }, {
+        ATTRS: {
+            /**
+             * constrained container.
+             * @type {Boolean|HTMLElement|String}
+             * @property constrain
+             */
 
             /**
-             * start monitoring drag
-             * @param {DD.Draggable} drag
+             * constrained container. true stands for viewport.
+             * Defaults: true.
+             * @cfg {Boolean|HTMLElement|String} constrain
              */
-            attachDrag:function (drag) {
-                var self = this,
-                    tag = stamp(drag, 1, MARKER);
-
-                if (tag && self[DESTRUCTOR_ID][tag]) {
-                    return self;
-                }
-                drag.on("dragstart", onDragStart, self)
-                    .on("dragend", onDragEnd, self)
-                    .on("dragalign", onDragAlign, self);
-                return self;
-            },
-
 
             /**
-             * stop monitoring drag
-             * @param {DD.Draggable} drag
+             * @ignore
              */
-            detachDrag:function (drag) {
-                var self = this,
-                    tag = stamp(drag, 1, MARKER),
-                    destructors = self[DESTRUCTOR_ID];
-                if (tag && destructors[tag]) {
-                    drag.detach("dragstart", onDragStart, self)
-                        .detach("dragend", onDragEnd, self)
-                        .detach("dragalign", onDragAlign, self);
-                    delete destructors[tag];
-                }
-                return self;
-            },
-
-            destroy:function () {
-                var self = this,
-                    destructors = S.merge(self[DESTRUCTOR_ID]);
-                S.each(destructors, function (drag) {
-                    self.detachDrag(drag);
-                });
+            constrain: {
+                value: true
             }
-        }, {
-            ATTRS:/**
-             * @lends DD.Constrain#
-             */
-            {
-                /**
-                 * constrained container
-                 * @type {Boolean|HTMLElement|String}
-                 */
-                constrain:{
-                    value:true
-                }
-            }
-        });
+        }
+    });
 
     return Constrain;
 }, {
-    requires:['base', 'node']
+    requires: ['base', 'node']
 });

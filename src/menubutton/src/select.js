@@ -80,7 +80,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
      * Set selected menu item as current selectedItem and hide drop down menu.
      * Protected, should only be overridden by subclasses.
      * @protected
-     * @override
+     *
      * @param {Event.Object} e
      */
     function handleMenuClick(e) {
@@ -130,7 +130,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
             /**
              * Removes all menu items from current select, and set selectedItem to null.
-             * @override
+             *
              */
             removeItems:function () {
                 var self = this;
@@ -141,7 +141,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
             /**
              * Remove specified item from current select.
              * If specified item is selectedItem, then set selectedItem to null.
-             * @override
+             *
              */
             removeItem:function (c) {
                 var self = this;

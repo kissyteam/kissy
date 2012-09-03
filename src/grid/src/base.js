@@ -41,7 +41,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
         /*
          * For overridden.
          * @protected
-         * @override
+         *
          */
         renderUI:function () {
             var _self = this;
@@ -355,7 +355,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
                 toBody:true
             },
             /**
-             * @override
+             *
              * when set this grid's width ,the header and body changed
              */
             width:{

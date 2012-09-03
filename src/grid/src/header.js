@@ -100,7 +100,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
             /*
              * For overridden.
              * @protected
-             * @override
+             *
              */
             initializer:function () {
                 var _self = this,

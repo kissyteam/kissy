@@ -1,9 +1,9 @@
 /**
+ * @ignore
  * @fileOverview dom/style
- * @author yiminghe@gmail.com,lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/style', function (S, DOM, UA, undefined) {
-    "use strict";
     var WINDOW = S.Env.host,
         doc = WINDOW.document,
         docElem = doc.documentElement,
@@ -18,32 +18,32 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         DISPLAY = 'display',
         OLD_DISPLAY = DISPLAY + S.now(),
         NONE = 'none',
-        PARSEINT = parseInt,
-        RE_NUMPX = /^-?\d+(?:px)?$/i,
+        myParseInt = parseInt,
+        RE_NUM_PX = /^-?\d+(?:px)?$/i,
         cssNumber = {
-            "fillOpacity":1,
-            "fontWeight":1,
-            "lineHeight":1,
-            "opacity":1,
-            "orphans":1,
-            "widows":1,
-            "zIndex":1,
-            "zoom":1
+            'fillOpacity': 1,
+            'fontWeight': 1,
+            'lineHeight': 1,
+            'opacity': 1,
+            'orphans': 1,
+            'widows': 1,
+            'zIndex': 1,
+            'zoom': 1
         },
         rmsPrefix = /^-ms-/,
         RE_DASH = /-([a-z])/ig,
-        CAMELCASE_FN = function (all, letter) {
+        CAMEL_CASE_FN = function (all, letter) {
             return letter.toUpperCase();
         },
-        // 考虑 ie9 ...
-        rupper = /([A-Z]|^ms)/g,
+    // 考虑 ie9 ...
+        R_UPPER = /([A-Z]|^ms)/g,
         EMPTY = '',
         DEFAULT_UNIT = 'px',
         CUSTOM_STYLES = {},
         cssProps = {},
         defaultDisplay = {};
 
-    // normalize reserved word float alternatives ("cssFloat" or "styleFloat")
+    // normalize reserved word float alternatives ('cssFloat' or 'styleFloat')
     if (docElem[STYLE][CSS_FLOAT] !== undefined) {
         cssProps[FLOAT] = CSS_FLOAT;
     }
@@ -53,7 +53,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     function camelCase(name) {
         // fix #92, ms!
-        return name.replace(rmsPrefix, "ms-").replace(RE_DASH, CAMELCASE_FN);
+        return name.replace(rmsPrefix, 'ms-').replace(RE_DASH, CAMEL_CASE_FN);
     }
 
     var defaultDisplayDetectIframe,
@@ -68,14 +68,14 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             body = doc.body || doc.documentElement;
             elem = doc.createElement(tagName);
             DOM.prepend(elem, body);
-            var oldDisplay = DOM.css(elem, "display");
+            var oldDisplay = DOM.css(elem, 'display');
             body.removeChild(elem);
             // If the simple way fails,
             // get element's real default display by attaching it to a temp iframe
-            if (oldDisplay == "none" || oldDisplay == "") {
+            if (oldDisplay == 'none' || oldDisplay == '') {
                 // No iframe to use yet, so create it
                 if (!defaultDisplayDetectIframe) {
-                    defaultDisplayDetectIframe = doc.createElement("iframe");
+                    defaultDisplayDetectIframe = doc.createElement('iframe');
 
                     defaultDisplayDetectIframe.frameBorder =
                         defaultDisplayDetectIframe.width =
@@ -97,19 +97,22 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
                     try {
                         defaultDisplayDetectIframeDoc = defaultDisplayDetectIframe.contentWindow.document;
-                        defaultDisplayDetectIframeDoc.write(( doc.compatMode === "CSS1Compat" ? "<!doctype html>" : "" )
-                            + "<html><head>" +
+                        defaultDisplayDetectIframeDoc.write(( doc.compatMode === 'CSS1Compat' ? '<!doctype html>' : '' )
+                            + '<html><head>' +
                             (UA['ie'] && DOM.isCustomDomain() ?
-                                "<script>document.domain = '" +
+                                '<script>' +
+                                    'document.' +
+                                    'domain' +
+                                    "= '" +
                                     doc.domain
-                                    + "';</script>" : "")
+                                    + "';</script>" : '')
                             +
-                            "</head><body>");
+                            '</head><body>');
                         defaultDisplayDetectIframeDoc.close();
                     } catch (e) {
                         // ie6 need a breath , such as alert(8) or setTimeout;
                         // 同时需要同步，所以无解，勉强返回
-                        return "block";
+                        return 'block';
                     }
                 }
 
@@ -117,7 +120,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
                 defaultDisplayDetectIframeDoc.body.appendChild(elem);
 
-                oldDisplay = DOM.css(elem, "display");
+                oldDisplay = DOM.css(elem, 'display');
 
                 body.removeChild(defaultDisplayDetectIframe);
             }
@@ -131,19 +134,21 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     S.mix(DOM,
         /**
-         * @lends DOM
+         * @override KISSY.DOM
+         * @class
+         * @singleton
          */
         {
-            _camelCase:camelCase,
+            _camelCase: camelCase,
             // _cssNumber:cssNumber,
-            _CUSTOM_STYLES:CUSTOM_STYLES,
-            _cssProps:cssProps,
-            _getComputedStyle:function (elem, name) {
-                var val = "",
+            _CUSTOM_STYLES: CUSTOM_STYLES,
+            _cssProps: cssProps,
+            _getComputedStyle: function (elem, name) {
+                var val = '',
                     computedStyle,
                     d = elem.ownerDocument;
 
-                name = name.replace(rupper, "-$1").toLowerCase();
+                name = name.replace(R_UPPER, '-$1').toLowerCase();
 
                 // https://github.com/kissyteam/kissy/issues/61
                 if (computedStyle = d.defaultView.getComputedStyle(elem, null)) {
@@ -151,7 +156,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
 
                 // 还没有加入到 document，就取行内
-                if (val == "" && !DOM.contains(d.documentElement, elem)) {
+                if (val == '' && !DOM.contains(d.documentElement, elem)) {
                     name = cssProps[name] || name;
                     val = elem[STYLE][name];
                 }
@@ -166,15 +171,17 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              *  @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              *  @param {String|Object} name A CSS property. or A map of property-value pairs to set.
              *  @param [val] A value to set for the property.
-             *  @returns {undefined|String}
+             *  @return {undefined|String}
              */
-            style:function (selector, name, val) {
+            style: function (selector, name, val) {
                 var els = DOM.query(selector), elem = els[0], i;
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        for (i = els.length - 1; i >= 0; i--) {
-                            style(els[i], k, name[k]);
+                        if (name.hasOwnProperty(k)) {
+                            for (i = els.length - 1; i >= 0; i--) {
+                                style(els[i], k, name[k]);
+                            }
                         }
                     }
                     return undefined;
@@ -197,20 +204,22 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Get the computed value of a style property for the first element in the set of matched elements.
              * or
              * Set one or more CSS properties for the set of matched elements.
-             * @param {HTMLElement[]|String|HTMLElement|Element} selector 选择器或节点或节点数组
+             * @param {HTMLElement[]|String|HTMLElement} selector 选择器或节点或节点数组
              * @param {String|Object} name A CSS property. or A map of property-value pairs to set.
              * @param [val] A value to set for the property.
-             * @returns {undefined|String}
+             * @return {undefined|String}
              */
-            css:function (selector, name, val) {
+            css: function (selector, name, val) {
                 var els = DOM.query(selector),
                     elem = els[0],
                     i;
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        for (i = els.length - 1; i >= 0; i--) {
-                            style(els[i], k, name[k]);
+                        if (name.hasOwnProperty(k)) {
+                            for (i = els.length - 1; i >= 0; i--) {
+                                style(els[i], k, name[k]);
+                            }
                         }
                     }
                     return undefined;
@@ -224,7 +233,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     var ret = '';
                     if (elem) {
                         // If a hook was provided get the computed value from there
-                        if (hook && "get" in hook && (ret = hook.get(elem, true)) !== undefined) {
+                        if (hook && 'get' in hook && (ret = hook.get(elem, true)) !== undefined) {
                         } else {
                             ret = DOM._getComputedStyle(elem, name);
                         }
@@ -244,7 +253,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Display the matched elements.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
-            show:function (selector) {
+            show: function (selector) {
                 var els = DOM.query(selector), elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
@@ -264,7 +273,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Hide the matched elements.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
-            hide:function (selector) {
+            hide: function (selector) {
                 var els = DOM.query(selector), elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
@@ -282,7 +291,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Display or hide the matched elements.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
-            toggle:function (selector) {
+            toggle: function (selector) {
                 var els = DOM.query(selector), elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
@@ -298,10 +307,10 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
              * @param {window} [refWin=window] Window which will accept this stylesheet
-             * @param {String} cssText The text containing the css rules
+             * @param {String} [cssText] The text containing the css rules
              * @param {String} [id] An id to add to the stylesheet for later removal
              */
-            addStyleSheet:function (refWin, cssText, id) {
+            addStyleSheet: function (refWin, cssText, id) {
                 refWin = refWin || WINDOW;
                 if (S.isString(refWin)) {
                     id = cssText;
@@ -322,7 +331,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     return;
                 }
 
-                elem = DOM.create('<style>', { id:id }, doc);
+                elem = DOM.create('<style>', { id: id }, doc);
 
                 // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
                 DOM.get('head', doc).appendChild(elem);
@@ -338,7 +347,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * Make matched elements unselectable
              * @param {HTMLElement[]|String|HTMLElement} selector  Matched elements.
              */
-            unselectable:function (selector) {
+            unselectable: function (selector) {
                 var _els = DOM.query(selector), elem, j;
                 for (j = _els.length - 1; j >= 0; j--) {
                     elem = _els[j];
@@ -350,8 +359,8 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     } else {
                         if (UA['ie'] || UA['opera']) {
                             var e, i = 0,
-                                els = elem.getElementsByTagName("*");
-                            elem.setAttribute("unselectable", 'on');
+                                els = elem.getElementsByTagName('*');
+                            elem.setAttribute('unselectable', 'on');
                             while (( e = els[ i++ ] )) {
                                 switch (e.tagName.toLowerCase()) {
                                     case 'iframe' :
@@ -361,7 +370,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                                         /* Ignore the above tags */
                                         break;
                                     default :
-                                        e.setAttribute("unselectable", 'on');
+                                        e.setAttribute('unselectable', 'on');
                                 }
                             }
                         }
@@ -371,56 +380,56 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
             /**
              * Get the current computed width for the first element in the set of matched elements, including padding but not border.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @returns {Number}
+             * @return {Number}
              */
-            innerWidth:0,
+            innerWidth: 0,
             /**
              * Get the current computed height for the first element in the set of matched elements, including padding but not border.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @returns {Number}
+             * @return {Number}
              */
-            innerHeight:0,
+            innerHeight: 0,
             /**
              *  Get the current computed width for the first element in the set of matched elements, including padding and border, and optionally margin.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {Boolean} [includeMargin] A Boolean indicating whether to include the element's margin in the calculation.
-             * @returns {Number}
+             * @return {Number}
              */
-            outerWidth:0,
+            outerWidth: 0,
             /**
              * Get the current computed height for the first element in the set of matched elements, including padding, border, and optionally margin.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {Boolean} [includeMargin] A Boolean indicating whether to include the element's margin in the calculation.
-             * @returns {Number}
+             * @return {Number}
              */
-            outerHeight:0,
+            outerHeight: 0,
             /**
              * Get the current computed width for the first element in the set of matched elements.
              * or
              * Set the CSS width of each element in the set of matched elements.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Number} [value]
              * An integer representing the number of pixels, or an integer along with an optional unit of measure appended (as a string).
-             * @returns {Number|undefined}
+             * @return {Number|undefined}
              */
-            width:0,
+            width: 0,
             /**
              * Get the current computed height for the first element in the set of matched elements.
              * or
              * Set the CSS height of each element in the set of matched elements.
-             * @function
+             * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Number} [value]
              * An integer representing the number of pixels, or an integer along with an optional unit of measure appended (as a string).
-             * @returns {Number|undefined}
+             * @return {Number|undefined}
              */
-            height:0
+            height: 0
         });
 
     function capital(str) {
@@ -428,14 +437,14 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     }
 
     S.each([WIDTH, HEIGHT], function (name) {
-        DOM["inner" + capital(name)] = function (selector) {
+        DOM['inner' + capital(name)] = function (selector) {
             var el = DOM.get(selector);
-            return el && getWHIgnoreDisplay(el, name, "padding");
+            return el && getWHIgnoreDisplay(el, name, 'padding');
         };
 
-        DOM["outer" + capital(name)] = function (selector, includeMargin) {
+        DOM['outer' + capital(name)] = function (selector, includeMargin) {
             var el = DOM.get(selector);
-            return el && getWHIgnoreDisplay(el, name, includeMargin ? "margin" : "border");
+            return el && getWHIgnoreDisplay(el, name, includeMargin ? 'margin' : 'border');
         };
 
         DOM[name] = function (selector, val) {
@@ -447,12 +456,12 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         };
     });
 
-    var cssShow = { position:"absolute", visibility:"hidden", display:"block" };
+    var cssShow = { position: 'absolute', visibility: 'hidden', display: 'block' };
 
     /*
      css height,width 永远都是计算值
      */
-    S.each(["height", "width"], function (name) {
+    S.each(['height', 'width'], function (name) {
         /**
          * @ignore
          */
@@ -460,16 +469,16 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             /**
              * @ignore
              */
-            get:function (elem, computed) {
+            get: function (elem, computed) {
                 if (computed) {
-                    return getWHIgnoreDisplay(elem, name) + "px";
+                    return getWHIgnoreDisplay(elem, name) + 'px';
                 }
             },
-            set:function (elem, value) {
-                if (RE_NUMPX.test(value)) {
+            set: function (elem, value) {
+                if (RE_NUM_PX.test(value)) {
                     value = parseFloat(value);
                     if (value >= 0) {
-                        return value + "px";
+                        return value + 'px';
                     }
                 } else {
                     return value;
@@ -478,12 +487,10 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         };
     });
 
-    S.each(["left", "top"], function (name) {
-        /**
-         * @ignore
-         */
+    S.each(['left', 'top'], function (name) {
+
         CUSTOM_STYLES[ name ] = {
-            get:function (elem, computed) {
+            get: function (elem, computed) {
                 if (computed) {
                     var val = DOM._getComputedStyle(elem, name), offset;
 
@@ -504,13 +511,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                                 // 否则减去 borderTop 其实也是 clientTop
                                 // http://msdn.microsoft.com/en-us/library/aa752288%28v=vs.85%29.aspx
                                 // ie<9 注意有时候 elem.offsetParent 为 null ...
-                                // 比如 DOM.append(DOM.create("<div class='position:absolute'></div>"),document.body)
+                                // 比如 DOM.append(DOM.create('<div class='position:absolute'></div>'),document.body)
                                 offset -= elem.offsetParent && elem.offsetParent['client' + (name == 'left' ? 'Left' : 'Top')]
                                     || 0;
                             }
-                            val = offset - (PARSEINT(DOM.css(elem, 'margin-' + name)) || 0);
+                            val = offset - (myParseInt(DOM.css(elem, 'margin-' + name)) || 0);
                         }
-                        val += "px";
+                        val += 'px';
                     }
                     return val;
                 }
@@ -523,15 +530,19 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
         // Remember the old values, and insert the new ones
         for (var name in options) {
-            old[ name ] = elem[STYLE][ name ];
-            elem[STYLE][ name ] = options[ name ];
+            if (options.hasOwnProperty(name)) {
+                old[ name ] = elem[STYLE][ name ];
+                elem[STYLE][ name ] = options[ name ];
+            }
         }
 
         callback.call(elem);
 
         // Revert the old values
         for (name in options) {
-            elem[STYLE][ name ] = old[ name ];
+            if (options.hasOwnProperty(name)) {
+                elem[STYLE][ name ] = old[ name ];
+            }
         }
     }
 
@@ -545,7 +556,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         name = cssProps[name] || name;
         // setter
         if (val !== undefined) {
-            // normalize unsetting
+            // normalize unset
             if (val === null || val === EMPTY) {
                 val = EMPTY;
             }
@@ -561,7 +572,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 try {
                     style[name] = val;
                 } catch (e) {
-                    S.log("css set error :" + e);
+                    S.log('css set error :' + e);
                 }
                 // #80 fix,font-family
                 if (val === EMPTY && style.removeAttribute) {
@@ -576,13 +587,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         //getter
         else {
             // If a hook was provided get the non-computed value from there
-            if (hook && "get" in hook && (ret = hook.get(elem, false)) !== undefined) {
+            if (hook && 'get' in hook && (ret = hook.get(elem, false)) !== undefined) {
 
             } else {
                 // Otherwise just get the value from the style object
                 ret = style[ name ];
             }
-            return ret === undefined ? "" : ret;
+            return ret === undefined ? '' : ret;
         }
     }
 
@@ -602,13 +613,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     }
 
 
-    /**
-     * 得到元素的大小信息
-     * @param elem
-     * @param name
-     * @param {String} [extra]  "padding" : (css width) + padding
-     *                          "border" : (css width) + padding + border
-     *                          "margin" : (css width) + padding + border + margin
+    /*
+      得到元素的大小信息
+      @param elem
+      @param name
+      @param {String} [extra]  'padding' : (css width) + padding
+                               'border' : (css width) + padding + border
+                               'margin' : (css width) + padding + border + margin
      */
     function getWH(elem, name, extra) {
         if (S.isWindow(elem)) {
@@ -620,15 +631,15 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             val = name === WIDTH ? elem.offsetWidth : elem.offsetHeight;
 
         if (val > 0) {
-            if (extra !== "border") {
+            if (extra !== 'border') {
                 S.each(which, function (w) {
                     if (!extra) {
-                        val -= parseFloat(DOM.css(elem, "padding" + w)) || 0;
+                        val -= parseFloat(DOM.css(elem, 'padding' + w)) || 0;
                     }
-                    if (extra === "margin") {
+                    if (extra === 'margin') {
                         val += parseFloat(DOM.css(elem, extra + w)) || 0;
                     } else {
-                        val -= parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                        val -= parseFloat(DOM.css(elem, 'border' + w + 'Width')) || 0;
                     }
                 });
             }
@@ -641,17 +652,17 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         if (val == null || (Number(val)) < 0) {
             val = elem.style[ name ] || 0;
         }
-        // Normalize "", auto, and prepare for extra
+        // Normalize '', auto, and prepare for extra
         val = parseFloat(val) || 0;
 
         // Add padding, border, margin
         if (extra) {
             S.each(which, function (w) {
-                val += parseFloat(DOM.css(elem, "padding" + w)) || 0;
-                if (extra !== "padding") {
-                    val += parseFloat(DOM.css(elem, "border" + w + "Width")) || 0;
+                val += parseFloat(DOM.css(elem, 'padding' + w)) || 0;
+                if (extra !== 'padding') {
+                    val += parseFloat(DOM.css(elem, 'border' + w + 'Width')) || 0;
                 }
-                if (extra === "margin") {
+                if (extra === 'margin') {
                     val += parseFloat(DOM.css(elem, extra + w)) || 0;
                 }
             });
@@ -662,29 +673,29 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-    requires:["dom/base", "ua"]
+    requires: ['dom/base', 'ua']
 });
 
-/**
- * 2011-12-21
- *  - backgroundPositionX, backgroundPositionY firefox/w3c 不支持
- *  - w3c 为准，这里不 fix 了
- *
- *
- * 2011-08-19
- *  - 调整结构，减少耦合
- *  - fix css("height") == auto
- *
- * NOTES:
- *  - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
- *  - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
- *
- *
- *  - getComputedStyle 在 webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输出 float 值。
- *
- *  - color: blue 继承值，getComputedStyle, 在 ie 下返回 blue, opera 返回 #0000ff, 其它浏览器
- *    返回 rgb(0, 0, 255)
- *
- *  - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未“追求完美”。YUI3 做了部分完美处理，但
- *    依旧存在浏览器差异。
+/*
+  2011-12-21
+   - backgroundPositionX, backgroundPositionY firefox/w3c 不支持
+   - w3c 为准，这里不 fix 了
+
+
+  2011-08-19
+   - 调整结构，减少耦合
+   - fix css('height') == auto
+
+  NOTES:
+   - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
+   - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
+
+
+   - getComputedStyle 在 webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输出 float 值。
+
+   - color: blue 继承值，getComputedStyle, 在 ie 下返回 blue, opera 返回 #0000ff, 其它浏览器
+     返回 rgb(0, 0, 255)
+
+   - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未“追求完美”。YUI3 做了部分完美处理，但
+     依旧存在浏览器差异。
  */

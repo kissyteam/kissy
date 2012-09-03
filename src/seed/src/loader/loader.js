@@ -1,15 +1,16 @@
 /**
+ * @ignore
  * @fileOverview simple loader from KISSY<=1.2
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
     var Loader = S.Loader,
-        Path= S.Path,
+        Path = S.Path,
         utils = Loader.Utils;
 
 
@@ -18,13 +19,13 @@
         {
 
             //firefox,ie9,chrome 如果 add 没有模块名，模块定义先暂存这里
-            __currentModule:null,
+            __currentModule: null,
 
             //ie6,7,8开始载入脚本的时间
-            __startLoadTime:0,
+            __startLoadTime: 0,
 
             //ie6,7,8开始载入脚本对应的模块名
-            __startLoadModuleName:null,
+            __startLoadModuleName: null,
 
             /**
              * Registers a module.
@@ -32,12 +33,13 @@
              * @param {Function|Object} [fn] entry point into the module that is used to bind module to KISSY
              * @param {Object} [config] special config for this add
              * @param {String[]} [config.requires] array of mod's name that current module requires
-             * @example
-             * <code>
-             * KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
-             * </code>
+             * @member KISSY.Loader
+             *
+             * for example:
+             *      @example
+             *      KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
              */
-            add:function (name, fn, config) {
+            add: function (name, fn, config) {
                 var self = this,
                     SS = self.SS,
                     mod,
@@ -47,7 +49,7 @@
                 // 兼容
                 if (S.isPlainObject(name)) {
                     return SS.config({
-                        modules:name
+                        modules: name
                     });
                 }
 
@@ -92,7 +94,7 @@
                          insertion.
                          * In IE, if the script is not in the cache, when define() is called you
                          can iterate through the script tags and the currently executing one will
-                         have a script.readyState == "interactive"
+                         have a script.readyState == 'interactive'
                          See RequireJS source code if you need more hints.
                          Anyway, the bottom line from a spec perspective is that it is
                          implemented, it works, and it is possible. Hope that helps.
@@ -101,20 +103,20 @@
                         // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                         // use onload to get module name is not right in ie
                         name = findModuleNameByInteractive(self);
-                        S.log("old_ie get modName by interactive : " + name);
+                        S.log('old_ie get modName by interactive : ' + name);
                         utils.registerModule(SS, name, fn, config);
                         self.__startLoadModuleName = null;
                         self.__startLoadTime = 0;
                     } else {
                         // 其他浏览器 onload 时，关联模块名与模块定义
                         self.__currentModule = {
-                            fn:fn,
-                            config:config
+                            fn: fn,
+                            config: config
                         };
                     }
                     return;
                 }
-                S.log("invalid format for KISSY.add !", "error");
+                S.log('invalid format for KISSY.add !', 'error');
             }
         });
 
@@ -123,14 +125,14 @@
     // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive(self) {
         var SS = self.SS,
-            scripts = S.Env.host.document.getElementsByTagName("script"),
+            scripts = S.Env.host.document.getElementsByTagName('script'),
             re,
             i,
             script;
 
         for (i = 0; i < scripts.length; i++) {
             script = scripts[i];
-            if (script.readyState == "interactive") {
+            if (script.readyState == 'interactive') {
                 re = script;
                 break;
             }
@@ -139,8 +141,8 @@
             // sometimes when read module file from cache , interactive status is not triggered
             // module code is executed right after inserting into dom
             // i has to preserve module name before insert module script into dom , then get it back here
-            S.log("can not find interactive script,time diff : " + (+new Date() - self.__startLoadTime), "error");
-            S.log("old_ie get mod name from cache : " + self.__startLoadModuleName);
+            S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
+            S.log('old_ie get mod name from cache : ' + self.__startLoadModuleName);
             return self.__startLoadModuleName;
         }
 
@@ -187,49 +189,49 @@
                 src.getPath()));
         }
 
-        S.log("interactive script does not have package config ：" + src, "error");
+        S.log('interactive script does not have package config ：' + src, 'error');
         return undefined;
     }
 
 })(KISSY);
 
-/**
- * 2012-02-21 yiminghe@gmail.com refactor:
- *
- * 拆分 ComboLoader 与 Loader
- *
- * 2011-01-04 chengyu<yiminghe@gmail.com> refactor:
- *
- * adopt requirejs :
- *
- * 1. packages(cfg) , cfg :{
- *    name : 包名，用于指定业务模块前缀
- *    path: 前缀包名对应的路径
- *    charset: 该包下所有文件的编码
- *
- * 2. add(moduleName,function(S,depModule){return function(){}},{requires:["depModuleName"]});
- *    moduleName add 时可以不写
- *    depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
- *
- * 3. S.use(["dom"],function(S,DOM){
- *    });
- *    依赖注入，发生于 add 和 use 时期
- *
- * 4. add,use 不支持 css loader ,getScript 仍然保留支持
- *
- * 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
- *
- * demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
- *
- * 2011-03-01 yiminghe@gmail.com note:
- *
- * compatibility
- *
- * 1. 保持兼容性，不得已而为之
- *      支持 { host : }
- *      如果 requires 都已经 attached，支持 add 后立即 attach
- *      支持 { attach : false } 显示控制 add 时是否 attach
- *      支持 { global : Editor } 指明模块来源
- *
- * 2011-05-04 初步拆分文件，tmd 乱了
+/*
+ 2012-02-21 yiminghe@gmail.com refactor:
+
+ 拆分 ComboLoader 与 Loader
+
+ 2011-01-04 chengyu<yiminghe@gmail.com> refactor:
+
+ adopt requirejs :
+
+ 1. packages(cfg) , cfg :{
+ name : 包名，用于指定业务模块前缀
+ path: 前缀包名对应的路径
+ charset: 该包下所有文件的编码
+
+ 2. add(moduleName,function(S,depModule){return function(){}},{requires:['depModuleName']});
+ moduleName add 时可以不写
+ depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
+
+ 3. S.use(['dom'],function(S,DOM){
+ });
+ 依赖注入，发生于 add 和 use 时期
+
+ 4. add,use 不支持 css loader ,getScript 仍然保留支持
+
+ 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
+
+ demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
+
+ 2011-03-01 yiminghe@gmail.com note:
+
+ compatibility
+
+ 1. 保持兼容性，不得已而为之
+ 支持 { host : }
+ 如果 requires 都已经 attached，支持 add 后立即 attach
+ 支持 { attach : false } 显示控制 add 时是否 attach
+ 支持 { global : Editor } 指明模块来源
+
+ 2011-05-04 初步拆分文件，tmd 乱了
  */

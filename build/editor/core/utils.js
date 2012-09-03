@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 7 22:12
+build time: Aug 27 21:29
 */
 /**
  * common utils for kissy editor
@@ -190,7 +190,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              *
-             * @param inp {NodeList}
+             * @param inp {KISSY.NodeList}
              */
             resetInput:function (inp) {
                 var placeholder = inp.attr("placeholder");
@@ -204,7 +204,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              *
-             * @param inp  {NodeList}
+             * @param inp  {KISSY.NodeList}
              * @param [val]
              */
             valInput:function (inp, val) {
@@ -222,7 +222,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              *
-             * @param inp {NodeList}
+             * @param inp {KISSY.NodeList}
              * @param tip {string}
              */
             placeholder:function (inp, tip) {

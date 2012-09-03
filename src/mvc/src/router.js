@@ -297,7 +297,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
      * @class
      * Router used to route url to responding action callbacks.
      * @memberOf MVC
-     * @extends Base
+     * @extends KISSY.Base
      */
     function Router() {
         var self = this;
@@ -386,7 +386,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
             },
             /**
              * Start router (url monitor).
-             * @param {object} opts
+             * @param {Object} opts
              * @param {Function} opts.success Callback function to be called after router is started.
              * @param {String} opts.urlRoot Specify url root for html5 history management.
              * @param {Boolean} opts.nativeHistory Whether enable html5 history management.
