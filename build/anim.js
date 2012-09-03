@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 3 16:47
+build time: Sep 3 17:15
 */
 /**
  * @ignore
@@ -191,7 +191,9 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         // camel case uniformity
         S.each(props, function (v, prop) {
             var camelProp = S.trim(camelCase(prop));
-            if (prop != camelProp) {
+            if (!camelProp) {
+                delete props[prop];
+            } else if (prop != camelProp) {
                 props[camelProp] = props[prop];
                 delete props[prop];
             }

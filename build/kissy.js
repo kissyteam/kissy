@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 3 16:50
+build time: Sep 3 17:15
 */
 /**
  * @ignore
@@ -496,11 +496,11 @@ build time: Sep 3 16:50
 
         /**
          * The build time of the library.
-         * NOTICE: '20120903164954' will replace with current timestamp when compressing.
+         * NOTICE: '20120903171513' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120903164954';
+        S.__BUILD_TIME = '20120903171513';
     })();
 
     return S;
@@ -5200,7 +5200,7 @@ build time: Sep 3 16:50
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120903164954'
+        tag: '20120903171513'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -16427,7 +16427,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 3 16:47
+build time: Sep 3 17:15
 */
 /**
  * @ignore
@@ -16617,7 +16617,9 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         // camel case uniformity
         S.each(props, function (v, prop) {
             var camelProp = S.trim(camelCase(prop));
-            if (prop != camelProp) {
+            if (!camelProp) {
+                delete props[prop];
+            } else if (prop != camelProp) {
                 props[camelProp] = props[prop];
                 delete props[prop];
             }
