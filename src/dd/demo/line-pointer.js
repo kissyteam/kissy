@@ -1,3 +1,7 @@
+/**
+ * using dd to draw three mutual-crossed lines to cross four points
+ * @author yiminghe@gmail.com
+ */
 KISSY.use('dd', function (S, DD) {
 
     function inRange(x, min, max, estimated) {
