@@ -49,7 +49,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
                         arg0 = args[0];
                     if (arg0.props) {
                         arg0.el = elem;
-                        Anim(arg0);
+                        Anim(arg0).run();
                     } else {
                         Anim.apply(undefined, [elem].concat(args)).run();
                     }

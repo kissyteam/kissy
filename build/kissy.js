@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 3 17:15
+build time: Sep 4 20:20
 */
 /**
  * @ignore
@@ -496,11 +496,11 @@ build time: Sep 3 17:15
 
         /**
          * The build time of the library.
-         * NOTICE: '20120903171513' will replace with current timestamp when compressing.
+         * NOTICE: '20120904202037' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120903171513';
+        S.__BUILD_TIME = '20120904202037';
     })();
 
     return S;
@@ -5200,7 +5200,7 @@ build time: Sep 3 17:15
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120903171513'
+        tag: '20120904202037'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -17974,7 +17974,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:29
+build time: Sep 4 20:20
 */
 /**
  * @ignore
@@ -18027,7 +18027,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
                         arg0 = args[0];
                     if (arg0.props) {
                         arg0.el = elem;
-                        Anim(arg0);
+                        Anim(arg0).run();
                     } else {
                         Anim.apply(undefined, [elem].concat(args)).run();
                     }

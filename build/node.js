@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:29
+build time: Sep 4 20:20
 */
 /**
  * @ignore
@@ -54,7 +54,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
                         arg0 = args[0];
                     if (arg0.props) {
                         arg0.el = elem;
-                        Anim(arg0);
+                        Anim(arg0).run();
                     } else {
                         Anim.apply(undefined, [elem].concat(args)).run();
                     }
