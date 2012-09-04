@@ -1,79 +1,57 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
-<title>简单拖放 demo</title>
-<style>
+    <meta charset="utf-8"/>
+    <title>简单拖放 demo</title>
+    <style>
 
-    .container {
-        border: 1px solid red;
-        height: 450px;
-        padding: 10px;
-        position: relative;
-    }
+        .component {
+            margin: 50px 10px;
+            width: 120px;
+            height: 100px;
+            border: 1px solid black;
+            float: left;
+            display: inline;
+            overflow: hidden;
+        }
 
-    .component {
-        margin: 50px 10px;
-        width: 100px;
-        height: 100px;
-        line-height: 100px;
-        border: 1px solid black;
-        display: inline-block;
-        *display: inline;
-        *zoom: 1;
-        overflow: hidden;
-    }
+        #drop {
+            border: 1px solid green;
+            height: 130px;
+        }
 
-    .cheader {
-        cursor: move;
-        border: 1px solid black;
-        height: 20px;
-        line-height: 20px;
-    }
-
-    #drop, #drop3 {
-        border: 1px solid green;
-        height: 130px;
-        line-height: 100px;
-    }
-
-    .ks-dd-drag-over {
-        background: #a52a2a;
-    }
-
-    .ks-dd-drop-over {
-        background: #fa8072;
-    }
-
-    #container3 .component .cheader {
-        cursor: move;
-    }
-</style>
+        .ks-dd-drag-over {
+            background: #a52a2a;
+        }
+    </style>
+    <link rel="stylesheet" href="../../css/src/dpl/base.css"/>
 </head>
 <body>
 
-<h2>简单拖放</h2>
+
 <div id="container" class="container">
 
-    <div id="c1" class="component">
+    <h2>简单拖放 + 回复动画</h2>
 
-        intersect drag
+    <div class="ks-clear">
+        <div id="c1" class="component">
+
+            intersect drag
+        </div>
+
+        <div id="c2" class="component">
+
+            point drag
+        </div>
+
+        <div id="c3" class="component">
+            strict drag with proxy
+            <img height="100"
+                 src="http://img.alimama.cn/adbrand/adboard/picture/2011-09-20/126792650001110920134440.jpg"/>
+        </div>
     </div>
-
-    <div id="c2" class="component">
-
-        point drag
-    </div>
-
-    <div id="c3" class="component" style="width:250px;line-height: 1;height: 110px;">
-        strict drag with proxy
-        <img height="100"
-             src="http://img.alimama.cn/adbrand/adboard/picture/2011-09-20/126792650001110920134440.jpg"/>
-    </div>
-
-
     <div id="drop">
-        drop zone
+        <strong>drop zone</strong>
     </div>
 </div>
 
@@ -108,43 +86,44 @@
                  * 如何产生替代节点
                  * @param drag 当前拖对象
                  */
-                node:function (drag) {
+                node: function (drag) {
                     var n = $(drag.get("dragNode").clone(true));
                     n.attr("id", S.guid("ks-dd-proxy"));
                     n.css("opacity", 0.2);
+                    n.isProxy = 1;
                     return n;
                 },
-                moveOnEnd:0
+                moveOnEnd: 0
             });
             var c1 = new Draggable({
-                node:"#c1",
-                move:1,
+                node: "#c1",
+                move: 1,
                 //模式，
                 // intersect :区域相交就算enter
                 // strict : drag 区域完全在 drop 区域内才算
                 // point : 鼠标在 drop 区域内
                 //默认 point
-                mode:Draggable.INTERSECT
+                mode: Draggable.INTERSECT
             });
 
 
             var c3 = new Draggable({
-                node:"#c3",
-                move:1,
-                mode:Draggable.STRICT
+                node: "#c3",
+                move: 1,
+                mode: Draggable.STRICT
             });
 
 
             p.attachDrag(c3);
 
             var c2 = new Draggable({
-                node:"#c2",
-                move:1
+                node: "#c2",
+                move: 1
             });
 
 
             var drop = new Droppable({
-                node:"#drop"
+                node: "#drop"
             });
 
             c1.on("dragenter", function (ev) {
@@ -166,23 +145,50 @@
             function onhit(ev) {
                 var node = ev.drag.get("node");
                 node.css({
-                    position:"",
-                    left:"",
-                    top:""
+                    position: "",
+                    left: "",
+                    top: ""
                 });
                 node.css("margin", "5px 10px");
                 node.appendTo(ev.drop.get("node"));
                 ev.drag.destroy();
             }
 
+
             DDM.on("dragdropmiss", function (ev) {
                 var node = ev.drag.get("node");
                 S.log(node.attr("id") + " dragdropmiss ");
-                node.css({
-                    position:"",
-                    left:"",
-                    top:""
-                });
+
+                if (node.isProxy) {
+                    var dragNode = ev.drag.get("dragNode");
+                    node = node.clone(true).insertBefore(node);
+                    node.animate({
+                        props: {
+                            left: dragNode.offset().left - parseInt(dragNode.css('margin-left')),
+                            top: dragNode.offset().top - parseInt(dragNode.css('margin-top'))
+                        },
+                        duration: 0.5,
+                        complete: function () {
+                            node.remove();
+                        }
+                    })
+                } else {
+                    node.animate({
+                        props: {
+                            left: 0,
+                            top: 0
+                        },
+                        duration: 0.5,
+                        complete: function () {
+                            node.css({
+                                position: "",
+                                left: "",
+                                top: ""
+                            });
+                        }
+                    })
+                }
+
             });
 
 
