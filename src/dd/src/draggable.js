@@ -436,6 +436,72 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          */
         groups: {
             value: {}
+        },
+
+        /**
+         * mouse position at drag start
+         * for example:
+         *      @example
+         *      {
+         *          left: 100,
+         *          top: 200
+         *      }
+         *
+         * @property startMousePos
+         * @type {Object}
+         * @readonly
+         */
+        /**
+         * @ignore
+         */
+        startMousePos: {
+
+        },
+
+        /**
+         * node position ar drag start
+         * for example:
+         *      @example
+         *      {
+         *          left: 100,
+         *          top: 200
+         *      }
+         *
+         * @property startNodePos
+         * @type {Object}
+         * @readonly
+         */
+        /**
+         * @ignore
+         */
+        startNodePos: {
+
+        },
+
+        /**
+         * The offset of the mouse position to the element's position
+         * @property deltaPos
+         * @type {Object}
+         * @readonly
+         */
+        /**
+         * @ignore
+         */
+        deltaPos: {
+
+        },
+
+        /**
+         * The xy that the node will be set to. Changing this will alter the position as it's dragged.
+         * @property actualPos
+         * @type {Object}
+         * @readonly
+         */
+        /**
+         * @ignore
+         */
+        actualPos: {
+
         }
 
     };
@@ -513,39 +579,6 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
     });
 
     S.extend(Draggable, Base, {
-
-        /**
-         * mouse position at drag start
-         *
-         *  for example:
-         *      @example
-         *      {x:100,y:200}
-         *
-         * @type {Object}
-         * @member KISSY.DD.Draggable
-         * @private
-         */
-        startMousePos: NULL,
-
-        /**
-         * node position ar drag start
-         *
-         *  for example:
-         *      @example
-         *      {x:100,y:200}
-         *
-         * @type {Object}
-         * @member KISSY.DD.Draggable
-         * @private
-         */
-        startNodePos: NULL,
-
-        /**
-         * 开始拖时鼠标和节点所在位置的差值
-         * @ignore
-         */
-        _diff: NULL,
-
         /**
          * mousedown 1秒后自动开始拖的定时器
          * @ignore
@@ -611,15 +644,15 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 mx = ev.pageX,
                 my = ev.pageY,
                 nxy = node.offset();
-            self.startMousePos = self.mousePos = {
+            self.setInternal('startMousePos', self.mousePos = {
                 left: mx,
                 top: my
-            };
-            self.startNodePos = nxy;
-            self._diff = {
+            });
+            self.setInternal('startNodePos', nxy);
+            self.setInternal('deltaPos', {
                 left: mx - nxy.left,
                 top: my - nxy.top
-            };
+            });
             DDM._regToDrag(self);
 
             var bufferTime = self.get('bufferTime');
@@ -646,16 +679,12 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         _move: function (ev) {
             var self = this,
                 ret,
-                diff = self._diff,
-                startMousePos = self.startMousePos,
                 pageX = ev.pageX,
-                pageY = ev.pageY,
-                left = pageX - diff.left,
-                top = pageY - diff.top;
-
+                pageY = ev.pageY;
 
             if (!self.get('dragging')) {
-                var clickPixelThresh = self.get('clickPixelThresh');
+                var startMousePos = self.get('startMousePos'),
+                    clickPixelThresh = self.get('clickPixelThresh');
                 // 鼠标经过了一定距离，立即开始
                 if (Math.abs(pageX - startMousePos.left) >= clickPixelThresh ||
                     Math.abs(pageY - startMousePos.top) >= clickPixelThresh) {
@@ -665,6 +694,10 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 // 开始后，下轮 move 开始触发 drag 事件
                 return;
             }
+
+            var diff = self.get('deltaPos'),
+                left = pageX - diff.left,
+                top = pageY - diff.top;
 
             self.mousePos = {
                 left: pageX,
@@ -679,9 +712,12 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                 drag: self
             };
 
-            self.fire('dragalign', {
-                info: ret
+            self.setInternal('actualPos', {
+                left: left,
+                top: top
             });
+
+            self.fire('dragalign', ret);
 
             var def = 1;
 
@@ -691,7 +727,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
 
             if (def && self.get('move')) {
                 // 取 'node' , 改 node 可能是代理哦
-                self.get('node').offset(ret);
+                self.get('node').offset(self.get('actualPos'));
             }
         },
 

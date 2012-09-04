@@ -82,13 +82,14 @@ KISSY.add('dd/constrain', function (S, Base, Node) {
 
     function onDragAlign(e) {
         var self = this,
-            info = e.info,
-            l = info.left,
-            t = info.top,
+            info = {},
+            l = e.left,
+            t = e.top,
             constrain = self.__constrainRegion;
         if (constrain) {
             info.left = Math.min(Math.max(constrain.left, l), constrain.right);
             info.top = Math.min(Math.max(constrain.top, t), constrain.bottom);
+            e.drag.setInternal('actualPos', info);
         }
     }
 
