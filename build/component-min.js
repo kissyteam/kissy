@@ -1,10 +1,10 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:53
+build time: Sep 5 11:09
 */
 KISSY.add("component/base",function(d,f,c){return{Manager:c,UIBase:f,create:function(b,a){var e;if(b&&(e=b.xclass))a&&!b.prefixCls&&(b.prefixCls=a.get("prefixCls")),e=c.getConstructorByXClass(e),b=new e(b);return b}}},{requires:["./uibase","./manager"]});KISSY.add("component",function(d,f,c,b,a,e,h,n){d.mix(f,{Controller:c,Render:b,Container:a,DelegateChildren:e,DecorateChild:n,DecorateChildren:h});return f},{requires:"component/base,component/controller,component/render,component/container,component/delegate-children,component/decorate-children,component/decorate-child".split(",")});
-KISSY.add("component/container",function(d,f,c,b){return f.extend([c,b],{},{xclass:"container"})},{requires:["./controller","./delegate-children","./decorate-children"]});
+KISSY.add("component/container",function(d,f,c,b){return f.extend([c,b],{})},{requires:["./controller","./delegate-children","./decorate-children"]});
 KISSY.add("component/controller",function(d,f,c,b,a,e,h){function n(k){return function(g){this==g.target&&(g=g.newVal,this.get("view").set(k,g))}}function j(k){return function(g){var a=this.get("view");return g===h?a.get(k):g}}function l(k){var g,b,e,m={},c,f=k.get("xrender");g=k.getAttrs();for(e in g)if(g.hasOwnProperty(e)&&(b=g[e],b.view)){if((c=k.get(e))!==h)m[e]=c;k.on("after"+d.ucfirst(e)+"Change",n(e));b.getter=j(e)}delete m.autoRender;k=k.constructor;for(b=[];k&&k!=v;)(g=a.getXClassByConstructor(k))&&
 b.push(g),k=k.superclass&&k.superclass.constructor;k=b.join(" ");m.ksComponentCss=k;return new f(m)}function o(k,a){var b=k.relatedTarget;return b&&(b===a[0]||a.contains(b))}function r(k,a){return k["__ks_wrap_"+a]=function(b){if(!k.get("disabled"))k[a](b)}}function m(a,b){return a["__ks_wrap_"+b]}var v=b.extend([b.Box],{isController:!0,getCssClassWithPrefix:a.getCssClassWithPrefix,initializer:function(){this.setInternal("view",l(this))},createDom:function(){var a;a=this.get("view");a.create(h);a=
 a.getKeyEventTarget();this.get("allowTextSelection")||a.unselectable(h)},renderUI:function(){var a,b,e;this.get("view").render();b=this.get("children").concat();for(a=this.get("children").length=0;a<b.length;a++)e=this.addChild(b[a]),e.render()},_uiSetFocusable:function(a){var b,e=this.getKeyEventTarget();if(a)e.attr("tabIndex",0).attr("hideFocus",!0).on("focus",r(this,"handleFocus")).on("blur",r(this,"handleBlur")).on("keydown",r(this,"handleKeydown"));else e.removeAttr("tabIndex"),(b=m(this,"handleFocus"))&&

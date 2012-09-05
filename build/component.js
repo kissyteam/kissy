@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:53
+build time: Sep 5 11:09
 */
 /**
  * Setup component namespace.
@@ -120,8 +120,6 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
              * @memberOf Component.Container#
              * @param {HTMLElement} target Current event target node.
              */
-        }, {
-            xclass: 'container'
         });
 
 }, {
