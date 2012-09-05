@@ -56,7 +56,6 @@
         }
     }
 
-
     // Enqueue use
     function enqueue(self, modNames, fn) {
         self.queue.push({
@@ -64,7 +63,6 @@
             fn: fn
         });
     }
-
 
     // Real use.
     function _use(self, modNames, fn) {
@@ -98,10 +96,7 @@
             countCss++;
         }
 
-        if (!countCss) {
-            _useJs(self, comboUrls, fn, modNames);
-            return;
-        }
+        var jsOk = 0, cssOk = !countCss;
 
         for (p in css) {
             if (css.hasOwnProperty(p)) {
@@ -115,20 +110,35 @@
                                 });
                             }
                         }
-                        _useJs(self, comboUrls, fn, modNames);
+                        cssOk = 1;
+                        check(jsOk);
                     }
                 }, css[p].charset);
             }
         }
+
+        function check(paramJsOk) {
+            jsOk = paramJsOk;
+            if (cssOk && jsOk) {
+                attachMods(self, unaliasModNames);
+                if (utils.isAttached(SS, unaliasModNames)) {
+                    fn.apply(null, utils.getModules(SS, modNames))
+                } else {
+                    // new require is introduced by KISSY.add
+                    // run again
+                    _use(self, modNames, fn)
+                }
+            }
+        }
+
+        // jss css download in parallel
+        _useJs(comboUrls, check);
     }
 
-
     // use js
-    function _useJs(self, comboUrls, fn, modNames) {
+    function _useJs(comboUrls, check) {
         var p,
             success,
-            SS = self.SS,
-            unaliasModNames,
             jss = comboUrls.js,
             countJss = 0;
 
@@ -139,9 +149,7 @@
 
         if (!countJss) {
             // 2012-05-18 bug: loaded 那么需要加载的 jss 为空，要先 attach 再通知用户回调函数
-            unaliasModNames = utils.unalias(SS, modNames);
-            attachMods(self, unaliasModNames);
-            fn.apply(null, utils.getModules(SS, modNames));
+            check(1);
             return;
         }
         success = 1;
@@ -149,7 +157,7 @@
             if (jss.hasOwnProperty(p)) {
                 (function (p) {
                     loadScripts(jss[p], function () {
-                        var mods = jss[p].mods, mod, unaliasModNames, i;
+                        var mods = jss[p].mods, mod, i;
                         for (i = 0; i < mods.length; i++) {
                             mod = mods[i];
                             // fix #111
@@ -162,15 +170,7 @@
                             }
                         }
                         if (success && !(--countJss)) {
-                            unaliasModNames = utils.unalias(SS, modNames);
-                            attachMods(self, unaliasModNames);
-                            if (utils.isAttached(SS, unaliasModNames)) {
-                                fn.apply(null, utils.getModules(SS, modNames))
-                            } else {
-                                // new require is introduced by KISSY.add
-                                // run again
-                                _use(self, modNames, fn)
-                            }
+                            check(1);
                         }
                     }, jss[p].charset);
                 })(p);
@@ -178,14 +178,12 @@
         }
     }
 
-
     // attach mods
     function attachMods(self, modNames) {
         S.each(modNames, function (modName) {
             attachMod(self, modName);
         });
     }
-
 
     // attach one mod
     function attachMod(self, modName) {
@@ -213,12 +211,10 @@
         return undefined;
     }
 
-
     // get mod info.
     function getModInfo(self, modName) {
         return self.SS.Env.mods[modName];
     }
-
 
     // get requires mods need to be loaded dynamically
     function getRequires(self, modName, cache) {

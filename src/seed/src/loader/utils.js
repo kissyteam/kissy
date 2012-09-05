@@ -289,7 +289,7 @@
          * normalize module names
          * @param self
          * @param modNames
-         * @param refModName
+         * @param [refModName]
          * @return {Array}
          */
         normalizeModNamesWithAlias: function (self, modNames, refModName) {
@@ -316,7 +316,7 @@
          * @param self
          * @param name
          * @param fn
-         * @param config
+         * @param [config]
          */
         registerModule: function (self, name, fn, config) {
             var mods = self.Env.mods,

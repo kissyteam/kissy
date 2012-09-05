@@ -1,8 +1,15 @@
 describe("css-combo", function () {
 
+
     it("works for css and js", function () {
 
         var S = KISSY;
+
+        S.config({
+            map: [
+                [/\?t=.*/, ""]
+            ]
+        });
 
         S.use("node", function () {
 
@@ -13,21 +20,17 @@ describe("css-combo", function () {
 
             KISSY.config({
 
-                map:[
-                    [/\?t=.+$/, ""]
-                ],
-
-                packages:{
-                    x:{
-                        base:"../specs/css-combo/"
+                packages: {
+                    x: {
+                        base: window['specsPath'] || "../specs/css-combo/"
                     }
                 },
-                modules:{
-                    "x/x1":{
-                        requires:["x/x1.css", "x/x2"]
+                modules: {
+                    "x/x1": {
+                        requires: ["x/x1.css", "x/x2"]
                     },
-                    "x/x2":{
-                        requires:["x/x2.css"]
+                    "x/x2": {
+                        requires: ["x/x2.css"]
                     }
                 }
             });
@@ -45,8 +48,8 @@ describe("css-combo", function () {
                 return ret;
             });
 
-            runs(function(){
-                S.config("map").length=0;
+            runs(function () {
+                S.config("map").length = 0;
             });
         });
 

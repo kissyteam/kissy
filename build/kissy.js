@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 4 20:01
+build time: Sep 5 18:56
 */
 /**
  * @ignore
@@ -26,9 +26,8 @@ build time: Sep 4 20:01
      *
      * to do complex task with modules.
      * @singleton
-     * @class
+     * @class KISSY
      */
-    var KISSY = S;
 
     function hasOwnProperty(o, p) {
         return Object.prototype.hasOwnProperty.call(o, p);
@@ -358,36 +357,18 @@ build time: Sep 4 20:01
                 var cfg,
                     r,
                     self = this,
-                    runs = [],
                     fn,
-                    p,
                     Config = S.Config,
                     configs = S.configs;
                 if (S.isObject(configName)) {
-                    for (p in configName) {
-                        if (configName.hasOwnProperty(p)) {
-                            runs.push({
-                                name: p,
-                                order: configs[p] && configs[p].order || 0,
-                                value: configName[p]
-                            });
-                        }
-                    }
-
-                    runs.sort(function (a1, a2) {
-                        return a1.order > a2.order;
-                    });
-
-                    S.each(runs, function (r) {
-                        fn = configs[p = r.name];
-                        configValue = r.value;
+                    S.each(configName, function (configValue, p) {
+                        fn = configs[p];
                         if (fn) {
                             fn.call(self, configValue);
                         } else {
                             Config[p] = configValue;
                         }
                     });
-
                 } else {
                     cfg = configs[configName];
                     if (configValue === undefined) {
@@ -498,11 +479,11 @@ build time: Sep 4 20:01
 
         /**
          * The build time of the library.
-         * NOTICE: '20120904200143' will replace with current timestamp when compressing.
+         * NOTICE: '20120905185655' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120904200143';
+        S.__BUILD_TIME = '20120905185655';
     })();
 
     return S;
@@ -3547,7 +3528,7 @@ build time: Sep 4 20:01
          * normalize module names
          * @param self
          * @param modNames
-         * @param refModName
+         * @param [refModName]
          * @return {Array}
          */
         normalizeModNamesWithAlias: function (self, modNames, refModName) {
@@ -3574,7 +3555,7 @@ build time: Sep 4 20:01
          * @param self
          * @param name
          * @param fn
-         * @param config
+         * @param [config]
          */
         registerModule: function (self, name, fn, config) {
             var mods = self.Env.mods,
@@ -4047,8 +4028,6 @@ build time: Sep 4 20:01
             });
         }
     };
-
-    configs.modules.order = 10;
 
     /*
      KISSY 's base path.
@@ -4630,7 +4609,6 @@ build time: Sep 4 20:01
         }
     }
 
-
     // Enqueue use
     function enqueue(self, modNames, fn) {
         self.queue.push({
@@ -4638,7 +4616,6 @@ build time: Sep 4 20:01
             fn: fn
         });
     }
-
 
     // Real use.
     function _use(self, modNames, fn) {
@@ -4672,10 +4649,7 @@ build time: Sep 4 20:01
             countCss++;
         }
 
-        if (!countCss) {
-            _useJs(self, comboUrls, fn, modNames);
-            return;
-        }
+        var jsOk = 0, cssOk = !countCss;
 
         for (p in css) {
             if (css.hasOwnProperty(p)) {
@@ -4689,20 +4663,35 @@ build time: Sep 4 20:01
                                 });
                             }
                         }
-                        _useJs(self, comboUrls, fn, modNames);
+                        cssOk = 1;
+                        check(jsOk);
                     }
                 }, css[p].charset);
             }
         }
+
+        function check(paramJsOk) {
+            jsOk = paramJsOk;
+            if (cssOk && jsOk) {
+                attachMods(self, unaliasModNames);
+                if (utils.isAttached(SS, unaliasModNames)) {
+                    fn.apply(null, utils.getModules(SS, modNames))
+                } else {
+                    // new require is introduced by KISSY.add
+                    // run again
+                    _use(self, modNames, fn)
+                }
+            }
+        }
+
+        // jss css download in parallel
+        _useJs(comboUrls, check);
     }
 
-
     // use js
-    function _useJs(self, comboUrls, fn, modNames) {
+    function _useJs(comboUrls, check) {
         var p,
             success,
-            SS = self.SS,
-            unaliasModNames,
             jss = comboUrls.js,
             countJss = 0;
 
@@ -4713,9 +4702,7 @@ build time: Sep 4 20:01
 
         if (!countJss) {
             // 2012-05-18 bug: loaded 那么需要加载的 jss 为空，要先 attach 再通知用户回调函数
-            unaliasModNames = utils.unalias(SS, modNames);
-            attachMods(self, unaliasModNames);
-            fn.apply(null, utils.getModules(SS, modNames));
+            check(1);
             return;
         }
         success = 1;
@@ -4723,7 +4710,7 @@ build time: Sep 4 20:01
             if (jss.hasOwnProperty(p)) {
                 (function (p) {
                     loadScripts(jss[p], function () {
-                        var mods = jss[p].mods, mod, unaliasModNames, i;
+                        var mods = jss[p].mods, mod, i;
                         for (i = 0; i < mods.length; i++) {
                             mod = mods[i];
                             // fix #111
@@ -4736,15 +4723,7 @@ build time: Sep 4 20:01
                             }
                         }
                         if (success && !(--countJss)) {
-                            unaliasModNames = utils.unalias(SS, modNames);
-                            attachMods(self, unaliasModNames);
-                            if (utils.isAttached(SS, unaliasModNames)) {
-                                fn.apply(null, utils.getModules(SS, modNames))
-                            } else {
-                                // new require is introduced by KISSY.add
-                                // run again
-                                _use(self, modNames, fn)
-                            }
+                            check(1);
                         }
                     }, jss[p].charset);
                 })(p);
@@ -4752,14 +4731,12 @@ build time: Sep 4 20:01
         }
     }
 
-
     // attach mods
     function attachMods(self, modNames) {
         S.each(modNames, function (modName) {
             attachMod(self, modName);
         });
     }
-
 
     // attach one mod
     function attachMod(self, modName) {
@@ -4787,12 +4764,10 @@ build time: Sep 4 20:01
         return undefined;
     }
 
-
     // get mod info.
     function getModInfo(self, modName) {
         return self.SS.Env.mods[modName];
     }
-
 
     // get requires mods need to be loaded dynamically
     function getRequires(self, modName, cache) {
@@ -5201,7 +5176,7 @@ build time: Sep 4 20:01
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120904200143'
+        tag: '20120905185655'
     }, getBaseInfo()));
 
     // Initializes loader.

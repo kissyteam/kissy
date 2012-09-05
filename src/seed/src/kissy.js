@@ -21,9 +21,8 @@
      *
      * to do complex task with modules.
      * @singleton
-     * @class
+     * @class KISSY
      */
-    var KISSY = S;
 
     function hasOwnProperty(o, p) {
         return Object.prototype.hasOwnProperty.call(o, p);
@@ -353,36 +352,18 @@
                 var cfg,
                     r,
                     self = this,
-                    runs = [],
                     fn,
-                    p,
                     Config = S.Config,
                     configs = S.configs;
                 if (S.isObject(configName)) {
-                    for (p in configName) {
-                        if (configName.hasOwnProperty(p)) {
-                            runs.push({
-                                name: p,
-                                order: configs[p] && configs[p].order || 0,
-                                value: configName[p]
-                            });
-                        }
-                    }
-
-                    runs.sort(function (a1, a2) {
-                        return a1.order > a2.order;
-                    });
-
-                    S.each(runs, function (r) {
-                        fn = configs[p = r.name];
-                        configValue = r.value;
+                    S.each(configName, function (configValue, p) {
+                        fn = configs[p];
                         if (fn) {
                             fn.call(self, configValue);
                         } else {
                             Config[p] = configValue;
                         }
                     });
-
                 } else {
                     cfg = configs[configName];
                     if (configValue === undefined) {

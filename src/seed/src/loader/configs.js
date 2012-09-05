@@ -101,8 +101,6 @@
         }
     };
 
-    configs.modules.order = 10;
-
     /*
      KISSY 's base path.
      */
