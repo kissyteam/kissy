@@ -55,14 +55,16 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             "</style>" +
             "{links}" +
             "</head>" +
-            "<body class='ks-editor'>" +
+            "<body class='ks-editor' " +
+            ">" +
             "{data}" +
             "{script}" +
             "</body>" +
             "</html>",
 
         IFRAME_TPL = '<iframe' +
-            ' style="width:100%;height:100%;border:none;" ' +
+            ' style="width:100%;height:100%;border:none;'
+            + '" ' +
             ' frameborder="0" ' +
             ' title="kissy-editor" ' +
             ' allowTransparency="true" ' +
@@ -71,7 +73,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             '</iframe>' ,
 
         EDITOR_TPL = '<div class="' + KE_TOOLBAR_CLASS.substring(1) + '"></div>' +
-            '<div class="' + KE_TEXTAREA_WRAP_CLASS.substring(1) + '">' +
+            '<div class="' + KE_TEXTAREA_WRAP_CLASS.substring(1) + '" ' +
+            // http://johanbrook.com/browsers/native-momentum-scrolling-ios-5/
+            // ios 不能放在 iframe 上！
+            (UA.mobile ? 'style="overflow:scroll;-webkit-overflow-scrolling:touch;"' : '') +
+            '>' +
             '</div>' +
             "<div class='" + KE_STATUSBAR_CLASS.substring(1) + "'></div>";
 
@@ -1211,4 +1217,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
  * 2012-03-05 重构 by yiminghe@gmail.com
  *  - core
  *  - plugins
+ *
+ * refer
+ *  - http://html5.org/specs/dom-range.html
  */

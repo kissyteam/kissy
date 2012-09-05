@@ -277,6 +277,8 @@
             });
 
             window.newEditor = editor;
+
+
         });
 
     });

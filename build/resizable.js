@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:29
+build time: Sep 5 10:30
 */
 /**
  * @fileOverview resizable support for kissy
@@ -103,8 +103,8 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
             maxW = self.get("maxWidth"),
             minH = self.get("minHeight"),
             maxH = self.get("maxHeight"),
-            diffT = ev.top - dd.startNodePos.top,
-            diffL = ev.left - dd.startNodePos.left,
+            diffT = ev.top - dd.get('startNodePos').top,
+            diffL = ev.left - dd.get('startNodePos').left,
             ot = self._top,
             ol = self._left,
             pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL),

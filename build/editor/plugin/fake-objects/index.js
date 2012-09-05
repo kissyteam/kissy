@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 27 10:38
+build time: Sep 5 10:33
 */
 /**
  * fakeObjects for music ,video,flash
@@ -32,7 +32,6 @@ KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
                     src:SPACER_GIF,
                     _ke_realelement:encodeURIComponent(outerHTML || realElement._4e_outerHtml(undefined)),
                     _ke_real_node_type:realElement[0].nodeType,
-                    //align : realElement.attr("align") || '',
                     style:style
                 };
 

@@ -292,7 +292,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
                     && ( parentTag = nativeSel.createRange() )
                     && ( parentTag = parentTag.parentElement() )
                     && ( parentTag = parentTag.nodeName )
-                    && parentTag.toLowerCase() in { input:1, textarea:1 }) {
+                    && parentTag.toLowerCase() in { input: 1, textarea: 1 }) {
                     return;
                 }
                 savedRange = nativeSel && sel.getRanges()[ 0 ];
@@ -323,7 +323,13 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
             editor.checkSelectionChange();
         }
 
-        Event.on(doc, 'mouseup keyup', monitor);
+        Event.on(doc, 'mouseup keyup ' +
+            // ios does not fire mouseup/keyup ....
+            // http://stackoverflow.com/questions/8442158/selection-change-event-in-contenteditable
+            // https://www.w3.org/Bugs/Public/show_bug.cgi?id=13952
+            // https://bugzilla.mozilla.org/show_bug.cgi?id=571294
+            // firefox does not has selectionchange
+            'selectionchange', monitor);
     }
 
     /**
@@ -453,7 +459,7 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
     }
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             editor.docReady(function () {
                 // S.log("editor docReady for fix selection");
                 if (UA.ie) {
@@ -469,5 +475,5 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
         }
     };
 }, {
-    requires:['./base', './selection']
+    requires: ['./base', './selection']
 });

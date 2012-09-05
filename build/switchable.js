@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:29
+build time: Sep 5 10:30
 */
 /**
  * @fileOverview accordion aria support
@@ -3212,8 +3212,8 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, undefined) {
                         });
                         contentDD.on("dragstart", function () {
                             start();
-                            startX = contentDD.startMousePos.left;
-                            startY = contentDD.startMousePos.top;
+                            startX = contentDD.get('startMousePos').left;
+                            startY = contentDD.get('startMousePos').top;
                         });
                         contentDD.on("drag", move);
                         contentDD.on("dragend", end);
