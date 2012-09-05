@@ -28,7 +28,7 @@ KISSY.add("uibase/mask", function () {
 
         __destructor: function () {
             if (this.get('mask')) {
-                this._maskExtHide();
+                this.get("view")._maskExtHide();
             }
         }
     };

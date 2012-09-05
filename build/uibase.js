@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Sep 5 14:55
+build time: Sep 5 15:00
 */
 /**
  * UIBase.Align
@@ -1570,7 +1570,7 @@ KISSY.add("uibase/mask", function () {
 
         __destructor: function () {
             if (this.get('mask')) {
-                this._maskExtHide();
+                this.get("view")._maskExtHide();
             }
         }
     };
