@@ -2,21 +2,20 @@
  * mask extension for kissy
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/mask", function() {
-
+KISSY.add("uibase/mask", function () {
 
     function Mask() {
     }
 
     Mask.ATTRS = {
-        mask:{
-            value:false
+        mask: {
+            value: false
         }
     };
 
     Mask.prototype = {
 
-        _uiSetMask:function(v) {
+        _uiSetMask: function (v) {
             var self = this;
             if (v) {
                 self.on("show", self.get("view")._maskExtShow, self.get("view"));
@@ -25,9 +24,14 @@ KISSY.add("uibase/mask", function() {
                 self.detach("show", self.get("view")._maskExtShow, self.get("view"));
                 self.detach("hide", self.get("view")._maskExtHide, self.get("view"));
             }
+        },
+
+        __destructor: function () {
+            if (this.get('mask')) {
+                this._maskExtHide();
+            }
         }
     };
 
-
     return Mask;
-}, {requires:["ua"]});
+}, {requires: ["ua"]});

@@ -113,12 +113,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
                     win.detach("resize scroll", resizeMask);
                 }
             }
-        },
-
-        __destructor:function() {
-            this._maskExtHide();
         }
-
     };
 
     return Mask;
