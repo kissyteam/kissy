@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 27 21:29
+build time: Sep 5 10:33
 */
 /**
  * Set up editor constructor
@@ -14939,8 +14939,8 @@ this.config=config||{};
 
             d.on("drag", function (ev) {
                 var self = this,
-                    diffX = ev.left - self['startNodePos'].left,
-                    diffY = ev.top - self['startNodePos'].top;
+                    diffX = ev.left - self.get('startNodePos').left,
+                    diffY = ev.top - self.get('startNodePos').top;
                 if (S.inArray("y", direction)) {
                     editor.set("height", height + diffY);
                 }

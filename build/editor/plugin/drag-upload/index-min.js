@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 27 21:29
+build time: Sep 5 10:33
 */
 KISSY.add("editor/plugin/drag-upload/index",function(e,o){function g(e){this.config=e||{}}var q=e.Node,l=e.Event,r=o.Utils,k=e.DOM;e.augment(g,{renderUI:function(g){function p(b){b=b.originalEvent.target;"img"==k.nodeName(b)&&b.src.match(/^file:\/\//)&&(m[b.src]=b)}function s(b,d){var j=new window.FileReader;j.onload=function(f){var a=b.name,f=f.target.result,c=new XMLHttpRequest;c.open("POST",t,!0);c.onreadystatechange=function(){if(4==c.readyState){if(200==c.status||304==c.status){if(""!=c.responseText){var a=
 window.JSON.parse(c.responseText);d[0].src=a.imgUrl}}else alert("服务器端出错！"),d.remove();c.onreadystatechange=null}};a="\r\n------kissy-editor-yiminghe\r\n"+('Content-Disposition: form-data; name="'+u+'"; filename="'+encodeURIComponent(a)+'"\r\n');a+="Content-Type: "+(b.type||"application/octet-stream")+"\r\n\r\n";a+=f+"\r\n";h=o.Utils.normParams(h);for(var e in h)h.hasOwnProperty(e)&&(a+="------kissy-editor-yiminghe\r\n",a+='Content-Disposition: form-data; name="'+e+'"\r\n\r\n',a+=h[e]+"\r\n");a+="------kissy-editor-yiminghe--";
