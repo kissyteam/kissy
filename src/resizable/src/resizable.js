@@ -8,9 +8,10 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
         i,
         j,
         Draggable = D.Draggable,
-        CLS_PREFIX = "ks-resizable-handler",
+        CLS_PREFIX = "resizable-handler",
         horizontal = ["l", "r"],
         vertical = ["t", "b"],
+        ATTRS_ORDER = ["width", "height", "top", "left"],
         hcNormal = {
             "t": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT) {
                 var h = getBoundValue(minH, maxH, oh - diffT),
@@ -59,13 +60,15 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
         var self = this,
             v = e.newVal,
             dds = self.dds,
+            prefixCls = self.get('prefixCls'),
+            prefix = prefixCls + CLS_PREFIX,
             node = self.get("node");
         self.destroy();
         for (i = 0; i < v.length; i++) {
             var hc = v[i],
                 el = $("<div class='" +
-                    CLS_PREFIX +
-                    " " + CLS_PREFIX +
+                    prefix +
+                    " " + prefix +
                     "-" + hc +
                     "'></div>")
                     .prependTo(node, undefined),
@@ -102,11 +105,10 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
             diffL = ev.left - dd.get('startNodePos').left,
             ot = self._top,
             ol = self._left,
-            pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL),
-            attr = ["width", "height", "top", "left"];
-        for (i = 0; i < attr.length; i++) {
+            pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL);
+        for (i = 0; i < ATTRS_ORDER.length; i++) {
             if (pos[i]) {
-                node.css(attr[i], pos[i]);
+                node.css(ATTRS_ORDER[i], pos[i]);
             }
         }
     }
@@ -123,6 +125,14 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
         return 0;
     }
 
+    function _uiSetDisabled(e) {
+        var v = e.newVal,
+            dds = this.dds;
+        S.each(dds, function (d) {
+            d.set('disabled', v);
+        });
+    }
+
     /**
      * @class
      * Make a element resizable.
@@ -131,9 +141,11 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
      */
     function Resizable(cfg) {
         var self = this,
+            disabled,
             node;
         Resizable.superclass.constructor.apply(self, arguments);
         self.on("afterHandlersChange", _uiSetHandlers, self);
+        self.on("afterDisabledChange", _uiSetDisabled, self);
         node = self.get("node");
         self.dds = {};
         if (node.css("position") == "static") {
@@ -142,6 +154,11 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
         _uiSetHandlers.call(self, {
             newVal: self.get("handlers")
         });
+        if (disabled = self.get('disabled')) {
+            _uiSetDisabled.call(self, {
+                newVal: disabled
+            });
+        }
     }
 
     S.extend(Resizable, Base,
@@ -170,6 +187,7 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
             {
                 /**
                  * KISSY Node to be resizable.
+                 * Need to be positioned 'relative' or 'absolute'.
                  * @type {Node}
                  */
                 node: {
@@ -177,6 +195,17 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
                         return $(v);
                     }
                 },
+
+                prefixCls: {
+                    value: 'ks-'
+                },
+
+                /**
+                 * Whether disable current resizable.
+                 * @type {Boolean}
+                 */
+                disabled: {},
+
                 /**
                  * Minimum width can current node resize to.
                  * @type {Number}
