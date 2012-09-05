@@ -59,7 +59,11 @@ KISSY.add('base', function (S, Attribute, Event) {
                 // 子类上的 ATTRS 配置优先
                 if (attrs.hasOwnProperty(attr)) {
                     // 父类后加，父类不覆盖子类的相同设置
-                    // 属性对象会 merge   a: {y:{getter:fn}}, b:{y:{value:3}}, b extends a => b {y:{value:3}}
+                    // 属性对象会 merge
+                    // a: {y: {getter: fn}}, b: {y: {value: 3}}
+                    // b extends a
+                    // =>
+                    // b {y: {value: 3, getter: fn}}
                     host.addAttr(attr, attrs[attr], false);
                 }
             }

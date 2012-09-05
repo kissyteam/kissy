@@ -59,35 +59,48 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         config && config.autoRender && self.render();
     }
 
+    // 收集单继承链，子类在前，父类在后
+    function collectConstructorChains(self) {
+        var constructorChains = [],
+            c = self.constructor;
+        while (c) {
+            constructorChains.push(c);
+            c = c.superclass && c.superclass.constructor;
+        }
+        return constructorChains;
+    }
+
     /**
      * 模拟多继承
      * init attr using constructors ATTRS meta info
      * @ignore
      */
-    function initHierarchy(host, config) {
-
-        var c = host.constructor, srcNode;
-
+    function initHierarchy(self, config) {
+        var c = self.constructor,
+            len,
+            p,
+            constructorChains,
+            srcNode;
         if (config && (srcNode = config[SRC_NODE])) {
+            constructorChains = collectConstructorChains(self);
             config[SRC_NODE] = Node.one(srcNode);
-            while (c) {
-                // 从 markup 生成相应的属性项
-                if (c[HTML_PARSER]) {
-                    applyParser.call(host, config, c[HTML_PARSER]);
+            // 从父类到子类开始从 html 读取属性
+            for (len = constructorChains.length - 1; len >= 0; len--) {
+                c = constructorChains[len];
+                if (p = c[HTML_PARSER]) {
+                    applyParser.call(self, config, p);
                 }
-                c = c.superclass && c.superclass.constructor;
             }
         }
-
-        callMethodByHierarchy(host, "initializer", "constructor");
-
+        callMethodByHierarchy(self, "initializer", "constructor");
     }
 
-    function callMethodByHierarchy(host, mainMethod, extMethod) {
-        var c = host.constructor,
+    function callMethodByHierarchy(self, mainMethod, extMethod) {
+        var c = self.constructor,
             extChains = [],
             ext,
             main,
+            i,
             exts,
             t;
 
@@ -97,7 +110,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             // 收集扩展类
             t = [];
             if (exts = c.__ks_exts) {
-                for (var i = 0; i < exts.length; i++) {
+                for (i = 0; i < exts.length; i++) {
                     ext = exts[i];
                     if (ext) {
                         if (extMethod != "constructor") {
@@ -132,7 +145,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         // 初始化函数
         // 顺序：父类的所有扩展类函数 -> 父类对应函数 -> 子类的所有扩展函数 -> 子类对应函数
         for (i = extChains.length - 1; i >= 0; i--) {
-            extChains[i] && extChains[i].call(host);
+            extChains[i] && extChains[i].call(self);
         }
     }
 
@@ -140,8 +153,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
      * 销毁组件顺序： 子类 destructor -> 子类扩展 destructor -> 父类 destructor -> 父类扩展 destructor
      * @ignore
      */
-    function destroyHierarchy(host) {
-        var c = host.constructor,
+    function destroyHierarchy(self) {
+        var c = self.constructor,
             extensions,
             d,
             i;
@@ -149,13 +162,13 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         while (c) {
             // 只触发该类真正的析构器，和父亲没关系，所以不要在子类析构器中调用 superclass
             if (c.prototype.hasOwnProperty("destructor")) {
-                c.prototype.destructor.apply(host);
+                c.prototype.destructor.apply(self);
             }
 
             if ((extensions = c.__ks_exts)) {
                 for (i = extensions.length - 1; i >= 0; i--) {
                     d = extensions[i] && extensions[i].prototype.__destructor;
-                    d && d.apply(host);
+                    d && d.apply(self);
                 }
             }
 
@@ -164,7 +177,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
     }
 
     function applyParser(config, parser) {
-        var host = this, p, v, srcNode = config[SRC_NODE];
+        var self = this, p, v, srcNode = config[SRC_NODE];
 
         // 从 parser 中，默默设置属性，不触发事件
         for (p in parser) {
@@ -175,15 +188,15 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 v = parser[p];
                 // 函数
                 if (S.isFunction(v)) {
-                    host.setInternal(p, v.call(host, srcNode));
+                    self.setInternal(p, v.call(self, srcNode));
                 }
                 // 单选选择器
                 else if (S.isString(v)) {
-                    host.setInternal(p, srcNode.one(v));
+                    self.setInternal(p, srcNode.one(v));
                 }
                 // 多选选择器
                 else if (S.isArray(v) && v[0]) {
-                    host.setInternal(p, srcNode.all(v[0]))
+                    self.setInternal(p, srcNode.all(v[0]))
                 }
             }
         }
@@ -222,16 +235,33 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
     function syncUI(self) {
         var v,
             f,
-            attrs = self.getAttrs();
-        for (var a in attrs) {
-            if (attrs.hasOwnProperty(a)) {
-                var m = UI_SET + ucfirst(a);
-                //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                if ((f = self[m])
-                    // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
-                    && attrs[a].sync !== false
-                    && (v = self.get(a)) !== undefined) {
-                    f.call(self, v);
+            i,
+            c,
+            a,
+            m,
+            cache = {},
+            constructorChains = collectConstructorChains(self),
+            attrs;
+
+        // 从父类到子类执行同步属性函数
+        for (i = constructorChains.length - 1; i >= 0; i--) {
+            c = constructorChains[i];
+            if (attrs = c[ATTRS]) {
+                for (a in attrs) {
+                    if (attrs.hasOwnProperty(a) &&
+                        // 防止子类覆盖父类属性定义造成重复执行
+                        !cache[a]) {
+                        cache[a] = 1;
+                        m = UI_SET + ucfirst(a);
+                        // 存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                        if ((f = self[m]) &&
+                            // 用户如果设置了显式不同步，就不同步，
+                            // 比如一些值从 html 中读取，不需要同步再次设置
+                            attrs[a].sync !== false &&
+                            (v = self.get(a)) !== undefined) {
+                            f.call(self, v);
+                        }
+                    }
                 }
             }
         }
@@ -273,10 +303,10 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
              * Put dom structure of this component to document and bind event.
              */
             render: function () {
-                var self = this;
+                var self = this, plugins;
                 // 是否已经渲染过
                 if (!self.get("rendered")) {
-                    var plugins = self.get("plugins");
+                    plugins = self.get("plugins");
                     self.create(undefined);
 
                     /**
@@ -450,9 +480,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                     }
                 }
             }
-
         });
-
 
     function constructPlugins(plugins) {
         S.each(plugins, function (plugin, i) {
@@ -462,7 +490,6 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         });
     }
 
-
     function actionPlugins(self, plugins, action) {
         S.each(plugins, function (plugin) {
             if (plugin[action]) {
@@ -471,9 +498,10 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         });
     }
 
-
     function create(base, extensions, px, sx) {
-        var args = S.makeArray(arguments), t;
+        var args = S.makeArray(arguments),
+            name,
+            t;
 
         if (S.isObject(extensions)) {
             sx = px;
@@ -481,7 +509,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             extensions = [];
         }
 
-        var name = "UIBaseDerived";
+        name = "UIBaseDerived";
 
         if (S.isString(t = args[args.length - 1])) {
             name = t;
@@ -491,7 +519,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             UIBase.apply(this, arguments);
         }
 
-        // debug mode , give the right name for constructor
+        // debug mode, give the right name for constructor
         // refer : http://limu.iteye.com/blog/1136712
         S.log("UIBase.extend : " + name, eval("C=function " + name.replace(/[-.]/g, "_") + "(){ UIBase.apply(this, arguments);}"));
 
@@ -500,54 +528,45 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         if (extensions) {
             C.__ks_exts = extensions;
 
-            var desc = {
-                // ATTRS:
-                // HTML_PARSER:
-            }, constructors = extensions['concat'](C);
+            var attrs = {},
+                parsers = {},
+                prototype = {},
+                constructors = extensions['concat'](C);
 
             // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
             // 主类最优先
             S.each(constructors, function (ext) {
                 if (ext) {
                     // 合并 ATTRS/HTML_PARSER 到主类
-                    S.each([ATTRS, HTML_PARSER], function (K) {
-                        if (ext[K]) {
-                            desc[K] = desc[K] || {};
-                            // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
-                            // 但是值是对象的话会深度合并
-                            // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题(用 function return 出来)!
-                            S.mix(desc[K], ext[K], {
-                                deep: true
-                            });
-                        }
+                    // 不覆盖主类上的定义(主类位于 constructors 最后)
+                    // 因为继承层次上扩展类比主类层次高
+                    // 注意：最好 value 必须是简单对象，自定义 new 出来的对象就会有问题
+                    // (用 function return 出来)!
+                    // a {y:{value:2}} b {y:{value:3,getter:fn}}
+                    // b is a extension of a
+                    // =>
+                    // a {y:{value:2,getter:fn}}
+
+                    S.each(ext[ATTRS], function (v, name) {
+                        var av = attrs[name] = attrs[name] || {};
+                        S.mix(av, v);
                     });
+
+                    S.each(ext[HTML_PARSER], function (v, name) {
+                        parsers[name] = v;
+                    });
+
+                    // 方法合并
+                    S.mix(prototype, ext.prototype);
                 }
             });
 
-            S.each(desc, function (v, k) {
-                C[k] = v;
-            });
+            C[ATTRS] = attrs;
+            C[HTML_PARSER] = parsers;
 
-            var prototype = {};
-
-            // 主类最优先
-            S.each(constructors, function (ext) {
-                if (ext) {
-                    var proto = ext.prototype;
-                    // 合并功能代码到主类，不覆盖
-                    for (var p in proto) {
-                        // 不覆盖主类，但是主类的父类还是覆盖吧
-                        if (proto.hasOwnProperty(p)) {
-                            prototype[p] = proto[p];
-                        }
-                    }
-                }
-            });
-
-            S.each(prototype, function (v, k) {
-                C.prototype[k] = v;
-            });
+            S.augment(C, prototype);
         }
+
         return C;
     }
 
@@ -580,18 +599,23 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 var args = S.makeArray(arguments),
                     ret,
                     last = args[args.length - 1];
+
                 args.unshift(this);
+
                 if (last.xclass) {
                     args.pop();
                     args.push(last.xclass);
                 }
+
                 ret = create.apply(UIBase, args);
+
                 if (last.xclass) {
                     Manager.setConstructorByXClass(last.xclass, {
                         constructor: ret,
                         priority: last.priority
                     });
                 }
+
                 ret.extend = extend;
                 return ret;
             }

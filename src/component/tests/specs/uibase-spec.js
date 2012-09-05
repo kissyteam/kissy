@@ -27,7 +27,7 @@ KISSY.use("component", function (S, Component) {
 
 
             var h3 = h2.extend([h1], {
-                zz:function () {
+                zz: function () {
                     z = 1;
                 }
             });
@@ -45,6 +45,67 @@ KISSY.use("component", function (S, Component) {
 
         });
 
+        it('should sync attr in order', function () {
+            var order = [];
+
+
+            var h1 = UIBase.extend([], {
+                _uiSetA: function () {
+                    order.push('a');
+                },
+
+                _uiSetD: function () {
+                    order.push('d');
+                }
+            }, {
+                ATTRS: {
+                    a: {
+
+                    },
+                    d: {
+
+                    }
+                }
+            });
+
+            var h2 = h1.extend({
+                _uiSetB: function () {
+                    order.push('b');
+                },
+
+                _uiSetC: function () {
+                    order.push('c');
+                }
+            }, {
+                ATTRS: {
+                    b: {
+
+                    },
+                    c: {
+
+                    },
+                    // 不会重复调用
+                    a:{
+
+                    }
+                }
+            });
+
+
+            var h = new h2({
+                a: 1, b: 2, c: 3, d: 4
+            });
+
+            h.render();
+
+            expect(h.get('a')).toBe(1);
+            expect(h.get('b')).toBe(2);
+            expect(h.get('c')).toBe(3);
+            expect(h.get('d')).toBe(4);
+
+            expect(order).toEqual(['a', 'd', 'b', 'c']);
+
+        });
 
         describe("extension attr", function () {
 
@@ -56,35 +117,35 @@ KISSY.use("component", function (S, Component) {
                 var x = function () {
                 };
                 x.ATTRS = {
-                    y:{
-                        value:1,
-                        getter:getter1
+                    y: {
+                        value: 1,
+                        getter: getter1
                     },
-                    x:{
-                        value:9
+                    x: {
+                        value: 9
                     }
                 };
 
                 var x3 = function () {
                 };
                 x3.ATTRS = {
-                    y:{
-                        value:4
+                    y: {
+                        value: 4
                     },
-                    x:{
-                        value:8
+                    x: {
+                        value: 8
                     }
                 };
 
                 var x2 = UIBase.extend([x, x3], {
 
                 }, {
-                    ATTRS:{
-                        y:{
-                            value:2
+                    ATTRS: {
+                        y: {
+                            value: 2
                         },
-                        z:{
-                            value:9
+                        z: {
+                            value: 9
                         }
                     }
                 });
@@ -111,7 +172,7 @@ KISSY.use("component", function (S, Component) {
                 };
 
                 x.prototype = {
-                    __renderUI:function () {
+                    __renderUI: function () {
                         ret.push(1);
                     }
                 };
@@ -120,13 +181,13 @@ KISSY.use("component", function (S, Component) {
                 };
 
                 x3.prototype = {
-                    __renderUI:function () {
+                    __renderUI: function () {
                         ret.push(2);
                     }
                 };
 
                 var x2 = UIBase.extend([x, x3], {
-                    renderUI:function () {
+                    renderUI: function () {
                         ret.push(3);
                     }
                 });
@@ -142,8 +203,8 @@ KISSY.use("component", function (S, Component) {
         describe("srcNode", function () {
 
             var SrcNode = UIBase.extend({}, {
-                HTML_PARSER:{
-                    contentAttr:function (el) {
+                HTML_PARSER: {
+                    contentAttr: function (el) {
                         return el.attr("data-contentAttr")
                     }
                 }
@@ -154,7 +215,7 @@ KISSY.use("component", function (S, Component) {
                 var node = $("<div data-contentAttr='x'></div>").appendTo("body");
 
                 var n = new SrcNode({
-                    srcNode:node
+                    srcNode: node
                 });
 
                 expect(n.get("contentAttr")).toBe('x');
@@ -166,8 +227,8 @@ KISSY.use("component", function (S, Component) {
             it("will override attribute from node", function () {
                 var node = $("<div data-contentAttr='x'></div>").appendTo("body");
                 var n = new SrcNode({
-                    srcNode:node,
-                    "contentAttr":'y'
+                    srcNode: node,
+                    "contentAttr": 'y'
                 });
                 expect(n.get("contentAttr")).toBe('y');
                 node.remove();
@@ -178,7 +239,7 @@ KISSY.use("component", function (S, Component) {
             it("should get html", function () {
                 var node = $("<div>123</div>").appendTo("body");
                 var n = new BoxRender({
-                    srcNode:node
+                    srcNode: node
                 });
                 expect(n.get("content")).toBe('123');
                 node.remove();
@@ -187,10 +248,10 @@ KISSY.use("component", function (S, Component) {
             it("can not override html", function () {
                 var node = $("<div>123</div>").appendTo("body");
                 var n = new BoxRender({
-                    srcNode:node,
-                    el:node,
-                    content:'4',
-                    autoRender:true
+                    srcNode: node,
+                    el: node,
+                    content: '4',
+                    autoRender: true
                 });
                 expect(n.get("content")).toBe('4');
                 expect(node.html().toLowerCase()).toBe('123');
@@ -199,8 +260,8 @@ KISSY.use("component", function (S, Component) {
 
             it("html can be node without srcNode", function () {
                 var n = new BoxRender({
-                    content:$('<span>4</span>'),
-                    autoRender:true
+                    content: $('<span>4</span>'),
+                    autoRender: true
                 });
                 expect(n.get("content").html()).toBe('4');
                 expect(n.get("el").html().toLowerCase()).toBe('<span>4</span>');
@@ -212,7 +273,7 @@ KISSY.use("component", function (S, Component) {
 
             var ContentEl = UIBase.extend([UIBase.Box.Render,
                 UIBase.ContentBox.Render], {}, {}, {
-                xclass:'contentELTest'
+                xclass: 'contentELTest'
             });
 
             describe("srcNode", function () {
@@ -223,13 +284,13 @@ KISSY.use("component", function (S, Component) {
 
                     var content = new ContentEl({
                         // srcNode->el 在 box 上
-                        el:el,
-                        srcNode:el
+                        el: el,
+                        srcNode: el
                     }).render();
 
                     expect(content.get("content")).toBe("23");
 
-                    expect(el.html().toLowerCase().replace(/"/g,""))
+                    expect(el.html().toLowerCase().replace(/"/g, ""))
                         .toBe("<div class=ks-contentbox>23</div>");
 
                     el.remove();
@@ -240,14 +301,14 @@ KISSY.use("component", function (S, Component) {
                     var el = $("<div>23</div>").appendTo("body");
 
                     var content = new ContentEl({
-                        el:el,
-                        srcNode:el,
-                        content:'4'
+                        el: el,
+                        srcNode: el,
+                        content: '4'
                     }).render();
 
                     expect(content.get("content")).toBe("4");
 
-                    expect(el.html().toLowerCase().replace(/"/g,""))
+                    expect(el.html().toLowerCase().replace(/"/g, ""))
                         .toBe("<div class=ks-contentbox>23</div>");
 
                     el.remove();
@@ -258,14 +319,14 @@ KISSY.use("component", function (S, Component) {
                     var el = $("<div>23</div>").appendTo("body");
 
                     var content = new ContentEl({
-                        srcNode:el,
-                        el:el,
-                        content:$('<s>4</s>')
+                        srcNode: el,
+                        el: el,
+                        content: $('<s>4</s>')
                     }).render();
 
                     expect(content.get("content").html()).toBe("4");
 
-                    expect(el.html().toLowerCase().replace(/"/g,""))
+                    expect(el.html().toLowerCase().replace(/"/g, ""))
                         .toBe("<div class=ks-contentbox>23</div>");
 
                     el.remove();
