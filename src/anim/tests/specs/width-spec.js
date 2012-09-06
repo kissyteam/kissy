@@ -59,7 +59,6 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             // width height 特殊，
             // ie6 需要设置 overflow:hidden
             // 否则动画不对
-            debugger
             div.css({
                 opacity: 0
             }).animate(" width: 0; opacity: 1;", {

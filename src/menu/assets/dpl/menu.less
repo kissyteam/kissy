@@ -1,0 +1,102 @@
+/**
+ * Menu DPL For KISSY.
+ * @author yiminghe@gmail.com
+ */
+
+@import "../../css/src/dpl/variables.less";
+@import "../../../css/src/dpl/mixins.less";
+@import "../../../css/src/dpl/icons-mixin.less";
+@import "variable.less";
+
+.ks-submenu-arrow {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    position: absolute;
+    margin-top: 4px;
+    margin-right: 8px;
+    vertical-align: top;
+    .opacity(30);
+    right: 0;
+    border-left: 4px solid black;
+    border-bottom: 4px solid transparent;
+    border-top: 4px solid transparent;
+}
+
+.ks-menuitem-hover .ks-submenu-arrow {
+    .opacity(100);
+}
+
+.menu-divider(){
+    height: 1px;
+    margin: ((@baseFontSize*@baseLineHeight / 2) - 1) 1px; // 8px 1px
+    overflow: hidden;
+    background-color: #e5e5e5;
+    border-bottom: 1px solid @white;
+}
+
+// The menu (ul)
+// ----------------------
+
+.ks-popupmenu {
+    position: absolute;
+    z-index: @zindexDropdown;
+    left: -9999px;
+    top: -9999px;
+}
+
+.ks-menu {
+    outline: none;
+    padding: 4px 0;
+    background-color: @menuBackground;
+    border-color: #ccc;
+    border-color: @menuBorder;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0 0 5px 5px;
+    .box-shadow(0 5px 10px rgba(0,0,0,.2));
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    *border-right-width: 2px;
+    *border-bottom-width: 2px; // Dividers (basically an hr) within the dropdown
+
+    .ks-separator {
+        .menu-divider();
+    }
+
+// Links within the dropdown menu
+    .ks-menuitem {
+        position: relative;
+        display: block;
+        padding: 3px 25px;
+        clear: both;
+        font-weight: normal;
+        color: @menuitemColor;
+        white-space: nowrap;
+        cursor: default;
+    }
+
+    .ks-menuitem-hover {
+        color: @menuitemColorHover;
+        text-decoration: none;
+        background-color: @menuitemBackgroundHover;
+    }
+}
+
+.ks-menu-disabled, .ks-menuitem-disabled {
+    .ks-menuitem {
+        .opacity(30);
+    }
+}
+
+.ks-menu .ks-menuitem-disabled {
+    .opacity(30);
+}
+
+.ks-menuitem-checked .ks-menuitem-checkbox {
+    position: absolute;
+    left: 6px;
+    .icon-base_();
+    .icon-ok_();
+}

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 3 10:54
+build time: Sep 6 15:53
 */
 /**
  * @fileOverview Make Elements flow like waterfall.
@@ -641,7 +641,11 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
 
         function success(items, callback) {
             self.__loading = 0;
-            self.addItems(items, callback);
+            self.addItems(items, function () {
+                callback.apply(this, arguments);
+                // 加载完不够一屏再次检测
+                doScroll();
+            });
         }
 
         function end() {
@@ -659,8 +663,8 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
          * @default 0.
          * @type {Number}
          */
-        diff:{
-            value:0
+        diff: {
+            value: 0
         }
     };
 
@@ -670,7 +674,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
          * @lends Waterfall.Loader#
          */
         {
-            _init:function () {
+            _init: function () {
                 var self = this;
                 Loader.superclass._init.apply(self, arguments);
                 self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
@@ -682,7 +686,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
             /**
              * Start monitor scroll on window.
              */
-            start:function () {
+            start: function () {
                 var self = this;
                 if (!self.__started) {
                     $(win).on("scroll", self.__onScroll);
@@ -693,7 +697,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
             /**
              * Stop monitor scroll on window.
              */
-            end:function () {
+            end: function () {
                 $(win).detach("scroll", this.__onScroll);
             },
 
@@ -701,7 +705,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
              * Use end instead.
              * @deprecated 1.3
              */
-            pause:function () {
+            pause: function () {
                 this.end();
             },
 
@@ -709,14 +713,14 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
              * Use start instead.
              * @deprecated 1.3
              */
-            resume:function () {
+            resume: function () {
                 this.start();
             },
 
             /**
              * Destroy this instance.
              */
-            destroy:function () {
+            destroy: function () {
                 var self = this;
                 Loader.superclass.destroy.apply(self, arguments);
                 $(win).detach("scroll", self.__onScroll);
@@ -727,7 +731,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
     return Loader;
 
 }, {
-    requires:['node', './base']
+    requires: ['node', './base']
 });/**
  * @fileOverview waterfall
  * @author yiminghe@gmail.com

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:57
+build time: Sep 6 15:34
 */
 /**
  * Toolbar for KISSY.
@@ -11,7 +11,7 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
 
     var KeyCodes = Node.KeyCodes;
 
-    function getEnabledHighlightedItem(index, direction, self) {
+    function getNextEnabledItem(index, direction, self) {
         var children = self.get("children"),
             count = 0,
             childrenLength = children.length;
@@ -57,6 +57,8 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
         if (
         // 不是自己本身的事件！
             t != self) {
+
+            // S.log(t.get('content') + ' : ' + e.newVal);
 
             if (e.newVal) {
                 self.set("highlightedItem", t);
@@ -108,15 +110,16 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
             },
 
             _uiSetHighlightedItem: function (item) {
-                var id;
+                var id, self = this, itemEl, el = self.get('el');
                 if (item) {
-                    id = item.get("el").attr("id");
+                    itemEl = item.get('el');
+                    id = itemEl.attr("id");
                     if (!id) {
-                        item.get("el").attr("id", id = S.guid("ks-toolbar-item"));
+                        itemEl.attr("id", id = S.guid("ks-toolbar-item"));
                     }
-                    this.get("el").attr("aria-activedescendant", id);
+                    el.attr("aria-activedescendant", id);
                 } else {
-                    this.get("el").attr("aria-activedescendant", "");
+                    el.attr("aria-activedescendant", "");
                 }
             },
 
@@ -130,7 +133,6 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
             },
 
             handleBlur: function () {
-
                 var self = this,
                     highlightedItem,
                     expandedItem;
@@ -142,18 +144,18 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                 }
             },
 
-            handleKeyEventInternal: function (e) {
+            getNextItemByKeyEventInternal: function (e, current) {
                 var self = this,
-                    highlightedItem = self.get("highlightedItem"),
-                    previous = highlightedItem,
                     orientation = self.get("orientation"),
                     children = self.get("children"),
-                    highlightedChildIndex = highlightedItem && S.indexOf(highlightedItem, children);
-                if (highlightedItem) {
-                    if (highlightedItem.handleKeyEventInternal(e)) {
+                    childIndex = current && S.indexOf(current, children);
+
+                if (current) {
+                    if (current.handleKeyEventInternal(e)) {
                         return true;
                     }
                 }
+
                 // Do not handle the key event if any modifier key is pressed.
                 if (e.shiftKey || e.ctrlKey || e.metaKey || e.altKey) {
                     return false;
@@ -167,39 +169,50 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                         return true;
 
                     case KeyCodes.HOME:
-                        highlightedItem = getEnabledHighlightedItem(undefined, 1, self);
+                        current = getNextEnabledItem(undefined, 1, self);
                         break;
 
                     case KeyCodes.END:
-                        highlightedItem = getEnabledHighlightedItem(undefined, -1, self);
+                        current = getNextEnabledItem(undefined, -1, self);
                         break;
 
                     case KeyCodes.UP:
-                        highlightedItem = getEnabledHighlightedItem(highlightedChildIndex, -1, self);
+                        current = getNextEnabledItem(childIndex, -1, self);
                         break;
 
                     case KeyCodes.LEFT:
-                        highlightedItem = getEnabledHighlightedItem(highlightedChildIndex, -1, self);
+                        current = getNextEnabledItem(childIndex, -1, self);
                         break;
 
                     case KeyCodes.DOWN:
-                        highlightedItem = getEnabledHighlightedItem(highlightedChildIndex, 1, self);
+                        current = getNextEnabledItem(childIndex, 1, self);
                         break;
 
                     case KeyCodes.RIGHT:
-                        highlightedItem = getEnabledHighlightedItem(highlightedChildIndex, 1, self);
+                        current = getNextEnabledItem(childIndex, 1, self);
                         break;
 
                     default:
                         return false;
                 }
+                return current;
+            },
 
-                if (previous) {
-                    previous.set("highlighted", false);
+            handleKeyEventInternal: function (e) {
+                var self = this,
+                    current = self.get("highlightedItem"),
+                    nextHighlightedItem = self.getNextItemByKeyEventInternal(e, current);
+
+                if (S.isBoolean(nextHighlightedItem)) {
+                    return nextHighlightedItem;
                 }
 
-                if (highlightedItem) {
-                    highlightedItem.set("highlighted", true);
+                if (current) {
+                    current.set("highlighted", false);
+                }
+
+                if (nextHighlightedItem) {
+                    nextHighlightedItem.set("highlighted", true);
                 }
 
                 return true;

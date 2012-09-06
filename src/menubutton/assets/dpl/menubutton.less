@@ -1,0 +1,44 @@
+/**
+ * MenuButton style for KISSY from Bootstrap dropdown.
+ * @author yiminghe@gmail.com
+ */
+
+@import "../../../css/src/dpl/variables.less";
+@import "../../../css/src/dpl/mixins.less";
+@import 'variables.less';
+
+.ks-menu-button {
+    .ks-inline-block_();
+}
+
+.ks-menu-button-dropdown {
+    width: 0;
+    height: 0;
+    vertical-align: top;
+    border-left: @menubuttonDropdownBorderWidth solid transparent;
+    border-right: @menubuttonDropdownBorderWidth solid transparent;
+    border-top: @menubuttonDropdownBorderWidth solid @menubuttonDropdownBorderColor;
+    .opacity(30);
+    .ks-inline-block_();
+    margin-top: @menubuttonDropdownMarginTop;
+    margin-left: @menubuttonDropdownMarginLeft;
+}
+
+.ks-button-primary .ks-menu-button-dropdown,
+.ks-button-warning .ks-menu-button-dropdown,
+.ks-button-danger .ks-menu-button-dropdown,
+.ks-button-info .ks-menu-button-dropdown,
+.ks-button-success .ks-menu-button-dropdown,
+.ks-button-inverse .ks-menu-button-dropdown {
+    border-top-color: @white;
+    .opacity(75);
+}
+
+.ks-button-hover .ks-menu-button-dropdown,
+.ks-menu-button-open .ks-menu-button-dropdown{
+    .opacity(100);
+}
+
+.ks-menu-button-caption {
+    .ks-inline-block_();
+}

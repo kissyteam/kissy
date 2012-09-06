@@ -1,0 +1,135 @@
+@import "../../../css/src/dpl/variables.less";
+@import "../../../css/src/dpl/mixins.less";
+@import 'variables.less';
+
+.ks-tabs {
+    .ks-clear_();
+}
+
+.ks-tabs-bar {
+    outline: none;
+    margin-bottom: @tabBarMargin;
+}
+
+.ks-tabs-body {
+    overflow: auto;
+
+    & > .ks-tabs-panel {
+        display: none;
+    }
+    & > .ks-tabs-panel-selected {
+        display: block;
+    }
+}
+
+.ks-tabs-tab {
+    padding: @tabPadding;
+    margin: 0;
+    border: @tabBorder;
+
+    .reset-filter();
+    background: none;
+
+    &.ks-tabs-tab-hover,
+    &:hover {
+        background-color: @tabHoverBackgroundColor;
+        border-color: @tabHoverBorderColor;
+    }
+
+    &.ks-tabs-tab-selected,
+    &.ks-tabs-tab-selected.ks-tabs-tab-active {
+        color: @tabSelectedColor;
+        background-color: @tabSelectedBackgroundColor;
+        cursor: default;
+        .box-shadow(none);
+    }
+}
+
+.ks-tabs-top {
+    & > .ks-tabs-bar {
+        .ks-clear_();
+        border-bottom: @tabBarBorderWidth solid @tabBarBorderColor;
+    }
+
+    & > .ks-tabs-bar > .ks-tabs-tab {
+    /*
+    inline-block cause whitespace in ie67
+    float is perfect
+    */
+        float: left;
+        margin-right: @tabMargin;
+        display: inline;
+        margin-bottom: -@tabBarBorderWidth;
+        border-radius: @tabRadius @tabRadius 0 0;
+        &.ks-tabs-tab-selected,
+        &.ks-tabs-tab-selected.ks-tabs-tab-active {
+            border-color: @tabBarBorderColor @tabBarBorderColor transparent @tabBarBorderColor;
+        /* ie7 transparent border makes bar border leaks*/
+            *border-bottom-color: white;
+        }
+    }
+}
+
+.ks-tabs-bottom {
+    & > .ks-tabs-bar {
+        .ks-clear_();
+        border-top: @tabBarBorderWidth solid @tabBarBorderColor;
+    }
+
+    & > .ks-tabs-bar > .ks-tabs-tab {
+        float: left;
+        margin-right: @tabMargin;
+        display: inline;
+        margin-top: -@tabBarBorderWidth;
+        border-radius: 0 0 @tabRadius @tabRadius; //*margin-top: -@tabMargin;
+        &.ks-tabs-tab-selected,
+        &.ks-tabs-tab-selected.ks-tabs-tab-active {
+            border-color: transparent @tabBarBorderColor @tabBarBorderColor @tabBarBorderColor;
+            *border-top-color: white;
+        }
+    }
+}
+
+.ks-tabs-left {
+
+    & > .ks-tabs-bar {
+        margin-right: @tabBarMargin;
+        border-right: @tabBarBorderWidth solid @tabBarBorderColor;
+        float: left;
+    }
+
+    & > .ks-tabs-bar > .ks-tabs-tab {
+        margin-right: -@tabBarBorderWidth;
+        border-radius: @tabRadius 0 0 @tabRadius; //*margin-top: -@tabMargin;
+        display: block;
+        margin-bottom: @tabMargin;
+        &.ks-tabs-tab-selected,
+        &.ks-tabs-tab-selected.ks-tabs-tab-active {
+            border-color: @tabBarBorderColor transparent @tabBarBorderColor @tabBarBorderColor;
+            *border-right-color: white;
+        }
+    }
+
+}
+
+.ks-tabs-right {
+
+    & > .ks-tabs-bar {
+        margin-left: @tabBarMargin;
+        border-left: @tabBarBorderWidth solid @tabBarBorderColor;
+        float: right;
+    }
+
+    & > .ks-tabs-bar > .ks-tabs-tab {
+        margin-left: -@tabBarBorderWidth;
+        border-radius: 0 @tabRadius @tabRadius 0; //*margin-top: -@tabMargin;
+        display: block;
+        margin-bottom: @tabMargin;
+        &.ks-tabs-tab-selected,
+        &.ks-tabs-tab-selected.ks-tabs-tab-active {
+            border-color: @tabBarBorderColor @tabBarBorderColor @tabBarBorderColor transparent;
+            *border-left-color: white;
+        }
+    }
+
+}

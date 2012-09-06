@@ -217,7 +217,7 @@ KISSY.use("kison", function (S, Kison) {
             expect(function () {
                 new Function(grammar.genCode())().parse("dc")
             })
-                .toThrow('parse error at line 1:\ndc\n-^\nexpect c, d');
+                .toThrow('parse error at line 1:\ndc\n--^\nexpect c, d');
 
         });
 

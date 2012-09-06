@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:57
+build time: Sep 6 15:34
 */
 /**
  * @fileOverview TabBar for KISSY.
@@ -15,23 +15,16 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
             this.get("el").attr("role", "tablist");
         },
 
-        handleKeyEventInternal: function () {
+        handleKeyEventInternal: function (e) {
             var self = this;
-            TabBar.superclass.handleKeyEventInternal.apply(self, arguments);
-            // even at 'click' type, keyboard should control tabs change.
-            // but in mouse mode,
-            // it is already handled in 'afterHighlightedItemChange'
-            if (self.get("changeType") != 'mouse') {
-                self.set("selectedTab", self.get("highlightedItem"));
+            var current = self.get('selectedTab');
+            var next = self.getNextItemByKeyEventInternal(e, current);
+            if (S.isBoolean(next)) {
+                return next;
+            } else {
+                next.set('selected', true);
+                return true;
             }
-        },
-
-        handleFocus: function () {
-            var self = this;
-            TabBar.superclass.handleFocus.apply(self, arguments);
-            // restore current highlighted item to selectedTab when focus
-            // because highlightedItem loses when mouse out of the whole tabs container
-            self.set("highlightedItem", self.get("selectedTab"));
         },
 
 
@@ -45,29 +38,32 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
             });
         },
 
+        _uiSetSelectedTab: function (v, e) {
+            var prev;
+            if (v) {
+                if (e&&(prev = e.prevVal)) {
+                    prev.set("selected", false);
+                }
+                v.set("selected", true);
+            }
+        },
+
+        _uiSetHighlightedItem: function () {
+            var self = this;
+            TabBar.superclass._uiSetHighlightedItem.apply(self, arguments);
+            if (self.get('changeType') == 'mouse') {
+                self._uiSetSelectedTab.apply(self, arguments);
+            }
+        },
+
         bindUI: function () {
-            var self = this,
-                changeType = self.get("changeType");
-            self.on("afterSelectedTabChange" +
-                (changeType == 'mouse' ? " afterHighlightedItemChange" : ""),
-                function (e) {
-                    // highlighted may be null
-                    // if mouse out of the whole tabs container
-                    if (e.newVal) {
-                        if (e.prevVal) {
-                            e.prevVal.set("selected", false);
-                        }
-                        e.newVal.set("selected", true);
-                    }
-                });
+            var self = this;
             self.on("afterSelectedChange", function (e) {
                 if (e.newVal && e.target.isTabsTab) {
                     self.set("selectedTab", e.target);
                 }
             });
         }
-
-
 
     }, {
         ATTRS: {
