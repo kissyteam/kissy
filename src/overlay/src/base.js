@@ -84,5 +84,5 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
 
     return Overlay;
 }, {
-    requires:['component', './overlayRender', './effect']
+    requires:['component', './overlay-render', './effect']
 });

@@ -1,6 +1,6 @@
 /**
  * @module  scroll-spec
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("dom,ua,node,dd", function(S, DOM,UA, Node, DD) {
     var Draggable = DD.Draggable,

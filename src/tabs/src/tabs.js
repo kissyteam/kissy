@@ -195,8 +195,9 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
 
         decorateInternal: function (el) {
             var self = this,
-                bar = el.children(".ks-tabs-bar"),
-                body = el.children(".ks-tabs-body");
+                prefixCls=self.get('prefixCls'),
+                bar = el.children("."+prefixCls+"tabs-bar"),
+                body = el.children("."+prefixCls+"tabs-body");
             self.set("el", el);
             self.set("bar", new Bar({
                 srcNode: bar

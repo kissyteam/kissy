@@ -1,6 +1,6 @@
 /**
  * @module  draggable-spec
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  * @description ie9 模式下 mousemove 触发事件有问题，无法测试
  */
 KISSY.use("ua,node,dd", function (S, UA, Node, DD) {

@@ -5,7 +5,7 @@
 KISSY.add("editor/plugin/dialog-loader/index", function (S, Overlay, Editor) {
     var globalMask,
         loadMask = {
-            loading:function () {
+            loading:function (prefixCls) {
                 if (!globalMask) {
                     globalMask = new Overlay({
                         x:0,
@@ -13,8 +13,8 @@ KISSY.add("editor/plugin/dialog-loader/index", function (S, Overlay, Editor) {
                         y:0,
                         // 指定全局 loading zIndex 值
                         "zIndex":Editor.baseZIndex(Editor.zIndexManager.LOADING),
-                        prefixCls:'ks-editor-',
-                        elCls:"ks-editor-global-loading"
+                        prefixCls:prefixCls+'editor-',
+                        elCls:prefixCls+"editor-global-loading"
                     });
                 }
                 globalMask.set("height", S.DOM.docHeight());
@@ -31,13 +31,14 @@ KISSY.add("editor/plugin/dialog-loader/index", function (S, Overlay, Editor) {
             // restore focus in editor
             // make dialog remember
             editor.focus();
+            var prefixCls=editor.get('prefixCls');
             if (editor.getControl(name + "/dialog")) {
                 setTimeout(function () {
                     editor.showDialog(name, args);
                 }, 0);
                 return;
             }
-            loadMask.loading();
+            loadMask.loading(prefixCls);
             S.use("editor/plugin/" + name + "/dialog", function (S, Dialog) {
                 loadMask.unloading();
                 editor.addControl(name + "/dialog", new Dialog(editor,config));

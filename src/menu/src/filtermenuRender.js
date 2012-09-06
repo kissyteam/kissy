@@ -6,9 +6,9 @@
  */
 KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
     var $ = Node.all,
-        MENU_FILTER = "ks-menu-filter",
-        MENU_FILTER_LABEL = "ks-menu-filter-label",
-        MENU_CONTENT = "ks-menu-content";
+        MENU_FILTER = "menu-filter",
+        MENU_FILTER_LABEL = "menu-filter-label",
+        MENU_CONTENT = "menu-content";
 
     return MenuRender.extend({
         getContentElement:function () {
@@ -20,16 +20,17 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
         },
         createDom:function () {
             var self = this;
+            var prefixCls=self.get('prefixCls');
             var contentEl = MenuRender.prototype.getContentElement.call(this);
             var filterWrap = self.get("filterWrap");
             if (!filterWrap) {
                 self.set("filterWrap",
-                    filterWrap = $("<div class='" + MENU_FILTER + "'/>")
+                    filterWrap = $("<div class='" + prefixCls+MENU_FILTER + "'/>")
                         .appendTo(contentEl, undefined));
             }
             if (!this.get("labelEl")) {
                 this.set("labelEl",
-                    $("<div class='" + MENU_FILTER_LABEL + "'/>")
+                    $("<div class='" + prefixCls+MENU_FILTER_LABEL + "'/>")
                         .appendTo(filterWrap, undefined));
             }
             if (!self.get("filterInput")) {
@@ -38,7 +39,7 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
             }
             if (!self.get("menuContent")) {
                 self.set("menuContent",
-                    $("<div class='" + MENU_CONTENT + "'/>")
+                    $("<div class='" + prefixCls+MENU_CONTENT + "'/>")
                         .appendTo(contentEl, undefined));
             }
         },
@@ -55,16 +56,18 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
 
         HTML_PARSER:{
             labelEl:function (el) {
-                return el.one("." + MENU_FILTER).one("." + MENU_FILTER_LABEL)
+                return el.one("." + this.get('prefixCls')+MENU_FILTER)
+                    .one("." + this.get('prefixCls')+MENU_FILTER_LABEL)
             },
             filterWrap:function (el) {
-                return el.one("." + MENU_FILTER);
+                return el.one("." + this.get('prefixCls')+MENU_FILTER);
             },
             menuContent:function (el) {
-                return el.one("." + MENU_CONTENT);
+                return el.one("." + this.get('prefixCls')+MENU_CONTENT);
             },
             filterInput:function (el) {
-                return el.one("." + MENU_FILTER).one("input");
+                return el.one("." + this.get('prefixCls')+MENU_FILTER)
+                    .one("input");
             }
         }
     });

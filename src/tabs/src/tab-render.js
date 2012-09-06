@@ -19,7 +19,9 @@ KISSY.add("tabs/tab-render", function (S, Button) {
                 value: false
             },
             selectedCls: {
-                value: 'ks-tabs-tab-selected'
+                valueFn:function(){
+                    return this.get('prefixCls')+'tabs-tab-selected';
+                }
             }
         },
         HTML_PARSER: {

@@ -22,7 +22,9 @@ KISSY.add("tabs/panel-render", function (S, Component) {
                 value: false
             },
             selectedCls: {
-                value: "ks-tabs-panel-selected"
+                valueFn:function(){
+                    return this.get('prefixCls')+'tabs-panel-selected';
+                }
             }
         },
 

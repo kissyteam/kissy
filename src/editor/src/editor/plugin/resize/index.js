@@ -27,7 +27,8 @@ this.config=config||{};
                 }
             }
 
-            var resizer = new Node("<div class='ks-editor-resizer' style='cursor: "
+            var resizer = new Node("<div class='"+editor.get('prefixCls')+
+                "editor-resizer' style='cursor: "
                 + cursor +
                 "'></div>").appendTo(statusBarEl);
 

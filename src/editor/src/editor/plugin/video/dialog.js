@@ -13,7 +13,7 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             "链接： " +
             "" +
             "<input " +
-            "class='ks-editor-video-url ks-editor-input' style='width:410px;" +
+            "class='{prefixCls}editor-video-url {prefixCls}editor-input' style='width:410px;" +
             "'/>" +
             "</label>" +
             "</p>" +
@@ -25,7 +25,7 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             "<input " +
             " data-verify='^(" + DTIP + "|((?!0$)\\d+))?$' " +
             " data-warning='宽度请输入正整数' " +
-            "class='ks-editor-video-width ks-editor-input' " +
+            "class='{prefixCls}editor-video-width {prefixCls}editor-input' " +
             "style='width:60px;" +
             "' " +
             "/> 像素" +
@@ -37,14 +37,14 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             " <input " +
             " data-verify='^(" + DTIP + "|((?!0$)\\d+))?$' " +
             " data-warning='高度请输入正整数' " +
-            "class='ks-editor-video-height ks-editor-input' style='width:60px;" +
+            "class='{prefixCls}editor-video-height {prefixCls}editor-input' style='width:60px;" +
             "'/> 像素" +
             "</label>" +
             "</td></tr>" +
             "<tr>" +
             "<td>" +
             "<label>对齐： " +
-            "<select class='ks-editor-video-align' title='对齐'>" +
+            "<select class='{prefixCls}editor-video-align' title='对齐'>" +
             "<option value='none'>无</option>" +
             "<option value='left'>左对齐</option>" +
             "<option value='right'>右对齐</option>" +
@@ -56,7 +56,7 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             "" +
             " data-verify='^\\d+$' " +
             " data-warning='间距请输入非负整数' " +
-            "class='ks-editor-video-margin ks-editor-input' style='width:60px;" +
+            "class='{prefixCls}editor-video-margin {prefixCls}editor-input' style='width:60px;" +
             "' value='"
             + MARGIN_DEFAULT + "'/> 像素" +
             "</label>" +
@@ -64,9 +64,9 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             "</table>" +
             "</div>",
         footHtml = "<div style='padding:5px 20px 20px;'><a " +
-            "class='ks-editor-video-ok ks-editor-button ks-inline-block' " +
+            "class='{prefixCls}editor-video-ok {prefixCls}editor-button ks-inline-block' " +
             "style='margin-left:40px;margin-right:20px;'>确定</button> " +
-            "<a class='ks-editor-video-cancel ks-editor-button ks-inline-block'>取消</a></div>";
+            "<a class='{prefixCls}editor-video-cancel {prefixCls}editor-button ks-inline-block'>取消</a></div>";
 
     function VideoDialog() {
         VideoDialog.superclass.constructor.apply(this, arguments);
@@ -75,12 +75,18 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
     S.extend(VideoDialog, FlashDialog, {
         _config:function () {
             var self = this,
+                editor=self.editor,
+                prefixCls=editor.get('prefixCls'),
                 cfg = self.config;
             self._cls = CLS_VIDEO;
             self._type = TYPE_VIDEO;
             self._title = "视频";//属性";
-            self._bodyHtml = bodyHtml;
-            self._footHtml = footHtml;
+            self._bodyHtml = S.substitute(bodyHtml,{
+                prefixCls:prefixCls
+            });
+            self._footHtml = S.substitute(footHtml,{
+                prefixCls:prefixCls
+            });
             self.urlCfg = cfg["video"] &&
                 cfg["video"].urlCfg;
             self._urlTip = (cfg["video"] &&
@@ -89,21 +95,23 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
         _initD:function () {
             var self = this,
                 d = self.dialog,
+                editor=self.editor,
+                prefixCls=editor.get('prefixCls'),
                 el = d.get("el");
-            self.dUrl = el.one(".ks-editor-video-url");
-            self.dAlign = MenuButton.Select.decorate(el.one(".ks-editor-video-align"), {
-                prefixCls:'ks-editor-big-',
+            self.dUrl = el.one("."+prefixCls+"editor-video-url");
+            self.dAlign = MenuButton.Select.decorate(el.one("."+prefixCls+"editor-video-align"), {
+                prefixCls:prefixCls+'editor-big-',
                 width:80,
                 menuCfg:{
-                    prefixCls:'ks-editor-',
+                    prefixCls:prefixCls+'editor-',
                     render:el
                 }
             });
-            self.dMargin = el.one(".ks-editor-video-margin");
-            self.dWidth = el.one(".ks-editor-video-width");
-            self.dHeight = el.one(".ks-editor-video-height");
-            var action = el.one(".ks-editor-video-ok"),
-                cancel = el.one(".ks-editor-video-cancel");
+            self.dMargin = el.one("."+prefixCls+"editor-video-margin");
+            self.dWidth = el.one("."+prefixCls+"editor-video-width");
+            self.dHeight = el.one("."+prefixCls+"editor-video-height");
+            var action = el.one("."+prefixCls+"editor-video-ok"),
+                cancel = el.one("."+prefixCls+"editor-video-cancel");
             action.on("click", self._gen, self);
             cancel.on("click", function (ev) {
                 d.hide();

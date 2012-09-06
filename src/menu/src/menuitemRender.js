@@ -4,13 +4,14 @@
  */
 KISSY.add("menu/menuitemRender", function (S, Node, Component) {
 
-    var CHECK_CLS = "ks-menuitem-checkbox";
+    var CHECK_CLS = "menuitem-checkbox";
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
-            checkEl = el.one("." + CHECK_CLS);
+            prefixCls=self.get('prefixCls'),
+            checkEl = el.one("." + prefixCls+CHECK_CLS);
         if (!checkEl) {
-            checkEl = new Node("<div class='" + CHECK_CLS + "'/>")
+            checkEl = new Node("<div class='" + prefixCls+CHECK_CLS + "'/>")
                 .prependTo(el);
             // if not ie will lose focus when click
             checkEl.unselectable();

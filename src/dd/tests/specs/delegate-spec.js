@@ -1,6 +1,6 @@
 /**
  * @module  delegate-spec
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("ua,node,dd,dom", function (S, UA, Node, DD, DOM) {
     var $ = Node.all,

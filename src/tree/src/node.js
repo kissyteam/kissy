@@ -347,7 +347,9 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 },
 
                 decorateChildCls: {
-                    value: "ks-tree-children"
+                    valueFn:function(){
+                        return this.get('prefixCls')+'tree-children';
+                    }
                 }
             }
         }, {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 5 17:56
+build time: Sep 6 21:52
 */
 /**
  * Setup component namespace.
@@ -2380,7 +2380,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
  * @fileOverview UIBase.Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/uibase/box', function (S) {
+KISSY.add('component/uibase/box', function () {
 
     /**
      * Box extension class.
@@ -2400,74 +2400,74 @@ KISSY.add('component/uibase/box', function (S) {
          * Note: content and srcNode can not be set both!
          * @type {String|KISSY.NodeList}
          */
-        content:{
-            view:1
+        content: {
+            view: 1
         },
         /**
          * component's width
          * @type {Number|String}
          */
-        width:{
-            view:1
+        width: {
+            view: 1
         },
         /**
          * component's height
          * @type {Number|String}
          */
-        height:{
-            view:1
+        height: {
+            view: 1
         },
         /**
          * css class of component's root element
          * @type {String}
          */
-        elCls:{
-            view:1
+        elCls: {
+            view: 1
         },
         /**
          * name-value pair css style of component's root element
          * @type {Object}
          */
-        elStyle:{
-            view:1
+        elStyle: {
+            view: 1
         },
         /**
          * name-value pair attribute of component's root element
          * @type {Object}
          */
-        elAttrs:{
-            view:1
+        elAttrs: {
+            view: 1
         },
         /**
          * archor element where component insert before
          * @type {KISSY.NodeList}
          */
-        elBefore:{
+        elBefore: {
             // better named to renderBefore, too late !
-            view:1
+            view: 1
         },
         /**
          * readonly. root element of current component
          * @type {KISSY.NodeList}
          */
-        el:{
-            view:1
+        el: {
+            view: 1
         },
 
         /**
          * archor element where component append to
          * @type {KISSY.NodeList}
          */
-        render:{
-            view:1
+        render: {
+            view: 1
         },
 
         /**
          * component's visibleMode,use css "display" or "visibility" to show this component
          * @type {String}
          */
-        visibleMode:{
-            view:1
+        visibleMode: {
+            view: 1
         },
 
         /**
@@ -2475,36 +2475,34 @@ KISSY.add('component/uibase/box', function (S) {
          * @type {Boolean}
          * @default true
          */
-        visible:{
-            value:true,
-            view:1
+        visible: {
+            value: true,
+            view: 1
         },
 
         /**
          * the node to parse for configuration values,passed to component's HTML_PARSER definition
          * @type {KISSY.NodeList}
          */
-        srcNode:{
-            view:1
+        srcNode: {
+            view: 1
         }
     };
 
     Box.prototype =
     {
-        /**
-         * bind ui for box
-         * @private
-         */
-        __bindUI:function () {
-            this.on("afterVisibleChange", function (e) {
-                this.fire(e.newVal ? "show" : "hide");
-            });
+
+        _uiSetVisible: function (v) {
+            // do not fire event at render phrase
+            if (this.get('rendered')) {
+                this.fire(v ? "show" : "hide");
+            }
         },
 
         /**
          * show component
          */
-        show:function () {
+        show: function () {
             var self = this;
             self.render();
             self.set("visible", true);
@@ -2514,7 +2512,7 @@ KISSY.add('component/uibase/box', function (S) {
         /**
          * hide component
          */
-        hide:function () {
+        hide: function () {
             var self = this;
             self.set("visible", false);
             return self;
@@ -2780,16 +2778,16 @@ KISSY.add("component/uibase/close", function () {
  */
 KISSY.add("component/uibase/closerender", function (S, Node) {
 
-    var CLS_PREFIX = 'ks-ext-';
+    var CLS_PREFIX = 'ext-';
 
-    function getCloseRenderBtn() {
+    function getCloseRenderBtn(prefixCls) {
         return new Node("<a " +
             "tabindex='0' " +
             "href='javascript:void(\"关闭\")' " +
             "role='button' " +
-            "class='" + CLS_PREFIX + "close" + "'>" +
+            "class='" + prefixCls + CLS_PREFIX + "close" + "'>" +
             "<span class='" +
-            CLS_PREFIX + "close-x" +
+            prefixCls + CLS_PREFIX + "close-x" +
             "'>关闭<" + "/span>" +
             "<" + "/a>");
     }
@@ -2798,28 +2796,28 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
     }
 
     CloseRender.ATTRS = {
-        closable:{
-            value:true
+        closable: {
+            value: true
         },
-        closeBtn:{
+        closeBtn: {
         }
     };
 
     CloseRender.HTML_PARSER = {
-        closeBtn:function (el) {
-            return el.one("." + CLS_PREFIX + 'close');
+        closeBtn: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + 'close');
         }
     };
 
     CloseRender.prototype = {
-        _uiSetClosable:function (v) {
+        _uiSetClosable: function (v) {
             var self = this,
                 btn = self.get("closeBtn");
             if (v) {
                 if (!btn) {
-                    self.setInternal("closeBtn", btn = getCloseRenderBtn());
+                    self.setInternal("closeBtn", btn = getCloseRenderBtn(self.get('prefixCls')));
                 }
-                btn.appendTo(self.get("el"), undefined);
+                self.get("el").prepend(btn);
             } else {
                 if (btn) {
                     btn.remove();
@@ -2831,7 +2829,7 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
     return CloseRender;
 
 }, {
-    requires:["node"]
+    requires: ["node"]
 });/**
  * @fileOverview 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
@@ -2874,7 +2872,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
     }
 
     ContentBoxRender.ATTRS = {
-        contentEl:{
+        contentEl: {
             // 不写 valueFn, 留待 createDom 处理
         }
     };
@@ -2883,7 +2881,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
      ! contentEl 只能由组件动态生成
      */
     ContentBoxRender.prototype = {
-        __createDom:function () {
+        __createDom: function () {
             var self = this,
                 contentEl,
                 el = self.get("el");
@@ -2892,7 +2890,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
                 c = childNodes.length && DOM.nodeListToFragment(childNodes);
 
             // 产生新的 contentEl
-            contentEl = Node.all("<div class='ks-contentbox'>" +
+            contentEl = Node.all("<div class='" + self.get('prefixCls') + "contentbox'>" +
                 "</div>").append(c);
 
             el.append(contentEl);
@@ -2903,7 +2901,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
 
     return ContentBoxRender;
 }, {
-    requires:["node", "./boxrender", 'dom']
+    requires: ["node", "./boxrender", 'dom']
 });/**
  * @fileOverview drag extension for position
  * @author yiminghe@gmail.com
@@ -3063,18 +3061,18 @@ KISSY.add("component/uibase/loading", function () {
  * @fileOverview loading mask support for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/loadingrender", function(S, Node) {
+KISSY.add("component/uibase/loadingrender", function (S, Node) {
 
     function Loading() {
     }
 
     Loading.prototype = {
-        loading:function() {
+        loading: function () {
             var self = this;
             if (!self._loadingExtEl) {
                 self._loadingExtEl = new Node("<div " +
                     "class='" +
-                    "ks-ext-loading'" +
+                    self.get('prefixCls') + "ext-loading'" +
                     " style='position: absolute;" +
                     "border: none;" +
                     "width: 100%;" +
@@ -3088,7 +3086,7 @@ KISSY.add("component/uibase/loadingrender", function(S, Node) {
             self._loadingExtEl.show();
         },
 
-        unloading:function() {
+        unloading: function () {
             var lel = this._loadingExtEl;
             lel && lel.hide();
         }
@@ -3097,7 +3095,7 @@ KISSY.add("component/uibase/loadingrender", function(S, Node) {
     return Loading;
 
 }, {
-    requires:['node']
+    requires: ['node']
 });/**
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
@@ -3418,7 +3416,7 @@ KISSY.add("component/uibase/position", function (S) {
     return Position;
 });/**
  * @fileOverview position and visible extension，可定位的隐藏层
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("component/uibase/positionrender", function () {
 
@@ -3426,57 +3424,46 @@ KISSY.add("component/uibase/positionrender", function () {
     }
 
     Position.ATTRS = {
-        x:{
+        x: {
             // 水平方向绝对位置
-            valueFn:function () {
-                var self = this;
-                // 读到这里时，el 一定是已经加到 dom 树中了，否则报未知错误
-                // el 不在 dom 树中 offset 报错的
-                // 最早读就是在 syncUI 中，一点重复设置(读取自身 X 再调用 _uiSetX)无所谓了
-                return self.get("el") && self.get("el").offset().left;
-            }
         },
-        y:{
+        y: {
             // 垂直方向绝对位置
-            valueFn:function () {
-                var self = this;
-                return self.get("el") && self.get("el").offset().top;
-            }
         },
-        zIndex:{
+        zIndex: {
         },
         /**
          * see {@link Component.UIBase.Box#visibleMode}.
          * @default "visibility"
          */
-        visibleMode:{
-            value:"visibility"
+        visibleMode: {
+            value: "visibility"
         }
     };
 
 
     Position.prototype = {
 
-        __createDom:function () {
-            this.get("el").addClass("ks-ext-position");
+        __createDom: function () {
+            this.get("el").addClass(this.get('prefixCls') + "ext-position");
         },
 
-        _uiSetZIndex:function (x) {
+        _uiSetZIndex: function (x) {
             this.get("el").css("z-index", x);
         },
 
-        _uiSetX:function (x) {
+        _uiSetX: function (x) {
             if (x != null) {
                 this.get("el").offset({
-                    left:x
+                    left: x
                 });
             }
         },
 
-        _uiSetY:function (y) {
+        _uiSetY: function (y) {
             if (y != null) {
                 this.get("el").offset({
-                    top:y
+                    top: y
                 });
             }
         }
@@ -3663,41 +3650,41 @@ KISSY.add("component/uibase/stdmod", function () {
 KISSY.add("component/uibase/stdmodrender", function (S, Node) {
 
 
-    var CLS_PREFIX = "ks-stdmod-";
+    var CLS_PREFIX = "stdmod-";
 
     function StdModRender() {
     }
 
     StdModRender.ATTRS = {
-        header:{
+        header: {
         },
-        body:{
+        body: {
         },
-        footer:{
+        footer: {
         },
-        bodyStyle:{
+        bodyStyle: {
         },
-        footerStyle:{
+        footerStyle: {
         },
-        headerStyle:{
+        headerStyle: {
         },
-        headerContent:{
+        headerContent: {
         },
-        bodyContent:{
+        bodyContent: {
         },
-        footerContent:{
+        footerContent: {
         }
     };
 
     StdModRender.HTML_PARSER = {
-        header:function (el) {
-            return el.one("." + CLS_PREFIX + "header");
+        header: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + "header");
         },
-        body:function (el) {
-            return el.one("." + CLS_PREFIX + "body");
+        body: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + "body");
         },
-        footer:function (el) {
-            return el.one("." + CLS_PREFIX + "footer");
+        footer: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + "footer");
         }
     };
 
@@ -3706,7 +3693,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
             partEl = self.get(part);
         if (!partEl) {
             partEl = new Node("<div class='" +
-                CLS_PREFIX + part + "'" +
+                self.get('prefixCls') + CLS_PREFIX + part + "'" +
                 " " +
                 " >" +
                 "</div>");
@@ -3728,32 +3715,32 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
 
     StdModRender.prototype = {
 
-        __createDom:function () {
+        __createDom: function () {
             createUI(this, "header");
             createUI(this, "body");
             createUI(this, "footer");
         },
 
-        _uiSetBodyStyle:function (v) {
+        _uiSetBodyStyle: function (v) {
             this.get("body").css(v);
         },
 
-        _uiSetHeaderStyle:function (v) {
+        _uiSetHeaderStyle: function (v) {
             this.get("header").css(v);
         },
-        _uiSetFooterStyle:function (v) {
+        _uiSetFooterStyle: function (v) {
             this.get("footer").css(v);
         },
 
-        _uiSetBodyContent:function (v) {
+        _uiSetBodyContent: function (v) {
             _setStdModRenderContent(this, "body", v);
         },
 
-        _uiSetHeaderContent:function (v) {
+        _uiSetHeaderContent: function (v) {
             _setStdModRenderContent(this, "header", v);
         },
 
-        _uiSetFooterContent:function (v) {
+        _uiSetFooterContent: function (v) {
             _setStdModRenderContent(this, "footer", v);
         }
     };
@@ -3761,5 +3748,5 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
     return StdModRender;
 
 }, {
-    requires:['node']
+    requires: ['node']
 });

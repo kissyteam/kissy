@@ -4,16 +4,16 @@
  */
 KISSY.add("component/uibase/closerender", function (S, Node) {
 
-    var CLS_PREFIX = 'ks-ext-';
+    var CLS_PREFIX = 'ext-';
 
-    function getCloseRenderBtn() {
+    function getCloseRenderBtn(prefixCls) {
         return new Node("<a " +
             "tabindex='0' " +
             "href='javascript:void(\"关闭\")' " +
             "role='button' " +
-            "class='" + CLS_PREFIX + "close" + "'>" +
+            "class='" + prefixCls + CLS_PREFIX + "close" + "'>" +
             "<span class='" +
-            CLS_PREFIX + "close-x" +
+            prefixCls + CLS_PREFIX + "close-x" +
             "'>关闭<" + "/span>" +
             "<" + "/a>");
     }
@@ -22,28 +22,28 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
     }
 
     CloseRender.ATTRS = {
-        closable:{
-            value:true
+        closable: {
+            value: true
         },
-        closeBtn:{
+        closeBtn: {
         }
     };
 
     CloseRender.HTML_PARSER = {
-        closeBtn:function (el) {
-            return el.one("." + CLS_PREFIX + 'close');
+        closeBtn: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + 'close');
         }
     };
 
     CloseRender.prototype = {
-        _uiSetClosable:function (v) {
+        _uiSetClosable: function (v) {
             var self = this,
                 btn = self.get("closeBtn");
             if (v) {
                 if (!btn) {
-                    self.setInternal("closeBtn", btn = getCloseRenderBtn());
+                    self.setInternal("closeBtn", btn = getCloseRenderBtn(self.get('prefixCls')));
                 }
-                btn.appendTo(self.get("el"), undefined);
+                self.get("el").prepend(btn);
             } else {
                 if (btn) {
                     btn.remove();
@@ -55,5 +55,5 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
     return CloseRender;
 
 }, {
-    requires:["node"]
+    requires: ["node"]
 });

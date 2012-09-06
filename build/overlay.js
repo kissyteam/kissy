@@ -1,150 +1,9 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:57
+build time: Sep 6 21:55
 */
 /**
- * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
- * @author yiminghe@gmail.com
- */
-KISSY.add("overlay/aria", function (S, Event) {
-    function Aria() {
-    }
-
-    Aria.ATTRS =
-    /**
-     * @lends Overlay#
-     */
-    {
-        /**
-         * Whether support aria.
-         * Focus on show and trap focus in overlay when visible.
-         * @default false.
-         * @type {Boolean}
-         */
-        aria:{
-            view:1
-        }
-    };
-
-    Aria.prototype = {
-        __bindUI:function () {
-            var self = this,
-                el = self.get("el");
-            if (self.get("aria")) {
-                el.on("keydown", function (e) {
-                    if (e.keyCode === Event.KeyCodes.ESC) {
-                        self.hide();
-                        e.halt();
-                    }
-                });
-            }
-        }
-    };
-    return Aria;
-}, {
-    requires:['event']
-});/**
- * @fileOverview http://www.w3.org/TR/wai-aria-practices/#trap_focus
- * @author yiminghe@gmail.com
- */
-KISSY.add("overlay/ariaRender", function (S, Node) {
-
-    var $ = Node.all;
-
-    function Aria() {
-    }
-
-
-    var KEY_TAB = Node.KeyCodes.TAB;
-
-    function _onKey(/*Normalized Event*/ evt) {
-
-        var self = this,
-            keyCode = evt.keyCode,
-            firstFocusItem = self.get("el");
-        if (keyCode != KEY_TAB) {
-            return;
-        }
-        // summary:
-        // Handles the keyboard events for accessibility reasons
-
-        var node = $(evt.target); // get the target node of the keypress event
-
-        // find the first and last tab focusable items in the hierarchy of the dialog container node
-        // do this every time if the items may be added / removed from the the dialog may change visibility or state
-
-        var lastFocusItem = self.__ariaArchor;
-
-        // assumes firstFocusItem and lastFocusItem maintained by dialog object
-
-        // see if we are shift-tabbing from first focusable item on dialog
-        if (node.equals(firstFocusItem) && evt.shiftKey) {
-            lastFocusItem[0].focus(); // send focus to last item in dialog
-            evt.halt(); //stop the tab keypress event
-        }
-        // see if we are tabbing from the last focusable item
-        else if (node.equals(lastFocusItem) && !evt.shiftKey) {
-            firstFocusItem[0].focus(); // send focus to first item in dialog
-            evt.halt(); //stop the tab keypress event
-        }
-        else {
-            // see if the key is for the dialog
-            if (node.equals(firstFocusItem) ||
-                firstFocusItem.contains(node)) {
-                return;
-            }
-        }
-        // this key is for the document window
-        // allow tabbing into the dialog
-        evt.halt();//stop the event if not a tab keypress
-    } // end of function
-
-
-    Aria.prototype = {
-
-        __renderUI:function () {
-            var self = this,
-                el = self.get("el"),
-                header = self.get("header");
-            if (self.get("aria")) {
-                el.attr("role", "dialog");
-                el.attr("tabindex", 0);
-                if (!header.attr("id")) {
-                    header.attr("id", S.guid("ks-dialog-header"));
-                }
-                el.attr("aria-labelledby", header.attr("id"));
-                // 哨兵元素，从这里 tab 出去到弹窗根节点
-                // 从根节点 shift tab 出去到这里
-                self.__ariaArchor = $("<div tabindex='0'></div>").appendTo(el);
-            }
-        },
-
-        __bindUI:function () {
-            var self = this;
-            if (self.get("aria")) {
-                var el = self.get("el"),
-                    lastActive;
-                self.on("afterVisibleChange", function (ev) {
-                    if (ev.newVal) {
-                        lastActive = el[0].ownerDocument.activeElement;
-                        el[0].focus();
-                        el.attr("aria-hidden", "false");
-                        el.on("keydown", _onKey, self);
-                    } else {
-                        el.attr("aria-hidden", "true");
-                        el.detach("keydown", _onKey, self);
-                        lastActive && lastActive.focus();
-                    }
-                });
-            }
-        }
-    };
-
-    return Aria;
-}, {
-    requires:["node"]
-});/**
  * @fileOverview model and control for overlay
  * @author yiminghe@gmail.com
  */
@@ -230,12 +89,43 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender, Effect) {
 
     return Overlay;
 }, {
-    requires:['component', './overlayRender', './effect']
+    requires:['component', './overlay-render', './effect']
+});/**
+ * @fileOverview render for dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/dialog-render", function (S, OverlayRender) {
+    function require(s) {
+        return S.require("component/uibase/" + s);
+    }
+
+    return OverlayRender.extend([
+        require("stdmodrender")
+    ], {
+        createDom: function () {
+            var self = this,
+                el = self.get("el"),
+                id,
+                header = self.get("header");
+            if (!(id = header.attr("id"))) {
+                header.attr("id", id = S.guid("ks-dialog-header"));
+            }
+            el.attr("role", "dialog")
+                .attr("aria-labelledby", id);
+            // 哨兵元素，从这里 tab 出去到弹窗根节点
+            // 从根节点 shift tab 出去到这里
+            el.append("<div " + "t" + "ab" + "index='0'></div>");
+        }
+    });
+}, {
+    requires: ['./overlay-render']
 });/**
  * @fileOverview KISSY.Dialog
- * @author  yiminghe@gmail.com, 乔花<qiaohua@taobao.com>
+ * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
-KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
+KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
+
+    var $ = Node.all;
 
     function require(s) {
         return S.require("component/uibase/" + s);
@@ -253,34 +143,46 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
      */
     var Dialog = Overlay.extend([
         require("stdmod"),
-        require("drag"),
-        Aria
+        require("drag")
     ],
         /**
          * @lends Overlay.Dialog#
          */
         {
-            /**
-             * see {@link Component.UIBase.Box#show}
-             * @name Overlay.Dialog#show
-             * @method
-             */
-
-            /**
-             * @protected
-             */
-            renderUI:function () {
+            initializer: function () {
                 var self = this, draggable;
                 if (draggable = self.get("draggable")) {
                     if (!draggable.handlers) {
+                        // default to drag header
                         draggable.handlers = [self.get("header")];
                     }
+                }
+            },
+            handleKeyEventInternal: function (e) {
+                if (e.keyCode === Node.KeyCodes.ESC) {
+                    this.hide();
+                    e.halt();
+                    return;
+                }
+                trapFocus.call(this, e);
+            },
+
+            _uiSetVisible: function (v) {
+                Dialog.superclass._uiSetVisible.apply(this, arguments);
+                var el = this.get('el');
+                if (v) {
+                    this.__lastActive = el[0].ownerDocument.activeElement;
+                    el[0].focus();
+                    el.attr("aria-hidden", "false");
+                } else {
+                    el.attr("aria-hidden", "true");
+                    this.__lastActive && this.__lastActive.focus();
                 }
             }
         },
 
         {
-            ATTRS:/**
+            ATTRS: /**
              * @lends Overlay.Dialog#
              */
             {
@@ -290,47 +192,85 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Aria) {
                  * @default true
                  * @type {Boolean}
                  */
-                closable:{
-                    value:true
+                closable: {
+                    value: true
                 },
 
-                xrender:{
-                    value:DialogRender
+                xrender: {
+                    value: DialogRender
+                },
+
+                focusable: {
+                    value: true
                 }
             }
         }, {
-            xclass:'dialog',
-            priority:20
+            xclass: 'dialog',
+            priority: 20
         });
 
+
+    var KEY_TAB = Node.KeyCodes.TAB;
+
+    function trapFocus(e) {
+
+        var self = this,
+            keyCode = e.keyCode,
+            firstFocusItem = self.get("el");
+        if (keyCode != KEY_TAB) {
+            return;
+        }
+        // summary:
+        // Handles the keyboard events for accessibility reasons
+
+        var node = $(e.target); // get the target node of the keypress event
+
+        // find the first and last tab focusable items in the hierarchy of the dialog container node
+        // do this every time if the items may be added / removed from the the dialog may change visibility or state
+
+        var lastFocusItem = firstFocusItem.last();
+
+        // assumes firstFocusItem and lastFocusItem maintained by dialog object
+
+        // see if we are shift-tabbing from first focusable item on dialog
+        if (node.equals(firstFocusItem) && e.shiftKey) {
+            lastFocusItem[0].focus(); // send focus to last item in dialog
+            e.halt(); //stop the tab keypress event
+        }
+        // see if we are tabbing from the last focusable item
+        else if (node.equals(lastFocusItem) && !e.shiftKey) {
+            firstFocusItem[0].focus(); // send focus to first item in dialog
+            e.halt(); //stop the tab keypress event
+        }
+        else {
+            // see if the key is for the dialog
+            if (node.equals(firstFocusItem) ||
+                firstFocusItem.contains(node)) {
+                return;
+            }
+        }
+        // this key is for the document window
+        // allow tabbing into the dialog
+        e.halt();//stop the event if not a tab keypress
+    } // end of function
     return Dialog;
 
 }, {
-    requires:[ "overlay/base", 'overlay/dialogRender', './aria']
+    requires: [ "./base", './dialog-render', 'node']
 });
 
 /**
- * 2010-11-10 yiminghe@gmail.com重构，使用扩展类
+ * 2012-09-06 yiminghe@gmail.com
+ *  merge aria with dialog
+ *  http://www.w3.org/TR/wai-aria-practices/#trap_focus
+ *
+ * 2010-11-10 yiminghe@gmail.com
+ *  重构，使用扩展类
  */
 
 
 
 /**
- * @fileOverview render for dialog
- * @author yiminghe@gmail.com
- */
-KISSY.add("overlay/dialogRender", function(S, OverlayRender, AriaRender) {
-    function require(s) {
-        return S.require("component/uibase/" + s);
-    }
-
-    return OverlayRender.extend([
-        require("stdmodrender"),
-        AriaRender
-    ]);
-}, {
-    requires:['./overlayRender','./ariaRender']
-});/**
  * @fileOverview effect applied when overlay shows or hides
  * @author yiminghe@gmail.com
  */
@@ -353,7 +293,7 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
          * v.effect (String): Default:none. can be set as "fade" or "slide" <br>
          * v.target (String|KISS.Node): The target node from which overlay should animate from while showing. Since KISSY 1.3.<br>
          * v.duration (Number): in seconds. Default:0.5. <br>
-         * v.easing (String): see {@link Anim.Easing} <br>
+         * v.easing (String): see {@link KISSY.Anim.Easing} <br>
          * @type {Object}
          */
         effect:{
@@ -379,10 +319,9 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
         ghost.style.visibility = "";
         ghost.style.overflow = "hidden";
         ghost.className += " " + self.get("prefixCls") + "overlay-ghost";
-        var body;
-        var elBody
+        var body,elBody;
         if (elBody = self.get("body")) {
-            body = DOM.get('.ks-stdmod-body', ghost);
+            body = DOM.get('.'+self.get('prefixCls')+'-stdmod-body', ghost);
             $(body).css({
                 height:elBody.height(),
                 width:elBody.width()
@@ -482,7 +421,7 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
     Effect.prototype = {
 
         __bindUI:function () {
-            var self = this
+            var self = this;
             self.on("hide", function () {
                 processEffect(self, 0);
             });
@@ -496,30 +435,10 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
 }, {
     requires:['anim', 'dom']
 });/**
- * @fileOverview overlay
- * @author yiminghe@gmail.com
- */
-KISSY.add("overlay", function (S, O, OR, D, DR, P) {
-    O.Render = OR;
-    D.Render = DR;
-    O.Dialog = D;
-    S.Dialog = D;
-    O.Popup = P;
-    S.Overlay = O;
-    return O;
-}, {
-    requires:[
-        "overlay/base",
-        "overlay/overlayRender",
-        "overlay/dialog",
-        "overlay/dialogRender",
-        "overlay/popup"
-    ]
-});/**
  * @fileOverview KISSY Overlay
- * @author yiminghe@gmail.com,乔花<qiaohua@taobao.com>
+ * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
-KISSY.add("overlay/overlayRender", function (S, UA, Component) {
+KISSY.add("overlay/overlay-render", function (S, UA, Component) {
 
     function require(s) {
         return S.require("component/uibase/" + s);
@@ -541,6 +460,26 @@ KISSY.add("overlay/overlayRender", function (S, UA, Component) {
  * 2010-11-09 2010-11-10 yiminghe@gmail.com重构，attribute-base-uibase-Overlay ，采用 UIBase.create
  */
 /**
+ * @fileOverview overlay
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay", function (S, O, OR, D, DR, P) {
+    O.Render = OR;
+    D.Render = DR;
+    O.Dialog = D;
+    S.Dialog = D;
+    O.Popup = P;
+    S.Overlay = O;
+    return O;
+}, {
+    requires:[
+        "overlay/base",
+        "overlay/overlay-render",
+        "overlay/dialog",
+        "overlay/dialog-render",
+        "overlay/popup"
+    ]
+});/**
  * @fileOverview KISSY.Popup
  * @author qiaohua@taobao.com, yiminghe@gmail.com
  */

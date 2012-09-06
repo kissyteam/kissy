@@ -13,7 +13,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
         IN_SIZE = 6,
         alignStyle = 'margin:0 5px 0 0;',
         TABLE_HTML = "<div style='padding:20px 20px 10px 20px;'>" +
-            "<table class='ks-editor-table-config' style='width:100%'>" +
+            "<table class='{prefixCls}editor-table-config' style='width:100%'>" +
             "<tr>" +
             "<td>" +
             "<label>行数： " +
@@ -21,7 +21,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             " data-verify='^(?!0$)\\d+$' " +
             " data-warning='行数请输入正整数' " +
             " value='2' " +
-            " class='ks-editor-table-rows ks-editor-table-create-only ks-editor-input' " +
+            " class='{prefixCls}editor-table-rows {prefixCls}editor-table-create-only {prefixCls}editor-input' " +
             "style='" + alignStyle + "'" +
             " size='" +
             IN_SIZE +
@@ -38,10 +38,10 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             "value='200' " +
             "style='" +
             alignStyle + "' " +
-            "class='ks-editor-table-width ks-editor-input' " +
+            "class='{prefixCls}editor-table-width {prefixCls}editor-input' " +
             "size='" + IN_SIZE + "'/>" +
 
-            "<select class='ks-editor-table-width-unit' title='宽度单位'>" +
+            "<select class='{prefixCls}editor-table-width-unit' title='宽度单位'>" +
             "<option value='px'>像素</option>" +
             "<option value='%'>百分比</option>" +
             "</select>" +
@@ -53,7 +53,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             "<input " +
             " data-verify='^(?!0$)\\d+$' " +
             " data-warning='列数请输入正整数' " +
-            "class='ks-editor-table-cols ks-editor-table-create-only ks-editor-input' " +
+            "class='{prefixCls}editor-table-cols {prefixCls}editor-table-create-only {prefixCls}editor-input' " +
             "style='" + alignStyle + "'" +
             "value='3' " +
             "size='" +
@@ -70,7 +70,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             "value='' " +
             "style='" +
             alignStyle + "'" +
-            "class='ks-editor-table-height ks-editor-input' " +
+            "class='{prefixCls}editor-table-height {prefixCls}editor-input' " +
             "size='" + IN_SIZE + "'/>" +
             " &nbsp;像素" +
             "</td>" +
@@ -78,7 +78,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             "<tr>" +
             "<td>" +
             "<label>对齐： </label>" +
-            "<select class='ks-editor-table-align' title='对齐'>" +
+            "<select class='{prefixCls}editor-table-align' title='对齐'>" +
             "<option value=''>无</option>" +
             "<option value='left'>左对齐</option>" +
             "<option value='right'>右对齐</option>" +
@@ -87,7 +87,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             "</td>" +
             "<td>" +
             "<label>标题格：</label> " +
-            "<select class='ks-editor-table-head ks-editor-table-create-only' title='标题格'>" +
+            "<select class='{prefixCls}editor-table-head {prefixCls}editor-table-create-only' title='标题格'>" +
             "<option value=''>无</option>" +
             "<option value='1'>有</option>" +
             "</select>" +
@@ -102,20 +102,20 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             "value='1' " +
             "style='" +
             alignStyle + "'" +
-            "class='ks-editor-table-border ks-editor-input' " +
+            "class='{prefixCls}editor-table-border {prefixCls}editor-input' " +
             "size='" + IN_SIZE + "'/>" +
             "</label> &nbsp;像素" +
             " " +
             '<label><input ' +
             'type="checkbox" ' +
             'style="vertical-align: middle; margin-left: 5px;" ' +
-            'class="ks-editor-table-collapse" ' +
+            'class="{prefixCls}editor-table-collapse" ' +
             '/> 合并边框' +
             "</label>" +
             "</td>" +
             "<td>" +
             "<label " +
-            "class='ks-editor-table-cellpadding-holder'" +
+            "class='{prefixCls}editor-table-cellpadding-holder'" +
             ">边&nbsp;&nbsp;&nbsp;距： " +
             "<input " +
             " data-verify='^(\\d+)?$' " +
@@ -123,7 +123,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             "value='0' " +
             "style='" +
             alignStyle + "'" +
-            "class='ks-editor-table-cellpadding ks-editor-input' " +
+            "class='{prefixCls}editor-table-cellpadding {prefixCls}editor-input' " +
             "size='" + IN_SIZE + "'/>" +
             " &nbsp;像素</label>" +
             "</td>" +
@@ -133,7 +133,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             "<label>" +
             "标题： " +
             "<input " +
-            "class='ks-editor-table-caption ks-editor-input' " +
+            "class='{prefixCls}editor-table-caption {prefixCls}editor-input' " +
             "style='width:380px;" +
             alignStyle + "'>" +
             "</label>" +
@@ -143,14 +143,19 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             "</div>",
         footHtml = "<div style='padding:5px 20px 20px;'>" +
             "<a " +
-            "class='ks-editor-table-ok ks-editor-button ks-inline-block' " +
+            "class='{prefixCls}editor-table-ok {prefixCls}editor-button ks-inline-block' " +
             "style='margin-right:20px;'>确定</a> " +
             "<a " +
-            "class='ks-editor-table-cancel ks-editor-button ks-inline-block'>取消</a>" +
+            "class='{prefixCls}editor-table-cancel {prefixCls}editor-button ks-inline-block'>取消</a>" +
             "</div>",
         addRes = Editor.Utils.addRes,
         destroyRes = Editor.Utils.destroyRes;
 
+    function replacePrefix(str, prefix) {
+        return S.substitute(str, {
+            prefixCls: prefix
+        });
+    }
 
     function valid(str) {
         return trim(str).length != 0;
@@ -163,51 +168,51 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
     }
 
     S.augment(TableDialog, {
-        _tableInit:function () {
+        _tableInit: function () {
             var self = this,
                 d = new Dialog({
-                    autoRender:true,
-                    width:"500px",
-                    mask:true,
-                    headerContent:"表格", //属性",
-                    bodyContent:TABLE_HTML,
-                    footerContent:footHtml
+                    autoRender: true,
+                    width: "500px",
+                    mask: true,
+                    headerContent: "表格", //属性",
+                    bodyContent: replacePrefix(TABLE_HTML),
+                    footerContent: replacePrefix(footHtml)
                 }),
                 dbody = d.get("body"),
                 foot = d.get("footer");
-            d.twidth = dbody.one(".ks-editor-table-width");
-            d.theight = dbody.one(".ks-editor-table-height");
-            d.tborder = dbody.one(".ks-editor-table-border");
-            d.tcaption = dbody.one(".ks-editor-table-caption");
-            d.talign = MenuButton.Select.decorate(dbody.one(".ks-editor-table-align"), {
-                prefixCls:'ks-editor-big-',
-                width:80,
-                menuCfg:{
-                    prefixCls:'ks-editor-',
-                    render:dbody
+            d.twidth = dbody.one(replacePrefix(".{prefixCls}editor-table-width"));
+            d.theight = dbody.one(replacePrefix(".{prefixCls}editor-table-height"));
+            d.tborder = dbody.one(replacePrefix(".{prefixCls}editor-table-border"));
+            d.tcaption = dbody.one(replacePrefix(".{prefixCls}editor-table-caption"));
+            d.talign = MenuButton.Select.decorate(dbody.one(replacePrefix(".{prefixCls}editor-table-align")), {
+                prefixCls: replacePrefix('{prefixCls}editor-big-'),
+                width: 80,
+                menuCfg: {
+                    prefixCls: replacePrefix('{prefixCls}editor-'),
+                    render: dbody
                 }
             });
-            d.trows = dbody.one(".ks-editor-table-rows");
-            d.tcols = dbody.one(".ks-editor-table-cols");
-            d.thead = MenuButton.Select.decorate(dbody.one(".ks-editor-table-head"), {
-                prefixCls:'ks-editor-big-',
-                width:80,
-                menuCfg:{
-                    prefixCls:'ks-editor-',
-                    render:dbody
+            d.trows = dbody.one(replacePrefix(".{prefixCls}editor-table-rows"));
+            d.tcols = dbody.one(replacePrefix(".{prefixCls}editor-table-cols"));
+            d.thead = MenuButton.Select.decorate(dbody.one(replacePrefix(".{prefixCls}editor-table-head")), {
+                prefixCls: replacePrefix('{prefixCls}editor-big-'),
+                width: 80,
+                menuCfg: {
+                    prefixCls: replacePrefix('{prefixCls}editor-'),
+                    render: dbody
                 }
             });
-            d.cellpaddingHolder = dbody.one(".ks-editor-table-cellpadding-holder");
-            d.cellpadding = dbody.one(".ks-editor-table-cellpadding");
-            d.tcollapse = dbody.one(".ks-editor-table-collapse");
-            var tok = foot.one(".ks-editor-table-ok"),
-                tclose = foot.one(".ks-editor-table-cancel");
-            d.twidthunit = MenuButton.Select.decorate(dbody.one(".ks-editor-table-width-unit"), {
-                prefixCls:'ks-editor-big-',
-                width:80,
-                menuCfg:{
-                    prefixCls:'ks-editor-',
-                    render:dbody
+            d.cellpaddingHolder = dbody.one(replacePrefix(".{prefixCls}editor-table-cellpadding-holder"));
+            d.cellpadding = dbody.one(replacePrefix(".{prefixCls}editor-table-cellpadding"));
+            d.tcollapse = dbody.one(replacePrefix(".{prefixCls}editor-table-collapse"));
+            var tok = foot.one(replacePrefix(".{prefixCls}editor-table-ok")),
+                tclose = foot.one(replacePrefix(".{prefixCls}editor-table-cancel"));
+            d.twidthunit = MenuButton.Select.decorate(dbody.one(replacePrefix(".{prefixCls}editor-table-width-unit")), {
+                prefixCls: replacePrefix('{prefixCls}editor-big-'),
+                width: 80,
+                menuCfg: {
+                    prefixCls: replacePrefix('{prefixCls}editor-'),
+                    render: dbody
                 }
             });
             self.dialog = d;
@@ -219,7 +224,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             });
             addRes.call(self, d, d.twidthunit, tok, tclose);
         },
-        _tableOk:function (ev) {
+        _tableOk: function (ev) {
             ev && ev.halt();
             var self = this,
                 tableDialog = self.dialog,
@@ -248,7 +253,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
                 }
             }, 0);
         },
-        _modifyTable:function () {
+        _modifyTable: function () {
             var self = this,
                 d = self.dialog,
                 selectedTable = self.selectedTable,
@@ -310,7 +315,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             }
 
         },
-        _genTable:function () {
+        _genTable: function () {
             var self = this,
                 d = self.dialog,
                 html = "<table ",
@@ -365,8 +370,9 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             if (d.thead.get("value")) {
                 html += "<thead>";
                 html += "<tr>";
-                for (i = 0; i < cols; i++)
+                for (i = 0; i < cols; i++) {
                     html += "<th>" + cellpad + "</th>";
+                }
                 html += "</tr>";
                 html += "</thead>";
                 rows -= 1;
@@ -386,7 +392,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             var table = new Node(html, null, editor.get("document")[0]);
             editor.insertElement(table);
         },
-        _fillTableDialog:function () {
+        _fillTableDialog: function () {
             var self = this,
                 d = self.dialog,
                 selectedTable = self.selectedTable,
@@ -432,18 +438,18 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
                 selectedTable.one("tr").children().length : 0);
             d.thead.set("value", head ? '1' : '');
         },
-        _realTableShow:function () {
+        _realTableShow: function () {
             var self = this,
                 d = self.dialog;
 
             if (self.selectedTable) {
                 self._fillTableDialog();
                 d.get("el")
-                    .all(".ks-editor-table-create-only")
+                    .all(replacePrefix(".{prefixCls}editor-table-create-only"))
                     .attr("disabled", "disabled");
                 d.thead.set('disabled', true);
             } else {
-                d.get("el").all(".ks-editor-table-create-only")
+                d.get("el").all(replacePrefix(".{prefixCls}editor-table-create-only"))
                     .removeAttr("disabled");
                 d.thead.set('disabled', false);
             }
@@ -454,21 +460,21 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             }
             self.dialog.show();
         },
-        _prepareTableShow:function () {
+        _prepareTableShow: function () {
             var self = this;
             self._tableInit();
         },
-        show:function (cfg) {
+        show: function (cfg) {
             var self = this;
             S.mix(self, cfg);
             self._prepareTableShow();
         },
-        destroy:function () {
+        destroy: function () {
             destroyRes.call(this);
         }
     });
 
     return TableDialog;
 }, {
-    requires:['editor', '../overlay/', '../menubutton/']
+    requires: ['editor', '../overlay/', '../menubutton/']
 });

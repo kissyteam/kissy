@@ -4,7 +4,7 @@
  */
 KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
-    var HIT_CLS = "ks-menuitem-hit";
+    var HIT_CLS = "menuitem-hit";
 
     // 转义正则特殊字符,返回字符串用来构建正则表达式
     function regExpEscape(s) {
@@ -68,6 +68,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
              */
             filterItems:function (str) {
                 var self = this,
+                    prefixCls=self.get('prefixCls'),
                     view = self.get("view"),
                     _labelEl = view.get("labelEl"),
                     filterInput = view.get("filterInput");
@@ -146,7 +147,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                             c.set("visible", true);
                             // 匹配子串着重 wrap
                             c.get("el").html(content.replace(strExp, function (m) {
-                                return "<span class='" + HIT_CLS + "'>" + m + "<" + "/span>";
+                                return "<span class='" + prefixCls+HIT_CLS + "'>" + m + "<" + "/span>";
                             }));
                         } else {
                             // 不符合
@@ -158,9 +159,10 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
             },
 
             decorateInternal:function (el) {
-                var self = this;
+                var self = this,
+                    prefixCls=self.get('prefixCls');
                 self.set("el", el);
-                var menuContent = el.one("." + "ks-menu-content");
+                var menuContent = el.one("." + prefixCls+"menu-content");
                 self.decorateChildren(menuContent);
             },
 

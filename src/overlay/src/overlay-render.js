@@ -1,8 +1,8 @@
 /**
  * @fileOverview KISSY Overlay
- * @author yiminghe@gmail.com,乔花<qiaohua@taobao.com>
+ * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
-KISSY.add("overlay/overlayRender", function (S, UA, Component) {
+KISSY.add("overlay/overlay-render", function (S, UA, Component) {
 
     function require(s) {
         return S.require("component/uibase/" + s);

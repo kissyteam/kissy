@@ -5,41 +5,41 @@
 KISSY.add("component/uibase/stdmodrender", function (S, Node) {
 
 
-    var CLS_PREFIX = "ks-stdmod-";
+    var CLS_PREFIX = "stdmod-";
 
     function StdModRender() {
     }
 
     StdModRender.ATTRS = {
-        header:{
+        header: {
         },
-        body:{
+        body: {
         },
-        footer:{
+        footer: {
         },
-        bodyStyle:{
+        bodyStyle: {
         },
-        footerStyle:{
+        footerStyle: {
         },
-        headerStyle:{
+        headerStyle: {
         },
-        headerContent:{
+        headerContent: {
         },
-        bodyContent:{
+        bodyContent: {
         },
-        footerContent:{
+        footerContent: {
         }
     };
 
     StdModRender.HTML_PARSER = {
-        header:function (el) {
-            return el.one("." + CLS_PREFIX + "header");
+        header: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + "header");
         },
-        body:function (el) {
-            return el.one("." + CLS_PREFIX + "body");
+        body: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + "body");
         },
-        footer:function (el) {
-            return el.one("." + CLS_PREFIX + "footer");
+        footer: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + "footer");
         }
     };
 
@@ -48,7 +48,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
             partEl = self.get(part);
         if (!partEl) {
             partEl = new Node("<div class='" +
-                CLS_PREFIX + part + "'" +
+                self.get('prefixCls') + CLS_PREFIX + part + "'" +
                 " " +
                 " >" +
                 "</div>");
@@ -70,32 +70,32 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
 
     StdModRender.prototype = {
 
-        __createDom:function () {
+        __createDom: function () {
             createUI(this, "header");
             createUI(this, "body");
             createUI(this, "footer");
         },
 
-        _uiSetBodyStyle:function (v) {
+        _uiSetBodyStyle: function (v) {
             this.get("body").css(v);
         },
 
-        _uiSetHeaderStyle:function (v) {
+        _uiSetHeaderStyle: function (v) {
             this.get("header").css(v);
         },
-        _uiSetFooterStyle:function (v) {
+        _uiSetFooterStyle: function (v) {
             this.get("footer").css(v);
         },
 
-        _uiSetBodyContent:function (v) {
+        _uiSetBodyContent: function (v) {
             _setStdModRenderContent(this, "body", v);
         },
 
-        _uiSetHeaderContent:function (v) {
+        _uiSetHeaderContent: function (v) {
             _setStdModRenderContent(this, "header", v);
         },
 
-        _uiSetFooterContent:function (v) {
+        _uiSetFooterContent: function (v) {
             _setStdModRenderContent(this, "footer", v);
         }
     };
@@ -103,5 +103,5 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
     return StdModRender;
 
 }, {
-    requires:['node']
+    requires: ['node']
 });

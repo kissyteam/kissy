@@ -49,7 +49,7 @@ KISSY.add("overlay/effect", function (S, Anim, DOM) {
         ghost.className += " " + self.get("prefixCls") + "overlay-ghost";
         var body,elBody;
         if (elBody = self.get("body")) {
-            body = DOM.get('.ks-stdmod-body', ghost);
+            body = DOM.get('.'+self.get('prefixCls')+'-stdmod-body', ghost);
             $(body).css({
                 height:elBody.height(),
                 width:elBody.width()

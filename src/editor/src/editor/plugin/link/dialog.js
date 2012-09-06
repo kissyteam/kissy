@@ -13,7 +13,7 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
             "<input " +
             " data-verify='^(https?://[^\\s]+)|(#.+)$' " +
             " data-warning='请输入合适的网址格式' " +
-            "class='ks-editor-link-url ks-editor-input' " +
+            "class='{prefixCls}editor-link-url {prefixCls}editor-input' " +
             "style='width:390px;" +
             "'" +
             " />" +
@@ -23,12 +23,12 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
             "style='margin: 15px 0 10px 0px;'>" +
             "<label>" +
             "链接名称： " +
-            "<input class='ks-editor-link-title ks-editor-input' style='width:100px;" +
+            "<input class='{prefixCls}editor-link-title {prefixCls}editor-input' style='width:100px;" +
             "'>" +
             "</label> " +
             "<label>" +
             "<input " +
-            "class='ks-editor-link-blank' " +
+            "class='{prefixCls}editor-link-blank' " +
             "style='vertical-align: middle; margin-left: 21px;' " +
             "type='checkbox'/>" +
             " &nbsp; 在新窗口打开链接" +
@@ -38,11 +38,11 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
         footHtml = "<div style='padding:5px 20px 20px;'>" +
             "<a " +
             "href='javascript:void(\'确定\')' " +
-            "class='ks-editor-link-ok ks-editor-button ks-inline-block' " +
+            "class='{prefixCls}editor-link-ok {prefixCls}editor-button ks-inline-block' " +
             "style='margin-left:65px;margin-right:20px;'>确定</a> " +
             "<a " +
             "href='javascript:void(\'取消\')' " +
-            "class='ks-editor-link-cancel ks-editor-button ks-inline-block'>取消</a>" +
+            "class='{prefixCls}editor-link-cancel {prefixCls}editor-button ks-inline-block'>取消</a>" +
             "</div>";
 
     function LinkDialog(editor,config) {
@@ -55,22 +55,28 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
     S.augment(LinkDialog, {
         _prepareShow:function () {
             var self = this,
+                editor=self.editor,
+                prefixCls=editor.get('prefixCls'),
                 d = new Dialog({
                     autoRender:true,
                     width:500,
                     headerContent:"链接",
-                    bodyContent:bodyHtml,
-                    footerContent:footHtml,
+                    bodyContent: S.substitute(bodyHtml,{
+                        prefixCls:prefixCls
+                        }),
+                    footerContent:S.substitute(footHtml,{
+                        prefixCls:prefixCls
+                    }),
                     mask:true
                 });
             self.dialog = d;
             var body = d.get("body"),
                 foot = d.get("footer");
-            d.urlEl = body.one(".ks-editor-link-url");
-            d.urlTitle = body.one(".ks-editor-link-title");
-            d.targetEl = body.one(".ks-editor-link-blank");
-            var cancel = foot.one(".ks-editor-link-cancel"),
-                ok = foot.one(".ks-editor-link-ok");
+            d.urlEl = body.one("."+prefixCls+"editor-link-url");
+            d.urlTitle = body.one("."+prefixCls+"editor-link-title");
+            d.targetEl = body.one("."+prefixCls+"editor-link-blank");
+            var cancel = foot.one("."+prefixCls+"editor-link-cancel"),
+                ok = foot.one("."+prefixCls+"editor-link-ok");
             ok.on("click", self._link, self);
             cancel.on("click", function (ev) {
                 ev && ev.halt();
