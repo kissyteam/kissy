@@ -263,6 +263,9 @@
                     bodyStyle: {
                         height: 100
                     },
+                    effect: {
+                        effect: 'fade'
+                    },
                     mask: false,
                     align: {
                         node: '#c1',
@@ -278,12 +281,19 @@
                         handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"]
                     }
                 });
+
                 dialog.on('show', function () {
                     if (stat) {
                         this.set('bodyContent', '我的位置只能在容器中');
                     } else {
                         this.set('bodyContent', '我自由啦');
                     }
+                    Node.one('#btn6').html('隐藏');
+                    sh = 1;
+                });
+                dialog.on('hide', function () {
+                    Node.one('#btn6').html('显示');
+                    sh = 0;
                 });
 
                 Node.one('#btn6').on('click', function () {
@@ -293,12 +303,9 @@
                             node: '#c1',
                             points: ['cc', 'cc']
                         });
-                        new Node(this).html('隐藏');
                     } else {
                         dialog.hide();
-                        new Node(this).html('显示');
                     }
-                    sh = !sh;
                 });
 
 
@@ -415,9 +422,10 @@
 
                 S.ready(function (S) {
 
-                    var dialog = new Dialog({
+                    var dialog = new Overlay({
                         width: 424,
                         elCls: 'my',
+                        closable: true,
                         elStyle: {
                             overflow: 'hidden'
                         },
@@ -430,7 +438,7 @@
                             duration: .3
                         },
                         <!-- width height 一定要设-->
-                        bodyContent: '<img '
+                        content: '<img '
                                 + 'width="424" '
                                 + 'height="282" '
                                 + 'src = "http://img02.taobaocdn.com/tps/i2/T10J9bXnlgXXXXXXXX-424-282.jpg?noq=y" / > '

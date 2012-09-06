@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 6 21:55
+build time: Sep 7 02:30
 */
 /**
 * Variables to customize the look and feel from Bootstrap.
@@ -23,6 +23,7 @@ build time: Sep 6 21:55
   left: -9999px;
   top: -9999px;
   visibility: hidden;
+  outline: none;
 }
 .ks-ext-close {
   display: inline-block;
@@ -69,6 +70,7 @@ build time: Sep 6 21:55
   position: absolute;
   right: 15px;
   top: 9px;
+  z-index: 99;
 }
 .ks-ext-close:last-child {
   *margin-left: 0;

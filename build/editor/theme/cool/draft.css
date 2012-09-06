@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 5 10:33
+build time: Sep 7 02:29
 */
 .ks-editor-draft {
     position: absolute;
@@ -21,7 +21,7 @@ build time: Sep 5 10:33
     margin-right: 2px;
 }
 
-.ks-editor-draft .ks-menu-button-caption {
+.ks-editor-draft .ks-editor-menu-button-caption {
     padding-left: 4px;
     height: 20px;
     line-height: 20px;

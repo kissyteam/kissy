@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 5 18:56
+build time: Sep 7 02:30
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 5 18:56
 
         /**
          * The build time of the library.
-         * NOTICE: '20120905185655' will replace with current timestamp when compressing.
+         * NOTICE: '20120907023044' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120905185655';
+        S.__BUILD_TIME = '20120907023044';
     })();
 
     return S;
@@ -5176,7 +5176,7 @@ build time: Sep 5 18:56
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120905185655'
+        tag: '20120907023044'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5472,7 +5472,7 @@ KISSY.config('modules', {
 'split-button': {requires: ['component','button','menubutton']},
 'mvc': {requires: ['base','event','node','ajax','json']},
 'color': {requires: ['base']},
-'overlay': {requires: ['anim','dom','node','event','ua','component']},
+'overlay': {requires: ['ua','component','node']},
 'base': {requires: ['event']},
 'separator': {requires: ['component']},
 'tabs': {requires: ['button','component','toolbar']}
@@ -5481,7 +5481,7 @@ KISSY.config('modules', {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:58
+build time: Sep 7 02:30
 */
 /**
  * @ignore
@@ -5866,7 +5866,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 27 21:19
+build time: Sep 7 02:26
 */
 /**
  * @ignore
@@ -10353,7 +10353,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 23:55
+build time: Sep 7 02:29
 */
 /**
  * @ignore
@@ -10546,7 +10546,7 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
  * @ignore
  * @fileOverview scalable event framework for kissy (refer DOM3 Events)
  * how to fire event just like browser?
- * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 
@@ -11229,7 +11229,7 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
                 if (gRet !== false) {
                     gRet = ret;
                 }
-                // return false 等价 preventDefault + stopProgation
+                // return false 等价 preventDefault + stopPropagation
                 if (ret === false) {
                     event.halt();
                 }
@@ -13068,7 +13068,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:57
+build time: Sep 7 02:29
 */
 /**
  * @ignore
@@ -13594,7 +13594,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:53
+build time: Sep 7 02:26
 */
 /**
  * @ignore
@@ -13768,7 +13768,7 @@ KISSY.add('ajax', function (S, serializer, IO) {
 });/**
  * @ignore
  * @fileOverview a scalable client io framework
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
 
@@ -14351,7 +14351,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
  *//**
  * @ignore
  * @fileOverview form data  serialization util
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/form-serializer', function (S, DOM) {
     var rselectTextarea = /^(?:select|textarea)/i,
@@ -14484,7 +14484,7 @@ KISSY.add('ajax/form', function (S, io, DOM, FormSerializer) {
 });/**
  * @ignore
  * @fileOverview non-refresh upload file with form by iframe
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
 
@@ -14676,7 +14676,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
 });/**
  * @ignore
  * @fileOverview jsonp transport based on script transport
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/jsonp', function (S, io) {
     var win = S.Env.host;
@@ -14979,7 +14979,7 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
  * @ignore
  * @fileOverview script transport for kissy io
  * @description: modified version of S.getScript , add abort ability
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
 
@@ -15655,7 +15655,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:53
+build time: Sep 7 02:26
 */
 /**
  * @ignore
@@ -15765,12 +15765,12 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:53
+build time: Sep 7 02:26
 */
 /**
  * @ignore
  * @fileOverview attribute management
- * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base/attribute', function (S, undefined) {
 
@@ -16309,7 +16309,7 @@ KISSY.add('base/attribute', function (S, undefined) {
 /**
  * @ignore
  * @fileOverview attribute management and event in one
- * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base', function (S, Attribute, Event) {
 
@@ -16367,7 +16367,11 @@ KISSY.add('base', function (S, Attribute, Event) {
                 // 子类上的 ATTRS 配置优先
                 if (attrs.hasOwnProperty(attr)) {
                     // 父类后加，父类不覆盖子类的相同设置
-                    // 属性对象会 merge   a: {y:{getter:fn}}, b:{y:{value:3}}, b extends a => b {y:{value:3}}
+                    // 属性对象会 merge
+                    // a: {y: {getter: fn}}, b: {y: {value: 3}}
+                    // b extends a
+                    // =>
+                    // b {y: {value: 3, getter: fn}}
                     host.addAttr(attr, attrs[attr], false);
                 }
             }
@@ -16399,7 +16403,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 3 17:15
+build time: Sep 7 02:26
 */
 /**
  * @ignore
@@ -16417,7 +16421,7 @@ KISSY.add('anim', function (S, Anim, Easing) {
 });/**
  * @ignore
  * @fileOverview special patch for anim backgroundPosition
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
 
@@ -17216,7 +17220,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 /**
  * @ignore
  * @fileOverview special patch for making color gradual change
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
 
@@ -17772,7 +17776,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
  *//**
  * @ignore
  * @fileOverview single timer for the whole anim module
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('anim/manager', function(S) {
     var stamp = S.stamp;
@@ -17946,7 +17950,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 4 20:01
+build time: Sep 7 02:30
 */
 /**
  * @ignore

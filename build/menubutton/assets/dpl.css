@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:57
+build time: Sep 7 02:30
 */
 /**
  * MenuButton style for KISSY from Bootstrap dropdown.
@@ -14,6 +14,11 @@ build time: Aug 21 20:57
 */
 /**
 * Snippets of reusable CSS to develop faster and keep code readable from KISSY and Bootstrap.
+*
+* @author yiminghe@gmail.com
+*/
+/**
+* Variables to customize the look and feel from Bootstrap.
 *
 * @author yiminghe@gmail.com
 */
@@ -44,7 +49,7 @@ build time: Aug 21 20:57
 .ks-button-info .ks-menu-button-dropdown,
 .ks-button-success .ks-menu-button-dropdown,
 .ks-button-inverse .ks-menu-button-dropdown {
-  border-top-color: white;
+  border-top-color: #ffffff;
   opacity: 0.75;
   filter: alpha(opacity=75);
   *zoom: 1;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:53
+build time: Sep 7 02:26
 */
 /**
  * @ignore
@@ -175,7 +175,7 @@ KISSY.add('ajax', function (S, serializer, IO) {
 });/**
  * @ignore
  * @fileOverview a scalable client io framework
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
 
@@ -758,7 +758,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
  *//**
  * @ignore
  * @fileOverview form data  serialization util
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/form-serializer', function (S, DOM) {
     var rselectTextarea = /^(?:select|textarea)/i,
@@ -891,7 +891,7 @@ KISSY.add('ajax/form', function (S, io, DOM, FormSerializer) {
 });/**
  * @ignore
  * @fileOverview non-refresh upload file with form by iframe
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
 
@@ -1083,7 +1083,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
 });/**
  * @ignore
  * @fileOverview jsonp transport based on script transport
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/jsonp', function (S, io) {
     var win = S.Env.host;
@@ -1386,7 +1386,7 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
  * @ignore
  * @fileOverview script transport for kissy io
  * @description: modified version of S.getScript , add abort ability
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
 

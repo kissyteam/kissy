@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 5 10:33
+build time: Sep 7 02:29
 */
 /**
  * Set up editor constructor
@@ -134,7 +134,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
     Editor.HTML_PARSER = {
 
         textarea:function (el) {
-            return el.one(".ks-editor-textarea");
+            return el.one("."+this.get('prefixCls')+"editor-textarea");
         }
 
     };

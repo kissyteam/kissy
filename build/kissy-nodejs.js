@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:57
+build time: Sep 7 02:30
 */
 /**
  * patch for nodejs
@@ -25,7 +25,7 @@ build time: Aug 21 20:57
      */
     KISSY = exports.KISSY = window.KISSY = exports;
     KISSY.Env = {
-        host:window
+        host: window
     };
 })();
 
@@ -46,8 +46,8 @@ build time: Aug 21 20:57
     S.Env.mods = {};
 
     mix(S, {
-        configs:{
-            packages:function (cfgs) {
+        configs: {
+            packages: function (cfgs) {
                 var ps = S.__packages = S.__packages || {}, cfg, p, i;
                 if (S.isArray(cfgs)) {
                     for (i = 0; i < cfgs.length; i++) {
@@ -77,24 +77,31 @@ build time: Aug 21 20:57
 
     mix(S, {
 
-        Config:{
-            base:__dirname.replace(/\\/g, "/") + "/"
+        Config: {
+            base: __dirname.replace(/\\/g, "/") + "/"
         },
 
-        add:function (name, def, cfg) {
+        getLoader: function () {
+            if (S.__loader) {
+                return S.__loader;
+            }
+            return S.__loader = S.merge(S.Loader.Target);
+        },
+
+        add: function (name, def, cfg) {
             if (S.isFunction(name)) {
                 cfg = def;
                 def = name;
                 name = this.currentModName;
             }
             mods[name] = {
-                name:name,
-                fn:def
+                name: name,
+                fn: def
             };
             S.mix(mods[name], cfg);
         },
 
-        _getPath:function (modName) {
+        _getPath: function (modName) {
             this.__packages = this.__packages || {};
             var packages = this.__packages;
             var pName = "";
@@ -111,14 +118,12 @@ build time: Aug 21 20:57
             return base + modName;
         },
 
-        require:function (moduleName) {
+        require: function (moduleName) {
             var mod = mods[moduleName];
-            var re = S['onRequire'] && S['onRequire'](mod);
-            if (re !== undefined) return re;
             return mod && mod.value;
         },
 
-        _attach:function (modName) {
+        _attach: function (modName) {
             var modPath = this._getPath(modName);
             var mod = mods[modName];
             if (!mod) {
@@ -129,14 +134,17 @@ build time: Aug 21 20:57
                     link.rel = 'stylesheet';
                     document.head.appendChild(link);
                     mods[modName] = {
-                        attached:1
+                        attached: 1
                     };
                 } else {
                     require(modPath);
                 }
             }
             mod = mods[modName];
-            if (mod.attached) return;
+            mod.name = modName;
+            if (mod.attached) {
+                return;
+            }
             mod.requires = mod.requires || [];
             var requires = mod.requires;
             normalDepModuleName(modName, requires);
@@ -147,9 +155,12 @@ build time: Aug 21 20:57
             }
             mod.value = mod.fn.apply(null, deps);
             mod.attached = true;
+            S.getLoader().fire("afterModAttached", {
+                mod: mod
+            });
         },
 
-        use:function (modNames, callback) {
+        use: function (modNames, callback) {
             modNames = modNames.replace(/\s+/g, "").split(',');
             indexMapping(modNames);
             var self = this;
@@ -214,7 +225,7 @@ build time: Aug 21 20:57
 })(KISSY);/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:52
+build time: Sep 5 18:56
 */
 /**
  * @ignore
@@ -239,9 +250,8 @@ build time: Aug 21 20:52
      *
      * to do complex task with modules.
      * @singleton
-     * @class
+     * @class KISSY
      */
-    var KISSY = S;
 
     function hasOwnProperty(o, p) {
         return Object.prototype.hasOwnProperty.call(o, p);
@@ -305,23 +315,24 @@ build time: Aug 21 20:52
 
             var i = 0, p, len;
 
+            // 记录循环标志
+            s[MIX_CIRCULAR_DETECTION] = r;
+
+            // 记录被记录了循环标志的对像
+            cache.push(s);
+
             if (wl && (len = wl.length)) {
                 for (; i < len; i++) {
                     p = wl[i];
                     if (p in s) {
-                        _mix(p, r, s, ov, deep, cache);
+                        _mix(p, r, s, ov, wl, deep, cache);
                     }
                 }
             } else {
-
-                s[MIX_CIRCULAR_DETECTION] = r;
-
-                cache.push(s);
-
                 for (p in s) {
                     if (p != MIX_CIRCULAR_DETECTION) {
                         // no hasOwnProperty judge !
-                        _mix(p, r, s, ov, deep, cache);
+                        _mix(p, r, s, ov, wl, deep, cache);
                     }
                 }
 
@@ -329,7 +340,7 @@ build time: Aug 21 20:52
                 if (hasEnumBug) {
                     for (; p = enumProperties[i++];) {
                         if (hasOwnProperty(s, p)) {
-                            _mix(p, r, s, ov, deep, cache);
+                            _mix(p, r, s, ov, wl, deep, cache);
                         }
                     }
                 }
@@ -337,7 +348,7 @@ build time: Aug 21 20:52
             return r;
         },
 
-        _mix = function (p, r, s, ov, deep, cache) {
+        _mix = function (p, r, s, ov, wl, deep, cache) {
             // 要求覆盖
             // 或者目的不存在
             // 或者深度mix
@@ -358,11 +369,8 @@ build time: Aug 21 20:52
                         var clone = target && (S.isArray(target) || S.isPlainObject(target)) ?
                             target :
                             (S.isArray(src) ? [] : {});
-                        // 记录循环标志
-                        src[MIX_CIRCULAR_DETECTION] = r[p] = clone;
-                        // 记录被记录了循环标志的对像
-                        cache.push(src);
-                        mixInternal(clone, src, ov, undefined, true, cache);
+                        r[p] = clone;
+                        mixInternal(clone, src, ov, wl, true, cache);
                     }
                 } else if (src !== undefined && (ov || !(p in r))) {
                     r[p] = src;
@@ -573,36 +581,18 @@ build time: Aug 21 20:52
                 var cfg,
                     r,
                     self = this,
-                    runs = [],
                     fn,
-                    p,
                     Config = S.Config,
                     configs = S.configs;
                 if (S.isObject(configName)) {
-                    for (p in configName) {
-                        if (configName.hasOwnProperty(p)) {
-                            runs.push({
-                                name: p,
-                                order: configs[p] && configs[p].order || 0,
-                                value: configName[p]
-                            });
-                        }
-                    }
-
-                    runs.sort(function (a1, a2) {
-                        return a1.order > a2.order;
-                    });
-
-                    S.each(runs, function (r) {
-                        fn = configs[p = r.name];
-                        configValue = r.value;
+                    S.each(configName, function (configValue, p) {
+                        fn = configs[p];
                         if (fn) {
                             fn.call(self, configValue);
                         } else {
                             Config[p] = configValue;
                         }
                     });
-
                 } else {
                     cfg = configs[configName];
                     if (configValue === undefined) {
@@ -694,6 +684,10 @@ build time: Aug 21 20:52
          * @type {Object}
          */
         S.Env = S.Env || {};
+
+        S.Env.nodejs = (typeof require !== 'undefined') &&
+            (typeof exports !== 'undefined');
+
         /**
          * KISSY Config.
          * If load kissy.js, Config.debug defaults to true.
@@ -709,11 +703,11 @@ build time: Aug 21 20:52
 
         /**
          * The build time of the library.
-         * NOTICE: '20120821205249' will replace with current timestamp when compressing.
+         * NOTICE: '20120905185655' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120821205249';
+        S.__BUILD_TIME = '20120905185655';
     })();
 
     return S;
@@ -3115,7 +3109,7 @@ build time: Aug 21 20:52
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -3393,9 +3387,8 @@ build time: Aug 21 20:52
  */
 (function (S) {
 
-    if (typeof require !== 'undefined') {
-        return;
-    }
+    // in case current code runs on nodejs
+    S.namespace("Loader");
 
     var time = S.now(),
         p = '__events__' + time;
@@ -3473,9 +3466,9 @@ build time: Aug 21 20:52
  * @fileOverview Utils for kissy loader
  * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
+(function (S) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -3759,7 +3752,7 @@ build time: Aug 21 20:52
          * normalize module names
          * @param self
          * @param modNames
-         * @param refModName
+         * @param [refModName]
          * @return {Array}
          */
         normalizeModNamesWithAlias: function (self, modNames, refModName) {
@@ -3786,7 +3779,7 @@ build time: Aug 21 20:52
          * @param self
          * @param name
          * @param fn
-         * @param config
+         * @param [config]
          */
         registerModule: function (self, name, fn, config) {
             var mods = self.Env.mods,
@@ -3855,7 +3848,7 @@ build time: Aug 21 20:52
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -3970,7 +3963,7 @@ build time: Aug 21 20:52
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
     var MILLISECONDS_OF_SECOND = 1000,
@@ -4163,7 +4156,7 @@ build time: Aug 21 20:52
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
     var Loader = S.Loader,
@@ -4260,8 +4253,6 @@ build time: Aug 21 20:52
         }
     };
 
-    configs.modules.order = 10;
-
     /*
      KISSY 's base path.
      */
@@ -4281,7 +4272,7 @@ build time: Aug 21 20:52
  */
 (function (S, undefined) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -4517,7 +4508,7 @@ build time: Aug 21 20:52
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -4791,7 +4782,7 @@ build time: Aug 21 20:52
  */
 (function (S) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -4842,7 +4833,6 @@ build time: Aug 21 20:52
         }
     }
 
-
     // Enqueue use
     function enqueue(self, modNames, fn) {
         self.queue.push({
@@ -4850,7 +4840,6 @@ build time: Aug 21 20:52
             fn: fn
         });
     }
-
 
     // Real use.
     function _use(self, modNames, fn) {
@@ -4884,10 +4873,7 @@ build time: Aug 21 20:52
             countCss++;
         }
 
-        if (!countCss) {
-            _useJs(self, comboUrls, fn, modNames);
-            return;
-        }
+        var jsOk = 0, cssOk = !countCss;
 
         for (p in css) {
             if (css.hasOwnProperty(p)) {
@@ -4901,20 +4887,35 @@ build time: Aug 21 20:52
                                 });
                             }
                         }
-                        _useJs(self, comboUrls, fn, modNames);
+                        cssOk = 1;
+                        check(jsOk);
                     }
                 }, css[p].charset);
             }
         }
+
+        function check(paramJsOk) {
+            jsOk = paramJsOk;
+            if (cssOk && jsOk) {
+                attachMods(self, unaliasModNames);
+                if (utils.isAttached(SS, unaliasModNames)) {
+                    fn.apply(null, utils.getModules(SS, modNames))
+                } else {
+                    // new require is introduced by KISSY.add
+                    // run again
+                    _use(self, modNames, fn)
+                }
+            }
+        }
+
+        // jss css download in parallel
+        _useJs(comboUrls, check);
     }
 
-
     // use js
-    function _useJs(self, comboUrls, fn, modNames) {
+    function _useJs(comboUrls, check) {
         var p,
             success,
-            SS = self.SS,
-            unaliasModNames,
             jss = comboUrls.js,
             countJss = 0;
 
@@ -4925,9 +4926,7 @@ build time: Aug 21 20:52
 
         if (!countJss) {
             // 2012-05-18 bug: loaded 那么需要加载的 jss 为空，要先 attach 再通知用户回调函数
-            unaliasModNames = utils.unalias(SS, modNames);
-            attachMods(self, unaliasModNames);
-            fn.apply(null, utils.getModules(SS, modNames));
+            check(1);
             return;
         }
         success = 1;
@@ -4935,7 +4934,7 @@ build time: Aug 21 20:52
             if (jss.hasOwnProperty(p)) {
                 (function (p) {
                     loadScripts(jss[p], function () {
-                        var mods = jss[p].mods, mod, unaliasModNames, i;
+                        var mods = jss[p].mods, mod, i;
                         for (i = 0; i < mods.length; i++) {
                             mod = mods[i];
                             // fix #111
@@ -4948,15 +4947,7 @@ build time: Aug 21 20:52
                             }
                         }
                         if (success && !(--countJss)) {
-                            unaliasModNames = utils.unalias(SS, modNames);
-                            attachMods(self, unaliasModNames);
-                            if (utils.isAttached(SS, unaliasModNames)) {
-                                fn.apply(null, utils.getModules(SS, modNames))
-                            } else {
-                                // new require is introduced by KISSY.add
-                                // run again
-                                _use(self, modNames, fn)
-                            }
+                            check(1);
                         }
                     }, jss[p].charset);
                 })(p);
@@ -4964,14 +4955,12 @@ build time: Aug 21 20:52
         }
     }
 
-
     // attach mods
     function attachMods(self, modNames) {
         S.each(modNames, function (modName) {
             attachMod(self, modName);
         });
     }
-
 
     // attach one mod
     function attachMod(self, modName) {
@@ -4999,12 +4988,10 @@ build time: Aug 21 20:52
         return undefined;
     }
 
-
     // get mod info.
     function getModInfo(self, modName) {
         return self.SS.Env.mods[modName];
     }
-
 
     // get requires mods need to be loaded dynamically
     function getRequires(self, modName, cache) {
@@ -5269,7 +5256,7 @@ build time: Aug 21 20:52
  */
 (function (S) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -5413,7 +5400,7 @@ build time: Aug 21 20:52
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120821205249'
+        tag: '20120905185655'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5718,7 +5705,7 @@ KISSY.config('modules', {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:11
+build time: Aug 21 20:58
 */
 /**
  * @ignore
@@ -6103,7 +6090,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:07
+build time: Aug 27 21:19
 */
 /**
  * @ignore
@@ -7709,7 +7696,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
     noData['embed'] = 1;
 
     var commonOps = {
-        hasData:function (cache, name) {
+        hasData: function (cache, name) {
             if (cache) {
                 if (name !== undefined) {
                     if (name in cache) {
@@ -7724,7 +7711,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
     };
 
     var objectOps = {
-        hasData:function (ob, name) {
+        hasData: function (ob, name) {
             // 只判断当前窗口，iframe 窗口内数据直接放入全局变量
             if (ob == win) {
                 return objectOps.hasData(winDataCache, name);
@@ -7734,7 +7721,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
             return commonOps.hasData(thisCache, name);
         },
 
-        data:function (ob, name, value) {
+        data: function (ob, name, value) {
             if (ob == win) {
                 return objectOps.data(winDataCache, name, value);
             }
@@ -7751,7 +7738,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                 }
             }
         },
-        removeData:function (ob, name) {
+        removeData: function (ob, name) {
             if (ob == win) {
                 return objectOps.removeData(winDataCache, name);
             }
@@ -7774,7 +7761,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
     };
 
     var domOps = {
-        hasData:function (elem, name) {
+        hasData: function (elem, name) {
             var key = elem[EXPANDO];
             if (!key) {
                 return false;
@@ -7783,7 +7770,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
             return commonOps.hasData(thisCache, name);
         },
 
-        data:function (elem, name, value) {
+        data: function (elem, name, value) {
             if (noData[elem.nodeName.toLowerCase()]) {
                 return undefined;
             }
@@ -7813,7 +7800,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
             }
         },
 
-        removeData:function (elem, name) {
+        removeData: function (elem, name) {
             var key = elem[EXPANDO], cache;
             if (!key) {
                 return;
@@ -7849,7 +7836,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
          */
         {
 
-            __EXPANDO:EXPANDO,
+            __EXPANDO: EXPANDO,
 
             /**
              * Determine whether an element has any data or specified data name associated with it.
@@ -7857,7 +7844,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * @param {String} [name] A string naming the piece of data to set.
              * @return {Boolean}
              */
-            hasData:function (selector, name) {
+            hasData: function (selector, name) {
                 var ret = false,
                     elems = DOM.query(selector);
                 for (var i = 0; i < elems.length; i++) {
@@ -7865,6 +7852,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                     if (elem.nodeType) {
                         ret = domOps.hasData(elem, name);
                     } else {
+                        // window
                         ret = objectOps.hasData(elem, name);
                     }
                     if (ret) {
@@ -7885,14 +7873,16 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * @param [data] The new data value.
              * @return {Object|undefined}
              */
-            data:function (selector, name, data) {
+            data: function (selector, name, data) {
 
                 var elems = DOM.query(selector), elem = elems[0];
 
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        DOM.data(elems, k, name[k]);
+                        if (name.hasOwnProperty(k)) {
+                            DOM.data(elems, k, name[k]);
+                        }
                     }
                     return undefined;
                 }
@@ -7901,9 +7891,10 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                 if (data === undefined) {
                     if (elem) {
                         if (elem.nodeType) {
-                            return domOps.data(elem, name, data);
+                            return domOps.data(elem, name);
                         } else {
-                            return objectOps.data(elem, name, data);
+                            // window
+                            return objectOps.data(elem, name);
                         }
                     }
                 }
@@ -7914,6 +7905,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                         if (elem.nodeType) {
                             domOps.data(elem, name, data);
                         } else {
+                            // window
                             objectOps.data(elem, name, data);
                         }
                     }
@@ -7928,13 +7920,14 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String} [name] A string naming the piece of data to delete.
              */
-            removeData:function (selector, name) {
+            removeData: function (selector, name) {
                 var els = DOM.query(selector), elem, i;
                 for (i = els.length - 1; i >= 0; i--) {
                     elem = els[i];
                     if (elem.nodeType) {
                         domOps.removeData(elem, name);
                     } else {
+                        // window
                         objectOps.removeData(elem, name);
                     }
                 }
@@ -7944,11 +7937,11 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
     return DOM;
 
 }, {
-    requires:['./base']
+    requires: ['./base']
 });
 /*
-  承玉：2011-05-31
-   - 分层 ，节点和普通对象分开处理
+ 承玉：2011-05-31
+ - 分层 ，节点和普通对象分开处理
  *//**
  * @ignore
  * @fileOverview dom
@@ -8285,7 +8278,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     var win = S.Env.host,
         doc = win.document,
-        NodeType=DOM.NodeType,
+        NodeType = DOM.NodeType,
         docElem = doc.documentElement,
         getWin = DOM._getWin,
         CSS1Compat = 'CSS1Compat',
@@ -8329,7 +8322,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              *     the top-most window.
              * @return {Object|undefined} if Get, the format of returned value is same with coordinates.
              */
-            offset:function (selector, coordinates, relativeWin) {
+            offset: function (selector, coordinates, relativeWin) {
                 // getter
                 if (coordinates === undefined) {
                     var elem = DOM.get(selector), ret;
@@ -8359,7 +8352,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
              *        http://yiminghe.javaeye.com/blog/390732
              */
-            scrollIntoView:function (selector, container, top, hscroll, auto) {
+            scrollIntoView: function (selector, container, top, hscroll, auto) {
                 var elem;
 
                 if (!(elem = DOM.get(selector))) {
@@ -8404,17 +8397,17 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                     wh = DOM.height(win);
                     ww = DOM.width(win);
                     winScroll = {
-                        left:DOM.scrollLeft(win),
-                        top:DOM.scrollTop(win)
+                        left: DOM.scrollLeft(win),
+                        top: DOM.scrollTop(win)
                     };
                     // elem 相对 container 可视视窗的距离
                     diffTop = {
-                        left:elemOffset[LEFT] - winScroll[LEFT],
-                        top:elemOffset[TOP] - winScroll[TOP]
+                        left: elemOffset[LEFT] - winScroll[LEFT],
+                        top: elemOffset[TOP] - winScroll[TOP]
                     };
                     diffBottom = {
-                        left:elemOffset[LEFT] + ew - (winScroll[LEFT] + ww),
-                        top:elemOffset[TOP] + eh - (winScroll[TOP] + wh)
+                        left: elemOffset[LEFT] + ew - (winScroll[LEFT] + ww),
+                        top: elemOffset[TOP] + eh - (winScroll[TOP] + wh)
                     };
                     containerScroll = winScroll;
                 }
@@ -8423,22 +8416,22 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                     ch = container.clientHeight;
                     cw = container.clientWidth;
                     containerScroll = {
-                        left:DOM.scrollLeft(container),
-                        top:DOM.scrollTop(container)
+                        left: DOM.scrollLeft(container),
+                        top: DOM.scrollTop(container)
                     };
                     // elem 相对 container 可视视窗的距离
                     // 注意边框 , offset 是边框到根节点
                     diffTop = {
-                        left:elemOffset[LEFT] - containerOffset[LEFT] -
+                        left: elemOffset[LEFT] - containerOffset[LEFT] -
                             (myParseInt(DOM.css(container, 'borderLeftWidth')) || 0),
-                        top:elemOffset[TOP] - containerOffset[TOP] -
+                        top: elemOffset[TOP] - containerOffset[TOP] -
                             (myParseInt(DOM.css(container, 'borderTopWidth')) || 0)
                     };
                     diffBottom = {
-                        left:elemOffset[LEFT] + ew -
+                        left: elemOffset[LEFT] + ew -
                             (containerOffset[LEFT] + cw +
                                 (myParseInt(DOM.css(container, 'borderRightWidth')) || 0)),
-                        top:elemOffset[TOP] + eh -
+                        top: elemOffset[TOP] + eh -
                             (containerOffset[TOP] + ch +
                                 (myParseInt(DOM.css(container, 'borderBottomWidth')) || 0))
                     };
@@ -8483,25 +8476,25 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * @param {window} [win=window] Window to be referred.
              * @method
              */
-            docWidth:0,
+            docWidth: 0,
             /**
              * Get the height of document
              * @param {window} [win=window] Window to be referred.
              * @method
              */
-            docHeight:0,
+            docHeight: 0,
             /**
              * Get the height of window
              * @param {window} [win=window] Window to be referred.
              * @method
              */
-            viewportHeight:0,
+            viewportHeight: 0,
             /**
              * Get the width of document
              * @param {window} [win=window] Window to be referred.
              * @method
              */
-            viewportWidth:0,
+            viewportWidth: 0,
             /**
              * Get the current vertical position of the scroll bar for the first element in the set of matched elements.
              * or
@@ -8510,7 +8503,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
              * @method
              */
-            scrollTop:0,
+            scrollTop: 0,
             /**
              * Get the current horizontal position of the scroll bar for the first element in the set of matched elements.
              * or
@@ -8519,7 +8512,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
              * @method
              */
-            scrollLeft:0
+            scrollLeft: 0
         });
 
     // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
@@ -8539,7 +8532,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
             if (w) {
                 if (v !== undefined) {
                     v = parseFloat(v);
-                    // 注意多 windw 情况，不能简单取 win
+                    // 注意多 window 情况，不能简单取 win
                     var left = name == 'Left' ? v : DOM.scrollLeft(w),
                         top = name == 'Top' ? v : DOM.scrollTop(w);
                     w['scrollTo'](left, top);
@@ -8603,8 +8596,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
     function getClientPosition(elem) {
         var box, x , y ,
             doc = elem.ownerDocument,
-            body = doc.body,
-            w = getWin(elem[OWNER_DOCUMENT]);
+            body = doc.body;
 
         // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
         box = elem.getBoundingClientRect();
@@ -8636,16 +8628,10 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         // ie7 html 即窗口边框改变不了。永远为 2
         // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
 
-        x -= docElem.clientLeft || body.clientLeft;
-        y -= docElem.clientTop || body.clientTop;
+        x -= docElem.clientLeft || body.clientLeft || 0;
+        y -= docElem.clientTop || body.clientTop || 0;
 
-        // iphone/ipad/itouch 下的 Safari 获取 getBoundingClientRect 时，已经加入 scrollTop
-        if (UA.mobile == 'apple') {
-            x -= DOM[SCROLL_LEFT](w);
-            y -= DOM[SCROLL_TOP](w);
-        }
-
-        return { left:x, top:y };
+        return { left: x, top: y };
     }
 
 
@@ -8659,7 +8645,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     // 获取 elem 相对 elem.ownerDocument 的坐标
     function getOffset(el, relativeWin) {
-        var position = {left:0, top:0};
+        var position = {left: 0, top: 0};
 
         // Iterate up the ancestor frame chain, keeping track of the current window
         // and the current element in that window.
@@ -8692,33 +8678,35 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         var old = getOffset(elem), ret = { }, current, key;
 
         for (key in offset) {
-            current = myParseInt(DOM.css(elem, key), 10) || 0;
-            ret[key] = current + offset[key] - old[key];
+            if (offset.hasOwnProperty(key)) {
+                current = myParseInt(DOM.css(elem, key), 10) || 0;
+                ret[key] = current + offset[key] - old[key];
+            }
         }
         DOM.css(elem, ret);
     }
 
     return DOM;
 }, {
-    requires:['./base', 'ua']
+    requires: ['./base', 'ua']
 });
 
 /*
-  2012-03-30
-   - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
-   - http://help.dottoro.com/ljkfqbqj.php
-   - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
+ 2012-03-30
+ - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
+ - http://help.dottoro.com/ljkfqbqj.php
+ - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
 
-  2011-05-24
-   - 承玉：
-   - 调整 docWidth , docHeight ,
-       viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
-       便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
+ 2011-05-24
+ - 承玉：
+ - 调整 docWidth , docHeight ,
+ viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
+ 便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
 
 
-  TODO:
-   - 考虑是否实现 jQuery 的 position, offsetParent 等功能
-   - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
+ TODO:
+ - 考虑是否实现 jQuery 的 position, offsetParent 等功能
+ - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
  */
 /**
  * @ignore
@@ -9203,7 +9191,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
             /**
              * Reduce the set of matched elements to those that match the selector or pass the function's test.
-             * @param {String|HTMLElement[]|NodeList} selector Matched elements
+             * @param {String|HTMLElement[]} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {HTMLElement[]}
@@ -10589,7 +10577,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:10
+build time: Aug 21 23:55
 */
 /**
  * @ignore
@@ -10628,9 +10616,10 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
                 var typedGroups = Utils.getTypedGroups(type);
                 type = typedGroups[0];
                 var groups = typedGroups[1],
+                    isCustomEvent = !isNativeTarget,
                     eventDesc,
                     data,
-                    s = specials[type],
+                    s = isNativeTarget&&specials[type],
                 // in case overwrite by delegateFix/onFix in specials events
                 // (mouseenter/leave,focusin/out)
                     originalType,
@@ -10667,9 +10656,9 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
                     return;
                 }
                 // 获取事件描述
-                eventDesc = Event._data(target);
+                eventDesc = _data._data(target,undefined, isCustomEvent);
                 if (!eventDesc) {
-                    _data._data(target, eventDesc = {});
+                    _data._data(target, eventDesc = {}, isCustomEvent);
                 }
                 //事件 listeners , similar to eventListeners in DOM3 Events
                 var events = eventDesc.events = eventDesc.events || {},
@@ -10685,11 +10674,15 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
                     },
                     eventHandler = eventDesc.handler;
                 // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
-                if (!eventHandler) {
+                if (
+                // 自定义事件不需要 eventHandler
+                    isNativeTarget &&
+                        !eventHandler
+                    ) {
                     eventHandler = eventDesc.handler = function (event, data) {
                         // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
                         // 已经在 fire 中 bubble 过一次了
-                        // incase after page has unloaded
+                        // in case after page has unloaded
                         if (typeof KISSY == 'undefined' ||
                             event && event.type == Utils.Event_Triggered) {
                             return;
@@ -10782,7 +10775,6 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
 KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 
     var isValidTarget = Utils.isValidTarget,
-        NodeType = DOM.NodeType,
         splitAndRun = Utils.splitAndRun,
         getNodeName = DOM.nodeName,
         trim = S.trim,
@@ -10802,12 +10794,10 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
          * @private
          */
         _clone: function (src, dest) {
-
-            if (dest.nodeType !== NodeType.ELEMENT_NODE ||
-                !_data._hasData(src)) {
+            if (!isValidTarget(dest) || !isValidTarget(src) || !_data._hasData(src, false)) {
                 return;
             }
-            var eventDesc = _data._data(src),
+            var eventDesc = _data._data(src, undefined, false),
                 events = eventDesc.events;
             S.each(events, function (handlers, type) {
                 S.each(handlers, function (handler) {
@@ -11137,28 +11127,40 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
  */
 KISSY.add('event/data', function (S, DOM, Utils) {
     var EVENT_GUID = Utils.EVENT_GUID,
-        data,
-        makeArray = S.makeArray;
+        data;
+
     data = {
-        _hasData:function (elem) {
-            return DOM.hasData(elem, EVENT_GUID);
+        _hasData: function (elem, isCustomEvent) {
+            if (isCustomEvent) {
+                return elem[EVENT_GUID] && (!S.isEmptyObject(elem[EVENT_GUID]));
+            } else {
+                return DOM.hasData(elem, EVENT_GUID);
+            }
         },
 
-        _data:function (elem) {
-            var args = makeArray(arguments);
-            args.splice(1, 0, EVENT_GUID);
-            return DOM.data.apply(DOM, args);
+        _data: function (elem, v, isCustomEvent) {
+            if (isCustomEvent) {
+                if (v !== undefined) {
+                    return elem[EVENT_GUID] = v;
+                } else {
+                    return elem[EVENT_GUID];
+                }
+            } else {
+                return DOM.data(elem, EVENT_GUID, v);
+            }
         },
 
-        _removeData:function (elem) {
-            var args = makeArray(arguments);
-            args.splice(1, 0, EVENT_GUID);
-            return DOM.removeData.apply(DOM, args);
+        _removeData: function (elem, isCustomEvent) {
+            if (isCustomEvent) {
+                delete elem[EVENT_GUID];
+            } else {
+                return DOM.removeData(elem, EVENT_GUID);
+            }
         }
     };
     return data;
 }, {
-    requires:['dom', './utils']
+    requires: ['dom', './utils']
 });/**
  * @ignore
  * @fileOverview KISSY Scalable Event Framework
@@ -11223,6 +11225,7 @@ KISSY.add('event', function (S, _data, KeyCodes, Event, Target, Object) {
             }
         });
 
+    // for debugger
     S.mix(Event, _data);
 
     S.mix(S, {
@@ -11328,18 +11331,18 @@ KISSY.add('event/focusin', function (S, UA, Event, special) {
  */
 KISSY.add('event/handle', function (S, DOM, _data, special) {
 
-    function getEvents(target) {
+    function getEvents(target, isCustomEvent) {
         // 获取事件描述
-        var eventDesc = _data._data(target);
+        var eventDesc = _data._data(target, undefined,isCustomEvent);
         return eventDesc && eventDesc.events;
     }
 
-    function getHandlers(target, type) {
-        var events = getEvents(target) || {};
+    function getHandlers(target, type, isCustomEvent) {
+        var events = getEvents(target, isCustomEvent) || {};
         return events[type] || [];
     }
 
-    return function (currentTarget, event) {
+    return function (currentTarget, event, isCustomEvent) {
         /*
          As some listeners may remove themselves from the
          event, the original array length is dynamic. So,
@@ -11347,9 +11350,9 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
          sure we'll call all of them.
          */
         /*
-          DOM3 Events: EventListenerList objects in the DOM are live. ??
+         DOM3 Events: EventListenerList objects in the DOM are live. ??
          */
-        var handlers = getHandlers(currentTarget, event.type),
+        var handlers = getHandlers(currentTarget, event.type, isCustomEvent),
             target = event.target,
             currentTarget0,
             allHandlers = [],
@@ -11380,8 +11383,8 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
                 }
                 if (currentTargetHandlers.length) {
                     allHandlers.push({
-                        currentTarget:target,
-                        'currentTargetHandlers':currentTargetHandlers
+                        currentTarget: target,
+                        'currentTargetHandlers': currentTargetHandlers
                     });
                 }
                 target = target.parentNode || currentTarget;
@@ -11391,8 +11394,8 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
         // root node's handlers is placed at end position of add handlers
         // in case child node stopPropagation of root node's handlers
         allHandlers.push({
-            currentTarget:currentTarget,
-            currentTargetHandlers:handlers.slice(delegateCount)
+            currentTarget: currentTarget,
+            currentTargetHandlers: handlers.slice(delegateCount)
         });
 
         // backup eventType
@@ -11400,6 +11403,7 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
             s,
             t,
             _ks_groups = event._ks_groups;
+
         for (i = 0, len = allHandlers.length;
              !event.isPropagationStopped && i < len;
              ++i) {
@@ -11408,8 +11412,9 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
             currentTargetHandlers = handlerObj.currentTargetHandlers;
             currentTarget0 = handlerObj.currentTarget;
             event.currentTarget = currentTarget0;
-            for (j = 0; !event.isImmediatePropagationStopped &&
-                j < currentTargetHandlers.length;
+
+            for (j = 0;
+                 !event.isImmediatePropagationStopped && j < currentTargetHandlers.length;
                  j++) {
 
                 currentTargetHandler = currentTargetHandlers[j];
@@ -11427,7 +11432,10 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
                 event.type = currentTargetHandler.originalType || eventType;
 
                 // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
-                if ((s = special[event.type]) && s.handle) {
+                if (// 非自定义事件
+                    !isCustomEvent &&
+                        (s = special[event.type]) &&
+                        s.handle) {
                     t = s.handle(event, currentTargetHandler, data);
                     // can handle
                     if (t.length > 0) {
@@ -11457,7 +11465,7 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
         return gRet;
     }
 }, {
-    requires:['dom', './data', './special']
+    requires: ['dom', './data', './special']
 });/**
  * @ignore
  * @fileOverview event-hashchange
@@ -12333,7 +12341,7 @@ KISSY.add('event/mousewheel', function (S, Event, UA, Utils, EventObject, handle
         setup:function () {
             var el = this,
                 mousewheelHandler,
-                eventDesc = _data._data(el);
+                eventDesc = _data._data(el,undefined,false);
             // solve this in ie
             mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER] = S.bind(handler, el);
             simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
@@ -12341,7 +12349,7 @@ KISSY.add('event/mousewheel', function (S, Event, UA, Utils, EventObject, handle
         tearDown:function () {
             var el = this,
                 mousewheelHandler,
-                eventDesc = _data._data(el);
+                eventDesc = _data._data(el,undefined,false);
             mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER];
             simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
             delete eventDesc[mousewheelHandler];
@@ -12398,7 +12406,7 @@ KISSY.add('event/object', function (S, undefined) {
         self.currentTarget = currentTarget;
         if (domEvent) { // html element
             self.type = domEvent.type;
-            // incase dom event has been mark as default prevented by lower dom node
+            // in case dom event has been mark as default prevented by lower dom node
             self.isDefaultPrevented = ( domEvent['defaultPrevented'] || domEvent.returnValue === FALSE ||
                 domEvent['getPreventDefault'] && domEvent['getPreventDefault']() ) ? TRUE : FALSE;
             self._fix();
@@ -12578,7 +12586,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
          */
         {
             // single target, single type, fixed native
-            __remove:function (isNativeTarget, target, type, fn, scope) {
+            __remove: function (isNativeTarget, target, type, fn, scope) {
 
                 if (!target || (isNativeTarget && !isValidTarget(target))) {
                     return;
@@ -12587,8 +12595,9 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                 var typedGroups = Utils.getTypedGroups(type);
                 type = typedGroups[0];
                 var groups = typedGroups[1],
+                    isCustomEvent = !isNativeTarget,
                     selector,
-                    // in case type is undefined
+                // in case type is undefined
                     originalFn = fn,
                     originalScope = scope,
                     hasSelector, s = EVENT_SPECIAL[type];
@@ -12611,7 +12620,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                     }
                 }
 
-                var eventDesc = _data._data(target),
+                var eventDesc = _data._data(target, undefined, isCustomEvent),
                     events = eventDesc && eventDesc.events,
                     handlers,
                     handler,
@@ -12720,10 +12729,10 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
 
                 // remove target's  all events description
                 if (S.isEmptyObject(events)) {
-                    eventDesc.handler.target = null;
+                    (eventDesc.handler || {}).target = null;
                     delete eventDesc.handler;
                     delete eventDesc.events;
-                    Event._removeData(target);
+                    _data._removeData(target, isCustomEvent);
                 }
             },
 
@@ -12736,7 +12745,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
              * @param {Function} [fn] The event handler/listener.
              * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
              */
-            remove:function (targets, type, fn, scope) {
+            remove: function (targets, type, fn, scope) {
 
                 type = S.trim(type);
 
@@ -12755,7 +12764,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
             }
         });
 }, {
-    requires:['./base', 'dom', './utils', './data', './special']
+    requires: ['./base', 'dom', './utils', './data', './special']
 });/**
  * @ignore
  * @fileOverview special house for special events
@@ -12871,7 +12880,7 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
         return self[KS_BUBBLE_TARGETS];
     }
 
-    function isBubblable(self, eventType) {
+    function canBubble(self, eventType) {
         var publish = getEventPublishObj(self);
         return publish[eventType] && publish[eventType].bubbles || publish[ALL_EVENT] && publish[ALL_EVENT].bubbles
     }
@@ -12944,12 +12953,12 @@ KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefi
 
             customEvent = getCustomEvent(self, type, eventData);
 
-            ret = handle(self, customEvent);
+            ret = handle(self, customEvent,true);
 
             if (!customEvent.isPropagationStopped && (
                 // 冒泡过来的，不检查继续冒泡
                 customEvent.target != self ||
-                    isBubblable(self, type))) {
+                    canBubble(self, type))) {
 
                 r2 = self.bubble(type, customEvent);
 
@@ -13283,27 +13292,43 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:10
+build time: Aug 21 20:57
 */
 /**
+ * @ignore
  * @fileOverview adapt json2 to kissy
  */
 KISSY.add('json', function (S, JSON) {
 
+    /**
+     * Provide json utils for KISSY.
+     * @class KISSY.JSON
+     * @singleton
+     */
     return S.JSON = {
 
-        parse:function (text) {
+        /**
+         * Parse json object from string.
+         * @param text
+         * @return {Object}
+         */
+        parse: function (text) {
             // 当输入为 undefined / null / '' 时，返回 null
             if (text == null || text === '') {
                 return null;
             }
             return JSON.parse(text);
         },
-
-        stringify:JSON.stringify
+        /**
+         * serialize json object to string.
+         * @method
+         * @param {Object} jsonObject
+         * @return {String}
+         */
+        stringify: JSON.stringify
     };
 }, {
-    requires:["json/json2"]
+    requires: ["json/json2"]
 });
 /*
  @fileOverview  http://www.JSON.org/json2.js
@@ -13793,7 +13818,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:06
+build time: Aug 21 20:53
 */
 /**
  * @ignore
@@ -13917,7 +13942,7 @@ KISSY.add('ajax', function (S, serializer, IO) {
             /**
              * submit form without page refresh
              * @param {String} url request destination
-             * @param {HTMLElement|NodeList} form element tobe submited
+             * @param {HTMLElement|KISSY.NodeList} form element tobe submited
              * @param {Object} [data] name-value object associated with this request
              * @param {Function} [callback]  success callback when this request is done.@param callback.data returned from this request with type specified by dataType
              * @param {String} callback.status status of this request with type String
@@ -14566,7 +14591,7 @@ KISSY.add('ajax/form-serializer', function (S, DOM) {
         /**
          * form serialization
          * @method
-         * @param {HTMLElement[]|HTMLElement|NodeList} forms form elements
+         * @param {HTMLElement[]|HTMLElement|KISSY.NodeList} forms form elements
          * @return {String} serialized string represent form elements
          * @param {Boolean}[serializeArray=false] See {@link KISSY#method-param} 同名参数
          * @member KISSY.IO
@@ -15854,40 +15879,36 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:07
+build time: Aug 21 20:53
 */
 /**
+ * @ignore
  * @fileOverview cookie
  * @author lifesinger@gmail.com
  */
 KISSY.add('cookie', function (S) {
-
-    /**
-     * @name Cookie
-     * @namespace Provide Cookie utilities.
-     */
 
     var doc = S.Env.host.document,
         MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
         encode = encodeURIComponent,
         decode = decodeURIComponent;
 
-
     function isNotEmptyString(val) {
         return S.isString(val) && val !== '';
     }
 
-    return S.Cookie =
     /**
-     * @lends Cookie
+     * Provide Cookie utilities.
+     * @class KISSY.Cookie
+     * @singleton
      */
-    {
+    return S.Cookie = {
 
         /**
          * Returns the cookie value for given name
          * @return {String} name The name of the cookie to retrieve
          */
-        get:function (name) {
+        get: function (name) {
             var ret, m;
 
             if (isNotEmptyString(name)) {
@@ -15909,7 +15930,7 @@ KISSY.add('cookie', function (S) {
          * @param {String} path set cookie's path
          * @param {Boolean} secure whether this cookie can only be sent to server on https
          */
-        set:function (name, val, expires, domain, path, secure) {
+        set: function (name, val, expires, domain, path, secure) {
             var text = String(encode(val)), date = expires;
 
             // 从当前时间开始，多少天后过期
@@ -15947,28 +15968,28 @@ KISSY.add('cookie', function (S) {
          * @param {String} path The cookie's path
          * @param {String} secure The cookie's secure option
          */
-        remove:function (name, domain, path, secure) {
+        remove: function (name, domain, path, secure) {
             this.set(name, '', -1, domain, path, secure);
         }
     };
 
 });
 
-/**
- *  2012.02.14 yiminghe@gmail.com
- *   - jsdoc added
- *
- *  2010.04
- *   - get 方法要考虑 ie 下，
- *     值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
- *     除了正则获取，还可以 split 字符串的方式来获取。
- *   - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
- *     独立成静态工具类的方式更优。
+/*
+ 2012.02.14 yiminghe@gmail.com
+ - jsdoc added
+
+ 2010.04
+ - get 方法要考虑 ie 下，
+ 值为空的 cookie 为 'test3; test3=3; test3tt=2; test1=t1test3; test3', 没有等于号。
+ 除了正则获取，还可以 split 字符串的方式来获取。
+ - api 设计上，原本想借鉴 jQuery 的简明风格：S.cookie(name, ...), 但考虑到可扩展性，目前
+ 独立成静态工具类的方式更优。
  */
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:52
+build time: Aug 21 20:53
 */
 /**
  * @ignore
@@ -16602,13 +16623,13 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:06
+build time: Sep 3 17:15
 */
 /**
  * @ignore
  * @fileOverview anim
  */
-KISSY.add("anim", function (S, Anim, Easing) {
+KISSY.add('anim', function (S, Anim, Easing) {
     Anim.Easing = Easing;
     S.mix(S, {
         Anim:Anim,
@@ -16616,18 +16637,18 @@ KISSY.add("anim", function (S, Anim, Easing) {
     });
     return Anim;
 }, {
-    requires:["anim/base", "anim/easing", "anim/color", "anim/background-position"]
+    requires:['anim/base', 'anim/easing', 'anim/color', 'anim/background-position']
 });/**
  * @ignore
  * @fileOverview special patch for anim backgroundPosition
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
+KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
 
     function numeric(bp) {
         bp = bp.replace(/left|top/g, '0px')
             .replace(/right|bottom/g, '100%')
-            .replace(/([0-9\.]+)(\s|\)|$)/g, "$1px$2");
+            .replace(/([0-9\.]+)(\s|\)|$)/g, '$1px$2');
         var res = bp.match(/(-?[0-9\.]+)(px|%|em|pt)\s(-?[0-9\.]+)(px|%|em|pt)/);
         return [parseFloat(res[1]), res[2], parseFloat(res[3]), res[4]];
     }
@@ -16641,7 +16662,7 @@ KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
         load:function () {
             var self = this, fromUnit;
             BackgroundPositionFx.superclass.load.apply(self, arguments);
-            fromUnit = self.unit = ["px", "px"];
+            fromUnit = self.unit = ['px', 'px'];
             if (self.from) {
                 var from = numeric(self.from);
                 self.from = [from[0], from[2]];
@@ -16658,21 +16679,21 @@ KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
             }
             if (fromUnit) {
                 if (fromUnit[0] !== self.unit[0] || fromUnit[1] !== self.unit[1]) {
-                    S.log("BackgroundPosition x y unit is not same :", "warn");
-                    S.log(fromUnit, "warn");
-                    S.log(self.unit, "warn");
+                    S.log('BackgroundPosition x y unit is not same :', 'warn');
+                    S.log(fromUnit, 'warn');
+                    S.log(self.unit, 'warn');
                 }
             }
         },
 
         interpolate:function (from, to, pos) {
             var unit = this.unit, interpolate = BackgroundPositionFx.superclass.interpolate;
-            return interpolate(from[0], to[0], pos) + unit[0] + " " +
+            return interpolate(from[0], to[0], pos) + unit[0] + ' ' +
                 interpolate(from[1], to[1], pos) + unit[1];
         },
 
         cur:function () {
-            return DOM.css(this.anim.config.el, "backgroundPosition");
+            return DOM.css(this.anim.config.el, 'backgroundPosition');
         },
 
         update:function () {
@@ -16687,12 +16708,12 @@ KISSY.add("anim/background-position", function (S, DOM, Anim, Fx) {
 
     });
 
-    Fx.Factories["backgroundPosition"] = BackgroundPositionFx;
+    Fx.Factories['backgroundPosition'] = BackgroundPositionFx;
 
     return BackgroundPositionFx;
 
 }, {
-    requires:["dom", "./base", "./fx"]
+    requires:['dom', './base', './fx']
 });/**
  * @ignore
  * @fileOverview animation framework for KISSY
@@ -16702,26 +16723,26 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     var camelCase = DOM._camelCase,
         NodeType = DOM.NodeType,
-        specialVals = ["hide", "show", "toggle"],
+        specialVals = ['hide', 'show', 'toggle'],
     // shorthand css properties
         SHORT_HANDS = {
             // http://www.w3.org/Style/CSS/Tracker/issues/9
             // http://snook.ca/archives/html_and_css/background-position-x-y
             // backgroundPositionX  backgroundPositionY does not support
             background: [
-                "backgroundPosition"
+                'backgroundPosition'
             ],
             border: [
-                "borderBottomWidth",
-                "borderLeftWidth",
+                'borderBottomWidth',
+                'borderLeftWidth',
                 'borderRightWidth',
                 // 'borderSpacing', 组合属性？
                 'borderTopWidth'
             ],
-            "borderBottom": ["borderBottomWidth"],
-            "borderLeft": ["borderLeftWidth"],
-            borderTop: ["borderTopWidth"],
-            borderRight: ["borderRightWidth"],
+            'borderBottom': ['borderBottomWidth'],
+            'borderLeft': ['borderLeftWidth'],
+            borderTop: ['borderTopWidth'],
+            borderRight: ['borderRightWidth'],
             font: [
                 'fontSize',
                 'fontWeight'
@@ -16783,7 +16804,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // the transition properties
         if (S.isString(props)) {
-            props = S.unparam(String(props), ";", ":");
+            props = S.unparam(String(props), ';', ':');
         } else {
             // clone to prevent collision within multiple instance
             props = S.clone(props);
@@ -16791,8 +16812,10 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // camel case uniformity
         S.each(props, function (v, prop) {
-            var camelProp = camelCase(prop);
-            if (prop != camelProp) {
+            var camelProp = S.trim(camelCase(prop));
+            if (!camelProp) {
+                delete props[prop];
+            } else if (prop != camelProp) {
                 props[camelProp] = props[prop];
                 delete props[prop];
             }
@@ -16829,7 +16852,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         self._fxs = {};
 
         // register complete
-        self.on("complete", onComplete);
+        self.on('complete', onComplete);
     }
 
 
@@ -16865,19 +16888,19 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         // 进入该函数即代表执行（q[0] 已经是 ...）
         saveRunning(self);
 
-        if (self.fire("beforeStart") === false) {
+        if (self.fire('beforeStart') === false) {
             // no need to invoke complete
             self.stop(0);
             return;
         }
 
         if (el.nodeType == NodeType.ELEMENT_NODE) {
-            hidden = (DOM.css(el, "display") === "none");
+            hidden = (DOM.css(el, 'display') === 'none');
             for (prop in props) {
                 if (props.hasOwnProperty(prop)) {
                     val = props[prop];
                     // 直接结束
-                    if (val == "hide" && hidden || val == 'show' && !hidden) {
+                    if (val == 'hide' && hidden || val == 'show' && !hidden) {
                         // need to invoke complete
                         self.stop(1);
                         return;
@@ -16897,17 +16920,17 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             elStyle = el.style;
             S.mix(_backupProps, {
                 overflow: elStyle.overflow,
-                "overflow-x": elStyle.overflowX,
-                "overflow-y": elStyle.overflowY
+                'overflow-x': elStyle.overflowX,
+                'overflow-y': elStyle.overflowY
             });
-            elStyle.overflow = "hidden";
+            elStyle.overflow = 'hidden';
             // inline element should has layout/inline-block
-            if (DOM.css(el, "display") === "inline" &&
-                DOM.css(el, "float") === "none") {
+            if (DOM.css(el, 'display') === 'inline' &&
+                DOM.css(el, 'float') === 'none') {
                 if (UA['ie']) {
                     elStyle.zoom = 1;
                 } else {
-                    elStyle.display = "inline-block";
+                    elStyle.display = 'inline-block';
                 }
             }
         }
@@ -16975,10 +16998,10 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             if (S.inArray(val, specialVals)) {
                 // backup original inline css value
                 _backupProps[prop] = DOM.style(el, prop);
-                if (val == "toggle") {
-                    val = hidden ? "show" : "hide";
+                if (val == 'toggle') {
+                    val = hidden ? 'show' : 'hide';
                 }
-                if (val == "hide") {
+                if (val == 'hide') {
                     to = 0;
                     from = fx.cur();
                     // 执行完后隐藏
@@ -16996,9 +17019,9 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 from = fx.cur();
             }
 
-            val += "";
+            val += '';
 
-            var unit = "",
+            var unit = '',
                 parts = val.match(NUMBER_REG);
 
             if (parts) {
@@ -17006,7 +17029,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 unit = parts[3];
 
                 // 有单位但单位不是 px
-                if (unit && unit !== "px") {
+                if (unit && unit !== 'px') {
                     DOM.css(el, prop, val);
                     from = (to / fx.cur()) * from;
                     DOM.css(el, prop, from + unit);
@@ -17014,7 +17037,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
                 // 相对
                 if (parts[1]) {
-                    to = ( (parts[ 1 ] === "-=" ? -1 : 1) * to ) + from;
+                    to = ( (parts[ 1 ] === '-=' ? -1 : 1) * to ) + from;
                 }
             }
 
@@ -17138,7 +17161,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 }
             }
 
-            if ((self.fire("step") === false) || end) {
+            if ((self.fire('step') === false) || end) {
                 // complete 事件只在动画到达最后一帧时才触发
                 self.stop(end);
             }
@@ -17179,7 +17202,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                         }
                     }
                 }
-                self.fire("complete");
+                self.fire('complete');
             }
 
             AM.stop(self);
@@ -17197,7 +17220,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
     S.augment(Anim, Event.Target);
 
-    var runningKey = S.guid("ks-anim-unqueued-" + S.now() + "-");
+    var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
 
     function saveRunning(anim) {
         var el = anim.config.el,
@@ -17229,7 +17252,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
 
 
-    var pausedKey = S.guid("ks-anim-paused-" + S.now() + "-");
+    var pausedKey = S.guid('ks-anim-paused-' + S.now() + '-');
 
     function savePaused(anim) {
         var el = anim.config.el,
@@ -17310,7 +17333,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
      * @static
      */
 
-    S.each(["pause", "resume"], function (action) {
+    S.each(['pause', 'resume'], function (action) {
         Anim[action] = function (el, queueName) {
             if (
             // default queue
@@ -17391,7 +17414,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
     return Anim;
 }, {
-    requires: ["dom", "event", "./easing", "ua", "./manager", "./fx", "./queue"]
+    requires: ['dom', 'event', './easing', 'ua', './manager', './fx', './queue']
 });
 
 /*
@@ -17419,29 +17442,29 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
  * @fileOverview special patch for making color gradual change
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
+KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
 
     var HEX_BASE = 16,
 
         floor = Math.floor,
 
         KEYWORDS = {
-            "black":[0, 0, 0],
-            "silver":[192, 192, 192],
-            "gray":[128, 128, 128],
-            "white":[255, 255, 255],
-            "maroon":[128, 0, 0],
-            "red":[255, 0, 0],
-            "purple":[128, 0, 128],
-            "fuchsia":[255, 0, 255],
-            "green":[0, 128, 0],
-            "lime":[0, 255, 0],
-            "olive":[128, 128, 0],
-            "yellow":[255, 255, 0],
-            "navy":[0, 0, 128],
-            "blue":[0, 0, 255],
-            "teal":[0, 128, 128],
-            "aqua":[0, 255, 255]
+            'black':[0, 0, 0],
+            'silver':[192, 192, 192],
+            'gray':[128, 128, 128],
+            'white':[255, 255, 255],
+            'maroon':[128, 0, 0],
+            'red':[255, 0, 0],
+            'purple':[128, 0, 128],
+            'fuchsia':[255, 0, 255],
+            'green':[0, 128, 0],
+            'lime':[0, 255, 0],
+            'olive':[128, 128, 0],
+            'yellow':[255, 255, 0],
+            'navy':[0, 0, 128],
+            'blue':[0, 0, 255],
+            'teal':[0, 128, 128],
+            'aqua':[0, 255, 255]
         },
         re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
 
@@ -17496,7 +17519,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
 
     //得到颜色的数值表示，红绿蓝数字数组
     function numericColor(val) {
-        val = (val + "");
+        val = (val + '');
         var match;
         if (match = val.match(re_RGB)) {
             return [
@@ -17530,7 +17553,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
         }
 
         //transparent 或者 颜色字符串返回
-        S.log("only allow rgb or hex color string : " + val, "warn");
+        S.log('only allow rgb or hex color string : ' + val, 'warn');
         return [255, 255, 255];
     }
 
@@ -17568,7 +17591,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
                     floor(interpolate(from[3] || 1, to[3] || 1, pos))
                 ].join(', ') + ')';
             } else {
-                S.log("anim/color unknown value : " + from);
+                S.log('anim/color unknown value : ' + from);
             }
         }
 
@@ -17581,7 +17604,7 @@ KISSY.add("anim/color", function (S, DOM, Anim, Fx) {
     return ColorFx;
 
 }, {
-    requires:["dom", "./base", "./fx"]
+    requires:['dom', './base', './fx']
 });
 
 /*
@@ -17627,14 +17650,14 @@ KISSY.add('anim/easing', function () {
         /**
          * Uniform speed between points.
          */
-        "easeNone": function (t) {
+        'easeNone': function (t) {
             return t;
         },
 
         /**
          * Begins slowly and accelerates towards end. (quadratic)
          */
-        "easeIn": function (t) {
+        'easeIn': function (t) {
             return t * t;
         },
 
@@ -17657,7 +17680,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Begins slowly and accelerates towards end. (quartic)
          */
-        "easeInStrong": function (t) {
+        'easeInStrong': function (t) {
             return t * t * t * t;
         },
 
@@ -17671,7 +17694,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Begins slowly and decelerates towards end. (quartic)
          */
-        "easeBothStrong": function (t) {
+        'easeBothStrong': function (t) {
             return (t *= 2) < 1 ?
                 .5 * t * t * t * t :
                 .5 * (2 - (t -= 2) * t * t * t);
@@ -17681,7 +17704,7 @@ KISSY.add('anim/easing', function () {
          * Snap in elastic effect.
          */
 
-        "elasticIn": function (t) {
+        'elasticIn': function (t) {
             var p = .3, s = p / 4;
             if (t === 0 || t === 1) return t;
             return -(pow(2, 10 * (t -= 1)) * sin((t - s) * (2 * PI) / p));
@@ -17699,7 +17722,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Snap both elastic effect.
          */
-        "elasticBoth": function (t) {
+        'elasticBoth': function (t) {
             var p = .45, s = p / 4;
             if (t === 0 || (t *= 2) === 2) return t;
 
@@ -17714,7 +17737,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Backtracks slightly, then reverses direction and moves to end.
          */
-        "backIn": function (t) {
+        'backIn': function (t) {
             if (t === 1) t -= .001;
             return t * t * ((BACK_CONST + 1) * t - BACK_CONST);
         },
@@ -17730,7 +17753,7 @@ KISSY.add('anim/easing', function () {
          * Backtracks slightly, then reverses direction, overshoots end,
          * then reverses and comes back to end.
          */
-        "backBoth": function (t) {
+        'backBoth': function (t) {
             var s = BACK_CONST;
             var m = (s *= 1.525) + 1;
 
@@ -17773,7 +17796,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Bounces off start and end.
          */
-        "bounceBoth": function (t) {
+        'bounceBoth': function (t) {
             if (t < .5) {
                 return Easing.bounceIn(t * 2) * .5;
             }
@@ -17815,7 +17838,7 @@ KISSY.add('anim/easing', function () {
  * @fileOverview animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/fx", function (S, DOM, undefined) {
+KISSY.add('anim/fx', function (S, DOM, undefined) {
 
     /**
      * basic animation about single css property or element attribute
@@ -17838,7 +17861,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             var self = this;
             S.mix(self, cfg);
             self.pos = 0;
-            self.unit = self.unit || "";
+            self.unit = self.unit || '';
         },
 
         /**
@@ -17906,7 +17929,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
                 if (!self.finished) {
                     self.finished = 1;
                     DOM.css(el, prop, to);
-                    S.log(self.prop + " update directly ! : " + val + " : " + from + " : " + to);
+                    S.log(self.prop + ' update directly ! : ' + val + ' : ' + from + ' : ' + to);
                 }
             } else {
                 val += self.unit;
@@ -17931,11 +17954,11 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
             }
             var parsed,
                 r = DOM.css(el, prop);
-            // Empty strings, null, undefined and "auto" are converted to 0,
-            // complex values such as "rotate(1rad)" or "0px 10px" are returned as is,
-            // simple values such as "10px" are parsed to Float.
+            // Empty strings, null, undefined and 'auto' are converted to 0,
+            // complex values such as 'rotate(1rad)' or '0px 10px' are returned as is,
+            // simple values such as '10px' are parsed to Float.
             return isNaN(parsed = parseFloat(r)) ?
-                !r || r === "auto" ? 0 : r
+                !r || r === 'auto' ? 0 : r
                 : parsed;
         }
     };
@@ -17975,7 +17998,7 @@ KISSY.add("anim/fx", function (S, DOM, undefined) {
  * @fileOverview single timer for the whole anim module
  * @author  yiminghe@gmail.com
  */
-KISSY.add("anim/manager", function(S) {
+KISSY.add('anim/manager', function(S) {
     var stamp = S.stamp;
 
     return {
@@ -18047,14 +18070,14 @@ KISSY.add("anim/manager", function(S) {
  * @fileOverview queue of anim objects
  * @author yiminghe@gmail.com
  */
-KISSY.add("anim/queue", function (S, DOM) {
+KISSY.add('anim/queue', function (S, DOM) {
 
     var // 队列集合容器
-        queueCollectionKey = S.guid("ks-queue-" + S.now() + "-"),
+        queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
     // 默认队列
-        queueKey = S.guid("ks-queue-" + S.now() + "-"),
+        queueKey = S.guid('ks-queue-' + S.now() + '-'),
     // 当前队列是否有动画正在执行
-        processing = "...";
+        processing = '...';
 
     function getQueue(el, name, readOnly) {
         name = name || queueKey;
@@ -18147,9 +18170,10 @@ KISSY.add("anim/queue", function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 20 15:10
+build time: Sep 4 20:01
 */
 /**
+ * @ignore
  * @fileOverview anim-node-plugin
  * @author yiminghe@gmail.com,
  *         lifesinger@gmail.com,
@@ -18160,11 +18184,11 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
 
     var FX = [
         // height animations
-        [ "height", "marginTop", "marginBottom", "paddingTop", "paddingBottom" ],
+        [ 'height', 'marginTop', 'marginBottom', 'paddingTop', 'paddingBottom' ],
         // width animations
-        [ "width", "marginLeft", "marginRight", "paddingLeft", "paddingRight" ],
+        [ 'width', 'marginLeft', 'marginRight', 'paddingLeft', 'paddingRight' ],
         // opacity animations
-        [ "opacity" ]
+        [ 'opacity' ]
     ];
 
     function getFxs(type, num, from) {
@@ -18179,76 +18203,211 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         return obj;
     }
 
-    S.augment(Node, {
-        animate:function () {
-            var self = this,
-                args = S.makeArray(arguments);
-            S.each(self, function (elem) {
-                Anim.apply(undefined, [elem].concat(args)).run();
-            });
-            return self;
-        },
-        stop:function (end, clearQueue, queue) {
-            var self = this;
-            S.each(self, function (elem) {
-                Anim.stop(elem, end, clearQueue, queue);
-            });
-            return self;
-        },
-        pause:function (end, queue) {
-            var self = this;
-            S.each(self, function (elem) {
-                Anim.pause(elem, queue);
-            });
-            return self;
-        },
-        resume:function (end, queue) {
-            var self = this;
-            S.each(self, function (elem) {
-                Anim.resume(elem, queue);
-            });
-            return self;
-        },
-        isRunning:function () {
-            var self = this;
-            for (var i = 0; i < self.length; i++) {
-                if (Anim.isRunning(self[i])) {
-                    return 1;
+    S.augment(Node,
+        /**
+         * @class
+         * @singleton
+         * @override KISSY.NodeList
+         */
+        {
+            /**
+             * animate for current node list.
+             * @param var_args see {@link KISSY.Anim}
+             * @return {KISSY.NodeList} this
+             */
+            animate: function (var_args) {
+                var self = this,
+                    originArgs = S.makeArray(arguments);
+                S.each(self, function (elem) {
+                    var args = S.clone(originArgs),
+                        arg0 = args[0];
+                    if (arg0.props) {
+                        arg0.el = elem;
+                        Anim(arg0).run();
+                    } else {
+                        Anim.apply(undefined, [elem].concat(args)).run();
+                    }
+                });
+                return self;
+            },
+            /**
+             * stop anim of current node list.
+             * @param {Boolean} [end] see {@link KISSY.Anim#static-method-stop}
+             * @param [clearQueue]
+             * @param [queue]
+             * @return {KISSY.NodeList} this
+             */
+            stop: function (end, clearQueue, queue) {
+                var self = this;
+                S.each(self, function (elem) {
+                    Anim.stop(elem, end, clearQueue, queue);
+                });
+                return self;
+            },
+            /**
+             * pause anim of current node list.
+             * @param {Boolean} end see {@link KISSY.Anim#static-method-pause}
+             * @param queue
+             * @return {KISSY.NodeList} this
+             */
+            pause: function (end, queue) {
+                var self = this;
+                S.each(self, function (elem) {
+                    Anim.pause(elem, queue);
+                });
+                return self;
+            },
+            /**
+             * resume anim of current node list.
+             * @param {Boolean} end see {@link KISSY.Anim#static-method-resume}
+             * @param queue
+             * @return {KISSY.NodeList} this
+             */
+            resume: function (end, queue) {
+                var self = this;
+                S.each(self, function (elem) {
+                    Anim.resume(elem, queue);
+                });
+                return self;
+            },
+            /**
+             * whether one of current node list is animating.
+             * @return {Boolean}
+             */
+            isRunning: function () {
+                var self = this;
+                for (var i = 0; i < self.length; i++) {
+                    if (Anim.isRunning(self[i])) {
+                        return true;
+                    }
                 }
-            }
-            return 0;
-        },
-        isPaused:function () {
-            var self = this;
-            for (var i = 0; i < self.length; i++) {
-                if (Anim.isPaused(self[i])) {
-                    return 1;
+                return false;
+            },
+            /**
+             * whether one of current node list 's animation is paused.
+             * @return {Boolean}
+             */
+            isPaused: function () {
+                var self = this;
+                for (var i = 0; i < self.length; i++) {
+                    if (Anim.isPaused(self[i])) {
+                        return 1;
+                    }
                 }
+                return 0;
             }
-            return 0;
-        }
-    });
+        });
+
+    /**
+     * animate show effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method show
+     */
+
+    /**
+     * animate hide effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method hide
+     */
+
+    /**
+     * toggle show and hide effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method toggle
+     */
+
+    /**
+     * animate fadeIn effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method fadeIn
+     */
+
+    /**
+     * animate fadeOut effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method fadeOut
+     */
+
+    /**
+     * toggle fadeIn and fadeOut effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method fadeToggle
+     */
+
+    /**
+     * animate slideUp effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method slideUp
+     */
+
+    /**
+     * animate slideDown effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method slideDown
+     */
+
+    /**
+     * toggle slideUp and slideDown effect for current node list.
+     * @param {Number} duration duration of effect
+     * @param {Function} [complete] callback function on anim complete.
+     * @param {String|Function} [easing] easing type or custom function.
+     * @return {KISSY.NodeList} this
+     * @member KISSY.NodeList
+     * @method slideToggle
+     */
 
     S.each({
-            show:getFxs("show", 3),
-            hide:getFxs("hide", 3),
-            toggle:getFxs("toggle", 3),
-            fadeIn:getFxs("show", 3, 2),
-            fadeOut:getFxs("hide", 3, 2),
-            fadeToggle:getFxs("toggle", 3, 2),
-            slideDown:getFxs("show", 1),
-            slideUp:getFxs("hide", 1),
-            slideToggle:getFxs("toggle", 1)
+            show: getFxs('show', 3),
+            hide: getFxs('hide', 3),
+            toggle: getFxs('toggle', 3),
+            fadeIn: getFxs('show', 3, 2),
+            fadeOut: getFxs('hide', 3, 2),
+            fadeToggle: getFxs('toggle', 3, 2),
+            slideDown: getFxs('show', 1),
+            slideUp: getFxs('hide', 1),
+            slideToggle: getFxs('toggle', 1)
         },
         function (v, k) {
-            Node.prototype[k] = function (speed, callback, easing) {
+            Node.prototype[k] = function (duration, complete, easing) {
                 var self = this;
                 // 没有参数时，调用 DOM 中的对应方法
-                if (DOM[k] && !speed) {
+                if (DOM[k] && !duration) {
                     DOM[k](self);
                 } else {
                     S.each(self, function (elem) {
-                        Anim(elem, v, speed, easing || 'easeOut', callback).run();
+                        Anim(elem, v, duration, easing || 'easeOut', complete).run();
                     });
                 }
                 return self;
@@ -18256,19 +18415,20 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         });
 
 }, {
-    requires:["dom", "anim", "./base"]
+    requires: ['dom', 'anim', './base']
 });
-/**
- * 2011-11-10
- *  - 重写，逻辑放到 Anim 模块，这边只进行转发
- *
- * 2011-05-17
- *  - 承玉：添加 stop ，随时停止动画
- *
- *  TODO
- *  - anim needs queue mechanism ?
+/*
+ 2011-11-10
+ - 重写，逻辑放到 Anim 模块，这边只进行转发
+
+ 2011-05-17
+ - 承玉：添加 stop ，随时停止动画
+
+ TODO
+ - anim needs queue mechanism ?
  */
 /**
+ * @ignore
  * @fileOverview import methods from DOM to NodeList.prototype
  * @author yiminghe@gmail.com
  */
@@ -18276,91 +18436,91 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
 
     var NLP = NodeList.prototype,
         makeArray = S.makeArray,
-        // DOM 添加到 NP 上的方法
-        // if DOM methods return undefined , Node methods need to transform result to itself
+    // DOM 添加到 NP 上的方法
+    // if DOM methods return undefined , Node methods need to transform result to itself
         DOM_INCLUDES_NORM = [
-            "nodeName",
-            "equals",
-            "contains",
-            "scrollTop",
-            "scrollLeft",
-            "height",
-            "width",
-            "innerHeight",
-            "innerWidth",
-            "outerHeight",
-            "outerWidth",
-            "addStyleSheet",
-            // "append" will be overridden
-            "appendTo",
-            // "prepend" will be overridden
-            "prependTo",
-            "insertBefore",
-            "before",
-            "after",
-            "insertAfter",
-            "test",
-            "hasClass",
-            "addClass",
-            "removeClass",
-            "replaceClass",
-            "toggleClass",
-            "removeAttr",
-            "hasAttr",
-            "hasProp",
+            'nodeName',
+            'equals',
+            'contains',
+            'scrollTop',
+            'scrollLeft',
+            'height',
+            'width',
+            'innerHeight',
+            'innerWidth',
+            'outerHeight',
+            'outerWidth',
+            'addStyleSheet',
+            // 'append' will be overridden
+            'appendTo',
+            // 'prepend' will be overridden
+            'prependTo',
+            'insertBefore',
+            'before',
+            'after',
+            'insertAfter',
+            'test',
+            'hasClass',
+            'addClass',
+            'removeClass',
+            'replaceClass',
+            'toggleClass',
+            'removeAttr',
+            'hasAttr',
+            'hasProp',
             // anim override
-//            "show",
-//            "hide",
-//            "toggle",
-            "scrollIntoView",
-            "remove",
-            "empty",
-            "removeData",
-            "hasData",
-            "unselectable",
+//            'show',
+//            'hide',
+//            'toggle',
+            'scrollIntoView',
+            'remove',
+            'empty',
+            'removeData',
+            'hasData',
+            'unselectable',
 
-            "wrap",
-            "wrapAll",
-            "replaceWith",
-            "wrapInner",
-            "unwrap"
+            'wrap',
+            'wrapAll',
+            'replaceWith',
+            'wrapInner',
+            'unwrap'
         ],
-        // if return array ,need transform to nodelist
+    // if return array ,need transform to nodelist
         DOM_INCLUDES_NORM_NODE_LIST = [
-            "filter",
-            "first",
-            "last",
-            "parent",
-            "closest",
-            "next",
-            "prev",
-            "clone",
-            "siblings",
-            "contents",
-            "children"
+            'filter',
+            'first',
+            'last',
+            'parent',
+            'closest',
+            'next',
+            'prev',
+            'clone',
+            'siblings',
+            'contents',
+            'children'
         ],
-        // if set return this else if get return true value ,no nodelist transform
+    // if set return this else if get return true value ,no nodelist transform
         DOM_INCLUDES_NORM_IF = {
             // dom method : set parameter index
-            "attr":1,
-            "text":0,
-            "css":1,
-            "style":1,
-            "val":0,
-            "prop":1,
-            "offset":0,
-            "html":0,
-            "outerHTML":0,
-            "data":1
+            'attr': 1,
+            'text': 0,
+            'css': 1,
+            'style': 1,
+            'val': 0,
+            'prop': 1,
+            'offset': 0,
+            'html': 0,
+            'outerHTML': 0,
+            'data': 1
         },
-        // Event 添加到 NP 上的方法
+    // Event 添加到 NP 上的方法
         EVENT_INCLUDES = [
-            "on",
-            "detach",
-            "fire",
-            "fireHandler",
-            "delegate",
-            "undelegate"
+            'on',
+            'detach',
+            'fire',
+            'fireHandler',
+            'delegate',
+            'undelegate'
         ];
 
 
@@ -18430,23 +18590,24 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
     });
 
 }, {
-    requires:["dom", "event", "./base"]
+    requires: ['dom', 'event', './base']
 });
 
-/**
- * 2011-05-24
- *  - 承玉：
- *  - 将 DOM 中的方法包装成 NodeList 方法
- *  - Node 方法调用参数中的 KISSY NodeList 要转换成第一个 HTML Node
- *  - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
- *  - 实际上可以完全使用 NodeList 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
- *  - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
+/*
+ 2011-05-24
+ - 承玉：
+ - 将 DOM 中的方法包装成 NodeList 方法
+ - Node 方法调用参数中的 KISSY NodeList 要转换成第一个 HTML Node
+ - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
+ - 实际上可以完全使用 NodeList 来代替 DOM，不和节点关联的方法如：viewportHeight 等，在 window，document 上调用
+ - 存在 window/document 虚节点，通过 S.one(window)/new Node(window) ,S.one(document)/new NodeList(document) 获得
  */
 /**
+ * @ignore
  * @fileOverview definition for node and nodelist
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add("node/base", function (S, DOM, undefined) {
+KISSY.add('node/base', function (S, DOM, undefined) {
 
     var AP = Array.prototype,
         slice = AP.slice,
@@ -18456,9 +18617,18 @@ KISSY.add("node/base", function (S, DOM, undefined) {
         isNodeList = DOM._isNodeList;
 
     /**
-     * @class The NodeList class provides a wrapper for manipulating DOM Node.
-     * use KISSY.all/one to retrieve NodeList instances
-     * @name NodeList
+     * The NodeList class provides a {@link KISSY.DOM} wrapper for manipulating DOM Node.
+     * use KISSY.all/one to retrieve NodeList instances.
+     *
+     *  for example:
+     *      @example
+     *      KISSY.all('a').attr('href','http://docs.kissyui.com');
+     *
+     * is equal to
+     *      @example
+     *      KISSY.DOM.attr('a','href','http://docs.kissyui.com');
+     *
+     * @class KISSY.NodeList
      */
     function NodeList(html, props, ownerDocument) {
         var self = this,
@@ -18498,209 +18668,226 @@ KISSY.add("node/base", function (S, DOM, undefined) {
         return undefined;
     }
 
-    S.augment(NodeList,
+    NodeList.prototype = {
+
         /**
-         * @lends NodeList#
+         * length of nodelist
+         * @type {Number}
          */
-        {
-
-            /**
-             * length of nodelist
-             * @type {Number}
-             */
-            length: 0,
+        length: 0,
 
 
-            /**
-             * Get one node at index
-             * @param {Number} index Index position.
-             * @return {NodeList}
-             */
-            item: function (index) {
-                var self = this;
-                if (S.isNumber(index)) {
-                    if (index >= self.length) {
-                        return null;
-                    } else {
-                        return new NodeList(self[index]);
-                    }
+        /**
+         * Get one node at index
+         * @param {Number} index Index position.
+         * @return {KISSY.NodeList}
+         */
+        item: function (index) {
+            var self = this;
+            if (S.isNumber(index)) {
+                if (index >= self.length) {
+                    return null;
                 } else {
-                    return new NodeList(index);
+                    return new NodeList(self[index]);
                 }
-            },
+            } else {
+                return new NodeList(index);
+            }
+        },
 
-            /**
-             * Add existing node list.
-             * @param {String|HTMLElement[]|NodeList} selector Selector string or html string or common dom node.
-             * @param {String|HTMLElement[]|NodeList|HTMLElement|Document} [context] Search context for selector
-             * @param {Number} [index] Insert position.
-             * @return {NodeList}
-             */
-            add: function (selector, context, index) {
-                if (S.isNumber(context)) {
-                    index = context;
-                    context = undefined;
-                }
-                var list = NodeList.all(selector, context).getDOMNodes(),
-                    ret = new NodeList(this);
-                if (index === undefined) {
-                    push.apply(ret, list);
-                } else {
-                    var args = [index, 0];
-                    args.push.apply(args, list);
-                    AP.splice.apply(ret, args);
-                }
-                return ret;
-            },
+        /**
+         * Add existing node list.
+         * @param {KISSY.NodeList} selector Selector string or html string or common dom node.
+         * @param {KISSY.NodeList} [context] Search context for selector
+         * @param {Number} [index] Insert position.
+         * @return {KISSY.NodeList}
+         */
+        add: function (selector, context, index) {
+            if (S.isNumber(context)) {
+                index = context;
+                context = undefined;
+            }
+            var list = NodeList.all(selector, context).getDOMNodes(),
+                ret = new NodeList(this);
+            if (index === undefined) {
+                push.apply(ret, list);
+            } else {
+                var args = [index, 0];
+                args.push.apply(args, list);
+                AP.splice.apply(ret, args);
+            }
+            return ret;
+        },
 
-            /**
-             * Get part of node list.
-             * @param {Number} start Start position.
-             * @param {number} end End position.
-             * @return {NodeList}
-             */
-            slice: function (start, end) {
-                // ie<9 : [1,2].slice(-2,undefined) => []
-                // ie<9 : [1,2].slice(-2) => []
-                // fix #85
-                return new NodeList(slice.apply(this, arguments));
-            },
+        /**
+         * Get part of node list.
+         * @param {Number} start Start position.
+         * @param {number} end End position.
+         * @return {KISSY.NodeList}
+         */
+        slice: function (start, end) {
+            // ie<9 : [1,2].slice(-2,undefined) => []
+            // ie<9 : [1,2].slice(-2) => []
+            // fix #85
+            return new NodeList(slice.apply(this, arguments));
+        },
 
-            /**
-             * Retrieves the DOMNodes.
-             */
-            getDOMNodes: function () {
-                return slice.call(this);
-            },
+        /**
+         * Retrieves the DOMNodes.
+         */
+        getDOMNodes: function () {
+            return slice.call(this);
+        },
 
-            /**
-             * Applies the given function to each Node in the NodeList.
-             * @param fn The function to apply. It receives 3 arguments: the current node instance, the node's index, and the NodeList instance
-             * @param [context] An optional context to apply the function with Default context is the current NodeList instance
-             */
-            each: function (fn, context) {
-                var self = this;
+        /**
+         * Applies the given function to each Node in the NodeList.
+         * @param {Function} fn The function to apply. It receives 3 arguments:
+         * the current node instance, the node's index,
+         * and the NodeList instance
+         * @param [context] An optional context to
+         * apply the function with Default context is the current NodeList instance
+         * @return {KISSY.NodeList}
+         */
+        each: function (fn, context) {
+            var self = this;
 
-                S.each(self, function (n, i) {
-                    n = new NodeList(n);
-                    return fn.call(context || n, n, i, self);
-                });
+            S.each(self, function (n, i) {
+                n = new NodeList(n);
+                return fn.call(context || n, n, i, self);
+            });
 
-                return self;
-            },
-            /**
-             * Retrieves the DOMNode.
-             */
-            getDOMNode: function () {
-                return this[0];
-            },
+            return self;
+        },
+        /**
+         * Retrieves the DOMNode.
+         * @return {HTMLElement}
+         */
+        getDOMNode: function () {
+            return this[0];
+        },
 
-            /**
-             * return last stack node list.
-             * @return {NodeList}
-             */
-            end: function () {
-                var self = this;
-                return self.__parent || self;
-            },
+        /**
+         * return last stack node list.
+         * @return {KISSY.NodeList}
+         */
+        end: function () {
+            var self = this;
+            return self.__parent || self;
+        },
 
-            /**
-             * Get node list which are descendants of current node list.
-             * @param {String} selector Selector string
-             * @return {NodeList}
-             */
-            all: function (selector) {
-                var ret, self = this;
-                if (self.length > 0) {
-                    ret = NodeList.all(selector, self);
-                } else {
-                    ret = new NodeList();
-                }
+        /**
+         * Get node list which are descendants of current node list.
+         * @param {String} selector Selector string
+         * @return {KISSY.NodeList}
+         */
+        all: function (selector) {
+            var ret, self = this;
+            if (self.length > 0) {
+                ret = NodeList.all(selector, self);
+            } else {
+                ret = new NodeList();
+            }
+            ret.__parent = self;
+            return ret;
+        },
+
+        /**
+         * Get node list which match selector under current node list sub tree.
+         * @param {String} selector
+         * @return {KISSY.NodeList}
+         */
+        one: function (selector) {
+            var self = this, all = self.all(selector),
+                ret = all.length ? all.slice(0, 1) : null;
+            if (ret) {
                 ret.__parent = self;
-                return ret;
-            },
-
-            one: function (selector) {
-                var self = this, all = self.all(selector),
-                    ret = all.length ? all.slice(0, 1) : null;
-                if (ret) {
-                    ret.__parent = self;
-                }
-                return ret;
             }
-        });
+            return ret;
+        }
+    };
 
-    S.mix(NodeList,
+    S.mix(NodeList, {
         /**
-         * @lends NodeList
+         * Get node list from selector or construct new node list from html string.
+         * Can also called from KISSY.all
+         * @param {String|KISSY.NodeList} selector Selector string or html string or common dom node.
+         * @param {String|KISSY.NodeList} [context] Search context for selector
+         * @return {KISSY.NodeList}
+         * @member KISSY.NodeList
+         * @static
          */
-        {
-            /**
-             * Get node list from selector or construct new node list from html string.
-             * Can also called from KISSY.all
-             * @param {String|HTMLElement[]|NodeList} selector Selector string or html string or common dom node.
-             * @param {String|HTMLElement[]|NodeList|HTMLElement|Document} [context] Search context for selector
-             * @return {NodeList}
-             */
-            all: function (selector, context) {
-                // are we dealing with html string ?
-                // TextNode 仍需要自己 new Node
+        all: function (selector, context) {
+            // are we dealing with html string ?
+            // TextNode 仍需要自己 new Node
 
-                if (S.isString(selector)
-                    && (selector = S.trim(selector))
-                    && selector.length >= 3
-                    && S.startsWith(selector, "<")
-                    && S.endsWith(selector, ">")
-                    ) {
-                    if (context) {
-                        if (context.getDOMNode) {
-                            context = context.getDOMNode();
-                        }
-                        if (context.ownerDocument) {
-                            context = context.ownerDocument;
-                        }
+            if (S.isString(selector)
+                && (selector = S.trim(selector))
+                && selector.length >= 3
+                && S.startsWith(selector, '<')
+                && S.endsWith(selector, '>')
+                ) {
+                if (context) {
+                    if (context['getDOMNode']) {
+                        context = context[0];
                     }
-                    return new NodeList(selector, undefined, context);
+                    if (context.ownerDocument) {
+                        context = context.ownerDocument;
+                    }
                 }
-                return new NodeList(DOM.query(selector, context));
-            },
-            one: function (selector, context) {
-                var all = NodeList.all(selector, context);
-                return all.length ? all.slice(0, 1) : null;
+                return new NodeList(selector, undefined, context);
             }
-        });
+            return new NodeList(DOM.query(selector, context));
+        },
+
+        /**
+         * Get node list with length of one
+         * from selector or construct new node list from html string.
+         * @param {String|KISSY.NodeList} selector Selector string or html string or common dom node.
+         * @param {String|KISSY.NodeList} [context] Search context for selector
+         * @return {KISSY.NodeList}
+         * @member KISSY.NodeList
+         * @static
+         */
+        one: function (selector, context) {
+            var all = NodeList.all(selector, context);
+            return all.length ? all.slice(0, 1) : null;
+        }
+    });
 
     /**
      * Same with {@link KISSY.DOM.NodeType}
-     * @enum {Number}
+     * @member KISSY.NodeList
+     * @property NodeType
+     * @static
      */
     NodeList.NodeType = NodeType;
 
     return NodeList;
 }, {
-    requires: ["dom"]
+    requires: ['dom']
 });
 
 
-/**
- * Notes:
- * 2011-05-25
- *  - 承玉：参考 jquery，只有一个 NodeList 对象，Node 就是 NodeList 的别名
- *
- *  2010.04
- *   - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。
- *     但从用户角度讲，this 的第一直觉是 $(this), kissy 和 yui3 保持一致，牺牲
- *     性能，以易用为首。
- *   - 有了 each 方法，似乎不再需要 import 所有 dom 方法，意义不大。
- *   - dom 是低级 api, node 是中级 api, 这是分层的一个原因。还有一个原因是，如果
- *     直接在 node 里实现 dom 方法，则不大好将 dom 的方法耦合到 nodelist 里。可
- *     以说，技术成本会制约 api 设计。
+/*
+ Notes:
+ 2011-05-25
+ - 承玉：参考 jquery，只有一个 NodeList 对象，Node 就是 NodeList 的别名
+
+ 2010.04
+ - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。
+ 但从用户角度讲，this 的第一直觉是 $(this), kissy 和 yui3 保持一致，牺牲
+ 性能，以易用为首。
+ - 有了 each 方法，似乎不再需要 import 所有 dom 方法，意义不大。
+ - dom 是低级 api, node 是中级 api, 这是分层的一个原因。还有一个原因是，如果
+ 直接在 node 里实现 dom 方法，则不大好将 dom 的方法耦合到 nodelist 里。可
+ 以说，技术成本会制约 api 设计。
  */
 /**
+ * @ignore
  * @fileOverview node
  * @author yiminghe@gmail.com
  */
-KISSY.add("node", function (S, Event, Node) {
+KISSY.add('node', function (S, Event, Node) {
     Node.KeyCodes = Event.KeyCodes;
     S.mix(S, {
         Node:Node,
@@ -18711,25 +18898,40 @@ KISSY.add("node", function (S, Event, Node) {
     return Node;
 }, {
     requires:[
-        "event",
-        "node/base",
-        "node/attach",
-        "node/override",
-        "node/anim"
+        'event',
+        'node/base',
+        'node/attach',
+        'node/override',
+        'node/anim'
     ]
 });/**
+ * @ignore
  * @fileOverview overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add("node/override", function (S, DOM, Event, NodeList) {
+KISSY.add('node/override', function (S, DOM, Event, NodeList) {
 
     var NLP = NodeList.prototype;
 
     /**
-     * append(node ,parent) : 参数顺序反过来了
-     * appendTo(parent,node) : 才是正常
-     *
+     * Insert every element in the set of newNodes to the end of every element in the set of current node list.
+     * @param {KISSY.NodeList} newNodes Nodes to be inserted
+     * @return {KISSY.NodeList} this
+     * @method append
+     * @member KISSY.NodeList
      */
+
+    /**
+     * Insert every element in the set of newNodes to the beginning of every element in the set of current node list.
+     * @param {KISSY.NodeList} newNodes Nodes to be inserted
+     * @return {KISSY.NodeList} this
+     * @method prepend
+     * @member KISSY.NodeList
+     */
+
+
+        // append(node ,parent) : 参数顺序反过来了
+        // appendTo(parent,node) : 才是正常
     S.each(['append', 'prepend', 'before', 'after'], function (insertType) {
         NLP[insertType] = function (html) {
             var newNode = html, self = this;
@@ -18744,7 +18946,7 @@ KISSY.add("node/override", function (S, DOM, Event, NodeList) {
         };
     });
 
-    S.each(["wrap", "wrapAll", "replaceWith", "wrapInner"], function (fixType) {
+    S.each(['wrap', 'wrapAll', 'replaceWith', 'wrapInner'], function (fixType) {
         var orig = NLP[fixType];
         NLP[fixType] = function (others) {
             var self = this;
@@ -18756,19 +18958,19 @@ KISSY.add("node/override", function (S, DOM, Event, NodeList) {
     })
 
 }, {
-    requires:["dom", "event", "./base", "./attach"]
+    requires: ['dom', 'event', './base', './attach']
 });
 
-/**
- * 2011-04-05 yiminghe@gmail.com
- * - 增加 wrap/wrapAll/replaceWith/wrapInner/unwrap/contents
- *
- * 2011-05-24
- * - 承玉：
- * - 重写 NodeList 的某些方法
- * - 添加 one ,all ，从当前 NodeList 往下开始选择节点
- * - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
- * - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
+/*
+ 2011-04-05 yiminghe@gmail.com
+ - 增加 wrap/wrapAll/replaceWith/wrapInner/unwrap/contents
+
+ 2011-05-24
+ - 承玉：
+ - 重写 NodeList 的某些方法
+ - 添加 one ,all ，从当前 NodeList 往下开始选择节点
+ - 处理 append ,prepend 和 DOM 的参数实际上是反过来的
+ - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
  */
 
 KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie");

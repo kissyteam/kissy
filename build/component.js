@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 6 21:52
+build time: Sep 7 02:26
 */
 /**
  * Setup component namespace.
@@ -2301,7 +2301,13 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                     });
 
                     // 方法合并
-                    S.mix(prototype, ext.prototype);
+                    var exp = ext.prototype, p;
+                    for (p in exp) {
+                        // do not mess with parent class
+                        if (exp.hasOwnProperty(p)) {
+                            prototype[p] = exp[p];
+                        }
+                    }
                 }
             });
 
@@ -2760,10 +2766,14 @@ KISSY.add("component/uibase/close", function () {
             if (v && !self.__bindCloseEvent) {
                 self.__bindCloseEvent = 1;
                 self.get("closeBtn").on("click", function (ev) {
-                    self[actions[self.get("closeAction")] || HIDE]();
+                    self.close();
                     ev.preventDefault();
                 });
             }
+        },
+        close:function(){
+            var self=this;
+            self[actions[self.get("closeAction")] || HIDE]();
         },
         __destructor:function () {
             var btn = this.get("closeBtn");
@@ -2928,19 +2938,19 @@ KISSY.add("component/uibase/drag", function (S) {
          * Whether current element is draggable.
          * @type {Boolean}
          */
-        draggable:{
-            setter:function (v) {
+        draggable: {
+            setter: function (v) {
                 if (v === true) {
                     return {};
                 }
             },
-            value:{}
+            value: {}
         }
     };
 
     Drag.prototype = {
 
-        _uiSetDraggable:function (dragCfg) {
+        _uiSetDraggable: function (dragCfg) {
             var self = this,
                 handlers,
                 DD = S.require("dd"),
@@ -2955,8 +2965,8 @@ KISSY.add("component/uibase/drag", function (S) {
                 Draggable = DD.Draggable;
 
                 d = self.__drag = new Draggable({
-                    node:el,
-                    move:1
+                    node: el,
+                    move: 1
                 });
 
                 if (dragCfg.proxy) {
@@ -2994,6 +3004,8 @@ KISSY.add("component/uibase/drag", function (S) {
                 handlers = dragCfg.handlers;
                 if ("constrain" in dragCfg) {
                     __constrain.set("constrain", dragCfg.constrain);
+                } else {
+                    __constrain.set("constrain", false);
                 }
                 if (handlers && handlers.length > 0) {
                     d.set("handlers", handlers);
@@ -3001,7 +3013,7 @@ KISSY.add("component/uibase/drag", function (S) {
             }
         },
 
-        __destructor:function () {
+        __destructor: function () {
             var self = this,
                 p = self.__proxy,
                 s = self.__scroll,
@@ -3119,63 +3131,64 @@ KISSY.add("component/uibase/mask", function () {
     {
         /**
          * Whether show mask layer when component shows
-         * @type {Boolean}
+         * @type {Boolean|Object}
          */
-        mask:{
-            value:false
+        mask: {
+            view: 1
         },
-        /**
-         * Mask node for current overlay 's mask.
-         * @type {KISSY.NodeList}
-         */
-        maskNode:{
-            view:1
-        },
-        /**
-         * Whether to share mask with other overlays.
-         * @default true.
-         * @type {Boolean}
-         */
-        maskShared:{
-            view:1
+        maskNode: {
+            view: 1
         }
     };
 
+    var NONE = 'none',
+        effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
+
+    function processMask(mask, el, show) {
+        var effect = mask.effect || NONE;
+
+        if (effect == NONE) {
+            el[show ? 'show' : 'hide']();
+            return;
+        }
+
+        var duration = mask.duration,
+            easing = mask.easing,
+            m,
+            index = show ? 1 : 0;
+
+        // run complete fn to restore window's original height
+        el.stop(1, 1);
+
+        m = effect + effects[effect][index];
+        el[m](duration, null, easing);
+    }
+
     Mask.prototype = {
 
-        __bindUI:function () {
+        __bindUI: function () {
             var self = this,
-                view = self.get("view"),
-                _maskExtShow = view._maskExtShow,
-                _maskExtHide = view._maskExtHide;
-            if (self.get("mask")) {
-                self.on("show", _maskExtShow, view);
-                self.on("hide", _maskExtHide, view);
+                maskNode,
+                mask,
+                view = self.get("view");
+            if (mask = self.get("mask")) {
+                maskNode = self.get('maskNode');
+                self.on('afterVisibleChange', function (e) {
+                    processMask(mask, maskNode, e.newVal)
+                });
             }
         }
     };
 
 
     return Mask;
-}, {requires:["ua"]});/**
+}, {requires: ["ua"]});/**
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
 
-    /**
-     * 每组相同 prefixCls 的 position 共享一个遮罩
-     */
-    var maskMap = {
-            /**
-             * {
-             *  node:
-             *  num:
-             * }
-             */
-
-        },
-        ie6 = (UA['ie'] === 6),
+    var ie6 = (UA['ie'] === 6),
         $ = Node.all;
 
     function getMaskCls(self) {
@@ -3225,75 +3238,29 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
     }
 
     Mask.ATTRS = {
-        maskShared:{
-            value:true
+
+        mask: {
+            value: false
+        },
+        maskNode: {
+
         }
+
     };
 
     Mask.prototype = {
 
-        _maskExtShow:function () {
-            var self = this,
-                zIndex,
-                maskCls = getMaskCls(self),
-                maskDesc = maskMap[maskCls],
-                maskShared = self.get("maskShared"),
-                mask = self.get("maskNode");
-            if (!mask) {
-                if (maskShared) {
-                    if (maskDesc) {
-                        mask = maskDesc.node;
-                    } else {
-                        mask = initMask(maskCls);
-                        maskDesc = maskMap[maskCls] = {
-                            num:0,
-                            node:mask
-                        };
-                    }
-                } else {
-                    mask = initMask(maskCls);
-                }
-                self.setInternal("maskNode", mask);
-            }
-            if (zIndex = self.get("zIndex")) {
-                mask.css("z-index", zIndex - 1);
-            }
-            if (maskShared) {
-                maskDesc.num++;
-            }
-            if (!maskShared || maskDesc.num == 1) {
-                mask.show();
+        __renderUI: function () {
+            var self = this;
+            if (self.get('mask')) {
+                self.set('maskNode', initMask(getMaskCls(self)));
             }
         },
 
-        _maskExtHide:function () {
-            var self = this,
-                maskCls = getMaskCls(self),
-                maskDesc = maskMap[maskCls],
-                maskShared = self.get("maskShared"),
-                mask = self.get("maskNode");
-            if (maskShared && maskDesc) {
-                maskDesc.num = Math.max(maskDesc.num - 1, 0);
-                if (maskDesc.num == 0) {
-                    mask.hide();
-                }
-            } else {
-                mask.hide();
-            }
-        },
-
-        __destructor:function () {
-            var self = this,
-                maskShared = self.get("maskShared"),
-                mask = self.get("maskNode");
-            if (self.get("maskNode")) {
-                if (maskShared) {
-                    if (self.get("visible")) {
-                        self._maskExtHide();
-                    }
-                } else {
-                    mask.remove();
-                }
+        __destructor: function () {
+            var self = this, mask;
+            if (mask = self.get("maskNode")) {
+                mask.remove();
             }
         }
 
@@ -3301,7 +3268,7 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
 
     return Mask;
 }, {
-    requires:["ua", "node"]
+    requires: ["ua", "node"]
 });
 
 /**

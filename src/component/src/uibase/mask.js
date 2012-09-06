@@ -21,42 +21,55 @@ KISSY.add("component/uibase/mask", function () {
     {
         /**
          * Whether show mask layer when component shows
-         * @type {Boolean}
+         * @type {Boolean|Object}
          */
-        mask:{
-            value:false
+        mask: {
+            view: 1
         },
-        /**
-         * Mask node for current overlay 's mask.
-         * @type {KISSY.NodeList}
-         */
-        maskNode:{
-            view:1
-        },
-        /**
-         * Whether to share mask with other overlays.
-         * @default true.
-         * @type {Boolean}
-         */
-        maskShared:{
-            view:1
+        maskNode: {
+            view: 1
         }
     };
 
+    var NONE = 'none',
+        effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
+
+    function processMask(mask, el, show) {
+        var effect = mask.effect || NONE;
+
+        if (effect == NONE) {
+            el[show ? 'show' : 'hide']();
+            return;
+        }
+
+        var duration = mask.duration,
+            easing = mask.easing,
+            m,
+            index = show ? 1 : 0;
+
+        // run complete fn to restore window's original height
+        el.stop(1, 1);
+
+        m = effect + effects[effect][index];
+        el[m](duration, null, easing);
+    }
+
     Mask.prototype = {
 
-        __bindUI:function () {
+        __bindUI: function () {
             var self = this,
-                view = self.get("view"),
-                _maskExtShow = view._maskExtShow,
-                _maskExtHide = view._maskExtHide;
-            if (self.get("mask")) {
-                self.on("show", _maskExtShow, view);
-                self.on("hide", _maskExtHide, view);
+                maskNode,
+                mask,
+                view = self.get("view");
+            if (mask = self.get("mask")) {
+                maskNode = self.get('maskNode');
+                self.on('afterVisibleChange', function (e) {
+                    processMask(mask, maskNode, e.newVal)
+                });
             }
         }
     };
 
 
     return Mask;
-}, {requires:["ua"]});
+}, {requires: ["ua"]});

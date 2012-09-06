@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:57
+build time: Sep 7 02:30
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -80,8 +80,8 @@ KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager
  */
 KISSY.add("tree/check-node-render", function (S, Node, TreeNodeRender) {
     var $ = Node.all,
-        CHECK_CLS = "ks-tree-node-checked",
-        ALL_STATES_CLS = "ks-tree-node-checked0 ks-tree-node-checked1 ks-tree-node-checked2";
+        CHECK_CLS = "tree-node-checked",
+        ALL_STATES_CLS = "tree-node-checked0 tree-node-checked1 tree-node-checked2";
     return TreeNodeRender.extend({
 
         createDom:function () {
@@ -94,7 +94,8 @@ KISSY.add("tree/check-node-render", function (S, Node, TreeNodeRender) {
         _uiSetCheckState:function (s) {
             var self = this,
                 checkIconEl = self.get("checkIconEl");
-            checkIconEl.removeClass(ALL_STATES_CLS).addClass(CHECK_CLS + s);
+            checkIconEl.removeClass(self.getCssClassWithPrefix(ALL_STATES_CLS))
+                .addClass(self.getCssClassWithPrefix(CHECK_CLS) + s);
         }
 
     }, {
@@ -357,9 +358,9 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
     //</div>
 
     var $ = Node.all,
-        SELECTED_CLS = "ks-tree-node-selected",
-        ROW_CLS = "ks-tree-node-row",
-        COMMON_EXPAND_EL_CLS = "ks-tree-expand-icon-{t}",
+        SELECTED_CLS = "tree-node-selected",
+        ROW_CLS = "tree-node-row",
+        COMMON_EXPAND_EL_CLS = "tree-expand-icon-{t}",
 
     // refreshCss 实际使用顺序
     // expandIconEl
@@ -375,19 +376,19 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
             COMMON_EXPAND_EL_CLS + "plus"
         ].join(" "),
         ICON_EL_FILE_CLS = [
-            "ks-tree-file-icon"
+            "tree-file-icon"
         ].join(" "),
         ICON_EL_FOLDER_EXPAND_CLS = [
-            "ks-tree-expanded-folder-icon"
+            "tree-expanded-folder-icon"
         ].join(" "),
         ICON_EL_FOLDER_COLLAPSE_CLS = [
-            "ks-tree-collapsed-folder-icon"
+            "tree-collapsed-folder-icon"
         ].join(" "),
     // 实际使用，结束
 
-        CONTENT_EL_CLS = "ks-tree-node-content",
-        CHILDREN_CLS = "ks-tree-children",
-        CHILDREN_CLS_L = "ks-tree-lchildren";
+        CONTENT_EL_CLS = "tree-node-content",
+        CHILDREN_CLS = "tree-children",
+        CHILDREN_CLS_L = "tree-lchildren";
 
     return Component.Render.extend({
 
@@ -413,12 +414,12 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
                 }
             }
 
-            iconEl.attr("class", iconElCss);
-            expandIconEl.attr("class", S.substitute(expandElCss, {
+            iconEl.attr("class", self.getCssClassWithPrefix(iconElCss));
+            expandIconEl.attr("class", self.getCssClassWithPrefix(S.substitute(expandElCss, {
                 "t": isNodeSingleOrLast ? "l" : "t"
-            }));
+            })));
             if (childrenEl) {
-                childrenEl.attr("class", (isNodeSingleOrLast ? CHILDREN_CLS_L : CHILDREN_CLS));
+                childrenEl.attr("class", self.getCssClassWithPrefix((isNodeSingleOrLast ? CHILDREN_CLS_L : CHILDREN_CLS)));
             }
         },
 
@@ -431,7 +432,8 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
                 iconEl,
                 contentEl = self.get("contentEl");
 
-            rowEl = $("<div class='" + ROW_CLS + "'/>");
+            rowEl = $("<div class='" +
+                self.getCssClassWithPrefix(ROW_CLS) + "'/>");
 
             id = contentEl.attr("id");
 
@@ -467,7 +469,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
         _uiSetSelected: function (v) {
             var self = this,
                 rowEl = self.get("rowEl");
-            rowEl[v ? "addClass" : "removeClass"](SELECTED_CLS);
+            rowEl[v ? "addClass" : "removeClass"](self.getCssClassWithPrefix(SELECTED_CLS));
             self.get("el").attr("aria-selected", v);
         },
 
@@ -512,7 +514,8 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
             },
             contentEl: {
                 valueFn: function () {
-                    return $("<span id='" + S.guid("ks-tree-node") + "' class='" + CONTENT_EL_CLS + "'/>");
+                    return $("<span id='" + S.guid("ks-tree-node") +
+                        "' class='" + this.getCssClassWithPrefix(CONTENT_EL_CLS) + "'/>");
                 }
             },
             isLeaf: {},
@@ -521,10 +524,10 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
 
         HTML_PARSER: {
             childrenEl: function (el) {
-                return el.children("." + CHILDREN_CLS);
+                return el.children("." + this.getCssClassWithPrefix(CHILDREN_CLS));
             },
             contentEl: function (el) {
-                return el.children("." + CONTENT_EL_CLS);
+                return el.children("." + this.getCssClassWithPrefix(CONTENT_EL_CLS));
             },
             isLeaf: function (el) {
                 var self = this;
@@ -536,7 +539,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
                 }
             },
             expanded: function (el) {
-                var children = el.one(".ks-tree-children");
+                var children = el.one("." + this.get('prefixCls') + "tree-children");
                 if (!children) {
                     return false;
                 }
@@ -897,7 +900,9 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 },
 
                 decorateChildCls: {
-                    value: "ks-tree-children"
+                    valueFn:function(){
+                        return this.get('prefixCls')+'tree-children';
+                    }
                 }
             }
         }, {
@@ -1031,18 +1036,18 @@ KISSY.add("tree/tree-manager-render", function (S) {
     TreeManagerRender.ATTRS = {
         // 默认 true
         // 是否显示根节点
-        showRootNode:{
+        showRootNode: {
         }
     };
 
     S.augment(TreeManagerRender, {
-        __renderUI:function () {
+        __renderUI: function () {
             var self = this;
             self.get("el").attr("role", "tree");
-            self.get("rowEl").addClass("ks-tree-row");
+            self.get("rowEl").addClass(self.get('prefixCls') + "tree-row");
         },
 
-        _uiSetShowRootNode:function (v) {
+        _uiSetShowRootNode: function (v) {
             this.get("rowEl")[v ? "show" : "hide"]();
         }
     });

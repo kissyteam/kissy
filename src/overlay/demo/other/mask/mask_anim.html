@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
-<title>KISSY Shared Mask</title>
-<link rel="stylesheet" href="../../../../../kissy-dpl/base/assets/reset.css"/>
-<script src="../../../../../build/kissy.js"></script>
-<link rel="stylesheet" href="../assets/cool.css"/>
+    <meta charset="utf-8"/>
+    <title>KISSY Shared Mask</title>
+    <link rel="stylesheet" href="../../../../../kissy-dpl/base/assets/reset.css"/>
+    <script src="../../../../../build/kissy.js"></script>
+    <link rel="stylesheet" href="../assets/cool.css"/>
 </head>
 <body>
 <div style="height:800px;width: 950px;margin: 0px auto;padding: 20px;">
@@ -15,32 +15,24 @@
     KISSY.ready(function (S) {
         S.use("overlay", function (S, Overlay) {
             var o = new Overlay.Dialog({
-                width:500,
-                height:500,
-                mask:true,
-                maskShared:false,
-                zIndex:1000
+                width: 500,
+                height: 500,
+                mask: {
+                    effect: 'fade'
+                },
+                effect: {
+                    effect: 'fade'
+                },
+                zIndex: 1000
             });
 
-            o.on("afterBindUI", function () {
-                o.on("show", function () {
-                    o.get("maskNode").css('opacity', 0);
-                    o.get("maskNode").animate({
-                        opacity:.5
-                    });
-                });
-                o.on("hide", function () {
-                    o.get("maskNode").show();
-                    o.get("maskNode").animate({
-                        opacity:0
-                    }, {
-                        complete:function () {
-                            o.get("maskNode").hide();
-                        }
-                    });
-                });
+            o.on('show', function () {
+                S.log('show');
             });
 
+            o.on('hide', function () {
+                S.log('hide');
+            });
 
             S.all("#t2").on("click", function () {
                 o.show().center();

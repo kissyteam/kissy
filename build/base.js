@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 20:53
+build time: Sep 7 02:26
 */
 /**
  * @ignore
  * @fileOverview attribute management
- * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base/attribute', function (S, undefined) {
 
@@ -545,7 +545,7 @@ KISSY.add('base/attribute', function (S, undefined) {
 /**
  * @ignore
  * @fileOverview attribute management and event in one
- * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base', function (S, Attribute, Event) {
 
@@ -603,7 +603,11 @@ KISSY.add('base', function (S, Attribute, Event) {
                 // 子类上的 ATTRS 配置优先
                 if (attrs.hasOwnProperty(attr)) {
                     // 父类后加，父类不覆盖子类的相同设置
-                    // 属性对象会 merge   a: {y:{getter:fn}}, b:{y:{value:3}}, b extends a => b {y:{value:3}}
+                    // 属性对象会 merge
+                    // a: {y: {getter: fn}}, b: {y: {value: 3}}
+                    // b extends a
+                    // =>
+                    // b {y: {value: 3, getter: fn}}
                     host.addAttr(attr, attrs[attr], false);
                 }
             }

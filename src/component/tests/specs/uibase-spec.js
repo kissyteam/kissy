@@ -85,7 +85,7 @@ KISSY.use("component", function (S, Component) {
 
                     },
                     // 不会重复调用
-                    a:{
+                    a: {
 
                     }
                 }
@@ -272,7 +272,13 @@ KISSY.use("component", function (S, Component) {
         describe("contentEl", function () {
 
             var ContentEl = UIBase.extend([UIBase.Box.Render,
-                UIBase.ContentBox.Render], {}, {}, {
+                UIBase.ContentBox.Render], {}, {
+                ATTRS: {
+                    prefixCls: {
+                        value: 'ks-'
+                    }
+                }
+            }, {
                 xclass: 'contentELTest'
             });
 

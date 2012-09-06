@@ -2,6 +2,7 @@
     position: absolute; /*防止移位带来的闪烁*/
     left: -9999px;
     top: -9999px;
+    outline: none;
 }
 
 .ks-dialog, .ks-popup {
@@ -26,6 +27,7 @@
     border: 1px solid transparent;
     right: 6px;
     top: 6px;
+    z-index: 99;
     vertical-align: middle;
     position: absolute;
     text-decoration: none;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 3 17:15
+build time: Sep 7 02:26
 */
 /**
  * @ignore
@@ -19,7 +19,7 @@ KISSY.add('anim', function (S, Anim, Easing) {
 });/**
  * @ignore
  * @fileOverview special patch for anim backgroundPosition
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
 
@@ -818,7 +818,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 /**
  * @ignore
  * @fileOverview special patch for making color gradual change
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
 
@@ -1374,7 +1374,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
  *//**
  * @ignore
  * @fileOverview single timer for the whole anim module
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('anim/manager', function(S) {
     var stamp = S.stamp;

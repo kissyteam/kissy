@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 5 10:33
+build time: Sep 7 02:29
 */
 /**
  * link editor support for kissy editor ,innovation from google doc and ckeditor
@@ -13,15 +13,15 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
         tipHtml = '<a ' +
             'href="" '
             + ' target="_blank" ' +
-            'class="ks-editor-bubble-url">' +
+            'class="{prefixCls}editor-bubble-url">' +
             '在新窗口查看' +
             '</a>  –  '
             + ' <span ' +
-            'class="ks-editor-bubble-link ks-editor-bubble-change">' +
+            'class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change">' +
             '编辑' +
             '</span>   |   '
             + ' <span ' +
-            'class="ks-editor-bubble-link ks-editor-bubble-remove">' +
+            'class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove">' +
             '去除' +
             '</span>';
 
@@ -31,23 +31,25 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
     }
 
     function LinkPlugin(config) {
-this.config=config||{};
+        this.config = config || {};
     }
 
     S.augment(LinkPlugin, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
+
+            var prefixCls = editor.get('prefixCls');
             editor.addButton("link", {
-                tooltip:"插入链接",
-                listeners:{
-                    click:function () {
+                tooltip: "插入链接",
+                listeners: {
+                    click: function () {
                         showLinkEditDialog();
 
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode: Editor.WYSIWYG_MODE
             });
 
-            var self=this;
+            var self = this;
 
             function showLinkEditDialog(selectedEl) {
                 DialogLoader.useDialog(editor, "link",
@@ -56,16 +58,18 @@ this.config=config||{};
             }
 
             editor.addBubble("link", checkLink, {
-                listeners:{
-                    afterRenderUI:function () {
+                listeners: {
+                    afterRenderUI: function () {
                         var bubble = this,
                             el = bubble.get("contentEl");
 
-                        el.html(tipHtml);
+                        el.html(S.substitute(tipHtml, {
+                            prefixCls: prefixCls
+                        }));
 
-                        var tipUrl = el.one(".ks-editor-bubble-url"),
-                            tipChange = el.one(".ks-editor-bubble-change"),
-                            tipRemove = el.one(".ks-editor-bubble-remove");
+                        var tipUrl = el.one("." + prefixCls + "editor-bubble-url"),
+                            tipChange = el.one("." + prefixCls + "editor-bubble-change"),
+                            tipRemove = el.one("." + prefixCls + "editor-bubble-remove");
 
                         //ie focus not lose
                         Editor.Utils.preventFocus(el);
@@ -99,6 +103,6 @@ this.config=config||{};
 
     return LinkPlugin;
 }, {
-    requires:['editor', '../bubble/',
+    requires: ['editor', '../bubble/',
         './utils', '../dialog-loader/', '../button/']
 });

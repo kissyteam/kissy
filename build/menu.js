@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 6 15:45
+build time: Sep 7 02:29
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -214,7 +214,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
  */
 KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
-    var HIT_CLS = "ks-menuitem-hit";
+    var HIT_CLS = "menuitem-hit";
 
     // 转义正则特殊字符,返回字符串用来构建正则表达式
     function regExpEscape(s) {
@@ -278,6 +278,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
              */
             filterItems:function (str) {
                 var self = this,
+                    prefixCls=self.get('prefixCls'),
                     view = self.get("view"),
                     _labelEl = view.get("labelEl"),
                     filterInput = view.get("filterInput");
@@ -356,7 +357,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                             c.set("visible", true);
                             // 匹配子串着重 wrap
                             c.get("el").html(content.replace(strExp, function (m) {
-                                return "<span class='" + HIT_CLS + "'>" + m + "<" + "/span>";
+                                return "<span class='" + prefixCls+HIT_CLS + "'>" + m + "<" + "/span>";
                             }));
                         } else {
                             // 不符合
@@ -368,9 +369,10 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
             },
 
             decorateInternal:function (el) {
-                var self = this;
+                var self = this,
+                    prefixCls=self.get('prefixCls');
                 self.set("el", el);
-                var menuContent = el.one("." + "ks-menu-content");
+                var menuContent = el.one("." + prefixCls+"menu-content");
                 self.decorateChildren(menuContent);
             },
 
@@ -454,9 +456,9 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
  */
 KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
     var $ = Node.all,
-        MENU_FILTER = "ks-menu-filter",
-        MENU_FILTER_LABEL = "ks-menu-filter-label",
-        MENU_CONTENT = "ks-menu-content";
+        MENU_FILTER = "menu-filter",
+        MENU_FILTER_LABEL = "menu-filter-label",
+        MENU_CONTENT = "menu-content";
 
     return MenuRender.extend({
         getContentElement:function () {
@@ -468,16 +470,17 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
         },
         createDom:function () {
             var self = this;
+            var prefixCls=self.get('prefixCls');
             var contentEl = MenuRender.prototype.getContentElement.call(this);
             var filterWrap = self.get("filterWrap");
             if (!filterWrap) {
                 self.set("filterWrap",
-                    filterWrap = $("<div class='" + MENU_FILTER + "'/>")
+                    filterWrap = $("<div class='" + prefixCls+MENU_FILTER + "'/>")
                         .appendTo(contentEl, undefined));
             }
             if (!this.get("labelEl")) {
                 this.set("labelEl",
-                    $("<div class='" + MENU_FILTER_LABEL + "'/>")
+                    $("<div class='" + prefixCls+MENU_FILTER_LABEL + "'/>")
                         .appendTo(filterWrap, undefined));
             }
             if (!self.get("filterInput")) {
@@ -486,7 +489,7 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
             }
             if (!self.get("menuContent")) {
                 self.set("menuContent",
-                    $("<div class='" + MENU_CONTENT + "'/>")
+                    $("<div class='" + prefixCls+MENU_CONTENT + "'/>")
                         .appendTo(contentEl, undefined));
             }
         },
@@ -503,16 +506,18 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
 
         HTML_PARSER:{
             labelEl:function (el) {
-                return el.one("." + MENU_FILTER).one("." + MENU_FILTER_LABEL)
+                return el.one("." + this.get('prefixCls')+MENU_FILTER)
+                    .one("." + this.get('prefixCls')+MENU_FILTER_LABEL)
             },
             filterWrap:function (el) {
-                return el.one("." + MENU_FILTER);
+                return el.one("." + this.get('prefixCls')+MENU_FILTER);
             },
             menuContent:function (el) {
-                return el.one("." + MENU_CONTENT);
+                return el.one("." + this.get('prefixCls')+MENU_CONTENT);
             },
             filterInput:function (el) {
-                return el.one("." + MENU_FILTER).one("input");
+                return el.one("." + this.get('prefixCls')+MENU_FILTER)
+                    .one("input");
             }
         }
     });
@@ -761,13 +766,14 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
  */
 KISSY.add("menu/menuitemRender", function (S, Node, Component) {
 
-    var CHECK_CLS = "ks-menuitem-checkbox";
+    var CHECK_CLS = "menuitem-checkbox";
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
-            checkEl = el.one("." + CHECK_CLS);
+            prefixCls=self.get('prefixCls'),
+            checkEl = el.one("." + prefixCls+CHECK_CLS);
         if (!checkEl) {
-            checkEl = new Node("<div class='" + CHECK_CLS + "'/>")
+            checkEl = new Node("<div class='" + prefixCls+CHECK_CLS + "'/>")
                 .prependTo(el);
             // if not ie will lose focus when click
             checkEl.unselectable();
@@ -1328,28 +1334,32 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
  */
 KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
     var SubMenuRender,
-        CONTENT_TMPL = '<span class="ks-menuitem-content"><' + '/span>',
-        ARROW_TMPL = '<span class="ks-submenu-arrow">►<' + '/span>';
+        CONTENT_TMPL = '<span class="{prefixCls}menuitem-content"><' + '/span>',
+        ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
 
     SubMenuRender = MenuItemRender.extend({
         createDom: function () {
             var self = this,
                 el = self.get("el");
             el.attr("aria-haspopup", "true")
-                .append(ARROW_TMPL);
+                .append(S.substitute(ARROW_TMPL, {
+                prefixCls: self.get('prefixCls')
+            }));
         }
     }, {
         ATTRS: {
             arrowEl: {},
             contentEl: {
                 valueFn: function () {
-                    return S.all(CONTENT_TMPL);
+                    return S.all(S.substitute(CONTENT_TMPL, {
+                        prefixCls: this.get('prefixCls')
+                    }));
                 }
             }
         },
         HTML_PARSER: {
             contentEl: function (el) {
-                return el.children(".ks-menuitem-content");
+                return el.children("." + this.get('prefixCls') + "menuitem-content");
             }
         }
     });

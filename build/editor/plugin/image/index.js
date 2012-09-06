@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 5 10:33
+build time: Sep 7 02:29
 */
 /**
  * insert image for kissy editor
@@ -21,12 +21,12 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                 return node;
             }
         },
-        tipHtml = '<a class="ks-editor-bubble-url" ' +
+        tipHtml = '<a class="{prefixCls}editor-bubble-url" ' +
             'target="_blank" href="#">在新窗口查看</a>  |  '
-            + '<a class="ks-editor-bubble-link ' +
-            'ks-editor-bubble-change" href="#">编辑</a>  |  '
-            + '<a class="ks-editor-bubble-link ' +
-            'ks-editor-bubble-remove" href="#">删除</a>';
+            + '<a class="{prefixCls}editor-bubble-link ' +
+            '{prefixCls}editor-bubble-change" href="#">编辑</a>  |  '
+            + '<a class="{prefixCls}editor-bubble-link ' +
+            '{prefixCls}editor-bubble-remove" href="#">删除</a>';
 
 
     function ImagePlugin(config) {
@@ -34,9 +34,11 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
     }
 
     S.augment(ImagePlugin, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
 
-            var self=this;
+            var self = this;
+
+            var prefixCls = editor.get('prefixCls');
 
             function showImageEditor(selectedEl) {
                 DialogLoader.useDialog(editor, "image",
@@ -46,20 +48,20 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
             editor.addButton("image", {
-                tooltip:"插入图片",
-                listeners:{
-                    click:function () {
+                tooltip: "插入图片",
+                listeners: {
+                    click: function () {
                         showImageEditor(null);
 
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode: Editor.WYSIWYG_MODE
             });
 
             var handlers = [
                 {
-                    content:"图片属性",
-                    fn:function () {
+                    content: "图片属性",
+                    fn: function () {
                         var img = checkImg(this.get("editorSelectedEl"));
                         if (img) {
                             // make editor restore focus
@@ -69,8 +71,8 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                     }
                 },
                 {
-                    content:"插入新行",
-                    fn:function () {
+                    content: "插入新行",
+                    fn: function () {
                         this.hide();
                         var doc = editor.get("document")[0],
                             p = new Node(doc.createElement("p"));
@@ -91,15 +93,15 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
 
             S.each(handlers, function (h) {
                 children.push({
-                    content:h.content
+                    content: h.content
                 })
             });
 
             editor.addContextMenu("image", checkImg, {
-                width:120,
-                children:children,
-                listeners:{
-                    click:function (e) {
+                width: 120,
+                children: children,
+                listeners: {
+                    click: function (e) {
                         var self = this, content = e.target.get('content');
                         S.each(handlers, function (h) {
                             if (h.content == content) {
@@ -122,14 +124,16 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
             });
 
             editor.addBubble("image", checkImg, {
-                listeners:{
-                    afterRenderUI:function () {
+                listeners: {
+                    afterRenderUI: function () {
                         var bubble = this,
                             el = bubble.get("contentEl");
-                        el.html(tipHtml);
-                        var tipUrlEl = el.one(".ks-editor-bubble-url"),
-                            tipChangeEl = el.one(".ks-editor-bubble-change"),
-                            tipRemoveEl = el.one(".ks-editor-bubble-remove");
+                        el.html(S.substitute(tipHtml, {
+                            prefixCls: prefixCls
+                        }));
+                        var tipUrlEl = el.one("." + prefixCls + "editor-bubble-url"),
+                            tipChangeEl = el.one("." + prefixCls + "editor-bubble-change"),
+                            tipRemoveEl = el.one("." + prefixCls + "editor-bubble-remove");
                         Editor.Utils.preventFocus(el);
                         tipChangeEl.on("click", function (ev) {
                             showImageEditor(bubble.get("editorSelectedEl"));
@@ -163,7 +167,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
 
     return ImagePlugin;
 }, {
-    requires:['editor',
+    requires: ['editor',
         '../button/',
         '../bubble/',
         '../contextmenu/',

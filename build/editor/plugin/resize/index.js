@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 5 10:33
+build time: Sep 7 02:29
 */
 /**
  * resize functionality
@@ -32,7 +32,8 @@ this.config=config||{};
                 }
             }
 
-            var resizer = new Node("<div class='ks-editor-resizer' style='cursor: "
+            var resizer = new Node("<div class='"+editor.get('prefixCls')+
+                "editor-resizer' style='cursor: "
                 + cursor +
                 "'></div>").appendTo(statusBarEl);
 

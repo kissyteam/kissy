@@ -1,6 +1,6 @@
 /**
  * @fileOverview KISSY.Dialog
- * @author yiminghe@gmail.com, qiaohua@taobao.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
@@ -33,30 +33,40 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 if (draggable = self.get("draggable")) {
                     if (!draggable.handlers) {
                         // default to drag header
-                        draggable.handlers = [self.get("header")];
+                        draggable.handlers = [function () {
+                            return self.get('header');
+                        }];
                     }
                 }
             },
+
             handleKeyEventInternal: function (e) {
-                if (e.keyCode === Node.KeyCodes.ESC) {
-                    this.hide();
-                    e.halt();
+                if (this.get('escapeToClose') &&
+                    e.keyCode === Node.KeyCodes.ESC) {
+                    if (e.target.nodeName.toLowerCase() == 'select' &&
+                        !e.target.disabled) {
+                        // escape at select
+                    } else {
+                        this.close();
+                        e.halt();
+                    }
                     return;
                 }
                 trapFocus.call(this, e);
             },
 
             _uiSetVisible: function (v) {
-                Dialog.superclass._uiSetVisible.apply(this, arguments);
-                var el = this.get('el');
+                var self = this, el = self.get('el');
                 if (v) {
-                    this.__lastActive = el[0].ownerDocument.activeElement;
+                    self.__lastActive = el[0].ownerDocument.activeElement;
                     el[0].focus();
                     el.attr("aria-hidden", "false");
                 } else {
                     el.attr("aria-hidden", "true");
-                    this.__lastActive && this.__lastActive.focus();
+                    self.__lastActive && self.__lastActive.focus();
                 }
+                // prevent display none for effect
+                Dialog.superclass._uiSetVisible.apply(self, arguments);
             }
         },
 
@@ -81,6 +91,13 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
                 focusable: {
                     value: true
+                },
+
+                /**
+                 * @since 1.3.0
+                 */
+                escapeToClose: {
+                    value: true
                 }
             }
         }, {
@@ -91,14 +108,16 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
     var KEY_TAB = Node.KeyCodes.TAB;
 
+    // 不完美的方案，窗体末尾空白 tab 占位符，多了 tab 操作一次
     function trapFocus(e) {
 
         var self = this,
-            keyCode = e.keyCode,
-            firstFocusItem = self.get("el");
+            keyCode = e.keyCode;
+
         if (keyCode != KEY_TAB) {
             return;
         }
+        var el = self.get("el");
         // summary:
         // Handles the keyboard events for accessibility reasons
 
@@ -107,24 +126,23 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         // find the first and last tab focusable items in the hierarchy of the dialog container node
         // do this every time if the items may be added / removed from the the dialog may change visibility or state
 
-        var lastFocusItem = firstFocusItem.last();
+        var lastFocusItem = el.last();
 
-        // assumes firstFocusItem and lastFocusItem maintained by dialog object
+        // assumes el and lastFocusItem maintained by dialog object
 
         // see if we are shift-tabbing from first focusable item on dialog
-        if (node.equals(firstFocusItem) && e.shiftKey) {
+        if (node.equals(el) && e.shiftKey) {
             lastFocusItem[0].focus(); // send focus to last item in dialog
             e.halt(); //stop the tab keypress event
         }
         // see if we are tabbing from the last focusable item
         else if (node.equals(lastFocusItem) && !e.shiftKey) {
-            firstFocusItem[0].focus(); // send focus to first item in dialog
+            el[0].focus(); // send focus to first item in dialog
             e.halt(); //stop the tab keypress event
         }
         else {
             // see if the key is for the dialog
-            if (node.equals(firstFocusItem) ||
-                firstFocusItem.contains(node)) {
+            if (node.equals(el) || el.contains(node)) {
                 return;
             }
         }

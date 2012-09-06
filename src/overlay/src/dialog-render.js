@@ -22,7 +22,10 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender) {
                 .attr("aria-labelledby", id);
             // 哨兵元素，从这里 tab 出去到弹窗根节点
             // 从根节点 shift tab 出去到这里
-            el.append("<div " + "t" + "ab" + "index='0'></div>");
+            // tab catcher
+            el.append("<div " + "t" + "ab" + "index='0' " +
+                // do not mess with main dialog
+                "style='position:absolute;'></div>");
         }
     });
 }, {

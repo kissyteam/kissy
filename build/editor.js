@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 5 10:33
+build time: Sep 7 02:29
 */
 /**
  * Set up editor constructor
@@ -134,7 +134,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
     Editor.HTML_PARSER = {
 
         textarea:function (el) {
-            return el.one(".ks-editor-textarea");
+            return el.one("."+this.get('prefixCls')+"editor-textarea");
         }
 
     };
@@ -1811,11 +1811,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
         HTML5_DTD = '<!doctype html>',
 
-        KE_TEXTAREA_WRAP_CLASS = ".ks-editor-textarea-wrap",
+        KE_TEXTAREA_WRAP_CLASS = ".{prefixCls}editor-textarea-wrap",
 
-        KE_TOOLBAR_CLASS = ".ks-editor-tools",
+        KE_TOOLBAR_CLASS = ".{prefixCls}editor-tools",
 
-        KE_STATUSBAR_CLASS = ".ks-editor-status",
+        KE_STATUSBAR_CLASS = ".{prefixCls}editor-status",
 
         IFRAME_HTML_TPL = HTML5_DTD + "<html>" +
             "<head>{doctype}" +
@@ -1872,12 +1872,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             createDom: function () {
                 var self = this,
                     wrap,
+                    prefixCls=self.get('prefixCls'),
                     textarea = self.get("textarea"),
                     editorEl;
 
                 if (!textarea) {
                     self.set("textarea",
-                        textarea = $("<textarea class='ks-editor-textarea'></textarea>"));
+                        textarea = $("<textarea class='"+prefixCls+
+                            "-editor-textarea'></textarea>"));
                 } else {
                     // in ie, textarea lose value when parent.innerHTML="xx";
                     textarea[0].parentNode.removeChild(textarea[0]);
@@ -1885,15 +1887,23 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
                 editorEl = self.get("el");
 
-                editorEl.html(EDITOR_TPL);
+                editorEl.html(S.substitute(EDITOR_TPL,{
+                    prefixCls:prefixCls
+                }));
 
-                wrap = editorEl.one(KE_TEXTAREA_WRAP_CLASS);
+                wrap = editorEl.one(S.substitute(KE_TEXTAREA_WRAP_CLASS,{
+                    prefixCls:prefixCls
+                }));
 
                 self._UUID = S.guid();
 
                 self.set({
-                    toolBarEl: editorEl.one(KE_TOOLBAR_CLASS),
-                    statusBarEl: editorEl.one(KE_STATUSBAR_CLASS)
+                    toolBarEl: editorEl.one(S.substitute(KE_TOOLBAR_CLASS,{
+                        prefixCls:prefixCls
+                    })),
+                    statusBarEl: editorEl.one(S.substitute(KE_STATUSBAR_CLASS,{
+                        prefixCls:prefixCls
+                    }))
                 }, {
                     silent: 1
                 });

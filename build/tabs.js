@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 6 15:34
+build time: Sep 7 02:30
 */
 /**
  * @fileOverview TabBar for KISSY.
@@ -172,7 +172,9 @@ KISSY.add("tabs/panel-render", function (S, Component) {
                 value: false
             },
             selectedCls: {
-                value: "ks-tabs-panel-selected"
+                valueFn:function(){
+                    return this.get('prefixCls')+'tabs-panel-selected';
+                }
             }
         },
 
@@ -268,7 +270,9 @@ KISSY.add("tabs/tab-render", function (S, Button) {
                 value: false
             },
             selectedCls: {
-                value: 'ks-tabs-tab-selected'
+                valueFn:function(){
+                    return this.get('prefixCls')+'tabs-tab-selected';
+                }
             }
         },
         HTML_PARSER: {
@@ -520,8 +524,9 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
 
         decorateInternal: function (el) {
             var self = this,
-                bar = el.children(".ks-tabs-bar"),
-                body = el.children(".ks-tabs-body");
+                prefixCls=self.get('prefixCls'),
+                bar = el.children("."+prefixCls+"tabs-bar"),
+                body = el.children("."+prefixCls+"tabs-body");
             self.set("el", el);
             self.set("bar", new Bar({
                 srcNode: bar

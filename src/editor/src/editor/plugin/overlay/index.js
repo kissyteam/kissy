@@ -46,9 +46,6 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix)
                 value:{
                     constrain:true
                 }
-            },
-            aria:{
-                value:true
             }
         }
     });

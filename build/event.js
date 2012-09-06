@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 21 23:55
+build time: Sep 7 02:29
 */
 /**
  * @ignore
@@ -194,7 +194,7 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
  * @ignore
  * @fileOverview scalable event framework for kissy (refer DOM3 Events)
  * how to fire event just like browser?
- * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 
@@ -877,7 +877,7 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
                 if (gRet !== false) {
                     gRet = ret;
                 }
-                // return false 等价 preventDefault + stopProgation
+                // return false 等价 preventDefault + stopPropagation
                 if (ret === false) {
                     event.halt();
                 }

@@ -170,48 +170,49 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
     S.augment(TableDialog, {
         _tableInit: function () {
             var self = this,
+                prefixCls = self.editor.get('prefixCls'),
                 d = new Dialog({
                     autoRender: true,
                     width: "500px",
                     mask: true,
                     headerContent: "表格", //属性",
-                    bodyContent: replacePrefix(TABLE_HTML),
-                    footerContent: replacePrefix(footHtml)
+                    bodyContent: replacePrefix(TABLE_HTML, prefixCls),
+                    footerContent: replacePrefix(footHtml, prefixCls)
                 }),
                 dbody = d.get("body"),
                 foot = d.get("footer");
-            d.twidth = dbody.one(replacePrefix(".{prefixCls}editor-table-width"));
-            d.theight = dbody.one(replacePrefix(".{prefixCls}editor-table-height"));
-            d.tborder = dbody.one(replacePrefix(".{prefixCls}editor-table-border"));
-            d.tcaption = dbody.one(replacePrefix(".{prefixCls}editor-table-caption"));
-            d.talign = MenuButton.Select.decorate(dbody.one(replacePrefix(".{prefixCls}editor-table-align")), {
-                prefixCls: replacePrefix('{prefixCls}editor-big-'),
+            d.twidth = dbody.one(replacePrefix(".{prefixCls}editor-table-width", prefixCls));
+            d.theight = dbody.one(replacePrefix(".{prefixCls}editor-table-height", prefixCls));
+            d.tborder = dbody.one(replacePrefix(".{prefixCls}editor-table-border", prefixCls));
+            d.tcaption = dbody.one(replacePrefix(".{prefixCls}editor-table-caption", prefixCls));
+            d.talign = MenuButton.Select.decorate(dbody.one(replacePrefix(".{prefixCls}editor-table-align", prefixCls)), {
+                prefixCls: replacePrefix('{prefixCls}editor-big-', prefixCls),
                 width: 80,
                 menuCfg: {
-                    prefixCls: replacePrefix('{prefixCls}editor-'),
+                    prefixCls: replacePrefix('{prefixCls}editor-', prefixCls),
                     render: dbody
                 }
             });
-            d.trows = dbody.one(replacePrefix(".{prefixCls}editor-table-rows"));
-            d.tcols = dbody.one(replacePrefix(".{prefixCls}editor-table-cols"));
-            d.thead = MenuButton.Select.decorate(dbody.one(replacePrefix(".{prefixCls}editor-table-head")), {
-                prefixCls: replacePrefix('{prefixCls}editor-big-'),
+            d.trows = dbody.one(replacePrefix(".{prefixCls}editor-table-rows", prefixCls));
+            d.tcols = dbody.one(replacePrefix(".{prefixCls}editor-table-cols", prefixCls));
+            d.thead = MenuButton.Select.decorate(dbody.one(replacePrefix(".{prefixCls}editor-table-head", prefixCls)), {
+                prefixCls: replacePrefix('{prefixCls}editor-big-', prefixCls),
                 width: 80,
                 menuCfg: {
-                    prefixCls: replacePrefix('{prefixCls}editor-'),
+                    prefixCls: replacePrefix('{prefixCls}editor-', prefixCls),
                     render: dbody
                 }
             });
-            d.cellpaddingHolder = dbody.one(replacePrefix(".{prefixCls}editor-table-cellpadding-holder"));
-            d.cellpadding = dbody.one(replacePrefix(".{prefixCls}editor-table-cellpadding"));
-            d.tcollapse = dbody.one(replacePrefix(".{prefixCls}editor-table-collapse"));
-            var tok = foot.one(replacePrefix(".{prefixCls}editor-table-ok")),
-                tclose = foot.one(replacePrefix(".{prefixCls}editor-table-cancel"));
-            d.twidthunit = MenuButton.Select.decorate(dbody.one(replacePrefix(".{prefixCls}editor-table-width-unit")), {
-                prefixCls: replacePrefix('{prefixCls}editor-big-'),
+            d.cellpaddingHolder = dbody.one(replacePrefix(".{prefixCls}editor-table-cellpadding-holder", prefixCls));
+            d.cellpadding = dbody.one(replacePrefix(".{prefixCls}editor-table-cellpadding", prefixCls));
+            d.tcollapse = dbody.one(replacePrefix(".{prefixCls}editor-table-collapse", prefixCls));
+            var tok = foot.one(replacePrefix(".{prefixCls}editor-table-ok", prefixCls)),
+                tclose = foot.one(replacePrefix(".{prefixCls}editor-table-cancel", prefixCls));
+            d.twidthunit = MenuButton.Select.decorate(dbody.one(replacePrefix(".{prefixCls}editor-table-width-unit", prefixCls)), {
+                prefixCls: replacePrefix('{prefixCls}editor-big-', prefixCls),
                 width: 80,
                 menuCfg: {
-                    prefixCls: replacePrefix('{prefixCls}editor-'),
+                    prefixCls: replacePrefix('{prefixCls}editor-', prefixCls),
                     render: dbody
                 }
             });
@@ -440,16 +441,17 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
         },
         _realTableShow: function () {
             var self = this,
+                prefixCls = self.editor.get('prefixCls'),
                 d = self.dialog;
 
             if (self.selectedTable) {
                 self._fillTableDialog();
                 d.get("el")
-                    .all(replacePrefix(".{prefixCls}editor-table-create-only"))
+                    .all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls))
                     .attr("disabled", "disabled");
                 d.thead.set('disabled', true);
             } else {
-                d.get("el").all(replacePrefix(".{prefixCls}editor-table-create-only"))
+                d.get("el").all(replacePrefix(".{prefixCls}editor-table-create-only", prefixCls))
                     .removeAttr("disabled");
                 d.thead.set('disabled', false);
             }

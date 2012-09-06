@@ -88,7 +88,8 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
                 iconEl,
                 contentEl = self.get("contentEl");
 
-            rowEl = $("<div class='" + ROW_CLS + "'/>");
+            rowEl = $("<div class='" +
+                self.getCssClassWithPrefix(ROW_CLS) + "'/>");
 
             id = contentEl.attr("id");
 
@@ -194,7 +195,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
                 }
             },
             expanded: function (el) {
-                var children = el.one("."+this.get('prefixCls')+"tree-children");
+                var children = el.one("." + this.get('prefixCls') + "tree-children");
                 if (!children) {
                     return false;
                 }

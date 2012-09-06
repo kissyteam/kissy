@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Aug 29 15:47
+build time: Sep 7 02:29
 */
 /**
  * @fileOverview 图片放大效果 ImageZoom.
@@ -135,7 +135,9 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                 },
 
                 wrapClass: {
-                    value: 'ks-imagezoom-wrap'
+                    valueFn: function () {
+                        return this.get('prefixCls') + 'imagezoom-wrap';
+                    }
                 },
 
                 // width/height 默认和原小图大小保持一致
@@ -186,10 +188,9 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                     value: true
                 },
                 iconClass: {
-                    value: 'ks-imagezoom-icon'
-                },
-                prefixCls: {
-                    value: 'ks-'
+                    valueFn: function () {
+                        return this.get('prefixCls') + 'imagezoom-icon';
+                    }
                 }
             }
         }, {
@@ -298,7 +299,9 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
         currentMouse: {},
 
         lensClass: {
-            value: 'ks-imagezoom-lens'
+            valueFn: function () {
+                return this.get('prefixCls') + 'imagezoom-lens';
+            }
         },
 
         // 设为属性，缓存结果

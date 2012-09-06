@@ -27,7 +27,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
 
     function replacePrefix(str, prefix) {
         return S.substitute(str, {
-            prefix: prefix
+            prefixCls: prefix
         });
     }
 
@@ -87,7 +87,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
 
             self.addRes(d);
 
-            var bangpaiUploaderHolder = d.get("body"),
+            var multipleUploaderHolder = d.get("body"),
                 btnHolder = $(
                     replacePrefix("<div class='{prefixCls}editor-upload-btn-wrap'>" +
                         "<span " +
@@ -98,11 +98,11 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                         "vertical-align:middle;" +
                         "width:450px;" +
                         "'></span>" +
-                        "</div>")).appendTo(bangpaiUploaderHolder, undefined),
+                        "</div>", prefixCls)).appendTo(multipleUploaderHolder, undefined),
                 listWrap = $("<div style='display:none'>")
-                    .appendTo(bangpaiUploaderHolder, undefined),
+                    .appendTo(multipleUploaderHolder, undefined),
                 btn = $(replacePrefix("<a class='{prefixCls}editor-button ks-inline-block'>" +
-                    "浏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;览</a>"))
+                    "浏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;览</a>", prefixCls))
                     .appendTo(btnHolder, undefined),
 
                 listTableWrap = $(replacePrefix("<div>" +
@@ -129,7 +129,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                     "<tbody>" +
                     "</tbody>" +
                     "</table>" +
-                    "</div>")).appendTo(listWrap, undefined),
+                    "</div>", prefixCls)).appendTo(listWrap, undefined),
                 list = listTableWrap.one("tbody"),
                 upHolder = $(replacePrefix("<p " +
                     "style='" +
@@ -144,11 +144,11 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                     "<a class='{prefixCls}editor-button {prefixCls}editor-multiple-upload-ok ks-inline-block'>确定上传</a>" +
                     "<a class='{prefixCls}editor-button {prefixCls}editor-multiple-upload-insertall ks-inline-block'" +
                     " style='margin-left:20px;'>全部插入</a>" +
-                    "</p>"))
+                    "</p>", prefixCls))
                     .appendTo(listWrap, undefined),
-                up = upHolder.one(replacePrefix(".{prefixCls}editor-multiple-upload-ok")),
-                insertAll = upHolder.one(replacePrefix(".{prefixCls}editor-multiple-upload-insertall")),
-                delAll = upHolder.one(replacePrefix(".{prefixCls}editor-multiple-upload-delall")),
+                up = upHolder.one(replacePrefix(".{prefixCls}editor-multiple-upload-ok", prefixCls)),
+                insertAll = upHolder.one(replacePrefix(".{prefixCls}editor-multiple-upload-insertall", prefixCls)),
+                delAll = upHolder.one(replacePrefix(".{prefixCls}editor-multiple-upload-delall", prefixCls)),
                 fid = S.guid(name),
                 statusText = $("<span>").prependTo(upHolder, undefined);
 
@@ -168,7 +168,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                     " target='_blank'>点此升级</a>";
             }
 
-            btn.addClass(replacePrefix("{prefixCls}editor-button-disabled"), undefined);
+            btn.addClass(replacePrefix("{prefixCls}editor-button-disabled", prefixCls), undefined);
             self.tipSpan = btnHolder.one("span");
             self.tipSpan.html(TIP);
             if (!UA.fpvGEQ(FLASH_VERSION_REQUIRED)) {
@@ -233,10 +233,10 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
             self.uploader = uploader;
 
             uploader.on("mouseOver", function () {
-                bel.addClass(replacePrefix("{prefixCls}editor-button-hover"), undefined);
+                bel.addClass(replacePrefix("{prefixCls}editor-button-hover", prefixCls), undefined);
             });
             uploader.on("mouseOut", function () {
-                bel.removeClass(replacePrefix("{prefixCls}editor-button-hover"), undefined);
+                bel.removeClass(replacePrefix("{prefixCls}editor-button-hover", prefixCls), undefined);
             });
             self.addRes(uploader);
 
@@ -277,7 +277,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
             list.on("click", function (ev) {
                 var target = $(ev.target), tr;
                 ev.halt();
-                if (target.hasClass(replacePrefix("{prefixCls}editor-upload-insert"), undefined)) {
+                if (target.hasClass(replacePrefix("{prefixCls}editor-upload-insert", prefixCls), undefined)) {
                     tr = target.parent("tr");
                     var url = tr.attr("url");
                     new Image().src = url;
@@ -285,9 +285,9 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                         url + "'/>", null, editor.get("document")[0]));
                 }
                 if (
-                    target.hasClass(replacePrefix("{prefixCls}editor-upload-delete"), undefined)
+                    target.hasClass(replacePrefix("{prefixCls}editor-upload-delete", prefixCls), undefined)
                         ||
-                        target.hasClass(replacePrefix("{prefixCls}editor-upload-insert"), undefined
+                        target.hasClass(replacePrefix("{prefixCls}editor-upload-insert", prefixCls), undefined
                         )
                     ) {
                     tr = target.parent("tr");
@@ -297,7 +297,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                 /**
                  * 支持排序
                  */
-                if (target.hasClass(replacePrefix("{prefixCls}editor-upload-moveup"), undefined)) {
+                if (target.hasClass(replacePrefix("{prefixCls}editor-upload-moveup", prefixCls), undefined)) {
                     tr = target.parent("tr");
                     tr.css("backgroundColor", "#eef4f9");
                     tr['animate']({
@@ -312,7 +312,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                         self._syncStatus();
                     }
 
-                } else if (target.hasClass(replacePrefix("{prefixCls}editor-upload-movedown"), undefined)) {
+                } else if (target.hasClass(replacePrefix("{prefixCls}editor-upload-movedown", prefixCls), undefined)) {
                     tr = target.parent("tr");
                     tr.css("backgroundColor", "#eef4f9");
                     tr['animate']({
@@ -354,7 +354,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
 
                 var previewWin = new (S.require("overlay"))({
                     mask: false,
-                    prefixCls: replacePrefix('{prefixCls}editor-'),
+                    prefixCls: replacePrefix('{prefixCls}editor-', prefixCls),
                     autoRender: true,
                     width: previewWidth,
                     render: listWrap
@@ -366,10 +366,10 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                 var currentFid = 0;
                 listWrap.on("mouseover", function (ev) {
                     var t = $(ev.target),
-                        td = t.parent(replacePrefix(".{prefixCls}editor-upload-filename"));
+                        td = t.parent(replacePrefix(".{prefixCls}editor-upload-filename", prefixCls));
                     if (td) {
                         var tr = td.parent("tr");
-                        if (tr.hasClass(replacePrefix("{prefixCls}editor-upload-complete"),
+                        if (tr.hasClass(replacePrefix("{prefixCls}editor-upload-complete", prefixCls),
                             undefined)) {
                             var url = tr.attr("url"),
                                 fid = tr.attr("fid");
@@ -432,6 +432,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
         },
         _uploadError: function (ev) {
             var self = this,
+                prefixCls = self.editor.get('prefixCls'),
                 progressBars = self.progressBars,
                 uploader = self.uploader,
                 id = ev.id || (ev['file'] && ev['file'].id);
@@ -451,7 +452,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
             if (tr) {
                 bar && bar.destroy();
                 delete progressBars[id];
-                tr.one(replacePrefix(".{prefixCls}editor-upload-progress")).html("<div " +
+                tr.one(replacePrefix(".{prefixCls}editor-upload-progress", prefixCls)).html("<div " +
                     "style='color:red;'>" +
                     status +
                     "</div>");
@@ -469,13 +470,16 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
             }
         },
         _onUploadStart: function (ev) {
-            var id = ev.id || (ev['file'] && ev['file'].id);
+            var self = this,
+                id = ev.id || (ev['file'] && ev['file'].id);
             var tr = this._getFileTr(id);
-            tr[0].className = replacePrefix("{prefixCls}editor-upload-uploading");
+            var prefixCls = self.editor.get('prefixCls');
+            tr[0].className = replacePrefix("{prefixCls}editor-upload-uploading", prefixCls);
         },
         _onUploadCompleteData: function (ev) {
             var self = this,
                 uploader = self.uploader,
+                prefixCls = self.editor.get('prefixCls'),
                 data = S.trim(ev.data).replace(/\r|\n/g, ""),
                 id = ev['file'].id;
             //S.log(data);
@@ -506,7 +510,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
             }
             var tr = self._getFileTr(id);
             if (tr) {
-                tr.one(replacePrefix(".{prefixCls}editor-upload-insert")).show();
+                tr.one(replacePrefix(".{prefixCls}editor-upload-insert", prefixCls)).show();
                 self._tagComplete(tr, data['imgUrl']);
             }
 
@@ -523,8 +527,9 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
         },
         ddisable: function () {
             var self = this;
+            var prefixCls = self.editor.get('prefixCls');
             self.uploader['lock']();
-            self.btn.addClass(replacePrefix("{prefixCls}editor-button-disabled"), undefined);
+            self.btn.addClass(replacePrefix("{prefixCls}editor-button-disabled", prefixCls), undefined);
             self.flashPos.offset({
                 left: -9999,
                 top: -9999
@@ -532,8 +537,9 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
         },
         denable: function () {
             var self = this;
+            var prefixCls = self.editor.get('prefixCls');
             self.uploader['unlock']();
-            self.btn.removeClass(replacePrefix("{prefixCls}editor-button-disabled"), undefined);
+            self.btn.removeClass(replacePrefix("{prefixCls}editor-button-disabled", prefixCls), undefined);
             self.flashPos.offset(self.btn.offset());
         },
         _syncStatus: function () {
@@ -541,10 +547,11 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                 list = self._list,
                 seq = 1,
                 trs = list.all("tr");
+            var prefixCls = self.editor.get('prefixCls');
             if (trs.length == 0) {
                 self._listWrap.hide();
             } else {
-                list.all(replacePrefix(".{prefixCls}editor-upload-seq")).each(function (n) {
+                list.all(replacePrefix(".{prefixCls}editor-upload-seq", prefixCls)).each(function (n) {
                     n.html(seq++);
                 });
                 var wait = 0;
@@ -579,20 +586,23 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
             }
         },
         _tagComplete: function (tr, url) {
+            var self = this;
+            var prefixCls = self.editor.get('prefixCls');
             tr.attr("url", url);
-            tr[0].className = replacePrefix("{prefixCls}editor-upload-complete");
+            tr[0].className = replacePrefix("{prefixCls}editor-upload-complete", prefixCls);
         },
         _save: function () {
             var self = this,
                 list = self._list,
                 trs = list.all("tr"),
                 data = [];
+            var prefixCls = self.editor.get('prefixCls');
             for (var i = 0; i < trs.length; i++) {
                 var tr = $(trs[i]),
                     url = tr.attr("url");
                 if (url) {
-                    var size = tr.one(replacePrefix(".{prefixCls}editor-upload-filesize")).html(),
-                        name = tr.one(replacePrefix(".{prefixCls}editor-upload-filename")).text();
+                    var size = tr.one(replacePrefix(".{prefixCls}editor-upload-filesize", prefixCls)).html(),
+                        name = tr.one(replacePrefix(".{prefixCls}editor-upload-filename", prefixCls)).text();
                     data.push({
                         name: name,
                         size: size,
@@ -645,20 +655,21 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                 progressBars = self.progressBars,
                 id = f.fid,
                 row = tbl.insertRow(-1);
+            var prefixCls = self.editor.get('prefixCls');
             DOM.attr(row, "fid", id);
             var cell = row.insertCell(-1);
-            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-seq'));
+            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-seq', prefixCls));
             cell = row.insertCell(-1);
             if (f.name.length > 18) {
                 f.name = f.name.substring(0, 18) + "...";
             }
             DOM.html(cell, "<div style='width:160px;overflow:hidden;'><div style='width:9999px;text-align:left;'>" + f.name + "</div></div>");
-            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-filename'));
+            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-filename', prefixCls));
             cell = row.insertCell(-1);
             DOM.html(cell, f.size);
-            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-filesize'));
+            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-filesize', prefixCls));
             cell = row.insertCell(-1);
-            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-progress'));
+            DOM.attr(cell, "class", replacePrefix('{prefixCls}editor-upload-progress', prefixCls));
             cell = row.insertCell(-1);
             DOM.html(cell, replacePrefix("<a class='{prefixCls}editor-upload-moveup' href='#'>[上移]</a> &nbsp; " +
                 "<a class='{prefixCls}editor-upload-movedown' href='#'>[下移]</a> &nbsp; " +
@@ -670,7 +681,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                 "[插入]</a> &nbsp; " +
                 "<a href='#' class='{prefixCls}editor-upload-delete'>" +
                 "[删除]" +
-                "</a> &nbsp;"));
+                "</a> &nbsp;", prefixCls));
 
             var rowNode = $(row);
 
@@ -685,7 +696,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
 
             } else {
                 progressBars[id] = new ProgressBar({
-                    container: rowNode.one(replacePrefix(".{prefixCls}editor-upload-progress")),
+                    container: rowNode.one(replacePrefix(".{prefixCls}editor-upload-progress", prefixCls)),
                     width: "100px",
                     height: "15px",
                     prefixCls: editor.get('prefixCls')
@@ -759,6 +770,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                 btn = self.btn,
                 flashPos = self.flashPos,
                 normParams = Editor.Utils.normParams;
+            var prefixCls = self.editor.get('prefixCls');
             if ("ready" != uploader['getReady']()) {
                 self.tipSpan.html("您的浏览器不支持该功能，" +
                     "请升级当前浏览器，" +
@@ -770,7 +782,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                 });
                 return;
             }
-            btn.removeClass(replacePrefix("{prefixCls}editor-button-disabled"), undefined);
+            btn.removeClass(replacePrefix("{prefixCls}editor-button-disabled", prefixCls), undefined);
             flashPos.offset(btn.offset());
             uploader['setAllowMultipleFiles'](true);
             uploader['setFileFilters']([

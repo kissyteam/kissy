@@ -22,7 +22,7 @@ KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
             contentEl: {
                 valueFn: function () {
                     return S.all(S.substitute(CONTENT_TMPL, {
-                        prefixCls: self.get('prefixCls')
+                        prefixCls: this.get('prefixCls')
                     }));
                 }
             }

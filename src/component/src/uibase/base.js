@@ -557,7 +557,13 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                     });
 
                     // 方法合并
-                    S.mix(prototype, ext.prototype);
+                    var exp = ext.prototype, p;
+                    for (p in exp) {
+                        // do not mess with parent class
+                        if (exp.hasOwnProperty(p)) {
+                            prototype[p] = exp[p];
+                        }
+                    }
                 }
             });
 
