@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:26
+build time: Sep 7 12:02
 */
 /**
  * Setup component namespace.
@@ -2795,6 +2795,7 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
             "tabindex='0' " +
             "href='javascript:void(\"关闭\")' " +
             "role='button' " +
+            "style='z-index:9' " +
             "class='" + prefixCls + CLS_PREFIX + "close" + "'>" +
             "<span class='" +
             prefixCls + CLS_PREFIX + "close-x" +
