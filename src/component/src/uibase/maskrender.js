@@ -7,10 +7,6 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
     var ie6 = (UA['ie'] === 6),
         $ = Node.all;
 
-    function getMaskCls(self) {
-        return self.get("prefixCls") + "ext-mask";
-    }
-
     function docWidth() {
         return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
     }
@@ -19,8 +15,9 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
         return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
     }
 
-    function initMask(maskCls) {
-        var mask = $("<div " +
+    function initMask(self) {
+        var maskCls = self.get("prefixCls") + "ext-mask",
+            mask = $("<div " +
             " style='width:" + docWidth() + ";" +
             "left:0;" +
             "top:0;" +
@@ -69,7 +66,7 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
         __renderUI: function () {
             var self = this;
             if (self.get('mask')) {
-                self.set('maskNode', initMask(getMaskCls(self)));
+                self.set('maskNode', initMask(self));
             }
         },
 

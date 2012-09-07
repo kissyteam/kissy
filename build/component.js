@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 12:02
+build time: Sep 7 13:01
 */
 /**
  * Setup component namespace.
@@ -3171,11 +3171,17 @@ KISSY.add("component/uibase/mask", function () {
             var self = this,
                 maskNode,
                 mask,
+                el = self.get('el'),
                 view = self.get("view");
             if (mask = self.get("mask")) {
                 maskNode = self.get('maskNode');
                 self.on('afterVisibleChange', function (e) {
-                    processMask(mask, maskNode, e.newVal)
+                    var v;
+                    if (v = e.newVal) {
+                        var elZIndex = parseInt(el.css('z-index')) || 1;
+                        maskNode.css('z-index', elZIndex - 1);
+                    }
+                    processMask(mask, maskNode, v)
                 });
             }
         }
@@ -3192,10 +3198,6 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
     var ie6 = (UA['ie'] === 6),
         $ = Node.all;
 
-    function getMaskCls(self) {
-        return self.get("prefixCls") + "ext-mask";
-    }
-
     function docWidth() {
         return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
     }
@@ -3204,8 +3206,9 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
         return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
     }
 
-    function initMask(maskCls) {
-        var mask = $("<div " +
+    function initMask(self) {
+        var maskCls = self.get("prefixCls") + "ext-mask",
+            mask = $("<div " +
             " style='width:" + docWidth() + ";" +
             "left:0;" +
             "top:0;" +
@@ -3254,7 +3257,7 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
         __renderUI: function () {
             var self = this;
             if (self.get('mask')) {
-                self.set('maskNode', initMask(getMaskCls(self)));
+                self.set('maskNode', initMask(self));
             }
         },
 

@@ -27,6 +27,7 @@
 
 .c2c-menu-button {
     position: relative;
+    line-height: 20px;
 }
 
 .c2c-button-disabled {
@@ -97,10 +98,9 @@
     /* Client apps may override the URL at which they serve the sprite. */
     background: url(http://img01.taobaocdn.com/tps/i1/T1xqXwXmRuXXXXXXXX-22-44.png) no-repeat -1px -1px;
     vertical-align: top;
-
-    display: inline-block;
-    *display: inline;
-    *zoom: 1;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .c2c-button-hover .c2c-menu-button-dropdown,

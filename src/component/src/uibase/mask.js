@@ -60,11 +60,17 @@ KISSY.add("component/uibase/mask", function () {
             var self = this,
                 maskNode,
                 mask,
+                el = self.get('el'),
                 view = self.get("view");
             if (mask = self.get("mask")) {
                 maskNode = self.get('maskNode');
                 self.on('afterVisibleChange', function (e) {
-                    processMask(mask, maskNode, e.newVal)
+                    var v;
+                    if (v = e.newVal) {
+                        var elZIndex = parseInt(el.css('z-index')) || 1;
+                        maskNode.css('z-index', elZIndex - 1);
+                    }
+                    processMask(mask, maskNode, v)
                 });
             }
         }
