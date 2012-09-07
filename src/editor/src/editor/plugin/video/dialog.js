@@ -63,7 +63,7 @@ KISSY.add("editor/plugin/video/dialog", function (S, Editor, FlashDialog, MenuBu
             "</td></tr>" +
             "</table>" +
             "</div>",
-        footHtml = "<div style='padding:5px 20px 20px;'><a " +
+        footHtml = "<div style='padding:10px 0 35px 20px;'><a " +
             "class='{prefixCls}editor-video-ok {prefixCls}editor-button ks-inline-block' " +
             "style='margin-left:40px;margin-right:20px;'>确定</button> " +
             "<a class='{prefixCls}editor-video-cancel {prefixCls}editor-button ks-inline-block'>取消</a></div>";

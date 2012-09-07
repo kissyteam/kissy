@@ -4,6 +4,7 @@
     left: -9999px;
     top: -9999px;
     outline: none;
+    overflow: hidden;
 }
 
 .ks-editor-dialog label,

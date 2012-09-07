@@ -62,7 +62,8 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "</td></tr>" +
             "</table>" +
             "</div>",
-        footHtml = "<div style='padding:5px 20px 20px;'><a " +
+        footHtml = "<div style='padding:10px 0 35px 20px;'>" +
+            "<a " +
             "class='{prefixCls}editor-flash-ok {prefixCls}editor-button ks-inline-block' " +
             "style='margin-left:40px;margin-right:20px;'>确定</a> " +
             "<a class='{prefixCls}editor-flash-cancel {prefixCls}editor-button ks-inline-block'>取消</a></div>";

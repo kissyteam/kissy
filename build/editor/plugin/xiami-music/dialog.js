@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:29
+build time: Sep 7 13:43
 */
 /**
  * xiami-music dialog
@@ -26,7 +26,7 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
     }
 
     var MARGIN_DEFAULT = 0,
-        bodyHtml = "<div style='padding:20px 0;'>" +
+        bodyHtml = "<div style='padding:40px 0 70px 0;'>" +
             "<form action='#' class='{prefixCls}editor-xiami-form' style='margin:0 20px;'>" +
             "<p class='{prefixCls}editor-xiami-title'>" +
             "" +

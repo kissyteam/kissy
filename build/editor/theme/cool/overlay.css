@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:29
+build time: Sep 7 13:43
 */
 .ks-editor-dialog, .ks-editor-overlay {
     position: absolute;
@@ -9,6 +9,7 @@ build time: Sep 7 02:29
     left: -9999px;
     top: -9999px;
     outline: none;
+    overflow: hidden;
 }
 
 .ks-editor-dialog label,

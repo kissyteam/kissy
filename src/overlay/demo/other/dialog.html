@@ -208,10 +208,13 @@
             </div>
         </div>
         <script>
-            KISSY.use("node,overlay", function (S, Node, O) {
+            KISSY.use("node,overlay,dd", function (S, Node, O) {
                 var d = new O.Dialog({
                     srcNode: "#choose",
                     width: 480,
+                    draggable:{
+                      constrain:window
+                    },
                     mask: true,
                     closable: true,
                     align: {

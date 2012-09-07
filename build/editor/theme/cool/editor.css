@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:29
+build time: Sep 7 13:43
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -929,6 +929,7 @@ menu style for kissy editor ,include contextmenu and select menu
     left: -9999px;
     top: -9999px;
     outline: none;
+    overflow: hidden;
 }
 
 .ks-editor-dialog label,
