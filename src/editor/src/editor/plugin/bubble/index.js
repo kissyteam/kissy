@@ -5,12 +5,12 @@
 KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
     var undefined = {}['a'],
         BUBBLE_CFG = {
-            zIndex:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW),
-            elCls:"{prefixCls}editor-bubble",
-            prefixCls:"{prefixCls}editor-",
-            effect:{
-                effect:"fade",
-                duration:0.3
+            zIndex: Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW),
+            elCls: "{prefixCls}editor-bubble",
+            prefixCls: "{prefixCls}editor-",
+            effect: {
+                effect: "fade",
+                duration: 0.3
             }
         };
 
@@ -84,6 +84,13 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
             x,
             y;
 
+        // ie 图片缩放框大于编辑区域底部，bubble 点击不了了，干脆不显示
+        if (S.UA.ie &&
+            el[0].nodeName.toLowerCase() == 'img' &&
+            elBottom > bottom) {
+            return undefined;
+        }
+
         // 对其下边
         // el 位于编辑区域，下边界超了编辑区域下边界
         if (elBottom > bottom && elTop < bottom) {
@@ -110,7 +117,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
 
     Editor.prototype.addBubble = function (id, filter, cfg) {
         var editor = this,
-            prefixCls=editor.get('prefixCls'),
+            prefixCls = editor.get('prefixCls'),
             bubble;
 
         cfg = cfg || {};
@@ -119,12 +126,12 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
 
         S.mix(cfg, BUBBLE_CFG);
 
-        cfg.elCls= S.substitute(cfg.elCls,{
-            prefixCls:prefixCls
+        cfg.elCls = S.substitute(cfg.elCls, {
+            prefixCls: prefixCls
         });
 
-        cfg.prefixCls= S.substitute(cfg.prefixCls,{
-            prefixCls:prefixCls
+        cfg.prefixCls = S.substitute(cfg.prefixCls, {
+            prefixCls: prefixCls
         });
 
         bubble = new Overlay(cfg);
@@ -204,5 +211,5 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         }
     };
 }, {
-    requires:['overlay', 'editor']
+    requires: ['overlay', 'editor']
 });
