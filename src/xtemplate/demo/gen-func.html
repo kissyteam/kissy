@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="../../css/src/dpl/base.css"/>
+    <link rel="stylesheet" href="../../css/src/dpl/forms.css"/>
+    <link rel="stylesheet" href="../../button/assets/dpl.css"/>
+    <script src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+    <script src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+    <link type="text/css" rel="stylesheet"
+          href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+    <script src="../../../tools/utils/js-beautify/beautify.js"></script>
+    <title> simple xtemplate </title>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="span8">
+
+            <h2>模板代码</h2>
+
+            <div>
+                <textarea style="width: 350px;height: 400px;" id="tpl">
+
+                    my first {{tpl name '0' file=3}} o
+
+                    {{#each this}}
+                        {{xindex}} {{name}}
+                    {{/each}}
+
+                    {{{ noEscapeO}}}
+
+                    {{!
+
+                    haha
+
+                    }}
+
+                    {{#if cond}}
+
+                        y
+
+                        {{#each my}}
+
+                            {{escapeName}}
+
+                                {{#if cond2}}
+
+                                    {{break}}
+
+                                {{else}}
+
+                                    {{../../z}}
+
+                                {{/if}}
+
+                        {{/each}}
+
+                    {{else}}
+
+                        z
+
+                    {{/if}}
+
+                </textarea>
+            </div>
+            <br/>
+            <button id="parse" class="ks-button">parse</button>
+        </div>
+
+        <div class="span15">
+            <h2>Generated Template Function</h2>
+
+            <div>
+                <div id="gen">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="../../../build/kissy.js"></script>
+<script src="../src/ast.js"></script>
+<script src="../src/compiler.js"></script>
+<script src="../src/parser.js"></script>
+<script>
+    function js_beauty(str) {
+        var opts = {"indent_size": "4", "indent_char": " ",
+            "preserve_newlines": true, "brace_style": "collapse",
+            "keep_array_indentation": false, "space_after_anon_function": true};
+        return js_beautify(str, opts);
+    }
+
+    KISSY.use("xtemplate/compiler", function (S, compiler) {
+        var $ = S.all;
+        $('#parse').on('click', function () {
+            var g = compiler.compile($('#tpl').val());
+            $('#gen').html('<pre class="brush: js;">' +
+                    S.escapeHTML(js_beauty(g)) + '</pre>');
+            SyntaxHighlighter.highlight({}, $('#gen').one("pre")[0]);
+        });
+    });
+</script>
+</body>
+</html>
