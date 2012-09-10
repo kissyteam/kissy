@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 4 20:20
+build time: Sep 10 10:11
 */
 KISSY.add("node/anim",function(b,g,e,f,i){function d(b,h,c){for(var a=[],k={},c=c||0;c<h;c++)a.push.apply(a,l[c]);for(c=0;c<a.length;c++)k[a[c]]=b;return k}var l=[["height","marginTop","marginBottom","paddingTop","paddingBottom"],["width","marginLeft","marginRight","paddingLeft","paddingRight"],["opacity"]];b.augment(f,{animate:function(j){var h=b.makeArray(arguments);b.each(this,function(c){var a=b.clone(h),k=a[0];k.props?(k.el=c,e(k).run()):e.apply(i,[c].concat(a)).run()});return this},stop:function(j,
 h,c){b.each(this,function(a){e.stop(a,j,h,c)});return this},pause:function(j,h){b.each(this,function(c){e.pause(c,h)});return this},resume:function(j,h){b.each(this,function(c){e.resume(c,h)});return this},isRunning:function(){for(var b=0;b<this.length;b++)if(e.isRunning(this[b]))return!0;return!1},isPaused:function(){for(var b=0;b<this.length;b++)if(e.isPaused(this[b]))return 1;return 0}});b.each({show:d("show",3),hide:d("hide",3),toggle:d("toggle",3),fadeIn:d("show",3,2),fadeOut:d("hide",3,2),fadeToggle:d("toggle",

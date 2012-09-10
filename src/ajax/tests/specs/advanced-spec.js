@@ -1,6 +1,6 @@
 /**
  * advanced ajax tc
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  **/
 KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
     var $ = Node.all;

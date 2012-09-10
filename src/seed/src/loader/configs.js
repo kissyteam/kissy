@@ -4,7 +4,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
     var Loader = S.Loader,
@@ -100,8 +100,6 @@
             });
         }
     };
-
-    configs.modules.order = 10;
 
     /*
      KISSY 's base path.

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 5 10:33
+build time: Sep 10 10:11
 */
 /**
 select style for kissy editor
@@ -41,8 +41,9 @@ select style for kissy editor
     background-color: #ffffff;
 }
 
-.ks-menu-button-dropdown,
-.ks-editor-big-select .ks-menu-button-dropdown-inner {
+.ks-editor-menu-button-dropdown,
+.ks-editor-big-menu-button-dropdown,
+.ks-editor-big-menu-button-dropdown-inner {
     background: no-repeat scroll center center transparent;
     background-image: url("arrow.png"); /** sprite-ref: cool; */
     width: 7px;
@@ -56,7 +57,7 @@ select style for kissy editor
     margin-right: 5px;
 }
 
-.ks-editor-big-select .ks-menu-button-dropdown {
+.ks-editor-big-menu-button-dropdown {
     margin-top: 0;
     margin-right: 0;
 }
@@ -75,7 +76,7 @@ select style for kissy editor
     filter: none;
 }
 
-.ks-editor-tools .ks-menu-button-caption {
+.ks-editor-tools .ks-editor-menu-button-caption {
     padding-left: 4px;
     height: 20px;
     line-height: 20px;
@@ -86,7 +87,7 @@ select style for kissy editor
     height: 24px;
 }
 
-.ks-editor-big-select .ks-menu-button-dropdown {
+.ks-editor-big-menu-button-dropdown {
     padding-left: 6px;
     padding-right: 6px;
     background: #e8ebee repeat-x left top;
@@ -103,6 +104,6 @@ select style for kissy editor
     background-image: url("text-bg.png");
 }
 
-.ks-editor-big-select .ks-menu-button-caption {
+.ks-editor-big-menu-button-caption {
     padding-left: 5px;
 }

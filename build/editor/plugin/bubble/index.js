@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 5 10:33
+build time: Sep 10 10:11
 */
 /**
  * bubble or tip view for kissy editor
@@ -11,8 +11,8 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
     var undefined = {}['a'],
         BUBBLE_CFG = {
             zIndex:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW),
-            elCls:"ks-editor-bubble",
-            prefixCls:"ks-editor-",
+            elCls:"{prefixCls}editor-bubble",
+            prefixCls:"{prefixCls}editor-",
             effect:{
                 effect:"fade",
                 duration:0.3
@@ -115,6 +115,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
 
     Editor.prototype.addBubble = function (id, filter, cfg) {
         var editor = this,
+            prefixCls=editor.get('prefixCls'),
             bubble;
 
         cfg = cfg || {};
@@ -122,6 +123,14 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         cfg.editor = editor;
 
         S.mix(cfg, BUBBLE_CFG);
+
+        cfg.elCls= S.substitute(cfg.elCls,{
+            prefixCls:prefixCls
+        });
+
+        cfg.prefixCls= S.substitute(cfg.prefixCls,{
+            prefixCls:prefixCls
+        });
 
         bubble = new Overlay(cfg);
 

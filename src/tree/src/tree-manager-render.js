@@ -10,18 +10,18 @@ KISSY.add("tree/tree-manager-render", function (S) {
     TreeManagerRender.ATTRS = {
         // 默认 true
         // 是否显示根节点
-        showRootNode:{
+        showRootNode: {
         }
     };
 
     S.augment(TreeManagerRender, {
-        __renderUI:function () {
+        __renderUI: function () {
             var self = this;
             self.get("el").attr("role", "tree");
-            self.get("rowEl").addClass("ks-tree-row");
+            self.get("rowEl").addClass(self.get('prefixCls') + "tree-row");
         },
 
-        _uiSetShowRootNode:function (v) {
+        _uiSetShowRootNode: function (v) {
             this.get("rowEl")[v ? "show" : "hide"]();
         }
     });

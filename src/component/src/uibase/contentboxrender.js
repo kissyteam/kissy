@@ -8,7 +8,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
     }
 
     ContentBoxRender.ATTRS = {
-        contentEl:{
+        contentEl: {
             // 不写 valueFn, 留待 createDom 处理
         }
     };
@@ -17,7 +17,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
      ! contentEl 只能由组件动态生成
      */
     ContentBoxRender.prototype = {
-        __createDom:function () {
+        __createDom: function () {
             var self = this,
                 contentEl,
                 el = self.get("el");
@@ -26,7 +26,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
                 c = childNodes.length && DOM.nodeListToFragment(childNodes);
 
             // 产生新的 contentEl
-            contentEl = Node.all("<div class='ks-contentbox'>" +
+            contentEl = Node.all("<div class='" + self.get('prefixCls') + "contentbox'>" +
                 "</div>").append(c);
 
             el.append(contentEl);
@@ -37,5 +37,5 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
 
     return ContentBoxRender;
 }, {
-    requires:["node", "./boxrender", 'dom']
+    requires: ["node", "./boxrender", 'dom']
 });

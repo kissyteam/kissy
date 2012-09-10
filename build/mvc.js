@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:29
+build time: Sep 10 10:11
 */
 /**
  * @fileOverview collection of models

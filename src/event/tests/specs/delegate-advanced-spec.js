@@ -1,6 +1,6 @@
 /**
  * @module  delegation-spec
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("dom,event", function (S, DOM, Event) {
     S.get = DOM.get;

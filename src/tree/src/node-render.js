@@ -14,9 +14,9 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
     //</div>
 
     var $ = Node.all,
-        SELECTED_CLS = "ks-tree-node-selected",
-        ROW_CLS = "ks-tree-node-row",
-        COMMON_EXPAND_EL_CLS = "ks-tree-expand-icon-{t}",
+        SELECTED_CLS = "tree-node-selected",
+        ROW_CLS = "tree-node-row",
+        COMMON_EXPAND_EL_CLS = "tree-expand-icon-{t}",
 
     // refreshCss 实际使用顺序
     // expandIconEl
@@ -32,19 +32,19 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
             COMMON_EXPAND_EL_CLS + "plus"
         ].join(" "),
         ICON_EL_FILE_CLS = [
-            "ks-tree-file-icon"
+            "tree-file-icon"
         ].join(" "),
         ICON_EL_FOLDER_EXPAND_CLS = [
-            "ks-tree-expanded-folder-icon"
+            "tree-expanded-folder-icon"
         ].join(" "),
         ICON_EL_FOLDER_COLLAPSE_CLS = [
-            "ks-tree-collapsed-folder-icon"
+            "tree-collapsed-folder-icon"
         ].join(" "),
     // 实际使用，结束
 
-        CONTENT_EL_CLS = "ks-tree-node-content",
-        CHILDREN_CLS = "ks-tree-children",
-        CHILDREN_CLS_L = "ks-tree-lchildren";
+        CONTENT_EL_CLS = "tree-node-content",
+        CHILDREN_CLS = "tree-children",
+        CHILDREN_CLS_L = "tree-lchildren";
 
     return Component.Render.extend({
 
@@ -70,12 +70,12 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
                 }
             }
 
-            iconEl.attr("class", iconElCss);
-            expandIconEl.attr("class", S.substitute(expandElCss, {
+            iconEl.attr("class", self.getCssClassWithPrefix(iconElCss));
+            expandIconEl.attr("class", self.getCssClassWithPrefix(S.substitute(expandElCss, {
                 "t": isNodeSingleOrLast ? "l" : "t"
-            }));
+            })));
             if (childrenEl) {
-                childrenEl.attr("class", (isNodeSingleOrLast ? CHILDREN_CLS_L : CHILDREN_CLS));
+                childrenEl.attr("class", self.getCssClassWithPrefix((isNodeSingleOrLast ? CHILDREN_CLS_L : CHILDREN_CLS)));
             }
         },
 
@@ -88,7 +88,8 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
                 iconEl,
                 contentEl = self.get("contentEl");
 
-            rowEl = $("<div class='" + ROW_CLS + "'/>");
+            rowEl = $("<div class='" +
+                self.getCssClassWithPrefix(ROW_CLS) + "'/>");
 
             id = contentEl.attr("id");
 
@@ -124,7 +125,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
         _uiSetSelected: function (v) {
             var self = this,
                 rowEl = self.get("rowEl");
-            rowEl[v ? "addClass" : "removeClass"](SELECTED_CLS);
+            rowEl[v ? "addClass" : "removeClass"](self.getCssClassWithPrefix(SELECTED_CLS));
             self.get("el").attr("aria-selected", v);
         },
 
@@ -169,7 +170,8 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
             },
             contentEl: {
                 valueFn: function () {
-                    return $("<span id='" + S.guid("ks-tree-node") + "' class='" + CONTENT_EL_CLS + "'/>");
+                    return $("<span id='" + S.guid("ks-tree-node") +
+                        "' class='" + this.getCssClassWithPrefix(CONTENT_EL_CLS) + "'/>");
                 }
             },
             isLeaf: {},
@@ -178,10 +180,10 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
 
         HTML_PARSER: {
             childrenEl: function (el) {
-                return el.children("." + CHILDREN_CLS);
+                return el.children("." + this.getCssClassWithPrefix(CHILDREN_CLS));
             },
             contentEl: function (el) {
-                return el.children("." + CONTENT_EL_CLS);
+                return el.children("." + this.getCssClassWithPrefix(CONTENT_EL_CLS));
             },
             isLeaf: function (el) {
                 var self = this;
@@ -193,7 +195,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
                 }
             },
             expanded: function (el) {
-                var children = el.one(".ks-tree-children");
+                var children = el.one("." + this.get('prefixCls') + "tree-children");
                 if (!children) {
                     return false;
                 }

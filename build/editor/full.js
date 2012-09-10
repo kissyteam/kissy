@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 5 10:33
+build time: Sep 10 10:11
 */
 /**
  * Set up editor constructor
@@ -134,7 +134,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
     Editor.HTML_PARSER = {
 
         textarea:function (el) {
-            return el.one(".ks-editor-textarea");
+            return el.one("."+this.get('prefixCls')+"editor-textarea");
         }
 
     };
@@ -1811,11 +1811,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
         HTML5_DTD = '<!doctype html>',
 
-        KE_TEXTAREA_WRAP_CLASS = ".ks-editor-textarea-wrap",
+        KE_TEXTAREA_WRAP_CLASS = ".{prefixCls}editor-textarea-wrap",
 
-        KE_TOOLBAR_CLASS = ".ks-editor-tools",
+        KE_TOOLBAR_CLASS = ".{prefixCls}editor-tools",
 
-        KE_STATUSBAR_CLASS = ".ks-editor-status",
+        KE_STATUSBAR_CLASS = ".{prefixCls}editor-status",
 
         IFRAME_HTML_TPL = HTML5_DTD + "<html>" +
             "<head>{doctype}" +
@@ -1872,12 +1872,14 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             createDom: function () {
                 var self = this,
                     wrap,
+                    prefixCls=self.get('prefixCls'),
                     textarea = self.get("textarea"),
                     editorEl;
 
                 if (!textarea) {
                     self.set("textarea",
-                        textarea = $("<textarea class='ks-editor-textarea'></textarea>"));
+                        textarea = $("<textarea class='"+prefixCls+
+                            "-editor-textarea'></textarea>"));
                 } else {
                     // in ie, textarea lose value when parent.innerHTML="xx";
                     textarea[0].parentNode.removeChild(textarea[0]);
@@ -1885,15 +1887,23 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
                 editorEl = self.get("el");
 
-                editorEl.html(EDITOR_TPL);
+                editorEl.html(S.substitute(EDITOR_TPL,{
+                    prefixCls:prefixCls
+                }));
 
-                wrap = editorEl.one(KE_TEXTAREA_WRAP_CLASS);
+                wrap = editorEl.one(S.substitute(KE_TEXTAREA_WRAP_CLASS,{
+                    prefixCls:prefixCls
+                }));
 
                 self._UUID = S.guid();
 
                 self.set({
-                    toolBarEl: editorEl.one(KE_TOOLBAR_CLASS),
-                    statusBarEl: editorEl.one(KE_STATUSBAR_CLASS)
+                    toolBarEl: editorEl.one(S.substitute(KE_TOOLBAR_CLASS,{
+                        prefixCls:prefixCls
+                    })),
+                    statusBarEl: editorEl.one(S.substitute(KE_STATUSBAR_CLASS,{
+                        prefixCls:prefixCls
+                    }))
                 }, {
                     silent: 1
                 });
@@ -9228,8 +9238,8 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
     var undefined = {}['a'],
         BUBBLE_CFG = {
             zIndex:Editor.baseZIndex(Editor.zIndexManager.BUBBLE_VIEW),
-            elCls:"ks-editor-bubble",
-            prefixCls:"ks-editor-",
+            elCls:"{prefixCls}editor-bubble",
+            prefixCls:"{prefixCls}editor-",
             effect:{
                 effect:"fade",
                 duration:0.3
@@ -9332,6 +9342,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
 
     Editor.prototype.addBubble = function (id, filter, cfg) {
         var editor = this,
+            prefixCls=editor.get('prefixCls'),
             bubble;
 
         cfg = cfg || {};
@@ -9339,6 +9350,14 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
         cfg.editor = editor;
 
         S.mix(cfg, BUBBLE_CFG);
+
+        cfg.elCls= S.substitute(cfg.elCls,{
+            prefixCls:prefixCls
+        });
+
+        cfg.prefixCls= S.substitute(cfg.prefixCls,{
+            prefixCls:prefixCls
+        });
 
         bubble = new Overlay(cfg);
 
@@ -9552,61 +9571,13 @@ KISSY.add("editor/plugin/checkbox-source-area/index", function (S, Editor) {
  */
 KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, DialogLoader) {
 
-    var Node = S.Node,
-        DOM = S.DOM;
-
-    DOM.addStyleSheet(window, ".ks-editor-color-panel a {" +
-        "display: block;" +
-        "color:black;" +
-        "text-decoration: none;" +
-        "}" +
-        "" +
-        ".ks-editor-color-panel a:hover {" +
-        "color:black;" +
-        "text-decoration: none;" +
-        "}" +
-        ".ks-editor-color-panel a:active {" +
-        "color:black;" +
-        "}" +
-
-        ".ks-editor-color-palette {" +
-        "    margin: 5px 8px 8px;" +
-        "}" +
-
-        ".ks-editor-color-palette table {" +
-        "    border: 1px solid #666666;" +
-        "    border-collapse: collapse;" +
-        "}" +
-
-        ".ks-editor-color-palette td {" +
-        "    border-right: 1px solid #666666;" +
-        "    height: 18px;" +
-        "    width: 18px;" +
-        "}" +
-
-        "a.ks-editor-color-a {" +
-        "    height: 18px;" +
-        "    width: 18px;" +
-        "}" +
-
-        "a.ks-editor-color-a:hover {" +
-        "    border: 1px solid #ffffff;" +
-        "    height: 16px;" +
-        "    width: 16px;" +
-        "}" +
-        "a.ks-editor-color-remove {" +
-        "  padding:3px 8px;" +
-        "  margin:2px 0 3px 0;" +
-        "}" +
-        "a.ks-editor-color-remove:hover {" +
-        "    background-color: #D6E9F8;" +
-        "}", "ks-editor-color-plugin");
+    var Node = S.Node;
 
     var COLORS = [
         ["000", "444", "666", "999", "CCC", "EEE", "F3F3F3", "FFF"],
         ["F00", "F90", "FF0", "0F0", "0FF", "00F", "90F", "F0F"],
         [
-            "F4CCCC", "FCE5CD", "FFF2CC", "D9EAD3", "D0E0E3", "CFE2F3", "D9D2E9", "EAD1DC",
+            "F4CC" + "CC", "FCE5CD", "FFF2CC", "D9EAD3", "D0E0E3", "CFE2F3", "D9D2E9", "EAD1DC",
             "EA9999", "F9CB9C", "FFE599", "B6D7A8", "A2C4C9", "9FC5E8", "B4A7D6", "D5A6BD",
             "E06666", "F6B26B", "FFD966", "93C47D", "76A5AF", "6FA8DC", "8E7CC3", "C27BAD",
             "CC0000", "E69138", "F1C232", "6AA84F", "45818E", "3D85C6", "674EA7", "A64D79",
@@ -9617,13 +9588,13 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
 
 
     function initHtml() {
-        html = "<div class='ks-editor-color-panel'>" +
-            "<a class='ks-editor-color-remove' " +
+        html = "<div class='{prefixCls}editor-color-panel'>" +
+            "<a class='{prefixCls}editor-color-remove' " +
             "href=\"javascript:void('清除');\">" +
             "清除" +
             "</a>";
         for (var i = 0; i < 3; i++) {
-            html += "<div class='ks-editor-color-palette'><table>";
+            html += "<div class='{prefixCls}editor-color-palette'><table>";
             var c = COLORS[i], l = c.length / 8;
             for (var k = 0; k < l; k++) {
                 html += "<tr>";
@@ -9631,7 +9602,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                     var currentColor = "#" + (c[8 * k + j]);
                     html += "<td>";
                     html += "<a href='javascript:void(0);' " +
-                        "class='ks-editor-color-a' " +
+                        "class='{prefixCls}editor-color-a' " +
                         "style='background-color:"
                         + currentColor
                         + "'" +
@@ -9644,7 +9615,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
         }
         html += "" +
             "<div>" +
-            "<a class='ks-editor-button ks-editor-color-others ks-inline-block'>其他颜色</a>" +
+            "<a class='{prefixCls}editor-button {prefixCls}editor-color-others ks-inline-block'>其他颜色</a>" +
             "</div>" +
             "</div>";
     }
@@ -9674,6 +9645,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
         _prepare: function () {
             var self = this,
                 editor = self.get("editor"),
+                prefixCls = editor.get('prefixCls'),
                 colorPanel;
 
             self.colorWin = new Overlay4E({
@@ -9681,8 +9653,10 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                 elAttrs: {
                     tabindex: 0
                 },
-                elCls: "ks-editor-popup",
-                content: html,
+                elCls: prefixCls + "editor-popup",
+                content: S.substitute(html, {
+                    prefixCls: prefixCls
+                }),
                 autoRender: true,
                 width: 170,
                 zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)
@@ -9694,7 +9668,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             colorWin.on("hide", function () {
                 self.set("checked", false);
             });
-            var others = colorPanel.one(".ks-editor-color-others");
+            var others = colorPanel.one("." + prefixCls + "editor-color-others");
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
@@ -9725,8 +9699,10 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
         _selectColor: function (ev) {
             ev.halt();
             var self = this,
+                editor = self.get("editor"),
+                prefixCls = editor.get('prefixCls'),
                 t = new Node(ev.target);
-            if (t.hasClass("ks-editor-color-a")) {
+            if (t.hasClass(prefixCls + "editor-color-a")) {
                 self.get("editor").execCommand(self.get("cmdType"), t.style("background-color"));
             }
         },
@@ -10151,7 +10127,7 @@ KISSY.add("editor/plugin/dent-utils/cmd", function (S, Editor, ListUtils) {
 KISSY.add("editor/plugin/dialog-loader/index", function (S, Overlay, Editor) {
     var globalMask,
         loadMask = {
-            loading:function () {
+            loading:function (prefixCls) {
                 if (!globalMask) {
                     globalMask = new Overlay({
                         x:0,
@@ -10159,8 +10135,8 @@ KISSY.add("editor/plugin/dialog-loader/index", function (S, Overlay, Editor) {
                         y:0,
                         // 指定全局 loading zIndex 值
                         "zIndex":Editor.baseZIndex(Editor.zIndexManager.LOADING),
-                        prefixCls:'ks-editor-',
-                        elCls:"ks-editor-global-loading"
+                        prefixCls:prefixCls+'editor-',
+                        elCls:prefixCls+"editor-global-loading"
                     });
                 }
                 globalMask.set("height", S.DOM.docHeight());
@@ -10177,13 +10153,14 @@ KISSY.add("editor/plugin/dialog-loader/index", function (S, Overlay, Editor) {
             // restore focus in editor
             // make dialog remember
             editor.focus();
+            var prefixCls=editor.get('prefixCls');
             if (editor.getControl(name + "/dialog")) {
                 setTimeout(function () {
                     editor.showDialog(name, args);
                 }, 0);
                 return;
             }
-            loadMask.loading();
+            loadMask.loading(prefixCls);
             S.use("editor/plugin/" + name + "/dialog", function (S, Dialog) {
                 loadMask.unloading();
                 editor.addControl(name + "/dialog", new Dialog(editor,config));
@@ -10276,6 +10253,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
 
             var self = this,
                 editor = self.editor,
+                prefixCls=editor.get('prefixCls'),
                 statusbar = editor.get("statusBarEl"),
                 cfg = this.config;
             cfg.draft = cfg.draft || {};
@@ -10284,34 +10262,36 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             self.draftLimit = cfg.draft.limit
                 = cfg.draft.limit || LIMIT;
             var holder = new Node(
-                "<div class='ks-editor-draft'>" +
-                    "<span class='ks-editor-draft-title'>" +
+                "<div class='"+prefixCls+"editor-draft'>" +
+                    "<span class='"+prefixCls+"editor-draft-title'>" +
                     "内容正文每" +
                     cfg.draft.interval
                     + "分钟自动保存一次。" +
                     "</span>" +
                     "</div>").appendTo(statusbar);
-            self.timeTip = new Node("<span class='ks-editor-draft-time'/>")
+            self.timeTip = new Node("<span class='"+prefixCls+"editor-draft-time'/>")
                 .appendTo(holder);
 
             var save = new Node(
-                    "<a href='#' " +
+                S.substitute("<a href='#' " +
                         "onclick='return false;' " +
-                        "class='ks-editor-button ks-editor-draft-save-btn ks-inline-block' " +
+                        "class='{prefixCls}editor-button " +
+                    "{prefixCls}editor-draft-save-btn ks-inline-block' " +
                         "style='" +
                         "vertical-align:middle;" +
                         "padding:1px 9px;" +
                         "'>" +
-                        "<span class='ks-editor-draft-save'>" +
+                        "<span class='{prefixCls}editor-draft-save'>" +
                         "</span>" +
                         "<span>立即保存</span>" +
-                        "</a>"
-                ).unselectable().appendTo(holder),
+                        "</a>",{
+                    prefixCls:prefixCls
+                })                ).unselectable().appendTo(holder),
                 versions = new MenuButton({
                     render:holder,
                     collapseOnClick:true,
                     width:"100px",
-                    prefixCls:"ks-editor-",
+                    prefixCls:prefixCls+"editor-",
                     menuCfg:{
                         width:"225px",
                         align:{
@@ -10374,7 +10354,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 var help = new Node('<a ' +
                     'tabindex="0" ' +
                     'hidefocus="hidefocus" ' +
-                    'class="ks-editor-draft-help" ' +
+                    'class="'+prefixCls+'editor-draft-help" ' +
                     'title="点击查看帮助" ' +
                     'href="javascript:void(\'点击查看帮助 \')">点击查看帮助</a>')
                     .unselectable()
@@ -10400,6 +10380,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         _prepareHelp:function () {
             var self = this,
                 editor = self.editor,
+                prefixCls=editor.get('prefixCls'),
                 cfg = self.config,
                 draftCfg = cfg.draft,
                 help = new Node(draftCfg['helpHtml'] || "");
@@ -10429,7 +10410,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             });
             self.helpPopup = new Overlay({
                 content:help,
-                prefixCls:'ks-editor-',
+                prefixCls:prefixCls+'editor-',
                 autoRender:true,
                 width:help.width() + "px",
                 zIndex:Editor.baseZIndex(Editor.zIndexManager.OVERLAY),
@@ -10754,7 +10735,7 @@ KISSY.add("editor/plugin/drag-upload/index", function (S, Editor) {
  */
 KISSY.add("editor/plugin/element-path/index", function (S, Editor) {
     var Node = S.Node;
-    var CLASS = "ks-editor-element-path";
+    var CLASS = "editor-element-path";
 
     function ElementPaths(cfg) {
         var self = this;
@@ -10783,6 +10764,7 @@ KISSY.add("editor/plugin/element-path/index", function (S, Editor) {
             var self = this,
                 cfg = self.cfg,
                 editor = cfg.editor,
+                prefixCls=editor.get('prefixCls'),
                 statusDom = self.holder,
                 elementPath = ev.path,
                 elements = elementPath.elements,
@@ -10801,7 +10783,7 @@ KISSY.add("editor/plugin/element-path/index", function (S, Editor) {
                         "href='javascript(\"" +
                         type + "\")' " +
                         "class='" +
-                        CLASS + "'>" +
+                        prefixCls+CLASS + "'>" +
                         type +
                         "</a>");
                 self._cache.push(a);
@@ -11264,11 +11246,11 @@ KISSY.add("editor/plugin/flash-common/baseClass", function (S, Editor, ContextMe
     }
 
     var tipHtml = ' <a ' +
-        'class="ks-editor-bubble-url" ' +
+        'class="{prefixCls}editor-bubble-url" ' +
         'target="_blank" ' +
         'href="#">{label}</a>   |   '
-        + ' <span class="ks-editor-bubble-link ks-editor-bubble-change">编辑</span>   |   '
-        + ' <span class="ks-editor-bubble-link ks-editor-bubble-remove">删除</span>';
+        + ' <span class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change">编辑</span>   |   '
+        + ' <span class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove">删除</span>';
 
     Flash.ATTRS = {
         cls:{},
@@ -11286,6 +11268,7 @@ KISSY.add("editor/plugin/flash-common/baseClass", function (S, Editor, ContextMe
             var self = this,
                 cls = self.get("cls"),
                 editor = self.get("editor"),
+                prefixCls=editor.get('prefixCls'),
                 children = [],
                 bubbleId = self.get("bubbleId"),
                 contextMenuId = self.get("contextMenuId"),
@@ -11319,11 +11302,12 @@ KISSY.add("editor/plugin/flash-common/baseClass", function (S, Editor, ContextMe
                             var bubble = this,
                                 el = bubble.get("contentEl");
                             el.html(S.substitute(tipHtml, {
-                                label:self.get("label")
+                                label:self.get("label"),
+                                prefixCls:prefixCls
                             }));
-                            var tipUrlEl = el.one(".ks-editor-bubble-url"),
-                                tipChangeEl = el.one(".ks-editor-bubble-change"),
-                                tipRemoveEl = el.one(".ks-editor-bubble-remove");
+                            var tipUrlEl = el.one("."+prefixCls+"editor-bubble-url"),
+                                tipChangeEl = el.one("."+prefixCls+"editor-bubble-change"),
+                                tipRemoveEl = el.one("."+prefixCls+"editor-bubble-remove");
 
                             // ie focus not lose
                             Editor.Utils.preventFocus(el);
@@ -11361,7 +11345,7 @@ KISSY.add("editor/plugin/flash-common/baseClass", function (S, Editor, ContextMe
                             });
                         }
                 }
-            })
+            });
 
 
             editor.docReady(function () {
@@ -12420,12 +12404,12 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                 return node;
             }
         },
-        tipHtml = '<a class="ks-editor-bubble-url" ' +
+        tipHtml = '<a class="{prefixCls}editor-bubble-url" ' +
             'target="_blank" href="#">在新窗口查看</a>  |  '
-            + '<a class="ks-editor-bubble-link ' +
-            'ks-editor-bubble-change" href="#">编辑</a>  |  '
-            + '<a class="ks-editor-bubble-link ' +
-            'ks-editor-bubble-remove" href="#">删除</a>';
+            + '<a class="{prefixCls}editor-bubble-link ' +
+            '{prefixCls}editor-bubble-change" href="#">编辑</a>  |  '
+            + '<a class="{prefixCls}editor-bubble-link ' +
+            '{prefixCls}editor-bubble-remove" href="#">删除</a>';
 
 
     function ImagePlugin(config) {
@@ -12433,9 +12417,11 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
     }
 
     S.augment(ImagePlugin, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
 
-            var self=this;
+            var self = this;
+
+            var prefixCls = editor.get('prefixCls');
 
             function showImageEditor(selectedEl) {
                 DialogLoader.useDialog(editor, "image",
@@ -12445,20 +12431,20 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
 
             // 重新采用form提交，不采用flash，国产浏览器很多问题
             editor.addButton("image", {
-                tooltip:"插入图片",
-                listeners:{
-                    click:function () {
+                tooltip: "插入图片",
+                listeners: {
+                    click: function () {
                         showImageEditor(null);
 
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode: Editor.WYSIWYG_MODE
             });
 
             var handlers = [
                 {
-                    content:"图片属性",
-                    fn:function () {
+                    content: "图片属性",
+                    fn: function () {
                         var img = checkImg(this.get("editorSelectedEl"));
                         if (img) {
                             // make editor restore focus
@@ -12468,8 +12454,8 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
                     }
                 },
                 {
-                    content:"插入新行",
-                    fn:function () {
+                    content: "插入新行",
+                    fn: function () {
                         this.hide();
                         var doc = editor.get("document")[0],
                             p = new Node(doc.createElement("p"));
@@ -12490,15 +12476,15 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
 
             S.each(handlers, function (h) {
                 children.push({
-                    content:h.content
+                    content: h.content
                 })
             });
 
             editor.addContextMenu("image", checkImg, {
-                width:120,
-                children:children,
-                listeners:{
-                    click:function (e) {
+                width: 120,
+                children: children,
+                listeners: {
+                    click: function (e) {
                         var self = this, content = e.target.get('content');
                         S.each(handlers, function (h) {
                             if (h.content == content) {
@@ -12521,14 +12507,16 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
             });
 
             editor.addBubble("image", checkImg, {
-                listeners:{
-                    afterRenderUI:function () {
+                listeners: {
+                    afterRenderUI: function () {
                         var bubble = this,
                             el = bubble.get("contentEl");
-                        el.html(tipHtml);
-                        var tipUrlEl = el.one(".ks-editor-bubble-url"),
-                            tipChangeEl = el.one(".ks-editor-bubble-change"),
-                            tipRemoveEl = el.one(".ks-editor-bubble-remove");
+                        el.html(S.substitute(tipHtml, {
+                            prefixCls: prefixCls
+                        }));
+                        var tipUrlEl = el.one("." + prefixCls + "editor-bubble-url"),
+                            tipChangeEl = el.one("." + prefixCls + "editor-bubble-change"),
+                            tipRemoveEl = el.one("." + prefixCls + "editor-bubble-remove");
                         Editor.Utils.preventFocus(el);
                         tipChangeEl.on("click", function (ev) {
                             showImageEditor(bubble.get("editorSelectedEl"));
@@ -12562,7 +12550,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
 
     return ImagePlugin;
 }, {
-    requires:['editor',
+    requires: ['editor',
         '../button/',
         '../bubble/',
         '../contextmenu/',
@@ -12960,15 +12948,15 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
         tipHtml = '<a ' +
             'href="" '
             + ' target="_blank" ' +
-            'class="ks-editor-bubble-url">' +
+            'class="{prefixCls}editor-bubble-url">' +
             '在新窗口查看' +
             '</a>  –  '
             + ' <span ' +
-            'class="ks-editor-bubble-link ks-editor-bubble-change">' +
+            'class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change">' +
             '编辑' +
             '</span>   |   '
             + ' <span ' +
-            'class="ks-editor-bubble-link ks-editor-bubble-remove">' +
+            'class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove">' +
             '去除' +
             '</span>';
 
@@ -12978,23 +12966,25 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
     }
 
     function LinkPlugin(config) {
-this.config=config||{};
+        this.config = config || {};
     }
 
     S.augment(LinkPlugin, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
+
+            var prefixCls = editor.get('prefixCls');
             editor.addButton("link", {
-                tooltip:"插入链接",
-                listeners:{
-                    click:function () {
+                tooltip: "插入链接",
+                listeners: {
+                    click: function () {
                         showLinkEditDialog();
 
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode: Editor.WYSIWYG_MODE
             });
 
-            var self=this;
+            var self = this;
 
             function showLinkEditDialog(selectedEl) {
                 DialogLoader.useDialog(editor, "link",
@@ -13003,16 +12993,18 @@ this.config=config||{};
             }
 
             editor.addBubble("link", checkLink, {
-                listeners:{
-                    afterRenderUI:function () {
+                listeners: {
+                    afterRenderUI: function () {
                         var bubble = this,
                             el = bubble.get("contentEl");
 
-                        el.html(tipHtml);
+                        el.html(S.substitute(tipHtml, {
+                            prefixCls: prefixCls
+                        }));
 
-                        var tipUrl = el.one(".ks-editor-bubble-url"),
-                            tipChange = el.one(".ks-editor-bubble-change"),
-                            tipRemove = el.one(".ks-editor-bubble-remove");
+                        var tipUrl = el.one("." + prefixCls + "editor-bubble-url"),
+                            tipChange = el.one("." + prefixCls + "editor-bubble-change"),
+                            tipRemove = el.one("." + prefixCls + "editor-bubble-remove");
 
                         //ie focus not lose
                         Editor.Utils.preventFocus(el);
@@ -13046,7 +13038,7 @@ this.config=config||{};
 
     return LinkPlugin;
 }, {
-    requires:['editor', '../bubble/',
+    requires: ['editor', '../bubble/',
         './utils', '../dialog-loader/', '../button/']
 });/**
  * link utils
@@ -13774,9 +13766,10 @@ KISSY.add("editor/plugin/local-storage/index", function (S, Editor, Overlay, Fla
 
     //Dialog 不行
     var o = new Overlay({
-        width:"0px",
-        prefixCls:'ks-editor-',
         elStyle:{
+            background:'white',
+            border:'1px solid red',
+            position:'absolute',
             overflow:'hidden'
         },
         content:"<h1 style='border:1px solid black;" +
@@ -13854,11 +13847,10 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
         Event = S.Event,
         DOM = S.DOM,
         iframe,
-        MAXIMIZE_TOOLBAR_CLASS = "ks-editor-toolbar-padding",
+        MAXIMIZE_TOOLBAR_CLASS = "editor-toolbar-padding",
         init = function () {
             if (!iframe) {
                 iframe = new Node("<" + "iframe " +
-                    " class='ks-editor-maximize-shim'" +
                     " style='" +
                     "position:absolute;" +
                     "top:-9999px;" +
@@ -13874,7 +13866,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
 
     S.augment(MaximizeCmd, {
 
-        restoreWindow:function () {
+        restoreWindow: function () {
             var self = this,
                 editor = self.editor;
 
@@ -13905,11 +13897,11 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
          * 从内存恢复最大化前的外围状态信息到编辑器实际动作，
          * 包括编辑器位置以及周围元素，浏览器窗口
          */
-        _restoreState:function () {
+        _restoreState: function () {
             var self = this,
                 editor = self.editor,
-                textareaEl=editor.get("textarea"),
-                //恢复父节点的position原状态 bugfix:最大化被父元素限制
+                textareaEl = editor.get("textarea"),
+            //恢复父节点的position原状态 bugfix:最大化被父元素限制
                 _savedParents = self._savedParents;
             if (_savedParents) {
                 for (var i = 0; i < _savedParents.length; i++) {
@@ -13921,15 +13913,15 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             //如果没有失去焦点，重新获得当前选取元素
             //self._saveEditorStatus();
             textareaEl.parent().css({
-                height:self.iframeHeight
+                height: self.iframeHeight
             });
             textareaEl.css({
-                height:self.iframeHeight
+                height: self.iframeHeight
             });
             DOM.css(doc.body, {
-                width:"",
-                height:"",
-                overflow:""
+                width: "",
+                height: "",
+                overflow: ""
             });
             //documentElement 设置宽高，ie崩溃
             doc.documentElement.style.overflow = "";
@@ -13946,21 +13938,22 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
              });*/
 
             iframe.css({
-                left:"-99999px",
-                top:"-99999px"
+                left: "-99999px",
+                top: "-99999px"
             });
 
             window.scrollTo(self.scrollLeft, self.scrollTop);
 
             if (ie < 8) {
-                self.editor.get("toolBarEl").removeClass(MAXIMIZE_TOOLBAR_CLASS, undefined);
+                editor.get("toolBarEl").removeClass(
+                    editor.get('prefixCls') + MAXIMIZE_TOOLBAR_CLASS, undefined);
             }
         },
         /**
          * 保存最大化前的外围状态信息到内存，
          * 包括编辑器位置以及周围元素，浏览器窗口
          */
-        _saveSate:function () {
+        _saveSate: function () {
             var self = this,
                 editor = self.editor,
                 _savedParents = [],
@@ -13979,8 +13972,8 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
                 var pre = p.css("position");
                 if (pre != "static") {
                     _savedParents.push({
-                        el:p,
-                        position:pre
+                        el: p,
+                        position: pre
                     });
                     p.css("position", "static");
                 }
@@ -13990,7 +13983,8 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
 
             //ie6,7 图标到了窗口边界，不可点击，给个padding
             if (ie < 8) {
-                self.editor.get("toolBarEl").addClass(MAXIMIZE_TOOLBAR_CLASS, undefined);
+                editor.get("toolBarEl").addClass(
+                    editor.get('prefixCls') + MAXIMIZE_TOOLBAR_CLASS, undefined);
             }
         },
 
@@ -13998,7 +13992,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
          *  编辑器自身核心状态保存，每次最大化最小化都要save,restore，
          *  firefox修正，iframe layout变化时，range丢了
          */
-        _saveEditorStatus:function () {
+        _saveEditorStatus: function () {
             var self = this,
                 editor = self.editor;
             self.savedRanges = null;
@@ -14014,7 +14008,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
          * 编辑器自身核心状态恢复，每次最大化最小化都要save,restore，
          * 维持编辑器核心状态不变
          */
-        _restoreEditorStatus:function () {
+        _restoreEditorStatus: function () {
             var self = this,
                 editor = self.editor,
                 sel = editor.getSelection(),
@@ -14045,22 +14039,22 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
          * 将编辑器最大化-实际动作
          * 必须做两次，何解？？
          */
-        _maximize:function (stop) {
+        _maximize: function (stop) {
             var self = this,
                 editor = self.editor,
                 editorEl = editor.get("el"),
                 viewportHeight = DOM.viewportHeight(),
                 viewportWidth = DOM.viewportWidth(),
-                textareaEl=editor.get("textarea"),
+                textareaEl = editor.get("textarea"),
                 statusHeight = editor.get("statusBarEl") ?
                     editor.get("statusBarEl")[0].offsetHeight : 0,
                 toolHeight = editor.get("toolBarEl")[0].offsetHeight;
 
             if (!ie) {
                 DOM.css(doc.body, {
-                    width:0,
-                    height:0,
-                    overflow:"hidden"
+                    width: 0,
+                    height: 0,
+                    overflow: "hidden"
                 });
             } else {
                 doc.body.style.overflow = "hidden";
@@ -14068,38 +14062,38 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             doc.documentElement.style.overflow = "hidden";
 
             editorEl.css({
-                position:"absolute",
-                zIndex:Editor.baseZIndex(Editor.zIndexManager.MAXIMIZE),
-                width:viewportWidth + "px"
+                position: "absolute",
+                zIndex: Editor.baseZIndex(Editor.zIndexManager.MAXIMIZE),
+                width: viewportWidth + "px"
             });
             iframe.css({
-                zIndex:Editor.baseZIndex(Editor.zIndexManager.MAXIMIZE - 5),
-                height:viewportHeight + "px",
-                width:viewportWidth + "px"
+                zIndex: Editor.baseZIndex(Editor.zIndexManager.MAXIMIZE - 5),
+                height: viewportHeight + "px",
+                width: viewportWidth + "px"
             });
             editorEl.offset({
-                left:0,
-                top:0
+                left: 0,
+                top: 0
             });
             iframe.css({
-                left:0,
-                top:0
+                left: 0,
+                top: 0
             });
 
             textareaEl.parent().css({
-                height:(viewportHeight - statusHeight - toolHeight ) + "px"
+                height: (viewportHeight - statusHeight - toolHeight ) + "px"
             });
 
 
             textareaEl.css({
-                height:(viewportHeight - statusHeight - toolHeight ) + "px"
+                height: (viewportHeight - statusHeight - toolHeight ) + "px"
             });
 
             if (stop !== true) {
                 arguments.callee.call(self, true);
             }
         },
-        _real:function () {
+        _real: function () {
             var self = this,
                 editor = self.editor;
             if (self._resize) {
@@ -14124,7 +14118,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
                 editor.fire("afterMaximizeWindow");
             }, 30);
         },
-        maximizeWindow:function () {
+        maximizeWindow: function () {
             var self = this,
                 editor = self.editor;
             if (editor.fire("beforeMaximizeWindow") === false) {
@@ -14133,7 +14127,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             init();
             self._real();
         },
-        destroy:function () {
+        destroy: function () {
             var self = this;
             if (self._resize) {
                 Event.remove(window, "resize", self._resize);
@@ -14143,20 +14137,20 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
     });
 
     return {
-        init:function (editor) {
+        init: function (editor) {
 
             if (!editor.hasCommand("maximizeWindow")) {
 
                 var maximizeCmd = new MaximizeCmd(editor);
 
                 editor.addCommand("maximizeWindow", {
-                    exec:function () {
+                    exec: function () {
                         maximizeCmd.maximizeWindow();
                     }
                 });
 
                 editor.addCommand("restoreWindow", {
-                    exec:function () {
+                    exec: function () {
                         maximizeCmd.restoreWindow();
                     }
                 });
@@ -14166,7 +14160,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
         }
     };
 }, {
-    requires:['editor']
+    requires: ['editor']
 });/**
  * Maximize plugin
  * @author yiminghe@gmail.com
@@ -14481,9 +14475,6 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix)
                 value:{
                     constrain:true
                 }
-            },
-            aria:{
-                value:true
             }
         }
     });
@@ -14670,6 +14661,9 @@ KISSY.add("editor/plugin/progressbar/index", function(S) {
         //0-100
         progress:{
             value:0
+        },
+        prefixCls:{
+            value:'ks-'
         }
     };
     S.extend(ProgressBar, S.Base, {
@@ -14681,24 +14675,32 @@ KISSY.add("editor/plugin/progressbar/index", function(S) {
         _init:function() {
             var self = this,
                 h = self.get("height"),
-                el = new Node("<div" +
-                    " class='ks-editor-progressbar' " +
+                prefixCls=self.get('prefixCls'),
+                el = new Node(
+
+                    S.substitute("<div" +
+                    " class='{prefixCls}editor-progressbar' " +
                     " style='width:" +
                     self.get("width") +
                     ";" +
                     "height:" +
                     h +
                     ";'" +
-                    "></div>"),
+                    "></div>",{
+                        prefixCls:prefixCls
+                    })),
                 container = self.get("container"),
                 p = new Node(
-                    "<div style='overflow:hidden;'>" +
-                        "<div class='ks-editor-progressbar-inner' style='height:" + (parseInt(h) - 4) + "px'>" +
-                        "<div class='ks-editor-progressbar-inner-bg'></div>" +
+                    S.substitute("<div style='overflow:hidden;'>" +
+                        "<div class='{prefixCls}editor-progressbar-inner' style='height:" + (parseInt(h) - 4) + "px'>" +
+                        "<div class='{prefixCls}editor-progressbar-inner-bg'></div>" +
                         "</div>" +
-                        "</div>"
+                        "</div>",{
+                        prefixCls:prefixCls
+                    })
                 ).appendTo(el),
-                title = new Node("<span class='ks-editor-progressbar-title'></span>").appendTo(el);
+                title = new Node("<span class='"+prefixCls+"editor-progressbar-title'></span>")
+                    .appendTo(el);
             if (container)
                 el.appendTo(container);
             self.el = el;
@@ -14910,7 +14912,8 @@ this.config=config||{};
                 }
             }
 
-            var resizer = new Node("<div class='ks-editor-resizer' style='cursor: "
+            var resizer = new Node("<div class='"+editor.get('prefixCls')+
+                "editor-resizer' style='cursor: "
                 + cursor +
                 "'></div>").appendTo(statusBarEl);
 
@@ -14972,7 +14975,7 @@ KISSY.add("editor/plugin/separator/index", function (S) {
     S.augment(Separator, {
         renderUI:function (editor) {
             S.all('<span ' +
-                'class="ks-editor-toolbar-separator">&nbsp;' +
+                'class="'+editor.get('prefixCls')+'editor-toolbar-separator">&nbsp;' +
                 '</span>')
                 .appendTo(editor.get("toolBarEl"));
         }
@@ -14987,7 +14990,7 @@ KISSY.add("editor/plugin/separator/index", function (S) {
  */
 KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
 
-    var smiley_markup = "<div class='ks-editor-smiley-sprite'>";
+    var smiley_markup = "<div class='{prefixCls}editor-smiley-sprite'>";
     for (var i = 0; i <= 98; i++) {
         smiley_markup += "<a href='javascript:void(0)' " +
             "data-icon='http://a.tbcdn.cn/sys/wangwang/smiley/48x48/" + i + ".gif'>" +
@@ -15000,6 +15003,9 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
 
     S.augment(Smiley, {
         renderUI: function (editor) {
+
+            var prefixCls = editor.get('prefixCls');
+
             editor.addButton("smiley", {
                 tooltip: "插入表情",
                 checkable: true,
@@ -15019,11 +15025,13 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                         if (checked) {
                             if (!(smiley = self.smiley)) {
                                 smiley = self.smiley = new Overlay4E({
-                                    content: smiley_markup,
+                                    content: S.substitute(smiley_markup, {
+                                        prefixCls: prefixCls
+                                    }),
                                     focus4e: false,
                                     width: "297px",
                                     autoRender: true,
-                                    elCls: "ks-editor-popup",
+                                    elCls: prefixCls + "editor-popup",
                                     zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
                                     mask: false
                                 });

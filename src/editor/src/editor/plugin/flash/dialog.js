@@ -13,8 +13,8 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "<input " +
             " data-verify='^https?://[^\\s]+$' " +
             " data-warning='网址格式为：http://' " +
-            "class='ks-editor-flash-url ks-editor-input' style='width:300px;" +
-             "' />" +
+            "class='{prefixCls}editor-flash-url {prefixCls}editor-input' style='width:300px;" +
+            "' />" +
             "</label>" +
             "</p>" +
             "<table style='margin:10px 0 5px  40px;width:300px;'>" +
@@ -24,7 +24,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "<input " +
             " data-verify='^(?!0$)\\d+$' " +
             " data-warning='宽度请输入正整数' " +
-            "class='ks-editor-flash-width ks-editor-input' style='width:60px;" +
+            "class='{prefixCls}editor-flash-width {prefixCls}editor-input' style='width:60px;" +
             "' /> 像素 </label>" +
             "</td>" +
             "<td>" +
@@ -32,7 +32,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "<input " +
             " data-verify='^(?!0$)\\d+$' " +
             " data-warning='高度请输入正整数' " +
-            "class='ks-editor-flash-height ks-editor-input' " +
+            "class='{prefixCls}editor-flash-height {prefixCls}editor-input' " +
             "style='width:60px;" +
             "' /> 像素 " +
             "</label>" +
@@ -43,7 +43,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "<label>" +
             "对齐： " +
             "</label>" +
-            "<select class='ks-editor-flash-align' title='对齐'>" +
+            "<select class='{prefixCls}editor-flash-align' title='对齐'>" +
             "<option value='none'>无</option>" +
             "<option value='left'>左对齐</option>" +
             "<option value='right'>右对齐</option>" +
@@ -55,17 +55,18 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             "<input " +
             " data-verify='^\\d+$' " +
             " data-warning='间距请输入非负整数' "
-            + "class='ks-editor-flash-margin ks-editor-input' " +
+            + "class='{prefixCls}editor-flash-margin {prefixCls}editor-input' " +
             "style='width:60px;" +
             "' value='"
             + 5 + "'/> 像素" +
             "</td></tr>" +
             "</table>" +
             "</div>",
-        footHtml = "<div style='padding:5px 20px 20px;'><a " +
-            "class='ks-editor-flash-ok ks-editor-button ks-inline-block' " +
+        footHtml = "<div style='padding:10px 0 35px 20px;'>" +
+            "<a " +
+            "class='{prefixCls}editor-flash-ok {prefixCls}editor-button ks-inline-block' " +
             "style='margin-left:40px;margin-right:20px;'>确定</a> " +
-            "<a class='ks-editor-flash-cancel ks-editor-button ks-inline-block'>取消</a></div>";
+            "<a class='{prefixCls}editor-flash-cancel {prefixCls}editor-button ks-inline-block'>取消</a></div>";
 
 
     function FlashDialog(editor, config) {
@@ -77,33 +78,39 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
     }
 
     S.augment(FlashDialog, {
-        addRes:Editor.Utils.addRes,
-        destroyRes:Editor.Utils.destroyRes,
-        _config:function () {
-            var self = this;
+        addRes: Editor.Utils.addRes,
+        destroyRes: Editor.Utils.destroyRes,
+        _config: function () {
+            var self = this,
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls');
             self._urlTip = TIP;
             self._type = TYPE_FLASH;
             self._cls = CLS_FLASH;
             self._config_dwidth = "400px";
             self._title = "Flash";//属性";
-            self._bodyHtml = bodyHtml;
-            self._footHtml = footHtml;
+            self._bodyHtml = S.substitute(bodyHtml, {
+                prefixCls: prefixCls
+            });
+            self._footHtml = S.substitute(footHtml, {
+                prefixCls: prefixCls
+            });
         },
         //建立弹出窗口
-        _prepareShow:function () {
+        _prepareShow: function () {
             var self = this;
             self.dialog = new Dialog({
-                autoRender:true,
-                headerContent:self._title,
-                bodyContent:self._bodyHtml,
-                footerContent:self._footHtml,
-                width:self._config_dwidth || "500px",
-                mask:true
+                autoRender: true,
+                headerContent: self._title,
+                bodyContent: self._bodyHtml,
+                footerContent: self._footHtml,
+                width: self._config_dwidth || "500px",
+                mask: true
             });
             self.addRes(self.dialog);
             self._initD();
         },
-        _realShow:function () {
+        _realShow: function () {
             //显示前就要内容搞好
             this._updateD();
             this.dialog.show();
@@ -113,14 +120,14 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
          *
          * @param r flash 元素
          */
-        _getFlashUrl:function (r) {
+        _getFlashUrl: function (r) {
             return flashUtils.getUrl(r);
         },
         /**
          * 触发前初始化窗口 field，子类覆盖
          *
          */
-        _updateD:function () {
+        _updateD: function () {
             var self = this,
                 editor = self.editor,
                 cfg = self.config,
@@ -147,7 +154,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
                 self.dMargin.val("5");
             }
         },
-        show:function (_selectedEl) {
+        show: function (_selectedEl) {
             var self = this;
             self.selectedFlash = _selectedEl;
             self._prepareShow();
@@ -158,24 +165,27 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
          * 映射窗口field，子类覆盖
          *
          */
-        _initD:function () {
+        _initD: function () {
             var self = this,
                 d = self.dialog,
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls'),
                 el = d.get("el");
-            self.dHeight = el.one(".ks-editor-flash-height");
-            self.dWidth = el.one(".ks-editor-flash-width");
-            self.dUrl = el.one(".ks-editor-flash-url");
-            self.dAlign = MenuButton.Select.decorate(el.one(".ks-editor-flash-align"), {
-                prefixCls:'ks-editor-big-',
-                width:80,
-                menuCfg:{
-                    prefixCls:'ks-editor-',
-                    render:el
+            self.dHeight = el.one("." + prefixCls + "editor-flash-height");
+            self.dWidth = el.one("." + prefixCls + "editor-flash-width");
+            self.dUrl = el.one("." + prefixCls + "editor-flash-url");
+            self.dAlign = MenuButton.Select.decorate(el.one("." + prefixCls +
+                "editor-flash-align"), {
+                prefixCls: prefixCls + 'editor-big-',
+                width: 80,
+                menuCfg: {
+                    prefixCls: prefixCls + 'editor-',
+                    render: el
                 }
             });
-            self.dMargin = el.one(".ks-editor-flash-margin");
-            var action = el.one(".ks-editor-flash-ok"),
-                cancel = el.one(".ks-editor-flash-cancel");
+            self.dMargin = el.one("." + prefixCls + "editor-flash-margin");
+            var action = el.one("." + prefixCls + "editor-flash-ok"),
+                cancel = el.one("." + prefixCls + "editor-flash-cancel");
             action.on("click", self._gen, self);
             cancel.on("click", function (ev) {
                 d.hide();
@@ -190,14 +200,14 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
          * 应用子类覆盖，提供 flash 元素的相关信息
          *
          */
-        _getDInfo:function () {
+        _getDInfo: function () {
             var self = this;
             return {
-                url:self.dUrl.val(),
-                attrs:{
-                    width:self.dWidth.val(),
-                    height:self.dHeight.val(),
-                    style:"margin:" +
+                url: self.dUrl.val(),
+                attrs: {
+                    width: self.dWidth.val(),
+                    height: self.dHeight.val(),
+                    style: "margin:" +
                         (parseInt(self.dMargin.val()) || 0) +
                         "px;" +
                         "float:" + self.dAlign.get("value") + ";"
@@ -208,7 +218,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
         /**
          * 真正产生 flash 元素
          */
-        _gen:function (ev) {
+        _gen: function (ev) {
             ev && ev.halt();
             var self = this,
                 editor = self.editor,
@@ -232,12 +242,12 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
             editor.notifySelectionChange();
         },
 
-        destroy:function () {
+        destroy: function () {
             this.destroyRes();
         }
     });
 
     return FlashDialog;
 }, {
-    requires:['editor', '../flash-common/utils', '../overlay/', '../menubutton/']
+    requires: ['editor', '../flash-common/utils', '../overlay/', '../menubutton/']
 });

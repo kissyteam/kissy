@@ -1,65 +1,14 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 5 10:33
+build time: Sep 10 10:11
 */
 /**
  * color picker
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/color/color-picker/dialog", function (S, Editor, Overlay4E) {
-    var map = S.map,
-        DOM = S.DOM;
-
-    DOM.addStyleSheet("" +
-        ".ks-editor-color-advanced-picker-left {" +
-        "float:left;" +
-        "display:inline;" +
-        "margin-left:10px;" +
-        "}" +
-
-        ".ks-editor-color-advanced-picker-right {" +
-        "float:right;" +
-        "width:50px;" +
-        "display:inline;" +
-        "margin:13px 10px 0 0;" +
-        "cursor:crosshair;" +
-        "}" +
-        "" +
-        ".ks-editor-color-advanced-picker-right a {" +
-        "height:2px;" +
-        "line-height:0;" +
-        "font-size:0;" +
-        "display:block;" +
-        "}" +
-        "" +
-
-        ".ks-editor-color-advanced-picker-left ul{" +
-        "float:left;" +
-        "}" +
-        ".ks-editor-color-advanced-picker-left li,.ks-editor-color-advanced-picker-left a{" +
-        "overflow:hidden;" +
-        "width:15px;" +
-        "height:16px;" +
-        "line-height:0;" +
-        "font-size:0;" +
-        "display:block;" +
-        "}" +
-        ".ks-editor-color-advanced-picker-left a:hover{" +
-        "width:13px;height:13px;border:1px solid white;" +
-        "}" +
-        "" +
-        ".ks-editor-color-advanced-indicator {" +
-        "margin-left:10px;" +
-        "*zoom:1;" +
-        "display:inline-block;" +
-        "*display:inline;" +
-        "width:68px;" +
-        "height:24px;" +
-        "vertical-align:middle;" +
-        "line-height:0;" +
-        "overflow:hidden;" +
-        "}", "ks-editor-color-advanced");
+    var map = S.map, DOM = S.DOM;
 
     //获取颜色数组
     function getData(color) {
@@ -173,33 +122,33 @@ KISSY.add("editor/plugin/color/color-picker/dialog", function (S, Editor, Overla
     }
 
     var pickerHtml = "<ul>" +
-        map(ColorGrads([ "red", "orange", "yellow", "green", "cyan", "blue", "purple" ], 5),
-            function (x) {
-                return map(ColorGrads([ "white", "rgb(" + x.join(",") + ")" , "black" ], 5),
-                    function (x) {
-                        return "<li><a style='background-color" + ":" + hex(x) + "' href='#'></a></li>";
-                    }).join("");
-            }).join("</ul><ul>") + "</ul>",
-        panelHtml = "<div class='ks-editor-color-advanced-picker'>" +
+            map(ColorGrads([ "red", "orange", "yellow", "green", "cyan", "blue", "purple" ], 5),
+                function (x) {
+                    return map(ColorGrads([ "white", "rgb(" + x.join(",") + ")" , "black" ], 5),
+                        function (x) {
+                            return "<li><a style='background-color" + ":" + hex(x) + "' href='#'></a></li>";
+                        }).join("");
+                }).join("</ul><ul>") + "</ul>",
+        panelHtml = "<div class='{prefixCls}editor-color-advanced-picker'>" +
             "<div class='ks-clear'>" +
-            "<div class='ks-editor-color-advanced-picker-left'>" +
+            "<div class='{prefixCls}editor-color-advanced-picker-left'>" +
             pickerHtml +
             "</div>" +
-            "<div class='ks-editor-color-advanced-picker-right'>" +
+            "<div class='{prefixCls}editor-color-advanced-picker-right'>" +
             "</div>" +
             "</div>" +
             "<div style='padding:10px;'>" +
             "<label>" +
             "颜色值： " +
-            "<input style='width:100px' class='ks-editor-color-advanced-value'/>" +
+            "<input style='width:100px' class='{prefixCls}editor-color-advanced-value'/>" +
             "</label>" +
-            "<span class='ks-editor-color-advanced-indicator'></span>" +
+            "<span class='{prefixCls}editor-color-advanced-indicator'></span>" +
             "</div>" +
             "</div>",
         footHtml = "<div style='padding:5px 20px 20px;'>" +
-            "<a class='ks-editor-button ks-editor-color-advanced-ok ks-inline-block'>确定</a>" +
+            "<a class='{prefixCls}editor-button {prefixCls}editor-color-advanced-ok ks-inline-block'>确定</a>" +
             "&nbsp;&nbsp;&nbsp;" +
-            "<a class='ks-editor-button  ks-editor-color-advanced-cancel ks-inline-block'>取消</a>" +
+            "<a class='{prefixCls}editor-button  {prefixCls}editor-color-advanced-cancel ks-inline-block'>取消</a>" +
             "</div>";
 
     function ColorPicker(editor) {
@@ -210,26 +159,32 @@ KISSY.add("editor/plugin/color/color-picker/dialog", function (S, Editor, Overla
     var addRes = Editor.Utils.addRes, destroyRes = Editor.Utils.destroyRes;
 
     S.augment(ColorPicker, {
-        _init:function () {
-            var self = this;
+        _init: function () {
+            var self = this,
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls');
 
             self.dialog = new Overlay4E.Dialog({
-                mask:true,
-                headerContent:"颜色拾取器",
-                bodyContent:panelHtml,
-                footerContent:footHtml,
-                autoRender:true,
-                width:"550px"
+                mask: true,
+                headerContent: "颜色拾取器",
+                bodyContent: S.substitute(panelHtml, {
+                    prefixCls: prefixCls
+                }),
+                footerContent: S.substitute(footHtml, {
+                    prefixCls: prefixCls
+                }),
+                autoRender: true,
+                width: "550px"
             });
             var win = self.dialog,
                 body = win.get("body"),
                 foot = win.get("footer"),
-                indicator = body.one(".ks-editor-color-advanced-indicator"),
-                indicatorValue = body.one(".ks-editor-color-advanced-value"),
-                left = body.one(".ks-editor-color-advanced-picker-left"),
-                right = body.one(".ks-editor-color-advanced-picker-right"),
-                ok = foot.one(".ks-editor-color-advanced-ok"),
-                cancel = foot.one(".ks-editor-color-advanced-cancel");
+                indicator = body.one("."+prefixCls+"editor-color-advanced-indicator"),
+                indicatorValue = body.one("."+prefixCls+"editor-color-advanced-value"),
+                left = body.one("."+prefixCls+"editor-color-advanced-picker-left"),
+                right = body.one("."+prefixCls+"editor-color-advanced-picker-right"),
+                ok = foot.one("."+prefixCls+"editor-color-advanced-ok"),
+                cancel = foot.one("."+prefixCls+"editor-color-advanced-cancel");
 
             ok.on("click", function (ev) {
                 var v = S.trim(indicatorValue.val()),
@@ -279,30 +234,32 @@ KISSY.add("editor/plugin/color/color-picker/dialog", function (S, Editor, Overla
             indicator.css("background-color", defaultColor);
         },
 
-        _detailColor:function (color) {
+        _detailColor: function (color) {
             var self = this,
                 win = self.dialog,
                 body = win.get("body"),
-                detailPanel = body.one(".ks-editor-color-advanced-picker-right");
+                editor = self.editor,
+                prefixCls = editor.get('prefixCls'),
+                detailPanel = body.one("."+prefixCls+"editor-color-advanced-picker-right");
 
             detailPanel.html(map(ColorGrads(["#ffffff", color, "#000000"], 40),
                 function (x) {
                     return "<a style='background-color:" + hex(x) + "'></a>";
                 }).join(""));
         },
-        show:function (cmd) {
+        show: function (cmd) {
             this.cmd = cmd;
             this.dialog.show();
         },
-        hide:function () {
+        hide: function () {
             this.dialog.hide();
         },
-        destroy:function () {
+        destroy: function () {
             destroyRes.call(this);
         }
     });
 
     return ColorPicker;
 }, {
-    requires:['editor', '../../overlay/']
+    requires: ['editor', '../../overlay/']
 });

@@ -1,0 +1,29 @@
+@import "../../../css/src/dpl/variables.less";
+@import "../../../css/src/dpl/mixins.less";
+
+.ks-split-button {
+    .ks-inline-block_();
+    position: relative;
+    .ks-clear_();
+    .ie67-restore-left-whitespace();
+
+    .ks-button {
+        float: left;
+        position: relative;
+    }
+
+    .ks-button:first-child {
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+
+    .ks-button:last-child {
+        margin-left: -1px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+
+    .ks-menu-button {
+        margin-left: -1px;
+    }
+}

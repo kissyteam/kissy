@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8"/>
 <title>KISSY Anim Target</title>
-<link rel="stylesheet" href="../../../../../kissy-dpl/base/assets/reset.css"/>
 <script src="../../../../../build/kissy.js"></script>
 <link rel="stylesheet" href="../assets/cool.css"/>
 <style>
@@ -43,7 +42,12 @@
             S.all("#t2").on("click", function () {
                 o.center().show();
             });
-
+            o.on('show',function(){
+                S.log('show');
+            });
+            o.on('hide',function(){
+                S.log('hide');
+            });
         });
     });
 </script>

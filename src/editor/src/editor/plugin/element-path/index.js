@@ -4,7 +4,7 @@
  */
 KISSY.add("editor/plugin/element-path/index", function (S, Editor) {
     var Node = S.Node;
-    var CLASS = "ks-editor-element-path";
+    var CLASS = "editor-element-path";
 
     function ElementPaths(cfg) {
         var self = this;
@@ -33,6 +33,7 @@ KISSY.add("editor/plugin/element-path/index", function (S, Editor) {
             var self = this,
                 cfg = self.cfg,
                 editor = cfg.editor,
+                prefixCls=editor.get('prefixCls'),
                 statusDom = self.holder,
                 elementPath = ev.path,
                 elements = elementPath.elements,
@@ -51,7 +52,7 @@ KISSY.add("editor/plugin/element-path/index", function (S, Editor) {
                         "href='javascript(\"" +
                         type + "\")' " +
                         "class='" +
-                        CLASS + "'>" +
+                        prefixCls+CLASS + "'>" +
                         type +
                         "</a>");
                 self._cache.push(a);

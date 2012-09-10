@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 5 10:33
+build time: Sep 10 10:11
 */
 /**
  * draft for kissy editor
@@ -86,6 +86,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
 
             var self = this,
                 editor = self.editor,
+                prefixCls=editor.get('prefixCls'),
                 statusbar = editor.get("statusBarEl"),
                 cfg = this.config;
             cfg.draft = cfg.draft || {};
@@ -94,34 +95,36 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             self.draftLimit = cfg.draft.limit
                 = cfg.draft.limit || LIMIT;
             var holder = new Node(
-                "<div class='ks-editor-draft'>" +
-                    "<span class='ks-editor-draft-title'>" +
+                "<div class='"+prefixCls+"editor-draft'>" +
+                    "<span class='"+prefixCls+"editor-draft-title'>" +
                     "内容正文每" +
                     cfg.draft.interval
                     + "分钟自动保存一次。" +
                     "</span>" +
                     "</div>").appendTo(statusbar);
-            self.timeTip = new Node("<span class='ks-editor-draft-time'/>")
+            self.timeTip = new Node("<span class='"+prefixCls+"editor-draft-time'/>")
                 .appendTo(holder);
 
             var save = new Node(
-                    "<a href='#' " +
+                S.substitute("<a href='#' " +
                         "onclick='return false;' " +
-                        "class='ks-editor-button ks-editor-draft-save-btn ks-inline-block' " +
+                        "class='{prefixCls}editor-button " +
+                    "{prefixCls}editor-draft-save-btn ks-inline-block' " +
                         "style='" +
                         "vertical-align:middle;" +
                         "padding:1px 9px;" +
                         "'>" +
-                        "<span class='ks-editor-draft-save'>" +
+                        "<span class='{prefixCls}editor-draft-save'>" +
                         "</span>" +
                         "<span>立即保存</span>" +
-                        "</a>"
-                ).unselectable().appendTo(holder),
+                        "</a>",{
+                    prefixCls:prefixCls
+                })                ).unselectable().appendTo(holder),
                 versions = new MenuButton({
                     render:holder,
                     collapseOnClick:true,
                     width:"100px",
-                    prefixCls:"ks-editor-",
+                    prefixCls:prefixCls+"editor-",
                     menuCfg:{
                         width:"225px",
                         align:{
@@ -184,7 +187,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 var help = new Node('<a ' +
                     'tabindex="0" ' +
                     'hidefocus="hidefocus" ' +
-                    'class="ks-editor-draft-help" ' +
+                    'class="'+prefixCls+'editor-draft-help" ' +
                     'title="点击查看帮助" ' +
                     'href="javascript:void(\'点击查看帮助 \')">点击查看帮助</a>')
                     .unselectable()
@@ -210,6 +213,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
         _prepareHelp:function () {
             var self = this,
                 editor = self.editor,
+                prefixCls=editor.get('prefixCls'),
                 cfg = self.config,
                 draftCfg = cfg.draft,
                 help = new Node(draftCfg['helpHtml'] || "");
@@ -239,7 +243,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             });
             self.helpPopup = new Overlay({
                 content:help,
-                prefixCls:'ks-editor-',
+                prefixCls:prefixCls+'editor-',
                 autoRender:true,
                 width:help.width() + "px",
                 zIndex:Editor.baseZIndex(Editor.zIndexManager.OVERLAY),

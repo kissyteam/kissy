@@ -26,9 +26,10 @@ KISSY.add("editor/plugin/local-storage/index", function (S, Editor, Overlay, Fla
 
     //Dialog 不行
     var o = new Overlay({
-        width:"0px",
-        prefixCls:'ks-editor-',
         elStyle:{
+            background:'white',
+            border:'1px solid red',
+            position:'absolute',
             overflow:'hidden'
         },
         content:"<h1 style='border:1px solid black;" +

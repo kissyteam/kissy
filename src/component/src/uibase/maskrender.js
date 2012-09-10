@@ -4,24 +4,8 @@
  */
 KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
 
-    /**
-     * 每组相同 prefixCls 的 position 共享一个遮罩
-     */
-    var maskMap = {
-            /**
-             * {
-             *  node:
-             *  num:
-             * }
-             */
-
-        },
-        ie6 = (UA['ie'] === 6),
+    var ie6 = (UA['ie'] === 6),
         $ = Node.all;
-
-    function getMaskCls(self) {
-        return self.get("prefixCls") + "ext-mask";
-    }
 
     function docWidth() {
         return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
@@ -31,8 +15,9 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
         return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
     }
 
-    function initMask(maskCls) {
-        var mask = $("<div " +
+    function initMask(self) {
+        var maskCls = self.get("prefixCls") + "ext-mask",
+            mask = $("<div " +
             " style='width:" + docWidth() + ";" +
             "left:0;" +
             "top:0;" +
@@ -66,75 +51,29 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
     }
 
     Mask.ATTRS = {
-        maskShared:{
-            value:true
+
+        mask: {
+            value: false
+        },
+        maskNode: {
+
         }
+
     };
 
     Mask.prototype = {
 
-        _maskExtShow:function () {
-            var self = this,
-                zIndex,
-                maskCls = getMaskCls(self),
-                maskDesc = maskMap[maskCls],
-                maskShared = self.get("maskShared"),
-                mask = self.get("maskNode");
-            if (!mask) {
-                if (maskShared) {
-                    if (maskDesc) {
-                        mask = maskDesc.node;
-                    } else {
-                        mask = initMask(maskCls);
-                        maskDesc = maskMap[maskCls] = {
-                            num:0,
-                            node:mask
-                        };
-                    }
-                } else {
-                    mask = initMask(maskCls);
-                }
-                self.setInternal("maskNode", mask);
-            }
-            if (zIndex = self.get("zIndex")) {
-                mask.css("z-index", zIndex - 1);
-            }
-            if (maskShared) {
-                maskDesc.num++;
-            }
-            if (!maskShared || maskDesc.num == 1) {
-                mask.show();
+        __renderUI: function () {
+            var self = this;
+            if (self.get('mask')) {
+                self.set('maskNode', initMask(self));
             }
         },
 
-        _maskExtHide:function () {
-            var self = this,
-                maskCls = getMaskCls(self),
-                maskDesc = maskMap[maskCls],
-                maskShared = self.get("maskShared"),
-                mask = self.get("maskNode");
-            if (maskShared && maskDesc) {
-                maskDesc.num = Math.max(maskDesc.num - 1, 0);
-                if (maskDesc.num == 0) {
-                    mask.hide();
-                }
-            } else {
-                mask.hide();
-            }
-        },
-
-        __destructor:function () {
-            var self = this,
-                maskShared = self.get("maskShared"),
-                mask = self.get("maskNode");
-            if (self.get("maskNode")) {
-                if (maskShared) {
-                    if (self.get("visible")) {
-                        self._maskExtHide();
-                    }
-                } else {
-                    mask.remove();
-                }
+        __destructor: function () {
+            var self = this, mask;
+            if (mask = self.get("maskNode")) {
+                mask.remove();
             }
         }
 
@@ -142,7 +81,7 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
 
     return Mask;
 }, {
-    requires:["ua", "node"]
+    requires: ["ua", "node"]
 });
 
 /**

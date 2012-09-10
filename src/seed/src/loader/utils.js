@@ -3,9 +3,9 @@
  * @fileOverview Utils for kissy loader
  * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
+(function (S) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -289,7 +289,7 @@
          * normalize module names
          * @param self
          * @param modNames
-         * @param refModName
+         * @param [refModName]
          * @return {Array}
          */
         normalizeModNamesWithAlias: function (self, modNames, refModName) {
@@ -316,7 +316,7 @@
          * @param self
          * @param name
          * @param fn
-         * @param config
+         * @param [config]
          */
         registerModule: function (self, name, fn, config) {
             var mods = self.Env.mods,

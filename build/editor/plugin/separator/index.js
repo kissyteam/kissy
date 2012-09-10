@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 5 10:33
+build time: Sep 10 10:11
 */
 /**
  * separator for button
@@ -15,7 +15,7 @@ KISSY.add("editor/plugin/separator/index", function (S) {
     S.augment(Separator, {
         renderUI:function (editor) {
             S.all('<span ' +
-                'class="ks-editor-toolbar-separator">&nbsp;' +
+                'class="'+editor.get('prefixCls')+'editor-toolbar-separator">&nbsp;' +
                 '</span>')
                 .appendTo(editor.get("toolBarEl"));
         }

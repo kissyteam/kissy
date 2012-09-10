@@ -37,36 +37,7 @@ KISSY.use('dd', function (S, DD) {
             }
             return inRange(p.left, this.minLeft, this.maxLeft, estimated) &&
                 inRange(p['top'], this.minTop, this.maxTop, estimated);
-        },
-
-        crossPoint: function (other) {
-
-            var a = this.p1, b = this.p2,
-                c = other.p1, d = other.p2;
-
-            var abcArea = (a.left - c.left) * (b.top - c.top) - (a.top - c.top) * (b.left - c.left);
-
-            var abdArea = (a.left - d.left) * (b.top - d.top) - (a.top - d.top) * (b.left - d.left);
-
-            if (abcArea * abdArea >= 0) {
-                return false;
-            }
-            var cdaArea = (c.left - a.left) * (d.top - a.top) - (c.top - a.top) * (d.left - a.left);
-
-            var cdbArea = cdaArea + abcArea - abdArea;
-
-            return cdaArea * cdbArea < 0;
-
-//            var t = cdaArea / ( abdArea - abcArea );
-//
-//            var dx = t * (b.left - a.left),
-//                    dy = t * (b.top - a.top);
-//
-//            return { x: a.left + dx, y: a.top + dy };
-
         }
-
-
     });
 
 
@@ -80,7 +51,7 @@ KISSY.use('dd', function (S, DD) {
             [100, 200],
             [200, 200],
             [200, 100]
-        ], r = 10, mouse = [], currentMouse;
+        ], r = 10, mouse = [];
 
         function redraw() {
             ctx.clearRect(0, 0, 600, 600);
@@ -134,9 +105,10 @@ KISSY.use('dd', function (S, DD) {
 
         canvasDD.on("dragstart", function () {
             S.log('dragstart');
-            currentMouse = {};
-            currentMouse.start = canvasDD.get('deltaPos');
-            mouse.push(currentMouse);
+            if (mouse.length == 0) {
+                mouse[0] = {};
+                mouse[0].start = canvasDD.get('deltaPos');
+            }
         });
 
         canvasDD.on('drag', function (e) {
@@ -145,23 +117,37 @@ KISSY.use('dd', function (S, DD) {
                 e.pageY > canvasOffset.top &&
                 e.pageY < canvasOffset.top + canvasRegion.height
                 ) {
-                currentMouse.end = {
+                var currentPoint = {
                     left: e.pageX - canvasOffset.left,
                     top: e.pageY - canvasOffset.top
                 };
+                if (!mouse[0].done) {
+                    mouse[0].end = currentPoint;
+                } else {
+                    mouse[1] = {
+                        start: currentPoint,
+                        end: mouse[0].start
+                    };
+
+                    mouse[2] = {
+                        start: currentPoint,
+                        end: mouse[0].end
+                    }
+                }
                 redraw();
             }
         });
 
         canvasDD.on('dragend', function () {
-            if (mouse.length == 3) {
-
+            if(mouse.length==1){
+                mouse[0].done=1;
+            }
+            else if (mouse.length == 3) {
 
                 var lines = [];
                 S.each(mouse, function (m, i) {
                     lines[i] = new Line(m.start, m.end);
                 });
-
 
                 var ok = [];
 
@@ -187,33 +173,10 @@ KISSY.use('dd', function (S, DD) {
                     }
                 }
 
-
                 if (allOk) {
-
-                    var cross = [];
-                    for (i = 0; i < lines.length; i++) {
-                        for (var j = i + 1; j < lines.length; j++) {
-                            if (lines[i].crossPoint(lines[j])) {
-                                cross[i] = cross[i] || 0;
-                                cross[j] = cross[j] || 0;
-                                cross[i]++;
-                                cross[j]++;
-                            }
-                        }
-                    }
-
-
-                    for (i = 0; i < cross.length; i++) {
-                        if (cross[i] !== 2) {
-                            allOk = false;
-                        }
-                    }
-
-                    if (allOk) {
-                        alert('well done');
-                        canvasDD.set('disabled', true);
-                        return;
-                    }
+                    alert('well done');
+                    canvasDD.set('disabled', true);
+                    return;
                 }
 
                 alert('try again please');

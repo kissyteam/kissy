@@ -29,7 +29,8 @@ KISSY.config('modules', {
 'editor': {requires: ['htmlparser','component','core']},
 'split-button': {requires: ['component','button','menubutton']},
 'mvc': {requires: ['base','event','node','ajax','json']},
-'overlay': {requires: ['anim','dom','node','event','ua','component']},
+'color': {requires: ['base']},
+'overlay': {requires: ['ua','component','node']},
 'base': {requires: ['event']},
 'separator': {requires: ['component']},
 'tabs': {requires: ['button','component','toolbar']}

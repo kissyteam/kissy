@@ -21,9 +21,8 @@
      *
      * to do complex task with modules.
      * @singleton
-     * @class
+     * @class KISSY
      */
-    var KISSY = S;
 
     function hasOwnProperty(o, p) {
         return Object.prototype.hasOwnProperty.call(o, p);
@@ -87,23 +86,24 @@
 
             var i = 0, p, len;
 
+            // 记录循环标志
+            s[MIX_CIRCULAR_DETECTION] = r;
+
+            // 记录被记录了循环标志的对像
+            cache.push(s);
+
             if (wl && (len = wl.length)) {
                 for (; i < len; i++) {
                     p = wl[i];
                     if (p in s) {
-                        _mix(p, r, s, ov, deep, cache);
+                        _mix(p, r, s, ov, wl, deep, cache);
                     }
                 }
             } else {
-
-                s[MIX_CIRCULAR_DETECTION] = r;
-
-                cache.push(s);
-
                 for (p in s) {
                     if (p != MIX_CIRCULAR_DETECTION) {
                         // no hasOwnProperty judge !
-                        _mix(p, r, s, ov, deep, cache);
+                        _mix(p, r, s, ov, wl, deep, cache);
                     }
                 }
 
@@ -111,7 +111,7 @@
                 if (hasEnumBug) {
                     for (; p = enumProperties[i++];) {
                         if (hasOwnProperty(s, p)) {
-                            _mix(p, r, s, ov, deep, cache);
+                            _mix(p, r, s, ov, wl, deep, cache);
                         }
                     }
                 }
@@ -119,7 +119,7 @@
             return r;
         },
 
-        _mix = function (p, r, s, ov, deep, cache) {
+        _mix = function (p, r, s, ov, wl, deep, cache) {
             // 要求覆盖
             // 或者目的不存在
             // 或者深度mix
@@ -140,11 +140,8 @@
                         var clone = target && (S.isArray(target) || S.isPlainObject(target)) ?
                             target :
                             (S.isArray(src) ? [] : {});
-                        // 记录循环标志
-                        src[MIX_CIRCULAR_DETECTION] = r[p] = clone;
-                        // 记录被记录了循环标志的对像
-                        cache.push(src);
-                        mixInternal(clone, src, ov, undefined, true, cache);
+                        r[p] = clone;
+                        mixInternal(clone, src, ov, wl, true, cache);
                     }
                 } else if (src !== undefined && (ov || !(p in r))) {
                     r[p] = src;
@@ -355,36 +352,18 @@
                 var cfg,
                     r,
                     self = this,
-                    runs = [],
                     fn,
-                    p,
                     Config = S.Config,
                     configs = S.configs;
                 if (S.isObject(configName)) {
-                    for (p in configName) {
-                        if (configName.hasOwnProperty(p)) {
-                            runs.push({
-                                name: p,
-                                order: configs[p] && configs[p].order || 0,
-                                value: configName[p]
-                            });
-                        }
-                    }
-
-                    runs.sort(function (a1, a2) {
-                        return a1.order > a2.order;
-                    });
-
-                    S.each(runs, function (r) {
-                        fn = configs[p = r.name];
-                        configValue = r.value;
+                    S.each(configName, function (configValue, p) {
+                        fn = configs[p];
                         if (fn) {
                             fn.call(self, configValue);
                         } else {
                             Config[p] = configValue;
                         }
                     });
-
                 } else {
                     cfg = configs[configName];
                     if (configValue === undefined) {
@@ -476,6 +455,10 @@
          * @type {Object}
          */
         S.Env = S.Env || {};
+
+        S.Env.nodejs = (typeof require !== 'undefined') &&
+            (typeof exports !== 'undefined');
+
         /**
          * KISSY Config.
          * If load kissy.js, Config.debug defaults to true.

@@ -6,7 +6,7 @@
     zoom:1;
 }
 
-.ks-menu-button-caption {
+.pix-menu-button-caption {
     float: left;
     width:248px;
     height:26px;
@@ -17,7 +17,7 @@
     padding-left:10px;
 }
 
-.ks-menu-button-dropdown {
+.pix-menu-button-dropdown {
     float: left;
     background:url(http://img03.taobaocdn.com/tps/i3/T1gJJgXdRBXXaCwpjX.png) no-repeat;
     width:19px;

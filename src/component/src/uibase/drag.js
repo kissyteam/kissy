@@ -24,19 +24,19 @@ KISSY.add("component/uibase/drag", function (S) {
          * Whether current element is draggable.
          * @type {Boolean}
          */
-        draggable:{
-            setter:function (v) {
+        draggable: {
+            setter: function (v) {
                 if (v === true) {
                     return {};
                 }
             },
-            value:{}
+            value: {}
         }
     };
 
     Drag.prototype = {
 
-        _uiSetDraggable:function (dragCfg) {
+        _uiSetDraggable: function (dragCfg) {
             var self = this,
                 handlers,
                 DD = S.require("dd"),
@@ -51,8 +51,8 @@ KISSY.add("component/uibase/drag", function (S) {
                 Draggable = DD.Draggable;
 
                 d = self.__drag = new Draggable({
-                    node:el,
-                    move:1
+                    node: el,
+                    move: 1
                 });
 
                 if (dragCfg.proxy) {
@@ -90,6 +90,8 @@ KISSY.add("component/uibase/drag", function (S) {
                 handlers = dragCfg.handlers;
                 if ("constrain" in dragCfg) {
                     __constrain.set("constrain", dragCfg.constrain);
+                } else {
+                    __constrain.set("constrain", false);
                 }
                 if (handlers && handlers.length > 0) {
                     d.set("handlers", handlers);
@@ -97,7 +99,7 @@ KISSY.add("component/uibase/drag", function (S) {
             }
         },
 
-        __destructor:function () {
+        __destructor: function () {
             var self = this,
                 p = self.__proxy,
                 s = self.__scroll,

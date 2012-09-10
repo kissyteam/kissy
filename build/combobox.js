@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:25
+build time: Sep 10 10:08
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -1136,10 +1136,10 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
 KISSY.add("combobox/render", function (S, Component) {
 
     var $ = S.all,
-        tpl = '<div class="ks-combobox-input-wrap">' +
+        tpl = '<div class="{prefixCls}combobox-input-wrap">' +
             '</div>',
-        triggerTpl = '<div class="ks-combobox-trigger">' +
-            '<div class="ks-combobox-trigger-inner">&#x25BC;</div>' +
+        triggerTpl = '<div class="{prefixCls}combobox-trigger">' +
+            '<div class="{prefixCls}combobox-trigger-inner">&#x25BC;</div>' +
             '</div>',
         inputTpl = '<input ' +
             'aria-haspopup="true" ' +
@@ -1147,7 +1147,7 @@ KISSY.add("combobox/render", function (S, Component) {
             'aria-haspopup="true" ' +
             'role="autocomplete" ' +
             'autocomplete="off" ' +
-            'class="ks-combobox-input" />';
+            'class="{prefixCls}combobox-input" />';
 
     var ComboboxRender = Component.Render.extend({
 
@@ -1156,26 +1156,33 @@ KISSY.add("combobox/render", function (S, Component) {
                 wrap,
                 input = self.get("input"),
                 inputId,
+                prefixCls=self.get('prefixCls'),
                 el = self.get("el"),
                 trigger = self.get("trigger");
 
             if (!self.get("srcNode")) {
-                el.append(tpl);
-                wrap = el.one(".ks-combobox-input-wrap");
-                input = input || S.all(inputTpl);
+                el.append(S.substitute(tpl,{
+                    prefixCls:prefixCls
+                }));
+                wrap = el.one("."+prefixCls+"combobox-input-wrap");
+                input = input || S.all(S.substitute(inputTpl,{
+                    prefixCls:prefixCls
+                }));
                 wrap.append(input);
                 self.setInternal("input", input);
             }
 
             if (!trigger) {
-                self.setInternal("trigger", S.all(triggerTpl));
+                self.setInternal("trigger", S.all(S.substitute(triggerTpl,{
+                    prefixCls:prefixCls
+                })));
             }
 
             self.get("trigger").unselectable();
 
             var invalidEl = $("<div " +
-                "class='ks-combobox-invalid-el'>" +
-                "<div class='ks-combobox-invalid-inner'></div>" +
+                "class='"+prefixCls+"combobox-invalid-el'>" +
+                "<div class='"+prefixCls+"combobox-invalid-inner'></div>" +
                 "</div>").insertBefore(input.parent());
             self.setInternal("invalidEl", invalidEl);
 
@@ -1187,7 +1194,7 @@ KISSY.add("combobox/render", function (S, Component) {
                 }
                 self.setInternal('placeholderEl', $('<label for="' +
                     inputId + '" ' +
-                    'class="ks-combobox-placeholder">' +
+                    'class="'+prefixCls+'combobox-placeholder">' +
                     placeholder + '</label>').appendTo(el));
             }
         },
@@ -1242,10 +1249,10 @@ KISSY.add("combobox/render", function (S, Component) {
         },
         HTML_PARSER: {
             input: function (el) {
-                return el.one(".ks-combobox-input");
+                return el.one("."+this.get('prefixCls')+"combobox-input");
             },
             trigger: function (el) {
-                return el.one(".ks-combobox-trigger");
+                return el.one("."+this.get('prefixCls')+"combobox-trigger");
             }
         }
     });

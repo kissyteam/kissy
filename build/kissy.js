@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 4 20:20
+build time: Sep 10 10:12
 */
 /**
  * @ignore
@@ -26,9 +26,8 @@ build time: Sep 4 20:20
      *
      * to do complex task with modules.
      * @singleton
-     * @class
+     * @class KISSY
      */
-    var KISSY = S;
 
     function hasOwnProperty(o, p) {
         return Object.prototype.hasOwnProperty.call(o, p);
@@ -92,23 +91,24 @@ build time: Sep 4 20:20
 
             var i = 0, p, len;
 
+            // 记录循环标志
+            s[MIX_CIRCULAR_DETECTION] = r;
+
+            // 记录被记录了循环标志的对像
+            cache.push(s);
+
             if (wl && (len = wl.length)) {
                 for (; i < len; i++) {
                     p = wl[i];
                     if (p in s) {
-                        _mix(p, r, s, ov, deep, cache);
+                        _mix(p, r, s, ov, wl, deep, cache);
                     }
                 }
             } else {
-
-                s[MIX_CIRCULAR_DETECTION] = r;
-
-                cache.push(s);
-
                 for (p in s) {
                     if (p != MIX_CIRCULAR_DETECTION) {
                         // no hasOwnProperty judge !
-                        _mix(p, r, s, ov, deep, cache);
+                        _mix(p, r, s, ov, wl, deep, cache);
                     }
                 }
 
@@ -116,7 +116,7 @@ build time: Sep 4 20:20
                 if (hasEnumBug) {
                     for (; p = enumProperties[i++];) {
                         if (hasOwnProperty(s, p)) {
-                            _mix(p, r, s, ov, deep, cache);
+                            _mix(p, r, s, ov, wl, deep, cache);
                         }
                     }
                 }
@@ -124,7 +124,7 @@ build time: Sep 4 20:20
             return r;
         },
 
-        _mix = function (p, r, s, ov, deep, cache) {
+        _mix = function (p, r, s, ov, wl, deep, cache) {
             // 要求覆盖
             // 或者目的不存在
             // 或者深度mix
@@ -145,11 +145,8 @@ build time: Sep 4 20:20
                         var clone = target && (S.isArray(target) || S.isPlainObject(target)) ?
                             target :
                             (S.isArray(src) ? [] : {});
-                        // 记录循环标志
-                        src[MIX_CIRCULAR_DETECTION] = r[p] = clone;
-                        // 记录被记录了循环标志的对像
-                        cache.push(src);
-                        mixInternal(clone, src, ov, undefined, true, cache);
+                        r[p] = clone;
+                        mixInternal(clone, src, ov, wl, true, cache);
                     }
                 } else if (src !== undefined && (ov || !(p in r))) {
                     r[p] = src;
@@ -360,36 +357,18 @@ build time: Sep 4 20:20
                 var cfg,
                     r,
                     self = this,
-                    runs = [],
                     fn,
-                    p,
                     Config = S.Config,
                     configs = S.configs;
                 if (S.isObject(configName)) {
-                    for (p in configName) {
-                        if (configName.hasOwnProperty(p)) {
-                            runs.push({
-                                name: p,
-                                order: configs[p] && configs[p].order || 0,
-                                value: configName[p]
-                            });
-                        }
-                    }
-
-                    runs.sort(function (a1, a2) {
-                        return a1.order > a2.order;
-                    });
-
-                    S.each(runs, function (r) {
-                        fn = configs[p = r.name];
-                        configValue = r.value;
+                    S.each(configName, function (configValue, p) {
+                        fn = configs[p];
                         if (fn) {
                             fn.call(self, configValue);
                         } else {
                             Config[p] = configValue;
                         }
                     });
-
                 } else {
                     cfg = configs[configName];
                     if (configValue === undefined) {
@@ -481,6 +460,10 @@ build time: Sep 4 20:20
          * @type {Object}
          */
         S.Env = S.Env || {};
+
+        S.Env.nodejs = (typeof require !== 'undefined') &&
+            (typeof exports !== 'undefined');
+
         /**
          * KISSY Config.
          * If load kissy.js, Config.debug defaults to true.
@@ -496,11 +479,11 @@ build time: Sep 4 20:20
 
         /**
          * The build time of the library.
-         * NOTICE: '20120904202037' will replace with current timestamp when compressing.
+         * NOTICE: '20120910101232' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120904202037';
+        S.__BUILD_TIME = '20120910101232';
     })();
 
     return S;
@@ -2902,7 +2885,7 @@ build time: Sep 4 20:20
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -3180,9 +3163,8 @@ build time: Sep 4 20:20
  */
 (function (S) {
 
-    if (typeof require !== 'undefined') {
-        return;
-    }
+    // in case current code runs on nodejs
+    S.namespace("Loader");
 
     var time = S.now(),
         p = '__events__' + time;
@@ -3260,9 +3242,9 @@ build time: Sep 4 20:20
  * @fileOverview Utils for kissy loader
  * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
+(function (S) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -3546,7 +3528,7 @@ build time: Sep 4 20:20
          * normalize module names
          * @param self
          * @param modNames
-         * @param refModName
+         * @param [refModName]
          * @return {Array}
          */
         normalizeModNamesWithAlias: function (self, modNames, refModName) {
@@ -3573,7 +3555,7 @@ build time: Sep 4 20:20
          * @param self
          * @param name
          * @param fn
-         * @param config
+         * @param [config]
          */
         registerModule: function (self, name, fn, config) {
             var mods = self.Env.mods,
@@ -3642,7 +3624,7 @@ build time: Sep 4 20:20
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -3757,7 +3739,7 @@ build time: Sep 4 20:20
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
     var MILLISECONDS_OF_SECOND = 1000,
@@ -3950,7 +3932,7 @@ build time: Sep 4 20:20
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
     var Loader = S.Loader,
@@ -4047,8 +4029,6 @@ build time: Sep 4 20:20
         }
     };
 
-    configs.modules.order = 10;
-
     /*
      KISSY 's base path.
      */
@@ -4068,7 +4048,7 @@ build time: Sep 4 20:20
  */
 (function (S, undefined) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -4304,7 +4284,7 @@ build time: Sep 4 20:20
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -4578,7 +4558,7 @@ build time: Sep 4 20:20
  */
 (function (S) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -4629,7 +4609,6 @@ build time: Sep 4 20:20
         }
     }
 
-
     // Enqueue use
     function enqueue(self, modNames, fn) {
         self.queue.push({
@@ -4637,7 +4616,6 @@ build time: Sep 4 20:20
             fn: fn
         });
     }
-
 
     // Real use.
     function _use(self, modNames, fn) {
@@ -4671,10 +4649,7 @@ build time: Sep 4 20:20
             countCss++;
         }
 
-        if (!countCss) {
-            _useJs(self, comboUrls, fn, modNames);
-            return;
-        }
+        var jsOk = 0, cssOk = !countCss;
 
         for (p in css) {
             if (css.hasOwnProperty(p)) {
@@ -4688,20 +4663,35 @@ build time: Sep 4 20:20
                                 });
                             }
                         }
-                        _useJs(self, comboUrls, fn, modNames);
+                        cssOk = 1;
+                        check(jsOk);
                     }
                 }, css[p].charset);
             }
         }
+
+        function check(paramJsOk) {
+            jsOk = paramJsOk;
+            if (cssOk && jsOk) {
+                attachMods(self, unaliasModNames);
+                if (utils.isAttached(SS, unaliasModNames)) {
+                    fn.apply(null, utils.getModules(SS, modNames))
+                } else {
+                    // new require is introduced by KISSY.add
+                    // run again
+                    _use(self, modNames, fn)
+                }
+            }
+        }
+
+        // jss css download in parallel
+        _useJs(comboUrls, check);
     }
 
-
     // use js
-    function _useJs(self, comboUrls, fn, modNames) {
+    function _useJs(comboUrls, check) {
         var p,
             success,
-            SS = self.SS,
-            unaliasModNames,
             jss = comboUrls.js,
             countJss = 0;
 
@@ -4712,9 +4702,7 @@ build time: Sep 4 20:20
 
         if (!countJss) {
             // 2012-05-18 bug: loaded 那么需要加载的 jss 为空，要先 attach 再通知用户回调函数
-            unaliasModNames = utils.unalias(SS, modNames);
-            attachMods(self, unaliasModNames);
-            fn.apply(null, utils.getModules(SS, modNames));
+            check(1);
             return;
         }
         success = 1;
@@ -4722,7 +4710,7 @@ build time: Sep 4 20:20
             if (jss.hasOwnProperty(p)) {
                 (function (p) {
                     loadScripts(jss[p], function () {
-                        var mods = jss[p].mods, mod, unaliasModNames, i;
+                        var mods = jss[p].mods, mod, i;
                         for (i = 0; i < mods.length; i++) {
                             mod = mods[i];
                             // fix #111
@@ -4735,15 +4723,7 @@ build time: Sep 4 20:20
                             }
                         }
                         if (success && !(--countJss)) {
-                            unaliasModNames = utils.unalias(SS, modNames);
-                            attachMods(self, unaliasModNames);
-                            if (utils.isAttached(SS, unaliasModNames)) {
-                                fn.apply(null, utils.getModules(SS, modNames))
-                            } else {
-                                // new require is introduced by KISSY.add
-                                // run again
-                                _use(self, modNames, fn)
-                            }
+                            check(1);
                         }
                     }, jss[p].charset);
                 })(p);
@@ -4751,14 +4731,12 @@ build time: Sep 4 20:20
         }
     }
 
-
     // attach mods
     function attachMods(self, modNames) {
         S.each(modNames, function (modName) {
             attachMod(self, modName);
         });
     }
-
 
     // attach one mod
     function attachMod(self, modName) {
@@ -4786,12 +4764,10 @@ build time: Sep 4 20:20
         return undefined;
     }
 
-
     // get mod info.
     function getModInfo(self, modName) {
         return self.SS.Env.mods[modName];
     }
-
 
     // get requires mods need to be loaded dynamically
     function getRequires(self, modName, cache) {
@@ -5056,7 +5032,7 @@ build time: Sep 4 20:20
  */
 (function (S) {
 
-    if (typeof require !== 'undefined') {
+    if (S.Env.nodejs) {
         return;
     }
 
@@ -5200,7 +5176,7 @@ build time: Sep 4 20:20
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120904202037'
+        tag: '20120910101232'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5495,7 +5471,8 @@ KISSY.config('modules', {
 'editor': {requires: ['htmlparser','component','core']},
 'split-button': {requires: ['component','button','menubutton']},
 'mvc': {requires: ['base','event','node','ajax','json']},
-'overlay': {requires: ['anim','dom','node','event','ua','component']},
+'color': {requires: ['base']},
+'overlay': {requires: ['ua','component','node']},
 'base': {requires: ['event']},
 'separator': {requires: ['component']},
 'tabs': {requires: ['button','component','toolbar']}
@@ -5504,7 +5481,7 @@ KISSY.config('modules', {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:29
+build time: Sep 10 10:12
 */
 /**
  * @ignore
@@ -5889,7 +5866,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:26
+build time: Sep 10 10:08
 */
 /**
  * @ignore
@@ -8077,7 +8054,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     var win = S.Env.host,
         doc = win.document,
-        NodeType=DOM.NodeType,
+        NodeType = DOM.NodeType,
         docElem = doc.documentElement,
         getWin = DOM._getWin,
         CSS1Compat = 'CSS1Compat',
@@ -8121,7 +8098,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              *     the top-most window.
              * @return {Object|undefined} if Get, the format of returned value is same with coordinates.
              */
-            offset:function (selector, coordinates, relativeWin) {
+            offset: function (selector, coordinates, relativeWin) {
                 // getter
                 if (coordinates === undefined) {
                     var elem = DOM.get(selector), ret;
@@ -8151,7 +8128,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
              *        http://yiminghe.javaeye.com/blog/390732
              */
-            scrollIntoView:function (selector, container, top, hscroll, auto) {
+            scrollIntoView: function (selector, container, top, hscroll, auto) {
                 var elem;
 
                 if (!(elem = DOM.get(selector))) {
@@ -8196,17 +8173,17 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                     wh = DOM.height(win);
                     ww = DOM.width(win);
                     winScroll = {
-                        left:DOM.scrollLeft(win),
-                        top:DOM.scrollTop(win)
+                        left: DOM.scrollLeft(win),
+                        top: DOM.scrollTop(win)
                     };
                     // elem 相对 container 可视视窗的距离
                     diffTop = {
-                        left:elemOffset[LEFT] - winScroll[LEFT],
-                        top:elemOffset[TOP] - winScroll[TOP]
+                        left: elemOffset[LEFT] - winScroll[LEFT],
+                        top: elemOffset[TOP] - winScroll[TOP]
                     };
                     diffBottom = {
-                        left:elemOffset[LEFT] + ew - (winScroll[LEFT] + ww),
-                        top:elemOffset[TOP] + eh - (winScroll[TOP] + wh)
+                        left: elemOffset[LEFT] + ew - (winScroll[LEFT] + ww),
+                        top: elemOffset[TOP] + eh - (winScroll[TOP] + wh)
                     };
                     containerScroll = winScroll;
                 }
@@ -8215,22 +8192,22 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                     ch = container.clientHeight;
                     cw = container.clientWidth;
                     containerScroll = {
-                        left:DOM.scrollLeft(container),
-                        top:DOM.scrollTop(container)
+                        left: DOM.scrollLeft(container),
+                        top: DOM.scrollTop(container)
                     };
                     // elem 相对 container 可视视窗的距离
                     // 注意边框 , offset 是边框到根节点
                     diffTop = {
-                        left:elemOffset[LEFT] - containerOffset[LEFT] -
+                        left: elemOffset[LEFT] - containerOffset[LEFT] -
                             (myParseInt(DOM.css(container, 'borderLeftWidth')) || 0),
-                        top:elemOffset[TOP] - containerOffset[TOP] -
+                        top: elemOffset[TOP] - containerOffset[TOP] -
                             (myParseInt(DOM.css(container, 'borderTopWidth')) || 0)
                     };
                     diffBottom = {
-                        left:elemOffset[LEFT] + ew -
+                        left: elemOffset[LEFT] + ew -
                             (containerOffset[LEFT] + cw +
                                 (myParseInt(DOM.css(container, 'borderRightWidth')) || 0)),
-                        top:elemOffset[TOP] + eh -
+                        top: elemOffset[TOP] + eh -
                             (containerOffset[TOP] + ch +
                                 (myParseInt(DOM.css(container, 'borderBottomWidth')) || 0))
                     };
@@ -8275,25 +8252,25 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * @param {window} [win=window] Window to be referred.
              * @method
              */
-            docWidth:0,
+            docWidth: 0,
             /**
              * Get the height of document
              * @param {window} [win=window] Window to be referred.
              * @method
              */
-            docHeight:0,
+            docHeight: 0,
             /**
              * Get the height of window
              * @param {window} [win=window] Window to be referred.
              * @method
              */
-            viewportHeight:0,
+            viewportHeight: 0,
             /**
              * Get the width of document
              * @param {window} [win=window] Window to be referred.
              * @method
              */
-            viewportWidth:0,
+            viewportWidth: 0,
             /**
              * Get the current vertical position of the scroll bar for the first element in the set of matched elements.
              * or
@@ -8302,7 +8279,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
              * @method
              */
-            scrollTop:0,
+            scrollTop: 0,
             /**
              * Get the current horizontal position of the scroll bar for the first element in the set of matched elements.
              * or
@@ -8311,7 +8288,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * @param {Number} value An integer indicating the new position to set the scroll bar to.
              * @method
              */
-            scrollLeft:0
+            scrollLeft: 0
         });
 
     // http://old.jr.pl/www.quirksmode.org/viewport/compatibility.html
@@ -8331,7 +8308,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
             if (w) {
                 if (v !== undefined) {
                     v = parseFloat(v);
-                    // 注意多 windw 情况，不能简单取 win
+                    // 注意多 window 情况，不能简单取 win
                     var left = name == 'Left' ? v : DOM.scrollLeft(w),
                         top = name == 'Top' ? v : DOM.scrollTop(w);
                     w['scrollTo'](left, top);
@@ -8395,8 +8372,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
     function getClientPosition(elem) {
         var box, x , y ,
             doc = elem.ownerDocument,
-            body = doc.body,
-            w = getWin(elem[OWNER_DOCUMENT]);
+            body = doc.body;
 
         // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
         box = elem.getBoundingClientRect();
@@ -8428,16 +8404,10 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         // ie7 html 即窗口边框改变不了。永远为 2
         // 但标准 firefox/chrome/ie9 下 docElem.clientTop 是窗口边框，即使设了 border-top 也为 0
 
-        x -= docElem.clientLeft || body.clientLeft;
-        y -= docElem.clientTop || body.clientTop;
+        x -= docElem.clientLeft || body.clientLeft || 0;
+        y -= docElem.clientTop || body.clientTop || 0;
 
-        // iphone/ipad/itouch 下的 Safari 获取 getBoundingClientRect 时，已经加入 scrollTop
-        if (UA.mobile == 'apple') {
-            x -= DOM[SCROLL_LEFT](w);
-            y -= DOM[SCROLL_TOP](w);
-        }
-
-        return { left:x, top:y };
+        return { left: x, top: y };
     }
 
 
@@ -8451,7 +8421,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     // 获取 elem 相对 elem.ownerDocument 的坐标
     function getOffset(el, relativeWin) {
-        var position = {left:0, top:0};
+        var position = {left: 0, top: 0};
 
         // Iterate up the ancestor frame chain, keeping track of the current window
         // and the current element in that window.
@@ -8484,33 +8454,35 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         var old = getOffset(elem), ret = { }, current, key;
 
         for (key in offset) {
-            current = myParseInt(DOM.css(elem, key), 10) || 0;
-            ret[key] = current + offset[key] - old[key];
+            if (offset.hasOwnProperty(key)) {
+                current = myParseInt(DOM.css(elem, key), 10) || 0;
+                ret[key] = current + offset[key] - old[key];
+            }
         }
         DOM.css(elem, ret);
     }
 
     return DOM;
 }, {
-    requires:['./base', 'ua']
+    requires: ['./base', 'ua']
 });
 
 /*
-  2012-03-30
-   - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
-   - http://help.dottoro.com/ljkfqbqj.php
-   - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
+ 2012-03-30
+ - refer: http://www.softcomplex.com/docs/get_window_size_and_scrollbar_position.html
+ - http://help.dottoro.com/ljkfqbqj.php
+ - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
 
-  2011-05-24
-   - 承玉：
-   - 调整 docWidth , docHeight ,
-       viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
-       便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
+ 2011-05-24
+ - 承玉：
+ - 调整 docWidth , docHeight ,
+ viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
+ 便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
 
 
-  TODO:
-   - 考虑是否实现 jQuery 的 position, offsetParent 等功能
-   - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
+ TODO:
+ - 考虑是否实现 jQuery 的 position, offsetParent 等功能
+ - 更详细的测试用例（比如：测试 position 为 fixed 的情况）
  */
 /**
  * @ignore
@@ -10381,7 +10353,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:28
+build time: Sep 10 10:11
 */
 /**
  * @ignore
@@ -10574,7 +10546,7 @@ KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _dat
  * @ignore
  * @fileOverview scalable event framework for kissy (refer DOM3 Events)
  * how to fire event just like browser?
- * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 
@@ -11257,7 +11229,7 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
                 if (gRet !== false) {
                     gRet = ret;
                 }
-                // return false 等价 preventDefault + stopProgation
+                // return false 等价 preventDefault + stopPropagation
                 if (ret === false) {
                     event.halt();
                 }
@@ -13096,7 +13068,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:29
+build time: Sep 10 10:11
 */
 /**
  * @ignore
@@ -13622,7 +13594,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:25
+build time: Sep 10 10:08
 */
 /**
  * @ignore
@@ -13796,7 +13768,7 @@ KISSY.add('ajax', function (S, serializer, IO) {
 });/**
  * @ignore
  * @fileOverview a scalable client io framework
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
 
@@ -14379,7 +14351,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
  *//**
  * @ignore
  * @fileOverview form data  serialization util
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/form-serializer', function (S, DOM) {
     var rselectTextarea = /^(?:select|textarea)/i,
@@ -14512,7 +14484,7 @@ KISSY.add('ajax/form', function (S, io, DOM, FormSerializer) {
 });/**
  * @ignore
  * @fileOverview non-refresh upload file with form by iframe
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
 
@@ -14704,7 +14676,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
 });/**
  * @ignore
  * @fileOverview jsonp transport based on script transport
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/jsonp', function (S, io) {
     var win = S.Env.host;
@@ -15007,7 +14979,7 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
  * @ignore
  * @fileOverview script transport for kissy io
  * @description: modified version of S.getScript , add abort ability
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
 
@@ -15683,7 +15655,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:25
+build time: Sep 10 10:08
 */
 /**
  * @ignore
@@ -15793,12 +15765,12 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:25
+build time: Sep 10 10:08
 */
 /**
  * @ignore
  * @fileOverview attribute management
- * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base/attribute', function (S, undefined) {
 
@@ -16337,7 +16309,7 @@ KISSY.add('base/attribute', function (S, undefined) {
 /**
  * @ignore
  * @fileOverview attribute management and event in one
- * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base', function (S, Attribute, Event) {
 
@@ -16395,7 +16367,11 @@ KISSY.add('base', function (S, Attribute, Event) {
                 // 子类上的 ATTRS 配置优先
                 if (attrs.hasOwnProperty(attr)) {
                     // 父类后加，父类不覆盖子类的相同设置
-                    // 属性对象会 merge   a: {y:{getter:fn}}, b:{y:{value:3}}, b extends a => b {y:{value:3}}
+                    // 属性对象会 merge
+                    // a: {y: {getter: fn}}, b: {y: {value: 3}}
+                    // b extends a
+                    // =>
+                    // b {y: {value: 3, getter: fn}}
                     host.addAttr(attr, attrs[attr], false);
                 }
             }
@@ -16427,7 +16403,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 3 17:15
+build time: Sep 10 10:08
 */
 /**
  * @ignore
@@ -16445,7 +16421,7 @@ KISSY.add('anim', function (S, Anim, Easing) {
 });/**
  * @ignore
  * @fileOverview special patch for anim backgroundPosition
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
 
@@ -17244,7 +17220,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 /**
  * @ignore
  * @fileOverview special patch for making color gradual change
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
 
@@ -17800,7 +17776,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
  *//**
  * @ignore
  * @fileOverview single timer for the whole anim module
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add('anim/manager', function(S) {
     var stamp = S.stamp;
@@ -17974,7 +17950,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 4 20:20
+build time: Sep 10 10:11
 */
 /**
  * @ignore

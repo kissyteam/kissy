@@ -1,0 +1,105 @@
+/**
+ * Combobox Style for KISSY.
+ * @author yiminghe@gmail.com
+ */
+
+@import "../../../css/src/dpl/variables.less";
+@import "../../../css/src/dpl/mixins.less";
+@import "../../../css/src/dpl/icons-mixin.less";
+@import "../../../button/assets/dpl/variables.less";
+@import "../../../button/assets/dpl/mixin.less";
+@import 'variables.less';
+
+.ks-combobox {
+    border: @comboboxBorder;
+    border-radius: @comboboxBorderRadius;
+    .ks-inline-block_();
+    .box-shadow(@comboboxBoxShadow);
+    .transition(@comboboxTransition);
+    vertical-align: middle;
+    position: relative;
+}
+
+.ks-combobox-disabled {
+    .opacity(70);
+}
+
+.ks-combobox-focused {
+    border-color: @comboboxFocusedBorderColor;
+    *border-color: @comboboxFocusedBorderColorIE;
+    .box-shadow(@comboboxFocusedBoxShadown);
+}
+
+.ks-combobox-trigger {
+    float: right;
+    padding: 5px 9px;
+    border-left:@comboboxTriggerBorderLeft;
+    .buttonBackground(@btnBackground, @btnBackgroundHighlight);
+}
+
+.ks-combobox-trigger-inner {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    font-size: 0;
+    vertical-align: top;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid black;
+    .opacity(30);
+    margin-top: 7px;
+    margin-left: 5px;
+    .ks-inline-block_();
+}
+
+.ks-combobox-trigger:hover .ks-combobox-trigger-inner {
+    .opacity(100);
+}
+
+.ks-combobox-input-wrap {
+    margin-top: 1px; // let shadow leak
+    overflow: hidden;
+    position: relative;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.ks-combobox-input {
+    padding: 4px;
+    padding-left: 0; // no padding when width 100% ...
+    padding-right: 0;
+    line-height: 1.5;
+    float: left;
+    width: 100%;
+    border: 0;
+    background-color: @inputBackground;
+    &:focus {
+        outline: none;
+    }
+}
+
+.ks-combobox-placeholder {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    .opacity(60);
+    display: none;
+}
+
+.ks-combobox-invalid {
+    border: 1px solid red;
+}
+
+.ks-combobox-invalid-el {
+    padding: 5px 0px;
+    *font-size: 0;
+    float: right;
+    display: none;
+    background: red;
+}
+
+.ks-combobox-invalid-inner {
+    .icon-base_();
+    .icon-exclamation-sign_();
+    .icon-white_();
+}

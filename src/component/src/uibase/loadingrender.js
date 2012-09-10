@@ -2,18 +2,18 @@
  * @fileOverview loading mask support for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/loadingrender", function(S, Node) {
+KISSY.add("component/uibase/loadingrender", function (S, Node) {
 
     function Loading() {
     }
 
     Loading.prototype = {
-        loading:function() {
+        loading: function () {
             var self = this;
             if (!self._loadingExtEl) {
                 self._loadingExtEl = new Node("<div " +
                     "class='" +
-                    "ks-ext-loading'" +
+                    self.get('prefixCls') + "ext-loading'" +
                     " style='position: absolute;" +
                     "border: none;" +
                     "width: 100%;" +
@@ -27,7 +27,7 @@ KISSY.add("component/uibase/loadingrender", function(S, Node) {
             self._loadingExtEl.show();
         },
 
-        unloading:function() {
+        unloading: function () {
             var lel = this._loadingExtEl;
             lel && lel.hide();
         }
@@ -36,5 +36,5 @@ KISSY.add("component/uibase/loadingrender", function(S, Node) {
     return Loading;
 
 }, {
-    requires:['node']
+    requires: ['node']
 });

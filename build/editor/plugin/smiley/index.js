@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 5 10:33
+build time: Sep 10 10:11
 */
 /**
  * smiley button
@@ -9,7 +9,7 @@ build time: Sep 5 10:33
  */
 KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
 
-    var smiley_markup = "<div class='ks-editor-smiley-sprite'>";
+    var smiley_markup = "<div class='{prefixCls}editor-smiley-sprite'>";
     for (var i = 0; i <= 98; i++) {
         smiley_markup += "<a href='javascript:void(0)' " +
             "data-icon='http://a.tbcdn.cn/sys/wangwang/smiley/48x48/" + i + ".gif'>" +
@@ -22,6 +22,9 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
 
     S.augment(Smiley, {
         renderUI: function (editor) {
+
+            var prefixCls = editor.get('prefixCls');
+
             editor.addButton("smiley", {
                 tooltip: "插入表情",
                 checkable: true,
@@ -41,11 +44,13 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                         if (checked) {
                             if (!(smiley = self.smiley)) {
                                 smiley = self.smiley = new Overlay4E({
-                                    content: smiley_markup,
+                                    content: S.substitute(smiley_markup, {
+                                        prefixCls: prefixCls
+                                    }),
                                     focus4e: false,
                                     width: "297px",
                                     autoRender: true,
-                                    elCls: "ks-editor-popup",
+                                    elCls: prefixCls + "editor-popup",
                                     zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
                                     mask: false
                                 });

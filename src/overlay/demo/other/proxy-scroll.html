@@ -64,22 +64,20 @@
                             points:['cc', 'cc']
                         },
                         draggable:{
-                            proxy:{
-                                node:function () {
+                            proxy: {
+                                node: function () {
                                     var el = dialog.get("el");
                                     var node = $("<div class='ks-overlay-proxy'></div>");
                                     node.height(el.height());
                                     node.width(el.width());
                                     el.css("visibility", "hidden");
                                     return node;
-                                }
-                                ,destroyOnEnd:true
+                                }, destroyOnEnd: true
                             },
                             scroll:{
                                 node:window
                             }
-                        },
-                        aria:true
+                        }
                     });
                     Node.one('#btn4').on('click', function () {
                         dialog.show();

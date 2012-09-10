@@ -1,6 +1,6 @@
 /**
  * @module  proxy-spec
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("ua,node,dd", function(S, UA, Node, DD) {
     var Draggable = DD.Draggable,

@@ -130,7 +130,9 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                 },
 
                 wrapClass: {
-                    value: 'ks-imagezoom-wrap'
+                    valueFn: function () {
+                        return this.get('prefixCls') + 'imagezoom-wrap';
+                    }
                 },
 
                 // width/height 默认和原小图大小保持一致
@@ -181,10 +183,9 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                     value: true
                 },
                 iconClass: {
-                    value: 'ks-imagezoom-icon'
-                },
-                prefixCls: {
-                    value: 'ks-'
+                    valueFn: function () {
+                        return this.get('prefixCls') + 'imagezoom-icon';
+                    }
                 }
             }
         }, {

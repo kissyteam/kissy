@@ -4,61 +4,13 @@
  */
 KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, DialogLoader) {
 
-    var Node = S.Node,
-        DOM = S.DOM;
-
-    DOM.addStyleSheet(window, ".ks-editor-color-panel a {" +
-        "display: block;" +
-        "color:black;" +
-        "text-decoration: none;" +
-        "}" +
-        "" +
-        ".ks-editor-color-panel a:hover {" +
-        "color:black;" +
-        "text-decoration: none;" +
-        "}" +
-        ".ks-editor-color-panel a:active {" +
-        "color:black;" +
-        "}" +
-
-        ".ks-editor-color-palette {" +
-        "    margin: 5px 8px 8px;" +
-        "}" +
-
-        ".ks-editor-color-palette table {" +
-        "    border: 1px solid #666666;" +
-        "    border-collapse: collapse;" +
-        "}" +
-
-        ".ks-editor-color-palette td {" +
-        "    border-right: 1px solid #666666;" +
-        "    height: 18px;" +
-        "    width: 18px;" +
-        "}" +
-
-        "a.ks-editor-color-a {" +
-        "    height: 18px;" +
-        "    width: 18px;" +
-        "}" +
-
-        "a.ks-editor-color-a:hover {" +
-        "    border: 1px solid #ffffff;" +
-        "    height: 16px;" +
-        "    width: 16px;" +
-        "}" +
-        "a.ks-editor-color-remove {" +
-        "  padding:3px 8px;" +
-        "  margin:2px 0 3px 0;" +
-        "}" +
-        "a.ks-editor-color-remove:hover {" +
-        "    background-color: #D6E9F8;" +
-        "}", "ks-editor-color-plugin");
+    var Node = S.Node;
 
     var COLORS = [
         ["000", "444", "666", "999", "CCC", "EEE", "F3F3F3", "FFF"],
         ["F00", "F90", "FF0", "0F0", "0FF", "00F", "90F", "F0F"],
         [
-            "F4CCCC", "FCE5CD", "FFF2CC", "D9EAD3", "D0E0E3", "CFE2F3", "D9D2E9", "EAD1DC",
+            "F4CC" + "CC", "FCE5CD", "FFF2CC", "D9EAD3", "D0E0E3", "CFE2F3", "D9D2E9", "EAD1DC",
             "EA9999", "F9CB9C", "FFE599", "B6D7A8", "A2C4C9", "9FC5E8", "B4A7D6", "D5A6BD",
             "E06666", "F6B26B", "FFD966", "93C47D", "76A5AF", "6FA8DC", "8E7CC3", "C27BAD",
             "CC0000", "E69138", "F1C232", "6AA84F", "45818E", "3D85C6", "674EA7", "A64D79",
@@ -69,13 +21,13 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
 
 
     function initHtml() {
-        html = "<div class='ks-editor-color-panel'>" +
-            "<a class='ks-editor-color-remove' " +
+        html = "<div class='{prefixCls}editor-color-panel'>" +
+            "<a class='{prefixCls}editor-color-remove' " +
             "href=\"javascript:void('清除');\">" +
             "清除" +
             "</a>";
         for (var i = 0; i < 3; i++) {
-            html += "<div class='ks-editor-color-palette'><table>";
+            html += "<div class='{prefixCls}editor-color-palette'><table>";
             var c = COLORS[i], l = c.length / 8;
             for (var k = 0; k < l; k++) {
                 html += "<tr>";
@@ -83,7 +35,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                     var currentColor = "#" + (c[8 * k + j]);
                     html += "<td>";
                     html += "<a href='javascript:void(0);' " +
-                        "class='ks-editor-color-a' " +
+                        "class='{prefixCls}editor-color-a' " +
                         "style='background-color:"
                         + currentColor
                         + "'" +
@@ -96,7 +48,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
         }
         html += "" +
             "<div>" +
-            "<a class='ks-editor-button ks-editor-color-others ks-inline-block'>其他颜色</a>" +
+            "<a class='{prefixCls}editor-button {prefixCls}editor-color-others ks-inline-block'>其他颜色</a>" +
             "</div>" +
             "</div>";
     }
@@ -126,6 +78,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
         _prepare: function () {
             var self = this,
                 editor = self.get("editor"),
+                prefixCls = editor.get('prefixCls'),
                 colorPanel;
 
             self.colorWin = new Overlay4E({
@@ -133,8 +86,10 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                 elAttrs: {
                     tabindex: 0
                 },
-                elCls: "ks-editor-popup",
-                content: html,
+                elCls: prefixCls + "editor-popup",
+                content: S.substitute(html, {
+                    prefixCls: prefixCls
+                }),
                 autoRender: true,
                 width: 170,
                 zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)
@@ -146,7 +101,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             colorWin.on("hide", function () {
                 self.set("checked", false);
             });
-            var others = colorPanel.one(".ks-editor-color-others");
+            var others = colorPanel.one("." + prefixCls + "editor-color-others");
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
@@ -177,8 +132,10 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
         _selectColor: function (ev) {
             ev.halt();
             var self = this,
+                editor = self.get("editor"),
+                prefixCls = editor.get('prefixCls'),
                 t = new Node(ev.target);
-            if (t.hasClass("ks-editor-color-a")) {
+            if (t.hasClass(prefixCls + "editor-color-a")) {
                 self.get("editor").execCommand(self.get("cmdType"), t.style("background-color"));
             }
         },

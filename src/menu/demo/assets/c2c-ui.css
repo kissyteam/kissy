@@ -1,7 +1,7 @@
 .c2c-button {
     display: inline-block;
     *display: inline;
-    *zoom:1;
+    *zoom: 1;
     margin: 2px;
     border: 0;
     padding: 0;
@@ -11,7 +11,6 @@
     cursor: default;
     outline: none;
     background-color: #FFF;
-    line-height: 24px;
     border-style: solid;
     border-color: #8ab6dd;
     white-space: nowrap;
@@ -28,6 +27,7 @@
 
 .c2c-menu-button {
     position: relative;
+    line-height: 20px;
 }
 
 .c2c-button-disabled {
@@ -41,8 +41,8 @@
     border-color: #ffad33 !important; /* Hover border wins. */
 }
 
-::root .ks-menu-button-caption,
-::root .ks-menu-button-dropdown {
+::root .c2c-menu-button-caption,
+::root .c2c-menu-button-dropdown {
     /* Required to make pseudo-rounded corners work on Safari. */
     line-height: normal;
 }
@@ -55,8 +55,8 @@
 }
 
 .c2c-menu-button-disabled,
-.c2c-menu-button-disabled .ks-menu-button-caption,
-.c2c-menu-button-disabled .ks-menu-button-dropdown {
+.c2c-menu-button-disabled .c2c-menu-button-caption,
+.c2c-menu-button-disabled .c2c-menu-button-dropdown {
     border-color: #999 !important;
 }
 
@@ -83,28 +83,34 @@
 }
 
 /* Caption style. */
-.ks-menu-button-caption {
+.c2c-menu-button-caption {
     padding: 0 4px 0 0;
     vertical-align: top;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
 }
 
 /* Dropdown arrow style. */
-.ks-menu-button-dropdown {
+.c2c-menu-button-dropdown {
     height: 20px;
     width: 20px;
     /* Client apps may override the URL at which they serve the sprite. */
     background: url(http://img01.taobaocdn.com/tps/i1/T1xqXwXmRuXXXXXXXX-22-44.png) no-repeat -1px -1px;
     vertical-align: top;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
-.c2c-button-hover .ks-menu-button-dropdown,
-.c2c-button-focused .ks-menu-button-dropdown,
-.c2c-menu-buttonmenu-button-open .ks-menu-button-dropdown {
+.c2c-button-hover .c2c-menu-button-dropdown,
+.c2c-button-focused .c2c-menu-button-dropdown,
+.c2c-menu-buttonmenu-button-open .c2c-menu-button-dropdown {
     background-position: -1px -23px;
 }
 
-.c2c-menu-buttonmenu-button-open .ks-menu-button-dropdown,
-.c2c-button-hover .ks-menu-button-dropdown {
+.c2c-menu-buttonmenu-button-open .c2c-menu-button-dropdown,
+.c2c-button-hover .c2c-menu-button-dropdown {
     border-color: #ffad33;
 }
 

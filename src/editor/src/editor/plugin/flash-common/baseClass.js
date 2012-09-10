@@ -16,11 +16,11 @@ KISSY.add("editor/plugin/flash-common/baseClass", function (S, Editor, ContextMe
     }
 
     var tipHtml = ' <a ' +
-        'class="ks-editor-bubble-url" ' +
+        'class="{prefixCls}editor-bubble-url" ' +
         'target="_blank" ' +
         'href="#">{label}</a>   |   '
-        + ' <span class="ks-editor-bubble-link ks-editor-bubble-change">编辑</span>   |   '
-        + ' <span class="ks-editor-bubble-link ks-editor-bubble-remove">删除</span>';
+        + ' <span class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change">编辑</span>   |   '
+        + ' <span class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove">删除</span>';
 
     Flash.ATTRS = {
         cls:{},
@@ -38,6 +38,7 @@ KISSY.add("editor/plugin/flash-common/baseClass", function (S, Editor, ContextMe
             var self = this,
                 cls = self.get("cls"),
                 editor = self.get("editor"),
+                prefixCls=editor.get('prefixCls'),
                 children = [],
                 bubbleId = self.get("bubbleId"),
                 contextMenuId = self.get("contextMenuId"),
@@ -71,11 +72,12 @@ KISSY.add("editor/plugin/flash-common/baseClass", function (S, Editor, ContextMe
                             var bubble = this,
                                 el = bubble.get("contentEl");
                             el.html(S.substitute(tipHtml, {
-                                label:self.get("label")
+                                label:self.get("label"),
+                                prefixCls:prefixCls
                             }));
-                            var tipUrlEl = el.one(".ks-editor-bubble-url"),
-                                tipChangeEl = el.one(".ks-editor-bubble-change"),
-                                tipRemoveEl = el.one(".ks-editor-bubble-remove");
+                            var tipUrlEl = el.one("."+prefixCls+"editor-bubble-url"),
+                                tipChangeEl = el.one("."+prefixCls+"editor-bubble-change"),
+                                tipRemoveEl = el.one("."+prefixCls+"editor-bubble-remove");
 
                             // ie focus not lose
                             Editor.Utils.preventFocus(el);
@@ -113,7 +115,7 @@ KISSY.add("editor/plugin/flash-common/baseClass", function (S, Editor, ContextMe
                             });
                         }
                 }
-            })
+            });
 
 
             editor.docReady(function () {

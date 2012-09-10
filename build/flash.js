@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 29 14:14
+build time: Sep 10 10:11
 */
 /**
  * @fileOverview Flash 全局静态类

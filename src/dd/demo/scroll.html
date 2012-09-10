@@ -1,114 +1,118 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
-<title>DD auto scroll demo</title>
-<style>
+    <meta charset="utf-8"/>
+    <title>DD auto scroll demo</title>
+    <style>
 
-    #container {
-        position: relative;
-        overflow: hidden;
-        width: 400px;
-        height: 400px;
-        border: 1px red solid;
-    }
+        .ks-dd-proxy {
+            opacity: 0.5;
+        }
 
-    #component {
-        position: absolute;
-        left: 40px;
-        top: 40px;
-        width: 100px;
-        height: 100px;
-        background: green;
-    }
+        #container {
+            position: relative;
+            overflow: hidden;
+            width: 400px;
+            height: 400px;
+            border: 1px red solid;
+        }
 
-    #free {
-        background: red;
-        position: absolute;
-        left: 600px;
-        top: 200px;
-        width: 100px;
-        height: 100px;
-    }
+        #component {
+            position: absolute;
+            left: 40px;
+            top: 40px;
+            width: 100px;
+            height: 100px;
+            background: green;
+        }
 
-    .pad {
-        width: 1000px;
-        height: 100px;
-        margin: 40px;
-        border: 1px solid purple;
-    }
+        #free {
+            background: red;
+            position: absolute;
+            left: 600px;
+            top: 200px;
+            width: 100px;
+            height: 100px;
+        }
 
-    .top {
-        height: 20px;
-        width: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-        border: 1px solid purple;
-        background: black;
-        color: white;
-        text-align: center;
-    }
+        .pad {
+            width: 1000px;
+            height: 100px;
+            margin: 40px;
+            border: 1px solid purple;
+        }
 
-    .bottom {
-        height: 20px;
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        border: 1px solid purple;
-        background: black;
-        color: white;
-        text-align: center;
-    }
+        .top {
+            height: 20px;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 1px solid purple;
+            background: black;
+            color: white;
+            text-align: center;
+        }
 
-    .left {
-        height: 100%;
-        *height: expressiont(this.parentNode.offsetHeight);
-        width: 20px;
-        position: absolute;
-        left: 0;
-        top: 0;
-        border: 1px solid purple;
-        background: black;
-        color: white;
-        text-align: center;
-    }
+        .bottom {
+            height: 20px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            border: 1px solid purple;
+            background: black;
+            color: white;
+            text-align: center;
+        }
 
-    .right {
-        height: 100%;
-        *height: expressiont(this.parentNode.offsetHeight);
-        width: 20px;
-        position: absolute;
-        right: 0;
-        top: 0;
-        border: 1px solid purple;
-        background: black;
-        color: white;
-        text-align: center;
-    }
+        .left {
+            height: 100%;
+            *height: expressiont(this.parentNode.offsetHeight);
+            width: 20px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border: 1px solid purple;
+            background: black;
+            color: white;
+            text-align: center;
+        }
 
-    .fix-top {
-        height: 20px;
-        width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        text-align: center;
-        background: yellow;
-    }
+        .right {
+            height: 100%;
+            *height: expressiont(this.parentNode.offsetHeight);
+            width: 20px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            border: 1px solid purple;
+            background: black;
+            color: white;
+            text-align: center;
+        }
 
-    .fix-bottom {
-        height: 20px;
-        width: 100%;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        text-align: center;
-        background: yellow;
-    }
+        .fix-top {
+            height: 20px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            text-align: center;
+            background: yellow;
+        }
 
-</style>
+        .fix-bottom {
+            height: 20px;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            text-align: center;
+            background: yellow;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -236,40 +240,43 @@
 <script>
 
 
-    KISSY.use("dd", function(S, DD) {
+    KISSY.use("dd", function (S, DD) {
 
         var Draggable = DD.Draggable,
                 Scroll = DD.Scroll;
 
-        (function() {
+        (function () {
             var drag = new Draggable({
-                node :'#component',
-                move:1
+                node: '#component',
+                move: 1
             });
 
             new Scroll({
                 // container 容器自动滚动
-                node:"#container",
+                node: "#container",
                 //滚动速度
-                rate:[10,10],
+                rate: [10, 10],
                 //容器边缘高宽度
-                diff:[20,20]
+                diff: [20, 20]
             }).attachDrag(drag);
         })();
 
 
-        (function() {
+        (function () {
             var drag = new Draggable({
-                node :'#free',
-                move:1
+                node: '#free',
+                move: 1
             });
 
             new Scroll({
                 //默认 window 自动滚动，相当于
                 //node :window
-                rate : [20,20],
-                diff :[20,20]
+                rate: [20, 20],
+                diff: [20, 20]
             }).attachDrag(drag);
+
+            new DD.Proxy().attachDrag(drag);
+
         })();
 
 

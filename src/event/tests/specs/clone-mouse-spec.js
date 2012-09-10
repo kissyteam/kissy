@@ -1,6 +1,6 @@
 /**
  * @module  clone-mouse-spec
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.use("dom,event,ua", function (S, DOM, Event) {
     describe("mouseenter clone works", function () {

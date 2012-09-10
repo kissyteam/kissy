@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:25
+build time: Sep 10 10:08
 */
 /**
  * Setup component namespace.
@@ -120,8 +120,6 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
              * @memberOf Component.Container#
              * @param {HTMLElement} target Current event target node.
              */
-        }, {
-            xclass: 'container'
         });
 
 }, {
@@ -1805,35 +1803,48 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         config && config.autoRender && self.render();
     }
 
+    // 收集单继承链，子类在前，父类在后
+    function collectConstructorChains(self) {
+        var constructorChains = [],
+            c = self.constructor;
+        while (c) {
+            constructorChains.push(c);
+            c = c.superclass && c.superclass.constructor;
+        }
+        return constructorChains;
+    }
+
     /**
      * 模拟多继承
      * init attr using constructors ATTRS meta info
      * @ignore
      */
-    function initHierarchy(host, config) {
-
-        var c = host.constructor, srcNode;
-
+    function initHierarchy(self, config) {
+        var c = self.constructor,
+            len,
+            p,
+            constructorChains,
+            srcNode;
         if (config && (srcNode = config[SRC_NODE])) {
+            constructorChains = collectConstructorChains(self);
             config[SRC_NODE] = Node.one(srcNode);
-            while (c) {
-                // 从 markup 生成相应的属性项
-                if (c[HTML_PARSER]) {
-                    applyParser.call(host, config, c[HTML_PARSER]);
+            // 从父类到子类开始从 html 读取属性
+            for (len = constructorChains.length - 1; len >= 0; len--) {
+                c = constructorChains[len];
+                if (p = c[HTML_PARSER]) {
+                    applyParser.call(self, config, p);
                 }
-                c = c.superclass && c.superclass.constructor;
             }
         }
-
-        callMethodByHierarchy(host, "initializer", "constructor");
-
+        callMethodByHierarchy(self, "initializer", "constructor");
     }
 
-    function callMethodByHierarchy(host, mainMethod, extMethod) {
-        var c = host.constructor,
+    function callMethodByHierarchy(self, mainMethod, extMethod) {
+        var c = self.constructor,
             extChains = [],
             ext,
             main,
+            i,
             exts,
             t;
 
@@ -1843,7 +1854,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             // 收集扩展类
             t = [];
             if (exts = c.__ks_exts) {
-                for (var i = 0; i < exts.length; i++) {
+                for (i = 0; i < exts.length; i++) {
                     ext = exts[i];
                     if (ext) {
                         if (extMethod != "constructor") {
@@ -1878,7 +1889,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         // 初始化函数
         // 顺序：父类的所有扩展类函数 -> 父类对应函数 -> 子类的所有扩展函数 -> 子类对应函数
         for (i = extChains.length - 1; i >= 0; i--) {
-            extChains[i] && extChains[i].call(host);
+            extChains[i] && extChains[i].call(self);
         }
     }
 
@@ -1886,8 +1897,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
      * 销毁组件顺序： 子类 destructor -> 子类扩展 destructor -> 父类 destructor -> 父类扩展 destructor
      * @ignore
      */
-    function destroyHierarchy(host) {
-        var c = host.constructor,
+    function destroyHierarchy(self) {
+        var c = self.constructor,
             extensions,
             d,
             i;
@@ -1895,13 +1906,13 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         while (c) {
             // 只触发该类真正的析构器，和父亲没关系，所以不要在子类析构器中调用 superclass
             if (c.prototype.hasOwnProperty("destructor")) {
-                c.prototype.destructor.apply(host);
+                c.prototype.destructor.apply(self);
             }
 
             if ((extensions = c.__ks_exts)) {
                 for (i = extensions.length - 1; i >= 0; i--) {
                     d = extensions[i] && extensions[i].prototype.__destructor;
-                    d && d.apply(host);
+                    d && d.apply(self);
                 }
             }
 
@@ -1910,7 +1921,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
     }
 
     function applyParser(config, parser) {
-        var host = this, p, v, srcNode = config[SRC_NODE];
+        var self = this, p, v, srcNode = config[SRC_NODE];
 
         // 从 parser 中，默默设置属性，不触发事件
         for (p in parser) {
@@ -1921,15 +1932,15 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 v = parser[p];
                 // 函数
                 if (S.isFunction(v)) {
-                    host.setInternal(p, v.call(host, srcNode));
+                    self.setInternal(p, v.call(self, srcNode));
                 }
                 // 单选选择器
                 else if (S.isString(v)) {
-                    host.setInternal(p, srcNode.one(v));
+                    self.setInternal(p, srcNode.one(v));
                 }
                 // 多选选择器
                 else if (S.isArray(v) && v[0]) {
-                    host.setInternal(p, srcNode.all(v[0]))
+                    self.setInternal(p, srcNode.all(v[0]))
                 }
             }
         }
@@ -1968,16 +1979,33 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
     function syncUI(self) {
         var v,
             f,
-            attrs = self.getAttrs();
-        for (var a in attrs) {
-            if (attrs.hasOwnProperty(a)) {
-                var m = UI_SET + ucfirst(a);
-                //存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                if ((f = self[m])
-                    // 用户如果设置了显式不同步，就不同步，比如一些值从 html 中读取，不需要同步再次设置
-                    && attrs[a].sync !== false
-                    && (v = self.get(a)) !== undefined) {
-                    f.call(self, v);
+            i,
+            c,
+            a,
+            m,
+            cache = {},
+            constructorChains = collectConstructorChains(self),
+            attrs;
+
+        // 从父类到子类执行同步属性函数
+        for (i = constructorChains.length - 1; i >= 0; i--) {
+            c = constructorChains[i];
+            if (attrs = c[ATTRS]) {
+                for (a in attrs) {
+                    if (attrs.hasOwnProperty(a) &&
+                        // 防止子类覆盖父类属性定义造成重复执行
+                        !cache[a]) {
+                        cache[a] = 1;
+                        m = UI_SET + ucfirst(a);
+                        // 存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                        if ((f = self[m]) &&
+                            // 用户如果设置了显式不同步，就不同步，
+                            // 比如一些值从 html 中读取，不需要同步再次设置
+                            attrs[a].sync !== false &&
+                            (v = self.get(a)) !== undefined) {
+                            f.call(self, v);
+                        }
+                    }
                 }
             }
         }
@@ -2019,10 +2047,10 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
              * Put dom structure of this component to document and bind event.
              */
             render: function () {
-                var self = this;
+                var self = this, plugins;
                 // 是否已经渲染过
                 if (!self.get("rendered")) {
-                    var plugins = self.get("plugins");
+                    plugins = self.get("plugins");
                     self.create(undefined);
 
                     /**
@@ -2196,9 +2224,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                     }
                 }
             }
-
         });
-
 
     function constructPlugins(plugins) {
         S.each(plugins, function (plugin, i) {
@@ -2208,7 +2234,6 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         });
     }
 
-
     function actionPlugins(self, plugins, action) {
         S.each(plugins, function (plugin) {
             if (plugin[action]) {
@@ -2217,9 +2242,10 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         });
     }
 
-
     function create(base, extensions, px, sx) {
-        var args = S.makeArray(arguments), t;
+        var args = S.makeArray(arguments),
+            name,
+            t;
 
         if (S.isObject(extensions)) {
             sx = px;
@@ -2227,7 +2253,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             extensions = [];
         }
 
-        var name = "UIBaseDerived";
+        name = "UIBaseDerived";
 
         if (S.isString(t = args[args.length - 1])) {
             name = t;
@@ -2237,7 +2263,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             UIBase.apply(this, arguments);
         }
 
-        // debug mode , give the right name for constructor
+        // debug mode, give the right name for constructor
         // refer : http://limu.iteye.com/blog/1136712
         S.log("UIBase.extend : " + name, eval("C=function " + name.replace(/[-.]/g, "_") + "(){ UIBase.apply(this, arguments);}"));
 
@@ -2246,54 +2272,51 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         if (extensions) {
             C.__ks_exts = extensions;
 
-            var desc = {
-                // ATTRS:
-                // HTML_PARSER:
-            }, constructors = extensions['concat'](C);
+            var attrs = {},
+                parsers = {},
+                prototype = {},
+                constructors = extensions['concat'](C);
 
             // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
             // 主类最优先
             S.each(constructors, function (ext) {
                 if (ext) {
                     // 合并 ATTRS/HTML_PARSER 到主类
-                    S.each([ATTRS, HTML_PARSER], function (K) {
-                        if (ext[K]) {
-                            desc[K] = desc[K] || {};
-                            // 不覆盖主类上的定义，因为继承层次上扩展类比主类层次高
-                            // 但是值是对象的话会深度合并
-                            // 注意：最好值是简单对象，自定义 new 出来的对象就会有问题(用 function return 出来)!
-                            S.mix(desc[K], ext[K], {
-                                deep: true
-                            });
-                        }
+                    // 不覆盖主类上的定义(主类位于 constructors 最后)
+                    // 因为继承层次上扩展类比主类层次高
+                    // 注意：最好 value 必须是简单对象，自定义 new 出来的对象就会有问题
+                    // (用 function return 出来)!
+                    // a {y:{value:2}} b {y:{value:3,getter:fn}}
+                    // b is a extension of a
+                    // =>
+                    // a {y:{value:2,getter:fn}}
+
+                    S.each(ext[ATTRS], function (v, name) {
+                        var av = attrs[name] = attrs[name] || {};
+                        S.mix(av, v);
                     });
-                }
-            });
 
-            S.each(desc, function (v, k) {
-                C[k] = v;
-            });
+                    S.each(ext[HTML_PARSER], function (v, name) {
+                        parsers[name] = v;
+                    });
 
-            var prototype = {};
-
-            // 主类最优先
-            S.each(constructors, function (ext) {
-                if (ext) {
-                    var proto = ext.prototype;
-                    // 合并功能代码到主类，不覆盖
-                    for (var p in proto) {
-                        // 不覆盖主类，但是主类的父类还是覆盖吧
-                        if (proto.hasOwnProperty(p)) {
-                            prototype[p] = proto[p];
+                    // 方法合并
+                    var exp = ext.prototype, p;
+                    for (p in exp) {
+                        // do not mess with parent class
+                        if (exp.hasOwnProperty(p)) {
+                            prototype[p] = exp[p];
                         }
                     }
                 }
             });
 
-            S.each(prototype, function (v, k) {
-                C.prototype[k] = v;
-            });
+            C[ATTRS] = attrs;
+            C[HTML_PARSER] = parsers;
+
+            S.augment(C, prototype);
         }
+
         return C;
     }
 
@@ -2326,18 +2349,23 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 var args = S.makeArray(arguments),
                     ret,
                     last = args[args.length - 1];
+
                 args.unshift(this);
+
                 if (last.xclass) {
                     args.pop();
                     args.push(last.xclass);
                 }
+
                 ret = create.apply(UIBase, args);
+
                 if (last.xclass) {
                     Manager.setConstructorByXClass(last.xclass, {
                         constructor: ret,
                         priority: last.priority
                     });
                 }
+
                 ret.extend = extend;
                 return ret;
             }
@@ -2358,7 +2386,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
  * @fileOverview UIBase.Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/uibase/box', function (S) {
+KISSY.add('component/uibase/box', function () {
 
     /**
      * Box extension class.
@@ -2378,74 +2406,74 @@ KISSY.add('component/uibase/box', function (S) {
          * Note: content and srcNode can not be set both!
          * @type {String|KISSY.NodeList}
          */
-        content:{
-            view:1
+        content: {
+            view: 1
         },
         /**
          * component's width
          * @type {Number|String}
          */
-        width:{
-            view:1
+        width: {
+            view: 1
         },
         /**
          * component's height
          * @type {Number|String}
          */
-        height:{
-            view:1
+        height: {
+            view: 1
         },
         /**
          * css class of component's root element
          * @type {String}
          */
-        elCls:{
-            view:1
+        elCls: {
+            view: 1
         },
         /**
          * name-value pair css style of component's root element
          * @type {Object}
          */
-        elStyle:{
-            view:1
+        elStyle: {
+            view: 1
         },
         /**
          * name-value pair attribute of component's root element
          * @type {Object}
          */
-        elAttrs:{
-            view:1
+        elAttrs: {
+            view: 1
         },
         /**
          * archor element where component insert before
          * @type {KISSY.NodeList}
          */
-        elBefore:{
+        elBefore: {
             // better named to renderBefore, too late !
-            view:1
+            view: 1
         },
         /**
          * readonly. root element of current component
          * @type {KISSY.NodeList}
          */
-        el:{
-            view:1
+        el: {
+            view: 1
         },
 
         /**
          * archor element where component append to
          * @type {KISSY.NodeList}
          */
-        render:{
-            view:1
+        render: {
+            view: 1
         },
 
         /**
          * component's visibleMode,use css "display" or "visibility" to show this component
          * @type {String}
          */
-        visibleMode:{
-            view:1
+        visibleMode: {
+            view: 1
         },
 
         /**
@@ -2453,36 +2481,34 @@ KISSY.add('component/uibase/box', function (S) {
          * @type {Boolean}
          * @default true
          */
-        visible:{
-            value:true,
-            view:1
+        visible: {
+            value: true,
+            view: 1
         },
 
         /**
          * the node to parse for configuration values,passed to component's HTML_PARSER definition
          * @type {KISSY.NodeList}
          */
-        srcNode:{
-            view:1
+        srcNode: {
+            view: 1
         }
     };
 
     Box.prototype =
     {
-        /**
-         * bind ui for box
-         * @private
-         */
-        __bindUI:function () {
-            this.on("afterVisibleChange", function (e) {
-                this.fire(e.newVal ? "show" : "hide");
-            });
+
+        _uiSetVisible: function (v) {
+            // do not fire event at render phrase
+            if (this.get('rendered')) {
+                this.fire(v ? "show" : "hide");
+            }
         },
 
         /**
          * show component
          */
-        show:function () {
+        show: function () {
             var self = this;
             self.render();
             self.set("visible", true);
@@ -2492,7 +2518,7 @@ KISSY.add('component/uibase/box', function (S) {
         /**
          * hide component
          */
-        hide:function () {
+        hide: function () {
             var self = this;
             self.set("visible", false);
             return self;
@@ -2740,10 +2766,14 @@ KISSY.add("component/uibase/close", function () {
             if (v && !self.__bindCloseEvent) {
                 self.__bindCloseEvent = 1;
                 self.get("closeBtn").on("click", function (ev) {
-                    self[actions[self.get("closeAction")] || HIDE]();
+                    self.close();
                     ev.preventDefault();
                 });
             }
+        },
+        close:function(){
+            var self=this;
+            self[actions[self.get("closeAction")] || HIDE]();
         },
         __destructor:function () {
             var btn = this.get("closeBtn");
@@ -2758,16 +2788,17 @@ KISSY.add("component/uibase/close", function () {
  */
 KISSY.add("component/uibase/closerender", function (S, Node) {
 
-    var CLS_PREFIX = 'ks-ext-';
+    var CLS_PREFIX = 'ext-';
 
-    function getCloseRenderBtn() {
+    function getCloseRenderBtn(prefixCls) {
         return new Node("<a " +
             "tabindex='0' " +
             "href='javascript:void(\"关闭\")' " +
             "role='button' " +
-            "class='" + CLS_PREFIX + "close" + "'>" +
+            "style='z-index:9' " +
+            "class='" + prefixCls + CLS_PREFIX + "close" + "'>" +
             "<span class='" +
-            CLS_PREFIX + "close-x" +
+            prefixCls + CLS_PREFIX + "close-x" +
             "'>关闭<" + "/span>" +
             "<" + "/a>");
     }
@@ -2776,28 +2807,28 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
     }
 
     CloseRender.ATTRS = {
-        closable:{
-            value:true
+        closable: {
+            value: true
         },
-        closeBtn:{
+        closeBtn: {
         }
     };
 
     CloseRender.HTML_PARSER = {
-        closeBtn:function (el) {
-            return el.one("." + CLS_PREFIX + 'close');
+        closeBtn: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + 'close');
         }
     };
 
     CloseRender.prototype = {
-        _uiSetClosable:function (v) {
+        _uiSetClosable: function (v) {
             var self = this,
                 btn = self.get("closeBtn");
             if (v) {
                 if (!btn) {
-                    self.setInternal("closeBtn", btn = getCloseRenderBtn());
+                    self.setInternal("closeBtn", btn = getCloseRenderBtn(self.get('prefixCls')));
                 }
-                btn.appendTo(self.get("el"), undefined);
+                self.get("el").prepend(btn);
             } else {
                 if (btn) {
                     btn.remove();
@@ -2809,7 +2840,7 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
     return CloseRender;
 
 }, {
-    requires:["node"]
+    requires: ["node"]
 });/**
  * @fileOverview 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
@@ -2852,7 +2883,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
     }
 
     ContentBoxRender.ATTRS = {
-        contentEl:{
+        contentEl: {
             // 不写 valueFn, 留待 createDom 处理
         }
     };
@@ -2861,7 +2892,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
      ! contentEl 只能由组件动态生成
      */
     ContentBoxRender.prototype = {
-        __createDom:function () {
+        __createDom: function () {
             var self = this,
                 contentEl,
                 el = self.get("el");
@@ -2870,7 +2901,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
                 c = childNodes.length && DOM.nodeListToFragment(childNodes);
 
             // 产生新的 contentEl
-            contentEl = Node.all("<div class='ks-contentbox'>" +
+            contentEl = Node.all("<div class='" + self.get('prefixCls') + "contentbox'>" +
                 "</div>").append(c);
 
             el.append(contentEl);
@@ -2881,7 +2912,7 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
 
     return ContentBoxRender;
 }, {
-    requires:["node", "./boxrender", 'dom']
+    requires: ["node", "./boxrender", 'dom']
 });/**
  * @fileOverview drag extension for position
  * @author yiminghe@gmail.com
@@ -2908,19 +2939,19 @@ KISSY.add("component/uibase/drag", function (S) {
          * Whether current element is draggable.
          * @type {Boolean}
          */
-        draggable:{
-            setter:function (v) {
+        draggable: {
+            setter: function (v) {
                 if (v === true) {
                     return {};
                 }
             },
-            value:{}
+            value: {}
         }
     };
 
     Drag.prototype = {
 
-        _uiSetDraggable:function (dragCfg) {
+        _uiSetDraggable: function (dragCfg) {
             var self = this,
                 handlers,
                 DD = S.require("dd"),
@@ -2935,8 +2966,8 @@ KISSY.add("component/uibase/drag", function (S) {
                 Draggable = DD.Draggable;
 
                 d = self.__drag = new Draggable({
-                    node:el,
-                    move:1
+                    node: el,
+                    move: 1
                 });
 
                 if (dragCfg.proxy) {
@@ -2974,6 +3005,8 @@ KISSY.add("component/uibase/drag", function (S) {
                 handlers = dragCfg.handlers;
                 if ("constrain" in dragCfg) {
                     __constrain.set("constrain", dragCfg.constrain);
+                } else {
+                    __constrain.set("constrain", false);
                 }
                 if (handlers && handlers.length > 0) {
                     d.set("handlers", handlers);
@@ -2981,7 +3014,7 @@ KISSY.add("component/uibase/drag", function (S) {
             }
         },
 
-        __destructor:function () {
+        __destructor: function () {
             var self = this,
                 p = self.__proxy,
                 s = self.__scroll,
@@ -3041,18 +3074,18 @@ KISSY.add("component/uibase/loading", function () {
  * @fileOverview loading mask support for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/loadingrender", function(S, Node) {
+KISSY.add("component/uibase/loadingrender", function (S, Node) {
 
     function Loading() {
     }
 
     Loading.prototype = {
-        loading:function() {
+        loading: function () {
             var self = this;
             if (!self._loadingExtEl) {
                 self._loadingExtEl = new Node("<div " +
                     "class='" +
-                    "ks-ext-loading'" +
+                    self.get('prefixCls') + "ext-loading'" +
                     " style='position: absolute;" +
                     "border: none;" +
                     "width: 100%;" +
@@ -3066,7 +3099,7 @@ KISSY.add("component/uibase/loadingrender", function(S, Node) {
             self._loadingExtEl.show();
         },
 
-        unloading:function() {
+        unloading: function () {
             var lel = this._loadingExtEl;
             lel && lel.hide();
         }
@@ -3075,7 +3108,7 @@ KISSY.add("component/uibase/loadingrender", function(S, Node) {
     return Loading;
 
 }, {
-    requires:['node']
+    requires: ['node']
 });/**
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
@@ -3099,68 +3132,71 @@ KISSY.add("component/uibase/mask", function () {
     {
         /**
          * Whether show mask layer when component shows
-         * @type {Boolean}
+         * @type {Boolean|Object}
          */
-        mask:{
-            value:false
+        mask: {
+            view: 1
         },
-        /**
-         * Mask node for current overlay 's mask.
-         * @type {KISSY.NodeList}
-         */
-        maskNode:{
-            view:1
-        },
-        /**
-         * Whether to share mask with other overlays.
-         * @default true.
-         * @type {Boolean}
-         */
-        maskShared:{
-            view:1
+        maskNode: {
+            view: 1
         }
     };
 
+    var NONE = 'none',
+        effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
+
+    function processMask(mask, el, show) {
+        var effect = mask.effect || NONE;
+
+        if (effect == NONE) {
+            el[show ? 'show' : 'hide']();
+            return;
+        }
+
+        var duration = mask.duration,
+            easing = mask.easing,
+            m,
+            index = show ? 1 : 0;
+
+        // run complete fn to restore window's original height
+        el.stop(1, 1);
+
+        m = effect + effects[effect][index];
+        el[m](duration, null, easing);
+    }
+
     Mask.prototype = {
 
-        __bindUI:function () {
+        __bindUI: function () {
             var self = this,
-                view = self.get("view"),
-                _maskExtShow = view._maskExtShow,
-                _maskExtHide = view._maskExtHide;
-            if (self.get("mask")) {
-                self.on("show", _maskExtShow, view);
-                self.on("hide", _maskExtHide, view);
+                maskNode,
+                mask,
+                el = self.get('el'),
+                view = self.get("view");
+            if (mask = self.get("mask")) {
+                maskNode = self.get('maskNode');
+                self.on('afterVisibleChange', function (e) {
+                    var v;
+                    if (v = e.newVal) {
+                        var elZIndex = parseInt(el.css('z-index')) || 1;
+                        maskNode.css('z-index', elZIndex - 1);
+                    }
+                    processMask(mask, maskNode, v)
+                });
             }
         }
     };
 
 
     return Mask;
-}, {requires:["ua"]});/**
+}, {requires: ["ua"]});/**
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
 
-    /**
-     * 每组相同 prefixCls 的 position 共享一个遮罩
-     */
-    var maskMap = {
-            /**
-             * {
-             *  node:
-             *  num:
-             * }
-             */
-
-        },
-        ie6 = (UA['ie'] === 6),
+    var ie6 = (UA['ie'] === 6),
         $ = Node.all;
-
-    function getMaskCls(self) {
-        return self.get("prefixCls") + "ext-mask";
-    }
 
     function docWidth() {
         return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
@@ -3170,8 +3206,9 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
         return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
     }
 
-    function initMask(maskCls) {
-        var mask = $("<div " +
+    function initMask(self) {
+        var maskCls = self.get("prefixCls") + "ext-mask",
+            mask = $("<div " +
             " style='width:" + docWidth() + ";" +
             "left:0;" +
             "top:0;" +
@@ -3205,75 +3242,29 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
     }
 
     Mask.ATTRS = {
-        maskShared:{
-            value:true
+
+        mask: {
+            value: false
+        },
+        maskNode: {
+
         }
+
     };
 
     Mask.prototype = {
 
-        _maskExtShow:function () {
-            var self = this,
-                zIndex,
-                maskCls = getMaskCls(self),
-                maskDesc = maskMap[maskCls],
-                maskShared = self.get("maskShared"),
-                mask = self.get("maskNode");
-            if (!mask) {
-                if (maskShared) {
-                    if (maskDesc) {
-                        mask = maskDesc.node;
-                    } else {
-                        mask = initMask(maskCls);
-                        maskDesc = maskMap[maskCls] = {
-                            num:0,
-                            node:mask
-                        };
-                    }
-                } else {
-                    mask = initMask(maskCls);
-                }
-                self.setInternal("maskNode", mask);
-            }
-            if (zIndex = self.get("zIndex")) {
-                mask.css("z-index", zIndex - 1);
-            }
-            if (maskShared) {
-                maskDesc.num++;
-            }
-            if (!maskShared || maskDesc.num == 1) {
-                mask.show();
+        __renderUI: function () {
+            var self = this;
+            if (self.get('mask')) {
+                self.set('maskNode', initMask(self));
             }
         },
 
-        _maskExtHide:function () {
-            var self = this,
-                maskCls = getMaskCls(self),
-                maskDesc = maskMap[maskCls],
-                maskShared = self.get("maskShared"),
-                mask = self.get("maskNode");
-            if (maskShared && maskDesc) {
-                maskDesc.num = Math.max(maskDesc.num - 1, 0);
-                if (maskDesc.num == 0) {
-                    mask.hide();
-                }
-            } else {
-                mask.hide();
-            }
-        },
-
-        __destructor:function () {
-            var self = this,
-                maskShared = self.get("maskShared"),
-                mask = self.get("maskNode");
-            if (self.get("maskNode")) {
-                if (maskShared) {
-                    if (self.get("visible")) {
-                        self._maskExtHide();
-                    }
-                } else {
-                    mask.remove();
-                }
+        __destructor: function () {
+            var self = this, mask;
+            if (mask = self.get("maskNode")) {
+                mask.remove();
             }
         }
 
@@ -3281,7 +3272,7 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
 
     return Mask;
 }, {
-    requires:["ua", "node"]
+    requires: ["ua", "node"]
 });
 
 /**
@@ -3396,7 +3387,7 @@ KISSY.add("component/uibase/position", function (S) {
     return Position;
 });/**
  * @fileOverview position and visible extension，可定位的隐藏层
- * @author  yiminghe@gmail.com
+ * @author yiminghe@gmail.com
  */
 KISSY.add("component/uibase/positionrender", function () {
 
@@ -3404,57 +3395,46 @@ KISSY.add("component/uibase/positionrender", function () {
     }
 
     Position.ATTRS = {
-        x:{
+        x: {
             // 水平方向绝对位置
-            valueFn:function () {
-                var self = this;
-                // 读到这里时，el 一定是已经加到 dom 树中了，否则报未知错误
-                // el 不在 dom 树中 offset 报错的
-                // 最早读就是在 syncUI 中，一点重复设置(读取自身 X 再调用 _uiSetX)无所谓了
-                return self.get("el") && self.get("el").offset().left;
-            }
         },
-        y:{
+        y: {
             // 垂直方向绝对位置
-            valueFn:function () {
-                var self = this;
-                return self.get("el") && self.get("el").offset().top;
-            }
         },
-        zIndex:{
+        zIndex: {
         },
         /**
          * see {@link Component.UIBase.Box#visibleMode}.
          * @default "visibility"
          */
-        visibleMode:{
-            value:"visibility"
+        visibleMode: {
+            value: "visibility"
         }
     };
 
 
     Position.prototype = {
 
-        __createDom:function () {
-            this.get("el").addClass("ks-ext-position");
+        __createDom: function () {
+            this.get("el").addClass(this.get('prefixCls') + "ext-position");
         },
 
-        _uiSetZIndex:function (x) {
+        _uiSetZIndex: function (x) {
             this.get("el").css("z-index", x);
         },
 
-        _uiSetX:function (x) {
+        _uiSetX: function (x) {
             if (x != null) {
                 this.get("el").offset({
-                    left:x
+                    left: x
                 });
             }
         },
 
-        _uiSetY:function (y) {
+        _uiSetY: function (y) {
             if (y != null) {
                 this.get("el").offset({
-                    top:y
+                    top: y
                 });
             }
         }
@@ -3641,41 +3621,41 @@ KISSY.add("component/uibase/stdmod", function () {
 KISSY.add("component/uibase/stdmodrender", function (S, Node) {
 
 
-    var CLS_PREFIX = "ks-stdmod-";
+    var CLS_PREFIX = "stdmod-";
 
     function StdModRender() {
     }
 
     StdModRender.ATTRS = {
-        header:{
+        header: {
         },
-        body:{
+        body: {
         },
-        footer:{
+        footer: {
         },
-        bodyStyle:{
+        bodyStyle: {
         },
-        footerStyle:{
+        footerStyle: {
         },
-        headerStyle:{
+        headerStyle: {
         },
-        headerContent:{
+        headerContent: {
         },
-        bodyContent:{
+        bodyContent: {
         },
-        footerContent:{
+        footerContent: {
         }
     };
 
     StdModRender.HTML_PARSER = {
-        header:function (el) {
-            return el.one("." + CLS_PREFIX + "header");
+        header: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + "header");
         },
-        body:function (el) {
-            return el.one("." + CLS_PREFIX + "body");
+        body: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + "body");
         },
-        footer:function (el) {
-            return el.one("." + CLS_PREFIX + "footer");
+        footer: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + "footer");
         }
     };
 
@@ -3684,7 +3664,7 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
             partEl = self.get(part);
         if (!partEl) {
             partEl = new Node("<div class='" +
-                CLS_PREFIX + part + "'" +
+                self.get('prefixCls') + CLS_PREFIX + part + "'" +
                 " " +
                 " >" +
                 "</div>");
@@ -3706,32 +3686,32 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
 
     StdModRender.prototype = {
 
-        __createDom:function () {
+        __createDom: function () {
             createUI(this, "header");
             createUI(this, "body");
             createUI(this, "footer");
         },
 
-        _uiSetBodyStyle:function (v) {
+        _uiSetBodyStyle: function (v) {
             this.get("body").css(v);
         },
 
-        _uiSetHeaderStyle:function (v) {
+        _uiSetHeaderStyle: function (v) {
             this.get("header").css(v);
         },
-        _uiSetFooterStyle:function (v) {
+        _uiSetFooterStyle: function (v) {
             this.get("footer").css(v);
         },
 
-        _uiSetBodyContent:function (v) {
+        _uiSetBodyContent: function (v) {
             _setStdModRenderContent(this, "body", v);
         },
 
-        _uiSetHeaderContent:function (v) {
+        _uiSetHeaderContent: function (v) {
             _setStdModRenderContent(this, "header", v);
         },
 
-        _uiSetFooterContent:function (v) {
+        _uiSetFooterContent: function (v) {
             _setStdModRenderContent(this, "footer", v);
         }
     };
@@ -3739,5 +3719,5 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
     return StdModRender;
 
 }, {
-    requires:['node']
+    requires: ['node']
 });

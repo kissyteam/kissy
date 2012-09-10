@@ -70,7 +70,9 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
         currentMouse: {},
 
         lensClass: {
-            value: 'ks-imagezoom-lens'
+            valueFn: function () {
+                return this.get('prefixCls') + 'imagezoom-lens';
+            }
         },
 
         // 设为属性，缓存结果

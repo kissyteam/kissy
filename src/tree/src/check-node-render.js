@@ -4,8 +4,8 @@
  */
 KISSY.add("tree/check-node-render", function (S, Node, TreeNodeRender) {
     var $ = Node.all,
-        CHECK_CLS = "ks-tree-node-checked",
-        ALL_STATES_CLS = "ks-tree-node-checked0 ks-tree-node-checked1 ks-tree-node-checked2";
+        CHECK_CLS = "tree-node-checked",
+        ALL_STATES_CLS = "tree-node-checked0 tree-node-checked1 tree-node-checked2";
     return TreeNodeRender.extend({
 
         createDom:function () {
@@ -18,7 +18,8 @@ KISSY.add("tree/check-node-render", function (S, Node, TreeNodeRender) {
         _uiSetCheckState:function (s) {
             var self = this,
                 checkIconEl = self.get("checkIconEl");
-            checkIconEl.removeClass(ALL_STATES_CLS).addClass(CHECK_CLS + s);
+            checkIconEl.removeClass(self.getCssClassWithPrefix(ALL_STATES_CLS))
+                .addClass(self.getCssClassWithPrefix(CHECK_CLS) + s);
         }
 
     }, {

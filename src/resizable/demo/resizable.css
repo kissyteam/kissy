@@ -1,0 +1,85 @@
+.ks-resizable-handler {
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+}
+
+.ks-resizable-handler-b {
+    height: 5px;
+    width: 100%;
+    background-color: yellow;
+    bottom: 0;
+    left: 0;
+    cursor: n-resize;
+}
+
+.ks-resizable-handler-t {
+    height: 5px;
+    width: 100%;
+    background-color: yellow;
+    top: 0;
+    left: 0;
+    cursor: n-resize;
+}
+
+.ks-resizable-handler-l {
+    height: 100%;
+    -height: expression(this.parentNode.offsetHeight);
+    width: 5px;
+    background-color: yellow;
+    top: 0;
+    left: 0;
+    cursor: e-resize;
+}
+
+.ks-resizable-handler-r {
+    height: 100%;
+    -height: expression(this.parentNode.offsetHeight);
+    background-color: yellow;
+    width: 5px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: e-resize;
+}
+
+.ks-resizable-handler-bl {
+    height: 5px;
+    width: 5px;
+    background-color: green;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    cursor: sw-resize;
+}
+
+.ks-resizable-handler-br {
+    height: 5px;
+    width: 5px;
+    z-index: 1;
+    background-color: green;
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+}
+
+.ks-resizable-handler-tl {
+    height: 5px;
+    width: 5px;
+    z-index: 1;
+    background-color: green;
+    top: 0;
+    left: 0;
+    cursor: nw-resize;
+}
+
+.ks-resizable-handler-tr {
+    height: 5px;
+    width: 5px;
+    z-index: 1;
+    background-color: green;
+    top: 0;
+    right: 0;
+    cursor: ne-resize;
+}

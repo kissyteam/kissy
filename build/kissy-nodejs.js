@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Aug 22 23:29
+build time: Sep 10 10:12
 */
 /**
  * patch for nodejs
@@ -25,7 +25,7 @@ build time: Aug 22 23:29
      */
     KISSY = exports.KISSY = window.KISSY = exports;
     KISSY.Env = {
-        host:window
+        host: window
     };
 })();
 
@@ -46,8 +46,8 @@ build time: Aug 22 23:29
     S.Env.mods = {};
 
     mix(S, {
-        configs:{
-            packages:function (cfgs) {
+        configs: {
+            packages: function (cfgs) {
                 var ps = S.__packages = S.__packages || {}, cfg, p, i;
                 if (S.isArray(cfgs)) {
                     for (i = 0; i < cfgs.length; i++) {
@@ -77,24 +77,31 @@ build time: Aug 22 23:29
 
     mix(S, {
 
-        Config:{
-            base:__dirname.replace(/\\/g, "/") + "/"
+        Config: {
+            base: __dirname.replace(/\\/g, "/") + "/"
         },
 
-        add:function (name, def, cfg) {
+        getLoader: function () {
+            if (S.__loader) {
+                return S.__loader;
+            }
+            return S.__loader = S.merge(S.Loader.Target);
+        },
+
+        add: function (name, def, cfg) {
             if (S.isFunction(name)) {
                 cfg = def;
                 def = name;
                 name = this.currentModName;
             }
             mods[name] = {
-                name:name,
-                fn:def
+                name: name,
+                fn: def
             };
             S.mix(mods[name], cfg);
         },
 
-        _getPath:function (modName) {
+        _getPath: function (modName) {
             this.__packages = this.__packages || {};
             var packages = this.__packages;
             var pName = "";
@@ -111,14 +118,12 @@ build time: Aug 22 23:29
             return base + modName;
         },
 
-        require:function (moduleName) {
+        require: function (moduleName) {
             var mod = mods[moduleName];
-            var re = S['onRequire'] && S['onRequire'](mod);
-            if (re !== undefined) return re;
             return mod && mod.value;
         },
 
-        _attach:function (modName) {
+        _attach: function (modName) {
             var modPath = this._getPath(modName);
             var mod = mods[modName];
             if (!mod) {
@@ -129,14 +134,17 @@ build time: Aug 22 23:29
                     link.rel = 'stylesheet';
                     document.head.appendChild(link);
                     mods[modName] = {
-                        attached:1
+                        attached: 1
                     };
                 } else {
                     require(modPath);
                 }
             }
             mod = mods[modName];
-            if (mod.attached) return;
+            mod.name = modName;
+            if (mod.attached) {
+                return;
+            }
             mod.requires = mod.requires || [];
             var requires = mod.requires;
             normalDepModuleName(modName, requires);
@@ -147,9 +155,12 @@ build time: Aug 22 23:29
             }
             mod.value = mod.fn.apply(null, deps);
             mod.attached = true;
+            S.getLoader().fire("afterModAttached", {
+                mod: mod
+            });
         },
 
-        use:function (modNames, callback) {
+        use: function (modNames, callback) {
             modNames = modNames.replace(/\s+/g, "").split(',');
             indexMapping(modNames);
             var self = this;

@@ -2,7 +2,7 @@
  * @ignore
  * @fileOverview scalable event framework for kissy (refer DOM3 Events)
  * how to fire event just like browser?
- * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
 

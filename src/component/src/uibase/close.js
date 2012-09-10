@@ -57,10 +57,14 @@ KISSY.add("component/uibase/close", function () {
             if (v && !self.__bindCloseEvent) {
                 self.__bindCloseEvent = 1;
                 self.get("closeBtn").on("click", function (ev) {
-                    self[actions[self.get("closeAction")] || HIDE]();
+                    self.close();
                     ev.preventDefault();
                 });
             }
+        },
+        close:function(){
+            var self=this;
+            self[actions[self.get("closeAction")] || HIDE]();
         },
         __destructor:function () {
             var btn = this.get("closeBtn");
