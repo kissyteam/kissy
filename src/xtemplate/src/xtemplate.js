@@ -24,4 +24,8 @@ KISSY.add('xtemplate', function (S, XTemplate) {
  *      - 不支持表达式
  *      - 不支持复杂比较操作
  *      - 不支持 js 语法
+ *
+ *  TODO:
+ *      - 参考 velocity, 扩充 ast
+ *          - Expression/ConditionalOrExpression/EqualityExpression/RelationalExpression...
  */
