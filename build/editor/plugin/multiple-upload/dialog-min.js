@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 10 21:42
+build time: Sep 10 21:59
 */
 KISSY.add("editor/plugin/multiple-upload/dialog",function(m,o,x,D,E,u,i){function s(a,c){this.editor=a;this.progressBars={};this.config=c;o.Utils.lazyRun(this,"_prepareShow","_realShow")}function h(a,c){return m.substitute(a,{prefixCls:c})}function z(a,c){var b=a.parentNode,d=c.nextSibling;b.insertBefore(c,a.nextSibling);b.insertBefore(a,d)}var y=m.UA,l=m.DOM,k=m.all,q=m.JSON,F=D.Dialog,G=o.Utils.debugUrl("plugin/uploader/uploader.longzang.swf");m.augment(s,{addRes:o.Utils.addRes,destroy:o.Utils.destroyRes,
 _prepareShow:function(){var a=this,c=a.editor,b=c.get("prefixCls"),d=a.config;a.addRes(function(){var b=a.progressBars,c;for(c in b)b.hasOwnProperty(c)&&b[c].destroy()});a.dialog=new F({headerContent:"批量上传",mask:!1,draggable:{constrain:!1},autoRender:!0,focus4e:!1,width:"600px"});var f=a.dialog;f.on("beforeVisibleChange",function(a){if(!a.newVal)return f.set("xy",[-9999,-9999]),!1});a.addRes(f);var e=f.get("body"),g=k(h("<div class='{prefixCls}editor-upload-btn-wrap'><span style='margin:0 15px 0 0px;color:#969696;display:inline-block;vertical-align:middle;width:450px;'></span></div>",
