@@ -19,6 +19,7 @@ KISSY.add('xtemplate', function (S, XTemplate) {
  *      - 支持子模板
  *      - 支持作用域链
  *      - 内置 escapeHTML 支持
+ *      - 支持预编译
  *   劣势
  *      - 不支持表达式
  *      - 不支持复杂比较操作
