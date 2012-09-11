@@ -18,6 +18,7 @@ KISSY.add('xtemplate', function (S, XTemplate) {
  *      - 更容易扩展 command,sub-tpl
  *      - 支持子模板
  *      - 支持作用域链
+ *      - 内置 escapeHTML 支持
  *   劣势
  *      - 不支持表达式
  *      - 不支持复杂比较操作
