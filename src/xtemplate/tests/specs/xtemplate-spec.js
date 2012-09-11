@@ -1,3 +1,7 @@
+/**
+ * TC for KISSY XTemplate
+ * @author yiminghe@gmail.com
+ */
 KISSY.use('xtemplate', function (S, XTemplate) {
 
     describe('xtemplate', function () {
