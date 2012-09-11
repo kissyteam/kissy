@@ -225,13 +225,16 @@ x({
             {
                 // "\n".match(/./)
                 regexp: /^[\s\S]*?(?={{)/,
-                token: 'CONTENT',
                 action: function () {
                     if (this.text.slice(-1) !== '\\') {
                         this.pushState('t');
                     } else {
                         this.text = this.text.slice(0, -1);
                         this.pushState('et');
+                    }
+                    // only return when has content
+                    if (this.text) {
+                        return 'CONTENT';
                     }
                 }
             },
@@ -242,7 +245,7 @@ x({
             {
                 state: 'et',
                 token: 'CONTENT',
-                regexp: /^[\s\S]{2,}?(?={{)/,
+                regexp: /^[\s\S]{2,}?(?:(?={{)|$)/,
                 action: function () {
                     this.popState();
                 }
@@ -332,7 +335,7 @@ x({
             },
             {
                 state: 't',
-                regexp: /^\d+(\.\d+)?/,
+                regexp: /^\d+(?:\.\d+)?(?:e-?\d+)/i,
                 token: 'NUMBER'
             },
             {

@@ -14,6 +14,7 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
             var buffer = '';
             var xcount;
             var single;
+            var singleRet;
             if (S.isArray(param0)) {
                 var opScopes = [0].concat(scopes);
                 xcount = param0.length;
@@ -62,6 +63,54 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
             var param0 = params[0];
             var buffer = '';
             if (param0) {
+                buffer = option.fn(scopes);
+            } else if (option.inverse) {
+                buffer = option.inverse(scopes);
+            }
+            return buffer;
+        },
+
+        ifeq: function (scopes, option) {
+            var params = option.params;
+            if (!params || params.length != 2) {
+                throw new Error('if must has two param');
+            }
+            var param0 = params[0];
+            var param1 = params[1];
+            var buffer = '';
+            if (param0 === param1) {
+                buffer = option.fn(scopes);
+            } else if (option.inverse) {
+                buffer = option.inverse(scopes);
+            }
+            return buffer;
+        },
+
+        iflt: function (scopes, option) {
+            var params = option.params;
+            if (!params || params.length != 2) {
+                throw new Error('if must has two param');
+            }
+            var param0 = params[0];
+            var param1 = params[1];
+            var buffer = '';
+            if (param0 < param1) {
+                buffer = option.fn(scopes);
+            } else if (option.inverse) {
+                buffer = option.inverse(scopes);
+            }
+            return buffer;
+        },
+
+        iflte: function (scopes, option) {
+            var params = option.params;
+            if (!params || params.length != 2) {
+                throw new Error('if must has two param');
+            }
+            var param0 = params[0];
+            var param1 = params[1];
+            var buffer = '';
+            if (param0 <= param1) {
                 buffer = option.fn(scopes);
             } else if (option.inverse) {
                 buffer = option.inverse(scopes);

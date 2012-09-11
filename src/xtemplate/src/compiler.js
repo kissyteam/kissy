@@ -17,7 +17,10 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
                 optionName = S.guid('option'),
                 self = this;
 
-            source.push('var ' + optionName + ' = {};');
+            source.push('var ' + optionName + ' = {' +
+                'commands: commands,' +
+                'subTpls: subTpls' +
+                '};');
 
             if (tplNode) {
 
@@ -66,13 +69,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
         genId: function (idNode, tplNode) {
             var source = [],
                 depth = idNode.depth,
-                scopes = 'scopes[' + depth + ']',
+                scope = 'scopes[' + depth + ']',
                 idString = idNode.string;
-
-            // this represents top scopes
-            if (idString == 'this') {
-                return [scopes, ''];
-            }
 
             var idName = S.guid('id'),
                 self = this,
@@ -88,7 +86,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
                 source.push('if( ' + tmpNameCommand + ' ){');
                 source.push('try{');
                 source.push(idName + ' = ' + tmpNameCommand +
-                    '(' + scopes + ',' + optionNameCode[0] + ');');
+                    '(' + scope + ',' + optionNameCode[0] + ');');
                 source.push('}catch(e){');
                 source.push('error(e.message+": \'' +
                     tmpNameCommand + '\' at line ' + idNode.lineNumber + '");');
@@ -100,12 +98,14 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
                 source.push('else {');
             }
 
-            source.push('if(!' + scopes + '||!' + scopes + '["' + idString + '"]){');
+            source.push('if(!' + scope + '||' +
+                // use in insteadof scope[idString]
+                '!("' + idString + '" in ' + scope + ')){');
             source.push('log("can not find property: \'' +
                 idString + '\' at line ' + idNode.lineNumber + '", "warn");');
             source.push(idName + ' = "";');
             source.push('} else {');
-            source.push(idName + ' = ' + scopes + '["' + idNode.string + '"];');
+            source.push(idName + ' = ' + scope + '["' + idNode.string + '"];');
             source.push('}');
 
             if (tplNode && depth == 0) {
@@ -124,8 +124,9 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
                     source.push('S = KISSY,' +
                         'escapeHTML = S.escapeHTML,' +
                         'log = S.log,' +
-                        'error = S.error');
-                    source.push('commands = option.commands;');
+                        'error = S.error,');
+                    source.push('commands = option.commands,' +
+                        'subTpls=option.subTpls;');
                 }
                 for (var i = 0, len = statements.length; i < len; i++) {
                     source.push(this[statements[i].type](statements[i]));
@@ -179,19 +180,13 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
         },
 
         tpl: function (tplNode) {
-
-            // return current block earlier
-            if (tplNode.path.string == 'break') {
-                return 'return {ret:0, value:buffer};';
-            }
-
             var source = [],
                 escaped = tplNode.escaped,
                 genIdCode = this.genId(tplNode.path, tplNode);
             source.push(genIdCode[1]);
             source.push('buffer+=' +
                 (escaped ? 'escapeHTML(' : '') +
-                genIdCode[0] +
+                genIdCode[0] + '+""' +
                 (escaped ? ')' : '') +
                 ';');
             return source.join('\n');

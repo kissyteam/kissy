@@ -7,9 +7,15 @@ KISSY.add('xtemplate/base', function (S, compiler) {
     var cache = {};
 
     function XTemplate(tpl, option) {
-        this.tpl = tpl;
-        this.subTpls = S.merge(option.subTpls, XTemplate.subTpls);
-        this.commands = S.merge(option.commands, XTemplate.commands);
+        var self = this;
+        // prevent messing up with velocity
+        if (S.isString(tpl)) {
+            tpl = tpl.replace(/\{\{@/g, '{{#');
+        }
+        self.tpl = tpl;
+        option = option || {};
+        self.subTpls = S.merge(option.subTpls, XTemplate.subTpls);
+        self.commands = S.merge(option.commands, XTemplate.commands);
     }
 
     XTemplate.prototype = {
@@ -26,22 +32,29 @@ KISSY.add('xtemplate/base', function (S, compiler) {
         addCommand: function (commandName, fn) {
             this.commands[commandName] = fn;
         },
-        render: function (data) {
-            if (!this.compiled) {
-                if (S.isFunction(this.tpl)) {
+        compile: function () {
+            var self = this, tpl = self.tpl;
+            if (!self.compiled) {
+                if (S.isFunction(tpl)) {
                 } else {
-                    this.tpl = cache[this.tpl] ||
-                        (cache[this.tpl] = new Function(compiler.compile(this.tpl)));
+                    var source = compiler.compile(tpl);
+                    self.tpl = cache[tpl] ||
+                        (cache[tpl] = eval('(' + source + ')'));
                 }
-                this.compiled = 1;
+                self.compiled = 1;
             }
+            return self.tpl;
+        },
+        render: function (data) {
+            var self = this;
+            self.compile();
             if (!S.isArray(data)) {
                 data = [data];
             }
-            return this.tpl(data, {
-                commands: this.commands,
-                subTpls: this.subTpls
-            })
+            return self.tpl(data, {
+                commands: self.commands,
+                subTpls: self.subTpls
+            });
         }
     };
 
