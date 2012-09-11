@@ -37,9 +37,12 @@ KISSY.add('xtemplate/base', function (S, compiler) {
             if (!self.compiled) {
                 if (S.isFunction(tpl)) {
                 } else {
-                    var source = compiler.compile(tpl);
+                    var code = compiler.compile(tpl);
+                    // eval is not ok for eval("(function(){})") ie
                     self.tpl = cache[tpl] ||
-                        (cache[tpl] = eval('(' + source + ')'));
+                        (cache[tpl] = Function.apply(null, []
+                            .concat(code.params)
+                            .concat(code.source)));
                 }
                 self.compiled = 1;
             }

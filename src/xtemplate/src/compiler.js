@@ -116,25 +116,33 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
         },
 
         genFunction: function (statements, global) {
-            if (statements && statements.length) {
-                var source = [];
-                source.push('function(scopes' + (global ? ',option' : '') + ') {');
-                source.push('var buffer = ""' + (global ? ',' : ';'));
-                if (global) {
-                    source.push('S = KISSY,' +
-                        'escapeHTML = S.escapeHTML,' +
-                        'log = S.log,' +
-                        'error = S.error,');
-                    source.push('commands = option.commands,' +
-                        'subTpls=option.subTpls;');
-                }
+            var source = [];
+            if (!global) {
+                source.push('function(scopes) {');
+            }
+            source.push('var buffer = ""' + (global ? ',' : ';'));
+            if (global) {
+                source.push('S = KISSY,' +
+                    'escapeHTML = S.escapeHTML,' +
+                    'log = S.log,' +
+                    'error = S.error,');
+                source.push('commands = option.commands,' +
+                    'subTpls=option.subTpls;');
+            }
+            if (statements) {
                 for (var i = 0, len = statements.length; i < len; i++) {
                     source.push(this[statements[i].type](statements[i]));
                 }
-                source.push('return buffer;' + '}');
+            }
+            source.push('return buffer;');
+            if (!global) {
+                source.push('}');
                 return source.join('\n');
             } else {
-                return '';
+                return {
+                    params: ['scopes', 'option'],
+                    source: source.join('\n')
+                };
             }
         },
 

@@ -5,7 +5,7 @@
 KISSY.add("xtemplate/commands", function (S, XTemplate) {
 
     var commands = {
-        each: function (scopes, option) {
+        'each': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 1) {
                 throw new Error('each must has one param');
@@ -21,7 +21,7 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
                 for (var xindex = 0; xindex < xcount; xindex++) {
                     var holder = {};
                     single = param0[xindex];
-                    holder.this = single;
+                    holder['this'] = single;
                     holder.xcount = xcount;
                     holder.xindex = xindex;
                     if (S.isObject(single)) {
@@ -37,7 +37,7 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
             return buffer;
         },
 
-        with: function (scopes, option) {
+        'with': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 1) {
                 throw new Error('with must has one param');
@@ -55,7 +55,7 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
             return buffer;
         },
 
-        if: function (scopes, option) {
+        'if': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 1) {
                 throw new Error('if must has one param');
@@ -70,7 +70,7 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
             return buffer;
         },
 
-        ifeq: function (scopes, option) {
+        'ifeq': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 2) {
                 throw new Error('if must has two param');
@@ -86,7 +86,7 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
             return buffer;
         },
 
-        iflt: function (scopes, option) {
+        'iflt': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 2) {
                 throw new Error('if must has two param');
@@ -102,7 +102,7 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
             return buffer;
         },
 
-        iflte: function (scopes, option) {
+        'iflte': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 2) {
                 throw new Error('if must has two param');
@@ -118,7 +118,7 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
             return buffer;
         },
 
-        include: function (scopes, option) {
+        'include': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 1) {
                 throw new Error('include must has one param');
