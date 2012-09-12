@@ -22,14 +22,14 @@ body {
 
 #ColumnContainer {
     position: relative;
-    min-width: 692px;
+    min-width: 500px;
     min-height: 500px;
     margin: 0 auto;
 }
 
 #article {
     width: auto;
-    min-width: 932px;
+    min-width: 500px;
     padding: 8px 0 0 0;
 }
 
