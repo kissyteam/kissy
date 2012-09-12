@@ -11,9 +11,6 @@ describe("modules and packages", function () {
     it("does not depend on order", function () {
 
         KISSY.config({
-            map:[
-                [/\?t=.+$/, ""]
-            ],
             "modules":{
                 "x/x":{
                     requires:['x/y']
@@ -38,19 +35,12 @@ describe("modules and packages", function () {
             return ret == 8;
         }, 5000);
 
-        runs(function(){
-            S.config("map").length=0;
-        });
-
     });
 
     it("package can has same path", function () {
         var combine = KISSY.config("combine");
         var ret = 0;
         KISSY.config({
-            map:[
-                [/\?t=.+$/, ""]
-            ],
             packages:{
                 y:{
                     base:"../specs/packages-modules"
@@ -70,10 +60,6 @@ describe("modules and packages", function () {
         waitsFor(function () {
             return ret;
         });
-
-        runs(function () {
-            S.config("map").length=0;
-        })
 
     });
 

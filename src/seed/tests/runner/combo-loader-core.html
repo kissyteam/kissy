@@ -1,15 +1,20 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
-<title>Seed Test Runner</title>
-<link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
-<script src="../../../../tools/jasmine/jasmine.js"></script>
-<script src="../../../../tools/jasmine/jasmine-html.js"></script>
-<script src="../../../../build/seed.js" charset="utf-8"></script>
-<script>
-    KISSY.config("combine", true);
-</script>
+    <meta charset="utf-8"/>
+    <title>Seed Test Runner</title>
+    <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
+    <script src="../../../../tools/jasmine/jasmine.js"></script>
+    <script src="../../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../../build/seed.js" charset="utf-8"></script>
+    <script>
+        KISSY.config("combine", true);
+        KISSY.config({
+            mapCombo: [
+                [/\?t=.*/, ""]
+            ]
+        });
+    </script>
 </head>
 <body>
 <h1>KISSY Combo Core Test Cases</h1>
@@ -19,7 +24,7 @@
     describe("use core should works as simple loader", function () {
         var S = KISSY;
 
-        S.config("map", [
+        KISSY.config("mapCombo", [
             [/\?t=.+$/, ""]
         ]);
 

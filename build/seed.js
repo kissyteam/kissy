@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:30
+build time: Sep 12 14:40
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 7 02:30
 
         /**
          * The build time of the library.
-         * NOTICE: '20120907023044' will replace with current timestamp when compressing.
+         * NOTICE: '20120912144034' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120907023044';
+        S.__BUILD_TIME = '20120912144034';
     })();
 
     return S;
@@ -3588,8 +3588,8 @@ build time: Sep 7 02:30
          * @param path
          * @return {String}
          */
-        getMappedPath: function (self, path) {
-            var __mappedRules = self.Config.mappedRules || [],
+        getMappedPath: function (self, path,rules) {
+            var __mappedRules = rules||self.Config.mappedRules || [],
                 i,
                 m,
                 rule;
@@ -3942,16 +3942,21 @@ build time: Sep 7 02:30
      modify current module path
 
      [
-        [/(.+-)min(.js(\?t=\d+)?)$/, '$1$2'],
-        [/(.+-)min(.js(\?t=\d+)?)$/, function(_,m1,m2){
-            return m1+m2;
-        }]
+     [/(.+-)min(.js(\?t=\d+)?)$/, '$1$2'],
+     [/(.+-)min(.js(\?t=\d+)?)$/, function(_,m1,m2){
+     return m1+m2;
+     }]
      ]
 
      */
     configs.map = function (rules) {
         var self = this;
         return self.Config.mappedRules = (self.Config.mappedRules || []).concat(rules || []);
+    };
+
+    configs.mapCombo = function (rules) {
+        var self = this;
+        return self.Config.mappedComboRules = (self.Config.mappedComboRules || []).concat(rules || []);
     };
 
     /*
@@ -3997,26 +4002,26 @@ build time: Sep 7 02:30
      <code>
 
      KISSY.config({
-         base: '',
-         // dom-min.js
-         debug: '',
-         combine: true,
-         tag: '',
-         packages: {
-             'biz1': {
-                 // path change to base
-                 base: 'haha',
-                 // x.js
-                 debug: '',
-                 tag: '',
-                 combine: false,
-             }
-         },
-         modules: {
-             'biz1/main': {
-                requires: ['biz1/part1', 'biz1/part2']
-             }
-         }
+     base: '',
+     // dom-min.js
+     debug: '',
+     combine: true,
+     tag: '',
+     packages: {
+     'biz1': {
+     // path change to base
+     base: 'haha',
+     // x.js
+     debug: '',
+     tag: '',
+     combine: false,
+     }
+     },
+     modules: {
+     'biz1/main': {
+     requires: ['biz1/part1', 'biz1/part2']
+     }
+     }
      });
      */
     configs.modules = function (modules) {
@@ -4578,7 +4583,6 @@ build time: Sep 7 02:30
     }
 
     var Loader = S.Loader,
-        Path = S.Path,
         data = Loader.STATUS,
         utils = Loader.Utils;
 
@@ -4963,8 +4967,10 @@ build time: Sep 7 02:30
                                 packageBase = jss.packageBase,
                                 prefix,
                                 path,
+                                fullpath,
                                 l,
-                                packageNamePath = packageName + '/';
+                                packagePath = packageBase +
+                                    (packageName ? (packageName + '/') : '');
 
                             res[type][packageName] = [];
                             res[type][packageName].charset = jss.charset;
@@ -4972,30 +4978,37 @@ build time: Sep 7 02:30
                             res[type][packageName].mods = [];
                             // add packageName to common prefix
                             // combo grouped by package
-                            prefix = packageBase +
-                                (packageName ? packageNamePath : '') +
-                                comboPrefix;
+                            prefix = packagePath + comboPrefix;
                             l = prefix.length;
 
                             function pushComboUrl() {
+                                // map the whole combo path
                                 res[type][packageName].push(utils.getMappedPath(
                                     SS,
-                                    prefix + t.join(comboSep) + (tag ? ('?t=' +
-                                        encodeURIComponent(tag)) : '')));
+                                    prefix +
+                                        t.join(comboSep) +
+                                        (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
+                                    Config.mappedComboRules || []
+                                ));
                             }
 
                             for (i = 0; i < jss.length; i++) {
-                                // remove packageName prefix from mod path
-                                path = jss[i].getPath();
+
+                                // map individual module
+                                fullpath = jss[i].getFullPath();
+
                                 res[type][packageName].mods.push(jss[i]);
-                                if (!jss.combine) {
-                                    res[type][packageName].push(jss[i].getFullPath());
+
+                                if (!jss.combine || !S.startsWith(fullpath, packagePath)) {
+                                    res[type][packageName].push(fullpath);
                                     continue;
                                 }
-                                if (packageName) {
-                                    path = Path.relative(packageName, path);
-                                }
+
+                                // ignore query parameter
+                                path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
+
                                 t.push(path);
+
                                 if (l + t.join(comboSep).length > maxUrlLength) {
                                     t.pop();
                                     pushComboUrl();
@@ -5176,7 +5189,7 @@ build time: Sep 7 02:30
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120907023044'
+        tag: '20120912144034'
     }, getBaseInfo()));
 
     // Initializes loader.

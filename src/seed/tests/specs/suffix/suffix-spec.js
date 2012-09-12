@@ -2,9 +2,9 @@ describe("mod with suffix", function () {
     var S = KISSY;
 
     it("can load mod with a suffix when simple loader", function () {
-        var combine = S.config("combine"), ret = 0;
+        var combine = KISSY.config("combine"), ret = 0;
 
-        S.config({
+        KISSY.config({
             packages:{
                 suffix:{
                     base:"../specs/"

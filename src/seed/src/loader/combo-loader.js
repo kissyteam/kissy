@@ -25,7 +25,6 @@
     }
 
     var Loader = S.Loader,
-        Path = S.Path,
         data = Loader.STATUS,
         utils = Loader.Utils;
 
@@ -410,8 +409,10 @@
                                 packageBase = jss.packageBase,
                                 prefix,
                                 path,
+                                fullpath,
                                 l,
-                                packageNamePath = packageName + '/';
+                                packagePath = packageBase +
+                                    (packageName ? (packageName + '/') : '');
 
                             res[type][packageName] = [];
                             res[type][packageName].charset = jss.charset;
@@ -419,30 +420,37 @@
                             res[type][packageName].mods = [];
                             // add packageName to common prefix
                             // combo grouped by package
-                            prefix = packageBase +
-                                (packageName ? packageNamePath : '') +
-                                comboPrefix;
+                            prefix = packagePath + comboPrefix;
                             l = prefix.length;
 
                             function pushComboUrl() {
+                                // map the whole combo path
                                 res[type][packageName].push(utils.getMappedPath(
                                     SS,
-                                    prefix + t.join(comboSep) + (tag ? ('?t=' +
-                                        encodeURIComponent(tag)) : '')));
+                                    prefix +
+                                        t.join(comboSep) +
+                                        (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
+                                    Config.mappedComboRules || []
+                                ));
                             }
 
                             for (i = 0; i < jss.length; i++) {
-                                // remove packageName prefix from mod path
-                                path = jss[i].getPath();
+
+                                // map individual module
+                                fullpath = jss[i].getFullPath();
+
                                 res[type][packageName].mods.push(jss[i]);
-                                if (!jss.combine) {
-                                    res[type][packageName].push(jss[i].getFullPath());
+
+                                if (!jss.combine || !S.startsWith(fullpath, packagePath)) {
+                                    res[type][packageName].push(fullpath);
                                     continue;
                                 }
-                                if (packageName) {
-                                    path = Path.relative(packageName, path);
-                                }
+
+                                // ignore query parameter
+                                path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
+
                                 t.push(path);
+
                                 if (l + t.join(comboSep).length > maxUrlLength) {
                                     t.pop();
                                     pushComboUrl();

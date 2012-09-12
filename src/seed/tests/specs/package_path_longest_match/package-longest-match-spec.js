@@ -6,7 +6,7 @@ describe("loader package", function () {
 
         var debug = S.Config.debug;
         S.Config.debug = true;
-        S.config({
+        KISSY.config({
             packages:[
                 {
                     name:"test",
