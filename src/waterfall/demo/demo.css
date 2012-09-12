@@ -1,3 +1,8 @@
+html {
+    background-color: #E8E7E3;
+    overflow-y: scroll;
+}
+
 body {
     background-color: #E8E7E3;
 }
