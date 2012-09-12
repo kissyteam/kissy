@@ -1,3 +1,7 @@
+/**
+ * lalr grammar and lexer rules for kissy xtemplate.
+ * @author yiminghe@gmail.com
+ */
 x({
 
     productions: [
