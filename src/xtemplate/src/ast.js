@@ -38,12 +38,73 @@ KISSY.add("xtemplate/ast", function (S) {
 
     ast.TplNode.prototype.type = 'tpl';
 
+
+    ast.TplExpressionNode = function (lineNumber, expression) {
+        this.lineNumber = lineNumber;
+        this.expression = expression;
+        this.escaped = true;
+    };
+
+    ast.TplExpressionNode.prototype.type = 'tplExpression';
+
     ast.ContentNode = function (lineNumber, value) {
         this.lineNumber = lineNumber;
         this.value = value;
     };
 
     ast.ContentNode.prototype.type = 'content';
+
+    ast.UnaryExpression = function (v) {
+        this.value = v;
+    };
+
+    ast.UnaryExpression.prototype.type = 'unaryExpression';
+
+    ast.MultiplicativeExpression = function (op1, opType, op2) {
+        this.op1 = op1;
+        this.opType = opType;
+        this.op2 = op2;
+    };
+
+    ast.MultiplicativeExpression.prototype.type = 'multiplicativeExpression';
+
+    ast.AdditiveExpression = function (op1, opType, op2) {
+        this.op1 = op1;
+        this.opType = opType;
+        this.op2 = op2;
+    };
+
+    ast.AdditiveExpression.prototype.type = 'additiveExpression';
+
+    ast.RelationalExpression = function (op1, opType, op2) {
+        this.op1 = op1;
+        this.opType = opType;
+        this.op2 = op2;
+    };
+
+    ast.RelationalExpression.prototype.type = 'relationalExpression';
+
+    ast.EqualityExpression = function (op1, opType, op2) {
+        this.op1 = op1;
+        this.opType = opType;
+        this.op2 = op2;
+    };
+
+    ast.EqualityExpression.prototype.type = 'equalityExpression';
+
+    ast.ConditionalAndExpression = function (op1, op2) {
+        this.op1 = op1;
+        this.op2 = op2;
+    };
+
+    ast.ConditionalAndExpression.prototype.type = 'conditionalAndExpression';
+
+    ast.ConditionalOrExpression = function (op1, op2) {
+        this.op1 = op1;
+        this.op2 = op2;
+    };
+
+    ast.ConditionalOrExpression.prototype.type = 'conditionalOrExpression';
 
     ast.StringNode = function (lineNumber, value) {
         this.lineNumber = lineNumber;
@@ -57,7 +118,7 @@ KISSY.add("xtemplate/ast", function (S) {
         this.value = value;
     };
 
-    ast.NumberNode.prototype.type = 'integer';
+    ast.NumberNode.prototype.type = 'number';
 
     ast.BooleanNode = function (lineNumber, value) {
         this.lineNumber = lineNumber;

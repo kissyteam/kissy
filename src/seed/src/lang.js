@@ -640,7 +640,7 @@
              * @return {String} escaped html
              */
             escapeHTML: function (str) {
-                return str.replace(getEscapeReg(), function (m) {
+                return (str + '').replace(getEscapeReg(), function (m) {
                     return reverseEntities[m];
                 });
             },

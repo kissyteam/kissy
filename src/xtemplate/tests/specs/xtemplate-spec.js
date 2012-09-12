@@ -152,7 +152,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 it('support parent scope', function () {
 
-                    var tpl = '{{#each data}}{{this}}-{{../total}}|{{/each}}';
+                    var tpl = '{{#each data}}{{this}}-{{..\\total}}|{{\\each}}';
 
                     var data = {
                         data: [1, 2],
@@ -190,7 +190,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                     var tpl = '{{#with data}}' +
                         '{{#with p}}' +
-                        '{{name}}-{{age}}-{{../l2}}-{{../../l1}}' +
+                        '{{name}}-{{age}}-{{..\\l2}}-{{..\\..\\l1}}' +
                         '{{/with}}' +
                         '{{/with}}';
 

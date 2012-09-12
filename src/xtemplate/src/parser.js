@@ -154,6 +154,7 @@ var lexer = new Lexer({
                 this.text = this.text.slice(0, -1);
                 this.pushState('et');
             }
+            // only return when has content
             if (this.text) {
                 return 'CONTENT';
             }
@@ -216,6 +217,70 @@ var lexer = new Lexer({
         "token": "CLOSE"
     }, {
         "state": "t",
+        "regexp": /^\(/,
+        "token": "LPAREN"
+    }, {
+        "state": "t",
+        "regexp": /^\)/,
+        "token": "RPAREN"
+    }, {
+        "state": "t",
+        "regexp": /^\|\|/,
+        "token": "OR"
+    }, {
+        "state": "t",
+        "regexp": /^&&/,
+        "token": "AND"
+    }, {
+        "state": "t",
+        "regexp": /^===/,
+        "token": "LOGIC_EQUALS"
+    }, {
+        "state": "t",
+        "regexp": /^!==/,
+        "token": "LOGIC_NOT_EQUALS"
+    }, {
+        "state": "t",
+        "regexp": /^>/,
+        "token": "GT"
+    }, {
+        "state": "t",
+        "regexp": /^>=/,
+        "token": "GE"
+    }, {
+        "state": "t",
+        "regexp": /^</,
+        "token": "LT"
+    }, {
+        "state": "t",
+        "regexp": /^<=/,
+        "token": "LE"
+    }, {
+        "state": "t",
+        "regexp": /^\+/,
+        "token": "PLUS"
+    }, {
+        "state": "t",
+        "regexp": /^-/,
+        "token": "MINUS"
+    }, {
+        "state": "t",
+        "regexp": /^\*/,
+        "token": "MULTIPLY"
+    }, {
+        "state": "t",
+        "regexp": /^\//,
+        "token": "DIVIDE"
+    }, {
+        "state": "t",
+        "regexp": /^%/,
+        "token": "MODULUS"
+    }, {
+        "state": "t",
+        "regexp": /^!/,
+        "token": "NOT"
+    }, {
+        "state": "t",
         "regexp": /^"(\\"|[^"])*"/,
         "action": function () {
             this.text = this.text.slice(1, -1).replace(/\\"/g, '"');
@@ -238,7 +303,7 @@ var lexer = new Lexer({
         "token": "BOOLEAN"
     }, {
         "state": "t",
-        "regexp": /^\d+(?:\.\d+)?(?:e-?\d+)/i,
+        "regexp": /^\d+(?:\.\d+)?(?:e-?\d+)?/i,
         "token": "NUMBER"
     }, {
         "state": "t",
@@ -250,19 +315,12 @@ var lexer = new Lexer({
         "token": "ID"
     }, {
         "state": "t",
-        "regexp": /^[\/.]/,
+        "regexp": /^[\\.]/,
         "token": "SEP"
     }, {
         "state": "t",
         "regexp": /^[a-zA-Z0-9_$-]+/,
         "token": "ID"
-    }, {
-        "state": "t",
-        "regexp": /^\[[^\]]*\]/,
-        "token": "ID",
-        "action": function () {
-            this.text = this.text.slice(1, -1);
-        }
     }, {
         "state": "t",
         "regexp": /^./,
@@ -340,6 +398,20 @@ parser.productions = [{
         return this.$2;
     }
 }, {
+    "symbol": "tpl",
+    "rhs": ["OPEN", "Expression", "CLOSE"],
+    "action": function () {
+        return new this.yy.TplExpressionNode(this.lexer.lineNumber, this.$2);
+    }
+}, {
+    "symbol": "tpl",
+    "rhs": ["OPEN_UN_ESCAPED", "Expression", "CLOSE"],
+    "action": function () {
+        var tpl = new this.yy.TplExpressionNode(this.lexer.lineNumber, this.$2);
+        tpl.escaped = false;
+        return tpl;
+    }
+}, {
     "symbol": "inverse",
     "rhs": ["OPEN_INVERSE", "CLOSE"],
     "action": undefined
@@ -381,25 +453,151 @@ parser.productions = [{
     }
 }, {
     "symbol": "param",
-    "rhs": ["path"],
+    "rhs": ["Expression"],
     "action": undefined
 }, {
-    "symbol": "param",
+    "symbol": "Expression",
+    "rhs": ["ConditionalOrExpression"],
+    "action": undefined
+}, {
+    "symbol": "ConditionalOrExpression",
+    "rhs": ["ConditionalAndExpression"],
+    "action": undefined
+}, {
+    "symbol": "ConditionalOrExpression",
+    "rhs": ["ConditionalOrExpression", "OR", "ConditionalAndExpression"],
+    "action": function () {
+        return new this.yy.ConditionalOrExpression(this.$1, this.$3);
+    }
+}, {
+    "symbol": "ConditionalAndExpression",
+    "rhs": ["EqualityExpression"],
+    "action": undefined
+}, {
+    "symbol": "ConditionalAndExpression",
+    "rhs": ["ConditionalAndExpression", "AND", "EqualityExpression"],
+    "action": function () {
+        return new this.yy.ConditionalAndExpression(this.$1, this.$3);
+    }
+}, {
+    "symbol": "EqualityExpression",
+    "rhs": ["RelationalExpression"],
+    "action": undefined
+}, {
+    "symbol": "EqualityExpression",
+    "rhs": ["EqualityExpression", "LOGIC_EQUALS", "RelationalExpression"],
+    "action": function () {
+        return new this.yy.EqualityExpression(this.$1, '===', this.$3);
+    }
+}, {
+    "symbol": "EqualityExpression",
+    "rhs": ["EqualityExpression", "LOGIC_NOT_EQUALS", "RelationalExpression"],
+    "action": function () {
+        return new this.yy.EqualityExpression(this.$1, '!==', this.$3);
+    }
+}, {
+    "symbol": "RelationalExpression",
+    "rhs": ["AdditiveExpression"],
+    "action": undefined
+}, {
+    "symbol": "RelationalExpression",
+    "rhs": ["RelationalExpression", "LT", "AdditiveExpression"],
+    "action": function () {
+        return new this.yy.RelationalExpression(this.$1, '<=', this.$3);
+    }
+}, {
+    "symbol": "RelationalExpression",
+    "rhs": ["RelationalExpression", "GT", "AdditiveExpression"],
+    "action": function () {
+        return new this.yy.RelationalExpression(this.$1, '>', this.$3);
+    }
+}, {
+    "symbol": "RelationalExpression",
+    "rhs": ["RelationalExpression", "LE", "AdditiveExpression"],
+    "action": function () {
+        return new this.yy.RelationalExpression(this.$1, '<=', this.$3);
+    }
+}, {
+    "symbol": "RelationalExpression",
+    "rhs": ["RelationalExpression", "GE", "AdditiveExpression"],
+    "action": function () {
+        return new this.yy.RelationalExpression(this.$1, '>=', this.$3);
+    }
+}, {
+    "symbol": "AdditiveExpression",
+    "rhs": ["MultiplicativeExpression"],
+    "action": undefined
+}, {
+    "symbol": "AdditiveExpression",
+    "rhs": ["AdditiveExpression", "PLUS", "MultiplicativeExpression"],
+    "action": function () {
+        return new this.yy.AdditiveExpression(this.$1, '+', this.$3);
+    }
+}, {
+    "symbol": "AdditiveExpression",
+    "rhs": ["AdditiveExpression", "MINUS", "MultiplicativeExpression"],
+    "action": function () {
+        return new this.yy.AdditiveExpression(this.$1, '-', this.$3);
+    }
+}, {
+    "symbol": "MultiplicativeExpression",
+    "rhs": ["UnaryExpression"],
+    "action": undefined
+}, {
+    "symbol": "MultiplicativeExpression",
+    "rhs": ["MultiplicativeExpression", "MULTIPLY", "UnaryExpression"],
+    "action": function () {
+        return new this.yy.MultiplicativeExpression(this.$1, '*', this.$3);
+    }
+}, {
+    "symbol": "MultiplicativeExpression",
+    "rhs": ["MultiplicativeExpression", "DIVIDE", "UnaryExpression"],
+    "action": function () {
+        return new this.yy.MultiplicativeExpression(this.$1, '/', this.$3);
+    }
+}, {
+    "symbol": "MultiplicativeExpression",
+    "rhs": ["MultiplicativeExpression", "MODULUS", "UnaryExpression"],
+    "action": function () {
+        return new this.yy.MultiplicativeExpression(this.$1, '%', this.$3);
+    }
+}, {
+    "symbol": "UnaryExpression",
+    "rhs": ["NOT", "UnaryExpression"],
+    "action": function () {
+        return new this.yy.UnaryExpression(this.$1);
+    }
+}, {
+    "symbol": "UnaryExpression",
+    "rhs": ["PrimaryExpression"],
+    "action": undefined
+}, {
+    "symbol": "PrimaryExpression",
     "rhs": ["STRING"],
     "action": function () {
         return new this.yy.StringNode(this.lexer.lineNumber, this.$1);
     }
 }, {
-    "symbol": "param",
+    "symbol": "PrimaryExpression",
     "rhs": ["NUMBER"],
     "action": function () {
         return new this.yy.NumberNode(this.lexer.lineNumber, this.$1);
     }
 }, {
-    "symbol": "param",
+    "symbol": "PrimaryExpression",
     "rhs": ["BOOLEAN"],
     "action": function () {
         return new this.yy.BooleanNode(this.lexer.lineNumber, this.$1);
+    }
+}, {
+    "symbol": "PrimaryExpression",
+    "rhs": ["path"],
+    "action": undefined
+}, {
+    "symbol": "PrimaryExpression",
+    "rhs": ["LPAREN", "Expression", "RPAREN"],
+    "action": function () {
+        return this.$2;
     }
 }, {
     "symbol": "hash",
@@ -421,27 +619,9 @@ parser.productions = [{
     }
 }, {
     "symbol": "hashSegment",
-    "rhs": ["ID", "EQUALS", "path"],
+    "rhs": ["ID", "EQUALS", "Expression"],
     "action": function () {
         return [this.$1, this.$3];
-    }
-}, {
-    "symbol": "hashSegment",
-    "rhs": ["ID", "EQUALS", "STRING"],
-    "action": function () {
-        return [this.$1, new this.yy.StringNode(this.lexer.lineNumber, this.$3)];
-    }
-}, {
-    "symbol": "hashSegment",
-    "rhs": ["ID", "EQUALS", "NUMBER"],
-    "action": function () {
-        return [this.$1, new this.yy.NumberNode(this.lexer.lineNumber, this.$3)];
-    }
-}, {
-    "symbol": "hashSegment",
-    "rhs": ["ID", "EQUALS", "BOOLEAN"],
-    "action": function () {
-        return [this.$1, new this.yy.BooleanNode(this.lexer.lineNumber, this.$3)];
     }
 }, {
     "symbol": "path",
@@ -452,6 +632,12 @@ parser.productions = [{
 }, {
     "symbol": "pathSegments",
     "rhs": ["pathSegments", "SEP", "ID"],
+    "action": function () {
+        this.$1.push(this.$3);
+    }
+}, {
+    "symbol": "pathSegments",
+    "rhs": ["pathSegments", "SEP", "NUMBER"],
     "action": function () {
         this.$1.push(this.$3);
     }
@@ -477,68 +663,253 @@ parser.table = {
             "pathSegments": 13
         },
         "3": {
-            "inTpl": 14,
-            "path": 12,
+            "inTpl": 19,
+            "Expression": 20,
+            "ConditionalOrExpression": 21,
+            "ConditionalAndExpression": 22,
+            "EqualityExpression": 23,
+            "RelationalExpression": 24,
+            "AdditiveExpression": 25,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 29,
             "pathSegments": 13
         },
         "4": {
-            "inTpl": 15,
-            "path": 12,
+            "inTpl": 30,
+            "Expression": 31,
+            "ConditionalOrExpression": 21,
+            "ConditionalAndExpression": 22,
+            "EqualityExpression": 23,
+            "RelationalExpression": 24,
+            "AdditiveExpression": 25,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 29,
             "pathSegments": 13
         },
         "6": {
-            "statement": 17,
+            "statement": 33,
             "openBlock": 8,
             "tpl": 9,
-            "inverse": 18
+            "inverse": 34
         },
         "8": {
-            "program": 19,
+            "program": 35,
             "statements": 6,
             "statement": 7,
             "openBlock": 8,
             "tpl": 9
         },
         "12": {
-            "params": 25,
-            "param": 26,
-            "hash": 27,
-            "hashSegments": 28,
-            "hashSegment": 29,
-            "path": 30,
+            "params": 38,
+            "param": 39,
+            "Expression": 40,
+            "ConditionalOrExpression": 21,
+            "ConditionalAndExpression": 22,
+            "EqualityExpression": 23,
+            "RelationalExpression": 24,
+            "AdditiveExpression": 25,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "hash": 41,
+            "hashSegments": 42,
+            "hashSegment": 43,
+            "path": 44,
             "pathSegments": 13
         },
-        "18": {
-            "statements": 35,
+        "14": {
+            "Expression": 46,
+            "ConditionalOrExpression": 21,
+            "ConditionalAndExpression": 22,
+            "EqualityExpression": 23,
+            "RelationalExpression": 24,
+            "AdditiveExpression": 25,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "15": {
+            "UnaryExpression": 47,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "29": {
+            "params": 38,
+            "param": 39,
+            "Expression": 40,
+            "ConditionalOrExpression": 21,
+            "ConditionalAndExpression": 22,
+            "EqualityExpression": 23,
+            "RelationalExpression": 24,
+            "AdditiveExpression": 25,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "hash": 41,
+            "hashSegments": 42,
+            "hashSegment": 43,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "34": {
+            "statements": 66,
             "statement": 7,
             "openBlock": 8,
             "tpl": 9
         },
-        "19": {
-            "closeBlock": 37
-        },
-        "25": {
-            "param": 39,
-            "hash": 40,
-            "hashSegments": 28,
-            "hashSegment": 29,
-            "path": 30,
-            "pathSegments": 13
-        },
-        "28": {
-            "hashSegment": 42
-        },
         "35": {
-            "statement": 17,
-            "openBlock": 8,
-            "tpl": 9
+            "closeBlock": 68
         },
-        "36": {
+        "38": {
+            "param": 70,
+            "Expression": 40,
+            "ConditionalOrExpression": 21,
+            "ConditionalAndExpression": 22,
+            "EqualityExpression": 23,
+            "RelationalExpression": 24,
+            "AdditiveExpression": 25,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "hash": 71,
+            "hashSegments": 42,
+            "hashSegment": 43,
             "path": 44,
             "pathSegments": 13
         },
-        "38": {
-            "path": 48,
+        "42": {
+            "hashSegment": 73
+        },
+        "50": {
+            "ConditionalAndExpression": 77,
+            "EqualityExpression": 23,
+            "RelationalExpression": 24,
+            "AdditiveExpression": 25,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "51": {
+            "EqualityExpression": 78,
+            "RelationalExpression": 24,
+            "AdditiveExpression": 25,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "52": {
+            "RelationalExpression": 79,
+            "AdditiveExpression": 25,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "53": {
+            "RelationalExpression": 80,
+            "AdditiveExpression": 25,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "54": {
+            "AdditiveExpression": 81,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "55": {
+            "AdditiveExpression": 82,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "56": {
+            "AdditiveExpression": 83,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "57": {
+            "AdditiveExpression": 84,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "58": {
+            "MultiplicativeExpression": 85,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "59": {
+            "MultiplicativeExpression": 86,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "60": {
+            "UnaryExpression": 87,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "61": {
+            "UnaryExpression": 88,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "62": {
+            "UnaryExpression": 89,
+            "PrimaryExpression": 28,
+            "path": 44,
+            "pathSegments": 13
+        },
+        "66": {
+            "statement": 33,
+            "openBlock": 8,
+            "tpl": 9
+        },
+        "67": {
+            "path": 90,
+            "pathSegments": 13
+        },
+        "69": {
+            "Expression": 91,
+            "ConditionalOrExpression": 21,
+            "ConditionalAndExpression": 22,
+            "EqualityExpression": 23,
+            "RelationalExpression": 24,
+            "AdditiveExpression": 25,
+            "MultiplicativeExpression": 26,
+            "UnaryExpression": 27,
+            "PrimaryExpression": 28,
+            "path": 44,
             "pathSegments": 13
         }
     },
@@ -598,12 +969,52 @@ parser.table = {
             }
         },
         "3": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
             "ID": {
                 "type": 1,
                 "to": 10
             }
         },
         "4": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
             "ID": {
                 "type": 1,
                 "to": 10
@@ -625,7 +1036,7 @@ parser.table = {
             },
             "OPEN_INVERSE": {
                 "type": 1,
-                "to": 16
+                "to": 32
             },
             "OPEN_UN_ESCAPED": {
                 "type": 1,
@@ -725,575 +1136,2939 @@ parser.table = {
         "10": {
             "CLOSE": {
                 "type": 2,
-                "production": 32
+                "production": 56
             },
             "ID": {
                 "type": 2,
-                "production": 32
+                "production": 56
+            },
+            "NOT": {
+                "type": 2,
+                "production": 56
             },
             "STRING": {
                 "type": 2,
-                "production": 32
+                "production": 56
             },
             "NUMBER": {
                 "type": 2,
-                "production": 32
+                "production": 56
             },
             "BOOLEAN": {
                 "type": 2,
-                "production": 32
+                "production": 56
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 56
             },
             "SEP": {
                 "type": 2,
-                "production": 32
+                "production": 56
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 56
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 56
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 56
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 56
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 56
+            },
+            "AND": {
+                "type": 2,
+                "production": 56
+            },
+            "OR": {
+                "type": 2,
+                "production": 56
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 56
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 56
+            },
+            "GE": {
+                "type": 2,
+                "production": 56
+            },
+            "GT": {
+                "type": 2,
+                "production": 56
+            },
+            "LE": {
+                "type": 2,
+                "production": 56
+            },
+            "LT": {
+                "type": 2,
+                "production": 56
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 56
             }
         },
         "11": {
             "CLOSE": {
                 "type": 1,
-                "to": 20
+                "to": 36
             }
         },
         "12": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
             "STRING": {
                 "type": 1,
-                "to": 21
+                "to": 16
             },
             "BOOLEAN": {
                 "type": 1,
-                "to": 22
+                "to": 17
             },
             "NUMBER": {
                 "type": 1,
-                "to": 23
+                "to": 18
             },
             "ID": {
                 "type": 1,
-                "to": 24
+                "to": 37
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 18
+            }
+        },
+        "13": {
+            "SEP": {
+                "type": 1,
+                "to": 45
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 53
+            },
+            "ID": {
+                "type": 2,
+                "production": 53
+            },
+            "NOT": {
+                "type": 2,
+                "production": 53
+            },
+            "STRING": {
+                "type": 2,
+                "production": 53
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 53
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 53
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 53
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 53
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 53
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 53
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 53
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 53
+            },
+            "AND": {
+                "type": 2,
+                "production": 53
+            },
+            "OR": {
+                "type": 2,
+                "production": 53
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 53
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 53
+            },
+            "GE": {
+                "type": 2,
+                "production": 53
+            },
+            "GT": {
+                "type": 2,
+                "production": 53
+            },
+            "LE": {
+                "type": 2,
+                "production": 53
+            },
+            "LT": {
+                "type": 2,
+                "production": 53
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 53
+            }
+        },
+        "14": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "15": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "16": {
+            "CLOSE": {
+                "type": 2,
+                "production": 44
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 44
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 44
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 44
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 44
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 44
+            },
+            "AND": {
+                "type": 2,
+                "production": 44
+            },
+            "OR": {
+                "type": 2,
+                "production": 44
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 44
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 44
+            },
+            "GE": {
+                "type": 2,
+                "production": 44
+            },
+            "GT": {
+                "type": 2,
+                "production": 44
+            },
+            "LE": {
+                "type": 2,
+                "production": 44
+            },
+            "LT": {
+                "type": 2,
+                "production": 44
+            },
+            "ID": {
+                "type": 2,
+                "production": 44
+            },
+            "NOT": {
+                "type": 2,
+                "production": 44
+            },
+            "STRING": {
+                "type": 2,
+                "production": 44
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 44
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 44
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 44
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 44
+            }
+        },
+        "17": {
+            "CLOSE": {
+                "type": 2,
+                "production": 46
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 46
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 46
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 46
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 46
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 46
+            },
+            "AND": {
+                "type": 2,
+                "production": 46
+            },
+            "OR": {
+                "type": 2,
+                "production": 46
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 46
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 46
+            },
+            "GE": {
+                "type": 2,
+                "production": 46
+            },
+            "GT": {
+                "type": 2,
+                "production": 46
+            },
+            "LE": {
+                "type": 2,
+                "production": 46
+            },
+            "LT": {
+                "type": 2,
+                "production": 46
+            },
+            "ID": {
+                "type": 2,
+                "production": 46
+            },
+            "NOT": {
+                "type": 2,
+                "production": 46
+            },
+            "STRING": {
+                "type": 2,
+                "production": 46
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 46
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 46
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 46
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 46
+            }
+        },
+        "18": {
+            "CLOSE": {
+                "type": 2,
+                "production": 45
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 45
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 45
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 45
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 45
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 45
+            },
+            "AND": {
+                "type": 2,
+                "production": 45
+            },
+            "OR": {
+                "type": 2,
+                "production": 45
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 45
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 45
+            },
+            "GE": {
+                "type": 2,
+                "production": 45
+            },
+            "GT": {
+                "type": 2,
+                "production": 45
+            },
+            "LE": {
+                "type": 2,
+                "production": 45
+            },
+            "LT": {
+                "type": 2,
+                "production": 45
+            },
+            "ID": {
+                "type": 2,
+                "production": 45
+            },
+            "NOT": {
+                "type": 2,
+                "production": 45
+            },
+            "STRING": {
+                "type": 2,
+                "production": 45
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 45
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 45
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 45
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 45
+            }
+        },
+        "19": {
+            "CLOSE": {
+                "type": 1,
+                "to": 48
+            }
+        },
+        "20": {
+            "CLOSE": {
+                "type": 1,
+                "to": 49
+            }
+        },
+        "21": {
+            "OR": {
+                "type": 1,
+                "to": 50
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 22
+            },
+            "ID": {
+                "type": 2,
+                "production": 22
+            },
+            "NOT": {
+                "type": 2,
+                "production": 22
+            },
+            "STRING": {
+                "type": 2,
+                "production": 22
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 22
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 22
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 22
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 22
+            }
+        },
+        "22": {
+            "AND": {
+                "type": 1,
+                "to": 51
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 23
+            },
+            "OR": {
+                "type": 2,
+                "production": 23
+            },
+            "ID": {
+                "type": 2,
+                "production": 23
+            },
+            "NOT": {
+                "type": 2,
+                "production": 23
+            },
+            "STRING": {
+                "type": 2,
+                "production": 23
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 23
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 23
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 23
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 23
+            }
+        },
+        "23": {
+            "LOGIC_EQUALS": {
+                "type": 1,
+                "to": 52
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 1,
+                "to": 53
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 25
+            },
+            "AND": {
+                "type": 2,
+                "production": 25
+            },
+            "OR": {
+                "type": 2,
+                "production": 25
+            },
+            "ID": {
+                "type": 2,
+                "production": 25
+            },
+            "NOT": {
+                "type": 2,
+                "production": 25
+            },
+            "STRING": {
+                "type": 2,
+                "production": 25
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 25
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 25
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 25
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 25
+            }
+        },
+        "24": {
+            "GT": {
+                "type": 1,
+                "to": 54
+            },
+            "GE": {
+                "type": 1,
+                "to": 55
+            },
+            "LT": {
+                "type": 1,
+                "to": 56
+            },
+            "LE": {
+                "type": 1,
+                "to": 57
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 27
+            },
+            "AND": {
+                "type": 2,
+                "production": 27
+            },
+            "OR": {
+                "type": 2,
+                "production": 27
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 27
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 27
+            },
+            "ID": {
+                "type": 2,
+                "production": 27
+            },
+            "NOT": {
+                "type": 2,
+                "production": 27
+            },
+            "STRING": {
+                "type": 2,
+                "production": 27
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 27
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 27
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 27
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 27
+            }
+        },
+        "25": {
+            "PLUS": {
+                "type": 1,
+                "to": 58
+            },
+            "MINUS": {
+                "type": 1,
+                "to": 59
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 30
+            },
+            "AND": {
+                "type": 2,
+                "production": 30
+            },
+            "OR": {
+                "type": 2,
+                "production": 30
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 30
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 30
+            },
+            "GE": {
+                "type": 2,
+                "production": 30
+            },
+            "GT": {
+                "type": 2,
+                "production": 30
+            },
+            "LE": {
+                "type": 2,
+                "production": 30
+            },
+            "LT": {
+                "type": 2,
+                "production": 30
+            },
+            "ID": {
+                "type": 2,
+                "production": 30
+            },
+            "NOT": {
+                "type": 2,
+                "production": 30
+            },
+            "STRING": {
+                "type": 2,
+                "production": 30
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 30
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 30
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 30
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 30
+            }
+        },
+        "26": {
+            "MULTIPLY": {
+                "type": 1,
+                "to": 60
+            },
+            "DIVIDE": {
+                "type": 1,
+                "to": 61
+            },
+            "MODULUS": {
+                "type": 1,
+                "to": 62
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 35
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 35
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 35
+            },
+            "AND": {
+                "type": 2,
+                "production": 35
+            },
+            "OR": {
+                "type": 2,
+                "production": 35
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 35
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 35
+            },
+            "GE": {
+                "type": 2,
+                "production": 35
+            },
+            "GT": {
+                "type": 2,
+                "production": 35
+            },
+            "LE": {
+                "type": 2,
+                "production": 35
+            },
+            "LT": {
+                "type": 2,
+                "production": 35
+            },
+            "ID": {
+                "type": 2,
+                "production": 35
+            },
+            "NOT": {
+                "type": 2,
+                "production": 35
+            },
+            "STRING": {
+                "type": 2,
+                "production": 35
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 35
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 35
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 35
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 35
+            }
+        },
+        "27": {
+            "CLOSE": {
+                "type": 2,
+                "production": 38
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 38
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 38
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 38
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 38
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 38
+            },
+            "AND": {
+                "type": 2,
+                "production": 38
+            },
+            "OR": {
+                "type": 2,
+                "production": 38
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 38
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 38
+            },
+            "GE": {
+                "type": 2,
+                "production": 38
+            },
+            "GT": {
+                "type": 2,
+                "production": 38
+            },
+            "LE": {
+                "type": 2,
+                "production": 38
+            },
+            "LT": {
+                "type": 2,
+                "production": 38
+            },
+            "ID": {
+                "type": 2,
+                "production": 38
+            },
+            "NOT": {
+                "type": 2,
+                "production": 38
+            },
+            "STRING": {
+                "type": 2,
+                "production": 38
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 38
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 38
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 38
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 38
+            }
+        },
+        "28": {
+            "CLOSE": {
+                "type": 2,
+                "production": 43
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 43
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 43
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 43
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 43
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 43
+            },
+            "AND": {
+                "type": 2,
+                "production": 43
+            },
+            "OR": {
+                "type": 2,
+                "production": 43
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 43
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 43
+            },
+            "GE": {
+                "type": 2,
+                "production": 43
+            },
+            "GT": {
+                "type": 2,
+                "production": 43
+            },
+            "LE": {
+                "type": 2,
+                "production": 43
+            },
+            "LT": {
+                "type": 2,
+                "production": 43
+            },
+            "ID": {
+                "type": 2,
+                "production": 43
+            },
+            "NOT": {
+                "type": 2,
+                "production": 43
+            },
+            "STRING": {
+                "type": 2,
+                "production": 43
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 43
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 43
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 43
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 43
+            }
+        },
+        "29": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 37
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 18
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 47
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 47
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 47
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 47
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 47
+            },
+            "AND": {
+                "type": 2,
+                "production": 47
+            },
+            "OR": {
+                "type": 2,
+                "production": 47
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 47
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 47
+            },
+            "GE": {
+                "type": 2,
+                "production": 47
+            },
+            "GT": {
+                "type": 2,
+                "production": 47
+            },
+            "LE": {
+                "type": 2,
+                "production": 47
+            },
+            "LT": {
+                "type": 2,
+                "production": 47
+            }
+        },
+        "30": {
+            "CLOSE": {
+                "type": 1,
+                "to": 63
+            }
+        },
+        "31": {
+            "CLOSE": {
+                "type": 1,
+                "to": 64
+            }
+        },
+        "32": {
+            "CLOSE": {
+                "type": 1,
+                "to": 65
+            }
+        },
+        "33": {
+            "$EOF": {
+                "type": 2,
+                "production": 4
+            },
+            "OPEN_INVERSE": {
+                "type": 2,
+                "production": 4
+            },
+            "OPEN_BLOCK": {
+                "type": 2,
+                "production": 4
+            },
+            "OPEN": {
+                "type": 2,
+                "production": 4
+            },
+            "OPEN_UN_ESCAPED": {
+                "type": 2,
+                "production": 4
+            },
+            "CONTENT": {
+                "type": 2,
+                "production": 4
+            },
+            "OPEN_END_BLOCK": {
+                "type": 2,
+                "production": 4
+            }
+        },
+        "34": {
+            "CONTENT": {
+                "type": 1,
+                "to": 1
+            },
+            "OPEN_BLOCK": {
+                "type": 1,
+                "to": 2
+            },
+            "OPEN_UN_ESCAPED": {
+                "type": 1,
+                "to": 3
+            },
+            "OPEN": {
+                "type": 1,
+                "to": 4
+            }
+        },
+        "35": {
+            "OPEN_END_BLOCK": {
+                "type": 1,
+                "to": 67
+            }
+        },
+        "36": {
+            "OPEN_BLOCK": {
+                "type": 2,
+                "production": 8
+            },
+            "OPEN": {
+                "type": 2,
+                "production": 8
+            },
+            "OPEN_UN_ESCAPED": {
+                "type": 2,
+                "production": 8
+            },
+            "CONTENT": {
+                "type": 2,
+                "production": 8
+            }
+        },
+        "37": {
+            "EQUALS": {
+                "type": 1,
+                "to": 69
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 56
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 56
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 56
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 56
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 56
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 56
+            },
+            "AND": {
+                "type": 2,
+                "production": 56
+            },
+            "OR": {
+                "type": 2,
+                "production": 56
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 56
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 56
+            },
+            "GE": {
+                "type": 2,
+                "production": 56
+            },
+            "GT": {
+                "type": 2,
+                "production": 56
+            },
+            "LE": {
+                "type": 2,
+                "production": 56
+            },
+            "LT": {
+                "type": 2,
+                "production": 56
+            },
+            "ID": {
+                "type": 2,
+                "production": 56
+            },
+            "NOT": {
+                "type": 2,
+                "production": 56
+            },
+            "STRING": {
+                "type": 2,
+                "production": 56
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 56
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 56
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 56
+            },
+            "SEP": {
+                "type": 2,
+                "production": 56
+            }
+        },
+        "38": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 37
             },
             "CLOSE": {
                 "type": 2,
                 "production": 16
             }
         },
-        "13": {
-            "SEP": {
-                "type": 1,
-                "to": 31
-            },
-            "CLOSE": {
-                "type": 2,
-                "production": 30
-            },
-            "ID": {
-                "type": 2,
-                "production": 30
-            },
-            "STRING": {
-                "type": 2,
-                "production": 30
-            },
-            "NUMBER": {
-                "type": 2,
-                "production": 30
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 30
-            }
-        },
-        "14": {
-            "CLOSE": {
-                "type": 1,
-                "to": 32
-            }
-        },
-        "15": {
-            "CLOSE": {
-                "type": 1,
-                "to": 33
-            }
-        },
-        "16": {
-            "CLOSE": {
-                "type": 1,
-                "to": 34
-            }
-        },
-        "17": {
-            "$EOF": {
-                "type": 2,
-                "production": 4
-            },
-            "OPEN_INVERSE": {
-                "type": 2,
-                "production": 4
-            },
-            "OPEN_BLOCK": {
-                "type": 2,
-                "production": 4
-            },
-            "OPEN": {
-                "type": 2,
-                "production": 4
-            },
-            "OPEN_UN_ESCAPED": {
-                "type": 2,
-                "production": 4
-            },
-            "CONTENT": {
-                "type": 2,
-                "production": 4
-            },
-            "OPEN_END_BLOCK": {
-                "type": 2,
-                "production": 4
-            }
-        },
-        "18": {
-            "CONTENT": {
-                "type": 1,
-                "to": 1
-            },
-            "OPEN_BLOCK": {
-                "type": 1,
-                "to": 2
-            },
-            "OPEN_UN_ESCAPED": {
-                "type": 1,
-                "to": 3
-            },
-            "OPEN": {
-                "type": 1,
-                "to": 4
-            }
-        },
-        "19": {
-            "OPEN_END_BLOCK": {
-                "type": 1,
-                "to": 36
-            }
-        },
-        "20": {
-            "OPEN_BLOCK": {
-                "type": 2,
-                "production": 8
-            },
-            "OPEN": {
-                "type": 2,
-                "production": 8
-            },
-            "OPEN_UN_ESCAPED": {
-                "type": 2,
-                "production": 8
-            },
-            "CONTENT": {
-                "type": 2,
-                "production": 8
-            }
-        },
-        "21": {
-            "CLOSE": {
-                "type": 2,
-                "production": 20
-            },
-            "ID": {
-                "type": 2,
-                "production": 20
-            },
-            "STRING": {
-                "type": 2,
-                "production": 20
-            },
-            "NUMBER": {
-                "type": 2,
-                "production": 20
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 20
-            }
-        },
-        "22": {
-            "CLOSE": {
-                "type": 2,
-                "production": 22
-            },
-            "ID": {
-                "type": 2,
-                "production": 22
-            },
-            "STRING": {
-                "type": 2,
-                "production": 22
-            },
-            "NUMBER": {
-                "type": 2,
-                "production": 22
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 22
-            }
-        },
-        "23": {
-            "CLOSE": {
-                "type": 2,
-                "production": 21
-            },
-            "ID": {
-                "type": 2,
-                "production": 21
-            },
-            "STRING": {
-                "type": 2,
-                "production": 21
-            },
-            "NUMBER": {
-                "type": 2,
-                "production": 21
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 21
-            }
-        },
-        "24": {
-            "EQUALS": {
-                "type": 1,
-                "to": 38
-            },
-            "CLOSE": {
-                "type": 2,
-                "production": 32
-            },
-            "ID": {
-                "type": 2,
-                "production": 32
-            },
-            "STRING": {
-                "type": 2,
-                "production": 32
-            },
-            "NUMBER": {
-                "type": 2,
-                "production": 32
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 32
-            },
-            "SEP": {
-                "type": 2,
-                "production": 32
-            }
-        },
-        "25": {
-            "STRING": {
-                "type": 1,
-                "to": 21
-            },
-            "BOOLEAN": {
-                "type": 1,
-                "to": 22
-            },
-            "NUMBER": {
-                "type": 1,
-                "to": 23
-            },
-            "ID": {
-                "type": 1,
-                "to": 24
-            },
-            "CLOSE": {
-                "type": 2,
-                "production": 14
-            }
-        },
-        "26": {
-            "CLOSE": {
-                "type": 2,
-                "production": 18
-            },
-            "ID": {
-                "type": 2,
-                "production": 18
-            },
-            "STRING": {
-                "type": 2,
-                "production": 18
-            },
-            "NUMBER": {
-                "type": 2,
-                "production": 18
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 18
-            }
-        },
-        "27": {
-            "CLOSE": {
-                "type": 2,
-                "production": 15
-            }
-        },
-        "28": {
-            "ID": {
-                "type": 1,
-                "to": 41
-            },
-            "CLOSE": {
-                "type": 2,
-                "production": 23
-            }
-        },
-        "29": {
-            "CLOSE": {
-                "type": 2,
-                "production": 25
-            },
-            "ID": {
-                "type": 2,
-                "production": 25
-            }
-        },
-        "30": {
-            "CLOSE": {
-                "type": 2,
-                "production": 19
-            },
-            "ID": {
-                "type": 2,
-                "production": 19
-            },
-            "STRING": {
-                "type": 2,
-                "production": 19
-            },
-            "NUMBER": {
-                "type": 2,
-                "production": 19
-            },
-            "BOOLEAN": {
-                "type": 2,
-                "production": 19
-            }
-        },
-        "31": {
-            "ID": {
-                "type": 1,
-                "to": 43
-            }
-        },
-        "32": {
-            "$EOF": {
-                "type": 2,
-                "production": 11
-            },
-            "OPEN_INVERSE": {
-                "type": 2,
-                "production": 11
-            },
-            "OPEN_BLOCK": {
-                "type": 2,
-                "production": 11
-            },
-            "OPEN": {
-                "type": 2,
-                "production": 11
-            },
-            "OPEN_UN_ESCAPED": {
-                "type": 2,
-                "production": 11
-            },
-            "CONTENT": {
-                "type": 2,
-                "production": 11
-            },
-            "OPEN_END_BLOCK": {
-                "type": 2,
-                "production": 11
-            }
-        },
-        "33": {
-            "$EOF": {
-                "type": 2,
-                "production": 10
-            },
-            "OPEN_INVERSE": {
-                "type": 2,
-                "production": 10
-            },
-            "OPEN_BLOCK": {
-                "type": 2,
-                "production": 10
-            },
-            "OPEN": {
-                "type": 2,
-                "production": 10
-            },
-            "OPEN_UN_ESCAPED": {
-                "type": 2,
-                "production": 10
-            },
-            "CONTENT": {
-                "type": 2,
-                "production": 10
-            },
-            "OPEN_END_BLOCK": {
-                "type": 2,
-                "production": 10
-            }
-        },
-        "34": {
-            "OPEN_BLOCK": {
-                "type": 2,
-                "production": 12
-            },
-            "OPEN": {
-                "type": 2,
-                "production": 12
-            },
-            "OPEN_UN_ESCAPED": {
-                "type": 2,
-                "production": 12
-            },
-            "CONTENT": {
-                "type": 2,
-                "production": 12
-            }
-        },
-        "35": {
-            "CONTENT": {
-                "type": 1,
-                "to": 1
-            },
-            "OPEN_BLOCK": {
-                "type": 1,
-                "to": 2
-            },
-            "OPEN_UN_ESCAPED": {
-                "type": 1,
-                "to": 3
-            },
-            "OPEN": {
-                "type": 1,
-                "to": 4
-            },
-            "$EOF": {
-                "type": 2,
-                "production": 1
-            },
-            "OPEN_END_BLOCK": {
-                "type": 2,
-                "production": 1
-            }
-        },
-        "36": {
-            "ID": {
-                "type": 1,
-                "to": 10
-            }
-        },
-        "37": {
-            "$EOF": {
-                "type": 2,
-                "production": 5
-            },
-            "OPEN_INVERSE": {
-                "type": 2,
-                "production": 5
-            },
-            "OPEN_BLOCK": {
-                "type": 2,
-                "production": 5
-            },
-            "OPEN": {
-                "type": 2,
-                "production": 5
-            },
-            "OPEN_UN_ESCAPED": {
-                "type": 2,
-                "production": 5
-            },
-            "CONTENT": {
-                "type": 2,
-                "production": 5
-            },
-            "OPEN_END_BLOCK": {
-                "type": 2,
-                "production": 5
-            }
-        },
-        "38": {
-            "STRING": {
-                "type": 1,
-                "to": 45
-            },
-            "BOOLEAN": {
-                "type": 1,
-                "to": 46
-            },
-            "NUMBER": {
-                "type": 1,
-                "to": 47
-            },
-            "ID": {
-                "type": 1,
-                "to": 10
-            }
-        },
         "39": {
             "CLOSE": {
                 "type": 2,
-                "production": 17
+                "production": 20
             },
             "ID": {
                 "type": 2,
-                "production": 17
+                "production": 20
+            },
+            "NOT": {
+                "type": 2,
+                "production": 20
             },
             "STRING": {
                 "type": 2,
-                "production": 17
+                "production": 20
             },
             "NUMBER": {
                 "type": 2,
-                "production": 17
+                "production": 20
             },
             "BOOLEAN": {
                 "type": 2,
-                "production": 17
+                "production": 20
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 20
             }
         },
         "40": {
             "CLOSE": {
                 "type": 2,
-                "production": 13
-            }
-        },
-        "41": {
-            "EQUALS": {
-                "type": 1,
-                "to": 38
-            }
-        },
-        "42": {
-            "CLOSE": {
-                "type": 2,
-                "production": 24
+                "production": 21
             },
             "ID": {
                 "type": 2,
-                "production": 24
+                "production": 21
+            },
+            "NOT": {
+                "type": 2,
+                "production": 21
+            },
+            "STRING": {
+                "type": 2,
+                "production": 21
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 21
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 21
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 21
+            }
+        },
+        "41": {
+            "CLOSE": {
+                "type": 2,
+                "production": 17
+            }
+        },
+        "42": {
+            "ID": {
+                "type": 1,
+                "to": 72
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 49
             }
         },
         "43": {
             "CLOSE": {
                 "type": 2,
+                "production": 51
+            },
+            "ID": {
+                "type": 2,
+                "production": 51
+            }
+        },
+        "44": {
+            "CLOSE": {
+                "type": 2,
+                "production": 47
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 47
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 47
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 47
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 47
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 47
+            },
+            "AND": {
+                "type": 2,
+                "production": 47
+            },
+            "OR": {
+                "type": 2,
+                "production": 47
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 47
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 47
+            },
+            "GE": {
+                "type": 2,
+                "production": 47
+            },
+            "GT": {
+                "type": 2,
+                "production": 47
+            },
+            "LE": {
+                "type": 2,
+                "production": 47
+            },
+            "LT": {
+                "type": 2,
+                "production": 47
+            },
+            "ID": {
+                "type": 2,
+                "production": 47
+            },
+            "NOT": {
+                "type": 2,
+                "production": 47
+            },
+            "STRING": {
+                "type": 2,
+                "production": 47
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 47
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 47
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 47
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 47
+            }
+        },
+        "45": {
+            "NUMBER": {
+                "type": 1,
+                "to": 74
+            },
+            "ID": {
+                "type": 1,
+                "to": 75
+            }
+        },
+        "46": {
+            "RPAREN": {
+                "type": 1,
+                "to": 76
+            }
+        },
+        "47": {
+            "CLOSE": {
+                "type": 2,
+                "production": 42
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 42
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 42
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 42
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 42
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 42
+            },
+            "AND": {
+                "type": 2,
+                "production": 42
+            },
+            "OR": {
+                "type": 2,
+                "production": 42
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 42
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 42
+            },
+            "GE": {
+                "type": 2,
+                "production": 42
+            },
+            "GT": {
+                "type": 2,
+                "production": 42
+            },
+            "LE": {
+                "type": 2,
+                "production": 42
+            },
+            "LT": {
+                "type": 2,
+                "production": 42
+            },
+            "ID": {
+                "type": 2,
+                "production": 42
+            },
+            "NOT": {
+                "type": 2,
+                "production": 42
+            },
+            "STRING": {
+                "type": 2,
+                "production": 42
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 42
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 42
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 42
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 42
+            }
+        },
+        "48": {
+            "$EOF": {
+                "type": 2,
+                "production": 11
+            },
+            "OPEN_INVERSE": {
+                "type": 2,
+                "production": 11
+            },
+            "OPEN_BLOCK": {
+                "type": 2,
+                "production": 11
+            },
+            "OPEN": {
+                "type": 2,
+                "production": 11
+            },
+            "OPEN_UN_ESCAPED": {
+                "type": 2,
+                "production": 11
+            },
+            "CONTENT": {
+                "type": 2,
+                "production": 11
+            },
+            "OPEN_END_BLOCK": {
+                "type": 2,
+                "production": 11
+            }
+        },
+        "49": {
+            "$EOF": {
+                "type": 2,
+                "production": 13
+            },
+            "OPEN_INVERSE": {
+                "type": 2,
+                "production": 13
+            },
+            "OPEN_BLOCK": {
+                "type": 2,
+                "production": 13
+            },
+            "OPEN": {
+                "type": 2,
+                "production": 13
+            },
+            "OPEN_UN_ESCAPED": {
+                "type": 2,
+                "production": 13
+            },
+            "CONTENT": {
+                "type": 2,
+                "production": 13
+            },
+            "OPEN_END_BLOCK": {
+                "type": 2,
+                "production": 13
+            }
+        },
+        "50": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "51": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "52": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "53": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "54": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "55": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "56": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "57": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "58": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "59": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "60": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "61": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "62": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "63": {
+            "$EOF": {
+                "type": 2,
+                "production": 10
+            },
+            "OPEN_INVERSE": {
+                "type": 2,
+                "production": 10
+            },
+            "OPEN_BLOCK": {
+                "type": 2,
+                "production": 10
+            },
+            "OPEN": {
+                "type": 2,
+                "production": 10
+            },
+            "OPEN_UN_ESCAPED": {
+                "type": 2,
+                "production": 10
+            },
+            "CONTENT": {
+                "type": 2,
+                "production": 10
+            },
+            "OPEN_END_BLOCK": {
+                "type": 2,
+                "production": 10
+            }
+        },
+        "64": {
+            "$EOF": {
+                "type": 2,
+                "production": 12
+            },
+            "OPEN_INVERSE": {
+                "type": 2,
+                "production": 12
+            },
+            "OPEN_BLOCK": {
+                "type": 2,
+                "production": 12
+            },
+            "OPEN": {
+                "type": 2,
+                "production": 12
+            },
+            "OPEN_UN_ESCAPED": {
+                "type": 2,
+                "production": 12
+            },
+            "CONTENT": {
+                "type": 2,
+                "production": 12
+            },
+            "OPEN_END_BLOCK": {
+                "type": 2,
+                "production": 12
+            }
+        },
+        "65": {
+            "OPEN_BLOCK": {
+                "type": 2,
+                "production": 14
+            },
+            "OPEN": {
+                "type": 2,
+                "production": 14
+            },
+            "OPEN_UN_ESCAPED": {
+                "type": 2,
+                "production": 14
+            },
+            "CONTENT": {
+                "type": 2,
+                "production": 14
+            }
+        },
+        "66": {
+            "CONTENT": {
+                "type": 1,
+                "to": 1
+            },
+            "OPEN_BLOCK": {
+                "type": 1,
+                "to": 2
+            },
+            "OPEN_UN_ESCAPED": {
+                "type": 1,
+                "to": 3
+            },
+            "OPEN": {
+                "type": 1,
+                "to": 4
+            },
+            "$EOF": {
+                "type": 2,
+                "production": 1
+            },
+            "OPEN_END_BLOCK": {
+                "type": 2,
+                "production": 1
+            }
+        },
+        "67": {
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "68": {
+            "$EOF": {
+                "type": 2,
+                "production": 5
+            },
+            "OPEN_INVERSE": {
+                "type": 2,
+                "production": 5
+            },
+            "OPEN_BLOCK": {
+                "type": 2,
+                "production": 5
+            },
+            "OPEN": {
+                "type": 2,
+                "production": 5
+            },
+            "OPEN_UN_ESCAPED": {
+                "type": 2,
+                "production": 5
+            },
+            "CONTENT": {
+                "type": 2,
+                "production": 5
+            },
+            "OPEN_END_BLOCK": {
+                "type": 2,
+                "production": 5
+            }
+        },
+        "69": {
+            "LPAREN": {
+                "type": 1,
+                "to": 14
+            },
+            "NOT": {
+                "type": 1,
+                "to": 15
+            },
+            "STRING": {
+                "type": 1,
+                "to": 16
+            },
+            "BOOLEAN": {
+                "type": 1,
+                "to": 17
+            },
+            "NUMBER": {
+                "type": 1,
+                "to": 18
+            },
+            "ID": {
+                "type": 1,
+                "to": 10
+            }
+        },
+        "70": {
+            "CLOSE": {
+                "type": 2,
+                "production": 19
+            },
+            "ID": {
+                "type": 2,
+                "production": 19
+            },
+            "NOT": {
+                "type": 2,
+                "production": 19
+            },
+            "STRING": {
+                "type": 2,
+                "production": 19
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 19
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 19
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 19
+            }
+        },
+        "71": {
+            "CLOSE": {
+                "type": 2,
+                "production": 15
+            }
+        },
+        "72": {
+            "EQUALS": {
+                "type": 1,
+                "to": 69
+            }
+        },
+        "73": {
+            "CLOSE": {
+                "type": 2,
+                "production": 50
+            },
+            "ID": {
+                "type": 2,
+                "production": 50
+            }
+        },
+        "74": {
+            "CLOSE": {
+                "type": 2,
+                "production": 55
+            },
+            "ID": {
+                "type": 2,
+                "production": 55
+            },
+            "NOT": {
+                "type": 2,
+                "production": 55
+            },
+            "STRING": {
+                "type": 2,
+                "production": 55
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 55
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 55
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 55
+            },
+            "SEP": {
+                "type": 2,
+                "production": 55
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 55
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 55
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 55
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 55
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 55
+            },
+            "AND": {
+                "type": 2,
+                "production": 55
+            },
+            "OR": {
+                "type": 2,
+                "production": 55
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 55
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 55
+            },
+            "GE": {
+                "type": 2,
+                "production": 55
+            },
+            "GT": {
+                "type": 2,
+                "production": 55
+            },
+            "LE": {
+                "type": 2,
+                "production": 55
+            },
+            "LT": {
+                "type": 2,
+                "production": 55
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 55
+            }
+        },
+        "75": {
+            "CLOSE": {
+                "type": 2,
+                "production": 54
+            },
+            "ID": {
+                "type": 2,
+                "production": 54
+            },
+            "NOT": {
+                "type": 2,
+                "production": 54
+            },
+            "STRING": {
+                "type": 2,
+                "production": 54
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 54
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 54
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 54
+            },
+            "SEP": {
+                "type": 2,
+                "production": 54
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 54
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 54
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 54
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 54
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 54
+            },
+            "AND": {
+                "type": 2,
+                "production": 54
+            },
+            "OR": {
+                "type": 2,
+                "production": 54
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 54
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 54
+            },
+            "GE": {
+                "type": 2,
+                "production": 54
+            },
+            "GT": {
+                "type": 2,
+                "production": 54
+            },
+            "LE": {
+                "type": 2,
+                "production": 54
+            },
+            "LT": {
+                "type": 2,
+                "production": 54
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 54
+            }
+        },
+        "76": {
+            "CLOSE": {
+                "type": 2,
+                "production": 48
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 48
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 48
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 48
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 48
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 48
+            },
+            "AND": {
+                "type": 2,
+                "production": 48
+            },
+            "OR": {
+                "type": 2,
+                "production": 48
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 48
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 48
+            },
+            "GE": {
+                "type": 2,
+                "production": 48
+            },
+            "GT": {
+                "type": 2,
+                "production": 48
+            },
+            "LE": {
+                "type": 2,
+                "production": 48
+            },
+            "LT": {
+                "type": 2,
+                "production": 48
+            },
+            "ID": {
+                "type": 2,
+                "production": 48
+            },
+            "NOT": {
+                "type": 2,
+                "production": 48
+            },
+            "STRING": {
+                "type": 2,
+                "production": 48
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 48
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 48
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 48
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 48
+            }
+        },
+        "77": {
+            "AND": {
+                "type": 1,
+                "to": 51
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 24
+            },
+            "OR": {
+                "type": 2,
+                "production": 24
+            },
+            "ID": {
+                "type": 2,
+                "production": 24
+            },
+            "NOT": {
+                "type": 2,
+                "production": 24
+            },
+            "STRING": {
+                "type": 2,
+                "production": 24
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 24
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 24
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 24
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 24
+            }
+        },
+        "78": {
+            "LOGIC_EQUALS": {
+                "type": 1,
+                "to": 52
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 1,
+                "to": 53
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 26
+            },
+            "AND": {
+                "type": 2,
+                "production": 26
+            },
+            "OR": {
+                "type": 2,
+                "production": 26
+            },
+            "ID": {
+                "type": 2,
+                "production": 26
+            },
+            "NOT": {
+                "type": 2,
+                "production": 26
+            },
+            "STRING": {
+                "type": 2,
+                "production": 26
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 26
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 26
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 26
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 26
+            }
+        },
+        "79": {
+            "GT": {
+                "type": 1,
+                "to": 54
+            },
+            "GE": {
+                "type": 1,
+                "to": 55
+            },
+            "LT": {
+                "type": 1,
+                "to": 56
+            },
+            "LE": {
+                "type": 1,
+                "to": 57
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 28
+            },
+            "AND": {
+                "type": 2,
+                "production": 28
+            },
+            "OR": {
+                "type": 2,
+                "production": 28
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 28
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 28
+            },
+            "ID": {
+                "type": 2,
+                "production": 28
+            },
+            "NOT": {
+                "type": 2,
+                "production": 28
+            },
+            "STRING": {
+                "type": 2,
+                "production": 28
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 28
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 28
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 28
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 28
+            }
+        },
+        "80": {
+            "GT": {
+                "type": 1,
+                "to": 54
+            },
+            "GE": {
+                "type": 1,
+                "to": 55
+            },
+            "LT": {
+                "type": 1,
+                "to": 56
+            },
+            "LE": {
+                "type": 1,
+                "to": 57
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 29
+            },
+            "AND": {
+                "type": 2,
+                "production": 29
+            },
+            "OR": {
+                "type": 2,
+                "production": 29
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 29
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 29
+            },
+            "ID": {
+                "type": 2,
+                "production": 29
+            },
+            "NOT": {
+                "type": 2,
+                "production": 29
+            },
+            "STRING": {
+                "type": 2,
+                "production": 29
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 29
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 29
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 29
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 29
+            }
+        },
+        "81": {
+            "PLUS": {
+                "type": 1,
+                "to": 58
+            },
+            "MINUS": {
+                "type": 1,
+                "to": 59
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 32
+            },
+            "AND": {
+                "type": 2,
+                "production": 32
+            },
+            "OR": {
+                "type": 2,
+                "production": 32
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 32
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 32
+            },
+            "GE": {
+                "type": 2,
+                "production": 32
+            },
+            "GT": {
+                "type": 2,
+                "production": 32
+            },
+            "LE": {
+                "type": 2,
+                "production": 32
+            },
+            "LT": {
+                "type": 2,
+                "production": 32
+            },
+            "ID": {
+                "type": 2,
+                "production": 32
+            },
+            "NOT": {
+                "type": 2,
+                "production": 32
+            },
+            "STRING": {
+                "type": 2,
+                "production": 32
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 32
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 32
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 32
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 32
+            }
+        },
+        "82": {
+            "PLUS": {
+                "type": 1,
+                "to": 58
+            },
+            "MINUS": {
+                "type": 1,
+                "to": 59
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 34
+            },
+            "AND": {
+                "type": 2,
+                "production": 34
+            },
+            "OR": {
+                "type": 2,
+                "production": 34
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 34
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 34
+            },
+            "GE": {
+                "type": 2,
+                "production": 34
+            },
+            "GT": {
+                "type": 2,
+                "production": 34
+            },
+            "LE": {
+                "type": 2,
+                "production": 34
+            },
+            "LT": {
+                "type": 2,
+                "production": 34
+            },
+            "ID": {
+                "type": 2,
+                "production": 34
+            },
+            "NOT": {
+                "type": 2,
+                "production": 34
+            },
+            "STRING": {
+                "type": 2,
+                "production": 34
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 34
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 34
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 34
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 34
+            }
+        },
+        "83": {
+            "PLUS": {
+                "type": 1,
+                "to": 58
+            },
+            "MINUS": {
+                "type": 1,
+                "to": 59
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 31
+            },
+            "AND": {
+                "type": 2,
+                "production": 31
+            },
+            "OR": {
+                "type": 2,
+                "production": 31
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 31
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 31
+            },
+            "GE": {
+                "type": 2,
+                "production": 31
+            },
+            "GT": {
+                "type": 2,
+                "production": 31
+            },
+            "LE": {
+                "type": 2,
+                "production": 31
+            },
+            "LT": {
+                "type": 2,
                 "production": 31
             },
             "ID": {
+                "type": 2,
+                "production": 31
+            },
+            "NOT": {
                 "type": 2,
                 "production": 31
             },
@@ -1309,58 +4084,536 @@ parser.table = {
                 "type": 2,
                 "production": 31
             },
-            "SEP": {
+            "LPAREN": {
+                "type": 2,
+                "production": 31
+            },
+            "RPAREN": {
                 "type": 2,
                 "production": 31
             }
         },
-        "44": {
+        "84": {
+            "PLUS": {
+                "type": 1,
+                "to": 58
+            },
+            "MINUS": {
+                "type": 1,
+                "to": 59
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 33
+            },
+            "AND": {
+                "type": 2,
+                "production": 33
+            },
+            "OR": {
+                "type": 2,
+                "production": 33
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 33
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 33
+            },
+            "GE": {
+                "type": 2,
+                "production": 33
+            },
+            "GT": {
+                "type": 2,
+                "production": 33
+            },
+            "LE": {
+                "type": 2,
+                "production": 33
+            },
+            "LT": {
+                "type": 2,
+                "production": 33
+            },
+            "ID": {
+                "type": 2,
+                "production": 33
+            },
+            "NOT": {
+                "type": 2,
+                "production": 33
+            },
+            "STRING": {
+                "type": 2,
+                "production": 33
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 33
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 33
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 33
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 33
+            }
+        },
+        "85": {
+            "MULTIPLY": {
+                "type": 1,
+                "to": 60
+            },
+            "DIVIDE": {
+                "type": 1,
+                "to": 61
+            },
+            "MODULUS": {
+                "type": 1,
+                "to": 62
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 36
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 36
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 36
+            },
+            "AND": {
+                "type": 2,
+                "production": 36
+            },
+            "OR": {
+                "type": 2,
+                "production": 36
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 36
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 36
+            },
+            "GE": {
+                "type": 2,
+                "production": 36
+            },
+            "GT": {
+                "type": 2,
+                "production": 36
+            },
+            "LE": {
+                "type": 2,
+                "production": 36
+            },
+            "LT": {
+                "type": 2,
+                "production": 36
+            },
+            "ID": {
+                "type": 2,
+                "production": 36
+            },
+            "NOT": {
+                "type": 2,
+                "production": 36
+            },
+            "STRING": {
+                "type": 2,
+                "production": 36
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 36
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 36
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 36
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 36
+            }
+        },
+        "86": {
+            "MULTIPLY": {
+                "type": 1,
+                "to": 60
+            },
+            "DIVIDE": {
+                "type": 1,
+                "to": 61
+            },
+            "MODULUS": {
+                "type": 1,
+                "to": 62
+            },
+            "CLOSE": {
+                "type": 2,
+                "production": 37
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 37
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 37
+            },
+            "AND": {
+                "type": 2,
+                "production": 37
+            },
+            "OR": {
+                "type": 2,
+                "production": 37
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 37
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 37
+            },
+            "GE": {
+                "type": 2,
+                "production": 37
+            },
+            "GT": {
+                "type": 2,
+                "production": 37
+            },
+            "LE": {
+                "type": 2,
+                "production": 37
+            },
+            "LT": {
+                "type": 2,
+                "production": 37
+            },
+            "ID": {
+                "type": 2,
+                "production": 37
+            },
+            "NOT": {
+                "type": 2,
+                "production": 37
+            },
+            "STRING": {
+                "type": 2,
+                "production": 37
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 37
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 37
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 37
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 37
+            }
+        },
+        "87": {
+            "CLOSE": {
+                "type": 2,
+                "production": 39
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 39
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 39
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 39
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 39
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 39
+            },
+            "AND": {
+                "type": 2,
+                "production": 39
+            },
+            "OR": {
+                "type": 2,
+                "production": 39
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 39
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 39
+            },
+            "GE": {
+                "type": 2,
+                "production": 39
+            },
+            "GT": {
+                "type": 2,
+                "production": 39
+            },
+            "LE": {
+                "type": 2,
+                "production": 39
+            },
+            "LT": {
+                "type": 2,
+                "production": 39
+            },
+            "ID": {
+                "type": 2,
+                "production": 39
+            },
+            "NOT": {
+                "type": 2,
+                "production": 39
+            },
+            "STRING": {
+                "type": 2,
+                "production": 39
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 39
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 39
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 39
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 39
+            }
+        },
+        "88": {
+            "CLOSE": {
+                "type": 2,
+                "production": 40
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 40
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 40
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 40
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 40
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 40
+            },
+            "AND": {
+                "type": 2,
+                "production": 40
+            },
+            "OR": {
+                "type": 2,
+                "production": 40
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 40
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 40
+            },
+            "GE": {
+                "type": 2,
+                "production": 40
+            },
+            "GT": {
+                "type": 2,
+                "production": 40
+            },
+            "LE": {
+                "type": 2,
+                "production": 40
+            },
+            "LT": {
+                "type": 2,
+                "production": 40
+            },
+            "ID": {
+                "type": 2,
+                "production": 40
+            },
+            "NOT": {
+                "type": 2,
+                "production": 40
+            },
+            "STRING": {
+                "type": 2,
+                "production": 40
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 40
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 40
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 40
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 40
+            }
+        },
+        "89": {
+            "CLOSE": {
+                "type": 2,
+                "production": 41
+            },
+            "MINUS": {
+                "type": 2,
+                "production": 41
+            },
+            "PLUS": {
+                "type": 2,
+                "production": 41
+            },
+            "DIVIDE": {
+                "type": 2,
+                "production": 41
+            },
+            "MODULUS": {
+                "type": 2,
+                "production": 41
+            },
+            "MULTIPLY": {
+                "type": 2,
+                "production": 41
+            },
+            "AND": {
+                "type": 2,
+                "production": 41
+            },
+            "OR": {
+                "type": 2,
+                "production": 41
+            },
+            "LOGIC_EQUALS": {
+                "type": 2,
+                "production": 41
+            },
+            "LOGIC_NOT_EQUALS": {
+                "type": 2,
+                "production": 41
+            },
+            "GE": {
+                "type": 2,
+                "production": 41
+            },
+            "GT": {
+                "type": 2,
+                "production": 41
+            },
+            "LE": {
+                "type": 2,
+                "production": 41
+            },
+            "LT": {
+                "type": 2,
+                "production": 41
+            },
+            "ID": {
+                "type": 2,
+                "production": 41
+            },
+            "NOT": {
+                "type": 2,
+                "production": 41
+            },
+            "STRING": {
+                "type": 2,
+                "production": 41
+            },
+            "NUMBER": {
+                "type": 2,
+                "production": 41
+            },
+            "BOOLEAN": {
+                "type": 2,
+                "production": 41
+            },
+            "LPAREN": {
+                "type": 2,
+                "production": 41
+            },
+            "RPAREN": {
+                "type": 2,
+                "production": 41
+            }
+        },
+        "90": {
             "CLOSE": {
                 "type": 1,
-                "to": 49
+                "to": 92
             }
         },
-        "45": {
+        "91": {
             "CLOSE": {
                 "type": 2,
-                "production": 27
+                "production": 52
             },
             "ID": {
                 "type": 2,
-                "production": 27
+                "production": 52
             }
         },
-        "46": {
-            "CLOSE": {
-                "type": 2,
-                "production": 29
-            },
-            "ID": {
-                "type": 2,
-                "production": 29
-            }
-        },
-        "47": {
-            "CLOSE": {
-                "type": 2,
-                "production": 28
-            },
-            "ID": {
-                "type": 2,
-                "production": 28
-            }
-        },
-        "48": {
-            "CLOSE": {
-                "type": 2,
-                "production": 26
-            },
-            "ID": {
-                "type": 2,
-                "production": 26
-            }
-        },
-        "49": {
+        "92": {
             "$EOF": {
                 "type": 2,
                 "production": 9

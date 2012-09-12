@@ -77,6 +77,24 @@ x({
             }
         },
         {
+            symbol: 'tpl',
+            rhs: ['OPEN', 'Expression', 'CLOSE'],
+            action: function () {
+                return new this.yy.TplExpressionNode(this.lexer.lineNumber,
+                    this.$2);
+            }
+        },
+        {
+            symbol: 'tpl',
+            rhs: ['OPEN_UN_ESCAPED', 'Expression', 'CLOSE'],
+            action: function () {
+                var tpl = new this.yy.TplExpressionNode(this.lexer.lineNumber,
+                    this.$2);
+                tpl.escaped = false;
+                return tpl;
+            }
+        },
+        {
             symbol: 'inverse',
             rhs: ['OPEN_INVERSE', 'CLOSE']
         },
@@ -124,29 +142,193 @@ x({
         },
         {
             symbol: 'param',
-            rhs: ['path']
+            rhs: ['Expression']
+        },
+
+    /**
+     * expression start
+     */
+        {
+            symbol: 'Expression',
+            rhs: ['ConditionalOrExpression']
+        },
+
+        {
+            symbol: 'ConditionalOrExpression',
+            rhs: ['ConditionalAndExpression']
         },
         {
-            symbol: 'param',
+            symbol: 'ConditionalOrExpression',
+            rhs: ['ConditionalOrExpression', 'OR', 'ConditionalAndExpression'],
+            action: function () {
+                return new this.yy.ConditionalOrExpression(this.$1, this.$3);
+            }
+        },
+
+        {
+            symbol: 'ConditionalAndExpression',
+            rhs: ['EqualityExpression']
+        },
+        {
+            symbol: 'ConditionalAndExpression',
+            rhs: ['ConditionalAndExpression', 'AND', 'EqualityExpression'],
+            action: function () {
+                return new this.yy.ConditionalAndExpression(this.$1, this.$3);
+            }
+        },
+
+        {
+            symbol: 'EqualityExpression',
+            rhs: ['RelationalExpression']
+        },
+        {
+            symbol: 'EqualityExpression',
+            rhs: ['EqualityExpression', 'LOGIC_EQUALS', 'RelationalExpression'],
+            action: function () {
+                return new this.yy.EqualityExpression(this.$1, '===', this.$3);
+            }
+        },
+        {
+            symbol: 'EqualityExpression',
+            rhs: ['EqualityExpression', 'LOGIC_NOT_EQUALS', 'RelationalExpression'],
+            action: function () {
+                return new this.yy.EqualityExpression(this.$1, '!==', this.$3);
+            }
+        },
+
+        {
+            symbol: 'RelationalExpression',
+            rhs: ['AdditiveExpression']
+        },
+        {
+            symbol: 'RelationalExpression',
+            rhs: ['RelationalExpression', 'LT', 'AdditiveExpression'],
+            action: function () {
+                return new this.yy.RelationalExpression(this.$1, '<=', this.$3);
+            }
+        },
+        {
+            symbol: 'RelationalExpression',
+            rhs: ['RelationalExpression', 'GT', 'AdditiveExpression'],
+            action: function () {
+                return new this.yy.RelationalExpression(this.$1, '>', this.$3);
+            }
+        },
+        {
+            symbol: 'RelationalExpression',
+            rhs: ['RelationalExpression', 'LE', 'AdditiveExpression'],
+            action: function () {
+                return new this.yy.RelationalExpression(this.$1, '<=', this.$3);
+            }
+        },
+        {
+            symbol: 'RelationalExpression',
+            rhs: ['RelationalExpression', 'GE', 'AdditiveExpression'],
+            action: function () {
+                return new this.yy.RelationalExpression(this.$1, '>=', this.$3);
+            }
+        },
+
+        {
+            symbol: 'AdditiveExpression',
+            rhs: ['MultiplicativeExpression']
+        },
+        {
+            symbol: 'AdditiveExpression',
+            rhs: ['AdditiveExpression', 'PLUS', 'MultiplicativeExpression'],
+            action: function () {
+                return new this.yy.AdditiveExpression(this.$1, '+', this.$3);
+            }
+        },
+        {
+            symbol: 'AdditiveExpression',
+            rhs: ['AdditiveExpression', 'MINUS', 'MultiplicativeExpression'],
+            action: function () {
+                return new this.yy.AdditiveExpression(this.$1, '-', this.$3);
+            }
+        },
+
+
+        {
+            symbol: 'MultiplicativeExpression',
+            rhs: ['UnaryExpression']
+        },
+        {
+            symbol: 'MultiplicativeExpression',
+            rhs: ['MultiplicativeExpression', 'MULTIPLY', 'UnaryExpression'],
+            action: function () {
+                return new this.yy.MultiplicativeExpression(this.$1, '*', this.$3);
+            }
+        },
+        {
+            symbol: 'MultiplicativeExpression',
+            rhs: ['MultiplicativeExpression', 'DIVIDE', 'UnaryExpression'],
+            action: function () {
+                return new this.yy.MultiplicativeExpression(this.$1, '/', this.$3);
+            }
+        },
+        {
+            symbol: 'MultiplicativeExpression',
+            rhs: ['MultiplicativeExpression', 'MODULUS', 'UnaryExpression'],
+            action: function () {
+                return new this.yy.MultiplicativeExpression(this.$1, '%', this.$3);
+            }
+        },
+
+        {
+            symbol: 'UnaryExpression',
+            rhs: ['NOT', 'UnaryExpression'],
+            action: function () {
+                return new this.yy.UnaryExpression(this.$1);
+            }
+        },
+
+        {
+            symbol: 'UnaryExpression',
+            rhs: ['PrimaryExpression']
+        },
+
+        {
+            symbol: 'PrimaryExpression',
             rhs: ['STRING'],
             action: function () {
                 return new this.yy.StringNode(this.lexer.lineNumber, this.$1);
             }
         },
+
         {
-            symbol: 'param',
+            symbol: 'PrimaryExpression',
             rhs: ['NUMBER'],
             action: function () {
                 return new this.yy.NumberNode(this.lexer.lineNumber, this.$1);
             }
         },
+
         {
-            symbol: 'param',
+            symbol: 'PrimaryExpression',
             rhs: ['BOOLEAN'],
             action: function () {
                 return new this.yy.BooleanNode(this.lexer.lineNumber, this.$1);
             }
         },
+
+        {
+            symbol: 'PrimaryExpression',
+            rhs: ['path']
+        },
+
+        {
+            symbol: 'PrimaryExpression',
+            rhs: ['LPAREN', 'Expression', 'RPAREN'],
+            action: function () {
+                return this.$2;
+            }
+        },
+
+
+    /**
+     * expression end
+     */
         {
             symbol: 'hash',
             rhs: ['hashSegments'],
@@ -170,30 +352,9 @@ x({
         },
         {
             symbol: 'hashSegment',
-            rhs: ['ID', 'EQUALS', 'path'],
+            rhs: ['ID', 'EQUALS', 'Expression'],
             action: function () {
                 return [this.$1, this.$3];
-            }
-        },
-        {
-            symbol: 'hashSegment',
-            rhs: ['ID', 'EQUALS', 'STRING'],
-            action: function () {
-                return [this.$1, new this.yy.StringNode(this.lexer.lineNumber, this.$3)];
-            }
-        },
-        {
-            symbol: 'hashSegment',
-            rhs: ['ID', 'EQUALS', 'NUMBER'],
-            action: function () {
-                return [this.$1, new this.yy.NumberNode(this.lexer.lineNumber, this.$3)];
-            }
-        },
-        {
-            symbol: 'hashSegment',
-            rhs: ['ID', 'EQUALS', 'BOOLEAN'],
-            action: function () {
-                return [this.$1, new this.yy.BooleanNode(this.lexer.lineNumber, this.$3)];
             }
         },
         {
@@ -206,6 +367,13 @@ x({
         {
             symbol: 'pathSegments',
             rhs: ['pathSegments', 'SEP', 'ID'],
+            action: function () {
+                this.$1.push(this.$3);
+            }
+        },
+        {
+            symbol: 'pathSegments',
+            rhs: ['pathSegments', 'SEP', 'NUMBER'],
             action: function () {
                 this.$1.push(this.$3);
             }
@@ -307,6 +475,86 @@ x({
             },
             {
                 state: 't',
+                regexp: /^\(/,
+                token: 'LPAREN'
+            },
+            {
+                state: 't',
+                regexp: /^\)/,
+                token: 'RPAREN'
+            },
+            {
+                state: 't',
+                regexp: /^\|\|/,
+                token: 'OR'
+            },
+            {
+                state: 't',
+                regexp: /^&&/,
+                token: 'AND'
+            },
+            {
+                state: 't',
+                regexp: /^===/,
+                token: 'LOGIC_EQUALS'
+            },
+            {
+                state: 't',
+                regexp: /^!==/,
+                token: 'LOGIC_NOT_EQUALS'
+            },
+            {
+                state: 't',
+                regexp: /^>/,
+                token: 'GT'
+            },
+            {
+                state: 't',
+                regexp: /^>=/,
+                token: 'GE'
+            },
+            {
+                state: 't',
+                regexp: /^</,
+                token: 'LT'
+            },
+            {
+                state: 't',
+                regexp: /^<=/,
+                token: 'LE'
+            },
+            {
+                state: 't',
+                regexp: /^\+/,
+                token: 'PLUS'
+            },
+            {
+                state: 't',
+                regexp: /^-/,
+                token: 'MINUS'
+            },
+            {
+                state: 't',
+                regexp: /^\*/,
+                token: 'MULTIPLY'
+            },
+            {
+                state: 't',
+                regexp: /^\//,
+                token: 'DIVIDE'
+            },
+            {
+                state: 't',
+                regexp: /^%/,
+                token: 'MODULUS'
+            },
+            {
+                state: 't',
+                regexp: /^!/,
+                token: 'NOT'
+            },
+            {
+                state: 't',
                 // notice escaped string
                 regexp: /^"(\\"|[^"])*"/,
                 action: function () {
@@ -335,7 +583,7 @@ x({
             },
             {
                 state: 't',
-                regexp: /^\d+(?:\.\d+)?(?:e-?\d+)/i,
+                regexp: /^\d+(?:\.\d+)?(?:e-?\d+)?/i,
                 token: 'NUMBER'
             },
             {
@@ -350,21 +598,13 @@ x({
             },
             {
                 state: 't',
-                regexp: /^[\/.]/,
+                regexp: /^[\\.]/,
                 token: 'SEP'
             },
             {
                 state: 't',
                 regexp: /^[a-zA-Z0-9_$-]+/,
                 token: 'ID'
-            },
-            {
-                state: 't',
-                regexp: /^\[[^\]]*\]/,
-                token: 'ID',
-                action: function () {
-                    this.text = this.text.slice(1, -1);
-                }
             },
             {
                 state: 't',

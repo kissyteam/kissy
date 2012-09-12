@@ -42,7 +42,7 @@ KISSY.add('xtemplate/base', function (S, compiler) {
                     self.tpl = cache[tpl] ||
                         (cache[tpl] = Function.apply(null, []
                             .concat(code.params)
-                            .concat(code.source)));
+                            .concat(code.source.join('\n'))));
                 }
                 self.compiled = 1;
             }
@@ -60,6 +60,8 @@ KISSY.add('xtemplate/base', function (S, compiler) {
             });
         }
     };
+
+    XTemplate.compiler = compiler;
 
     return XTemplate;
 }, {

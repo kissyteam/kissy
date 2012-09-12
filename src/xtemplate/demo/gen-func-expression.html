@@ -25,45 +25,11 @@
             <div>
                 <textarea style="width: 350px;height: 400px;" id="tpl">
 
-                    my first {{tpl name '0' file=3}} o
-
-                    {{#each this}}
-                    {{xindex}} {{name}}
+                    {{#each data}}
+                        {{#if n === ..\n2 * 5}}
+                            {{n + 10.1}}
+                        {{/if}}
                     {{/each}}
-
-                    {{{ noEscapeO}}}
-
-                    {{!
-
-                    haha
-
-                    }}
-
-                    {{#if cond}}
-
-                    y
-
-                    {{#each my}}
-
-                    {{escapeName}}
-
-                    {{#if cond2}}
-
-                    {{break}}
-
-                    {{else}}
-
-                    {{..\..\z}}
-
-                    {{/if}}
-
-                    {{/each}}
-
-                    {{else}}
-
-                    z
-
-                    {{/if}}
 
                 </textarea>
             </div>
