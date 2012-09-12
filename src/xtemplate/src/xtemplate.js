@@ -19,7 +19,7 @@ KISSY.add('xtemplate', function (S, XTemplate) {
  *  - 初步完成，添加 tc
  *
  * 对比 template
- * 
+ *
  *  优势
  *      - 不会莫名其妙报错（with）
  *      - 更多出错信息，直接给出行号

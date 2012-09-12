@@ -9,7 +9,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
     var arrayPush = [].push;
 
     function escapeString(str) {
-        return str.replace(/\r/g, '\\r').replace(/\n/g, '\\n');
+        return str.replace(/\r/g, '\\r').replace(/\n/g, '\\n').replace(/\t/g, '\\t');
     }
 
     function pushToArray(to, from) {
