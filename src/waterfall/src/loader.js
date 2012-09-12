@@ -64,7 +64,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
             self.addItems(items, function () {
                 callback && callback.apply(this, arguments);
                 // 加载完不够一屏再次检测
-                doScroll();
+                doScroll.call(self);
             });
         }
 
