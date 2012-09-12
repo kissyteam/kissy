@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:12
+build time: Sep 12 15:30
 */
 /**
  * @fileOverview TabBar for KISSY.
@@ -98,11 +98,6 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
 KISSY.add("tabs/body", function (S, Component) {
 
     return Component.Container.extend({
-
-        setSelectedPanelByIndexInternal: function (index) {
-            var self = this, children = self.get("children");
-            self.set("selectedPanel", children[index]);
-        },
 
         renderUI: function () {
             var self = this,
@@ -503,6 +498,26 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             return child;
         },
 
+        setSelectedTab: function (tab) {
+            var tabs = this,
+                bar = tabs.get("bar"),
+                body = tabs.get("body");
+            bar.set('selectedTab', tab);
+            body.set('selectedPanel',
+                tabs.getPanelAt(S.indexOf(tab, bar.get('children'))));
+            return this;
+        },
+
+        setSelectedPanel: function (panel) {
+            var tabs = this,
+                bar = tabs.get("bar"),
+                body = tabs.get("body");
+            bar.set('selectedPanel', panel);
+            body.set('selectedTab',
+                tabs.getTabAt(S.indexOf(panel, body.get('children'))));
+            return this;
+        },
+
         renderUI: function () {
 
             var self = this,
@@ -524,15 +539,17 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
 
         decorateInternal: function (el) {
             var self = this,
-                prefixCls=self.get('prefixCls'),
-                bar = el.children("."+prefixCls+"tabs-bar"),
-                body = el.children("."+prefixCls+"tabs-body");
+                prefixCls = self.get('prefixCls'),
+                bar = el.children("." + prefixCls + "tabs-bar"),
+                body = el.children("." + prefixCls + "tabs-body");
             self.set("el", el);
             self.set("bar", new Bar({
-                srcNode: bar
+                srcNode: bar,
+                prefixCls: prefixCls
             }));
             self.set("body", new Body({
-                srcNode: body
+                srcNode: body,
+                prefixCls: prefixCls
             }));
         },
 
@@ -542,7 +559,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
                 bar = self.get("bar");
 
             bar.on("afterSelectedTabChange", function (e) {
-                body.setSelectedPanelByIndexInternal(S.indexOf(e.newVal, bar.get("children")));
+                self.setSelectedTab(e.newVal);
             });
         }
 
@@ -578,7 +595,8 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
                 },
                 valueFn: function () {
                     return Component.create({
-                        xclass: 'tabs-bar'
+                        xclass: 'tabs-bar',
+                        prefixCls: this.get('prefixCls')
                     });
                 }
             },
@@ -590,7 +608,8 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
                 },
                 valueFn: function () {
                     return Component.create({
-                        xclass: 'tabs-body'
+                        xclass: 'tabs-body',
+                        prefixCls: this.get('prefixCls')
                     });
                 }
             },

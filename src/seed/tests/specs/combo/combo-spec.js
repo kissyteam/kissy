@@ -6,22 +6,16 @@ describe("KISSY ComboLoader", function () {
 
     it("should works simply", function () {
 
-        var p = S.config("packages");
+        var p = KISSY.config("packages");
         for (var i in p) {
             if (p.hasOwnProperty(i)) {
                 delete p[i];
             }
         }
 
-        S.config({
-            map:[
-                [/\?t=.*/, ""]
-            ]
-        });
-
         var ret = 0;
 
-        S.config({
+        KISSY.config({
             packages:[
                 {
                     name:'tests3',
@@ -141,7 +135,7 @@ describe("KISSY ComboLoader", function () {
 
     it("should works for packages", function () {
 
-        var p = S.config("packages");
+        var p = KISSY.config("packages");
         for (var i in p) {
             if (p.hasOwnProperty(i)) {
                 delete p[i];
@@ -152,7 +146,7 @@ describe("KISSY ComboLoader", function () {
 
         S.Env.mods = {};
 
-        S.config({
+        KISSY.config({
             packages:[
                 {
                     name:'tests',
@@ -194,7 +188,7 @@ describe("KISSY ComboLoader", function () {
 
     it("should works for multiple use at the same time", function () {
 
-        var p = S.config("packages");
+        var p = KISSY.config("packages");
         for (var i in p) {
             if (p.hasOwnProperty(i)) {
                 delete p[i];
@@ -205,7 +199,7 @@ describe("KISSY ComboLoader", function () {
 
         S.Env.mods = {};
 
-        S.config({
+        KISSY.config({
             packages:[
                 {
                     name:'tests2',
@@ -256,7 +250,7 @@ describe("KISSY ComboLoader", function () {
     it("works for not combo for specified packages", function () {
         window.TIMESTAMP_X = 0;
 
-        S.config({
+        KISSY.config({
             base:'',
             tag:'',
             debug:true,
@@ -297,7 +291,7 @@ describe("KISSY ComboLoader", function () {
 
 
     it("should load mod not config", function () {
-        var p = S.config("packages");
+        var p = KISSY.config("packages");
         for (var i in p) {
             if (p.hasOwnProperty(i)) {
                 delete p[i];
@@ -306,7 +300,7 @@ describe("KISSY ComboLoader", function () {
 
         S.Env.mods = {};
 
-        S.config({
+        KISSY.config({
             packages:[
                 {
                     name:'tests4',
@@ -330,7 +324,7 @@ describe("KISSY ComboLoader", function () {
 
     it("can use after another use", function () {
 
-        S.config({
+        KISSY.config({
             packages:[
                 {
                     name:'test5',
@@ -360,8 +354,7 @@ describe("KISSY ComboLoader", function () {
     });
 
     it("clean", function () {
-        S.config("map").length = 0;
-        var p = S.config("packages");
+        var p = KISSY.config("packages");
         for (var i in p) {
             if (p.hasOwnProperty(i)) {
                 delete p[i];

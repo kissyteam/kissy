@@ -1,4 +1,4 @@
-describe("loader", function () {
+describe("simple loader", function () {
     describe("raw config for package works", function () {
 
         it("works and avoid repeated loading", function () {
@@ -29,29 +29,7 @@ describe("loader", function () {
 
             runs(function () {
                 KISSY.config({
-                    combine:true,
-                    map:[
-                        [/\?t=.+/, ""]
-                    ]
-                });
-                KISSY.use("t/t2", function () {
-                    ok1 = 2;
-                });
-            });
-
-            waitsFor(function () {
-                return ok1 == 2;
-            });
-
-            runs(function () {
-                expect(mods["t/t2"].getValue()).toBe(2);
-            });
-
-            runs(function () {
-                KISSY.Config.mappedRules = [];
-                KISSY.config({
-                    debug:true,
-                    combine:false
+                    debug:true
                 });
             });
         });

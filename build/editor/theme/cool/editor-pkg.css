@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 22:09
+build time: Sep 12 15:29
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -1097,15 +1097,16 @@ select style for kissy editor
 
 .ks-editor-smiley-sprite a:hover {
     border: 1px solid #808080;
-}.ks-editor-tabs {
+}.ks-editor-img-tabs-bar {
     padding-left: 10px;
     margin: 0;
     margin-top: 10px;
     border-bottom: 1px solid #CED5E0;
     list-style: none;
+    outline: none;
 }
 
-.ks-editor-tabs li {
+.ks-editor-img-tabs-tab {
     background-color: #F2F2F2;
     border-color: #CED5E0;
     border-style: solid solid none;
@@ -1120,15 +1121,27 @@ select style for kissy editor
     text-align: center;
     width: 120px;
     outline: none;
-    list-style: none;
 }
 
-.ks-editor-tabs li.ks-active {
+.ks-editor-img-tabs-bar .ks-editor-img-tabs-tab-selected {
     background-color: #FCFCFC;
     border-color: #CED5E0 #CED5E0 #FCFCFC;
     cursor: default;
     margin-bottom: -1px;
     padding-bottom: 1px;
+}
+
+.ks-editor-img-tabs-body {
+    padding: 12px 0 5px 20px;
+}
+
+.ks-editor-img-tabs-panel {
+    display: none;
+    position: relative;
+}
+
+.ks-editor-img-tabs-panel-selected {
+    display: block;
 }.ks-editor-table-config td {
     padding:2px;
 }.ks-editor-upload-btn-wrap {

@@ -1,1 +1,3 @@
-console.log("run js !!!!!!!!!!!!!!");
+if (window.console) {
+    console.log("run js !!!!!!!!!!!!!!");
+}

@@ -64,7 +64,7 @@
 
         it("should load and attach custom mods correctly", function () {
 
-            S.config({
+            KISSY.config({
                 packages:[
                     {
                         name:"1.2", //包名
@@ -144,7 +144,7 @@
             S.Env._loadQueue = {};
             S.Env.mods = {};
 
-            S.config({
+            KISSY.config({
                 packages:[
                     {
                         name:"1.2", //包名
@@ -177,7 +177,7 @@
             S.Env._loadQueue = {};
             S.Env.mods = {};
 
-            S.config({
+            KISSY.config({
                 debug:0
             });
 

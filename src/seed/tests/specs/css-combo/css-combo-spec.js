@@ -5,12 +5,6 @@ describe("css-combo", function () {
 
         var S = KISSY;
 
-        S.config({
-            map: [
-                [/\?t=.*/, ""]
-            ]
-        });
-
         S.use("node", function () {
 
             S.all("<div>" +
@@ -46,10 +40,6 @@ describe("css-combo", function () {
 
             waitsFor(function () {
                 return ret;
-            });
-
-            runs(function () {
-                S.config("map").length = 0;
             });
         });
 

@@ -6,11 +6,6 @@ KISSY.add("tabs/body", function (S, Component) {
 
     return Component.Container.extend({
 
-        setSelectedPanelByIndexInternal: function (index) {
-            var self = this, children = self.get("children");
-            self.set("selectedPanel", children[index]);
-        },
-
         renderUI: function () {
             var self = this,
                 children = self.get("children");

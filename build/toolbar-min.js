@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:12
+build time: Sep 12 15:30
 */
 KISSY.add("toolbar",function(f,i,j,m,g){function d(a,b,c){var c=c.get("children"),e=0,d=c.length;if(a==g&&(a=1==b?0:d-1,!c[a].get("disabled")))return c[a];do e++,a=(a+d+b)%d;while(e<d&&c[a].get("disabled"));return e!=d?c[a]:null}function k(a){a.target!=this&&(a.newVal?this.set("expandedItem",null):this.set("expandedItem",a.target))}function l(a){var b,c=a.target;if(c!=this)if(a.newVal){if(this.set("highlightedItem",c),(b=this.get("expandedItem"))&&b.hasAttr("collapsed")&&b!=c)b.set("collapsed",!0),
 c.set("collapsed",!1)}else this.set("highlightedItem",null)}var e=j.KeyCodes,h=i.Container.extend({addChild:function(){var a=h.superclass.addChild.apply(this,arguments),b=a;b.set("handleMouseEvents",!1);b.set("focusable",!1);b.publish("afterCollapsedChange afterHighlightedChange",{bubbles:1});return a},createDom:function(){this.get("el").attr("role","toolbar")},_uiSetHighlightedItem:function(a){var b,c=this.get("el");a?(b=a.get("el"),(a=b.attr("id"))||b.attr("id",a=f.guid("ks-toolbar-item")),c.attr("aria-activedescendant",

@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:12
+build time: Sep 12 15:29
 */
 KISSY.add("resizable",function(n,f,t,g,u){function o(a){var a=a.newVal,h=this.dds,e=this.get("prefixCls")+v,d=this.get("node");this.destroy();for(b=0;b<a.length;b++){var c=a[b],l=p("<div class='"+e+" "+e+"-"+c+"'></div>").prependTo(d,u),c=h[c]=new w({node:l,cursor:null});c.on("drag",x,this);c.on("dragstart",y,this)}}function y(){var a=this.get("node");this._width=a.width();this._top=parseInt(a.css("top"));this._left=parseInt(a.css("left"));this._height=a.height()}function x(a){var h=this.get("node"),
 e=a.target,d;a:{d=this.dds;for(var c in d)if(d.hasOwnProperty(c)&&d[c]==e){d=c;break a}d=0}c=this._width;var l=this._height,m=this.get("minWidth"),i=this.get("maxWidth"),z=this.get("minHeight"),f=this.get("maxHeight"),g=a.top-e.get("startNodePos").top,a=a.left-e.get("startNodePos").left,a=j[d](m,i,z,f,this._top,this._left,c,l,g,a);for(b=0;b<q.length;b++)a[b]&&h.css(q[b],a[b])}function r(a){var h=a.newVal;n.each(this.dds,function(a){a.set("disabled",h)})}function k(a){var h,b;k.superclass.constructor.apply(this,

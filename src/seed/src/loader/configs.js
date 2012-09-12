@@ -14,16 +14,21 @@
      modify current module path
 
      [
-        [/(.+-)min(.js(\?t=\d+)?)$/, '$1$2'],
-        [/(.+-)min(.js(\?t=\d+)?)$/, function(_,m1,m2){
-            return m1+m2;
-        }]
+     [/(.+-)min(.js(\?t=\d+)?)$/, '$1$2'],
+     [/(.+-)min(.js(\?t=\d+)?)$/, function(_,m1,m2){
+     return m1+m2;
+     }]
      ]
 
      */
     configs.map = function (rules) {
         var self = this;
         return self.Config.mappedRules = (self.Config.mappedRules || []).concat(rules || []);
+    };
+
+    configs.mapCombo = function (rules) {
+        var self = this;
+        return self.Config.mappedComboRules = (self.Config.mappedComboRules || []).concat(rules || []);
     };
 
     /*
@@ -69,26 +74,26 @@
      <code>
 
      KISSY.config({
-         base: '',
-         // dom-min.js
-         debug: '',
-         combine: true,
-         tag: '',
-         packages: {
-             'biz1': {
-                 // path change to base
-                 base: 'haha',
-                 // x.js
-                 debug: '',
-                 tag: '',
-                 combine: false,
-             }
-         },
-         modules: {
-             'biz1/main': {
-                requires: ['biz1/part1', 'biz1/part2']
-             }
-         }
+     base: '',
+     // dom-min.js
+     debug: '',
+     combine: true,
+     tag: '',
+     packages: {
+     'biz1': {
+     // path change to base
+     base: 'haha',
+     // x.js
+     debug: '',
+     tag: '',
+     combine: false,
+     }
+     },
+     modules: {
+     'biz1/main': {
+     requires: ['biz1/part1', 'biz1/part2']
+     }
+     }
      });
      */
     configs.modules = function (modules) {

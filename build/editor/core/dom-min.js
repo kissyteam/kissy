@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 22:09
+build time: Sep 12 15:29
 */
 KISSY.add("editor/core/dom",function(m,s,p){function t(a,b){var c=a[b?"next":"prev"](j,1);if(c&&c[0].nodeType==k.ELEMENT_NODE){for(var d=[];c.attr("_ke_bookmark")||c._4e_isEmptyInlineRemovable(j);)if(d.push(c),c=b?c.next(j,1):c.prev(j,1),!c)return;if(a._4e_isIdentical(c,j)){for(var e=new q(b?a[0].lastChild:a[0].firstChild);d.length;)d.shift()._4e_move(a,!b,j);c._4e_moveChildren(a,!b,j);c.remove();e[0]&&e[0].nodeType==k.ELEMENT_NODE&&e._4e_mergeSiblings()}}}var j=j,r=s.XHTML_DTD,e=m.DOM,k=e.NodeType,
 n=m.UA,q=m.Node,u={a:1,abbr:1,acronym:1,address:1,b:1,bdo:1,big:1,cite:1,code:1,del:1,dfn:1,em:1,font:1,i:1,ins:1,label:1,kbd:1,q:1,s:1,samp:1,small:1,span:1,strike:1,strong:1,sub:1,sup:1,tt:1,u:1,"var":1};s.POSITION={POSITION_IDENTICAL:0,POSITION_DISCONNECTED:1,POSITION_FOLLOWING:2,POSITION_PRECEDING:4,POSITION_IS_CONTAINED:8,POSITION_CONTAINS:16};var g=s.POSITION,v={block:1,"list-item":1,table:1,"table-row-group":1,"table-header-group":1,"table-footer-group":1,"table-row":1,"table-column-group":1,

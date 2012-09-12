@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:12
+build time: Sep 12 15:30
 */
 /**
  * @fileOverview Make Elements flow like waterfall.
@@ -642,9 +642,9 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         function success(items, callback) {
             self.__loading = 0;
             self.addItems(items, function () {
-                callback.apply(this, arguments);
+                callback && callback.apply(this, arguments);
                 // 加载完不够一屏再次检测
-                doScroll();
+                doScroll.call(self);
             });
         }
 

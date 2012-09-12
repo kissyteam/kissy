@@ -349,8 +349,8 @@
          * @param path
          * @return {String}
          */
-        getMappedPath: function (self, path) {
-            var __mappedRules = self.Config.mappedRules || [],
+        getMappedPath: function (self, path,rules) {
+            var __mappedRules = rules||self.Config.mappedRules || [],
                 i,
                 m,
                 rule;

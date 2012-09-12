@@ -9,9 +9,9 @@ describe("loader", function () {
             S.Env.packages = {};
             S.Config.mappedRules = [];
             window.TIMESTAMP_X = 0;
-            var combine = S.config("combine");
+            var combine = KISSY.config("combine");
 
-            S.config({
+            KISSY.config({
                 base:'',
                 tag:'',
                 combine:true,
@@ -58,7 +58,7 @@ describe("loader", function () {
             S.Env.packages = {};
             S.Config.mappedRules = [];
             window.TIMESTAMP_X = 0;
-            S.config({
+            KISSY.config({
                 base:'',
                 tag:'',
                 combine:true,
@@ -80,12 +80,7 @@ describe("loader", function () {
                     'timestamp/z':{
                         tag:'z'
                     }
-                },
-                map:[
-                    [
-                        /\?t=.+/, ""
-                    ]
-                ]
+                }
             });
 
             var ok = 0;
@@ -108,9 +103,9 @@ describe("loader", function () {
             S.Env.packages = {};
             S.Config.mappedRules = [];
             window.TIMESTAMP_X = 0;
-            var combine = S.config("combine");
+            var combine = KISSY.config("combine");
 
-            S.config({
+            KISSY.config({
                 base:'',
                 tag:'',
                 combine:true,
@@ -161,7 +156,7 @@ describe("loader", function () {
             S.Env.packages = {};
             S.Config.mappedRules = [];
             window.TIMESTAMP_X = 0;
-            S.config({
+            KISSY.config({
                 base:'',
                 tag:'',
                 combine:true,
@@ -184,12 +179,7 @@ describe("loader", function () {
                     'timestamp/z':{
                         tag:'z'
                     }
-                },
-                map:[
-                    [
-                        /\?t=.+/, ""
-                    ]
-                ]
+                }
             });
 
             var ok = 0;

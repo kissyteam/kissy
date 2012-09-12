@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:12
+build time: Sep 12 15:30
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 10 10:12
 
         /**
          * The build time of the library.
-         * NOTICE: '20120910101232' will replace with current timestamp when compressing.
+         * NOTICE: '20120912153016' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120910101232';
+        S.__BUILD_TIME = '20120912153016';
     })();
 
     return S;
@@ -3588,8 +3588,8 @@ build time: Sep 10 10:12
          * @param path
          * @return {String}
          */
-        getMappedPath: function (self, path) {
-            var __mappedRules = self.Config.mappedRules || [],
+        getMappedPath: function (self, path,rules) {
+            var __mappedRules = rules||self.Config.mappedRules || [],
                 i,
                 m,
                 rule;
@@ -3942,16 +3942,21 @@ build time: Sep 10 10:12
      modify current module path
 
      [
-        [/(.+-)min(.js(\?t=\d+)?)$/, '$1$2'],
-        [/(.+-)min(.js(\?t=\d+)?)$/, function(_,m1,m2){
-            return m1+m2;
-        }]
+     [/(.+-)min(.js(\?t=\d+)?)$/, '$1$2'],
+     [/(.+-)min(.js(\?t=\d+)?)$/, function(_,m1,m2){
+     return m1+m2;
+     }]
      ]
 
      */
     configs.map = function (rules) {
         var self = this;
         return self.Config.mappedRules = (self.Config.mappedRules || []).concat(rules || []);
+    };
+
+    configs.mapCombo = function (rules) {
+        var self = this;
+        return self.Config.mappedComboRules = (self.Config.mappedComboRules || []).concat(rules || []);
     };
 
     /*
@@ -3997,26 +4002,26 @@ build time: Sep 10 10:12
      <code>
 
      KISSY.config({
-         base: '',
-         // dom-min.js
-         debug: '',
-         combine: true,
-         tag: '',
-         packages: {
-             'biz1': {
-                 // path change to base
-                 base: 'haha',
-                 // x.js
-                 debug: '',
-                 tag: '',
-                 combine: false,
-             }
-         },
-         modules: {
-             'biz1/main': {
-                requires: ['biz1/part1', 'biz1/part2']
-             }
-         }
+     base: '',
+     // dom-min.js
+     debug: '',
+     combine: true,
+     tag: '',
+     packages: {
+     'biz1': {
+     // path change to base
+     base: 'haha',
+     // x.js
+     debug: '',
+     tag: '',
+     combine: false,
+     }
+     },
+     modules: {
+     'biz1/main': {
+     requires: ['biz1/part1', 'biz1/part2']
+     }
+     }
      });
      */
     configs.modules = function (modules) {
@@ -4578,7 +4583,6 @@ build time: Sep 10 10:12
     }
 
     var Loader = S.Loader,
-        Path = S.Path,
         data = Loader.STATUS,
         utils = Loader.Utils;
 
@@ -4963,8 +4967,10 @@ build time: Sep 10 10:12
                                 packageBase = jss.packageBase,
                                 prefix,
                                 path,
+                                fullpath,
                                 l,
-                                packageNamePath = packageName + '/';
+                                packagePath = packageBase +
+                                    (packageName ? (packageName + '/') : '');
 
                             res[type][packageName] = [];
                             res[type][packageName].charset = jss.charset;
@@ -4972,30 +4978,37 @@ build time: Sep 10 10:12
                             res[type][packageName].mods = [];
                             // add packageName to common prefix
                             // combo grouped by package
-                            prefix = packageBase +
-                                (packageName ? packageNamePath : '') +
-                                comboPrefix;
+                            prefix = packagePath + comboPrefix;
                             l = prefix.length;
 
                             function pushComboUrl() {
+                                // map the whole combo path
                                 res[type][packageName].push(utils.getMappedPath(
                                     SS,
-                                    prefix + t.join(comboSep) + (tag ? ('?t=' +
-                                        encodeURIComponent(tag)) : '')));
+                                    prefix +
+                                        t.join(comboSep) +
+                                        (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
+                                    Config.mappedComboRules || []
+                                ));
                             }
 
                             for (i = 0; i < jss.length; i++) {
-                                // remove packageName prefix from mod path
-                                path = jss[i].getPath();
+
+                                // map individual module
+                                fullpath = jss[i].getFullPath();
+
                                 res[type][packageName].mods.push(jss[i]);
-                                if (!jss.combine) {
-                                    res[type][packageName].push(jss[i].getFullPath());
+
+                                if (!jss.combine || !S.startsWith(fullpath, packagePath)) {
+                                    res[type][packageName].push(fullpath);
                                     continue;
                                 }
-                                if (packageName) {
-                                    path = Path.relative(packageName, path);
-                                }
+
+                                // ignore query parameter
+                                path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
+
                                 t.push(path);
+
                                 if (l + t.join(comboSep).length > maxUrlLength) {
                                     t.pop();
                                     pushComboUrl();
@@ -5176,7 +5189,7 @@ build time: Sep 10 10:12
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120910101232'
+        tag: '20120912153016'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5481,7 +5494,7 @@ KISSY.config('modules', {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:12
+build time: Sep 12 15:30
 */
 /**
  * @ignore
@@ -5866,7 +5879,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:08
+build time: Sep 12 15:26
 */
 /**
  * @ignore
@@ -10353,7 +10366,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:11
+build time: Sep 12 15:29
 */
 /**
  * @ignore
@@ -13068,7 +13081,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:11
+build time: Sep 12 15:29
 */
 /**
  * @ignore
@@ -13594,7 +13607,7 @@ KISSY.add("json/json2", function(S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:08
+build time: Sep 12 15:25
 */
 /**
  * @ignore
@@ -15655,7 +15668,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:08
+build time: Sep 12 15:25
 */
 /**
  * @ignore
@@ -15765,7 +15778,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:08
+build time: Sep 12 15:25
 */
 /**
  * @ignore
@@ -16403,7 +16416,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:08
+build time: Sep 12 15:25
 */
 /**
  * @ignore
@@ -17950,7 +17963,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 10 10:11
+build time: Sep 12 15:29
 */
 /**
  * @ignore
