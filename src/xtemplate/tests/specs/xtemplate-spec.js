@@ -462,7 +462,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                     var tpl = '{{#each data}}' +
                         '{{#if this > ..\\limit+1}}' +
-                        '{{this+1}}|' +
+                        '{{this+1}}-{{xindex+1}}-{{xcount}}|' +
                         '{{/if}}' +
                         '{{/each}}' +
                         '';
@@ -472,7 +472,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                         limit: 10
                     };
 
-                    expect(new XTemplate(tpl).render(data)).toBe('13|20|');
+                    expect(new XTemplate(tpl).render(data)).toBe('13-3-6|20-5-6|');
 
                 });
 
