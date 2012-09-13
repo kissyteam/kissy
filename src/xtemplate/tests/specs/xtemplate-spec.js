@@ -63,61 +63,9 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     'not has title2');
             });
 
-
-            it('support {{#ifeq}}', function () {
-                var tpl = '{{#ifeq title title2}}same title{{/ifeq}}\n' +
-                    '{{#ifeq n n2}}same number{{else}}not same number{{/ifeq}}';
-
-                var data = {
-                    title: 'my',
-                    title2: 'my',
-                    n: 0,
-                    n2: ""
-                };
-
-                var render = new XTemplate(tpl).render(data);
-
-                expect(render).toBe('same title\n' +
-                    'not same number');
-            });
-
-
-            it('support {{#iflt}}', function () {
-                var tpl = '{{#iflt title title2}}title < title2{{/iflt}}\n' +
-                    '{{#iflt n n2}}n < n2{{else}}n > n2{{/iflt}}';
-
-                var data = {
-                    title: 0,
-                    title2: 1,
-                    n: 0,
-                    n2: -1
-                };
-
-                var render = new XTemplate(tpl).render(data);
-
-                expect(render).toBe('title < title2\n' + 'n > n2');
-            });
-
-
-            it('support {{#iflte}}', function () {
-                var tpl = '{{#iflte title title2}}title <= title2{{/iflte}}\n' +
-                    '{{#iflte n n2}}n < n2{{else}}n > n2{{/iflte}}';
-
-                var data = {
-                    title: 0,
-                    title2: 0,
-                    n: 0,
-                    n2: -1
-                };
-
-                var render = new XTemplate(tpl).render(data);
-
-                expect(render).toBe('title <= title2\n' + 'n > n2');
-            });
-
-
             describe('each', function () {
                 it('support object', function () {
+
                     var tpl = '{{#each data}}{{name}}-{{xindex}}/{{xcount}}|{{/each}}';
 
                     var data = {
@@ -152,7 +100,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 it('support parent scope', function () {
 
-                    var tpl = '{{#each data}}{{this}}-{{..\\total}}|{{\\each}}';
+                    var tpl = '{{#each data}}{{this}}-{{..\\total}}|{{/each}}';
 
                     var data = {
                         data: [1, 2],
@@ -434,6 +382,57 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     }).render(data);
 
                     expect(render).toBe('1');
+                });
+
+            });
+
+
+            describe('expression', function () {
+
+                it('support expression for variable', function () {
+
+                    var tpl = '{{n+3*4/2}}';
+
+                    var data = {
+                        n: 1
+                    };
+
+                    expect(new XTemplate(tpl).render(data)).toBe('7');
+
+                });
+
+
+                it('support expression for variable in string', function () {
+
+                    var tpl = '{{n+" is good"}}';
+
+                    var data = {
+                        n: 'xtemplate'
+                    };
+
+                    expect(new XTemplate(tpl).render(data)).toBe('xtemplate is good');
+
+                });
+
+                it('support relational expression', function () {
+
+                    var tpl = '{{#if n > n2+4/2}}' +
+                        '{{n+1}}' +
+                        '{{else}}' +
+                        '{{n2+1}}' +
+                        '{{/if}}';
+
+                    var data = {
+                        n: 5,
+                        n2: 2
+                    }, data2 = {
+                        n: 1,
+                        n2: 2
+                    };
+
+                    expect(new XTemplate(tpl).render(data)).toBe('6');
+
+                    expect(new XTemplate(tpl).render(data2)).toBe('3');
                 });
 
             });

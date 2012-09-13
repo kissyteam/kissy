@@ -70,52 +70,8 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
             return buffer;
         },
 
-        'ifeq': function (scopes, option) {
-            var params = option.params;
-            if (!params || params.length != 2) {
-                throw new Error('if must has two param');
-            }
-            var param0 = params[0];
-            var param1 = params[1];
-            var buffer = '';
-            if (param0 === param1) {
-                buffer = option.fn(scopes);
-            } else if (option.inverse) {
-                buffer = option.inverse(scopes);
-            }
-            return buffer;
-        },
-
-        'iflt': function (scopes, option) {
-            var params = option.params;
-            if (!params || params.length != 2) {
-                throw new Error('if must has two param');
-            }
-            var param0 = params[0];
-            var param1 = params[1];
-            var buffer = '';
-            if (param0 < param1) {
-                buffer = option.fn(scopes);
-            } else if (option.inverse) {
-                buffer = option.inverse(scopes);
-            }
-            return buffer;
-        },
-
-        'iflte': function (scopes, option) {
-            var params = option.params;
-            if (!params || params.length != 2) {
-                throw new Error('if must has two param');
-            }
-            var param0 = params[0];
-            var param1 = params[1];
-            var buffer = '';
-            if (param0 <= param1) {
-                buffer = option.fn(scopes);
-            } else if (option.inverse) {
-                buffer = option.inverse(scopes);
-            }
-            return buffer;
+        'set': function (scopes, option) {
+            S.mix(scopes[0], option.hash);
         },
 
         'include': function (scopes, option) {

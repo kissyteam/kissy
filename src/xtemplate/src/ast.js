@@ -15,11 +15,15 @@ KISSY.add("xtemplate/ast", function (S) {
     ast.ProgramNode.prototype.type = 'program';
 
     ast.BlockNode = function (lineNumber, tpl, program, close) {
+        var closeParts = close['parts'];
         // 开始没有结束
-        if (!S.equals(tpl.path.parts, close.parts)) {
-            S.error("parse error at line " + lineNumber +
-                ":\n" + "expect {{/" + tpl.path.parts +
-                "}} not {{/" + close.parts + "}}");
+        if (!S.equals(tpl.path['parts'], closeParts)) {
+            throw new Error("parse error at line " +
+                lineNumber +
+                ":\n" + "expect {{/" +
+                tpl.path['parts'] +
+                "}} not {{/" +
+                closeParts + "}}");
         }
         this.lineNumber = lineNumber;
         this.tpl = tpl;

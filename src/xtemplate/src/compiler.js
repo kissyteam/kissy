@@ -26,7 +26,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
         }
         parts = parts.split('.');
         var len = parts.length, i, v = from;
-        for (i = 0; i < len - 1; i++) {
+        for (i = 0; i < len; i++) {
             if (!(parts[i] in v)) {
                 return false;
             }
@@ -263,23 +263,23 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
             return [name, source];
         },
 
-        string: function (e) {
+        'string': function (e) {
             return ['', ["'" + e.value.replace(/'/g, "\\'") + "'"]];
         },
 
-        number: function (e) {
+        'number': function (e) {
             return ['', [e.value]];
         },
 
-        boolean: function (e) {
+        'boolean': function (e) {
             return ['', [e.value]];
         },
 
-        id: function (e) {
+        'id': function (e) {
             return this.genId(e);
         },
 
-        block: function (block) {
+        'block': function (block) {
             var programNode = block.program,
                 source = [],
                 tmpNameCommand = S.guid('command'),
@@ -315,11 +315,11 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
             return source;
         },
 
-        content: function (contentNode) {
+        'content': function (contentNode) {
             return ['buffer += "' + escapeString(contentNode.value.replace(/"/g, "\\")) + '";'];
         },
 
-        tpl: function (tplNode) {
+        'tpl': function (tplNode) {
             var source = [],
                 escaped = tplNode.escaped,
                 genIdCode = this.genId(tplNode.path, tplNode);

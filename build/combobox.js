@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:26
+build time: Sep 13 13:52
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -118,6 +118,95 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                     placeholderEl.show();
                 }
             },
+
+            handleMouseDown: function (e) {
+                ComboBox.superclass.handleMouseDown.apply(this, arguments);
+                var self = this,
+                    input,
+                    target = e.target,
+                    trigger = self.get("trigger"),
+                    hasTrigger = self.get('hasTrigger');
+                if (hasTrigger && (trigger[0] == target || trigger.contains(target))) {
+                    input = self.get("input");
+                    if (!self.get('collapsed')) {
+                        self.set('collapsed', true);
+                    } else {
+                        input[0].focus();
+                        self.sendRequest('');
+                    }
+                    e.preventDefault();
+                }
+            },
+
+            /**
+             * @protected
+             */
+            handleKeyEventInternal: function (e) {
+                var self = this,
+                    input = self.get("input"),
+                    menu = getMenu(self);
+
+                if (!menu) {
+                    return;
+                }
+
+                var updateInputOnDownUp = self.get("updateInputOnDownUp");
+
+                if (updateInputOnDownUp) {
+                    // combobox will change input value
+                    // but it does not need to reload data
+                    if (S.inArray(e.keyCode, [
+                        KeyCodes.UP,
+                        KeyCodes.DOWN,
+                        KeyCodes.ESC
+                    ])) {
+                        self._stopNotify = 1;
+                    } else {
+                        self._stopNotify = 0;
+                    }
+                }
+
+                var activeItem;
+
+                if (menu.get("visible")) {
+                    var handledByMenu = menu.handleKeydown(e);
+
+                    if (updateInputOnDownUp) {
+                        if (S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
+                            // update menu's active value to input just for show
+                            setValue(self, menu.get("activeItem").get("textContent"));
+                        }
+                    }
+                    // esc
+                    if (e.keyCode == KeyCodes.ESC) {
+                        self.set("collapsed", true);
+                        if (updateInputOnDownUp) {
+                            // restore original user's input text
+                            setValue(self, self._savedInputValue);
+                        }
+                        return true;
+                    }
+
+                    // tab
+                    // if menu is open and an menuitem is highlighted, see as click/enter
+                    if (e.keyCode == KeyCodes.TAB) {
+                        if (activeItem = menu.get("activeItem")) {
+                            activeItem.performActionInternal();
+                            // only prevent focus change in multiple mode
+                            if (self.get("multiple")) {
+                                return true;
+                            }
+                        }
+                    }
+                    return handledByMenu;
+                } else if ((e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP)) {
+                    // re-fetch , consider multiple input
+                    S.log("refetch : " + getValue(self));
+                    self.sendRequest(getValue(self));
+                    return true;
+                }
+            },
+
             /**
              * @protected
              */
@@ -192,18 +281,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 self.bindMenu = S.noop;
             },
 
-            _uiSetHasTrigger: function (v) {
-                var self = this,
-                    trigger = self.get("trigger");
-                if (v) {
-                    trigger.on("click", onTriggerClick, self);
-                    trigger.on("mousedown", onTriggerMouseDown);
-                } else {
-                    trigger.detach("click", onTriggerClick, self);
-                    trigger.detach("mousedown", onTriggerMouseDown);
-                }
-            },
-
             /**
              * fetch comboBox list by value and show comboBox list
              * @param {String} value value for fetching comboBox list
@@ -213,6 +290,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                     dataSource = self.get("dataSource");
                 dataSource.fetchData(value, renderData, self);
             },
+
             /**
              * @protected
              */
@@ -221,74 +299,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                     hideMenu(this);
                 } else {
                     showMenu(this);
-                }
-            },
-            /**
-             * @protected
-             */
-            handleKeyEventInternal: function (e) {
-                var self = this,
-                    input = self.get("input"),
-                    menu = getMenu(self);
-
-                if (!menu) {
-                    return;
-                }
-
-                var updateInputOnDownUp = self.get("updateInputOnDownUp");
-
-                if (updateInputOnDownUp) {
-                    // combobox will change input value
-                    // but it does not need to reload data
-                    if (S.inArray(e.keyCode, [
-                        KeyCodes.UP,
-                        KeyCodes.DOWN,
-                        KeyCodes.ESC
-                    ])) {
-                        self._stopNotify = 1;
-                    } else {
-                        self._stopNotify = 0;
-                    }
-                }
-
-                var activeItem;
-
-                if (menu.get("visible")) {
-                    var handledByMenu = menu.handleKeydown(e);
-
-                    if (updateInputOnDownUp) {
-                        if (S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
-                            // update menu's active value to input just for show
-                            setValue(self, menu.get("activeItem").get("textContent"));
-                        }
-                    }
-                    // esc
-                    if (e.keyCode == KeyCodes.ESC) {
-                        self.set("collapsed", true);
-                        if (updateInputOnDownUp) {
-                            // restore original user's input text
-                            setValue(self, self._savedInputValue);
-                        }
-                        return true;
-                    }
-
-                    // tab
-                    // if menu is open and an menuitem is highlighted, see as click/enter
-                    if (e.keyCode == KeyCodes.TAB) {
-                        if (activeItem = menu.get("activeItem")) {
-                            activeItem.performActionInternal();
-                            // only prevent focus change in multiple mode
-                            if (self.get("multiple")) {
-                                return true;
-                            }
-                        }
-                    }
-                    return handledByMenu;
-                } else if ((e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP)) {
-                    // re-fetch , consider multiple input
-                    S.log("refetch : " + getValue(self));
-                    self.sendRequest(getValue(self));
-                    return true;
                 }
             },
 
@@ -767,23 +777,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
         } else {
             self.set("collapsed", true);
         }
-    }
-
-    function onTriggerClick() {
-        if (!this.get("disabled")) {
-            var self = this,
-                input = self.get("input");
-            if (!self.get('collapsed')) {
-                self.set('collapsed', true);
-            } else {
-                input[0].focus();
-                self.sendRequest('');
-            }
-        }
-    }
-
-    function onTriggerMouseDown(e) {
-        e.preventDefault();
     }
 
     function getInputDesc(self) {
