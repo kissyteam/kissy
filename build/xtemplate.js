@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 13 14:31
+build time: Sep 13 15:07
 */
 /**
  * Ast node class for xtemplate
@@ -471,7 +471,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
 
             if (name1 && name2) {
                 pushToArray(source, code1[1]);
-                pushToArray(source, code1[2]);
+                pushToArray(source, code2[1]);
                 source.push(name1 + type + name2);
                 return ['', source];
             }

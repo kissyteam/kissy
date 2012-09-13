@@ -457,6 +457,47 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     expect(new XTemplate(tpl4).render(data3)).toBe('3');
                 });
 
+
+                it('support relational expression in each', function () {
+
+                    var tpl = '{{#each data}}' +
+                        '{{#if this > ..\\limit+1}}' +
+                        '{{this+1}}|' +
+                        '{{/if}}' +
+                        '{{/each}}' +
+                        '';
+
+                    var data = {
+                        data: [11, 5, 12, 6, 19, 0],
+                        limit: 10
+                    };
+
+                    expect(new XTemplate(tpl).render(data)).toBe('13|20|');
+
+                });
+
+
+                it('support relational expression in with', function () {
+
+                    var tpl = '{{#with data}}' +
+                        '{{#if n > ..\\limit/5}}' +
+                        '{{n+1}}' +
+                        '{{/if}}' +
+                        '{{/with}}' +
+
+                        '';
+
+                    var data = {
+                        data: {
+                            n: 5
+                        },
+                        limit: 10
+                    };
+
+                    expect(new XTemplate(tpl).render(data)).toBe('6');
+
+                });
+
             });
 
         });

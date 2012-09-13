@@ -133,7 +133,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
 
             if (name1 && name2) {
                 pushToArray(source, code1[1]);
-                pushToArray(source, code1[2]);
+                pushToArray(source, code2[1]);
                 source.push(name1 + type + name2);
                 return ['', source];
             }
