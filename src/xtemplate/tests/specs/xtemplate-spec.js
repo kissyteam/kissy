@@ -422,17 +422,39 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                         '{{n2+1}}' +
                         '{{/if}}';
 
+                    var tpl3 = '{{#if n === n2+4/2}}' +
+                        '{{n+1}}' +
+                        '{{else}}' +
+                        '{{n2+1}}' +
+                        '{{/if}}';
+
+
+                    var tpl4 = '{{#if n !== n2+4/2}}' +
+                        '{{n+1}}' +
+                        '{{else}}' +
+                        '{{n2+1}}' +
+                        '{{/if}}';
+
+
                     var data = {
-                        n: 5,
-                        n2: 2
-                    }, data2 = {
-                        n: 1,
-                        n2: 2
-                    };
+                            n: 5,
+                            n2: 2
+                        }, data2 = {
+                            n: 1,
+                            n2: 2
+                        },
+                        data3 = {
+                            n: 4,
+                            n2: 2
+                        };
 
                     expect(new XTemplate(tpl).render(data)).toBe('6');
 
                     expect(new XTemplate(tpl).render(data2)).toBe('3');
+
+                    expect(new XTemplate(tpl3).render(data3)).toBe('5');
+
+                    expect(new XTemplate(tpl4).render(data3)).toBe('3');
                 });
 
             });
