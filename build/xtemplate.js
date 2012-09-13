@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 13 15:07
+build time: Sep 13 16:33
 */
 /**
  * Ast node class for xtemplate
@@ -307,6 +307,7 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
 
         'set': function (scopes, option) {
             S.mix(scopes[0], option.hash);
+            return '';
         },
 
         'include': function (scopes, option) {
@@ -319,6 +320,7 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
             if (!(tpl = subTpls[param0])) {
                 throw new Error('does not include sub template "' + param0 + '"');
             }
+            var XTemplate = S.require('xtemplate');
             return new XTemplate(tpl, {
                 commands: option.commands,
                 subTpls: option.subTpls
@@ -326,21 +328,13 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
         }
     };
 
-    XTemplate.addCommand = function (commandName, fn) {
-        commands[commandName] = fn;
-    };
-
-    XTemplate.commands = commands;
-
     return commands;
 
-}, {
-    requires: ['./base']
 });/**
  * translate ast to js function code
  * @author yiminghe@gmail.com
  */
-KISSY.add("xtemplate/compiler", function (S, parser, ast) {
+KISSY.add("xtemplate/compiler", function (S, parser, ast, commands) {
 
     parser.yy = ast;
 
@@ -388,7 +382,15 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
                     'escapeHTML = S.escapeHTML,' +
                     'log = S.log,' +
                     'error = S.error,');
+
+                var nativeCommands = '';
+
+                for (var c in commands) {
+                    nativeCommands += c + 'Command = commands["' + c + '"],';
+                }
+
                 source.push('commands = option.commands,' +
+                    nativeCommands +
                     'subTpls=option.subTpls;');
                 source.push('var getProperty=' + getProperty.toString() + ';');
             }
@@ -417,44 +419,56 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
 
             var idName = S.guid('id'),
                 self = this,
-                tmpNameCommand = S.guid('command');
+                escapePropertyResolve = 0,
+                tmpNameCommand;
+
 
             source.push('var ' + idName + ';');
 
             if (tplNode && depth == 0) {
                 var optionNameCode = self.genOption(tplNode);
                 pushToArray(source, optionNameCode[1]);
-                source.push('var ' + tmpNameCommand + ';');
-                source.push(tmpNameCommand + ' = commands["' + idString + '"];');
-                source.push('if( ' + tmpNameCommand + ' ){');
+                if (!commands[idString]) {
+                    tmpNameCommand = S.guid('command');
+                    source.push('var ' + tmpNameCommand + ';');
+                    source.push(tmpNameCommand + ' = commands["' + idString + '"];');
+                    source.push('if( ' + tmpNameCommand + ' ){');
+                } else {
+                    tmpNameCommand = idString + 'Command';
+                    escapePropertyResolve = 1;
+                }
                 source.push('try{');
                 source.push(idName + ' = ' + tmpNameCommand +
-                    '(' + scope + ',' + optionNameCode[0] + ');');
+                    '(scopes,' + optionNameCode[0] + ');');
                 source.push('}catch(e){');
                 source.push('error(e.message+": \'' +
                     idString + '\' at line ' + idNode.lineNumber + '");');
                 source.push('}');
-                source.push('}');
+                if (!commands[idString]) {
+                    source.push('}');
+                }
             }
 
-            if (tplNode && depth == 0) {
-                source.push('else {');
-            }
+            if (!escapePropertyResolve) {
+                if (tplNode && depth == 0) {
+                    source.push('else {');
+                }
 
-            var tmp = S.guid('tmp');
+                var tmp = S.guid('tmp');
 
-            source.push('var ' + tmp + '=getProperty("' + idString + '",' + scope + ');');
+                source.push('var ' + tmp + '=getProperty("' + idString + '",' + scope + ');');
 
-            source.push('if(' + tmp + '===false){');
-            source.push('log("can not find property: \'' +
-                idString + '\' at line ' + idNode.lineNumber + '", "warn");');
-            source.push(idName + ' = "";');
-            source.push('} else {');
-            source.push(idName + ' = ' + tmp + '[0];');
-            source.push('}');
-
-            if (tplNode && depth == 0) {
+                source.push('if(' + tmp + '===false){');
+                source.push('log("can not find property: \'' +
+                    idString + '\' at line ' + idNode.lineNumber + '", "warn");');
+                source.push(idName + ' = "";');
+                source.push('} else {');
+                source.push(idName + ' = ' + tmp + '[0];');
                 source.push('}');
+
+                if (tplNode && depth == 0) {
+                    source.push('}');
+                }
             }
 
             return [idName, source];
@@ -620,7 +634,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
         'block': function (block) {
             var programNode = block.program,
                 source = [],
-                tmpNameCommand = S.guid('command'),
+                tmpNameCommand,
                 tplNode = block.tpl,
                 optionNameCode = this.genOption(tplNode),
                 optionName = optionNameCode[0],
@@ -628,8 +642,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
 
             pushToArray(source, optionNameCode[1]);
 
-            source.push('var ' + tmpNameCommand +
-                ' = commands["' + string + '"];');
 
             source.push(optionName + '.fn=' + this.genFunction(programNode.statements).join('\n') + ';');
 
@@ -638,18 +650,50 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
                 source.push(optionName + '.inverse=' + inverseFn + ';');
             }
 
-            source.push('if( ' + tmpNameCommand + ' ){');
+            if (!commands[string]) {
+                tmpNameCommand = S.guid('command');
+                source.push('var ' + tmpNameCommand +
+                    ' = commands["' + string + '"];');
+                source.push('if( ' + tmpNameCommand + ' ){');
+            } else {
+                tmpNameCommand = string + 'Command';
+            }
             source.push('try{');
             source.push('buffer += ' + tmpNameCommand + '(scopes,' + optionName + ');');
             source.push('}catch(e){');
             source.push('error(e.message+": \'' +
                 string + '\' at line ' + tplNode.path.lineNumber + '");');
             source.push('}');
-            source.push('} else {');
-            source.push('error("can not find command: \'' +
-                string + '\' at line ' + tplNode.path.lineNumber + '");');
-            source.push('}');
-
+            if (!commands[string]) {
+                source.push('}');
+                var tmp = S.guid('tmp');
+                source.push('else {');
+                source.push('var ' + tmp + ';');
+                source.push(tmp + ' = getProperty("' + string + '",scopes[0]);');
+                source.push('if(' + tmp + '!==false&&S.isArray(' + tmp + '[0])) {');
+                source.push('try{');
+                source.push(optionName + '.params=' + tmp + ';');
+                source.push('buffer += eachCommand(scopes,' + optionName + ');');
+                source.push('}catch(e){');
+                source.push('error(e.message+": \' each ' +
+                    string + '\' at line ' + tplNode.path.lineNumber + '");');
+                source.push('}');
+                source.push('}');
+                source.push('else if(' + tmp + '!==false&&S.isObject(' + tmp + '[0])) {');
+                source.push('try{');
+                source.push(optionName + '.params=' + tmp + ';');
+                source.push('buffer += withCommand(scopes,' + optionName + ');');
+                source.push('}catch(e){');
+                source.push('error(e.message+": \' with ' +
+                    string + '\' at line ' + tplNode.path.lineNumber + '");');
+                source.push('}');
+                source.push('}');
+                source.push('else {');
+                source.push('error("can not find command: \'' +
+                    string + '\' at line ' + tplNode.path.lineNumber + '");');
+                source.push('}');
+                source.push('}');
+            }
             return source;
         },
 
@@ -696,6 +740,12 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
         parse: function (tpl) {
             return parser.parse(tpl);
         },
+        compileToStr: function (tpl) {
+            var func = this.compile(tpl);
+            return 'function(' + func.params.join(',') + '){\n' +
+                func.source.join('\n') +
+                '}';
+        },
         compile: function (tpl) {
             var root = this.parse(tpl);
             return gen.genFunction(root.statements, true);
@@ -703,7 +753,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
     };
 
 }, {
-    requires: ['./parser', './ast']
+    requires: ['./parser', './ast', './commands']
 });/**
 * parser for xtemplate from kison.
 * @author yiminghe@gmail.com
@@ -5463,10 +5513,16 @@ parser.parse = function parse(input) {
 };
 return parser;
 });/**
- * sub templates holder
+ * enhanced kissy template engine
  * @author yiminghe@gmail.com
  */
-KISSY.add('xtemplate/sub-tpls', function (S, XTemplate) {
+KISSY.add('xtemplate', function (S, XTemplate, commands) {
+
+    XTemplate.addCommand = function (commandName, fn) {
+        commands[commandName] = fn;
+    };
+
+    XTemplate.commands = commands;
 
     var subTpls = {};
 
@@ -5476,20 +5532,10 @@ KISSY.add('xtemplate/sub-tpls', function (S, XTemplate) {
         subTpls[tplName] = def;
     };
 
-    return subTpls;
-
-}, {
-    requires: ['./base']
-});/**
- * enhanced kissy template engine
- * @author yiminghe@gmail.com
- */
-KISSY.add('xtemplate', function (S, XTemplate) {
-
     return XTemplate;
 
 }, {
-    requires: ['xtemplate/base', 'xtemplate/commands', 'xtemplate/sub-tpls']
+    requires: ['xtemplate/base', 'xtemplate/commands']
 });
 /**
  * 2012-09-12 yiminghe@gmail.com

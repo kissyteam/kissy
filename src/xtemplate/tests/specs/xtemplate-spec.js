@@ -386,7 +386,6 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
             });
 
-
             describe('expression', function () {
 
                 it('support expression for variable', function () {
@@ -496,6 +495,58 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                     expect(new XTemplate(tpl).render(data)).toBe('6');
 
+                });
+
+            });
+
+            it('support set', function () {
+                var tpl = '{{#each data}}' +
+                    '{{set n2=this*2 n3=this*3}}' +
+                    '{{n2}}-{{n3}}|' +
+                    '{{/each}}';
+
+                var data = {
+                    data: [1, 2]
+                };
+
+                expect(new XTemplate(tpl).render(data)).toBe('2-3|4-6|');
+            });
+
+            describe('support mustache', function () {
+
+                it('support object', function () {
+                    var tpl = '{{#data}}{{name}}-{{age}}{{/data}}';
+
+                    var data = {
+                        data: {
+                            name: 'h',
+                            age: 2
+                        }
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('h-2');
+                });
+
+
+                it('support array', function () {
+                    var tpl = '{{#data}}{{name}}-{{xindex}}/{{xcount}}|{{/data}}';
+
+                    var data = {
+                        data: [
+                            {
+                                name: 1
+                            },
+                            {
+                                name: 2
+                            }
+                        ]
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('1-0/2|2-1/2|');
                 });
 
             });

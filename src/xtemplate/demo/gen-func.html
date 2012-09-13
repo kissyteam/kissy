@@ -92,7 +92,6 @@
 <script src="../src/parser.js"></script>
 <script src="../src/base.js"></script>
 <script src="../src/commands.js"></script>
-<script src="../src/sub-tpls.js"></script>
 <script src="../src/xtemplate.js"></script>
 <script>
     function js_beauty(str) {
@@ -105,7 +104,7 @@
     KISSY.use("xtemplate", function (S, XTemplate) {
         var $ = S.all;
         $('#parse').on('click', function () {
-            var g = new XTemplate($('#tpl').val()).compile().toString();
+            var g = XTemplate.compiler.compileToStr($('#tpl').val());
             $('#gen').html('<pre class="brush: js;">' +
                     S.escapeHTML(js_beauty(g)) + '</pre>');
             SyntaxHighlighter.highlight({}, $('#gen').one("pre")[0]);

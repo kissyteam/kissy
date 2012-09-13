@@ -26,15 +26,16 @@
                 <textarea style="width: 350px;height: 400px;" id="tpl">
 
                     {{#each data}}
-                        {{#if n === ..\n2 * 5}}
-                            {{n + 10.1}}
-                        {{/if}}
+                    {{#if n === ..\n2 * 5}}
+                    {{n + 10.1}}
+                    {{/if}}
                     {{/each}}
 
                 </textarea>
             </div>
             <br/>
             <button id="parse" class="ks-button">parse</button>
+            <button id="check" class="ks-button">check</button>
         </div>
 
         <div class="span15">
@@ -58,7 +59,6 @@
 <script src="../src/parser.js"></script>
 <script src="../src/base.js"></script>
 <script src="../src/commands.js"></script>
-<script src="../src/sub-tpls.js"></script>
 <script src="../src/xtemplate.js"></script>
 <script>
     function js_beauty(str) {
@@ -71,6 +71,13 @@
     KISSY.use("xtemplate", function (S, XTemplate) {
         var $ = S.all;
         $('#parse').on('click', function () {
+            var g = XTemplate.compiler.compileToStr($('#tpl').val());
+            $('#gen').html('<pre class="brush: js;">' +
+                    S.escapeHTML(js_beauty(g)) + '</pre>');
+            SyntaxHighlighter.highlight({}, $('#gen').one("pre")[0]);
+        });
+
+        $('#check').on('click', function () {
             var g = new XTemplate($('#tpl').val()).compile().toString();
             $('#gen').html('<pre class="brush: js;">' +
                     S.escapeHTML(js_beauty(g)) + '</pre>');

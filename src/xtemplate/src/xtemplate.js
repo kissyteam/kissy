@@ -2,12 +2,26 @@
  * enhanced kissy template engine
  * @author yiminghe@gmail.com
  */
-KISSY.add('xtemplate', function (S, XTemplate) {
+KISSY.add('xtemplate', function (S, XTemplate, commands) {
+
+    XTemplate.addCommand = function (commandName, fn) {
+        commands[commandName] = fn;
+    };
+
+    XTemplate.commands = commands;
+
+    var subTpls = {};
+
+    XTemplate.subTpls = subTpls;
+
+    XTemplate.addSubTpl = function (tplName, def) {
+        subTpls[tplName] = def;
+    };
 
     return XTemplate;
 
 }, {
-    requires: ['xtemplate/base', 'xtemplate/commands', 'xtemplate/sub-tpls']
+    requires: ['xtemplate/base', 'xtemplate/commands']
 });
 /**
  * 2012-09-12 yiminghe@gmail.com

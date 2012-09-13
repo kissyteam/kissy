@@ -72,6 +72,7 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
 
         'set': function (scopes, option) {
             S.mix(scopes[0], option.hash);
+            return '';
         },
 
         'include': function (scopes, option) {
@@ -84,6 +85,7 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
             if (!(tpl = subTpls[param0])) {
                 throw new Error('does not include sub template "' + param0 + '"');
             }
+            var XTemplate = S.require('xtemplate');
             return new XTemplate(tpl, {
                 commands: option.commands,
                 subTpls: option.subTpls
@@ -91,14 +93,6 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
         }
     };
 
-    XTemplate.addCommand = function (commandName, fn) {
-        commands[commandName] = fn;
-    };
-
-    XTemplate.commands = commands;
-
     return commands;
 
-}, {
-    requires: ['./base']
 });
