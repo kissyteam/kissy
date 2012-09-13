@@ -1,3 +1,8 @@
+/**
+ * unit test framework for KISSY
+ * @author yiminghe@gmail.com
+ */
+
 // document.domain='ali.com';
 var index = -1;
 var $ = KISSY.all;
