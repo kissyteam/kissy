@@ -871,18 +871,18 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         if (range.collapsed) {
 
             var startPath = new ElementPath(startNode.parent()),
-            // The topmost element in elementspatch which we should jump out of.
+            // The topmost element in elements path which we should jump out of.
                 boundaryElement;
 
 
             for (var i = 0, element; i < startPath.elements.length
                 && ( element = startPath.elements[i] ); i++) {
                 /*
-                 * 1. If it's collaped inside text nodes, try to remove the style from the whole element.
+                 * 1. If it's collapsed inside text nodes, try to remove the style from the whole element.
                  *
                  * 2. Otherwise if it's collapsed on element boundaries, moving the selection
                  *  outside the styles instead of removing the whole tag,
-                 *  also make sure other inner styles were well preserverd.(#3309)
+                 *  also make sure other inner styles were well preserved.(#3309)
                  */
                 if (element == startPath.block ||
                     element == startPath.blockLimit) {
