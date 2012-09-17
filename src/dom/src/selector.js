@@ -587,7 +587,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
  - Array 的 push 方法可以用 j++ 来替代，性能有提升。
  - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组。
 
- - 从压缩角度考虑，还可以将 getElmentsByTagName 和 getElementsByClassName 定义为常量，
+ - 从压缩角度考虑，还可以将 getElementsByTagName 和 getElementsByClassName 定义为常量，
  不过感觉这样做太“压缩控”，还是保留不替换的好。
 
  - 调整 getElementsByClassName 的降级写法，性能最差的放最后。
