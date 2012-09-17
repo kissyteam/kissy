@@ -197,12 +197,12 @@ KISSY.Editor.add("image/dialog", function (editor) {
     function prepare() {
 
         d = new KE.Dialog({
-            autoRender:true,
-            width:500,
-            headerContent:"图片", //属性",
-            bodyContent:bodyHtml,
-            footerContent:footHtml,
-            mask:true
+            autoRender: true,
+            width: 500,
+            headerContent: "图片", //属性",
+            bodyContent: bodyHtml,
+            footerContent: footHtml,
+            mask: true
         });
         addRes.call(controls, d);
         var content = d.get("el"),
@@ -213,8 +213,8 @@ KISSY.Editor.add("image/dialog", function (editor) {
         uploadForm = content.one(".ke-img-upload-form");
         imgLocalUrl = content.one(".ke-img-local-url");
         tab = new KE.Tabs({
-            tabs:content.one("ul.ke-tabs"),
-            contents:content.one("div.ke-image-tabs-content-wrap")
+            tabs: content.one("ul.ke-tabs"),
+            contents: content.one("div.ke-image-tabs-content-wrap")
         });
         addRes.call(controls, tab);
         imgLocalUrl.val(warning);
@@ -278,8 +278,8 @@ KISSY.Editor.add("image/dialog", function (editor) {
                 DOM.remove(uploadIframe);
             }
             loadingCancel.css({
-                left:-9999,
-                top:-9999
+                left: -9999,
+                top: -9999
             });
             uploadIframe = null;
         });
@@ -331,12 +331,12 @@ KISSY.Editor.add("image/dialog", function (editor) {
                 d.loading();
 
                 uploadIframe = KE.Utils.doFormUpload({
-                    form:uploadForm,
-                    callback:function (r) {
+                    form: uploadForm,
+                    callback: function (r) {
                         uploadIframe = null;
                         loadingCancel.css({
-                            left:-9999,
-                            top:-9999
+                            left: -9999,
+                            top: -9999
                         });
                         var data = S.trim(r.responseText)
                             .replace(/\r|\n/g, "");
@@ -348,7 +348,7 @@ KISSY.Editor.add("image/dialog", function (editor) {
                             S.log(data);
                             data = null;
                         }
-                        if (!data) data = {error:"服务器出错，请重试"};
+                        if (!data) data = {error: "服务器出错，请重试"};
                         if (data.error) {
                             alert(data.error);
                             return;
@@ -367,8 +367,8 @@ KISSY.Editor.add("image/dialog", function (editor) {
                     height = loadingMaskEl[0].offsetHeight;
 
                 loadingCancel.css({
-                    left:(offset.left + width / 2.5),
-                    top:(offset.top + height / 1.5)
+                    left: (offset.left + width / 2.5),
+                    top: (offset.top + height / 1.5)
                 });
 
             } else {
@@ -461,10 +461,10 @@ KISSY.Editor.add("image/dialog", function (editor) {
             img = selectedEl;
             editor.fire("save");
             selectedEl.attr({
-                "src":url,
+                "src": url,
                 //注意设置，取的话要从 _ke_saved_src 里取
-                "_ke_saved_src":url,
-                "style":style
+                "_ke_saved_src": url,
+                "style": style
             });
         } else {
             img = new Node("<img " +
@@ -532,10 +532,18 @@ KISSY.Editor.add("image/dialog", function (editor) {
         selectedEl = _selectedEl;
         if (selectedEl && imageCfg.remote !== false) {
             valInput(imgUrl, selectedEl.attr("src"));
-            var w = selectedEl.width(),
-                h = selectedEl.height();
-            valInput(imgHeight, h);
-            valInput(imgWidth, w);
+            var w = parseInt(selectedEl.style("width")),
+                h = parseInt(selectedEl.style("height"));
+            if (h) {
+                valInput(imgHeight, h);
+            } else {
+                resetInput(imgHeight);
+            }
+            if (w) {
+                valInput(imgWidth, w);
+            } else {
+                resetInput(imgWidth);
+            }
             imgAlign.val(selectedEl.css("float") || "none");
             var margin = parseInt(selectedEl._4e_style("margin"))
                 || 0;
@@ -576,19 +584,19 @@ KISSY.Editor.add("image/dialog", function (editor) {
     KE.use("overlay,tabs,select", function () {
         prepare();
         editor.addDialog("image/dialog", {
-            show:function (_selectedEl) {
+            show: function (_selectedEl) {
                 update(_selectedEl);
                 d.show();
             },
-            hide:function () {
+            hide: function () {
                 d.hide();
             },
-            destroy:function () {
+            destroy: function () {
                 destroyRes.call(controls);
             },
-            dialog:d
+            dialog: d
         });
     });
 }, {
-    attach:false
+    attach: false
 });

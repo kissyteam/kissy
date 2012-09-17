@@ -116,6 +116,13 @@ KISSY.Editor.add("bubbleview", function () {
 
         var x, y;
 
+        // ie 图片缩放框大于编辑区域底部，bubble 点击不了了，干脆不显示
+        if (S.UA.ie &&
+            el[0].nodeName.toLowerCase() == 'img' &&
+            elBottom > bottom) {
+            return undefined;
+        }
+
         // 对其下边
         // el 位于编辑区域，下边界超了编辑区域下边界
         if (elBottom > bottom && elTop < bottom) {

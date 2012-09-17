@@ -3,7 +3,7 @@
  *      thanks to CKSource's intelligent work on CKEditor
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  * @version: 2
- * @buildtime: 2012-07-16 13:51:46
+ * @buildtime: 2012-09-10 21:59:19
  */
 
 /**
@@ -108,12 +108,12 @@ KISSY.add("editor/export", function(S) {
     if (parseFloat(S.version) < 1.2) {
         getJSName = function () {
             return "plugin-min.js?t=" +
-                encodeURIComponent("2012-07-16 13:51:46");
+                encodeURIComponent("2012-09-10 21:59:19");
         };
     } else {
         getJSName = function (m, tag) {
             return m + '/plugin-min.js' + (tag ? tag : '?t=' +
-                encodeURIComponent('2012-07-16 13:51:46'));
+                encodeURIComponent('2012-09-10 21:59:19'));
         };
     }
 
@@ -11435,6 +11435,13 @@ KISSY.Editor.add("bubbleview", function () {
             elBottom = elTop + el.height();
 
         var x, y;
+
+        // ie 图片缩放框大于编辑区域底部，bubble 点击不了了，干脆不显示
+        if (S.UA.ie &&
+            el[0].nodeName.toLowerCase() == 'img' &&
+            elBottom > bottom) {
+            return undefined;
+        }
 
         // 对其下边
         // el 位于编辑区域，下边界超了编辑区域下边界
