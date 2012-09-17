@@ -6,7 +6,7 @@
 KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
-        NodeType=DOM.NodeType,
+        NodeType = DOM.NodeType,
         filter = S.filter,
         require = function (selector) {
             return S.require(selector);
@@ -128,7 +128,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             // 简单选择器自己处理
             ret = queryBySimple(selector, context);
         }
-        // 如果选择器有 , 分开递归一部分一部分来
+        // 如果选择器有, 分开递归一部分一部分来
         else if (isSelectorString && selector.indexOf(COMMA) > -1) {
             ret = queryBySelectors(selector, context);
         }
@@ -315,7 +315,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     // 调整 context 为合理值
     function tuneContext(context) {
-        return query(context, undefined);
+        return query(context);
     }
 
     // query #id
@@ -328,8 +328,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         el = doc.getElementById(id);
         if (el && el.id === id) {
             // optimize for common usage
-        }
-        else if (el && el.parentNode) {
+        } else if (el && el.parentNode) {
             // ie opera confuse name with id
             // https://github.com/kissyteam/kissy/issues/67
             // 不能直接 el.id ，否则 input shadow form attribute
@@ -337,12 +336,12 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                 // 直接在 context 下的所有节点找
                 el = DOM.filter(ANY, '#' + id, context)[0] || null;
             }
-            // ie 特殊情况下以及指明在 context 下找了，不需要再判断
-            // 如果指定了 context node , 还要判断 id 是否处于 context 内
-            else if (!testByContext(el, context)) {
-                el = null;
-            }
         } else {
+            el = null;
+        }
+        // ie 特殊情况下以及指明在 context 下找了，不需要再判断
+        // 如果指定了 context node , 还要判断 id 是否处于 context 内
+        if (el && !testByContext(el, context)) {
             el = null;
         }
         return el;

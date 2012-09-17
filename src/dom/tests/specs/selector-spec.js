@@ -77,7 +77,7 @@ KISSY.use("dom", function (S, DOM) {
 
             expect(DOM.get("#" + id).nodeName.toLowerCase()).toBe("div");
 
-            DOM.remove([input,div]);
+            DOM.remove([input, div]);
 
         });
     });
@@ -175,12 +175,12 @@ KISSY.use("dom", function (S, DOM) {
 
         it("support other format as first parameter", function () {
             // 普通对象
-            var o = {length:1};
+            var o = {length: 1};
             expect(DOM.query(o)[0]).toBe(o);
 
             // KISSY NodeList
             o = {
-                getDOMNodes:1
+                getDOMNodes: 1
             };
             expect(DOM.query(o)).toBe(o);
 
@@ -194,6 +194,15 @@ KISSY.use("dom", function (S, DOM) {
             expect(ret.length).toBe(o.length);
             expect(ret[0]).toBe(o[0]);
             expect(S.isArray(ret)).toBe(true);
+        });
+
+
+        it('id selector should constrain to context', function () {
+            var t = DOM.append(DOM.create('<div id="tt"></div><div id="tt2"></div>'),
+                'body');
+            expect(DOM.query('#tt', DOM.get('#tt2')).length).toBe(0);
+
+            expect($('#tt', '#tt2').length).toBe(0);
         });
 
         if (S.require("sizzle")) {
