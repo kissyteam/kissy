@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 12 21:52
+build time: Sep 17 19:40
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 12 21:52
 
         /**
          * The build time of the library.
-         * NOTICE: '20120912215158' will replace with current timestamp when compressing.
+         * NOTICE: '20120917194015' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120912215158';
+        S.__BUILD_TIME = '20120917194015';
     })();
 
     return S;
@@ -5189,7 +5189,7 @@ build time: Sep 12 21:52
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120912215158'
+        tag: '20120917194015'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5879,7 +5879,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:26
+build time: Sep 17 19:40
 */
 /**
  * @ignore
@@ -8500,12 +8500,12 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 /**
  * @ignore
  * @fileOverview selector
- * @author lifesinger@gmail.com, yiminghe@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
-        NodeType=DOM.NodeType,
+        NodeType = DOM.NodeType,
         filter = S.filter,
         require = function (selector) {
             return S.require(selector);
@@ -8627,7 +8627,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             // 简单选择器自己处理
             ret = queryBySimple(selector, context);
         }
-        // 如果选择器有 , 分开递归一部分一部分来
+        // 如果选择器有, 分开递归一部分一部分来
         else if (isSelectorString && selector.indexOf(COMMA) > -1) {
             ret = queryBySelectors(selector, context);
         }
@@ -8814,34 +8814,49 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     // 调整 context 为合理值
     function tuneContext(context) {
-        return query(context, undefined);
+        return query(context);
     }
 
     // query #id
     function getElementById(id, context) {
-        var doc = context,
+        var contextIsDocument = context.nodeType == NodeType.DOCUMENT_NODE,
+            doc = contextIsDocument ? context : context.ownerDocument,
+            shouldTestAndIgnoreContext,
+            shouldFilterAndGetBelowContext,
             el;
-        if (context.nodeType !== NodeType.DOCUMENT_NODE) {
-            doc = context.ownerDocument;
-        }
+
         el = doc.getElementById(id);
-        if (el && el.id === id) {
-            // optimize for common usage
-        }
-        else if (el && el.parentNode) {
+
+        if (el) {
             // ie opera confuse name with id
             // https://github.com/kissyteam/kissy/issues/67
             // 不能直接 el.id ，否则 input shadow form attribute
-            if (!idEq(el, id)) {
-                // 直接在 context 下的所有节点找
-                el = DOM.filter(ANY, '#' + id, context)[0] || null;
-            }
-            // ie 特殊情况下以及指明在 context 下找了，不需要再判断
-            // 如果指定了 context node , 还要判断 id 是否处于 context 内
-            else if (!testByContext(el, context)) {
-                el = null;
+            if (idEq(el, id)) {
+                // 成功了就不用从 context 中找了
+                shouldFilterAndGetBelowContext = 0;
+                // 如果 context 不是document 还需要过滤
+                shouldTestAndIgnoreContext = contextIsDocument ? 0 : 1;
+            } else {
+                // id 错了，无论如何都要从 context 的所有节点中找
+                shouldFilterAndGetBelowContext = 1;
+                // 但是不用测试了
+                shouldTestAndIgnoreContext = 0;
             }
         } else {
+            // 没这个 id，如果 context 不是 document，需要从 context 所有节点中找下
+            // DOM.get('#id',DOM.create('<div><div id="id"></div></div>'));
+            shouldFilterAndGetBelowContext = contextIsDocument ? 0 : 1;
+            // 不用测试了
+            shouldTestAndIgnoreContext = 0;
+        }
+
+        if (shouldFilterAndGetBelowContext) {
+            el = DOM.filter(ANY, '#' + id, context)[0] || null;
+        }
+
+        // ie 特殊情况下以及指明在 context 下找了，不需要再判断
+        // 如果指定了 context node , 还要判断 id 是否处于 context 内
+        else if (shouldTestAndIgnoreContext && !testByContext(el, context)) {
             el = null;
         }
         return el;
@@ -9087,7 +9102,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
  - Array 的 push 方法可以用 j++ 来替代，性能有提升。
  - 返回值策略和 Sizzle 一致，正常时，返回数组；其它所有情况，返回空数组。
 
- - 从压缩角度考虑，还可以将 getElmentsByTagName 和 getElementsByClassName 定义为常量，
+ - 从压缩角度考虑，还可以将 getElementsByTagName 和 getElementsByClassName 定义为常量，
  不过感觉这样做太“压缩控”，还是保留不替换的好。
 
  - 调整 getElementsByClassName 的降级写法，性能最差的放最后。

@@ -200,9 +200,22 @@ KISSY.use("dom", function (S, DOM) {
         it('id selector should constrain to context', function () {
             var t = DOM.append(DOM.create('<div id="tt"></div><div id="tt2"></div>'),
                 'body');
+
             expect(DOM.query('#tt', DOM.get('#tt2')).length).toBe(0);
 
             expect($('#tt', '#tt2').length).toBe(0);
+
+            DOM.remove('#tt,#tt2');
+
+            expect(DOM.get('#tt')).toBe(null);
+            expect(DOM.get('#tt2')).toBe(null);
+        });
+
+        it('should get child element by id selector ' +
+            'even node is not in the document', function () {
+            var t = DOM.create('<div id="tt"><div id="tt2"></div></div>');
+            expect(DOM.query('#tt2',t).length).toBe(1);
+            expect($('#tt2',t).length).toBe(1);
         });
 
         if (S.require("sizzle")) {

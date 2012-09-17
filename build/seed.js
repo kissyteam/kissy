@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 12 21:52
+build time: Sep 17 19:40
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 12 21:52
 
         /**
          * The build time of the library.
-         * NOTICE: '20120912215158' will replace with current timestamp when compressing.
+         * NOTICE: '20120917194015' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120912215158';
+        S.__BUILD_TIME = '20120917194015';
     })();
 
     return S;
@@ -5189,7 +5189,7 @@ build time: Sep 12 21:52
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120912215158'
+        tag: '20120917194015'
     }, getBaseInfo()));
 
     // Initializes loader.

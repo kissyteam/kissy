@@ -1,7 +1,7 @@
 /**
  * @ignore
  * @fileOverview selector
- * @author lifesinger@gmail.com, yiminghe@gmail.com
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/selector', function (S, DOM, undefined) {
 
@@ -320,28 +320,44 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     // query #id
     function getElementById(id, context) {
-        var doc = context,
+        var contextIsDocument = context.nodeType == NodeType.DOCUMENT_NODE,
+            doc = contextIsDocument ? context : context.ownerDocument,
+            shouldTestAndIgnoreContext,
+            shouldFilterAndGetBelowContext,
             el;
-        if (context.nodeType !== NodeType.DOCUMENT_NODE) {
-            doc = context.ownerDocument;
-        }
+
         el = doc.getElementById(id);
-        if (el && el.id === id) {
-            // optimize for common usage
-        } else if (el && el.parentNode) {
+
+        if (el) {
             // ie opera confuse name with id
             // https://github.com/kissyteam/kissy/issues/67
             // 不能直接 el.id ，否则 input shadow form attribute
-            if (!idEq(el, id)) {
-                // 直接在 context 下的所有节点找
-                el = DOM.filter(ANY, '#' + id, context)[0] || null;
+            if (idEq(el, id)) {
+                // 成功了就不用从 context 中找了
+                shouldFilterAndGetBelowContext = 0;
+                // 如果 context 不是document 还需要过滤
+                shouldTestAndIgnoreContext = contextIsDocument ? 0 : 1;
+            } else {
+                // id 错了，无论如何都要从 context 的所有节点中找
+                shouldFilterAndGetBelowContext = 1;
+                // 但是不用测试了
+                shouldTestAndIgnoreContext = 0;
             }
         } else {
-            el = null;
+            // 没这个 id，如果 context 不是 document，需要从 context 所有节点中找下
+            // DOM.get('#id',DOM.create('<div><div id="id"></div></div>'));
+            shouldFilterAndGetBelowContext = contextIsDocument ? 0 : 1;
+            // 不用测试了
+            shouldTestAndIgnoreContext = 0;
         }
+
+        if (shouldFilterAndGetBelowContext) {
+            el = DOM.filter(ANY, '#' + id, context)[0] || null;
+        }
+
         // ie 特殊情况下以及指明在 context 下找了，不需要再判断
         // 如果指定了 context node , 还要判断 id 是否处于 context 内
-        if (el && !testByContext(el, context)) {
+        else if (shouldTestAndIgnoreContext && !testByContext(el, context)) {
             el = null;
         }
         return el;
