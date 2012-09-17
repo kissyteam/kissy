@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Aug 17 11:32
+build time: Sep 17 12:20
 */
 /**
  * scalable event framework for kissy (refer DOM3 Events)
@@ -1536,7 +1536,7 @@ KISSY.add("event/submit", function(S, UA, Event, DOM) {
  * @module  EventTarget
  * @author  yiminghe@gmail.com
  */
-KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
+KISSY.add('event/target', function (S, Event, EventObject, Utils, undefined) {
     var KS_PUBLISH = "__~ks_publish",
         trim = S.trim,
         splitAndRun = Utils.splitAndRun,
@@ -1574,10 +1574,10 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
     }
 
     function attach(method) {
-        return function(type, fn, scope) {
+        return function (type, fn, scope) {
             var self = this;
             type = trim(type);
-            splitAndRun(type, function(t) {
+            splitAndRun(type, function (t) {
                 Event["__" + method](false, self, t, fn, scope);
             });
             return self; // chain
@@ -1600,20 +1600,23 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
          * @param {Object} eventData 事件附加信息对象
          * @returns 如果一个 listener 返回false，则返回 false ，否则返回最后一个 listener 的值.
          */
-        fire: function(type, eventData) {
+        fire: function (type, eventData) {
             var self = this,
                 ret,
                 r2,
                 customEvent;
             type = trim(type);
             if (type.indexOf(" ") > 0) {
-                splitAndRun(type, function(t) {
+                splitAndRun(type, function (t) {
                     r2 = self.fire(t, eventData);
                     if (r2 === false) {
                         ret = false;
                     }
                 });
                 return ret;
+            }
+            if (eventData) {
+                eventData.type = type;
             }
             customEvent = getCustomEvent(self, type, eventData);
             ret = Event._handle(self, customEvent);
@@ -1635,7 +1638,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
          *        example { bubbles: true}
          *        default bubbles: false
          */
-        publish: function(type, cfg) {
+        publish: function (type, cfg) {
             var self = this,
                 publish = getEventPublishObj(self);
             type = trim(type);
@@ -1649,11 +1652,11 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
          * @param type
          * @param eventData
          */
-        bubble: function(type, eventData) {
+        bubble: function (type, eventData) {
             var self = this,
                 ret,
                 targets = getBubbleTargetsObj(self);
-            S.each(targets, function(t) {
+            S.each(targets, function (t) {
                 var r2 = t.fire(type, eventData);
                 if (ret !== false) {
                     ret = r2;
@@ -1666,13 +1669,13 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
          * add target which bubblable event bubbles towards
          * @param target another EventTarget instance
          */
-        addTarget: function(target) {
+        addTarget: function (target) {
             var self = this,
                 targets = getBubbleTargetsObj(self);
             targets[S.stamp(target)] = target;
         },
 
-        removeTarget:function(target) {
+        removeTarget: function (target) {
             var self = this,
                 targets = getBubbleTargetsObj(self);
             delete targets[S.stamp(target)];
@@ -1703,7 +1706,7 @@ KISSY.add('event/target', function(S, Event, EventObject, Utils, undefined) {
      实际上只需要 dom/data ，但是不要跨模块引用另一模块的子模块，
      否则会导致build打包文件 dom 和 dom-data 重复载入
      */
-    requires:["./base",'./object','./utils']
+    requires: ["./base", './object', './utils']
 });
 /**
  *  yiminghe:2011-10-17
