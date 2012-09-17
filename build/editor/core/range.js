@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 17 14:38
+build time: Sep 17 18:02
 */
 /**
  * Range implementation across browsers for kissy editor. Modified from CKEditor.
@@ -1703,38 +1703,6 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     domNode.nodeValue.length :
                     domNode.childNodes.length);
             },
-
-            /*
-             insertNodeByDtd:function (element) {
-             var current,
-             self = this,
-             tmpDtd,
-             elementName = element['nodeName'](),
-             isBlock = dtd['$block'][ elementName ];
-             self.deleteContents();
-             if (isBlock) {
-             while (( current = self.getCommonAncestor(FALSE, TRUE) ) &&
-             ( tmpDtd = dtd[ current.nodeName() ] ) &&
-             !( tmpDtd && tmpDtd [ elementName ] )) {
-             // Split up inline elements.
-             if (current.nodeName() in dtd["span"]) {
-             self.splitElement(current);
-             }
-             // If we're in an empty block which indicate a new paragraph,
-             // simply replace it with the inserting block.(#3664)
-             else if (self.checkStartOfBlock() && self.checkEndOfBlock()) {
-             self.setStartBefore(current);
-             self.collapse(TRUE);
-             current.remove();
-             }
-             else {
-             self.splitBlock(undefined);
-             }
-             }
-             }
-             // Insert the new node.
-             self.insertNode(element);
-             },*/
 
             /**
              * Insert node by dtd.(not invalidate dtd convention)

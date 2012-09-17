@@ -11,6 +11,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
+        $ = S.all,
         DOM = S.DOM,
         /**
          * enum for style type
@@ -947,6 +948,10 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                     // filling char
                     tmp == '\u200b') {
                     boundaryElement.remove();
+                }
+                // http://code.google.com/p/chromium/issues/detail?id=149894
+                else if (UA.webkit) {
+                    $(range.document.createTextNode('\u200b')).insertBefore(clonedElement);
                 }
             }
         } else {

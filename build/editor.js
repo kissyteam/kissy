@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 17 14:38
+build time: Sep 17 18:02
 */
 /**
  * Set up editor constructor
@@ -5553,38 +5553,6 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     domNode.childNodes.length);
             },
 
-            /*
-             insertNodeByDtd:function (element) {
-             var current,
-             self = this,
-             tmpDtd,
-             elementName = element['nodeName'](),
-             isBlock = dtd['$block'][ elementName ];
-             self.deleteContents();
-             if (isBlock) {
-             while (( current = self.getCommonAncestor(FALSE, TRUE) ) &&
-             ( tmpDtd = dtd[ current.nodeName() ] ) &&
-             !( tmpDtd && tmpDtd [ elementName ] )) {
-             // Split up inline elements.
-             if (current.nodeName() in dtd["span"]) {
-             self.splitElement(current);
-             }
-             // If we're in an empty block which indicate a new paragraph,
-             // simply replace it with the inserting block.(#3664)
-             else if (self.checkStartOfBlock() && self.checkEndOfBlock()) {
-             self.setStartBefore(current);
-             self.collapse(TRUE);
-             current.remove();
-             }
-             else {
-             self.splitBlock(undefined);
-             }
-             }
-             }
-             // Insert the new node.
-             self.insertNode(element);
-             },*/
-
             /**
              * Insert node by dtd.(not invalidate dtd convention)
              * @param {KISSY.NodeList} element
@@ -6951,6 +6919,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
+        $ = S.all,
         DOM = S.DOM,
         /**
          * enum for style type
@@ -7811,18 +7780,18 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         if (range.collapsed) {
 
             var startPath = new ElementPath(startNode.parent()),
-            // The topmost element in elementspatch which we should jump out of.
+            // The topmost element in elements path which we should jump out of.
                 boundaryElement;
 
 
             for (var i = 0, element; i < startPath.elements.length
                 && ( element = startPath.elements[i] ); i++) {
                 /*
-                 * 1. If it's collaped inside text nodes, try to remove the style from the whole element.
+                 * 1. If it's collapsed inside text nodes, try to remove the style from the whole element.
                  *
                  * 2. Otherwise if it's collapsed on element boundaries, moving the selection
                  *  outside the styles instead of removing the whole tag,
-                 *  also make sure other inner styles were well preserverd.(#3309)
+                 *  also make sure other inner styles were well preserved.(#3309)
                  */
                 if (element == startPath.block ||
                     element == startPath.blockLimit) {
@@ -7887,6 +7856,10 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                     // filling char
                     tmp == '\u200b') {
                     boundaryElement.remove();
+                }
+                // http://code.google.com/p/chromium/issues/detail?id=149894
+                else if (UA.webkit) {
+                    $(range.document.createTextNode('\u200b')).insertBefore(clonedElement);
                 }
             }
         } else {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 17 14:38
+build time: Sep 17 18:02
 */
 /**
  * Use style to gen element and wrap range's elements.Modified from CKEditor.
@@ -16,6 +16,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
+        $ = S.all,
         DOM = S.DOM,
         /**
          * enum for style type
@@ -876,18 +877,18 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         if (range.collapsed) {
 
             var startPath = new ElementPath(startNode.parent()),
-            // The topmost element in elementspatch which we should jump out of.
+            // The topmost element in elements path which we should jump out of.
                 boundaryElement;
 
 
             for (var i = 0, element; i < startPath.elements.length
                 && ( element = startPath.elements[i] ); i++) {
                 /*
-                 * 1. If it's collaped inside text nodes, try to remove the style from the whole element.
+                 * 1. If it's collapsed inside text nodes, try to remove the style from the whole element.
                  *
                  * 2. Otherwise if it's collapsed on element boundaries, moving the selection
                  *  outside the styles instead of removing the whole tag,
-                 *  also make sure other inner styles were well preserverd.(#3309)
+                 *  also make sure other inner styles were well preserved.(#3309)
                  */
                 if (element == startPath.block ||
                     element == startPath.blockLimit) {
@@ -952,6 +953,10 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                     // filling char
                     tmp == '\u200b') {
                     boundaryElement.remove();
+                }
+                // http://code.google.com/p/chromium/issues/detail?id=149894
+                else if (UA.webkit) {
+                    $(range.document.createTextNode('\u200b')).insertBefore(clonedElement);
                 }
             }
         } else {
