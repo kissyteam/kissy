@@ -103,6 +103,30 @@ KISSY.use("dom,event,ua", function (S, DOM, Event, UA) {
 
         });
 
+        // note 219
+        it('fire does not depend on custom event\'s type', function () {
+            var S = KISSY,
+                haha = 0,
+                haha2 = 0,
+                obj = S.mix({}, S.EventTarget);
+
+            obj.on('haha', function (ev) {
+                haha++;
+                ev.type = 'hah3';
+                obj.fire('haha2', ev);
+            });
+
+            obj.on('haha2', function () {
+                haha2++;
+            });
+
+            obj.fire('haha');
+
+            expect(haha).toBe(1);
+            expect(haha2).toBe(1);
+
+        });
+
 
     });
 
