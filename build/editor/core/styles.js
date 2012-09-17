@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 11 23:28
+build time: Sep 17 14:38
 */
 /**
  * Use style to gen element and wrap range's elements.Modified from CKEditor.
@@ -22,9 +22,9 @@ KISSY.add("editor/core/styles", function (S, Editor) {
          * @enum {number}
          */
             KEST = {
-            STYLE_BLOCK:1,
-            STYLE_INLINE:2,
-            STYLE_OBJECT:3
+            STYLE_BLOCK: 1,
+            STYLE_INLINE: 2,
+            STYLE_OBJECT: 3
         },
         KER = Editor.RANGE,
         KESelection = Editor.Selection,
@@ -35,36 +35,36 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         UA = S.UA,
         ElementPath = Editor.ElementPath,
         blockElements = {
-            "address":1,
-            "div":1,
-            "h1":1,
-            "h2":1,
-            "h3":1,
-            "h4":1,
-            "h5":1,
-            "h6":1,
-            "p":1,
-            "pre":1
+            "address": 1,
+            "div": 1,
+            "h1": 1,
+            "h2": 1,
+            "h3": 1,
+            "h4": 1,
+            "h5": 1,
+            "h6": 1,
+            "p": 1,
+            "pre": 1
         },
         DTD = Editor.XHTML_DTD,
         objectElements = {
             //why? a should be same to inline? 但是不能互相嵌套
             //a:1,
-            "embed":1,
-            "hr":1,
-            "img":1,
-            "li":1,
-            "object":1,
-            "ol":1,
-            "table":1,
-            "td":1,
-            "tr":1,
-            "th":1,
-            "ul":1,
-            "dl":1,
-            "dt":1,
-            "dd":1,
-            "form":1
+            "embed": 1,
+            "hr": 1,
+            "img": 1,
+            "li": 1,
+            "object": 1,
+            "ol": 1,
+            "table": 1,
+            "td": 1,
+            "tr": 1,
+            "th": 1,
+            "ul": 1,
+            "dl": 1,
+            "dt": 1,
+            "dd": 1,
+            "form": 1
         },
         semicolonFixRegex = /\s*(?:;\s*|$)/g,
         varRegex = /#\((.+?)\)/g;
@@ -109,7 +109,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
             KEST.STYLE_OBJECT : KEST.STYLE_INLINE;
 
         this._ = {
-            "definition":styleDefinition
+            "definition": styleDefinition
         };
     }
 
@@ -137,15 +137,15 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     }
 
     KEStyle.prototype = {
-        apply:function (document) {
+        apply: function (document) {
             applyStyle.call(this, document, FALSE);
         },
 
-        remove:function (document) {
+        remove: function (document) {
             applyStyle.call(this, document, TRUE);
         },
 
-        applyToRange:function (range) {
+        applyToRange: function (range) {
             var self = this;
             return ( self.applyToRange =
                 this.type == KEST.STYLE_INLINE ?
@@ -159,7 +159,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                     : NULL ).call(self, range);
         },
 
-        removeFromRange:function (range) {
+        removeFromRange: function (range) {
             var self = this;
             return ( self.removeFromRange =
                 self.type == KEST.STYLE_INLINE ?
@@ -172,7 +172,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 //        },
         // Checks if an element, or any of its attributes, is removable by the
         // current style definition.
-        checkElementRemovable:function (element, fullMatch) {
+        checkElementRemovable: function (element, fullMatch) {
             if (!element)
                 return FALSE;
 
@@ -271,7 +271,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
          * Get the style state inside an element path. Returns "TRUE" if the
          * element is active in the path.
          */
-        checkActive:function (elementPath) {
+        checkActive: function (elementPath) {
             switch (this.type) {
                 case KEST.STYLE_BLOCK :
                     return this.checkElementRemovable(elementPath.block
@@ -740,12 +740,12 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
 
                 var removeList = {
-                    styles:{},
-                    attrs:{},
+                    styles: {},
+                    attrs: {},
                     // Styles cannot be removed.
-                    blockedStyles:{},
+                    blockedStyles: {},
                     // Attrs cannot be removed.
-                    blockedAttrs:{}
+                    blockedAttrs: {}
                 };
 
                 var attName, styleName = null, value;
@@ -930,7 +930,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                 var clonedElement = startNode;
                 for (i = 0; ; i++) {
                     var newElement = startPath.elements[ i ];
-                    if (DOM.equals(newElement, boundaryElement))
+                    if (newElement.equals(boundaryElement))
                         break;
                     // Avoid copying any matched element.
                     else if (newElement.match)
@@ -941,10 +941,18 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                     clonedElement = newElement;
                 }
                 //脱离当前的元素，将 bookmark 插入到当前元素后面
-                //<strong>xx|</strong>  ->
-                //<strong>xx<strong>|
+                // <strong>xx|</strong>  ->
+                // <strong>xx<strong>|
                 clonedElement[ boundaryElement.match == 'start' ? 'insertBefore' :
                     'insertAfter' ](boundaryElement);
+                // <strong>|</strong> ->
+                // <strong></strong>|
+                var tmp = boundaryElement.html();
+                if (!tmp ||
+                    // filling char
+                    tmp == '\u200b') {
+                    boundaryElement.remove();
+                }
             }
         } else {
             /*
@@ -1281,8 +1289,9 @@ KISSY.add("editor/core/styles", function (S, Editor) {
             overrides = getOverrides(style),
             innerElements = element.all(style["element"]);
 
-        for (var i = innerElements.length; --i >= 0;)
+        for (var i = innerElements.length; --i >= 0;) {
             removeFromElement(style, new Node(innerElements[i]));
+        }
 
         // Now remove any other element with different name that is
         // defined to be overriden.
@@ -1380,7 +1389,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
     return KEStyle;
 }, {
-    requires:['./base', './range', './selection', './domIterator', './elementPath']
+    requires: ['./base', './range', './selection', './domIterator', './elementPath']
 });
 /**
  * TODO yiminghe@gmail.com : 重构 Refer
