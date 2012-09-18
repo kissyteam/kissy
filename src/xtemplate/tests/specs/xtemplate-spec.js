@@ -603,9 +603,9 @@ KISSY.use('xtemplate', function (S, XTemplate) {
             });
 
             it('detect unmatched', function () {
-                var tpl = '{{#ifeq n n1}}' +
-                    'n eq n1' +
-                    '{{/if}}';
+                var tpl = '{{#if n === n1}}\n' +
+                    'n eq n1\n' +
+                    '{{/with}}';
 
                 var data = {
                     n: 1,
@@ -619,8 +619,8 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                         //S.log('!'+e.replace(/\n/g,'\\n').replace(/\r/g,'\\r')+'!');
                         throw e;
                     }
-                }).toThrow('parse error at line 1:\n' +
-                    'expect {{/ifeq}} not {{/if}}');
+                }).toThrow('parse error at line 3:\n' +
+                    'expect {{/if}} not {{/with}}');
 
             });
 
