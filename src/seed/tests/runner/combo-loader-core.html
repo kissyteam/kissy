@@ -9,11 +9,6 @@
     <script src="../../../../build/seed.js" charset="utf-8"></script>
     <script>
         KISSY.config("combine", true);
-        KISSY.config({
-            mapCombo: [
-                [/\?t=.*/, ""]
-            ]
-        });
     </script>
 </head>
 <body>
@@ -23,10 +18,6 @@
 <script>
     describe("use core should works as simple loader", function () {
         var S = KISSY;
-
-        KISSY.config("mapCombo", [
-            [/\?t=.+$/, ""]
-        ]);
 
         it("core is an alias", function () {
 

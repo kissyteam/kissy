@@ -16,23 +16,23 @@ describe("KISSY ComboLoader", function () {
         var ret = 0;
 
         KISSY.config({
-            packages:[
+            packages: [
                 {
-                    name:'tests3',
-                    path:'/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
+                    name: 'tests3',
+                    path: '/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
                 }
             ]
         });
 
         S.add({
-            "tests3/a":{
-                requires:["./b"]
+            "tests3/a": {
+                requires: ["./b"]
             },
-            "tests3/b":{
-                requires:["./c", "dom"]
+            "tests3/b": {
+                requires: ["./c", "dom"]
             },
-            dom:{
-                requires:['ua']
+            dom: {
+                requires: ['ua']
             }
         });
 
@@ -56,17 +56,17 @@ describe("KISSY ComboLoader", function () {
         var l = new ComboLoader(S);
 
         l.add({
-            a:{
-                requires:["b", "c"]
+            a: {
+                requires: ["b", "c"]
             },
-            b:{
-                requires:["d", "e"]
+            b: {
+                requires: ["d", "e"]
             },
-            d:{
-                requires:["f", "g"]
+            d: {
+                requires: ["f", "g"]
             },
-            "h":{
-                requires:["a", "m"]
+            "h": {
+                requires: ["a", "m"]
             }
         });
 
@@ -75,7 +75,7 @@ describe("KISSY ComboLoader", function () {
         S.Loader.Utils.createModulesInfo(S, r);
         var c = l.getComboUrls(r);
         expect(c.js[''][0]).toBe(S.Config.base +
-            "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js");
+            "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js?t=" + S.Config.tag);
     });
 
     it("should trunk url automatically", function () {
@@ -92,7 +92,7 @@ describe("KISSY ComboLoader", function () {
                 r2.push("y" + (k++))
             }
             x["y" + i] = {
-                requires:r2
+                requires: r2
             }
         }
 
@@ -110,8 +110,9 @@ describe("KISSY ComboLoader", function () {
         var c = l.getComboUrls(r);
         var cjs = c.js[''];
         expect(cjs.length).toBe(3);
+
         S.each(cjs, function (j) {
-            expect(j.length < S.Config.comboMaxUrlLength).toBe(true);
+            expect(j.length).not.toBeGreaterThan(S.Config.comboMaxUrlLength)
         });
     });
 
@@ -122,7 +123,7 @@ describe("KISSY ComboLoader", function () {
         S.Env.mods = {};
         S.DOM = null;
         S.add({
-            dom:{requires:['ua']}
+            dom: {requires: ['ua']}
         });
         S.use("dom", function () {
             expect(S.DOM).not.toBe(undefined);
@@ -147,22 +148,22 @@ describe("KISSY ComboLoader", function () {
         S.Env.mods = {};
 
         KISSY.config({
-            packages:[
+            packages: [
                 {
-                    name:'tests',
-                    path:'/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
+                    name: 'tests',
+                    path: '/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
                 }
             ]
         });
         S.add({
-            "tests/a":{
-                requires:['./b']
+            "tests/a": {
+                requires: ['./b']
             },
-            "tests/b":{
-                requires:['./c', 'dom']
+            "tests/b": {
+                requires: ['./c', 'dom']
             },
-            dom:{
-                requires:['ua']
+            dom: {
+                requires: ['ua']
             }
         });
 
@@ -173,7 +174,7 @@ describe("KISSY ComboLoader", function () {
 
         expect(urls['js']['tests'][0])
             .toBe("http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/combo/" +
-            "tests/??a.js,b.js,c.js");
+            "tests/??a.js,b.js,c.js?t=" + S.Config.tag);
 
         S.DOM = null;
 
@@ -200,24 +201,24 @@ describe("KISSY ComboLoader", function () {
         S.Env.mods = {};
 
         KISSY.config({
-            packages:[
+            packages: [
                 {
-                    name:'tests2',
-                    path:'/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
+                    name: 'tests2',
+                    path: '/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
                 }
             ]
         });
         S.add({
-            "tests2/a":{
-                requires:['./b']
+            "tests2/a": {
+                requires: ['./b']
             },
-            "tests2/b":{
-                requires:['./c', 'dom']
+            "tests2/b": {
+                requires: ['./c', 'dom']
             },
-            dom:{
-                requires:['ua']
+            dom: {
+                requires: ['ua']
             },
-            x:{}
+            x: {}
         });
 
         S.DOM = null;
@@ -251,21 +252,21 @@ describe("KISSY ComboLoader", function () {
         window.TIMESTAMP_X = 0;
 
         KISSY.config({
-            base:'',
-            tag:'',
-            debug:true,
-            packages:{
-                'timestamp':{
-                    combine:false,
-                    base:'/kissy_git/kissy1.3/src/seed/tests/specs/'
+            base: '',
+            tag: '',
+            debug: true,
+            packages: {
+                'timestamp': {
+                    combine: false,
+                    base: '/kissy_git/kissy1.3/src/seed/tests/specs/'
                 }
             },
-            modules:{
-                'timestamp/x':{
-                    requires:['./z']
+            modules: {
+                'timestamp/x': {
+                    requires: ['./z']
                 },
-                'timestamp/y':{
-                    requires:['./x']
+                'timestamp/y': {
+                    requires: ['./x']
                 }
             }
         });
@@ -301,10 +302,10 @@ describe("KISSY ComboLoader", function () {
         S.Env.mods = {};
 
         KISSY.config({
-            packages:[
+            packages: [
                 {
-                    name:'tests4',
-                    path:'/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
+                    name: 'tests4',
+                    path: '/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
                 }
             ]
         });
@@ -325,17 +326,17 @@ describe("KISSY ComboLoader", function () {
     it("can use after another use", function () {
 
         KISSY.config({
-            packages:[
+            packages: [
                 {
-                    name:'test5',
-                    path:'/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
+                    name: 'test5',
+                    path: '/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
                 }
             ]
         });
 
         S.add({
-            "test5/a":{
-                requires:["test5/b"]
+            "test5/a": {
+                requires: ["test5/b"]
             }
         });
 

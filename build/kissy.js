@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 17 19:40
+build time: Sep 18 20:48
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 17 19:40
 
         /**
          * The build time of the library.
-         * NOTICE: '20120917194015' will replace with current timestamp when compressing.
+         * NOTICE: '20120918204824' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120917194015';
+        S.__BUILD_TIME = '20120918204824';
     })();
 
     return S;
@@ -4781,6 +4781,7 @@ build time: Sep 17 19:40
             rMod,
             r,
             allRequires,
+            debugMode = S.Config.debug,
             ret2,
             mod = getModInfo(self, modName),
         // 做个缓存，该模块的待加载子模块都知道咯，不用再次递归查找啦！
@@ -4796,7 +4797,7 @@ build time: Sep 17 19:40
         if (mod && !utils.isAttached(SS, modName)) {
             requires = utils.normalizeModNames(SS, mod.requires, modName);
             // circular dependency check
-            if (S.Config.debug) {
+            if (debugMode) {
                 allRequires = mod.__allRequires || (mod.__allRequires = {});
                 if (allRequires[modName]) {
                     S.error('detect circular dependency among : ');
@@ -4806,7 +4807,7 @@ build time: Sep 17 19:40
             }
             for (i = 0; i < requires.length; i++) {
                 r = requires[i];
-                if (S.Config.debug) {
+                if (debugMode) {
                     // circular dependency check
                     rMod = getModInfo(self, r);
                     allRequires[r] = 1;
@@ -4964,6 +4965,8 @@ build time: Sep 17 19:40
 
                             var jss = combos[packageName][type],
                                 tag = jss.tag,
+                                suffix = (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
+                                suffixLength = suffix.length,
                                 packageBase = jss.packageBase,
                                 prefix,
                                 path,
@@ -4987,7 +4990,7 @@ build time: Sep 17 19:40
                                     SS,
                                     prefix +
                                         t.join(comboSep) +
-                                        (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
+                                        suffix,
                                     Config.mappedComboRules || []
                                 ));
                             }
@@ -5009,7 +5012,7 @@ build time: Sep 17 19:40
 
                                 t.push(path);
 
-                                if (l + t.join(comboSep).length > maxUrlLength) {
+                                if (l + t.join(comboSep).length + suffixLength > maxUrlLength) {
                                     t.pop();
                                     pushComboUrl();
                                     t = [];
@@ -5189,7 +5192,7 @@ build time: Sep 17 19:40
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120917194015'
+        tag: '20120918204824'
     }, getBaseInfo()));
 
     // Initializes loader.

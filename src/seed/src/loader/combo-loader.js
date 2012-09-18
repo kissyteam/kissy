@@ -223,6 +223,7 @@
             rMod,
             r,
             allRequires,
+            debugMode = S.Config.debug,
             ret2,
             mod = getModInfo(self, modName),
         // 做个缓存，该模块的待加载子模块都知道咯，不用再次递归查找啦！
@@ -238,7 +239,7 @@
         if (mod && !utils.isAttached(SS, modName)) {
             requires = utils.normalizeModNames(SS, mod.requires, modName);
             // circular dependency check
-            if (S.Config.debug) {
+            if (debugMode) {
                 allRequires = mod.__allRequires || (mod.__allRequires = {});
                 if (allRequires[modName]) {
                     S.error('detect circular dependency among : ');
@@ -248,7 +249,7 @@
             }
             for (i = 0; i < requires.length; i++) {
                 r = requires[i];
-                if (S.Config.debug) {
+                if (debugMode) {
                     // circular dependency check
                     rMod = getModInfo(self, r);
                     allRequires[r] = 1;
@@ -406,6 +407,8 @@
 
                             var jss = combos[packageName][type],
                                 tag = jss.tag,
+                                suffix = (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
+                                suffixLength = suffix.length,
                                 packageBase = jss.packageBase,
                                 prefix,
                                 path,
@@ -429,7 +432,7 @@
                                     SS,
                                     prefix +
                                         t.join(comboSep) +
-                                        (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
+                                        suffix,
                                     Config.mappedComboRules || []
                                 ));
                             }
@@ -451,7 +454,7 @@
 
                                 t.push(path);
 
-                                if (l + t.join(comboSep).length > maxUrlLength) {
+                                if (l + t.join(comboSep).length + suffixLength > maxUrlLength) {
                                     t.pop();
                                     pushComboUrl();
                                     t = [];
