@@ -271,7 +271,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                 });
 
 
-                it('support custom command for variable', function () {
+                it('support local command for variable', function () {
 
                     var tpl = 'my {{global3 title}}';
 
@@ -292,7 +292,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                 });
 
 
-                it('support custom command for block', function () {
+                it('support local command for block', function () {
 
                     var tpl = 'my {{#global4}}{{title}}{{/global4}}';
 
@@ -348,7 +348,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                 });
 
 
-                it('support custom sub template as string', function () {
+                it('support local sub template as string', function () {
                     var tpl = '{{include "sub-tpl-3"}}';
 
                     var data = {
@@ -365,7 +365,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                 });
 
 
-                it('support custom sub template as function', function () {
+                it('support local sub template as function', function () {
 
                     var tpl = '{{include "sub-tpl-4"}}';
 
