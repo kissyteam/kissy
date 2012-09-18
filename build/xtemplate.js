@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 13 16:33
+build time: Sep 18 16:59
 */
 /**
  * Ast node class for xtemplate
@@ -1068,11 +1068,22 @@ var lexer = new Lexer({
     }, {
         "state": "t",
         "regexp": /^\.\./,
-        "token": "ID"
+        "token": "ID",
+        "action": function () {
+            // wait for '/'
+            this.pushState('ws');
+        }
     }, {
         "state": "t",
-        "regexp": /^[\\.]/,
+        "regexp": /^\./,
         "token": "SEP"
+    }, {
+        "state": "ws",
+        "regexp": /^\//,
+        "token": "SEP",
+        "action": function () {
+            this.popState();
+        }
     }, {
         "state": "t",
         "regexp": /^[a-zA-Z0-9_$-]+/,

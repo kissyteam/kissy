@@ -312,11 +312,22 @@ var lexer = new Lexer({
     }, {
         "state": "t",
         "regexp": /^\.\./,
-        "token": "ID"
+        "token": "ID",
+        "action": function () {
+            // wait for '/'
+            this.pushState('ws');
+        }
     }, {
         "state": "t",
-        "regexp": /^[\\.]/,
+        "regexp": /^\./,
         "token": "SEP"
+    }, {
+        "state": "ws",
+        "regexp": /^\//,
+        "token": "SEP",
+        "action": function () {
+            this.popState();
+        }
     }, {
         "state": "t",
         "regexp": /^[a-zA-Z0-9_$-]+/,

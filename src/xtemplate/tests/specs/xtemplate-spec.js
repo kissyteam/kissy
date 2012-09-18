@@ -100,7 +100,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 it('support parent scope', function () {
 
-                    var tpl = '{{#each data}}{{this}}-{{..\\total}}|{{/each}}';
+                    var tpl = '{{#each data}}{{this}}-{{../total}}|{{/each}}';
 
                     var data = {
                         data: [1, 2],
@@ -138,7 +138,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                     var tpl = '{{#with data}}' +
                         '{{#with p}}' +
-                        '{{name}}-{{age}}-{{..\\l2}}-{{..\\..\\l1}}' +
+                        '{{name}}-{{age}}-{{../l2}}-{{../../l1}}' +
                         '{{/with}}' +
                         '{{/with}}';
 
@@ -460,7 +460,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                 it('support relational expression in each', function () {
 
                     var tpl = '{{#each data}}' +
-                        '{{#if this > ..\\limit+1}}' +
+                        '{{#if this > ../limit+1}}' +
                         '{{this+1}}-{{xindex+1}}-{{xcount}}|' +
                         '{{/if}}' +
                         '{{/each}}' +
@@ -479,7 +479,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                 it('support relational expression in with', function () {
 
                     var tpl = '{{#with data}}' +
-                        '{{#if n > ..\\limit/5}}' +
+                        '{{#if n > ../limit/5}}' +
                         '{{n+1}}' +
                         '{{/if}}' +
                         '{{/with}}' +
