@@ -2,17 +2,21 @@
  * Router spec for mvc
  * @author yiminghe@gmail.com
  */
-KISSY.use('mvc,event', function(S, MVC, Event) {
+KISSY.use('mvc,event', function (S, MVC, Event) {
 
-    var Model = MVC.Model,
-        Collection = MVC.Collection,
-        View = MVC.View,
-        Router = MVC.Router;
+    var Router = MVC.Router;
 
+    function getHash() {
+        // 不能 location.hash
+        // http://xx.com/#yy?z=1
+        // ie6 => location.hash = #yy
+        // 其他浏览器 => location.hash = #yy?z=1
+        return new S.Uri(location.href).getFragment().replace(/^!/, "");
+    }
 
-    describe("router", function() {
+    describe("router", function () {
 
-        it("works", function() {
+        it("works", function () {
 
             //document.domain='ali.com';
 
@@ -22,26 +26,26 @@ KISSY.use('mvc,event', function(S, MVC, Event) {
                 ok2 = 0;
 
             var r = new Router({
-                routes:{
-                    "/*path":function(paths) {
+                routes: {
+                    "/*path": function (paths) {
                         expect(paths.path).toBe("haha/hah2/hah3");
                         ok3++;
                     },
-                    "/list/*path":function(paths, query) {
+                    "/list/*path": function (paths, query) {
                         expect(paths.path).toBe("what/item");
                         expect(query.item1).toBe("1");
                         expect(query.item2).toBe("2");
-                        ok ++;
+                        ok++;
                     },
-                    "/detail/:id":function(paths, query) {
+                    "/detail/:id": function (paths, query) {
                         expect(paths.id).toBe("9999");
                         expect(query.item1).toBe("1");
                         expect(query.item2).toBe("2");
-                        ok2 ++;
+                        ok2++;
                     },
-                    "reg_test":{
-                        reg:'^/list-(\\w)$',
-                        callback:function(paths) {
+                    "reg_test": {
+                        reg: '^/list-(\\w)$',
+                        callback: function (paths) {
                             expect(arguments.length).toBe(2);
                             expect(paths[0]).toBe('t');
                             ok4++;
@@ -55,42 +59,131 @@ KISSY.use('mvc,event', function(S, MVC, Event) {
             location.hash = '';
 
             Router.start({
-                success:function() {
+                success: function () {
                     Router.navigate("/list/what/item?item1=1&item2=2");
                 }
             });
 
             waits(200);
 
-            runs(function() {
+            runs(function () {
                 Router.navigate("/list/what/item?item1=1&item2=2");
             });
 
             waits(200);
 
-            runs(function() {
+            runs(function () {
                 Router.navigate("/detail/9999?item1=1&item2=2");
             });
 
             waits(200);
 
-            runs(function() {
+            runs(function () {
                 Router.navigate("/haha/hah2/hah3");
             });
 
             waits(200);
 
-            runs(function() {
+            runs(function () {
                 Router.navigate("/list-t");
             });
 
             waits(200);
 
-            runs(function() {
+            runs(function () {
                 expect(ok).toBe(1);
                 expect(ok2).toBe(1);
                 expect(ok3).toBe(1);
                 expect(ok4).toBe(1);
+            });
+        });
+
+        var ie = document.documentMode || S.UA.ie;
+
+        if (ie && ie < 8) {
+           // return;
+        }
+
+        // ie<8 can only used on event handler
+        // see ../others/test-replace-history.html
+        it("can replace history", function () {
+            var go = 0, list = 0, detail = 0, ok = 0;
+
+            location.replace('#');
+
+            waits(200);
+
+            var r;
+
+            runs(function () {
+                r = new Router({
+                    routes: {
+                        "/go/": function () {
+                            go++;
+                        },
+                        "/list/": function () {
+                            list++;
+                        },
+                        "/detail/": function () {
+                            detail++;
+                        }
+                    }
+                });
+
+                Router.start({
+                    success: function () {
+                        Router.navigate("/list/");
+                        ok = 1;
+                    }
+                });
+            });
+
+            waitsFor(function () {
+                return ok;
+            });
+
+            waits(200);
+
+            runs(function () {
+                Router.navigate("/detail/", {
+                    replaceHistory: 1
+                });
+            });
+
+            waits(200);
+
+            runs(function () {
+                Router.navigate("/go/");
+            });
+
+            waits(200);
+
+            runs(function () {
+                history.back();
+            });
+
+            waits(200);
+
+            runs(function () {
+                expect(getHash()).toBe('/detail/')
+            });
+
+            waits(200);
+
+            runs(function () {
+                history.back();
+            });
+
+            waits(200);
+
+            runs(function () {
+                expect(getHash()).toBe('')
+            });
+
+            runs(function () {
+                expect(go).toBe(1);
+                expect(detail).toBe(2);
+                expect(list).toBe(1);
             });
         });
     });

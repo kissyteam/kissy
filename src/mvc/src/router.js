@@ -10,6 +10,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
     // all registered route instance
         allRoutes = [],
         win = S.Env.host,
+        ie = win.document.documentMode || S.UA.ie,
         history = win.history ,
         supportNativeHistory = !!(history && history['pushState']),
         ROUTER_MAP = "__routerMap";
@@ -221,9 +222,9 @@ KISSY.add('mvc/router', function (S, Event, Base) {
             query = pathUri.query.get();
             finalCallback.apply(finalRoute, [finalParam, query]);
             arg = {
-                name:finalRouteName,
-                "paths":finalParam,
-                query:query
+                name: finalRouteName,
+                "paths": finalParam,
+                query: query
             };
             finalRoute.fire('route:' + finalRouteName, arg);
             finalRoute.fire('route', arg);
@@ -257,17 +258,17 @@ KISSY.add('mvc/router', function (S, Event, Base) {
             });
 
             return {
-                name:name,
-                paramNames:paramNames,
-                reg:new RegExp("^" + str + "$"),
-                regStr:str,
-                callback:callback
+                name: name,
+                paramNames: paramNames,
+                reg: new RegExp("^" + str + "$"),
+                regStr: str,
+                callback: callback
             };
         } else {
             return {
-                name:name,
-                reg:callback.reg,
-                callback:normFn(self, callback.callback)
+                name: name,
+                reg: callback.reg,
+                callback: normFn(self, callback.callback)
             };
         }
     }
@@ -303,7 +304,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
         var self = this;
         Router.superclass.constructor.apply(self, arguments);
         self.on("afterRoutesChange", _afterRoutesChange, self);
-        _afterRoutesChange.call(self, {newVal:self.get("routes")});
+        _afterRoutesChange.call(self, {newVal: self.get("routes")});
         allRoutes.push(self);
     }
 
@@ -327,7 +328,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
          *   }
          * </code>
          */
-        routes:{}
+        routes: {}
     };
 
     S.extend(Router, Base,
@@ -350,7 +351,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
              *   }
              * </code>
              */
-            addRoutes:function (routes) {
+            addRoutes: function (routes) {
                 var self = this;
                 each(routes, function (callback, name) {
                     self[ROUTER_MAP][name] = transformRouterReg(self, name, normFn(self, callback));
@@ -364,21 +365,32 @@ KISSY.add('mvc/router', function (S, Event, Base) {
 
             /**
              * Navigate to specified path.
+             * Similar to runRoute in sammy.js.
              * @param {String} path Destination path.
              * @param {Object} [opts] Config for current navigation.
              * @param {Boolean} opts.triggerRoute Whether to trigger responding action
              *                  even current path is same as parameter
              */
-            navigate:function (path, opts) {
+            navigate: function (path, opts) {
+                opts = opts || {};
+                var replaceHistory = opts.replaceHistory, normalizedPath;
                 if (getFragment() !== path) {
                     if (Router.nativeHistory && supportNativeHistory) {
-                        history['pushState']({}, "", getFullPath(path));
+                        history[replaceHistory ? 'replaceState' : 'pushState']({},
+                            "", getFullPath(path));
                         // pushState does not fire popstate event (unlike hashchange)
                         // so popstate is not statechange
                         // fire manually
                         dispatch();
                     } else {
-                        location.hash = "!" + path;
+                        normalizedPath = '#!' + path;
+                        if (replaceHistory) {
+                            // add history hack
+                            location.replace(normalizedPath +
+                                (ie && ie < 8 ? Event.REPLACE_HISTORY : ''));
+                        } else {
+                            location.hash = normalizedPath;
+                        }
                     }
                 } else if (opts && opts.triggerRoute) {
                     dispatch();
@@ -391,13 +403,13 @@ KISSY.add('mvc/router', function (S, Event, Base) {
              * @param {String} opts.urlRoot Specify url root for html5 history management.
              * @param {Boolean} opts.nativeHistory Whether enable html5 history management.
              */
-            start:function (opts) {
-
-                if (Router.__started) {
-                    return;
-                }
+            start: function (opts) {
 
                 opts = opts || {};
+
+                if (Router.__started) {
+                    return opts.success && opts.success();
+                }
 
                 opts.urlRoot = opts.urlRoot || "";
 
@@ -466,7 +478,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
     return Router;
 
 }, {
-    requires:['event', 'base']
+    requires: ['event', 'base']
 });
 
 /**

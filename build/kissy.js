@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 18 20:48
+build time: Sep 19 16:52
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 18 20:48
 
         /**
          * The build time of the library.
-         * NOTICE: '20120918204824' will replace with current timestamp when compressing.
+         * NOTICE: '20120919165217' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120918204824';
+        S.__BUILD_TIME = '20120919165217';
     })();
 
     return S;
@@ -5192,7 +5192,7 @@ build time: Sep 18 20:48
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120918204824'
+        tag: '20120919165217'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -10384,7 +10384,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:29
+build time: Sep 19 16:52
 */
 /**
  * @ignore
@@ -11276,15 +11276,18 @@ KISSY.add('event/handle', function (S, DOM, _data, special) {
 });/**
  * @ignore
  * @fileOverview event-hashchange
- * @author yiminghe@gmail.com , xiaomacji@gmail.com
+ * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
 KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
     var win = S.Env.host,
         doc = win.document,
         docMode = doc['documentMode'],
+        REPLACE_HISTORY = '__replace_history_' + S.now(),
         ie = docMode || UA['ie'],
         HASH_CHANGE = 'hashchange';
+
+    Event.REPLACE_HISTORY = REPLACE_HISTORY;
 
     // ie8 支持 hashchange
     // 但IE8以上切换浏览器模式到IE7（兼容模式），
@@ -11317,18 +11320,23 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
             lastHash,
 
             poll = function () {
-                var hash = getHash();
+                var hash = getHash(), replaceHistory;
+                if (replaceHistory = S.endsWith(hash, REPLACE_HISTORY)) {
+                    hash = hash.slice(0, -REPLACE_HISTORY.length);
+                    // 去除 ie67 hack 标记
+                    location.hash = hash;
+                }
                 if (hash !== lastHash) {
                     // S.log('poll success :' + hash + ' :' + lastHash);
                     // 通知完调用者 hashchange 事件前设置 lastHash
                     lastHash = hash;
                     // ie<8 同步 : hashChange -> onIframeLoad
-                    hashChange(hash);
+                    hashChange(hash, replaceHistory);
                 }
                 timer = setTimeout(poll, POLL_INTERVAL);
             },
 
-            hashChange = ie && ie < 8 ? function (hash) {
+            hashChange = ie && ie < 8 ? function (hash, replaceHistory) {
                 // S.log('set iframe html :' + hash);
                 var html = S.substitute(IFRAME_TEMPLATE, {
                         // 防止 hash 里有代码造成 xss
@@ -11343,8 +11351,13 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
                     }),
                     iframeDoc = getIframeDoc(iframe);
                 try {
-                    // 写入历史 hash
-                    iframeDoc.open();
+                    // ie 下不留历史记录！
+                    if (replaceHistory) {
+                        iframeDoc.open("text/html", "replace");
+                    } else {
+                        // 写入历史 hash
+                        iframeDoc.open();
+                    }
                     // 取时要用 innerText !!
                     // 否则取 innerHtml 会因为 escapeHtml 导置 body.innerHTMl != hash
                     iframeDoc.write(html);
@@ -11486,13 +11499,13 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 });
 
 /*
-  已知 bug :
-  - ie67 有时后退后取得的 location.hash 不和地址栏一致，导致必须后退两次才能触发 hashchange
+ 已知 bug :
+ - ie67 有时后退后取得的 location.hash 不和地址栏一致，导致必须后退两次才能触发 hashchange
 
-  v1 : 2010-12-29
-  v1.1: 支持非IE，但不支持onhashchange事件的浏览器(例如低版本的firefox、safari)
-  refer : http://yiminghe.javaeye.com/blog/377867
-          https://github.com/cowboy/jquery-hashchange
+ v1 : 2010-12-29
+ v1.1: 支持非IE，但不支持onhashchange事件的浏览器(例如低版本的firefox、safari)
+ refer : http://yiminghe.javaeye.com/blog/377867
+ https://github.com/cowboy/jquery-hashchange
  *//**
  * @ignore
  * @fileOverview some key-codes definition and utils from closure-library
