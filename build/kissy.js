@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 19 16:52
+build time: Sep 21 00:01
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 19 16:52
 
         /**
          * The build time of the library.
-         * NOTICE: '20120919165217' will replace with current timestamp when compressing.
+         * NOTICE: '20120921000059' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120919165217';
+        S.__BUILD_TIME = '20120921000059';
     })();
 
     return S;
@@ -2889,8 +2889,6 @@ build time: Sep 19 16:52
         return;
     }
 
-    var Path = S.Path;
-
     /**
      * @class KISSY.Loader
      * @private
@@ -2905,235 +2903,6 @@ build time: Sep 19 16:52
          * @param e
          * @param {KISSY.Loader.Module} e.mod current module object
          */
-    }
-
-    KISSY.Loader = Loader;
-
-    /**
-     * @class KISSY.Loader.Package
-     * @private
-     * This class should not be instantiated manually.
-     */
-    function Package(cfg) {
-        S.mix(this, cfg);
-    }
-
-    S.augment(Package,
-        {
-            /**
-             * Tag for package.
-             * @return {String}
-             */
-            getTag: function () {
-                var self = this;
-                return self.tag || self.SS.Config.tag;
-            },
-
-            /**
-             * Get package name.
-             * @return {String}
-             */
-            getName: function () {
-                return this.name;
-            },
-
-            /**
-             * Get package base.
-             * @return {String}
-             */
-            getBase: function () {
-                var self = this;
-                return self.base || self.SS.Config.base;
-            },
-
-            getBaseUri: function () {
-                var self = this;
-                return self.baseUri || self.SS.Config.baseUri;
-            },
-
-            /**
-             * Whether is debug for this package.
-             * @return {Boolean}
-             */
-            isDebug: function () {
-                var self = this, debug = self.debug;
-                return debug === undefined ? self.SS.Config.debug : debug;
-            },
-
-            /**
-             * Get charset for package.
-             * @return {String}
-             */
-            getCharset: function () {
-                var self = this;
-                return self.charset || self.SS.Config.charset;
-            },
-
-            /**
-             * Whether modules are combined for this package.
-             * @return {Boolean}
-             */
-            isCombine: function () {
-                var self = this, combine = self.combine;
-                return combine === undefined ? self.SS.Config.combine : combine;
-            }
-        });
-
-    Loader.Package = Package;
-
-    /**
-     * @class KISSY.Loader.Module
-     * @private
-     * This class should not be instantiated manually.
-     */
-    function Module(cfg) {
-        S.mix(this, cfg);
-    }
-
-    S.augment(Module,
-        {
-            /**
-             * Set the value of current module
-             * @param v value to be set
-             */
-            setValue: function (v) {
-                this.value = v;
-            },
-
-            /**
-             * Get the type if current Module
-             * @return {String} css or js
-             */
-            getType: function () {
-                var self = this, v;
-                if ((v = self.type) === undefined) {
-                    if (Path.extname(self.name).toLowerCase() == '.css') {
-                        v = 'css';
-                    } else {
-                        v = 'js';
-                    }
-                    self.type = v;
-                }
-                return v;
-            },
-
-            /**
-             * Get the fullpath of current module if load dynamically
-             */
-            getFullPath: function () {
-                var self = this, t, fullpathUri, packageBaseUri;
-                if (!self.fullpath) {
-                    packageBaseUri = self.getPackageInfo().getBaseUri();
-                    fullpathUri = packageBaseUri.resolve(self.getPath());
-                    if (t = self.getTag()) {
-                        fullpathUri.query.set('t', t);
-                    }
-                    self.fullpath = Loader.Utils.getMappedPath(self.SS, fullpathUri.toString());
-                }
-                return self.fullpath;
-            },
-
-            /**
-             * Get the path (without package base)
-             * @return {String}
-             */
-            getPath: function () {
-                var self = this;
-                return self.path ||
-                    (self.path = defaultComponentJsName(self))
-            },
-
-            /**
-             * Get the value of current module
-             */
-            getValue: function () {
-                return this.value;
-            },
-
-            /**
-             * Get the name of current module
-             * @return {String}
-             */
-            getName: function () {
-                return this.name;
-            },
-
-            /**
-             * Get the packageInfo of current module
-             * @return {Object}
-             */
-            getPackageInfo: function () {
-                var self = this;
-                return self.packageInfo ||
-                    (self.packageInfo = getPackageInfo(self.SS, self));
-            },
-
-            /**
-             * Get the tag of current module
-             * @return {String}
-             */
-            getTag: function () {
-                var self = this;
-                return self.tag || self.getPackageInfo().getTag();
-            },
-
-            /**
-             * Get the charset of current module
-             * @return {String}
-             */
-            getCharset: function () {
-                var self = this;
-                return self.charset || self.getPackageInfo().getCharset();
-            }
-        });
-
-    Loader.Module = Module;
-
-
-    function defaultComponentJsName(m) {
-        var name = m.name,
-            extname = (Path.extname(name) || '').toLowerCase(),
-            min = '-min';
-
-        if (extname != '.css') {
-            extname = '.js';
-        }
-
-        name = Path.join(Path.dirname(name), Path.basename(name, extname));
-
-        if (m.getPackageInfo().isDebug()) {
-            min = '';
-        }
-        return name + min + extname;
-    }
-
-    function getPackageInfo(self, mod) {
-        var modName = mod.name,
-            Env = self.Env,
-            packages = Env.packages || {},
-            pName = '',
-            p,
-            packageDesc;
-
-        for (p in packages) {
-            if (packages.hasOwnProperty(p)) {
-                // longest match
-                if (S.startsWith(modName, p) &&
-                    p.length > pName.length) {
-                    pName = p;
-                }
-            }
-        }
-
-        packageDesc = packages[pName] ||
-            Env.defaultPackage ||
-            (Env.defaultPackage = new Loader.Package({
-                SS: self,
-                // need packageName as key
-                name: ''
-            }));
-
-        return packageDesc;
     }
 
     /**
@@ -3153,6 +2922,9 @@ build time: Sep 19 16:52
         /** attached */
         'ATTACHED': 4
     };
+
+    KISSY.Loader = Loader;
+
 })(KISSY);
 /*
  TODO: implement conditional loader
@@ -3254,6 +3026,8 @@ build time: Sep 19 16:52
         ua = navigator.userAgent,
         startsWith = S.startsWith,
         data = Loader.STATUS,
+        ATTACHED = data.ATTACHED,
+        LOADED = data.LOADED,
         /**
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
@@ -3378,7 +3152,7 @@ build time: Sep 19 16:52
          * create single module info
          * @param self
          * @param modName
-         * @param cfg
+         * @param [cfg]
          * @return {KISSY.Loader.Module}
          */
         createModuleInfo: function (self, modName, cfg) {
@@ -3407,7 +3181,7 @@ build time: Sep 19 16:52
          * @return {Boolean}
          */
         isAttached: function (self, modNames) {
-            return isStatus(self, modNames, data.ATTACHED);
+            return isStatus(self, modNames, ATTACHED);
         },
 
         /**
@@ -3417,7 +3191,7 @@ build time: Sep 19 16:52
          * @return {Boolean}
          */
         isLoaded: function (self, modNames) {
-            return isStatus(self, modNames, data.LOADED);
+            return isStatus(self, modNames, LOADED);
         },
 
         /**
@@ -3445,7 +3219,7 @@ build time: Sep 19 16:52
          * @param mod
          */
         attachMod: function (self, mod) {
-            if (mod.status != data.LOADED) {
+            if (mod.status != LOADED) {
                 return;
             }
 
@@ -3454,7 +3228,7 @@ build time: Sep 19 16:52
                 value;
 
             // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            requires = mod.requires = Utils.normalizeModNamesWithAlias(self, mod.requires, mod.name);
+            requires = mod.requires = mod.getNormalizedRequires();
 
             if (fn) {
                 if (S.isFunction(fn)) {
@@ -3466,7 +3240,7 @@ build time: Sep 19 16:52
                 mod.value = value;
             }
 
-            mod.status = data.ATTACHED;
+            mod.status = ATTACHED;
 
             self.getLoader().fire('afterModAttached', {
                 mod: mod
@@ -3573,7 +3347,7 @@ build time: Sep 19 16:52
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-            S.mix(mod, { name: name, status: data.LOADED });
+            S.mix(mod, { name: name, status: LOADED });
 
             mod.fn = fn;
 
@@ -3588,8 +3362,8 @@ build time: Sep 19 16:52
          * @param path
          * @return {String}
          */
-        getMappedPath: function (self, path,rules) {
-            var __mappedRules = rules||self.Config.mappedRules || [],
+        getMappedPath: function (self, path, rules) {
+            var __mappedRules = rules || self.Config.mappedRules || [],
                 i,
                 m,
                 rule;
@@ -3600,6 +3374,36 @@ build time: Sep 19 16:52
                 }
             }
             return path;
+        },
+
+        memoize: function (fn, hasher) {
+            hasher = hasher || function (x) {
+                return x;
+            };
+            var memo = {},
+                queues = {},
+                memoized = function () {
+                    var args = S.makeArray(arguments),
+                        callback = args.pop(),
+                        key = hasher.apply(null, args);
+                    if (key in memo) {
+                        callback.apply(null, memo[key]);
+                    } else if (key in queues) {
+                        queues[key].push(callback);
+                    } else {
+                        queues[key] = [callback];
+                        fn.apply(null, args.concat([function () {
+                            memo[key] = arguments;
+                            var q = queues[key];
+                            delete queues[key];
+                            for (var i = 0, l = q.length; i < l; i++) {
+                                q[i].apply(null, arguments);
+                            }
+                        }]));
+                    }
+                };
+            memoized.unmemoized = fn;
+            return memoized;
         }
     });
 
@@ -3619,6 +3423,268 @@ build time: Sep 19 16:52
     Loader.Utils = Utils;
 
 })(KISSY);/**
+ * @ignore
+ * @fileOverview setup data structure for kissy loader
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+    if (S.Env.nodejs) {
+        return;
+    }
+
+    var Path = S.Path, Loader = S.Loader, Utils = Loader.Utils;
+
+    /**
+     * @class KISSY.Loader.Package
+     * @private
+     * This class should not be instantiated manually.
+     */
+    function Package(cfg) {
+        S.mix(this, cfg);
+    }
+
+    S.augment(Package,
+        {
+            /**
+             * Tag for package.
+             * @return {String}
+             */
+            getTag: function () {
+                var self = this;
+                return self.tag || self.SS.Config.tag;
+            },
+
+            /**
+             * Get package name.
+             * @return {String}
+             */
+            getName: function () {
+                return this.name;
+            },
+
+            /**
+             * Get package base.
+             * @return {String}
+             */
+            getBase: function () {
+                var self = this;
+                return self.base || self.SS.Config.base;
+            },
+
+            getBaseUri: function () {
+                var self = this;
+                return self.baseUri || self.SS.Config.baseUri;
+            },
+
+            /**
+             * Whether is debug for this package.
+             * @return {Boolean}
+             */
+            isDebug: function () {
+                var self = this, debug = self.debug;
+                return debug === undefined ? self.SS.Config.debug : debug;
+            },
+
+            /**
+             * Get charset for package.
+             * @return {String}
+             */
+            getCharset: function () {
+                var self = this;
+                return self.charset || self.SS.Config.charset;
+            },
+
+            /**
+             * Whether modules are combined for this package.
+             * @return {Boolean}
+             */
+            isCombine: function () {
+                var self = this, combine = self.combine;
+                return combine === undefined ? self.SS.Config.combine : combine;
+            }
+        });
+
+    Loader.Package = Package;
+
+    /**
+     * @class KISSY.Loader.Module
+     * @private
+     * This class should not be instantiated manually.
+     */
+    function Module(cfg) {
+        this.status = Loader.STATUS.INIT;
+        S.mix(this, cfg);
+    }
+
+    S.augment(Module,
+        {
+            /**
+             * Set the value of current module
+             * @param v value to be set
+             */
+            setValue: function (v) {
+                this.value = v;
+            },
+
+            /**
+             * Get the type if current Module
+             * @return {String} css or js
+             */
+            getType: function () {
+                var self = this, v;
+                if ((v = self.type) === undefined) {
+                    if (Path.extname(self.name).toLowerCase() == '.css') {
+                        v = 'css';
+                    } else {
+                        v = 'js';
+                    }
+                    self.type = v;
+                }
+                return v;
+            },
+
+            /**
+             * Get the fullpath of current module if load dynamically
+             */
+            getFullPath: function () {
+                var self = this, t, fullpathUri, packageBaseUri;
+                if (!self.fullpath) {
+                    packageBaseUri = self.getPackageInfo().getBaseUri();
+                    fullpathUri = packageBaseUri.resolve(self.getPath());
+                    if (t = self.getTag()) {
+                        fullpathUri.query.set('t', t);
+                    }
+                    self.fullpath = Utils.getMappedPath(self.SS, fullpathUri.toString());
+                }
+                return self.fullpath;
+            },
+
+            /**
+             * Get the path (without package base)
+             * @return {String}
+             */
+            getPath: function () {
+                var self = this;
+                return self.path ||
+                    (self.path = defaultComponentJsName(self))
+            },
+
+            /**
+             * Get the value of current module
+             */
+            getValue: function () {
+                return this.value;
+            },
+
+            /**
+             * Get the name of current module
+             * @return {String}
+             */
+            getName: function () {
+                return this.name;
+            },
+
+            /**
+             * Get the packageInfo of current module
+             * @return {Object}
+             */
+            getPackageInfo: function () {
+                var self = this;
+                return self.packageInfo ||
+                    (self.packageInfo = getPackageInfo(self.SS, self));
+            },
+
+            /**
+             * Get the tag of current module
+             * @return {String}
+             */
+            getTag: function () {
+                var self = this;
+                return self.tag || self.getPackageInfo().getTag();
+            },
+
+            /**
+             * Get the charset of current module
+             * @return {String}
+             */
+            getCharset: function () {
+                var self = this;
+                return self.charset || self.getPackageInfo().getCharset();
+            },
+
+            getNormalizedRequires: function () {
+                var self = this, normalizedRequires,
+                    normalizedRequiresStatus = self.normalizedRequiresStatus,
+                    status = self.status,
+                    requires = self.requires;
+                if (!requires || requires.length == 0) {
+                    return requires || [];
+                } else if ((normalizedRequires = self.normalizedRequires) &&
+                    // 事先声明的依赖不能当做 loaded 状态下真正的依赖
+                    (normalizedRequiresStatus == status)) {
+                    return normalizedRequires;
+                } else {
+                    self.normalizedRequiresStatus = status;
+                    return self.normalizedRequires =
+                        Utils.normalizeModNames(self.SS, requires, self.name);
+                }
+            }
+        });
+
+    Loader.Module = Module;
+
+
+    function defaultComponentJsName(m) {
+        var name = m.name,
+            extname = (Path.extname(name) || '').toLowerCase(),
+            min = '-min';
+
+        if (extname != '.css') {
+            extname = '.js';
+        }
+
+        name = Path.join(Path.dirname(name), Path.basename(name, extname));
+
+        if (m.getPackageInfo().isDebug()) {
+            min = '';
+        }
+        return name + min + extname;
+    }
+
+    function getPackageInfo(self, mod) {
+        var modName = mod.name,
+            Env = self.Env,
+            packages = Env.packages || {},
+            pName = '',
+            p,
+            packageDesc;
+
+        for (p in packages) {
+            if (packages.hasOwnProperty(p)) {
+                // longest match
+                if (S.startsWith(modName, p) &&
+                    p.length > pName.length) {
+                    pName = p;
+                }
+            }
+        }
+
+        packageDesc = packages[pName] ||
+            Env.defaultPackage ||
+            (Env.defaultPackage = new Loader.Package({
+                SS: self,
+                // need packageName as key
+                name: ''
+            }));
+
+        return packageDesc;
+    }
+
+
+})(KISSY);
+/*
+ TODO: implement conditional loader
+ *//**
  * @ignore
  * @fileOverview script/css load across browser
  * @author yiminghe@gmail.com
@@ -4048,7 +4114,7 @@ build time: Sep 19 16:52
     };
 })(KISSY);/**
  * @ignore
- * @fileOverview simple loader from KISSY<=1.2
+ * @fileOverview add module to kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
@@ -4114,7 +4180,7 @@ build time: Sep 19 16:52
                     }
 
                     if (config) {
-                        requires = utils.normalizeModNames(SS, config.requires, name);
+                        requires = mod.getNormalizedRequires();
                     }
 
                     if (!requires || utils.isAttached(SS, requires)) {
@@ -4275,17 +4341,15 @@ build time: Sep 19 16:52
 
  compatibility
 
- 1. 保持兼容性，不得已而为之
- 支持 { host : }
+ 1. 保持兼容性
  如果 requires 都已经 attached，支持 add 后立即 attach
  支持 { attach : false } 显示控制 add 时是否 attach
- 支持 { global : Editor } 指明模块来源
 
  2011-05-04 初步拆分文件，tmd 乱了
  */
 /**
  * @ignore
- * @fileOverview use and attach mod
+ * @fileOverview use and attach mod for kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
@@ -4296,14 +4360,55 @@ build time: Sep 19 16:52
     var Loader = S.Loader,
         data = Loader.STATUS,
         utils = Loader.Utils,
-        INIT = data.INIT,
         IE = utils.IE,
-        win = S.Env.host,
         LOADING = data.LOADING,
+        LOADED = data.LOADED,
         ERROR = data.ERROR,
         ALL_REQUIRES = '__allRequires',
         CURRENT_MODULE = '__currentModule',
         ATTACHED = data.ATTACHED;
+
+    function LoadChecker() {
+        this.listeners = [];
+        this.results = {};
+        this.registeredMod = {};
+    }
+
+    LoadChecker.prototype = {
+
+        addListener: function (fn, modName) {
+            if (!modName || !this.registeredMod[modName]) {
+                this.listeners.unshift(fn);
+                if (modName) {
+                    this.registeredMod[modName] = 1;
+                }
+                return 1;
+            }
+            return 0;
+        },
+
+        removeListener: function (fn) {
+            var listeners = this.listeners;
+            for (var i = 0; i < listeners.length; i += 1) {
+                if (listeners[i] === fn) {
+                    listeners.splice(i, 1);
+                    return;
+                }
+            }
+        },
+
+        check: function () {
+            S.each(this.listeners.slice(0), function (fn) {
+                fn();
+            });
+        },
+
+        inResult: function (modName) {
+            return modName in this.results;
+        }
+
+    };
+
 
     S.augment(Loader, {
         /**
@@ -4312,239 +4417,183 @@ build time: Sep 19 16:52
          *
          * for example:
          *      @example
-         *      S.use('mod-name', callback, config);
-         *      S.use('mod1,mod2', callback, config);
+         *      S.use('mod-name', callback);
+         *      S.use('mod1,mod2', callback);
          *
          * @param {String|String[]} modNames names of mods to be loaded,if string then separated by space
          * @param {Function} callback callback when modNames are all loaded,
-         * with KISSY as first argument and mod's value as the following arguments
+         * with KISSY as first argument and mod 's value as the following arguments
          */
         use: function (modNames, callback) {
             var self = this,
+                loadChecker = new LoadChecker(),
                 SS = self.SS;
 
             modNames = utils.getModNamesAsArray(modNames);
             modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
-            var normalizedModNames = utils.unalias(SS, modNames),
-                count = normalizedModNames.length,
-                currentIndex = 0;
+            var normalizedModNames = utils.unalias(SS, modNames), end;
 
-            function end() {
-                var mods = utils.getModules(SS, modNames);
-                callback && callback.apply(SS, mods);
-            }
-
-            // 已经全部 attached, 直接执行回调即可
-            if (utils.isAttached(SS, normalizedModNames)) {
-                return end();
-            }
-
-            // 有尚未 attached 的模块
-            S.each(normalizedModNames, function (modName) {
-                // 从 name 开始调用，防止不存在模块
-                attachModByName(self, modName, function () {
-                    if ((++currentIndex) == count) {
-                        end();
-                    }
-                });
+            loadChecker.addListener(end = function () {
+                var all = S.reduce(normalizedModNames, function (a, modName) {
+                    return a && loadChecker.inResult(modName);
+                }, 1);
+                if (all) {
+                    // 防止重复
+                    loadChecker.removeListener(end);
+                    callback && callback.apply(SS, utils.getModules(SS, modNames));
+                    callback = null;
+                }
             });
+
+            attachMods(self, normalizedModNames, loadChecker);
 
             return self;
         }
     });
 
-    // 加载指定模块名模块，如果不存在定义默认定义为内部模块
-    function attachModByName(self, modName, callback) {
+    function attachMods(self, mods, loadChecker) {
+        S.each(mods, function (m) {
+            attachModByName(self, m, loadChecker);
+        });
+    }
+
+    function attachModByName(self, modName, loadChecker) {
+
         var SS = self.SS,
+            debug = S.Config.debug,
+            mods = SS.Env.mods,
             mod;
+
         utils.createModuleInfo(SS, modName);
-        mod = SS.Env.mods[modName];
-        if (mod.status === ATTACHED) {
-            callback();
+        mod = mods[modName];
+
+        function ready() {
+
+            if (mod.status == ATTACHED) {
+                return 1;
+            } else if (mod.status != LOADED) {
+                return 0;
+            }
+
+            var requires = mod.getNormalizedRequires(),
+                all = S.reduce(requires, function (a, r) {
+                    return a && loadChecker.inResult(r)
+                }, 1);
+
+            if (all) {
+                utils.attachMod(SS, mod);
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+
+        function end() {
+            if (ready()) {
+                loadChecker.removeListener(end);
+                loadChecker.results[modName] = 1;
+                // a module is ready, need to notify other modules globally
+                // chain effect
+                loadChecker.check();
+                return 1;
+            }
+            return 0;
+        }
+
+        if (end()) {
             return;
         }
-        attachModRecursive(self, mod, callback);
+
+        if (loadChecker.addListener(end, modName)) {
+            attachModRecursive(self, mod, loadChecker);
+            if (debug) {
+                cyclicCheck(SS, modName);
+            }
+        } else if (debug) {
+            // this mod is already listened
+            checkCyclicRecursive(SS, modName);
+        }
     }
 
-
-    // Attach a module and all required modules.
-    function attachModRecursive(self, mod, callback) {
-        var SS = self.SS,
-            r,
-            rMod,
-            i,
-            callbackBeCalled = 0,
-        // 最终有效的 require, add 处声明为准
-            newRequires,
-            mods = SS.Env.mods;
-
-        // 复制一份当前的依赖项出来，防止 add 后修改！
-        // 事先配置的 require ，同 newRequires 有区别
-        var requires = utils.normalizeModNames(SS, mod.requires, mod.name);
-
-
-        // check cyclic dependency between mods
-        function cyclicCheck() {
-            // one mod 's all requires mods to run its callback
-            var __allRequires = mod[ALL_REQUIRES] = mod[ALL_REQUIRES] || {},
-                myName = mod.name,
-                rMod,
-                r__allRequires;
-
-            S.each(requires, function (r) {
-                rMod = mods[r];
-                __allRequires[r] = 1;
-                if (rMod && (r__allRequires = rMod[ALL_REQUIRES])) {
-                    S.mix(__allRequires, r__allRequires);
-                }
-            });
-
-            if (__allRequires[myName]) {
-                S.log(__allRequires, 'error');
-                var JSON = win.JSON,
-                    error = '';
-                if (JSON) {
-                    error = JSON.stringify(__allRequires);
-                }
-                S.error('find cyclic dependency by mod ' + myName + ' between mods: ' + error);
-            }
-        }
-
-        S.log(cyclicCheck());
-
-        // attach all required modules
-        for (i = 0; i < requires.length; i++) {
-            r = requires[i];
-            rMod = mods[r];
-            if (rMod && rMod.status === ATTACHED) {
-                //no need
-            } else {
-                attachModByName(self, r, fn);
-            }
-        }
-
-        // load and attach this module
-        loadModByScript(self, mod, function () {
-
-            // KISSY.add 可能改了 config，这里重新取下
-            newRequires = utils.normalizeModNames(SS, mod.requires, mod.name);
-
-            var needToLoad = [];
-
-            //本模块下载成功后串行下载 require
-            for (i = 0; i < newRequires.length; i++) {
-                var r = newRequires[i],
-                    rMod = mods[r],
-                    inA = S.inArray(r, requires);
-                //已经处理过了或将要处理
-                if (rMod &&
-                    rMod.status === ATTACHED ||
-                    //已经正在处理了
-                    inA) {
-                    //no need
-                } else {
-                    //新增的依赖项
-                    needToLoad.push(r);
-                }
-            }
-
-            if (needToLoad.length) {
-                for (i = 0; i < needToLoad.length; i++) {
-                    attachModByName(self, needToLoad[i], fn);
-                }
-            } else {
-                fn();
+    function checkCyclicRecursive(SS, modName) {
+        // S.log('checkCyclicRecursive :' + modName, 'warn');
+        cyclicCheck(SS, modName);
+        var requires = SS.Env.mods[modName].getNormalizedRequires();
+        S.each(requires, function (r) {
+            if (SS.Env.mods[r].status != ATTACHED) {
+                checkCyclicRecursive(SS, r);
             }
         });
-
-        function fn() {
-            if (
-            // 前提条件，本模块 script onload 已经调用
-            // ie 下 add 与 script onload 并不连续！！
-            // attach 以 newRequires 为准
-                newRequires &&
-                    !callbackBeCalled &&
-                    // 2012-03-16 by yiminghe@gmail.com
-                    // add 与 onload ie 下不连续
-                    // c 依赖 a
-                    // a 模块 add 时进行 attach
-                    // a add 后 c 模块 onload 触发
-                    // 检测到 a 已经 attach 则调用该函数
-                    // a onload 后又调用该函数则需要用 callbackBeCalled 来把门
-                    utils.isAttached(SS, newRequires)) {
-
-                utils.attachMod(SS, mod);
-
-                if (mod.status == ATTACHED) {
-                    callbackBeCalled = 1;
-                    callback();
-                }
-            }
-        }
     }
 
+    // Attach a module and all required modules.
+    function attachModRecursive(self, mod, loadChecker) {
+
+        var requires = mod.getNormalizedRequires();
+
+        // attach all required modules
+        attachMods(self, requires, loadChecker);
+
+        if (mod.status < LOADING) {
+            // load and attach this module
+            loadModByScript(self, mod, loadChecker);
+        }
+
+    }
 
     // Load a single module.
-    function loadModByScript(self, mod, callback) {
+    function loadModByScript(self, mod, loadChecker) {
+
         var SS = self.SS,
             modName = mod.getName(),
             charset = mod.getCharset(),
             url = mod.getFullPath(),
             isCss = mod.getType() == 'css';
 
-        mod.status = mod.status || INIT;
+        mod.status = LOADING;
 
-        if (mod.status < LOADING) {
-            mod.status = LOADING;
-            if (IE && !isCss) {
-                self.__startLoadModuleName = modName;
-                self.__startLoadTime = Number(+new Date());
-            }
-            S.getScript(url, {
-                // syntaxError in all browser will trigger this
-                // same as #111 : https://github.com/kissyteam/kissy/issues/111
-                success: function () {
-                    if (isCss) {
-                        // css 不会设置 LOADED! 必须外部设置
-                        utils.registerModule(SS, modName, S.noop);
-                    } else {
-                        var currentModule;
-                        // 载入 css 不需要这步了
-                        // 标准浏览器下：外部脚本执行后立即触发该脚本的 load 事件,ie9 还是不行
-                        if (currentModule = self[CURRENT_MODULE]) {
-                            S.log('standard browser get mod name after load : ' + modName);
-                            utils.registerModule(SS,
-                                modName, currentModule.fn,
-                                currentModule.config);
-                            self[CURRENT_MODULE] = null;
-                        }
+        if (IE && !isCss) {
+            self.__startLoadModuleName = modName;
+            self.__startLoadTime = Number(+new Date());
+        }
+
+        S.getScript(url, {
+            // syntaxError in all browser will trigger this
+            // same as #111 : https://github.com/kissyteam/kissy/issues/111
+            success: function () {
+                if (isCss) {
+                    // css does not set LOADED because no add for css! must be set manually
+                    utils.registerModule(SS, modName, S.noop);
+                } else {
+                    var currentModule;
+                    // does not need this step for css
+                    // standard browser(except ie9) fire load after KISSY.add immediately
+                    if (currentModule = self[CURRENT_MODULE]) {
+                        S.log('standard browser get mod name after load : ' + modName);
+                        utils.registerModule(SS,
+                            modName, currentModule.fn,
+                            currentModule.config);
+                        self[CURRENT_MODULE] = null;
                     }
-                    checkAndHandle();
-                },
-                error: checkAndHandle,
-                // source:mod.name + '-init',
-                charset: charset
-            });
-        }
-        // 已经在加载中，需要添加回调到 script onload 中
-        // 注意：没有考虑 error 情形，只在第一次处理即可
-        // 交给 getScript 排队
-        else if (mod.status == LOADING) {
-            S.getScript(url, {
-                success: checkAndHandle,
-                // source:mod.name + '-loading',
-                charset: charset
-            });
-        }
-        // loaded/attached/error
-        else {
-            checkAndHandle();
-        }
+                }
+                checkAndHandle();
+            },
+            error: checkAndHandle,
+            // source:mod.name + '-init',
+            charset: charset
+        });
 
         function checkAndHandle() {
             if (mod.fn) {
-                callback();
+                var requires = mod.getNormalizedRequires();
+
+                if (requires.length) {
+                    attachMods(self, requires, loadChecker);
+                } else {
+                    // a mod is loaded, need to check globally at least once
+                    loadChecker.check();
+                }
             } else {
                 // ie will call success even when getScript error(404)
                 _modError();
@@ -4555,8 +4604,44 @@ build time: Sep 19 16:52
             S.log(modName + ' is not loaded! can not find module in path : ' + url, 'error');
             mod.status = ERROR;
         }
+
     }
-})(KISSY);/**
+
+    // check cyclic dependency between mods
+    function cyclicCheck(SS, modName) {
+        // one mod 's all requires mods to run its callback
+        var mods = SS.Env.mods,
+            mod = mods[modName],
+            __allRequires = mod[ALL_REQUIRES] = mod[ALL_REQUIRES] || {},
+            requires = mod.getNormalizedRequires(),
+            myName = mod.name,
+            rMod,
+            r__allRequires;
+
+        S.each(requires, function (r) {
+            rMod = mods[r];
+            __allRequires[r] = 1;
+            if (rMod && (r__allRequires = rMod[ALL_REQUIRES])) {
+                S.mix(__allRequires, r__allRequires);
+            }
+        });
+
+        if (__allRequires[myName]) {
+            S.log(__allRequires, 'error');
+            var JSON = S.Env.host.JSON,
+                error = '';
+            if (JSON) {
+                error = JSON.stringify(__allRequires);
+            }
+            S.error('find cyclic dependency by mod ' + myName + ' between mods: ' + error);
+        }
+    }
+})(KISSY);
+
+/*
+ 2012-09-20 yiminghe@gmail.com refactor
+ - 参考 async 重构，去除递归回调
+ *//**
  * @ignore
  * @fileOverview using combo to load module files
  * @author yiminghe@gmail.com
@@ -4755,7 +4840,7 @@ build time: Sep 19 16:52
         if (!mod || utils.isAttached(SS, modName)) {
             return undefined;
         }
-        requires = utils.normalizeModNames(SS, mod.requires, modName);
+        requires = mod.getNormalizedRequires();
         len = requires.length;
         for (i = 0; i < len; i++) {
             r = requires[i];
@@ -4795,7 +4880,7 @@ build time: Sep 19 16:52
 
         // if this mod is attached then its require is attached too!
         if (mod && !utils.isAttached(SS, modName)) {
-            requires = utils.normalizeModNames(SS, mod.requires, modName);
+            requires = mod.getNormalizedRequires();
             // circular dependency check
             if (debugMode) {
                 allRequires = mod.__allRequires || (mod.__allRequires = {});
@@ -5192,7 +5277,7 @@ build time: Sep 19 16:52
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120919165217'
+        tag: '20120921000059'
     }, getBaseInfo()));
 
     // Initializes loader.

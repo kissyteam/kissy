@@ -15,6 +15,8 @@
         ua = navigator.userAgent,
         startsWith = S.startsWith,
         data = Loader.STATUS,
+        ATTACHED = data.ATTACHED,
+        LOADED = data.LOADED,
         /**
          * @class KISSY.Loader.Utils
          * Utils for KISSY Loader
@@ -139,7 +141,7 @@
          * create single module info
          * @param self
          * @param modName
-         * @param cfg
+         * @param [cfg]
          * @return {KISSY.Loader.Module}
          */
         createModuleInfo: function (self, modName, cfg) {
@@ -168,7 +170,7 @@
          * @return {Boolean}
          */
         isAttached: function (self, modNames) {
-            return isStatus(self, modNames, data.ATTACHED);
+            return isStatus(self, modNames, ATTACHED);
         },
 
         /**
@@ -178,7 +180,7 @@
          * @return {Boolean}
          */
         isLoaded: function (self, modNames) {
-            return isStatus(self, modNames, data.LOADED);
+            return isStatus(self, modNames, LOADED);
         },
 
         /**
@@ -206,7 +208,7 @@
          * @param mod
          */
         attachMod: function (self, mod) {
-            if (mod.status != data.LOADED) {
+            if (mod.status != LOADED) {
                 return;
             }
 
@@ -215,7 +217,7 @@
                 value;
 
             // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            requires = mod.requires = Utils.normalizeModNamesWithAlias(self, mod.requires, mod.name);
+            requires = mod.requires = mod.getNormalizedRequires();
 
             if (fn) {
                 if (S.isFunction(fn)) {
@@ -227,7 +229,7 @@
                 mod.value = value;
             }
 
-            mod.status = data.ATTACHED;
+            mod.status = ATTACHED;
 
             self.getLoader().fire('afterModAttached', {
                 mod: mod
@@ -334,7 +336,7 @@
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-            S.mix(mod, { name: name, status: data.LOADED });
+            S.mix(mod, { name: name, status: LOADED });
 
             mod.fn = fn;
 
@@ -349,8 +351,8 @@
          * @param path
          * @return {String}
          */
-        getMappedPath: function (self, path,rules) {
-            var __mappedRules = rules||self.Config.mappedRules || [],
+        getMappedPath: function (self, path, rules) {
+            var __mappedRules = rules || self.Config.mappedRules || [],
                 i,
                 m,
                 rule;
@@ -361,6 +363,36 @@
                 }
             }
             return path;
+        },
+
+        memoize: function (fn, hasher) {
+            hasher = hasher || function (x) {
+                return x;
+            };
+            var memo = {},
+                queues = {},
+                memoized = function () {
+                    var args = S.makeArray(arguments),
+                        callback = args.pop(),
+                        key = hasher.apply(null, args);
+                    if (key in memo) {
+                        callback.apply(null, memo[key]);
+                    } else if (key in queues) {
+                        queues[key].push(callback);
+                    } else {
+                        queues[key] = [callback];
+                        fn.apply(null, args.concat([function () {
+                            memo[key] = arguments;
+                            var q = queues[key];
+                            delete queues[key];
+                            for (var i = 0, l = q.length; i < l; i++) {
+                                q[i].apply(null, arguments);
+                            }
+                        }]));
+                    }
+                };
+            memoized.unmemoized = fn;
+            return memoized;
         }
     });
 

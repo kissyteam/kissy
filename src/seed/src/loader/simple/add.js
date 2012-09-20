@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview simple loader from KISSY<=1.2
+ * @fileOverview add module to kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
@@ -66,7 +66,7 @@
                     }
 
                     if (config) {
-                        requires = utils.normalizeModNames(SS, config.requires, name);
+                        requires = mod.getNormalizedRequires();
                     }
 
                     if (!requires || utils.isAttached(SS, requires)) {
@@ -227,11 +227,9 @@
 
  compatibility
 
- 1. 保持兼容性，不得已而为之
- 支持 { host : }
+ 1. 保持兼容性
  如果 requires 都已经 attached，支持 add 后立即 attach
  支持 { attach : false } 显示控制 add 时是否 attach
- 支持 { global : Editor } 指明模块来源
 
  2011-05-04 初步拆分文件，tmd 乱了
  */

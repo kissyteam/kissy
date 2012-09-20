@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>KISSY Menu Demo</title>
+    <link href="../../../../../css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../../../../../menu/assets/dpl.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <h1>KISSY Menu</h1>
+</div>
+<script>
+    var start = new Date().valueOf();
+</script>
+<script src="../../../../../../build/kissy.js"></script>
+<script>
+    KISSY.use("menu", function (S, Menu) {
+        new Menu({
+            width: 200,
+            render: '.container',
+            listeners: {
+                "click": function (e) {
+                    var h;
+                    if (h = e.target.get("href")) {
+                        window.open(h);
+                    }
+                }
+            },
+            children: [
+                {
+                    content: "dpl",
+                    href: 'demo/dpl/demo.html',
+                    xclass: 'menuitem'
+                },
+                {
+                    content: 'other',
+                    xclass: 'submenu',
+                    menu: {
+                        xclass: 'popupmenu',
+                        children: [
+                            {
+                                content: '右键菜单',
+                                href: 'demo/other/contextmenu.html',
+                                xclass: 'menuitem'
+                            },
+                            {
+                                content: '从已有节点产生',
+                                href: 'demo/other/decorate.html',
+                                xclass: 'menuitem'
+                            },
+                            {
+                                content: '过滤菜单',
+                                href: 'demo/other/filtermenu.html',
+                                xclass: 'menuitem'
+                            },
+                            {
+                                content: '大数据量测试',
+                                href: 'demo/other/large.html',
+                                xclass: 'menuitem'
+                            },
+                            {
+                                content: '单菜单项',
+                                href: 'demo/other/mouse-menubutton.html',
+                                xclass: 'menuitem'
+                            },
+                            {
+                                content: 'json 方式',
+                                href: 'demo/other/simple_json.html',
+                                xclass: 'menuitem'
+                            },
+                            {
+                                content: '简单方式',
+                                href: 'demo/other/simple.html',
+                                xclass: 'menuitem'
+                            },
+                            {
+                                content: '导航菜单',
+                                href: 'demo/other/taolive/demo.html',
+                                xclass: 'menuitem'
+                            }
+                        ]
+                    }
+                }
+            ]
+        }).render();
+
+        alert(S.now() - start);
+    });
+</script>
+</body>
+</html>

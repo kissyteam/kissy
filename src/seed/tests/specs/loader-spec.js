@@ -1,9 +1,9 @@
 /**
- * test loader for 1.1x and 1.2 both
+ * test loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    var d = window.location.href.replace(/[^/]*$/, "")+"../data/";
+    var d = window.location.href.replace(/[^/]*$/, "") + "../data/";
 
     function getStyle(elem, name) {
         if (document.defaultView) {
@@ -48,32 +48,21 @@
 
     describe("loader", function () {
 
-        it("should load internal mods correctly", function () {
-            var ok = false;
-
-            S.use("node", function (S, Node) {
-                ok = true;
-                new Node(document.body).append("<div id='k11x'/>");
-                new Node(document.body).append("<div id='k12'/>");
-            });
-
-            waitsFor(function () {
-                return ok;
-            }, "node never loaded");
-        });
-
         it("should load and attach custom mods correctly", function () {
 
             KISSY.config({
-                packages:[
+                packages: [
                     {
-                        name:"1.2", //包名
-                        tag:"20110323",
-                        path:d //包对应路径，相对路径指相对于当前页面路径
+                        name: "1.2", //包名
+                        tag: "20110323",
+                        path: d //包对应路径，相对路径指相对于当前页面路径
 
                     }
                 ]
             });
+
+            new S.Node(document.body).append("<div id='k11x'/>");
+            new S.Node(document.body).append("<div id='k12'/>");
 
             var ok = false;
 
@@ -92,9 +81,8 @@
 
                 expect(mod12.async).toBe(true);
                 expect(mod12.charset).toBe("utf-8");
-                S.use("node", function (S, N) {
-                    expect(N.one("#k12").css("width")).toBe('111px');
-                });
+                expect(S.one("#k12").css("width")).toBe('111px');
+
             });
 
             waitsFor(function () {
@@ -105,12 +93,13 @@
         });
 
         it("detect cyclic dependency", function () {
+            //return;
             var old = KISSY.Config.base;
             KISSY.config({
-                packages:[
+                packages: [
                     {
-                        name:"cyclic",
-                        path:"../others/loader/"
+                        name: "cyclic",
+                        path: "../others/loader/"
                     }
                 ]
 
@@ -119,15 +108,15 @@
 
             S.error = function (args) {
                 err.push(args);
-                oldError(args);
+                oldError(args[0]);
             };
 
             KISSY.use("cyclic/a");
 
             waitsFor(function () {
                 if (err.length == 1) {
-                    return err[0] == 'find cyclic dependency by mod cyclic/b between mods: '+
-                        (window.JSON?'{"cyclic/c":1,"cyclic/a":1,"cyclic/b":1}':'');
+                    return err[0] == 'find cyclic dependency by mod cyclic/b between mods: ' +
+                        (window.JSON ? '{"cyclic/c":1,"cyclic/a":1,"cyclic/b":1}' : '');
                 }
             }, 10000);
 
@@ -145,15 +134,15 @@
             S.Env.mods = {};
 
             KISSY.config({
-                packages:[
+                packages: [
                     {
-                        name:"1.2", //包名
-                        tag:"20110323",
-                        path:d //包对应路径，相对路径指相对于当前页面路径
+                        name: "1.2", //包名
+                        tag: "20110323",
+                        path: d //包对应路径，相对路径指相对于当前页面路径
 
                     }
                 ],
-                map:[
+                map: [
                     [/(.+)mod.js(.+)$/, "$1mod-min.js$2"]
                 ]
             });
@@ -168,28 +157,6 @@
             waitsFor(function () {
                 return ok;
             }, "1.2/mod never loaded");
-
-        });
-
-        it("load core when use dom", function () {
-            S.Env.packages = {};
-            S.Config.mappedRules = [];
-            S.Env._loadQueue = {};
-            S.Env.mods = {};
-
-            KISSY.config({
-                debug:0
-            });
-
-            var ok = 0;
-            S.use("dom", function () {
-                ok = 1;
-                expect(S.Event).not.toBeUndefined();
-            });
-
-            waitsFor(function () {
-                return ok;
-            }, "dom never loaded");
 
         });
 

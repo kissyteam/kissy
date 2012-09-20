@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Seed Test Runner</title>
+    <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
+    <script src="../../../../tools/jasmine/jasmine.js"></script>
+    <script src="../../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../../build/seed.js" charset="utf-8"></script>
+</head>
+<body>
+<h1>KISSY Simple Loader Native Test Cases</h1>
+<script>
+    var S=KISSY;
+    describe("loader", function () {
+
+        it("should load native internal mods correctly", function () {
+            var ok = false;
+
+            S.use("node", function (S, Node) {
+                ok = true;
+            });
+
+            waitsFor(function () {
+                return ok;
+            }, "node never loaded");
+        });
+
+        it("load core when use dom", function () {
+            S.Env.packages = {};
+            S.Config.mappedRules = [];
+            S.Env._loadQueue = {};
+            S.Env.mods = {};
+
+            KISSY.config({
+                debug: 0
+            });
+
+            var ok = 0;
+            S.use("dom", function () {
+                ok = 1;
+                expect(S.Event).not.toBeUndefined();
+            });
+
+            waitsFor(function () {
+                return ok;
+            }, "dom never loaded");
+
+        });
+
+    });
+    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    jasmine.getEnv().execute(function () {
+        jasmine.kissyNext(this.results().failedCount);
+    });
+</script>
+</body>
+</html>

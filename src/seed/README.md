@@ -31,7 +31,7 @@ kissy seed 的层次结构为：
 
  - 重构 lang.js 中的 isString 等方法，抽离出 type 方法，和 jQuery 1.4.4 逻辑一致。
  - web.js 中增加 isWindow 方法，并将 lang.js 中的 isPlainObject, clone, makeArray 移动到 web.js.
- - 重构 S.app 和 S.__init 的关系，抽离出 S.__APP_INIT_METHODS, 现在 kissy.js 中不再包含 loader.js 相关信息。
+ - 重构 S.app 和 S.__init 的关系，抽离出 S.__APP_INIT_METHODS, 现在 kissy.js 中不再包含 add.js 相关信息。
  - 将 test.html 转移到 tests 目录，目前可运行版本：test-domready.html. 还需进一步重构和完善。
 
 ### 2010/12 aimingoo:
@@ -44,7 +44,7 @@ kissy seed 的层次结构为：
 
 ### 2010/08 yubo:
 
- - 将 loader 功能独立到 loader.js 中。
+ - 将 loader 功能独立到 add.js 中。
  - lang.js 增加 lastIndexOf 和 unique 方法。
 
 ### 2010/07 yubo:

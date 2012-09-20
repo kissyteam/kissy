@@ -19,12 +19,13 @@
             <path location="${src.dir}/loader/base.js"/>
             <path location="${src.dir}/loader/target.js"/>
             <path location="${src.dir}/loader/utils.js"/>
+            <path location="${src.dir}/loader/base-ext.js"/>
             <path location="${src.dir}/loader/css-onload.js"/>
             <path location="${src.dir}/loader/get-script.js"/>
             <path location="${src.dir}/loader/configs.js"/>
-            <path location="${src.dir}/loader/loader.js"/>
-            <path location="${src.dir}/loader/use.js"/>
-            <path location="${src.dir}/loader/combo-loader.js"/>
+            <path location="${src.dir}/loader/simple/add.js"/>
+            <path location="${src.dir}/loader/simple/use.js"/>
+            <path location="${src.dir}/loader/combo/loader.js"/>
             <path location="${src.dir}/loader/init.js"/>
 
             <!--kissy loader end-->

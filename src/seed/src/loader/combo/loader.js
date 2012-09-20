@@ -197,7 +197,7 @@
         if (!mod || utils.isAttached(SS, modName)) {
             return undefined;
         }
-        requires = utils.normalizeModNames(SS, mod.requires, modName);
+        requires = mod.getNormalizedRequires();
         len = requires.length;
         for (i = 0; i < len; i++) {
             r = requires[i];
@@ -237,7 +237,7 @@
 
         // if this mod is attached then its require is attached too!
         if (mod && !utils.isAttached(SS, modName)) {
-            requires = utils.normalizeModNames(SS, mod.requires, modName);
+            requires = mod.getNormalizedRequires();
             // circular dependency check
             if (debugMode) {
                 allRequires = mod.__allRequires || (mod.__allRequires = {});
