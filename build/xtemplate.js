@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 18 16:59
+build time: Sep 20 14:50
 */
 /**
  * Ast node class for xtemplate
@@ -171,6 +171,8 @@ KISSY.add("xtemplate/ast", function (S) {
  */
 KISSY.add('xtemplate/base', function (S, compiler) {
 
+    var guid = 0;
+
     var cache = {};
 
     function XTemplate(tpl, option) {
@@ -183,6 +185,7 @@ KISSY.add('xtemplate/base', function (S, compiler) {
         option = option || {};
         self.subTpls = S.merge(option.subTpls, XTemplate.subTpls);
         self.commands = S.merge(option.commands, XTemplate.commands);
+        this.option = option;
     }
 
     XTemplate.prototype = {
@@ -200,7 +203,7 @@ KISSY.add('xtemplate/base', function (S, compiler) {
             this.commands[commandName] = fn;
         },
         compile: function () {
-            var self = this, tpl = self.tpl;
+            var self = this, tpl = self.tpl, option = this.option;
             if (!self.compiled) {
                 if (S.isFunction(tpl)) {
                 } else {
@@ -209,7 +212,8 @@ KISSY.add('xtemplate/base', function (S, compiler) {
                     self.tpl = cache[tpl] ||
                         (cache[tpl] = Function.apply(null, []
                             .concat(code.params)
-                            .concat(code.source.join('\n'))));
+                            .concat(code.source.join('\n') + '//@ sourceURL=' +
+                            (option.name ? option.name : ('xtemplate' + (guid++))) + '.js')));
                 }
                 self.compiled = 1;
             }

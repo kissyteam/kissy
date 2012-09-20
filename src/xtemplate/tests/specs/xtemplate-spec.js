@@ -16,7 +16,9 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     title: 'o'
                 };
 
-                var render = new XTemplate(tpl).render(data);
+                var render = new XTemplate(tpl, {
+                    name: 'tpl-variable'
+                }).render(data);
 
                 expect(render).toBe('this is o!');
 

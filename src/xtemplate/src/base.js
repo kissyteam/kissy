@@ -4,6 +4,8 @@
  */
 KISSY.add('xtemplate/base', function (S, compiler) {
 
+    var guid = 0;
+
     var cache = {};
 
     function XTemplate(tpl, option) {
@@ -16,6 +18,7 @@ KISSY.add('xtemplate/base', function (S, compiler) {
         option = option || {};
         self.subTpls = S.merge(option.subTpls, XTemplate.subTpls);
         self.commands = S.merge(option.commands, XTemplate.commands);
+        this.option = option;
     }
 
     XTemplate.prototype = {
@@ -33,7 +36,7 @@ KISSY.add('xtemplate/base', function (S, compiler) {
             this.commands[commandName] = fn;
         },
         compile: function () {
-            var self = this, tpl = self.tpl;
+            var self = this, tpl = self.tpl, option = this.option;
             if (!self.compiled) {
                 if (S.isFunction(tpl)) {
                 } else {
@@ -42,7 +45,8 @@ KISSY.add('xtemplate/base', function (S, compiler) {
                     self.tpl = cache[tpl] ||
                         (cache[tpl] = Function.apply(null, []
                             .concat(code.params)
-                            .concat(code.source.join('\n'))));
+                            .concat(code.source.join('\n') + '//@ sourceURL=' +
+                            (option.name ? option.name : ('xtemplate' + (guid++))) + '.js')));
                 }
                 self.compiled = 1;
             }
