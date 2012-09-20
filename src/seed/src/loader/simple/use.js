@@ -90,7 +90,7 @@
                     return a && loadChecker.inResult(modName);
                 }, 1);
                 if (all) {
-                    // 防止重复
+                    // prevent call duplication
                     loadChecker.removeListener(end);
                     callback && callback.apply(SS, utils.getModules(SS, modNames));
                     callback = null;
