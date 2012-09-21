@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 21 12:58
+build time: Sep 21 14:38
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 21 12:58
 
         /**
          * The build time of the library.
-         * NOTICE: '20120921125821' will replace with current timestamp when compressing.
+         * NOTICE: '20120921143804' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120921125821';
+        S.__BUILD_TIME = '20120921143804';
     })();
 
     return S;
@@ -1644,6 +1644,9 @@ build time: Sep 21 12:58
  */
 (function (S, undefined) {
 
+    var PROMISE_VALUE = '__promise_value',
+        PROMISE_PENDINGS = '__promise_pendings';
+
     /**
      * two effects:
      * 1. call fulfilled with immediate value
@@ -1659,11 +1662,11 @@ build time: Sep 21 12:58
             if (!rejected) {
                 S.error('no rejected callback!');
             }
-            return rejected(promise.__promise_value);
+            return rejected(promise[PROMISE_VALUE]);
         }
 
-        var v = promise.__promise_value,
-            pendings = promise.__promise_pendings;
+        var v = promise[PROMISE_VALUE],
+            pendings = promise[PROMISE_PENDINGS];
 
         // unresolved
         // pushed to pending list
@@ -1713,14 +1716,14 @@ build time: Sep 21 12:58
         resolve: function (value) {
             var promise = this.promise,
                 pendings;
-            if (!(pendings = promise.__promise_pendings)) {
+            if (!(pendings = promise[PROMISE_PENDINGS])) {
                 return undefined;
             }
             // set current promise 's resolved value
             // maybe a promise or instant value
-            promise.__promise_value = value;
+            promise[PROMISE_VALUE] = value;
             pendings = [].concat(pendings);
-            promise.__promise_pendings = undefined;
+            promise[PROMISE_PENDINGS] = undefined;
             S.each(pendings, function (p) {
                 promiseWhen(promise, p[0], p[1]);
             });
@@ -1750,10 +1753,10 @@ build time: Sep 21 12:58
     function Promise(v) {
         var self = this;
         // maybe internal value is also a promise
-        self.__promise_value = v;
+        self[PROMISE_VALUE] = v;
         if (v === undefined) {
             // unresolved
-            self.__promise_pendings = [];
+            self[PROMISE_PENDINGS] = [];
         }
     }
 
@@ -1815,7 +1818,7 @@ build time: Sep 21 12:58
         }
         var self = this;
         Promise.apply(self, arguments);
-        if (self.__promise_value instanceof Promise) {
+        if (self[PROMISE_VALUE] instanceof Promise) {
             S.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
         }
         return undefined;
@@ -1897,21 +1900,21 @@ build time: Sep 21 12:58
         return !isRejected(obj) &&
             isPromise(obj) &&
             // self is resolved
-            (obj.__promise_pendings === undefined) &&
+            (obj[PROMISE_PENDINGS] === undefined) &&
             // value is a resolved promise or value is immediate value
             (
                 // immediate value
-                !isPromise(obj.__promise_value) ||
+                !isPromise(obj[PROMISE_VALUE]) ||
                     // resolved with a resolved promise !!! :)
                     // Reject.__promise_value is string
-                    isResolved(obj.__promise_value)
+                    isResolved(obj[PROMISE_VALUE])
                 );
     }
 
     function isRejected(obj) {
         return isPromise(obj) &&
-            (obj.__promise_pendings === undefined) &&
-            (obj.__promise_value instanceof Reject);
+            (obj[PROMISE_PENDINGS] === undefined) &&
+            (obj[PROMISE_VALUE] instanceof Reject);
     }
 
     KISSY.Defer = Defer;
@@ -5304,7 +5307,7 @@ build time: Sep 21 12:58
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120921125821'
+        tag: '20120921143804'
     }, getBaseInfo()));
 
     // Initializes loader.

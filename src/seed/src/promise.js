@@ -5,6 +5,9 @@
  */
 (function (S, undefined) {
 
+    var PROMISE_VALUE = '__promise_value',
+        PROMISE_PENDINGS = '__promise_pendings';
+
     /**
      * two effects:
      * 1. call fulfilled with immediate value
@@ -20,11 +23,11 @@
             if (!rejected) {
                 S.error('no rejected callback!');
             }
-            return rejected(promise.__promise_value);
+            return rejected(promise[PROMISE_VALUE]);
         }
 
-        var v = promise.__promise_value,
-            pendings = promise.__promise_pendings;
+        var v = promise[PROMISE_VALUE],
+            pendings = promise[PROMISE_PENDINGS];
 
         // unresolved
         // pushed to pending list
@@ -74,14 +77,14 @@
         resolve: function (value) {
             var promise = this.promise,
                 pendings;
-            if (!(pendings = promise.__promise_pendings)) {
+            if (!(pendings = promise[PROMISE_PENDINGS])) {
                 return undefined;
             }
             // set current promise 's resolved value
             // maybe a promise or instant value
-            promise.__promise_value = value;
+            promise[PROMISE_VALUE] = value;
             pendings = [].concat(pendings);
-            promise.__promise_pendings = undefined;
+            promise[PROMISE_PENDINGS] = undefined;
             S.each(pendings, function (p) {
                 promiseWhen(promise, p[0], p[1]);
             });
@@ -111,10 +114,10 @@
     function Promise(v) {
         var self = this;
         // maybe internal value is also a promise
-        self.__promise_value = v;
+        self[PROMISE_VALUE] = v;
         if (v === undefined) {
             // unresolved
-            self.__promise_pendings = [];
+            self[PROMISE_PENDINGS] = [];
         }
     }
 
@@ -176,7 +179,7 @@
         }
         var self = this;
         Promise.apply(self, arguments);
-        if (self.__promise_value instanceof Promise) {
+        if (self[PROMISE_VALUE] instanceof Promise) {
             S.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
         }
         return undefined;
@@ -258,21 +261,21 @@
         return !isRejected(obj) &&
             isPromise(obj) &&
             // self is resolved
-            (obj.__promise_pendings === undefined) &&
+            (obj[PROMISE_PENDINGS] === undefined) &&
             // value is a resolved promise or value is immediate value
             (
                 // immediate value
-                !isPromise(obj.__promise_value) ||
+                !isPromise(obj[PROMISE_VALUE]) ||
                     // resolved with a resolved promise !!! :)
                     // Reject.__promise_value is string
-                    isResolved(obj.__promise_value)
+                    isResolved(obj[PROMISE_VALUE])
                 );
     }
 
     function isRejected(obj) {
         return isPromise(obj) &&
-            (obj.__promise_pendings === undefined) &&
-            (obj.__promise_value instanceof Reject);
+            (obj[PROMISE_PENDINGS] === undefined) &&
+            (obj[PROMISE_VALUE] instanceof Reject);
     }
 
     KISSY.Defer = Defer;
