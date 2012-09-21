@@ -128,10 +128,7 @@
 
         it("map config works", function () {
 
-            S.Env.packages = {};
-            S.Config.mappedRules = [];
-            S.Env._loadQueue = {};
-            S.Env.mods = {};
+            S.clearLoader();
 
             KISSY.config({
                 packages: [

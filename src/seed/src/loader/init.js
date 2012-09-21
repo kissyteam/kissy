@@ -68,6 +68,23 @@
                     return env._loader;
                 }
             },
+            clearLoader: function () {
+                var self = this, env = self.Env, l;
+
+                if ((l = env._comboLoader) && l.clear) {
+                    l.clear();
+                }
+                if ((l = env._loader) && l.clear) {
+                    l.clear();
+                }
+
+                self.config({
+                    map: false,
+                    mapCombo: false,
+                    modules: false,
+                    packages: false
+                })
+            },
             /**
              * get module value defined by define function
              * @param {string} moduleName

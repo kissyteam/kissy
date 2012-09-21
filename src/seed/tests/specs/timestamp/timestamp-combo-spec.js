@@ -5,9 +5,7 @@ describe("loader", function () {
 
         it("works theoretically", function () {
 
-            S.Env.mods = {};
-            S.Env.packages = {};
-            S.Config.mappedRules = [];
+            S.clearLoader();
             window.TIMESTAMP_X = 0;
             var combine = KISSY.config("combine");
 
@@ -54,9 +52,7 @@ describe("loader", function () {
 
 
         it("works practically", function () {
-            S.Env.mods = {};
-            S.Env.packages = {};
-            S.Config.mappedRules = [];
+            S.clearLoader();
             window.TIMESTAMP_X = 0;
             KISSY.config({
                 base:'',
@@ -99,9 +95,7 @@ describe("loader", function () {
 
         it("works theoretically when package has no combo", function () {
 
-            S.Env.mods = {};
-            S.Env.packages = {};
-            S.Config.mappedRules = [];
+            S.clearLoader();
             window.TIMESTAMP_X = 0;
             var combine = KISSY.config("combine");
 
@@ -152,9 +146,7 @@ describe("loader", function () {
         });
 
         it("works practically when package has no combo", function () {
-            S.Env.mods = {};
-            S.Env.packages = {};
-            S.Config.mappedRules = [];
+            S.clearLoader();
             window.TIMESTAMP_X = 0;
             KISSY.config({
                 base:'',

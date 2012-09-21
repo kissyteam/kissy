@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 21 00:01
+build time: Sep 21 12:58
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 21 00:01
 
         /**
          * The build time of the library.
-         * NOTICE: '20120921000059' will replace with current timestamp when compressing.
+         * NOTICE: '20120921125821' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120921000059';
+        S.__BUILD_TIME = '20120921125821';
     })();
 
     return S;
@@ -4017,11 +4017,17 @@ build time: Sep 21 00:01
      */
     configs.map = function (rules) {
         var self = this;
+        if (rules === false) {
+            return self.Config.mappedRules = [];
+        }
         return self.Config.mappedRules = (self.Config.mappedRules || []).concat(rules || []);
     };
 
     configs.mapCombo = function (rules) {
         var self = this;
+        if (rules === false) {
+            return self.Config.mappedComboRules = [];
+        }
         return self.Config.mappedComboRules = (self.Config.mappedComboRules || []).concat(rules || []);
     };
 
@@ -4060,6 +4066,8 @@ build time: Sep 21 00:01
 
                 ps[ name ] = new Loader.Package(cfg);
             });
+        } else if (cfgs === false) {
+            Env.packages = {};
         }
     };
 
@@ -4097,6 +4105,8 @@ build time: Sep 21 00:01
                 utils.createModuleInfo(self, modName, modCfg);
                 S.mix(self.Env.mods[modName], modCfg);
             });
+        } else if (modules === false) {
+            self.Env.mods = {};
         }
     };
 
@@ -4369,37 +4379,30 @@ build time: Sep 21 00:01
         ATTACHED = data.ATTACHED;
 
     function LoadChecker() {
-        this.listeners = [];
+        this.listeners = {};
         this.results = {};
-        this.registeredMod = {};
     }
 
     LoadChecker.prototype = {
 
         addListener: function (fn, modName) {
-            if (!modName || !this.registeredMod[modName]) {
-                this.listeners.unshift(fn);
-                if (modName) {
-                    this.registeredMod[modName] = 1;
-                }
+            if (!(modName in this.listeners)) {
+                this.listeners[modName] = fn;
                 return 1;
             }
             return 0;
         },
 
-        removeListener: function (fn) {
-            var listeners = this.listeners;
-            for (var i = 0; i < listeners.length; i += 1) {
-                if (listeners[i] === fn) {
-                    listeners.splice(i, 1);
-                    return;
-                }
-            }
+        removeListener: function (modName) {
+            this.listeners[modName] = null;
         },
 
         check: function () {
-            S.each(this.listeners.slice(0), function (fn) {
-                fn();
+            var listeners = this.listeners, fn, keys = S.keys(listeners);
+            S.each(keys, function (k) {
+                if (fn = listeners[k]) {
+                    fn();
+                }
             });
         },
 
@@ -4426,29 +4429,36 @@ build time: Sep 21 00:01
          */
         use: function (modNames, callback) {
             var self = this,
-                loadChecker = new LoadChecker(),
+                callbackId = S.guid('callback'),
+            // use simultaneously on one loader
+                loadChecker = self.__loadChecker ||
+                    (self.__loadChecker = new LoadChecker()),
                 SS = self.SS;
 
             modNames = utils.getModNamesAsArray(modNames);
             modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
-            var normalizedModNames = utils.unalias(SS, modNames), end;
+            var normalizedModNames = utils.unalias(SS, modNames);
 
-            loadChecker.addListener(end = function () {
+            loadChecker.addListener(function () {
                 var all = S.reduce(normalizedModNames, function (a, modName) {
                     return a && loadChecker.inResult(modName);
                 }, 1);
                 if (all) {
-                    // 防止重复
-                    loadChecker.removeListener(end);
+                    // prevent call duplication
+                    loadChecker.removeListener(callbackId);
                     callback && callback.apply(SS, utils.getModules(SS, modNames));
                     callback = null;
                 }
-            });
+            }, callbackId);
 
             attachMods(self, normalizedModNames, loadChecker);
 
             return self;
+        },
+
+        clear: function () {
+            this.__loadChecker = new LoadChecker();
         }
     });
 
@@ -4491,7 +4501,7 @@ build time: Sep 21 00:01
 
         function end() {
             if (ready()) {
-                loadChecker.removeListener(end);
+                loadChecker.removeListener(modName);
                 loadChecker.results[modName] = 1;
                 // a module is ready, need to notify other modules globally
                 // chain effect
@@ -5196,6 +5206,23 @@ build time: Sep 21 00:01
                     return env._loader;
                 }
             },
+            clearLoader: function () {
+                var self = this, env = self.Env, l;
+
+                if ((l = env._comboLoader) && l.clear) {
+                    l.clear();
+                }
+                if ((l = env._loader) && l.clear) {
+                    l.clear();
+                }
+
+                self.config({
+                    map: false,
+                    mapCombo: false,
+                    modules: false,
+                    packages: false
+                })
+            },
             /**
              * get module value defined by define function
              * @param {string} moduleName
@@ -5277,7 +5304,7 @@ build time: Sep 21 00:01
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120921000059'
+        tag: '20120921125821'
     }, getBaseInfo()));
 
     // Initializes loader.

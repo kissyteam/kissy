@@ -20,37 +20,30 @@
         ATTACHED = data.ATTACHED;
 
     function LoadChecker() {
-        this.listeners = [];
+        this.listeners = {};
         this.results = {};
-        this.registeredMod = {};
     }
 
     LoadChecker.prototype = {
 
         addListener: function (fn, modName) {
-            if (!modName || !this.registeredMod[modName]) {
-                this.listeners.unshift(fn);
-                if (modName) {
-                    this.registeredMod[modName] = 1;
-                }
+            if (!(modName in this.listeners)) {
+                this.listeners[modName] = fn;
                 return 1;
             }
             return 0;
         },
 
-        removeListener: function (fn) {
-            var listeners = this.listeners;
-            for (var i = 0; i < listeners.length; i += 1) {
-                if (listeners[i] === fn) {
-                    listeners.splice(i, 1);
-                    return;
-                }
-            }
+        removeListener: function (modName) {
+            this.listeners[modName] = null;
         },
 
         check: function () {
-            S.each(this.listeners.slice(0), function (fn) {
-                fn();
+            var listeners = this.listeners, fn, keys = S.keys(listeners);
+            S.each(keys, function (k) {
+                if (fn = listeners[k]) {
+                    fn();
+                }
             });
         },
 
@@ -77,29 +70,36 @@
          */
         use: function (modNames, callback) {
             var self = this,
-                loadChecker = new LoadChecker(),
+                callbackId = S.guid('callback'),
+            // use simultaneously on one loader
+                loadChecker = self.__loadChecker ||
+                    (self.__loadChecker = new LoadChecker()),
                 SS = self.SS;
 
             modNames = utils.getModNamesAsArray(modNames);
             modNames = utils.normalizeModNamesWithAlias(SS, modNames);
 
-            var normalizedModNames = utils.unalias(SS, modNames), end;
+            var normalizedModNames = utils.unalias(SS, modNames);
 
-            loadChecker.addListener(end = function () {
+            loadChecker.addListener(function () {
                 var all = S.reduce(normalizedModNames, function (a, modName) {
                     return a && loadChecker.inResult(modName);
                 }, 1);
                 if (all) {
                     // prevent call duplication
-                    loadChecker.removeListener(end);
+                    loadChecker.removeListener(callbackId);
                     callback && callback.apply(SS, utils.getModules(SS, modNames));
                     callback = null;
                 }
-            });
+            }, callbackId);
 
             attachMods(self, normalizedModNames, loadChecker);
 
             return self;
+        },
+
+        clear: function () {
+            this.__loadChecker = new LoadChecker();
         }
     });
 
@@ -142,7 +142,7 @@
 
         function end() {
             if (ready()) {
-                loadChecker.removeListener(end);
+                loadChecker.removeListener(modName);
                 loadChecker.results[modName] = 1;
                 // a module is ready, need to notify other modules globally
                 // chain effect

@@ -23,11 +23,17 @@
      */
     configs.map = function (rules) {
         var self = this;
+        if (rules === false) {
+            return self.Config.mappedRules = [];
+        }
         return self.Config.mappedRules = (self.Config.mappedRules || []).concat(rules || []);
     };
 
     configs.mapCombo = function (rules) {
         var self = this;
+        if (rules === false) {
+            return self.Config.mappedComboRules = [];
+        }
         return self.Config.mappedComboRules = (self.Config.mappedComboRules || []).concat(rules || []);
     };
 
@@ -66,6 +72,8 @@
 
                 ps[ name ] = new Loader.Package(cfg);
             });
+        } else if (cfgs === false) {
+            Env.packages = {};
         }
     };
 
@@ -103,6 +111,8 @@
                 utils.createModuleInfo(self, modName, modCfg);
                 S.mix(self.Env.mods[modName], modCfg);
             });
+        } else if (modules === false) {
+            self.Env.mods = {};
         }
     };
 

@@ -62,8 +62,7 @@ describe("loader", function () {
 
         it("can be set later", function () {
             window.TIMESTAMP_X = 0;
-            KISSY.Env.mods = {};
-            KISSY.Env.packages = {};
+            KISSY.clearLoader();
 
             var mods = KISSY.Env.mods;
 
