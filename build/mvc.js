@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 19 18:14
+build time: Sep 24 21:45
 */
 /**
  * @fileOverview collection of models
@@ -663,22 +663,23 @@ KISSY.add('mvc/router', function (S, Event, Base) {
         throw new Error("impossible to not to get capture group in kissy mvc route");
     }
 
-    function getHash() {
+    function getHash(url) {
         // 不能 location.hash
         // http://xx.com/#yy?z=1
         // ie6 => location.hash = #yy
         // 其他浏览器 => location.hash = #yy?z=1
-        return new S.Uri(location.href).getFragment().replace(/^!/, "");
+        return new S.Uri(url || location.href).getFragment().replace(/^!/, "");
     }
 
     /**
      * get url fragment and dispatch
      */
-    function getFragment() {
+    function getFragment(url) {
         if (Router.nativeHistory && supportNativeHistory) {
-            return location.pathname.substr(Router.urlRoot.length) + location.search;
+            url = new S.Uri(url);
+            return url.getPath().substr(Router.urlRoot.length) + url.getQuery().toString();
         } else {
-            return getHash();
+            return getHash(url);
         }
     }
 
@@ -854,10 +855,15 @@ KISSY.add('mvc/router', function (S, Event, Base) {
 
         if (finalParam) {
             query = pathUri.query.get();
-            finalCallback.apply(finalRoute, [finalParam, query]);
+            finalCallback.apply(finalRoute, [finalParam, query, {
+                path: path,
+                url: location.href
+            }]);
             arg = {
                 name: finalRouteName,
                 "paths": finalParam,
+                path: path,
+                url: location.href,
                 query: query
             };
             finalRoute.fire('route:' + finalRouteName, arg);
@@ -998,6 +1004,41 @@ KISSY.add('mvc/router', function (S, Event, Base) {
         {
 
             /**
+             * whether Router can process path
+             * @param {String} path path for route
+             * @return {Boolean}
+             */
+            hasRoute: function (path) {
+                var match = 0;
+                // user input : /xx/yy/zz
+                each(allRoutes, function (route) {
+                    var routeRegs = route[ROUTER_MAP];
+                    each(routeRegs, function (desc) {
+                        var reg = desc.reg,
+                            m;
+                        if (path.match(reg)) {
+                            match = 1;
+                            return false;
+                        }
+                    });
+                    if (match) {
+                        return false;
+                    }
+                });
+                return !!match;
+            },
+
+            /**
+             * get the route path
+             * @param {String} url full location href
+             * @return {String} route path
+             */
+            removeRoot: function (url) {
+                var u = new S.Uri(url);
+                return u.getPath().substr(Router.urlRoot.length);
+            },
+
+            /**
              * Navigate to specified path.
              * Similar to runRoute in sammy.js.
              * @param {String} path Destination path.
@@ -1088,10 +1129,14 @@ KISSY.add('mvc/router', function (S, Event, Base) {
 
                 // prevent hashChange trigger on start
                 setTimeout(function () {
+
                     if (nativeHistory && supportNativeHistory) {
                         Event.on(win, 'popstate', dispatch);
+                        // html5 triggerRoute is leaved to user decision
+                        // if provide no #! hash
                     } else {
                         Event.on(win, "hashchange", dispatch);
+                        // hash-based browser is forced to trigger route
                         opts.triggerRoute = 1;
                     }
 

@@ -31,10 +31,12 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
                         expect(paths.path).toBe("haha/hah2/hah3");
                         ok3++;
                     },
-                    "/list/*path": function (paths, query) {
+                    "/list/*path": function (paths, query, more) {
                         expect(paths.path).toBe("what/item");
                         expect(query.item1).toBe("1");
                         expect(query.item2).toBe("2");
+                        expect(more.path).toBe('/list/what/item');
+                        expect(more.url).toBe(location.href);
                         ok++;
                     },
                     "/detail/:id": function (paths, query) {
@@ -46,7 +48,7 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
                     "reg_test": {
                         reg: '^/list-(\\w)$',
                         callback: function (paths) {
-                            expect(arguments.length).toBe(2);
+                            expect(arguments.length).toBe(3);
                             expect(paths[0]).toBe('t');
                             ok4++;
                         }
@@ -55,13 +57,23 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
                 }
             });
 
+
+            expect(Router.hasRoute('/list/what/item')).toBe(true);
+
+            expect(Router.hasRoute('/list2/what/item')).toBe(true);
+
             // restore hash to its original value
-            location.hash = '';
+            location.hash = '#';
 
             Router.start({
+                urlRoot: '/my',
                 success: function () {
-                    Router.navigate("/list/what/item?item1=1&item2=2");
                 }
+            });
+
+            runs(function () {
+                expect(Router.removeRoot('/my/list/what/item?item1=1&item2=2'))
+                    .toBe('/list/what/item');
             });
 
             waits(200);
@@ -101,7 +113,7 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
         var ie = document.documentMode || S.UA.ie;
 
         if (ie && ie < 8) {
-           // return;
+            // return;
         }
 
         // ie<8 can only used on event handler

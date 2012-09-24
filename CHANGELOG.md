@@ -127,6 +127,11 @@ History:
 #### template
  - [+] template 支持 {{@if t}} t {{/if}}, 等价于 {{#if t}} t {{/if}}
 
+#### mvc
+ - [+] navigate 第二个参数支持 replaceHistory 配置
+ - [+] router callback 增加第三个参数 {path,url}
+ - [+] 增加静态方法 hasRoute/removeRoot
+
 #### tabs
  - [+] 增加 tabs
 
