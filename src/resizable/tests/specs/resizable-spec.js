@@ -45,7 +45,17 @@ KISSY.use('resizable', function (S, Resizable) {
 
         var trNode = dom.one('.ks-resizable-handler-tr');
 
+        var start, end;
+
+        resizable.on('resizeStart', function (e) {
+            start = e.handler;
+        });
+        resizable.on('resizeEnd', function (e) {
+            end = e.handler;
+        });
+
         it('l resize works', function () {
+
             jasmine.simulate(lNode[0], 'mousedown', {
                 clientX: 102,
                 clientY: 110
@@ -72,6 +82,10 @@ KISSY.use('resizable', function (S, Resizable) {
             runs(function () {
                 expect(dom.width()).toBe(120);
                 expect(dom.offset().left).toBe(80);
+            });
+            runs(function () {
+                expect(start).toBe('l');
+                expect(end).toBe('l');
             });
         });
 
@@ -102,6 +116,10 @@ KISSY.use('resizable', function (S, Resizable) {
             runs(function () {
                 expect(dom.width()).toBe(120);
                 expect(dom.offset().left).toBe(100);
+            });
+            runs(function () {
+                expect(start).toBe('r');
+                expect(end).toBe('r');
             });
         });
 
@@ -197,6 +215,10 @@ KISSY.use('resizable', function (S, Resizable) {
                 expect(dom.width()).toBe(120);
                 expect(dom.offset().top).toBe(100);
                 expect(dom.offset().left).toBe(80);
+            });
+            runs(function () {
+                expect(start).toBe('bl');
+                expect(end).toBe('bl');
             });
         });
 

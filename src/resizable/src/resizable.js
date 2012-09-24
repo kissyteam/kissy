@@ -76,53 +76,49 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
                     node: el,
                     cursor: null
                 });
-            dd.on("drag", _drag, self);
-            dd.on("dragstart", _dragStart, self);
-        }
-    }
+            (function (hc, dd) {
+                dd.on("drag", function (ev) {
+                    var dd = ev.target,
+                        ow = self._width,
+                        oh = self._height,
+                        minW = self.get("minWidth"),
+                        maxW = self.get("maxWidth"),
+                        minH = self.get("minHeight"),
+                        maxH = self.get("maxHeight"),
+                        diffT = ev.top - dd.get('startNodePos').top,
+                        diffL = ev.left - dd.get('startNodePos').left,
+                        ot = self._top,
+                        ol = self._left,
+                        pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL);
+                    for (i = 0; i < ATTRS_ORDER.length; i++) {
+                        if (pos[i]) {
+                            node.css(ATTRS_ORDER[i], pos[i]);
+                        }
+                    }
+                    self.fire('resize', {
+                        handler: hc,
+                        dd: dd
+                    });
+                });
+                dd.on("dragstart", function () {
+                    self._width = node.width();
+                    self._top = parseInt(node.css("top"));
+                    self._left = parseInt(node.css("left"));
+                    self._height = node.height();
+                    self.fire('resizeStart', {
+                        handler: hc,
+                        dd: dd
+                    });
+                });
+                dd.on("dragend", function () {
+                    self.fire('resizeEnd', {
+                        handler: hc,
+                        dd: dd
+                    });
+                });
+            })(hc, dd);
 
-    function _dragStart() {
-        var self = this,
-            node = self.get("node");
-        self._width = node.width();
-        self._top = parseInt(node.css("top"));
-        self._left = parseInt(node.css("left"));
-        self._height = node.height();
-    }
-
-    function _drag(ev) {
-        var self = this,
-            node = self.get("node"),
-            dd = ev.target,
-            hc = _getHandlerC(self, dd),
-            ow = self._width,
-            oh = self._height,
-            minW = self.get("minWidth"),
-            maxW = self.get("maxWidth"),
-            minH = self.get("minHeight"),
-            maxH = self.get("maxHeight"),
-            diffT = ev.top - dd.get('startNodePos').top,
-            diffL = ev.left - dd.get('startNodePos').left,
-            ot = self._top,
-            ol = self._left,
-            pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL);
-        for (i = 0; i < ATTRS_ORDER.length; i++) {
-            if (pos[i]) {
-                node.css(ATTRS_ORDER[i], pos[i]);
-            }
         }
-    }
-
-    function _getHandlerC(self, dd) {
-        var dds = self.dds;
-        for (var d in dds) {
-            if (dds.hasOwnProperty(d)) {
-                if (dds[d] == dd) {
-                    return d;
-                }
-            }
-        }
-        return 0;
     }
 
     function _uiSetDisabled(e) {
