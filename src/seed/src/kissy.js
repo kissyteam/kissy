@@ -391,7 +391,7 @@
              * @param {String} [src] the source of the the message (opt)
              */
             log: function (msg, cat, src) {
-                if (S.Config.debug && msg) {
+                if (S.Config.debug) {
                     if (src) {
                         msg = src + ': ' + msg;
                     }
