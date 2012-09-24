@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 17 18:02
+build time: Sep 24 15:22
 */
 /**
 for kissy editor iframe
@@ -27,7 +27,7 @@ dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
 pre, /* text formatting elements 文本格式元素 */
 form, fieldset, legend, button, input, textarea, /* form elements 表单元素 */
 th, td /* table elements 表格元素 */
-{
+ {
     margin: 0;
     padding: 0;
 }
@@ -233,4 +233,11 @@ img.ke_pagebreak {
     height: 5px !important;
     page-break-after: always;
     width: 100% !important;
+}
+
+pre.ks-editor-code {
+    display: block;
+    margin-right: 2em;
+    border-left: 3px solid #CCC;
+    padding: 0 1em;
 }

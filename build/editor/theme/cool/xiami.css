@@ -1,13 +1,19 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 17 18:02
+build time: Sep 24 15:22
 */
 .ks-editor-xiami-list {
     margin: 10px 0 10px 0;
     padding: 10px 20px 0 20px;
     border-top: 1px solid #CED5E0;
     display: none;
+    list-style-type: none;
+}
+
+.ks-editor-xiami-list ul {
+    margin: 0;
+    padding: 0;
 }
 
 .ks-editor-xiami-list li {
@@ -19,6 +25,7 @@ build time: Sep 17 18:02
     height: 24px;
     line-height: 24px;
     padding: 0 20px 0 10px;
+    list-style-type: none;
 }
 
 .ks-editor-xiami-list .ks-editor-xiami-add {

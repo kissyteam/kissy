@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:29
+build time: Sep 24 13:58
 */
 /**
  * @fileOverview parse html to a hierarchy dom tree
@@ -3013,7 +3013,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
  * @fileOverview write html into its minified form,thanks to kangax where minify algorithm comes from
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
+KISSY.add("htmlparser/writer/minify", function (S, BasicWriter, Utils) {
 
     var trim = S.trim,
         collapseWhitespace = Utils.collapseWhitespace,
@@ -3159,7 +3159,7 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
         /**
          * remove non-conditional comment
          */
-        comment:function(text) {
+        comment: function (text) {
             if (isConditionalComment(text)) {
                 text = cleanConditionalComment(text);
                 Minifier.superclass.comment.call(this, text);
@@ -3169,7 +3169,7 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
         /**
          * record pre track
          */
-        openTag:function(el) {
+        openTag: function (el) {
             var self = this;
             if (el.tagName == 'pre') {
                 self.inPre = 1;
@@ -3180,7 +3180,7 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
         /**
          * clean pre track
          */
-        closeTag:function(el) {
+        closeTag: function (el) {
             var self = this;
             if (el.tagName == 'pre') {
                 self.inPre = 0;
@@ -3191,12 +3191,12 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
         /**
          * textarea | script | style
          */
-        cdata:function(cdata) {
+        cdata: function (cdata) {
             cdata = removeCDATASections(cdata);
             Minifier.superclass.cdata.call(this, cdata);
         },
 
-        attribute:function(attr, el) {
+        attribute: function (attr, el) {
             var self = this,
                 name = attr.name,
                 value = attr.value || "";
@@ -3222,19 +3222,20 @@ KISSY.add("htmlparser/writer/minify", function(S, BasicWriter, Utils) {
         /**
          * note : pre is special
          */
-        text:function(text) {
+        text: function (text) {
             var self = this;
             if (!self.inPre) {
                 // collapse whitespace
-                self.append(collapseWhitespace(text));
+                text = collapseWhitespace(text);
             }
+            self.append(text);
         }
     });
 
     return Minifier;
 
 }, {
-    requires:['./basic','../Utils']
+    requires: ['./basic', '../Utils']
 });
 
 /**

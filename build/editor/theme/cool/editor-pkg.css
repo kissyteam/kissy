@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 17 18:02
+build time: Sep 24 15:22
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -401,6 +401,34 @@ active
 .ks-editor-button:active {
     border-color: #a1badf !important;
     background-color: #DDE1EB !important;
+}.ks-editor-code-wrap {
+    padding: 20px;
+    padding-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ks-editor-code-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.ks-editor-code-table td {
+    padding: 2px;
+}
+
+.ks-editor-code-table-action {
+    padding: 20px;
+    padding-top: 5px;
+}
+
+.ks-editor-code-insert {
+    margin-right: 20px;
+}
+
+.ks-editor-code-table .ks-editor-code-textarea {
+    width: 367px;
+    height: 270px;
 }.ks-editor-color-panel a {
     display: block;
     color: black;
@@ -429,6 +457,7 @@ active
     border-right: 1px solid #666666;
     height: 18px;
     width: 18px;
+    padding: 0;
 }
 
 a.ks-editor-color-a {
@@ -474,6 +503,8 @@ a.ks-editor-color-remove:hover {
 
 .ks-editor-color-advanced-picker-left ul {
     float: left;
+    margin: 0;
+    padding: 0;
 }
 
 .ks-editor-color-advanced-picker-left li, .ks-editor-color-advanced-picker-left a {
@@ -791,6 +822,10 @@ ks-editor-toolbar-padding {
     margin-bottom: 4px;
 }
 
+.ks-editor-toolbar-code {
+    background-image: url("code.png"); /** sprite-ref: cool; */
+}
+
 .ks-editor-toolbar-restore {
     background-image: url("restore.png"); /** sprite-ref: cool; */
 }
@@ -828,7 +863,7 @@ menu style for kissy editor ,include contextmenu and select menu
     margin: 0;
     outline: medium none; /*padding: 4px 0;*/
     position: absolute;
-    overflow: hidden;
+    overflow: auto;
     left: -9999px;
     top: -9999px;
     box-shadow: 0px 1px 1px rgb(228, 228, 228);
@@ -843,7 +878,7 @@ menu style for kissy editor ,include contextmenu and select menu
 .ks-editor-menuitem {
     margin: 0;
     border-width: 0;
-    padding: 4px 12px 4px 20px;
+    padding: 4px 0px 4px 20px;
     white-space: nowrap;
     /*ie6 can hover*/
     position: relative;
@@ -1181,6 +1216,12 @@ select style for kissy editor
     padding: 10px 20px 0 20px;
     border-top: 1px solid #CED5E0;
     display: none;
+    list-style-type: none;
+}
+
+.ks-editor-xiami-list ul {
+    margin: 0;
+    padding: 0;
 }
 
 .ks-editor-xiami-list li {
@@ -1192,6 +1233,7 @@ select style for kissy editor
     height: 24px;
     line-height: 24px;
     padding: 0 20px 0 10px;
+    list-style-type: none;
 }
 
 .ks-editor-xiami-list .ks-editor-xiami-add {

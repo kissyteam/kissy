@@ -224,6 +224,10 @@ ks-editor-toolbar-padding {
     margin-bottom: 4px;
 }
 
+.ks-editor-toolbar-code {
+    background-image: url("code.png"); /** sprite-ref: cool; */
+}
+
 .ks-editor-toolbar-restore {
     background-image: url("restore.png"); /** sprite-ref: cool; */
 }

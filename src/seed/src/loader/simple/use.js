@@ -170,9 +170,10 @@
     function checkCyclicRecursive(SS, modName) {
         // S.log('checkCyclicRecursive :' + modName, 'warn');
         cyclicCheck(SS, modName);
-        var requires = SS.Env.mods[modName].getNormalizedRequires();
+        var mods = SS.Env.mods,
+            requires = mods[modName].getNormalizedRequires();
         S.each(requires, function (r) {
-            if (SS.Env.mods[r].status != ATTACHED) {
+            if (mods[r] && mods[r].status != ATTACHED) {
                 checkCyclicRecursive(SS, r);
             }
         });

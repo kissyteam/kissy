@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 21 14:38
+build time: Sep 24 14:17
 */
 /**
  * @ignore
@@ -396,7 +396,7 @@ build time: Sep 21 14:38
              * @param {String} [src] the source of the the message (opt)
              */
             log: function (msg, cat, src) {
-                if (S.Config.debug && msg) {
+                if (S.Config.debug) {
                     if (src) {
                         msg = src + ': ' + msg;
                     }
@@ -479,11 +479,11 @@ build time: Sep 21 14:38
 
         /**
          * The build time of the library.
-         * NOTICE: '20120921143804' will replace with current timestamp when compressing.
+         * NOTICE: '20120924141706' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120921143804';
+        S.__BUILD_TIME = '20120924141706';
     })();
 
     return S;
@@ -4532,9 +4532,10 @@ build time: Sep 21 14:38
     function checkCyclicRecursive(SS, modName) {
         // S.log('checkCyclicRecursive :' + modName, 'warn');
         cyclicCheck(SS, modName);
-        var requires = SS.Env.mods[modName].getNormalizedRequires();
+        var mods = SS.Env.mods,
+            requires = mods[modName].getNormalizedRequires();
         S.each(requires, function (r) {
-            if (SS.Env.mods[r].status != ATTACHED) {
+            if (mods[r] && mods[r].status != ATTACHED) {
                 checkCyclicRecursive(SS, r);
             }
         });
@@ -5307,7 +5308,7 @@ build time: Sep 21 14:38
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120921143804'
+        tag: '20120924141706'
     }, getBaseInfo()));
 
     // Initializes loader.

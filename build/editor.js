@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 17 18:02
+build time: Sep 24 15:22
 */
 /**
  * Set up editor constructor
@@ -464,6 +464,7 @@ KISSY.config('modules', {
 'editor/plugin/drag-upload/index': {requires: ['editor']},
 'editor/plugin/color/cmd': {requires: ['editor']},
 'editor/plugin/flash/dialog': {requires: ['editor','editor/plugin/flash-common/utils','editor/plugin/overlay/','editor/plugin/menubutton/']},
+'editor/plugin/code/index': {requires: ['editor','editor/plugin/dialog-loader/']},
 'editor/plugin/strike-through/cmd': {requires: ['editor','editor/plugin/font/cmd']},
 'editor/plugin/unordered-list/index': {requires: ['editor','editor/plugin/list-utils/btn','editor/plugin/unordered-list/cmd']},
 'editor/plugin/outdent/cmd': {requires: ['editor','editor/plugin/dent-utils/cmd']},
@@ -475,8 +476,8 @@ KISSY.config('modules', {
 'editor/plugin/word-filter/dynamic/index': {requires: ['htmlparser']},
 'editor/plugin/justify-left/cmd': {requires: ['editor/plugin/justify-utils/cmd']},
 'editor/plugin/resize/index': {requires: ['editor','dd']},
-'editor/plugin/focus-fix/index': {requires: ['editor']},
 'editor/plugin/video/dialog': {requires: ['editor','editor/plugin/flash/dialog','editor/plugin/menubutton/']},
+'editor/plugin/focus-fix/index': {requires: ['editor']},
 'editor/plugin/xiami-music/index': {requires: ['editor','editor/plugin/flash-common/baseClass','editor/plugin/flash-common/utils','editor/plugin/fake-objects/']},
 'editor/plugin/maximize/index': {requires: ['editor','editor/plugin/maximize/cmd']},
 'editor/plugin/color/color-picker/dialog': {requires: ['editor','editor/plugin/overlay/']},
@@ -521,18 +522,19 @@ KISSY.config('modules', {
 'editor/plugin/draft/index': {requires: ['editor','editor/plugin/local-storage/','overlay','editor/plugin/menubutton/']},
 'editor/plugin/link/index': {requires: ['editor','editor/plugin/bubble/','editor/plugin/link/utils','editor/plugin/dialog-loader/','editor/plugin/button/']},
 'editor/plugin/remove-format/index': {requires: ['editor','editor/plugin/remove-format/cmd','editor/plugin/button/']},
-'editor/plugin/element-path/index': {requires: ['editor']},
 'editor/plugin/font/ui': {requires: ['editor','editor/plugin/button/','editor/plugin/menubutton/']},
+'editor/plugin/element-path/index': {requires: ['editor']},
 'editor/plugin/source-area/index': {requires: ['editor','editor/plugin/button/']},
-'editor/plugin/list-utils/btn': {requires: ['editor','editor/plugin/button/']},
 'editor/plugin/justify-right/index': {requires: ['editor','editor/plugin/justify-right/cmd']},
+'editor/plugin/list-utils/btn': {requires: ['editor','editor/plugin/button/']},
 'editor/plugin/justify-left/index': {requires: ['editor','editor/plugin/justify-left/cmd']},
 'editor/plugin/outdent/index': {requires: ['editor','editor/plugin/outdent/cmd']},
 'editor/plugin/fake-objects/index': {requires: ['editor']},
 'editor/plugin/link/dialog': {requires: ['editor','editor/plugin/overlay/','editor/plugin/link/utils']},
-'editor/plugin/back-color/cmd': {requires: ['editor/plugin/color/cmd']},
 'editor/plugin/font-family/cmd': {requires: ['editor','editor/plugin/font/cmd']},
+'editor/plugin/back-color/cmd': {requires: ['editor/plugin/color/cmd']},
 'editor/plugin/multiple-upload/dialog': {requires: ['editor','editor/plugin/progressbar/','editor/plugin/overlay/','editor/plugin/flash-bridge/','editor/plugin/local-storage/']},
+'editor/plugin/code/dialog': {requires: ['editor/plugin/overlay/','menubutton']},
 'editor/plugin/justify-center/cmd': {requires: ['editor/plugin/justify-utils/cmd']},
 'editor/plugin/flash-common/baseClass': {requires: ['editor','editor/plugin/contextmenu/','editor/plugin/bubble/','editor/plugin/dialog-loader/','editor/plugin/flash-common/utils']},
 'editor/plugin/justify-center/index': {requires: ['editor','editor/plugin/justify-center/cmd']},
@@ -1770,7 +1772,7 @@ KISSY.add("editor/core/domIterator", function (S) {
     requires:['./base', './range', './elementPath', './walker']
 });
 /**
- * Editor For KISSY 1.3
+ * New Editor For KISSY
  * @preserve thanks to CKSource's intelligent work on CKEditor
  * @author yiminghe@gmail.com
  */
@@ -1872,37 +1874,40 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             createDom: function () {
                 var self = this,
                     wrap,
-                    prefixCls=self.get('prefixCls'),
+                    prefixCls = self.get('prefixCls'),
                     textarea = self.get("textarea"),
                     editorEl;
 
                 if (!textarea) {
                     self.set("textarea",
-                        textarea = $("<textarea class='"+prefixCls+
+                        textarea = $("<textarea class='" + prefixCls +
                             "-editor-textarea'></textarea>"));
                 } else {
+                    self.set("textarea", textarea = $(textarea));
                     // in ie, textarea lose value when parent.innerHTML="xx";
-                    textarea[0].parentNode.removeChild(textarea[0]);
+                    if (textarea[0].parentNode) {
+                        textarea[0].parentNode.removeChild(textarea[0]);
+                    }
                 }
 
                 editorEl = self.get("el");
 
-                editorEl.html(S.substitute(EDITOR_TPL,{
-                    prefixCls:prefixCls
+                editorEl.html(S.substitute(EDITOR_TPL, {
+                    prefixCls: prefixCls
                 }));
 
-                wrap = editorEl.one(S.substitute(KE_TEXTAREA_WRAP_CLASS,{
-                    prefixCls:prefixCls
+                wrap = editorEl.one(S.substitute(KE_TEXTAREA_WRAP_CLASS, {
+                    prefixCls: prefixCls
                 }));
 
                 self._UUID = S.guid();
 
                 self.set({
-                    toolBarEl: editorEl.one(S.substitute(KE_TOOLBAR_CLASS,{
-                        prefixCls:prefixCls
+                    toolBarEl: editorEl.one(S.substitute(KE_TOOLBAR_CLASS, {
+                        prefixCls: prefixCls
                     })),
-                    statusBarEl: editorEl.one(S.substitute(KE_STATUSBAR_CLASS,{
-                        prefixCls:prefixCls
+                    statusBarEl: editorEl.one(S.substitute(KE_STATUSBAR_CLASS, {
+                        prefixCls: prefixCls
                     }))
                 }, {
                     silent: 1

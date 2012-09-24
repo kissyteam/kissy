@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 17 18:02
+build time: Sep 24 15:22
 */
 /**
  * smiley button
@@ -48,7 +48,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                                         prefixCls: prefixCls
                                     }),
                                     focus4e: false,
-                                    width: "297px",
+                                    width: 300,
                                     autoRender: true,
                                     elCls: prefixCls + "editor-popup",
                                     zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
