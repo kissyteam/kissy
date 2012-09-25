@@ -61,7 +61,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
          */
         {
 
-<span id='KISSY-DOM-method-closest'>            /**
+<span id='-method-closest'>            /**
 </span>             * Get the first element that matches the filter,
              * beginning at the first element of matched elements and progressing up through the DOM tree.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
@@ -77,7 +77,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 }, context, true, allowTextNode);
             },
 
-<span id='KISSY-DOM-method-parent'>            /**
+<span id='-method-parent'>            /**
 </span>             * Get the parent of the first element in the current set of matched elements, optionally filtered by a selector.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function|String[]|Function[]} [filter] Selector string or filter function or array
@@ -92,7 +92,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 }, context, undefined);
             },
 
-<span id='KISSY-DOM-method-first'>            /**
+<span id='-method-first'>            /**
 </span>             * Get the first child of the first element in the set of matched elements.
              * If a filter is provided, it retrieves the next child only if it matches that filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
@@ -105,7 +105,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                     undefined, undefined, true, allowTextNode);
             },
 
-<span id='KISSY-DOM-method-last'>            /**
+<span id='-method-last'>            /**
 </span>             * Get the last child of the first element in the set of matched elements.
              * If a filter is provided, it retrieves the previous child only if it matches that filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
@@ -118,7 +118,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                     undefined, undefined, true, allowTextNode);
             },
 
-<span id='KISSY-DOM-method-next'>            /**
+<span id='-method-next'>            /**
 </span>             * Get the immediately following sibling of the first element in the set of matched elements.
              * If a filter is provided, it retrieves the next child only if it matches that filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
@@ -130,7 +130,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                     undefined, undefined, allowTextNode);
             },
 
-<span id='KISSY-DOM-method-prev'>            /**
+<span id='-method-prev'>            /**
 </span>             * Get the immediately preceding  sibling of the first element in the set of matched elements.
              * If a filter is provided, it retrieves the previous child only if it matches that filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
@@ -142,7 +142,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                     undefined, undefined, undefined, allowTextNode);
             },
 
-<span id='KISSY-DOM-method-siblings'>            /**
+<span id='-method-siblings'>            /**
 </span>             * Get the siblings of the first element in the set of matched elements, optionally filtered by a filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
@@ -152,7 +152,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 return getSiblings(selector, filter, true, allowTextNode);
             },
 
-<span id='KISSY-DOM-method-children'>            /**
+<span id='-method-children'>            /**
 </span>             * Get the children of the first element in the set of matched elements, optionally filtered by a filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|Function} [filter] Selector string or filter function
@@ -162,7 +162,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 return getSiblings(selector, filter, undefined);
             },
 
-<span id='KISSY-DOM-method-contents'>            /**
+<span id='-method-contents'>            /**
 </span>             * Get the childNodes of the first element in the set of matched elements (includes text and comment nodes),
              * optionally filtered by a filter.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
@@ -173,7 +173,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 return getSiblings(selector, filter, undefined, 1);
             },
 
-<span id='KISSY-DOM-method-contains'>            /**
+<span id='-method-contains'>            /**
 </span>             * Check to see if a DOM node is within another DOM node.
              * @param {HTMLElement|String} container The DOM element that may contain the other element.
              * @param {HTMLElement|String} contained The DOM element that may be contained by the other element.
@@ -187,7 +187,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 }
                 return false;
             },
-<span id='KISSY-DOM-method-index'>            /**
+<span id='-method-index'>            /**
 </span>             * search for a given element from among the matched elements.
              * @param {HTMLElement|String} selector elements or selector string to find matched elements.
              * @param {HTMLElement|String} s2 elements or selector string to find matched elements.

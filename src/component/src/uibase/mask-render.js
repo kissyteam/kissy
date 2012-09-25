@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
+KISSY.add("component/uibase/mask-render", function (S, UA, Node) {
 
     var ie6 = (UA['ie'] === 6),
         $ = Node.all;
@@ -37,8 +38,8 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
                 "z-index:-1;'></iframe>" : "") +
             "</div>")
             .prependTo("body");
-        /**
-         * 点 mask 焦点不转移
+        /*
+          点 mask 焦点不转移
          */
         mask.unselectable();
         mask.on("mousedown", function (e) {
@@ -83,8 +84,3 @@ KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
 }, {
     requires: ["ua", "node"]
 });
-
-/**
- * TODO
- *  - mask index 隐藏时不会恢复 z-index，需要业务架构自己实现 DialogManager
- **/

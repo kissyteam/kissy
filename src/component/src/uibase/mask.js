@@ -1,31 +1,42 @@
 /**
+ * @ignore
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/uibase/mask", function () {
 
     /**
-     * @name Mask
-     * @class
-     * Mask extension class.
-     * Make component to be able to show with mask.
-     * @memberOf Component.UIBase
+     * @class KISSY.Component.UIBase.Mask
+     * Mask extension class. Make component to be able to show with mask.
      */
     function Mask() {
     }
 
-    Mask.ATTRS =
-    /**
-     * @lends Component.UIBase.Mask#
-     */
-    {
+    Mask.ATTRS = {
         /**
-         * Whether show mask layer when component shows
-         * @type {Boolean|Object}
+         * Whether show mask layer when component shows and effect
+         * @cfg {Boolean|Object} mask
+         *
+         * for example:
+         *      @example
+         *      {
+         *          effect:'fade', // slide
+         *          duration:0.5,
+         *          easing:'easingNone'
+         *      }
+         */
+        /**
+         * @ignore
          */
         mask: {
             view: 1
         },
+        /**
+         * Mask node of current component.
+         * @type {KISSY.NodeList}
+         * @property maskNode
+         * @readonly
+         */
         maskNode: {
             view: 1
         }

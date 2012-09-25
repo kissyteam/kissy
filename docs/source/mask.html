@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview mask extension for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;component/uibase/mask&quot;, function () {
+
+<span id='KISSY-Component-UIBase-Mask'>    /**
+</span>     * @class KISSY.Component.UIBase.Mask
+     * Mask extension class. Make component to be able to show with mask.
+     */
+    function Mask() {
+    }
+
+    Mask.ATTRS = {
+<span id='KISSY-Component-UIBase-Mask-cfg-mask'>        /**
+</span>         * Whether show mask layer when component shows and effect
+         * @cfg {Boolean|Object} mask
+         *
+         * for example:
+         *      @example
+         *      {
+         *          effect:'fade', // slide
+         *          duration:0.5,
+         *          easing:'easingNone'
+         *      }
+         */
+<span id='global-property-mask'>        /**
+</span>         * @ignore
+         */
+        mask: {
+            view: 1
+        },
+<span id='KISSY-Component-UIBase-Mask-property-maskNode'>        /**
+</span>         * Mask node of current component.
+         * @type {KISSY.NodeList}
+         * @property maskNode
+         * @readonly
+         */
+        maskNode: {
+            view: 1
+        }
+    };
+
+    var NONE = 'none',
+        effects = {fade: [&quot;Out&quot;, &quot;In&quot;], slide: [&quot;Up&quot;, &quot;Down&quot;]};
+
+    function processMask(mask, el, show) {
+        var effect = mask.effect || NONE;
+
+        if (effect == NONE) {
+            el[show ? 'show' : 'hide']();
+            return;
+        }
+
+        var duration = mask.duration,
+            easing = mask.easing,
+            m,
+            index = show ? 1 : 0;
+
+        // run complete fn to restore window's original height
+        el.stop(1, 1);
+
+        m = effect + effects[effect][index];
+        el[m](duration, null, easing);
+    }
+
+    Mask.prototype = {
+
+        __bindUI: function () {
+            var self = this,
+                maskNode,
+                mask,
+                el = self.get('el'),
+                view = self.get(&quot;view&quot;);
+            if (mask = self.get(&quot;mask&quot;)) {
+                maskNode = self.get('maskNode');
+                self.on('afterVisibleChange', function (e) {
+                    var v;
+                    if (v = e.newVal) {
+                        var elZIndex = parseInt(el.css('z-index')) || 1;
+                        maskNode.css('z-index', elZIndex - 1);
+                    }
+                    processMask(mask, maskNode, v)
+                });
+            }
+        }
+    };
+
+
+    return Mask;
+}, {requires: [&quot;ua&quot;]});</pre>
+</body>
+</html>

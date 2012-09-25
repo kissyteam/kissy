@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview resizable support for kissy
  * @author yiminghe@gmail.com
  */
@@ -130,10 +131,9 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
     }
 
     /**
-     * @class
      * Make a element resizable.
+     * @class KISSY.Resizable
      * @extends KISSY.Base
-     * @name Resizable
      */
     function Resizable(cfg) {
         var self = this,
@@ -157,98 +157,142 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
         }
     }
 
-    S.extend(Resizable, Base,
+    S.extend(Resizable, Base, {
         /**
-         * @lends Resizable#
+         * make current resizable 's node not resizable.
          */
-        {
+        destroy: function () {
+            var self = this,
+                dds = self.dds;
+            for (var d in dds) {
+                if (dds.hasOwnProperty(d)) {
+                    dds[d].destroy();
+                    dds[d].get("node").remove();
+                    delete dds[d];
+                }
+            }
+        }
+    }, {
+        ATTRS: {
             /**
-             * make current resizable 's node not resizable.
+             * KISSY Node to be resizable.
+             * Need to be positioned 'relative' or 'absolute'.
+             * @cfg {KISSY.NodeList} node
              */
-            destroy: function () {
-                var self = this,
-                    dds = self.dds;
-                for (var d in dds) {
-                    if (dds.hasOwnProperty(d)) {
-                        dds[d].destroy();
-                        dds[d].get("node").remove();
-                        delete dds[d];
-                    }
-                }
-            }
-        }, {
-            ATTRS: /**
-             * @lends Resizable#
+            /**
+             * @ignore
              */
-            {
-                /**
-                 * KISSY Node to be resizable.
-                 * Need to be positioned 'relative' or 'absolute'.
-                 * @type {Node}
-                 */
-                node: {
-                    setter: function (v) {
-                        return $(v);
-                    }
-                },
-
-                prefixCls: {
-                    value: 'ks-'
-                },
-
-                /**
-                 * Whether disable current resizable.
-                 * @type {Boolean}
-                 */
-                disabled: {},
-
-                /**
-                 * Minimum width can current node resize to.
-                 * @type {Number}
-                 */
-                minWidth: {
-                    value: 0
-                },
-                /**
-                 * Minimum height can current node resize to.
-                 * @type {Number}
-                 */
-                minHeight: {
-                    value: 0
-                },
-                /**
-                 * Maximum width can current node resize to.
-                 * @type {Number}
-                 */
-                maxWidth: {
-                    value: Number.MAX_VALUE
-                },
-                /**
-                 * Maximum height can current node resize to.
-                 * @type {Number}
-                 */
-                maxHeight: {
-                    value: Number.MAX_VALUE
-                },
-                /**
-                 * Enumeration of directions can current node resize to.
-                 * Directions:
-                 * "t": top.
-                 * "tr": top-right.
-                 * "r": right.
-                 * "b": bottom.
-                 * "l": left.
-                 * "tl": top-left.
-                 * "bl": bottom-left.
-                 * "br": bottom-right.
-                 * @type {String[]}
-                 */
-                handlers: {
-                    // t,tr,r,br,b,bl,l,tl
-                    value: []
+            node: {
+                setter: function (v) {
+                    return $(v);
                 }
+            },
+
+            prefixCls: {
+                value: 'ks-'
+            },
+
+            /**
+             * Whether disable current resizable.
+             * @cfg {Boolean} disabled
+             */
+            /**
+             * @ignore
+             */
+            disabled: {},
+
+            /**
+             * Minimum width can current node resize to.
+             * @cfg {Number} minWidth
+             */
+            /**
+             * @ignore
+             */
+            minWidth: {
+                value: 0
+            },
+            /**
+             * Minimum height can current node resize to.
+             * @cfg {Number} minHeight
+             */
+            /**
+             * @ignore
+             */
+            minHeight: {
+                value: 0
+            },
+            /**
+             * Maximum width can current node resize to.
+             * @cfg {Number} maxWidth
+             */
+            /**
+             * @ignore
+             */
+            maxWidth: {
+                value: Number.MAX_VALUE
+            },
+            /**
+             * Maximum height can current node resize to.
+             * @cfg {Number} maxHeight
+             */
+            /**
+             * @ignore
+             */
+            maxHeight: {
+                value: Number.MAX_VALUE
+            },
+            /**
+             * directions can current node resize to.
+             * @cfg {KISSY.Resizable.HANDLER} handlers
+             */
+            /**
+             * @ignore
+             */
+            handlers: {
+                // t,tr,r,br,b,bl,l,tl
+                value: []
             }
-        });
+        }
+    });
+
+    /**
+     * Resizable handlers type.
+     * @enum {String} KISSY.Resizable.HANDLER
+     */
+    Resizable.HANDLER = {
+        /**
+         * bottom
+         */
+        B: 'b',
+        /**
+         * top
+         */
+        T: 't',
+        /**
+         * left
+         */
+        L: 'l',
+        /**
+         * right
+         */
+        R: 'r',
+        /**
+         * bottom-left
+         */
+        BL: 'bl',
+        /**
+         * top-left
+         */
+        TL: 'tl',
+        /**
+         * bottom-right
+         */
+        BR: 'br',
+        /**
+         * top-right
+         */
+        TR: 'tr'
+    };
 
     return Resizable;
 

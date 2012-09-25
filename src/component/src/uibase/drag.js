@@ -1,28 +1,38 @@
 /**
+ * @ignore
  * @fileOverview drag extension for position
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/uibase/drag", function (S) {
 
     /**
-     * @name Drag
-     * @class
-     * Drag extension class.
-     * Make element draggable.
-     * @memberOf Component.UIBase
+     * @class KISSY.Component.UIBase.Drag
+     * Drag extension class. Make element draggable.
      */
     function Drag() {
     }
 
-    Drag.ATTRS =
-
-    /**
-     * @lends Component.UIBase.Drag
-     */
-    {
+    Drag.ATTRS = {
         /**
-         * Whether current element is draggable.
-         * @type {Boolean}
+         * Whether current element is draggable and draggable config.
+         * @cfg {Boolean|Object} draggable
+         *
+         * for example:
+         *      @example
+         *      {
+         *          proxy:{
+         *              // see {@link KISSY.DD.Proxy}
+         *          },
+         *          scroll:{
+         *              // see {@link KISSY.DD.Scroll}
+         *          },
+         *          constrain:{
+         *              // see {@link KISSY.DD.Constrain}
+         *          },
+         *      }
+         */
+        /**
+         * @ignore
          */
         draggable: {
             setter: function (v) {

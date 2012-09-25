@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview decorate function for children render from markup
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;component/decorate-children&quot;, function (S, Manager) {
+
+
+    function DecorateChildren() {
+
+    }
+
+    S.augment(DecorateChildren, {
+        decorateInternal:function (el) {
+            var self = this;
+            // 不用 setInternal , 通知 view 更新
+            self.set(&quot;el&quot;, el);
+            self.decorateChildren(el);
+        },
+
+<span id='global-method-findUIConstructorByNode'>        /**
+</span>         * Get component's constructor from KISSY Node.
+         * @protected
+         * @param {KISSY.NodeList} childNode Child component's root node.
+         */
+        findUIConstructorByNode:function (childNode, ignoreError) {
+            var self = this,
+                cls = childNode.attr(&quot;class&quot;) || &quot;&quot;,
+                prefixCls = self.get(&quot;prefixCls&quot;);
+            // 过滤掉特定前缀
+            cls = cls.replace(new RegExp(&quot;\\b&quot; + prefixCls, &quot;ig&quot;), &quot;&quot;);
+            var UI = Manager.getConstructorByXClass(cls);
+            if (!UI &amp;&amp; !ignoreError) {
+                S.log(childNode);
+                S.error(&quot;can not find ui &quot; + cls + &quot; from this markup&quot;);
+            }
+            return UI;
+        },
+
+        // 生成一个组件
+        decorateChildrenInternal:function (UI, c) {
+            var self = this;
+            self.addChild(new UI({
+                srcNode:c,
+                prefixCls:self.get(&quot;prefixCls&quot;)
+            }));
+        },
+
+        // container 需要在装饰时对儿子特殊处理，递归装饰
+        decorateChildren:function (el) {
+            var self = this,
+                children = el.children();
+            children.each(function (c) {
+                var UI = self.findUIConstructorByNode(c);
+                self.decorateChildrenInternal(UI, c);
+            });
+        }
+    });
+
+    return DecorateChildren;
+
+}, {
+    requires:['./manager']
+});</pre>
+</body>
+</html>

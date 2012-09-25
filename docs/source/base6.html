@@ -17,283 +17,166 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview definition for node and nodelist
+ * @fileOverview dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('node/base', function (S, DOM, undefined) {
+KISSY.add('dom/base', function (S, UA, undefined) {
 
-    var AP = Array.prototype,
-        slice = AP.slice,
-        NodeType = DOM.NodeType,
-        push = AP.push,
-        makeArray = S.makeArray,
-        isNodeList = DOM._isNodeList;
+    var WINDOW = S.Env.host;
 
-<span id='KISSY-NodeList'>    /**
-</span>     * The NodeList class provides a {@link KISSY.DOM} wrapper for manipulating DOM Node.
-     * use KISSY.all/one to retrieve NodeList instances.
-     *
-     *  for example:
-     *      @example
-     *      KISSY.all('a').attr('href','http://docs.kissyui.com');
-     *
-     * is equal to
-     *      @example
-     *      KISSY.DOM.attr('a','href','http://docs.kissyui.com');
-     *
-     * @class KISSY.NodeList
+<span id='KISSY-DOM-NodeType'>    /**
+</span>     * DOM Element node type.
+     * @enum {Number} KISSY.DOM.NodeType
      */
-    function NodeList(html, props, ownerDocument) {
-        var self = this,
-            domNode;
+    var NodeType = {
+<span id='KISSY-DOM-NodeType-property-ELEMENT_NODE'>        /**
+</span>         * element type
+         */
+        ELEMENT_NODE: 1,
+<span id='KISSY-DOM-NodeType-property-ATTRIBUTE_NODE'>        /**
+</span>         * attribute node type
+         */
+        'ATTRIBUTE_NODE': 2,
+<span id='KISSY-DOM-NodeType-property-TEXT_NODE'>        /**
+</span>         * text node type
+         */
+        TEXT_NODE: 3,
+<span id='KISSY-DOM-NodeType-property-CDATA_SECTION_NODE'>        /**
+</span>         * cdata node type
+         */
+        'CDATA_SECTION_NODE': 4,
+<span id='KISSY-DOM-NodeType-property-ENTITY_REFERENCE_NODE'>        /**
+</span>         * entity reference node type
+         */
+        'ENTITY_REFERENCE_NODE': 5,
+<span id='KISSY-DOM-NodeType-property-ENTITY_NODE'>        /**
+</span>         * entity node type
+         */
+        'ENTITY_NODE': 6,
+<span id='KISSY-DOM-NodeType-property-PROCESSING_INSTRUCTION_NODE'>        /**
+</span>         * processing instruction node type
+         */
+        'PROCESSING_INSTRUCTION_NODE': 7,
+<span id='KISSY-DOM-NodeType-property-COMMENT_NODE'>        /**
+</span>         * comment node type
+         */
+        COMMENT_NODE: 8,
+<span id='KISSY-DOM-NodeType-property-DOCUMENT_NODE'>        /**
+</span>         * document node type
+         */
+        DOCUMENT_NODE: 9,
+<span id='KISSY-DOM-NodeType-property-DOCUMENT_TYPE_NODE'>        /**
+</span>         * document type
+         */
+        'DOCUMENT_TYPE_NODE': 10,
+<span id='KISSY-DOM-NodeType-property-DOCUMENT_FRAGMENT_NODE'>        /**
+</span>         * document fragment type
+         */
+        DOCUMENT_FRAGMENT_NODE: 11,
+<span id='KISSY-DOM-NodeType-property-NOTATION_NODE'>        /**
+</span>         * notation type
+         */
+        'NOTATION_NODE': 12
+    };
+<span id='KISSY-DOM'>    /**
+</span>     * KISSY DOM Utils.
+     * Provides DOM helper methods.
+     * @class KISSY.DOM
+     * @singleton
+     */
+    var DOM = {
 
-        if (!(self instanceof NodeList)) {
-            return new NodeList(html, props, ownerDocument);
-        }
+<span id='KISSY-DOM-method-isCustomDomain'>        /**
+</span>         * Whether has been set a custom domain,
+         * @param {window} [win] Test window. Default current window.
+         * @return {Boolean}
+         */
+        isCustomDomain: function (win) {
+            win = win || WINDOW;
+            var domain = win.document.domain,
+                hostname = win.location.hostname;
+            return domain != hostname &amp;&amp;
+                domain != ( '[' + hostname + ']' );	// IPv6 IP support
+        },
 
-        // handle NodeList(''), NodeList(null), or NodeList(undefined)
-        if (!html) {
-            return undefined;
-        }
-
-        else if (S.isString(html)) {
-            // create from html
-            domNode = DOM.create(html, props, ownerDocument);
-            // ('&lt;p&gt;1&lt;/p&gt;&lt;p&gt;2&lt;/p&gt;') 转换为 NodeList
-            if (domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) { // fragment
-                push.apply(this, makeArray(domNode.childNodes));
-                return undefined;
+<span id='KISSY-DOM-method-getEmptyIframeSrc'>        /**
+</span>         * Get appropriate src for new empty iframe.
+         * Consider custom domain.
+         * @param {window} [win] Window new iframe will be inserted into.
+         * @return {String} Src for iframe.
+         */
+        getEmptyIframeSrc: function (win) {
+            win = win || WINDOW;
+            if (UA['ie'] &amp;&amp; DOM.isCustomDomain(win)) {
+                return  'javascript:void(function(){' + encodeURIComponent(
+                    'document.open();' +
+                        &quot;document.domain='&quot; +
+                        win.document.domain
+                        + &quot;';&quot; +
+                        'document.close();') + '}())';
             }
-        }
-
-        else if (S.isArray(html) || isNodeList(html)) {
-            push.apply(self, makeArray(html));
             return undefined;
-        }
+        },
 
-        else {
-            // node, document, window
-            domNode = html;
-        }
+        NodeType: NodeType,
 
-        self[0] = domNode;
-        self.length = 1;
-        return undefined;
-    }
-
-    NodeList.prototype = {
-
-<span id='KISSY-NodeList-property-length'>        /**
-</span>         * length of nodelist
-         * @type {Number}
+<span id='KISSY-DOM-method-_getWin'>        /**
+</span>         * Return corresponding window if elem is document or window or undefined.
+         * Else return false.
+         * @private
+         * @param {undefined|window|HTMLDocument} elem
+         * @return {window|Boolean}
          */
-        length: 0,
+        _getWin: function (elem) {
+            if (elem == null) {
+                return WINDOW;
+            }
+            return ('scrollTo' in elem &amp;&amp; elem['document']) ?
+                elem : elem.nodeType == NodeType.DOCUMENT_NODE ?
+                elem.defaultView || elem.parentWindow :
+                false;
+        },
 
+        // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
+        _isNodeList: function (o) {
+            // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
+            // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
+            // 注3：通过 namedItem 来判断不可靠
+            // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
+            // 注5: 考虑 iframe.contentWindow
+            return o &amp;&amp; !o.nodeType &amp;&amp; o.item &amp;&amp; !o.setTimeout;
+        },
 
-<span id='KISSY-NodeList-method-item'>        /**
-</span>         * Get one node at index
-         * @param {Number} index Index position.
-         * @return {KISSY.NodeList}
+<span id='KISSY-DOM-method-nodeName'>        /**
+</span>         * Get node 's nodeName in lowercase.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
+         * @return {String} el 's nodeName in lowercase
          */
-        item: function (index) {
-            var self = this;
-            if (S.isNumber(index)) {
-                if (index &gt;= self.length) {
-                    return null;
-                } else {
-                    return new NodeList(self[index]);
+        nodeName: function (selector) {
+            var el = DOM.get(selector),
+                nodeName = el.nodeName.toLowerCase();
+            // http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
+            if (UA['ie']) {
+                var scopeName = el['scopeName'];
+                if (scopeName &amp;&amp; scopeName != 'HTML') {
+                    nodeName = scopeName.toLowerCase() + ':' + nodeName;
                 }
-            } else {
-                return new NodeList(index);
             }
-        },
-
-<span id='KISSY-NodeList-method-add'>        /**
-</span>         * Add existing node list.
-         * @param {KISSY.NodeList} selector Selector string or html string or common dom node.
-         * @param {KISSY.NodeList} [context] Search context for selector
-         * @param {Number} [index] Insert position.
-         * @return {KISSY.NodeList}
-         */
-        add: function (selector, context, index) {
-            if (S.isNumber(context)) {
-                index = context;
-                context = undefined;
-            }
-            var list = NodeList.all(selector, context).getDOMNodes(),
-                ret = new NodeList(this);
-            if (index === undefined) {
-                push.apply(ret, list);
-            } else {
-                var args = [index, 0];
-                args.push.apply(args, list);
-                AP.splice.apply(ret, args);
-            }
-            return ret;
-        },
-
-<span id='KISSY-NodeList-method-slice'>        /**
-</span>         * Get part of node list.
-         * @param {Number} start Start position.
-         * @param {number} end End position.
-         * @return {KISSY.NodeList}
-         */
-        slice: function (start, end) {
-            // ie&lt;9 : [1,2].slice(-2,undefined) =&gt; []
-            // ie&lt;9 : [1,2].slice(-2) =&gt; []
-            // fix #85
-            return new NodeList(slice.apply(this, arguments));
-        },
-
-<span id='KISSY-NodeList-method-getDOMNodes'>        /**
-</span>         * Retrieves the DOMNodes.
-         */
-        getDOMNodes: function () {
-            return slice.call(this);
-        },
-
-<span id='KISSY-NodeList-method-each'>        /**
-</span>         * Applies the given function to each Node in the NodeList.
-         * @param {Function} fn The function to apply. It receives 3 arguments:
-         * the current node instance, the node's index,
-         * and the NodeList instance
-         * @param [context] An optional context to
-         * apply the function with Default context is the current NodeList instance
-         * @return {KISSY.NodeList}
-         */
-        each: function (fn, context) {
-            var self = this;
-
-            S.each(self, function (n, i) {
-                n = new NodeList(n);
-                return fn.call(context || n, n, i, self);
-            });
-
-            return self;
-        },
-<span id='KISSY-NodeList-method-getDOMNode'>        /**
-</span>         * Retrieves the DOMNode.
-         * @return {HTMLElement}
-         */
-        getDOMNode: function () {
-            return this[0];
-        },
-
-<span id='KISSY-NodeList-method-end'>        /**
-</span>         * return last stack node list.
-         * @return {KISSY.NodeList}
-         */
-        end: function () {
-            var self = this;
-            return self.__parent || self;
-        },
-
-<span id='KISSY-NodeList-method-all'>        /**
-</span>         * Get node list which are descendants of current node list.
-         * @param {String} selector Selector string
-         * @return {KISSY.NodeList}
-         */
-        all: function (selector) {
-            var ret, self = this;
-            if (self.length &gt; 0) {
-                ret = NodeList.all(selector, self);
-            } else {
-                ret = new NodeList();
-            }
-            ret.__parent = self;
-            return ret;
-        },
-
-<span id='KISSY-NodeList-method-one'>        /**
-</span>         * Get node list which match selector under current node list sub tree.
-         * @param {String} selector
-         * @return {KISSY.NodeList}
-         */
-        one: function (selector) {
-            var self = this, all = self.all(selector),
-                ret = all.length ? all.slice(0, 1) : null;
-            if (ret) {
-                ret.__parent = self;
-            }
-            return ret;
+            return nodeName;
         }
     };
 
-    S.mix(NodeList, {
-<span id='KISSY-NodeList-static-method-all'>        /**
-</span>         * Get node list from selector or construct new node list from html string.
-         * Can also called from KISSY.all
-         * @param {String|KISSY.NodeList} selector Selector string or html string or common dom node.
-         * @param {String|KISSY.NodeList} [context] Search context for selector
-         * @return {KISSY.NodeList}
-         * @member KISSY.NodeList
-         * @static
-         */
-        all: function (selector, context) {
-            // are we dealing with html string ?
-            // TextNode 仍需要自己 new Node
+    S.mix(DOM, NodeType);
 
-            if (S.isString(selector)
-                &amp;&amp; (selector = S.trim(selector))
-                &amp;&amp; selector.length &gt;= 3
-                &amp;&amp; S.startsWith(selector, '&lt;')
-                &amp;&amp; S.endsWith(selector, '&gt;')
-                ) {
-                if (context) {
-                    if (context['getDOMNode']) {
-                        context = context[0];
-                    }
-                    if (context.ownerDocument) {
-                        context = context.ownerDocument;
-                    }
-                }
-                return new NodeList(selector, undefined, context);
-            }
-            return new NodeList(DOM.query(selector, context));
-        },
+    return DOM;
 
-<span id='KISSY-NodeList-static-method-one'>        /**
-</span>         * Get node list with length of one
-         * from selector or construct new node list from html string.
-         * @param {String|KISSY.NodeList} selector Selector string or html string or common dom node.
-         * @param {String|KISSY.NodeList} [context] Search context for selector
-         * @return {KISSY.NodeList}
-         * @member KISSY.NodeList
-         * @static
-         */
-        one: function (selector, context) {
-            var all = NodeList.all(selector, context);
-            return all.length ? all.slice(0, 1) : null;
-        }
-    });
-
-<span id='KISSY-NodeList-static-property-NodeType'>    /**
-</span>     * Same with {@link KISSY.DOM.NodeType}
-     * @member KISSY.NodeList
-     * @property NodeType
-     * @static
-     */
-    NodeList.NodeType = NodeType;
-
-    return NodeList;
 }, {
-    requires: ['dom']
+    requires: ['ua']
 });
 
-
 /*
- Notes:
- 2011-05-25
- - 承玉：参考 jquery，只有一个 NodeList 对象，Node 就是 NodeList 的别名
-
- 2010.04
- - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。
- 但从用户角度讲，this 的第一直觉是 $(this), kissy 和 yui3 保持一致，牺牲
- 性能，以易用为首。
- - 有了 each 方法，似乎不再需要 import 所有 dom 方法，意义不大。
- - dom 是低级 api, node 是中级 api, 这是分层的一个原因。还有一个原因是，如果
- 直接在 node 里实现 dom 方法，则不大好将 dom 的方法耦合到 nodelist 里。可
- 以说，技术成本会制约 api 设计。
+ 2011-08
+ - 添加键盘枚举值，方便依赖程序清晰
  */
 </pre>
 </body>

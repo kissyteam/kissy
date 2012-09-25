@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview loading mask support for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/loadingrender", function (S, Node) {
+KISSY.add("component/uibase/loading-render", function (S, Node) {
 
     function Loading() {
     }

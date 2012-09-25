@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview uibase
  * @author yiminghe@gmail.com
  */
@@ -30,20 +31,20 @@ KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close,
     requires:["./uibase/base",
         "./uibase/align",
         "./uibase/box",
-        "./uibase/boxrender",
+        "./uibase/box-render",
         "./uibase/close",
-        "./uibase/closerender",
-        "./uibase/contentbox",
-        "./uibase/contentboxrender",
+        "./uibase/close-render",
+        "./uibase/content-box",
+        "./uibase/content-box-render",
         "./uibase/drag",
         "./uibase/loading",
-        "./uibase/loadingrender",
+        "./uibase/loading-render",
         "./uibase/mask",
-        "./uibase/maskrender",
+        "./uibase/mask-render",
         "./uibase/position",
-        "./uibase/positionrender",
-        "./uibase/shimrender",
+        "./uibase/position-render",
+        "./uibase/shim-render",
         "./uibase/resize",
         "./uibase/stdmod",
-        "./uibase/stdmodrender"]
+        "./uibase/stdmod-render"]
 });

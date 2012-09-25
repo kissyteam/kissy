@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview uibase
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;component/uibase&quot;, function (S, UIBase, Align, Box, BoxRender, Close, CloseRender, ContentBox, ContentBoxRender, Drag, Loading, LoadingRender, Mask, MaskRender, Position, PositionRender, ShimRender, Resize, StdMod, StdModRender) {
+    Close.Render = CloseRender;
+    Loading.Render = LoadingRender;
+    Mask.Render = MaskRender;
+    Position.Render = PositionRender;
+    StdMod.Render = StdModRender;
+    Box.Render = BoxRender;
+    ContentBox.Render = ContentBoxRender;
+    S.mix(UIBase, {
+        Align:Align,
+        Box:Box,
+        Close:Close,
+        ContentBox:ContentBox,
+        Drag:Drag,
+        Loading:Loading,
+        Mask:Mask,
+        Position:Position,
+        Shim:{
+            Render:ShimRender
+        },
+        Resize:Resize,
+        StdMod:StdMod
+    });
+    return UIBase;
+}, {
+    requires:[&quot;./uibase/base&quot;,
+        &quot;./uibase/align&quot;,
+        &quot;./uibase/box&quot;,
+        &quot;./uibase/box-render&quot;,
+        &quot;./uibase/close&quot;,
+        &quot;./uibase/close-render&quot;,
+        &quot;./uibase/content-box&quot;,
+        &quot;./uibase/content-box-render&quot;,
+        &quot;./uibase/drag&quot;,
+        &quot;./uibase/loading&quot;,
+        &quot;./uibase/loading-render&quot;,
+        &quot;./uibase/mask&quot;,
+        &quot;./uibase/mask-render&quot;,
+        &quot;./uibase/position&quot;,
+        &quot;./uibase/position-render&quot;,
+        &quot;./uibase/shim-render&quot;,
+        &quot;./uibase/resize&quot;,
+        &quot;./uibase/stdmod&quot;,
+        &quot;./uibase/stdmod-render&quot;]
+});</pre>
+</body>
+</html>

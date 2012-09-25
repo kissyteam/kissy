@@ -380,7 +380,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
              * find the cell dom by record and column id
              * @param {String|Number} id the column id
              * @param {Object} record the record that showed in this component,if can not find ,return null
-             * @return  {Node}
+             * @return  {KISSY.NodeList}
              */
             findCell:function (id, record) {
                 var _self = this,

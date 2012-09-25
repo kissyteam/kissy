@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview Component.UIBase.Align
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
@@ -14,17 +15,18 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
      */
 
     /**
+     * @ignore
      * 得到会导致元素显示不全的祖先元素
      */
     function getOffsetParent(element) {
         // ie 这个也不是完全可行
-        /**
+        /*
          <div style="width: 50px;height: 100px;overflow: hidden">
          <div style="width: 50px;height: 100px;position: relative;" id="d6">
          元素 6 高 100px 宽 50px<br/>
          </div>
          </div>
-         **/
+         */
         // element.offsetParent does the right thing in ie7 and below. Return parent with layout!
         //  In other browsers it only includes elements with position absolute, relative or
         // fixed, not elements with overflow set to auto or scroll.
@@ -52,6 +54,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
     }
 
     /**
+     * @ignore
      * 获得元素的显示部分的区域
      */
     function getVisibleRectForElement(element) {
@@ -205,11 +208,8 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
 
     /**
-     * @name Align
-     * @class
-     * Align extension class.
-     * Align component with specified element.
-     * @memberOf Component.UIBase
+     * @class KISSY.Component.UIBase.Align
+     * Align extension class.Align component with specified element.
      */
     function Align() {
     }
@@ -220,23 +220,39 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
     Align.__getVisibleRectForElement = getVisibleRectForElement;
 
     Align.ATTRS =
-    /**
-     * @lends Component.UIBase.Align.prototype
-     */
     {
 
         /**
-         * Align configuration.
+         * alignment config.
          * @type {Object}
-         * @field
-         * @example
-         * <code>
-         *     {
+         * @property align
+         *
+         * for example:
+         *      @example
+         *      {
          *        node: null,         // 参考元素, falsy 或 window 为可视区域, 'trigger' 为触发元素, 其他为指定元素
          *        points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
          *        offset: [0, 0]      // 有效值为 [n, m]
-         *     }
-         * </code>
+         *      }
+         */
+
+
+        /**
+         * alignment config.
+         * @cfg {Object} align
+         *
+         * for example:
+         *      @example
+         *      {
+         *        node: null,         // 参考元素, falsy 或 window 为可视区域, 'trigger' 为触发元素, 其他为指定元素
+         *        points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+         *        offset: [0, 0]      // 有效值为 [n, m]
+         *      }
+         */
+
+
+        /**
+         * @ignore
          */
         align:{
             value:{}
@@ -263,6 +279,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
      * 获取 node 上的 align 对齐点 相对于页面的坐标
      * @param region
      * @param align
+     * @ignore
      */
     function getAlignOffset(region, align) {
         var V = align.charAt(0),
@@ -289,11 +306,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
         return { left:x, top:y };
     }
 
-    Align.prototype =
-    /**
-     * @lends Component.UIBase.Align.prototype
-     */
-    {
+    Align.prototype =    {
         _uiSetAlign:function (v) {
             if (v && v.points) {
                 this.align(v.node, v.points, v.offset, v.overflow);
@@ -301,12 +314,11 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
         },
 
         /*
-         对齐 Overlay 到 node 的 points 点, 偏移 offset 处
-         @method
-         @ignore
-         @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
-         @param {String[]} points 对齐方式
-         @param {Number[]} [offset] 偏移
+         * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
+         * @ignore
+         * @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
+         * @param {String[]} points 对齐方式
+         * @param {Number[]} [offset] 偏移
          */
         align:function (refNode, points, offset, overflow) {
             refNode = Node.one(refNode || win);
@@ -408,7 +420,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
         /**
          * Make current element center within node.
          * @param {undefined|String|HTMLElement|KISSY.NodeList} node
-         * Same as node config of {@link Component.UIBase.Align#align} .
+         * Same as node config of {@link KISSY.Component.UIBase.Align#cfg-align} .
          */
         center:function (node) {
             var self = this;
@@ -426,6 +438,8 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
     requires:["ua", "dom", "node"]
 });
 /**
+ * @ignore
+ *
  *  2012-04-26 yiminghe@gmail.com
  *   - 优化智能对齐算法
  *   - 慎用 resizeXX

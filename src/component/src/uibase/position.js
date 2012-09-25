@@ -1,45 +1,57 @@
 /**
+ * @ignore
  * @fileOverview position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/uibase/position", function (S) {
 
     /**
-     * @name Position
-     * @class
-     * Position extension class.
-     * Make component positionable
-     * @memberOf Component.UIBase
+     * @class KISSY.Component.UIBase.Position
+     * Position extension class. Make component positionable.
      */
     function Position() {
     }
 
-    Position.ATTRS =
-    /**
-     * @lends Component.UIBase.Position#
-     */
-    {
+    Position.ATTRS = {
         /**
          * Horizontal axis
          * @type {Number}
+         * @property x
          */
-        x:{
-            view:1
+        /**
+         * Horizontal axis
+         * @cfg {Number} x
+         */
+        /**
+         * @ignore
+         */
+        x: {
+            view: 1
         },
+
         /**
          * Vertical axis
          * @type {Number}
+         * @property y
          */
-        y:{
-            view:1
+        /**
+         * Vertical axis
+         * @cfg {Number} y
+         */
+        /**
+         * @ignore
+         */
+        y: {
+            view: 1
         },
         /**
          * Horizontal and vertical axis.
+         * @ignore
          * @type {Number[]}
          */
-        xy:{
+        xy: {
             // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
-            setter:function (v) {
+            setter: function (v) {
                 var self = this,
                     xy = S.makeArray(v);
                 /*
@@ -52,48 +64,46 @@ KISSY.add("component/uibase/position", function (S) {
                 }
                 return v;
             },
-            /**
-             * xy 纯中转作用
-             */
-            getter:function () {
+
+            // xy 纯中转作用
+            getter: function () {
                 return [this.get("x"), this.get("y")];
             }
         },
+
         /**
          * z-index value.
          * @type {Number}
+         * @property zIndex
          */
-        zIndex:{
-            view:1
+        /**
+         * z-index value.
+         * @cfg {Number} zIndex
+         */
+        /**
+         * @ignore
+         */
+        zIndex: {
+            view: 1
         },
         /**
          * Positionable element is by default visible false.
          * For compatibility in overlay and PopupMenu.
-         * @default false
+         * Defaults to: false
+         * @ignore
          */
-        visible:{
-            value:false
+        visible: {
+            value: false
         }
     };
 
 
-    Position.prototype =
-    /**
-     * @lends Component.UIBase.Position.prototype
-     */
-    {
+    Position.prototype = {
         /**
          * Move to absolute position.
-         * @param {Number|Number[]} x
-         * @param {Number} [y]
-         * @example
-         * <code>
-         * move(x, y);
-         * move(x);
-         * move([x,y])
-         * </code>
+         * @ignore
          */
-        move:function (x, y) {
+        move: function (x, y) {
             var self = this;
             if (S.isArray(x)) {
                 y = x[1];

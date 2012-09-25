@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview UIBase.Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/uibase/boxrender', function (S) {
+KISSY.add('component/uibase/box-render', function (S) {
 
     var $ = S.all, doc = S.Env.host.document;
 
@@ -72,11 +73,7 @@ KISSY.add('component/uibase/boxrender', function (S) {
         }
     };
 
-    BoxRender.prototype =
-    /**
-     * @lends Component.UIBase.Box.Render#
-     */
-    {
+    BoxRender.prototype = {
 
         __renderUI: function () {
             var self = this;
@@ -96,6 +93,7 @@ KISSY.add('component/uibase/boxrender', function (S) {
         },
 
         /**
+         * @ignore
          * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失
          * 通过 render 来重建原有的内容
          */

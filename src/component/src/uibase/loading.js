@@ -1,28 +1,22 @@
 /**
+ * @ignore
  * @fileOverview loading mask support for overlay
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/uibase/loading", function () {
 
     /**
-     * @name Loading
-     * @class
-     * Loading extension class.
-     * Make component to be able to mask loading.
-     * @memberOf Component.UIBase
+     * @class KISSY.DD.UIBase.Loading
+     * Loading extension class. Make component to be able to mask loading.
      */
     function Loading() {
     }
 
-    Loading.prototype =
-    /**
-     * @lends Component.UIBase.Loading#
-     */
-    {
+    Loading.prototype = {
         /**
          * mask component as loading
          */
-        loading:function () {
+        loading: function () {
             this.get("view").loading();
             return this;
         },
@@ -30,7 +24,7 @@ KISSY.add("component/uibase/loading", function () {
         /**
          * unmask component as loading
          */
-        unloading:function () {
+        unloading: function () {
             this.get("view").unloading();
             return this;
         }

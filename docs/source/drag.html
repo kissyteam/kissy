@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview drag extension for position
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;component/uibase/drag&quot;, function (S) {
+
+<span id='KISSY-Component-UIBase-Drag'>    /**
+</span>     * @class KISSY.Component.UIBase.Drag
+     * Drag extension class. Make element draggable.
+     */
+    function Drag() {
+    }
+
+    Drag.ATTRS = {
+<span id='KISSY-Component-UIBase-Drag-cfg-draggable'>        /**
+</span>         * Whether current element is draggable and draggable config.
+         * @cfg {Boolean|Object} draggable
+         *
+         * for example:
+         *      @example
+         *      {
+         *          proxy:{
+         *              // see {@link KISSY.DD.Proxy}
+         *          },
+         *          scroll:{
+         *              // see {@link KISSY.DD.Scroll}
+         *          },
+         *          constrain:{
+         *              // see {@link KISSY.DD.Constrain}
+         *          },
+         *      }
+         */
+<span id='global-property-draggable'>        /**
+</span>         * @ignore
+         */
+        draggable: {
+            setter: function (v) {
+                if (v === true) {
+                    return {};
+                }
+            },
+            value: {}
+        }
+    };
+
+    Drag.prototype = {
+
+        _uiSetDraggable: function (dragCfg) {
+            var self = this,
+                handlers,
+                DD = S.require(&quot;dd&quot;),
+                Draggable,
+                p,
+                d = self.__drag,
+                __constrain = self.__constrain,
+                el = self.get(&quot;el&quot;);
+
+            if (dragCfg &amp;&amp; !d &amp;&amp; DD) {
+
+                Draggable = DD.Draggable;
+
+                d = self.__drag = new Draggable({
+                    node: el,
+                    move: 1
+                });
+
+                if (dragCfg.proxy) {
+                    dragCfg.proxy.moveOnEnd = true;
+
+                    p = self.__proxy = new DD.Proxy(dragCfg.proxy);
+                    p.attachDrag(d);
+                }
+
+                __constrain = self.__constrain = new DD.Constrain().attachDrag(d);
+
+                d.on(&quot;dragend&quot;, function () {
+                    var proxyOffset;
+                    proxyOffset = el.offset();
+                    self.set(&quot;x&quot;, proxyOffset.left);
+                    self.set(&quot;y&quot;, proxyOffset.top);
+                    // 存在代理时
+                    if (p) {
+                        el.css(&quot;visibility&quot;, &quot;visible&quot;);
+                    }
+                });
+
+                if (dragCfg.scroll) {
+                    var s = self.__scroll = new DD.Scroll(dragCfg.scroll);
+                    s.attachDrag(d);
+                }
+
+            }
+
+            if (d) {
+                d.set(&quot;disabled&quot;, !dragCfg);
+            }
+
+            if (dragCfg &amp;&amp; d) {
+                handlers = dragCfg.handlers;
+                if (&quot;constrain&quot; in dragCfg) {
+                    __constrain.set(&quot;constrain&quot;, dragCfg.constrain);
+                } else {
+                    __constrain.set(&quot;constrain&quot;, false);
+                }
+                if (handlers &amp;&amp; handlers.length &gt; 0) {
+                    d.set(&quot;handlers&quot;, handlers);
+                }
+            }
+        },
+
+        __destructor: function () {
+            var self = this,
+                p = self.__proxy,
+                s = self.__scroll,
+                __constrain = self.__constrain,
+                d = self.__drag;
+            s &amp;&amp; s.destroy();
+            p &amp;&amp; p.destroy();
+            __constrain &amp;&amp; __constrain.destroy();
+            d &amp;&amp; d.destroy();
+        }
+
+    };
+
+    return Drag;
+
+});</pre>
+</body>
+</html>

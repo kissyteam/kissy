@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * Setup component namespace.
  * @author yiminghe@gmail.com
  */

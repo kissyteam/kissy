@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview delegate events for children
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;component/delegate-children&quot;, function (S, UA) {
+
+    var ie = S.Env.host.document.documentMode || UA.ie;
+
+    function DelegateChildren() {
+    }
+
+    function handleChildMouseEvents(e) {
+        if (!this.get(&quot;disabled&quot;)) {
+            var control = this.getOwnerControl(e.target, e);
+            if (control &amp;&amp; !control.get(&quot;disabled&quot;)) {
+                // Child control identified; forward the event.
+                switch (e.type) {
+                    case &quot;mousedown&quot;:
+                        control.handleMouseDown(e);
+                        break;
+                    case &quot;mouseup&quot;:
+                        control.handleMouseUp(e);
+                        break;
+                    case &quot;mouseover&quot;:
+                        control.handleMouseOver(e);
+                        break;
+                    case &quot;mouseout&quot;:
+                        control.handleMouseOut(e);
+                        break;
+                    case &quot;contextmenu&quot;:
+                        control.handleContextMenu(e);
+                        break;
+                    case &quot;dblclick&quot;:
+                        control.handleDblClick(e);
+                        break;
+                    default:
+                        S.error(e.type + &quot; unhandled!&quot;);
+                }
+            }
+        }
+    }
+
+    DelegateChildren.ATTRS = {
+        delegateChildren: {
+            value: true
+        }
+    };
+
+    S.augment(DelegateChildren, {
+
+        __bindUI: function () {
+            var self = this;
+            if (self.get(&quot;delegateChildren&quot;)) {
+                self.get(&quot;el&quot;).on(&quot;mousedown mouseup mouseover mouseout &quot; +
+                    (ie &amp;&amp; ie &lt; 9 ? &quot;dblclick &quot; : &quot;&quot;) +
+                    &quot;contextmenu&quot;,
+                    handleChildMouseEvents, self);
+            }
+        },
+
+<span id='global-method-getOwnerControl'>        /**
+</span>         * Get child component which is receiving event.
+         * @protected
+         * @param {HTMLElement} target event target.
+         * @return {*}
+         */
+        getOwnerControl: function (target) {
+            var self = this,
+                children = self.get(&quot;children&quot;),
+                len = children.length,
+                elem = self.get(&quot;el&quot;)[0];
+            while (target &amp;&amp; target !== elem) {
+                for (var i = 0; i &lt; len; i++) {
+                    if (children[i].get(&quot;el&quot;)[0] === target) {
+                        return children[i];
+                    }
+                }
+                target = target.parentNode;
+            }
+            return null;
+        }
+    });
+
+    return DelegateChildren;
+}, {
+    requires: ['ua']
+});</pre>
+</body>
+</html>

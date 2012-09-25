@@ -73,7 +73,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
     {
         /**
          * Container which contains waterfall elements.
-         * @type {Node}
+         * @type {KISSY.NodeList}
          */
         container: {
             setter: function (v) {

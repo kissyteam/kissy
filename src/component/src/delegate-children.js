@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview delegate events for children
  * @author yiminghe@gmail.com
  */

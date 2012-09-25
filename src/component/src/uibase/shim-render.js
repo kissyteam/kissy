@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview shim for ie6 ,require box-ext
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/shimrender", function () {
+KISSY.add("component/uibase/shim-render", function () {
     // only for ie6!
     function Shim() {
     }

@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview close extension for kissy dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/closerender", function (S, Node) {
+KISSY.add("component/uibase/close-render", function (S, Node) {
 
     var CLS_PREFIX = 'ext-';
 

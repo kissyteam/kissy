@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview UIBase
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
@@ -13,9 +14,9 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
 
     /**
-     * UIBase for class-based component.
+     * @class KISSY.Component.UIBase
      * @extends KISSY.Base
-     * @class Component.UIBase
+     * UIBase for class-based component.
      */
     function UIBase(config) {
         var self = this, id, srcNode;
@@ -267,220 +268,230 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         }
     }
 
-    S.extend(UIBase, Base,
+    S.extend(UIBase, Base, {
+
         /**
-         * @lends Component.UIBase.prototype
+         * Create dom structure of this component.
          */
-        {
+        create: function () {
+            var self = this;
+            // 是否生成过节点
+            if (!self.get("created")) {
+                /**
+                 * @event beforeCreateDom
+                 * fired before root node is created
+                 * @param {KISSY.Event.Object} e
+                 */
+                self.fire('beforeCreateDom');
+                callMethodByHierarchy(self, "createDom", "__createDom");
+                self.setInternal("created", true);
+                /**
+                 * @event afterCreateDom
+                 * fired when root node is created
+                 * @param {KISSY.Event.Object} e
+                 */
+                self.fire('afterCreateDom');
+                actionPlugins(self, self.get("plugins"), "createDom");
+            }
+            return self;
+        },
 
+        /**
+         * Put dom structure of this component to document and bind event.
+         */
+        render: function () {
+            var self = this, plugins;
+            // 是否已经渲染过
+            if (!self.get("rendered")) {
+                plugins = self.get("plugins");
+                self.create(undefined);
+
+                /**
+                 * @event beforeRenderUI
+                 * fired when root node is ready
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('beforeRenderUI');
+                callMethodByHierarchy(self, "renderUI", "__renderUI");
+
+                /**
+                 * @event afterRenderUI
+                 * fired after root node is rendered into dom
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('afterRenderUI');
+                actionPlugins(self, plugins, "renderUI");
+
+                /**
+                 * @event beforeBindUI
+                 * fired before component 's internal event is bind.
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('beforeBindUI');
+                bindUI(self);
+                callMethodByHierarchy(self, "bindUI", "__bindUI");
+
+                /**
+                 * @event afterBindUI
+                 * fired when component 's internal event is bind.
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('afterBindUI');
+                actionPlugins(self, plugins, "bindUI");
+
+                /**
+                 * @event beforeSyncUI
+                 * fired before component 's internal state is synchronized.
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('beforeSyncUI');
+
+                syncUI(self);
+                callMethodByHierarchy(self, "syncUI", "__syncUI");
+
+                /**
+                 * @event afterSyncUI
+                 * fired after component 's internal state is synchronized.
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('afterSyncUI');
+                actionPlugins(self, plugins, "syncUI");
+                self.setInternal("rendered", true);
+            }
+            return self;
+        },
+
+        /**
+         * For overridden. DOM creation logic of subclass component.
+         * @protected
+         * @method
+         */
+        createDom: noop,
+
+        /**
+         * For overridden. Render logic of subclass component.
+         * @protected
+         * @method
+         */
+        renderUI: noop,
+
+        /**
+         * For overridden. Bind logic for subclass component.
+         * @protected
+         * @method
+         */
+        bindUI: noop,
+
+        /**
+         * For overridden. Sync attribute with ui.
+         * @protected
+         * @method
+         */
+        syncUI: noop,
+
+
+        /**
+         * Destroy this component.
+         */
+        destroy: function () {
+            var self = this,
+                id,
+                plugins = self.get("plugins");
+            actionPlugins(self, plugins, "destructor");
+            destroyHierarchy(self);
+            self.fire('destroy');
+            self.detach();
+            // remove instance if set id
+            if (id = self.get("id")) {
+                Manager.removeComponent(id);
+            }
+            return self;
+        }
+    }, {
+
+        ATTRS: {
             /**
-             * Create dom structure of this component.
+             * Whether this component is rendered.
+             * @type {Boolean}
+             * @property rendered
              */
-            create: function () {
-                var self = this;
-                // 是否生成过节点
-                if (!self.get("created")) {
-                    /**
-                     * @event beforeCreateDom
-                     * fired before root node is created
-                     * @param e
-                     */
-                    self.fire('beforeCreateDom');
-                    callMethodByHierarchy(self, "createDom", "__createDom");
-                    self.setInternal("created", true);
-                    /**
-                     * @event afterCreateDom
-                     * fired when root node is created
-                     * @param e
-                     */
-                    self.fire('afterCreateDom');
-                    actionPlugins(self, self.get("plugins"), "createDom");
-                }
-                return self;
+            /**
+             * @ignore
+             */
+            rendered: {
+                value: false
+            },
+            /**
+             * Whether this component 's dom structure is created.
+             * @type {Boolean}
+             * @property created
+             */
+            /**
+             * @ignore
+             */
+            created: {
+                value: false
             },
 
             /**
-             * Put dom structure of this component to document and bind event.
+             * Config listener on created.
+             * @cfg {Object} listeners
+             *
+             * for example:
+             *      @example
+             *      {
+             *          click:{
+             *              scope:{x:1},
+             *              fn:function(){
+             *                  alert(this.x);
+             *              }
+             *          }
+             *      }
+             *      // or
+             *      {
+             *          click:function(){
+             *              alert(this.x);
+             *          }
+             *      }
              */
-            render: function () {
-                var self = this, plugins;
-                // 是否已经渲染过
-                if (!self.get("rendered")) {
-                    plugins = self.get("plugins");
-                    self.create(undefined);
-
-                    /**
-                     * @event beforeRenderUI
-                     * fired when root node is ready
-                     * @param e
-                     */
-
-                    self.fire('beforeRenderUI');
-                    callMethodByHierarchy(self, "renderUI", "__renderUI");
-
-                    /**
-                     * @event afterRenderUI
-                     * fired after root node is rendered into dom
-                     * @param e
-                     */
-
-                    self.fire('afterRenderUI');
-                    actionPlugins(self, plugins, "renderUI");
-
-                    /**
-                     * @event beforeBindUI
-                     * fired before component 's internal event is bind.
-                     * @param e
-                     */
-
-                    self.fire('beforeBindUI');
-                    bindUI(self);
-                    callMethodByHierarchy(self, "bindUI", "__bindUI");
-
-                    /**
-                     * @event afterBindUI
-                     * fired when component 's internal event is bind.
-                     * @param e
-                     */
-
-                    self.fire('afterBindUI');
-                    actionPlugins(self, plugins, "bindUI");
-
-                    /**
-                     * @event beforeSyncUI
-                     * fired before component 's internal state is synchronized.
-                     * @param e
-                     */
-
-                    self.fire('beforeSyncUI');
-
-                    syncUI(self);
-                    callMethodByHierarchy(self, "syncUI", "__syncUI");
-
-                    /**
-                     * @event afterSyncUI
-                     * fired after component 's internal state is synchronized.
-                     * @param e
-                     */
-
-                    self.fire('afterSyncUI');
-                    actionPlugins(self, plugins, "syncUI");
-                    self.setInternal("rendered", true);
-                }
-                return self;
+            /**
+             * @ignore
+             */
+            listeners: {
+                value: {}
             },
 
             /**
-             * For overridden. DOM creation logic of subclass component.
-             * @protected
-             * @method
+             * Plugins for current component.
+             * @cfg {Function[]/Object[]} plugins
              */
-            createDom: noop,
+            /**
+             * @ignore
+             */
+            plugins: {
+                value: []
+            },
 
             /**
-             * For overridden. Render logic of subclass component.
-             * @protected
-             * @method
+             * Get xclass of current component instance.
+             * @cfg {String} xclass
              */
-            renderUI: noop,
-
             /**
-             * For overridden. Bind logic for subclass component.
-             * @protected
-             * @method
+             * @ignore
              */
-            bindUI: noop,
-
-            /**
-             * For overridden. Sync attribute with ui.
-             * @protected
-             * @method
-             */
-            syncUI: noop,
-
-
-            /**
-             * Destroy this component.
-             */
-            destroy: function () {
-                var self = this,
-                    id,
-                    plugins = self.get("plugins");
-                actionPlugins(self, plugins, "destructor");
-                destroyHierarchy(self);
-                self.fire('destroy');
-                self.detach();
-                // remove instance if set id
-                if (id = self.get("id")) {
-                    Manager.removeComponent(id);
-                }
-                return self;
-            }
-        }, {
-
-            ATTRS: /**
-             * @lends Component.UIBase#
-             */
-            {
-                /**
-                 * Whether this component is rendered.
-                 * @type {Boolean}
-                 */
-                rendered: {
-                    value: false
-                },
-                /**
-                 * Whether this component 's dom structure is created.
-                 * @type {Boolean}
-                 */
-                created: {
-                    value: false
-                },
-
-                /**
-                 * Config listener on created.
-                 * @example
-                 * <code>
-                 * {
-                 *  click:{
-                 *      scope:{x:1},
-                 *      fn:function(){
-                 *          alert(this.x);
-                 *      }
-                 *  }
-                 * }
-                 * or
-                 * {
-                 *  click:function(){
-                 *          alert(this.x);
-                 *        }
-                 * }
-                 * </code>
-                 */
-                listeners: {
-                    value: {}
-                },
-
-                /**
-                 * Plugins
-                 * @type {Function[]/Object[]}
-                 */
-                plugins: {
-                    value: []
-                },
-
-                /**
-                 * Get xclass of current component instance.
-                 * Readonly and only for json config.
-                 * @type {String}
-                 */
-                xclass: {
-                    valueFn: function () {
-                        return Manager.getXClassByConstructor(this.constructor);
-                    }
+            xclass: {
+                valueFn: function () {
+                    return Manager.getXClassByConstructor(this.constructor);
                 }
             }
-        });
+        }
+    });
 
     function constructPlugins(plugins) {
         S.each(plugins, function (plugin, i) {
@@ -580,9 +591,13 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
     S.mix(UIBase,
         {
             /**
-             * @static
              * Parse attribute from existing dom node.
+             * @static
+             * @protected
+             * @property HTML_PARSER
+             * @member KISSY.Component.UIBase
              *
+             * for example:
              *     @example
              *     Overlay.HTML_PARSER={
              *          // el: root element of current component.
@@ -599,7 +614,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
              * @param {Object} px Object to be mixed into new class 's prototype.
              * @param {Object} sx Object to be mixed into new class.
              * @static
-             * @return {Component.UIBase} A new class which extends UIBase .
+             * @return {KISSY.Component.UIBase} A new class which extends UIBase .
              */
             extend: function extend(extensions, px, sx) {
                 var args = S.makeArray(arguments),
@@ -632,6 +647,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
     requires: ["base", "node", "../manager"]
 });
 /**
+ * @ignore
+ *
  * Refer:
  *  - http://martinfowler.com/eaaDev/uiArchs.html
  *

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview resizable support for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;resizable&quot;, function (S, Node, Base, D, undefined) {
+
+    var $ = Node.all,
+        i,
+        j,
+        Draggable = D.Draggable,
+        CLS_PREFIX = &quot;resizable-handler&quot;,
+        horizontal = [&quot;l&quot;, &quot;r&quot;],
+        vertical = [&quot;t&quot;, &quot;b&quot;],
+        ATTRS_ORDER = [&quot;width&quot;, &quot;height&quot;, &quot;top&quot;, &quot;left&quot;],
+        hcNormal = {
+            &quot;t&quot;: function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT) {
+                var h = getBoundValue(minH, maxH, oh - diffT),
+                    t = ot + oh - h;
+                return [0, h, t, 0]
+            },
+            &quot;b&quot;: function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT) {
+                var h = getBoundValue(minH, maxH, oh + diffT);
+                return [0, h, 0, 0];
+            },
+            &quot;r&quot;: function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL) {
+                var w = getBoundValue(minW, maxW, ow + diffL);
+                return [w, 0, 0, 0];
+            },
+            &quot;l&quot;: function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL) {
+                var w = getBoundValue(minW, maxW, ow - diffL),
+                    l = ol + ow - w;
+                return [w, 0, 0, l]
+            }
+        };
+
+
+    for (i = 0; i &lt; horizontal.length; i++) {
+        for (j = 0; j &lt; vertical.length; j++) {
+            (function (h, v) {
+                hcNormal[ h + v] = hcNormal[ v + h] = function () {
+                    return merge(hcNormal[h].apply(this, arguments),
+                        hcNormal[v].apply(this, arguments));
+                };
+            })(horizontal[i], vertical[j]);
+        }
+    }
+    function merge(a1, a2) {
+        var a = [];
+        for (i = 0; i &lt; a1.length; i++) {
+            a[i] = a1[i] || a2[i];
+        }
+        return a;
+    }
+
+    function getBoundValue(min, max, v) {
+        return Math.min(Math.max(min, v), max);
+    }
+
+    function _uiSetHandlers(e) {
+        var self = this,
+            v = e.newVal,
+            dds = self.dds,
+            prefixCls = self.get('prefixCls'),
+            prefix = prefixCls + CLS_PREFIX,
+            node = self.get(&quot;node&quot;);
+        self.destroy();
+        for (i = 0; i &lt; v.length; i++) {
+            var hc = v[i],
+                el = $(&quot;&lt;div class='&quot; +
+                    prefix +
+                    &quot; &quot; + prefix +
+                    &quot;-&quot; + hc +
+                    &quot;'&gt;&lt;/div&gt;&quot;)
+                    .prependTo(node, undefined),
+                dd = dds[hc] = new Draggable({
+                    node: el,
+                    cursor: null
+                });
+            (function (hc, dd) {
+                dd.on(&quot;drag&quot;, function (ev) {
+                    var dd = ev.target,
+                        ow = self._width,
+                        oh = self._height,
+                        minW = self.get(&quot;minWidth&quot;),
+                        maxW = self.get(&quot;maxWidth&quot;),
+                        minH = self.get(&quot;minHeight&quot;),
+                        maxH = self.get(&quot;maxHeight&quot;),
+                        diffT = ev.top - dd.get('startNodePos').top,
+                        diffL = ev.left - dd.get('startNodePos').left,
+                        ot = self._top,
+                        ol = self._left,
+                        pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL);
+                    for (i = 0; i &lt; ATTRS_ORDER.length; i++) {
+                        if (pos[i]) {
+                            node.css(ATTRS_ORDER[i], pos[i]);
+                        }
+                    }
+                    self.fire('resize', {
+                        handler: hc,
+                        dd: dd
+                    });
+                });
+                dd.on(&quot;dragstart&quot;, function () {
+                    self._width = node.width();
+                    self._top = parseInt(node.css(&quot;top&quot;));
+                    self._left = parseInt(node.css(&quot;left&quot;));
+                    self._height = node.height();
+                    self.fire('resizeStart', {
+                        handler: hc,
+                        dd: dd
+                    });
+                });
+                dd.on(&quot;dragend&quot;, function () {
+                    self.fire('resizeEnd', {
+                        handler: hc,
+                        dd: dd
+                    });
+                });
+            })(hc, dd);
+
+        }
+    }
+
+    function _uiSetDisabled(e) {
+        var v = e.newVal,
+            dds = this.dds;
+        S.each(dds, function (d) {
+            d.set('disabled', v);
+        });
+    }
+
+<span id='KISSY-Resizable'>    /**
+</span>     * Make a element resizable.
+     * @class KISSY.Resizable
+     * @extends KISSY.Base
+     */
+    function Resizable(cfg) {
+        var self = this,
+            disabled,
+            node;
+        Resizable.superclass.constructor.apply(self, arguments);
+        self.on(&quot;afterHandlersChange&quot;, _uiSetHandlers, self);
+        self.on(&quot;afterDisabledChange&quot;, _uiSetDisabled, self);
+        node = self.get(&quot;node&quot;);
+        self.dds = {};
+        if (node.css(&quot;position&quot;) == &quot;static&quot;) {
+            node.css(&quot;position&quot;, &quot;relative&quot;);
+        }
+        _uiSetHandlers.call(self, {
+            newVal: self.get(&quot;handlers&quot;)
+        });
+        if (disabled = self.get('disabled')) {
+            _uiSetDisabled.call(self, {
+                newVal: disabled
+            });
+        }
+    }
+
+    S.extend(Resizable, Base, {
+<span id='KISSY-Resizable-method-destroy'>        /**
+</span>         * make current resizable 's node not resizable.
+         */
+        destroy: function () {
+            var self = this,
+                dds = self.dds;
+            for (var d in dds) {
+                if (dds.hasOwnProperty(d)) {
+                    dds[d].destroy();
+                    dds[d].get(&quot;node&quot;).remove();
+                    delete dds[d];
+                }
+            }
+        }
+    }, {
+        ATTRS: {
+<span id='KISSY-Resizable-cfg-node'>            /**
+</span>             * KISSY Node to be resizable.
+             * Need to be positioned 'relative' or 'absolute'.
+             * @cfg {KISSY.NodeList} node
+             */
+<span id='global-property-node'>            /**
+</span>             * @ignore
+             */
+            node: {
+                setter: function (v) {
+                    return $(v);
+                }
+            },
+
+            prefixCls: {
+                value: 'ks-'
+            },
+
+<span id='KISSY-Resizable-cfg-disabled'>            /**
+</span>             * Whether disable current resizable.
+             * @cfg {Boolean} disabled
+             */
+<span id='global-property-disabled'>            /**
+</span>             * @ignore
+             */
+            disabled: {},
+
+<span id='KISSY-Resizable-cfg-minWidth'>            /**
+</span>             * Minimum width can current node resize to.
+             * @cfg {Number} minWidth
+             */
+<span id='global-property-minWidth'>            /**
+</span>             * @ignore
+             */
+            minWidth: {
+                value: 0
+            },
+<span id='KISSY-Resizable-cfg-minHeight'>            /**
+</span>             * Minimum height can current node resize to.
+             * @cfg {Number} minHeight
+             */
+<span id='global-property-minHeight'>            /**
+</span>             * @ignore
+             */
+            minHeight: {
+                value: 0
+            },
+<span id='KISSY-Resizable-cfg-maxWidth'>            /**
+</span>             * Maximum width can current node resize to.
+             * @cfg {Number} maxWidth
+             */
+<span id='global-property-maxWidth'>            /**
+</span>             * @ignore
+             */
+            maxWidth: {
+                value: Number.MAX_VALUE
+            },
+<span id='KISSY-Resizable-cfg-maxHeight'>            /**
+</span>             * Maximum height can current node resize to.
+             * @cfg {Number} maxHeight
+             */
+<span id='global-property-maxHeight'>            /**
+</span>             * @ignore
+             */
+            maxHeight: {
+                value: Number.MAX_VALUE
+            },
+<span id='KISSY-Resizable-cfg-handlers'>            /**
+</span>             * directions can current node resize to.
+             * @cfg {KISSY.Resizable.HANDLER} handlers
+             */
+<span id='global-property-handlers'>            /**
+</span>             * @ignore
+             */
+            handlers: {
+                // t,tr,r,br,b,bl,l,tl
+                value: []
+            }
+        }
+    });
+
+<span id='KISSY-Resizable-HANDLER'>    /**
+</span>     * Resizable handlers type.
+     * @enum {String} KISSY.Resizable.HANDLER
+     */
+    Resizable.HANDLER = {
+<span id='KISSY-Resizable-HANDLER-property-B'>        /**
+</span>         * bottom
+         */
+        B: 'b',
+<span id='KISSY-Resizable-HANDLER-property-T'>        /**
+</span>         * top
+         */
+        T: 't',
+<span id='KISSY-Resizable-HANDLER-property-L'>        /**
+</span>         * left
+         */
+        L: 'l',
+<span id='KISSY-Resizable-HANDLER-property-R'>        /**
+</span>         * right
+         */
+        R: 'r',
+<span id='KISSY-Resizable-HANDLER-property-BL'>        /**
+</span>         * bottom-left
+         */
+        BL: 'bl',
+<span id='KISSY-Resizable-HANDLER-property-TL'>        /**
+</span>         * top-left
+         */
+        TL: 'tl',
+<span id='KISSY-Resizable-HANDLER-property-BR'>        /**
+</span>         * bottom-right
+         */
+        BR: 'br',
+<span id='KISSY-Resizable-HANDLER-property-TR'>        /**
+</span>         * top-right
+         */
+        TR: 'tr'
+    };
+
+    return Resizable;
+
+}, { requires: [&quot;node&quot;, &quot;base&quot;, &quot;dd&quot;] });
+</pre>
+</body>
+</html>

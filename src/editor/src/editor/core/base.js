@@ -32,17 +32,17 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
             {
                 /**
                  * textarea
-                 * @type {Node}
+                 * @type {KISSY.NodeList}
                  */
                 textarea:{},
                 /**
                  * iframe
-                 * @type {Node}
+                 * @type {KISSY.NodeList}
                  */
                 iframe:{},
                 /**
                  * iframe 's contentWindow.
-                 * @type {Node}
+                 * @type {KISSY.NodeList}
                  */
                 window:{
                     // ie6 一旦中途设置了 domain
@@ -52,17 +52,17 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                 },
                 /**
                  * iframe 's document
-                 * @type {Node}
+                 * @type {KISSY.NodeList}
                  */
                 document:{},
                 /**
                  * toolbar element
-                 * @type {Node}
+                 * @type {KISSY.NodeList}
                  */
                 toolBarEl:{},
                 /**
                  * status bar element
-                 * @type {Node}
+                 * @type {KISSY.NodeList}
                  */
                 statusBarEl:{},
                 handleMouseEvents:{

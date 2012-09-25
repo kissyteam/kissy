@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview mvc based component framework for kissy
  * @author yiminghe@gmail.com
  */

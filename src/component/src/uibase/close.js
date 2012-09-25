@@ -1,36 +1,45 @@
 /**
+ * @ignore
  * @fileOverview close extension for kissy dialog
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/uibase/close", function () {
 
     /**
-     * @name Close
-     * @class
-     * Close extension class.
-     * Represent a close button.
-     * @memberOf Component.UIBase
+     * @class KISSY.Component.UIBase.Close
+     * Close extension class. Represent a close button.
      */
     function Close() {
     }
 
     var HIDE = "hide";
-    Close.ATTRS =
-    /**
-     * @lends Component.UIBase.Close.prototype
-     */
-    {
+
+    Close.ATTRS =    {
         /**
          * Whether close button is visible.
-         * @default true.
+         * Defaults to: true.
+         * @cfg {Boolean} closable
+         */
+        /**
+         * Whether close button is visible.
          * @type {Boolean}
+         * @property closable
+         */
+        /**
+         * @ignore
          */
         closable:{
             view:1
         },
 
         /**
-         * Close button.
+         * close button element.
+         * @type {KISSY.NodeList}
+         * @property closeBtn
+         * @readonly
+         */
+        /**
+         * @ignore
          */
         closeBtn:{
             view:1
@@ -38,8 +47,13 @@ KISSY.add("component/uibase/close", function () {
 
         /**
          * Whether to destroy or hide current element when click close button.
-         * @default "hide". Can set "destroy" to destroy it when click close button.
-         * @type {String}
+         *
+         * Defaults to: "hide". Can set "destroy" to destroy it when click close button.
+         *
+         * @cfg {String} closeAction
+         */
+        /**
+         * @ignore
          */
         closeAction:{
             value:HIDE
@@ -62,6 +76,9 @@ KISSY.add("component/uibase/close", function () {
                 });
             }
         },
+        /**
+         * hide or destroy according to {@link KISSY.Component.UIBase.Close#closeAction}
+         */
         close:function(){
             var self=this;
             self[actions[self.get("closeAction")] || HIDE]();

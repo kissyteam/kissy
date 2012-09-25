@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview container can delegate event for its children
  * @author yiminghe@gmail.com
  */

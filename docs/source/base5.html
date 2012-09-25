@@ -17,249 +17,661 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview scalable event framework for kissy (refer DOM3 Events)
- * how to fire event just like browser?
+ * @fileOverview UIBase
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
+KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) {
 
-    var isValidTarget = Utils.isValidTarget,
-        splitAndRun = Utils.splitAndRun,
-        getNodeName = DOM.nodeName,
-        trim = S.trim,
-        TRIGGERED_NONE = Utils.TRIGGERED_NONE;
+    var UI_SET = '_uiSet',
+        SRC_NODE = 'srcNode',
+        ATTRS = 'ATTRS',
+        HTML_PARSER = 'HTML_PARSER',
+        ucfirst = S.ucfirst,
+        noop = S.noop;
 
-<span id='KISSY-Event'>    /**
-</span>     * The event utility provides functions to add and remove event listeners.
-     * @class KISSY.Event
-     * @singleton
+
+<span id='KISSY-Component-UIBase'>    /**
+</span>     * @class KISSY.Component.UIBase
+     * @extends KISSY.Base
+     * UIBase for class-based component.
      */
-    var Event =
-    {
-<span id='KISSY-Event-method-_clone'>        /**
-</span>         * copy event from src to dest
-         * @param {HTMLElement} src srcElement
-         * @param {HTMLElement} dest destElement
-         * @private
-         */
-        _clone: function (src, dest) {
-            if (!isValidTarget(dest) || !isValidTarget(src) || !_data._hasData(src, false)) {
-                return;
-            }
-            var eventDesc = _data._data(src, undefined, false),
-                events = eventDesc.events;
-            S.each(events, function (handlers, type) {
-                S.each(handlers, function (handler) {
-                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
-                    Event.on(dest, type, {
-                        data: handler.data,
-                        fn: handler.fn,
-                        groups: handler.groups,
-                        last: handler.last,
-                        originalType: handler.originalType,
-                        scope: handler.scope,
-                        selector: handler.selector
-                    });
-                });
-            });
-        },
+    function UIBase(config) {
+        var self = this, id, srcNode;
 
-<span id='KISSY-Event-method-fire'>        /**
-</span>         * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
-         * @param targets html nodes
-         * @param {String|KISSY.Event.Object} eventType event type
-         * @param [eventData] additional event data
-         * @param {Boolean} [onlyHandlers] only fire handlers
-         * @return {Boolean} The return value of fire/dispatchEvent indicates
-         * whether any of the listeners which handled the event called preventDefault.
-         * If preventDefault was called the value is false, else the value is true.
-         */
-        fire: function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
-            var ret = true, r;
-            // custom event firing moved to target.js
-            eventData = eventData || {};
-            if (S.isString(eventType)) {
-                eventType = trim(eventType);
-                if (eventType.indexOf(' ') &gt; -1) {
-                    splitAndRun(eventType, function (t) {
-                        r = Event.fire(targets, t, eventData, onlyHandlers);
-                        if (ret !== false) {
-                            ret = r;
-                        }
-                    });
-                    return ret;
-                }
-                // protect event type
-                eventData.type = eventType;
-            } else if (eventType instanceof EventObject) {
-                eventData = eventType;
-                eventType = eventData.type;
-            }
+        // 读取用户设置的属性值并设置到自身
+        Base.apply(self, arguments);
 
-            var typedGroups = Utils.getTypedGroups(eventType),
-                _ks_groups = typedGroups[1];
-
-            if (_ks_groups) {
-                _ks_groups = Utils.getGroupsRe(_ks_groups);
-            }
-
-            eventType = typedGroups[0];
-
-            S.mix(eventData, {
-                type: eventType,
-                _ks_groups: _ks_groups
-            });
-
-            targets = DOM.query(targets);
-            for (var i = targets.length - 1; i &gt;= 0; i--) {
-                r = fireDOMEvent(targets[i], eventType, eventData, onlyHandlers);
-                if (ret !== false) {
-                    ret = r;
-                }
-            }
-            return ret;
-        },
-
-<span id='KISSY-Event-method-fireHandler'>        /**
-</span>         * same with fire but:
-         * does not cause default behavior to occur.
-         * does not bubble up the DOM hierarchy.
-         * @param targets
-         * @param {KISSY.Event.Object | String} eventType
-         * @param [eventData]
-         */
-        fireHandler: function (targets, eventType, eventData) {
-            return Event.fire(targets, eventType, eventData, 1);
-        }
-    };
-
-    /*
-     fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
-     @return {Boolean} The return value of dispatchEvent indicates
-     whether any of the listeners which handled the event called preventDefault.
-     If preventDefault was called the value is false, else the value is true.
-     */
-    function fireDOMEvent(target, eventType, eventData, onlyHandlers) {
-        if (!isValidTarget(target)) {
-            return false;
-        }
-        var s = special[eventType];
-        // TODO bug : when fire mouseenter , it also fire mouseover in firefox/chrome
-        if (s &amp;&amp; s['onFix']) {
-            eventType = s['onFix'];
+        // register instance if config id
+        if (id = self.get(&quot;id&quot;)) {
+            Manager.addComponent(id, self);
         }
 
-        var event,
-            ret = true;
-        if (eventData instanceof EventObject) {
-            event = eventData;
-        } else {
-            event = new EventObject(target, undefined, eventType);
-            S.mix(event, eventData);
+        // 根据 srcNode 设置属性值
+        // 按照类层次执行初始函数，主类执行 initializer 函数，扩展类执行构造器函数
+        initHierarchy(self, config);
+
+        // 特殊的 decorate 等属性从 html 收集完再进行
+        if (config &amp;&amp;
+            (srcNode = config[SRC_NODE]) &amp;&amp;
+            self.decorateInternal) {
+            self.decorateInternal(srcNode);
         }
-<span id='global-property-_ks_fired'>        /**
-</span>         * identify event as fired manually
-         * @ignore
-         */
-        event._ks_fired = 1;
-        /*
-         The target of the event is the EventTarget on which dispatchEvent is called.
-         */
-        // TODO: protect target , but incompatible
-        // event.target=target;
-        // protect type
-        event.type = eventType;
 
-        // onlyHandlers is equal to event.halt()
-        // but we can not call event.halt()
-        // because handle will check event.isPropagationStopped
+        var listener,
+            n,
+            plugins = self.get(&quot;plugins&quot;),
+            listeners = self.get(&quot;listeners&quot;);
 
-        var cur = target,
-            t,
-            win = DOM._getWin(cur.ownerDocument || cur),
-            ontype = 'on' + eventType;
+        constructPlugins(plugins);
 
-        //bubble up dom tree
-        do {
-            event.currentTarget = cur;
-            t = handle(cur, event);
-            if (ret !== false) {
-                ret = t;
-            }
-            // Trigger an inline bound script
-            if (cur[ ontype ] &amp;&amp; cur[ ontype ].call(cur) === false) {
-                event.preventDefault();
-            }
-            // Bubble up to document, then to window
-            cur = cur.parentNode ||
-                cur.ownerDocument ||
-                (cur === target.ownerDocument) &amp;&amp; win;
-        } while (!onlyHandlers &amp;&amp; cur &amp;&amp; !event.isPropagationStopped);
+        actionPlugins(self, plugins, &quot;initializer&quot;);
 
-        if (!onlyHandlers &amp;&amp; !event.isDefaultPrevented) {
-            if (!(eventType === 'click' &amp;&amp;
-                getNodeName(target) == 'a')) {
-                var old;
-                try {
-                    // execute default action on dom node
-                    // so exclude window
-                    // exclude focus/blue on hidden element
-                    if (ontype &amp;&amp;
-                        target[ eventType ] &amp;&amp;
-                        (
-                            (eventType !== 'focus' &amp;&amp; eventType !== 'blur') ||
-                                target.offsetWidth !== 0
-                            ) &amp;&amp;
-                        !S.isWindow(target)) {
-                        // Don't re-trigger an onFOO event when we call its FOO() method
-                        old = target[ ontype ];
-
-                        if (old) {
-                            target[ ontype ] = null;
-                        }
-
-                        // 记录当前 trigger 触发
-                        Utils.Event_Triggered = eventType;
-
-                        // 只触发默认事件，而不要执行绑定的用户回调
-                        // 同步触发
-                        target[ eventType ]();
-                    }
-                } catch (ieError) {
-                    S.log('trigger action error : ');
-                    S.log(ieError);
-                }
-
-                if (old) {
-                    target[ ontype ] = old;
-                }
-
-                Utils.Event_Triggered = TRIGGERED_NONE;
+        for (n in listeners) {
+            if (listeners.hasOwnProperty(n)) {
+                listener = listeners[n];
+                self.on(n, listener.fn || listener, listener.scope);
             }
         }
-        return ret;
+
+        // 是否自动渲染
+        config &amp;&amp; config.autoRender &amp;&amp; self.render();
     }
 
-    return Event;
+    // 收集单继承链，子类在前，父类在后
+    function collectConstructorChains(self) {
+        var constructorChains = [],
+            c = self.constructor;
+        while (c) {
+            constructorChains.push(c);
+            c = c.superclass &amp;&amp; c.superclass.constructor;
+        }
+        return constructorChains;
+    }
+
+<span id='global-method-initHierarchy'>    /**
+</span>     * 模拟多继承
+     * init attr using constructors ATTRS meta info
+     * @ignore
+     */
+    function initHierarchy(self, config) {
+        var c = self.constructor,
+            len,
+            p,
+            constructorChains,
+            srcNode;
+        if (config &amp;&amp; (srcNode = config[SRC_NODE])) {
+            constructorChains = collectConstructorChains(self);
+            config[SRC_NODE] = Node.one(srcNode);
+            // 从父类到子类开始从 html 读取属性
+            for (len = constructorChains.length - 1; len &gt;= 0; len--) {
+                c = constructorChains[len];
+                if (p = c[HTML_PARSER]) {
+                    applyParser.call(self, config, p);
+                }
+            }
+        }
+        callMethodByHierarchy(self, &quot;initializer&quot;, &quot;constructor&quot;);
+    }
+
+    function callMethodByHierarchy(self, mainMethod, extMethod) {
+        var c = self.constructor,
+            extChains = [],
+            ext,
+            main,
+            i,
+            exts,
+            t;
+
+        // define
+        while (c) {
+
+            // 收集扩展类
+            t = [];
+            if (exts = c.__ks_exts) {
+                for (i = 0; i &lt; exts.length; i++) {
+                    ext = exts[i];
+                    if (ext) {
+                        if (extMethod != &quot;constructor&quot;) {
+                            //只调用真正自己构造器原型的定义，继承原型链上的不要管
+                            if (ext.prototype.hasOwnProperty(extMethod)) {
+                                ext = ext.prototype[extMethod];
+                            } else {
+                                ext = null;
+                            }
+                        }
+                        ext &amp;&amp; t.push(ext);
+                    }
+                }
+            }
+
+            // 收集主类
+            // 只调用真正自己构造器原型的定义，继承原型链上的不要管 !important
+            // 所以不用自己在 renderUI 中调用 superclass.renderUI 了，UIBase 构造器自动搜寻
+            // 以及 initializer 等同理
+            if (c.prototype.hasOwnProperty(mainMethod) &amp;&amp; (main = c.prototype[mainMethod])) {
+                t.push(main);
+            }
+
+            // 原地 reverse
+            if (t.length) {
+                extChains.push.apply(extChains, t.reverse());
+            }
+
+            c = c.superclass &amp;&amp; c.superclass.constructor;
+        }
+
+        // 初始化函数
+        // 顺序：父类的所有扩展类函数 -&gt; 父类对应函数 -&gt; 子类的所有扩展函数 -&gt; 子类对应函数
+        for (i = extChains.length - 1; i &gt;= 0; i--) {
+            extChains[i] &amp;&amp; extChains[i].call(self);
+        }
+    }
+
+<span id='global-method-destroyHierarchy'>    /**
+</span>     * 销毁组件顺序： 子类 destructor -&gt; 子类扩展 destructor -&gt; 父类 destructor -&gt; 父类扩展 destructor
+     * @ignore
+     */
+    function destroyHierarchy(self) {
+        var c = self.constructor,
+            extensions,
+            d,
+            i;
+
+        while (c) {
+            // 只触发该类真正的析构器，和父亲没关系，所以不要在子类析构器中调用 superclass
+            if (c.prototype.hasOwnProperty(&quot;destructor&quot;)) {
+                c.prototype.destructor.apply(self);
+            }
+
+            if ((extensions = c.__ks_exts)) {
+                for (i = extensions.length - 1; i &gt;= 0; i--) {
+                    d = extensions[i] &amp;&amp; extensions[i].prototype.__destructor;
+                    d &amp;&amp; d.apply(self);
+                }
+            }
+
+            c = c.superclass &amp;&amp; c.superclass.constructor;
+        }
+    }
+
+    function applyParser(config, parser) {
+        var self = this, p, v, srcNode = config[SRC_NODE];
+
+        // 从 parser 中，默默设置属性，不触发事件
+        for (p in parser) {
+            if (parser.hasOwnProperty(p) &amp;&amp;
+                // 用户设置过那么这里不从 dom 节点取
+                // 用户设置 &gt; html parser &gt; default value
+                config[p] === undefined) {
+                v = parser[p];
+                // 函数
+                if (S.isFunction(v)) {
+                    self.setInternal(p, v.call(self, srcNode));
+                }
+                // 单选选择器
+                else if (S.isString(v)) {
+                    self.setInternal(p, srcNode.one(v));
+                }
+                // 多选选择器
+                else if (S.isArray(v) &amp;&amp; v[0]) {
+                    self.setInternal(p, srcNode.all(v[0]))
+                }
+            }
+        }
+    }
+
+<span id='global-method-bindUI'>    /**
+</span>     * 根据属性变化设置 UI
+     * @ignore
+     */
+    function bindUI(self) {
+        var attrs = self.getAttrs(),
+            attr, m;
+
+        for (attr in attrs) {
+            if (attrs.hasOwnProperty(attr)) {
+                m = UI_SET + ucfirst(attr);
+                if (self[m]) {
+                    // 自动绑定事件到对应函数
+                    (function (attr, m) {
+                        self.on('after' + ucfirst(attr) + 'Change', function (ev) {
+                            // fix! 防止冒泡过来的
+                            if (ev.target === self) {
+                                self[m](ev.newVal, ev);
+                            }
+                        });
+                    })(attr, m);
+                }
+            }
+        }
+    }
+
+<span id='global-method-syncUI'>    /**
+</span>     * 根据当前（初始化）状态来设置 UI
+     * @ignore
+     */
+    function syncUI(self) {
+        var v,
+            f,
+            i,
+            c,
+            a,
+            m,
+            cache = {},
+            constructorChains = collectConstructorChains(self),
+            attrs;
+
+        // 从父类到子类执行同步属性函数
+        for (i = constructorChains.length - 1; i &gt;= 0; i--) {
+            c = constructorChains[i];
+            if (attrs = c[ATTRS]) {
+                for (a in attrs) {
+                    if (attrs.hasOwnProperty(a) &amp;&amp;
+                        // 防止子类覆盖父类属性定义造成重复执行
+                        !cache[a]) {
+                        cache[a] = 1;
+                        m = UI_SET + ucfirst(a);
+                        // 存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                        if ((f = self[m]) &amp;&amp;
+                            // 用户如果设置了显式不同步，就不同步，
+                            // 比如一些值从 html 中读取，不需要同步再次设置
+                            attrs[a].sync !== false &amp;&amp;
+                            (v = self.get(a)) !== undefined) {
+                            f.call(self, v);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    S.extend(UIBase, Base, {
+
+<span id='KISSY-Component-UIBase-method-create'>        /**
+</span>         * Create dom structure of this component.
+         */
+        create: function () {
+            var self = this;
+            // 是否生成过节点
+            if (!self.get(&quot;created&quot;)) {
+<span id='KISSY-Component-UIBase-event-beforeCreateDom'>                /**
+</span>                 * @event beforeCreateDom
+                 * fired before root node is created
+                 * @param {KISSY.Event.Object} e
+                 */
+                self.fire('beforeCreateDom');
+                callMethodByHierarchy(self, &quot;createDom&quot;, &quot;__createDom&quot;);
+                self.setInternal(&quot;created&quot;, true);
+<span id='KISSY-Component-UIBase-event-afterCreateDom'>                /**
+</span>                 * @event afterCreateDom
+                 * fired when root node is created
+                 * @param {KISSY.Event.Object} e
+                 */
+                self.fire('afterCreateDom');
+                actionPlugins(self, self.get(&quot;plugins&quot;), &quot;createDom&quot;);
+            }
+            return self;
+        },
+
+<span id='KISSY-Component-UIBase-method-render'>        /**
+</span>         * Put dom structure of this component to document and bind event.
+         */
+        render: function () {
+            var self = this, plugins;
+            // 是否已经渲染过
+            if (!self.get(&quot;rendered&quot;)) {
+                plugins = self.get(&quot;plugins&quot;);
+                self.create(undefined);
+
+<span id='KISSY-Component-UIBase-event-beforeRenderUI'>                /**
+</span>                 * @event beforeRenderUI
+                 * fired when root node is ready
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('beforeRenderUI');
+                callMethodByHierarchy(self, &quot;renderUI&quot;, &quot;__renderUI&quot;);
+
+<span id='KISSY-Component-UIBase-event-afterRenderUI'>                /**
+</span>                 * @event afterRenderUI
+                 * fired after root node is rendered into dom
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('afterRenderUI');
+                actionPlugins(self, plugins, &quot;renderUI&quot;);
+
+<span id='KISSY-Component-UIBase-event-beforeBindUI'>                /**
+</span>                 * @event beforeBindUI
+                 * fired before component 's internal event is bind.
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('beforeBindUI');
+                bindUI(self);
+                callMethodByHierarchy(self, &quot;bindUI&quot;, &quot;__bindUI&quot;);
+
+<span id='KISSY-Component-UIBase-event-afterBindUI'>                /**
+</span>                 * @event afterBindUI
+                 * fired when component 's internal event is bind.
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('afterBindUI');
+                actionPlugins(self, plugins, &quot;bindUI&quot;);
+
+<span id='KISSY-Component-UIBase-event-beforeSyncUI'>                /**
+</span>                 * @event beforeSyncUI
+                 * fired before component 's internal state is synchronized.
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('beforeSyncUI');
+
+                syncUI(self);
+                callMethodByHierarchy(self, &quot;syncUI&quot;, &quot;__syncUI&quot;);
+
+<span id='KISSY-Component-UIBase-event-afterSyncUI'>                /**
+</span>                 * @event afterSyncUI
+                 * fired after component 's internal state is synchronized.
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('afterSyncUI');
+                actionPlugins(self, plugins, &quot;syncUI&quot;);
+                self.setInternal(&quot;rendered&quot;, true);
+            }
+            return self;
+        },
+
+<span id='KISSY-Component-UIBase-method-createDom'>        /**
+</span>         * For overridden. DOM creation logic of subclass component.
+         * @protected
+         * @method
+         */
+        createDom: noop,
+
+<span id='KISSY-Component-UIBase-method-renderUI'>        /**
+</span>         * For overridden. Render logic of subclass component.
+         * @protected
+         * @method
+         */
+        renderUI: noop,
+
+<span id='KISSY-Component-UIBase-method-bindUI'>        /**
+</span>         * For overridden. Bind logic for subclass component.
+         * @protected
+         * @method
+         */
+        bindUI: noop,
+
+<span id='KISSY-Component-UIBase-method-syncUI'>        /**
+</span>         * For overridden. Sync attribute with ui.
+         * @protected
+         * @method
+         */
+        syncUI: noop,
+
+
+<span id='KISSY-Component-UIBase-method-destroy'>        /**
+</span>         * Destroy this component.
+         */
+        destroy: function () {
+            var self = this,
+                id,
+                plugins = self.get(&quot;plugins&quot;);
+            actionPlugins(self, plugins, &quot;destructor&quot;);
+            destroyHierarchy(self);
+            self.fire('destroy');
+            self.detach();
+            // remove instance if set id
+            if (id = self.get(&quot;id&quot;)) {
+                Manager.removeComponent(id);
+            }
+            return self;
+        }
+    }, {
+
+        ATTRS: {
+<span id='KISSY-Component-UIBase-property-rendered'>            /**
+</span>             * Whether this component is rendered.
+             * @type {Boolean}
+             * @property rendered
+             */
+<span id='global-property-rendered'>            /**
+</span>             * @ignore
+             */
+            rendered: {
+                value: false
+            },
+<span id='KISSY-Component-UIBase-property-created'>            /**
+</span>             * Whether this component 's dom structure is created.
+             * @type {Boolean}
+             * @property created
+             */
+<span id='global-property-created'>            /**
+</span>             * @ignore
+             */
+            created: {
+                value: false
+            },
+
+<span id='KISSY-Component-UIBase-cfg-listeners'>            /**
+</span>             * Config listener on created.
+             * @cfg {Object} listeners
+             *
+             * for example:
+             *      @example
+             *      {
+             *          click:{
+             *              scope:{x:1},
+             *              fn:function(){
+             *                  alert(this.x);
+             *              }
+             *          }
+             *      }
+             *      // or
+             *      {
+             *          click:function(){
+             *              alert(this.x);
+             *          }
+             *      }
+             */
+<span id='global-property-listeners'>            /**
+</span>             * @ignore
+             */
+            listeners: {
+                value: {}
+            },
+
+<span id='KISSY-Component-UIBase-cfg-plugins'>            /**
+</span>             * Plugins for current component.
+             * @cfg {Function[]/Object[]} plugins
+             */
+<span id='global-property-plugins'>            /**
+</span>             * @ignore
+             */
+            plugins: {
+                value: []
+            },
+
+<span id='KISSY-Component-UIBase-cfg-xclass'>            /**
+</span>             * Get xclass of current component instance.
+             * @cfg {String} xclass
+             */
+<span id='global-property-xclass'>            /**
+</span>             * @ignore
+             */
+            xclass: {
+                valueFn: function () {
+                    return Manager.getXClassByConstructor(this.constructor);
+                }
+            }
+        }
+    });
+
+    function constructPlugins(plugins) {
+        S.each(plugins, function (plugin, i) {
+            if (S.isFunction(plugin)) {
+                plugins[i] = new plugin();
+            }
+        });
+    }
+
+    function actionPlugins(self, plugins, action) {
+        S.each(plugins, function (plugin) {
+            if (plugin[action]) {
+                plugin[action](self);
+            }
+        });
+    }
+
+    function create(base, extensions, px, sx) {
+        var args = S.makeArray(arguments),
+            name,
+            t;
+
+        if (S.isObject(extensions)) {
+            sx = px;
+            px = extensions;
+            extensions = [];
+        }
+
+        name = &quot;UIBaseDerived&quot;;
+
+        if (S.isString(t = args[args.length - 1])) {
+            name = t;
+        }
+
+        function C() {
+            UIBase.apply(this, arguments);
+        }
+
+        // debug mode, give the right name for constructor
+        // refer : http://limu.iteye.com/blog/1136712
+        S.log(&quot;UIBase.extend : &quot; + name, eval(&quot;C=function &quot; + name.replace(/[-.]/g, &quot;_&quot;) + &quot;(){ UIBase.apply(this, arguments);}&quot;));
+
+        S.extend(C, base, px, sx);
+
+        if (extensions) {
+            C.__ks_exts = extensions;
+
+            var attrs = {},
+                parsers = {},
+                prototype = {},
+                constructors = extensions['concat'](C);
+
+            // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
+            // 主类最优先
+            S.each(constructors, function (ext) {
+                if (ext) {
+                    // 合并 ATTRS/HTML_PARSER 到主类
+                    // 不覆盖主类上的定义(主类位于 constructors 最后)
+                    // 因为继承层次上扩展类比主类层次高
+                    // 注意：最好 value 必须是简单对象，自定义 new 出来的对象就会有问题
+                    // (用 function return 出来)!
+                    // a {y:{value:2}} b {y:{value:3,getter:fn}}
+                    // b is a extension of a
+                    // =&gt;
+                    // a {y:{value:2,getter:fn}}
+
+                    S.each(ext[ATTRS], function (v, name) {
+                        var av = attrs[name] = attrs[name] || {};
+                        S.mix(av, v);
+                    });
+
+                    S.each(ext[HTML_PARSER], function (v, name) {
+                        parsers[name] = v;
+                    });
+
+                    // 方法合并
+                    var exp = ext.prototype, p;
+                    for (p in exp) {
+                        // do not mess with parent class
+                        if (exp.hasOwnProperty(p)) {
+                            prototype[p] = exp[p];
+                        }
+                    }
+                }
+            });
+
+            C[ATTRS] = attrs;
+            C[HTML_PARSER] = parsers;
+
+            S.augment(C, prototype);
+        }
+
+        return C;
+    }
+
+
+    S.mix(UIBase,
+        {
+<span id='KISSY-Component-UIBase-static-property-HTML_PARSER'>            /**
+</span>             * Parse attribute from existing dom node.
+             * @static
+             * @protected
+             * @property HTML_PARSER
+             * @member KISSY.Component.UIBase
+             *
+             * for example:
+             *     @example
+             *     Overlay.HTML_PARSER={
+             *          // el: root element of current component.
+             *          &quot;isRed&quot;:function(el){
+             *              return el.hasClass(&quot;ks-red&quot;);
+             *          }
+             *      };
+             */
+            HTML_PARSER: {},
+
+<span id='KISSY-Component-UIBase-static-method-extend'>            /**
+</span>             * Create a new class which extends UIBase .
+             * @param {Function[]} extensions Class constructors for extending.
+             * @param {Object} px Object to be mixed into new class 's prototype.
+             * @param {Object} sx Object to be mixed into new class.
+             * @static
+             * @return {KISSY.Component.UIBase} A new class which extends UIBase .
+             */
+            extend: function extend(extensions, px, sx) {
+                var args = S.makeArray(arguments),
+                    ret,
+                    last = args[args.length - 1];
+
+                args.unshift(this);
+
+                if (last.xclass) {
+                    args.pop();
+                    args.push(last.xclass);
+                }
+
+                ret = create.apply(UIBase, args);
+
+                if (last.xclass) {
+                    Manager.setConstructorByXClass(last.xclass, {
+                        constructor: ret,
+                        priority: last.priority
+                    });
+                }
+
+                ret.extend = extend;
+                return ret;
+            }
+        });
+
+    return UIBase;
 }, {
-    requires: ['dom', './object', './utils', './handle', './data', './special']
+    requires: [&quot;base&quot;, &quot;node&quot;, &quot;../manager&quot;]
 });
-
-/*
- yiminghe@gmail.com : 2011-12-15
- - 重构，粒度更细，新的架构
-
- 2011-11-24
- - 自定义事件和 dom 事件操作彻底分离
- - TODO: group event from DOM3 Event
-
- 2011-06-07
- - refer : http://www.w3.org/TR/2001/WD-DOM-Level-3-Events-20010823/events.html
- - 重构
- - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
- - 减少闭包使用，prevent ie 内存泄露？
- - 增加 fire ，模拟冒泡处理 dom 事件
- */
-</pre>
+<span id='global-property-'>/**
+</span> * @ignore
+ *
+ * Refer:
+ *  - http://martinfowler.com/eaaDev/uiArchs.html
+ *
+ * render 和 create 区别
+ *  - render 包括 create ，以及把生成的节点放在 document 中
+ *  - create 仅仅包括创建节点
+ **/</pre>
 </body>
 </html>

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview support standard mod for component
  * @author yiminghe@gmail.com
  */
@@ -6,79 +7,105 @@ KISSY.add("component/uibase/stdmod", function () {
 
 
     /**
-     * @name StdMod
-     * @class
-     * StdMod extension class.
-     * Generate head, body, foot for component.
-     * @memberOf Component.UIBase
+     * @class KISSY.Component.UIBase.StdMod
+     * StdMod extension class. Generate head, body, foot for component.
      */
     function StdMod() {
     }
 
-    StdMod.ATTRS =
-    /**
-     * @lends Component.UIBase.StdMod#
-     */
-    {
+    StdMod.ATTRS = {
         /**
          * Header element of dialog. Readonly
-         * @type {Node}
+         * @type {KISSY.NodeList}
+         * @property header
+         * @readonly
+         */
+        /**
+         * @ignore
          */
         header:{
             view:1
         },
         /**
          * Body element of dialog. Readonly
-         * @type {Node}
+         * @type {KISSY.NodeList}
+         * @property body
+         * @readonly
+         */
+        /**
+         * @ignore
          */
         body:{
             view:1
         },
         /**
          * Footer element of dialog. Readonly
-         * @type {Node}
+         * @type {KISSY.NodeList}
+         * @property footer
+         * @readonly
+         */
+        /**
+         * @ignore
          */
         footer:{
             view:1
         },
         /**
          * Key-value map of body element's style.
-         * @type {Object}
+         * @cfg {Object} bodyStyle
+         */
+        /**
+         * @ignore
          */
         bodyStyle:{
             view:1
         },
         /**
          * Key-value map of footer element's style.
-         * @type {Object}
+         * @cfg {Object} footerStyle
+         */
+        /**
+         * @ignore
          */
         footerStyle:{
             view:1
         },
         /**
          * Key-value map of header element's style.
-         * @type {Object}
+         * @cfg {Object} headerStyle
+         */
+        /**
+         * @ignore
          */
         headerStyle:{
             view:1
         },
         /**
          * html content of header element.
-         * @type {NodeList|String}
+         * @cfg {KISSY.NodeList|String} headerContent
+         */
+        /**
+         * @ignore
          */
         headerContent:{
             view:1
         },
         /**
          * html content of body element.
-         * @type {NodeList|String}
+         * @cfg {KISSY.NodeList|String} bodyContent
+         */
+        /**
+         * @ignore
          */
         bodyContent:{
             view:1
         },
         /**
          * html content of footer element.
-         * @type {NodeList|String}
+         * @cfg {KISSY.NodeList|String} footerContent
+         */
+        /**
+         * @ignore
          */
         footerContent:{
             view:1

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview decorate its children from one element
  * @author yiminghe@gmail.com
  */

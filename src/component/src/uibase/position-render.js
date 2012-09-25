@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/positionrender", function () {
+KISSY.add("component/uibase/position-render", function () {
 
     function Position() {
     }
@@ -17,6 +18,7 @@ KISSY.add("component/uibase/positionrender", function () {
         zIndex: {
         },
         /**
+         * @ignore
          * see {@link Component.UIBase.Box#visibleMode}.
          * @default "visibility"
          */

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview mask extension for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;component/uibase/mask-render&quot;, function (S, UA, Node) {
+
+    var ie6 = (UA['ie'] === 6),
+        $ = Node.all;
+
+    function docWidth() {
+        return  ie6 ? (&quot;expression(KISSY.DOM.docWidth())&quot;) : &quot;100%&quot;;
+    }
+
+    function docHeight() {
+        return ie6 ? (&quot;expression(KISSY.DOM.docHeight())&quot;) : &quot;100%&quot;;
+    }
+
+    function initMask(self) {
+        var maskCls = self.get(&quot;prefixCls&quot;) + &quot;ext-mask&quot;,
+            mask = $(&quot;&lt;div &quot; +
+            &quot; style='width:&quot; + docWidth() + &quot;;&quot; +
+            &quot;left:0;&quot; +
+            &quot;top:0;&quot; +
+            &quot;height:&quot; + docHeight() + &quot;;&quot; +
+            &quot;position:&quot; + (ie6 ? &quot;absolute&quot; : &quot;fixed&quot;) + &quot;;'&quot; +
+            &quot; class='&quot; +
+            maskCls +
+            &quot;'&gt;&quot; +
+            (ie6 ? &quot;&lt;&quot; + &quot;iframe &quot; +
+                &quot;style='position:absolute;&quot; +
+                &quot;left:&quot; + &quot;0&quot; + &quot;;&quot; +
+                &quot;top:&quot; + &quot;0&quot; + &quot;;&quot; +
+                &quot;background:red;&quot; +
+                &quot;width: expression(this.parentNode.offsetWidth);&quot; +
+                &quot;height: expression(this.parentNode.offsetHeight);&quot; +
+                &quot;filter:alpha(opacity=0);&quot; +
+                &quot;z-index:-1;'&gt;&lt;/iframe&gt;&quot; : &quot;&quot;) +
+            &quot;&lt;/div&gt;&quot;)
+            .prependTo(&quot;body&quot;);
+        /*
+          点 mask 焦点不转移
+         */
+        mask.unselectable();
+        mask.on(&quot;mousedown&quot;, function (e) {
+            e.preventDefault();
+        });
+        return mask;
+    }
+
+    function Mask() {
+    }
+
+    Mask.ATTRS = {
+
+        mask: {
+            value: false
+        },
+        maskNode: {
+
+        }
+
+    };
+
+    Mask.prototype = {
+
+        __renderUI: function () {
+            var self = this;
+            if (self.get('mask')) {
+                self.set('maskNode', initMask(self));
+            }
+        },
+
+        __destructor: function () {
+            var self = this, mask;
+            if (mask = self.get(&quot;maskNode&quot;)) {
+                mask.remove();
+            }
+        }
+
+    };
+
+    return Mask;
+}, {
+    requires: [&quot;ua&quot;, &quot;node&quot;]
+});</pre>
+</body>
+</html>

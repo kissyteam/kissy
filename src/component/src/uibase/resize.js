@@ -1,38 +1,37 @@
 /**
+ * @ignore
  * @fileOverview resize extension using resizable
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/uibase/resize", function (S) {
 
     /**
-     * @name Resize
-     * @class
-     * Resizable extension class.
-     * Make component resizable
-     * @memberOf Component.UIBase
+     * @name KISSY.Component.UIBase.Resize
+     * @class Resizable extension class. Make component resizable
      */
     function Resize() {
     }
 
-    Resize.ATTRS =
-    /**
-     * @lends Component.UIBase.Resize.prototype
-     */
-    {
+    Resize.ATTRS = {
         /**
-         * Resizable configuration.
-         * See {@link Resizable}
-         * @example
-         * <code>
-         *  {
-         *    minWidth:100,
-         *    maxWidth:1000,
-         *    minHeight:100,
-         *    maxHeight:1000,
-         *    handlers:["b","t","r","l","tr","tl","br","bl"]
-         *  }
-         * </code>
+         * Resizable configuration. See {@link KISSY.Resizable}
          * @type {Object}
+         * @property resize
+         *
+         * for example:
+         *      @example
+         *      {
+         *          minWidth:100,
+         *          maxWidth:1000,
+         *          minHeight:100,
+         *          maxHeight:1000,
+         *          handlers:["b","t","r","l","tr","tl","br","bl"]
+         *      }
+         *
+         *
+         */
+        /**
+         * @ignore
          */
         resize:{
             value:{

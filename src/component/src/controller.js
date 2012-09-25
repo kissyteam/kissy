@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */

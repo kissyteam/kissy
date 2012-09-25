@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview mvc based component framework for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;component&quot;, function (S, Component, Controller, Render, Container, DelegateChildren, DecorateChildren, DecorateChild) {
+
+    S.mix(Component, {
+        Controller:Controller,
+        &quot;Render&quot;:Render,
+        &quot;Container&quot;:Container,
+        &quot;DelegateChildren&quot;:DelegateChildren,
+        &quot;DecorateChild&quot;:DecorateChild,
+        &quot;DecorateChildren&quot;:DecorateChildren
+    });
+
+    return Component;
+}, {
+    requires:[
+        'component/base',
+        'component/controller',
+        'component/render',
+        'component/container',
+        'component/delegate-children',
+        'component/decorate-children',
+        'component/decorate-child']
+});</pre>
+</body>
+</html>

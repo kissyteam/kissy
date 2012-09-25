@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview storage for component
  * @author yiminghe@gmail.com
  */

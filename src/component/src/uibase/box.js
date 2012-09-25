@@ -1,76 +1,120 @@
 /**
+ * @ignore
  * @fileOverview UIBase.Box
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/uibase/box', function () {
 
     /**
-     * Box extension class.
-     * Represent a dom element.
-     * @class Component.UIBase.Box
+     * Box extension class.Represent a dom element.
+     * @class KISSY.Component.UIBase.Box
      */
     function Box() {
     }
 
     Box.ATTRS =
-    /**
-     * @lends Component.UIBase.Box.prototype
-     */
     {
         /**
-         * component's html content.
-         * Note: content and srcNode can not be set both!
+         * component's html content. Note: content and srcNode can not be set both!
          * @type {String|KISSY.NodeList}
+         * @property content
+         */
+        /**
+         * component's html content. Note: content and srcNode can not be set both!
+         * @cfg {String|KISSY.NodeList} content
+         */
+        /**
+         * @ignore
          */
         content: {
             view: 1
         },
+
         /**
          * component's width
          * @type {Number|String}
+         * @property width
+         */
+        /**
+         * component's width
+         * @cfg {Number|String} width
+         */
+        /**
+         * @ignore
          */
         width: {
             view: 1
         },
+
         /**
          * component's height
          * @type {Number|String}
+         * @property height
+         */
+        /**
+         * component's height
+         * @cfg {Number|String} height
+         */
+        /**
+         * @ignore
          */
         height: {
             view: 1
         },
+
         /**
          * css class of component's root element
-         * @type {String}
+         * @cfg {String} elCls
+         */
+        /**
+         * @ignore
          */
         elCls: {
             view: 1
         },
+
         /**
          * name-value pair css style of component's root element
-         * @type {Object}
+         * @cfg {Object} elStyle
+         */
+        /**
+         * @ignore
          */
         elStyle: {
             view: 1
         },
+
         /**
          * name-value pair attribute of component's root element
-         * @type {Object}
+         * @cfg {Object} elAttrs
+         */
+        /**
+         * @ignore
          */
         elAttrs: {
             view: 1
         },
+
         /**
          * archor element where component insert before
-         * @type {KISSY.NodeList}
+         * @cfg {KISSY.NodeList} elBefore
+         */
+        /**
+         * @ignore
          */
         elBefore: {
             // better named to renderBefore, too late !
             view: 1
         },
+
         /**
-         * readonly. root element of current component
+         * root element of current component
          * @type {KISSY.NodeList}
+         * @readonly
+         * @property el
+         */
+        /**
+         * @ignore
          */
         el: {
             view: 1
@@ -78,7 +122,10 @@ KISSY.add('component/uibase/box', function () {
 
         /**
          * archor element where component append to
-         * @type {KISSY.NodeList}
+         * @cfg {KISSY.NodeList} render
+         */
+        /**
+         * @ignore
          */
         render: {
             view: 1
@@ -86,16 +133,27 @@ KISSY.add('component/uibase/box', function () {
 
         /**
          * component's visibleMode,use css "display" or "visibility" to show this component
-         * @type {String}
+         * @cfg {String} visibleMode
+         */
+        /**
+         * @ignore
          */
         visibleMode: {
             view: 1
         },
 
         /**
-         * whether this component is visible
+         * whether this component is visible.
+         * Defaults to: true.
+         * @cfg {Boolean} visible
+         */
+        /**
+         * whether this component is visible.
          * @type {Boolean}
-         * @default true
+         * @property visible
+         */
+        /**
+         * @ignore
          */
         visible: {
             value: true,
@@ -104,7 +162,10 @@ KISSY.add('component/uibase/box', function () {
 
         /**
          * the node to parse for configuration values,passed to component's HTML_PARSER definition
-         * @type {KISSY.NodeList}
+         * @cfg {KISSY.NodeList} srcNode
+         */
+        /**
+         * @ignore
          */
         srcNode: {
             view: 1

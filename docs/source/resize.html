@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview resize extension using resizable
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;component/uibase/resize&quot;, function (S) {
+
+<span id='Resizable'>    /**
+</span>     * @name KISSY.Component.UIBase.Resize
+     * @class Resizable extension class. Make component resizable
+     */
+    function Resize() {
+    }
+
+    Resize.ATTRS = {
+<span id='Resizable-property-resize'>        /**
+</span>         * Resizable configuration. See {@link KISSY.Resizable}
+         * @type {Object}
+         * @property resize
+         *
+         * for example:
+         *      @example
+         *      {
+         *          minWidth:100,
+         *          maxWidth:1000,
+         *          minHeight:100,
+         *          maxHeight:1000,
+         *          handlers:[&quot;b&quot;,&quot;t&quot;,&quot;r&quot;,&quot;l&quot;,&quot;tr&quot;,&quot;tl&quot;,&quot;br&quot;,&quot;bl&quot;]
+         *      }
+         *
+         *
+         */
+<span id='global-property-resize'>        /**
+</span>         * @ignore
+         */
+        resize:{
+            value:{
+            }
+        }
+    };
+
+    Resize.prototype = {
+        __destructor:function () {
+            var r = this.resizer;
+            r &amp;&amp; r.destroy();
+        },
+        _uiSetResize:function (v) {
+            var Resizable = S.require(&quot;resizable&quot;),
+                self = this;
+            self.resizer &amp;&amp; self.resizer.destroy();
+            if (Resizable &amp;&amp; v) {
+                v.node = self.get(&quot;el&quot;);
+                self.resizer = new Resizable(v);
+            }
+        }
+    };
+
+
+    return Resize;
+});</pre>
+</body>
+</html>

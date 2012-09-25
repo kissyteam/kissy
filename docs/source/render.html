@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview render base class for kissy
+ * @author yiminghe@gmail.com
+ * @see http://martinfowler.com/eaaDev/uiArchs.html
+ */
+KISSY.add(&quot;component/render&quot;, function (S, Component, UIBase, Manager) {
+
+<span id='Component-Render'>    /**
+</span>     * @extends Component.UIBase
+     * @class Component.Render
+     * Base Render class for KISSY Component.
+     */
+    return UIBase.extend([UIBase.Box.Render],
+        {
+
+<span id='Component-Render-method-getComponentCssClassWithState'>            /**
+</span>             * Get all css class name to be applied to the root element of this component for given state.
+             * the css class names are prefixed with component name.
+             * @param {String} [state] This component's state info.
+             */
+            getComponentCssClassWithState: function (state) {
+                var self = this,
+                    componentCls = self.get(&quot;ksComponentCss&quot;);
+                state = state || &quot;&quot;;
+                return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + &quot; &quot;) + state);
+            },
+
+<span id='Component-Render-method-getCssClassWithPrefix'>            /**
+</span>             * Get full class name (with prefix) for current component
+             * @param classes {String} class names without prefixCls. Separated by space.
+             * @method
+             * @return {String} class name with prefixCls
+             * @private
+             */
+            getCssClassWithPrefix: Manager.getCssClassWithPrefix,
+
+            createDom: function () {
+                var self = this;
+                self.get(&quot;el&quot;).addClass(self.getComponentCssClassWithState());
+            },
+
+<span id='Component-Render-method-getKeyEventTarget'>            /**
+</span>             * Returns the dom element which is responsible for listening keyboard events.
+             * @return {KISSY.NodeList}
+             */
+            getKeyEventTarget: function () {
+                return this.get(&quot;el&quot;);
+            },
+
+<span id='Component-Render-method-_uiSetHighlighted'>            /**
+</span>             * @protected
+             */
+            _uiSetHighlighted: function (v) {
+                var self = this,
+                    componentCls = self.getComponentCssClassWithState(&quot;-hover&quot;),
+                    el = self.get(&quot;el&quot;);
+                el[v ? 'addClass' : 'removeClass'](componentCls);
+            },
+
+<span id='Component-Render-method-_uiSetDisabled'>            /**
+</span>             * @protected
+             */
+            _uiSetDisabled: function (v) {
+                var self = this,
+                    componentCls = self.getComponentCssClassWithState(&quot;-disabled&quot;),
+                    el = self.get(&quot;el&quot;);
+                el[v ? 'addClass' : 'removeClass'](componentCls)
+                    .attr(&quot;aria-disabled&quot;, v);
+                if (self.get(&quot;focusable&quot;)) {
+                    //不能被 tab focus 到
+                    self.getKeyEventTarget().attr(&quot;tabIndex&quot;, v ? -1 : 0);
+                }
+            },
+<span id='Component-Render-method-_uiSetActive'>            /**
+</span>             * @protected
+             */
+            _uiSetActive: function (v) {
+                var self = this,
+                    componentCls = self.getComponentCssClassWithState(&quot;-active&quot;);
+                self.get(&quot;el&quot;)[v ? 'addClass' : 'removeClass'](componentCls)
+                    .attr(&quot;aria-pressed&quot;, !!v);
+            },
+<span id='Component-Render-method-_uiSetFocused'>            /**
+</span>             * @protected
+             */
+            _uiSetFocused: function (v) {
+                var self = this,
+                    el = self.get(&quot;el&quot;),
+                    componentCls = self.getComponentCssClassWithState(&quot;-focused&quot;);
+                el[v ? 'addClass' : 'removeClass'](componentCls);
+            },
+
+<span id='Component-Render-method-getContentElement'>            /**
+</span>             * Return the dom element into which child component to be rendered.
+             * @return {KISSY.NodeList}
+             */
+            getContentElement: function () {
+                return this.get(&quot;contentEl&quot;) || this.get(&quot;el&quot;);
+            }
+
+        }, {//  screen state
+<span id='Component-Render-property-'>            ATTRS: /**
+</span>             * @lends Component.Render#
+             */
+            {
+<span id='Component-Render-property-prefixCls'>                /**
+</span>                 * see {@link Component.Controller#prefixCls}
+                 */
+                prefixCls: {
+                    value: &quot;ks-&quot;
+                },
+<span id='Component-Render-property-focusable'>                /**
+</span>                 * see {@link Component.Controller#focusable}
+                 */
+                focusable: {
+                    value: true
+                },
+<span id='Component-Render-property-focused'>                /**
+</span>                 * see {@link Component.Controller#focused}
+                 */
+                focused: {},
+<span id='Component-Render-property-active'>                /**
+</span>                 * see {@link Component.Controller#active}
+                 */
+                active: {},
+<span id='Component-Render-property-disabled'>                /**
+</span>                 * see {@link Component.Controller#disabled}
+                 */
+                disabled: {},
+<span id='Component-Render-property-highlighted'>                /**
+</span>                 * see {@link Component.Controller#highlighted}
+                 */
+                highlighted: {}
+            },
+            HTML_PARSER: {
+                disabled: function (el) {
+                    var self = this, componentCls = self.getComponentCssClassWithState(&quot;-disabled&quot;);
+                    return self.get(&quot;el&quot;).hasClass(componentCls);
+                }
+            }
+        });
+}, {
+    requires: ['./base', './uibase', './manager']
+});</pre>
+</body>
+</html>

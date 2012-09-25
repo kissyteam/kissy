@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview support standard mod for component
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/stdmodrender", function (S, Node) {
+KISSY.add("component/uibase/stdmod-render", function (S, Node) {
 
 
     var CLS_PREFIX = "stdmod-";

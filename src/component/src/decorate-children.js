@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview decorate function for children render from markup
  * @author yiminghe@gmail.com
  */
