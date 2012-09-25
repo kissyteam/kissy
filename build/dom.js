@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 25 20:04
+build time: Sep 25 21:01
 */
 /**
  * @ignore
@@ -4235,9 +4235,11 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
              * Get the first element that matches the filter,
              * beginning at the first element of matched elements and progressing up through the DOM tree.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Function} filter Selector string or filter function
+             * @param {String|Function|String[]|Function[]} filter Selector string or filter function or array
              * @param {HTMLElement|String|HTMLDocument|HTMLElement[]} [context] Search bound element
-             * @return {HTMLElement}
+             * @return {HTMLElement|HTMLElement[]}
+             *  if filter is array, return all ancestors (include this) which match filter.
+             *  else return closest parent (include this) which matches filter.
              */
             closest: function (selector, filter, context, allowTextNode) {
                 return nth(selector, filter, 'parentNode', function (elem) {
@@ -4248,9 +4250,11 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             /**
              * Get the parent of the first element in the current set of matched elements, optionally filtered by a selector.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
-             * @param {String|Function} [filter] Selector string or filter function
+             * @param {String|Function|String[]|Function[]} [filter] Selector string or filter function or array
              * @param {HTMLElement|String|HTMLDocument|HTMLElement[]} [context] Search bound element
-             * @return {HTMLElement}
+             * @return {HTMLElement|HTMLElement[]}
+             *  if filter is array, return all ancestors which match filter.
+             *  else return closest parent which matches filter.
              */
             parent: function (selector, filter, context) {
                 return nth(selector, filter, 'parentNode', function (elem) {
@@ -4471,7 +4475,11 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
             return true;
         }
         if (S.isArray(filter)) {
-            for (var i = 0; i < filter.length; i++) {
+            var i, l = filter.length;
+            if (!l) {
+                return true;
+            }
+            for (i = 0; i < l; i++) {
                 if (DOM.test(elem, filter[i])) {
                     return true;
                 }

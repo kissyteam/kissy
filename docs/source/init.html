@@ -85,6 +85,23 @@
                     return env._loader;
                 }
             },
+            clearLoader: function () {
+                var self = this, env = self.Env, l;
+
+                if ((l = env._comboLoader) &amp;&amp; l.clear) {
+                    l.clear();
+                }
+                if ((l = env._loader) &amp;&amp; l.clear) {
+                    l.clear();
+                }
+
+                self.config({
+                    map: false,
+                    mapCombo: false,
+                    modules: false,
+                    packages: false
+                })
+            },
 <span id='KISSY-method-require'>            /**
 </span>             * get module value defined by define function
              * @param {string} moduleName

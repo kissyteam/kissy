@@ -33,6 +33,7 @@ KISSY.use("dom", function (S, DOM) {
 
             expect(DOM.parent('#test-data', 'p')).toBe(null);
             expect(DOM.parent('#test-data', ['p']) + "").toBe([] + "");
+            // support array of filter
             expect(DOM.parent('#test-selector-tag', ['div']).length).toBe(4);
             expect(DOM.parent('#test-parent4', '.text-next')).toBe(null);
         });
@@ -44,7 +45,9 @@ KISSY.use("dom", function (S, DOM) {
             // return itself
             expect(DOM.closest(t, "a")).toBe(t);
 
+            // support array of filter
             expect(DOM.closest('#test-selector-1', ['div']).length).toBe(3);
+
             // parent works
             expect(DOM.closest(t, ".test-p")).toBe(DOM.get("#test-prev"));
 
@@ -250,9 +253,9 @@ KISSY.use("dom", function (S, DOM) {
             expect(DOM.index(DOM.query('.index-li')[1])).toBe(1);
 
             // selector 集合中找当前第一个节点
-            expect(DOM.index(DOM.query('.index-li')[1],'.index-li')).toBe(1);
+            expect(DOM.index(DOM.query('.index-li')[1], '.index-li')).toBe(1);
 
-            expect(DOM.index(DOM.get('body'),'.index-li')).toBe(-1);
+            expect(DOM.index(DOM.get('body'), '.index-li')).toBe(-1);
 
             DOM.remove(div);
 

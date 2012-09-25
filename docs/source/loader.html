@@ -17,241 +17,489 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview simple loader from KISSY&lt;=1.2
- * @author yiminghe@gmail.com, lifesinger@gmail.com
+ * @fileOverview using combo to load module files
+ * @author yiminghe@gmail.com
  */
-(function (S, undefined) {
+(function (S) {
 
     if (S.Env.nodejs) {
         return;
     }
 
+    function loadScripts(urls, callback, charset) {
+        var count = urls &amp;&amp; urls.length;
+        if (!count) {
+            callback();
+            return;
+        }
+        S.each(urls, function (url) {
+            S.getScript(url, function () {
+                if (!(--count)) {
+                    callback();
+                }
+            }, charset || 'utf-8');
+        });
+    }
+
     var Loader = S.Loader,
-        Path = S.Path,
+        data = Loader.STATUS,
         utils = Loader.Utils;
 
-
-    S.augment(Loader,
-        Loader.Target,
-        {
-
-            //firefox,ie9,chrome 如果 add 没有模块名，模块定义先暂存这里
-            __currentModule: null,
-
-            //ie6,7,8开始载入脚本的时间
-            __startLoadTime: 0,
-
-            //ie6,7,8开始载入脚本对应的模块名
-            __startLoadModuleName: null,
-
-<span id='KISSY-Loader-method-add'>            /**
-</span>             * Registers a module.
-             * @param {String|Object} [name] module name
-             * @param {Function|Object} [fn] entry point into the module that is used to bind module to KISSY
-             * @param {Object} [config] special config for this add
-             * @param {String[]} [config.requires] array of mod's name that current module requires
-             * @member KISSY.Loader
-             *
-             * for example:
-             *      @example
-             *      KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
-             */
-            add: function (name, fn, config) {
-                var self = this,
-                    SS = self.SS,
-                    mod,
-                    requires,
-                    mods = SS.Env.mods;
-
-                // 兼容
-                if (S.isPlainObject(name)) {
-                    return SS.config({
-                        modules: name
-                    });
-                }
-
-                // S.add(name[, fn[, config]])
-                if (S.isString(name)) {
-
-                    utils.registerModule(SS, name, fn, config);
-
-                    mod = mods[name];
-
-                    // 显示指定 add 不 attach
-                    if (config &amp;&amp; config['attach'] === false) {
-                        return;
-                    }
-
-                    if (config) {
-                        requires = utils.normalizeModNames(SS, config.requires, name);
-                    }
-
-                    if (!requires || utils.isAttached(SS, requires)) {
-                        utils.attachMod(SS, mod);
-                    }
-
-                    return;
-                }
-                // S.add(fn,config);
-                else if (S.isFunction(name)) {
-                    config = fn;
-                    fn = name;
-                    if (utils.IE) {
-                        /*
-                         Kris Zyp
-                         2010年10月21日, 上午11时34分
-                         We actually had some discussions off-list, as it turns out the required
-                         technique is a little different than described in this thread. Briefly,
-                         to identify anonymous modules from scripts:
-                         * In non-IE browsers, the onload event is sufficient, it always fires
-                         immediately after the script is executed.
-                         * In IE, if the script is in the cache, it actually executes *during*
-                         the DOM insertion of the script tag, so you can keep track of which
-                         script is being requested in case define() is called during the DOM
-                         insertion.
-                         * In IE, if the script is not in the cache, when define() is called you
-                         can iterate through the script tags and the currently executing one will
-                         have a script.readyState == 'interactive'
-                         See RequireJS source code if you need more hints.
-                         Anyway, the bottom line from a spec perspective is that it is
-                         implemented, it works, and it is possible. Hope that helps.
-                         Kris
-                         */
-                        // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
-                        // use onload to get module name is not right in ie
-                        name = findModuleNameByInteractive(self);
-                        S.log('old_ie get modName by interactive : ' + name);
-                        utils.registerModule(SS, name, fn, config);
-                        self.__startLoadModuleName = null;
-                        self.__startLoadTime = 0;
-                    } else {
-                        // 其他浏览器 onload 时，关联模块名与模块定义
-                        self.__currentModule = {
-                            fn: fn,
-                            config: config
-                        };
-                    }
-                    return;
-                }
-                S.log('invalid format for KISSY.add !', 'error');
-            }
+<span id='KISSY-Loader-ComboLoader'>    /**
+</span>     * @class KISSY.Loader.ComboLoader
+     * using combo to load module files
+     * @param SS KISSY
+     * @private
+     * @mixins KISSY.Loader.Target
+     */
+    function ComboLoader(SS) {
+        S.mix(this, {
+            SS: SS,
+            queue: [],
+            loading: 0
         });
+    }
 
+    S.augment(ComboLoader, Loader.Target);
 
-    // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
-    // 如果找不到，返回发送前那个脚本
-    function findModuleNameByInteractive(self) {
-        var SS = self.SS,
-            scripts = S.Env.host.document.getElementsByTagName('script'),
-            re,
-            i,
-            script;
+    // ----------------------- private start
+    // Load next use
+    function next(self) {
+        var args;
+        if (self.queue.length) {
+            args = self.queue.shift();
+            _use(self, args.modNames, args.fn);
+        }
+    }
 
-        for (i = 0; i &lt; scripts.length; i++) {
-            script = scripts[i];
-            if (script.readyState == 'interactive') {
-                re = script;
-                break;
+    // Enqueue use
+    function enqueue(self, modNames, fn) {
+        self.queue.push({
+            modNames: modNames,
+            fn: fn
+        });
+    }
+
+    // Real use.
+    function _use(self, modNames, fn) {
+        var unaliasModNames,
+            allModNames,
+            comboUrls,
+            css,
+            countCss,
+            p,
+            SS = self.SS;
+
+        self.loading = 1;
+
+        modNames = utils.getModNamesAsArray(modNames);
+
+        modNames = utils.normalizeModNamesWithAlias(SS, modNames);
+
+        unaliasModNames = utils.unalias(SS, modNames);
+
+        allModNames = self.calculate(unaliasModNames);
+
+        utils.createModulesInfo(SS, allModNames);
+
+        comboUrls = self.getComboUrls(allModNames);
+
+        // load css first to avoid page blink
+        css = comboUrls.css;
+        countCss = 0;
+
+        for (p in css) {
+            countCss++;
+        }
+
+        var jsOk = 0, cssOk = !countCss;
+
+        for (p in css) {
+            if (css.hasOwnProperty(p)) {
+                loadScripts(css[p], function () {
+                    if (!(--countCss)) {
+                        // mark all css mods to be loaded
+                        for (var p in css) {
+                            if (css.hasOwnProperty(p)) {
+                                S.each(css[p].mods, function (m) {
+                                    utils.registerModule(SS, m.name, S.noop);
+                                });
+                            }
+                        }
+                        cssOk = 1;
+                        check(jsOk);
+                    }
+                }, css[p].charset);
             }
         }
-        if (!re) {
-            // sometimes when read module file from cache , interactive status is not triggered
-            // module code is executed right after inserting into dom
-            // i has to preserve module name before insert module script into dom , then get it back here
-            S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
-            S.log('old_ie get mod name from cache : ' + self.__startLoadModuleName);
-            return self.__startLoadModuleName;
-        }
 
-        // src 必定是绝对路径
-        // or re.hasAttribute ? re.src :  re.getAttribute('src', 4);
-        // http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
-        // note:
-        // &lt;script src='/x.js'&gt;&lt;/script&gt;
-        // ie6-8 =&gt; re.src == '/x.js'
-        // ie9 or firefox/chrome =&gt; re.src == 'http://localhost/x.js'
-        var src = utils.resolveByPage(re.src),
-            srcStr = src.toString(),
-            packages = SS.Env.packages,
-            finalPackagePath,
-            p,
-            packageBase,
-            Config = SS.Config,
-            finalPackageUri,
-            finalPackageLength = -1;
-
-        // 外部模块去除包路径，得到模块名
-        for (p in packages) {
-            if (packages.hasOwnProperty(p)) {
-                packageBase = packages[p].getBase();
-                if (S.startsWith(srcStr, packageBase)) {
-                    // longest match
-                    if (packageBase.length &gt; finalPackageLength) {
-                        finalPackageLength = packageBase.length;
-                        finalPackagePath = packageBase;
-                        finalPackageUri = packages[p].getBaseUri();
-                    }
+        function check(paramJsOk) {
+            jsOk = paramJsOk;
+            if (cssOk &amp;&amp; jsOk) {
+                attachMods(self, unaliasModNames);
+                if (utils.isAttached(SS, unaliasModNames)) {
+                    fn.apply(null, utils.getModules(SS, modNames))
+                } else {
+                    // new require is introduced by KISSY.add
+                    // run again
+                    _use(self, modNames, fn)
                 }
             }
         }
-        // 注意：模块名不包含后缀名以及参数，所以去除
-        // 系统模块去除系统路径
-        // 需要 base norm , 防止 base 被指定为相对路径
-        // configs 统一处理
-        if (finalPackagePath) {
-            return utils.removeExtname(Path.relative(finalPackageUri.getPath(),
-                src.getPath()));
-        } else if (S.startsWith(srcStr, Config.base)) {
-            return utils.removeExtname(Path.relative(Config.baseUri.getPath(),
-                src.getPath()));
+
+        // jss css download in parallel
+        _useJs(comboUrls, check);
+    }
+
+    // use js
+    function _useJs(comboUrls, check) {
+        var p,
+            success,
+            jss = comboUrls.js,
+            countJss = 0;
+
+
+        for (p in jss) {
+            countJss++;
         }
 
-        S.log('interactive script does not have package config ：' + src, 'error');
+        if (!countJss) {
+            // 2012-05-18 bug: loaded 那么需要加载的 jss 为空，要先 attach 再通知用户回调函数
+            check(1);
+            return;
+        }
+        success = 1;
+        for (p in jss) {
+            if (jss.hasOwnProperty(p)) {
+                (function (p) {
+                    loadScripts(jss[p], function () {
+                        var mods = jss[p].mods, mod, i;
+                        for (i = 0; i &lt; mods.length; i++) {
+                            mod = mods[i];
+                            // fix #111
+                            // https://github.com/kissyteam/kissy/issues/111
+                            if (!mod.fn) {
+                                S.log(mod.name + ' is not loaded! can not find module in path : ' + jss[p], 'error');
+                                mod.status = data.ERROR;
+                                success = 0;
+                                return;
+                            }
+                        }
+                        if (success &amp;&amp; !(--countJss)) {
+                            check(1);
+                        }
+                    }, jss[p].charset);
+                })(p);
+            }
+        }
+    }
+
+    // attach mods
+    function attachMods(self, modNames) {
+        S.each(modNames, function (modName) {
+            attachMod(self, modName);
+        });
+    }
+
+    // attach one mod
+    function attachMod(self, modName) {
+        var SS = self.SS,
+            i,
+            len,
+            requires,
+            r,
+            mod = getModInfo(self, modName);
+        // new require after add
+        // not register yet!
+        if (!mod || utils.isAttached(SS, modName)) {
+            return undefined;
+        }
+        requires = mod.getNormalizedRequires();
+        len = requires.length;
+        for (i = 0; i &lt; len; i++) {
+            r = requires[i];
+            attachMod(self, r);
+            if (!utils.isAttached(SS, r)) {
+                return false;
+            }
+        }
+        utils.attachMod(SS, mod);
         return undefined;
     }
 
+    // get mod info.
+    function getModInfo(self, modName) {
+        return self.SS.Env.mods[modName];
+    }
+
+    // get requires mods need to be loaded dynamically
+    function getRequires(self, modName, cache) {
+        var SS = self.SS,
+            requires,
+            i,
+            rMod,
+            r,
+            allRequires,
+            debugMode = S.Config.debug,
+            ret2,
+            mod = getModInfo(self, modName),
+        // 做个缓存，该模块的待加载子模块都知道咯，不用再次递归查找啦！
+            ret = cache[modName];
+
+        if (ret) {
+            return ret;
+        }
+
+        cache[modName] = ret = {};
+
+        // if this mod is attached then its require is attached too!
+        if (mod &amp;&amp; !utils.isAttached(SS, modName)) {
+            requires = mod.getNormalizedRequires();
+            // circular dependency check
+            if (debugMode) {
+                allRequires = mod.__allRequires || (mod.__allRequires = {});
+                if (allRequires[modName]) {
+                    S.error('detect circular dependency among : ');
+                    S.error(allRequires);
+                    return ret;
+                }
+            }
+            for (i = 0; i &lt; requires.length; i++) {
+                r = requires[i];
+                if (debugMode) {
+                    // circular dependency check
+                    rMod = getModInfo(self, r);
+                    allRequires[r] = 1;
+                    if (rMod &amp;&amp; rMod.__allRequires) {
+                        S.each(rMod.__allRequires, function (_, r2) {
+                            allRequires[r2] = 1;
+                        });
+                    }
+                }
+                // if not load into page yet
+                if (!utils.isLoaded(SS, r) &amp;&amp;
+                    // and not attached
+                    !utils.isAttached(SS, r)) {
+                    ret[r] = 1;
+                }
+                ret2 = getRequires(self, r, cache);
+                S.mix(ret, ret2);
+            }
+        }
+
+        return ret;
+    }
+
+    // ----------------------- private end
+
+    S.augment(ComboLoader, {
+
+
+<span id='KISSY-Loader-ComboLoader-method-use'>        /**
+</span>         * use
+         * @param modNames
+         * @param callback
+         */
+        use: function (modNames, callback) {
+            var self = this,
+                fn = function () {
+                    // KISSY.use in callback will be queued
+                    if (callback) {
+                        callback.apply(this, arguments);
+                    }
+                    self.loading = 0;
+                    next(self);
+                };
+
+            enqueue(self, modNames, fn);
+
+            if (!self.loading) {
+                next(self);
+            }
+        },
+
+<span id='KISSY-Loader-ComboLoader-method-add'>        /**
+</span>         * add module
+         * @param name
+         * @param fn
+         * @param config
+         */
+        add: function (name, fn, config) {
+            var self = this,
+                SS = self.SS;
+            // 兼容
+            if (S.isPlainObject(name)) {
+                return SS.config({
+                    modules: name
+                });
+            }
+            utils.registerModule(SS, name, fn, config);
+        },
+
+<span id='KISSY-Loader-ComboLoader-method-calculate'>        /**
+</span>         * calculate dependency
+         * @param modNames
+         * @private
+         * @return {Array}
+         */
+        calculate: function (modNames) {
+            var ret = {},
+                i,
+                m,
+                r,
+                ret2,
+                self = this,
+                SS = self.SS,
+            // 提高性能，不用每个模块都再次全部依赖计算
+            // 做个缓存，每个模块对应的待动态加载模块
+                cache = {};
+            for (i = 0; i &lt; modNames.length; i++) {
+                m = modNames[i];
+                if (!utils.isAttached(SS, m)) {
+                    if (!utils.isLoaded(SS, m)) {
+                        ret[m] = 1;
+                    }
+                    S.mix(ret, getRequires(self, m, cache));
+                }
+            }
+            ret2 = [];
+            for (r in ret) {
+                if (ret.hasOwnProperty(r)) {
+                    ret2.push(r);
+                }
+            }
+            return ret2;
+        },
+
+<span id='KISSY-Loader-ComboLoader-method-getComboUrls'>        /**
+</span>         * Get combo urls
+         * @param modNames
+         * @private
+         * @return {Object}
+         */
+        getComboUrls: function (modNames) {
+            var self = this,
+                i,
+                SS = self.SS,
+                Config = SS.Config,
+                combos = {};
+
+            S.each(modNames, function (modName) {
+                var mod = getModInfo(self, modName),
+                    packageInfo = mod.getPackageInfo(),
+                    packageBase = packageInfo.getBase(),
+                    type = mod.getType(),
+                    mods,
+                    packageName = packageInfo.getName();
+                combos[packageName] = combos[packageName] || {};
+                if (!(mods = combos[packageName][type])) {
+                    mods = combos[packageName][type] = combos[packageName][type] || [];
+                    mods.combine = 1;
+                    if (packageInfo.isCombine() === false) {
+                        mods.combine = 0;
+                    }
+                    mods.tag = packageInfo.getTag();
+                    mods.charset = packageInfo.getCharset();
+                    mods.packageBase = packageBase;
+                }
+                mods.push(mod);
+            });
+
+            var res = {
+                    js: {},
+                    css: {}
+                },
+                t,
+                packageName,
+                type,
+                comboPrefix = Config.comboPrefix,
+                comboSep = Config.comboSep,
+                maxUrlLength = Config.comboMaxUrlLength;
+
+            for (packageName in combos) {
+                if (combos.hasOwnProperty(packageName)) {
+                    for (type in combos[packageName]) {
+                        if (combos[packageName].hasOwnProperty(type)) {
+                            t = [];
+
+                            var jss = combos[packageName][type],
+                                tag = jss.tag,
+                                suffix = (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
+                                suffixLength = suffix.length,
+                                packageBase = jss.packageBase,
+                                prefix,
+                                path,
+                                fullpath,
+                                l,
+                                packagePath = packageBase +
+                                    (packageName ? (packageName + '/') : '');
+
+                            res[type][packageName] = [];
+                            res[type][packageName].charset = jss.charset;
+                            // current package's mods
+                            res[type][packageName].mods = [];
+                            // add packageName to common prefix
+                            // combo grouped by package
+                            prefix = packagePath + comboPrefix;
+                            l = prefix.length;
+
+                            function pushComboUrl() {
+                                // map the whole combo path
+                                res[type][packageName].push(utils.getMappedPath(
+                                    SS,
+                                    prefix +
+                                        t.join(comboSep) +
+                                        suffix,
+                                    Config.mappedComboRules || []
+                                ));
+                            }
+
+                            for (i = 0; i &lt; jss.length; i++) {
+
+                                // map individual module
+                                fullpath = jss[i].getFullPath();
+
+                                res[type][packageName].mods.push(jss[i]);
+
+                                if (!jss.combine || !S.startsWith(fullpath, packagePath)) {
+                                    res[type][packageName].push(fullpath);
+                                    continue;
+                                }
+
+                                // ignore query parameter
+                                path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
+
+                                t.push(path);
+
+                                if (l + t.join(comboSep).length + suffixLength &gt; maxUrlLength) {
+                                    t.pop();
+                                    pushComboUrl();
+                                    t = [];
+                                    i--;
+                                }
+                            }
+                            if (t.length) {
+                                pushComboUrl();
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            return res;
+        }
+    });
+
+    Loader.Combo = ComboLoader;
+
 })(KISSY);
-
 /*
- 2012-02-21 yiminghe@gmail.com refactor:
-
- 拆分 ComboLoader 与 Loader
-
- 2011-01-04 chengyu&lt;yiminghe@gmail.com&gt; refactor:
-
- adopt requirejs :
-
- 1. packages(cfg) , cfg :{
- name : 包名，用于指定业务模块前缀
- path: 前缀包名对应的路径
- charset: 该包下所有文件的编码
-
- 2. add(moduleName,function(S,depModule){return function(){}},{requires:['depModuleName']});
- moduleName add 时可以不写
- depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
-
- 3. S.use(['dom'],function(S,DOM){
- });
- 依赖注入，发生于 add 和 use 时期
-
- 4. add,use 不支持 css loader ,getScript 仍然保留支持
-
- 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
-
- demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
-
- 2011-03-01 yiminghe@gmail.com note:
-
- compatibility
-
- 1. 保持兼容性，不得已而为之
- 支持 { host : }
- 如果 requires 都已经 attached，支持 add 后立即 attach
- 支持 { attach : false } 显示控制 add 时是否 attach
- 支持 { global : Editor } 指明模块来源
-
- 2011-05-04 初步拆分文件，tmd 乱了
- */
-</pre>
+ 2012-02-20 yiminghe note:
+ - three status
+ 0 : initialized
+ LOADED : load into page
+ ATTACHED : fn executed
+ */</pre>
 </body>
 </html>
