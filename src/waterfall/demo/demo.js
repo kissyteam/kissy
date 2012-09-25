@@ -46,7 +46,7 @@
                 });
             },
             minColCount:2,
-            colWidth:228,
+            colWidth:228
             //align:'left' // right, center (default)
         });
     waterfall.on('adjustComplete', function () {
