@@ -2,7 +2,9 @@
  * @fileOverview delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/delegate-children", function (S) {
+KISSY.add("component/delegate-children", function (S, UA) {
+
+    var ie = S.Env.host.document.documentMode || UA.ie;
 
     function DelegateChildren() {
     }
@@ -49,7 +51,9 @@ KISSY.add("component/delegate-children", function (S) {
         __bindUI: function () {
             var self = this;
             if (self.get("delegateChildren")) {
-                self.get("el").on("mousedown mouseup mouseover mouseout dblclick contextmenu",
+                self.get("el").on("mousedown mouseup mouseover mouseout " +
+                    (ie && ie < 9 ? "dblclick " : "") +
+                    "contextmenu",
                     handleChildMouseEvents, self);
             }
         },
@@ -78,4 +82,6 @@ KISSY.add("component/delegate-children", function (S) {
     });
 
     return DelegateChildren;
+}, {
+    requires: ['ua']
 });

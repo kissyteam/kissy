@@ -152,12 +152,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                     tree = self.get("tree");
                 tree.get("el")[0].focus();
                 if (target.equals(self.get("expandIconEl"))) {
-                    // 忽略双击
-                    if (type != 'dblclick') {
                         self.set("expanded", !expanded);
-                    }
-                } else if (type == 'dblclick') {
-                    self.set("expanded", !expanded);
                 } else {
                     self.select();
                     self.fire("click");
@@ -469,6 +464,6 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
 });
 
 /**
- * TODO
- *  tree 不能很好的结合 xclass
+ * 2012-09-25
+ *  - 去除 dblclick 支持，该交互会重复触发 click 事件，可能会重复执行逻辑
  */

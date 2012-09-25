@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:30
+build time: Sep 25 13:49
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -154,19 +154,6 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
 
                 // 需要通知 tree 获得焦点
                 tree.get("el")[0].focus();
-
-                if (e.type == "dblclick") {
-                    // 双击在 +- 号上无效
-                    if (target.equals(expandIconEl)) {
-                        return;
-                    }
-                    // 双击在 checkbox 上无效
-                    if (target.equals(self.get("checkIconEl"))) {
-                        return;
-                    }
-                    // 双击在字或者图标上，切换 expand
-                    self.set("expanded", !expanded);
-                }
 
                 // 点击在 +- 号，切换状态
                 if (target.equals(expandIconEl)) {
@@ -705,12 +692,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                     tree = self.get("tree");
                 tree.get("el")[0].focus();
                 if (target.equals(self.get("expandIconEl"))) {
-                    // 忽略双击
-                    if (type != 'dblclick') {
                         self.set("expanded", !expanded);
-                    }
-                } else if (type == 'dblclick') {
-                    self.set("expanded", !expanded);
                 } else {
                     self.select();
                     self.fire("click");

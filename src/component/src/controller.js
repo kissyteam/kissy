@@ -4,6 +4,8 @@
  */
 KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager, Render, undefined) {
 
+    var ie = S.Env.host.document.documentMode || S.UA.ie;
+
     function wrapperViewSetter(attrName) {
         return function (ev) {
             var self = this;
@@ -217,8 +219,12 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                         .on("mouseleave", wrapBehavior(self, "handleMouseLeave"))
                         .on("contextmenu", wrapBehavior(self, "handleContextMenu"))
                         .on("mousedown", wrapBehavior(self, "handleMouseDown"))
-                        .on("mouseup", wrapBehavior(self, "handleMouseUp"))
-                        .on("dblclick", wrapBehavior(self, "handleDblClick"));
+                        .on("mouseup", wrapBehavior(self, "handleMouseUp"));
+                    // click quickly only trigger click and dblclick in ie<9
+                    // others click click dblclick
+                    if (ie && ie < 9) {
+                        el.on("dblclick", wrapBehavior(self, "handleDblClick"));
+                    }
                 } else {
                     t = getWrapBehavior(self, "handleMouseEnter") &&
                         el.detach("mouseenter", t);
@@ -230,8 +236,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                         el.detach("mousedown", t);
                     t = getWrapBehavior(self, "handleMouseUp") &&
                         el.detach("mouseup", t);
-                    t = getWrapBehavior(self, "handleDblClick") &&
-                        el.detach("dblclick", t);
+                    if (ie && ie < 9) {
+                        t = getWrapBehavior(self, "handleDblClick") &&
+                            el.detach("dblclick", t);
+                    }
                 }
             },
 
@@ -342,7 +350,8 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             },
 
             /**
-             * Handle dblclick events. By default, this performs its associated action by calling
+             * Hack click in ie<9 by handling dblclick events.
+             * By default, this performs its associated action by calling
              * {@link Component.Controller#performActionInternal}.
              * @protected
              * @param {Event.Object} ev DOM event to handle.

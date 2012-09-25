@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 20 15:06
+build time: Sep 25 13:49
 */
 /**
  * Setup component namespace.
@@ -134,6 +134,8 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager, Render, undefined) {
+
+    var ie = S.Env.host.document.documentMode || S.UA.ie;
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
@@ -348,8 +350,12 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                         .on("mouseleave", wrapBehavior(self, "handleMouseLeave"))
                         .on("contextmenu", wrapBehavior(self, "handleContextMenu"))
                         .on("mousedown", wrapBehavior(self, "handleMouseDown"))
-                        .on("mouseup", wrapBehavior(self, "handleMouseUp"))
-                        .on("dblclick", wrapBehavior(self, "handleDblClick"));
+                        .on("mouseup", wrapBehavior(self, "handleMouseUp"));
+                    // click quickly only trigger click and dblclick in ie<9
+                    // others click click dblclick
+                    if (ie && ie < 9) {
+                        el.on("dblclick", wrapBehavior(self, "handleDblClick"));
+                    }
                 } else {
                     t = getWrapBehavior(self, "handleMouseEnter") &&
                         el.detach("mouseenter", t);
@@ -361,8 +367,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                         el.detach("mousedown", t);
                     t = getWrapBehavior(self, "handleMouseUp") &&
                         el.detach("mouseup", t);
-                    t = getWrapBehavior(self, "handleDblClick") &&
-                        el.detach("dblclick", t);
+                    if (ie && ie < 9) {
+                        t = getWrapBehavior(self, "handleDblClick") &&
+                            el.detach("dblclick", t);
+                    }
                 }
             },
 
@@ -473,7 +481,8 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             },
 
             /**
-             * Handle dblclick events. By default, this performs its associated action by calling
+             * Hack click in ie<9 by handling dblclick events.
+             * By default, this performs its associated action by calling
              * {@link Component.Controller#performActionInternal}.
              * @protected
              * @param {Event.Object} ev DOM event to handle.
@@ -926,7 +935,9 @@ KISSY.add("component/decorate-children", function (S, Manager) {
  * @fileOverview delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/delegate-children", function (S) {
+KISSY.add("component/delegate-children", function (S, UA) {
+
+    var ie = S.Env.host.document.documentMode || UA.ie;
 
     function DelegateChildren() {
     }
@@ -973,7 +984,9 @@ KISSY.add("component/delegate-children", function (S) {
         __bindUI: function () {
             var self = this;
             if (self.get("delegateChildren")) {
-                self.get("el").on("mousedown mouseup mouseover mouseout dblclick contextmenu",
+                self.get("el").on("mousedown mouseup mouseover mouseout " +
+                    (ie && ie < 9 ? "dblclick " : "") +
+                    "contextmenu",
                     handleChildMouseEvents, self);
             }
         },
@@ -1002,6 +1015,8 @@ KISSY.add("component/delegate-children", function (S) {
     });
 
     return DelegateChildren;
+}, {
+    requires: ['ua']
 });/**
  * @fileOverview storage for component
  * @author yiminghe@gmail.com

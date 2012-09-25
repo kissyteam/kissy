@@ -83,7 +83,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
          * @protected
          * @param target
          */
-        getOwnerControl: function (target) {
+        getOwnerControl: function (target,e) {
             var self = this,
                 n,
                 allNodes = getAllNodes(self),
