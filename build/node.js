@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:30
+build time: Sep 25 20:05
 */
 /**
  * @ignore
@@ -273,6 +273,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             'nodeName',
             'equals',
             'contains',
+            'index',
             'scrollTop',
             'scrollLeft',
             'height',

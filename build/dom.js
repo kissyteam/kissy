@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 17 19:40
+build time: Sep 25 20:04
 */
 /**
  * @ignore
@@ -2943,7 +2943,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
     function getElementById(id, context) {
         var contextIsDocument = context.nodeType == NodeType.DOCUMENT_NODE,
             doc = contextIsDocument ? context : context.ownerDocument,
-            shouldTestAndIgnoreContext,
+            shouldTestAndIgnoreByContext,
             shouldFilterAndGetBelowContext,
             el;
 
@@ -2957,19 +2957,19 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                 // 成功了就不用从 context 中找了
                 shouldFilterAndGetBelowContext = 0;
                 // 如果 context 不是document 还需要过滤
-                shouldTestAndIgnoreContext = contextIsDocument ? 0 : 1;
+                shouldTestAndIgnoreByContext = contextIsDocument ? 0 : 1;
             } else {
                 // id 错了，无论如何都要从 context 的所有节点中找
                 shouldFilterAndGetBelowContext = 1;
                 // 但是不用测试了
-                shouldTestAndIgnoreContext = 0;
+                shouldTestAndIgnoreByContext = 0;
             }
         } else {
             // 没这个 id，如果 context 不是 document，需要从 context 所有节点中找下
             // DOM.get('#id',DOM.create('<div><div id="id"></div></div>'));
             shouldFilterAndGetBelowContext = contextIsDocument ? 0 : 1;
             // 不用测试了
-            shouldTestAndIgnoreContext = 0;
+            shouldTestAndIgnoreByContext = 0;
         }
 
         if (shouldFilterAndGetBelowContext) {
@@ -2978,7 +2978,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
         // ie 特殊情况下以及指明在 context 下找了，不需要再判断
         // 如果指定了 context node , 还要判断 id 是否处于 context 内
-        else if (shouldTestAndIgnoreContext && !testByContext(el, context)) {
+        else if (shouldTestAndIgnoreByContext && !testByContext(el, context)) {
             el = null;
         }
         return el;
@@ -4352,6 +4352,41 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                     return __contains(container, contained);
                 }
                 return false;
+            },
+            /**
+             * search for a given element from among the matched elements.
+             * @param {HTMLElement|String} selector elements or selector string to find matched elements.
+             * @param {HTMLElement|String} s2 elements or selector string to find matched elements.
+             */
+            index: function (selector, s2) {
+                var els = DOM.query(selector),
+                    c,
+                    n = 0,
+                    p,
+                    els2,
+                    el = els[0];
+
+                if (!s2) {
+                    p = el && el.parentNode;
+                    if (!p) {
+                        return -1;
+                    }
+                    c = el;
+                    while (c = c.previousSibling) {
+                        if (c.nodeType == NodeType.ELEMENT_NODE) {
+                            n++;
+                        }
+                    }
+                    return n;
+                }
+
+                els2 = DOM.query(s2);
+
+                if (typeof s2 === 'string') {
+                    return S.indexOf(el, els2);
+                }
+
+                return S.indexOf(els2[0], els);
             },
 
             /**

@@ -378,6 +378,34 @@ KISSY.use("dom,node", function (S, DOM, Node) {
             expect($(".context-test-3").slice(-2, -1).length).toBe(1);
         });
 
+        it('index works', function () {
+
+            var div = $('<ul class="index-ul">' +
+                '<li class="index-li">0</li>' +
+                '<li class="index-li">1</li>' +
+                '<li class="index-li">2</li>' +
+                '</ul>').appendTo('body');
+
+            // 单个节点
+            expect($('.index-li').index($('.index-li')[1])).toBe(1);
+
+            // 取第一个节点
+            expect($('.index-li').index($('.index-li'))).toBe(0);
+
+            // 第一个节点在 parent 中找
+            expect($('.index-li').index()).toBe(0);
+
+            expect($('.index-li').item(1).index()).toBe(1);
+
+            // selector 集合中找当前第一个节点
+            expect($('.index-li').item(1).index('.index-li')).toBe(1);
+
+            expect($('body').index('.index-li')).toBe(-1);
+
+            div.remove();
+
+        });
+
         runs(function () {
             html.remove();
         });

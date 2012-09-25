@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 24 14:17
+build time: Sep 25 20:05
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 24 14:17
 
         /**
          * The build time of the library.
-         * NOTICE: '20120924141706' will replace with current timestamp when compressing.
+         * NOTICE: '20120925200504' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120924141706';
+        S.__BUILD_TIME = '20120925200504';
     })();
 
     return S;
@@ -5308,7 +5308,7 @@ build time: Sep 24 14:17
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120924141706'
+        tag: '20120925200504'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5998,7 +5998,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 17 19:40
+build time: Sep 25 20:04
 */
 /**
  * @ignore
@@ -8940,7 +8940,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
     function getElementById(id, context) {
         var contextIsDocument = context.nodeType == NodeType.DOCUMENT_NODE,
             doc = contextIsDocument ? context : context.ownerDocument,
-            shouldTestAndIgnoreContext,
+            shouldTestAndIgnoreByContext,
             shouldFilterAndGetBelowContext,
             el;
 
@@ -8954,19 +8954,19 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                 // 成功了就不用从 context 中找了
                 shouldFilterAndGetBelowContext = 0;
                 // 如果 context 不是document 还需要过滤
-                shouldTestAndIgnoreContext = contextIsDocument ? 0 : 1;
+                shouldTestAndIgnoreByContext = contextIsDocument ? 0 : 1;
             } else {
                 // id 错了，无论如何都要从 context 的所有节点中找
                 shouldFilterAndGetBelowContext = 1;
                 // 但是不用测试了
-                shouldTestAndIgnoreContext = 0;
+                shouldTestAndIgnoreByContext = 0;
             }
         } else {
             // 没这个 id，如果 context 不是 document，需要从 context 所有节点中找下
             // DOM.get('#id',DOM.create('<div><div id="id"></div></div>'));
             shouldFilterAndGetBelowContext = contextIsDocument ? 0 : 1;
             // 不用测试了
-            shouldTestAndIgnoreContext = 0;
+            shouldTestAndIgnoreByContext = 0;
         }
 
         if (shouldFilterAndGetBelowContext) {
@@ -8975,7 +8975,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
         // ie 特殊情况下以及指明在 context 下找了，不需要再判断
         // 如果指定了 context node , 还要判断 id 是否处于 context 内
-        else if (shouldTestAndIgnoreContext && !testByContext(el, context)) {
+        else if (shouldTestAndIgnoreByContext && !testByContext(el, context)) {
             el = null;
         }
         return el;
@@ -10349,6 +10349,41 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                     return __contains(container, contained);
                 }
                 return false;
+            },
+            /**
+             * search for a given element from among the matched elements.
+             * @param {HTMLElement|String} selector elements or selector string to find matched elements.
+             * @param {HTMLElement|String} s2 elements or selector string to find matched elements.
+             */
+            index: function (selector, s2) {
+                var els = DOM.query(selector),
+                    c,
+                    n = 0,
+                    p,
+                    els2,
+                    el = els[0];
+
+                if (!s2) {
+                    p = el && el.parentNode;
+                    if (!p) {
+                        return -1;
+                    }
+                    c = el;
+                    while (c = c.previousSibling) {
+                        if (c.nodeType == NodeType.ELEMENT_NODE) {
+                            n++;
+                        }
+                    }
+                    return n;
+                }
+
+                els2 = DOM.query(s2);
+
+                if (typeof s2 === 'string') {
+                    return S.indexOf(el, els2);
+                }
+
+                return S.indexOf(els2[0], els);
             },
 
             /**
@@ -18110,7 +18145,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:30
+build time: Sep 25 20:05
 */
 /**
  * @ignore
@@ -18382,6 +18417,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             'nodeName',
             'equals',
             'contains',
+            'index',
             'scrollTop',
             'scrollLeft',
             'height',

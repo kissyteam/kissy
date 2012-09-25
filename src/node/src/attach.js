@@ -13,6 +13,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             'nodeName',
             'equals',
             'contains',
+            'index',
             'scrollTop',
             'scrollLeft',
             'height',

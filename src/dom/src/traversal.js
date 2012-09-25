@@ -166,6 +166,41 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 }
                 return false;
             },
+            /**
+             * search for a given element from among the matched elements.
+             * @param {HTMLElement|String} selector elements or selector string to find matched elements.
+             * @param {HTMLElement|String} s2 elements or selector string to find matched elements.
+             */
+            index: function (selector, s2) {
+                var els = DOM.query(selector),
+                    c,
+                    n = 0,
+                    p,
+                    els2,
+                    el = els[0];
+
+                if (!s2) {
+                    p = el && el.parentNode;
+                    if (!p) {
+                        return -1;
+                    }
+                    c = el;
+                    while (c = c.previousSibling) {
+                        if (c.nodeType == NodeType.ELEMENT_NODE) {
+                            n++;
+                        }
+                    }
+                    return n;
+                }
+
+                els2 = DOM.query(s2);
+
+                if (typeof s2 === 'string') {
+                    return S.indexOf(el, els2);
+                }
+
+                return S.indexOf(els2[0], els);
+            },
 
             /**
              * Check to see if a DOM node is equal with another DOM node.

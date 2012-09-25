@@ -228,5 +228,35 @@ KISSY.use("dom", function (S, DOM) {
             expect(DOM.contains(document.body, newNode.firstChild)).toBe(false);
         });
 
+
+        it('index works', function () {
+            var div = DOM.create('<ul class="index-ul">' +
+                '<li class="index-li">0</li>' +
+                '<li class="index-li">1</li>' +
+                '<li class="index-li">2</li>' +
+                '</ul>');
+
+            DOM.append(div, 'body');
+
+            // 单个节点
+            expect(DOM.index('.index-li', DOM.query('.index-li')[1])).toBe(1);
+
+            // 取第一个节点
+            expect(DOM.index('.index-li', DOM.query('.index-li'))).toBe(0);
+
+            // 第一个节点在 parent 中找
+            expect(DOM.index('.index-li')).toBe(0);
+
+            expect(DOM.index(DOM.query('.index-li')[1])).toBe(1);
+
+            // selector 集合中找当前第一个节点
+            expect(DOM.index(DOM.query('.index-li')[1],'.index-li')).toBe(1);
+
+            expect(DOM.index(DOM.get('body'),'.index-li')).toBe(-1);
+
+            DOM.remove(div);
+
+        });
+
     });
 });
