@@ -15,7 +15,7 @@ KISSY.add("component/uibase/stdmod", function () {
 
     StdMod.ATTRS = {
         /**
-         * Header element of dialog. Readonly
+         * Header element of dialog.
          * @type {KISSY.NodeList}
          * @property header
          * @readonly
@@ -27,7 +27,7 @@ KISSY.add("component/uibase/stdmod", function () {
             view:1
         },
         /**
-         * Body element of dialog. Readonly
+         * Body element of dialog.
          * @type {KISSY.NodeList}
          * @property body
          * @readonly
@@ -39,7 +39,7 @@ KISSY.add("component/uibase/stdmod", function () {
             view:1
         },
         /**
-         * Footer element of dialog. Readonly
+         * Footer element of dialog.
          * @type {KISSY.NodeList}
          * @property footer
          * @readonly

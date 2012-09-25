@@ -37,6 +37,9 @@ KISSY.add("component/uibase/mask", function () {
          * @property maskNode
          * @readonly
          */
+        /**
+         * @ignore
+         */
         maskNode: {
             view: 1
         }
