@@ -369,7 +369,7 @@
 
             S.each(modNames, function (modName) {
                 var mod = getModInfo(self, modName),
-                    packageInfo = mod.getPackageInfo(),
+                    packageInfo = mod.getPackage(),
                     packageBase = packageInfo.getBase(),
                     type = mod.getType(),
                     mods,

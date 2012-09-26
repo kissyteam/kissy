@@ -47,6 +47,10 @@
                 return self.base || self.SS.Config.base;
             },
 
+            /**
+             * Get package baseUri
+             * @return {KISSY.Uri}
+             */
             getBaseUri: function () {
                 var self = this;
                 return self.baseUri || self.SS.Config.baseUri;
@@ -121,11 +125,12 @@
 
             /**
              * Get the fullpath of current module if load dynamically
+             * @return {String}
              */
             getFullPath: function () {
                 var self = this, t, fullpathUri, packageBaseUri;
                 if (!self.fullpath) {
-                    packageBaseUri = self.getPackageInfo().getBaseUri();
+                    packageBaseUri = self.getPackage().getBaseUri();
                     fullpathUri = packageBaseUri.resolve(self.getPath());
                     if (t = self.getTag()) {
                         fullpathUri.query.set('t', t);
@@ -147,6 +152,7 @@
 
             /**
              * Get the value of current module
+             * @return {*}
              */
             getValue: function () {
                 return this.value;
@@ -161,13 +167,13 @@
             },
 
             /**
-             * Get the packageInfo of current module
-             * @return {Object}
+             * Get the package which current module belongs to.
+             * @return {KISSY.Loader.Package}
              */
-            getPackageInfo: function () {
+            getPackage: function () {
                 var self = this;
                 return self.packageInfo ||
-                    (self.packageInfo = getPackageInfo(self.SS, self));
+                    (self.packageInfo = getPackage(self.SS, self));
             },
 
             /**
@@ -176,7 +182,7 @@
              */
             getTag: function () {
                 var self = this;
-                return self.tag || self.getPackageInfo().getTag();
+                return self.tag || self.getPackage().getTag();
             },
 
             /**
@@ -185,7 +191,7 @@
              */
             getCharset: function () {
                 var self = this;
-                return self.charset || self.getPackageInfo().getCharset();
+                return self.charset || self.getPackage().getCharset();
             },
 
             getNormalizedRequires: function () {
@@ -221,13 +227,13 @@
 
         name = Path.join(Path.dirname(name), Path.basename(name, extname));
 
-        if (m.getPackageInfo().isDebug()) {
+        if (m.getPackage().isDebug()) {
             min = '';
         }
         return name + min + extname;
     }
 
-    function getPackageInfo(self, mod) {
+    function getPackage(self, mod) {
         var modName = mod.name,
             Env = self.Env,
             packages = Env.packages || {},

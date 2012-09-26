@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 25 21:01
+build time: Sep 26 12:04
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 25 21:01
 
         /**
          * The build time of the library.
-         * NOTICE: '20120925210140' will replace with current timestamp when compressing.
+         * NOTICE: '20120926120402' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120925210140';
+        S.__BUILD_TIME = '20120926120402';
     })();
 
     return S;
@@ -3474,6 +3474,10 @@ build time: Sep 25 21:01
                 return self.base || self.SS.Config.base;
             },
 
+            /**
+             * Get package baseUri
+             * @return {KISSY.Uri}
+             */
             getBaseUri: function () {
                 var self = this;
                 return self.baseUri || self.SS.Config.baseUri;
@@ -3548,11 +3552,12 @@ build time: Sep 25 21:01
 
             /**
              * Get the fullpath of current module if load dynamically
+             * @return {String}
              */
             getFullPath: function () {
                 var self = this, t, fullpathUri, packageBaseUri;
                 if (!self.fullpath) {
-                    packageBaseUri = self.getPackageInfo().getBaseUri();
+                    packageBaseUri = self.getPackage().getBaseUri();
                     fullpathUri = packageBaseUri.resolve(self.getPath());
                     if (t = self.getTag()) {
                         fullpathUri.query.set('t', t);
@@ -3574,6 +3579,7 @@ build time: Sep 25 21:01
 
             /**
              * Get the value of current module
+             * @return {*}
              */
             getValue: function () {
                 return this.value;
@@ -3588,13 +3594,13 @@ build time: Sep 25 21:01
             },
 
             /**
-             * Get the packageInfo of current module
-             * @return {Object}
+             * Get the package which current module belongs to.
+             * @return {KISSY.Loader.Package}
              */
-            getPackageInfo: function () {
+            getPackage: function () {
                 var self = this;
                 return self.packageInfo ||
-                    (self.packageInfo = getPackageInfo(self.SS, self));
+                    (self.packageInfo = getPackage(self.SS, self));
             },
 
             /**
@@ -3603,7 +3609,7 @@ build time: Sep 25 21:01
              */
             getTag: function () {
                 var self = this;
-                return self.tag || self.getPackageInfo().getTag();
+                return self.tag || self.getPackage().getTag();
             },
 
             /**
@@ -3612,7 +3618,7 @@ build time: Sep 25 21:01
              */
             getCharset: function () {
                 var self = this;
-                return self.charset || self.getPackageInfo().getCharset();
+                return self.charset || self.getPackage().getCharset();
             },
 
             getNormalizedRequires: function () {
@@ -3648,13 +3654,13 @@ build time: Sep 25 21:01
 
         name = Path.join(Path.dirname(name), Path.basename(name, extname));
 
-        if (m.getPackageInfo().isDebug()) {
+        if (m.getPackage().isDebug()) {
             min = '';
         }
         return name + min + extname;
     }
 
-    function getPackageInfo(self, mod) {
+    function getPackage(self, mod) {
         var modName = mod.name,
             Env = self.Env,
             packages = Env.packages || {},
@@ -5026,7 +5032,7 @@ build time: Sep 25 21:01
 
             S.each(modNames, function (modName) {
                 var mod = getModInfo(self, modName),
-                    packageInfo = mod.getPackageInfo(),
+                    packageInfo = mod.getPackage(),
                     packageBase = packageInfo.getBase(),
                     type = mod.getType(),
                     mods,
@@ -5308,7 +5314,7 @@ build time: Sep 25 21:01
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120925210140'
+        tag: '20120926120402'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5586,8 +5592,8 @@ KISSY.config('modules', {
 'switchable': {requires: ['dom','anim','event']},
 'tree': {requires: ['node','component','event']},
 'button': {requires: ['component','event']},
-'component': {requires: ['ua','node','event','dom','base']},
 'json': {requires: ['ua']},
+'component': {requires: ['event','ua','dom','node','base']},
 'event': {requires: ['ua','dom']},
 'ajax': {requires: ['json','event','dom']},
 'resizable': {requires: ['node','base','dd']},
