@@ -60,7 +60,7 @@ KISSY.add('event/utils', function (S, DOM) {
     }
 
     var doc = S.Env.host.document,
-        simpleAdd = doc.addEventListener ?
+        simpleAdd = doc && doc.addEventListener ?
             function (el, type, fn, capture) {
                 if (el.addEventListener) {
                     el.addEventListener(type, fn, !!capture);
@@ -71,7 +71,7 @@ KISSY.add('event/utils', function (S, DOM) {
                     el.attachEvent('on' + type, fn);
                 }
             },
-        simpleRemove = doc.removeEventListener ?
+        simpleRemove = doc && doc.removeEventListener ?
             function (el, type, fn, capture) {
                 if (el.removeEventListener) {
                     el.removeEventListener(type, fn, !!capture);

@@ -13,7 +13,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
     }
 
     var doc = S.Env.host.document,
-        docElem = doc.documentElement,
+        docElem = doc&&doc.documentElement,
         OPACITY = 'opacity',
         STYLE = 'style',
         FILTER = 'filter',

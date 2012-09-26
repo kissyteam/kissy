@@ -1,13 +1,13 @@
-var KISSY = require('../../../build/kissy-nodejs');
+var KISSY = require('../../../../../build/kissy-nodejs').KISSY;
 
-KISSY.ready(function(S) {
+KISSY.use('base',function(S,Base) {
     // 自定义类
     function MyClass(config) {
         MyClass.superclass.constructor.call(this, config);
     }
 
     // 继承 Base
-    S.extend(MyClass, S.Base);
+    S.extend(MyClass, Base);
 
     // 增加属性
     MyClass.ATTRS = {

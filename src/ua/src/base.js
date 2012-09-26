@@ -6,8 +6,9 @@
 KISSY.add('ua/base', function (S, undefined) {
 
     var win = S.Env.host,
+        doc = win.document,
         navigator = win.navigator,
-        ua = navigator.userAgent,
+        ua = navigator && navigator.userAgent || "",
         EMPTY = '',
         MOBILE = 'mobile',
         core = EMPTY,
@@ -17,8 +18,8 @@ KISSY.add('ua/base', function (S, undefined) {
         end,
         VERSION_PLACEHOLDER = '{{version}}',
         IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
-        div = win.document.createElement('div'),
-        s,
+        div = doc && doc.createElement('div'),
+        s = [],
         /**
          * KISSY UA Module
          * @member KISSY
@@ -107,10 +108,12 @@ KISSY.add('ua/base', function (S, undefined) {
             }));
         };
 
-    // try to use IE-Conditional-Comment detect IE more accurately
-    // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
-    div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
-    s = div.getElementsByTagName('s');
+    if (div) {
+        // try to use IE-Conditional-Comment detect IE more accurately
+        // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
+        div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
+        s = div.getElementsByTagName('s');
+    }
 
     if (s.length > 0) {
 

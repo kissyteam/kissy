@@ -7,7 +7,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
     var win = S.Env.host,
         doc = win.document,
-        docMode = doc['documentMode'],
+        docMode = doc && doc['documentMode'],
         REPLACE_HISTORY = '__replace_history_' + S.now(),
         ie = docMode || UA['ie'],
         HASH_CHANGE = 'hashchange';
@@ -27,7 +27,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         }
 
         var POLL_INTERVAL = 50,
-            IFRAME_TEMPLATE = '<html><head><title>' + (doc.title || '') +
+            IFRAME_TEMPLATE = '<html><head><title>' + (doc && doc.title || '') +
                 ' - {hash}</title>{head}</head><body>{hash}</body></html>',
 
             getHash = function () {

@@ -1,14 +1,14 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 12:04
+build time: Sep 26 22:21
 */
 /**
  * @ignore
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-(function (S, undefined) {
+var KISSY = (function (undefined) {
     /**
      * The KISSY global namespace object. you can use
      *
@@ -156,7 +156,7 @@ build time: Sep 26 12:04
 
     // If KISSY is already defined, the existing KISSY object will not
     // be overwritten so that defined namespaces are preserved.
-        seed = (host && host[S]) || {},
+        seed = {},
 
         guid = 0,
         EMPTY = '';
@@ -164,11 +164,11 @@ build time: Sep 26 12:04
     // The host of runtime environment. specify by user's seed or <this>,
     // compatibled for  '<this> is null' in unknown engine.
     seed.Env = seed.Env || {};
-    host = seed.Env.host || (seed.Env.host = host || {});
+    seed.Env.host = host;
 
     // shortcut and meta for seed.
     // override previous kissy
-    S = host[S] = meta.mix(seed, meta);
+    var S = meta.mix(seed, meta);
 
     S.mix(S,
         {
@@ -461,8 +461,8 @@ build time: Sep 26 12:04
          */
         S.Env = S.Env || {};
 
-        S.Env.nodejs = (typeof require !== 'undefined') &&
-            (typeof exports !== 'undefined');
+        S.Env.nodejs = (typeof require === 'function') &&
+            (typeof exports === 'object');
 
         /**
          * KISSY Config.
@@ -479,17 +479,21 @@ build time: Sep 26 12:04
 
         /**
          * The build time of the library.
-         * NOTICE: '20120926120402' will replace with current timestamp when compressing.
+         * NOTICE: '20120926222112' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120926120402';
+        S.__BUILD_TIME = '20120926222112';
     })();
+
+    // exports for nodejs
+    if (S.Env.nodejs) {
+        exports.KISSY = S;
+    }
 
     return S;
 
-})('KISSY', undefined);
-/**
+})();/**
  * @ignore
  * @fileOverview   lang
  * @author  lifesinger@gmail.com, yiminghe@gmail.com
@@ -2888,9 +2892,6 @@ build time: Sep 26 12:04
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (S.Env.nodejs) {
-        return;
-    }
 
     /**
      * @class KISSY.Loader
@@ -3019,14 +3020,11 @@ build time: Sep 26 12:04
  */
 (function (S) {
 
-    if (S.Env.nodejs) {
-        return;
-    }
-
     var Loader = S.Loader,
         Path = S.Path,
         Uri = S.Uri,
-        ua = navigator.userAgent,
+        host = S.Env.host,
+        ua = host.navigator && navigator.userAgent || "",
         startsWith = S.startsWith,
         data = Loader.STATUS,
         ATTACHED = data.ATTACHED,
@@ -3038,10 +3036,10 @@ build time: Sep 26 12:04
          * @private
          */
             Utils = {},
-        host = S.Env.host,
+
         isWebKit = !!ua.match(/AppleWebKit/),
         doc = host.document,
-        simulatedLocation = new Uri(location.href);
+        simulatedLocation = new Uri(host.location && location.href || "");
 
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -3431,9 +3429,6 @@ build time: Sep 26 12:04
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (S.Env.nodejs) {
-        return;
-    }
 
     var Path = S.Path, Loader = S.Loader, Utils = Loader.Utils;
 
@@ -3699,9 +3694,6 @@ build time: Sep 26 12:04
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (S.Env.nodejs) {
-        return;
-    }
 
     var CSS_POLL_INTERVAL = 30,
         win = S.Env.host,
@@ -3814,9 +3806,7 @@ build time: Sep 26 12:04
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
-    if (S.Env.nodejs) {
-        return;
-    }
+
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
         utils = S.Loader.Utils,
@@ -4007,9 +3997,7 @@ build time: Sep 26 12:04
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (S.Env.nodejs) {
-        return;
-    }
+
     var Loader = S.Loader,
         utils = Loader.Utils,
         configs = S.configs;
@@ -4137,10 +4125,6 @@ build time: Sep 26 12:04
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
-
-    if (S.Env.nodejs) {
-        return;
-    }
 
     var Loader = S.Loader,
         Path = S.Path,
@@ -4372,9 +4356,6 @@ build time: Sep 26 12:04
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
-    if (S.Env.nodejs) {
-        return;
-    }
 
     var Loader = S.Loader,
         data = Loader.STATUS,
@@ -4667,10 +4648,6 @@ build time: Sep 26 12:04
  * @author yiminghe@gmail.com
  */
 (function (S) {
-
-    if (S.Env.nodejs) {
-        return;
-    }
 
     function loadScripts(urls, callback, charset) {
         var count = urls && urls.length;
@@ -5153,10 +5130,6 @@ build time: Sep 26 12:04
  */
 (function (S) {
 
-    if (S.Env.nodejs) {
-        return;
-    }
-
     var Loader = S.Loader,
         utils = Loader.Utils,
         ComboLoader = S.Loader.Combo;
@@ -5210,7 +5183,7 @@ build time: Sep 26 12:04
              */
             getLoader: function () {
                 var self = this, env = self.Env;
-                if (self.Config.combine) {
+                if (self.Config.combine && !S.Env.nodejs) {
                     return env._comboLoader;
                 } else {
                     return env._loader;
@@ -5310,19 +5283,27 @@ build time: Sep 26 12:04
         }, baseInfo);
     }
 
-    S.config(S.mix({
-        // 2k
-        comboMaxUrlLength: 2048,
-        charset: 'utf-8',
-        tag: '20120926120402'
-    }, getBaseInfo()));
+    if (S.Env.nodejs) {
+        S.config('base',
+            // specify scheme for KISSY.Uri
+            'file:' + __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/');
+    } else {
+        S.config(S.mix({
+            // 2k
+            comboMaxUrlLength: 2048,
+            charset: 'utf-8',
+            tag: '20120926222112'
+        }, getBaseInfo()));
+    }
 
     // Initializes loader.
     (function () {
         var env = S.Env;
         env.mods = env.mods || {}; // all added mods
         env._loader = new Loader(S);
-        env._comboLoader = new ComboLoader(S);
+        if (ComboLoader) {
+            env._comboLoader = new ComboLoader(S);
+        }
     })();
 
 })(KISSY);/**
@@ -5337,7 +5318,7 @@ build time: Sep 26 12:04
 
         doc = win['document'],
 
-        docElem = doc.documentElement,
+        docElem = doc && doc.documentElement,
 
         location = win.location,
 
@@ -5467,7 +5448,7 @@ build time: Sep 26 12:04
      * @ignore
      */
     function _bindReady() {
-        var doScroll = docElem.doScroll,
+        var doScroll = docElem && docElem.doScroll,
             eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
             COMPLETE = 'complete',
             fire = function () {
@@ -5476,7 +5457,7 @@ build time: Sep 26 12:04
 
         // Catch cases where ready() is called after the
         // browser event has already occurred.
-        if (doc.readyState === COMPLETE) {
+        if (!doc || doc.readyState === COMPLETE) {
             return fire();
         }
 

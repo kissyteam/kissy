@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:30
+build time: Sep 26 22:20
 */
 /**
  * @fileOverview 提示补全组件
@@ -155,7 +155,7 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
              * @param {Object} data 请求返回的数据
              * @return {HTMLElement | String} 渲染的内容,可选项要求由"li"标签包裹，并将用于表单提交的值存储在"li"元素的key属性上
              */
-            //contentRender:null
+            //contentRenderer:null
         };
 
     /**

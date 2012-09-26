@@ -5,10 +5,6 @@
  */
 (function (S) {
 
-    if (S.Env.nodejs) {
-        return;
-    }
-
     var Loader = S.Loader,
         utils = Loader.Utils,
         ComboLoader = S.Loader.Combo;
@@ -62,7 +58,7 @@
              */
             getLoader: function () {
                 var self = this, env = self.Env;
-                if (self.Config.combine) {
+                if (self.Config.combine && !S.Env.nodejs) {
                     return env._comboLoader;
                 } else {
                     return env._loader;
@@ -162,19 +158,27 @@
         }, baseInfo);
     }
 
-    S.config(S.mix({
-        // 2k
-        comboMaxUrlLength: 2048,
-        charset: 'utf-8',
-        tag: '@TIMESTAMP@'
-    }, getBaseInfo()));
+    if (S.Env.nodejs) {
+        S.config('base',
+            // specify scheme for KISSY.Uri
+            'file:' + __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/');
+    } else {
+        S.config(S.mix({
+            // 2k
+            comboMaxUrlLength: 2048,
+            charset: 'utf-8',
+            tag: '@TIMESTAMP@'
+        }, getBaseInfo()));
+    }
 
     // Initializes loader.
     (function () {
         var env = S.Env;
         env.mods = env.mods || {}; // all added mods
         env._loader = new Loader(S);
-        env._comboLoader = new ComboLoader(S);
+        if (ComboLoader) {
+            env._comboLoader = new ComboLoader(S);
+        }
     })();
 
 })(KISSY);

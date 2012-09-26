@@ -4,7 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/change', function (S, UA, Event, DOM, special) {
-    var mode = S.Env.host.document['documentMode'];
+    var doc = S.Env.host.document,
+        mode = doc && doc['documentMode'];
 
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
 
@@ -20,7 +21,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
         }
 
         special['change'] = {
-            setup:function () {
+            setup: function () {
                 var el = this;
                 if (isFormElement(el)) {
                     // checkbox/radio only fires change when blur in ie<9
@@ -41,7 +42,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
                     Event.on(el, 'beforeactivate', beforeActivate);
                 }
             },
-            tearDown:function () {
+            tearDown: function () {
                 var el = this;
                 if (isFormElement(el)) {
                     if (isCheckBoxOrRadio(el)) {
@@ -55,7 +56,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
                     S.each(DOM.query('textarea,input,select', el), function (fel) {
                         if (fel.__changeHandler) {
                             fel.__changeHandler = 0;
-                            Event.remove(fel, 'change', {fn:changeHandler, last:1});
+                            Event.remove(fel, 'change', {fn: changeHandler, last: 1});
                         }
                     });
                 }
@@ -81,7 +82,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
             if (isFormElement(t) && !t.__changeHandler) {
                 t.__changeHandler = 1;
                 // lazy bind change , always as last handler among user's handlers
-                Event.on(t, 'change', {fn:changeHandler, last:1});
+                Event.on(t, 'change', {fn: changeHandler, last: 1});
             }
         }
 
@@ -106,5 +107,5 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
 
     }
 }, {
-    requires:['ua', './base', 'dom', './special']
+    requires: ['ua', './base', 'dom', './special']
 });

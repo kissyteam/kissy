@@ -1,9 +1,10 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 25 13:49
+build time: Sep 26 22:48
 */
 /**
+ * @ignore
  * Setup component namespace.
  * @author yiminghe@gmail.com
  */
@@ -57,6 +58,7 @@ KISSY.add("component/base", function (S, UIBase, Manager) {
 }, {
     requires:['./uibase', './manager']
 });/**
+ * @ignore
  * @fileOverview mvc based component framework for kissy
  * @author yiminghe@gmail.com
  */
@@ -82,6 +84,7 @@ KISSY.add("component", function (S, Component, Controller, Render, Container, De
         'component/decorate-children',
         'component/decorate-child']
 });/**
+ * @ignore
  * @fileOverview container can delegate event for its children
  * @author yiminghe@gmail.com
  */
@@ -130,6 +133,7 @@ KISSY.add("component/container", function (S, Controller, DelegateChildren, Deco
  * TODO
  *  - handleMouseEvents false for container ?
  *//**
+ * @ignore
  * @fileOverview Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
@@ -837,6 +841,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
  - http://martinfowler.com/eaaDev/uiArchs.html
 
  *//**
+ * @ignore
  * @fileOverview decorate its children from one element
  * @author yiminghe@gmail.com
  */
@@ -870,6 +875,7 @@ KISSY.add("component/decorate-child", function (S, DecorateChildren) {
 }, {
     requires:['./decorate-children']
 });/**
+ * @ignore
  * @fileOverview decorate function for children render from markup
  * @author yiminghe@gmail.com
  */
@@ -932,6 +938,7 @@ KISSY.add("component/decorate-children", function (S, Manager) {
 }, {
     requires:['./manager']
 });/**
+ * @ignore
  * @fileOverview delegate events for children
  * @author yiminghe@gmail.com
  */
@@ -1018,6 +1025,7 @@ KISSY.add("component/delegate-children", function (S, UA) {
 }, {
     requires: ['ua']
 });/**
+ * @ignore
  * @fileOverview storage for component
  * @author yiminghe@gmail.com
  */
@@ -1133,6 +1141,7 @@ KISSY.add("component/manager", function (S) {
 
     return Manager;
 });/**
+ * @ignore
  * @fileOverview render base class for kissy
  * @author yiminghe@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
@@ -1276,6 +1285,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
 }, {
     requires: ['./base', './uibase', './manager']
 });/**
+ * @ignore
  * @fileOverview uibase
  * @author yiminghe@gmail.com
  */
@@ -1307,23 +1317,24 @@ KISSY.add("component/uibase", function (S, UIBase, Align, Box, BoxRender, Close,
     requires:["./uibase/base",
         "./uibase/align",
         "./uibase/box",
-        "./uibase/boxrender",
+        "./uibase/box-render",
         "./uibase/close",
-        "./uibase/closerender",
-        "./uibase/contentbox",
-        "./uibase/contentboxrender",
+        "./uibase/close-render",
+        "./uibase/content-box",
+        "./uibase/content-box-render",
         "./uibase/drag",
         "./uibase/loading",
-        "./uibase/loadingrender",
+        "./uibase/loading-render",
         "./uibase/mask",
-        "./uibase/maskrender",
+        "./uibase/mask-render",
         "./uibase/position",
-        "./uibase/positionrender",
-        "./uibase/shimrender",
+        "./uibase/position-render",
+        "./uibase/shim-render",
         "./uibase/resize",
         "./uibase/stdmod",
-        "./uibase/stdmodrender"]
+        "./uibase/stdmod-render"]
 });/**
+ * @ignore
  * @fileOverview Component.UIBase.Align
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
@@ -1339,17 +1350,18 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
      */
 
     /**
+     * @ignore
      * 得到会导致元素显示不全的祖先元素
      */
     function getOffsetParent(element) {
         // ie 这个也不是完全可行
-        /**
+        /*
          <div style="width: 50px;height: 100px;overflow: hidden">
          <div style="width: 50px;height: 100px;position: relative;" id="d6">
          元素 6 高 100px 宽 50px<br/>
          </div>
          </div>
-         **/
+         */
         // element.offsetParent does the right thing in ie7 and below. Return parent with layout!
         //  In other browsers it only includes elements with position absolute, relative or
         // fixed, not elements with overflow set to auto or scroll.
@@ -1377,6 +1389,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
     }
 
     /**
+     * @ignore
      * 获得元素的显示部分的区域
      */
     function getVisibleRectForElement(element) {
@@ -1530,11 +1543,8 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
 
 
     /**
-     * @name Align
-     * @class
-     * Align extension class.
-     * Align component with specified element.
-     * @memberOf Component.UIBase
+     * @class KISSY.Component.UIBase.Align
+     * Align extension class.Align component with specified element.
      */
     function Align() {
     }
@@ -1545,23 +1555,39 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
     Align.__getVisibleRectForElement = getVisibleRectForElement;
 
     Align.ATTRS =
-    /**
-     * @lends Component.UIBase.Align.prototype
-     */
     {
 
         /**
-         * Align configuration.
+         * alignment config.
          * @type {Object}
-         * @field
-         * @example
-         * <code>
-         *     {
+         * @property align
+         *
+         * for example:
+         *      @example
+         *      {
          *        node: null,         // 参考元素, falsy 或 window 为可视区域, 'trigger' 为触发元素, 其他为指定元素
          *        points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
          *        offset: [0, 0]      // 有效值为 [n, m]
-         *     }
-         * </code>
+         *      }
+         */
+
+
+        /**
+         * alignment config.
+         * @cfg {Object} align
+         *
+         * for example:
+         *      @example
+         *      {
+         *        node: null,         // 参考元素, falsy 或 window 为可视区域, 'trigger' 为触发元素, 其他为指定元素
+         *        points: ['cc','cc'], // ['tr', 'tl'] 表示 overlay 的 tl 与参考节点的 tr 对齐
+         *        offset: [0, 0]      // 有效值为 [n, m]
+         *      }
+         */
+
+
+        /**
+         * @ignore
          */
         align:{
             value:{}
@@ -1588,6 +1614,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
      * 获取 node 上的 align 对齐点 相对于页面的坐标
      * @param region
      * @param align
+     * @ignore
      */
     function getAlignOffset(region, align) {
         var V = align.charAt(0),
@@ -1614,11 +1641,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
         return { left:x, top:y };
     }
 
-    Align.prototype =
-    /**
-     * @lends Component.UIBase.Align.prototype
-     */
-    {
+    Align.prototype =    {
         _uiSetAlign:function (v) {
             if (v && v.points) {
                 this.align(v.node, v.points, v.offset, v.overflow);
@@ -1626,12 +1649,11 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
         },
 
         /*
-         对齐 Overlay 到 node 的 points 点, 偏移 offset 处
-         @method
-         @ignore
-         @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
-         @param {String[]} points 对齐方式
-         @param {Number[]} [offset] 偏移
+         * 对齐 Overlay 到 node 的 points 点, 偏移 offset 处
+         * @ignore
+         * @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
+         * @param {String[]} points 对齐方式
+         * @param {Number[]} [offset] 偏移
          */
         align:function (refNode, points, offset, overflow) {
             refNode = Node.one(refNode || win);
@@ -1733,7 +1755,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
         /**
          * Make current element center within node.
          * @param {undefined|String|HTMLElement|KISSY.NodeList} node
-         * Same as node config of {@link Component.UIBase.Align#align} .
+         * Same as node config of {@link KISSY.Component.UIBase.Align#cfg-align} .
          */
         center:function (node) {
             var self = this;
@@ -1751,6 +1773,8 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
     requires:["ua", "dom", "node"]
 });
 /**
+ * @ignore
+ *
  *  2012-04-26 yiminghe@gmail.com
  *   - 优化智能对齐算法
  *   - 慎用 resizeXX
@@ -1758,6 +1782,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
  *  2011-07-13 yiminghe@gmail.com note:
  *   - 增加智能对齐，以及大小调整选项
  **//**
+ * @ignore
  * @fileOverview UIBase
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
@@ -1772,9 +1797,9 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
 
     /**
-     * UIBase for class-based component.
+     * @class KISSY.Component.UIBase
      * @extends KISSY.Base
-     * @class Component.UIBase
+     * UIBase for class-based component.
      */
     function UIBase(config) {
         var self = this, id, srcNode;
@@ -2026,220 +2051,230 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         }
     }
 
-    S.extend(UIBase, Base,
+    S.extend(UIBase, Base, {
+
         /**
-         * @lends Component.UIBase.prototype
+         * Create dom structure of this component.
          */
-        {
+        create: function () {
+            var self = this;
+            // 是否生成过节点
+            if (!self.get("created")) {
+                /**
+                 * @event beforeCreateDom
+                 * fired before root node is created
+                 * @param {KISSY.Event.Object} e
+                 */
+                self.fire('beforeCreateDom');
+                callMethodByHierarchy(self, "createDom", "__createDom");
+                self.setInternal("created", true);
+                /**
+                 * @event afterCreateDom
+                 * fired when root node is created
+                 * @param {KISSY.Event.Object} e
+                 */
+                self.fire('afterCreateDom');
+                actionPlugins(self, self.get("plugins"), "createDom");
+            }
+            return self;
+        },
 
+        /**
+         * Put dom structure of this component to document and bind event.
+         */
+        render: function () {
+            var self = this, plugins;
+            // 是否已经渲染过
+            if (!self.get("rendered")) {
+                plugins = self.get("plugins");
+                self.create(undefined);
+
+                /**
+                 * @event beforeRenderUI
+                 * fired when root node is ready
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('beforeRenderUI');
+                callMethodByHierarchy(self, "renderUI", "__renderUI");
+
+                /**
+                 * @event afterRenderUI
+                 * fired after root node is rendered into dom
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('afterRenderUI');
+                actionPlugins(self, plugins, "renderUI");
+
+                /**
+                 * @event beforeBindUI
+                 * fired before component 's internal event is bind.
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('beforeBindUI');
+                bindUI(self);
+                callMethodByHierarchy(self, "bindUI", "__bindUI");
+
+                /**
+                 * @event afterBindUI
+                 * fired when component 's internal event is bind.
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('afterBindUI');
+                actionPlugins(self, plugins, "bindUI");
+
+                /**
+                 * @event beforeSyncUI
+                 * fired before component 's internal state is synchronized.
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('beforeSyncUI');
+
+                syncUI(self);
+                callMethodByHierarchy(self, "syncUI", "__syncUI");
+
+                /**
+                 * @event afterSyncUI
+                 * fired after component 's internal state is synchronized.
+                 * @param {KISSY.Event.Object} e
+                 */
+
+                self.fire('afterSyncUI');
+                actionPlugins(self, plugins, "syncUI");
+                self.setInternal("rendered", true);
+            }
+            return self;
+        },
+
+        /**
+         * For overridden. DOM creation logic of subclass component.
+         * @protected
+         * @method
+         */
+        createDom: noop,
+
+        /**
+         * For overridden. Render logic of subclass component.
+         * @protected
+         * @method
+         */
+        renderUI: noop,
+
+        /**
+         * For overridden. Bind logic for subclass component.
+         * @protected
+         * @method
+         */
+        bindUI: noop,
+
+        /**
+         * For overridden. Sync attribute with ui.
+         * @protected
+         * @method
+         */
+        syncUI: noop,
+
+
+        /**
+         * Destroy this component.
+         */
+        destroy: function () {
+            var self = this,
+                id,
+                plugins = self.get("plugins");
+            actionPlugins(self, plugins, "destructor");
+            destroyHierarchy(self);
+            self.fire('destroy');
+            self.detach();
+            // remove instance if set id
+            if (id = self.get("id")) {
+                Manager.removeComponent(id);
+            }
+            return self;
+        }
+    }, {
+
+        ATTRS: {
             /**
-             * Create dom structure of this component.
+             * Whether this component is rendered.
+             * @type {Boolean}
+             * @property rendered
              */
-            create: function () {
-                var self = this;
-                // 是否生成过节点
-                if (!self.get("created")) {
-                    /**
-                     * @event beforeCreateDom
-                     * fired before root node is created
-                     * @param e
-                     */
-                    self.fire('beforeCreateDom');
-                    callMethodByHierarchy(self, "createDom", "__createDom");
-                    self.setInternal("created", true);
-                    /**
-                     * @event afterCreateDom
-                     * fired when root node is created
-                     * @param e
-                     */
-                    self.fire('afterCreateDom');
-                    actionPlugins(self, self.get("plugins"), "createDom");
-                }
-                return self;
+            /**
+             * @ignore
+             */
+            rendered: {
+                value: false
+            },
+            /**
+             * Whether this component 's dom structure is created.
+             * @type {Boolean}
+             * @property created
+             */
+            /**
+             * @ignore
+             */
+            created: {
+                value: false
             },
 
             /**
-             * Put dom structure of this component to document and bind event.
+             * Config listener on created.
+             * @cfg {Object} listeners
+             *
+             * for example:
+             *      @example
+             *      {
+             *          click:{
+             *              scope:{x:1},
+             *              fn:function(){
+             *                  alert(this.x);
+             *              }
+             *          }
+             *      }
+             *      // or
+             *      {
+             *          click:function(){
+             *              alert(this.x);
+             *          }
+             *      }
              */
-            render: function () {
-                var self = this, plugins;
-                // 是否已经渲染过
-                if (!self.get("rendered")) {
-                    plugins = self.get("plugins");
-                    self.create(undefined);
-
-                    /**
-                     * @event beforeRenderUI
-                     * fired when root node is ready
-                     * @param e
-                     */
-
-                    self.fire('beforeRenderUI');
-                    callMethodByHierarchy(self, "renderUI", "__renderUI");
-
-                    /**
-                     * @event afterRenderUI
-                     * fired after root node is rendered into dom
-                     * @param e
-                     */
-
-                    self.fire('afterRenderUI');
-                    actionPlugins(self, plugins, "renderUI");
-
-                    /**
-                     * @event beforeBindUI
-                     * fired before component 's internal event is bind.
-                     * @param e
-                     */
-
-                    self.fire('beforeBindUI');
-                    bindUI(self);
-                    callMethodByHierarchy(self, "bindUI", "__bindUI");
-
-                    /**
-                     * @event afterBindUI
-                     * fired when component 's internal event is bind.
-                     * @param e
-                     */
-
-                    self.fire('afterBindUI');
-                    actionPlugins(self, plugins, "bindUI");
-
-                    /**
-                     * @event beforeSyncUI
-                     * fired before component 's internal state is synchronized.
-                     * @param e
-                     */
-
-                    self.fire('beforeSyncUI');
-
-                    syncUI(self);
-                    callMethodByHierarchy(self, "syncUI", "__syncUI");
-
-                    /**
-                     * @event afterSyncUI
-                     * fired after component 's internal state is synchronized.
-                     * @param e
-                     */
-
-                    self.fire('afterSyncUI');
-                    actionPlugins(self, plugins, "syncUI");
-                    self.setInternal("rendered", true);
-                }
-                return self;
+            /**
+             * @ignore
+             */
+            listeners: {
+                value: {}
             },
 
             /**
-             * For overridden. DOM creation logic of subclass component.
-             * @protected
-             * @method
+             * Plugins for current component.
+             * @cfg {Function[]/Object[]} plugins
              */
-            createDom: noop,
+            /**
+             * @ignore
+             */
+            plugins: {
+                value: []
+            },
 
             /**
-             * For overridden. Render logic of subclass component.
-             * @protected
-             * @method
+             * Get xclass of current component instance.
+             * @cfg {String} xclass
              */
-            renderUI: noop,
-
             /**
-             * For overridden. Bind logic for subclass component.
-             * @protected
-             * @method
+             * @ignore
              */
-            bindUI: noop,
-
-            /**
-             * For overridden. Sync attribute with ui.
-             * @protected
-             * @method
-             */
-            syncUI: noop,
-
-
-            /**
-             * Destroy this component.
-             */
-            destroy: function () {
-                var self = this,
-                    id,
-                    plugins = self.get("plugins");
-                actionPlugins(self, plugins, "destructor");
-                destroyHierarchy(self);
-                self.fire('destroy');
-                self.detach();
-                // remove instance if set id
-                if (id = self.get("id")) {
-                    Manager.removeComponent(id);
-                }
-                return self;
-            }
-        }, {
-
-            ATTRS: /**
-             * @lends Component.UIBase#
-             */
-            {
-                /**
-                 * Whether this component is rendered.
-                 * @type {Boolean}
-                 */
-                rendered: {
-                    value: false
-                },
-                /**
-                 * Whether this component 's dom structure is created.
-                 * @type {Boolean}
-                 */
-                created: {
-                    value: false
-                },
-
-                /**
-                 * Config listener on created.
-                 * @example
-                 * <code>
-                 * {
-                 *  click:{
-                 *      scope:{x:1},
-                 *      fn:function(){
-                 *          alert(this.x);
-                 *      }
-                 *  }
-                 * }
-                 * or
-                 * {
-                 *  click:function(){
-                 *          alert(this.x);
-                 *        }
-                 * }
-                 * </code>
-                 */
-                listeners: {
-                    value: {}
-                },
-
-                /**
-                 * Plugins
-                 * @type {Function[]/Object[]}
-                 */
-                plugins: {
-                    value: []
-                },
-
-                /**
-                 * Get xclass of current component instance.
-                 * Readonly and only for json config.
-                 * @type {String}
-                 */
-                xclass: {
-                    valueFn: function () {
-                        return Manager.getXClassByConstructor(this.constructor);
-                    }
+            xclass: {
+                valueFn: function () {
+                    return Manager.getXClassByConstructor(this.constructor);
                 }
             }
-        });
+        }
+    });
 
     function constructPlugins(plugins) {
         S.each(plugins, function (plugin, i) {
@@ -2339,9 +2374,13 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
     S.mix(UIBase,
         {
             /**
-             * @static
              * Parse attribute from existing dom node.
+             * @static
+             * @protected
+             * @property HTML_PARSER
+             * @member KISSY.Component.UIBase
              *
+             * for example:
              *     @example
              *     Overlay.HTML_PARSER={
              *          // el: root element of current component.
@@ -2358,7 +2397,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
              * @param {Object} px Object to be mixed into new class 's prototype.
              * @param {Object} sx Object to be mixed into new class.
              * @static
-             * @return {Component.UIBase} A new class which extends UIBase .
+             * @return {KISSY.Component.UIBase} A new class which extends UIBase .
              */
             extend: function extend(extensions, px, sx) {
                 var args = S.makeArray(arguments),
@@ -2391,6 +2430,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
     requires: ["base", "node", "../manager"]
 });
 /**
+ * @ignore
+ *
  * Refer:
  *  - http://martinfowler.com/eaaDev/uiArchs.html
  *
@@ -2398,155 +2439,11 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
  *  - render 包括 create ，以及把生成的节点放在 document 中
  *  - create 仅仅包括创建节点
  **//**
+ * @ignore
  * @fileOverview UIBase.Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/uibase/box', function () {
-
-    /**
-     * Box extension class.
-     * Represent a dom element.
-     * @class Component.UIBase.Box
-     */
-    function Box() {
-    }
-
-    Box.ATTRS =
-    /**
-     * @lends Component.UIBase.Box.prototype
-     */
-    {
-        /**
-         * component's html content.
-         * Note: content and srcNode can not be set both!
-         * @type {String|KISSY.NodeList}
-         */
-        content: {
-            view: 1
-        },
-        /**
-         * component's width
-         * @type {Number|String}
-         */
-        width: {
-            view: 1
-        },
-        /**
-         * component's height
-         * @type {Number|String}
-         */
-        height: {
-            view: 1
-        },
-        /**
-         * css class of component's root element
-         * @type {String}
-         */
-        elCls: {
-            view: 1
-        },
-        /**
-         * name-value pair css style of component's root element
-         * @type {Object}
-         */
-        elStyle: {
-            view: 1
-        },
-        /**
-         * name-value pair attribute of component's root element
-         * @type {Object}
-         */
-        elAttrs: {
-            view: 1
-        },
-        /**
-         * archor element where component insert before
-         * @type {KISSY.NodeList}
-         */
-        elBefore: {
-            // better named to renderBefore, too late !
-            view: 1
-        },
-        /**
-         * readonly. root element of current component
-         * @type {KISSY.NodeList}
-         */
-        el: {
-            view: 1
-        },
-
-        /**
-         * archor element where component append to
-         * @type {KISSY.NodeList}
-         */
-        render: {
-            view: 1
-        },
-
-        /**
-         * component's visibleMode,use css "display" or "visibility" to show this component
-         * @type {String}
-         */
-        visibleMode: {
-            view: 1
-        },
-
-        /**
-         * whether this component is visible
-         * @type {Boolean}
-         * @default true
-         */
-        visible: {
-            value: true,
-            view: 1
-        },
-
-        /**
-         * the node to parse for configuration values,passed to component's HTML_PARSER definition
-         * @type {KISSY.NodeList}
-         */
-        srcNode: {
-            view: 1
-        }
-    };
-
-    Box.prototype =
-    {
-
-        _uiSetVisible: function (v) {
-            // do not fire event at render phrase
-            if (this.get('rendered')) {
-                this.fire(v ? "show" : "hide");
-            }
-        },
-
-        /**
-         * show component
-         */
-        show: function () {
-            var self = this;
-            self.render();
-            self.set("visible", true);
-            return self;
-        },
-
-        /**
-         * hide component
-         */
-        hide: function () {
-            var self = this;
-            self.set("visible", false);
-            return self;
-        }
-    };
-
-    return Box;
-});
-/**
- * @fileOverview UIBase.Box
- * @author yiminghe@gmail.com
- */
-KISSY.add('component/uibase/boxrender', function (S) {
+KISSY.add('component/uibase/box-render', function (S) {
 
     var $ = S.all, doc = S.Env.host.document;
 
@@ -2616,11 +2513,7 @@ KISSY.add('component/uibase/boxrender', function (S) {
         }
     };
 
-    BoxRender.prototype =
-    /**
-     * @lends Component.UIBase.Box.Render#
-     */
-    {
+    BoxRender.prototype = {
 
         __renderUI: function () {
             var self = this;
@@ -2640,6 +2533,7 @@ KISSY.add('component/uibase/boxrender', function (S) {
         },
 
         /**
+         * @ignore
          * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失
          * 通过 render 来重建原有的内容
          */
@@ -2723,85 +2617,217 @@ KISSY.add('component/uibase/boxrender', function (S) {
     requires: ['node']
 });
 /**
- * @fileOverview close extension for kissy dialog
+ * @ignore
+ * @fileOverview UIBase.Box
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/close", function () {
+KISSY.add('component/uibase/box', function () {
 
     /**
-     * @name Close
-     * @class
-     * Close extension class.
-     * Represent a close button.
-     * @memberOf Component.UIBase
+     * Box extension class.Represent a dom element.
+     * @class KISSY.Component.UIBase.Box
      */
-    function Close() {
+    function Box() {
     }
 
-    var HIDE = "hide";
-    Close.ATTRS =
-    /**
-     * @lends Component.UIBase.Close.prototype
-     */
+    Box.ATTRS =
     {
         /**
-         * Whether close button is visible.
-         * @default true.
+         * component's html content. Note: content and srcNode can not be set both!
+         * @type {String|KISSY.NodeList}
+         * @property content
+         */
+        /**
+         * component's html content. Note: content and srcNode can not be set both!
+         * @cfg {String|KISSY.NodeList} content
+         */
+        /**
+         * @ignore
+         */
+        content: {
+            view: 1
+        },
+
+        /**
+         * component's width
+         * @type {Number|String}
+         * @property width
+         */
+        /**
+         * component's width
+         * @cfg {Number|String} width
+         */
+        /**
+         * @ignore
+         */
+        width: {
+            view: 1
+        },
+
+        /**
+         * component's height
+         * @type {Number|String}
+         * @property height
+         */
+        /**
+         * component's height
+         * @cfg {Number|String} height
+         */
+        /**
+         * @ignore
+         */
+        height: {
+            view: 1
+        },
+
+        /**
+         * css class of component's root element
+         * @cfg {String} elCls
+         */
+        /**
+         * @ignore
+         */
+        elCls: {
+            view: 1
+        },
+
+        /**
+         * name-value pair css style of component's root element
+         * @cfg {Object} elStyle
+         */
+        /**
+         * @ignore
+         */
+        elStyle: {
+            view: 1
+        },
+
+        /**
+         * name-value pair attribute of component's root element
+         * @cfg {Object} elAttrs
+         */
+        /**
+         * @ignore
+         */
+        elAttrs: {
+            view: 1
+        },
+
+        /**
+         * archor element where component insert before
+         * @cfg {KISSY.NodeList} elBefore
+         */
+        /**
+         * @ignore
+         */
+        elBefore: {
+            // better named to renderBefore, too late !
+            view: 1
+        },
+
+        /**
+         * root element of current component
+         * @type {KISSY.NodeList}
+         * @readonly
+         * @property el
+         */
+        /**
+         * @ignore
+         */
+        el: {
+            view: 1
+        },
+
+        /**
+         * archor element where component append to
+         * @cfg {KISSY.NodeList} render
+         */
+        /**
+         * @ignore
+         */
+        render: {
+            view: 1
+        },
+
+        /**
+         * component's visibleMode,use css "display" or "visibility" to show this component
+         * @cfg {String} visibleMode
+         */
+        /**
+         * @ignore
+         */
+        visibleMode: {
+            view: 1
+        },
+
+        /**
+         * whether this component is visible.
+         * Defaults to: true.
+         * @cfg {Boolean} visible
+         */
+        /**
+         * whether this component is visible.
          * @type {Boolean}
+         * @property visible
          */
-        closable:{
-            view:1
+        /**
+         * @ignore
+         */
+        visible: {
+            value: true,
+            view: 1
         },
 
         /**
-         * Close button.
+         * the node to parse for configuration values,passed to component's HTML_PARSER definition
+         * @cfg {KISSY.NodeList} srcNode
          */
-        closeBtn:{
-            view:1
-        },
-
         /**
-         * Whether to destroy or hide current element when click close button.
-         * @default "hide". Can set "destroy" to destroy it when click close button.
-         * @type {String}
+         * @ignore
          */
-        closeAction:{
-            value:HIDE
+        srcNode: {
+            view: 1
         }
     };
 
-    var actions = {
-        hide:HIDE,
-        destroy:"destroy"
-    };
+    Box.prototype =
+    {
 
-    Close.prototype = {
-        _uiSetClosable:function (v) {
-            var self = this;
-            if (v && !self.__bindCloseEvent) {
-                self.__bindCloseEvent = 1;
-                self.get("closeBtn").on("click", function (ev) {
-                    self.close();
-                    ev.preventDefault();
-                });
+        _uiSetVisible: function (v) {
+            // do not fire event at render phrase
+            if (this.get('rendered')) {
+                this.fire(v ? "show" : "hide");
             }
         },
-        close:function(){
-            var self=this;
-            self[actions[self.get("closeAction")] || HIDE]();
+
+        /**
+         * show component
+         */
+        show: function () {
+            var self = this;
+            self.render();
+            self.set("visible", true);
+            return self;
         },
-        __destructor:function () {
-            var btn = this.get("closeBtn");
-            btn && btn.detach();
+
+        /**
+         * hide component
+         */
+        hide: function () {
+            var self = this;
+            self.set("visible", false);
+            return self;
         }
     };
-    return Close;
 
-});/**
+    return Box;
+});
+/**
+ * @ignore
  * @fileOverview close extension for kissy dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/closerender", function (S, Node) {
+KISSY.add("component/uibase/close-render", function (S, Node) {
 
     var CLS_PREFIX = 'ext-';
 
@@ -2857,42 +2883,103 @@ KISSY.add("component/uibase/closerender", function (S, Node) {
 }, {
     requires: ["node"]
 });/**
- * @fileOverview 里层包裹层定义， 适合mask以及shim
+ * @ignore
+ * @fileOverview close extension for kissy dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/contentbox", function () {
+KISSY.add("component/uibase/close", function () {
 
     /**
-     * @name ContentBox
-     * @class
-     * ContentBox extension class.
-     * Represent inner element of component's root element.
-     * @memberOf Component.UIBase
+     * @class KISSY.Component.UIBase.Close
+     * Close extension class. Represent a close button.
      */
-    function ContentBox() {
+    function Close() {
     }
 
-    ContentBox.ATTRS =
-    /**
-     * @lends Component.UIBase.ContentBox#
-     */
-    {
+    var HIDE = "hide";
+
+    Close.ATTRS =    {
+        /**
+         * Whether close button is visible.
+         * Defaults to: true.
+         * @cfg {Boolean} closable
+         */
+        /**
+         * Whether close button is visible.
+         * @type {Boolean}
+         * @property closable
+         */
+        /**
+         * @ignore
+         */
+        closable:{
+            view:1
+        },
 
         /**
-         * readonly! content box's element of component
+         * close button element.
          * @type {KISSY.NodeList}
+         * @property closeBtn
+         * @readonly
          */
-        contentEl:{
+        /**
+         * @ignore
+         */
+        closeBtn:{
             view:1
+        },
+
+        /**
+         * Whether to destroy or hide current element when click close button.
+         *
+         * Defaults to: "hide". Can set "destroy" to destroy it when click close button.
+         *
+         * @cfg {String} closeAction
+         */
+        /**
+         * @ignore
+         */
+        closeAction:{
+            value:HIDE
         }
     };
 
-    return ContentBox;
+    var actions = {
+        hide:HIDE,
+        destroy:"destroy"
+    };
+
+    Close.prototype = {
+        _uiSetClosable:function (v) {
+            var self = this;
+            if (v && !self.__bindCloseEvent) {
+                self.__bindCloseEvent = 1;
+                self.get("closeBtn").on("click", function (ev) {
+                    self.close();
+                    ev.preventDefault();
+                });
+            }
+        },
+        /**
+         * hide or destroy according to {@link KISSY.Component.UIBase.Close#closeAction}
+         */
+        close:function(){
+            var self=this;
+            self[actions[self.get("closeAction")] || HIDE]();
+        },
+        __destructor:function () {
+            var btn = this.get("closeBtn");
+            btn && btn.detach();
+        }
+    };
+    return Close;
+
 });/**
+ * @ignore
  * @fileOverview 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM) {
+KISSY.add("component/uibase/content-box-render", function (S, Node, BoxRender, DOM) {
 
     function ContentBoxRender() {
     }
@@ -2927,32 +3014,73 @@ KISSY.add("component/uibase/contentboxrender", function (S, Node, BoxRender, DOM
 
     return ContentBoxRender;
 }, {
-    requires: ["node", "./boxrender", 'dom']
+    requires: ["node", "./box-render", 'dom']
 });/**
+ * @ignore
+ * @fileOverview 里层包裹层定义， 适合mask以及shim
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/uibase/content-box", function () {
+
+    /**
+     * @class KISSY.Component.UIBase.ContentBox
+     * ContentBox extension class. Represent inner element of component's root element.
+     */
+    function ContentBox() {
+    }
+
+    ContentBox.ATTRS = {
+
+        /**
+         * content box's element of component.
+         * @type {KISSY.NodeList}
+         * @readonly
+         * @property contentEl
+         */
+        /**
+         * @ignore
+         */
+        contentEl: {
+            view: 1
+        }
+    };
+
+    return ContentBox;
+});/**
+ * @ignore
  * @fileOverview drag extension for position
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/uibase/drag", function (S) {
 
     /**
-     * @name Drag
-     * @class
-     * Drag extension class.
-     * Make element draggable.
-     * @memberOf Component.UIBase
+     * @class KISSY.Component.UIBase.Drag
+     * Drag extension class. Make element draggable.
      */
     function Drag() {
     }
 
-    Drag.ATTRS =
-
-    /**
-     * @lends Component.UIBase.Drag
-     */
-    {
+    Drag.ATTRS = {
         /**
-         * Whether current element is draggable.
-         * @type {Boolean}
+         * Whether current element is draggable and draggable config.
+         * @cfg {Boolean|Object} draggable
+         *
+         * for example:
+         *      @example
+         *      {
+         *          proxy:{
+         *              // see {@link KISSY.DD.Proxy}
+         *          },
+         *          scroll:{
+         *              // see {@link KISSY.DD.Scroll}
+         *          },
+         *          constrain:{
+         *              // see {@link KISSY.DD.Constrain}
+         *          },
+         *      }
+         */
+        /**
+         * @ignore
          */
         draggable: {
             setter: function (v) {
@@ -3046,50 +3174,11 @@ KISSY.add("component/uibase/drag", function (S) {
     return Drag;
 
 });/**
+ * @ignore
  * @fileOverview loading mask support for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/loading", function () {
-
-    /**
-     * @name Loading
-     * @class
-     * Loading extension class.
-     * Make component to be able to mask loading.
-     * @memberOf Component.UIBase
-     */
-    function Loading() {
-    }
-
-    Loading.prototype =
-    /**
-     * @lends Component.UIBase.Loading#
-     */
-    {
-        /**
-         * mask component as loading
-         */
-        loading:function () {
-            this.get("view").loading();
-            return this;
-        },
-
-        /**
-         * unmask component as loading
-         */
-        unloading:function () {
-            this.get("view").unloading();
-            return this;
-        }
-    };
-
-    return Loading;
-
-});/**
- * @fileOverview loading mask support for overlay
- * @author yiminghe@gmail.com
- */
-KISSY.add("component/uibase/loadingrender", function (S, Node) {
+KISSY.add("component/uibase/loading-render", function (S, Node) {
 
     function Loading() {
     }
@@ -3125,33 +3214,166 @@ KISSY.add("component/uibase/loadingrender", function (S, Node) {
 }, {
     requires: ['node']
 });/**
+ * @ignore
+ * @fileOverview loading mask support for overlay
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/uibase/loading", function () {
+
+    /**
+     * @class KISSY.DD.UIBase.Loading
+     * Loading extension class. Make component to be able to mask loading.
+     */
+    function Loading() {
+    }
+
+    Loading.prototype = {
+        /**
+         * mask component as loading
+         */
+        loading: function () {
+            this.get("view").loading();
+            return this;
+        },
+
+        /**
+         * unmask component as loading
+         */
+        unloading: function () {
+            this.get("view").unloading();
+            return this;
+        }
+    };
+
+    return Loading;
+
+});/**
+ * @ignore
+ * @fileOverview mask extension for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/uibase/mask-render", function (S, UA, Node) {
+
+    var ie6 = (UA['ie'] === 6),
+        $ = Node.all;
+
+    function docWidth() {
+        return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
+    }
+
+    function docHeight() {
+        return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
+    }
+
+    function initMask(self) {
+        var maskCls = self.get("prefixCls") + "ext-mask",
+            mask = $("<div " +
+            " style='width:" + docWidth() + ";" +
+            "left:0;" +
+            "top:0;" +
+            "height:" + docHeight() + ";" +
+            "position:" + (ie6 ? "absolute" : "fixed") + ";'" +
+            " class='" +
+            maskCls +
+            "'>" +
+            (ie6 ? "<" + "iframe " +
+                "style='position:absolute;" +
+                "left:" + "0" + ";" +
+                "top:" + "0" + ";" +
+                "background:red;" +
+                "width: expression(this.parentNode.offsetWidth);" +
+                "height: expression(this.parentNode.offsetHeight);" +
+                "filter:alpha(opacity=0);" +
+                "z-index:-1;'></iframe>" : "") +
+            "</div>")
+            .prependTo("body");
+        /*
+          点 mask 焦点不转移
+         */
+        mask.unselectable();
+        mask.on("mousedown", function (e) {
+            e.preventDefault();
+        });
+        return mask;
+    }
+
+    function Mask() {
+    }
+
+    Mask.ATTRS = {
+
+        mask: {
+            value: false
+        },
+        maskNode: {
+
+        }
+
+    };
+
+    Mask.prototype = {
+
+        __renderUI: function () {
+            var self = this;
+            if (self.get('mask')) {
+                self.set('maskNode', initMask(self));
+            }
+        },
+
+        __destructor: function () {
+            var self = this, mask;
+            if (mask = self.get("maskNode")) {
+                mask.remove();
+            }
+        }
+
+    };
+
+    return Mask;
+}, {
+    requires: ["ua", "node"]
+});/**
+ * @ignore
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/uibase/mask", function () {
 
     /**
-     * @name Mask
-     * @class
-     * Mask extension class.
-     * Make component to be able to show with mask.
-     * @memberOf Component.UIBase
+     * @class KISSY.Component.UIBase.Mask
+     * Mask extension class. Make component to be able to show with mask.
      */
     function Mask() {
     }
 
-    Mask.ATTRS =
-    /**
-     * @lends Component.UIBase.Mask#
-     */
-    {
+    Mask.ATTRS = {
         /**
-         * Whether show mask layer when component shows
-         * @type {Boolean|Object}
+         * Whether show mask layer when component shows and effect
+         * @cfg {Boolean|Object} mask
+         *
+         * for example:
+         *      @example
+         *      {
+         *          effect:'fade', // slide
+         *          duration:0.5,
+         *          easing:'easingNone'
+         *      }
+         */
+        /**
+         * @ignore
          */
         mask: {
             view: 1
         },
+        /**
+         * Mask node of current component.
+         * @type {KISSY.NodeList}
+         * @property maskNode
+         * @readonly
+         */
+        /**
+         * @ignore
+         */
         maskNode: {
             view: 1
         }
@@ -3205,206 +3427,11 @@ KISSY.add("component/uibase/mask", function () {
 
     return Mask;
 }, {requires: ["ua"]});/**
- * @fileOverview mask extension for kissy
- * @author yiminghe@gmail.com
- */
-KISSY.add("component/uibase/maskrender", function (S, UA, Node) {
-
-    var ie6 = (UA['ie'] === 6),
-        $ = Node.all;
-
-    function docWidth() {
-        return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
-    }
-
-    function docHeight() {
-        return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
-    }
-
-    function initMask(self) {
-        var maskCls = self.get("prefixCls") + "ext-mask",
-            mask = $("<div " +
-            " style='width:" + docWidth() + ";" +
-            "left:0;" +
-            "top:0;" +
-            "height:" + docHeight() + ";" +
-            "position:" + (ie6 ? "absolute" : "fixed") + ";'" +
-            " class='" +
-            maskCls +
-            "'>" +
-            (ie6 ? "<" + "iframe " +
-                "style='position:absolute;" +
-                "left:" + "0" + ";" +
-                "top:" + "0" + ";" +
-                "background:red;" +
-                "width: expression(this.parentNode.offsetWidth);" +
-                "height: expression(this.parentNode.offsetHeight);" +
-                "filter:alpha(opacity=0);" +
-                "z-index:-1;'></iframe>" : "") +
-            "</div>")
-            .prependTo("body");
-        /**
-         * 点 mask 焦点不转移
-         */
-        mask.unselectable();
-        mask.on("mousedown", function (e) {
-            e.preventDefault();
-        });
-        return mask;
-    }
-
-    function Mask() {
-    }
-
-    Mask.ATTRS = {
-
-        mask: {
-            value: false
-        },
-        maskNode: {
-
-        }
-
-    };
-
-    Mask.prototype = {
-
-        __renderUI: function () {
-            var self = this;
-            if (self.get('mask')) {
-                self.set('maskNode', initMask(self));
-            }
-        },
-
-        __destructor: function () {
-            var self = this, mask;
-            if (mask = self.get("maskNode")) {
-                mask.remove();
-            }
-        }
-
-    };
-
-    return Mask;
-}, {
-    requires: ["ua", "node"]
-});
-
-/**
- * TODO
- *  - mask index 隐藏时不会恢复 z-index，需要业务架构自己实现 DialogManager
- **//**
+ * @ignore
  * @fileOverview position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/position", function (S) {
-
-    /**
-     * @name Position
-     * @class
-     * Position extension class.
-     * Make component positionable
-     * @memberOf Component.UIBase
-     */
-    function Position() {
-    }
-
-    Position.ATTRS =
-    /**
-     * @lends Component.UIBase.Position#
-     */
-    {
-        /**
-         * Horizontal axis
-         * @type {Number}
-         */
-        x:{
-            view:1
-        },
-        /**
-         * Vertical axis
-         * @type {Number}
-         */
-        y:{
-            view:1
-        },
-        /**
-         * Horizontal and vertical axis.
-         * @type {Number[]}
-         */
-        xy:{
-            // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
-            setter:function (v) {
-                var self = this,
-                    xy = S.makeArray(v);
-                /*
-                 属性内分发特别注意：
-                 xy -> x,y
-                 */
-                if (xy.length) {
-                    xy[0] && self.set("x", xy[0]);
-                    xy[1] && self.set("y", xy[1]);
-                }
-                return v;
-            },
-            /**
-             * xy 纯中转作用
-             */
-            getter:function () {
-                return [this.get("x"), this.get("y")];
-            }
-        },
-        /**
-         * z-index value.
-         * @type {Number}
-         */
-        zIndex:{
-            view:1
-        },
-        /**
-         * Positionable element is by default visible false.
-         * For compatibility in overlay and PopupMenu.
-         * @default false
-         */
-        visible:{
-            value:false
-        }
-    };
-
-
-    Position.prototype =
-    /**
-     * @lends Component.UIBase.Position.prototype
-     */
-    {
-        /**
-         * Move to absolute position.
-         * @param {Number|Number[]} x
-         * @param {Number} [y]
-         * @example
-         * <code>
-         * move(x, y);
-         * move(x);
-         * move([x,y])
-         * </code>
-         */
-        move:function (x, y) {
-            var self = this;
-            if (S.isArray(x)) {
-                y = x[1];
-                x = x[0];
-            }
-            self.set("xy", [x, y]);
-            return self;
-        }
-    };
-
-    return Position;
-});/**
- * @fileOverview position and visible extension，可定位的隐藏层
- * @author yiminghe@gmail.com
- */
-KISSY.add("component/uibase/positionrender", function () {
+KISSY.add("component/uibase/position-render", function () {
 
     function Position() {
     }
@@ -3419,6 +3446,7 @@ KISSY.add("component/uibase/positionrender", function () {
         zIndex: {
         },
         /**
+         * @ignore
          * see {@link Component.UIBase.Box#visibleMode}.
          * @default "visibility"
          */
@@ -3457,40 +3485,156 @@ KISSY.add("component/uibase/positionrender", function () {
 
     return Position;
 });/**
+ * @ignore
+ * @fileOverview position and visible extension，可定位的隐藏层
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/uibase/position", function (S) {
+
+    /**
+     * @class KISSY.Component.UIBase.Position
+     * Position extension class. Make component positionable.
+     */
+    function Position() {
+    }
+
+    Position.ATTRS = {
+        /**
+         * Horizontal axis
+         * @type {Number}
+         * @property x
+         */
+        /**
+         * Horizontal axis
+         * @cfg {Number} x
+         */
+        /**
+         * @ignore
+         */
+        x: {
+            view: 1
+        },
+
+        /**
+         * Vertical axis
+         * @type {Number}
+         * @property y
+         */
+        /**
+         * Vertical axis
+         * @cfg {Number} y
+         */
+        /**
+         * @ignore
+         */
+        y: {
+            view: 1
+        },
+        /**
+         * Horizontal and vertical axis.
+         * @ignore
+         * @type {Number[]}
+         */
+        xy: {
+            // 相对 page 定位, 有效值为 [n, m], 为 null 时, 选 align 设置
+            setter: function (v) {
+                var self = this,
+                    xy = S.makeArray(v);
+                /*
+                 属性内分发特别注意：
+                 xy -> x,y
+                 */
+                if (xy.length) {
+                    xy[0] && self.set("x", xy[0]);
+                    xy[1] && self.set("y", xy[1]);
+                }
+                return v;
+            },
+
+            // xy 纯中转作用
+            getter: function () {
+                return [this.get("x"), this.get("y")];
+            }
+        },
+
+        /**
+         * z-index value.
+         * @type {Number}
+         * @property zIndex
+         */
+        /**
+         * z-index value.
+         * @cfg {Number} zIndex
+         */
+        /**
+         * @ignore
+         */
+        zIndex: {
+            view: 1
+        },
+        /**
+         * Positionable element is by default visible false.
+         * For compatibility in overlay and PopupMenu.
+         * Defaults to: false
+         * @ignore
+         */
+        visible: {
+            value: false
+        }
+    };
+
+
+    Position.prototype = {
+        /**
+         * Move to absolute position.
+         * @ignore
+         */
+        move: function (x, y) {
+            var self = this;
+            if (S.isArray(x)) {
+                y = x[1];
+                x = x[0];
+            }
+            self.set("xy", [x, y]);
+            return self;
+        }
+    };
+
+    return Position;
+});/**
+ * @ignore
  * @fileOverview resize extension using resizable
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/uibase/resize", function (S) {
 
     /**
-     * @name Resize
-     * @class
-     * Resizable extension class.
-     * Make component resizable
-     * @memberOf Component.UIBase
+     * @name KISSY.Component.UIBase.Resize
+     * @class Resizable extension class. Make component resizable
      */
     function Resize() {
     }
 
-    Resize.ATTRS =
-    /**
-     * @lends Component.UIBase.Resize.prototype
-     */
-    {
+    Resize.ATTRS = {
         /**
-         * Resizable configuration.
-         * See {@link Resizable}
-         * @example
-         * <code>
-         *  {
-         *    minWidth:100,
-         *    maxWidth:1000,
-         *    minHeight:100,
-         *    maxHeight:1000,
-         *    handlers:["b","t","r","l","tr","tl","br","bl"]
-         *  }
-         * </code>
+         * Resizable configuration. See {@link KISSY.Resizable}
          * @type {Object}
+         * @property resize
+         *
+         * for example:
+         *      @example
+         *      {
+         *          minWidth:100,
+         *          maxWidth:1000,
+         *          minHeight:100,
+         *          maxHeight:1000,
+         *          handlers:["b","t","r","l","tr","tl","br","bl"]
+         *      }
+         *
+         *
+         */
+        /**
+         * @ignore
          */
         resize:{
             value:{
@@ -3517,10 +3661,11 @@ KISSY.add("component/uibase/resize", function (S) {
 
     return Resize;
 });/**
+ * @ignore
  * @fileOverview shim for ie6 ,require box-ext
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/shimrender", function () {
+KISSY.add("component/uibase/shim-render", function () {
     // only for ie6!
     function Shim() {
     }
@@ -3541,99 +3686,11 @@ KISSY.add("component/uibase/shimrender", function () {
 
     return Shim;
 });/**
+ * @ignore
  * @fileOverview support standard mod for component
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/stdmod", function () {
-
-
-    /**
-     * @name StdMod
-     * @class
-     * StdMod extension class.
-     * Generate head, body, foot for component.
-     * @memberOf Component.UIBase
-     */
-    function StdMod() {
-    }
-
-    StdMod.ATTRS =
-    /**
-     * @lends Component.UIBase.StdMod#
-     */
-    {
-        /**
-         * Header element of dialog. Readonly
-         * @type {Node}
-         */
-        header:{
-            view:1
-        },
-        /**
-         * Body element of dialog. Readonly
-         * @type {Node}
-         */
-        body:{
-            view:1
-        },
-        /**
-         * Footer element of dialog. Readonly
-         * @type {Node}
-         */
-        footer:{
-            view:1
-        },
-        /**
-         * Key-value map of body element's style.
-         * @type {Object}
-         */
-        bodyStyle:{
-            view:1
-        },
-        /**
-         * Key-value map of footer element's style.
-         * @type {Object}
-         */
-        footerStyle:{
-            view:1
-        },
-        /**
-         * Key-value map of header element's style.
-         * @type {Object}
-         */
-        headerStyle:{
-            view:1
-        },
-        /**
-         * html content of header element.
-         * @type {NodeList|String}
-         */
-        headerContent:{
-            view:1
-        },
-        /**
-         * html content of body element.
-         * @type {NodeList|String}
-         */
-        bodyContent:{
-            view:1
-        },
-        /**
-         * html content of footer element.
-         * @type {NodeList|String}
-         */
-        footerContent:{
-            view:1
-        }
-    };
-
-    return StdMod;
-
-});/**
- * @fileOverview support standard mod for component
- * @author yiminghe@gmail.com
- */
-KISSY.add("component/uibase/stdmodrender", function (S, Node) {
+KISSY.add("component/uibase/stdmod-render", function (S, Node) {
 
 
     var CLS_PREFIX = "stdmod-";
@@ -3735,4 +3792,120 @@ KISSY.add("component/uibase/stdmodrender", function (S, Node) {
 
 }, {
     requires: ['node']
+});/**
+ * @ignore
+ * @fileOverview support standard mod for component
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("component/uibase/stdmod", function () {
+
+
+    /**
+     * @class KISSY.Component.UIBase.StdMod
+     * StdMod extension class. Generate head, body, foot for component.
+     */
+    function StdMod() {
+    }
+
+    StdMod.ATTRS = {
+        /**
+         * Header element of dialog.
+         * @type {KISSY.NodeList}
+         * @property header
+         * @readonly
+         */
+        /**
+         * @ignore
+         */
+        header:{
+            view:1
+        },
+        /**
+         * Body element of dialog.
+         * @type {KISSY.NodeList}
+         * @property body
+         * @readonly
+         */
+        /**
+         * @ignore
+         */
+        body:{
+            view:1
+        },
+        /**
+         * Footer element of dialog.
+         * @type {KISSY.NodeList}
+         * @property footer
+         * @readonly
+         */
+        /**
+         * @ignore
+         */
+        footer:{
+            view:1
+        },
+        /**
+         * Key-value map of body element's style.
+         * @cfg {Object} bodyStyle
+         */
+        /**
+         * @ignore
+         */
+        bodyStyle:{
+            view:1
+        },
+        /**
+         * Key-value map of footer element's style.
+         * @cfg {Object} footerStyle
+         */
+        /**
+         * @ignore
+         */
+        footerStyle:{
+            view:1
+        },
+        /**
+         * Key-value map of header element's style.
+         * @cfg {Object} headerStyle
+         */
+        /**
+         * @ignore
+         */
+        headerStyle:{
+            view:1
+        },
+        /**
+         * html content of header element.
+         * @cfg {KISSY.NodeList|String} headerContent
+         */
+        /**
+         * @ignore
+         */
+        headerContent:{
+            view:1
+        },
+        /**
+         * html content of body element.
+         * @cfg {KISSY.NodeList|String} bodyContent
+         */
+        /**
+         * @ignore
+         */
+        bodyContent:{
+            view:1
+        },
+        /**
+         * html content of footer element.
+         * @cfg {KISSY.NodeList|String} footerContent
+         */
+        /**
+         * @ignore
+         */
+        footerContent:{
+            view:1
+        }
+    };
+
+    return StdMod;
+
 });

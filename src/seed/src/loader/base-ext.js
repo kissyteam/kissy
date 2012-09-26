@@ -4,9 +4,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (S.Env.nodejs) {
-        return;
-    }
 
     var Path = S.Path, Loader = S.Loader, Utils = Loader.Utils;
 

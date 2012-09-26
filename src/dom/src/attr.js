@@ -6,10 +6,10 @@
 KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
     var doc = S.Env.host.document,
-        NodeType=DOM.NodeType,
-        docElement = doc.documentElement,
+        NodeType = DOM.NodeType,
+        docElement = doc && doc.documentElement,
         IE_VERSION = UA.ie && (doc.documentMode || UA.ie),
-        TEXT = docElement.textContent === undefined ?
+        TEXT = docElement && docElement.textContent === undefined ?
             'innerText' : 'textContent',
         EMPTY = '',
         HREF = 'href',
@@ -514,7 +514,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * @param {String} name The attribute to be tested
              * @return {Boolean}
              */
-            hasAttr: !docElement.hasAttribute ?
+            hasAttr: docElement && !docElement.hasAttribute ?
                 function (selector, name) {
                     name = name.toLowerCase();
                     var elems = DOM.query(selector);
@@ -655,21 +655,21 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
     requires: ['./base', 'ua']
 });
 /*
-  NOTES:
-  yiminghe@gmail.com：2011-06-03
-   - 借鉴 jquery 1.6,理清 attribute 与 property
- 
-  yiminghe@gmail.com：2011-01-28
-   - 处理 tabindex，顺便重构
- 
-  2010.03
-   - 在 jquery/support.js 中，special attrs 里还有 maxlength, cellspacing,
-     rowspan, colspan, useap, frameboder, 但测试发现，在 Grade-A 级浏览器中
-     并无兼容性问题。
-   - 当 colspan/rowspan 属性值设置有误时，ie7- 会自动纠正，和 href 一样，需要传递
-     第 2 个参数来解决。jQuery 未考虑，存在兼容性 bug.
-   - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
-   - jquery/attributes.js: Safari mis-reports the default selected
-     property of an option 在 Safari 4 中已修复。
- 
+ NOTES:
+ yiminghe@gmail.com：2011-06-03
+ - 借鉴 jquery 1.6,理清 attribute 与 property
+
+ yiminghe@gmail.com：2011-01-28
+ - 处理 tabindex，顺便重构
+
+ 2010.03
+ - 在 jquery/support.js 中，special attrs 里还有 maxlength, cellspacing,
+ rowspan, colspan, useap, frameboder, 但测试发现，在 Grade-A 级浏览器中
+ 并无兼容性问题。
+ - 当 colspan/rowspan 属性值设置有误时，ie7- 会自动纠正，和 href 一样，需要传递
+ 第 2 个参数来解决。jQuery 未考虑，存在兼容性 bug.
+ - jQuery 考虑了未显式设定 tabindex 时引发的兼容问题，kissy 里忽略（太不常用了）
+ - jquery/attributes.js: Safari mis-reports the default selected
+ property of an option 在 Safari 4 中已修复。
+
  */

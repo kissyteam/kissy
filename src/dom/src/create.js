@@ -6,19 +6,19 @@
 KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
         var doc = S.Env.host.document,
-            NodeType=DOM.NodeType,
+            NodeType = DOM.NodeType,
             ie = UA['ie'],
             isString = S.isString,
             DIV = 'div',
             PARENT_NODE = 'parentNode',
-            DEFAULT_DIV = doc.createElement(DIV),
+            DEFAULT_DIV = doc && doc.createElement(DIV),
             R_XHTML_TAG = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
             RE_TAG = /<([\w:]+)/,
             R_TBODY = /<tbody/i,
             R_LEADING_WHITESPACE = /^\s+/,
             lostLeadingWhitespace = ie && ie < 9,
             R_HTML = /<|&#?\w+;/,
-            supportOuterHTML = 'outerHTML' in doc.documentElement,
+            supportOuterHTML = doc && 'outerHTML' in doc.documentElement,
             RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
 
         // help compression
@@ -49,7 +49,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * @param {HTMLDocument} [ownerDoc] A document in which the new elements will be created
                  * @return {DocumentFragment|HTMLElement}
                  */
-                create:function (html, props, ownerDoc, _trim/*internal*/) {
+                create: function (html, props, ownerDoc, _trim/*internal*/) {
 
                     var ret = null;
 
@@ -122,8 +122,8 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     return attachProps(ret, props);
                 },
 
-                _creators:{
-                    div:function (html, ownerDoc) {
+                _creators: {
+                    div: function (html, ownerDoc) {
                         var frag = ownerDoc && ownerDoc != doc ? ownerDoc.createElement(DIV) : DEFAULT_DIV;
                         // html 为 <style></style> 时不行，必须有其他元素？
                         frag['innerHTML'] = 'm<div>' + html + '<' + '/div>';
@@ -139,7 +139,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * @param {String} htmlString  A string of HTML to set as the content of each matched element.
                  * @param {Boolean} [loadScripts=false] True to look for and process scripts
                  */
-                html:function (selector, htmlString, loadScripts, callback) {
+                html: function (selector, htmlString, loadScripts, callback) {
                     // supports css selector/Node/NodeList
                     var els = DOM.query(selector),
                         el = els[0];
@@ -200,7 +200,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * @param {String} htmlString  A string of HTML to set as outerHTML of each matched element.
                  * @param {Boolean} [loadScripts=false] True to look for and process scripts
                  */
-                outerHTML:function (selector, htmlString, loadScripts) {
+                outerHTML: function (selector, htmlString, loadScripts) {
                     var els = DOM.query(selector),
                         holder,
                         i,
@@ -243,7 +243,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  * @param {Boolean} [keepData=false] whether keep bound events and jQuery data associated with the elements from removed.
                  */
-                remove:function (selector, keepData) {
+                remove: function (selector, keepData) {
                     var el, els = DOM.query(selector), i;
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
@@ -279,7 +279,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * @return {HTMLElement}
                  * @member KISSY.DOM
                  */
-                clone:function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
+                clone: function (selector, deep, withDataAndEvent, deepWithDataAndEvent) {
 
                     if (typeof deep === 'object') {
                         deepWithDataAndEvent = deep['deepWithDataAndEvent'];
@@ -328,7 +328,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                  * Remove(include data and event handlers) all child nodes of the set of matched elements from the DOM.
                  * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  */
-                empty:function (selector) {
+                empty: function (selector) {
                     var els = DOM.query(selector), el, i;
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
@@ -336,7 +336,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                 },
 
-                nodeListToFragment:nodeListToFragment
+                nodeListToFragment: nodeListToFragment
             });
 
         function processAll(fn, elem, clone) {
@@ -484,19 +484,19 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         var creators = DOM._creators,
             create = DOM.create,
             creatorsMap = {
-                option:'select',
-                optgroup:'select',
-                area:'map',
-                thead:'table',
-                td:'tr',
-                th:'tr',
-                tr:'tbody',
-                tbody:'table',
-                tfoot:'table',
-                caption:'table',
-                colgroup:'table',
-                col:'colgroup',
-                legend:'fieldset' // ie 支持，但 gecko 不支持
+                option: 'select',
+                optgroup: 'select',
+                area: 'map',
+                thead: 'table',
+                td: 'tr',
+                th: 'tr',
+                tr: 'tbody',
+                tbody: 'table',
+                tfoot: 'table',
+                caption: 'table',
+                colgroup: 'table',
+                col: 'colgroup',
+                legend: 'fieldset' // ie 支持，但 gecko 不支持
             };
 
         for (var p in creatorsMap) {
@@ -532,27 +532,27 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         return DOM;
     },
     {
-        requires:['./base', 'ua']
+        requires: ['./base', 'ua']
     });
 
 /*
-  2012-01-31
-  remove spurious tbody
+ 2012-01-31
+ remove spurious tbody
 
-  2011-10-13
-  empty , html refactor
+ 2011-10-13
+ empty , html refactor
 
-  2011-08-22
-  clone 实现，参考 jq
+ 2011-08-22
+ clone 实现，参考 jq
 
-  2011-08
-   remove 需要对子孙节点以及自身清除事件以及自定义 data
-   create 修改，支持 <style></style> ie 下直接创建
-   TODO: jquery clone ,clean 实现
+ 2011-08
+ remove 需要对子孙节点以及自身清除事件以及自定义 data
+ create 修改，支持 <style></style> ie 下直接创建
+ TODO: jquery clone ,clean 实现
 
-  TODO:
-   - 研究 jQuery 的 buildFragment 和 clean
-   - 增加 cache, 完善 test cases
-   - 支持更多 props
-   - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
+ TODO:
+ - 研究 jQuery 的 buildFragment 和 clean
+ - 增加 cache, 完善 test cases
+ - 支持更多 props
+ - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
  */

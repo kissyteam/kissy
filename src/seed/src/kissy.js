@@ -3,7 +3,7 @@
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-(function (S, undefined) {
+var KISSY = (function (undefined) {
     /**
      * The KISSY global namespace object. you can use
      *
@@ -151,7 +151,7 @@
 
     // If KISSY is already defined, the existing KISSY object will not
     // be overwritten so that defined namespaces are preserved.
-        seed = (host && host[S]) || {},
+        seed = {},
 
         guid = 0,
         EMPTY = '';
@@ -159,11 +159,11 @@
     // The host of runtime environment. specify by user's seed or <this>,
     // compatibled for  '<this> is null' in unknown engine.
     seed.Env = seed.Env || {};
-    host = seed.Env.host || (seed.Env.host = host || {});
+    seed.Env.host = host;
 
     // shortcut and meta for seed.
     // override previous kissy
-    S = host[S] = meta.mix(seed, meta);
+    var S = meta.mix(seed, meta);
 
     S.mix(S,
         {
@@ -456,8 +456,8 @@
          */
         S.Env = S.Env || {};
 
-        S.Env.nodejs = (typeof require !== 'undefined') &&
-            (typeof exports !== 'undefined');
+        S.Env.nodejs = (typeof require === 'function') &&
+            (typeof exports === 'object');
 
         /**
          * KISSY Config.
@@ -481,6 +481,11 @@
         S.__BUILD_TIME = '@TIMESTAMP@';
     })();
 
+    // exports for nodejs
+    if (S.Env.nodejs) {
+        exports.KISSY = S;
+    }
+
     return S;
 
-})('KISSY', undefined);
+})();

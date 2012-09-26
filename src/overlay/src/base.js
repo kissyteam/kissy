@@ -135,7 +135,7 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
      * @extends Component.UIBase.Mask
      */
     var Overlay = Component.Controller.extend([
-        require("contentbox"),
+        require("content-box"),
         require("position"),
         require("loading"),
         require("align"),

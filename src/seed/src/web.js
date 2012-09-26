@@ -10,7 +10,7 @@
 
         doc = win['document'],
 
-        docElem = doc.documentElement,
+        docElem = doc && doc.documentElement,
 
         location = win.location,
 
@@ -140,7 +140,7 @@
      * @ignore
      */
     function _bindReady() {
-        var doScroll = docElem.doScroll,
+        var doScroll = docElem && docElem.doScroll,
             eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
             COMPLETE = 'complete',
             fire = function () {
@@ -149,7 +149,7 @@
 
         // Catch cases where ready() is called after the
         // browser event has already occurred.
-        if (doc.readyState === COMPLETE) {
+        if (!doc || doc.readyState === COMPLETE) {
             return fire();
         }
 

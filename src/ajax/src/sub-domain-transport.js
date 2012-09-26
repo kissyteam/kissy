@@ -5,8 +5,7 @@
  */
 KISSY.add('ajax/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) {
 
-    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-        PROXY_PAGE = '/sub_domain_proxy.html',
+    var PROXY_PAGE = '/sub_domain_proxy.html',
         doc = S.Env.host.document,
         iframeMap = {
             // hostname:{iframe: , ready:}

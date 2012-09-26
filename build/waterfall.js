@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 12 14:57
+build time: Sep 26 22:21
 */
 /**
  * @fileOverview Make Elements flow like waterfall.
@@ -78,7 +78,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
     {
         /**
          * Container which contains waterfall elements.
-         * @type {Node}
+         * @type {KISSY.NodeList}
          */
         container: {
             setter: function (v) {

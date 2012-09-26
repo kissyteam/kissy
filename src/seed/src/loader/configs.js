@@ -4,9 +4,7 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (S.Env.nodejs) {
-        return;
-    }
+
     var Loader = S.Loader,
         utils = Loader.Utils,
         configs = S.configs;

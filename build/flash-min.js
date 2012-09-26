@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:29
+build time: Sep 26 22:20
 */
 KISSY.add("flash/base",function(){return{swfs:{},length:0,version:"1.3"}});
 KISSY.add("flash/embed",function(g,i,k,d,o){function j(a,b){return e+a+n+q+b+q}function m(a,b){return'<param name="'+a+'" value="'+b+'" />'}var p=/^(?:object|embed)/i,e=" ",n="=",q='"',r=Object.prototype,s=encodeURIComponent,t={wmode:"",allowscriptaccess:"",allownetworking:"",allowfullscreen:"",play:"false",loop:"",menu:"",quality:"",scale:"",salign:"",bgcolor:"",devicefont:"",hasPriority:"",base:"",swliveconnect:"",seamlesstabbing:""},u={params:{},attrs:{width:215,height:138},version:9};g.mix(d,

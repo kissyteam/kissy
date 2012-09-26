@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 24 15:22
+build time: Sep 26 22:20
 */
 .ks-editor-button{display:inline-block;*display:inline;*zoom:1;margin:2px;border-radius:2px;padding:3px 18px;border:1px solid #c1c8d1;_padding-bottom:2px;*padding-bottom:2px;color:black;vertical-align:middle;white-space:nowrap;box-shadow:0 1px 1px #e4e4e4;background:#e8ebee repeat-x left top;background-image:url("ks-editor-button-bg.png")}.ks-editor-tools .ks-editor-button{padding:0;box-shadow:none;background:0}.ks-editor-toolbar-button{border:1px solid transparent;_border-color:tomato;_filter:chroma(color = tomato)}.ks-editor-tools .ks-editor-button-checked{border-color:#729bd1;background-color:#dde1eb!important}.ks-editor-button-hover,.ks-editor-button:hover{cursor:pointer;text-decoration:none;border-color:#e8cca0;background:#f5e7ce repeat-x left top;background-image:url("ks-editor-button-bg-active.png")}.ks-editor-tools .ks-editor-button-hover,.ks-editor-tools .ks-editor-button:hover{background:0;border-color:#ced5e0}.ks-editor-button-disabled{opacity:.3;filter:chroma(color = tomato) alpha(opacity = 30)}.ks-ie9 .ks-editor-button-disabled{filter:none}.ks-editor-tools .ks-editor-button-hover.ks-editor-button-checked{border-color:#a1badf}.ks-editor-tools .ks-editor-button-active,.ks-editor-button:active{border-color:#a1badf!important;background-color:#dde1eb!important}

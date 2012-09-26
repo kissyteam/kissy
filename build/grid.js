@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:29
+build time: Sep 26 22:20
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -2626,7 +2626,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
              * find the cell dom by record and column id
              * @param {String|Number} id the column id
              * @param {Object} record the record that showed in this component,if can not find ,return null
-             * @return  {Node}
+             * @return  {KISSY.NodeList}
              */
             findCell:function (id, record) {
                 var _self = this,

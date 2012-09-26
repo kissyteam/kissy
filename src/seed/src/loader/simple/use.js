@@ -4,9 +4,6 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
-    if (S.Env.nodejs) {
-        return;
-    }
 
     var Loader = S.Loader,
         data = Loader.STATUS,

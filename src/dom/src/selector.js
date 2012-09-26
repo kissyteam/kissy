@@ -284,7 +284,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         };
 
         // 貌似除了 ie 都有了...
-        if (doc.documentElement.compareDocumentPosition) {
+        if (doc && doc.documentElement.compareDocumentPosition) {
             sortOrder = function (a, b) {
                 if (a == b) {
                     hasDuplicate = true;
@@ -368,35 +368,37 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         return context && makeArray(context.getElementsByTagName(tag)) || [];
     }
 
-    (function () {
-        // Check to see if the browser returns only elements
-        // when doing getElementsByTagName('*')
+    if (doc) {
+        (function () {
+            // Check to see if the browser returns only elements
+            // when doing getElementsByTagName('*')
 
-        // Create a fake element
-        var div = doc.createElement('div');
-        div.appendChild(doc.createComment(''));
+            // Create a fake element
+            var div = doc.createElement('div');
+            div.appendChild(doc.createComment(''));
 
-        // Make sure no comments are found
-        if (div.getElementsByTagName(ANY).length > 0) {
-            getElementsByTagName = function (tag, context) {
-                var ret = makeArray(context.getElementsByTagName(tag));
-                if (tag === ANY) {
-                    var t = [], i = 0, node;
-                    while ((node = ret[i++])) {
-                        // Filter out possible comments
-                        if (node.nodeType === 1) {
-                            t.push(node);
+            // Make sure no comments are found
+            if (div.getElementsByTagName(ANY).length > 0) {
+                getElementsByTagName = function (tag, context) {
+                    var ret = makeArray(context.getElementsByTagName(tag));
+                    if (tag === ANY) {
+                        var t = [], i = 0, node;
+                        while ((node = ret[i++])) {
+                            // Filter out possible comments
+                            if (node.nodeType === 1) {
+                                t.push(node);
+                            }
                         }
+                        ret = t;
                     }
-                    ret = t;
-                }
-                return ret;
-            };
-        }
-    })();
+                    return ret;
+                };
+            }
+        })();
+    }
 
     // query .cls
-    var getElementsByClassName = doc.getElementsByClassName ? function (cls, tag, context) {
+    var getElementsByClassName = doc && doc.getElementsByClassName ? function (cls, tag, context) {
         // query('#id1 xx','#id2')
         // #id2 内没有 #id1 , context 为 null , 这里防御下
         if (!context) {
@@ -420,7 +422,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             ret = makeArray(els);
         }
         return ret;
-    } : ( doc.querySelectorAll ? function (cls, tag, context) {
+    } : ( doc && doc.querySelectorAll ? function (cls, tag, context) {
         // ie8 return staticNodeList 对象,[].concat 会形成 [ staticNodeList ] ，手动转化为普通数组
         return context && makeArray(context.querySelectorAll((tag ? tag : '') + '.' + cls)) || [];
     } : function (cls, tag, context) {

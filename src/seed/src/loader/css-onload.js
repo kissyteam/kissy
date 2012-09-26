@@ -4,9 +4,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (S.Env.nodejs) {
-        return;
-    }
 
     var CSS_POLL_INTERVAL = 30,
         win = S.Env.host,

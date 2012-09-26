@@ -5,14 +5,11 @@
  */
 (function (S) {
 
-    if (S.Env.nodejs) {
-        return;
-    }
-
     var Loader = S.Loader,
         Path = S.Path,
         Uri = S.Uri,
-        ua = navigator.userAgent,
+        host = S.Env.host,
+        ua = host.navigator && navigator.userAgent || "",
         startsWith = S.startsWith,
         data = Loader.STATUS,
         ATTACHED = data.ATTACHED,
@@ -24,10 +21,10 @@
          * @private
          */
             Utils = {},
-        host = S.Env.host,
+
         isWebKit = !!ua.match(/AppleWebKit/),
         doc = host.document,
-        simulatedLocation = new Uri(location.href);
+        simulatedLocation = new Uri(host.location && location.href || "");
 
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A

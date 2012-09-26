@@ -8,7 +8,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
     var win = S.Env.host,
         doc = win.document,
         NodeType = DOM.NodeType,
-        docElem = doc.documentElement,
+        docElem = doc && doc.documentElement,
         getWin = DOM._getWin,
         CSS1Compat = 'CSS1Compat',
         compatMode = 'compatMode',
@@ -326,6 +326,13 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         var box, x , y ,
             doc = elem.ownerDocument,
             body = doc.body;
+
+        if (!elem.getBoundingClientRect) {
+            return {
+                left: 0,
+                top: 0
+            };
+        }
 
         // 根据 GBS 最新数据，A-Grade Browsers 都已支持 getBoundingClientRect 方法，不用再考虑传统的实现方式
         box = elem.getBoundingClientRect();

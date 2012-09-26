@@ -9,12 +9,12 @@ KISSY.add("overlay/overlay-render", function (S, UA, Component) {
     }
 
     return Component.Render.extend([
-        require("contentboxrender"),
-        require("positionrender"),
-        require("loadingrender"),
-        UA['ie'] === 6 ? require("shimrender") : null,
-        require("closerender"),
-        require("maskrender")
+        require("content-box-render"),
+        require("position-render"),
+        require("loading-render"),
+        UA['ie'] === 6 ? require("shim-render") : null,
+        require("close-render"),
+        require("mask-render")
     ]);
 }, {
     requires:["ua", "component"]

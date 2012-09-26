@@ -4,9 +4,7 @@
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
-    if (S.Env.nodejs) {
-        return;
-    }
+
     var MILLISECONDS_OF_SECOND = 1000,
         doc = S.Env.host.document,
         utils = S.Loader.Utils,

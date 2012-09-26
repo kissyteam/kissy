@@ -1,5 +1,11 @@
+var jsdom = require("jsdom").jsdom;
+document = jsdom("<html><head></head><body></body></html>");
+window = document.createWindow();
+location = window.location;
+navigator = window.navigator;
+window.document = document;
 
-var S = require('../../../build/kissy-nodejs');
+var S = require('../../../../../build/kissy-nodejs').KISSY;
 
 var http = require('http');
 

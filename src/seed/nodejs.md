@@ -22,7 +22,7 @@ h1. Hello World
 
 <pre class="console">var S = require('KISSY');
 S.ready(function(S){
-	S.log('hello world!');	
+	S.log('hello world!');
 });</pre>
 
 运行
@@ -32,7 +32,7 @@ S.ready(function(S){
 h1.  Using KISSY
 
 <!--
-"KISSY-Calendar Demo"://gist.github.com/662117 
+"KISSY-Calendar Demo"://gist.github.com/662117
 -->
 
 "KISSY-Overlay Demo"://gist.github.com/1703698

@@ -5,10 +5,6 @@
  */
 (function (S, undefined) {
 
-    if (S.Env.nodejs) {
-        return;
-    }
-
     var Loader = S.Loader,
         Path = S.Path,
         utils = Loader.Utils;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 7 02:26
+build time: Sep 26 22:16
 */
 /**
  * @ignore
@@ -192,22 +192,23 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         doc = win.document,
         location = win.location,
         simulatedLocation;
+    if (location) {
+        try {
+            curLocation = location.href;
+        } catch (e) {
+            S.log('ajax/base get curLocation error: ');
+            S.log(e);
+            // Use the href attribute of an A element
+            // since IE will modify it given document.location
+            curLocation = doc.createElement('a');
+            curLocation.href = '';
+            curLocation = curLocation.href;
+        }
 
-    try {
-        curLocation = location.href;
-    } catch (e) {
-        S.log('ajax/base get curLocation error: ');
-        S.log(e);
-        // Use the href attribute of an A element
-        // since IE will modify it given document.location
-        curLocation = doc.createElement('a');
-        curLocation.href = '';
-        curLocation = curLocation.href;
+        simulatedLocation = new Uri(curLocation);
     }
 
-    simulatedLocation = new Uri(curLocation);
-
-    var isLocal = rlocalProtocol.test(simulatedLocation.getScheme()),
+    var isLocal = simulatedLocation && rlocalProtocol.test(simulatedLocation.getScheme()),
         transports = {},
         defaultConfig = {
             type: 'GET',
@@ -1520,8 +1521,7 @@ KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
  */
 KISSY.add('ajax/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) {
 
-    var rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+))?)?/,
-        PROXY_PAGE = '/sub_domain_proxy.html',
+    var PROXY_PAGE = '/sub_domain_proxy.html',
         doc = S.Env.host.document,
         iframeMap = {
             // hostname:{iframe: , ready:}

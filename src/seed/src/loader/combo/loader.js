@@ -5,10 +5,6 @@
  */
 (function (S) {
 
-    if (S.Env.nodejs) {
-        return;
-    }
-
     function loadScripts(urls, callback, charset) {
         var count = urls && urls.length;
         if (!count) {

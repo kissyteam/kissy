@@ -8,7 +8,7 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender) {
     }
 
     return OverlayRender.extend([
-        require("stdmodrender")
+        require("stdmod-render")
     ], {
         createDom: function () {
             var self = this,

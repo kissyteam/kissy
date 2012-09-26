@@ -1,9 +1,16 @@
 var path = require("path"),
-    fs = require("fs"),
-    KISSY=require("KISSY").KISSY,
-    S=KISSY;
+    fs = require("fs");
 
-KISSY.use("overlay", function(S, Overlay) {
+var jsdom = require("jsdom").jsdom;
+document = jsdom("<html><head></head><body></body></html>");
+window = document.createWindow();
+location = window.location;
+navigator = window.navigator;
+window.document = document;
+
+var S = require('../../../../../build/kissy-nodejs').KISSY;
+
+S.use("overlay", function(S, Overlay) {
     
     document.body.innerHTML = "<div id='server'></div>";
     

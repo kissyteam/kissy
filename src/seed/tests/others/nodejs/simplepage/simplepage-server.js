@@ -1,13 +1,20 @@
-var S = require('../../lib/kissy-nodejs');
+var jsdom = require("jsdom").jsdom;
+document = jsdom("<html><head></head><body></body></html>");
+window = document.createWindow();
+location = window.location;
+navigator = window.navigator;
+window.document = document;
+
+var S = require('../../../../../../build/kissy-nodejs').KISSY;
 var vm = require('vm'),
     fs = require('fs'),
     url = require('url'),
     http = require('http');
 S.config({
-    packages:[
+    packages: [
         {
-            name:'example',
-            path:__dirname.replace(/\\/g, "/") + '/../../'
+            name: 'example',
+            path: 'file:' + __dirname.replace(/\\/g, "/") + '/../../'
         }
     ]
 });
@@ -21,19 +28,23 @@ http.createServer(
 
                 //后端渲染
                 if (!S.isEmptyObject(urlInfo.query)) {
+                    // !TODO
+                    // 需要更新，jsdom 会执行 script 标签里代码
+
+
                     KISSY.SSJS = 1;
                     document.docType = '<!DOCTYPE html>';
                     document.body.innerHTML = html_data;
 
                     var p = vm.runInNewContext(js_logic, {
-                        KISSY:KISSY,
-                        SSJS:1
-                    },"logic.js");
+                        KISSY: KISSY,
+                        SSJS: 1
+                    }, "logic.js");
 
-                    p.render({index:Number(urlInfo.query.page)});
+                    p.render({index: Number(urlInfo.query.page)});
                     res.writeHead(200, {
-                            'Content-Type':'text',
-                            'Accept-Charset':'utf-8'}
+                            'Content-Type': 'text',
+                            'Accept-Charset': 'utf-8'}
                     );
                     res.end(document.outerHTML);
                     fs.writeFile("server2.html", document.innerHTML);
@@ -46,8 +57,8 @@ http.createServer(
                         document.body.innerHTML = html_data + '<script>' + js_file + js_logic + '</script>';
 
                         res.writeHead(200, {
-                                'Content-Type':'text',
-                                'Accept-Charset':'utf-8'}
+                                'Content-Type': 'text',
+                                'Accept-Charset': 'utf-8'}
                         );
                         res.end(document.outerHTML);
                         fs.writeFile("browser2.html", document.innerHTML);

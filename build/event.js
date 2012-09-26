@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 19 16:52
+build time: Sep 26 22:20
 */
 /**
  * @ignore
@@ -441,7 +441,8 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/change', function (S, UA, Event, DOM, special) {
-    var mode = S.Env.host.document['documentMode'];
+    var doc = S.Env.host.document,
+        mode = doc && doc['documentMode'];
 
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
 
@@ -457,7 +458,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
         }
 
         special['change'] = {
-            setup:function () {
+            setup: function () {
                 var el = this;
                 if (isFormElement(el)) {
                     // checkbox/radio only fires change when blur in ie<9
@@ -478,7 +479,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
                     Event.on(el, 'beforeactivate', beforeActivate);
                 }
             },
-            tearDown:function () {
+            tearDown: function () {
                 var el = this;
                 if (isFormElement(el)) {
                     if (isCheckBoxOrRadio(el)) {
@@ -492,7 +493,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
                     S.each(DOM.query('textarea,input,select', el), function (fel) {
                         if (fel.__changeHandler) {
                             fel.__changeHandler = 0;
-                            Event.remove(fel, 'change', {fn:changeHandler, last:1});
+                            Event.remove(fel, 'change', {fn: changeHandler, last: 1});
                         }
                     });
                 }
@@ -518,7 +519,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
             if (isFormElement(t) && !t.__changeHandler) {
                 t.__changeHandler = 1;
                 // lazy bind change , always as last handler among user's handlers
-                Event.on(t, 'change', {fn:changeHandler, last:1});
+                Event.on(t, 'change', {fn: changeHandler, last: 1});
             }
         }
 
@@ -543,7 +544,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
 
     }
 }, {
-    requires:['ua', './base', 'dom', './special']
+    requires: ['ua', './base', 'dom', './special']
 });/**
  * @ignore
  * @fileOverview for other kissy core usage
@@ -899,7 +900,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
     var win = S.Env.host,
         doc = win.document,
-        docMode = doc['documentMode'],
+        docMode = doc && doc['documentMode'],
         REPLACE_HISTORY = '__replace_history_' + S.now(),
         ie = docMode || UA['ie'],
         HASH_CHANGE = 'hashchange';
@@ -919,7 +920,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         }
 
         var POLL_INTERVAL = 50,
-            IFRAME_TEMPLATE = '<html><head><title>' + (doc.title || '') +
+            IFRAME_TEMPLATE = '<html><head><title>' + (doc && doc.title || '') +
                 ' - {hash}</title>{head}</head><body>{hash}</body></html>',
 
             getHash = function () {
@@ -2215,11 +2216,14 @@ KISSY.add('event/special', function () {
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
-    var mode = S.Env.host.document['documentMode'];
+
+    var doc = S.Env.host.document,
+        mode = doc && doc['documentMode'];
+
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
         var getNodeName = DOM.nodeName;
         special['submit'] = {
-            setup:function () {
+            setup: function () {
                 var el = this;
                 // form use native
                 if (getNodeName(el) == 'form') {
@@ -2230,7 +2234,7 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
                 // keypoint : find the forms
                 Event.on(el, 'click keypress', detector);
             },
-            tearDown:function () {
+            tearDown: function () {
                 var el = this;
                 // form use native
                 if (getNodeName(el) == 'form') {
@@ -2241,8 +2245,8 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
                     if (form.__submit__fix) {
                         form.__submit__fix = 0;
                         Event.remove(form, 'submit', {
-                            fn:submitBubble,
-                            last:1
+                            fn: submitBubble,
+                            last: 1
                         });
                     }
                 });
@@ -2258,8 +2262,8 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
             if (form && !form.__submit__fix) {
                 form.__submit__fix = 1;
                 Event.on(form, 'submit', {
-                    fn:submitBubble,
-                    last:1
+                    fn: submitBubble,
+                    last: 1
                 });
             }
         }
@@ -2279,11 +2283,11 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
     }
 
 }, {
-    requires:['ua', './base', 'dom', './special']
+    requires: ['ua', './base', 'dom', './special']
 });
 /*
-  modified from jq ,fix submit in ie<9
-   - http://bugs.jquery.com/ticket/11049
+ modified from jq ,fix submit in ie<9
+ - http://bugs.jquery.com/ticket/11049
  *//**
  * @ignore
  * @fileOverview 提供事件发布和订阅机制
@@ -2551,7 +2555,7 @@ KISSY.add('event/utils', function (S, DOM) {
     }
 
     var doc = S.Env.host.document,
-        simpleAdd = doc.addEventListener ?
+        simpleAdd = doc && doc.addEventListener ?
             function (el, type, fn, capture) {
                 if (el.addEventListener) {
                     el.addEventListener(type, fn, !!capture);
@@ -2562,7 +2566,7 @@ KISSY.add('event/utils', function (S, DOM) {
                     el.attachEvent('on' + type, fn);
                 }
             },
-        simpleRemove = doc.removeEventListener ?
+        simpleRemove = doc && doc.removeEventListener ?
             function (el, type, fn, capture) {
                 if (el.removeEventListener) {
                     el.removeEventListener(type, fn, !!capture);

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 25 13:49
+build time: Sep 26 22:21
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -1004,8 +1004,8 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
 });
 
 /**
- * TODO
- *  tree 不能很好的结合 xclass
+ * 2012-09-25
+ *  - 去除 dblclick 支持，该交互会重复触发 click 事件，可能会重复执行逻辑
  *//**
  * @fileOverview tree management utils render
  * @author yiminghe@gmail.com
@@ -1120,7 +1120,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
          * @protected
          * @param target
          */
-        getOwnerControl: function (target) {
+        getOwnerControl: function (target,e) {
             var self = this,
                 n,
                 allNodes = getAllNodes(self),

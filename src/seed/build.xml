@@ -27,11 +27,39 @@
             <path location="${src.dir}/loader/simple/use.js"/>
             <path location="${src.dir}/loader/combo/loader.js"/>
             <path location="${src.dir}/loader/init.js"/>
-
             <!--kissy loader end-->
+
             <path location="${src.dir}/web.js"/>
             <path location="${src.dir}/meta.js"/>
             <path location="${src.dir}/deps.js"/>
+            <filterchain>
+                <deletecharacters chars="&#xFEFF;"/>
+            </filterchain>
+        </concat>
+
+        <!-- build kissy-nodejs -->
+        <concat destfile="${component.src.dir.tmp}/kissy-nodejs-pkg.js" encoding="${charset}"
+                outputencoding="${charset}">
+            <path location="${src.dir}/kissy.js"/>
+            <path location="${src.dir}/lang.js"/>
+            <path location="${src.dir}/promise.js"/>
+            <path location="${src.dir}/path.js"/>
+            <path location="${src.dir}/uri.js"/>
+
+            <!--kissy loader start-->
+            <path location="${src.dir}/loader/base.js"/>
+            <path location="${src.dir}/loader/target.js"/>
+            <path location="${src.dir}/loader/utils.js"/>
+            <path location="${src.dir}/loader/base-ext.js"/>
+            <path location="${src.dir}/loader/get-script-nodejs.js"/>
+            <path location="${src.dir}/loader/configs.js"/>
+            <path location="${src.dir}/loader/simple/add.js"/>
+            <path location="${src.dir}/loader/simple/use.js"/>
+            <path location="${src.dir}/loader/init.js"/>
+            <!--kissy loader end-->
+
+            <path location="${src.dir}/web.js"/>
+            <path location="${src.dir}/meta.js"/>
             <filterchain>
                 <deletecharacters chars="&#xFEFF;"/>
             </filterchain>

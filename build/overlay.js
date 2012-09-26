@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 10 21:09
+build time: Sep 26 22:48
 */
 /**
  * @fileOverview model and control for overlay
@@ -140,7 +140,7 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
      * @extends Component.UIBase.Mask
      */
     var Overlay = Component.Controller.extend([
-        require("contentbox"),
+        require("content-box"),
         require("position"),
         require("loading"),
         require("align"),
@@ -246,7 +246,7 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender) {
     }
 
     return OverlayRender.extend([
-        require("stdmodrender")
+        require("stdmod-render")
     ], {
         createDom: function () {
             var self = this,
@@ -329,7 +329,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 var self = this, el = self.get('el');
                 if (v) {
                     self.__lastActive = el[0].ownerDocument.activeElement;
-                    el[0].focus();
+                    el[0].focus && el[0].focus();
                     el.attr("aria-hidden", "false");
                 } else {
                     el.attr("aria-hidden", "true");
@@ -448,12 +448,12 @@ KISSY.add("overlay/overlay-render", function (S, UA, Component) {
     }
 
     return Component.Render.extend([
-        require("contentboxrender"),
-        require("positionrender"),
-        require("loadingrender"),
-        UA['ie'] === 6 ? require("shimrender") : null,
-        require("closerender"),
-        require("maskrender")
+        require("content-box-render"),
+        require("position-render"),
+        require("loading-render"),
+        UA['ie'] === 6 ? require("shim-render") : null,
+        require("close-render"),
+        require("mask-render")
     ]);
 }, {
     requires:["ua", "component"]

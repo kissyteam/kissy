@@ -4,11 +4,14 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
-    var mode = S.Env.host.document['documentMode'];
+
+    var doc = S.Env.host.document,
+        mode = doc && doc['documentMode'];
+
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
         var getNodeName = DOM.nodeName;
         special['submit'] = {
-            setup:function () {
+            setup: function () {
                 var el = this;
                 // form use native
                 if (getNodeName(el) == 'form') {
@@ -19,7 +22,7 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
                 // keypoint : find the forms
                 Event.on(el, 'click keypress', detector);
             },
-            tearDown:function () {
+            tearDown: function () {
                 var el = this;
                 // form use native
                 if (getNodeName(el) == 'form') {
@@ -30,8 +33,8 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
                     if (form.__submit__fix) {
                         form.__submit__fix = 0;
                         Event.remove(form, 'submit', {
-                            fn:submitBubble,
-                            last:1
+                            fn: submitBubble,
+                            last: 1
                         });
                     }
                 });
@@ -47,8 +50,8 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
             if (form && !form.__submit__fix) {
                 form.__submit__fix = 1;
                 Event.on(form, 'submit', {
-                    fn:submitBubble,
-                    last:1
+                    fn: submitBubble,
+                    last: 1
                 });
             }
         }
@@ -68,9 +71,9 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
     }
 
 }, {
-    requires:['ua', './base', 'dom', './special']
+    requires: ['ua', './base', 'dom', './special']
 });
 /*
-  modified from jq ,fix submit in ie<9
-   - http://bugs.jquery.com/ticket/11049
+ modified from jq ,fix submit in ie<9
+ - http://bugs.jquery.com/ticket/11049
  */

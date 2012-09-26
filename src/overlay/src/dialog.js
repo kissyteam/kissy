@@ -59,7 +59,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 var self = this, el = self.get('el');
                 if (v) {
                     self.__lastActive = el[0].ownerDocument.activeElement;
-                    el[0].focus();
+                    el[0].focus && el[0].focus();
                     el.attr("aria-hidden", "false");
                 } else {
                     el.attr("aria-hidden", "true");

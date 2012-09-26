@@ -1,8 +1,16 @@
+var path = require("path"),
+    fs = require("fs");
 
-var S = require('../../../build/kissy-nodejs'),
-    fs = require('fs');
+var jsdom = require("jsdom").jsdom;
+document = jsdom("<html><head></head><body></body></html>");
+window = document.createWindow();
+location = window.location;
+navigator = window.navigator;
+window.document = document;
 
-S.use('sizzle',function(S){
+var S = require('../../../../../build/kissy-nodejs').KISSY;
+
+S.use('dom,sizzle',function(S){
 
 
 	var test = function(node,str){
