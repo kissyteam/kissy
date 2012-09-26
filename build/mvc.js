@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 13:42
+build time: Sep 26 14:32
 */
 /**
  * @fileOverview collection of models
@@ -720,7 +720,11 @@ KISSY.add('mvc/router', function (S, Event, Base) {
     }
 
     function addStartSlash(str) {
-        return "/" + removeStartSlash(str);
+        if (str) {
+            return "/" + removeStartSlash(str);
+        } else {
+            return str;
+        }
     }
 
     function equalsIgnoreSlash(str1, str2) {

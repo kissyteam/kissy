@@ -1,17 +1,21 @@
 /**
- * Router spec for mvc
+ * Router spec for mvc html5 history
  * @author yiminghe@gmail.com
  */
 KISSY.use('mvc,event', function (S, MVC, Event) {
 
+    if (!window.history.pushState) {
+        return;
+    }
+
+    var original = location.href;
+
     var Router = MVC.Router;
 
-    function getHash() {
-        // 不能 location.hash
-        // http://xx.com/#yy?z=1
-        // ie6 => location.hash = #yy
-        // 其他浏览器 => location.hash = #yy?z=1
-        return new S.Uri(location.href).getFragment().replace(/^!/, "");
+    var urlRoot = new S.Uri(location.href).resolve('./').getPath().replace(/\/$/, '');
+
+    function getPath() {
+        return new S.Uri(location.href).getPath().substring(urlRoot.length);
     }
 
     describe("router", function () {
@@ -62,18 +66,11 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
 
             expect(Router.hasRoute('/list2/what/item')).toBe(true);
 
-            // restore hash to its original value
-            location.hash = '#';
-
             Router.start({
-                urlRoot: '/my',
+                urlRoot: new S.Uri(location.href).resolve('./').getPath(),
+                nativeHistory: 1,
                 success: function () {
                 }
-            });
-
-            runs(function () {
-                expect(Router.removeRoot('/my/list/what/item?item1=1&item2=2'))
-                    .toBe('/list/what/item');
             });
 
             waits(200);
@@ -110,18 +107,14 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
             });
         });
 
-        var ie = document.documentMode || S.UA.ie;
-
-        if (ie && ie < 8) {
-            // return;
-        }
-
         // ie<8 can only used on event handler
         // see ../others/test-replace-history.html
         it("can replace history", function () {
             var go = 0, list = 0, detail = 0, ok = 0;
 
-            location.replace('#');
+            runs(function () {
+                Router.navigate('');
+            });
 
             waits(200);
 
@@ -143,6 +136,7 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
                 });
 
                 Router.start({
+                    nativeHistory: 1,
                     success: function () {
                         Router.navigate("/list/");
                         ok = 1;
@@ -177,7 +171,7 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
             waits(200);
 
             runs(function () {
-                expect(getHash()).toBe('/detail/')
+                expect(getPath()).toBe('/detail/')
             });
 
             waits(200);
@@ -189,13 +183,14 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
             waits(200);
 
             runs(function () {
-                expect(getHash()).toBe('')
+                expect(getPath()).toBe('')
             });
 
             runs(function () {
                 expect(go).toBe(1);
                 expect(detail).toBe(2);
                 expect(list).toBe(1);
+                window.history.pushState({}, '', original);
             });
         });
 

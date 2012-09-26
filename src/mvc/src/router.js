@@ -86,7 +86,11 @@ KISSY.add('mvc/router', function (S, Event, Base) {
     }
 
     function addStartSlash(str) {
-        return "/" + removeStartSlash(str);
+        if (str) {
+            return "/" + removeStartSlash(str);
+        } else {
+            return str;
+        }
     }
 
     function equalsIgnoreSlash(str1, str2) {
