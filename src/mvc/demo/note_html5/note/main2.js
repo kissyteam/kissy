@@ -11,9 +11,7 @@ KISSY.add(function(S, Node, NoteRouter, Sy, MVC) {
         // 触发当前地址对应的 route 操作
         triggerRoute:1,
         nativeHistory:1,
-        urlRoot:location.hostname == "localhost" ?
-            '/kissy_git/kissy1.3/src/mvc/demo/note_html5' :
-            '/kissy/src/mvc/demo/note_html5',
+        urlRoot:new S.Uri(location.href).getPath(),
         success:function() {
             Node.all('#loading').hide();
         }

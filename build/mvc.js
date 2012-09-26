@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 24 21:45
+build time: Sep 26 13:42
 */
 /**
  * @fileOverview collection of models
@@ -668,16 +668,18 @@ KISSY.add('mvc/router', function (S, Event, Base) {
         // http://xx.com/#yy?z=1
         // ie6 => location.hash = #yy
         // 其他浏览器 => location.hash = #yy?z=1
-        return new S.Uri(url || location.href).getFragment().replace(/^!/, "");
+        return new S.Uri(url).getFragment().replace(/^!/, "");
     }
 
     /**
      * get url fragment and dispatch
      */
     function getFragment(url) {
+        url = url || location.href;
         if (Router.nativeHistory && supportNativeHistory) {
             url = new S.Uri(url);
-            return url.getPath().substr(Router.urlRoot.length) + url.getQuery().toString();
+            var query = url.getQuery().toString();
+            return url.getPath().substr(Router.urlRoot.length) + (query ? ('?' + query) : '');
         } else {
             return getHash(url);
         }
@@ -1014,8 +1016,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
                 each(allRoutes, function (route) {
                     var routeRegs = route[ROUTER_MAP];
                     each(routeRegs, function (desc) {
-                        var reg = desc.reg,
-                            m;
+                        var reg = desc.reg;
                         if (path.match(reg)) {
                             match = 1;
                             return false;
@@ -1086,7 +1087,8 @@ KISSY.add('mvc/router', function (S, Event, Base) {
                     return opts.success && opts.success();
                 }
 
-                opts.urlRoot = opts.urlRoot || "";
+                // remove backslash
+                opts.urlRoot = (opts.urlRoot || "").replace(/\/$/, '');
 
                 var urlRoot,
                     nativeHistory = opts.nativeHistory,

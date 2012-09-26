@@ -279,7 +279,7 @@ KISSY.add("note/mods/sync", function(S, mvc) {
 }, {requires:["mvc"]});
 KISSY.add("note/main2", function(S, Node, NoteRouter, Sy, MVC) {
   new NoteRouter;
-  MVC.Router.start({triggerRoute:1, nativeHistory:1, urlRoot:location.hostname == "localhost" ? "/kissy_git/kissy1.3/src/mvc/demo/note_html5" : "/kissy/src/mvc/demo/note_html5", success:function() {
+  MVC.Router.start({triggerRoute:1, nativeHistory:1, urlRoot:(new S.Uri(location.href)).getPath(), success:function() {
     Node.all("#loading").hide()
   }})
 }, {requires:["node", "./mods/router", "./mods/sync", "mvc"]});
