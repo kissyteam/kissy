@@ -78,11 +78,47 @@ describe("KISSY ComboLoader", function () {
             "??a.js,b.js,d.js,f.js,g.js,e.js,c.js,h.js,m.js?t=" + S.Config.tag);
     });
 
-    it("should trunk url automatically", function () {
+    it("should trunk url by comboMaxFileNum config rightly", function () {
 
         expect(S.Env._comboLoader.loading).toBe(0);
 
-        S.Env.mods = {};
+        S.clearLoader();
+
+        var comboMaxFileNum = S.config('comboMaxFileNum');
+
+        S.config('comboMaxFileNum', 2);
+
+        var l = new ComboLoader(S);
+
+        l.add({
+            a: {
+                requires: ["b", "c"]
+            },
+            b: {
+                requires: ["d", "e"]
+            }
+        });
+
+        var r;
+        r = l.calculate(["a", "b"]);
+        S.Loader.Utils.createModulesInfo(S, r);
+        var c = l.getComboUrls(r);
+        var js = c.js[''];
+        expect(js.length).toBe(3);
+        expect(js[0]).toBe(S.Config.base + "??a.js,b.js?t=" + S.Config.tag);
+        expect(js[1]).toBe(S.Config.base + "??d.js,e.js?t=" + S.Config.tag);
+        expect(js[2]).toBe(S.Config.base + "??c.js?t=" + S.Config.tag);
+
+        S.config('comboMaxFileNum', comboMaxFileNum);
+    });
+
+    it("should trunk url by comboMaxUrlLength automatically", function () {
+
+        S.config('comboMaxFileNum', 9999);
+
+        expect(S.Env._comboLoader.loading).toBe(0);
+
+        S.clearLoader();
 
         var x = {}, k = 3000;
 

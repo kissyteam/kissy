@@ -393,6 +393,7 @@
                 type,
                 comboPrefix = Config.comboPrefix,
                 comboSep = Config.comboSep,
+                maxFileNum = Config.comboMaxFileNum,
                 maxUrlLength = Config.comboMaxUrlLength;
 
             for (packageName in combos) {
@@ -450,7 +451,9 @@
 
                                 t.push(path);
 
-                                if (l + t.join(comboSep).length + suffixLength > maxUrlLength) {
+                                if (
+                                    (t.length > maxFileNum) ||
+                                        (l + t.join(comboSep).length + suffixLength > maxUrlLength)) {
                                     t.pop();
                                     pushComboUrl();
                                     t = [];
