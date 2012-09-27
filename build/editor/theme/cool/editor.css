@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 12 15:29
+build time: Sep 27 16:17
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -404,6 +404,34 @@ active
 .ks-editor-button:active {
     border-color: #a1badf !important;
     background-color: #DDE1EB !important;
+}.ks-editor-code-wrap {
+    padding: 20px;
+    padding-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ks-editor-code-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.ks-editor-code-table td {
+    padding: 2px;
+}
+
+.ks-editor-code-table-action {
+    padding: 20px;
+    padding-top: 5px;
+}
+
+.ks-editor-code-insert {
+    margin-right: 20px;
+}
+
+.ks-editor-code-table .ks-editor-code-textarea {
+    width: 367px;
+    height: 270px;
 }.ks-editor-color-panel a {
     display: block;
     color: black;
@@ -432,6 +460,7 @@ active
     border-right: 1px solid #666666;
     height: 18px;
     width: 18px;
+    padding: 0;
 }
 
 a.ks-editor-color-a {
@@ -477,6 +506,8 @@ a.ks-editor-color-remove:hover {
 
 .ks-editor-color-advanced-picker-left ul {
     float: left;
+    margin: 0;
+    padding: 0;
 }
 
 .ks-editor-color-advanced-picker-left li, .ks-editor-color-advanced-picker-left a {
@@ -858,10 +889,16 @@ ks-editor-toolbar-padding {
     margin-bottom: 4px;
 }
 
-.ks-editor-toolbar-restore {
+.ks-editor-toolbar-code {
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
   background-position: left -525px;
+}
+
+.ks-editor-toolbar-restore {
+  background-image: url('./cool.png');
+  -background-image: url('./cool-ie6.png');
+  background-position: left -541px;
 }
 
 .ks-editor-input {
@@ -897,7 +934,7 @@ menu style for kissy editor ,include contextmenu and select menu
     margin: 0;
     outline: medium none; /*padding: 4px 0;*/
     position: absolute;
-    overflow: hidden;
+    overflow: auto;
     left: -9999px;
     top: -9999px;
     box-shadow: 0px 1px 1px rgb(228, 228, 228);
@@ -912,7 +949,7 @@ menu style for kissy editor ,include contextmenu and select menu
 .ks-editor-menuitem {
     margin: 0;
     border-width: 0;
-    padding: 4px 12px 4px 20px;
+    padding: 4px 0px 4px 20px;
     white-space: nowrap;
     /*ie6 can hover*/
     position: relative;
@@ -946,7 +983,7 @@ menu style for kissy editor ,include contextmenu and select menu
     background: repeat-x scroll 0 0 #D6DBE2;
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
-  background-position: left -541px;
+  background-position: left -557px;
     border-bottom: 1px solid #ACB4BE;
     font-size: 14px;
     font-weight: bold;
@@ -976,7 +1013,7 @@ menu style for kissy editor ,include contextmenu and select menu
     background: no-repeat;
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
-  background-position: left -571px;
+  background-position: left -587px;
     height: 13px;
     text-indent: -9999px;
     width: 13px;
@@ -1042,7 +1079,7 @@ menu style for kissy editor ,include contextmenu and select menu
     background: no-repeat right bottom;
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
-  background-position: left -584px;
+  background-position: left -600px;
     height: 10px;
     width: 10px;
     font-size:0;
@@ -1095,7 +1132,7 @@ select style for kissy editor
     background: no-repeat scroll center center transparent;
   background-image: url('./cool.png');
   -background-image: url('./cool-ie6.png');
-  background-position: left -594px;
+  background-position: left -610px;
     width: 7px;
     height: 3px;
     vertical-align: middle;
@@ -1260,6 +1297,12 @@ select style for kissy editor
     padding: 10px 20px 0 20px;
     border-top: 1px solid #CED5E0;
     display: none;
+    list-style-type: none;
+}
+
+.ks-editor-xiami-list ul {
+    margin: 0;
+    padding: 0;
 }
 
 .ks-editor-xiami-list li {
@@ -1271,6 +1314,7 @@ select style for kissy editor
     height: 24px;
     line-height: 24px;
     padding: 0 20px 0 10px;
+    list-style-type: none;
 }
 
 .ks-editor-xiami-list .ks-editor-xiami-add {

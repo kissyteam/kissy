@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 12 15:29
+build time: Sep 27 16:17
 */
 /**
  * Set up editor constructor
@@ -37,17 +37,17 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
             {
                 /**
                  * textarea
-                 * @type {Node}
+                 * @type {KISSY.NodeList}
                  */
                 textarea:{},
                 /**
                  * iframe
-                 * @type {Node}
+                 * @type {KISSY.NodeList}
                  */
                 iframe:{},
                 /**
                  * iframe 's contentWindow.
-                 * @type {Node}
+                 * @type {KISSY.NodeList}
                  */
                 window:{
                     // ie6 一旦中途设置了 domain
@@ -57,17 +57,17 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                 },
                 /**
                  * iframe 's document
-                 * @type {Node}
+                 * @type {KISSY.NodeList}
                  */
                 document:{},
                 /**
                  * toolbar element
-                 * @type {Node}
+                 * @type {KISSY.NodeList}
                  */
                 toolBarEl:{},
                 /**
                  * status bar element
-                 * @type {Node}
+                 * @type {KISSY.NodeList}
                  */
                 statusBarEl:{},
                 handleMouseEvents:{
@@ -464,6 +464,7 @@ KISSY.config('modules', {
 'editor/plugin/drag-upload/index': {requires: ['editor']},
 'editor/plugin/color/cmd': {requires: ['editor']},
 'editor/plugin/flash/dialog': {requires: ['editor','editor/plugin/flash-common/utils','editor/plugin/overlay/','editor/plugin/menubutton/']},
+'editor/plugin/code/index': {requires: ['editor','editor/plugin/dialog-loader/']},
 'editor/plugin/strike-through/cmd': {requires: ['editor','editor/plugin/font/cmd']},
 'editor/plugin/unordered-list/index': {requires: ['editor','editor/plugin/list-utils/btn','editor/plugin/unordered-list/cmd']},
 'editor/plugin/outdent/cmd': {requires: ['editor','editor/plugin/dent-utils/cmd']},
@@ -475,8 +476,8 @@ KISSY.config('modules', {
 'editor/plugin/word-filter/dynamic/index': {requires: ['htmlparser']},
 'editor/plugin/justify-left/cmd': {requires: ['editor/plugin/justify-utils/cmd']},
 'editor/plugin/resize/index': {requires: ['editor','dd']},
-'editor/plugin/focus-fix/index': {requires: ['editor']},
 'editor/plugin/video/dialog': {requires: ['editor','editor/plugin/flash/dialog','editor/plugin/menubutton/']},
+'editor/plugin/focus-fix/index': {requires: ['editor']},
 'editor/plugin/xiami-music/index': {requires: ['editor','editor/plugin/flash-common/baseClass','editor/plugin/flash-common/utils','editor/plugin/fake-objects/']},
 'editor/plugin/maximize/index': {requires: ['editor','editor/plugin/maximize/cmd']},
 'editor/plugin/color/color-picker/dialog': {requires: ['editor','editor/plugin/overlay/']},
@@ -521,18 +522,19 @@ KISSY.config('modules', {
 'editor/plugin/draft/index': {requires: ['editor','editor/plugin/local-storage/','overlay','editor/plugin/menubutton/']},
 'editor/plugin/link/index': {requires: ['editor','editor/plugin/bubble/','editor/plugin/link/utils','editor/plugin/dialog-loader/','editor/plugin/button/']},
 'editor/plugin/remove-format/index': {requires: ['editor','editor/plugin/remove-format/cmd','editor/plugin/button/']},
-'editor/plugin/element-path/index': {requires: ['editor']},
 'editor/plugin/font/ui': {requires: ['editor','editor/plugin/button/','editor/plugin/menubutton/']},
+'editor/plugin/element-path/index': {requires: ['editor']},
 'editor/plugin/source-area/index': {requires: ['editor','editor/plugin/button/']},
-'editor/plugin/list-utils/btn': {requires: ['editor','editor/plugin/button/']},
 'editor/plugin/justify-right/index': {requires: ['editor','editor/plugin/justify-right/cmd']},
+'editor/plugin/list-utils/btn': {requires: ['editor','editor/plugin/button/']},
 'editor/plugin/justify-left/index': {requires: ['editor','editor/plugin/justify-left/cmd']},
 'editor/plugin/outdent/index': {requires: ['editor','editor/plugin/outdent/cmd']},
 'editor/plugin/fake-objects/index': {requires: ['editor']},
 'editor/plugin/link/dialog': {requires: ['editor','editor/plugin/overlay/','editor/plugin/link/utils']},
-'editor/plugin/back-color/cmd': {requires: ['editor/plugin/color/cmd']},
 'editor/plugin/font-family/cmd': {requires: ['editor','editor/plugin/font/cmd']},
+'editor/plugin/back-color/cmd': {requires: ['editor/plugin/color/cmd']},
 'editor/plugin/multiple-upload/dialog': {requires: ['editor','editor/plugin/progressbar/','editor/plugin/overlay/','editor/plugin/flash-bridge/','editor/plugin/local-storage/']},
+'editor/plugin/code/dialog': {requires: ['editor/plugin/overlay/','menubutton']},
 'editor/plugin/justify-center/cmd': {requires: ['editor/plugin/justify-utils/cmd']},
 'editor/plugin/flash-common/baseClass': {requires: ['editor','editor/plugin/contextmenu/','editor/plugin/bubble/','editor/plugin/dialog-loader/','editor/plugin/flash-common/utils']},
 'editor/plugin/justify-center/index': {requires: ['editor','editor/plugin/justify-center/cmd']},
@@ -1770,7 +1772,7 @@ KISSY.add("editor/core/domIterator", function (S) {
     requires:['./base', './range', './elementPath', './walker']
 });
 /**
- * Editor For KISSY 1.3
+ * New Editor For KISSY
  * @preserve thanks to CKSource's intelligent work on CKEditor
  * @author yiminghe@gmail.com
  */
@@ -1872,37 +1874,40 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             createDom: function () {
                 var self = this,
                     wrap,
-                    prefixCls=self.get('prefixCls'),
+                    prefixCls = self.get('prefixCls'),
                     textarea = self.get("textarea"),
                     editorEl;
 
                 if (!textarea) {
                     self.set("textarea",
-                        textarea = $("<textarea class='"+prefixCls+
+                        textarea = $("<textarea class='" + prefixCls +
                             "-editor-textarea'></textarea>"));
                 } else {
+                    self.set("textarea", textarea = $(textarea));
                     // in ie, textarea lose value when parent.innerHTML="xx";
-                    textarea[0].parentNode.removeChild(textarea[0]);
+                    if (textarea[0].parentNode) {
+                        textarea[0].parentNode.removeChild(textarea[0]);
+                    }
                 }
 
                 editorEl = self.get("el");
 
-                editorEl.html(S.substitute(EDITOR_TPL,{
-                    prefixCls:prefixCls
+                editorEl.html(S.substitute(EDITOR_TPL, {
+                    prefixCls: prefixCls
                 }));
 
-                wrap = editorEl.one(S.substitute(KE_TEXTAREA_WRAP_CLASS,{
-                    prefixCls:prefixCls
+                wrap = editorEl.one(S.substitute(KE_TEXTAREA_WRAP_CLASS, {
+                    prefixCls: prefixCls
                 }));
 
                 self._UUID = S.guid();
 
                 self.set({
-                    toolBarEl: editorEl.one(S.substitute(KE_TOOLBAR_CLASS,{
-                        prefixCls:prefixCls
+                    toolBarEl: editorEl.one(S.substitute(KE_TOOLBAR_CLASS, {
+                        prefixCls: prefixCls
                     })),
-                    statusBarEl: editorEl.one(S.substitute(KE_STATUSBAR_CLASS,{
-                        prefixCls:prefixCls
+                    statusBarEl: editorEl.one(S.substitute(KE_STATUSBAR_CLASS, {
+                        prefixCls: prefixCls
                     }))
                 }, {
                     silent: 1
@@ -5553,38 +5558,6 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
                     domNode.childNodes.length);
             },
 
-            /*
-             insertNodeByDtd:function (element) {
-             var current,
-             self = this,
-             tmpDtd,
-             elementName = element['nodeName'](),
-             isBlock = dtd['$block'][ elementName ];
-             self.deleteContents();
-             if (isBlock) {
-             while (( current = self.getCommonAncestor(FALSE, TRUE) ) &&
-             ( tmpDtd = dtd[ current.nodeName() ] ) &&
-             !( tmpDtd && tmpDtd [ elementName ] )) {
-             // Split up inline elements.
-             if (current.nodeName() in dtd["span"]) {
-             self.splitElement(current);
-             }
-             // If we're in an empty block which indicate a new paragraph,
-             // simply replace it with the inserting block.(#3664)
-             else if (self.checkStartOfBlock() && self.checkEndOfBlock()) {
-             self.setStartBefore(current);
-             self.collapse(TRUE);
-             current.remove();
-             }
-             else {
-             self.splitBlock(undefined);
-             }
-             }
-             }
-             // Insert the new node.
-             self.insertNode(element);
-             },*/
-
             /**
              * Insert node by dtd.(not invalidate dtd convention)
              * @param {KISSY.NodeList} element
@@ -6951,15 +6924,16 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     var TRUE = true,
         FALSE = false,
         NULL = null,
+        $ = S.all,
         DOM = S.DOM,
         /**
          * enum for style type
          * @enum {number}
          */
             KEST = {
-            STYLE_BLOCK:1,
-            STYLE_INLINE:2,
-            STYLE_OBJECT:3
+            STYLE_BLOCK: 1,
+            STYLE_INLINE: 2,
+            STYLE_OBJECT: 3
         },
         KER = Editor.RANGE,
         KESelection = Editor.Selection,
@@ -6970,36 +6944,36 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         UA = S.UA,
         ElementPath = Editor.ElementPath,
         blockElements = {
-            "address":1,
-            "div":1,
-            "h1":1,
-            "h2":1,
-            "h3":1,
-            "h4":1,
-            "h5":1,
-            "h6":1,
-            "p":1,
-            "pre":1
+            "address": 1,
+            "div": 1,
+            "h1": 1,
+            "h2": 1,
+            "h3": 1,
+            "h4": 1,
+            "h5": 1,
+            "h6": 1,
+            "p": 1,
+            "pre": 1
         },
         DTD = Editor.XHTML_DTD,
         objectElements = {
             //why? a should be same to inline? 但是不能互相嵌套
             //a:1,
-            "embed":1,
-            "hr":1,
-            "img":1,
-            "li":1,
-            "object":1,
-            "ol":1,
-            "table":1,
-            "td":1,
-            "tr":1,
-            "th":1,
-            "ul":1,
-            "dl":1,
-            "dt":1,
-            "dd":1,
-            "form":1
+            "embed": 1,
+            "hr": 1,
+            "img": 1,
+            "li": 1,
+            "object": 1,
+            "ol": 1,
+            "table": 1,
+            "td": 1,
+            "tr": 1,
+            "th": 1,
+            "ul": 1,
+            "dl": 1,
+            "dt": 1,
+            "dd": 1,
+            "form": 1
         },
         semicolonFixRegex = /\s*(?:;\s*|$)/g,
         varRegex = /#\((.+?)\)/g;
@@ -7044,7 +7018,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
             KEST.STYLE_OBJECT : KEST.STYLE_INLINE;
 
         this._ = {
-            "definition":styleDefinition
+            "definition": styleDefinition
         };
     }
 
@@ -7072,15 +7046,15 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     }
 
     KEStyle.prototype = {
-        apply:function (document) {
+        apply: function (document) {
             applyStyle.call(this, document, FALSE);
         },
 
-        remove:function (document) {
+        remove: function (document) {
             applyStyle.call(this, document, TRUE);
         },
 
-        applyToRange:function (range) {
+        applyToRange: function (range) {
             var self = this;
             return ( self.applyToRange =
                 this.type == KEST.STYLE_INLINE ?
@@ -7094,7 +7068,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                     : NULL ).call(self, range);
         },
 
-        removeFromRange:function (range) {
+        removeFromRange: function (range) {
             var self = this;
             return ( self.removeFromRange =
                 self.type == KEST.STYLE_INLINE ?
@@ -7107,7 +7081,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 //        },
         // Checks if an element, or any of its attributes, is removable by the
         // current style definition.
-        checkElementRemovable:function (element, fullMatch) {
+        checkElementRemovable: function (element, fullMatch) {
             if (!element)
                 return FALSE;
 
@@ -7206,7 +7180,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
          * Get the style state inside an element path. Returns "TRUE" if the
          * element is active in the path.
          */
-        checkActive:function (elementPath) {
+        checkActive: function (elementPath) {
             switch (this.type) {
                 case KEST.STYLE_BLOCK :
                     return this.checkElementRemovable(elementPath.block
@@ -7675,12 +7649,12 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
 
                 var removeList = {
-                    styles:{},
-                    attrs:{},
+                    styles: {},
+                    attrs: {},
                     // Styles cannot be removed.
-                    blockedStyles:{},
+                    blockedStyles: {},
                     // Attrs cannot be removed.
-                    blockedAttrs:{}
+                    blockedAttrs: {}
                 };
 
                 var attName, styleName = null, value;
@@ -7811,18 +7785,18 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         if (range.collapsed) {
 
             var startPath = new ElementPath(startNode.parent()),
-            // The topmost element in elementspatch which we should jump out of.
+            // The topmost element in elements path which we should jump out of.
                 boundaryElement;
 
 
             for (var i = 0, element; i < startPath.elements.length
                 && ( element = startPath.elements[i] ); i++) {
                 /*
-                 * 1. If it's collaped inside text nodes, try to remove the style from the whole element.
+                 * 1. If it's collapsed inside text nodes, try to remove the style from the whole element.
                  *
                  * 2. Otherwise if it's collapsed on element boundaries, moving the selection
                  *  outside the styles instead of removing the whole tag,
-                 *  also make sure other inner styles were well preserverd.(#3309)
+                 *  also make sure other inner styles were well preserved.(#3309)
                  */
                 if (element == startPath.block ||
                     element == startPath.blockLimit) {
@@ -7865,7 +7839,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                 var clonedElement = startNode;
                 for (i = 0; ; i++) {
                     var newElement = startPath.elements[ i ];
-                    if (DOM.equals(newElement, boundaryElement))
+                    if (newElement.equals(boundaryElement))
                         break;
                     // Avoid copying any matched element.
                     else if (newElement.match)
@@ -7876,10 +7850,22 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                     clonedElement = newElement;
                 }
                 //脱离当前的元素，将 bookmark 插入到当前元素后面
-                //<strong>xx|</strong>  ->
-                //<strong>xx<strong>|
+                // <strong>xx|</strong>  ->
+                // <strong>xx<strong>|
                 clonedElement[ boundaryElement.match == 'start' ? 'insertBefore' :
                     'insertAfter' ](boundaryElement);
+                // <strong>|</strong> ->
+                // <strong></strong>|
+                var tmp = boundaryElement.html();
+                if (!tmp ||
+                    // filling char
+                    tmp == '\u200b') {
+                    boundaryElement.remove();
+                }
+                // http://code.google.com/p/chromium/issues/detail?id=149894
+                else if (UA.webkit) {
+                    $(range.document.createTextNode('\u200b')).insertBefore(clonedElement);
+                }
             }
         } else {
             /*
@@ -8216,8 +8202,9 @@ KISSY.add("editor/core/styles", function (S, Editor) {
             overrides = getOverrides(style),
             innerElements = element.all(style["element"]);
 
-        for (var i = innerElements.length; --i >= 0;)
+        for (var i = innerElements.length; --i >= 0;) {
             removeFromElement(style, new Node(innerElements[i]));
+        }
 
         // Now remove any other element with different name that is
         // defined to be overriden.
@@ -8315,7 +8302,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
     return KEStyle;
 }, {
-    requires:['./base', './range', './selection', './domIterator', './elementPath']
+    requires: ['./base', './range', './selection', './domIterator', './elementPath']
 });
 /**
  * TODO yiminghe@gmail.com : 重构 Refer
@@ -9571,6 +9558,34 @@ KISSY.add("editor/plugin/checkbox-source-area/index", function (S, Editor) {
     return CheckboxSourceAreaPlugin;
 }, {
     requires:["editor"]
+});
+/**
+ * insert program code
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('editor/plugin/code/index', function (S, Editor,DialogLoader) {
+
+    function CodePlugin() {
+
+    }
+
+    S.augment(CodePlugin, {
+        renderUI: function (editor) {
+            editor.addButton('code', {
+                tooltip: "插入代码",
+                listeners: {
+                    click: function () {
+                        DialogLoader.useDialog(editor, "code");
+                    }
+                },
+                mode: Editor.WYSIWYG_MODE
+            });
+        }
+    });
+
+    return CodePlugin;
+}, {
+    requires: ['editor','../dialog-loader/']
 });
 /**
  * color button.
@@ -15040,7 +15055,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                                         prefixCls: prefixCls
                                     }),
                                     focus4e: false,
-                                    width: "297px",
+                                    width: 300,
                                     autoRender: true,
                                     elCls: prefixCls + "editor-popup",
                                     zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),

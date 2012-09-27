@@ -18,6 +18,7 @@
         }, window.EDITOR_CFG);
 
         var plugins = ("source-area" +
+            ",code"+
             ",separator" +
             ",bold" +
             ",italic," +

@@ -1,5 +1,5 @@
 /**
- * Editor For KISSY 1.3
+ * New Editor For KISSY
  * @preserve thanks to CKSource's intelligent work on CKEditor
  * @author yiminghe@gmail.com
  */
@@ -101,37 +101,40 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             createDom: function () {
                 var self = this,
                     wrap,
-                    prefixCls=self.get('prefixCls'),
+                    prefixCls = self.get('prefixCls'),
                     textarea = self.get("textarea"),
                     editorEl;
 
                 if (!textarea) {
                     self.set("textarea",
-                        textarea = $("<textarea class='"+prefixCls+
+                        textarea = $("<textarea class='" + prefixCls +
                             "-editor-textarea'></textarea>"));
                 } else {
+                    self.set("textarea", textarea = $(textarea));
                     // in ie, textarea lose value when parent.innerHTML="xx";
-                    textarea[0].parentNode.removeChild(textarea[0]);
+                    if (textarea[0].parentNode) {
+                        textarea[0].parentNode.removeChild(textarea[0]);
+                    }
                 }
 
                 editorEl = self.get("el");
 
-                editorEl.html(S.substitute(EDITOR_TPL,{
-                    prefixCls:prefixCls
+                editorEl.html(S.substitute(EDITOR_TPL, {
+                    prefixCls: prefixCls
                 }));
 
-                wrap = editorEl.one(S.substitute(KE_TEXTAREA_WRAP_CLASS,{
-                    prefixCls:prefixCls
+                wrap = editorEl.one(S.substitute(KE_TEXTAREA_WRAP_CLASS, {
+                    prefixCls: prefixCls
                 }));
 
                 self._UUID = S.guid();
 
                 self.set({
-                    toolBarEl: editorEl.one(S.substitute(KE_TOOLBAR_CLASS,{
-                        prefixCls:prefixCls
+                    toolBarEl: editorEl.one(S.substitute(KE_TOOLBAR_CLASS, {
+                        prefixCls: prefixCls
                     })),
-                    statusBarEl: editorEl.one(S.substitute(KE_STATUSBAR_CLASS,{
-                        prefixCls:prefixCls
+                    statusBarEl: editorEl.one(S.substitute(KE_STATUSBAR_CLASS, {
+                        prefixCls: prefixCls
                     }))
                 }, {
                     silent: 1

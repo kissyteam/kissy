@@ -24,6 +24,7 @@
     <link href="../src/editor/theme/cool/menu.css" rel="stylesheet"/>
     <link href="../src/editor/theme/cool/color.css" rel="stylesheet"/>
     <link href="../src/editor/theme/cool/xiami.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/code.css" rel="stylesheet"/>
 </head>
 <body>
 <h1 style="font-size: 2em;text-align: center;margin: 2em;">Simple KISSY Editor</h1>
@@ -37,8 +38,16 @@
     <div id="container" class="ks-editor">
         <textarea class="ks-editor-textarea">我有初始值</textarea>
     </div>
-    <button onclick="window.newEditor.destroy();">destroy</button>
+    <div style="margin: 20px 0;">
+        <button onclick="window.newEditor.destroy();">destroy</button>
+        <button onclick="preview();">预览</button>
+    </div>
+    <div id="previewEl" style="margin: 20px 0;">
+
+    </div>
 </div>
+
+
 <script src="../../../build/kissy.js"></script>
 <script src="../../../build/separator.js"></script>
 <script src="../../../build/htmlparser.js"></script>
@@ -75,10 +84,22 @@ core plugins
 <!--
 other plugins
 -->
+
+
+<script src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet"
+      href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+
 <script>
     KISSY.config({
         base: '../src/'
     });
+    var $ = KISSY.all;
+    function preview() {
+        $('#previewEl').html(window.newEditor.get('data'));
+        SyntaxHighlighter.highlight();
+    }
 </script>
 <script src="./build/demo.js"></script>
 </body>
