@@ -14,30 +14,12 @@
 
     <div id="container" style="margin: 10px 30px;">
         <div id="editor">
-            <textarea class="ks-editor-textarea" name="content">
-                <p>
-                    我有初始值
-                </p>
-                <p>
-                </p>
-
-<pre class="prettyprint ks-editor-code brush:js;toolbar:false;">
-alert(1);</pre>
-
-                <p>
-                </p>
-                <p>
-                    我有初始值
-                </p>
-                <p>
-                </p>
-<pre class="prettyprint ks-editor-code brush:cpp;toolbar:false;">
-printf('hello')</pre>
-                <p>
-                </p>
-                <p>
-                    我有初始值
-                </p>
+            <textarea class="ks-editor-textarea" name="content" style='width:500px;height:300px;'>
+                <?php
+                        if(isset($_POST['content'])){
+                            echo htmlspecialchars($_POST['content']);
+                        }
+                       ?>
             </textarea>
         </div>
     </div>
