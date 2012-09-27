@@ -1,0 +1,29 @@
+.ks-editor-code-wrap {
+    padding: 20px;
+    padding-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ks-editor-code-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.ks-editor-code-table td {
+    padding: 2px;
+}
+
+.ks-editor-code-table-action {
+    padding: 20px;
+    padding-top: 5px;
+}
+
+.ks-editor-code-insert {
+    margin-right: 20px;
+}
+
+.ks-editor-code-table .ks-editor-code-textarea {
+    width: 367px;
+    height: 270px;
+}
