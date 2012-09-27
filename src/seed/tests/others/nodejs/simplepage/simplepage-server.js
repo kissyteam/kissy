@@ -14,7 +14,7 @@ S.config({
     packages: [
         {
             name: 'example',
-            path: 'file:' + __dirname.replace(/\\/g, "/") + '/../../'
+            path: __dirname.replace(/\\/g, "/") + '/../../'
         }
     ]
 });

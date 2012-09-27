@@ -55,6 +55,12 @@
                 // 兼容 path
                 base = cfg.base || cfg.path;
 
+                // nodejs must be absolute local file path
+                if (S.Env.nodejs && !S.startsWith(base, 'file:')) {
+                    // specify scheme for KISSY.Uri
+                    base = 'file:' + base;
+                }
+
                 // must be folder
                 if (!S.endsWith(base, '/')) {
                     base += '/';
@@ -121,6 +127,11 @@
         var self = this, baseUri, Config = self.Config;
         if (!base) {
             return Config.base;
+        }
+        // nodejs must be absolute local file path
+        if (S.Env.nodejs && !S.startsWith(base, 'file:')) {
+            // specify scheme for KISSY.Uri
+            base = 'file:' + base;
         }
         baseUri = utils.resolveByPage(base);
         Config.base = baseUri.toString();

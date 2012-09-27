@@ -290,4 +290,9 @@
 /*
  2012-09-20 yiminghe@gmail.com refactor
  - 参考 async 重构，去除递归回调
+
+ TODO： 1.4 不兼容修改
+ - 分离下载与 attach(执行) 过程
+ - 下载阶段构建依赖树
+ - use callback 统一 attach
  */

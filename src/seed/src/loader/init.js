@@ -159,9 +159,7 @@
     }
 
     if (S.Env.nodejs) {
-        S.config('base',
-            // specify scheme for KISSY.Uri
-            'file:' + __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/');
+        S.config('base', __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/');
     } else {
         S.config(S.mix({
             // 2k

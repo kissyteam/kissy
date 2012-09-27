@@ -4,7 +4,7 @@ KISSY.config({
     packages:
         {
             mods: {
-                base:'file:'+ __dirname.replace(/\\/g, "/")
+                base:__dirname.replace(/\\/g, "/")
             }
         }
 

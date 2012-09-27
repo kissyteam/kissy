@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:21
+build time: Sep 27 15:12
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20120926222112' will replace with current timestamp when compressing.
+         * NOTICE: '20120927151216' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120926222112';
+        S.__BUILD_TIME = '20120927151216';
     })();
 
     // exports for nodejs
@@ -3093,6 +3093,18 @@ var KISSY = (function (undefined) {
          */
         IE: !!ua.match(/MSIE/),
 
+        addEventListener: host.addEventListener ? function (node, type, callback) {
+            node.addEventListener(type, callback, false);
+        } : function (node, type, callback) {
+            node.attachEvent('on' + type, callback);
+        },
+
+        removeEventListener: host.removeEventListener ? function (node, type, callback) {
+            node.removeEventListener(type, callback, false);
+        } : function (node, type, callback) {
+            node.detachEvent('on' + type, callback);
+        },
+
         /**
          * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
          * @param moduleName current module 's name
@@ -3696,13 +3708,35 @@ var KISSY = (function (undefined) {
 (function (S) {
 
     var CSS_POLL_INTERVAL = 30,
-        win = S.Env.host,
         utils = S.Loader.Utils,
     // central poll for link node
         timer = 0,
         monitors = {
             // node.id:{callback:callback,node:node}
         };
+
+
+    /**
+     * @ignore
+     * References:
+     *  - http://unixpapa.com/js/dyna.html
+     *  - http://www.blaze.io/technical/ies-premature-execution-problem/
+     *
+     * `onload` event is supported in WebKit since 535.23
+     *  - https://bugs.webkit.org/show_activity.cgi?id=38995
+     * `onload/onerror` event is supported since Firefox 9.0
+     *  - https://bugzilla.mozilla.org/show_bug.cgi?id=185236
+     *  - https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
+     *
+     * monitor css onload across browsers.issue about 404 failure.
+     *
+     *  - firefox not ok（4 is wrong）：
+     *    - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
+     *  - all is ok
+     *    - http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+     *  - others
+     *    - http://www.zachleat.com/web/load-css-dynamically/
+     */
 
     function startCssTimer() {
         if (!timer) {
@@ -3729,16 +3763,17 @@ var KISSY = (function (undefined) {
                     try {
                         var cssRules;
                         if (cssRules = node['sheet'].cssRules) {
-                            S.log('firefox loaded : ' + url);
+                            S.log('same domain firefox loaded : ' + url);
                             loaded = 1;
                         }
                     } catch (ex) {
                         exName = ex.name;
                         S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
                         // http://www.w3.org/TR/dom/#dom-domexception-code
-                        if (exName == 'SecurityError' ||
+                        if (// exName == 'SecurityError' ||
+                        // for old firefox
                             exName == 'NS_ERROR_DOM_SECURITY_ERR') {
-                            S.log('firefox loaded : ' + url);
+                            S.log(exName + ' firefox loaded : ' + url);
                             loaded = 1;
                         }
                     }
@@ -3761,36 +3796,8 @@ var KISSY = (function (undefined) {
     }
 
     S.mix(utils, {
-        /**
-         * monitor css onload across browsers.issue about 404 failure.
-         *
-         *  - firefox not ok（4 is wrong）：
-         *    - http://yearofmoo.com/2011/03/cross-browser-stylesheet-preloading/
-         *  - all is ok
-         *    - http://lifesinger.org/lab/2011/load-js-css/css-preload.html
-         *  - others
-         *    - http://www.zachleat.com/web/load-css-dynamically/
-         *
-         *  @member KISSY.Loader.Utils
-         *  @method
-         */
-        styleOnLoad: win.attachEvent || utils.isPresto ?
-            // ie/opera
-            // try in opera
-            // alert(win.attachEvent);
-            // alert(!!win.attachEvent);
-            function (node, callback) {
-                // whether to detach using function wrapper?
-                function t() {
-                    node.detachEvent('onload', t);
-                    S.log('ie/opera loaded : ' + node.href);
-                    callback.call(node);
-                }
-
-                node.attachEvent('onload', t);
-            } :
-            // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
-            // 暂时不考虑如何判断失败，如 404 等
+        pollCss: // refer : http://lifesinger.org/lab/2011/load-js-css/css-preload.html
+        // 暂时不考虑如何判断失败，如 404 等
             function (node, callback) {
                 var href = node.href,
                     arr;
@@ -3799,6 +3806,7 @@ var KISSY = (function (undefined) {
                 arr.callback = callback;
                 startCssTimer();
             }
+
     });
 })(KISSY);/**
  * @ignore
@@ -3811,63 +3819,9 @@ var KISSY = (function (undefined) {
         doc = S.Env.host.document,
         utils = S.Loader.Utils,
         Path = S.Path,
-        jsCallbacks = {},
-        cssCallbacks = {};
+        jsCssCallbacks = {};
 
     S.mix(S, {
-
-        /**
-         * load  a css file from server using http get,
-         * after css file load ,execute success callback.
-         * note: no support for timeout and error
-         * @param url css file url
-         * @param success callback
-         * @param charset
-         * @member KISSY
-         */
-        getStyle: function (url, success, charset) {
-
-            var config = success;
-
-            if (S.isPlainObject(config)) {
-                success = config.success;
-                charset = config.charset;
-            }
-            var src = utils.resolveByPage(url).toString(),
-                callbacks = cssCallbacks[src] = cssCallbacks[src] || [];
-
-            callbacks.push(success);
-
-            if (callbacks.length > 1) {
-                // S.log(' queue css : ' + callbacks.length);
-                return callbacks.node;
-            }
-
-            var head = utils.docHead(),
-                node = doc.createElement('link');
-
-            callbacks.node = node;
-
-            node.href = url;
-            node.rel = 'stylesheet';
-
-            if (charset) {
-                node.charset = charset;
-            }
-            utils.styleOnLoad(node, function () {
-                var callbacks = cssCallbacks[src];
-                S.each(callbacks, function (callback) {
-                    if (callback) {
-                        callback.call(node);
-                    }
-                });
-                delete cssCallbacks[src];
-            });
-            // css order matters!
-            head.appendChild(node);
-            return node;
-
-        },
         /**
          * Load a JavaScript/Css file from the server using a GET HTTP request,
          * then execute it.
@@ -3895,15 +3849,16 @@ var KISSY = (function (undefined) {
          */
         getScript: function (url, success, charset) {
 
-            if (S.startsWith(Path.extname(url).toLowerCase(), '.css')) {
-                return S.getStyle(url, success, charset);
-            }
-
-            var src = utils.resolveByPage(url),
+            var src = utils.resolveByPage(url).toString(),
                 config = success,
+                css = 0,
                 error,
                 timeout,
                 timer;
+
+            if (S.startsWith(Path.extname(url).toLowerCase(), '.css')) {
+                css = 1;
+            }
 
             if (S.isPlainObject(config)) {
                 success = config.success;
@@ -3912,7 +3867,7 @@ var KISSY = (function (undefined) {
                 charset = config.charset;
             }
 
-            var callbacks = jsCallbacks[src] = jsCallbacks[src] || [];
+            var callbacks = jsCssCallbacks[src] = jsCssCallbacks[src] || [];
 
             callbacks.push([success, error]);
 
@@ -3924,7 +3879,7 @@ var KISSY = (function (undefined) {
             }
 
             var head = utils.docHead(),
-                node = doc.createElement('script'),
+                node = doc.createElement(css ? 'link' : 'script'),
                 clearTimer = function () {
                     if (timer) {
                         timer.cancel();
@@ -3932,8 +3887,15 @@ var KISSY = (function (undefined) {
                     }
                 };
 
-            node.src = url;
-            node.async = true;
+            if (css) {
+                // can not use src.toString
+                // ? is escaped when combo in KISSY.Uri
+                node.href = url;
+                node.rel = 'stylesheet';
+            } else {
+                node.src = url;
+                node.async = true;
+            }
 
             callbacks.node = node;
 
@@ -3944,32 +3906,36 @@ var KISSY = (function (undefined) {
             var end = function (error) {
                 var index = error ? 1 : 0;
                 clearTimer();
-                var callbacks = jsCallbacks[src];
+                var callbacks = jsCssCallbacks[src];
                 S.each(callbacks, function (callback) {
                     if (callback[index]) {
                         callback[index].call(node);
                     }
                 });
-                delete jsCallbacks[src];
+                delete jsCssCallbacks[src];
             };
 
-            //标准浏览器
-            if (node.addEventListener) {
-                node.addEventListener('load', function () {
-                    end(0);
-                }, false);
-                node.addEventListener('error', function () {
-                    end(1);
-                }, false);
-            } else {
-                node.onreadystatechange = function () {
-                    var self = this,
-                        rs = self.readyState;
-                    if (/loaded|complete/i.test(rs)) {
-                        self.onreadystatechange = null;
-                        end(0);
+            //标准浏览器 css and all script
+            if ('onload' in node || !css) {
+                node.onload = node.onreadystatechange = function () {
+                    var readyState = node.readyState;
+                    if (!readyState ||
+                        readyState == "loaded" ||
+                        readyState == "complete") {
+                        node.onreadystatechange = node.onload = null;
+                        end(0)
                     }
                 };
+                node.onerror = function () {
+                    node.onerror = null;
+                    error(1);
+                };
+            }
+            // old chrome/firefox for css
+            else {
+                utils.pollCss(node, function () {
+                    end(0);
+                });
             }
 
             if (timeout) {
@@ -3977,7 +3943,8 @@ var KISSY = (function (undefined) {
                     end(1);
                 }, timeout * MILLISECONDS_OF_SECOND);
             }
-            head.insertBefore(node, head.firstChild);
+
+            head.appendChild(node);
             return node;
         }
     });
@@ -4048,6 +4015,12 @@ var KISSY = (function (undefined) {
                 // 兼容 path
                 base = cfg.base || cfg.path;
 
+                // nodejs must be absolute local file path
+                if (S.Env.nodejs && !S.startsWith(base, 'file:')) {
+                    // specify scheme for KISSY.Uri
+                    base = 'file:' + base;
+                }
+
                 // must be folder
                 if (!S.endsWith(base, '/')) {
                     base += '/';
@@ -4114,6 +4087,11 @@ var KISSY = (function (undefined) {
         var self = this, baseUri, Config = self.Config;
         if (!base) {
             return Config.base;
+        }
+        // nodejs must be absolute local file path
+        if (S.Env.nodejs && !S.startsWith(base, 'file:')) {
+            // specify scheme for KISSY.Uri
+            base = 'file:' + base;
         }
         baseUri = utils.resolveByPage(base);
         Config.base = baseUri.toString();
@@ -4642,6 +4620,11 @@ var KISSY = (function (undefined) {
 /*
  2012-09-20 yiminghe@gmail.com refactor
  - 参考 async 重构，去除递归回调
+
+ TODO： 1.4 不兼容修改
+ - 分离下载与 attach(执行) 过程
+ - 下载阶段构建依赖树
+ - use callback 统一 attach
  *//**
  * @ignore
  * @fileOverview using combo to load module files
@@ -5284,15 +5267,13 @@ var KISSY = (function (undefined) {
     }
 
     if (S.Env.nodejs) {
-        S.config('base',
-            // specify scheme for KISSY.Uri
-            'file:' + __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/');
+        S.config('base', __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/');
     } else {
         S.config(S.mix({
             // 2k
             comboMaxUrlLength: 2048,
             charset: 'utf-8',
-            tag: '20120926222112'
+            tag: '20120927151216'
         }, getBaseInfo()));
     }
 

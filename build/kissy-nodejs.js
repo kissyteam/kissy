@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:21
+build time: Sep 27 15:12
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20120926222112' will replace with current timestamp when compressing.
+         * NOTICE: '20120927151216' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120926222112';
+        S.__BUILD_TIME = '20120927151216';
     })();
 
     // exports for nodejs
@@ -3093,6 +3093,18 @@ var KISSY = (function (undefined) {
          */
         IE: !!ua.match(/MSIE/),
 
+        addEventListener: host.addEventListener ? function (node, type, callback) {
+            node.addEventListener(type, callback, false);
+        } : function (node, type, callback) {
+            node.attachEvent('on' + type, callback);
+        },
+
+        removeEventListener: host.removeEventListener ? function (node, type, callback) {
+            node.removeEventListener(type, callback, false);
+        } : function (node, type, callback) {
+            node.detachEvent('on' + type, callback);
+        },
+
         /**
          * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
          * @param moduleName current module 's name
@@ -3701,46 +3713,36 @@ var KISSY = (function (undefined) {
 
     S.mix(S, {
 
-        getStyle: function (url, success) {
-            S.log('nodejs does not support getStyle: ' + url, 'warn');
-            if (S.isPlainObject(success)) {
-                success = success.success;
-            }
-            success && success();
-        },
-
         getScript: function (url, success, charset) {
 
-            if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
-                return S.getStyle(url, success, charset);
-            }
+            var error;
 
-            var error = S.noop;
             if (S.isPlainObject(success)) {
                 charset = success.charset;
-                error = success.error || error;
+                error = success.error;
                 success = success.success;
             }
-            var uri = new S.Uri(url),
-                msg = 'nodejs does not support remote js file';
-            if (uri.getScheme() != 'file') {
-                S.log(msg, 'error');
-                return error(msg);
+
+            if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
+                S.log('node js can not load css: ' + url, 'warn');
+                return success && success();
             }
+
+            var uri = new S.Uri(url);
+
             fs.readFile(uri.getPath(), charset || 'utf-8', function (err, mod) {
                 if (err) {
-                    error(err);
+                    error && error(err);
                 } else {
                     try {
-                        var fn = vm.runInThisContext('(function(KISSY){' + mod + '})',
-                            url);
+                        var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
                         fn(S);
                     } catch (e) {
                         S.log('in file: ' + url);
                         S.log(e.stack, 'error');
-                        error(e);
+                        error && error(e);
                     }
-                    success();
+                    success && success();
                 }
             });
         }
@@ -3803,6 +3805,12 @@ var KISSY = (function (undefined) {
                 name = cfg.name || key;
                 // 兼容 path
                 base = cfg.base || cfg.path;
+
+                // nodejs must be absolute local file path
+                if (S.Env.nodejs && !S.startsWith(base, 'file:')) {
+                    // specify scheme for KISSY.Uri
+                    base = 'file:' + base;
+                }
 
                 // must be folder
                 if (!S.endsWith(base, '/')) {
@@ -3870,6 +3878,11 @@ var KISSY = (function (undefined) {
         var self = this, baseUri, Config = self.Config;
         if (!base) {
             return Config.base;
+        }
+        // nodejs must be absolute local file path
+        if (S.Env.nodejs && !S.startsWith(base, 'file:')) {
+            // specify scheme for KISSY.Uri
+            base = 'file:' + base;
         }
         baseUri = utils.resolveByPage(base);
         Config.base = baseUri.toString();
@@ -4398,6 +4411,11 @@ var KISSY = (function (undefined) {
 /*
  2012-09-20 yiminghe@gmail.com refactor
  - 参考 async 重构，去除递归回调
+
+ TODO： 1.4 不兼容修改
+ - 分离下载与 attach(执行) 过程
+ - 下载阶段构建依赖树
+ - use callback 统一 attach
  *//**
  * @ignore
  * @fileOverview mix loader into S and infer KISSy baseUrl if not set
@@ -4559,15 +4577,13 @@ var KISSY = (function (undefined) {
     }
 
     if (S.Env.nodejs) {
-        S.config('base',
-            // specify scheme for KISSY.Uri
-            'file:' + __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/');
+        S.config('base', __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/');
     } else {
         S.config(S.mix({
             // 2k
             comboMaxUrlLength: 2048,
             charset: 'utf-8',
-            tag: '20120926222112'
+            tag: '20120927151216'
         }, getBaseInfo()));
     }
 

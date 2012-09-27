@@ -9,63 +9,9 @@
         doc = S.Env.host.document,
         utils = S.Loader.Utils,
         Path = S.Path,
-        jsCallbacks = {},
-        cssCallbacks = {};
+        jsCssCallbacks = {};
 
     S.mix(S, {
-
-        /**
-         * load  a css file from server using http get,
-         * after css file load ,execute success callback.
-         * note: no support for timeout and error
-         * @param url css file url
-         * @param success callback
-         * @param charset
-         * @member KISSY
-         */
-        getStyle: function (url, success, charset) {
-
-            var config = success;
-
-            if (S.isPlainObject(config)) {
-                success = config.success;
-                charset = config.charset;
-            }
-            var src = utils.resolveByPage(url).toString(),
-                callbacks = cssCallbacks[src] = cssCallbacks[src] || [];
-
-            callbacks.push(success);
-
-            if (callbacks.length > 1) {
-                // S.log(' queue css : ' + callbacks.length);
-                return callbacks.node;
-            }
-
-            var head = utils.docHead(),
-                node = doc.createElement('link');
-
-            callbacks.node = node;
-
-            node.href = url;
-            node.rel = 'stylesheet';
-
-            if (charset) {
-                node.charset = charset;
-            }
-            utils.styleOnLoad(node, function () {
-                var callbacks = cssCallbacks[src];
-                S.each(callbacks, function (callback) {
-                    if (callback) {
-                        callback.call(node);
-                    }
-                });
-                delete cssCallbacks[src];
-            });
-            // css order matters!
-            head.appendChild(node);
-            return node;
-
-        },
         /**
          * Load a JavaScript/Css file from the server using a GET HTTP request,
          * then execute it.
@@ -93,15 +39,16 @@
          */
         getScript: function (url, success, charset) {
 
-            if (S.startsWith(Path.extname(url).toLowerCase(), '.css')) {
-                return S.getStyle(url, success, charset);
-            }
-
-            var src = utils.resolveByPage(url),
+            var src = utils.resolveByPage(url).toString(),
                 config = success,
+                css = 0,
                 error,
                 timeout,
                 timer;
+
+            if (S.startsWith(Path.extname(url).toLowerCase(), '.css')) {
+                css = 1;
+            }
 
             if (S.isPlainObject(config)) {
                 success = config.success;
@@ -110,7 +57,7 @@
                 charset = config.charset;
             }
 
-            var callbacks = jsCallbacks[src] = jsCallbacks[src] || [];
+            var callbacks = jsCssCallbacks[src] = jsCssCallbacks[src] || [];
 
             callbacks.push([success, error]);
 
@@ -122,7 +69,7 @@
             }
 
             var head = utils.docHead(),
-                node = doc.createElement('script'),
+                node = doc.createElement(css ? 'link' : 'script'),
                 clearTimer = function () {
                     if (timer) {
                         timer.cancel();
@@ -130,8 +77,15 @@
                     }
                 };
 
-            node.src = url;
-            node.async = true;
+            if (css) {
+                // can not use src.toString
+                // ? is escaped when combo in KISSY.Uri
+                node.href = url;
+                node.rel = 'stylesheet';
+            } else {
+                node.src = url;
+                node.async = true;
+            }
 
             callbacks.node = node;
 
@@ -142,32 +96,36 @@
             var end = function (error) {
                 var index = error ? 1 : 0;
                 clearTimer();
-                var callbacks = jsCallbacks[src];
+                var callbacks = jsCssCallbacks[src];
                 S.each(callbacks, function (callback) {
                     if (callback[index]) {
                         callback[index].call(node);
                     }
                 });
-                delete jsCallbacks[src];
+                delete jsCssCallbacks[src];
             };
 
-            //标准浏览器
-            if (node.addEventListener) {
-                node.addEventListener('load', function () {
-                    end(0);
-                }, false);
-                node.addEventListener('error', function () {
-                    end(1);
-                }, false);
-            } else {
-                node.onreadystatechange = function () {
-                    var self = this,
-                        rs = self.readyState;
-                    if (/loaded|complete/i.test(rs)) {
-                        self.onreadystatechange = null;
-                        end(0);
+            //标准浏览器 css and all script
+            if ('onload' in node || !css) {
+                node.onload = node.onreadystatechange = function () {
+                    var readyState = node.readyState;
+                    if (!readyState ||
+                        readyState == "loaded" ||
+                        readyState == "complete") {
+                        node.onreadystatechange = node.onload = null;
+                        end(0)
                     }
                 };
+                node.onerror = function () {
+                    node.onerror = null;
+                    error(1);
+                };
+            }
+            // old chrome/firefox for css
+            else {
+                utils.pollCss(node, function () {
+                    end(0);
+                });
             }
 
             if (timeout) {
@@ -175,7 +133,8 @@
                     end(1);
                 }, timeout * MILLISECONDS_OF_SECOND);
             }
-            head.insertBefore(node, head.firstChild);
+
+            head.appendChild(node);
             return node;
         }
     });

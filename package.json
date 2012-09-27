@@ -10,6 +10,7 @@
     "contributors": [
         "lifesinger <lifesinger@gmail.com>",
         "Jayli <lijing00333@163.com>",
+        "yyfrankyy <yyfrankyy@gmail.com>",
         "dxq613 <dxq613@gmail.com>",
         "fool2fish <fool2fish@gmail.com>",
         "kingfo <oicuicu@gmail.com>",
@@ -17,14 +18,13 @@
         "satans17 <satans17@gmail.com>"
     ],
     "engines": {
-        "node": ">=0.4.0"
+        "node": ">=0.6.0"
     },
     "directories": {
         "lib": "./build/"
     },
     "main": "./build/kissy-nodejs.js",
     "dependencies": {
-        "jsdom": ">=0.2.0"
     },
     "licenses": [
         {
