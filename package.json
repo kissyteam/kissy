@@ -18,13 +18,17 @@
         "yyfrankyy <yyfrankyy@gmail.com>"
     ],
     "engines": {
-        "node": ">=0.6.0"
+        "node": ">=0.8.0"
+    },
+    "bin": {
+        "kissy-xtemplate": "./bin/xtemplate.js"
     },
     "directories": {
         "lib": "./build/"
     },
     "main": "./build/kissy-nodejs.js",
     "dependencies": {
+        "optimist": ">=0.3.4"
     },
     "licenses": [
         {
