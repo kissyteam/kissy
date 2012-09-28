@@ -86,7 +86,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Overlay, MenuButton) {
                 d;
             d = self.dialog = new Overlay.Dialog({
                 width: 500,
-                mask:true,
+                mask: true,
                 autoRender: true,
                 headerContent: '插入代码',
                 bodyContent: S.substitute(bodyTpl, {
@@ -106,7 +106,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Overlay, MenuButton) {
                     width: 150,
                     menuCfg: {
                         prefixCls: prefixCls,
-                        height:320,
+                        height: 320,
                         render: d.get('contentEl')
                     }
                 });
@@ -128,7 +128,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Overlay, MenuButton) {
             }
             var codeEl = S.all(S.substitute(codeTpl, {
                 type: self.type.get('value'),
-                code: val
+                code: S.escapeHTML(val)
             }), editor.get('document')[0]);
             editor.insertElement(codeEl);
             self.dialog.hide();
