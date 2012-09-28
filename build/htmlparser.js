@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 27 16:21
+build time: Sep 28 14:48
 */
 /**
  * @fileOverview parse html to a hierarchy dom tree
@@ -3199,24 +3199,32 @@ KISSY.add("htmlparser/writer/minify", function (S, BasicWriter, Utils) {
         attribute: function (attr, el) {
             var self = this,
                 name = attr.name,
+                normalizedValue,
                 value = attr.value || "";
+
             // remove empty attribute
             if (canDeleteEmptyAttribute(el, attr) ||
                 // remove redundant attribute
                 isAttributeRedundant(el, attr)) {
-            } else if (isBooleanAttribute(name)) {
+                return;
+            }
+
+            if (isBooleanAttribute(name)) {
                 // collapse boolean attributes
                 self.append(" ", name);
-            } else if (canRemoveAttributeQuotes(value)) {
-                // remove quote
-                self.append(" ", name, "=",
-                    // clean attribute value
-                    escapeAttrValue(cleanAttributeValue(el, attr)));
-            } else {
-                self.append(" ", name, '="',
-                    // clean attribute value
-                    escapeAttrValue(cleanAttributeValue(el, attr)), '"');
+                return;
             }
+
+            // clean attribute value
+            normalizedValue = escapeAttrValue(cleanAttributeValue(el, attr));
+
+            if (value && canRemoveAttributeQuotes(value)) {
+                // remove quote if value is not empty
+            } else {
+                normalizedValue = '"' + normalizedValue + '"';
+            }
+
+            self.append(" ", name, "=", normalizedValue);
         },
 
         /**
