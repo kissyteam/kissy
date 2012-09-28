@@ -170,5 +170,30 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
             var n = HtmlParser.parse(html).childNodes[0];
             expect(HtmlParser.serialize(n)).toBe(html);
         });
+
+        describe('writer',function(){
+
+            it('works for empty attribute',function(){
+
+                var html = "<img alt='' />",
+                    parser = new Parser(html),
+                    node = parser.parse(),
+                    writer = new HtmlParser.BasicWriter();
+                node.writeHtml(writer);
+               expect(writer.getHtml()).toBe('<img alt="alt" />');
+
+
+                var  beatifyWriter = new HtmlParser.BeautifyWriter();
+                node.writeHtml(beatifyWriter);
+                expect(beatifyWriter.getHtml()).toBe('<img alt="alt" />');
+
+                var  minifyWriter = new HtmlParser.MinifyWriter();
+                node.writeHtml(minifyWriter);
+                expect(minifyWriter.getHtml()).toBe('<img alt="" />');
+            });
+
+
+        });
+
     });
 });
