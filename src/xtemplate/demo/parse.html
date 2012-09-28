@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="../../css/src/dpl/base.css"/>
+    <link rel="stylesheet" href="../../css/src/dpl/forms.css"/>
+    <link rel="stylesheet" href="../../button/assets/dpl.css"/>
+    <script src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+    <script src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+    <link type="text/css" rel="stylesheet"
+          href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+    <script src="../../../tools/utils/js-beautify/beautify.js"></script>
+    <title> simple xtemplate </title>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="span8">
+
+            <h2>模板代码</h2>
+
+            <div>
+                <textarea style="width: 350px;height: 400px;" id="tpl">
+
+                    {{3*4*5}}
+
+                </textarea>
+            </div>
+            <br/>
+            <button id="parse" class="ks-button">parse</button>
+        </div>
+
+        <div class="span15">
+            <h2>Generated Template Function</h2>
+
+            <div>
+                <div id="gen">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="../../../build/kissy.js"></script>
+<script src="../src/ast.js"></script>
+<script src="../src/compiler.js"></script>
+<script src="../src/parser.js"></script>
+<script src="../src/base.js"></script>
+<script src="../src/commands.js"></script>
+<script src="../src/xtemplate.js"></script>
+<script>
+
+    KISSY.use("xtemplate", function (S, XTemplate) {
+        var $ = S.all;
+        $('#parse').on('click', function () {
+            var g = XTemplate.compiler.parse($('#tpl').val());
+            S.log(g);
+        });
+    });
+</script>
+</body>
+</html>
