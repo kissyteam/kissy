@@ -24,7 +24,7 @@
              */
             getTag: function () {
                 var self = this;
-                return self.tag || self.SS.Config.tag;
+                return self.tag || self.runtime.Config.tag;
             },
 
             /**
@@ -41,7 +41,7 @@
              */
             getBase: function () {
                 var self = this;
-                return self.base || self.SS.Config.base;
+                return self.base || self.runtime.Config.base;
             },
 
             /**
@@ -50,7 +50,7 @@
              */
             getBaseUri: function () {
                 var self = this;
-                return self.baseUri || self.SS.Config.baseUri;
+                return self.baseUri || self.runtime.Config.baseUri;
             },
 
             /**
@@ -59,7 +59,7 @@
              */
             isDebug: function () {
                 var self = this, debug = self.debug;
-                return debug === undefined ? self.SS.Config.debug : debug;
+                return debug === undefined ? self.runtime.Config.debug : debug;
             },
 
             /**
@@ -68,7 +68,7 @@
              */
             getCharset: function () {
                 var self = this;
-                return self.charset || self.SS.Config.charset;
+                return self.charset || self.runtime.Config.charset;
             },
 
             /**
@@ -77,7 +77,7 @@
              */
             isCombine: function () {
                 var self = this, combine = self.combine;
-                return combine === undefined ? self.SS.Config.combine : combine;
+                return combine === undefined ? self.runtime.Config.combine : combine;
             }
         });
 
@@ -132,7 +132,7 @@
                     if (t = self.getTag()) {
                         fullpathUri.query.set('t', t);
                     }
-                    self.fullpath = Utils.getMappedPath(self.SS, fullpathUri.toString());
+                    self.fullpath = Utils.getMappedPath(self.runtime, fullpathUri.toString());
                 }
                 return self.fullpath;
             },
@@ -170,7 +170,7 @@
             getPackage: function () {
                 var self = this;
                 return self.packageInfo ||
-                    (self.packageInfo = getPackage(self.SS, self));
+                    (self.packageInfo = getPackage(self.runtime, self));
             },
 
             /**
@@ -191,6 +191,19 @@
                 return self.charset || self.getPackage().getCharset();
             },
 
+
+            /**
+             * Get module objects required by this one
+             * @return {KISSY.Loader.Module[]}
+             */
+            getRequiredMods: function () {
+                var mods = this.runtime.Env.mods;
+                return S.map(this.getNormalizedRequires(), function (r) {
+                    return mods[r];
+                });
+            },
+
+
             getNormalizedRequires: function () {
                 var self = this, normalizedRequires,
                     normalizedRequiresStatus = self.normalizedRequiresStatus,
@@ -205,7 +218,7 @@
                 } else {
                     self.normalizedRequiresStatus = status;
                     return self.normalizedRequires =
-                        Utils.normalizeModNames(self.SS, requires, self.name);
+                        Utils.normalizeModNames(self.runtime, requires, self.name);
                 }
             }
         });
@@ -251,7 +264,7 @@
         packageDesc = packages[pName] ||
             Env.defaultPackage ||
             (Env.defaultPackage = new Loader.Package({
-                SS: self,
+                runtime: self,
                 // need packageName as key
                 name: ''
             }));

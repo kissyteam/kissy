@@ -27,13 +27,13 @@
     /**
      * @class KISSY.Loader.ComboLoader
      * using combo to load module files
-     * @param SS KISSY
+     * @param runtime KISSY
      * @private
      * @mixins KISSY.Loader.Target
      */
-    function ComboLoader(SS) {
+    function ComboLoader(runtime) {
         S.mix(this, {
-            SS: SS,
+            runtime: runtime,
             queue: [],
             loading: 0
         });
@@ -67,19 +67,19 @@
             css,
             countCss,
             p,
-            SS = self.SS;
+            runtime = self.runtime;
 
         self.loading = 1;
 
         modNames = utils.getModNamesAsArray(modNames);
 
-        modNames = utils.normalizeModNamesWithAlias(SS, modNames);
+        modNames = utils.normalizeModNamesWithAlias(runtime, modNames);
 
-        unaliasModNames = utils.unalias(SS, modNames);
+        unaliasModNames = utils.unalias(runtime, modNames);
 
         allModNames = self.calculate(unaliasModNames);
 
-        utils.createModulesInfo(SS, allModNames);
+        utils.createModulesInfo(runtime, allModNames);
 
         comboUrls = self.getComboUrls(allModNames);
 
@@ -101,7 +101,7 @@
                         for (var p in css) {
                             if (css.hasOwnProperty(p)) {
                                 S.each(css[p].mods, function (m) {
-                                    utils.registerModule(SS, m.name, S.noop);
+                                    utils.registerModule(runtime, m.name, S.noop);
                                 });
                             }
                         }
@@ -116,8 +116,8 @@
             jsOk = paramJsOk;
             if (cssOk && jsOk) {
                 attachMods(self, unaliasModNames);
-                if (utils.isAttached(SS, unaliasModNames)) {
-                    fn.apply(null, utils.getModules(SS, modNames))
+                if (utils.isAttached(runtime, unaliasModNames)) {
+                    fn.apply(null, utils.getModules(runtime, modNames))
                 } else {
                     // new require is introduced by KISSY.add
                     // run again
@@ -182,7 +182,7 @@
 
     // attach one mod
     function attachMod(self, modName) {
-        var SS = self.SS,
+        var runtime = self.runtime,
             i,
             len,
             requires,
@@ -190,7 +190,7 @@
             mod = getModInfo(self, modName);
         // new require after add
         // not register yet!
-        if (!mod || utils.isAttached(SS, modName)) {
+        if (!mod || utils.isAttached(runtime, modName)) {
             return undefined;
         }
         requires = mod.getNormalizedRequires();
@@ -198,22 +198,22 @@
         for (i = 0; i < len; i++) {
             r = requires[i];
             attachMod(self, r);
-            if (!utils.isAttached(SS, r)) {
+            if (!utils.isAttached(runtime, r)) {
                 return false;
             }
         }
-        utils.attachMod(SS, mod);
+        utils.attachMod(runtime, mod);
         return undefined;
     }
 
     // get mod info.
     function getModInfo(self, modName) {
-        return self.SS.Env.mods[modName];
+        return self.runtime.Env.mods[modName];
     }
 
     // get requires mods need to be loaded dynamically
     function getRequires(self, modName, cache) {
-        var SS = self.SS,
+        var runtime = self.runtime,
             requires,
             i,
             rMod,
@@ -232,7 +232,7 @@
         cache[modName] = ret = {};
 
         // if this mod is attached then its require is attached too!
-        if (mod && !utils.isAttached(SS, modName)) {
+        if (mod && !utils.isAttached(runtime, modName)) {
             requires = mod.getNormalizedRequires();
             // circular dependency check
             if (debugMode) {
@@ -256,9 +256,9 @@
                     }
                 }
                 // if not load into page yet
-                if (!utils.isLoaded(SS, r) &&
+                if (!utils.isLoaded(runtime, r) &&
                     // and not attached
-                    !utils.isAttached(SS, r)) {
+                    !utils.isAttached(runtime, r)) {
                     ret[r] = 1;
                 }
                 ret2 = getRequires(self, r, cache);
@@ -305,14 +305,14 @@
          */
         add: function (name, fn, config) {
             var self = this,
-                SS = self.SS;
+                runtime = self.runtime;
             // 兼容
             if (S.isPlainObject(name)) {
-                return SS.config({
+                return runtime.config({
                     modules: name
                 });
             }
-            utils.registerModule(SS, name, fn, config);
+            utils.registerModule(runtime, name, fn, config);
         },
 
         /**
@@ -328,14 +328,14 @@
                 r,
                 ret2,
                 self = this,
-                SS = self.SS,
+                runtime = self.runtime,
             // 提高性能，不用每个模块都再次全部依赖计算
             // 做个缓存，每个模块对应的待动态加载模块
                 cache = {};
             for (i = 0; i < modNames.length; i++) {
                 m = modNames[i];
-                if (!utils.isAttached(SS, m)) {
-                    if (!utils.isLoaded(SS, m)) {
+                if (!utils.isAttached(runtime, m)) {
+                    if (!utils.isLoaded(runtime, m)) {
                         ret[m] = 1;
                     }
                     S.mix(ret, getRequires(self, m, cache));
@@ -359,8 +359,8 @@
         getComboUrls: function (modNames) {
             var self = this,
                 i,
-                SS = self.SS,
-                Config = SS.Config,
+                runtime = self.runtime,
+                Config = runtime.Config,
                 combos = {};
 
             S.each(modNames, function (modName) {
@@ -426,7 +426,7 @@
                             function pushComboUrl() {
                                 // map the whole combo path
                                 res[type][packageName].push(utils.getMappedPath(
-                                    SS,
+                                    runtime,
                                     prefix +
                                         t.join(comboSep) +
                                         suffix,

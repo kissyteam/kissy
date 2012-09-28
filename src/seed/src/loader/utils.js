@@ -166,7 +166,7 @@
             // 防止 cfg 里有 tag，构建 fullpath 需要
             mods[modName] = mod = new Loader.Module(S.mix({
                 name: modName,
-                SS: self
+                runtime: self
             }, cfg));
 
             return mod;

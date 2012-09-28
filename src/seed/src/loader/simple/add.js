@@ -37,14 +37,14 @@
              */
             add: function (name, fn, config) {
                 var self = this,
-                    SS = self.SS,
+                    runtime = self.runtime,
                     mod,
                     requires,
-                    mods = SS.Env.mods;
+                    mods = runtime.Env.mods;
 
                 // 兼容
                 if (S.isPlainObject(name)) {
-                    return SS.config({
+                    return runtime.config({
                         modules: name
                     });
                 }
@@ -52,7 +52,7 @@
                 // S.add(name[, fn[, config]])
                 if (S.isString(name)) {
 
-                    utils.registerModule(SS, name, fn, config);
+                    utils.registerModule(runtime, name, fn, config);
 
                     mod = mods[name];
 
@@ -65,8 +65,8 @@
                         requires = mod.getNormalizedRequires();
                     }
 
-                    if (!requires || utils.isAttached(SS, requires)) {
-                        utils.attachMod(SS, mod);
+                    if (!requires || utils.isAttached(runtime, requires)) {
+                        utils.attachMod(runtime, mod);
                     }
 
                     return;
@@ -100,7 +100,7 @@
                         // use onload to get module name is not right in ie
                         name = findModuleNameByInteractive(self);
                         S.log('old_ie get modName by interactive : ' + name);
-                        utils.registerModule(SS, name, fn, config);
+                        utils.registerModule(runtime, name, fn, config);
                         self.__startLoadModuleName = null;
                         self.__startLoadTime = 0;
                     } else {
@@ -120,7 +120,7 @@
     // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
     // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive(self) {
-        var SS = self.SS,
+        var runtime = self.runtime,
             scripts = S.Env.host.document.getElementsByTagName('script'),
             re,
             i,
@@ -151,11 +151,11 @@
         // ie9 or firefox/chrome => re.src == 'http://localhost/x.js'
         var src = utils.resolveByPage(re.src),
             srcStr = src.toString(),
-            packages = SS.Env.packages,
+            packages = runtime.Env.packages,
             finalPackagePath,
             p,
             packageBase,
-            Config = SS.Config,
+            Config = runtime.Config,
             finalPackageUri,
             finalPackageLength = -1;
 

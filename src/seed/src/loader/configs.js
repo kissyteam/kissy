@@ -71,7 +71,7 @@
                 var baseUri = utils.resolveByPage(base);
                 cfg.base = baseUri.toString();
                 cfg.baseUri = baseUri;
-                cfg.SS = S;
+                cfg.runtime = S;
                 delete cfg.path;
 
                 ps[ name ] = new Loader.Package(cfg);

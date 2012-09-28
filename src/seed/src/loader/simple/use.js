@@ -71,12 +71,12 @@
             // use simultaneously on one loader
                 loadChecker = self.__loadChecker ||
                     (self.__loadChecker = new LoadChecker()),
-                SS = self.SS;
+                runtime = self.runtime;
 
             modNames = utils.getModNamesAsArray(modNames);
-            modNames = utils.normalizeModNamesWithAlias(SS, modNames);
+            modNames = utils.normalizeModNamesWithAlias(runtime, modNames);
 
-            var normalizedModNames = utils.unalias(SS, modNames);
+            var normalizedModNames = utils.unalias(runtime, modNames);
 
             loadChecker.addListener(function () {
                 var all = S.reduce(normalizedModNames, function (a, modName) {
@@ -85,7 +85,7 @@
                 if (all) {
                     // prevent call duplication
                     loadChecker.removeListener(callbackId);
-                    callback && callback.apply(SS, utils.getModules(SS, modNames));
+                    callback && callback.apply(runtime, utils.getModules(runtime, modNames));
                     callback = null;
                 }
             }, callbackId);
@@ -108,12 +108,12 @@
 
     function attachModByName(self, modName, loadChecker) {
 
-        var SS = self.SS,
+        var runtime = self.runtime,
             debug = S.Config.debug,
-            mods = SS.Env.mods,
+            mods = runtime.Env.mods,
             mod;
 
-        utils.createModuleInfo(SS, modName);
+        utils.createModuleInfo(runtime, modName);
         mod = mods[modName];
 
         function ready() {
@@ -130,7 +130,7 @@
                 }, 1);
 
             if (all) {
-                utils.attachMod(SS, mod);
+                utils.attachMod(runtime, mod);
                 return 1;
             } else {
                 return 0;
@@ -156,22 +156,22 @@
         if (loadChecker.addListener(end, modName)) {
             attachModRecursive(self, mod, loadChecker);
             if (debug) {
-                cyclicCheck(SS, modName);
+                cyclicCheck(runtime, modName);
             }
         } else if (debug) {
             // this mod is already listened
-            checkCyclicRecursive(SS, modName);
+            checkCyclicRecursive(runtime, modName);
         }
     }
 
-    function checkCyclicRecursive(SS, modName) {
+    function checkCyclicRecursive(runtime, modName) {
         // S.log('checkCyclicRecursive :' + modName, 'warn');
-        cyclicCheck(SS, modName);
-        var mods = SS.Env.mods,
+        cyclicCheck(runtime, modName);
+        var mods = runtime.Env.mods,
             requires = mods[modName].getNormalizedRequires();
         S.each(requires, function (r) {
             if (mods[r] && mods[r].status != ATTACHED) {
-                checkCyclicRecursive(SS, r);
+                checkCyclicRecursive(runtime, r);
             }
         });
     }
@@ -194,7 +194,7 @@
     // Load a single module.
     function loadModByScript(self, mod, loadChecker) {
 
-        var SS = self.SS,
+        var runtime = self.runtime,
             modName = mod.getName(),
             charset = mod.getCharset(),
             url = mod.getFullPath(),
@@ -213,14 +213,14 @@
             success: function () {
                 if (isCss) {
                     // css does not set LOADED because no add for css! must be set manually
-                    utils.registerModule(SS, modName, S.noop);
+                    utils.registerModule(runtime, modName, S.noop);
                 } else {
                     var currentModule;
                     // does not need this step for css
                     // standard browser(except ie9) fire load after KISSY.add immediately
                     if (currentModule = self[CURRENT_MODULE]) {
                         S.log('standard browser get mod name after load : ' + modName);
-                        utils.registerModule(SS,
+                        utils.registerModule(runtime,
                             modName, currentModule.fn,
                             currentModule.config);
                         self[CURRENT_MODULE] = null;
@@ -257,9 +257,9 @@
     }
 
     // check cyclic dependency between mods
-    function cyclicCheck(SS, modName) {
+    function cyclicCheck(runtime, modName) {
         // one mod 's all requires mods to run its callback
-        var mods = SS.Env.mods,
+        var mods = runtime.Env.mods,
             mod = mods[modName],
             __allRequires = mod[ALL_REQUIRES] = mod[ALL_REQUIRES] || {},
             requires = mod.getNormalizedRequires(),

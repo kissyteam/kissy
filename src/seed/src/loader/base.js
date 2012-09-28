@@ -11,8 +11,8 @@
      * @mixins KISSY.Loader.Target
      * This class should not be instantiated manually.
      */
-    function Loader(SS) {
-        this.SS = SS;
+    function Loader(runtime) {
+        this.runtime = runtime;
         /**
          * @event afterModAttached
          * fired after a module is attached

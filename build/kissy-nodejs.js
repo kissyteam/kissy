@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 27 20:08
+build time: Sep 28 17:42
 */
 /**
  * @ignore
@@ -479,16 +479,17 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20120927200828' will replace with current timestamp when compressing.
+         * NOTICE: '20120928174215' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120927200828';
+        S.__BUILD_TIME = '20120928174215';
     })();
 
     // exports for nodejs
     if (S.Env.nodejs) {
-        exports.KISSY = S;
+        S.KISSY = S;
+        module.exports = S;
     }
 
     return S;
@@ -2899,8 +2900,8 @@ var KISSY = (function (undefined) {
      * @mixins KISSY.Loader.Target
      * This class should not be instantiated manually.
      */
-    function Loader(SS) {
-        this.SS = SS;
+    function Loader(runtime) {
+        this.runtime = runtime;
         /**
          * @event afterModAttached
          * fired after a module is attached
@@ -3181,7 +3182,7 @@ var KISSY = (function (undefined) {
             // 防止 cfg 里有 tag，构建 fullpath 需要
             mods[modName] = mod = new Loader.Module(S.mix({
                 name: modName,
-                SS: self
+                runtime: self
             }, cfg));
 
             return mod;
@@ -3461,7 +3462,7 @@ var KISSY = (function (undefined) {
              */
             getTag: function () {
                 var self = this;
-                return self.tag || self.SS.Config.tag;
+                return self.tag || self.runtime.Config.tag;
             },
 
             /**
@@ -3478,7 +3479,7 @@ var KISSY = (function (undefined) {
              */
             getBase: function () {
                 var self = this;
-                return self.base || self.SS.Config.base;
+                return self.base || self.runtime.Config.base;
             },
 
             /**
@@ -3487,7 +3488,7 @@ var KISSY = (function (undefined) {
              */
             getBaseUri: function () {
                 var self = this;
-                return self.baseUri || self.SS.Config.baseUri;
+                return self.baseUri || self.runtime.Config.baseUri;
             },
 
             /**
@@ -3496,7 +3497,7 @@ var KISSY = (function (undefined) {
              */
             isDebug: function () {
                 var self = this, debug = self.debug;
-                return debug === undefined ? self.SS.Config.debug : debug;
+                return debug === undefined ? self.runtime.Config.debug : debug;
             },
 
             /**
@@ -3505,7 +3506,7 @@ var KISSY = (function (undefined) {
              */
             getCharset: function () {
                 var self = this;
-                return self.charset || self.SS.Config.charset;
+                return self.charset || self.runtime.Config.charset;
             },
 
             /**
@@ -3514,7 +3515,7 @@ var KISSY = (function (undefined) {
              */
             isCombine: function () {
                 var self = this, combine = self.combine;
-                return combine === undefined ? self.SS.Config.combine : combine;
+                return combine === undefined ? self.runtime.Config.combine : combine;
             }
         });
 
@@ -3569,7 +3570,7 @@ var KISSY = (function (undefined) {
                     if (t = self.getTag()) {
                         fullpathUri.query.set('t', t);
                     }
-                    self.fullpath = Utils.getMappedPath(self.SS, fullpathUri.toString());
+                    self.fullpath = Utils.getMappedPath(self.runtime, fullpathUri.toString());
                 }
                 return self.fullpath;
             },
@@ -3607,7 +3608,7 @@ var KISSY = (function (undefined) {
             getPackage: function () {
                 var self = this;
                 return self.packageInfo ||
-                    (self.packageInfo = getPackage(self.SS, self));
+                    (self.packageInfo = getPackage(self.runtime, self));
             },
 
             /**
@@ -3628,6 +3629,19 @@ var KISSY = (function (undefined) {
                 return self.charset || self.getPackage().getCharset();
             },
 
+
+            /**
+             * Get module objects required by this one
+             * @return {KISSY.Loader.Module[]}
+             */
+            getRequiredMods: function () {
+                var mods = this.runtime.Env.mods;
+                return S.map(this.getNormalizedRequires(), function (r) {
+                    return mods[r];
+                });
+            },
+
+
             getNormalizedRequires: function () {
                 var self = this, normalizedRequires,
                     normalizedRequiresStatus = self.normalizedRequiresStatus,
@@ -3642,7 +3656,7 @@ var KISSY = (function (undefined) {
                 } else {
                     self.normalizedRequiresStatus = status;
                     return self.normalizedRequires =
-                        Utils.normalizeModNames(self.SS, requires, self.name);
+                        Utils.normalizeModNames(self.runtime, requires, self.name);
                 }
             }
         });
@@ -3688,7 +3702,7 @@ var KISSY = (function (undefined) {
         packageDesc = packages[pName] ||
             Env.defaultPackage ||
             (Env.defaultPackage = new Loader.Package({
-                SS: self,
+                runtime: self,
                 // need packageName as key
                 name: ''
             }));
@@ -3822,7 +3836,7 @@ var KISSY = (function (undefined) {
                 var baseUri = utils.resolveByPage(base);
                 cfg.base = baseUri.toString();
                 cfg.baseUri = baseUri;
-                cfg.SS = S;
+                cfg.runtime = S;
                 delete cfg.path;
 
                 ps[ name ] = new Loader.Package(cfg);
@@ -3927,14 +3941,14 @@ var KISSY = (function (undefined) {
              */
             add: function (name, fn, config) {
                 var self = this,
-                    SS = self.SS,
+                    runtime = self.runtime,
                     mod,
                     requires,
-                    mods = SS.Env.mods;
+                    mods = runtime.Env.mods;
 
                 // 兼容
                 if (S.isPlainObject(name)) {
-                    return SS.config({
+                    return runtime.config({
                         modules: name
                     });
                 }
@@ -3942,7 +3956,7 @@ var KISSY = (function (undefined) {
                 // S.add(name[, fn[, config]])
                 if (S.isString(name)) {
 
-                    utils.registerModule(SS, name, fn, config);
+                    utils.registerModule(runtime, name, fn, config);
 
                     mod = mods[name];
 
@@ -3955,8 +3969,8 @@ var KISSY = (function (undefined) {
                         requires = mod.getNormalizedRequires();
                     }
 
-                    if (!requires || utils.isAttached(SS, requires)) {
-                        utils.attachMod(SS, mod);
+                    if (!requires || utils.isAttached(runtime, requires)) {
+                        utils.attachMod(runtime, mod);
                     }
 
                     return;
@@ -3990,7 +4004,7 @@ var KISSY = (function (undefined) {
                         // use onload to get module name is not right in ie
                         name = findModuleNameByInteractive(self);
                         S.log('old_ie get modName by interactive : ' + name);
-                        utils.registerModule(SS, name, fn, config);
+                        utils.registerModule(runtime, name, fn, config);
                         self.__startLoadModuleName = null;
                         self.__startLoadTime = 0;
                     } else {
@@ -4010,7 +4024,7 @@ var KISSY = (function (undefined) {
     // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
     // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive(self) {
-        var SS = self.SS,
+        var runtime = self.runtime,
             scripts = S.Env.host.document.getElementsByTagName('script'),
             re,
             i,
@@ -4041,11 +4055,11 @@ var KISSY = (function (undefined) {
         // ie9 or firefox/chrome => re.src == 'http://localhost/x.js'
         var src = utils.resolveByPage(re.src),
             srcStr = src.toString(),
-            packages = SS.Env.packages,
+            packages = runtime.Env.packages,
             finalPackagePath,
             p,
             packageBase,
-            Config = SS.Config,
+            Config = runtime.Config,
             finalPackageUri,
             finalPackageLength = -1;
 
@@ -4192,12 +4206,12 @@ var KISSY = (function (undefined) {
             // use simultaneously on one loader
                 loadChecker = self.__loadChecker ||
                     (self.__loadChecker = new LoadChecker()),
-                SS = self.SS;
+                runtime = self.runtime;
 
             modNames = utils.getModNamesAsArray(modNames);
-            modNames = utils.normalizeModNamesWithAlias(SS, modNames);
+            modNames = utils.normalizeModNamesWithAlias(runtime, modNames);
 
-            var normalizedModNames = utils.unalias(SS, modNames);
+            var normalizedModNames = utils.unalias(runtime, modNames);
 
             loadChecker.addListener(function () {
                 var all = S.reduce(normalizedModNames, function (a, modName) {
@@ -4206,7 +4220,7 @@ var KISSY = (function (undefined) {
                 if (all) {
                     // prevent call duplication
                     loadChecker.removeListener(callbackId);
-                    callback && callback.apply(SS, utils.getModules(SS, modNames));
+                    callback && callback.apply(runtime, utils.getModules(runtime, modNames));
                     callback = null;
                 }
             }, callbackId);
@@ -4229,12 +4243,12 @@ var KISSY = (function (undefined) {
 
     function attachModByName(self, modName, loadChecker) {
 
-        var SS = self.SS,
+        var runtime = self.runtime,
             debug = S.Config.debug,
-            mods = SS.Env.mods,
+            mods = runtime.Env.mods,
             mod;
 
-        utils.createModuleInfo(SS, modName);
+        utils.createModuleInfo(runtime, modName);
         mod = mods[modName];
 
         function ready() {
@@ -4251,7 +4265,7 @@ var KISSY = (function (undefined) {
                 }, 1);
 
             if (all) {
-                utils.attachMod(SS, mod);
+                utils.attachMod(runtime, mod);
                 return 1;
             } else {
                 return 0;
@@ -4277,22 +4291,22 @@ var KISSY = (function (undefined) {
         if (loadChecker.addListener(end, modName)) {
             attachModRecursive(self, mod, loadChecker);
             if (debug) {
-                cyclicCheck(SS, modName);
+                cyclicCheck(runtime, modName);
             }
         } else if (debug) {
             // this mod is already listened
-            checkCyclicRecursive(SS, modName);
+            checkCyclicRecursive(runtime, modName);
         }
     }
 
-    function checkCyclicRecursive(SS, modName) {
+    function checkCyclicRecursive(runtime, modName) {
         // S.log('checkCyclicRecursive :' + modName, 'warn');
-        cyclicCheck(SS, modName);
-        var mods = SS.Env.mods,
+        cyclicCheck(runtime, modName);
+        var mods = runtime.Env.mods,
             requires = mods[modName].getNormalizedRequires();
         S.each(requires, function (r) {
             if (mods[r] && mods[r].status != ATTACHED) {
-                checkCyclicRecursive(SS, r);
+                checkCyclicRecursive(runtime, r);
             }
         });
     }
@@ -4315,7 +4329,7 @@ var KISSY = (function (undefined) {
     // Load a single module.
     function loadModByScript(self, mod, loadChecker) {
 
-        var SS = self.SS,
+        var runtime = self.runtime,
             modName = mod.getName(),
             charset = mod.getCharset(),
             url = mod.getFullPath(),
@@ -4334,14 +4348,14 @@ var KISSY = (function (undefined) {
             success: function () {
                 if (isCss) {
                     // css does not set LOADED because no add for css! must be set manually
-                    utils.registerModule(SS, modName, S.noop);
+                    utils.registerModule(runtime, modName, S.noop);
                 } else {
                     var currentModule;
                     // does not need this step for css
                     // standard browser(except ie9) fire load after KISSY.add immediately
                     if (currentModule = self[CURRENT_MODULE]) {
                         S.log('standard browser get mod name after load : ' + modName);
-                        utils.registerModule(SS,
+                        utils.registerModule(runtime,
                             modName, currentModule.fn,
                             currentModule.config);
                         self[CURRENT_MODULE] = null;
@@ -4378,9 +4392,9 @@ var KISSY = (function (undefined) {
     }
 
     // check cyclic dependency between mods
-    function cyclicCheck(SS, modName) {
+    function cyclicCheck(runtime, modName) {
         // one mod 's all requires mods to run its callback
-        var mods = SS.Env.mods,
+        var mods = runtime.Env.mods,
             mod = mods[modName],
             __allRequires = mod[ALL_REQUIRES] = mod[ALL_REQUIRES] || {},
             requires = mod.getNormalizedRequires(),
@@ -4585,7 +4599,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 45,
             charset: 'utf-8',
-            tag: '20120927200828'
+            tag: '20120928174215'
         }, getBaseInfo()));
     }
 
