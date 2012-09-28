@@ -22,6 +22,8 @@ textarea,iframe包装
 
 .ks-editor-textarea-wrap textarea {
     border-width: 0;
+    margin: 0;
+    padding: 0;
 }
 
 /*

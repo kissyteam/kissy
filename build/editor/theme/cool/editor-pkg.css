@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:20
+build time: Sep 28 16:22
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -620,6 +620,8 @@ textarea,iframe包装
 
 .ks-editor-textarea-wrap textarea {
     border-width: 0;
+    margin: 0;
+    padding: 0;
 }
 
 /*
