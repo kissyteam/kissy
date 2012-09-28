@@ -8,14 +8,14 @@
         "url": "https://github.com/kissyteam/kissy/issues"
     },
     "contributors": [
-        "lifesinger <lifesinger@gmail.com>",
         "Jayli <lijing00333@163.com>",
-        "yyfrankyy <yyfrankyy@gmail.com>",
         "dxq613 <dxq613@gmail.com>",
         "fool2fish <fool2fish@gmail.com>",
         "kingfo <oicuicu@gmail.com>",
+        "lifesinger <lifesinger@gmail.com>",
         "lizzie <shengyan1985@gmail.com>",
-        "satans17 <satans17@gmail.com>"
+        "satans17 <satans17@gmail.com>",
+        "yyfrankyy <yyfrankyy@gmail.com>"
     ],
     "engines": {
         "node": ">=0.6.0"

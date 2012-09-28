@@ -483,7 +483,8 @@ var KISSY = (function (undefined) {
 
     // exports for nodejs
     if (S.Env.nodejs) {
-        exports.KISSY = S;
+        S.KISSY = S;
+        module.exports = S;
     }
 
     return S;
