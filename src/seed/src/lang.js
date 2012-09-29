@@ -176,15 +176,36 @@
              * or 'new Object()' or 'new FunctionClass()').
              * @member KISSY
              */
-            isPlainObject: function (o) {
-                /*
-                 note by yiminghe
-                 isPlainObject(node=document.getElementById('xx')) -> false
-                 toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
-                 'isPrototypeOf' in node : ie678 === false ,other === true
-                 refer http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
-                 */
-                return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
+            isPlainObject: function (obj) {
+                // credits to jquery
+
+                // Must be an Object.
+                // Because of IE, we also have to check the presence of the constructor property.
+                // Make sure that DOM nodes and window objects don't pass through, as well
+                if (!obj || S.type(obj) !== "object" || obj.nodeType || obj.window == obj) {
+                    return false;
+                }
+
+                try {
+                    // Not own constructor property must be Object
+                    if (obj.constructor &&
+                        !hasOwnProperty(obj, "constructor") &&
+                        !hasOwnProperty(obj.constructor.prototype, "isPrototypeOf")) {
+                        return false;
+                    }
+                } catch (e) {
+                    // IE8,9 Will throw exceptions on certain host objects #9897
+                    return false;
+                }
+
+                // Own properties are enumerated firstly, so to speed up,
+                // if last one is own, then all properties are own.
+
+                var key;
+                for (key in obj) {
+                }
+
+                return key === undefined || hasOwnProperty(obj, key);
             },
 
 

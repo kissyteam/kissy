@@ -41,11 +41,8 @@
              * A crude way of determining if an object is a window
              * @member KISSY
              */
-            isWindow: function (o) {
-                return S.type(o) === 'object'
-                    && 'setInterval' in o
-                    && 'document' in o
-                    && o.document.nodeType == 9;
+            isWindow: function (obj) {
+                return obj != null && obj == obj.window;
             },
 
 

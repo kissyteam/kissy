@@ -9,6 +9,13 @@ describe('web.js', function () {
     it('S.isWindow', function () {
         expect(S.isWindow(host)).toBe(true);
         expect(S.isWindow({})).toBe(false);
+        expect(S.isWindow({
+            setInterval:1,
+            setTimeout:1,
+            document:{
+                nodeType:9
+            }
+        })).toBe(false);
         expect(S.isWindow(document)).toBe(false);
         expect(S.isWindow(document.documentElement.firstChild)).toBe(false);
     });

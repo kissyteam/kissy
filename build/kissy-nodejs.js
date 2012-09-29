@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 28 17:42
+build time: Sep 29 14:17
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20120928174215' will replace with current timestamp when compressing.
+         * NOTICE: '20120929141713' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120928174215';
+        S.__BUILD_TIME = '20120929141713';
     })();
 
     // exports for nodejs
@@ -672,15 +672,36 @@ var KISSY = (function (undefined) {
              * or 'new Object()' or 'new FunctionClass()').
              * @member KISSY
              */
-            isPlainObject: function (o) {
-                /*
-                 note by yiminghe
-                 isPlainObject(node=document.getElementById('xx')) -> false
-                 toString.call(node) : ie678 == '[object Object]',other =='[object HTMLElement]'
-                 'isPrototypeOf' in node : ie678 === false ,other === true
-                 refer http://lifesinger.org/blog/2010/12/thinking-of-isplainobject/
-                 */
-                return o && toString.call(o) === '[object Object]' && 'isPrototypeOf' in o;
+            isPlainObject: function (obj) {
+                // credits to jquery
+
+                // Must be an Object.
+                // Because of IE, we also have to check the presence of the constructor property.
+                // Make sure that DOM nodes and window objects don't pass through, as well
+                if (!obj || S.type(obj) !== "object" || obj.nodeType || obj.window == obj) {
+                    return false;
+                }
+
+                try {
+                    // Not own constructor property must be Object
+                    if (obj.constructor &&
+                        !hasOwnProperty(obj, "constructor") &&
+                        !hasOwnProperty(obj.constructor.prototype, "isPrototypeOf")) {
+                        return false;
+                    }
+                } catch (e) {
+                    // IE8,9 Will throw exceptions on certain host objects #9897
+                    return false;
+                }
+
+                // Own properties are enumerated firstly, so to speed up,
+                // if last one is own, then all properties are own.
+
+                var key;
+                for (key in obj) {
+                }
+
+                return key === undefined || hasOwnProperty(obj, key);
             },
 
 
@@ -4599,7 +4620,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 45,
             charset: 'utf-8',
-            tag: '20120928174215'
+            tag: '20120929141713'
         }, getBaseInfo()));
     }
 
@@ -4656,11 +4677,8 @@ var KISSY = (function (undefined) {
              * A crude way of determining if an object is a window
              * @member KISSY
              */
-            isWindow: function (o) {
-                return S.type(o) === 'object'
-                    && 'setInterval' in o
-                    && 'document' in o
-                    && o.document.nodeType == 9;
+            isWindow: function (obj) {
+                return obj != null && obj == obj.window;
             },
 
 

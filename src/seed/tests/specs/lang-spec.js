@@ -291,15 +291,16 @@ describe('lang.js', function () {
     it('S.isPlainObject', function () {
         // The use case that we want to match
         expect(S.isPlainObject({})).toBe(true);
-        expect(S.isPlainObject(new fn)).toBe(true);
+
+        expect(S.isPlainObject(new fn)).toBe(false);
 
         // Not objects shouldn't be matched
-        expect(S.isPlainObject('')).toBe('');
-        expect(S.isPlainObject(0)).toBe(0);
+        expect(S.isPlainObject('')).toBe(false);
+        expect(S.isPlainObject(0)).toBe(false);
         expect(S.isPlainObject(1)).toBe(false);
         expect(S.isPlainObject(true)).toBe(false);
-        expect(S.isPlainObject(null)).toBe(null);
-        expect(S.isPlainObject(undefined)).toBe(undefined);
+        expect(S.isPlainObject(null)).toBe(false);
+        expect(S.isPlainObject(undefined)).toBe(false);
         expect(S.isPlainObject([])).toBe(false);
         expect(S.isPlainObject(new Date)).toBe(false);
         expect(S.isPlainObject(fn)).toBe(false);
@@ -308,6 +309,13 @@ describe('lang.js', function () {
         if (web) {
             expect(S.isPlainObject(doc.createElement('div'))).toBe(false);
         }
+
+
+        function X(){}
+        expect(S.isPlainObject(new X())).toBe(false);
+        function Y(){this.x=1;}
+        Y.prototype.z= S.noop;
+        expect(S.isPlainObject(new Y())).toBe(false);
 
         // Host
         expect(S.isPlainObject(host)).toBe(false);
