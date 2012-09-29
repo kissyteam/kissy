@@ -8,6 +8,10 @@ KISSY.add('xtemplate/base', function (S, compiler) {
 
     var cache = {};
 
+    var defaultConfig = {
+        cache: true
+    };
+
     function XTemplate(tpl, option) {
         var self = this;
         // prevent messing up with velocity
@@ -15,7 +19,7 @@ KISSY.add('xtemplate/base', function (S, compiler) {
             tpl = tpl.replace(/\{\{@/g, '{{#');
         }
         self.tpl = tpl;
-        option = option || {};
+        option = S.merge(defaultConfig, option);
         self.subTpls = S.merge(option.subTpls, XTemplate.subTpls);
         self.commands = S.merge(option.commands, XTemplate.commands);
         this.option = option;
@@ -35,18 +39,27 @@ KISSY.add('xtemplate/base', function (S, compiler) {
         addCommand: function (commandName, fn) {
             this.commands[commandName] = fn;
         },
+        __compile: function () {
+            var self = this,
+                option = this.option,
+                tpl = self.tpl;
+            var code = compiler.compile(tpl);
+            // eval is not ok for eval("(function(){})") ie
+            return (Function.apply(null, []
+                .concat(code.params)
+                .concat(code.source.join('\n') + '//@ sourceURL=' +
+                (option.name ? option.name : ('xtemplate' + (guid++))) + '.js')));
+        },
         compile: function () {
-            var self = this, tpl = self.tpl, option = this.option;
+            var self = this,
+                tpl = self.tpl,
+                option = this.option;
             if (!self.compiled) {
                 if (S.isFunction(tpl)) {
+                } else if (option.cache) {
+                    self.tpl = cache[tpl] || (cache[tpl] = self.__compile());
                 } else {
-                    var code = compiler.compile(tpl);
-                    // eval is not ok for eval("(function(){})") ie
-                    self.tpl = cache[tpl] ||
-                        (cache[tpl] = Function.apply(null, []
-                            .concat(code.params)
-                            .concat(code.source.join('\n') + '//@ sourceURL=' +
-                            (option.name ? option.name : ('xtemplate' + (guid++))) + '.js')));
+                    self.tpl = self.__compile();
                 }
                 self.compiled = 1;
             }

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 12 15:30
+build time: Sep 29 16:22
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 12 15:30
 
         /**
          * The build time of the library.
-         * NOTICE: '20120912153016' will replace with current timestamp when compressing.
+         * NOTICE: '20120929162159' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120912153016';
+        S.__BUILD_TIME = '20120929162159';
     })();
 
     return S;
@@ -1131,7 +1131,7 @@ build time: Sep 12 15:30
              * @return {String} escaped html
              */
             escapeHTML: function (str) {
-                return str.replace(getEscapeReg(), function (m) {
+                return (str+'').replace(getEscapeReg(), function (m) {
                     return reverseEntities[m];
                 });
             },
@@ -5189,7 +5189,7 @@ build time: Sep 12 15:30
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120912153016'
+        tag: '20120929162159'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5484,7 +5484,6 @@ KISSY.config('modules', {
 'editor': {requires: ['htmlparser','component','core']},
 'split-button': {requires: ['component','button','menubutton']},
 'mvc': {requires: ['base','event','node','ajax','json']},
-'color': {requires: ['base']},
 'overlay': {requires: ['ua','component','node']},
 'base': {requires: ['event']},
 'separator': {requires: ['component']},

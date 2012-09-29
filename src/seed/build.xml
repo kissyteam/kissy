@@ -51,7 +51,6 @@
             ${kissy.src.dir}/base/src/,
             ${kissy.src.dir}/button/src/,
             ${kissy.src.dir}/calendar/src/,
-            ${kissy.src.dir}/color/src/,
             ${kissy.src.dir}/combobox/src/,
             ${kissy.src.dir}/component/src/,
             ${kissy.src.dir}/cookie/src/,
