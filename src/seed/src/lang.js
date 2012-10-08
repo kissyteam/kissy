@@ -173,11 +173,11 @@
 
             /**
              * Checks to see if an object is a plain object (created using '{}'
-             * or 'new Object()' or 'new FunctionClass()').
+             * or 'new Object()' but not 'new FunctionClass()').
              * @member KISSY
              */
             isPlainObject: function (obj) {
-                // credits to jquery
+                // credits to jq
 
                 // Must be an Object.
                 // Because of IE, we also have to check the presence of the constructor property.
