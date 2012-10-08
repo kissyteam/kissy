@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 01:24
+build time: Oct 9 01:32
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121009012444' will replace with current timestamp when compressing.
+         * NOTICE: '20121009013249' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20121009012444';
+        S.__BUILD_TIME = '20121009013249';
     })();
 
     // exports for nodejs
@@ -5274,7 +5274,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121009012444'
+            tag: '20121009013249'
         }, getBaseInfo()));
     }
 
@@ -16600,7 +16600,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 8 20:02
+build time: Oct 9 01:32
 */
 /**
  * @ignore
@@ -17913,7 +17913,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
                 if (isAttr(el, prop)) {
                     DOM.attr(el, prop, val, 1);
                 } else {
-                    S.log(self.prop + ' update: ' + val);
+                    // S.log(self.prop + ' update: ' + val);
                     DOM.css(el, prop, val);
                 }
             }

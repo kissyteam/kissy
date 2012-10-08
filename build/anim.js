@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 8 20:02
+build time: Oct 9 01:32
 */
 /**
  * @ignore
@@ -1314,7 +1314,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
                 if (isAttr(el, prop)) {
                     DOM.attr(el, prop, val, 1);
                 } else {
-                    S.log(self.prop + ' update: ' + val);
+                    // S.log(self.prop + ' update: ' + val);
                     DOM.css(el, prop, val);
                 }
             }

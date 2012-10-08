@@ -101,7 +101,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
                 if (isAttr(el, prop)) {
                     DOM.attr(el, prop, val, 1);
                 } else {
-                    S.log(self.prop + ' update: ' + val);
+                    // S.log(self.prop + ' update: ' + val);
                     DOM.css(el, prop, val);
                 }
             }
