@@ -12,40 +12,46 @@
         LOADING = data.LOADING,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
-        ALL_REQUIRES = '__allRequires',
         CURRENT_MODULE = '__currentModule',
         ATTACHED = data.ATTACHED;
 
-    function LoadChecker() {
-        this.listeners = {};
-        this.results = {};
+    function LoadChecker(fn) {
+        this.fn = fn;
+        this.waitMods = {};
+        this.requireLoadedMods = {};
     }
 
     LoadChecker.prototype = {
 
-        addListener: function (fn, modName) {
-            if (!(modName in this.listeners)) {
-                this.listeners[modName] = fn;
-                return 1;
-            }
-            return 0;
-        },
-
-        removeListener: function (modName) {
-            this.listeners[modName] = null;
-        },
-
         check: function () {
-            var listeners = this.listeners, fn, keys = S.keys(listeners);
-            S.each(keys, function (k) {
-                if (fn = listeners[k]) {
-                    fn();
-                }
-            });
+            var self = this,
+                waitMods = self.waitMods,
+                fn = self.fn;
+            if (fn && S.isEmptyObject(waitMods)) {
+                fn();
+                self.fn = null;
+            }
         },
 
-        inResult: function (modName) {
-            return modName in this.results;
+        addWaitMod: function (modName) {
+            this.waitMods[modName] = 1;
+        },
+
+        removeWaitMod: function (modName) {
+            delete this.waitMods[modName];
+        },
+
+        // only load mod requires once
+        // prevent looping dependency tree more than once for one use()
+        loadModRequires: function (loader, mod) {
+            var requireLoadedMods = this.requireLoadedMods,
+                modName = mod.name,
+                requires;
+            if (!requireLoadedMods[modName]) {
+                requireLoadedMods[modName] = 1;
+                requires = mod.getNormalizedRequires();
+                loadModules(loader, requires, this);
+            }
         }
 
     };
@@ -67,132 +73,100 @@
          */
         use: function (modNames, callback) {
             var self = this,
-                callbackId = S.guid('callback'),
-            // use simultaneously on one loader
-                loadChecker = self.__loadChecker ||
-                    (self.__loadChecker = new LoadChecker()),
+                normalizedModNames,
+                loadChecker = new LoadChecker(loadReady),
                 runtime = self.runtime;
 
             modNames = utils.getModNamesAsArray(modNames);
             modNames = utils.normalizeModNamesWithAlias(runtime, modNames);
 
-            var normalizedModNames = utils.unalias(runtime, modNames);
+            normalizedModNames = utils.unalias(runtime, modNames);
 
-            loadChecker.addListener(function () {
-                var all = S.reduce(normalizedModNames, function (a, modName) {
-                    return a && loadChecker.inResult(modName);
-                }, 1);
-                if (all) {
-                    // prevent call duplication
-                    loadChecker.removeListener(callbackId);
-                    callback && callback.apply(runtime, utils.getModules(runtime, modNames));
-                    callback = null;
-                }
-            }, callbackId);
+            function loadReady() {
+                attachMods(normalizedModNames, runtime, []);
+                callback && callback.apply(runtime, utils.getModules(runtime, modNames));
+            }
 
-            attachMods(self, normalizedModNames, loadChecker);
+            loadModules(self, normalizedModNames, loadChecker);
+
+            // in case modules is loaded statically
+            // synchronous check
+            loadChecker.check();
 
             return self;
         },
 
         clear: function () {
-            this.__loadChecker = new LoadChecker();
         }
     });
 
-    function attachMods(self, mods, loadChecker) {
-        S.each(mods, function (m) {
-            attachModByName(self, m, loadChecker);
-        });
+    function attachMods(modNames, runtime, stack) {
+        var i,
+            l = modNames.length,
+            stackDepth = stack.length;
+
+        for (i = 0; i < l; i++) {
+            attachMod(modNames[i], runtime, stack);
+            stack.length = stackDepth;
+        }
     }
 
-    function attachModByName(self, modName, loadChecker) {
+    function attachMod(modName, runtime, stack) {
+        var mods = runtime.Env.mods,
+            m = mods[modName];
+        if (m.status == ATTACHED) {
+            return;
+        }
+        if (S.inArray(modName, stack)) {
+            stack.push(modName);
+            S.error('find cyclic dependency between mods: ' + stack);
+            return;
+        }
+        stack.push(modName);
+        attachMods(m.getNormalizedRequires(), runtime, stack);
+        utils.attachMod(runtime, m);
+    }
 
+    function loadModules(self, modNames, loadChecker) {
+        var i, l = modNames.length;
+        for (i = 0; i < l; i++) {
+            loadModule(self, modNames[i], loadChecker);
+        }
+    }
+
+    function loadModule(self, modName, loadChecker) {
         var runtime = self.runtime,
-            debug = S.Config.debug,
+            status,
             mods = runtime.Env.mods,
-            mod;
+            mod = mods[modName];
 
-        utils.createModuleInfo(runtime, modName);
-        mod = mods[modName];
-
-        function ready() {
-
-            if (mod.status == ATTACHED) {
-                return 1;
-            } else if (mod.status != LOADED) {
-                return 0;
-            }
-
-            var requires = mod.getNormalizedRequires(),
-                all = S.reduce(requires, function (a, r) {
-                    return a && loadChecker.inResult(r)
-                }, 1);
-
-            if (all) {
-                utils.attachMod(runtime, mod);
-                return 1;
-            } else {
-                return 0;
-            }
+        if (!mod) {
+            utils.createModuleInfo(runtime, modName);
+            mod = mods[modName];
         }
 
-        function end() {
-            if (ready()) {
-                loadChecker.removeListener(modName);
-                loadChecker.results[modName] = 1;
-                // a module is ready, need to notify other modules globally
-                // chain effect
-                loadChecker.check();
-                return 1;
-            }
-            return 0;
-        }
+        status = mod.status;
 
-        if (end()) {
+        if (status == ATTACHED) {
             return;
         }
 
-        if (loadChecker.addListener(end, modName)) {
-            attachModRecursive(self, mod, loadChecker);
-            if (debug) {
-                cyclicCheck(runtime, modName);
+        // 只在 LOADED 后加载一次依赖项一次
+        if (status === LOADED) {
+            loadChecker.loadModRequires(self, mod);
+        } else {
+            // error or init or loading
+            loadChecker.addWaitMod(modName);
+            // parallel use
+            if (status <= LOADING) {
+                // load and attach this module
+                fetchModule(self, mod, loadChecker);
             }
-        } else if (debug) {
-            // this mod is already listened
-            checkCyclicRecursive(runtime, modName);
         }
-    }
-
-    function checkCyclicRecursive(runtime, modName) {
-        // S.log('checkCyclicRecursive :' + modName, 'warn');
-        cyclicCheck(runtime, modName);
-        var mods = runtime.Env.mods,
-            requires = mods[modName].getNormalizedRequires();
-        S.each(requires, function (r) {
-            if (mods[r] && mods[r].status != ATTACHED) {
-                checkCyclicRecursive(runtime, r);
-            }
-        });
-    }
-
-    // Attach a module and all required modules.
-    function attachModRecursive(self, mod, loadChecker) {
-
-        var requires = mod.getNormalizedRequires();
-
-        // attach all required modules
-        attachMods(self, requires, loadChecker);
-
-        if (mod.status < LOADING) {
-            // load and attach this module
-            loadModByScript(self, mod, loadChecker);
-        }
-
     }
 
     // Load a single module.
-    function loadModByScript(self, mod, loadChecker) {
+    function fetchModule(self, mod, loadChecker) {
 
         var runtime = self.runtime,
             modName = mod.getName(),
@@ -211,38 +185,37 @@
             // syntaxError in all browser will trigger this
             // same as #111 : https://github.com/kissyteam/kissy/issues/111
             success: function () {
-                if (isCss) {
-                    // css does not set LOADED because no add for css! must be set manually
-                    utils.registerModule(runtime, modName, S.noop);
-                } else {
-                    var currentModule;
-                    // does not need this step for css
-                    // standard browser(except ie9) fire load after KISSY.add immediately
-                    if (currentModule = self[CURRENT_MODULE]) {
-                        S.log('standard browser get mod name after load : ' + modName);
-                        utils.registerModule(runtime,
-                            modName, currentModule.fn,
-                            currentModule.config);
-                        self[CURRENT_MODULE] = null;
+                // parallel use
+                if (mod.status == LOADING) {
+                    if (isCss) {
+                        // css does not set LOADED because no add for css! must be set manually
+                        utils.registerModule(runtime, modName, S.noop);
+                    } else {
+                        var currentModule;
+                        // does not need this step for css
+                        // standard browser(except ie9) fire load after KISSY.add immediately
+                        if (currentModule = self[CURRENT_MODULE]) {
+                            S.log('standard browser get mod name after load : ' + modName);
+                            utils.registerModule(runtime,
+                                modName, currentModule.fn,
+                                currentModule.config);
+                            self[CURRENT_MODULE] = null;
+                        }
                     }
                 }
-                checkAndHandle();
+                checkHandler();
             },
-            error: checkAndHandle,
+            error: checkHandler,
             // source:mod.name + '-init',
             charset: charset
         });
 
-        function checkAndHandle() {
+        function checkHandler() {
             if (mod.fn) {
-                var requires = mod.getNormalizedRequires();
-
-                if (requires.length) {
-                    attachMods(self, requires, loadChecker);
-                } else {
-                    // a mod is loaded, need to check globally at least once
-                    loadChecker.check();
-                }
+                loadChecker.loadModRequires(self, mod);
+                loadChecker.removeWaitMod(modName);
+                // a mod is loaded, need to check globally
+                loadChecker.check();
             } else {
                 // ie will call success even when getScript error(404)
                 _modError();
@@ -255,39 +228,12 @@
         }
 
     }
-
-    // check cyclic dependency between mods
-    function cyclicCheck(runtime, modName) {
-        // one mod 's all requires mods to run its callback
-        var mods = runtime.Env.mods,
-            mod = mods[modName],
-            __allRequires = mod[ALL_REQUIRES] = mod[ALL_REQUIRES] || {},
-            requires = mod.getNormalizedRequires(),
-            myName = mod.name,
-            rMod,
-            r__allRequires;
-
-        S.each(requires, function (r) {
-            rMod = mods[r];
-            __allRequires[r] = 1;
-            if (rMod && (r__allRequires = rMod[ALL_REQUIRES])) {
-                S.mix(__allRequires, r__allRequires);
-            }
-        });
-
-        if (__allRequires[myName]) {
-            S.log(__allRequires, 'error');
-            var JSON = S.Env.host.JSON,
-                error = '';
-            if (JSON) {
-                error = JSON.stringify(__allRequires);
-            }
-            S.error('find cyclic dependency by mod ' + myName + ' between mods: ' + error);
-        }
-    }
 })(KISSY);
 
 /*
+ 2012-10-08 yiminghe@gmail.com refactor
+ - use 调用先统一 load 再统一 attach
+
  2012-09-20 yiminghe@gmail.com refactor
  - 参考 async 重构，去除递归回调
 

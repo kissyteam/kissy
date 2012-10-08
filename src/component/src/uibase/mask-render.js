@@ -17,29 +17,29 @@ KISSY.add("component/uibase/mask-render", function (S, UA, Node) {
     }
 
     function initMask(self) {
-        var maskCls = self.get("prefixCls") + "ext-mask",
+        var maskCls = self.get("prefixCls") + "ext-mask " + self.getComponentCssClassWithState('-mask'),
             mask = $("<div " +
-            " style='width:" + docWidth() + ";" +
-            "left:0;" +
-            "top:0;" +
-            "height:" + docHeight() + ";" +
-            "position:" + (ie6 ? "absolute" : "fixed") + ";'" +
-            " class='" +
-            maskCls +
-            "'>" +
-            (ie6 ? "<" + "iframe " +
-                "style='position:absolute;" +
-                "left:" + "0" + ";" +
-                "top:" + "0" + ";" +
-                "background:red;" +
-                "width: expression(this.parentNode.offsetWidth);" +
-                "height: expression(this.parentNode.offsetHeight);" +
-                "filter:alpha(opacity=0);" +
-                "z-index:-1;'></iframe>" : "") +
-            "</div>")
-            .prependTo("body");
+                " style='width:" + docWidth() + ";" +
+                "left:0;" +
+                "top:0;" +
+                "height:" + docHeight() + ";" +
+                "position:" + (ie6 ? "absolute" : "fixed") + ";'" +
+                " class='" +
+                maskCls +
+                "'>" +
+                (ie6 ? "<" + "iframe " +
+                    "style='position:absolute;" +
+                    "left:" + "0" + ";" +
+                    "top:" + "0" + ";" +
+                    "background:red;" +
+                    "width: expression(this.parentNode.offsetWidth);" +
+                    "height: expression(this.parentNode.offsetHeight);" +
+                    "filter:alpha(opacity=0);" +
+                    "z-index:-1;'></iframe>" : "") +
+                "</div>")
+                .prependTo("body");
         /*
-          点 mask 焦点不转移
+         点 mask 焦点不转移
          */
         mask.unselectable();
         mask.on("mousedown", function (e) {

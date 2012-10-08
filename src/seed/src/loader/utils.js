@@ -137,26 +137,26 @@
 
         /**
          * create modules info
-         * @param self
+         * @param runtime
          * @param modNames
          */
-        createModulesInfo: function (self, modNames) {
+        createModulesInfo: function (runtime, modNames) {
             S.each(modNames, function (m) {
-                Utils.createModuleInfo(self, m);
+                Utils.createModuleInfo(runtime, m);
             });
         },
 
         /**
          * create single module info
-         * @param self
+         * @param runtime
          * @param modName
          * @param [cfg]
          * @return {KISSY.Loader.Module}
          */
-        createModuleInfo: function (self, modName, cfg) {
+        createModuleInfo: function (runtime, modName, cfg) {
             modName = indexMapStr(modName);
 
-            var mods = self.Env.mods,
+            var mods = runtime.Env.mods,
                 mod = mods[modName];
 
             if (mod) {
@@ -166,7 +166,7 @@
             // 防止 cfg 里有 tag，构建 fullpath 需要
             mods[modName] = mod = new Loader.Module(S.mix({
                 name: modName,
-                runtime: self
+                runtime: runtime
             }, cfg));
 
             return mod;
@@ -174,37 +174,37 @@
 
         /**
          * Whether modNames is attached.
-         * @param self
+         * @param runtime
          * @param modNames
          * @return {Boolean}
          */
-        isAttached: function (self, modNames) {
-            return isStatus(self, modNames, ATTACHED);
+        isAttached: function (runtime, modNames) {
+            return isStatus(runtime, modNames, ATTACHED);
         },
 
         /**
          * Whether modNames is loaded.
-         * @param self
+         * @param runtime
          * @param modNames
          * @return {Boolean}
          */
-        isLoaded: function (self, modNames) {
-            return isStatus(self, modNames, LOADED);
+        isLoaded: function (runtime, modNames) {
+            return isStatus(runtime, modNames, LOADED);
         },
 
         /**
          * Get module values
-         * @param self
+         * @param runtime
          * @param modNames
          * @return {Array}
          */
-        getModules: function (self, modNames) {
-            var mods = [self], mod;
+        getModules: function (runtime, modNames) {
+            var mods = [runtime], mod;
 
             S.each(modNames, function (modName) {
-                mod = self.Env.mods[modName];
+                mod = runtime.Env.mods[modName];
                 if (!mod || mod.getType() != 'css') {
-                    mods.push(self.require(modName));
+                    mods.push(runtime.require(modName));
                 }
             });
 
@@ -213,10 +213,10 @@
 
         /**
          * Attach specified mod.
-         * @param self
+         * @param runtime
          * @param mod
          */
-        attachMod: function (self, mod) {
+        attachMod: function (runtime, mod) {
             if (mod.status != LOADED) {
                 return;
             }
@@ -231,7 +231,7 @@
             if (fn) {
                 if (S.isFunction(fn)) {
                     // context is mod info
-                    value = fn.apply(mod, Utils.getModules(self, requires));
+                    value = fn.apply(mod, Utils.getModules(runtime, requires));
                 } else {
                     value = fn;
                 }
@@ -240,7 +240,7 @@
 
             mod.status = ATTACHED;
 
-            self.getLoader().fire('afterModAttached', {
+            runtime.getLoader().fire('afterModAttached', {
                 mod: mod
             });
         },
@@ -262,28 +262,28 @@
          * 1. add index : / => /index
          * 2. unalias : core => dom,event,ua
          * 3. relative to absolute : ./x => y/x
-         * @param {KISSY} self Global KISSY instance
+         * @param {KISSY} runtime Global KISSY instance
          * @param {String|String[]} modNames Array of module names
          * or module names string separated by comma
          * @return {String[]}
          */
-        normalizeModNames: function (self, modNames, refModName) {
-            return Utils.unalias(self, Utils.normalizeModNamesWithAlias(self, modNames, refModName));
+        normalizeModNames: function (runtime, modNames, refModName) {
+            return Utils.unalias(runtime, Utils.normalizeModNamesWithAlias(runtime, modNames, refModName));
         },
 
         /**
          * unalias module name.
-         * @param self
+         * @param runtime
          * @param names
          * @return {Array}
          */
-        unalias: function (self, names) {
+        unalias: function (runtime, names) {
             var ret = [].concat(names),
                 i,
                 m,
                 alias,
                 ok = 0,
-                mods = self['Env'].mods;
+                mods = runtime['Env'].mods;
             while (!ok) {
                 ok = 1;
                 for (i = ret.length - 1; i >= 0; i--) {
@@ -298,12 +298,12 @@
 
         /**
          * normalize module names
-         * @param self
+         * @param runtime
          * @param modNames
          * @param [refModName]
          * @return {Array}
          */
-        normalizeModNamesWithAlias: function (self, modNames, refModName) {
+        normalizeModNamesWithAlias: function (runtime, modNames, refModName) {
             var ret = [], i, l;
             if (modNames) {
                 // 1. index map
@@ -324,13 +324,13 @@
 
         /**
          * register module with factory
-         * @param self
+         * @param runtime
          * @param name
          * @param fn
          * @param [config]
          */
-        registerModule: function (self, name, fn, config) {
-            var mods = self.Env.mods,
+        registerModule: function (runtime, name, fn, config) {
+            var mods = runtime.Env.mods,
                 mod = mods[name];
 
             if (mod && mod.fn) {
@@ -339,7 +339,7 @@
             }
 
             // 没有 use，静态载入的 add 可能执行
-            Utils.createModuleInfo(self, name);
+            Utils.createModuleInfo(runtime, name);
 
             mod = mods[name];
 
@@ -351,17 +351,17 @@
 
             S.mix((mods[name] = mod), config);
 
-            S.log(name + ' is loaded');
+            S.log(name + ' is loaded', 'info');
         },
 
         /**
          * Get mapped path.
-         * @param self
+         * @param runtime
          * @param path
          * @return {String}
          */
-        getMappedPath: function (self, path, rules) {
-            var __mappedRules = rules || self.Config.mappedRules || [],
+        getMappedPath: function (runtime, path, rules) {
+            var __mappedRules = rules || runtime.Config.mappedRules || [],
                 i,
                 m,
                 rule;
@@ -405,8 +405,8 @@
         }
     });
 
-    function isStatus(self, modNames, status) {
-        var mods = self.Env.mods,
+    function isStatus(runtime, modNames, status) {
+        var mods = runtime.Env.mods,
             i;
         modNames = S.makeArray(modNames);
         for (i = 0; i < modNames.length; i++) {

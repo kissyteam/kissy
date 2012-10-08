@@ -13,7 +13,7 @@
 <script>
     var start = new Date().valueOf();
 </script>
-<script type="text/javascript" src="http://a.tbcdn.cn/s/kissy/1.3.0rc/kissy.js"></script>
+<script type="text/javascript" src="../../../../../../../kissy1.3/build/seed.js"></script>
 <script>
     KISSY.use("menu", function (S, Menu) {
         new Menu({
@@ -85,7 +85,11 @@
             ]
         }).render();
 
-        alert(S.now() - start);
+        S.log(S.now() - start);
+    });
+
+    KISSY.use("menu", function (S, Menu) {
+        S.log(S.now() - start);
     });
 </script>
 </body>

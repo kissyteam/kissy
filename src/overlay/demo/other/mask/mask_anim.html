@@ -3,26 +3,29 @@
 <head>
     <meta charset="utf-8"/>
     <title>KISSY Shared Mask</title>
-    <link rel="stylesheet" href="../../../../../kissy-dpl/base/assets/reset.css"/>
-    <script src="../../../../../build/kissy.js"></script>
+    <link rel="stylesheet" href="../../../../css/src/dpl/base.css"/>
+    <link rel="stylesheet" href="../../../../button/assets/dpl.css"/>
+    <script src="../../../../../build/seed.js"></script>
     <link rel="stylesheet" href="../assets/cool.css"/>
 </head>
 <body>
 <div style="height:800px;width: 950px;margin: 0px auto;padding: 20px;">
-    <button id="t2">open dialog with mask anim</button>
+    <button id="t2" class="ks-button">open dialog with mask anim</button>
 </div>
 <script>
     KISSY.ready(function (S) {
+        var start = S.now();
         S.use("overlay", function (S, Overlay) {
+            alert("loaded: " + (S.now() - start));
             var o = new Overlay.Dialog({
                 width: 500,
                 height: 500,
                 mask: {
                     effect: 'fade'
                 },
-                effect: {
-                    effect: 'fade'
-                },
+//                effect: {
+//                    effect: 'fade'
+//                },
                 zIndex: 1000
             });
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:48
+build time: Oct 8 19:59
 */
 /**
  * @ignore
@@ -3266,29 +3266,29 @@ KISSY.add("component/uibase/mask-render", function (S, UA, Node) {
     }
 
     function initMask(self) {
-        var maskCls = self.get("prefixCls") + "ext-mask",
+        var maskCls = self.get("prefixCls") + "ext-mask " + self.getComponentCssClassWithState('-mask'),
             mask = $("<div " +
-            " style='width:" + docWidth() + ";" +
-            "left:0;" +
-            "top:0;" +
-            "height:" + docHeight() + ";" +
-            "position:" + (ie6 ? "absolute" : "fixed") + ";'" +
-            " class='" +
-            maskCls +
-            "'>" +
-            (ie6 ? "<" + "iframe " +
-                "style='position:absolute;" +
-                "left:" + "0" + ";" +
-                "top:" + "0" + ";" +
-                "background:red;" +
-                "width: expression(this.parentNode.offsetWidth);" +
-                "height: expression(this.parentNode.offsetHeight);" +
-                "filter:alpha(opacity=0);" +
-                "z-index:-1;'></iframe>" : "") +
-            "</div>")
-            .prependTo("body");
+                " style='width:" + docWidth() + ";" +
+                "left:0;" +
+                "top:0;" +
+                "height:" + docHeight() + ";" +
+                "position:" + (ie6 ? "absolute" : "fixed") + ";'" +
+                " class='" +
+                maskCls +
+                "'>" +
+                (ie6 ? "<" + "iframe " +
+                    "style='position:absolute;" +
+                    "left:" + "0" + ";" +
+                    "top:" + "0" + ";" +
+                    "background:red;" +
+                    "width: expression(this.parentNode.offsetWidth);" +
+                    "height: expression(this.parentNode.offsetHeight);" +
+                    "filter:alpha(opacity=0);" +
+                    "z-index:-1;'></iframe>" : "") +
+                "</div>")
+                .prependTo("body");
         /*
-          点 mask 焦点不转移
+         点 mask 焦点不转移
          */
         mask.unselectable();
         mask.on("mousedown", function (e) {
@@ -3337,7 +3337,7 @@ KISSY.add("component/uibase/mask-render", function (S, UA, Node) {
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/mask", function () {
+KISSY.add("component/uibase/mask", function (S) {
 
     /**
      * @class KISSY.Component.UIBase.Mask
@@ -3399,6 +3399,7 @@ KISSY.add("component/uibase/mask", function () {
         el.stop(1, 1);
 
         m = effect + effects[effect][index];
+
         el[m](duration, null, easing);
     }
 
