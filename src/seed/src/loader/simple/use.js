@@ -9,6 +9,7 @@
         data = Loader.STATUS,
         utils = Loader.Utils,
         IE = utils.IE,
+        remoteModules = {},
         LOADING = data.LOADING,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
@@ -41,9 +42,14 @@
             delete this.waitMods[modName];
         },
 
+        isModWait: function (modName) {
+            return this.waitMods[modName];
+        },
+
         // only load mod requires once
-        // prevent looping dependency tree more than once for one use()
+        // prevent looping dependency sub tree more than once for one use()
         loadModRequires: function (loader, mod) {
+            // 根据每次 use 缓存子树
             var requireLoadedMods = this.requireLoadedMods,
                 modName = mod.name,
                 requires;
@@ -155,13 +161,17 @@
         if (status === LOADED) {
             loadChecker.loadModRequires(self, mod);
         } else {
+            var isWait = loadChecker.isModWait(modName);
             // error or init or loading
             loadChecker.addWaitMod(modName);
             // parallel use
-            if (status <= LOADING) {
+            if (status <= LOADING &&
+                // prevent duplicate listen for one use
+                !isWait) {
                 // load and attach this module
                 fetchModule(self, mod, loadChecker);
             }
+
         }
     }
 
@@ -185,7 +195,12 @@
             // syntaxError in all browser will trigger this
             // same as #111 : https://github.com/kissyteam/kissy/issues/111
             success: function () {
+                if (!remoteModules[modName]) {
+                    S.log('load remote module: ' + modName, 'info');
+                    remoteModules[modName] = 1;
+                }
                 // parallel use
+                // 只设置第一个 use 处
                 if (mod.status == LOADING) {
                     if (isCss) {
                         // css does not set LOADED because no add for css! must be set manually

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 8 22:47
+build time: Oct 9 01:24
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121008224739' will replace with current timestamp when compressing.
+         * NOTICE: '20121009012444' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20121008224739';
+        S.__BUILD_TIME = '20121009012444';
     })();
 
     // exports for nodejs
@@ -2943,12 +2943,10 @@ var KISSY = (function (undefined) {
         'LOADING': 1,
         /** loaded */
         'LOADED': 2,
-        /** attaching */
-        'ATTACHING': 3,
         /** error */
-        'ERROR': 4,
+        'ERROR': 3,
         /** attached */
-        'ATTACHED': 5
+        'ATTACHED': 4
     };
 
     KISSY.Loader = Loader;
@@ -3390,7 +3388,7 @@ var KISSY = (function (undefined) {
 
             S.mix((mods[name] = mod), config);
 
-            S.log(name + ' is loaded');
+            // S.log(name + ' is loaded', 'info');
         },
 
         /**
@@ -4376,8 +4374,8 @@ var KISSY = (function (undefined) {
         data = Loader.STATUS,
         utils = Loader.Utils,
         IE = utils.IE,
+        remoteModules = {},
         LOADING = data.LOADING,
-        ATTACHING = data.ATTACHING,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
         CURRENT_MODULE = '__currentModule',
@@ -4385,44 +4383,46 @@ var KISSY = (function (undefined) {
 
     function LoadChecker(fn) {
         this.fn = fn;
-        this.mods = {};
+        this.waitMods = {};
+        this.requireLoadedMods = {};
     }
 
     LoadChecker.prototype = {
 
         check: function () {
             var self = this,
-                mods = self.mods,
-                fn = self.fn,
-                n,
-                m,
-                status,
-                all = 1;
-            if (fn) {
-                for (n in mods) {
-                    if (mods.hasOwnProperty(n)) {
-                        m = mods[n];
-                        status = m && m.status;
-                        if (status != ATTACHED && status != LOADED) {
-                            all = 0;
-                            break;
-                        }
-                    }
-                }
-                if (all) {
-                    fn();
-                    self.fn = null;
-                }
+                waitMods = self.waitMods,
+                fn = self.fn;
+            if (fn && S.isEmptyObject(waitMods)) {
+                fn();
+                self.fn = null;
             }
         },
 
-        addMod: function (mod) {
-            var mods = this.mods,
-                modName = mod.name;
-            if (mods[modName]) {
-                return 1;
+        addWaitMod: function (modName) {
+            this.waitMods[modName] = 1;
+        },
+
+        removeWaitMod: function (modName) {
+            delete this.waitMods[modName];
+        },
+
+        isModWait: function (modName) {
+            return this.waitMods[modName];
+        },
+
+        // only load mod requires once
+        // prevent looping dependency sub tree more than once for one use()
+        loadModRequires: function (loader, mod) {
+            // 根据每次 use 缓存子树
+            var requireLoadedMods = this.requireLoadedMods,
+                modName = mod.name,
+                requires;
+            if (!requireLoadedMods[modName]) {
+                requireLoadedMods[modName] = 1;
+                requires = mod.getNormalizedRequires();
+                loadModules(loader, requires, this);
             }
-            mods[modName] = mod;
         }
 
     };
@@ -4485,13 +4485,13 @@ var KISSY = (function (undefined) {
     function attachMod(modName, runtime, stack) {
         var mods = runtime.Env.mods,
             m = mods[modName];
+        if (m.status == ATTACHED) {
+            return;
+        }
         if (S.inArray(modName, stack)) {
             stack.push(modName);
             S.error('find cyclic dependency between mods: ' + stack);
             return;
-        }
-        if (m.status == LOADED) {
-            m.status = ATTACHING;
         }
         stack.push(modName);
         attachMods(m.getNormalizedRequires(), runtime, stack);
@@ -4506,25 +4506,37 @@ var KISSY = (function (undefined) {
     }
 
     function loadModule(self, modName, loadChecker) {
-
         var runtime = self.runtime,
             status,
             mods = runtime.Env.mods,
-            mod;
+            mod = mods[modName];
 
-        utils.createModuleInfo(runtime, modName);
-        mod = mods[modName];
+        if (!mod) {
+            utils.createModuleInfo(runtime, modName);
+            mod = mods[modName];
+        }
+
         status = mod.status;
 
         if (status == ATTACHED) {
             return;
         }
 
-        loadChecker.addMod(mod);
+        // 只在 LOADED 后加载一次依赖项一次
+        if (status === LOADED) {
+            loadChecker.loadModRequires(self, mod);
+        } else {
+            var isWait = loadChecker.isModWait(modName);
+            // error or init or loading
+            loadChecker.addWaitMod(modName);
+            // parallel use
+            if (status <= LOADING &&
+                // prevent duplicate listen for one use
+                !isWait) {
+                // load and attach this module
+                fetchModule(self, mod, loadChecker);
+            }
 
-        if (mod.status < LOADING) {
-            // load and attach this module
-            fetchModule(self, mod, loadChecker);
         }
     }
 
@@ -4548,19 +4560,27 @@ var KISSY = (function (undefined) {
             // syntaxError in all browser will trigger this
             // same as #111 : https://github.com/kissyteam/kissy/issues/111
             success: function () {
-                if (isCss) {
-                    // css does not set LOADED because no add for css! must be set manually
-                    utils.registerModule(runtime, modName, S.noop);
-                } else {
-                    var currentModule;
-                    // does not need this step for css
-                    // standard browser(except ie9) fire load after KISSY.add immediately
-                    if (currentModule = self[CURRENT_MODULE]) {
-                        S.log('standard browser get mod name after load : ' + modName);
-                        utils.registerModule(runtime,
-                            modName, currentModule.fn,
-                            currentModule.config);
-                        self[CURRENT_MODULE] = null;
+                if (!remoteModules[modName]) {
+                    S.log('load remote module: ' + modName, 'info');
+                    remoteModules[modName] = 1;
+                }
+                // parallel use
+                // 只设置第一个 use 处
+                if (mod.status == LOADING) {
+                    if (isCss) {
+                        // css does not set LOADED because no add for css! must be set manually
+                        utils.registerModule(runtime, modName, S.noop);
+                    } else {
+                        var currentModule;
+                        // does not need this step for css
+                        // standard browser(except ie9) fire load after KISSY.add immediately
+                        if (currentModule = self[CURRENT_MODULE]) {
+                            S.log('standard browser get mod name after load : ' + modName);
+                            utils.registerModule(runtime,
+                                modName, currentModule.fn,
+                                currentModule.config);
+                            self[CURRENT_MODULE] = null;
+                        }
                     }
                 }
                 checkHandler();
@@ -4572,8 +4592,8 @@ var KISSY = (function (undefined) {
 
         function checkHandler() {
             if (mod.fn) {
-                var requires = mod.getNormalizedRequires();
-                loadModules(self, requires, loadChecker);
+                loadChecker.loadModRequires(self, mod);
+                loadChecker.removeWaitMod(modName);
                 // a mod is loaded, need to check globally
                 loadChecker.check();
             } else {
@@ -5254,7 +5274,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121008224739'
+            tag: '20121009012444'
         }, getBaseInfo()));
     }
 
@@ -5950,7 +5970,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 8 18:51
+build time: Oct 9 01:18
 */
 /**
  * @ignore
@@ -9271,7 +9291,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
         RE_NUM_PX = /^-?\d+(?:px)?$/i,
         RE_NUM = /^-?\d/,
         backgroundPosition = 'backgroundPosition',
-        R_OPACITY = /opacity=([^)]*)/,
+        R_OPACITY = /opacity\s*=\s*([^)]*)/,
         R_ALPHA = /alpha\([^)]*\)/i;
 
     // odd backgroundPosition

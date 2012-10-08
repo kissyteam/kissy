@@ -25,7 +25,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
         RE_NUM_PX = /^-?\d+(?:px)?$/i,
         RE_NUM = /^-?\d/,
         backgroundPosition = 'backgroundPosition',
-        R_OPACITY = /opacity=([^)]*)/,
+        R_OPACITY = /opacity\s*=\s*([^)]*)/,
         R_ALPHA = /alpha\([^)]*\)/i;
 
     // odd backgroundPosition

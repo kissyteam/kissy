@@ -351,7 +351,7 @@
 
             S.mix((mods[name] = mod), config);
 
-            S.log(name + ' is loaded', 'info');
+            // S.log(name + ' is loaded', 'info');
         },
 
         /**

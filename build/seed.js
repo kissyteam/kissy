@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 00:35
+build time: Oct 9 01:24
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121009003553' will replace with current timestamp when compressing.
+         * NOTICE: '20121009012444' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20121009003553';
+        S.__BUILD_TIME = '20121009012444';
     })();
 
     // exports for nodejs
@@ -3388,7 +3388,7 @@ var KISSY = (function (undefined) {
 
             S.mix((mods[name] = mod), config);
 
-            S.log(name + ' is loaded', 'info');
+            // S.log(name + ' is loaded', 'info');
         },
 
         /**
@@ -4374,6 +4374,7 @@ var KISSY = (function (undefined) {
         data = Loader.STATUS,
         utils = Loader.Utils,
         IE = utils.IE,
+        remoteModules = {},
         LOADING = data.LOADING,
         LOADED = data.LOADED,
         ERROR = data.ERROR,
@@ -4406,9 +4407,14 @@ var KISSY = (function (undefined) {
             delete this.waitMods[modName];
         },
 
+        isModWait: function (modName) {
+            return this.waitMods[modName];
+        },
+
         // only load mod requires once
-        // prevent looping dependency tree more than once for one use()
+        // prevent looping dependency sub tree more than once for one use()
         loadModRequires: function (loader, mod) {
+            // 根据每次 use 缓存子树
             var requireLoadedMods = this.requireLoadedMods,
                 modName = mod.name,
                 requires;
@@ -4520,13 +4526,17 @@ var KISSY = (function (undefined) {
         if (status === LOADED) {
             loadChecker.loadModRequires(self, mod);
         } else {
+            var isWait = loadChecker.isModWait(modName);
             // error or init or loading
             loadChecker.addWaitMod(modName);
             // parallel use
-            if (status <= LOADING) {
+            if (status <= LOADING &&
+                // prevent duplicate listen for one use
+                !isWait) {
                 // load and attach this module
                 fetchModule(self, mod, loadChecker);
             }
+
         }
     }
 
@@ -4550,7 +4560,12 @@ var KISSY = (function (undefined) {
             // syntaxError in all browser will trigger this
             // same as #111 : https://github.com/kissyteam/kissy/issues/111
             success: function () {
+                if (!remoteModules[modName]) {
+                    S.log('load remote module: ' + modName, 'info');
+                    remoteModules[modName] = 1;
+                }
                 // parallel use
+                // 只设置第一个 use 处
                 if (mod.status == LOADING) {
                     if (isCss) {
                         // css does not set LOADED because no add for css! must be set manually
@@ -5259,7 +5274,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121009003553'
+            tag: '20121009012444'
         }, getBaseInfo()));
     }
 
