@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 29 14:17
+build time: Oct 8 18:52
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20120929141713' will replace with current timestamp when compressing.
+         * NOTICE: '20121008185148' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120929141713';
+        S.__BUILD_TIME = '20121008185148';
     })();
 
     // exports for nodejs
@@ -669,11 +669,11 @@ var KISSY = (function (undefined) {
 
             /**
              * Checks to see if an object is a plain object (created using '{}'
-             * or 'new Object()' or 'new FunctionClass()').
+             * or 'new Object()' but not 'new FunctionClass()').
              * @member KISSY
              */
             isPlainObject: function (obj) {
-                // credits to jquery
+                // credits to jq
 
                 // Must be an Object.
                 // Because of IE, we also have to check the presence of the constructor property.
@@ -5308,12 +5308,12 @@ var KISSY = (function (undefined) {
         S.config('base', __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/');
     } else {
         S.config(S.mix({
-            // 2k url length
-            comboMaxUrlLength: 2048,
+            // 2k(2048) url length
+            comboMaxUrlLength: 2000,
             // file limit number for a single combo url
-            comboMaxFileNum: 45,
+            comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20120929141713'
+            tag: '20121008185148'
         }, getBaseInfo()));
     }
 

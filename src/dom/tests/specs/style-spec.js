@@ -5,21 +5,22 @@
 KISSY.use("dom,ua", function (S, DOM, UA) {
     describe("style", function () {
         beforeEach(function () {
+
             this.addMatchers({
-                toBeAlmostEqual:function (expected) {
+
+                toBeAlmostEqual: function (expected) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
                 },
 
-
-                toBeEqual:function (expected) {
+                toBeEqual: function (expected) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
                 },
 
-                toBeExactEqual:function (expected) {
-                    return Math.abs(parseFloat(this.actual) - parseFloat(expected)) < 1;
+                toBeExactEqual: function (expected) {
+                    return Math.abs(Number(this.actual) - Number(expected)) < 1e-6;
                 },
 
-                toBeArrayEq:function (expected) {
+                toBeArrayEq: function (expected) {
                     var actual = this.actual;
                     if (expected.length != actual.length) return false;
                     for (var i = 0; i < expected.length; i++) {
@@ -27,7 +28,9 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
                     }
                     return true;
                 }
+
             });
+
         });
         it("css works", function () {
 
@@ -70,7 +73,7 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
 
             expect(DOM.css(elem, 'padding-right')).toBe('0px');
 
-            expect(DOM.css(elem, 'opacity')).toBe('1');
+            expect(DOM.css(elem, 'opacity')).toBeExactEqual('1');
 
             // 不加入 dom 节点，ie9,firefox 返回 auto by computedStyle
             // ie7,8 返回负数，offsetHeight 返回0
@@ -95,9 +98,9 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
 
 
             DOM.css(elem, {
-                marginLeft:'20px',
-                opacity:'0.8',
-                border:'2px solid #ccc'
+                marginLeft: '20px',
+                opacity: '0.8',
+                border: '2px solid #ccc'
             });
             expect(DOM.css(elem, 'opacity')).toBeExactEqual('0.8');
 
@@ -281,7 +284,6 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
             DOM.remove(d);
         });
 
-
         it("opacity works inline or from stylesheet", function () {
             var tag = S.guid("opacity");
             DOM.addStyleSheet("." + tag + " {opacity:0.55;filter:alpha(opacity=55); }");
@@ -291,25 +293,27 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
                 "<" + "/div>");
             DOM.append(d, document.body);
             expect(DOM.css(d, "opacity")).toBeExactEqual("0.66");
-            expect(DOM.style(d, "opacity")).toBe("0.66");
-
+            expect(DOM.style(d, "opacity")).toBeExactEqual("0.66");
 
             DOM.css(d, "opacity", "");
 
-            //expect($(d).css("opacity")).toBe("0.55");
+            // https://github.com/kissyteam/kissy/issues/231
+            expect(DOM.css(d, "opacity")).toBeExactEqual("0.55");
 
-            if (!(UA.ie < 9)) {
-                // ie filter 继承有问题
-                expect(DOM.css(d, "opacity")).toBeExactEqual("0.55");
-            }
             expect(DOM.style(d, "opacity")).toBe("");
-
 
             DOM.css(d, "opacity", 0.66);
 
             expect(DOM.css(d, "opacity")).toBeExactEqual("0.66");
-            expect(DOM.style(d, "opacity")).toBe("0.66");
+            expect(DOM.style(d, "opacity")).toBeExactEqual("0.66");
             DOM.remove(d);
+        });
+
+        it('does not leave empty style', function () {
+            var d = DOM.create('<div><div></div></div>');
+            DOM.append(d, 'body');
+            DOM.css(d.firstChild, 'height', '');
+            expect(d.innerHTML.toLowerCase()).toBe('<div></div>');
         });
 
         it("left works for auto in", function () {

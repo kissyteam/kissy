@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:17
+build time: Oct 8 18:51
 */
 /**
  * @ignore
@@ -3310,7 +3310,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
     }
 
     var doc = S.Env.host.document,
-        docElem = doc&&doc.documentElement,
+        docElem = doc && doc.documentElement,
         OPACITY = 'opacity',
         STYLE = 'style',
         FILTER = 'filter',
@@ -3368,15 +3368,18 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
                     style.zoom = 1;
 
                     // if setting opacity to 1, and no other filters exist - attempt to remove filter attribute
-                    if (val >= 1 && S.trim(filter.replace(R_ALPHA, '')) === '') {
+                    // https://github.com/kissyteam/kissy/issues/231
+                    if ((val >= 1 || !opacity) && !S.trim(filter.replace(R_ALPHA, ''))) {
 
                         // Setting style.filter to null, '' & ' ' still leave 'filter:' in the cssText
                         // if 'filter:' is present at all, clearType is disabled, we want to avoid this
                         // style.removeAttribute is IE Only, but so apparently is this code path...
                         style.removeAttribute(FILTER);
 
-                        // if there is no filter style applied in a css rule, we are done
-                        if (currentStyle && !currentStyle[FILTER]) {
+                        if (// unset inline opacity
+                            !opacity ||
+                                // if there is no filter style applied in a css rule, we are done
+                                currentStyle && !currentStyle[FILTER]) {
                             return;
                         }
                     }
@@ -3479,18 +3482,18 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
     requires: ['./base', 'ua', './style']
 });
 /*
-  NOTES:
+ NOTES:
 
-  yiminghe@gmail.com: 2011.12.21 backgroundPosition in ie
-   - currentStyle['backgroundPosition'] undefined
-   - currentStyle['backgroundPositionX'] ok
-   - currentStyle['backgroundPositionY'] ok
+ yiminghe@gmail.com: 2011.12.21 backgroundPosition in ie
+ - currentStyle['backgroundPosition'] undefined
+ - currentStyle['backgroundPositionX'] ok
+ - currentStyle['backgroundPositionY'] ok
 
 
-  yiminghe@gmail.com： 2011.05.19 opacity in ie
-   - 如果节点是动态创建，设置opacity，没有加到 dom 前，取不到 opacity 值
-   - 兼容：border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值
-   - opacity 的实现，参考自 jquery
+ yiminghe@gmail.com： 2011.05.19 opacity in ie
+ - 如果节点是动态创建，设置opacity，没有加到 dom 前，取不到 opacity 值
+ - 兼容：border-width 值，ie 下有可能返回 medium/thin/thick 等值，其它浏览器返回 px 值
+ - opacity 的实现，参考自 jquery
 
  */
 /**
@@ -4067,6 +4070,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             if (val !== undefined) {
                 // ie 无效值报错
                 try {
+                    // EMPTY will unset style!
                     style[name] = val;
                 } catch (e) {
                     S.log('css set error :' + e);
@@ -4077,6 +4081,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
             }
             if (!style.cssText) {
+                // weird for chrome, safari is ok?
+                // https://github.com/kissyteam/kissy/issues/231
+                UA.webkit && (style = elem.outerHTML);
                 elem.removeAttribute('style');
             }
             return undefined;

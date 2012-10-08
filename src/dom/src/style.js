@@ -572,6 +572,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             if (val !== undefined) {
                 // ie 无效值报错
                 try {
+                    // EMPTY will unset style!
                     style[name] = val;
                 } catch (e) {
                     S.log('css set error :' + e);
@@ -582,6 +583,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
             }
             if (!style.cssText) {
+                // weird for chrome, safari is ok?
+                // https://github.com/kissyteam/kissy/issues/231
+                UA.webkit && (style = elem.outerHTML);
                 elem.removeAttribute('style');
             }
             return undefined;
