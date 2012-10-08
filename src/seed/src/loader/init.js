@@ -162,10 +162,10 @@
         S.config('base', __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/');
     } else {
         S.config(S.mix({
-            // 2k url length
-            comboMaxUrlLength: 2048,
+            // 2k(2048) url length
+            comboMaxUrlLength: 2000,
             // file limit number for a single combo url
-            comboMaxFileNum: 45,
+            comboMaxFileNum: 40,
             charset: 'utf-8',
             tag: '@TIMESTAMP@'
         }, getBaseInfo()));
