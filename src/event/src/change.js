@@ -64,12 +64,15 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
         };
 
         function propertyChange(e) {
+            // if only checked property 's value is changed
             if (e.originalEvent.propertyName == 'checked') {
                 this.__changed = 1;
             }
         }
 
         function onClick(e) {
+            // only fire change after click and checked is changed
+            // (only fire change after click on previous unchecked radio)
             if (this.__changed) {
                 this.__changed = 0;
                 // fire from itself
