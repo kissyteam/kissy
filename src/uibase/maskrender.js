@@ -2,7 +2,7 @@
  * mask extension for kissy
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/maskrender", function(S, UA, Node) {
+KISSY.add("uibase/maskrender", function (S, UA, Node) {
 
     /**
      * 多 position 共享一个遮罩
@@ -31,9 +31,9 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
             this.get("prefixCls") + "ext-mask'/>")
             .prependTo("body");
         mask.css({
-            "position":ie6 ? "absolute" : "fixed", // mask 不会撑大 docWidth
-            left:0,
-            top:0,
+            "position": ie6 ? "absolute" : "fixed", // mask 不会撑大 docWidth
+            left: 0,
+            top: 0,
             width: docWidth(),
             "height": docHeight()
         });
@@ -55,18 +55,18 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
          * 点 mask 焦点不转移
          */
         mask.unselectable();
-        mask.on("mousedown click", function(e) {
-            e.halt();
+        mask.on("mousedown", function (e) {
+            e.preventDefault();
         });
     }
 
     function Mask() {
     }
 
-    var resizeMask = S.throttle(function() {
+    var resizeMask = S.throttle(function () {
         var v = {
-            width : docWidth(),
-            height : docHeight()
+            width: docWidth(),
+            height: docHeight()
         };
         mask.css(v);
         iframe && iframe.css(v);
@@ -75,16 +75,16 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
 
     Mask.prototype = {
 
-        _maskExtShow:function() {
+        _maskExtShow: function () {
             var self = this;
             if (!mask) {
                 initMask.call(self);
             }
             var zIndex = {
-                "z-index": self.get("zIndex") - 1
-            },
+                    "z-index": self.get("zIndex") - 1
+                },
                 display = {
-                    "display":""
+                    "display": ""
                 };
             mask.css(zIndex);
             iframe && iframe.css(zIndex);
@@ -98,14 +98,14 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
             }
         },
 
-        _maskExtHide:function() {
+        _maskExtHide: function () {
             num--;
             if (num <= 0) {
                 num = 0;
             }
             if (!num) {
                 var display = {
-                    "display":"none"
+                    "display": "none"
                 };
                 mask && mask.css(display);
                 iframe && iframe.css(display);
@@ -118,5 +118,5 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
 
     return Mask;
 }, {
-    requires:["ua","node"]
+    requires: ["ua", "node"]
 });
