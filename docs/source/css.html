@@ -34,23 +34,26 @@ KISSY.add('ua/css', function (S, UA) {
             'ie',
             'opera'
         ],
-        documentElement = S.Env.host.document.documentElement,
+        doc = S.Env.host.document,
+        documentElement = doc &amp;&amp; doc.documentElement,
         className = '',
         v;
-    S.each(o, function (key) {
-        if (v = UA[key]) {
-            className += ' ks-' + key + (parseInt(v) + '');
-            className += ' ks-' + key;
-        }
-    });
-    documentElement.className = S.trim(documentElement.className + className);
+    if (documentElement) {
+        S.each(o, function (key) {
+            if (v = UA[key]) {
+                className += ' ks-' + key + (parseInt(v) + '');
+                className += ' ks-' + key;
+            }
+        });
+        documentElement.className = S.trim(documentElement.className + className);
+    }
 }, {
     requires: ['./base']
 });
 
 /*
-  refer :
-   - http://yiminghe.iteye.com/blog/444889
+ refer :
+ - http://yiminghe.iteye.com/blog/444889
  */</pre>
 </body>
 </html>

@@ -15,12 +15,12 @@
   </script>
 </head>
 <body onload="prettyPrint(); highlight();">
-  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+  <pre class="prettyprint lang-js"><span id='KISSY'>/**
 </span> * @ignore
  * @fileOverview A seed where KISSY grows up from , KISS Yeah !
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-(function (S, undefined) {
+var KISSY = (function (undefined) {
 <span id='KISSY'>    /**
 </span>     * The KISSY global namespace object. you can use
      *
@@ -168,7 +168,7 @@
 
     // If KISSY is already defined, the existing KISSY object will not
     // be overwritten so that defined namespaces are preserved.
-        seed = (host &amp;&amp; host[S]) || {},
+        seed = {},
 
         guid = 0,
         EMPTY = '';
@@ -176,11 +176,11 @@
     // The host of runtime environment. specify by user's seed or &lt;this&gt;,
     // compatibled for  '&lt;this&gt; is null' in unknown engine.
     seed.Env = seed.Env || {};
-    host = seed.Env.host || (seed.Env.host = host || {});
+    seed.Env.host = host;
 
     // shortcut and meta for seed.
     // override previous kissy
-    S = host[S] = meta.mix(seed, meta);
+    var S = meta.mix(seed, meta);
 
     S.mix(S,
         {
@@ -473,8 +473,8 @@
          */
         S.Env = S.Env || {};
 
-        S.Env.nodejs = (typeof require !== 'undefined') &amp;&amp;
-            (typeof exports !== 'undefined');
+        S.Env.nodejs = (typeof require === 'function') &amp;&amp;
+            (typeof exports === 'object');
 
 <span id='KISSY-property-Config'>        /**
 </span>         * KISSY Config.
@@ -498,9 +498,14 @@
         S.__BUILD_TIME = '@TIMESTAMP@';
     })();
 
+    // exports for nodejs
+    if (S.Env.nodejs) {
+        S.KISSY = S;
+        module.exports = S;
+    }
+
     return S;
 
-})('KISSY', undefined);
-</pre>
+})();</pre>
 </body>
 </html>

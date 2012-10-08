@@ -24,14 +24,14 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
         NodeType = DOM.NodeType,
-        documentElement = doc.documentElement,
+        documentElement = doc &amp;&amp; doc.documentElement,
         CONTAIN_MASK = 16,
         __contains =
-            documentElement.compareDocumentPosition ?
+            documentElement &amp;&amp; documentElement.compareDocumentPosition ?
                 function (a, b) {
                     return !!(a.compareDocumentPosition(b) &amp; CONTAIN_MASK);
                 } :
-                documentElement.contains ?
+                documentElement &amp;&amp; documentElement.contains ?
                     function (a, b) {
                         if (a.nodeType == NodeType.DOCUMENT_NODE) {
                             a = a.documentElement;

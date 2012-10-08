@@ -23,7 +23,7 @@
 KISSY.add('ua/extra', function (S, UA, undefined) {
     var win = S.Env.host,
         navigator = win.navigator,
-        ua = navigator.userAgent,
+        ua = navigator &amp;&amp; navigator.userAgent || &quot;&quot;,
         m, external, shell,
         o = {
 <span id='KISSY-UA-property-se360'>            /**

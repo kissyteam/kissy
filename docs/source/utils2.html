@@ -22,14 +22,11 @@
  */
 (function (S) {
 
-    if (S.Env.nodejs) {
-        return;
-    }
-
     var Loader = S.Loader,
         Path = S.Path,
         Uri = S.Uri,
-        ua = navigator.userAgent,
+        host = S.Env.host,
+        ua = host.navigator &amp;&amp; navigator.userAgent || &quot;&quot;,
         startsWith = S.startsWith,
         data = Loader.STATUS,
         ATTACHED = data.ATTACHED,
@@ -41,10 +38,10 @@
          * @private
          */
             Utils = {},
-        host = S.Env.host,
+
         isWebKit = !!ua.match(/AppleWebKit/),
         doc = host.document,
-        simulatedLocation = new Uri(location.href);
+        simulatedLocation = new Uri(host.location &amp;&amp; location.href || &quot;&quot;);
 
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -97,6 +94,18 @@
 </span>         * IE
          */
         IE: !!ua.match(/MSIE/),
+
+        addEventListener: host.addEventListener ? function (node, type, callback) {
+            node.addEventListener(type, callback, false);
+        } : function (node, type, callback) {
+            node.attachEvent('on' + type, callback);
+        },
+
+        removeEventListener: host.removeEventListener ? function (node, type, callback) {
+            node.removeEventListener(type, callback, false);
+        } : function (node, type, callback) {
+            node.detachEvent('on' + type, callback);
+        },
 
 <span id='KISSY-Loader-Utils-method-normalDepModuleName'>        /**
 </span>         * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
@@ -174,7 +183,7 @@
             // 防止 cfg 里有 tag，构建 fullpath 需要
             mods[modName] = mod = new Loader.Module(S.mix({
                 name: modName,
-                SS: self
+                runtime: self
             }, cfg));
 
             return mod;

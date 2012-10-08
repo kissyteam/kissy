@@ -23,7 +23,7 @@
 KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     var WINDOW = S.Env.host,
         doc = WINDOW.document,
-        docElem = doc.documentElement,
+        docElem = doc &amp;&amp; doc.documentElement,
         isIE = UA['ie'],
         STYLE = 'style',
         FLOAT = 'float',
@@ -60,12 +60,14 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         cssProps = {},
         defaultDisplay = {};
 
-    // normalize reserved word float alternatives ('cssFloat' or 'styleFloat')
-    if (docElem[STYLE][CSS_FLOAT] !== undefined) {
-        cssProps[FLOAT] = CSS_FLOAT;
-    }
-    else if (docElem[STYLE][STYLE_FLOAT] !== undefined) {
-        cssProps[FLOAT] = STYLE_FLOAT;
+    if (docElem) {
+        // normalize reserved word float alternatives ('cssFloat' or 'styleFloat')
+        if (docElem[STYLE][CSS_FLOAT] !== undefined) {
+            cssProps[FLOAT] = CSS_FLOAT;
+        }
+        else if (docElem[STYLE][STYLE_FLOAT] !== undefined) {
+            cssProps[FLOAT] = STYLE_FLOAT;
+        }
     }
 
     function camelCase(name) {
@@ -631,12 +633,12 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
 
     /*
-      得到元素的大小信息
-      @param elem
-      @param name
-      @param {String} [extra]  'padding' : (css width) + padding
-                               'border' : (css width) + padding + border
-                               'margin' : (css width) + padding + border + margin
+     得到元素的大小信息
+     @param elem
+     @param name
+     @param {String} [extra]  'padding' : (css width) + padding
+     'border' : (css width) + padding + border
+     'margin' : (css width) + padding + border + margin
      */
     function getWH(elem, name, extra) {
         if (S.isWindow(elem)) {
@@ -694,27 +696,27 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 });
 
 /*
-  2011-12-21
-   - backgroundPositionX, backgroundPositionY firefox/w3c 不支持
-   - w3c 为准，这里不 fix 了
+ 2011-12-21
+ - backgroundPositionX, backgroundPositionY firefox/w3c 不支持
+ - w3c 为准，这里不 fix 了
 
 
-  2011-08-19
-   - 调整结构，减少耦合
-   - fix css('height') == auto
+ 2011-08-19
+ - 调整结构，减少耦合
+ - fix css('height') == auto
 
-  NOTES:
-   - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
-   - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
+ NOTES:
+ - Opera 下，color 默认返回 #XXYYZZ, 非 rgb(). 目前 jQuery 等类库均忽略此差异，KISSY 也忽略。
+ - Safari 低版本，transparent 会返回为 rgba(0, 0, 0, 0), 考虑低版本才有此 bug, 亦忽略。
 
 
-   - getComputedStyle 在 webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输出 float 值。
+ - getComputedStyle 在 webkit 下，会舍弃小数部分，ie 下会四舍五入，gecko 下直接输出 float 值。
 
-   - color: blue 继承值，getComputedStyle, 在 ie 下返回 blue, opera 返回 #0000ff, 其它浏览器
-     返回 rgb(0, 0, 255)
+ - color: blue 继承值，getComputedStyle, 在 ie 下返回 blue, opera 返回 #0000ff, 其它浏览器
+ 返回 rgb(0, 0, 255)
 
-   - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未“追求完美”。YUI3 做了部分完美处理，但
-     依旧存在浏览器差异。
+ - 总之：要使得返回值完全一致是不大可能的，jQuery/ExtJS/KISSY 未“追求完美”。YUI3 做了部分完美处理，但
+ 依旧存在浏览器差异。
  */
 </pre>
 </body>

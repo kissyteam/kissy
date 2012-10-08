@@ -21,9 +21,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    if (S.Env.nodejs) {
-        return;
-    }
 
 <span id='KISSY-Loader'>    /**
 </span>     * @class KISSY.Loader
@@ -31,8 +28,8 @@
      * @mixins KISSY.Loader.Target
      * This class should not be instantiated manually.
      */
-    function Loader(SS) {
-        this.SS = SS;
+    function Loader(runtime) {
+        this.runtime = runtime;
 <span id='KISSY-Loader-event-afterModAttached'>        /**
 </span>         * @event afterModAttached
          * fired after a module is attached

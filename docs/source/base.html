@@ -35,22 +35,23 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         doc = win.document,
         location = win.location,
         simulatedLocation;
+    if (location) {
+        try {
+            curLocation = location.href;
+        } catch (e) {
+            S.log('ajax/base get curLocation error: ');
+            S.log(e);
+            // Use the href attribute of an A element
+            // since IE will modify it given document.location
+            curLocation = doc.createElement('a');
+            curLocation.href = '';
+            curLocation = curLocation.href;
+        }
 
-    try {
-        curLocation = location.href;
-    } catch (e) {
-        S.log('ajax/base get curLocation error: ');
-        S.log(e);
-        // Use the href attribute of an A element
-        // since IE will modify it given document.location
-        curLocation = doc.createElement('a');
-        curLocation.href = '';
-        curLocation = curLocation.href;
+        simulatedLocation = new Uri(curLocation);
     }
 
-    simulatedLocation = new Uri(curLocation);
-
-    var isLocal = rlocalProtocol.test(simulatedLocation.getScheme()),
+    var isLocal = simulatedLocation &amp;&amp; rlocalProtocol.test(simulatedLocation.getScheme()),
         transports = {},
         defaultConfig = {
             type: 'GET',

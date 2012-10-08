@@ -27,7 +27,7 @@
 
         doc = win['document'],
 
-        docElem = doc.documentElement,
+        docElem = doc &amp;&amp; doc.documentElement,
 
         location = win.location,
 
@@ -58,11 +58,8 @@
 </span>             * A crude way of determining if an object is a window
              * @member KISSY
              */
-            isWindow: function (o) {
-                return S.type(o) === 'object'
-                    &amp;&amp; 'setInterval' in o
-                    &amp;&amp; 'document' in o
-                    &amp;&amp; o.document.nodeType == 9;
+            isWindow: function (obj) {
+                return obj != null &amp;&amp; obj == obj.window;
             },
 
 
@@ -157,7 +154,7 @@
      * @ignore
      */
     function _bindReady() {
-        var doScroll = docElem.doScroll,
+        var doScroll = docElem &amp;&amp; docElem.doScroll,
             eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
             COMPLETE = 'complete',
             fire = function () {
@@ -166,7 +163,7 @@
 
         // Catch cases where ready() is called after the
         // browser event has already occurred.
-        if (doc.readyState === COMPLETE) {
+        if (!doc || doc.readyState === COMPLETE) {
             return fire();
         }
 

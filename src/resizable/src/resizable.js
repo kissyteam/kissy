@@ -188,6 +188,13 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
                 }
             },
 
+            /**
+             * css prefix for handler elements.
+             * @cfg {String} prefixCls
+             */
+            /**
+             * @ignore
+             */
             prefixCls: {
                 value: 'ks-'
             },
@@ -197,6 +204,11 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
              * @cfg {Boolean} disabled
              */
             /**
+             * disable or enable current resizable.
+             * @property disabled
+             * @type {Boolean}
+             */
+            /**
              * @ignore
              */
             disabled: {},
@@ -204,6 +216,11 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
             /**
              * Minimum width can current node resize to.
              * @cfg {Number} minWidth
+             */
+            /**
+             * Minimum width can current node resize to.
+             * @property minWidth
+             * @type {Number}
              */
             /**
              * @ignore
@@ -216,6 +233,11 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
              * @cfg {Number} minHeight
              */
             /**
+             * Minimum height can current node resize to.
+             * @property minHeight
+             * @type {Number}
+             */
+            /**
              * @ignore
              */
             minHeight: {
@@ -226,6 +248,13 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
              * @cfg {Number} maxWidth
              */
             /**
+             * Maximum width can current node resize to,
+             * it can be changed after initialization,
+             * for example: responsive design.
+             * @property maxWidth
+             * @type {Number}
+             */
+            /**
              * @ignore
              */
             maxWidth: {
@@ -234,6 +263,11 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
             /**
              * Maximum height can current node resize to.
              * @cfg {Number} maxHeight
+             */
+            /**
+             * Maximum height can current node resize to.
+             * @property maxHeight
+             * @type {Number}
              */
             /**
              * @ignore
