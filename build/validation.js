@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Oct 9 12:01
+build time: Oct 9 13:49
 */
 /**
  * @fileOverview validation
@@ -236,7 +236,7 @@ KISSY.add("validation/define",function(){
  */
 KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote, Warn) {
     var symbol = Define.Const.enumvalidsign,
-        doc = S.Env.host.document;
+        doc = document;
 
     /**
      * @constructor
@@ -1357,7 +1357,7 @@ KISSY.add("validation/warn/float", function (S, DOM, Event, Util, Define) {
 
 
                 S.ready(function () {
-                    S.Env.host.document.body.appendChild(panel);
+                    document.body.appendChild(panel);
                 });
                 S.mix(self, {
                     panel:S.one(panel),
