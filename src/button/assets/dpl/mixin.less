@@ -2,15 +2,17 @@
 
 @import "../../../css/src/dpl/variables.less";
 
-.buttonBackground(@startColor, @endColor) {
+.buttonState(@startColor, @endColor,@color,@activeColor) {
 // gradientBar will set the background to a pleasing blend of these, to support IE<=9
     .gradientBar(@startColor, @endColor);
     .reset-filter();
+    color:@color;
 
 // in these cases the gradient won't cover the background, so we override
 // :active ie 不支持
     &.ks-button-hover,
     &:hover{
+        color:@color;
         background-position: 0 -15px;
     /*
     transition is only when going to hover, otherwise the background
@@ -26,8 +28,19 @@
     &.ks-button-checked,
     // TODO menu-button 耦合
     &.ks-menu-button-open {
+        color: @activeColor;
         @shadow: inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05);
         .box-shadow(@shadow);
         background-color: darken(@endColor, 10%) e("\9");
+    }
+
+    &.ks-button-disabled {
+        cursor: default;
+        .opacity(65);
+        color:@color;
+        background-position: 0 0;
+        .transition(none);
+        .box-shadow(none);
+        .gradientBar(@startColor, @endColor);
     }
 }
