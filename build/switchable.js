@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:20
+build time: Oct 9 20:15
 */
 /**
  * @fileOverview accordion aria support
@@ -2482,7 +2482,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                         if (effect === SCROLLX) {
                             DOM.css(panels, FLOAT, LEFT);
                             // 设置最大宽度，以保证有空间让 panels 水平排布
-                            DOM.width(content, "9999px");
+                            DOM.width(content, "999999px");
                         }
 
                         // 只有 scrollX, scrollY 需要设置 viewSize

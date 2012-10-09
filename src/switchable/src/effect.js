@@ -187,7 +187,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                         if (effect === SCROLLX) {
                             DOM.css(panels, FLOAT, LEFT);
                             // 设置最大宽度，以保证有空间让 panels 水平排布
-                            DOM.width(content, "9999px");
+                            DOM.width(content, "999999px");
                         }
 
                         // 只有 scrollX, scrollY 需要设置 viewSize
