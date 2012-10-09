@@ -299,7 +299,12 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
         isValid: function() {
             var self = this, result = self._validateValue();
             self.showMessage(result[1], result[0]);
-            return result[1] != 0;
+			//return result[1] != 0;  //这么写存在一个bug,只有ok/ignore才能返回true
+			if(result[1]===1 || result[1]===3){
+				return true;
+			}else{
+				return false;
+			}
         }
 
     });
