@@ -1,6 +1,6 @@
 /**
- * 提示类管理类
- * @author: 常胤 <lzlu.com>
+ * @fileOverview 提示类管理类
+ * @author 常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
 

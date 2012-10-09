@@ -1,13 +1,12 @@
 /**
- * Validation.Field
- * @author: 常胤 <lzlu.com>
+ * @fileOverview Validation.Field
+ * @author 常胤 <lzlu.com>
  */
 KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote, Warn) {
     var symbol = Define.Const.enumvalidsign,
-        doc = document;
+        doc = S.Env.host.document;
 
     /**
-     * @name Validation.Field类
      * @constructor
      * @param el {String|Element} field字段
      * @param config {Object} 配置
@@ -22,8 +21,7 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
 
         /**
          * field对象
-         * @name
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         self.el = el;
 
@@ -255,7 +253,6 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
         /**
          * @description 给当前field对象增加一条验证规则
          * 如果Auth.Rule中存在直接增加
-         * @name
          * @param {String} name 规则名称
          * @param {Object} argument 规则可配置
          */
@@ -302,7 +299,12 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
         isValid: function() {
             var self = this, result = self._validateValue();
             self.showMessage(result[1], result[0]);
-            return result[1] != 0;
+			//return result[1] != 0;  //这么写存在一个bug,只有ok/ignore才能返回true
+			if(result[1]===1 || result[1]===3){
+				return true;
+			}else{
+				return false;
+			}
         }
 
     });

@@ -1,6 +1,6 @@
 /**
- * 扩展类基类
- * @author: 常胤 <lzlu.com>
+ * @fileOverview 扩展类基类
+ * @author 常胤 <lzlu.com>
  */
 
 KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
@@ -10,7 +10,7 @@ KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
 
         /**
          * 目标对象
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         self.target = S.isArray(target) ? target[target.length - 1] : target;
         self.el = target;
