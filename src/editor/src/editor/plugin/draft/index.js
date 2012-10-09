@@ -120,7 +120,8 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                     collapseOnClick: true,
                     width: "100px",
                     prefixCls: prefixCls + "editor-",
-                    menuCfg: {
+                    menu: {
+                        xclass: 'popupmenu',
                         width: "225px",
                         align: {
                             points: ['tr', 'br']
