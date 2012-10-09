@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:20
+build time: Oct 9 21:46
 */
 /**
  * @ignore
@@ -201,8 +201,10 @@ KISSY.add('json', function (S, JSON) {
 // Create a JSON object only if one does not already exist. We create the
 // methods in a closure to avoid creating global variables.
 
-KISSY.add("json/json2", function(S, UA) {
-    var win = S.Env.host,JSON = win.JSON;
+KISSY.add("json/json2", function (S, UA) {
+    var Env = S.Env,
+        win = Env.host || {},
+        JSON = ((Env.nodejs && typeof global === 'object') ? global : win).JSON;
     // ie 8.0.7600.16315@win7 json 有问题
     if (!JSON || UA['ie'] < 9) {
         JSON = win.JSON = {};
@@ -243,7 +245,7 @@ KISSY.add("json/json2", function(S, UA) {
             '\n': '\\n',
             '\f': '\\f',
             '\r': '\\r',
-            '"' : '\\"',
+            '"': '\\"',
             '\\': '\\\\'
         },
         rep;
@@ -271,9 +273,9 @@ KISSY.add("json/json2", function(S, UA) {
 
 // Produce a string from holder[key].
 
-        var i,          // The loop counter.
-            k,          // The member key.
-            v,          // The member value.
+        var i, // The loop counter.
+            k, // The member key.
+            v, // The member value.
             length,
             mind = gap,
             partial,
@@ -523,4 +525,4 @@ KISSY.add("json/json2", function(S, UA) {
         };
     }
     return JSON;
-}, {requires:['ua']});
+}, {requires: ['ua']});
