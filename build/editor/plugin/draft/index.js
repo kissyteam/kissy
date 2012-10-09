@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 28 16:36
+build time: Oct 9 22:47
 */
 /**
  * draft for kissy editor
@@ -57,16 +57,16 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
     var addRes = Editor.Utils.addRes, destroyRes = Editor.Utils.destroyRes;
     S.augment(Draft, {
 
-        _getSaveKey:function () {
+        _getSaveKey: function () {
             var self = this,
-                cfg = this.config;
+                cfg = self.config;
             return cfg.draft && cfg.draft['saveKey'] || DRAFT_SAVE;
         },
 
         /**
          * parse 历史记录延后，点击 select 时才开始 parse
          */
-        _getDrafts:function () {
+        _getDrafts: function () {
             var self = this;
             if (!self.drafts) {
                 var str = localStorage.getItem(self._getSaveKey()),
@@ -82,11 +82,11 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             }
             return self.drafts;
         },
-        _init:function () {
+        _init: function () {
 
             var self = this,
                 editor = self.editor,
-                prefixCls=editor.get('prefixCls'),
+                prefixCls = editor.get('prefixCls'),
                 statusbar = editor.get("statusBarEl"),
                 cfg = this.config;
             cfg.draft = cfg.draft || {};
@@ -95,21 +95,21 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             self.draftLimit = cfg.draft.limit
                 = cfg.draft.limit || LIMIT;
             var holder = new Node(
-                "<div class='"+prefixCls+"editor-draft'>" +
-                    "<span class='"+prefixCls+"editor-draft-title'>" +
+                "<div class='" + prefixCls + "editor-draft'>" +
+                    "<span class='" + prefixCls + "editor-draft-title'>" +
                     "内容正文每" +
                     cfg.draft.interval
                     + "分钟自动保存一次。" +
                     "</span>" +
                     "</div>").appendTo(statusbar);
-            self.timeTip = new Node("<span class='"+prefixCls+"editor-draft-time'/>")
+            self.timeTip = new Node("<span class='" + prefixCls + "editor-draft-time'/>")
                 .appendTo(holder);
 
             var save = new Node(
-                S.substitute("<a href='#' " +
+                    S.substitute("<a href='#' " +
                         "onclick='return false;' " +
                         "class='{prefixCls}editor-button " +
-                    "{prefixCls}editor-draft-save-btn ks-inline-block' " +
+                        "{prefixCls}editor-draft-save-btn ks-inline-block' " +
                         "style='" +
                         "vertical-align:middle;" +
                         "padding:1px 9px;" +
@@ -117,23 +117,23 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                         "<span class='{prefixCls}editor-draft-save'>" +
                         "</span>" +
                         "<span>立即保存</span>" +
-                        "</a>",{
-                    prefixCls:prefixCls
-                })                ).unselectable().appendTo(holder),
+                        "</a>", {
+                        prefixCls: prefixCls
+                    })).unselectable(undefined).appendTo(holder),
                 versions = new MenuButton({
-                    render:holder,
-                    collapseOnClick:true,
-                    width:"100px",
-                    prefixCls:prefixCls+"editor-",
-                    menuCfg:{
-                        width:"225px",
-                        align:{
-                            points:['tr', 'br']
+                    render: holder,
+                    collapseOnClick: true,
+                    width: "100px",
+                    prefixCls: prefixCls + "editor-",
+                    menuCfg: {
+                        width: "225px",
+                        align: {
+                            points: ['tr', 'br']
                         }
                     },
-                    matchElWidth:false,
-                    autoRender:true,
-                    content:"恢复编辑历史"
+                    matchElWidth: false,
+                    autoRender: true,
+                    content: "恢复编辑历史"
                 });
             self.versions = versions;
             // 点击才开始 parse
@@ -187,10 +187,10 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 var help = new Node('<a ' +
                     'tabindex="0" ' +
                     'hidefocus="hidefocus" ' +
-                    'class="'+prefixCls+'editor-draft-help" ' +
+                    'class="' + prefixCls + 'editor-draft-help" ' +
                     'title="点击查看帮助" ' +
                     'href="javascript:void(\'点击查看帮助 \')">点击查看帮助</a>')
-                    .unselectable()
+                    .unselectable(undefined)
                     .appendTo(holder);
 
                 help.on("click", function () {
@@ -210,10 +210,10 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             }
             addRes.call(self, holder);
         },
-        _prepareHelp:function () {
+        _prepareHelp: function () {
             var self = this,
                 editor = self.editor,
-                prefixCls=editor.get('prefixCls'),
+                prefixCls = editor.get('prefixCls'),
                 cfg = self.config,
                 draftCfg = cfg.draft,
                 help = new Node(draftCfg['helpHtml'] || "");
@@ -238,63 +238,65 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 "</div>");
             help.append(arrow);
             help.css({
-                border:"1px solid #ACB4BE",
-                "text-align":"left"
+                border: "1px solid #ACB4BE",
+                "text-align": "left"
             });
             self.helpPopup = new Overlay({
-                content:help,
-                prefixCls:prefixCls+'editor-',
-                autoRender:true,
-                width:help.width() + "px",
-                zIndex:Editor.baseZIndex(Editor.zIndexManager.OVERLAY),
-                mask:false
+                content: help,
+                prefixCls: prefixCls + 'editor-',
+                autoRender: true,
+                width: help.width() + "px",
+                zIndex: Editor.baseZIndex(Editor.zIndexManager.OVERLAY),
+                mask: false
             });
             self.helpPopup.get("el")
                 .css("border", "none");
             self.helpPopup.arrow = arrow;
         },
-        _realHelp:function () {
+        _realHelp: function () {
             var win = this.helpPopup,
                 helpBtn = this.helpBtn,
                 arrow = win.arrow;
             win.show();
             var off = helpBtn.offset();
             win.get("el").offset({
-                left:(off.left - win.get("el").width()) + 17,
-                top:(off.top - win.get("el").height()) - 7
+                left: (off.left - win.get("el").width()) + 17,
+                top: (off.top - win.get("el").height()) - 7
             });
             arrow.offset({
-                left:off.left - 2,
-                top:off.top - 8
+                left: off.left - 2,
+                top: off.top - 8
             });
         },
-        disable:function () {
+        disable: function () {
             this.holder.css("visibility", "hidden");
         },
-        enable:function () {
+        enable: function () {
             this.holder.css("visibility", "");
         },
-        sync:function () {
+        sync: function () {
             var self = this,
                 i,
                 draftLimit = self.draftLimit,
                 timeTip = self.timeTip,
                 versions = self.versions,
                 drafts = self._getDrafts(),
-                draft, tip
+                draft, tip;
 
             if (drafts.length > draftLimit) {
                 drafts.splice(0, drafts.length - draftLimit);
             }
+
+            versions.removeItems(true);
 
             for (i = 0; i < drafts.length; i++) {
                 draft = drafts[i];
                 tip = (draft.auto ? "自动" : "手动") + "保存于 : "
                     + date(draft.date);
                 versions.addItem({
-                    xclass:'menuitem',
-                    content:tip,
-                    value:i
+                    xclass: 'menuitem',
+                    content: tip,
+                    value: i
                 });
             }
 
@@ -305,7 +307,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                     : drafts);
         },
 
-        save:function (auto) {
+        save: function (auto) {
             var self = this,
                 drafts = self._getDrafts(),
                 editor = self.editor,
@@ -326,14 +328,14 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                 drafts.length -= 1;
             }
             self.drafts = drafts.concat({
-                content:data,
-                date:new Date().getTime(),
-                auto:auto
+                content: data,
+                date: new Date().getTime(),
+                auto: auto
             });
             self.sync();
         },
 
-        recover:function (ev) {
+        recover: function (ev) {
             var self = this,
                 editor = self.editor,
                 drafts = self._getDrafts(),
@@ -346,7 +348,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             ev.halt();
         },
 
-        destroy:function () {
+        destroy: function () {
             destroyRes.call(this);
         }
     });
@@ -363,7 +365,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
     }
 
     S.augment(DraftPlugin, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
             var config = this.config;
             if (localStorage.ready) {
                 localStorage.ready(function () {
@@ -378,5 +380,5 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
     return DraftPlugin;
 
 }, {
-    "requires":["editor", "../local-storage/", "overlay", '../menubutton/']
+    "requires": ["editor", "../local-storage/", "overlay", '../menubutton/']
 });

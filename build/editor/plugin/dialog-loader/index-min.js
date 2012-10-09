@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 28 16:36
+build time: Oct 9 22:47
 */
 KISSY.add("editor/plugin/dialog-loader/index",function(c,d,e){var a,f={loading:function(b){a||(a=new d({x:0,width:6==c.UA.ie?c.DOM.docWidth():"100%",y:0,zIndex:e.baseZIndex(e.zIndexManager.LOADING),prefixCls:b+"editor-",elCls:b+"editor-global-loading"}));a.set("height",c.DOM.docHeight());a.show();a.loading()},unloading:function(){a.hide()}};return{useDialog:function(b,a,e,g){b.focus();var d=b.get("prefixCls");b.getControl(a+"/dialog")?setTimeout(function(){b.showDialog(a,g)},0):(f.loading(d),c.use("editor/plugin/"+
 a+"/dialog",function(c,d){f.unloading();b.addControl(a+"/dialog",new d(b,e));b.showDialog(a,g)}))}}},{requires:["overlay","editor"]});
