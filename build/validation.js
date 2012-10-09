@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Oct 9 13:49
+build time: Oct 9 16:18
 */
 /**
  * @fileOverview validation
@@ -1554,6 +1554,7 @@ KISSY.add("validation/warn/static", function(S, Node, Util, Define) {
  * @date 2011.06.21
  */
 KISSY.add("validation", function(S, Validation) {
+        S.Validation = Validation;
 	    return Validation;
 	}, {
 		requires:["validation/base","validation/assets/base.css"]
