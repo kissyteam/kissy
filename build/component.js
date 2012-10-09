@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 8 19:59
+build time: Oct 9 22:19
 */
 /**
  * @ignore
@@ -2294,6 +2294,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
     function create(base, extensions, px, sx) {
         var args = S.makeArray(arguments),
+            baseName,
             name,
             t;
 
@@ -2303,7 +2304,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             extensions = [];
         }
 
-        name = "UIBaseDerived";
+        baseName = name = "UIBaseDerived";
 
         if (S.isString(t = args[args.length - 1])) {
             name = t;
@@ -2316,6 +2317,9 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         // debug mode, give the right name for constructor
         // refer : http://limu.iteye.com/blog/1136712
         S.log("UIBase.extend : " + name, eval("C=function " + name.replace(/[-.]/g, "_") + "(){ UIBase.apply(this, arguments);}"));
+        if (name == baseName) {
+            S.log(px);
+        }
 
         S.extend(C, base, px, sx);
 

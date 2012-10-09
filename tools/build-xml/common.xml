@@ -43,15 +43,7 @@
     </target>
 
     <!-- 压缩代码 -->
-    <target name="compress">
-        <replaceregexp match="^\s*(S|KISSY)\.(log|error)\s*\(.+$"
-                       replace=""
-                       flags="g"
-                       byline="true"
-                       encoding="${charset}">
-            <fileset dir="${component.build.dir}" includes="**/*.js"/>
-        </replaceregexp>
-
+    <target name="compress-css">
         <!-- 用 YUICompressor 压缩 CSS -->
         <apply executable="java" verbose="true"
                dest="${component.build.dir}">
@@ -66,6 +58,18 @@
             <targetfile/>
             <mapper type="regexp" from="^(.*)\.(css|js)$" to="\1-min.\2"/>
         </apply>
+    </target>
+
+    <!-- 压缩代码 -->
+    <target name="compress" depends="compress-css">
+        <replaceregexp match="^\s*(S|KISSY)\.(log|error)\s*\(.+$"
+                       replace=""
+                       flags="g"
+                       byline="true"
+                       encoding="${charset}">
+            <fileset dir="${component.build.dir}" includes="**/*.js"/>
+        </replaceregexp>
+
 
         <!-- 用 Closure Compiler 压缩 JS -->
         <apply executable="java" verbose="true"
