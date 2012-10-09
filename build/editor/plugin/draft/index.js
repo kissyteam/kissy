@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 22:47
+build time: Oct 9 23:22
 */
 /**
  * draft for kissy editor
@@ -125,7 +125,8 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                     collapseOnClick: true,
                     width: "100px",
                     prefixCls: prefixCls + "editor-",
-                    menuCfg: {
+                    menu: {
+                        xclass: 'popupmenu',
                         width: "225px",
                         align: {
                             points: ['tr', 'br']

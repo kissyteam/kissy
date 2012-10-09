@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 22:47
+build time: Oct 9 23:22
 */
 /**
 menu style for kissy editor ,include contextmenu and select menu
@@ -18,6 +18,7 @@ menu style for kissy editor ,include contextmenu and select menu
     outline: medium none; /*padding: 4px 0;*/
     position: absolute;
     overflow: auto;
+    overflow-x: hidden;
     left: -9999px;
     top: -9999px;
     box-shadow: 0px 1px 1px rgb(228, 228, 228);
@@ -32,7 +33,7 @@ menu style for kissy editor ,include contextmenu and select menu
 .ks-editor-menuitem {
     margin: 0;
     border-width: 0;
-    padding: 4px 10px 4px 10px;
+    padding: 4px 10px 4px 20px;
     white-space: nowrap;
     /*ie6 can hover*/
     position: relative;
