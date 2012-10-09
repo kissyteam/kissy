@@ -18,7 +18,7 @@ KISSY.add("validation/warn/float", function (S, DOM, Event, Util, Define) {
 
 
                 S.ready(function () {
-                    S.Env.host.document.body.appendChild(panel);
+                    document.body.appendChild(panel);
                 });
                 S.mix(self, {
                     panel:S.one(panel),
