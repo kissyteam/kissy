@@ -21,6 +21,7 @@ kissy seed 的层次结构为：
  - 增加 defer (promise)
  - 增加 Path (nodejs)
  - 增加 Uri (rfc3986)
+ - 增加 Combo Loader
 
 ### 2011 yiminghe@gmail.com
 

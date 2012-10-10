@@ -5,6 +5,7 @@ KISSY - An Enjoyable JavaScript Library
  * Docs: <http://http://docs.kissyui.com/>
  * Changelog: <http://github.com/kissyteam/kissy/blob/master/CHANGELOG.md>
  * License: <http://github.com/kissyteam/kissy/blob/master/LICENSE.md>
+ * Nodejs README: <https://github.com/kissyteam/kissy/blob/master/src/seed/nodejs.md>
 
 
 Vision

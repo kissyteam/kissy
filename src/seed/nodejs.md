@@ -1,42 +1,42 @@
-h1.  KISSY for NodeJS
+#  KISSY for NodeJS
 
 nodejs-kissy 实现了将 kissy 移植到 nodeJS 上运行
 
-h1.  通过NPM安装 nodejs-kissy
+##  通过NPM安装 nodejs-kissy
 
 需要预装 npm
 
-<pre class="console">npm install kissy</pre>
+`npm install kissy`
 
-h1.  通过源码安装 nodejs-kissy
+##  通过源码安装 nodejs-kissy
 
 需要预装 npm 和 git
 
-<pre class="console">git clone git://github.com/kissyteam/kissy.git
-cd kissy/
-npm install .</pre>
+    git clone git://github.com/kissyteam/kissy.git
+    cd kissy/
+    npm install .
 
-h1. Hello World
+## Hello World
 
 新建文件test.js
 
-<pre class="console">var S = require('kissy').KISSY;
-S.ready(function(S){
-	S.log('hello world!');
-});</pre>
+    var S = require('kissy');
+    S.ready(function(S){
+	    S.log('hello world!');
+    });
 
 运行
 
-<pre class="console">node test.js</pre>
+`node test.js`
 
-h1.  Using KISSY
+##  Using KISSY
 
 <!--
 "KISSY-Calendar Demo"://gist.github.com/662117
 -->
 
-"KISSY-Overlay Demo"://gist.github.com/1703698
+[KISSY-Overlay Demo](http//gist.github.com/1703698)
 
-h1.  License
+##  License
 
-KISSY 遵守 "MIT":https://github.com/kissyteam/kissy/blob/master/LICENSE.md 协议
+KISSY 遵守 [MIT](https://github.com/kissyteam/kissy/blob/master/LICENSE.md) 协议
