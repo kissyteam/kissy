@@ -3,7 +3,7 @@
  * @author lifesinger@gmail.com,yiminghe@gmail.com,lijing00333@163.com
  * @description: constant member and common method holder
  */
-(function(S, loader, data) {
+(function (S, loader, data) {
     if ("require" in this) {
         return;
     }
@@ -16,21 +16,21 @@
         // http://xx.com/y/z.htm#!/f/g
         // ->
         // http://xx.com/y/
-        __pagePath:location.href.replace(location.hash, "").replace(/[^/]*$/i, ""),
+        __pagePath: location.href.replace(/#.*$/, "").replace(/[^/]*$/i, ""),
 
         //firefox,ie9,chrome 如果add没有模块名，模块定义先暂存这里
-        __currentModule:null,
+        __currentModule: null,
 
         //ie6,7,8开始载入脚本的时间
-        __startLoadTime:0,
+        __startLoadTime: 0,
 
         //ie6,7,8开始载入脚本对应的模块名
-        __startLoadModuleName:null,
+        __startLoadModuleName: null,
 
-        __isAttached: function(modNames) {
+        __isAttached: function (modNames) {
             var mods = this.Env.mods,
                 ret = true;
-            S.each(modNames, function(name) {
+            S.each(modNames, function (name) {
                 var mod = mods[name];
                 if (!mod || mod.status !== ATTACHED) {
                     ret = false;

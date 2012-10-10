@@ -3,7 +3,6 @@
  * @author yiminghe@gmail.com
  */
 (function (S) {
-    var d = window.location.href.replace(/[^/]*$/, "");
     S.Config.base = "../../";
 
     function getStyle(elem, name) {
@@ -24,11 +23,11 @@
 
             expect(getStyle($("special"), "fontSize")).not.toBe("33px");
 
-            S.getScript(d + "getStyle/fp2011.css", function () {
+            S.getScript("getStyle/fp2011.css", function () {
                 expect(getStyle($("special"), "fontSize")).toBe("33px");
             });
 
-
+            var d = location.href.replace(/#.*$/, "").replace(/[^/]*$/i, "");
             //expect(getStyle($("special2"), "fontSize")).not.toBe("44px");
             var d2 = d.replace("localhost", "chengyu.taobao.ali.com");
             S.getScript(d2 + "getStyle/fp2011b.css", function () {
@@ -59,21 +58,21 @@
 
     describe("loader < 1.2", function () {
         it("should load and attach custom mods correctly", function () {
-
+            var d = location.href.replace(/#.*$/, "").replace(/[^/]*$/i, "");
             S.add({
-                "1.1x-dep":{
-                    fullpath:d + "1.1x/dep.js"
+                "1.1x-dep": {
+                    fullpath: d + "1.1x/dep.js"
                 },
                 //监控 css onload
-                "1.1x-mod-css":{
-                    fullpath:d + "1.1x/mod.css"
+                "1.1x-mod-css": {
+                    fullpath: d + "1.1x/mod.css"
                 },
 
-                "1.1x-mod":{
-                    fullpath:d + "1.1x/mod.js",
+                "1.1x-mod": {
+                    fullpath: d + "1.1x/mod.js",
                     //不监控 css onload
                     //cssfullpath:d + "1.1x/mod.css",
-                    requires:["1.1x-dep"
+                    requires: ["1.1x-dep"
                         , "1.1x-mod-css"
                     ]
                 }
@@ -101,11 +100,11 @@
         it("should load and attach custom mods correctly", function () {
 
             S.config({
-                packages:[
+                packages: [
                     {
-                        name:"1.2", //包名
-                        tag:"20110323",
-                        path:d //包对应路径，相对路径指相对于当前页面路径
+                        name: "1.2", //包名
+                        tag: "20110323",
+                        path: './' //包对应路径，相对路径指相对于当前页面路径
 
                     }
                 ]
@@ -169,15 +168,15 @@
             S.Env.mods = {};
 
             S.config({
-                packages:[
+                packages: [
                     {
-                        name:"1.2", //包名
-                        tag:"20110323",
-                        path:d //包对应路径，相对路径指相对于当前页面路径
+                        name: "1.2", //包名
+                        tag: "20110323",
+                        path: './' //包对应路径，相对路径指相对于当前页面路径
 
                     }
                 ],
-                map:[
+                map: [
                     [/(.+)mod.js(.+)$/, "$1mod-min.js$2"]
                 ]
             });
@@ -203,11 +202,11 @@
             S.Env.mods = {};
 
             S.config({
-                'combines':{
-                    'core':['dom', 'ua', 'event', 'node', 'json', 'ajax', 'anim', 'base', 'cookie']
+                'combines': {
+                    'core': ['dom', 'ua', 'event', 'node', 'json', 'ajax', 'anim', 'base', 'cookie']
                 },
-                debug:0,
-                base:"../../../build/"
+                debug: 0,
+                base: "../../../build/"
             });
 
             var ok = 0;

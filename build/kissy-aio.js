@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Sep 17 12:20
+build time: Oct 10 18:15
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: Sep 17 12:20
          */
         version:'1.20',
 
-        buildTime:'20120917122006',
+        buildTime:'20121010181509',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2166,7 +2166,7 @@ build time: Sep 17 12:20
  * @author lifesinger@gmail.com,yiminghe@gmail.com,lijing00333@163.com
  * @description: constant member and common method holder
  */
-(function(S, loader, data) {
+(function (S, loader, data) {
     if ("require" in this) {
         return;
     }
@@ -2179,21 +2179,21 @@ build time: Sep 17 12:20
         // http://xx.com/y/z.htm#!/f/g
         // ->
         // http://xx.com/y/
-        __pagePath:location.href.replace(location.hash, "").replace(/[^/]*$/i, ""),
+        __pagePath: location.href.replace(/#.*$/, "").replace(/[^/]*$/i, ""),
 
         //firefox,ie9,chrome 如果add没有模块名，模块定义先暂存这里
-        __currentModule:null,
+        __currentModule: null,
 
         //ie6,7,8开始载入脚本的时间
-        __startLoadTime:0,
+        __startLoadTime: 0,
 
         //ie6,7,8开始载入脚本对应的模块名
-        __startLoadModuleName:null,
+        __startLoadModuleName: null,
 
-        __isAttached: function(modNames) {
+        __isAttached: function (modNames) {
             var mods = this.Env.mods,
                 ret = true;
-            S.each(modNames, function(name) {
+            S.each(modNames, function (name) {
                 var mod = mods[name];
                 if (!mod || mod.status !== ATTACHED) {
                     ret = false;
@@ -18007,7 +18007,7 @@ KISSY.add("resizable", function(S, R) {
 /*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Sep 5 15:00
+build time: Oct 8 16:26
 */
 /**
  * UIBase.Align
@@ -19586,7 +19586,7 @@ KISSY.add("uibase/mask", function () {
  * mask extension for kissy
  * @author 承玉<yiminghe@gmail.com>
  */
-KISSY.add("uibase/maskrender", function(S, UA, Node) {
+KISSY.add("uibase/maskrender", function (S, UA, Node) {
 
     /**
      * 多 position 共享一个遮罩
@@ -19615,9 +19615,9 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
             this.get("prefixCls") + "ext-mask'/>")
             .prependTo("body");
         mask.css({
-            "position":ie6 ? "absolute" : "fixed", // mask 不会撑大 docWidth
-            left:0,
-            top:0,
+            "position": ie6 ? "absolute" : "fixed", // mask 不会撑大 docWidth
+            left: 0,
+            top: 0,
             width: docWidth(),
             "height": docHeight()
         });
@@ -19639,18 +19639,18 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
          * 点 mask 焦点不转移
          */
         mask.unselectable();
-        mask.on("mousedown click", function(e) {
-            e.halt();
+        mask.on("mousedown", function (e) {
+            e.preventDefault();
         });
     }
 
     function Mask() {
     }
 
-    var resizeMask = S.throttle(function() {
+    var resizeMask = S.throttle(function () {
         var v = {
-            width : docWidth(),
-            height : docHeight()
+            width: docWidth(),
+            height: docHeight()
         };
         mask.css(v);
         iframe && iframe.css(v);
@@ -19659,16 +19659,16 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
 
     Mask.prototype = {
 
-        _maskExtShow:function() {
+        _maskExtShow: function () {
             var self = this;
             if (!mask) {
                 initMask.call(self);
             }
             var zIndex = {
-                "z-index": self.get("zIndex") - 1
-            },
+                    "z-index": self.get("zIndex") - 1
+                },
                 display = {
-                    "display":""
+                    "display": ""
                 };
             mask.css(zIndex);
             iframe && iframe.css(zIndex);
@@ -19682,14 +19682,14 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
             }
         },
 
-        _maskExtHide:function() {
+        _maskExtHide: function () {
             num--;
             if (num <= 0) {
                 num = 0;
             }
             if (!num) {
                 var display = {
-                    "display":"none"
+                    "display": "none"
                 };
                 mask && mask.css(display);
                 iframe && iframe.css(display);
@@ -19702,7 +19702,7 @@ KISSY.add("uibase/maskrender", function(S, UA, Node) {
 
     return Mask;
 }, {
-    requires:["ua","node"]
+    requires: ["ua", "node"]
 });/**
  * position and visible extension，可定位的隐藏层
  * @author 承玉<yiminghe@gmail.com>
@@ -30860,12 +30860,13 @@ KISSY.add("waterfall/loader", function(S, Node, Intervein) {
 /*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: May 22 16:11
+build time: Oct 9 16:18
 */
 /**
- * @author: 常胤 (lzlu.com)
- * @version: 2.0
- * @date: 2011.5.18
+ * @fileOverview validation
+ * @author 常胤 (lzlu.com)
+ * @version 2.0
+ * @date 2011.5.18
  */
 
 KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, Rule) {
@@ -31043,8 +31044,8 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
     return Validation;
 
 }, { requires: ["dom","event","./utils","./define","./field","./warn","./rule"] });/**
- * Validation默认配置和常量
- * @author: 常胤 (lzlu.com)
+ * @fileOverview  Validation默认配置和常量
+ * @author 常胤 (lzlu.com)
  */
 
 KISSY.add("validation/define",function(){
@@ -31089,15 +31090,14 @@ KISSY.add("validation/define",function(){
 	
 });
 /**
- * Validation.Field
- * @author: 常胤 <lzlu.com>
+ * @fileOverview Validation.Field
+ * @author 常胤 <lzlu.com>
  */
 KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote, Warn) {
     var symbol = Define.Const.enumvalidsign,
         doc = document;
 
     /**
-     * @name Validation.Field类
      * @constructor
      * @param el {String|Element} field字段
      * @param config {Object} 配置
@@ -31112,8 +31112,7 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
 
         /**
          * field对象
-         * @name
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         self.el = el;
 
@@ -31345,7 +31344,6 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
         /**
          * @description 给当前field对象增加一条验证规则
          * 如果Auth.Rule中存在直接增加
-         * @name
          * @param {String} name 规则名称
          * @param {Object} argument 规则可配置
          */
@@ -31392,7 +31390,12 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
         isValid: function() {
             var self = this, result = self._validateValue();
             self.showMessage(result[1], result[0]);
-            return result[1] != 0;
+			//return result[1] != 0;  //这么写存在一个bug,只有ok/ignore才能返回true
+			if(result[1]===1 || result[1]===3){
+				return true;
+			}else{
+				return false;
+			}
         }
 
     });
@@ -31401,8 +31404,8 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
     return Field;
 
 }, { requires: ['dom',"event","./utils","./define","./rule","./rule/remote","./warn"] });/**
- * 校验规则管理
- * @author: 常胤 <lzlu.com>
+ * @fileOverview  校验规则管理
+ * @author 常胤 <lzlu.com>
  */
 
 KISSY.add("validation/rule", function(S, Util, Rule) {
@@ -31413,8 +31416,8 @@ KISSY.add("validation/rule", function(S, Util, Rule) {
 
 
 /**
- * 规则管理类
- * @author: 常胤 <lzlu.com>
+ * @fileOverview 规则管理类
+ * @author 常胤 <lzlu.com>
  */
 KISSY.add("validation/rule/base", function(S, DOM, Event, Util) {
 
@@ -31712,8 +31715,8 @@ KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 
 
 /**
- * 远程校验
- * @author: 常胤 <lzlu.com>
+ * @fileOverview 远程校验
+ * @author 常胤 <lzlu.com>
  */
 KISSY.add("validation/rule/remote", function(S, DOM, Event, Util) {
 
@@ -31792,8 +31795,8 @@ KISSY.add("validation/rule/remote", function(S, DOM, Event, Util) {
 
 
 /**
- * 工具类
- * @author: 常胤 <lzlu.com>
+ * @fileOverview 工具类
+ * @author 常胤 <lzlu.com>
  */
 
 KISSY.add("validation/utils", function(S, undefined) {
@@ -31945,8 +31948,8 @@ KISSY.add("validation/utils", function(S, undefined) {
 
 
 /**
- * 信息提示类及管理
- * @validationor: 常胤 <lzlu.com>
+ * @fileOverview 信息提示类及管理
+ * @author 常胤 <lzlu.com>
  */
 
 KISSY.add("validation/warn", function(S, Util, Warn, BaseClass, Alert, Static, Float) {
@@ -31964,8 +31967,8 @@ KISSY.add("validation/warn", function(S, Util, Warn, BaseClass, Alert, Static, F
     return Warn;
 
 }, { requires: ["./utils","./warn/base","./warn/baseclass","./warn/alert","./warn/static","./warn/float"] });/**
- * 扩展提示类:alert
- * @author: 常胤 <lzlu.com>
+ * @fileOverview 扩展提示类:alert
+ * @author 常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/alert", function(S, DOM, Event, Util, Define) {
 	var symbol = Define.Const.enumvalidsign;
@@ -32026,8 +32029,8 @@ KISSY.add("validation/warn/alert", function(S, DOM, Event, Util, Define) {
 	
 
 /**
- * 提示类管理类
- * @author: 常胤 <lzlu.com>
+ * @fileOverview 提示类管理类
+ * @author 常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
 
@@ -32115,8 +32118,8 @@ KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
 	
 
 /**
- * 扩展类基类
- * @author: 常胤 <lzlu.com>
+ * @fileOverview 扩展类基类
+ * @author 常胤 <lzlu.com>
  */
 
 KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
@@ -32126,7 +32129,7 @@ KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
 
         /**
          * 目标对象
-         * @type HTMLElement
+         * @type {HTMLElement}
          */
         self.target = S.isArray(target) ? target[target.length - 1] : target;
         self.el = target;
@@ -32194,93 +32197,93 @@ KISSY.add("validation/warn/baseclass", function(S, DOM, Event) {
     return BaseClass;
 
 }, { requires: ['dom',"event"]});/**
- * 扩展提示类：float
- * @author: 常胤 <lzlu.com>
+ * @fileOverview 扩展提示类：float
+ * @author 常胤 <lzlu.com>
  */
-KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
-	var symbol = Define.Const.enumvalidsign;
+KISSY.add("validation/warn/float", function (S, DOM, Event, Util, Define) {
+    var symbol = Define.Const.enumvalidsign;
 
-	function Float(){
-		return {
-			//出错标记
-			invalidCls: "J_Invalid",
-			
-			//重写init
-			init: function(){
-				var self = this, tg = self.target,
-					panel = DOM.create(self.template),
-					msg = DOM.get('div.msg',panel);
-				
-				
-				S.ready(function(){
-					document.body.appendChild(panel);
-				});
-				S.mix(self,{
-					panel: S.one(panel),
-					msg: S.one(msg)
-				});
+    function Float() {
+        return {
+            //出错标记
+            invalidCls:"J_Invalid",
 
-				//绑定对象的focus,blur事件来显示隐藏消息面板
-				Event.on(self.el,"focus",function(ev){
-					if(DOM.hasClass(tg,self.invalidCls)){
-						self._toggleError(true,ev.target);
-					}
-				});
-				
-				Event.on(self.el,"blur",function(){
-					self._toggleError(false);
-				});
-			},
+            //重写init
+            init:function () {
+                var self = this, tg = self.target,
+                    panel = DOM.create(self.template),
+                    msg = DOM.get('div.msg', panel);
 
-			//处理校验结果
-			showMessage: function(result,msg,evttype,target) {
-				var self = this,tg = self.target,
-					div = self.msg;
 
-				if(symbol.ok==result){
-					DOM.removeClass(tg,self.invalidClass);
-					div.html('OK');
-				}else{
-					if(evttype!="submit"){
-						self._toggleError(true,target);
-					}
-					DOM.addClass(tg,self.invalidClass);
-					div.html(msg);
-				}
-			},
-			
-			//定位
-			_pos: function(target){
-				var self = this, offset = DOM.offset(target||self.target),
-				 ph = self.panel.height(),
-					pl = offset.left-10,pt = offset.top-ph-20;
-				self.panel.css('left',pl).css('top',pt);
-			},
-			
-			//显示错误
-			_toggleError: function(show,target){
-				var self = this,panel = self.panel;
-				if(show){
-					DOM.show(panel);
-					self._pos(target);
-				}else{
-					DOM.hide(panel);
-				}
-			},
-            
-			style:{
-				"float":{
-					template: '<div class="valid-float" style="display:none;"><div class="msg">&nbsp;</div><'+'s>◥◤</s></div>',
-					event: 'focus blur',
-					invalidClass: 'vailInvalid'
-				}
-			}
-		}
-	}
-		
-	return Float;
+                S.ready(function () {
+                    document.body.appendChild(panel);
+                });
+                S.mix(self, {
+                    panel:S.one(panel),
+                    msg:S.one(msg)
+                });
 
-}, { requires: ['dom',"event","../utils","../define"] });
+                //绑定对象的focus,blur事件来显示隐藏消息面板
+                Event.on(self.el, "focus", function (ev) {
+                    if (DOM.hasClass(tg, self.invalidCls)) {
+                        self._toggleError(true, ev.target);
+                    }
+                });
+
+                Event.on(self.el, "blur", function () {
+                    self._toggleError(false);
+                });
+            },
+
+            //处理校验结果
+            showMessage:function (result, msg, evttype, target) {
+                var self = this, tg = self.target,
+                    div = self.msg;
+
+                if (symbol.ok == result) {
+                    DOM.removeClass(tg, self.invalidClass);
+                    div.html('OK');
+                } else {
+                    if (evttype != "submit") {
+                        self._toggleError(true, target);
+                    }
+                    DOM.addClass(tg, self.invalidClass);
+                    div.html(msg);
+                }
+            },
+
+            //定位
+            _pos:function (target) {
+                var self = this, offset = DOM.offset(target || self.target),
+                    ph = self.panel.height(),
+                    pl = offset.left - 10, pt = offset.top - ph - 20;
+                self.panel.css('left', pl).css('top', pt);
+            },
+
+            //显示错误
+            _toggleError:function (show, target) {
+                var self = this, panel = self.panel;
+                if (show) {
+                    DOM.show(panel);
+                    self._pos(target);
+                } else {
+                    DOM.hide(panel);
+                }
+            },
+
+            style:{
+                "float":{
+                    template:'<div class="valid-float" style="display:none;"><div class="msg">&nbsp;</div><' + 's>◥◤</s></div>',
+                    event:'focus blur',
+                    invalidClass:'vailInvalid'
+                }
+            }
+        }
+    }
+
+    return Float;
+
+}, { requires:['dom', "event", "../utils", "../define"] });
 
 
 
@@ -32310,8 +32313,8 @@ KISSY.add("validation/warn/float", function(S, DOM, Event, Util, Define) {
 	
 
 /**
- * 提示类：Static
- * @author: 常胤 <lzlu.com>
+ * @fileOverview 提示类：Static
+ * @author 常胤 <lzlu.com>
  */
 KISSY.add("validation/warn/static", function(S, Node, Util, Define) {
     var symbol = Define.Const.enumvalidsign,
@@ -32404,14 +32407,13 @@ KISSY.add("validation/warn/static", function(S, Node, Util, Define) {
 }, { requires: ['node',"../utils","../define"] });
 
 /**
- * @description 表单验证组件
- * @author: changyin@taobao.com (lzlu.com)
- * @version: 1.2
- * @date: 2011.06.21
+ * @fileOverview 表单验证组件
+ * @author changyin@taobao.com (lzlu.com)
+ * @version 1.2
+ * @date 2011.06.21
  */
- 
 KISSY.add("validation", function(S, Validation) {
-   		S.Validation = Validation;
+        S.Validation = Validation;
 	    return Validation;
 	}, {
 		requires:["validation/base","validation/assets/base.css"]
