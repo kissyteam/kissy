@@ -31,9 +31,14 @@ KISSY.add('mvc/router', function (S, Event, Base) {
 
     function getHash(url) {
         // 不能 location.hash
+        // 1.
         // http://xx.com/#yy?z=1
         // ie6 => location.hash = #yy
         // 其他浏览器 => location.hash = #yy?z=1
+        // 2.
+        // #!/home/q={%22thedate%22:%2220121010~20121010%22}
+        // firefox 15 => #!/home/q={"thedate":"20121010~20121010"}
+        // !! :(
         return new S.Uri(url).getFragment().replace(/^!/, "");
     }
 
