@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:20
+build time: Oct 10 14:18
 */
 /**
  * Normalize operation about stylesheet
@@ -50,13 +50,13 @@ KISSY.add("stylesheet", function (S, DOM) {
 
     StyleSheet.prototype = {
 
-        constructor:StyleSheet,
+        constructor: StyleSheet,
 
         /**
          * Make current stylesheet enabled.
          * @return {StyleSheet} current StyleSheet instance.
          */
-        enable:function () {
+        enable: function () {
             this.sheet.disabled = false;
             return this;
         },
@@ -65,7 +65,7 @@ KISSY.add("stylesheet", function (S, DOM) {
          * Make current stylesheet disabled.
          * @return {StyleSheet} current StyleSheet instance.
          */
-        disable:function () {
+        disable: function () {
             this.sheet.disabled = true;
             return this;
         },
@@ -74,7 +74,7 @@ KISSY.add("stylesheet", function (S, DOM) {
          * Whether current stylesheet is enabled.
          * @return {Boolean}
          */
-        isEnabled:function () {
+        isEnabled: function () {
             return !this.sheet.disabled;
         },
 
@@ -91,7 +91,7 @@ KISSY.add("stylesheet", function (S, DOM) {
          * </code>
          * @return {StyleSheet} current StyleSheet instance.
          */
-        set:function (selectorText, css) {
+        set: function (selectorText, css) {
             var sheet = this.sheet;
             var rulesName = this.rulesName;
             var cssRules = this.cssRules;
@@ -137,7 +137,7 @@ KISSY.add("stylesheet", function (S, DOM) {
          * @param {String} selectorText specified selector as string
          * @return {String} CssText corresponding to specified selectorText
          */
-        get:function (selectorText) {
+        get: function (selectorText) {
             var rule, css, selector, cssRules = this.cssRules;
 
             if (selectorText) {
@@ -147,10 +147,10 @@ KISSY.add("stylesheet", function (S, DOM) {
             } else {
                 css = [];
                 for (selector in cssRules) {
-                    if (cssRules.hasOwnProperty(selector)) {
-                        rule = cssRules[selector];
-                        css.push(rule.selectorText + " {" + rule.style.cssText + "}");
-                    }
+
+                    rule = cssRules[selector];
+                    css.push(rule.selectorText + " {" + rule.style.cssText + "}");
+
                 }
                 return css.join("\n");
             }
@@ -161,13 +161,12 @@ KISSY.add("stylesheet", function (S, DOM) {
 
     // # ------------------ private start
 
-    var workerElement = document.createElement("p"),
-        workerStyle = workerElement.style;
+    var workerElement = document.createElement("p");
 
     function toCssText(css, base) {
-        workerStyle.cssText = base || "";
+        workerElement.style.cssText = base || "";
         DOM.css(workerElement, css);
-        return workerStyle.cssText;
+        return workerElement.style.cssText;
     }
 
     function deleteRule(sheet, i) {
@@ -191,7 +190,7 @@ KISSY.add("stylesheet", function (S, DOM) {
     return StyleSheet;
 
 }, {
-    requires:['dom']
+    requires: ['dom']
 });
 /**
  * Refer

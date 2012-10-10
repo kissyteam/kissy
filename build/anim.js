@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 01:32
+build time: Oct 10 13:56
 */
 /**
  * @ignore
@@ -275,14 +275,12 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         if (el.nodeType == NodeType.ELEMENT_NODE) {
             hidden = (DOM.css(el, 'display') === 'none');
             for (prop in props) {
-                if (props.hasOwnProperty(prop)) {
-                    val = props[prop];
-                    // 直接结束
-                    if (val == 'hide' && hidden || val == 'show' && !hidden) {
-                        // need to invoke complete
-                        self.stop(1);
-                        return;
-                    }
+                val = props[prop];
+                // 直接结束
+                if (val == 'hide' && hidden || val == 'show' && !hidden) {
+                    // need to invoke complete
+                    self.stop(1);
+                    return;
                 }
             }
         }
@@ -315,9 +313,6 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // 分离 easing
         S.each(props, function (val, prop) {
-            if (!props.hasOwnProperty(prop)) {
-                return;
-            }
             var easing;
             if (S.isArray(val)) {
                 easing = specialEasing[prop] = val[1];
@@ -357,9 +352,6 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // 取得单位，并对单个属性构建 Fx 对象
         for (prop in props) {
-            if (!props.hasOwnProperty(prop)) {
-                continue;
-            }
 
             val = S.trim(props[prop]);
 
@@ -516,9 +508,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 fxs = self._fxs;
 
             for (prop in fxs) {
-                if (fxs.hasOwnProperty(prop) &&
-                    // 当前属性没有结束
-                    !((fx = fxs[prop]).finished)) {
+                // 当前属性没有结束
+                if (!((fx = fxs[prop]).finished)) {
                     // 非短路
                     if (config.frame) {
                         c = config.frame(fx);
@@ -569,9 +560,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
             if (finish) {
                 for (prop in fxs) {
-                    if (fxs.hasOwnProperty(prop) &&
-                        // 当前属性没有结束
-                        !((fx = fxs[prop]).finished)) {
+                    // 当前属性没有结束
+                    if (!((fx = fxs[prop]).finished)) {
                         // 非短路
                         if (config.frame) {
                             config.frame(fx, 1);
@@ -1377,14 +1367,14 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
  * @fileOverview single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/manager', function(S) {
+KISSY.add('anim/manager', function (S) {
     var stamp = S.stamp;
 
     return {
-        interval:15,
-        runnings:{},
-        timer:null,
-        start:function(anim) {
+        interval: 15,
+        runnings: {},
+        timer: null,
+        start: function (anim) {
             var self = this,
                 kv = stamp(anim);
             if (self.runnings[kv]) {
@@ -1393,10 +1383,10 @@ KISSY.add('anim/manager', function(S) {
             self.runnings[kv] = anim;
             self.startTimer();
         },
-        stop:function(anim) {
+        stop: function (anim) {
             this.notRun(anim);
         },
-        notRun:function(anim) {
+        notRun: function (anim) {
             var self = this,
                 kv = stamp(anim);
             delete self.runnings[kv];
@@ -1404,16 +1394,16 @@ KISSY.add('anim/manager', function(S) {
                 self.stopTimer();
             }
         },
-        pause:function(anim) {
+        pause: function (anim) {
             this.notRun(anim);
         },
-        resume:function(anim) {
+        resume: function (anim) {
             this.start(anim);
         },
-        startTimer:function() {
+        startTimer: function () {
             var self = this;
             if (!self.timer) {
-                self.timer = setTimeout(function() {
+                self.timer = setTimeout(function () {
                     if (!self.runFrames()) {
                         self.timer = 0;
                         self.startTimer();
@@ -1423,7 +1413,7 @@ KISSY.add('anim/manager', function(S) {
                 }, self.interval);
             }
         },
-        stopTimer:function() {
+        stopTimer: function () {
             var self = this,
                 t = self.timer;
             if (t) {
@@ -1431,15 +1421,13 @@ KISSY.add('anim/manager', function(S) {
                 self.timer = 0;
             }
         },
-        runFrames:function() {
+        runFrames: function () {
             var self = this,
                 done = 1,
                 runnings = self.runnings;
             for (var r in runnings) {
-                if (runnings.hasOwnProperty(r)) {
-                    done = 0;
-                    runnings[r]._frame();
-                }
+                done = 0;
+                runnings[r]._frame();
             }
             return done;
         }

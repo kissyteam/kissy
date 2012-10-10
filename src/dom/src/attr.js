@@ -408,9 +408,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 if (S.isPlainObject(name)) {
                     pass = val;
                     for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            DOM.attr(els, k, name[k], pass);
-                        }
+                        DOM.attr(els, k, name[k], pass);
                     }
                     return undefined;
                 }

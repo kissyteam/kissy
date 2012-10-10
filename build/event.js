@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:20
+build time: Oct 10 13:59
 */
 /**
  * @ignore
@@ -501,12 +501,15 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
         };
 
         function propertyChange(e) {
+            // if only checked property 's value is changed
             if (e.originalEvent.propertyName == 'checked') {
                 this.__changed = 1;
             }
         }
 
         function onClick(e) {
+            // only fire change after click and checked is changed
+            // (only fire change after click on previous unchecked radio)
             if (this.__changed) {
                 this.__changed = 0;
                 // fire from itself
@@ -2075,11 +2078,9 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                 // remove all types of event
                 if (!type) {
                     for (type in events) {
-                        if (events.hasOwnProperty(type)) {
-                            Event.__remove(isNativeTarget,
-                                target, type + groups, originalFn,
-                                originalScope);
-                        }
+                        Event.__remove(isNativeTarget,
+                            target, type + groups, originalFn,
+                            originalScope);
                     }
                     return;
                 }

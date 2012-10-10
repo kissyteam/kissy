@@ -75,7 +75,6 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
     function replaceVariables(list, variablesValues) {
         for (var item in list) {
-            if (!list.hasOwnProperty(item)) continue;
             if (S.isString(list[ item ])) {
                 list[ item ] = list[ item ].replace(varRegex, function (match, varName) {
                     return variablesValues[ varName ];
@@ -189,20 +188,16 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                         if (attName == '_length')
                             continue;
 
-                        if (attribs.hasOwnProperty(attName)) {
-
-                            var elementAttr = element.attr(attName) || '';
-                            if (attName == 'style' ?
-                                compareCssText(attribs[ attName ],
-                                    normalizeCssText(elementAttr, FALSE))
-                                : attribs[ attName ] == elementAttr) {
-                                if (!fullMatch)
-                                    return TRUE;
-                            }
-                            else if (fullMatch)
-                                return FALSE;
+                        var elementAttr = element.attr(attName) || '';
+                        if (attName == 'style' ?
+                            compareCssText(attribs[ attName ],
+                                normalizeCssText(elementAttr, FALSE))
+                            : attribs[ attName ] == elementAttr) {
+                            if (!fullMatch)
+                                return TRUE;
                         }
-
+                        else if (fullMatch)
+                            return FALSE;
 
                     }
                     if (fullMatch)
@@ -317,17 +312,15 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
         for (var style in stylesDef) {
 
-            if (stylesDef.hasOwnProperty(style)) {
+            var styleVal = stylesDef[ style ],
+                text = ( style + ':' + styleVal ).replace(semicolonFixRegex, ';');
 
-                var styleVal = stylesDef[ style ],
-                    text = ( style + ':' + styleVal ).replace(semicolonFixRegex, ';');
+            // Some browsers don't support 'inherit' property value, leave them intact. (#5242)
+            if (styleVal == 'inherit')
+                specialStylesText += text;
+            else
+                stylesText += text;
 
-                // Some browsers don't support 'inherit' property value, leave them intact. (#5242)
-                if (styleVal == 'inherit')
-                    specialStylesText += text;
-                else
-                    stylesText += text;
-            }
         }
 
         // Browsers make some changes to the style when applying them. So, here
@@ -368,9 +361,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         // Assign all defined attributes.
         if (attributes) {
             for (var att in attributes) {
-                if (attributes.hasOwnProperty(att)) {
-                    el.attr(att, attributes[ att ]);
-                }
+                el.attr(att, attributes[ att ]);
             }
         }
 
@@ -752,21 +743,15 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                     if (parent.nodeName() == elementName) {
                         for (attName in def.attributes) {
 
-                            if (def.attributes.hasOwnProperty(attName)) {
+                            if (removeList.blockedAttrs[ attName ]
+                                || !( value = parent.attr(styleName) ))
+                                continue;
 
-
-                                if (removeList.blockedAttrs[ attName ]
-                                    || !( value = parent.attr(styleName) ))
-                                    continue;
-
-                                if (styleNode.attr(attName) == value) {
-                                    //removeList.attrs[ attName ] = 1;
-                                    styleNode.removeAttr(attName);
-                                }
-                                else
-                                    removeList.blockedAttrs[ attName ] = 1;
-                            }
-
+                            if (styleNode.attr(attName) == value) {
+                                //removeList.attrs[ attName ] = 1;
+                                styleNode.removeAttr(attName);
+                            } else
+                                removeList.blockedAttrs[ attName ] = 1;
 
                         }
                         //bug notice add by yiminghe@gmail.com
@@ -774,19 +759,16 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                         //下一次格式xxx为70px
                         //var exit = FALSE;
                         for (styleName in def.styles) {
-                            if (def.styles.hasOwnProperty(styleName)) {
 
-                                if (removeList.blockedStyles[ styleName ]
-                                    || !( value = parent.style(styleName) ))
-                                    continue;
+                            if (removeList.blockedStyles[ styleName ]
+                                || !( value = parent.style(styleName) ))
+                                continue;
 
-                                if (styleNode.style(styleName) == value) {
-                                    //removeList.styles[ styleName ] = 1;
-                                    styleNode.style(styleName, "");
-                                }
-                                else
-                                    removeList.blockedStyles[ styleName ] = 1;
-                            }
+                            if (styleNode.style(styleName) == value) {
+                                //removeList.styles[ styleName ] = 1;
+                                styleNode.style(styleName, "");
+                            } else
+                                removeList.blockedStyles[ styleName ] = 1;
 
                         }
 
@@ -1059,16 +1041,16 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         typeof source == 'string' && ( source = parseStyleText(source) );
         typeof target == 'string' && ( target = parseStyleText(target) );
         for (var name in source) {
-            if (source.hasOwnProperty(name)) {
-                // Value 'inherit'  is treated as a wildcard,
-                // which will match any value.
-                if (!( name in target &&
-                    ( target[ name ] == source[ name ]
-                        || source[ name ] == 'inherit'
-                        || target[ name ] == 'inherit' ) )) {
-                    return FALSE;
-                }
+
+            // Value 'inherit'  is treated as a wildcard,
+            // which will match any value.
+            if (!( name in target &&
+                ( target[ name ] == source[ name ]
+                    || source[ name ] == 'inherit'
+                    || target[ name ] == 'inherit' ) )) {
+                return FALSE;
             }
+
         }
         return TRUE;
     }
@@ -1107,9 +1089,9 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     function getAttributesForComparison(styleDefinition) {
         // If we have already computed it, just return it.
         var attribs = styleDefinition._AC;
-        if (attribs)
+        if (attribs) {
             return attribs;
-
+        }
         attribs = {};
 
         var length = 0,
@@ -1118,10 +1100,10 @@ KISSY.add("editor/core/styles", function (S, Editor) {
             styleAttribs = styleDefinition["attributes"];
         if (styleAttribs) {
             for (var styleAtt in styleAttribs) {
-                if (styleAttribs.hasOwnProperty(styleAtt)) {
-                    length++;
-                    attribs[ styleAtt ] = styleAttribs[ styleAtt ];
-                }
+
+                length++;
+                attribs[ styleAtt ] = styleAttribs[ styleAtt ];
+
             }
         }
 
@@ -1196,8 +1178,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                         // Each item in the attributes array is also an array,
                         // where [0] is the attribute name and [1] is the
                         // override value.
-                        if (attrs.hasOwnProperty(attName))
-                            overrideAttrs.push([ attName.toLowerCase(), attrs[ attName ] ]);
+                        overrideAttrs.push([ attName.toLowerCase(), attrs[ attName ] ]);
                     }
                 }
 
@@ -1212,9 +1193,8 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                         // Each item in the styles array is also an array,
                         // where [0] is the style name and [1] is the
                         // override value.
-                        if (styles.hasOwnProperty(styleName))
-                            overrideStyles.push([ styleName.toLowerCase(),
-                                styles[ styleName ] ]);
+                        overrideStyles.push([ styleName.toLowerCase(),
+                            styles[ styleName ] ]);
                     }
                 }
             }
@@ -1238,29 +1218,29 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
         // Remove definition attributes/style from the element.
         for (var attName in attributes) {
-            if (attributes.hasOwnProperty(attName)) {
-                // The 'class' element value must match (#1318).
-                if (( attName == 'class' || style._.definition["fullMatch"] )
-                    && element.attr(attName) != normalizeProperty(attName,
-                    attributes[ attName ]))
-                    continue;
-                removeEmpty = removeEmpty || !!element.hasAttr(attName);
-                element.removeAttr(attName);
-            }
+
+            // The 'class' element value must match (#1318).
+            if (( attName == 'class' || style._.definition["fullMatch"] )
+                && element.attr(attName) != normalizeProperty(attName,
+                attributes[ attName ]))
+                continue;
+            removeEmpty = removeEmpty || !!element.hasAttr(attName);
+            element.removeAttr(attName);
+
         }
 
         for (var styleName in styles) {
-            if (styles.hasOwnProperty(styleName)) {
-                // Full match style insist on having fully equivalence. (#5018)
-                if (style._.definition["fullMatch"]
-                    && element.style(styleName)
-                    != normalizeProperty(styleName, styles[ styleName ], TRUE))
-                    continue;
 
-                removeEmpty = removeEmpty || !!element.style(styleName);
-                //设置空即为：清除样式
-                element.style(styleName, "");
-            }
+            // Full match style insist on having fully equivalence. (#5018)
+            if (style._.definition["fullMatch"]
+                && element.style(styleName)
+                != normalizeProperty(styleName, styles[ styleName ], TRUE))
+                continue;
+
+            removeEmpty = removeEmpty || !!element.style(styleName);
+            //设置空即为：清除样式
+            element.style(styleName, "");
+
         }
 
         //removeEmpty &&
@@ -1294,18 +1274,18 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         }
 
         // Now remove any other element with different name that is
-        // defined to be overriden.
+        // defined to be overridden.
         for (var overrideElement in overrides) {
-            if (overrides.hasOwnProperty(overrideElement)) {
-                if (overrideElement != style["element"]) {
-                    innerElements = element.all(overrideElement);
-                    for (i = innerElements.length - 1; i >= 0; i--) {
-                        var innerElement = new Node(innerElements[i]);
-                        removeOverrides(innerElement,
-                            overrides[ overrideElement ]);
-                    }
+
+            if (overrideElement != style["element"]) {
+                innerElements = element.all(overrideElement);
+                for (i = innerElements.length - 1; i >= 0; i--) {
+                    var innerElement = new Node(innerElements[i]);
+                    removeOverrides(innerElement,
+                        overrides[ overrideElement ]);
                 }
             }
+
         }
 
     }

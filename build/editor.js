@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 23:22
+build time: Oct 10 13:59
 */
 /**
  * Set up editor constructor
@@ -423,13 +423,11 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 contextmenu.__copy_fix = 1;
 
                 for (var i in pastes) {
-                    if (pastes.hasOwnProperty(i)) {
-                        contextmenu.addChild({
-                            xclass: 'menuitem',
-                            content: lang[i],
-                            value: i
-                        });
-                    }
+                    contextmenu.addChild({
+                        xclass: 'menuitem',
+                        content: lang[i],
+                        value: i
+                    });
                 }
 
                 contextmenu.on('click', function (e) {
@@ -1287,9 +1285,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 var names = element.data('list_marker_names'),
                     id = element.data('list_marker_id');
                 for (var i in names) {
-                    if (names.hasOwnProperty(i)) {
-                        element.removeData(i);
-                    }
+                    element.removeData(i);
                 }
                 element.removeData('list_marker_names');
                 if (removeFromDatabase) {
@@ -3378,37 +3374,35 @@ KISSY.add("editor/core/focusManager", function (S) {
             /**
              * 刷新全部实例
              */
-            refreshAll:function () {
+            refreshAll: function () {
                 for (var i in INSTANCES) {
-                    if (INSTANCES.hasOwnProperty(i)) {
-                        var e = INSTANCES[i], doc = e.get("document")[0];
-                        doc.designMode = "off";
-                        doc.designMode = "on";
-                    }
+                    var e = INSTANCES[i], doc = e.get("document")[0];
+                    doc.designMode = "off";
+                    doc.designMode = "on";
                 }
             },
             /**
              * 得到当前获得焦点的实例
              */
-            currentInstance:function () {
+            currentInstance: function () {
                 return currentInstance;
             },
             /**
              *
              * @param id {string}
              */
-            getInstance:function (id) {
+            getInstance: function (id) {
                 return INSTANCES[id];
             },
-            add:function (editor) {
+            add: function (editor) {
                 var win = editor.get("window")[0];
                 Event.on(win, "focus", focus, editor);
                 Event.on(win, "blur", blur, editor);
             },
-            register:function (editor) {
+            register: function (editor) {
                 INSTANCES[editor._UUID] = editor;
             },
-            remove:function (editor) {
+            remove: function (editor) {
                 delete INSTANCES[editor._UUID];
                 var win = editor.get("window")[0];
                 Event.remove(win, "focus", focus, editor);
@@ -3455,7 +3449,7 @@ KISSY.add("editor/core/focusManager", function (S) {
 
     return focusManager;
 }, {
-    requires:['./base', './dom']
+    requires: ['./base', './dom']
 });
 /**
  * Modified from ckeditor. Process malformed html for kissy editor.
@@ -3468,7 +3462,7 @@ KISSY.add("editor/core/focusManager", function (S) {
 KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             var Node = S.Node,
                 UA = S.UA,
                 HtmlParser = S.require("htmlparser"),
@@ -3498,33 +3492,33 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
 
                 // 过滤外边来的 html
                 var defaultDataFilterRules = {
-                    tagNames:[
+                    tagNames: [
                         [/^\?xml.*$/i, ''],
                         [/^.*namespace.*$/i, '']
                     ],
-                    attributeNames:[
+                    attributeNames: [
                         // Event attributes (onXYZ) must not be directly set. They can become
                         // active in the editing area (IE|WebKit).
                         [/^on/, 'ke_on'],
                         [/^lang$/, '']
                     ],
-                    tags:{
-                        script:wrapAsComment,
-                        noscript:wrapAsComment,
-                        span:filterSpan
+                    tags: {
+                        script: wrapAsComment,
+                        noscript: wrapAsComment,
+                        span: filterSpan
                     }
                 };
 
                 // 将编辑区生成 html 最终化
                 var defaultHtmlFilterRules = {
-                    tagNames:[
+                    tagNames: [
                         // Remove the "ke:" namespace prefix.
                         [ ( /^ke:/ ), '' ],
                         // Ignore <?xml:namespace> tags.
                         [ ( /^\?xml:namespace$/ ), '' ]
                     ],
-                    tags:{
-                        $:function (element) {
+                    tags: {
+                        $: function (element) {
                             var attributes = element.attributes;
 
                             if (attributes.length) {
@@ -3542,7 +3536,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
 
                             return element;
                         },
-                        embed:function (element) {
+                        embed: function (element) {
                             var parent = element.parentNode;
                             // If the <embed> is child of a <object>, copy the width
                             // and height attributes from it.
@@ -3559,22 +3553,22 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                         },
 
                         // Remove empty link but not empty anchor.(#3829)
-                        a:function (element) {
+                        a: function (element) {
                             if (!(element.childNodes.length) && !(element.attributes.length)) {
                                 return false;
                             }
                         },
-                        span:filterSpan
+                        span: filterSpan
                     },
-                    attributes:{
+                    attributes: {
                         // 清除空style
-                        style:function (v) {
+                        style: function (v) {
                             if (!S.trim(v)) {
                                 return false;
                             }
                         }
                     },
-                    attributeNames:[
+                    attributeNames: [
                         // 把保存的作为真正的属性，替换掉原来的
                         // replace(/^_ke_saved_/,"")
                         // _ke_saved_href -> href
@@ -3585,7 +3579,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                         // kissy 相关
                         [ ( /^_ks.*/ ), '' ]
                     ],
-                    comment:function (contents) {
+                    comment: function (contents) {
                         // If this is a comment for protected source.
                         if (contents.substr(0, protectedSourceMarker.length) == protectedSourceMarker) {
                             contents = S.trim(decodeURIComponent(contents.substr(protectedSourceMarker.length)));
@@ -3626,8 +3620,9 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     var childNodes = block.childNodes,
                         lastIndex = childNodes.length,
                         last = childNodes[ lastIndex - 1 ];
-                    while (last && last.nodeType == 3 && !S.trim(last.nodeValue))
+                    while (last && last.nodeType == 3 && !S.trim(last.nodeValue)) {
                         last = childNodes[ --lastIndex ];
+                    }
                     return last;
                 }
 
@@ -3691,10 +3686,8 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     dtd.$listItem,
                     dtd.$tableContent), i;
                 for (i in blockLikeTags) {
-                    if (blockLikeTags.hasOwnProperty(i)) {
-                        if (!( 'br' in dtd[i] )) {
-                            delete blockLikeTags[i];
-                        }
+                    if (!( 'br' in dtd[i] )) {
+                        delete blockLikeTags[i];
                     }
                 }
 
@@ -3704,15 +3697,14 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 // We just avoid filler in <pre> right now.
                 // TODO: Support filler for <pre>, line break is also occupy line height.
                 delete blockLikeTags.pre;
-                var defaultDataBlockFilterRules = { tags:{} };
-                var defaultHtmlBlockFilterRules = { tags:{} };
+                var defaultDataBlockFilterRules = { tags: {} };
+                var defaultHtmlBlockFilterRules = { tags: {} };
 
                 for (i in blockLikeTags) {
-                    if (blockLikeTags.hasOwnProperty(i)) {
-                        defaultDataBlockFilterRules.tags[ i ] = extendBlockForDisplay;
-                        defaultHtmlBlockFilterRules.tags[ i ] = extendBlockForOutput;
-                    }
+                    defaultDataBlockFilterRules.tags[ i ] = extendBlockForDisplay;
+                    defaultHtmlBlockFilterRules.tags[ i ] = extendBlockForOutput;
                 }
+
                 dataFilter.addRules(defaultDataBlockFilterRules);
                 htmlFilter.addRules(defaultHtmlBlockFilterRules);
             })();
@@ -3722,7 +3714,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
             // el.innerHTML="&nbsp;"
             // http://yiminghe.javaeye.com/blog/788929
             htmlFilter.addRules({
-                text:function (text) {
+                text: function (text) {
                     return text
                         //.replace(/&nbsp;/g, "\xa0")
                         .replace(/\xa0/g, "&nbsp;");
@@ -3783,11 +3775,11 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
             }
 
             editor.htmlDataProcessor = {
-                dataFilter:dataFilter,
-                htmlFilter:htmlFilter,
+                dataFilter: dataFilter,
+                htmlFilter: htmlFilter,
                 // 编辑器 html 到外部 html
                 // fixForBody , <body>t</body> => <body><p>t</p></body>
-                toHtml:function (html) {
+                toHtml: function (html) {
                     // fixForBody = fixForBody || "p";
                     // Now use our parser to make further fixes to the structure, as
                     // well as apply the filter.
@@ -3799,7 +3791,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     return html;
                 },
                 // 外部html进入编辑器
-                toDataFormat:function (html, _dataFilter) {
+                toDataFormat: function (html, _dataFilter) {
                     //可以传 wordFilter 或 dataFilter
                     _dataFilter = _dataFilter || dataFilter;
 
@@ -3845,7 +3837,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 /*
                  最精简html传送到server
                  */
-                toServer:function (html) {
+                toServer: function (html) {
                     var writer = new HtmlParser.MinifyWriter(),
                         n = new HtmlParser.Parser(html).parse();
                     n.writeHtml(writer, htmlFilter);
@@ -3855,7 +3847,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
         }
     };
 }, {
-    requires:['./base']
+    requires: ['./base']
 });
 /**
  * Range implementation across browsers for kissy editor. Modified from CKEditor.
@@ -6988,7 +6980,6 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
     function replaceVariables(list, variablesValues) {
         for (var item in list) {
-            if (!list.hasOwnProperty(item)) continue;
             if (S.isString(list[ item ])) {
                 list[ item ] = list[ item ].replace(varRegex, function (match, varName) {
                     return variablesValues[ varName ];
@@ -7102,20 +7093,16 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                         if (attName == '_length')
                             continue;
 
-                        if (attribs.hasOwnProperty(attName)) {
-
-                            var elementAttr = element.attr(attName) || '';
-                            if (attName == 'style' ?
-                                compareCssText(attribs[ attName ],
-                                    normalizeCssText(elementAttr, FALSE))
-                                : attribs[ attName ] == elementAttr) {
-                                if (!fullMatch)
-                                    return TRUE;
-                            }
-                            else if (fullMatch)
-                                return FALSE;
+                        var elementAttr = element.attr(attName) || '';
+                        if (attName == 'style' ?
+                            compareCssText(attribs[ attName ],
+                                normalizeCssText(elementAttr, FALSE))
+                            : attribs[ attName ] == elementAttr) {
+                            if (!fullMatch)
+                                return TRUE;
                         }
-
+                        else if (fullMatch)
+                            return FALSE;
 
                     }
                     if (fullMatch)
@@ -7230,17 +7217,15 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
         for (var style in stylesDef) {
 
-            if (stylesDef.hasOwnProperty(style)) {
+            var styleVal = stylesDef[ style ],
+                text = ( style + ':' + styleVal ).replace(semicolonFixRegex, ';');
 
-                var styleVal = stylesDef[ style ],
-                    text = ( style + ':' + styleVal ).replace(semicolonFixRegex, ';');
+            // Some browsers don't support 'inherit' property value, leave them intact. (#5242)
+            if (styleVal == 'inherit')
+                specialStylesText += text;
+            else
+                stylesText += text;
 
-                // Some browsers don't support 'inherit' property value, leave them intact. (#5242)
-                if (styleVal == 'inherit')
-                    specialStylesText += text;
-                else
-                    stylesText += text;
-            }
         }
 
         // Browsers make some changes to the style when applying them. So, here
@@ -7281,9 +7266,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         // Assign all defined attributes.
         if (attributes) {
             for (var att in attributes) {
-                if (attributes.hasOwnProperty(att)) {
-                    el.attr(att, attributes[ att ]);
-                }
+                el.attr(att, attributes[ att ]);
             }
         }
 
@@ -7665,21 +7648,15 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                     if (parent.nodeName() == elementName) {
                         for (attName in def.attributes) {
 
-                            if (def.attributes.hasOwnProperty(attName)) {
+                            if (removeList.blockedAttrs[ attName ]
+                                || !( value = parent.attr(styleName) ))
+                                continue;
 
-
-                                if (removeList.blockedAttrs[ attName ]
-                                    || !( value = parent.attr(styleName) ))
-                                    continue;
-
-                                if (styleNode.attr(attName) == value) {
-                                    //removeList.attrs[ attName ] = 1;
-                                    styleNode.removeAttr(attName);
-                                }
-                                else
-                                    removeList.blockedAttrs[ attName ] = 1;
-                            }
-
+                            if (styleNode.attr(attName) == value) {
+                                //removeList.attrs[ attName ] = 1;
+                                styleNode.removeAttr(attName);
+                            } else
+                                removeList.blockedAttrs[ attName ] = 1;
 
                         }
                         //bug notice add by yiminghe@gmail.com
@@ -7687,19 +7664,16 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                         //下一次格式xxx为70px
                         //var exit = FALSE;
                         for (styleName in def.styles) {
-                            if (def.styles.hasOwnProperty(styleName)) {
 
-                                if (removeList.blockedStyles[ styleName ]
-                                    || !( value = parent.style(styleName) ))
-                                    continue;
+                            if (removeList.blockedStyles[ styleName ]
+                                || !( value = parent.style(styleName) ))
+                                continue;
 
-                                if (styleNode.style(styleName) == value) {
-                                    //removeList.styles[ styleName ] = 1;
-                                    styleNode.style(styleName, "");
-                                }
-                                else
-                                    removeList.blockedStyles[ styleName ] = 1;
-                            }
+                            if (styleNode.style(styleName) == value) {
+                                //removeList.styles[ styleName ] = 1;
+                                styleNode.style(styleName, "");
+                            } else
+                                removeList.blockedStyles[ styleName ] = 1;
 
                         }
 
@@ -7972,16 +7946,16 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         typeof source == 'string' && ( source = parseStyleText(source) );
         typeof target == 'string' && ( target = parseStyleText(target) );
         for (var name in source) {
-            if (source.hasOwnProperty(name)) {
-                // Value 'inherit'  is treated as a wildcard,
-                // which will match any value.
-                if (!( name in target &&
-                    ( target[ name ] == source[ name ]
-                        || source[ name ] == 'inherit'
-                        || target[ name ] == 'inherit' ) )) {
-                    return FALSE;
-                }
+
+            // Value 'inherit'  is treated as a wildcard,
+            // which will match any value.
+            if (!( name in target &&
+                ( target[ name ] == source[ name ]
+                    || source[ name ] == 'inherit'
+                    || target[ name ] == 'inherit' ) )) {
+                return FALSE;
             }
+
         }
         return TRUE;
     }
@@ -8020,9 +7994,9 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     function getAttributesForComparison(styleDefinition) {
         // If we have already computed it, just return it.
         var attribs = styleDefinition._AC;
-        if (attribs)
+        if (attribs) {
             return attribs;
-
+        }
         attribs = {};
 
         var length = 0,
@@ -8031,10 +8005,10 @@ KISSY.add("editor/core/styles", function (S, Editor) {
             styleAttribs = styleDefinition["attributes"];
         if (styleAttribs) {
             for (var styleAtt in styleAttribs) {
-                if (styleAttribs.hasOwnProperty(styleAtt)) {
-                    length++;
-                    attribs[ styleAtt ] = styleAttribs[ styleAtt ];
-                }
+
+                length++;
+                attribs[ styleAtt ] = styleAttribs[ styleAtt ];
+
             }
         }
 
@@ -8109,8 +8083,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                         // Each item in the attributes array is also an array,
                         // where [0] is the attribute name and [1] is the
                         // override value.
-                        if (attrs.hasOwnProperty(attName))
-                            overrideAttrs.push([ attName.toLowerCase(), attrs[ attName ] ]);
+                        overrideAttrs.push([ attName.toLowerCase(), attrs[ attName ] ]);
                     }
                 }
 
@@ -8125,9 +8098,8 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                         // Each item in the styles array is also an array,
                         // where [0] is the style name and [1] is the
                         // override value.
-                        if (styles.hasOwnProperty(styleName))
-                            overrideStyles.push([ styleName.toLowerCase(),
-                                styles[ styleName ] ]);
+                        overrideStyles.push([ styleName.toLowerCase(),
+                            styles[ styleName ] ]);
                     }
                 }
             }
@@ -8151,29 +8123,29 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
         // Remove definition attributes/style from the element.
         for (var attName in attributes) {
-            if (attributes.hasOwnProperty(attName)) {
-                // The 'class' element value must match (#1318).
-                if (( attName == 'class' || style._.definition["fullMatch"] )
-                    && element.attr(attName) != normalizeProperty(attName,
-                    attributes[ attName ]))
-                    continue;
-                removeEmpty = removeEmpty || !!element.hasAttr(attName);
-                element.removeAttr(attName);
-            }
+
+            // The 'class' element value must match (#1318).
+            if (( attName == 'class' || style._.definition["fullMatch"] )
+                && element.attr(attName) != normalizeProperty(attName,
+                attributes[ attName ]))
+                continue;
+            removeEmpty = removeEmpty || !!element.hasAttr(attName);
+            element.removeAttr(attName);
+
         }
 
         for (var styleName in styles) {
-            if (styles.hasOwnProperty(styleName)) {
-                // Full match style insist on having fully equivalence. (#5018)
-                if (style._.definition["fullMatch"]
-                    && element.style(styleName)
-                    != normalizeProperty(styleName, styles[ styleName ], TRUE))
-                    continue;
 
-                removeEmpty = removeEmpty || !!element.style(styleName);
-                //设置空即为：清除样式
-                element.style(styleName, "");
-            }
+            // Full match style insist on having fully equivalence. (#5018)
+            if (style._.definition["fullMatch"]
+                && element.style(styleName)
+                != normalizeProperty(styleName, styles[ styleName ], TRUE))
+                continue;
+
+            removeEmpty = removeEmpty || !!element.style(styleName);
+            //设置空即为：清除样式
+            element.style(styleName, "");
+
         }
 
         //removeEmpty &&
@@ -8207,18 +8179,18 @@ KISSY.add("editor/core/styles", function (S, Editor) {
         }
 
         // Now remove any other element with different name that is
-        // defined to be overriden.
+        // defined to be overridden.
         for (var overrideElement in overrides) {
-            if (overrides.hasOwnProperty(overrideElement)) {
-                if (overrideElement != style["element"]) {
-                    innerElements = element.all(overrideElement);
-                    for (i = innerElements.length - 1; i >= 0; i--) {
-                        var innerElement = new Node(innerElements[i]);
-                        removeOverrides(innerElement,
-                            overrides[ overrideElement ]);
-                    }
+
+            if (overrideElement != style["element"]) {
+                innerElements = element.all(overrideElement);
+                for (i = innerElements.length - 1; i >= 0; i--) {
+                    var innerElement = new Node(innerElements[i]);
+                    removeOverrides(innerElement,
+                        overrides[ overrideElement ]);
                 }
             }
+
         }
 
     }
@@ -8337,7 +8309,7 @@ KISSY.add("editor/core/utils", function (S) {
              * @param url
              * @return {String}
              */
-            debugUrl:function (url) {
+            debugUrl: function (url) {
                 var Config = S.Config;
                 if (!Config.debug) {
                     url = url.replace(/\.(js|css)/i, "-min.$1");
@@ -8359,7 +8331,7 @@ KISSY.add("editor/core/utils", function (S) {
              * @param before {string} 准备方法
              * @param after {string} 真正方法
              */
-            lazyRun:function (obj, before, after) {
+            lazyRun: function (obj, before, after) {
                 var b = obj[before], a = obj[after];
                 obj[before] = function () {
                     b.apply(this, arguments);
@@ -8371,7 +8343,7 @@ KISSY.add("editor/core/utils", function (S) {
             /**
              * editor 元素在主窗口的位置
              */
-            getXY:function (offset, editor) {
+            getXY: function (offset, editor) {
                 var x = offset.left,
                     y = offset.top,
                     currentWindow = editor.get("window")[0];
@@ -8384,7 +8356,7 @@ KISSY.add("editor/core/utils", function (S) {
                 x += iframePosition.left;
                 y += iframePosition.top;
 
-                return {left:x, top:y};
+                return {left: x, top: y};
             },
 
             /**
@@ -8392,7 +8364,7 @@ KISSY.add("editor/core/utils", function (S) {
              * @param var_args {...function()}
              * @return {*} 得到成功的返回
              */
-            tryThese:function (var_args) {
+            tryThese: function (var_args) {
                 var returnValue;
                 for (var i = 0, length = arguments.length; i < length; i++) {
                     var lambda = arguments[i];
@@ -8412,7 +8384,7 @@ KISSY.add("editor/core/utils", function (S) {
              * @param arrayB {Array}
              * @return {Boolean}
              */
-            arrayCompare:function (arrayA, arrayB) {
+            arrayCompare: function (arrayA, arrayB) {
                 if (!arrayA && !arrayB)
                     return TRUE;
 
@@ -8430,11 +8402,11 @@ KISSY.add("editor/core/utils", function (S) {
             /**
              * @param database {Object}
              */
-            clearAllMarkers:function (database) {
+            clearAllMarkers: function (database) {
                 for (var i in database) {
-                    if (database.hasOwnProperty(i)) {
-                        database[i]._4e_clearMarkers(database, TRUE, undefined);
-                    }
+
+                    database[i]._4e_clearMarkers(database, TRUE, undefined);
+
                 }
             },
 
@@ -8443,7 +8415,7 @@ KISSY.add("editor/core/utils", function (S) {
              * @param str {string}
              * @return {string}
              */
-            ltrim:function (str) {
+            ltrim: function (str) {
                 return str.replace(/^\s+/, "");
             },
 
@@ -8452,14 +8424,14 @@ KISSY.add("editor/core/utils", function (S) {
              * @param str {string}
              * @return {string}
              */
-            rtrim:function (str) {
+            rtrim: function (str) {
                 return str.replace(/\s+$/, "");
             },
 
             /**
              *
              */
-            isNumber:function (n) {
+            isNumber: function (n) {
                 return /^\d+(.\d+)?$/.test(S.trim(n));
             },
 
@@ -8468,7 +8440,7 @@ KISSY.add("editor/core/utils", function (S) {
              * @param inputs {Array.<Node>}
              * @return {Boolean} 是否验证成功
              */
-            verifyInputs:function (inputs) {
+            verifyInputs: function (inputs) {
                 for (var i = 0; i < inputs.length; i++) {
                     var input = new Node(inputs[i]),
                         v = S.trim(Utils.valInput(input)),
@@ -8487,7 +8459,7 @@ KISSY.add("editor/core/utils", function (S) {
              * @param editor {KISSY.Editor}
              * @param plugin {Object}
              */
-            sourceDisable:function (editor, plugin) {
+            sourceDisable: function (editor, plugin) {
                 editor.on("sourceMode", plugin.disable, plugin);
                 editor.on("wysiwygMode", plugin.enable, plugin);
             },
@@ -8496,7 +8468,7 @@ KISSY.add("editor/core/utils", function (S) {
              *
              * @param inp {KISSY.NodeList}
              */
-            resetInput:function (inp) {
+            resetInput: function (inp) {
                 var placeholder = inp.attr("placeholder");
                 if (placeholder && UA['ie']) {
                     inp.addClass("ks-editor-input-tip");
@@ -8511,7 +8483,7 @@ KISSY.add("editor/core/utils", function (S) {
              * @param inp  {KISSY.NodeList}
              * @param [val]
              */
-            valInput:function (inp, val) {
+            valInput: function (inp, val) {
                 if (val === undefined) {
                     if (inp.hasClass("ks-editor-input-tip")) {
                         return "";
@@ -8529,7 +8501,7 @@ KISSY.add("editor/core/utils", function (S) {
              * @param inp {KISSY.NodeList}
              * @param tip {string}
              */
-            placeholder:function (inp, tip) {
+            placeholder: function (inp, tip) {
                 inp.attr("placeholder", tip);
                 if (!UA['ie']) {
                     return;
@@ -8554,7 +8526,7 @@ KISSY.add("editor/core/utils", function (S) {
              * @param {string} value The string to encode
              * @return {string} The encoded text
              */
-            htmlEncode:function (value) {
+            htmlEncode: function (value) {
                 return !value ? value : String(value).replace(/&/g, "&amp;").replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
             },
 
@@ -8563,15 +8535,15 @@ KISSY.add("editor/core/utils", function (S) {
              * @param params {Object}
              * @return {Object}
              */
-            normParams:function (params) {
+            normParams: function (params) {
                 params = S.clone(params);
                 for (var p in params) {
-                    if (params.hasOwnProperty(p)) {
-                        var v = params[p];
-                        if (S.isFunction(v)) {
-                            params[p] = v();
-                        }
+
+                    var v = params[p];
+                    if (S.isFunction(v)) {
+                        params[p] = v();
                     }
+
                 }
                 return params;
             },
@@ -8579,7 +8551,7 @@ KISSY.add("editor/core/utils", function (S) {
             /**
              *
              */
-            map:function (arr, callback) {
+            map: function (arr, callback) {
                 for (var i = 0; i < arr.length; i++) {
                     arr[i] = callback(arr[i]);
                 }
@@ -8587,13 +8559,13 @@ KISSY.add("editor/core/utils", function (S) {
             },
 
             //直接判断引擎，防止兼容性模式影响
-            ieEngine:document['documentMode'] || UA['ie'],
+            ieEngine: document['documentMode'] || UA['ie'],
 
             /**
              * 点击 el 或者 el 内的元素，不会使得焦点转移
              * @param el
              */
-            preventFocus:function (el) {
+            preventFocus: function (el) {
                 if (UA['ie']) {
                     //ie 点击按钮不丢失焦点
                     el.unselectable(undefined);
@@ -8605,34 +8577,33 @@ KISSY.add("editor/core/utils", function (S) {
             /**
              *
              */
-            injectDom:function (editorDom) {
+            injectDom: function (editorDom) {
                 S.mix(DOM, editorDom);
                 for (var dm in editorDom) {
-                    if (editorDom.hasOwnProperty(dm))
-                        (function (dm) {
-                            Node.prototype[dm] = function () {
-                                var args = [].slice.call(arguments, 0);
-                                args.unshift(this[0]);
-                                var ret = editorDom[dm].apply(NULL, args);
-                                if (ret && (ret.nodeType || S.isWindow(ret))) {
-                                    return new Node(ret);
-                                } else {
-                                    if (S.isArray(ret)) {
-                                        if (ret.__IS_NODELIST || (ret[0] && ret[0].nodeType)) {
-                                            return new Node(ret);
-                                        }
+                    (function (dm) {
+                        Node.prototype[dm] = function () {
+                            var args = [].slice.call(arguments, 0);
+                            args.unshift(this[0]);
+                            var ret = editorDom[dm].apply(NULL, args);
+                            if (ret && (ret.nodeType || S.isWindow(ret))) {
+                                return new Node(ret);
+                            } else {
+                                if (S.isArray(ret)) {
+                                    if (ret.__IS_NODELIST || (ret[0] && ret[0].nodeType)) {
+                                        return new Node(ret);
                                     }
-                                    return ret;
                                 }
-                            };
-                        })(dm);
+                                return ret;
+                            }
+                        };
+                    })(dm);
                 }
             },
 
             /**
              *
              */
-            addRes:function () {
+            addRes: function () {
                 this.__res = this.__res || [];
                 var res = this.__res;
                 res.push.apply(res, S.makeArray(arguments));
@@ -8641,7 +8612,7 @@ KISSY.add("editor/core/utils", function (S) {
             /**
              *
              */
-            destroyRes:function () {
+            destroyRes: function () {
                 var res = this.__res || [];
                 for (var i = 0; i < res.length; i++) {
                     var r = res[i];
@@ -8662,7 +8633,7 @@ KISSY.add("editor/core/utils", function (S) {
             /**
              *
              */
-            getQueryCmd:function (cmd) {
+            getQueryCmd: function (cmd) {
                 return "query" + ("-" + cmd).replace(/-(\w)/g, function (m, m1) {
                     return m1.toUpperCase()
                 }) + "Value";
@@ -8673,7 +8644,7 @@ KISSY.add("editor/core/utils", function (S) {
 
     return Utils;
 }, {
-    requires:['./base']
+    requires: ['./base']
 });
 /**
  * modified from ckeditor for kissy editor ,walker implementation

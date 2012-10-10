@@ -252,13 +252,13 @@
             packageDesc;
 
         for (p in packages) {
-            if (packages.hasOwnProperty(p)) {
-                // longest match
-                if (S.startsWith(modName, p) &&
-                    p.length > pName.length) {
-                    pName = p;
-                }
+
+            // longest match
+            if (S.startsWith(modName, p) &&
+                p.length > pName.length) {
+                pName = p;
             }
+
         }
 
         packageDesc = packages[pName] ||

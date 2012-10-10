@@ -123,13 +123,13 @@
                 k;
             parseQuery(self);
             for (k in _queryMap) {
-                if (_queryMap.hasOwnProperty(k)) {
-                    if (S.isArray(_queryMap[k])) {
-                        count += _queryMap[k].length;
-                    } else {
-                        count++;
-                    }
+
+                if (S.isArray(_queryMap[k])) {
+                    count += _queryMap[k].length;
+                } else {
+                    count++;
                 }
+
             }
             return count;
         },

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:17
+build time: Oct 10 13:56
 */
 /**
  * @ignore
@@ -2005,10 +2005,8 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
             return 1;
         }
         for (var d in dropGroups) {
-            if (dropGroups.hasOwnProperty(d)) {
-                if (dragGroups[d]) {
-                    return 1;
-                }
+            if (dragGroups[d]) {
+                return 1;
             }
         }
         return 0;
@@ -2272,9 +2270,7 @@ KISSY.add('dd/proxy', function (S, Node, Base, DDM) {
                 node.remove();
             }
             for (var d in destructors) {
-                if (destructors.hasOwnProperty(d)) {
-                    this.detachDrag(destructors[d].drag);
-                }
+                this.detachDrag(destructors[d].drag);
             }
         }
     });

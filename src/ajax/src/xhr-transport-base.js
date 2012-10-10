@@ -93,9 +93,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
 
             if (xhrFields = c['xhrFields']) {
                 for (i in xhrFields) {
-                    if (xhrFields.hasOwnProperty(i)) {
-                        nativeXhr[ i ] = xhrFields[ i ];
-                    }
+                    nativeXhr[ i ] = xhrFields[ i ];
                 }
             }
 
@@ -112,9 +110,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                 // OPTIONS /xhr/r.php HTTP/1.1
                 if (!crossDomain) {
                     for (i in requestHeaders) {
-                        if (requestHeaders.hasOwnProperty(i)) {
-                            nativeXhr.setRequestHeader(i, requestHeaders[ i ]);
-                        }
+                        nativeXhr.setRequestHeader(i, requestHeaders[ i ]);
                     }
                 }
             } catch (e) {

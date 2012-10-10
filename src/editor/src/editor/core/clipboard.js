@@ -275,13 +275,11 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 contextmenu.__copy_fix = 1;
 
                 for (var i in pastes) {
-                    if (pastes.hasOwnProperty(i)) {
-                        contextmenu.addChild({
-                            xclass: 'menuitem',
-                            content: lang[i],
-                            value: i
-                        });
-                    }
+                    contextmenu.addChild({
+                        xclass: 'menuitem',
+                        content: lang[i],
+                        value: i
+                    });
                 }
 
                 contextmenu.on('click', function (e) {

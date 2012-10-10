@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 23:22
+build time: Oct 10 13:59
 */
 /**
  * clean html pasted from word. modified from ckeditor.
@@ -168,17 +168,17 @@ KISSY.add("editor/plugin/word-filter/dynamic/index", function (S, HtmlParser) {
 
 
     function addStyle(elem, name, value, isPrepend) {
-        var styleText, addingStyleText = '';
+        var styleText, addingStyleText = '', style;
         // name/value pair.
         if (typeof value == 'string') {
             addingStyleText += name + ':' + value + ';';
         } else {
             // style literal.
             if (typeof name == 'object') {
-                for (var style in name) {
-                    if (name.hasOwnProperty(style)) {
-                        addingStyleText += style + ':' + name[ style ] + ';';
-                    }
+                for (style in name) {
+
+                    addingStyleText += style + ':' + name[ style ] + ';';
+
                 }
             }
             // raw style text form.
@@ -203,11 +203,11 @@ KISSY.add("editor/plugin/word-filter/dynamic/index", function (S, HtmlParser) {
         var result = {},
             tag;
         for (tag in dtd) {
-            if (dtd.hasOwnProperty(tag)) {
-                if (tag.indexOf('$') == -1 && dtd[ tag ][ tagName ]) {
-                    result[ tag ] = 1;
-                }
+
+            if (tag.indexOf('$') == -1 && dtd[ tag ][ tagName ]) {
+                result[ tag ] = 1;
             }
+
         }
         return result;
     }
@@ -367,27 +367,27 @@ KISSY.add("editor/plugin/word-filter/dynamic/index", function (S, HtmlParser) {
                         }
                         else {
                             for (var type in listMarkerPatterns) {
-                                if (listMarkerPatterns.hasOwnProperty(type))
-                                    for (var style in listMarkerPatterns[ type ]) {
-                                        if (listMarkerPatterns[ type ].hasOwnProperty(style))
-                                            if (listMarkerPatterns[ type ][ style ].test(bullet[ 1 ])) {
-                                                // Small numbering has higher priority, when dealing with ambiguous
-                                                // between C(Alpha) and C.(Roman).
-                                                if (type == 'ol' && ( /alpha|roman/ ).test(style)) {
-                                                    var num = /roman/.test(style) ? fromRoman(bullet[ 1 ]) : fromAlphabet(bullet[ 1 ]);
-                                                    if (!itemNumeric || num < itemNumeric) {
-                                                        itemNumeric = num;
-                                                        listType = type;
-                                                        listStyleType = style;
-                                                    }
-                                                }
-                                                else {
-                                                    listType = type;
-                                                    listStyleType = style;
-                                                    break;
-                                                }
+
+                                for (var style in listMarkerPatterns[ type ]) {
+
+                                    if (listMarkerPatterns[ type ][ style ].test(bullet[ 1 ])) {
+                                        // Small numbering has higher priority, when dealing with ambiguous
+                                        // between C(Alpha) and C.(Roman).
+                                        if (type == 'ol' && ( /alpha|roman/ ).test(style)) {
+                                            var num = /roman/.test(style) ? fromRoman(bullet[ 1 ]) : fromAlphabet(bullet[ 1 ]);
+                                            if (!itemNumeric || num < itemNumeric) {
+                                                itemNumeric = num;
+                                                listType = type;
+                                                listStyleType = style;
                                             }
+                                        }
+                                        else {
+                                            listType = type;
+                                            listStyleType = style;
+                                            break;
+                                        }
                                     }
+                                }
                             }
                         }
 

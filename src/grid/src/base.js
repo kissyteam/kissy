@@ -131,7 +131,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
                     bodyConfig;
 
                 for (var name in attrs) {
-                    if (attrs.hasOwnProperty(name) && attrs[name].toBody) {
+                    if (attrs[name].toBody) {
                         toBody[name] = _self.get(name);
                     }
                 }

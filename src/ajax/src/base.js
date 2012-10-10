@@ -445,9 +445,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
 
         // Check for headers option
         for (i in headers) {
-            if (headers.hasOwnProperty(i)) {
-                self.setRequestHeader(i, headers[ i ]);
-            }
+            self.setRequestHeader(i, headers[ i ]);
         }
 
 

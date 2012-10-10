@@ -57,9 +57,9 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
             self.addRes(function () {
                 var progressBars = self.progressBars;
                 for (var p in progressBars) {
-                    if (progressBars.hasOwnProperty(p)) {
-                        progressBars[p].destroy();
-                    }
+
+                    progressBars[p].destroy();
+
                 }
             });
 
@@ -617,8 +617,8 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
         _getFilesSize: function (files) {
             var n = 0;
             for (var i in files) {
-                if (files.hasOwnProperty(i))
-                    n++;
+
+                n++;
             }
             return n;
         },
@@ -742,7 +742,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                 //files 是这次新选择的啦！
                 //新选择的随即删除一些
                 for (i in files) {
-                    if (!files.hasOwnProperty(i)) continue;
+
                     curNum++;
                     var f = files[i],
                         size = Math.floor(f.size / 1000),

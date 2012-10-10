@@ -50,10 +50,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         actionPlugins(self, plugins, "initializer");
 
         for (n in listeners) {
-            if (listeners.hasOwnProperty(n)) {
-                listener = listeners[n];
-                self.on(n, listener.fn || listener, listener.scope);
-            }
+            listener = listeners[n];
+            self.on(n, listener.fn || listener, listener.scope);
         }
 
         // 是否自动渲染
@@ -182,10 +180,9 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
         // 从 parser 中，默默设置属性，不触发事件
         for (p in parser) {
-            if (parser.hasOwnProperty(p) &&
-                // 用户设置过那么这里不从 dom 节点取
-                // 用户设置 > html parser > default value
-                config[p] === undefined) {
+            // 用户设置过那么这里不从 dom 节点取
+            // 用户设置 > html parser > default value
+            if (config[p] === undefined) {
                 v = parser[p];
                 // 函数
                 if (S.isFunction(v)) {
@@ -212,19 +209,17 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             attr, m;
 
         for (attr in attrs) {
-            if (attrs.hasOwnProperty(attr)) {
-                m = UI_SET + ucfirst(attr);
-                if (self[m]) {
-                    // 自动绑定事件到对应函数
-                    (function (attr, m) {
-                        self.on('after' + ucfirst(attr) + 'Change', function (ev) {
-                            // fix! 防止冒泡过来的
-                            if (ev.target === self) {
-                                self[m](ev.newVal, ev);
-                            }
-                        });
-                    })(attr, m);
-                }
+            m = UI_SET + ucfirst(attr);
+            if (self[m]) {
+                // 自动绑定事件到对应函数
+                (function (attr, m) {
+                    self.on('after' + ucfirst(attr) + 'Change', function (ev) {
+                        // fix! 防止冒泡过来的
+                        if (ev.target === self) {
+                            self[m](ev.newVal, ev);
+                        }
+                    });
+                })(attr, m);
             }
         }
     }
@@ -249,9 +244,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             c = constructorChains[i];
             if (attrs = c[ATTRS]) {
                 for (a in attrs) {
-                    if (attrs.hasOwnProperty(a) &&
-                        // 防止子类覆盖父类属性定义造成重复执行
-                        !cache[a]) {
+                    // 防止子类覆盖父类属性定义造成重复执行
+                    if (!cache[a]) {
                         cache[a] = 1;
                         m = UI_SET + ucfirst(a);
                         // 存在方法，并且用户设置了初始值或者存在默认值，就同步状态

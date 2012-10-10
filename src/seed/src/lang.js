@@ -55,9 +55,9 @@
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
         for (var k in htmlEntities) {
-            if (htmlEntities.hasOwnProperty(k)) {
-                reverseEntities[htmlEntities[k]] = k;
-            }
+
+            reverseEntities[htmlEntities[k]] = k;
+
         }
     })();
 
@@ -747,33 +747,33 @@
                 }
                 var buf = [], key, i, v, len, val;
                 for (key in o) {
-                    if (o.hasOwnProperty(key)) {
-                        val = o[key];
-                        key = encode(key);
 
-                        // val is valid non-array value
-                        if (isValidParamValue(val)) {
-                            buf.push(key);
-                            if (val !== undefined) {
-                                buf.push(eq, encode(val + EMPTY));
-                            }
-                            buf.push(sep);
+                    val = o[key];
+                    key = encode(key);
+
+                    // val is valid non-array value
+                    if (isValidParamValue(val)) {
+                        buf.push(key);
+                        if (val !== undefined) {
+                            buf.push(eq, encode(val + EMPTY));
                         }
-                        // val is not empty array
-                        else if (S.isArray(val) && val.length) {
-                            for (i = 0, len = val.length; i < len; ++i) {
-                                v = val[i];
-                                if (isValidParamValue(v)) {
-                                    buf.push(key, (serializeArray ? encode('[]') : EMPTY));
-                                    if (v !== undefined) {
-                                        buf.push(eq, encode(v + EMPTY));
-                                    }
-                                    buf.push(sep);
-                                }
-                            }
-                        }
-                        // ignore other cases, including empty array, Function, RegExp, Date etc.
+                        buf.push(sep);
                     }
+                    // val is not empty array
+                    else if (S.isArray(val) && val.length) {
+                        for (i = 0, len = val.length; i < len; ++i) {
+                            v = val[i];
+                            if (isValidParamValue(v)) {
+                                buf.push(key, (serializeArray ? encode('[]') : EMPTY));
+                                if (v !== undefined) {
+                                    buf.push(eq, encode(v + EMPTY));
+                                }
+                                buf.push(sep);
+                            }
+                        }
+                    }
+                    // ignore other cases, including empty array, Function, RegExp, Date etc.
+
                 }
                 buf.pop();
                 return buf.join(EMPTY);
@@ -823,7 +823,7 @@
                             key = key.substring(0, key.length - 2);
                         }
                     }
-                    if (hasOwnProperty(ret, key)) {
+                    if (key in ret) {
                         if (S.isArray(ret[key])) {
                             ret[key].push(val);
                         } else {
@@ -1110,12 +1110,12 @@
             }
         } else if (isPlainObject) {
             for (k in input) {
-                if (input.hasOwnProperty(k)) {
-                    if (k !== CLONE_MARKER &&
-                        (!f || (f.call(input, input[k], k, input) !== FALSE))) {
-                        destination[k] = cloneInternal(input[k], f, memory);
-                    }
+
+                if (k !== CLONE_MARKER &&
+                    (!f || (f.call(input, input[k], k, input) !== FALSE))) {
+                    destination[k] = cloneInternal(input[k], f, memory);
                 }
+
             }
         }
 
@@ -1133,30 +1133,30 @@
             return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
         };
         for (var property in b) {
-            if (b.hasOwnProperty(property)) {
-                if (!hasKey(a, property) && hasKey(b, property)) {
-                    mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
-                }
+
+            if (!hasKey(a, property) && hasKey(b, property)) {
+                mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
             }
+
         }
         for (property in a) {
-            if (a.hasOwnProperty(property)) {
-                if (!hasKey(b, property) && hasKey(a, property)) {
-                    mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
-                }
+
+            if (!hasKey(b, property) && hasKey(a, property)) {
+                mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
             }
+
         }
         for (property in b) {
-            if (b.hasOwnProperty(property)) {
-                if (property == COMPARE_MARKER) {
-                    continue;
-                }
-                if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
-                    mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
-                        + "' in expected, but was '" +
-                        (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
-                }
+
+            if (property == COMPARE_MARKER) {
+                continue;
             }
+            if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
+                mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
+                    + "' in expected, but was '" +
+                    (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
+            }
+
         }
         if (S.isArray(a) && S.isArray(b) && a.length != b.length) {
             mismatchValues.push('arrays were not the same length');

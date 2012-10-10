@@ -744,9 +744,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 var names = element.data('list_marker_names'),
                     id = element.data('list_marker_id');
                 for (var i in names) {
-                    if (names.hasOwnProperty(i)) {
-                        element.removeData(i);
-                    }
+                    element.removeData(i);
                 }
                 element.removeData('list_marker_names');
                 if (removeFromDatabase) {

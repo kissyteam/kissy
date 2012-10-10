@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 22:19
+build time: Oct 10 13:56
 */
 /**
  * @ignore
@@ -198,24 +198,22 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
         // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
         for (attrName in attrs) {
-            if (attrs.hasOwnProperty(attrName)) {
-                attrCfg = attrs[attrName];
-                if (attrCfg.view) {
-                    // 先取后 getter
-                    // 防止死循环
-                    if (( v = self.get(attrName) ) !== undefined) {
-                        cfg[attrName] = v;
-                    }
-
-                    // setter 不应该有实际操作，仅用于正规化比较好
-                    // attrCfg.setter = wrapperViewSetter(attrName);
-                    self.on("after" + S.ucfirst(attrName) + "Change",
-                        wrapperViewSetter(attrName));
-                    // 逻辑层读值直接从 view 层读
-                    // 那么如果存在默认值也设置在 view 层
-                    // 逻辑层不要设置 getter
-                    attrCfg.getter = wrapperViewGetter(attrName);
+            attrCfg = attrs[attrName];
+            if (attrCfg.view) {
+                // 先取后 getter
+                // 防止死循环
+                if (( v = self.get(attrName) ) !== undefined) {
+                    cfg[attrName] = v;
                 }
+
+                // setter 不应该有实际操作，仅用于正规化比较好
+                // attrCfg.setter = wrapperViewSetter(attrName);
+                self.on("after" + S.ucfirst(attrName) + "Change",
+                    wrapperViewSetter(attrName));
+                // 逻辑层读值直接从 view 层读
+                // 那么如果存在默认值也设置在 view 层
+                // 逻辑层不要设置 getter
+                attrCfg.getter = wrapperViewGetter(attrName);
             }
         }
         // does not autoRender for view
@@ -1833,10 +1831,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         actionPlugins(self, plugins, "initializer");
 
         for (n in listeners) {
-            if (listeners.hasOwnProperty(n)) {
-                listener = listeners[n];
-                self.on(n, listener.fn || listener, listener.scope);
-            }
+            listener = listeners[n];
+            self.on(n, listener.fn || listener, listener.scope);
         }
 
         // 是否自动渲染
@@ -1965,10 +1961,9 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
         // 从 parser 中，默默设置属性，不触发事件
         for (p in parser) {
-            if (parser.hasOwnProperty(p) &&
-                // 用户设置过那么这里不从 dom 节点取
-                // 用户设置 > html parser > default value
-                config[p] === undefined) {
+            // 用户设置过那么这里不从 dom 节点取
+            // 用户设置 > html parser > default value
+            if (config[p] === undefined) {
                 v = parser[p];
                 // 函数
                 if (S.isFunction(v)) {
@@ -1995,19 +1990,17 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             attr, m;
 
         for (attr in attrs) {
-            if (attrs.hasOwnProperty(attr)) {
-                m = UI_SET + ucfirst(attr);
-                if (self[m]) {
-                    // 自动绑定事件到对应函数
-                    (function (attr, m) {
-                        self.on('after' + ucfirst(attr) + 'Change', function (ev) {
-                            // fix! 防止冒泡过来的
-                            if (ev.target === self) {
-                                self[m](ev.newVal, ev);
-                            }
-                        });
-                    })(attr, m);
-                }
+            m = UI_SET + ucfirst(attr);
+            if (self[m]) {
+                // 自动绑定事件到对应函数
+                (function (attr, m) {
+                    self.on('after' + ucfirst(attr) + 'Change', function (ev) {
+                        // fix! 防止冒泡过来的
+                        if (ev.target === self) {
+                            self[m](ev.newVal, ev);
+                        }
+                    });
+                })(attr, m);
             }
         }
     }
@@ -2032,9 +2025,8 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             c = constructorChains[i];
             if (attrs = c[ATTRS]) {
                 for (a in attrs) {
-                    if (attrs.hasOwnProperty(a) &&
-                        // 防止子类覆盖父类属性定义造成重复执行
-                        !cache[a]) {
+                    // 防止子类覆盖父类属性定义造成重复执行
+                    if (!cache[a]) {
                         cache[a] = 1;
                         m = UI_SET + ucfirst(a);
                         // 存在方法，并且用户设置了初始值或者存在默认值，就同步状态
@@ -2316,9 +2308,12 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
         // debug mode, give the right name for constructor
         // refer : http://limu.iteye.com/blog/1136712
-        S.log("UIBase.extend : " + name, eval("C=function " + name.replace(/[-.]/g, "_") + "(){ UIBase.apply(this, arguments);}"));
-        if (name == baseName) {
-            S.log(px);
+        if (S.Config.debug) {
+            eval("C=function " + name.replace(/[-.]/g, "_") + "(){ UIBase.apply(this, arguments);}");
+            S.log("UIBase.extend : " + name);
+            if (name == baseName) {
+                S.log(px);
+            }
         }
 
         S.extend(C, base, px, sx);

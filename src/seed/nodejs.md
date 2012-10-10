@@ -6,7 +6,7 @@ h1.  通过NPM安装 nodejs-kissy
 
 需要预装 npm
 
-<pre class="console">npm install KISSY</pre>
+<pre class="console">npm install kissy</pre>
 
 h1.  通过源码安装 nodejs-kissy
 
@@ -20,7 +20,7 @@ h1. Hello World
 
 新建文件test.js
 
-<pre class="console">var S = require('KISSY');
+<pre class="console">var S = require('kissy').KISSY;
 S.ready(function(S){
 	S.log('hello world!');
 });</pre>

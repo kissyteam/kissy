@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 01:32
+build time: Oct 10 14:09
 */
 /**
  * @ignore
@@ -430,12 +430,10 @@ var KISSY = (function (undefined) {
              * @return {Array}
              */
             keys: function (o) {
-                var result = [];
+                var result = [], p;
 
-                for (var p in o) {
-                    if (o.hasOwnProperty(p)) {
-                        result.push(p);
-                    }
+                for (p in o) {
+                    result.push(p);
                 }
 
                 if (hasEnumBug) {
@@ -479,11 +477,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121009013249' will replace with current timestamp when compressing.
+         * NOTICE: '20121010140939' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20121009013249';
+        S.__BUILD_TIME = '20121010140939';
     })();
 
     // exports for nodejs
@@ -551,9 +549,9 @@ var KISSY = (function (undefined) {
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
         for (var k in htmlEntities) {
-            if (htmlEntities.hasOwnProperty(k)) {
-                reverseEntities[htmlEntities[k]] = k;
-            }
+
+            reverseEntities[htmlEntities[k]] = k;
+
         }
     })();
 
@@ -1243,33 +1241,33 @@ var KISSY = (function (undefined) {
                 }
                 var buf = [], key, i, v, len, val;
                 for (key in o) {
-                    if (o.hasOwnProperty(key)) {
-                        val = o[key];
-                        key = encode(key);
 
-                        // val is valid non-array value
-                        if (isValidParamValue(val)) {
-                            buf.push(key);
-                            if (val !== undefined) {
-                                buf.push(eq, encode(val + EMPTY));
-                            }
-                            buf.push(sep);
+                    val = o[key];
+                    key = encode(key);
+
+                    // val is valid non-array value
+                    if (isValidParamValue(val)) {
+                        buf.push(key);
+                        if (val !== undefined) {
+                            buf.push(eq, encode(val + EMPTY));
                         }
-                        // val is not empty array
-                        else if (S.isArray(val) && val.length) {
-                            for (i = 0, len = val.length; i < len; ++i) {
-                                v = val[i];
-                                if (isValidParamValue(v)) {
-                                    buf.push(key, (serializeArray ? encode('[]') : EMPTY));
-                                    if (v !== undefined) {
-                                        buf.push(eq, encode(v + EMPTY));
-                                    }
-                                    buf.push(sep);
-                                }
-                            }
-                        }
-                        // ignore other cases, including empty array, Function, RegExp, Date etc.
+                        buf.push(sep);
                     }
+                    // val is not empty array
+                    else if (S.isArray(val) && val.length) {
+                        for (i = 0, len = val.length; i < len; ++i) {
+                            v = val[i];
+                            if (isValidParamValue(v)) {
+                                buf.push(key, (serializeArray ? encode('[]') : EMPTY));
+                                if (v !== undefined) {
+                                    buf.push(eq, encode(v + EMPTY));
+                                }
+                                buf.push(sep);
+                            }
+                        }
+                    }
+                    // ignore other cases, including empty array, Function, RegExp, Date etc.
+
                 }
                 buf.pop();
                 return buf.join(EMPTY);
@@ -1319,7 +1317,7 @@ var KISSY = (function (undefined) {
                             key = key.substring(0, key.length - 2);
                         }
                     }
-                    if (hasOwnProperty(ret, key)) {
+                    if (key in ret) {
                         if (S.isArray(ret[key])) {
                             ret[key].push(val);
                         } else {
@@ -1606,12 +1604,12 @@ var KISSY = (function (undefined) {
             }
         } else if (isPlainObject) {
             for (k in input) {
-                if (input.hasOwnProperty(k)) {
-                    if (k !== CLONE_MARKER &&
-                        (!f || (f.call(input, input[k], k, input) !== FALSE))) {
-                        destination[k] = cloneInternal(input[k], f, memory);
-                    }
+
+                if (k !== CLONE_MARKER &&
+                    (!f || (f.call(input, input[k], k, input) !== FALSE))) {
+                    destination[k] = cloneInternal(input[k], f, memory);
                 }
+
             }
         }
 
@@ -1629,30 +1627,30 @@ var KISSY = (function (undefined) {
             return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
         };
         for (var property in b) {
-            if (b.hasOwnProperty(property)) {
-                if (!hasKey(a, property) && hasKey(b, property)) {
-                    mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
-                }
+
+            if (!hasKey(a, property) && hasKey(b, property)) {
+                mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
             }
+
         }
         for (property in a) {
-            if (a.hasOwnProperty(property)) {
-                if (!hasKey(b, property) && hasKey(a, property)) {
-                    mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
-                }
+
+            if (!hasKey(b, property) && hasKey(a, property)) {
+                mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
             }
+
         }
         for (property in b) {
-            if (b.hasOwnProperty(property)) {
-                if (property == COMPARE_MARKER) {
-                    continue;
-                }
-                if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
-                    mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
-                        + "' in expected, but was '" +
-                        (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
-                }
+
+            if (property == COMPARE_MARKER) {
+                continue;
             }
+            if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
+                mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
+                    + "' in expected, but was '" +
+                    (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
+            }
+
         }
         if (S.isArray(a) && S.isArray(b) && a.length != b.length) {
             mismatchValues.push('arrays were not the same length');
@@ -2397,13 +2395,13 @@ var KISSY = (function (undefined) {
                 k;
             parseQuery(self);
             for (k in _queryMap) {
-                if (_queryMap.hasOwnProperty(k)) {
-                    if (S.isArray(_queryMap[k])) {
-                        count += _queryMap[k].length;
-                    } else {
-                        count++;
-                    }
+
+                if (S.isArray(_queryMap[k])) {
+                    count += _queryMap[k].length;
+                } else {
+                    count++;
                 }
+
             }
             return count;
         },
@@ -3711,13 +3709,13 @@ var KISSY = (function (undefined) {
             packageDesc;
 
         for (p in packages) {
-            if (packages.hasOwnProperty(p)) {
-                // longest match
-                if (S.startsWith(modName, p) &&
-                    p.length > pName.length) {
-                    pName = p;
-                }
+
+            // longest match
+            if (S.startsWith(modName, p) &&
+                p.length > pName.length) {
+                pName = p;
             }
+
         }
 
         packageDesc = packages[pName] ||
@@ -3782,46 +3780,44 @@ var KISSY = (function (undefined) {
 
     // single thread is ok
     function cssPoll() {
-        for (var url in monitors) {
-            if (monitors.hasOwnProperty(url)) {
-                var callbackObj = monitors[url],
-                    node = callbackObj.node,
-                    exName,
-                    loaded = 0;
-                if (utils.isWebKit) {
-                    // http://www.w3.org/TR/DOM-Level-2-Style/stylesheets.html
-                    if (node['sheet']) {
-                        S.log('webkit loaded : ' + url);
-                        loaded = 1;
-                    }
-                } else if (node['sheet']) {
-                    try {
-                        var cssRules;
-                        if (cssRules = node['sheet'].cssRules) {
-                            S.log('same domain firefox loaded : ' + url);
-                            loaded = 1;
-                        }
-                    } catch (ex) {
-                        exName = ex.name;
-                        S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
-                        // http://www.w3.org/TR/dom/#dom-domexception-code
-                        if (// exName == 'SecurityError' ||
-                        // for old firefox
-                            exName == 'NS_ERROR_DOM_SECURITY_ERR') {
-                            S.log(exName + ' firefox loaded : ' + url);
-                            loaded = 1;
-                        }
-                    }
-                }
 
-                if (loaded) {
-                    if (callbackObj.callback) {
-                        callbackObj.callback.call(node);
-                    }
-                    delete monitors[url];
+        var callbackObj = monitors[url],
+            node = callbackObj.node,
+            exName,
+            loaded = 0;
+        if (utils.isWebKit) {
+            // http://www.w3.org/TR/DOM-Level-2-Style/stylesheets.html
+            if (node['sheet']) {
+                S.log('webkit loaded : ' + url);
+                loaded = 1;
+            }
+        } else if (node['sheet']) {
+            try {
+                var cssRules = node['sheet'].cssRules;
+                if (cssRules) {
+                    S.log('same domain firefox loaded : ' + url);
+                    loaded = 1;
+                }
+            } catch (ex) {
+                exName = ex.name;
+                S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                // http://www.w3.org/TR/dom/#dom-domexception-code
+                if (// exName == 'SecurityError' ||
+                // for old firefox
+                    exName == 'NS_ERROR_DOM_SECURITY_ERR') {
+                    S.log(exName + ' firefox loaded : ' + url);
+                    loaded = 1;
                 }
             }
         }
+
+        if (loaded) {
+            if (callbackObj.callback) {
+                callbackObj.callback.call(node);
+            }
+            delete monitors[url];
+        }
+
         if (S.isEmptyObject(monitors)) {
             timer = 0;
             // S.log('end css polling');
@@ -4295,17 +4291,17 @@ var KISSY = (function (undefined) {
 
         // 外部模块去除包路径，得到模块名
         for (p in packages) {
-            if (packages.hasOwnProperty(p)) {
-                packageBase = packages[p].getBase();
-                if (S.startsWith(srcStr, packageBase)) {
-                    // longest match
-                    if (packageBase.length > finalPackageLength) {
-                        finalPackageLength = packageBase.length;
-                        finalPackagePath = packageBase;
-                        finalPackageUri = packages[p].getBaseUri();
-                    }
+
+            packageBase = packages[p].getBase();
+            if (S.startsWith(srcStr, packageBase)) {
+                // longest match
+                if (packageBase.length > finalPackageLength) {
+                    finalPackageLength = packageBase.length;
+                    finalPackagePath = packageBase;
+                    finalPackageUri = packages[p].getBaseUri();
                 }
             }
+
         }
         // 注意：模块名不包含后缀名以及参数，所以去除
         // 系统模块去除系统路径
@@ -4717,22 +4713,22 @@ var KISSY = (function (undefined) {
         var jsOk = 0, cssOk = !countCss;
 
         for (p in css) {
-            if (css.hasOwnProperty(p)) {
-                loadScripts(css[p], function () {
-                    if (!(--countCss)) {
-                        // mark all css mods to be loaded
-                        for (var p in css) {
-                            if (css.hasOwnProperty(p)) {
-                                S.each(css[p].mods, function (m) {
-                                    utils.registerModule(runtime, m.name, S.noop);
-                                });
-                            }
-                        }
-                        cssOk = 1;
-                        check(jsOk);
+
+            loadScripts(css[p], function () {
+                if (!(--countCss)) {
+                    // mark all css mods to be loaded
+                    for (var p in css) {
+
+                        S.each(css[p].mods, function (m) {
+                            utils.registerModule(runtime, m.name, S.noop);
+                        });
+
                     }
-                }, css[p].charset);
-            }
+                    cssOk = 1;
+                    check(jsOk);
+                }
+            }, css[p].charset);
+
         }
 
         function check(paramJsOk) {
@@ -4772,27 +4768,27 @@ var KISSY = (function (undefined) {
         }
         success = 1;
         for (p in jss) {
-            if (jss.hasOwnProperty(p)) {
-                (function (p) {
-                    loadScripts(jss[p], function () {
-                        var mods = jss[p].mods, mod, i;
-                        for (i = 0; i < mods.length; i++) {
-                            mod = mods[i];
-                            // fix #111
-                            // https://github.com/kissyteam/kissy/issues/111
-                            if (!mod.fn) {
-                                S.log(mod.name + ' is not loaded! can not find module in path : ' + jss[p], 'error');
-                                mod.status = data.ERROR;
-                                success = 0;
-                                return;
-                            }
+
+            (function (p) {
+                loadScripts(jss[p], function () {
+                    var mods = jss[p].mods, mod, i;
+                    for (i = 0; i < mods.length; i++) {
+                        mod = mods[i];
+                        // fix #111
+                        // https://github.com/kissyteam/kissy/issues/111
+                        if (!mod.fn) {
+                            S.log(mod.name + ' is not loaded! can not find module in path : ' + jss[p], 'error');
+                            mod.status = data.ERROR;
+                            success = 0;
+                            return;
                         }
-                        if (success && !(--countJss)) {
-                            check(1);
-                        }
-                    }, jss[p].charset);
-                })(p);
-            }
+                    }
+                    if (success && !(--countJss)) {
+                        check(1);
+                    }
+                }, jss[p].charset);
+            })(p);
+
         }
     }
 
@@ -4966,9 +4962,9 @@ var KISSY = (function (undefined) {
             }
             ret2 = [];
             for (r in ret) {
-                if (ret.hasOwnProperty(r)) {
-                    ret2.push(r);
-                }
+
+                ret2.push(r);
+
             }
             return ret2;
         },
@@ -5020,76 +5016,75 @@ var KISSY = (function (undefined) {
                 maxUrlLength = Config.comboMaxUrlLength;
 
             for (packageName in combos) {
-                if (combos.hasOwnProperty(packageName)) {
-                    for (type in combos[packageName]) {
-                        if (combos[packageName].hasOwnProperty(type)) {
+
+                for (type in combos[packageName]) {
+
+                    t = [];
+
+                    var jss = combos[packageName][type],
+                        tag = jss.tag,
+                        suffix = (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
+                        suffixLength = suffix.length,
+                        packageBase = jss.packageBase,
+                        prefix,
+                        path,
+                        fullpath,
+                        l,
+                        packagePath = packageBase +
+                            (packageName ? (packageName + '/') : '');
+
+                    res[type][packageName] = [];
+                    res[type][packageName].charset = jss.charset;
+                    // current package's mods
+                    res[type][packageName].mods = [];
+                    // add packageName to common prefix
+                    // combo grouped by package
+                    prefix = packagePath + comboPrefix;
+                    l = prefix.length;
+
+                    function pushComboUrl() {
+                        // map the whole combo path
+                        res[type][packageName].push(utils.getMappedPath(
+                            runtime,
+                            prefix +
+                                t.join(comboSep) +
+                                suffix,
+                            Config.mappedComboRules || []
+                        ));
+                    }
+
+                    for (i = 0; i < jss.length; i++) {
+
+                        // map individual module
+                        fullpath = jss[i].getFullPath();
+
+                        res[type][packageName].mods.push(jss[i]);
+
+                        if (!jss.combine || !S.startsWith(fullpath, packagePath)) {
+                            res[type][packageName].push(fullpath);
+                            continue;
+                        }
+
+                        // ignore query parameter
+                        path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
+
+                        t.push(path);
+
+                        if (
+                            (t.length > maxFileNum) ||
+                                (l + t.join(comboSep).length + suffixLength > maxUrlLength)) {
+                            t.pop();
+                            pushComboUrl();
                             t = [];
-
-                            var jss = combos[packageName][type],
-                                tag = jss.tag,
-                                suffix = (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
-                                suffixLength = suffix.length,
-                                packageBase = jss.packageBase,
-                                prefix,
-                                path,
-                                fullpath,
-                                l,
-                                packagePath = packageBase +
-                                    (packageName ? (packageName + '/') : '');
-
-                            res[type][packageName] = [];
-                            res[type][packageName].charset = jss.charset;
-                            // current package's mods
-                            res[type][packageName].mods = [];
-                            // add packageName to common prefix
-                            // combo grouped by package
-                            prefix = packagePath + comboPrefix;
-                            l = prefix.length;
-
-                            function pushComboUrl() {
-                                // map the whole combo path
-                                res[type][packageName].push(utils.getMappedPath(
-                                    runtime,
-                                    prefix +
-                                        t.join(comboSep) +
-                                        suffix,
-                                    Config.mappedComboRules || []
-                                ));
-                            }
-
-                            for (i = 0; i < jss.length; i++) {
-
-                                // map individual module
-                                fullpath = jss[i].getFullPath();
-
-                                res[type][packageName].mods.push(jss[i]);
-
-                                if (!jss.combine || !S.startsWith(fullpath, packagePath)) {
-                                    res[type][packageName].push(fullpath);
-                                    continue;
-                                }
-
-                                // ignore query parameter
-                                path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
-
-                                t.push(path);
-
-                                if (
-                                    (t.length > maxFileNum) ||
-                                        (l + t.join(comboSep).length + suffixLength > maxUrlLength)) {
-                                    t.pop();
-                                    pushComboUrl();
-                                    t = [];
-                                    i--;
-                                }
-                            }
-                            if (t.length) {
-                                pushComboUrl();
-                            }
-
+                            i--;
                         }
                     }
+                    if (t.length) {
+                        pushComboUrl();
+                    }
+
                 }
+
             }
 
             return res;
@@ -5274,7 +5269,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121009013249'
+            tag: '20121010140939'
         }, getBaseInfo()));
     }
 
@@ -5579,7 +5574,7 @@ KISSY.config('modules', {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:21
+build time: Oct 10 14:00
 */
 /**
  * @ignore
@@ -5970,7 +5965,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 01:18
+build time: Oct 10 13:56
 */
 /**
  * @ignore
@@ -6382,9 +6377,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 if (S.isPlainObject(name)) {
                     pass = val;
                     for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            DOM.attr(els, k, name[k], pass);
-                        }
+                        DOM.attr(els, k, name[k], pass);
                     }
                     return undefined;
                 }
@@ -7760,9 +7753,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            DOM.data(elems, k, name[k]);
-                        }
+                        DOM.data(elems, k, name[k]);
                     }
                     return undefined;
                 }
@@ -8565,10 +8556,8 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         var old = getOffset(elem), ret = { }, current, key;
 
         for (key in offset) {
-            if (offset.hasOwnProperty(key)) {
-                current = myParseInt(DOM.css(elem, key), 10) || 0;
-                ret[key] = current + offset[key] - old[key];
-            }
+            current = myParseInt(DOM.css(elem, key), 10) || 0;
+            ret[key] = current + offset[key] - old[key];
         }
         DOM.css(elem, ret);
     }
@@ -9647,10 +9636,8 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            for (i = els.length - 1; i >= 0; i--) {
-                                style(els[i], k, name[k]);
-                            }
+                        for (i = els.length - 1; i >= 0; i--) {
+                            style(els[i], k, name[k]);
                         }
                     }
                     return undefined;
@@ -9681,14 +9668,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             css: function (selector, name, val) {
                 var els = DOM.query(selector),
                     elem = els[0],
+                    k,
                     i;
                 // supports hash
                 if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            for (i = els.length - 1; i >= 0; i--) {
-                                style(els[i], k, name[k]);
-                            }
+                    for (k in name) {
+                        for (i = els.length - 1; i >= 0; i--) {
+                            style(els[i], k, name[k]);
                         }
                     }
                     return undefined;
@@ -9995,23 +9981,19 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     });
 
     function swap(elem, options, callback) {
-        var old = {};
+        var old = {}, name;
 
         // Remember the old values, and insert the new ones
-        for (var name in options) {
-            if (options.hasOwnProperty(name)) {
-                old[ name ] = elem[STYLE][ name ];
-                elem[STYLE][ name ] = options[ name ];
-            }
+        for (name in options) {
+            old[ name ] = elem[STYLE][ name ];
+            elem[STYLE][ name ] = options[ name ];
         }
 
         callback.call(elem);
 
         // Revert the old values
         for (name in options) {
-            if (options.hasOwnProperty(name)) {
-                elem[STYLE][ name ] = old[ name ];
-            }
+            elem[STYLE][ name ] = old[ name ];
         }
     }
 
@@ -10533,7 +10515,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:20
+build time: Oct 10 13:59
 */
 /**
  * @ignore
@@ -11033,12 +11015,15 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
         };
 
         function propertyChange(e) {
+            // if only checked property 's value is changed
             if (e.originalEvent.propertyName == 'checked') {
                 this.__changed = 1;
             }
         }
 
         function onClick(e) {
+            // only fire change after click and checked is changed
+            // (only fire change after click on previous unchecked radio)
             if (this.__changed) {
                 this.__changed = 0;
                 // fire from itself
@@ -12607,11 +12592,9 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                 // remove all types of event
                 if (!type) {
                     for (type in events) {
-                        if (events.hasOwnProperty(type)) {
-                            Event.__remove(isNativeTarget,
-                                target, type + groups, originalFn,
-                                originalScope);
-                        }
+                        Event.__remove(isNativeTarget,
+                            target, type + groups, originalFn,
+                            originalScope);
                     }
                     return;
                 }
@@ -13265,7 +13248,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:20
+build time: Oct 10 13:59
 */
 /**
  * @ignore
@@ -13465,8 +13448,10 @@ KISSY.add('json', function (S, JSON) {
 // Create a JSON object only if one does not already exist. We create the
 // methods in a closure to avoid creating global variables.
 
-KISSY.add("json/json2", function(S, UA) {
-    var win = S.Env.host,JSON = win.JSON;
+KISSY.add("json/json2", function (S, UA) {
+    var Env = S.Env,
+        win = Env.host || {},
+        JSON = ((Env.nodejs && typeof global === 'object') ? global : win).JSON;
     // ie 8.0.7600.16315@win7 json 有问题
     if (!JSON || UA['ie'] < 9) {
         JSON = win.JSON = {};
@@ -13507,7 +13492,7 @@ KISSY.add("json/json2", function(S, UA) {
             '\n': '\\n',
             '\f': '\\f',
             '\r': '\\r',
-            '"' : '\\"',
+            '"': '\\"',
             '\\': '\\\\'
         },
         rep;
@@ -13535,9 +13520,9 @@ KISSY.add("json/json2", function(S, UA) {
 
 // Produce a string from holder[key].
 
-        var i,          // The loop counter.
-            k,          // The member key.
-            v,          // The member value.
+        var i, // The loop counter.
+            k, // The member key.
+            v, // The member value.
             length,
             mind = gap,
             partial,
@@ -13787,11 +13772,11 @@ KISSY.add("json/json2", function(S, UA) {
         };
     }
     return JSON;
-}, {requires:['ua']});
+}, {requires: ['ua']});
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:16
+build time: Oct 10 13:56
 */
 /**
  * @ignore
@@ -14409,9 +14394,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
 
         // Check for headers option
         for (i in headers) {
-            if (headers.hasOwnProperty(i)) {
-                self.setRequestHeader(i, headers[ i ]);
-            }
+            self.setRequestHeader(i, headers[ i ]);
         }
 
 
@@ -14998,7 +14981,7 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
             if (!dataType.length) {
                 // 获取源数据格式，放在第一个
                 for (type in contents) {
-                    if (contents.hasOwnProperty(type) && contents[type].test(contentType)) {
+                    if (contents[type].test(contentType)) {
                         if (dataType[0] != type) {
                             dataType.unshift(type);
                         }
@@ -15623,9 +15606,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
 
             if (xhrFields = c['xhrFields']) {
                 for (i in xhrFields) {
-                    if (xhrFields.hasOwnProperty(i)) {
-                        nativeXhr[ i ] = xhrFields[ i ];
-                    }
+                    nativeXhr[ i ] = xhrFields[ i ];
                 }
             }
 
@@ -15642,9 +15623,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                 // OPTIONS /xhr/r.php HTTP/1.1
                 if (!crossDomain) {
                     for (i in requestHeaders) {
-                        if (requestHeaders.hasOwnProperty(i)) {
-                            nativeXhr.setRequestHeader(i, requestHeaders[ i ]);
-                        }
+                        nativeXhr.setRequestHeader(i, requestHeaders[ i ]);
                     }
                 }
             } catch (e) {
@@ -15852,7 +15831,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:16
+build time: Oct 10 13:56
 */
 /**
  * @ignore
@@ -15962,7 +15941,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:16
+build time: Oct 10 14:09
 */
 /**
  * @ignore
@@ -16198,9 +16177,7 @@ KISSY.add('base/attribute', function (S, undefined) {
                 a,
                 attrs = getAttrs(self);
             for (a in attrs) {
-                if (attrs.hasOwnProperty(a)) {
-                    o[a] = self.get(a);
-                }
+                o[a] = self.get(a);
             }
             return o;
         },
@@ -16253,7 +16230,7 @@ KISSY.add('base/attribute', function (S, undefined) {
          * Checks if the given attribute has been added to the host.
          */
         hasAttr: function (name) {
-            return name && getAttrs(this).hasOwnProperty(name);
+            return getAttrs(this).hasOwnProperty(name);
         },
 
         /**
@@ -16288,12 +16265,10 @@ KISSY.add('base/attribute', function (S, undefined) {
                     e,
                     errors = [];
                 for (name in all) {
-                    if (all.hasOwnProperty(name)) {
-                        // bulk validation
-                        // if any one failed,all values are not set
-                        if ((e = validate(self, name, all[name], all)) !== undefined) {
-                            errors.push(e);
-                        }
+                    // bulk validation
+                    // if any one failed,all values are not set
+                    if ((e = validate(self, name, all[name], all)) !== undefined) {
+                        errors.push(e);
                     }
                 }
                 if (errors.length) {
@@ -16303,9 +16278,7 @@ KISSY.add('base/attribute', function (S, undefined) {
                     return false;
                 }
                 for (name in all) {
-                    if (all.hasOwnProperty(name)) {
-                        setInternal(self, name, all[name], opts, attrs);
-                    }
+                    setInternal(self, name, all[name], opts, attrs);
                 }
                 var attrNames = [],
                     prevVals = [],
@@ -16440,9 +16413,7 @@ KISSY.add('base/attribute', function (S, undefined) {
 
             // reset all
             for (name in attrs) {
-                if (attrs.hasOwnProperty(name)) {
-                    values[name] = getDefAttrVal(self, name);
-                }
+                values[name] = getDefAttrVal(self, name);
             }
 
             self.set(values, opts);
@@ -16562,15 +16533,13 @@ KISSY.add('base', function (S, Attribute, Event) {
         if (attrs) {
             for (var attr in attrs) {
                 // 子类上的 ATTRS 配置优先
-                if (attrs.hasOwnProperty(attr)) {
-                    // 父类后加，父类不覆盖子类的相同设置
-                    // 属性对象会 merge
-                    // a: {y: {getter: fn}}, b: {y: {value: 3}}
-                    // b extends a
-                    // =>
-                    // b {y: {value: 3, getter: fn}}
-                    host.addAttr(attr, attrs[attr], false);
-                }
+                // 父类后加，父类不覆盖子类的相同设置
+                // 属性对象会 merge
+                // a: {y: {getter: fn}}, b: {y: {value: 3}}
+                // b extends a
+                // =>
+                // b {y: {value: 3, getter: fn}}
+                host.addAttr(attr, attrs[attr], false);
             }
         }
     }
@@ -16578,11 +16547,8 @@ KISSY.add('base', function (S, Attribute, Event) {
     function initAttrs(host, config) {
         if (config) {
             for (var attr in config) {
-                if (config.hasOwnProperty(attr)) {
-                    // 用户设置会调用 setter/validator 的，但不会触发属性变化事件
-                    host.setInternal(attr, config[attr]);
-                }
-
+                // 用户设置会调用 setter/validator 的，但不会触发属性变化事件
+                host.setInternal(attr, config[attr]);
             }
         }
     }
@@ -16600,7 +16566,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 01:32
+build time: Oct 10 13:56
 */
 /**
  * @ignore
@@ -16874,14 +16840,12 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         if (el.nodeType == NodeType.ELEMENT_NODE) {
             hidden = (DOM.css(el, 'display') === 'none');
             for (prop in props) {
-                if (props.hasOwnProperty(prop)) {
-                    val = props[prop];
-                    // 直接结束
-                    if (val == 'hide' && hidden || val == 'show' && !hidden) {
-                        // need to invoke complete
-                        self.stop(1);
-                        return;
-                    }
+                val = props[prop];
+                // 直接结束
+                if (val == 'hide' && hidden || val == 'show' && !hidden) {
+                    // need to invoke complete
+                    self.stop(1);
+                    return;
                 }
             }
         }
@@ -16914,9 +16878,6 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // 分离 easing
         S.each(props, function (val, prop) {
-            if (!props.hasOwnProperty(prop)) {
-                return;
-            }
             var easing;
             if (S.isArray(val)) {
                 easing = specialEasing[prop] = val[1];
@@ -16956,9 +16917,6 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // 取得单位，并对单个属性构建 Fx 对象
         for (prop in props) {
-            if (!props.hasOwnProperty(prop)) {
-                continue;
-            }
 
             val = S.trim(props[prop]);
 
@@ -17115,9 +17073,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 fxs = self._fxs;
 
             for (prop in fxs) {
-                if (fxs.hasOwnProperty(prop) &&
-                    // 当前属性没有结束
-                    !((fx = fxs[prop]).finished)) {
+                // 当前属性没有结束
+                if (!((fx = fxs[prop]).finished)) {
                     // 非短路
                     if (config.frame) {
                         c = config.frame(fx);
@@ -17168,9 +17125,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
             if (finish) {
                 for (prop in fxs) {
-                    if (fxs.hasOwnProperty(prop) &&
-                        // 当前属性没有结束
-                        !((fx = fxs[prop]).finished)) {
+                    // 当前属性没有结束
+                    if (!((fx = fxs[prop]).finished)) {
                         // 非短路
                         if (config.frame) {
                             config.frame(fx, 1);
@@ -17976,14 +17932,14 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
  * @fileOverview single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/manager', function(S) {
+KISSY.add('anim/manager', function (S) {
     var stamp = S.stamp;
 
     return {
-        interval:15,
-        runnings:{},
-        timer:null,
-        start:function(anim) {
+        interval: 15,
+        runnings: {},
+        timer: null,
+        start: function (anim) {
             var self = this,
                 kv = stamp(anim);
             if (self.runnings[kv]) {
@@ -17992,10 +17948,10 @@ KISSY.add('anim/manager', function(S) {
             self.runnings[kv] = anim;
             self.startTimer();
         },
-        stop:function(anim) {
+        stop: function (anim) {
             this.notRun(anim);
         },
-        notRun:function(anim) {
+        notRun: function (anim) {
             var self = this,
                 kv = stamp(anim);
             delete self.runnings[kv];
@@ -18003,16 +17959,16 @@ KISSY.add('anim/manager', function(S) {
                 self.stopTimer();
             }
         },
-        pause:function(anim) {
+        pause: function (anim) {
             this.notRun(anim);
         },
-        resume:function(anim) {
+        resume: function (anim) {
             this.start(anim);
         },
-        startTimer:function() {
+        startTimer: function () {
             var self = this;
             if (!self.timer) {
-                self.timer = setTimeout(function() {
+                self.timer = setTimeout(function () {
                     if (!self.runFrames()) {
                         self.timer = 0;
                         self.startTimer();
@@ -18022,7 +17978,7 @@ KISSY.add('anim/manager', function(S) {
                 }, self.interval);
             }
         },
-        stopTimer:function() {
+        stopTimer: function () {
             var self = this,
                 t = self.timer;
             if (t) {
@@ -18030,15 +17986,13 @@ KISSY.add('anim/manager', function(S) {
                 self.timer = 0;
             }
         },
-        runFrames:function() {
+        runFrames: function () {
             var self = this,
                 done = 1,
                 runnings = self.runnings;
             for (var r in runnings) {
-                if (runnings.hasOwnProperty(r)) {
-                    done = 0;
-                    runnings[r]._frame();
-                }
+                done = 0;
+                runnings[r]._frame();
             }
             return done;
         }
@@ -18148,7 +18102,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 8 20:02
+build time: Oct 10 13:59
 */
 /**
  * @ignore

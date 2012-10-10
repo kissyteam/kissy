@@ -11,11 +11,11 @@ KISSY.add("editor/plugin/drag-upload/index", function (S, Editor) {
         DOM = S.DOM;
 
     function dragUpload(config) {
-        this.config=config||{};
+        this.config = config || {};
     }
 
     S.augment(dragUpload, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
             var cfg = this.config,
                 fileInput = cfg['fileInput'] || "Filedata",
                 sizeLimit = cfg['sizeLimit'] || Number.MAX_VALUE,
@@ -155,12 +155,12 @@ KISSY.add("editor/plugin/drag-upload/index", function (S, Editor) {
                     body += fileData + "\r\n";
                     serverParams = Editor.Utils.normParams(serverParams);
                     for (var p in serverParams) {
-                        if (serverParams.hasOwnProperty(p)) {
-                            body += "--" + boundary + "\r\n";
-                            body += "Content-Disposition: form-data; name=\"" +
-                                p + "\"\r\n\r\n";
-                            body += serverParams[p] + "\r\n";
-                        }
+
+                        body += "--" + boundary + "\r\n";
+                        body += "Content-Disposition: form-data; name=\"" +
+                            p + "\"\r\n\r\n";
+                        body += serverParams[p] + "\r\n";
+
                     }
                     body += "--" + boundary + "--";
 
@@ -180,5 +180,5 @@ KISSY.add("editor/plugin/drag-upload/index", function (S, Editor) {
 
     return dragUpload;
 }, {
-    requires:['editor']
+    requires: ['editor']
 });

@@ -162,9 +162,7 @@ KISSY.add('dd/proxy', function (S, Node, Base, DDM) {
                 node.remove();
             }
             for (var d in destructors) {
-                if (destructors.hasOwnProperty(d)) {
-                    this.detachDrag(destructors[d].drag);
-                }
+                this.detachDrag(destructors[d].drag);
             }
         }
     });

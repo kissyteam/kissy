@@ -64,24 +64,22 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
         // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
         for (attrName in attrs) {
-            if (attrs.hasOwnProperty(attrName)) {
-                attrCfg = attrs[attrName];
-                if (attrCfg.view) {
-                    // 先取后 getter
-                    // 防止死循环
-                    if (( v = self.get(attrName) ) !== undefined) {
-                        cfg[attrName] = v;
-                    }
-
-                    // setter 不应该有实际操作，仅用于正规化比较好
-                    // attrCfg.setter = wrapperViewSetter(attrName);
-                    self.on("after" + S.ucfirst(attrName) + "Change",
-                        wrapperViewSetter(attrName));
-                    // 逻辑层读值直接从 view 层读
-                    // 那么如果存在默认值也设置在 view 层
-                    // 逻辑层不要设置 getter
-                    attrCfg.getter = wrapperViewGetter(attrName);
+            attrCfg = attrs[attrName];
+            if (attrCfg.view) {
+                // 先取后 getter
+                // 防止死循环
+                if (( v = self.get(attrName) ) !== undefined) {
+                    cfg[attrName] = v;
                 }
+
+                // setter 不应该有实际操作，仅用于正规化比较好
+                // attrCfg.setter = wrapperViewSetter(attrName);
+                self.on("after" + S.ucfirst(attrName) + "Change",
+                    wrapperViewSetter(attrName));
+                // 逻辑层读值直接从 view 层读
+                // 那么如果存在默认值也设置在 view 层
+                // 逻辑层不要设置 getter
+                attrCfg.getter = wrapperViewGetter(attrName);
             }
         }
         // does not autoRender for view

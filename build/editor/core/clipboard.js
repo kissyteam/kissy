@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 23:22
+build time: Oct 10 13:59
 */
 /**
  * monitor user's paste key ,clear user input,modified from ckeditor
@@ -280,13 +280,11 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 contextmenu.__copy_fix = 1;
 
                 for (var i in pastes) {
-                    if (pastes.hasOwnProperty(i)) {
-                        contextmenu.addChild({
-                            xclass: 'menuitem',
-                            content: lang[i],
-                            value: i
-                        });
-                    }
+                    contextmenu.addChild({
+                        xclass: 'menuitem',
+                        content: lang[i],
+                        value: i
+                    });
                 }
 
                 contextmenu.on('click', function (e) {

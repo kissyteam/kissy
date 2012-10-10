@@ -204,9 +204,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            DOM.data(elems, k, name[k]);
-                        }
+                        DOM.data(elems, k, name[k]);
                     }
                     return undefined;
                 }

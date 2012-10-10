@@ -28,7 +28,7 @@ KISSY.add("kison/utils", function (S) {
                 ret = ['{'];
                 var start = true;
                 for (var i in obj) {
-                    if (obj.hasOwnProperty(i) && (!excludeReg || !(i.match(excludeReg)))) {
+                    if (!excludeReg || !(i.match(excludeReg))) {
                         var v = obj[i];
                         ret.push((start ? '' : ',') +
                             '"' + i + '": ' + serializeObject(v, excludeReg));
@@ -38,7 +38,7 @@ KISSY.add("kison/utils", function (S) {
                 ret.push('}');
                 return ret.join('\n');
             } else {
-                return obj+'';
+                return obj + '';
             }
         }
     };

@@ -11,11 +11,10 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
     var mix = S.mix, END_TAG = '$EOF', START_TAG = '$START';
 
     function setSize(set3) {
-        var count = 0;
-        for (var i in set3) {
-            if (set3.hasOwnProperty(i)) {
-                count++;
-            }
+        var count = 0, i;
+        for (i in set3) {
+            count++;
+
         }
         return count;
     }
@@ -125,17 +124,17 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
                 //check if each symbol is null able
                 for (symbol in nonTerminals) {
-                    if (nonTerminals.hasOwnProperty(symbol)) {
-                        if (!nonTerminals[symbol].get("nullAble")) {
-                            productions = nonTerminals[symbol].get("productions");
-                            for (i = 0; production = productions[i]; i++) {
-                                if (production.get("nullAble")) {
-                                    nonTerminals[symbol].set("nullAble", cont = true);
-                                    break;
-                                }
+
+                    if (!nonTerminals[symbol].get("nullAble")) {
+                        productions = nonTerminals[symbol].get("productions");
+                        for (i = 0; production = productions[i]; i++) {
+                            if (production.get("nullAble")) {
+                                nonTerminals[symbol].set("nullAble", cont = true);
+                                break;
                             }
                         }
                     }
+
                 }
             }
         },
@@ -215,18 +214,16 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
                 for (symbol in nonTerminals) {
 
-                    if (nonTerminals.hasOwnProperty(symbol)) {
-
-                        nonTerminal = nonTerminals[symbol];
-                        firsts = {};
-                        S.each(nonTerminal.get("productions"), function (production) {
-                            mix(firsts, production.get("firsts"));
-                        });
-                        if (setSize(firsts) !== setSize(nonTerminal.get("firsts"))) {
-                            nonTerminal.set("firsts", firsts);
-                            cont = true;
-                        }
+                    nonTerminal = nonTerminals[symbol];
+                    firsts = {};
+                    S.each(nonTerminal.get("productions"), function (production) {
+                        mix(firsts, production.get("firsts"));
+                    });
+                    if (setSize(firsts) !== setSize(nonTerminal.get("firsts"))) {
+                        nonTerminal.set("firsts", firsts);
+                        cont = true;
                     }
+
                 }
             }
         },

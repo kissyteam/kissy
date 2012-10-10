@@ -6,8 +6,8 @@ KISSY.add("editor/plugin/flash-common/utils", function (S) {
     var DOM = S.DOM, Node = S.Node, UA = S.UA;
     var flashUtils = {
 
-        insertFlash:function (editor, src, attrs, _cls, _type) {
-            var nodeInfo = flashUtils.createSWF(src, { attrs:attrs }, editor.get("document")[0]),
+        insertFlash: function (editor, src, attrs, _cls, _type) {
+            var nodeInfo = flashUtils.createSWF(src, { attrs: attrs }, editor.get("document")[0]),
                 real = nodeInfo.el,
                 substitute = editor.createFakeElement(real,
                     _cls || 'ke_flash',
@@ -19,14 +19,14 @@ KISSY.add("editor/plugin/flash-common/utils", function (S) {
             return substitute;
         },
 
-        isFlashEmbed:function (element) {
+        isFlashEmbed: function (element) {
             return (
                 element.getAttribute("type") == 'application/x-shockwave-flash' ||
                     /\.swf(?:$|\?)/i.test(element.getAttribute("src") || '')
                 );
         },
 
-        getUrl:function (r) {
+        getUrl: function (r) {
             var url = "";
             if (r.nodeName() == "object") {
                 var params = r[0].childNodes;
@@ -45,7 +45,7 @@ KISSY.add("editor/plugin/flash-common/utils", function (S) {
             }
             return url;
         },
-        createSWF:function (movie, cfg, doc) {
+        createSWF: function (movie, cfg, doc) {
             var attrs = cfg.attrs || {},
                 flashVars = cfg.flashVars,
                 attrs_str = "",
@@ -54,28 +54,27 @@ KISSY.add("editor/plugin/flash-common/utils", function (S) {
                 vars_str = "";
             doc = doc || document;
             S.mix(attrs, {
-                wmode:"transparent"
+                wmode: "transparent"
             });
             for (var a in attrs) {
-                if (attrs.hasOwnProperty(a))
-                    attrs_str += a + "='" + attrs[a] + "' ";
+                attrs_str += a + "='" + attrs[a] + "' ";
             }
 
             S.mix(params, {
-                quality:"high",
-                movie:movie,
-                wmode:"transparent"
+                quality: "high",
+                movie: movie,
+                wmode: "transparent"
             });
             for (var p in params) {
-                if (params.hasOwnProperty(p))
-                    params_str += "<param name='" + p + "' value='" + params[p] + "'/>";
+
+                params_str += "<param name='" + p + "' value='" + params[p] + "'/>";
             }
 
 
             if (flashVars) {
                 for (var f in flashVars) {
-                    if (flashVars.hasOwnProperty(f))
-                        vars_str += "&" + f + "=" + encodeURIComponent(flashVars[f]);
+
+                    vars_str += "&" + f + "=" + encodeURIComponent(flashVars[f]);
                 }
                 vars_str = vars_str.substring(1);
             }
@@ -104,26 +103,26 @@ KISSY.add("editor/plugin/flash-common/utils", function (S) {
                 // + '</object>' +
                 '</object>';
             return {
-                el:new Node(outerHTML, null, doc),
-                html:outerHTML
+                el: new Node(outerHTML, null, doc),
+                html: outerHTML
             };
         },
-        createSWFRuntime2:function (movie, cfg, doc) {
+        createSWFRuntime2: function (movie, cfg, doc) {
             doc = doc || document;
             var holder = new Node(
-                "<div " +
-                    "style='" +
-                    "width:0;" +
-                    "height:0;" +
-                    "overflow:hidden;" +
-                    "'>", null, doc).appendTo(doc.body)
+                    "<div " +
+                        "style='" +
+                        "width:0;" +
+                        "height:0;" +
+                        "overflow:hidden;" +
+                        "'>", null, doc).appendTo(doc.body)
                 , el = flashUtils.createSWF.apply(this, arguments).el.appendTo(holder);
             if (!UA['ie'])
                 el = el.one("object");
             return el[0];
 
         },
-        createSWFRuntime:function (movie, cfg, doc) {
+        createSWFRuntime: function (movie, cfg, doc) {
             var attrs = cfg.attrs || {},
                 flashVars = cfg.flashVars || {},
                 params = cfg.params || {},
@@ -133,16 +132,16 @@ KISSY.add("editor/plugin/flash-common/utils", function (S) {
             doc = doc || document;
             attrs.id = attrs.id || S.guid("ks-editor-runtimeflash-");
             for (var a in attrs) {
-                if (attrs.hasOwnProperty(a))
-                    attrs_str += a + "='" + attrs[a] + "' ";
+
+                attrs_str += a + "='" + attrs[a] + "' ";
             }
             for (var p in params) {
-                if (params.hasOwnProperty(p))
-                    params_str += "<param name='" + p + "' value='" + params[p] + "'/>";
+
+                params_str += "<param name='" + p + "' value='" + params[p] + "'/>";
             }
             for (var f in flashVars) {
-                if (flashVars.hasOwnProperty(f))
-                    vars_str += "&" + f + "=" + encodeURIComponent(flashVars[f]);
+
+                vars_str += "&" + f + "=" + encodeURIComponent(flashVars[f]);
             }
             vars_str = vars_str.substring(1);
 
@@ -191,7 +190,7 @@ KISSY.add("editor/plugin/flash-common/utils", function (S) {
                     appendTo(doc.body);
                 //不能初始化时设置，防止刷新,scrollLeft 一开始为0，等会,wait is virtue
                 setTimeout(function () {
-                    holder.offset({left:DOM.scrollLeft(), top:DOM.scrollTop()})
+                    holder.offset({left: DOM.scrollLeft(), top: DOM.scrollTop()})
                 }, 100);
             }
             holder.html(outerHTML);

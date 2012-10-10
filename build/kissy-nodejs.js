@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 01:32
+build time: Oct 10 14:09
 */
 /**
  * @ignore
@@ -430,12 +430,10 @@ var KISSY = (function (undefined) {
              * @return {Array}
              */
             keys: function (o) {
-                var result = [];
+                var result = [], p;
 
-                for (var p in o) {
-                    if (o.hasOwnProperty(p)) {
-                        result.push(p);
-                    }
+                for (p in o) {
+                    result.push(p);
                 }
 
                 if (hasEnumBug) {
@@ -479,11 +477,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121009013249' will replace with current timestamp when compressing.
+         * NOTICE: '20121010140939' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20121009013249';
+        S.__BUILD_TIME = '20121010140939';
     })();
 
     // exports for nodejs
@@ -551,9 +549,9 @@ var KISSY = (function (undefined) {
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
         for (var k in htmlEntities) {
-            if (htmlEntities.hasOwnProperty(k)) {
-                reverseEntities[htmlEntities[k]] = k;
-            }
+
+            reverseEntities[htmlEntities[k]] = k;
+
         }
     })();
 
@@ -1243,33 +1241,33 @@ var KISSY = (function (undefined) {
                 }
                 var buf = [], key, i, v, len, val;
                 for (key in o) {
-                    if (o.hasOwnProperty(key)) {
-                        val = o[key];
-                        key = encode(key);
 
-                        // val is valid non-array value
-                        if (isValidParamValue(val)) {
-                            buf.push(key);
-                            if (val !== undefined) {
-                                buf.push(eq, encode(val + EMPTY));
-                            }
-                            buf.push(sep);
+                    val = o[key];
+                    key = encode(key);
+
+                    // val is valid non-array value
+                    if (isValidParamValue(val)) {
+                        buf.push(key);
+                        if (val !== undefined) {
+                            buf.push(eq, encode(val + EMPTY));
                         }
-                        // val is not empty array
-                        else if (S.isArray(val) && val.length) {
-                            for (i = 0, len = val.length; i < len; ++i) {
-                                v = val[i];
-                                if (isValidParamValue(v)) {
-                                    buf.push(key, (serializeArray ? encode('[]') : EMPTY));
-                                    if (v !== undefined) {
-                                        buf.push(eq, encode(v + EMPTY));
-                                    }
-                                    buf.push(sep);
-                                }
-                            }
-                        }
-                        // ignore other cases, including empty array, Function, RegExp, Date etc.
+                        buf.push(sep);
                     }
+                    // val is not empty array
+                    else if (S.isArray(val) && val.length) {
+                        for (i = 0, len = val.length; i < len; ++i) {
+                            v = val[i];
+                            if (isValidParamValue(v)) {
+                                buf.push(key, (serializeArray ? encode('[]') : EMPTY));
+                                if (v !== undefined) {
+                                    buf.push(eq, encode(v + EMPTY));
+                                }
+                                buf.push(sep);
+                            }
+                        }
+                    }
+                    // ignore other cases, including empty array, Function, RegExp, Date etc.
+
                 }
                 buf.pop();
                 return buf.join(EMPTY);
@@ -1319,7 +1317,7 @@ var KISSY = (function (undefined) {
                             key = key.substring(0, key.length - 2);
                         }
                     }
-                    if (hasOwnProperty(ret, key)) {
+                    if (key in ret) {
                         if (S.isArray(ret[key])) {
                             ret[key].push(val);
                         } else {
@@ -1606,12 +1604,12 @@ var KISSY = (function (undefined) {
             }
         } else if (isPlainObject) {
             for (k in input) {
-                if (input.hasOwnProperty(k)) {
-                    if (k !== CLONE_MARKER &&
-                        (!f || (f.call(input, input[k], k, input) !== FALSE))) {
-                        destination[k] = cloneInternal(input[k], f, memory);
-                    }
+
+                if (k !== CLONE_MARKER &&
+                    (!f || (f.call(input, input[k], k, input) !== FALSE))) {
+                    destination[k] = cloneInternal(input[k], f, memory);
                 }
+
             }
         }
 
@@ -1629,30 +1627,30 @@ var KISSY = (function (undefined) {
             return (obj !== null && obj !== undefined) && obj[keyName] !== undefined;
         };
         for (var property in b) {
-            if (b.hasOwnProperty(property)) {
-                if (!hasKey(a, property) && hasKey(b, property)) {
-                    mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
-                }
+
+            if (!hasKey(a, property) && hasKey(b, property)) {
+                mismatchKeys.push("expected has key '" + property + "', but missing from actual.");
             }
+
         }
         for (property in a) {
-            if (a.hasOwnProperty(property)) {
-                if (!hasKey(b, property) && hasKey(a, property)) {
-                    mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
-                }
+
+            if (!hasKey(b, property) && hasKey(a, property)) {
+                mismatchKeys.push("expected missing key '" + property + "', but present in actual.");
             }
+
         }
         for (property in b) {
-            if (b.hasOwnProperty(property)) {
-                if (property == COMPARE_MARKER) {
-                    continue;
-                }
-                if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
-                    mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
-                        + "' in expected, but was '" +
-                        (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
-                }
+
+            if (property == COMPARE_MARKER) {
+                continue;
             }
+            if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
+                mismatchValues.push("'" + property + "' was '" + (b[property] ? (b[property].toString()) : b[property])
+                    + "' in expected, but was '" +
+                    (a[property] ? (a[property].toString()) : a[property]) + "' in actual.");
+            }
+
         }
         if (S.isArray(a) && S.isArray(b) && a.length != b.length) {
             mismatchValues.push('arrays were not the same length');
@@ -2397,13 +2395,13 @@ var KISSY = (function (undefined) {
                 k;
             parseQuery(self);
             for (k in _queryMap) {
-                if (_queryMap.hasOwnProperty(k)) {
-                    if (S.isArray(_queryMap[k])) {
-                        count += _queryMap[k].length;
-                    } else {
-                        count++;
-                    }
+
+                if (S.isArray(_queryMap[k])) {
+                    count += _queryMap[k].length;
+                } else {
+                    count++;
                 }
+
             }
             return count;
         },
@@ -3711,13 +3709,13 @@ var KISSY = (function (undefined) {
             packageDesc;
 
         for (p in packages) {
-            if (packages.hasOwnProperty(p)) {
-                // longest match
-                if (S.startsWith(modName, p) &&
-                    p.length > pName.length) {
-                    pName = p;
-                }
+
+            // longest match
+            if (S.startsWith(modName, p) &&
+                p.length > pName.length) {
+                pName = p;
             }
+
         }
 
         packageDesc = packages[pName] ||
@@ -4086,17 +4084,17 @@ var KISSY = (function (undefined) {
 
         // 外部模块去除包路径，得到模块名
         for (p in packages) {
-            if (packages.hasOwnProperty(p)) {
-                packageBase = packages[p].getBase();
-                if (S.startsWith(srcStr, packageBase)) {
-                    // longest match
-                    if (packageBase.length > finalPackageLength) {
-                        finalPackageLength = packageBase.length;
-                        finalPackagePath = packageBase;
-                        finalPackageUri = packages[p].getBaseUri();
-                    }
+
+            packageBase = packages[p].getBase();
+            if (S.startsWith(srcStr, packageBase)) {
+                // longest match
+                if (packageBase.length > finalPackageLength) {
+                    finalPackageLength = packageBase.length;
+                    finalPackagePath = packageBase;
+                    finalPackageUri = packages[p].getBaseUri();
                 }
             }
+
         }
         // 注意：模块名不包含后缀名以及参数，所以去除
         // 系统模块去除系统路径
@@ -4581,7 +4579,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121009013249'
+            tag: '20121010140939'
         }, getBaseInfo()));
     }
 

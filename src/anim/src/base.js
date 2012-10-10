@@ -181,14 +181,12 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         if (el.nodeType == NodeType.ELEMENT_NODE) {
             hidden = (DOM.css(el, 'display') === 'none');
             for (prop in props) {
-                if (props.hasOwnProperty(prop)) {
-                    val = props[prop];
-                    // 直接结束
-                    if (val == 'hide' && hidden || val == 'show' && !hidden) {
-                        // need to invoke complete
-                        self.stop(1);
-                        return;
-                    }
+                val = props[prop];
+                // 直接结束
+                if (val == 'hide' && hidden || val == 'show' && !hidden) {
+                    // need to invoke complete
+                    self.stop(1);
+                    return;
                 }
             }
         }
@@ -221,9 +219,6 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // 分离 easing
         S.each(props, function (val, prop) {
-            if (!props.hasOwnProperty(prop)) {
-                return;
-            }
             var easing;
             if (S.isArray(val)) {
                 easing = specialEasing[prop] = val[1];
@@ -263,9 +258,6 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         // 取得单位，并对单个属性构建 Fx 对象
         for (prop in props) {
-            if (!props.hasOwnProperty(prop)) {
-                continue;
-            }
 
             val = S.trim(props[prop]);
 
@@ -422,9 +414,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
                 fxs = self._fxs;
 
             for (prop in fxs) {
-                if (fxs.hasOwnProperty(prop) &&
-                    // 当前属性没有结束
-                    !((fx = fxs[prop]).finished)) {
+                // 当前属性没有结束
+                if (!((fx = fxs[prop]).finished)) {
                     // 非短路
                     if (config.frame) {
                         c = config.frame(fx);
@@ -475,9 +466,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
             if (finish) {
                 for (prop in fxs) {
-                    if (fxs.hasOwnProperty(prop) &&
-                        // 当前属性没有结束
-                        !((fx = fxs[prop]).finished)) {
+                    // 当前属性没有结束
+                    if (!((fx = fxs[prop]).finished)) {
                         // 非短路
                         if (config.frame) {
                             config.frame(fx, 1);

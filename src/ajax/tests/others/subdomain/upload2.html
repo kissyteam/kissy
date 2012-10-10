@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
 </head>
 <body>
 <form enctype="multipart/form-data" id="t">
@@ -9,7 +9,7 @@
     <input name="test2" value='2'/>
 </form>
 <script src="../../../../build/kissy.js"></script>
-<script >
+<script>
     document.domain = 'ali.com';
     KISSY.ready(function (S) {
         S.use("core", function (S) {
@@ -48,17 +48,17 @@
 
                 var form = o.form,
                         buf = {
-                            target:DOM.attr(form, "target"),
-                            method:DOM.attr(form, "method"),
-                            encoding:DOM.attr(form, "encoding"),
-                            enctype:DOM.attr(form, "enctype"),
-                            "action":DOM.attr(form, "action")
+                            target: DOM.attr(form, "target"),
+                            method: DOM.attr(form, "method"),
+                            encoding: DOM.attr(form, "encoding"),
+                            enctype: DOM.attr(form, "enctype"),
+                            "action": DOM.attr(form, "action")
                         };
                 DOM.attr(form, {
-                    target:id,
-                    "method":"post",
-                    enctype:'multipart/form-data',
-                    encoding:'multipart/form-data'
+                    target: id,
+                    "method": "post",
+                    enctype: 'multipart/form-data',
+                    encoding: 'multipart/form-data'
                 });
                 if (url) {
                     DOM.attr(form, "action", url);
@@ -67,21 +67,19 @@
                 if (ps) { // add dynamic params
                     hiddens = [];
                     for (var k in ps) {
-                        if (ps.hasOwnProperty(k)) {
-                            hd = document.createElement('input');
-                            hd.type = 'hidden';
-                            hd.name = k;
-                            hd.value = ps[k];
-                            form.appendChild(hd);
-                            hiddens.push(hd);
-                        }
+                        hd = document.createElement('input');
+                        hd.type = 'hidden';
+                        hd.name = k;
+                        hd.value = ps[k];
+                        form.appendChild(hd);
+                        hiddens.push(hd);
                     }
                 }
 
                 function cb(e) {
                     var r = {  // bogus response object
-                        responseText:'',
-                        responseXML:null
+                        responseText: '',
+                        responseXML: null
                     };
 
                     r.argument = o ? o.argument : null;
@@ -141,12 +139,12 @@
             };
 
             doFormUpload({
-                        form:S.get('#t'),
-                        callback:function (data) {
+                        form: S.get('#t'),
+                        callback: function (data) {
                             alert(data.responseText);
                         }
                     }, {
-                        s:1
+                        s: 1
                     },
                     'http://yiminghe.taobao.ali.com/kissy_git/kissy/' +
                             'src/ajax/tests/subdomain/upload.php');

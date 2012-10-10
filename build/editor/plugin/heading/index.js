@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 23:22
+build time: Oct 10 13:59
 */
 /**
  * Heading plugin for KISSY.
@@ -14,54 +14,54 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
     }
 
     S.augment(HeadingPlugin, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
             headingCmd.init(editor);
 
             var FORMAT_SELECTION_ITEMS = [],
                 FORMATS = {
-                    "普通文本":"p",
-                    "标题1":"h1",
-                    "标题2":"h2",
-                    "标题3":"h3",
-                    "标题4":"h4",
-                    "标题5":"h5",
-                    "标题6":"h6"
+                    "普通文本": "p",
+                    "标题1": "h1",
+                    "标题2": "h2",
+                    "标题3": "h3",
+                    "标题4": "h4",
+                    "标题5": "h5",
+                    "标题6": "h6"
                 },
                 FORMAT_SIZES = {
-                    p:"1em",
-                    h1:"2em",
-                    h2:"1.5em",
-                    h3:"1.17em",
-                    h4:"1em",
-                    h5:"0.83em",
-                    h6:"0.67em"
+                    p: "1em",
+                    h1: "2em",
+                    h2: "1.5em",
+                    h3: "1.17em",
+                    h4: "1em",
+                    h5: "0.83em",
+                    h6: "0.67em"
                 };
 
             for (var p in FORMATS) {
-                if (FORMATS.hasOwnProperty(p)) {
-                    FORMAT_SELECTION_ITEMS.push({
-                        content:p,
-                        value:FORMATS[p],
-                        elAttrs:{
-                            style:"font-size:" + FORMAT_SIZES[FORMATS[p]]
-                        }
-                    });
-                }
+
+                FORMAT_SELECTION_ITEMS.push({
+                    content: p,
+                    value: FORMATS[p],
+                    elAttrs: {
+                        style: "font-size:" + FORMAT_SIZES[FORMATS[p]]
+                    }
+                });
+
             }
 
             editor.addSelect("heading", {
-                defaultCaption:"标题",
-                width:"120px",
-                menu:{
-                    children:FORMAT_SELECTION_ITEMS
+                defaultCaption: "标题",
+                width: "120px",
+                menu: {
+                    children: FORMAT_SELECTION_ITEMS
                 },
-                mode:Editor.WYSIWYG_MODE,
-                listeners:{
-                    click:function (ev) {
+                mode: Editor.WYSIWYG_MODE,
+                listeners: {
+                    click: function (ev) {
                         var v = ev.target.get("value")
                         editor.execCommand("heading", v);
                     },
-                    afterSyncUI:function () {
+                    afterSyncUI: function () {
                         var self = this;
                         editor.on("selectionChange", function () {
                             if (editor.get("mode") == Editor.SOURCE_MODE) {
@@ -70,9 +70,9 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
                             // For each element into the elements path.
                             // Check if the element is removable by any of
                             // the styles.
-                            var headingValue = editor.queryCommandValue("heading");
-                            for (var value in FORMAT_SIZES) {
-                                if (FORMAT_SIZES.hasOwnProperty(value) && value == headingValue) {
+                            var headingValue = editor.queryCommandValue("heading"), value;
+                            for (value in FORMAT_SIZES) {
+                                if (value == headingValue) {
                                     self.set("value", value);
                                     return;
                                 }
@@ -88,5 +88,5 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
 
     return HeadingPlugin;
 }, {
-    requires:['editor', './cmd']
+    requires: ['editor', './cmd']
 });

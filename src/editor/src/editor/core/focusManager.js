@@ -16,37 +16,35 @@ KISSY.add("editor/core/focusManager", function (S) {
             /**
              * 刷新全部实例
              */
-            refreshAll:function () {
+            refreshAll: function () {
                 for (var i in INSTANCES) {
-                    if (INSTANCES.hasOwnProperty(i)) {
-                        var e = INSTANCES[i], doc = e.get("document")[0];
-                        doc.designMode = "off";
-                        doc.designMode = "on";
-                    }
+                    var e = INSTANCES[i], doc = e.get("document")[0];
+                    doc.designMode = "off";
+                    doc.designMode = "on";
                 }
             },
             /**
              * 得到当前获得焦点的实例
              */
-            currentInstance:function () {
+            currentInstance: function () {
                 return currentInstance;
             },
             /**
              *
              * @param id {string}
              */
-            getInstance:function (id) {
+            getInstance: function (id) {
                 return INSTANCES[id];
             },
-            add:function (editor) {
+            add: function (editor) {
                 var win = editor.get("window")[0];
                 Event.on(win, "focus", focus, editor);
                 Event.on(win, "blur", blur, editor);
             },
-            register:function (editor) {
+            register: function (editor) {
                 INSTANCES[editor._UUID] = editor;
             },
-            remove:function (editor) {
+            remove: function (editor) {
                 delete INSTANCES[editor._UUID];
                 var win = editor.get("window")[0];
                 Event.remove(win, "focus", focus, editor);
@@ -93,5 +91,5 @@ KISSY.add("editor/core/focusManager", function (S) {
 
     return focusManager;
 }, {
-    requires:['./base', './dom']
+    requires: ['./base', './dom']
 });

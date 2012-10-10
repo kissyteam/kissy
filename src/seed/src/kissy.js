@@ -425,12 +425,10 @@ var KISSY = (function (undefined) {
              * @return {Array}
              */
             keys: function (o) {
-                var result = [];
+                var result = [], p;
 
-                for (var p in o) {
-                    if (o.hasOwnProperty(p)) {
-                        result.push(p);
-                    }
+                for (p in o) {
+                    result.push(p);
                 }
 
                 if (hasEnumBug) {

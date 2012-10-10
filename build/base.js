@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:16
+build time: Oct 10 14:09
 */
 /**
  * @ignore
@@ -237,9 +237,7 @@ KISSY.add('base/attribute', function (S, undefined) {
                 a,
                 attrs = getAttrs(self);
             for (a in attrs) {
-                if (attrs.hasOwnProperty(a)) {
-                    o[a] = self.get(a);
-                }
+                o[a] = self.get(a);
             }
             return o;
         },
@@ -292,7 +290,7 @@ KISSY.add('base/attribute', function (S, undefined) {
          * Checks if the given attribute has been added to the host.
          */
         hasAttr: function (name) {
-            return name && getAttrs(this).hasOwnProperty(name);
+            return getAttrs(this).hasOwnProperty(name);
         },
 
         /**
@@ -327,12 +325,10 @@ KISSY.add('base/attribute', function (S, undefined) {
                     e,
                     errors = [];
                 for (name in all) {
-                    if (all.hasOwnProperty(name)) {
-                        // bulk validation
-                        // if any one failed,all values are not set
-                        if ((e = validate(self, name, all[name], all)) !== undefined) {
-                            errors.push(e);
-                        }
+                    // bulk validation
+                    // if any one failed,all values are not set
+                    if ((e = validate(self, name, all[name], all)) !== undefined) {
+                        errors.push(e);
                     }
                 }
                 if (errors.length) {
@@ -342,9 +338,7 @@ KISSY.add('base/attribute', function (S, undefined) {
                     return false;
                 }
                 for (name in all) {
-                    if (all.hasOwnProperty(name)) {
-                        setInternal(self, name, all[name], opts, attrs);
-                    }
+                    setInternal(self, name, all[name], opts, attrs);
                 }
                 var attrNames = [],
                     prevVals = [],
@@ -479,9 +473,7 @@ KISSY.add('base/attribute', function (S, undefined) {
 
             // reset all
             for (name in attrs) {
-                if (attrs.hasOwnProperty(name)) {
-                    values[name] = getDefAttrVal(self, name);
-                }
+                values[name] = getDefAttrVal(self, name);
             }
 
             self.set(values, opts);
@@ -601,15 +593,13 @@ KISSY.add('base', function (S, Attribute, Event) {
         if (attrs) {
             for (var attr in attrs) {
                 // 子类上的 ATTRS 配置优先
-                if (attrs.hasOwnProperty(attr)) {
-                    // 父类后加，父类不覆盖子类的相同设置
-                    // 属性对象会 merge
-                    // a: {y: {getter: fn}}, b: {y: {value: 3}}
-                    // b extends a
-                    // =>
-                    // b {y: {value: 3, getter: fn}}
-                    host.addAttr(attr, attrs[attr], false);
-                }
+                // 父类后加，父类不覆盖子类的相同设置
+                // 属性对象会 merge
+                // a: {y: {getter: fn}}, b: {y: {value: 3}}
+                // b extends a
+                // =>
+                // b {y: {value: 3, getter: fn}}
+                host.addAttr(attr, attrs[attr], false);
             }
         }
     }
@@ -617,11 +607,8 @@ KISSY.add('base', function (S, Attribute, Event) {
     function initAttrs(host, config) {
         if (config) {
             for (var attr in config) {
-                if (config.hasOwnProperty(attr)) {
-                    // 用户设置会调用 setter/validator 的，但不会触发属性变化事件
-                    host.setInternal(attr, config[attr]);
-                }
-
+                // 用户设置会调用 setter/validator 的，但不会触发属性变化事件
+                host.setInternal(attr, config[attr]);
             }
         }
     }

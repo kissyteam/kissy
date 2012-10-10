@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 01:18
+build time: Oct 10 13:56
 */
 /**
  * @ignore
@@ -413,9 +413,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 if (S.isPlainObject(name)) {
                     pass = val;
                     for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            DOM.attr(els, k, name[k], pass);
-                        }
+                        DOM.attr(els, k, name[k], pass);
                     }
                     return undefined;
                 }
@@ -1791,9 +1789,7 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            DOM.data(elems, k, name[k]);
-                        }
+                        DOM.data(elems, k, name[k]);
                     }
                     return undefined;
                 }
@@ -2596,10 +2592,8 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         var old = getOffset(elem), ret = { }, current, key;
 
         for (key in offset) {
-            if (offset.hasOwnProperty(key)) {
-                current = myParseInt(DOM.css(elem, key), 10) || 0;
-                ret[key] = current + offset[key] - old[key];
-            }
+            current = myParseInt(DOM.css(elem, key), 10) || 0;
+            ret[key] = current + offset[key] - old[key];
         }
         DOM.css(elem, ret);
     }
@@ -3678,10 +3672,8 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            for (i = els.length - 1; i >= 0; i--) {
-                                style(els[i], k, name[k]);
-                            }
+                        for (i = els.length - 1; i >= 0; i--) {
+                            style(els[i], k, name[k]);
                         }
                     }
                     return undefined;
@@ -3712,14 +3704,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             css: function (selector, name, val) {
                 var els = DOM.query(selector),
                     elem = els[0],
+                    k,
                     i;
                 // supports hash
                 if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            for (i = els.length - 1; i >= 0; i--) {
-                                style(els[i], k, name[k]);
-                            }
+                    for (k in name) {
+                        for (i = els.length - 1; i >= 0; i--) {
+                            style(els[i], k, name[k]);
                         }
                     }
                     return undefined;
@@ -4026,23 +4017,19 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     });
 
     function swap(elem, options, callback) {
-        var old = {};
+        var old = {}, name;
 
         // Remember the old values, and insert the new ones
-        for (var name in options) {
-            if (options.hasOwnProperty(name)) {
-                old[ name ] = elem[STYLE][ name ];
-                elem[STYLE][ name ] = options[ name ];
-            }
+        for (name in options) {
+            old[ name ] = elem[STYLE][ name ];
+            elem[STYLE][ name ] = options[ name ];
         }
 
         callback.call(elem);
 
         // Revert the old values
         for (name in options) {
-            if (options.hasOwnProperty(name)) {
-                elem[STYLE][ name ] = old[ name ];
-            }
+            elem[STYLE][ name ] = old[ name ];
         }
     }
 

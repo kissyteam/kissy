@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 23:22
+build time: Oct 10 13:59
 */
 /**
  * dom utils for kissy editor,mainly from ckeditor
@@ -749,9 +749,7 @@ KISSY.add("editor/core/dom", function (S, Editor, Utils) {
                 var names = element.data('list_marker_names'),
                     id = element.data('list_marker_id');
                 for (var i in names) {
-                    if (names.hasOwnProperty(i)) {
-                        element.removeData(i);
-                    }
+                    element.removeData(i);
                 }
                 element.removeData('list_marker_names');
                 if (removeFromDatabase) {

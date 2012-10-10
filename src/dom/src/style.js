@@ -180,10 +180,8 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            for (i = els.length - 1; i >= 0; i--) {
-                                style(els[i], k, name[k]);
-                            }
+                        for (i = els.length - 1; i >= 0; i--) {
+                            style(els[i], k, name[k]);
                         }
                     }
                     return undefined;
@@ -214,14 +212,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             css: function (selector, name, val) {
                 var els = DOM.query(selector),
                     elem = els[0],
+                    k,
                     i;
                 // supports hash
                 if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            for (i = els.length - 1; i >= 0; i--) {
-                                style(els[i], k, name[k]);
-                            }
+                    for (k in name) {
+                        for (i = els.length - 1; i >= 0; i--) {
+                            style(els[i], k, name[k]);
                         }
                     }
                     return undefined;
@@ -528,23 +525,19 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     });
 
     function swap(elem, options, callback) {
-        var old = {};
+        var old = {}, name;
 
         // Remember the old values, and insert the new ones
-        for (var name in options) {
-            if (options.hasOwnProperty(name)) {
-                old[ name ] = elem[STYLE][ name ];
-                elem[STYLE][ name ] = options[ name ];
-            }
+        for (name in options) {
+            old[ name ] = elem[STYLE][ name ];
+            elem[STYLE][ name ] = options[ name ];
         }
 
         callback.call(elem);
 
         // Revert the old values
         for (name in options) {
-            if (options.hasOwnProperty(name)) {
-                elem[STYLE][ name ] = old[ name ];
-            }
+            elem[STYLE][ name ] = old[ name ];
         }
     }
 

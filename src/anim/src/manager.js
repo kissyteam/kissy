@@ -3,14 +3,14 @@
  * @fileOverview single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/manager', function(S) {
+KISSY.add('anim/manager', function (S) {
     var stamp = S.stamp;
 
     return {
-        interval:15,
-        runnings:{},
-        timer:null,
-        start:function(anim) {
+        interval: 15,
+        runnings: {},
+        timer: null,
+        start: function (anim) {
             var self = this,
                 kv = stamp(anim);
             if (self.runnings[kv]) {
@@ -19,10 +19,10 @@ KISSY.add('anim/manager', function(S) {
             self.runnings[kv] = anim;
             self.startTimer();
         },
-        stop:function(anim) {
+        stop: function (anim) {
             this.notRun(anim);
         },
-        notRun:function(anim) {
+        notRun: function (anim) {
             var self = this,
                 kv = stamp(anim);
             delete self.runnings[kv];
@@ -30,16 +30,16 @@ KISSY.add('anim/manager', function(S) {
                 self.stopTimer();
             }
         },
-        pause:function(anim) {
+        pause: function (anim) {
             this.notRun(anim);
         },
-        resume:function(anim) {
+        resume: function (anim) {
             this.start(anim);
         },
-        startTimer:function() {
+        startTimer: function () {
             var self = this;
             if (!self.timer) {
-                self.timer = setTimeout(function() {
+                self.timer = setTimeout(function () {
                     if (!self.runFrames()) {
                         self.timer = 0;
                         self.startTimer();
@@ -49,7 +49,7 @@ KISSY.add('anim/manager', function(S) {
                 }, self.interval);
             }
         },
-        stopTimer:function() {
+        stopTimer: function () {
             var self = this,
                 t = self.timer;
             if (t) {
@@ -57,15 +57,13 @@ KISSY.add('anim/manager', function(S) {
                 self.timer = 0;
             }
         },
-        runFrames:function() {
+        runFrames: function () {
             var self = this,
                 done = 1,
                 runnings = self.runnings;
             for (var r in runnings) {
-                if (runnings.hasOwnProperty(r)) {
-                    done = 0;
-                    runnings[r]._frame();
-                }
+                done = 0;
+                runnings[r]._frame();
             }
             return done;
         }

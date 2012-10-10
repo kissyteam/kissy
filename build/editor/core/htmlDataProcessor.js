@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 9 23:22
+build time: Oct 10 13:59
 */
 /**
  * Modified from ckeditor. Process malformed html for kissy editor.
@@ -14,7 +14,7 @@ build time: Oct 9 23:22
 KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             var Node = S.Node,
                 UA = S.UA,
                 HtmlParser = S.require("htmlparser"),
@@ -44,33 +44,33 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
 
                 // 过滤外边来的 html
                 var defaultDataFilterRules = {
-                    tagNames:[
+                    tagNames: [
                         [/^\?xml.*$/i, ''],
                         [/^.*namespace.*$/i, '']
                     ],
-                    attributeNames:[
+                    attributeNames: [
                         // Event attributes (onXYZ) must not be directly set. They can become
                         // active in the editing area (IE|WebKit).
                         [/^on/, 'ke_on'],
                         [/^lang$/, '']
                     ],
-                    tags:{
-                        script:wrapAsComment,
-                        noscript:wrapAsComment,
-                        span:filterSpan
+                    tags: {
+                        script: wrapAsComment,
+                        noscript: wrapAsComment,
+                        span: filterSpan
                     }
                 };
 
                 // 将编辑区生成 html 最终化
                 var defaultHtmlFilterRules = {
-                    tagNames:[
+                    tagNames: [
                         // Remove the "ke:" namespace prefix.
                         [ ( /^ke:/ ), '' ],
                         // Ignore <?xml:namespace> tags.
                         [ ( /^\?xml:namespace$/ ), '' ]
                     ],
-                    tags:{
-                        $:function (element) {
+                    tags: {
+                        $: function (element) {
                             var attributes = element.attributes;
 
                             if (attributes.length) {
@@ -88,7 +88,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
 
                             return element;
                         },
-                        embed:function (element) {
+                        embed: function (element) {
                             var parent = element.parentNode;
                             // If the <embed> is child of a <object>, copy the width
                             // and height attributes from it.
@@ -105,22 +105,22 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                         },
 
                         // Remove empty link but not empty anchor.(#3829)
-                        a:function (element) {
+                        a: function (element) {
                             if (!(element.childNodes.length) && !(element.attributes.length)) {
                                 return false;
                             }
                         },
-                        span:filterSpan
+                        span: filterSpan
                     },
-                    attributes:{
+                    attributes: {
                         // 清除空style
-                        style:function (v) {
+                        style: function (v) {
                             if (!S.trim(v)) {
                                 return false;
                             }
                         }
                     },
-                    attributeNames:[
+                    attributeNames: [
                         // 把保存的作为真正的属性，替换掉原来的
                         // replace(/^_ke_saved_/,"")
                         // _ke_saved_href -> href
@@ -131,7 +131,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                         // kissy 相关
                         [ ( /^_ks.*/ ), '' ]
                     ],
-                    comment:function (contents) {
+                    comment: function (contents) {
                         // If this is a comment for protected source.
                         if (contents.substr(0, protectedSourceMarker.length) == protectedSourceMarker) {
                             contents = S.trim(decodeURIComponent(contents.substr(protectedSourceMarker.length)));
@@ -172,8 +172,9 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     var childNodes = block.childNodes,
                         lastIndex = childNodes.length,
                         last = childNodes[ lastIndex - 1 ];
-                    while (last && last.nodeType == 3 && !S.trim(last.nodeValue))
+                    while (last && last.nodeType == 3 && !S.trim(last.nodeValue)) {
                         last = childNodes[ --lastIndex ];
+                    }
                     return last;
                 }
 
@@ -237,10 +238,8 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     dtd.$listItem,
                     dtd.$tableContent), i;
                 for (i in blockLikeTags) {
-                    if (blockLikeTags.hasOwnProperty(i)) {
-                        if (!( 'br' in dtd[i] )) {
-                            delete blockLikeTags[i];
-                        }
+                    if (!( 'br' in dtd[i] )) {
+                        delete blockLikeTags[i];
                     }
                 }
 
@@ -250,15 +249,14 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 // We just avoid filler in <pre> right now.
                 // TODO: Support filler for <pre>, line break is also occupy line height.
                 delete blockLikeTags.pre;
-                var defaultDataBlockFilterRules = { tags:{} };
-                var defaultHtmlBlockFilterRules = { tags:{} };
+                var defaultDataBlockFilterRules = { tags: {} };
+                var defaultHtmlBlockFilterRules = { tags: {} };
 
                 for (i in blockLikeTags) {
-                    if (blockLikeTags.hasOwnProperty(i)) {
-                        defaultDataBlockFilterRules.tags[ i ] = extendBlockForDisplay;
-                        defaultHtmlBlockFilterRules.tags[ i ] = extendBlockForOutput;
-                    }
+                    defaultDataBlockFilterRules.tags[ i ] = extendBlockForDisplay;
+                    defaultHtmlBlockFilterRules.tags[ i ] = extendBlockForOutput;
                 }
+
                 dataFilter.addRules(defaultDataBlockFilterRules);
                 htmlFilter.addRules(defaultHtmlBlockFilterRules);
             })();
@@ -268,7 +266,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
             // el.innerHTML="&nbsp;"
             // http://yiminghe.javaeye.com/blog/788929
             htmlFilter.addRules({
-                text:function (text) {
+                text: function (text) {
                     return text
                         //.replace(/&nbsp;/g, "\xa0")
                         .replace(/\xa0/g, "&nbsp;");
@@ -329,11 +327,11 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
             }
 
             editor.htmlDataProcessor = {
-                dataFilter:dataFilter,
-                htmlFilter:htmlFilter,
+                dataFilter: dataFilter,
+                htmlFilter: htmlFilter,
                 // 编辑器 html 到外部 html
                 // fixForBody , <body>t</body> => <body><p>t</p></body>
-                toHtml:function (html) {
+                toHtml: function (html) {
                     // fixForBody = fixForBody || "p";
                     // Now use our parser to make further fixes to the structure, as
                     // well as apply the filter.
@@ -345,7 +343,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     return html;
                 },
                 // 外部html进入编辑器
-                toDataFormat:function (html, _dataFilter) {
+                toDataFormat: function (html, _dataFilter) {
                     //可以传 wordFilter 或 dataFilter
                     _dataFilter = _dataFilter || dataFilter;
 
@@ -391,7 +389,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 /*
                  最精简html传送到server
                  */
-                toServer:function (html) {
+                toServer: function (html) {
                     var writer = new HtmlParser.MinifyWriter(),
                         n = new HtmlParser.Parser(html).parse();
                     n.writeHtml(writer, htmlFilter);
@@ -401,5 +399,5 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
         }
     };
 }, {
-    requires:['./base']
+    requires: ['./base']
 });

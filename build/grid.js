@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:20
+build time: Oct 10 13:59
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -432,7 +432,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
                     bodyConfig;
 
                 for (var name in attrs) {
-                    if (attrs.hasOwnProperty(name) && attrs[name].toBody) {
+                    if (attrs[name].toBody) {
                         toBody[name] = _self.get(name);
                     }
                 }

@@ -414,10 +414,8 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         var old = getOffset(elem), ret = { }, current, key;
 
         for (key in offset) {
-            if (offset.hasOwnProperty(key)) {
-                current = myParseInt(DOM.css(elem, key), 10) || 0;
-                ret[key] = current + offset[key] - old[key];
-            }
+            current = myParseInt(DOM.css(elem, key), 10) || 0;
+            ret[key] = current + offset[key] - old[key];
         }
         DOM.css(elem, ret);
     }

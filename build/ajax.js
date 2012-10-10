@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Sep 26 22:16
+build time: Oct 10 13:56
 */
 /**
  * @ignore
@@ -619,9 +619,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
 
         // Check for headers option
         for (i in headers) {
-            if (headers.hasOwnProperty(i)) {
-                self.setRequestHeader(i, headers[ i ]);
-            }
+            self.setRequestHeader(i, headers[ i ]);
         }
 
 
@@ -1208,7 +1206,7 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
             if (!dataType.length) {
                 // 获取源数据格式，放在第一个
                 for (type in contents) {
-                    if (contents.hasOwnProperty(type) && contents[type].test(contentType)) {
+                    if (contents[type].test(contentType)) {
                         if (dataType[0] != type) {
                             dataType.unshift(type);
                         }
@@ -1833,9 +1831,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
 
             if (xhrFields = c['xhrFields']) {
                 for (i in xhrFields) {
-                    if (xhrFields.hasOwnProperty(i)) {
-                        nativeXhr[ i ] = xhrFields[ i ];
-                    }
+                    nativeXhr[ i ] = xhrFields[ i ];
                 }
             }
 
@@ -1852,9 +1848,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                 // OPTIONS /xhr/r.php HTTP/1.1
                 if (!crossDomain) {
                     for (i in requestHeaders) {
-                        if (requestHeaders.hasOwnProperty(i)) {
-                            nativeXhr.setRequestHeader(i, requestHeaders[ i ]);
-                        }
+                        nativeXhr.setRequestHeader(i, requestHeaders[ i ]);
                     }
                 }
             } catch (e) {
