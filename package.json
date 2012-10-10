@@ -30,6 +30,9 @@
     "dependencies": {
         "optimist": ">=0.3.4"
     },
+    "optionalDependencies": {
+        "jsdom": ">=0.2.0"
+    },
     "licenses": [
         {
             "type": "MIT",
