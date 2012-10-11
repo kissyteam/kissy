@@ -67,10 +67,10 @@
     }
     KISSY.use("kison,ajax", function (S, KISON,IO) {
         S.io({
-            url: 'grammar.js',
+            url: '../src/parser-grammar.kison',
             dataType: 'text',
             success: function (data) {
-                $("#grammar").val(data.slice(1, data.length - 1));
+                $("#grammar").val(data);
             }
         });
 

@@ -1,9 +1,10 @@
-x(
-    /**
-     * lalr grammar and lexer rules for kissy xtemplate.
-     * @author yiminghe@gmail.com
-     */
-    {
+/**
+ * lalr grammar and lexer rules for kissy xtemplate.
+ * @author yiminghe@gmail.com
+ */
+(function () {
+
+    return {
         productions: [
             {
                 symbol: 'program',
@@ -630,4 +631,5 @@ x(
             ]
         }
 
-    });
+    }
+})();

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 11 19:24
 */
 /**
  * LALR grammar parser
@@ -649,9 +649,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                         expected.push(symbol);
                     });
                 }
-                S.error("parse error at line " + lexer.lineNumber +
-                    ":\n" + lexer.showDebugInfo() + "\n" +
-                    "expect " + expected.join(", "));
+                S.error("parse error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", "));
                 return false;
             }
 
@@ -924,7 +922,7 @@ KISSY.add("kison", function (S, Grammar, Production, Lexer) {
  */
 KISSY.add("kison/lexer", function (S, Utils) {
 
-    function Lexer(cfg) {
+    var Lexer = function (cfg) {
 
         /**
          * lex rules.
@@ -957,7 +955,7 @@ KISSY.add("kison/lexer", function (S, Utils) {
 
         this.resetInput(this.input);
 
-    }
+    };
 
     Lexer.STATIC = {
         INIT: S.guid("init"),
@@ -985,7 +983,7 @@ KISSY.add("kison/lexer", function (S, Utils) {
         genCode: function () {
             var code = [];
 
-            code.push(Lexer.toString());
+            code.push("var Lexer = " + Lexer.toString() + ';');
 
             code.push("Lexer.prototype= " + Utils.serializeObject(Lexer.prototype, /genCode/) + ";");
 

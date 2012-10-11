@@ -20,6 +20,9 @@ var argv = require('optimist')
         'usage: $0 -t [tpl file] -m [module name]').argv,
 
     S = require('../build/kissy-nodejs-min'),
+
+    js_beautify = require('js-beautify').js_beautify,
+
     fs = require('fs'),
     tpl = argv.tpl,
     path = require('path'),
@@ -53,6 +56,13 @@ if (module) {
     module = '"' + module + '",';
 }
 
+function my_js_beautify(str) {
+    var opts = {"indent_size": "4", "indent_char": " ",
+        "preserve_newlines": true, "brace_style": "collapse",
+        "keep_array_indentation": false, "space_after_anon_function": true};
+    return js_beautify(str, opts);
+}
+
 S.use('xtemplate', function (S, XTemplate) {
 
     function compile() {
@@ -66,10 +76,10 @@ S.use('xtemplate', function (S, XTemplate) {
             cache: false
         }).compile().toString();
 
-        var moduleCode = S.substitute(codeTemplate, {
+        var moduleCode = my_js_beautify(S.substitute(codeTemplate, {
             module: module,
             code: code
-        });
+        }));
 
         S.log(moduleCode);
 

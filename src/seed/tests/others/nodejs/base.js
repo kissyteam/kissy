@@ -1,5 +1,11 @@
 var KISSY = require('../../../../../build/kissy-nodejs').KISSY;
 
+var path=require('./path');
+
+var x=path.resolve(path.resolve('d:\\base.js','./'),'.\\');
+
+console.log(x);
+
 KISSY.use('base',function(S,Base) {
     // 自定义类
     function MyClass(config) {

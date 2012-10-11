@@ -644,9 +644,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                         expected.push(symbol);
                     });
                 }
-                S.error("parse error at line " + lexer.lineNumber +
-                    ":\n" + lexer.showDebugInfo() + "\n" +
-                    "expect " + expected.join(", "));
+                S.error("parse error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", "));
                 return false;
             }
 

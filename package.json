@@ -21,17 +21,17 @@
         "node": ">=0.8.0"
     },
     "bin": {
-        "kissy-xtemplate": "./bin/xtemplate.js"
+        "kissy-xtemplate": "./bin/xtemplate.js",
+        "kissy-kison": "./bin/kison.js"
     },
     "directories": {
         "lib": "./build/"
     },
     "main": "./build/kissy-nodejs.js",
-    "dependencies": {
-        "optimist": ">=0.3.4"
-    },
     "optionalDependencies": {
-        "jsdom": ">=0.2.0"
+        "optimist": ">=0.3.4",
+        "jsdom": ">=0.2.0",
+        "js-beautify": ">=0.2.0"
     },
     "licenses": [
         {

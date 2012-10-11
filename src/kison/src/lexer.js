@@ -4,7 +4,7 @@
  */
 KISSY.add("kison/lexer", function (S, Utils) {
 
-    function Lexer(cfg) {
+    var Lexer = function (cfg) {
 
         /**
          * lex rules.
@@ -37,7 +37,7 @@ KISSY.add("kison/lexer", function (S, Utils) {
 
         this.resetInput(this.input);
 
-    }
+    };
 
     Lexer.STATIC = {
         INIT: S.guid("init"),
@@ -65,7 +65,7 @@ KISSY.add("kison/lexer", function (S, Utils) {
         genCode: function () {
             var code = [];
 
-            code.push(Lexer.toString());
+            code.push("var Lexer = " + Lexer.toString() + ';');
 
             code.push("Lexer.prototype= " + Utils.serializeObject(Lexer.prototype, /genCode/) + ";");
 
