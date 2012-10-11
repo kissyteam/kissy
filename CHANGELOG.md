@@ -127,6 +127,9 @@ History:
 #### template
  - [+] template 支持 {{@if t}} t {{/if}}, 等价于 {{#if t}} t {{/if}}
 
+#### xtemplate
+ - [+] 增加 xtemplate 组件，富逻辑模板引擎
+
 #### mvc
  - [+] navigate 第二个参数支持 replaceHistory 配置
  - [+] router callback 增加第三个参数 {path,url}
@@ -146,6 +149,10 @@ History:
 
 #### dpl
  - [+] 增加 kissy dpl
+
+#### editor
+ - [!] 重构，api 变化
+ - [+] 增加 code 插件，处理代码输入
 
 ### Happy 2nd Anniversary (2011/10/26)
  - [!] Still Alive
