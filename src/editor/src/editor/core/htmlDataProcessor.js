@@ -129,7 +129,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     comment: function (contents) {
                         // If this is a comment for protected source.
                         if (contents.substr(0, protectedSourceMarker.length) == protectedSourceMarker) {
-                            contents = S.trim(decodeURIComponent(contents.substr(protectedSourceMarker.length)));
+                            contents = S.trim(S.urlDecode(contents.substr(protectedSourceMarker.length)));
                             return HtmlParser.parse(contents).childNodes[0];
                         }
                     }
@@ -309,7 +309,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
 
             function unprotectElements(html) {
                 return html.replace(encodedElementsRegex, function (match, encoded) {
-                    return decodeURIComponent(encoded);
+                    return S.urlDecode(encoded);
                 });
             }
 

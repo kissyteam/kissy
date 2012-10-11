@@ -350,9 +350,9 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
     }
 
     function getDisplayName(r) {
-        return decodeURIComponent(r['song_name'])
+        return S.urlDecode(r['song_name'])
             + " - "
-            + decodeURIComponent(r['artist_name']);
+            + S.urlDecode(r['artist_name']);
     }
 
     return XiamiMusicDialog;

@@ -269,7 +269,7 @@
     function Uri(uriStr) {
 
         if (uriStr instanceof  Uri) {
-            return uriStr.clone();
+            return uriStr['clone']();
         }
 
         var m, self = this;
@@ -322,10 +322,11 @@
                 self.query = new Query(match);
             } else {
                 // need to decode to get data structure in memory
-                self[key] = decodeURIComponent(match);
+                self[key] = S.urlDecode(match);
             }
         });
 
+        return undefined;
     }
 
     Uri.prototype =
@@ -457,7 +458,7 @@
          * @param {String} userInfo
          * @return this
          */
-        setUserInfo: function (userInfo) {
+        'setUserInfo': function (userInfo) {
             this.userInfo = userInfo;
             return this;
         },
@@ -475,7 +476,7 @@
          * @param {String} port
          * @return this
          */
-        setPort: function (port) {
+        'setPort': function (port) {
             this.port = port;
             return this;
         },
@@ -484,7 +485,7 @@
          * Get port
          * @return {String}
          */
-        getPort: function () {
+        'getPort': function () {
             return this.port;
         },
 
@@ -511,7 +512,7 @@
          * @param {String|KISSY.Uri.Query} query
          * @return this
          */
-        setQuery: function (query) {
+        'setQuery': function (query) {
             if (S.isString(query)) {
                 if (S.startsWith(query, '?')) {
                     query = query.slice(1);
@@ -543,7 +544,7 @@
          * @param {String} fragment
          * @return this
          */
-        setFragment: function (fragment) {
+        'setFragment': function (fragment) {
             if (!S.startsWith(fragment, '#')) {
                 fragment = '#' + fragment;
             }
@@ -611,7 +612,7 @@
                 out.push(encodeSpecialChars(path, reDisallowedInPathName));
             }
 
-            if (query = ( self.query.toString(serializeArray))) {
+            if (query = ( self.query.toString.call(self.query, serializeArray))) {
                 out.push('?');
                 out.push(query);
             }
@@ -632,6 +633,9 @@
 })(KISSY);
 /*
  Refer
+ - application/x-www-form-urlencoded
  - http://www.ietf.org/rfc/rfc3986.txt
  - http://en.wikipedia.org/wiki/URI_scheme
+ - http://unixpapa.com/js/querystring.html
+ - http://code.stephenmorley.org/javascript/parsing-query-strings-for-get-data/
  */

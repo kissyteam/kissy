@@ -49,7 +49,7 @@ KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
                 return null;
             }
 
-            var html = (decodeURIComponent(fakeElement.attr('_ke_realelement')));
+            var html = (S.urlDecode(fakeElement.attr('_ke_realelement')));
 
             var temp = new Node('<div>', null, this.get("document")[0]);
             temp.html(html);
@@ -71,7 +71,7 @@ KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
                 var realFragment;
 
                 if (realHtml) {
-                    realFragment = new HtmlParser.Parser(decodeURIComponent(realHtml)).parse();
+                    realFragment = new HtmlParser.Parser(S.urlDecode(realHtml)).parse();
                 }
 
                 var realElement = realFragment && realFragment.childNodes[ 0 ];
@@ -125,7 +125,7 @@ KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
                         return null;
                     }
 
-                    var html = (decodeURIComponent(fakeElement.attr('_ke_realelement')));
+                    var html = (S.urlDecode(fakeElement.attr('_ke_realelement')));
 
                     var temp = new Node('<div>', null, editor.get("document")[0]);
                     temp.html(html);

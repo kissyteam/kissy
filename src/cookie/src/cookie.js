@@ -8,7 +8,7 @@ KISSY.add('cookie', function (S) {
     var doc = S.Env.host.document,
         MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
         encode = encodeURIComponent,
-        decode = decodeURIComponent;
+        decode = S.urlDecode;
 
     function isNotEmptyString(val) {
         return S.isString(val) && val !== '';

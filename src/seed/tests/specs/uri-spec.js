@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 describe("uri", function () {
-    var Uri = KISSY.Uri,S=KISSY;
+    var Uri = KISSY.Uri, S = KISSY;
 
 
     it("create works", function () {
@@ -16,56 +16,77 @@ describe("uri", function () {
         expect(base.getFragment()).toBe("w");
     });
 
-    it('query works', function () {
-        var query = new Uri.Query("x=1&y=2");
 
-        expect(S.unparam(query.toString())).toEqual(S.unparam("x=1&y=2"));
+    describe('query', function () {
 
-        query.set("x", "3");
 
-        expect(S.unparam(query.toString())).toEqual(S.unparam("x=3&y=2"));
+        it('works', function () {
+            var query = new Uri.Query("x=1&y=2");
 
-        query.set("z", "5");
+            expect(S.unparam(query.toString())).toEqual(S.unparam("x=1&y=2"));
 
-        expect(S.unparam(query.toString())).toEqual(S.unparam("x=3&y=2&z=5"));
+            query.set("x", "3");
 
-        query.remove("x");
+            expect(S.unparam(query.toString())).toEqual(S.unparam("x=3&y=2"));
 
-        expect(S.unparam(query.toString())).toEqual(S.unparam("y=2&z=5"));
+            query.set("z", "5");
 
-        query.set({
-            x:6,
-            y:7
+            expect(S.unparam(query.toString())).toEqual(S.unparam("x=3&y=2&z=5"));
+
+            query.remove("x");
+
+            expect(S.unparam(query.toString())).toEqual(S.unparam("y=2&z=5"));
+
+            query.set({
+                x: 6,
+                y: 7
+            });
+
+            expect(S.unparam(query.toString())).toEqual(S.unparam("y=7&z=5&x=6"));
+
+            expect(query.count()).toBe(3);
+
+            query.add({
+                x: 61,
+                y: 71
+            });
+
+            expect(S.unparam(query.toString(false))).toEqual(S.unparam("y=7&y=71&z=5&x=6&x=61"));
+
+            expect(query.count()).toBe(5);
+
+            var q2 = new Uri.Query("x1=1&y1=2");
+
+            query.reset("x1=3&y1=4");
+
+            query.add(q2);
+
+            expect(S.unparam(query.toString(false))).toEqual(S.unparam("x1=3&x1=1&y1=4&y1=2"));
+
+            expect(query.count()).toBe(4);
+
+            query.set(q2);
+
+            expect(S.unparam(query.toString(false))).toEqual(S.unparam("x1=1&y1=2"));
+
+            expect(query.count()).toBe(2);
+
         });
 
-        expect(S.unparam(query.toString())).toEqual(S.unparam("y=7&z=5&x=6"));
-
-        expect(query.count()).toBe(3);
-
-        query.add({
-            x:61,
-            y:71
+        it("handles '+'", function () {
+            expect(new Uri('http://www.g.cn/s?t=1+2').getQuery().get('t')).toBe('1 2');
         });
 
-        expect(S.unparam(query.toString(false))).toEqual(S.unparam("y=7&y=71&z=5&x=6&x=61"));
+        it('handles undefined and empty value', function () {
+            var query = new Uri('http://www.g.cn/s?t&y=').getQuery();
+            expect(query.get('t')).toBeUndefined();
+            expect(query.get('y')).toBe('');
+        });
 
-        expect(query.count()).toBe(5);
-
-        var q2=new Uri.Query("x1=1&y1=2");
-
-        query.reset("x1=3&y1=4");
-
-        query.add(q2);
-
-        expect(S.unparam(query.toString(false))).toEqual(S.unparam("x1=3&x1=1&y1=4&y1=2"));
-
-        expect(query.count()).toBe(4);
-
-        query.set(q2);
-
-        expect(S.unparam(query.toString(false))).toEqual(S.unparam("x1=1&y1=2"));
-
-        expect(query.count()).toBe(2);
+        it('handles multiple values', function () {
+            var query = new Uri('http://www.g.cn/s?t=1&t=2').getQuery();
+            expect(query.get('t')).toEqual(['1', '2']);
+        });
 
     });
 

@@ -96,7 +96,7 @@ KISSY.add(function (S, Node, mvc, NotesView, EditView, NotesCollection, NoteMode
         },
 
         search:function (path, query) {
-            var q = decodeURIComponent(query.q), self = this;
+            var q = S.urlDecode(query.q), self = this;
             self.searchView.searchInput.val(q);
             self.searchView.get("notes").load({
                 data:{

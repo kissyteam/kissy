@@ -71,7 +71,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                      * 原生 localStorage 必须串行化
                      */
                     drafts = (localStorage == window.localStorage) ?
-                        JSON.parse(decodeURIComponent(str)) : str;
+                        JSON.parse(S.urlDecode(str)) : str;
                 }
                 self.drafts = drafts;
             }

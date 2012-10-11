@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 14:09
+build time: Oct 11 15:08
 */
 /**
  * @ignore
@@ -477,11 +477,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121010140939' will replace with current timestamp when compressing.
+         * NOTICE: '20121011150816' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20121010140939';
+        S.__BUILD_TIME = '20121011150816';
     })();
 
     // exports for nodejs
@@ -526,8 +526,6 @@ var KISSY = (function (undefined) {
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
     // include it in the regexp to enforce consistent cross-browser behavior.
         RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
-        encode = encodeURIComponent,
-        decode = decodeURIComponent,
         SEP = '&',
         EQ = '=',
     // [[Class]] -> type pairs
@@ -1147,6 +1145,25 @@ var KISSY = (function (undefined) {
             },
 
             /**
+             * Call encodeURIComponent to encode a url component
+             * @param {String} s part of url to be encoded.
+             * @return {String} encoded url part string.
+             */
+            urlEncode: function (s) {
+                return encodeURIComponent(String(s));
+            },
+
+            /**
+             * Call decodeURIComponent to decode a url component
+             * and replace '+' with space.
+             * @param {String} s part of url to be decoded.
+             * @return {String} decoded url part string.
+             */
+            urlDecode: function (s) {
+                return decodeURIComponent(s.replace(/\+/g, ' '));
+            },
+
+            /**
              * get escaped string from html
              * @see   http://yiminghe.javaeye.com/blog/788929
              *        http://wonko.com/post/html-escaping
@@ -1239,7 +1256,8 @@ var KISSY = (function (undefined) {
                 if (S.isUndefined(serializeArray)) {
                     serializeArray = TRUE;
                 }
-                var buf = [], key, i, v, len, val;
+                var buf = [], key, i, v, len, val,
+                    encode = S.urlEncode;
                 for (key in o) {
 
                     val = o[key];
@@ -1296,6 +1314,7 @@ var KISSY = (function (undefined) {
                 eq = eq || EQ;
                 var ret = {},
                     eqIndex,
+                    decode = S.urlDecode,
                     pairs = str.split(sep),
                     key, val,
                     i = 0, len = pairs.length;
@@ -1306,6 +1325,7 @@ var KISSY = (function (undefined) {
                         key = decode(pairs[i]);
                         val = undefined;
                     } else {
+                        // remember to decode key!
                         key = decode(pairs[i].substring(0, eqIndex));
                         val = pairs[i].substring(eqIndex + 1);
                         try {
@@ -2541,7 +2561,7 @@ var KISSY = (function (undefined) {
     function Uri(uriStr) {
 
         if (uriStr instanceof  Uri) {
-            return uriStr.clone();
+            return uriStr['clone']();
         }
 
         var m, self = this;
@@ -2594,10 +2614,11 @@ var KISSY = (function (undefined) {
                 self.query = new Query(match);
             } else {
                 // need to decode to get data structure in memory
-                self[key] = decodeURIComponent(match);
+                self[key] = S.urlDecode(match);
             }
         });
 
+        return undefined;
     }
 
     Uri.prototype =
@@ -2729,7 +2750,7 @@ var KISSY = (function (undefined) {
          * @param {String} userInfo
          * @return this
          */
-        setUserInfo: function (userInfo) {
+        'setUserInfo': function (userInfo) {
             this.userInfo = userInfo;
             return this;
         },
@@ -2747,7 +2768,7 @@ var KISSY = (function (undefined) {
          * @param {String} port
          * @return this
          */
-        setPort: function (port) {
+        'setPort': function (port) {
             this.port = port;
             return this;
         },
@@ -2756,7 +2777,7 @@ var KISSY = (function (undefined) {
          * Get port
          * @return {String}
          */
-        getPort: function () {
+        'getPort': function () {
             return this.port;
         },
 
@@ -2783,7 +2804,7 @@ var KISSY = (function (undefined) {
          * @param {String|KISSY.Uri.Query} query
          * @return this
          */
-        setQuery: function (query) {
+        'setQuery': function (query) {
             if (S.isString(query)) {
                 if (S.startsWith(query, '?')) {
                     query = query.slice(1);
@@ -2815,7 +2836,7 @@ var KISSY = (function (undefined) {
          * @param {String} fragment
          * @return this
          */
-        setFragment: function (fragment) {
+        'setFragment': function (fragment) {
             if (!S.startsWith(fragment, '#')) {
                 fragment = '#' + fragment;
             }
@@ -2883,7 +2904,7 @@ var KISSY = (function (undefined) {
                 out.push(encodeSpecialChars(path, reDisallowedInPathName));
             }
 
-            if (query = ( self.query.toString(serializeArray))) {
+            if (query = ( self.query.toString.call(self.query, serializeArray))) {
                 out.push('?');
                 out.push(query);
             }
@@ -2904,8 +2925,11 @@ var KISSY = (function (undefined) {
 })(KISSY);
 /*
  Refer
+ - application/x-www-form-urlencoded
  - http://www.ietf.org/rfc/rfc3986.txt
  - http://en.wikipedia.org/wiki/URI_scheme
+ - http://unixpapa.com/js/querystring.html
+ - http://code.stephenmorley.org/javascript/parsing-query-strings-for-get-data/
  *//**
  * @ignore
  * @fileOverview setup data structure for kissy loader
@@ -5269,7 +5293,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121010140939'
+            tag: '20121011150816'
         }, getBaseInfo()));
     }
 

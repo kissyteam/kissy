@@ -32,8 +32,6 @@
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
     // include it in the regexp to enforce consistent cross-browser behavior.
         RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
-        encode = encodeURIComponent,
-        decode = decodeURIComponent,
         SEP = '&',
         EQ = '=',
     // [[Class]] -> type pairs
@@ -653,6 +651,25 @@
             },
 
             /**
+             * Call encodeURIComponent to encode a url component
+             * @param {String} s part of url to be encoded.
+             * @return {String} encoded url part string.
+             */
+            urlEncode: function (s) {
+                return encodeURIComponent(String(s));
+            },
+
+            /**
+             * Call decodeURIComponent to decode a url component
+             * and replace '+' with space.
+             * @param {String} s part of url to be decoded.
+             * @return {String} decoded url part string.
+             */
+            urlDecode: function (s) {
+                return decodeURIComponent(s.replace(/\+/g, ' '));
+            },
+
+            /**
              * get escaped string from html
              * @see   http://yiminghe.javaeye.com/blog/788929
              *        http://wonko.com/post/html-escaping
@@ -745,7 +762,8 @@
                 if (S.isUndefined(serializeArray)) {
                     serializeArray = TRUE;
                 }
-                var buf = [], key, i, v, len, val;
+                var buf = [], key, i, v, len, val,
+                    encode = S.urlEncode;
                 for (key in o) {
 
                     val = o[key];
@@ -802,6 +820,7 @@
                 eq = eq || EQ;
                 var ret = {},
                     eqIndex,
+                    decode = S.urlDecode,
                     pairs = str.split(sep),
                     key, val,
                     i = 0, len = pairs.length;
@@ -812,6 +831,7 @@
                         key = decode(pairs[i]);
                         val = undefined;
                     } else {
+                        // remember to decode key!
                         key = decode(pairs[i].substring(0, eqIndex));
                         val = pairs[i].substring(eqIndex + 1);
                         try {
