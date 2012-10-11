@@ -7,7 +7,9 @@
 
 注：
 本文持续更新地址：
-[xtemplate at github](https://github.com/kissyteam/kissy/blob/master/src/xtemplate/impl.md). DSL 也是初学，敬请勘误.
+[xtemplate at github](https://github.com/kissyteam/kissy/blob/master/src/xtemplate/impl.md).
+[xtemplate at docs.kissyui.com](http://docs.kissyui.com/docs/html/tutorials/kissy/component/xtemplate/impl.html).
+DSL 也是初学，敬请勘误.
 
 
 
