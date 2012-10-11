@@ -1,11 +1,15 @@
-本文持续更新地址： [xtemplate at github](https://github.com/kissyteam/kissy/blob/master/src/xtemplate/impl.md)
-
 目前在传统的软件开发领域 [DSL](http://en.wikipedia.org/wiki/Domain-specific_language) 已经比较普遍，
 特别是 [Martin Fowler](http://martinfowler.com/) 的突出贡献。
-而在前端领域尚较少涉及，而如果同样在前端开发中合理使用 DSL 可以有效得**减少代码数量，提高可读性**，常见的一个应用场景即前端模板的构建。
+而在前端领域尚较少涉及，而如果在前端开发中合理使用 DSL 同样也可以有效得**减少代码数量，提高可读性**，常见的一个应用场景即前端模板的构建。
 本质上说模板也是一个微型语言，因此可以从DSL的角度着手，使用工具快速构建一个适合于特定前端框架的模板引擎。
-本文将以 [KISSY XTemplate] (http://docs.kissyui.com/docs/html/demo/component/xtemplate/index.html)
+本文将以 [KISSY XTemplate](http://docs.kissyui.com/docs/html/demo/component/xtemplate/index.html)
 为例介绍如何构建前端的 DSL。
+
+注：
+本文持续更新地址：
+[xtemplate at github](https://github.com/kissyteam/kissy/blob/master/src/xtemplate/impl.md). DSL 也是初学，敬请勘误.
+
+
 
 # 首先 npm 安装 kissy
 
