@@ -26,7 +26,7 @@
                 <textarea style="width: 350px;height: 400px;" id="tpl">
 
                     {{#each data}}
-                    {{#if n === ..\n2 * 5}}
+                    {{#if n === ../n2 * 5}}
                     {{n + 10.1}}
                     {{/if}}
                     {{/each}}
@@ -71,10 +71,7 @@
     KISSY.use("xtemplate", function (S, XTemplate) {
         var $ = S.all;
         $('#parse').on('click', function () {
-            var g = XTemplate.compiler.compileToStr($('#tpl').val());
-            $('#gen').html('<pre class="brush: js;">' +
-                    S.escapeHTML(js_beauty(g)) + '</pre>');
-            SyntaxHighlighter.highlight({}, $('#gen').one("pre")[0]);
+            S.log(XTemplate.compiler.parse($('#tpl').val()));
         });
 
         $('#check').on('click', function () {
