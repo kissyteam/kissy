@@ -8,7 +8,6 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
     var isValidTarget = Utils.isValidTarget,
         splitAndRun = Utils.splitAndRun,
-        getNodeName = DOM.nodeName,
         trim = S.trim,
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
@@ -180,45 +179,47 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
         } while (!onlyHandlers && cur && !event.isPropagationStopped);
 
         if (!onlyHandlers && !event.isDefaultPrevented) {
-            if (!(eventType === 'click' &&
-                getNodeName(target) == 'a')) {
-                var old;
-                try {
-                    // execute default action on dom node
-                    // so exclude window
-                    // exclude focus/blue on hidden element
-                    if (ontype &&
-                        target[ eventType ] &&
-                        (
-                            (eventType !== 'focus' && eventType !== 'blur') ||
-                                target.offsetWidth !== 0
-                            ) &&
-                        !S.isWindow(target)) {
-                        // Don't re-trigger an onFOO event when we call its FOO() method
-                        old = target[ ontype ];
 
-                        if (old) {
-                            target[ ontype ] = null;
-                        }
+            // now all browser support click
+            // https://developer.mozilla.org/en-US/docs/DOM/element.click
 
-                        // 记录当前 trigger 触发
-                        Utils.Event_Triggered = eventType;
+            var old;
+            try {
+                // execute default action on dom node
+                // so exclude window
+                // exclude focus/blue on hidden element
+                if (ontype &&
+                    target[ eventType ] &&
+                    (
+                        (eventType !== 'focus' && eventType !== 'blur') ||
+                            target.offsetWidth !== 0
+                        ) &&
+                    !S.isWindow(target)) {
+                    // Don't re-trigger an onFOO event when we call its FOO() method
+                    old = target[ ontype ];
 
-                        // 只触发默认事件，而不要执行绑定的用户回调
-                        // 同步触发
-                        target[ eventType ]();
+                    if (old) {
+                        target[ ontype ] = null;
                     }
-                } catch (ieError) {
-                    S.log('trigger action error : ');
-                    S.log(ieError);
-                }
 
-                if (old) {
-                    target[ ontype ] = old;
-                }
+                    // 记录当前 trigger 触发
+                    Utils.Event_Triggered = eventType;
 
-                Utils.Event_Triggered = TRIGGERED_NONE;
+                    // 只触发默认事件，而不要执行绑定的用户回调
+                    // 同步触发
+                    target[ eventType ]();
+                }
+            } catch (eError) {
+                S.log('trigger action error : ');
+                S.log(eError);
             }
+
+            if (old) {
+                target[ ontype ] = old;
+            }
+
+            Utils.Event_Triggered = TRIGGERED_NONE;
+
         }
         return ret;
     }

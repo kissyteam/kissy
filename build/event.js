@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 12 00:46
 */
 /**
  * @ignore
@@ -200,7 +200,6 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
 
     var isValidTarget = Utils.isValidTarget,
         splitAndRun = Utils.splitAndRun,
-        getNodeName = DOM.nodeName,
         trim = S.trim,
         TRIGGERED_NONE = Utils.TRIGGERED_NONE;
 
@@ -372,45 +371,47 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
         } while (!onlyHandlers && cur && !event.isPropagationStopped);
 
         if (!onlyHandlers && !event.isDefaultPrevented) {
-            if (!(eventType === 'click' &&
-                getNodeName(target) == 'a')) {
-                var old;
-                try {
-                    // execute default action on dom node
-                    // so exclude window
-                    // exclude focus/blue on hidden element
-                    if (ontype &&
-                        target[ eventType ] &&
-                        (
-                            (eventType !== 'focus' && eventType !== 'blur') ||
-                                target.offsetWidth !== 0
-                            ) &&
-                        !S.isWindow(target)) {
-                        // Don't re-trigger an onFOO event when we call its FOO() method
-                        old = target[ ontype ];
 
-                        if (old) {
-                            target[ ontype ] = null;
-                        }
+            // now all browser support click
+            // https://developer.mozilla.org/en-US/docs/DOM/element.click
 
-                        // 记录当前 trigger 触发
-                        Utils.Event_Triggered = eventType;
+            var old;
+            try {
+                // execute default action on dom node
+                // so exclude window
+                // exclude focus/blue on hidden element
+                if (ontype &&
+                    target[ eventType ] &&
+                    (
+                        (eventType !== 'focus' && eventType !== 'blur') ||
+                            target.offsetWidth !== 0
+                        ) &&
+                    !S.isWindow(target)) {
+                    // Don't re-trigger an onFOO event when we call its FOO() method
+                    old = target[ ontype ];
 
-                        // 只触发默认事件，而不要执行绑定的用户回调
-                        // 同步触发
-                        target[ eventType ]();
+                    if (old) {
+                        target[ ontype ] = null;
                     }
-                } catch (ieError) {
-                    S.log('trigger action error : ');
-                    S.log(ieError);
-                }
 
-                if (old) {
-                    target[ ontype ] = old;
-                }
+                    // 记录当前 trigger 触发
+                    Utils.Event_Triggered = eventType;
 
-                Utils.Event_Triggered = TRIGGERED_NONE;
+                    // 只触发默认事件，而不要执行绑定的用户回调
+                    // 同步触发
+                    target[ eventType ]();
+                }
+            } catch (eError) {
+                S.log('trigger action error : ');
+                S.log(eError);
             }
+
+            if (old) {
+                target[ ontype ] = old;
+            }
+
+            Utils.Event_Triggered = TRIGGERED_NONE;
+
         }
         return ret;
     }
@@ -928,9 +929,14 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
 
             getHash = function () {
                 // 不能 location.hash
+                // 1.
                 // http://xx.com/#yy?z=1
                 // ie6 => location.hash = #yy
                 // 其他浏览器 => location.hash = #yy?z=1
+                // 2.
+                // #!/home/q={%22thedate%22:%2220121010~20121010%22}
+                // firefox 15 => #!/home/q={"thedate":"20121010~20121010"}
+                // !! :(
                 var uri = new S.Uri(location.href);
                 return '#' + uri.getFragment();
             },
