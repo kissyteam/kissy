@@ -43,7 +43,7 @@
 语法采用变形的 [BNF](http://en.wikipedia.org/wiki/Backus%E2%80%93Naur_Form) 形式，
 例如 xtemplate 的 [词法语法文件](https://github.com/kissyteam/kissy/blob/master/src/xtemplate/src/parser-grammar.kison)
 
-工具采用 kissy 历时半年开发的 [LALR](http://en.wikipedia.org/wiki/LALR) 语法解析器生成器 [kison](https://github.com/kissyteam/kissy/tree/master/src/kison).
+工具采用 kissy 开发的 [LALR](http://en.wikipedia.org/wiki/LALR) 语法解析器生成器 [kison](https://github.com/kissyteam/kissy/tree/master/src/kison).
 
 词法关注如何从输入代码中解析出最基本的代码单元（关键词，字符串，数字...），例如 xtemplate 的部分词法
 
