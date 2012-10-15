@@ -133,12 +133,12 @@ var KISSY = (function (undefined) {
         /**
          * Applies prototype properties from the supplier to the receiver.
          * @param   {Object} r received object
-         * @param   {...Object} s1 object need to  augment
+         * @param   {...Object} var_args object need to  augment
          *          {Boolean} [ov=true] whether overwrite existing property
          *          {String[]} [wl] array of white-list properties
          * @return  {Object} the augmented object
          */
-        augment: function (r, s1) {
+        augment: function (r, var_args) {
             var args = S.makeArray(arguments),
                 len = args.length - 2,
                 i = 1,
