@@ -6,6 +6,8 @@ KISSY.add("kison/lexer", function (S, Utils) {
 
     var Lexer = function (cfg) {
 
+        var self = this;
+
         /**
          * lex rules.
          * @type {Object[]}
@@ -20,27 +22,28 @@ KISSY.add("kison/lexer", function (S, Utils) {
          *  }
          * ]
          */
-        this.rules = [];
+        self.rules = [];
 
-        S.mix(this, cfg);
+        S.mix(self, cfg);
 
-        S.each(this.rules, function (r) {
-            if (!r.state) {
+        for (var i = 0, l = self.rules.length; i < l; i++) {
+            var r = self.rules[i];
+            if (!S.isArray(r) && !('state' in r)) {
                 r.state = Lexer.STATIC.INIT;
             }
-        });
+        }
 
         /**
          * Input languages
          * @type {String}
          */
 
-        this.resetInput(this.input);
+        self.resetInput(self.input);
 
     };
 
     Lexer.STATIC = {
-        INIT: S.guid("init"),
+        INIT: S.guid('ks' + S.now()),
         DEBUG_CONTEXT_LIMIT: 20,
         END_TAG: '$EOF'
     };
@@ -48,8 +51,9 @@ KISSY.add("kison/lexer", function (S, Utils) {
     Lexer.prototype = {
 
         resetInput: function (input) {
-            this.input = input;
-            S.mix(this, {
+            var self = this;
+            self.input = input;
+            S.mix(self, {
                 matched: "",
                 stateStack: [Lexer.STATIC.INIT],
                 match: "",
@@ -62,8 +66,23 @@ KISSY.add("kison/lexer", function (S, Utils) {
             });
         },
 
-        genCode: function () {
-            var code = [];
+        genCode: function (compress) {
+
+            if (!arguments.length) {
+                compress = 1;
+            }
+
+            var code = [],
+                stateId = 0,
+                stateMap = {},
+                tokenMap = {
+                },
+                tokenId = 0;
+
+            if (compress) {
+                stateMap[Lexer.STATIC.INIT] = ++stateId;
+                tokenMap[Lexer.STATIC.END_TAG] = ++tokenId;
+            }
 
             code.push("var Lexer = " + Lexer.toString() + ';');
 
@@ -71,16 +90,49 @@ KISSY.add("kison/lexer", function (S, Utils) {
 
             code.push("Lexer.STATIC= " + Utils.serializeObject(Lexer.STATIC) + ";");
 
-            code.push("var lexer = new Lexer(" + Utils.serializeObject({rules: this.rules}) + ");");
+            var newCfg = Utils.serializeObject({rules: this.rules}, compress ? function (v) {
+                if (v && v.regexp) {
+                    var state = v.state;
+                    var token = v.token || 0;
+                    if (token) {
+                        token = tokenMap[token] || (tokenMap[token] = (++tokenId));
+                    }
+                    state = stateMap[state] || (stateMap[state] = (++stateId));
+                    return [
+                        token,
+                        v.regexp || 0,
+                        v.action || 0,
+                        state
+                    ];
+                }
+            } : 0);
 
-            return code.join("\n");
+            code.push("var lexer = new Lexer(" + newCfg + ");");
+
+            if (compress) {
+                // for grammar
+                this.rules = eval('(' + newCfg + ')').rules;
+                code.push('lexer.tokenMap = ' + Utils.serializeObject(tokenMap) + ';');
+                code.push('lexer.stateMap = ' + Utils.serializeObject(stateMap) + ';');
+            }
+
+            return {
+                code: code.join("\n"),
+                tokenMap: tokenMap,
+                stateMap: stateMap,
+                tokenId: tokenId
+            };
         },
 
         getCurrentRules: function () {
-            var currentState = this.stateStack[this.stateStack.length - 1];
-            var rules = [];
-            S.each(this.rules, function (r) {
-                if (r.state == currentState) {
+            var self = this,
+                stateMap = self.stateMap || {},
+                currentState = self.stateStack[self.stateStack.length - 1],
+                rules = [];
+            currentState = stateMap[currentState] || currentState;
+            S.each(self.rules, function (r) {
+                var state = r.state || r[3];
+                if (state == currentState) {
                     rules.push(r);
                 }
             });
@@ -96,14 +148,15 @@ KISSY.add("kison/lexer", function (S, Utils) {
         },
 
         showDebugInfo: function () {
-            var DEBUG_CONTEXT_LIMIT = Lexer.STATIC.DEBUG_CONTEXT_LIMIT;
-            var matched = this.matched,
-                match = this.match,
-                input = this.input;
+            var self = this,
+                DEBUG_CONTEXT_LIMIT = Lexer.STATIC.DEBUG_CONTEXT_LIMIT,
+                matched = self.matched,
+                match = self.match,
+                input = self.input;
             matched = matched.slice(0, matched.length - match.length);
             var past = (matched.length > DEBUG_CONTEXT_LIMIT ? "..." : "") +
-                matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " ");
-            var next = match + input;
+                    matched.slice(-DEBUG_CONTEXT_LIMIT).replace(/\n/, " "),
+                next = match + input;
             next = next.slice(0, DEBUG_CONTEXT_LIMIT) +
                 (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
             return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
@@ -111,10 +164,12 @@ KISSY.add("kison/lexer", function (S, Utils) {
 
         lex: function () {
             var self = this,
+                tokenMap = self.tokenMap || {},
                 input = self.input,
                 i,
                 rule,
                 m,
+                END_TAG = Lexer.STATIC.END_TAG,
                 ret,
                 lines,
                 rules = self.getCurrentRules();
@@ -122,12 +177,15 @@ KISSY.add("kison/lexer", function (S, Utils) {
             self.match = self.text = "";
 
             if (!S.trim(input)) {
-                return  Lexer.STATIC.END_TAG;
+                return tokenMap[END_TAG] || END_TAG;
             }
 
             for (i = 0; i < rules.length; i++) {
                 rule = rules[i];
-                if (m = input.match(rule.regexp)) {
+                var regexp = rule.regexp || rule[1],
+                    token = rule.token || rule[0],
+                    action = rule.action || rule[2] || undefined;
+                if (m = input.match(regexp)) {
                     lines = m[0].match(/\n.*/g);
                     if (lines) {
                         self.lineNumber += lines.length;
@@ -150,9 +208,11 @@ KISSY.add("kison/lexer", function (S, Utils) {
                     self.text = match;
                     // matched content utils now
                     self.matched += match;
-                    ret = rule.action && rule.action.call(this);
+                    ret = action && action.call(self);
                     if (ret == undefined) {
-                        ret = rule.token;
+                        ret = token;
+                    } else {
+                        ret = tokenMap[ret] || ret;
                     }
                     input = input.slice(match.length);
                     self.input = input;
@@ -166,7 +226,7 @@ KISSY.add("kison/lexer", function (S, Utils) {
                 }
             }
 
-            S.error("lex error at line " + this.lineNumber + ":\n" + this.showDebugInfo());
+            S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
         }
     };
 

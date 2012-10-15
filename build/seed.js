@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 16:47
+build time: Oct 15 20:24
 */
 /**
  * @ignore
@@ -83,11 +83,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121015164719' will replace with current timestamp when compressing.
+         * NOTICE: '20121015202413' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121015164719',
+        __BUILD_TIME: '20121015202413',
         /**
          * KISSY Environment.
          * @private
@@ -138,12 +138,12 @@ var KISSY = (function (undefined) {
         /**
          * Applies prototype properties from the supplier to the receiver.
          * @param   {Object} r received object
-         * @param   {...Object} s1 object need to  augment
+         * @param   {...Object} var_args object need to  augment
          *          {Boolean} [ov=true] whether overwrite existing property
          *          {String[]} [wl] array of white-list properties
          * @return  {Object} the augmented object
          */
-        augment: function (r, s1) {
+        augment: function (r, var_args) {
             var args = S.makeArray(arguments),
                 len = args.length - 2,
                 i = 1,
@@ -5265,7 +5265,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121015164719'
+            tag: '20121015202413'
         }, getBaseInfo()));
     }
 

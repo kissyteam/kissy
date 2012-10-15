@@ -434,6 +434,10 @@ KISSY.add('base/attribute', function (S, undefined) {
                 ret = getter.call(self, ret, name);
             }
 
+            if (!(name in attrVals) && ret !== undefined) {
+                attrVals[name] = ret;
+            }
+
             if (path) {
                 ret = getValueByPath(ret, path);
             }

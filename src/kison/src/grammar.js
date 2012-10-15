@@ -4,11 +4,17 @@
  */
 KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal, Lexer, Production) {
 
-    var SHIFT_TYPE = 1;
-    var REDUCE_TYPE = 2;
-    var ACCEPT_TYPE = 0;
+    var GrammarConst = {
+        SHIFT_TYPE: 1,
+        REDUCE_TYPE: 2,
+        ACCEPT_TYPE: 0,
 
-    var mix = S.mix, END_TAG = '$EOF', START_TAG = '$START';
+        TYPE_INDEX: 0,
+        PRODUCTION_INDEX: 1,
+        TO_INDEX: 2
+    };
+
+    var mix = S.mix, END_TAG = Lexer.STATIC.END_TAG, START_TAG = '$START';
 
     function setSize(set3) {
         var count = 0, i;
@@ -34,27 +40,47 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
     function Grammar() {
         var self = this;
         Grammar.superclass.constructor.apply(self, arguments);
-        self.buildTerminals();
-        self.buildNonTerminals();
-        self.buildNullAble();
-        self.buildFirsts();
-        self.buildItemSet();
-        self.buildLalrItemSets();
-        self.buildTable();
     }
 
 
     S.extend(Grammar, Base, {
+
+        build: function () {
+            var self = this,
+                vs = self.get('productions');
+            vs.unshift({
+                symbol: START_TAG,
+                rhs: [vs[0].symbol]
+            });
+            S.each(vs, function (v, index) {
+                v.symbol = self.mapSymbol(v.symbol);
+                var rhs = v.rhs;
+                S.each(rhs, function (r, index) {
+                    rhs[index] = self.mapSymbol(r);
+                });
+                vs[index] = new Production(v);
+            });
+
+            self.buildTerminals();
+            self.buildNonTerminals();
+            self.buildNullAble();
+            self.buildFirsts();
+            self.buildItemSet();
+            self.buildLalrItemSets();
+            self.buildTable();
+
+        },
 
         buildTerminals: function () {
             var self = this,
                 lexer = self.get("lexer"),
                 rules = lexer && lexer.rules,
                 terminals = self.get("terminals");
-            terminals[END_TAG] = 1;
+            terminals[self.mapSymbol(END_TAG)] = 1;
             S.each(rules, function (rule) {
-                if (rule.token) {
-                    terminals[rule.token] = 1;
+                var token = rule.token || rule[0];
+                if (token) {
+                    terminals[token] = 1;
                 }
             });
         },
@@ -343,7 +369,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                 lookAheadTmp = {},
                 productions = self.get("productions");
 
-            lookAheadTmp[END_TAG] = 1;
+            lookAheadTmp[self.mapSymbol(END_TAG)] = 1;
 
             var initItemSet = self.closure(
                 new ItemSet({
@@ -361,7 +387,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
             var symbols = S.merge(self.get("terminals"), self.get("nonTerminals"));
 
-            delete  symbols[END_TAG];
+            delete  symbols[self.mapSymbol(END_TAG)];
 
             while (condition) {
                 condition = false;
@@ -445,6 +471,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
             var productions = self.get("productions");
             var gotos = {};
             var action = {};
+            var t;
             table.gotos = gotos;
             table.action = action;
             var nonTerminals = self.get("nonTerminals");
@@ -454,10 +481,10 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                 S.each(itemSet.get("gotos"), function (anotherItemSet, symbol) {
                     if (!nonTerminals[symbol]) {
                         action[i] = action[i] || {};
-                        action[i][symbol] = {
-                            type: SHIFT_TYPE,
-                            to: indexOf(anotherItemSet, itemSets)
-                        };
+                        t = action[i][symbol] = [];
+                        t[GrammarConst.TYPE_INDEX] = GrammarConst.SHIFT_TYPE;
+                        t[GrammarConst.PRODUCTION_INDEX] = 0;
+                        t[GrammarConst.TO_INDEX] = indexOf(anotherItemSet, itemSets);
                     } else {
                         gotos[i] = gotos[i] || {};
                         gotos[i][symbol] = indexOf(anotherItemSet, itemSets);
@@ -467,12 +494,12 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                 S.each(itemSet.get("items"), function (item) {
                     var production = item.get("production");
                     if (item.get("dotPosition") == production.get("rhs").length) {
-                        if (production.get("symbol") == START_TAG) {
-                            if (item.get("lookAhead")[END_TAG]) {
+                        if (production.get("symbol") == self.mapSymbol(START_TAG)) {
+                            if (item.get("lookAhead")[self.mapSymbol(END_TAG)]) {
                                 action[i] = action[i] || {};
-                                action[i][END_TAG] = {
-                                    type: ACCEPT_TYPE
-                                };
+                                t = action[i][self.mapSymbol(END_TAG)] = [];
+                                t[GrammarConst.TYPE_INDEX] = GrammarConst.ACCEPT_TYPE;
+                                t[GrammarConst.TO_INDEX] = t[GrammarConst.PRODUCTION_INDEX] = 0;
                             }
                         } else {
                             action[i] = action[i] || {};
@@ -481,10 +508,10 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                             // 2 -> f, f 's lookahead contains *
                             // f !-> e, e 's lookahead does not contain *
                             S.each(item.get("lookAhead"), function (_, l) {
-                                action[i][l] = {
-                                    type: REDUCE_TYPE,
-                                    production: S.indexOf(production, productions)
-                                };
+                                t = action[i][l] = [];
+                                t[GrammarConst.TYPE_INDEX] = GrammarConst.REDUCE_TYPE;
+                                t[GrammarConst.TO_INDEX] = 0;
+                                t[GrammarConst.PRODUCTION_INDEX] = S.indexOf(production, productions);
                             });
                         }
                     }
@@ -493,13 +520,14 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
         },
 
         visualizeTable: function () {
-            var table = this.get("table");
+            var self=this;
+            var table = self.get("table");
             var gotos = table.gotos;
             var action = table.action;
-            var productions = this.get("productions");
+            var productions = self.get("productions");
             var ret = [];
 
-            S.each(this.get("itemSets"), function (itemSet, i) {
+            S.each(self.get("itemSets"), function (itemSet, i) {
                 ret.push(new Array(70).join("*") + " itemSet : " + i);
                 ret.push(itemSet.toString());
                 ret.push("");
@@ -511,15 +539,15 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
             S.each(action, function (av, index) {
                 S.each(av, function (v, s) {
-                    var str, type = v.type;
-                    if (type == ACCEPT_TYPE) {
+                    var str, type = v[GrammarConst.TYPE_INDEX];
+                    if (type == GrammarConst.ACCEPT_TYPE) {
                         str = "acc"
-                    } else if (type == REDUCE_TYPE) {
-                        var production = productions[v.production];
+                    } else if (type == GrammarConst.REDUCE_TYPE) {
+                        var production = productions[v[GrammarConst.PRODUCTION_INDEX]];
                         str = "r, " + production.get("symbol") + "=" +
                             production.get("rhs").join(" ");
-                    } else if (type == SHIFT_TYPE) {
-                        str = "s, " + v.to;
+                    } else if (type == GrammarConst.SHIFT_TYPE) {
+                        str = "s, " + v[GrammarConst.TO_INDEX];
                     }
                     ret.push("action[" + index + "]" + "[" + s + "] = " + str);
                 });
@@ -536,29 +564,65 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
             return ret;
         },
 
-        genCode: function () {
-            var table = this.get("table");
+        mapSymbol: function (symbol) {
+            var self = this,
+                tokenMap = self.tokenMap,
+                symbolMap = self.symbolMap;
+            if (tokenMap && tokenMap[symbol]) {
+                symbol = tokenMap[symbol];
+            } else if (symbolMap) {
+                symbol = symbolMap[symbol] || (symbolMap[symbol] = (++self.symbolId));
+            }
+            return symbol;
+        },
 
-            var lexer = this.get("lexer");
+        genCode: function (compress) {
+            if (!arguments.length) {
+                compress = 1;
+            }
+
+            var self=this;
+
+            var table = self.get("table");
+
+            var lexer = self.get("lexer");
+
+            var lexerCode = lexer.genCode(compress);
+
+            if (compress) {
+                self.symbolMap = {};
+
+                self.tokenMap = lexerCode.tokenMap;
+
+                self.symbolId = lexerCode.tokenId + 1;
+            }
+
+            self.build();
 
             var productions = [];
-            S.each(this.get("productions"), function (p) {
-                productions.push({
-                    symbol: p.get("symbol"),
-                    rhs: p.get("rhs"),
-                    action: p.get("action")
-                });
+
+            S.each(self.get("productions"), function (p) {
+                var symbol = p.get('symbol'),
+                    rhs = p.get('rhs');
+                productions.push([
+                    symbol,
+                    rhs,
+                    p.get("action") || 0
+                ]);
             });
 
             var code = [];
+
             code.push("/* Generated by kison from KISSY */");
+
             code.push("var parser={}," +
                 "S=KISSY," +
-                "REDUCE_TYPE=" +
-                REDUCE_TYPE + "," +
-                "SHIFT_TYPE=" + SHIFT_TYPE + "," +
-                "ACCEPT_TYPE=" + ACCEPT_TYPE + ";");
-            code.push(lexer.genCode());
+                "GrammarConst=" +
+                Utils.serializeObject(GrammarConst) +
+                ";");
+
+            code.push(lexerCode.code);
+
             code.push("parser.lexer=lexer;");
             code.push('parser.productions=' + Utils.serializeObject(productions) + ";");
             code.push("parser.table=" + Utils.serializeObject(table) + ";");
@@ -576,16 +640,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                 value: []
             },
             productions: {
-                value: [],
-                setter: function (vs) {
-                    vs.unshift({
-                        symbol: START_TAG,
-                        rhs: [vs[0].symbol]
-                    });
-                    S.each(vs, function (v, index) {
-                        vs[index] = new Production(v);
-                    });
-                }
+                value: []
             },
             nonTerminals: {
                 value: {}
@@ -648,49 +703,49 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                 return false;
             }
 
-            switch (action.type) {
+            switch (action[GrammarConst.TYPE_INDEX]) {
 
-                case SHIFT_TYPE:
+                case GrammarConst.SHIFT_TYPE:
 
                     stack.push(symbol);
 
                     valueStack.push(lexer.text);
 
                     // push state
-                    stack.push(action.to);
+                    stack.push(action[GrammarConst.TO_INDEX]);
 
                     // allow to read more
                     symbol = null;
 
                     break;
 
-                case REDUCE_TYPE:
+                case GrammarConst.REDUCE_TYPE:
 
-                    var production = productions[action.production],
-                        reducedSymbol = production.symbol,
-                        reducedAction = production.action,
-                        reducedRhs = production.rhs;
+                    var production = productions[action[GrammarConst.PRODUCTION_INDEX]],
+                        reducedSymbol = production.symbol || production[0],
+                        reducedAction = production.action || production[2],
+                        reducedRhs = production.rhs || production[1];
 
                     var len = reducedRhs.length;
 
                     var $$ = valueStack[valueStack.length - len]; // default to $$ = $1
 
-                    this.$$ = $$;
+                    self.$$ = $$;
 
                     for (var i = 0; i < len; i++) {
-                        this["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
+                        self["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
                     }
 
                     var ret;
 
                     if (reducedAction) {
-                        ret = reducedAction.call(this);
+                        ret = reducedAction.call(self);
                     }
 
                     if (ret !== undefined) {
                         $$ = ret;
                     } else {
-                        $$ = this.$$;
+                        $$ = self.$$;
                     }
 
                     if (len) {
@@ -708,7 +763,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
                     break;
 
-                case ACCEPT_TYPE:
+                case GrammarConst.ACCEPT_TYPE:
 
                     return $$;
             }

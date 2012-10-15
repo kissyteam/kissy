@@ -5,8 +5,17 @@ KISSY.use("kison", function (S, Kison) {
     var Production = Kison.Production;
     var Grammar = Kison.Grammar;
     var Lexer = Kison.Lexer;
+    var Utils = Kison.Utils;
 
     describe("grammar", function () {
+
+        it('escape correctly', function () {
+
+            expect(Utils.escapeString("'\\")).toBe("\\'\\\\");
+
+            expect(eval("'" + Utils.escapeString("'\\") + "'")).toBe("'\\");
+
+        });
 
         // 4-41 文法 GOTO 图
         it("generate goto map ok", function () {
@@ -38,11 +47,21 @@ KISSY.use("kison", function (S, Kison) {
                         ]
                     }
                 ],
-                terminals: {
-                    "c": 1,
-                    "d": 1
+                lexer: {
+                    rules: [
+                        {
+                            regexp: /^c/,
+                            token: 'c'
+                        },
+                        {
+                            regexp: /^d/,
+                            token: 'd'
+                        }
+                    ]
                 }
             });
+
+            grammar.build();
 
             var itemSets = grammar.get("itemSets");
 
@@ -112,11 +131,21 @@ KISSY.use("kison", function (S, Kison) {
                         ]
                     }
                 ],
-                terminals: {
-                    "c": 1,
-                    "d": 1
+                lexer: {
+                    rules: [
+                        {
+                            regexp: /^c/,
+                            token: 'c'
+                        },
+                        {
+                            regexp: /^d/,
+                            token: 'd'
+                        }
+                    ]
                 }
             });
+
+            grammar.build();
 
             var table = grammar.visualizeTable();
 
@@ -167,7 +196,7 @@ KISSY.use("kison", function (S, Kison) {
                 }
             });
 
-            expect(new Function(grammar.genCode())().parse("ccdd")).not.toBe(false);
+            expect(new Function(grammar.genCode(true))().parse("ccdd")).not.toBe(false);
         });
 
 
@@ -214,10 +243,14 @@ KISSY.use("kison", function (S, Kison) {
                 }
             });
 
+            var compress = true;
+
             expect(function () {
-                new Function(grammar.genCode())().parse("dc")
+                new Function(grammar.genCode('parse error at line 1:\ndc\n--^\nexpect c, d'))().parse("dc")
             })
-                .toThrow('parse error at line 1:\ndc\n--^\nexpect c, d');
+                .toThrow(compress ?
+                'parse error at line 1:\ndc\n--^\nexpect 2, 3' :
+                'parse error at line 1:\ndc\n--^\nexpect c, d');
 
         });
 

@@ -2,12 +2,12 @@
  * @author lifesinger@gmail.com
  */
 
-KISSY.use("base", function(S,Base) {
+KISSY.use("base", function (S, Base) {
 
 
-    describe('base', function() {
+    describe('base', function () {
 
-        it('拥有 S.EventTarget 上的方法', function() {
+        it('拥有 S.EventTarget 上的方法', function () {
 
             function A() {
                 Base.call(this);
@@ -18,14 +18,14 @@ KISSY.use("base", function(S,Base) {
             var a = new A();
 
             var fired;
-            a.on('xxx', function() {
+            a.on('xxx', function () {
                 fired = true;
             });
             a.fire('xxx');
             expect(fired).toBeTruthy();
         });
 
-        it('拥有 S.Attribute 上的方法', function() {
+        it('拥有 S.Attribute 上的方法', function () {
 
             function A() {
                 Base.call(this);
@@ -45,7 +45,7 @@ KISSY.use("base", function(S,Base) {
             // addAttr
             a.addAttr('attr1', {
                 value: 1,
-                setter: function(v) {
+                setter: function (v) {
                     return parseInt(v);
                 }
             });
@@ -69,7 +69,7 @@ KISSY.use("base", function(S,Base) {
             expect(a.hasAttr('toString')).toBeFalsy();
         });
 
-        it('能解析 ATTRS 和 config', function() {
+        it('能解析 ATTRS 和 config', function () {
 
             function A(config) {
                 Base.call(this, config);
@@ -104,7 +104,7 @@ KISSY.use("base", function(S,Base) {
             expect(b.hasAttr('attr2')).toBeFalsy();
         });
 
-        it('能正确触发 S.Attribute 的事件', function() {
+        it('能正确触发 S.Attribute 的事件', function () {
 
             function A() {
                 Base.call(this);
@@ -116,7 +116,7 @@ KISSY.use("base", function(S,Base) {
 
             // normal
             var firedCount = 0;
-            a.on('beforeAttr1Change afterAttr1Change', function() {
+            a.on('beforeAttr1Change afterAttr1Change', function () {
                 firedCount++;
             });
             a.set('attr1', 1);
@@ -124,7 +124,7 @@ KISSY.use("base", function(S,Base) {
 
             // use 'return false' to cancel set
             a.set('attr2', 2);
-            a.on('beforeAttr2Change', function() {
+            a.on('beforeAttr2Change', function () {
                 return false;
             });
             a.set('attr2', 3);
@@ -132,12 +132,40 @@ KISSY.use("base", function(S,Base) {
 
             // check event object
             a.set('attr3', 3);
-            a.on('beforeAttr3Change', function(ev) {
+            a.on('beforeAttr3Change', function (ev) {
                 expect(ev.attrName).toBe('attr3');
                 expect(ev.prevVal).toBe(3);
                 expect(ev.newVal).toBe(4);
             });
             a.set('attr3', 4);
+        });
+
+        it('transfer default value to value', function () {
+            function A() {
+                Base.call(this);
+            }
+
+            S.extend(A, Base);
+
+            A.ATTRS = {
+                a: {
+                    value: 9
+                }
+            };
+
+            var a = new A();
+
+            a.get('a');
+
+            expect(a['__attrVals']['a']).toBe(9);
+
+            expect(a['__attrs']['a'].value).toBe(9);
+
+            a.set('a', 7);
+
+            expect(a['__attrVals']['a']).toBe(7);
+
+            expect(a['__attrs']['a'].value).toBe(9);
         });
 
     });

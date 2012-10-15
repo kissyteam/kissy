@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:01
+build time: Oct 15 20:24
 */
 /**
  * @ignore
@@ -437,6 +437,10 @@ KISSY.add('base/attribute', function (S, undefined) {
             // invoke getter for this attribute
             if (getter && (getter = normalFn(self, getter))) {
                 ret = getter.call(self, ret, name);
+            }
+
+            if (!(name in attrVals) && ret !== undefined) {
+                attrVals[name] = ret;
             }
 
             if (path) {

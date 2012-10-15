@@ -560,23 +560,25 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
             it('detect un-closed block tag', function () {
                 var tpl = '{{#if title}}\n' +
-                    'shoot\n' +
-                    '';
-                var data = {
-                    title: 'o'
-                };
+                        'shoot\n' +
+                        '',
+                    data = {
+                        title: 'o'
+                    }, info;
 
-                expect(function () {
-                    //try {
+
+                try {
                     new XTemplate(tpl).render(data);
-                    //} catch (e) {
-                    //    S.log('!'+e.replace(/\n/g,'\\n').replace(/\r/g,'\\r')+'!');
-                    //    throw e;
-                    //}
-                }).toThrow('parse error at line 3:\n' +
+                } catch (e) {
+                    info = e;
+
+                }
+
+                expect(S.startsWith(info, 'parse error at line 3:\n' +
                     '{{#if title}} shoot\n\n' +
                     '--------------------^\n' +
-                    'expect OPEN_END_BLOCK');
+                    'expect'));
+                // OPEN_END_BLOCK
             });
 
             it('warn about missing property', function () {

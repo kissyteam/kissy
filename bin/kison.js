@@ -65,6 +65,7 @@ if (module) {
 }
 
 function my_js_beautify(str) {
+    //return str;
     var opts = {"indent_size": "4", "indent_char": " ",
         "preserve_newlines": true, "brace_style": "collapse",
         "keep_array_indentation": false, "space_after_anon_function": true};
