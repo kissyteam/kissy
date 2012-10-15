@@ -245,11 +245,10 @@
 
     function getPackage(self, mod) {
         var modName = mod.name,
-            Env = self.Env,
-            packages = Env.packages || {},
+            Config = self.Config,
+            packages = Config.packages || {},
             pName = '',
-            p,
-            packageDesc;
+            p;
 
         for (p in packages) {
 
@@ -261,15 +260,7 @@
 
         }
 
-        packageDesc = packages[pName] ||
-            Env.defaultPackage ||
-            (Env.defaultPackage = new Loader.Package({
-                runtime: self,
-                // need packageName as key
-                name: ''
-            }));
-
-        return packageDesc;
+        return packages[pName];
     }
 
 

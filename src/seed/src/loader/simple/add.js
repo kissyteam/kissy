@@ -151,7 +151,7 @@
         // ie9 or firefox/chrome => re.src == 'http://localhost/x.js'
         var src = utils.resolveByPage(re.src),
             srcStr = src.toString(),
-            packages = runtime.Env.packages,
+            packages = runtime.config('packages'),
             finalPackagePath,
             p,
             packageBase,

@@ -364,9 +364,9 @@
                 combos = {};
 
             S.each(modNames, function (modName) {
-                var mod = getModInfo(self, modName),
-                    packageInfo = mod.getPackage(),
-                    packageBase = packageInfo.getBase(),
+                var mod = getModInfo(self, modName);
+                var packageInfo = mod.getPackage();
+                var packageBase = packageInfo.getBase(),
                     type = mod.getType(),
                     mods,
                     packageName = packageInfo.getName();

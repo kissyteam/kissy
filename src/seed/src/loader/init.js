@@ -5,10 +5,6 @@
  */
 (function (S) {
 
-    var Loader = S.Loader,
-        utils = Loader.Utils,
-        ComboLoader = S.Loader.Combo;
-
     S.mix(S,
         {
             /**
@@ -57,20 +53,24 @@
              * @return {KISSY.Loader}
              */
             getLoader: function () {
-                var self = this, env = self.Env;
-                if (self.Config.combine && !S.Env.nodejs) {
-                    return env._comboLoader;
+                var self = this,
+                    Config = self.Config,
+                    Env = self.Env;
+                if (Config.combine && !Env.nodejs) {
+                    return Env._comboLoader;
                 } else {
-                    return env._loader;
+                    return Env._loader;
                 }
             },
             clearLoader: function () {
-                var self = this, env = self.Env, l;
+                var self = this,
+                    Env = self.Env,
+                    l;
 
-                if ((l = env._comboLoader) && l.clear) {
+                if ((l = Env._comboLoader) && l.clear) {
                     l.clear();
                 }
-                if ((l = env._loader) && l.clear) {
+                if ((l = Env._loader) && l.clear) {
                     l.clear();
                 }
 
@@ -87,12 +87,16 @@
              * @member KISSY
              */
             require: function (moduleName) {
-                var self = this,
-                    mods = self.Env.mods,
+                var mods = this.Env.mods,
                     mod = mods[moduleName];
                 return mod && mod.value;
             }
         });
+
+    var Loader = S.Loader,
+        Env = S.Env,
+        utils = Loader.Utils,
+        ComboLoader = S.Loader.Combo;
 
     function returnJson(s) {
         return (new Function('return ' + s))();
@@ -116,7 +120,7 @@
             baseTestReg = /(seed|kissy)(?:-min)?\.js/i,
             comboPrefix,
             comboSep,
-            scripts = S.Env.host.document.getElementsByTagName('script'),
+            scripts = Env.host.document.getElementsByTagName('script'),
             script = scripts[scripts.length - 1],
             src = utils.resolveByPage(script.src).toString(),
             baseInfo = script.getAttribute('data-config');
@@ -153,8 +157,7 @@
             });
         }
         return S.mix({
-            base: base,
-            baseUri: new S.Uri(base)
+            base: base
         }, baseInfo);
     }
 
@@ -172,13 +175,11 @@
     }
 
     // Initializes loader.
-    (function () {
-        var env = S.Env;
-        env.mods = env.mods || {}; // all added mods
-        env._loader = new Loader(S);
-        if (ComboLoader) {
-            env._comboLoader = new ComboLoader(S);
-        }
-    })();
+    Env.mods = {}; // all added mods
+    Env._loader = new Loader(S);
+
+    if (ComboLoader) {
+        Env._comboLoader = new ComboLoader(S);
+    }
 
 })(KISSY);

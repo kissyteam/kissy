@@ -1,37 +1,34 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:05
+build time: Oct 15 16:47
 */
 /**
  * @ignore
- * @fileOverview A seed where KISSY grows up from , KISS Yeah !
+ * @fileOverview A seed where KISSY grows up from, KISS Yeah !
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-var KISSY = (function (undefined) {
-    /**
-     * The KISSY global namespace object. you can use
-     *
-     * for example:
-     *      @example
-     *      KISSY.each/mix
-     *
-     * to do basic operation. or
-     *
-     * for example:
-     *      @example
-     *      KISSY.use('overlay,node', function(S, Overlay, Node){
-     *          //
-     *      });
-     *
-     * to do complex task with modules.
-     * @singleton
-     * @class KISSY
-     */
 
-    function hasOwnProperty(o, p) {
-        return Object.prototype.hasOwnProperty.call(o, p);
-    }
+/**
+ * The KISSY global namespace object. you can use
+ *
+ * for example:
+ *      @example
+ *      KISSY.each/mix
+ *
+ * to do basic operation. or
+ *
+ * for example:
+ *      @example
+ *      KISSY.use('overlay,node', function(S, Overlay, Node){
+ *          //
+ *      });
+ *
+ * to do complex task with modules.
+ * @singleton
+ * @class KISSY
+ */
+var KISSY = (function (undefined) {
 
     var host = this,
         MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
@@ -44,424 +41,62 @@ var KISSY = (function (undefined) {
             'toLocaleString',
             'valueOf'
         ],
-        meta = {
-            /**
-             * Copies all the properties of s to r.
-             * @method
-             * @param {Object} r the augmented object
-             * @param {Object} s the object need to augment
-             * @param {Boolean|Object} [ov=true] whether overwrite existing property or config.
-             * @param {Boolean} [ov.overwrite=true] whether overwrite existing property.
-             * @param {String[]} [ov.whitelist] array of white-list properties
-             * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
-             * @param {String[]} [wl] array of white-list properties
-             * @param [deep=false] {Boolean} whether recursive mix if encounter object.
-             * @return {Object} the augmented object
-             *
-             * for example:
-             *     @example
-             *     var t = {};
-             *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true}) => {x: {y: 3, z: 4, a: {}}}, a !== t
-             *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true, overwrite: false}) => {x: {y: 2, z: 4, a: {}}}, a !== t
-             *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, 1) => {x: {y: 3, a: t}}
-             */
-            mix: function (r, s, ov, wl, deep) {
-                if (typeof ov === 'object') {
-                    wl = ov['whitelist'];
-                    deep = ov['deep'];
-                    ov = ov['overwrite'];
-                }
-                var cache = [], c, i = 0;
-                mixInternal(r, s, ov, wl, deep, cache);
-                while (c = cache[i++]) {
-                    delete c[MIX_CIRCULAR_DETECTION];
-                }
-                return r;
+        S,
+        guid = 0,
+        EMPTY = '';
+
+    S = {
+
+        /**
+         * Copies all the properties of s to r.
+         * @method
+         * @param {Object} r the augmented object
+         * @param {Object} s the object need to augment
+         * @param {Boolean|Object} [ov=true] whether overwrite existing property or config.
+         * @param {Boolean} [ov.overwrite=true] whether overwrite existing property.
+         * @param {String[]} [ov.whitelist] array of white-list properties
+         * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
+         * @param {String[]} [wl] array of white-list properties
+         * @param [deep=false] {Boolean} whether recursive mix if encounter object.
+         * @return {Object} the augmented object
+         *
+         * for example:
+         *     @example
+         *     var t = {};
+         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true}) => {x: {y: 3, z: 4, a: {}}}, a !== t
+         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true, overwrite: false}) => {x: {y: 2, z: 4, a: {}}}, a !== t
+         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, 1) => {x: {y: 3, a: t}}
+         */
+        mix: function (r, s, ov, wl, deep) {
+            if (typeof ov === 'object') {
+                wl = ov['whitelist'];
+                deep = ov['deep'];
+                ov = ov['overwrite'];
             }
-        },
-
-        mixInternal = function (r, s, ov, wl, deep, cache) {
-            if (!s || !r) {
-                return r;
-            }
-
-            if (ov === undefined) {
-                ov = true;
-            }
-
-            var i = 0, p, len;
-
-            // 记录循环标志
-            s[MIX_CIRCULAR_DETECTION] = r;
-
-            // 记录被记录了循环标志的对像
-            cache.push(s);
-
-            if (wl && (len = wl.length)) {
-                for (; i < len; i++) {
-                    p = wl[i];
-                    if (p in s) {
-                        _mix(p, r, s, ov, wl, deep, cache);
-                    }
-                }
-            } else {
-                for (p in s) {
-                    if (p != MIX_CIRCULAR_DETECTION) {
-                        // no hasOwnProperty judge !
-                        _mix(p, r, s, ov, wl, deep, cache);
-                    }
-                }
-
-                // fix #101
-                if (hasEnumBug) {
-                    for (; p = enumProperties[i++];) {
-                        if (hasOwnProperty(s, p)) {
-                            _mix(p, r, s, ov, wl, deep, cache);
-                        }
-                    }
-                }
+            var cache = [], c, i = 0;
+            mixInternal(r, s, ov, wl, deep, cache);
+            while (c = cache[i++]) {
+                delete c[MIX_CIRCULAR_DETECTION];
             }
             return r;
         },
 
-        _mix = function (p, r, s, ov, wl, deep, cache) {
-            // 要求覆盖
-            // 或者目的不存在
-            // 或者深度mix
-            if (ov || !(p in r) || deep) {
-                var target = r[p],
-                    src = s[p];
-                // prevent never-end loop
-                if (target === src) {
-                    return;
-                }
-                // 来源是数组和对象，并且要求深度 mix
-                if (deep && src && (S.isArray(src) || S.isPlainObject(src))) {
-                    if (src[MIX_CIRCULAR_DETECTION]) {
-                        r[p] = src[MIX_CIRCULAR_DETECTION];
-                    } else {
-                        // 目标值为对象或数组，直接 mix
-                        // 否则 新建一个和源值类型一样的空数组/对象，递归 mix
-                        var clone = target && (S.isArray(target) || S.isPlainObject(target)) ?
-                            target :
-                            (S.isArray(src) ? [] : {});
-                        r[p] = clone;
-                        mixInternal(clone, src, ov, wl, true, cache);
-                    }
-                } else if (src !== undefined && (ov || !(p in r))) {
-                    r[p] = src;
-                }
-            }
-        },
-
-    // If KISSY is already defined, the existing KISSY object will not
-    // be overwritten so that defined namespaces are preserved.
-        seed = {},
-
-        guid = 0,
-        EMPTY = '';
-
-    // The host of runtime environment. specify by user's seed or <this>,
-    // compatibled for  '<this> is null' in unknown engine.
-    seed.Env = seed.Env || {};
-    seed.Env.host = host;
-
-    // shortcut and meta for seed.
-    // override previous kissy
-    var S = meta.mix(seed, meta);
-
-    S.mix(S,
-        {
-            /**
-             * Config function.
-             * @private
-             */
-            configs: (S.configs || {}),
-
-            /**
-             * The version of the library.
-             * NOTICE: '1.40dev' will replace with current version when compressing.
-             * @type {String}
-             */
-            version: '1.40dev',
-
-            /**
-             * Returns a new object containing all of the properties of
-             * all the supplied objects. The properties from later objects
-             * will overwrite those in earlier objects. Passing in a
-             * single object will create a shallow copy of it.
-             * @param {...Object} var_args objects need to be merged
-             * @return {Object} the new merged object
-             */
-            merge: function (var_args) {
-                var_args = S.makeArray(arguments);
-                var o = {}, i, l = var_args.length;
-                for (i = 0; i < l; i++) {
-                    S.mix(o, var_args[i]);
-                }
-                return o;
-            },
-
-            /**
-             * Applies prototype properties from the supplier to the receiver.
-             * @param   {Object} r received object
-             * @param   {...Object} s1 object need to  augment
-             *          {Boolean} [ov=true] whether overwrite existing property
-             *          {String[]} [wl] array of white-list properties
-             * @return  {Object} the augmented object
-             */
-            augment: function (r, s1) {
-                var args = S.makeArray(arguments),
-                    len = args.length - 2,
-                    i = 1,
-                    ov = args[len],
-                    wl = args[len + 1];
-
-                if (!S.isArray(wl)) {
-                    ov = wl;
-                    wl = undefined;
-                    len++;
-                }
-                if (!S.isBoolean(ov)) {
-                    ov = undefined;
-                    len++;
-                }
-
-                for (; i < len; i++) {
-                    S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
-                }
-
-                return r;
-            },
-
-            /**
-             * Utility to set up the prototype, constructor and superclass properties to
-             * support an inheritance strategy that can chain constructors and methods.
-             * Static members will not be inherited.
-             * @param r {Function} the object to modify
-             * @param s {Function} the object to inherit
-             * @param {Object} [px] prototype properties to add/override
-             * @param {Object} [sx] static properties to add/override
-             * @return r {Object}
-             */
-            extend: function (r, s, px, sx) {
-                if (!s || !r) {
-                    return r;
-                }
-
-                var create = Object.create ?
-                        function (proto, c) {
-                            return Object.create(proto, {
-                                constructor: {
-                                    value: c
-                                }
-                            });
-                        } :
-                        function (proto, c) {
-                            function F() {
-                            }
-
-                            F.prototype = proto;
-
-                            var o = new F();
-                            o.constructor = c;
-                            return o;
-                        },
-                    sp = s.prototype,
-                    rp;
-
-                // add prototype chain
-                rp = create(sp, r);
-                r.prototype = S.mix(rp, r.prototype);
-                r.superclass = create(sp, s);
-
-                // add prototype overrides
-                if (px) {
-                    S.mix(rp, px);
-                }
-
-                // add object overrides
-                if (sx) {
-                    S.mix(r, sx);
-                }
-
-                return r;
-            },
-
-            // The KISSY System Framework
-
-            /**
-             * Returns the namespace specified and creates it if it doesn't exist. Be careful
-             * when naming packages. Reserved words may work in some browsers and not others.
-             *
-             * for example:
-             *      @example
-             *      S.namespace('KISSY.app'); // returns KISSY.app
-             *      S.namespace('app.Shop'); // returns KISSY.app.Shop
-             *      S.namespace('TB.app.Shop', true); // returns TB.app.Shop
-             *
-             * @return {Object}  A reference to the last namespace object created
-             */
-            namespace: function () {
-                var args = S.makeArray(arguments),
-                    l = args.length,
-                    o = null, i, j, p,
-                    global = (args[l - 1] === true && l--);
-
-                for (i = 0; i < l; i++) {
-                    p = (EMPTY + args[i]).split('.');
-                    o = global ? host : this;
-                    for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                        o = o[p[j]] = o[p[j]] || { };
-                    }
-                }
-                return o;
-            },
-
-            /**
-             * set KISSY configuration
-             * @param {Object|String}   configName Config object or config key.
-             * @param {String} configName.base   KISSY 's base path. Default: get from kissy(-min).js or seed(-min).js
-             * @param {String} configName.tag    KISSY 's timestamp for native module. Default: KISSY 's build time.
-             * @param {Boolean} configName.debug     whether to enable debug mod.
-             * @param {Boolean} configName.combine   whether to enable combo.
-             * @param {Object} configName.packages Packages definition with package name as the key.
-             * @param {String} configName.packages.base    Package base path.
-             * @param {String} configName.packages.tag     Timestamp for this package's module file.
-             * @param {String} configName.packages.debug     Whether force debug mode for current package.
-             * @param {String} configName.packages.combine     Whether allow combine for current package modules.
-             * @param {Array[]} configName.map file map      File url map configs.
-             * @param {Array[]} configName.map.0     A single map rule.
-             * @param {RegExp} configName.map.0.0    A regular expression to match url.
-             * @param {String|Function} configName.map.0.1   Replacement for String.replace.
-             * @param [configValue] config value.
-             *
-             * for example:
-             *     @example
-             *     KISSY.config({
-             *      combine: true,
-             *      base: '',
-             *      packages: {
-             *          'gallery': {
-             *              base: 'http://a.tbcdn.cn/s/kissy/gallery/'
-             *          }
-             *      },
-             *      modules: {
-             *          'gallery/x/y': {
-             *              requires: ['gallery/x/z']
-             *          }
-             *      }
-             *     });
-             */
-            config: function (configName, configValue) {
-                var cfg,
-                    r,
-                    self = this,
-                    fn,
-                    Config = S.Config,
-                    configs = S.configs;
-                if (S.isObject(configName)) {
-                    S.each(configName, function (configValue, p) {
-                        fn = configs[p];
-                        if (fn) {
-                            fn.call(self, configValue);
-                        } else {
-                            Config[p] = configValue;
-                        }
-                    });
-                } else {
-                    cfg = configs[configName];
-                    if (configValue === undefined) {
-                        if (cfg) {
-                            r = cfg.call(self);
-                        } else {
-                            r = Config[configName];
-                        }
-                    } else {
-                        if (cfg) {
-                            r = cfg.call(self, configValue);
-                        } else {
-                            Config[configName] = configValue;
-                        }
-                    }
-                }
-                return r;
-            },
-
-            /**
-             * Prints debug info.
-             * @param msg {String} the message to log.
-             * @param {String} [cat] the log category for the message. Default
-             *        categories are 'info', 'warn', 'error', 'time' etc.
-             * @param {String} [src] the source of the the message (opt)
-             */
-            log: function (msg, cat, src) {
-                if (S.Config.debug) {
-                    if (src) {
-                        msg = src + ': ' + msg;
-                    }
-                    if (host['console'] !== undefined && console.log) {
-                        console[cat && console[cat] ? cat : 'log'](msg);
-                    }
-                }
-            },
-
-            /**
-             * Throws error message.
-             */
-            error: function (msg) {
-                if (S.Config.debug) {
-                    throw msg;
-                }
-            },
-
-            /*
-             * Generate a global unique id.
-             * @param {String} [pre] guid prefix
-             * @return {String} the guid
-             */
-            guid: function (pre) {
-                return (pre || EMPTY) + guid++;
-            },
-
-            /**
-             * Get all the property names of o as array
-             * @param {Object} o
-             * @return {Array}
-             */
-            keys: function (o) {
-                var result = [], p;
-
-                for (p in o) {
-                    result.push(p);
-                }
-
-                if (hasEnumBug) {
-                    S.each(enumProperties, function (name) {
-                        if (hasOwnProperty(o, name)) {
-                            result.push(name);
-                        }
-                    });
-                }
-
-                return result;
-            }
-        });
-
-
-    // Initializes
-    (function () {
-        var c;
+        /**
+         * The build time of the library.
+         * NOTICE: '20121015164719' will replace with current timestamp when compressing.
+         * @private
+         * @type {String}
+         */
+        __BUILD_TIME: '20121015164719',
         /**
          * KISSY Environment.
          * @private
          * @type {Object}
          */
-        S.Env = S.Env || {};
-
-        S.Env.nodejs = (typeof require === 'function') &&
-            (typeof exports === 'object');
-
+        Env: {
+            host: host,
+            nodejs: (typeof require == 'function') && (typeof exports == 'object')
+        },
         /**
          * KISSY Config.
          * If load kissy.js, Config.debug defaults to true.
@@ -471,18 +106,353 @@ var KISSY = (function (undefined) {
          * @property {Boolean} Config.debug
          * @member KISSY
          */
-        c = S.Config = S.Config || {};
-
-        c.debug = '@DEBUG@';
+        Config: {
+            debug: '@DEBUG@',
+            fns: {}
+        },
 
         /**
-         * The build time of the library.
-         * NOTICE: '20121015140542' will replace with current timestamp when compressing.
-         * @private
+         * The version of the library.
+         * NOTICE: '1.40dev' will replace with current version when compressing.
          * @type {String}
          */
-        S.__BUILD_TIME = '20121015140542';
-    })();
+        version: '1.40dev',
+
+        /**
+         * Returns a new object containing all of the properties of
+         * all the supplied objects. The properties from later objects
+         * will overwrite those in earlier objects. Passing in a
+         * single object will create a shallow copy of it.
+         * @param {...Object} var_args objects need to be merged
+         * @return {Object} the new merged object
+         */
+        merge: function (var_args) {
+            var_args = S.makeArray(arguments);
+            var o = {}, i, l = var_args.length;
+            for (i = 0; i < l; i++) {
+                S.mix(o, var_args[i]);
+            }
+            return o;
+        },
+
+        /**
+         * Applies prototype properties from the supplier to the receiver.
+         * @param   {Object} r received object
+         * @param   {...Object} s1 object need to  augment
+         *          {Boolean} [ov=true] whether overwrite existing property
+         *          {String[]} [wl] array of white-list properties
+         * @return  {Object} the augmented object
+         */
+        augment: function (r, s1) {
+            var args = S.makeArray(arguments),
+                len = args.length - 2,
+                i = 1,
+                ov = args[len],
+                wl = args[len + 1];
+
+            if (!S.isArray(wl)) {
+                ov = wl;
+                wl = undefined;
+                len++;
+            }
+            if (!S.isBoolean(ov)) {
+                ov = undefined;
+                len++;
+            }
+
+            for (; i < len; i++) {
+                S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
+            }
+
+            return r;
+        },
+
+        /**
+         * Utility to set up the prototype, constructor and superclass properties to
+         * support an inheritance strategy that can chain constructors and methods.
+         * Static members will not be inherited.
+         * @param r {Function} the object to modify
+         * @param s {Function} the object to inherit
+         * @param {Object} [px] prototype properties to add/override
+         * @param {Object} [sx] static properties to add/override
+         * @return r {Object}
+         */
+        extend: function (r, s, px, sx) {
+            if (!s || !r) {
+                return r;
+            }
+
+            var create = Object.create ?
+                    function (proto, c) {
+                        return Object.create(proto, {
+                            constructor: {
+                                value: c
+                            }
+                        });
+                    } :
+                    function (proto, c) {
+                        function F() {
+                        }
+
+                        F.prototype = proto;
+
+                        var o = new F();
+                        o.constructor = c;
+                        return o;
+                    },
+                sp = s.prototype,
+                rp;
+
+            // add prototype chain
+            rp = create(sp, r);
+            r.prototype = S.mix(rp, r.prototype);
+            r.superclass = create(sp, s);
+
+            // add prototype overrides
+            if (px) {
+                S.mix(rp, px);
+            }
+
+            // add object overrides
+            if (sx) {
+                S.mix(r, sx);
+            }
+
+            return r;
+        },
+
+        // The KISSY System Framework
+
+        /**
+         * Returns the namespace specified and creates it if it doesn't exist. Be careful
+         * when naming packages. Reserved words may work in some browsers and not others.
+         *
+         * for example:
+         *      @example
+         *      S.namespace('KISSY.app'); // returns KISSY.app
+         *      S.namespace('app.Shop'); // returns KISSY.app.Shop
+         *      S.namespace('TB.app.Shop', true); // returns TB.app.Shop
+         *
+         * @return {Object}  A reference to the last namespace object created
+         */
+        namespace: function () {
+            var args = S.makeArray(arguments),
+                l = args.length,
+                o = null, i, j, p,
+                global = (args[l - 1] === true && l--);
+
+            for (i = 0; i < l; i++) {
+                p = (EMPTY + args[i]).split('.');
+                o = global ? host : this;
+                for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
+                    o = o[p[j]] = o[p[j]] || { };
+                }
+            }
+            return o;
+        },
+
+        /**
+         * set KISSY configuration
+         * @param {Object|String}   configName Config object or config key.
+         * @param {String} configName.base   KISSY 's base path. Default: get from kissy(-min).js or seed(-min).js
+         * @param {String} configName.tag    KISSY 's timestamp for native module. Default: KISSY 's build time.
+         * @param {Boolean} configName.debug     whether to enable debug mod.
+         * @param {Boolean} configName.combine   whether to enable combo.
+         * @param {Object} configName.packages Packages definition with package name as the key.
+         * @param {String} configName.packages.base    Package base path.
+         * @param {String} configName.packages.tag     Timestamp for this package's module file.
+         * @param {String} configName.packages.debug     Whether force debug mode for current package.
+         * @param {String} configName.packages.combine     Whether allow combine for current package modules.
+         * @param {Array[]} configName.map file map      File url map configs.
+         * @param {Array[]} configName.map.0     A single map rule.
+         * @param {RegExp} configName.map.0.0    A regular expression to match url.
+         * @param {String|Function} configName.map.0.1   Replacement for String.replace.
+         * @param [configValue] config value.
+         *
+         * for example:
+         *     @example
+         *     KISSY.config({
+         *      combine: true,
+         *      base: '',
+         *      packages: {
+         *          'gallery': {
+         *              base: 'http://a.tbcdn.cn/s/kissy/gallery/'
+         *          }
+         *      },
+         *      modules: {
+         *          'gallery/x/y': {
+         *              requires: ['gallery/x/z']
+         *          }
+         *      }
+         *     });
+         */
+        config: function (configName, configValue) {
+            var cfg,
+                r,
+                self = this,
+                fn,
+                Config = S.Config,
+                configFns = Config.fns;
+            if (S.isObject(configName)) {
+                S.each(configName, function (configValue, p) {
+                    fn = configFns[p];
+                    if (fn) {
+                        fn.call(self, configValue);
+                    } else {
+                        Config[p] = configValue;
+                    }
+                });
+            } else {
+                cfg = configFns[configName];
+                if (configValue === undefined) {
+                    if (cfg) {
+                        r = cfg.call(self);
+                    } else {
+                        r = Config[configName];
+                    }
+                } else {
+                    if (cfg) {
+                        r = cfg.call(self, configValue);
+                    } else {
+                        Config[configName] = configValue;
+                    }
+                }
+            }
+            return r;
+        },
+
+        /**
+         * Prints debug info.
+         * @param msg {String} the message to log.
+         * @param {String} [cat] the log category for the message. Default
+         *        categories are 'info', 'warn', 'error', 'time' etc.
+         * @param {String} [src] the source of the the message (opt)
+         */
+        log: function (msg, cat, src) {
+            if (S.Config.debug) {
+                if (src) {
+                    msg = src + ': ' + msg;
+                }
+                if (host['console'] !== undefined && console.log) {
+                    console[cat && console[cat] ? cat : 'log'](msg);
+                }
+            }
+        },
+
+        /**
+         * Throws error message.
+         */
+        error: function (msg) {
+            if (S.Config.debug) {
+                throw msg;
+            }
+        },
+
+        /*
+         * Generate a global unique id.
+         * @param {String} [pre] guid prefix
+         * @return {String} the guid
+         */
+        guid: function (pre) {
+            return (pre || EMPTY) + guid++;
+        },
+
+        /**
+         * Get all the property names of o as array
+         * @param {Object} o
+         * @return {Array}
+         */
+        keys: function (o) {
+            var result = [], p;
+
+            for (p in o) {
+                result.push(p);
+            }
+
+            if (hasEnumBug) {
+                S.each(enumProperties, function (name) {
+                    if (o.hasOwnProperty(name)) {
+                        result.push(name);
+                    }
+                });
+            }
+
+            return result;
+        }
+    };
+
+    function mixInternal(r, s, ov, wl, deep, cache) {
+        if (!s || !r) {
+            return r;
+        }
+
+        if (ov === undefined) {
+            ov = true;
+        }
+
+        var i = 0, p, len;
+
+        // 记录循环标志
+        s[MIX_CIRCULAR_DETECTION] = r;
+
+        // 记录被记录了循环标志的对像
+        cache.push(s);
+
+        if (wl && (len = wl.length)) {
+            for (; i < len; i++) {
+                p = wl[i];
+                if (p in s) {
+                    _mix(p, r, s, ov, wl, deep, cache);
+                }
+            }
+        } else {
+            for (p in s) {
+                if (p != MIX_CIRCULAR_DETECTION) {
+                    _mix(p, r, s, ov, wl, deep, cache);
+                }
+            }
+
+            // fix #101
+            if (hasEnumBug) {
+                for (; p = enumProperties[i++];) {
+                    if (s.hasOwnProperty(p)) {
+                        _mix(p, r, s, ov, wl, deep, cache);
+                    }
+                }
+            }
+        }
+        return r;
+    }
+
+    function _mix(p, r, s, ov, wl, deep, cache) {
+        // 要求覆盖
+        // 或者目的不存在
+        // 或者深度mix
+        if (ov || !(p in r) || deep) {
+            var target = r[p],
+                src = s[p];
+            // prevent never-end loop
+            if (target === src) {
+                return;
+            }
+            // 来源是数组和对象，并且要求深度 mix
+            if (deep && src && (S.isArray(src) || S.isPlainObject(src))) {
+                if (src[MIX_CIRCULAR_DETECTION]) {
+                    r[p] = src[MIX_CIRCULAR_DETECTION];
+                } else {
+                    // 目标值为对象或数组，直接 mix
+                    // 否则 新建一个和源值类型一样的空数组/对象，递归 mix
+                    var clone = target && (S.isArray(target) || S.isPlainObject(target)) ?
+                        target :
+                        (S.isArray(src) ? [] : {});
+                    r[p] = clone;
+                    mixInternal(clone, src, ov, wl, true, cache);
+                }
+            } else if (src !== undefined && (ov || !(p in r))) {
+                r[p] = src;
+            }
+        }
+    }
 
     // exports for nodejs
     if (S.Env.nodejs) {
@@ -3726,11 +3696,10 @@ var KISSY = (function (undefined) {
 
     function getPackage(self, mod) {
         var modName = mod.name,
-            Env = self.Env,
-            packages = Env.packages || {},
+            Config = self.Config,
+            packages = Config.packages || {},
             pName = '',
-            p,
-            packageDesc;
+            p;
 
         for (p in packages) {
 
@@ -3742,15 +3711,7 @@ var KISSY = (function (undefined) {
 
         }
 
-        packageDesc = packages[pName] ||
-            Env.defaultPackage ||
-            (Env.defaultPackage = new Loader.Package({
-                runtime: self,
-                // need packageName as key
-                name: ''
-            }));
-
-        return packageDesc;
+        return packages[pName];
     }
 
 
@@ -4022,7 +3983,7 @@ var KISSY = (function (undefined) {
 
     var Loader = S.Loader,
         utils = Loader.Utils,
-        configs = S.configs;
+        configFns = S.Config.fns;
     /*
      modify current module path
 
@@ -4034,20 +3995,20 @@ var KISSY = (function (undefined) {
      ]
 
      */
-    configs.map = function (rules) {
-        var self = this;
+    configFns.map = function (rules) {
+        var Config = this.Config;
         if (rules === false) {
-            return self.Config.mappedRules = [];
+            return Config.mappedRules = [];
         }
-        return self.Config.mappedRules = (self.Config.mappedRules || []).concat(rules || []);
+        return Config.mappedRules = (Config.mappedRules || []).concat(rules || []);
     };
 
-    configs.mapCombo = function (rules) {
-        var self = this;
+    configFns.mapCombo = function (rules) {
+        var Config = this.Config;
         if (rules === false) {
-            return self.Config.mappedComboRules = [];
+            return Config.mappedComboRules = [];
         }
-        return self.Config.mappedComboRules = (self.Config.mappedComboRules || []).concat(rules || []);
+        return Config.mappedComboRules = (Config.mappedComboRules || []).concat(rules || []);
     };
 
     /*
@@ -4057,12 +4018,11 @@ var KISSY = (function (undefined) {
      在当前网页路径找 biz/x.js
      @private
      */
-    configs.packages = function (cfgs) {
-        var self = this,
-            name,
+    configFns.packages = function (cfgs) {
+        var name,
             base,
-            Env = self.Env,
-            ps = Env.packages = Env.packages || {};
+            Config = this.Config,
+            ps = Config.packages = Config.packages || {};
         if (cfgs) {
             S.each(cfgs, function (cfg, key) {
                 // 兼容数组方式
@@ -4092,7 +4052,9 @@ var KISSY = (function (undefined) {
                 ps[ name ] = new Loader.Package(cfg);
             });
         } else if (cfgs === false) {
-            Env.packages = {};
+            Config.packages = {
+                '': Config.packages['']
+            };
         }
     };
 
@@ -4123,23 +4085,24 @@ var KISSY = (function (undefined) {
      }
      });
      */
-    configs.modules = function (modules) {
-        var self = this;
+    configFns.modules = function (modules) {
+        var self = this, Env = self.Env;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
                 utils.createModuleInfo(self, modName, modCfg);
-                S.mix(self.Env.mods[modName], modCfg);
+                S.mix(Env.mods[modName], modCfg);
             });
         } else if (modules === false) {
-            self.Env.mods = {};
+            Env.mods = {};
         }
     };
 
     /*
      KISSY 's base path.
      */
-    configs.base = function (base) {
-        var self = this, baseUri, Config = self.Config;
+    configFns.base = function (base) {
+        var self = this,
+            Config = self.Config, baseUri;
         if (!base) {
             return Config.base;
         }
@@ -4151,6 +4114,12 @@ var KISSY = (function (undefined) {
         baseUri = utils.resolveByPage(base);
         Config.base = baseUri.toString();
         Config.baseUri = baseUri;
+
+        self.config('packages', {
+            '': {
+                base: S.config('base')
+            }
+        });
     };
 })(KISSY);/**
  * @ignore
@@ -4305,7 +4274,7 @@ var KISSY = (function (undefined) {
         // ie9 or firefox/chrome => re.src == 'http://localhost/x.js'
         var src = utils.resolveByPage(re.src),
             srcStr = src.toString(),
-            packages = runtime.Env.packages,
+            packages = runtime.config('packages'),
             finalPackagePath,
             p,
             packageBase,
@@ -5007,9 +4976,9 @@ var KISSY = (function (undefined) {
                 combos = {};
 
             S.each(modNames, function (modName) {
-                var mod = getModInfo(self, modName),
-                    packageInfo = mod.getPackage(),
-                    packageBase = packageInfo.getBase(),
+                var mod = getModInfo(self, modName);
+                var packageInfo = mod.getPackage();
+                var packageBase = packageInfo.getBase(),
                     type = mod.getType(),
                     mods,
                     packageName = packageInfo.getName();
@@ -5131,10 +5100,6 @@ var KISSY = (function (undefined) {
  */
 (function (S) {
 
-    var Loader = S.Loader,
-        utils = Loader.Utils,
-        ComboLoader = S.Loader.Combo;
-
     S.mix(S,
         {
             /**
@@ -5183,20 +5148,24 @@ var KISSY = (function (undefined) {
              * @return {KISSY.Loader}
              */
             getLoader: function () {
-                var self = this, env = self.Env;
-                if (self.Config.combine && !S.Env.nodejs) {
-                    return env._comboLoader;
+                var self = this,
+                    Config = self.Config,
+                    Env = self.Env;
+                if (Config.combine && !Env.nodejs) {
+                    return Env._comboLoader;
                 } else {
-                    return env._loader;
+                    return Env._loader;
                 }
             },
             clearLoader: function () {
-                var self = this, env = self.Env, l;
+                var self = this,
+                    Env = self.Env,
+                    l;
 
-                if ((l = env._comboLoader) && l.clear) {
+                if ((l = Env._comboLoader) && l.clear) {
                     l.clear();
                 }
-                if ((l = env._loader) && l.clear) {
+                if ((l = Env._loader) && l.clear) {
                     l.clear();
                 }
 
@@ -5213,12 +5182,16 @@ var KISSY = (function (undefined) {
              * @member KISSY
              */
             require: function (moduleName) {
-                var self = this,
-                    mods = self.Env.mods,
+                var mods = this.Env.mods,
                     mod = mods[moduleName];
                 return mod && mod.value;
             }
         });
+
+    var Loader = S.Loader,
+        Env = S.Env,
+        utils = Loader.Utils,
+        ComboLoader = S.Loader.Combo;
 
     function returnJson(s) {
         return (new Function('return ' + s))();
@@ -5242,7 +5215,7 @@ var KISSY = (function (undefined) {
             baseTestReg = /(seed|kissy)(?:-min)?\.js/i,
             comboPrefix,
             comboSep,
-            scripts = S.Env.host.document.getElementsByTagName('script'),
+            scripts = Env.host.document.getElementsByTagName('script'),
             script = scripts[scripts.length - 1],
             src = utils.resolveByPage(script.src).toString(),
             baseInfo = script.getAttribute('data-config');
@@ -5279,8 +5252,7 @@ var KISSY = (function (undefined) {
             });
         }
         return S.mix({
-            base: base,
-            baseUri: new S.Uri(base)
+            base: base
         }, baseInfo);
     }
 
@@ -5293,19 +5265,17 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121015140542'
+            tag: '20121015164719'
         }, getBaseInfo()));
     }
 
     // Initializes loader.
-    (function () {
-        var env = S.Env;
-        env.mods = env.mods || {}; // all added mods
-        env._loader = new Loader(S);
-        if (ComboLoader) {
-            env._comboLoader = new ComboLoader(S);
-        }
-    })();
+    Env.mods = {}; // all added mods
+    Env._loader = new Loader(S);
+
+    if (ComboLoader) {
+        Env._comboLoader = new ComboLoader(S);
+    }
 
 })(KISSY);/**
  * @ignore

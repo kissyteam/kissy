@@ -7,7 +7,7 @@
 
     var Loader = S.Loader,
         utils = Loader.Utils,
-        configs = S.configs;
+        configFns = S.Config.fns;
     /*
      modify current module path
 
@@ -19,20 +19,20 @@
      ]
 
      */
-    configs.map = function (rules) {
-        var self = this;
+    configFns.map = function (rules) {
+        var Config = this.Config;
         if (rules === false) {
-            return self.Config.mappedRules = [];
+            return Config.mappedRules = [];
         }
-        return self.Config.mappedRules = (self.Config.mappedRules || []).concat(rules || []);
+        return Config.mappedRules = (Config.mappedRules || []).concat(rules || []);
     };
 
-    configs.mapCombo = function (rules) {
-        var self = this;
+    configFns.mapCombo = function (rules) {
+        var Config = this.Config;
         if (rules === false) {
-            return self.Config.mappedComboRules = [];
+            return Config.mappedComboRules = [];
         }
-        return self.Config.mappedComboRules = (self.Config.mappedComboRules || []).concat(rules || []);
+        return Config.mappedComboRules = (Config.mappedComboRules || []).concat(rules || []);
     };
 
     /*
@@ -42,12 +42,11 @@
      在当前网页路径找 biz/x.js
      @private
      */
-    configs.packages = function (cfgs) {
-        var self = this,
-            name,
+    configFns.packages = function (cfgs) {
+        var name,
             base,
-            Env = self.Env,
-            ps = Env.packages = Env.packages || {};
+            Config = this.Config,
+            ps = Config.packages = Config.packages || {};
         if (cfgs) {
             S.each(cfgs, function (cfg, key) {
                 // 兼容数组方式
@@ -77,7 +76,9 @@
                 ps[ name ] = new Loader.Package(cfg);
             });
         } else if (cfgs === false) {
-            Env.packages = {};
+            Config.packages = {
+                '': Config.packages['']
+            };
         }
     };
 
@@ -108,23 +109,24 @@
      }
      });
      */
-    configs.modules = function (modules) {
-        var self = this;
+    configFns.modules = function (modules) {
+        var self = this, Env = self.Env;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
                 utils.createModuleInfo(self, modName, modCfg);
-                S.mix(self.Env.mods[modName], modCfg);
+                S.mix(Env.mods[modName], modCfg);
             });
         } else if (modules === false) {
-            self.Env.mods = {};
+            Env.mods = {};
         }
     };
 
     /*
      KISSY 's base path.
      */
-    configs.base = function (base) {
-        var self = this, baseUri, Config = self.Config;
+    configFns.base = function (base) {
+        var self = this,
+            Config = self.Config, baseUri;
         if (!base) {
             return Config.base;
         }
@@ -136,5 +138,11 @@
         baseUri = utils.resolveByPage(base);
         Config.base = baseUri.toString();
         Config.baseUri = baseUri;
+
+        self.config('packages', {
+            '': {
+                base: S.config('base')
+            }
+        });
     };
 })(KISSY);
