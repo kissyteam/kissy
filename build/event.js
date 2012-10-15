@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 12 00:46
+build time: Oct 15 14:04
 */
 /**
  * @ignore
@@ -252,7 +252,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
             var ret = true, r;
             // custom event firing moved to target.js
             eventData = eventData || {};
-            if (S.isString(eventType)) {
+            if (typeof eventType == 'string') {
                 eventType = trim(eventType);
                 if (eventType.indexOf(' ') > -1) {
                     splitAndRun(eventType, function (t) {

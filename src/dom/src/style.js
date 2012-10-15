@@ -311,12 +311,15 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              */
             addStyleSheet: function (refWin, cssText, id) {
                 refWin = refWin || WINDOW;
-                if (S.isString(refWin)) {
+
+                if (typeof refWin == 'string') {
                     id = cssText;
                     cssText = refWin;
                     refWin = WINDOW;
                 }
+
                 refWin = DOM.get(refWin);
+
                 var win = DOM._getWin(refWin),
                     doc = win.document,
                     elem;
@@ -330,16 +333,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     return;
                 }
 
-                elem = DOM.create('<style>', { id: id }, doc);
+                elem = DOM.create('<style>' + cssText + '</style>', { id: id }, doc);
 
-                // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
                 DOM.get('head', doc).appendChild(elem);
-
-                if (elem.styleSheet) { // IE
-                    elem.styleSheet.cssText = cssText;
-                } else { // W3C
-                    elem.appendChild(doc.createTextNode(cssText));
-                }
             },
 
             /**

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 14:00
+build time: Oct 15 14:05
 */
 /**
  * @fileOverview validation
@@ -20,7 +20,7 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
     function Validation(form, config) {
         var self = this;
 
-        if (S.isString(form)) {
+        if (typeof form == 'string') {
             form = S.get(form);
         }
 

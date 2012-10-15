@@ -167,7 +167,7 @@
             var self = this, _queryMap;
             parseQuery(self);
             _queryMap = self._queryMap;
-            if (S.isString(key)) {
+            if (typeof key == 'string') {
                 self._queryMap[key] = value;
             } else {
                 if (key instanceof Query) {
@@ -367,7 +367,7 @@
          */
         resolve: function (relativeUri) {
 
-            if (S.isString(relativeUri)) {
+            if (typeof relativeUri == 'string') {
                 relativeUri = new Uri(relativeUri);
             }
 
@@ -513,7 +513,7 @@
          * @return this
          */
         'setQuery': function (query) {
-            if (S.isString(query)) {
+            if (typeof query == 'string') {
                 if (S.startsWith(query, '?')) {
                     query = query.slice(1);
                 }

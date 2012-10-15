@@ -20,7 +20,7 @@ KISSY.use('base',function(S,Base) {
         size: {
             value: 0,
             setter: function(v) {
-                if (S.isString(v) && v.indexOf('inch')!== -1) {
+                if (typeof v == 'string' && v.indexOf('inch')!== -1) {
                     return parseFloat(v)*10/3;
                 }
                 return parseFloat(v);

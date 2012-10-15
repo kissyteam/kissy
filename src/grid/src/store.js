@@ -125,7 +125,7 @@ KISSY.add('grid/store',function(S){
 				if(obj2 === undefined){
 					obj2 = '';
 				}
-				if(S.isString(obj1)){
+				if(typeof obj1 == 'string'){
 					return obj1.localeCompare(obj2);
 				}
 

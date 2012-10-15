@@ -50,7 +50,7 @@
                 }
 
                 // S.add(name[, fn[, config]])
-                if (S.isString(name)) {
+                if (typeof name == 'string') {
 
                     utils.registerModule(runtime, name, fn, config);
 

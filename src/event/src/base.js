@@ -60,7 +60,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
             var ret = true, r;
             // custom event firing moved to target.js
             eventData = eventData || {};
-            if (S.isString(eventType)) {
+            if (typeof eventType == 'string') {
                 eventType = trim(eventType);
                 if (eventType.indexOf(' ') > -1) {
                     splitAndRun(eventType, function (t) {

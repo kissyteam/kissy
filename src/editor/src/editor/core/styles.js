@@ -75,7 +75,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
     function replaceVariables(list, variablesValues) {
         for (var item in list) {
-            if (S.isString(list[ item ])) {
+            if (typeof (list[ item ]) == 'string') {
                 list[ item ] = list[ item ].replace(varRegex, function (match, varName) {
                     return variablesValues[ varName ];
                 });

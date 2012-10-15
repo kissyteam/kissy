@@ -7,7 +7,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     var $ = Node.all;
 
     function normFn(self, f) {
-        if (S.isString(f)) {
+        if (typeof f == 'string') {
             return self[f];
         }
         return f;
@@ -25,7 +25,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
         var events;
         if (events = this.get("events")) {
             this._afterEventsChange({
-                newVal:events
+                newVal: events
             });
         }
     }
@@ -46,10 +46,10 @@ KISSY.add("mvc/view", function (S, Node, Base) {
          * <div>my</div>
          * </code>
          */
-        el:{
-            value:"<div />",
-            getter:function (s) {
-                if (S.isString(s)) {
+        el: {
+            value: "<div />",
+            getter: function (s) {
+                if (typeof s == 'string') {
                     s = $(s);
                     this.setInternal("el", s);
                 }
@@ -69,7 +69,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
          * }
          * </code>
          */
-        events:{
+        events: {
 
         }
     };
@@ -81,7 +81,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
          */
         {
 
-            _afterEventsChange:function (e) {
+            _afterEventsChange: function (e) {
                 var prevVal = e.prevVal;
                 if (prevVal) {
                     this._removeEvents(prevVal);
@@ -89,7 +89,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
                 this._addEvents(e.newVal);
             },
 
-            _removeEvents:function (events) {
+            _removeEvents: function (events) {
                 var el = this.get("el");
                 for (var selector in events) {
                     var event = events[selector];
@@ -100,7 +100,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
                 }
             },
 
-            _addEvents:function (events) {
+            _addEvents: function (events) {
                 var el = this.get("el");
                 for (var selector in events) {
                     var event = events[selector];
@@ -111,14 +111,14 @@ KISSY.add("mvc/view", function (S, Node, Base) {
                 }
             },
 
-            render:function () {
+            render: function () {
                 return this;
             },
 
             /**
              * Remove root element.
              */
-            destroy:function () {
+            destroy: function () {
                 this.get("el").remove();
             }
 
@@ -127,5 +127,5 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     return View;
 
 }, {
-    requires:['node', 'base']
+    requires: ['node', 'base']
 });

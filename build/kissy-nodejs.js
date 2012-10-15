@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 12 00:48
+build time: Oct 15 14:05
 */
 /**
  * @ignore
@@ -477,11 +477,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121012004838' will replace with current timestamp when compressing.
+         * NOTICE: '20121015140542' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20121012004838';
+        S.__BUILD_TIME = '20121015140542';
     })();
 
     // exports for nodejs
@@ -723,7 +723,7 @@ var KISSY = (function (undefined) {
                 if (a instanceof Date && b instanceof Date) {
                     return a.getTime() == b.getTime();
                 }
-                if (S.isString(a) && S.isString(b)) {
+                if (typeof a == 'string' && typeof b == 'string') {
                     return (a == b);
                 }
                 if (S.isNumber(a) && S.isNumber(b)) {
@@ -790,7 +790,7 @@ var KISSY = (function (undefined) {
              * @param {RegExp} [regexp] to match a piece of template string
              */
             substitute: function (str, o, regexp) {
-                if (!S.isString(str)
+                if (typeof str != 'string'
                     || !S.isPlainObject(o)) {
                     return str;
                 }
@@ -971,7 +971,7 @@ var KISSY = (function (undefined) {
                     var len = arr.length,
                         res = new Array(len);
                     for (var i = 0; i < len; i++) {
-                        var el = S.isString(arr) ? arr.charAt(i) : arr[i];
+                        var el = typeof arr == 'string' ? arr.charAt(i) : arr[i];
                         if (el
                             ||
                             //ie<9 in invalid when typeof arr == string
@@ -1219,7 +1219,7 @@ var KISSY = (function (undefined) {
                     // || o.nodeName
                     // window
                     || o.alert
-                    || S.isString(o)
+                    || typeof o == 'string'
                     || S.isFunction(o)) {
                     return [o];
                 }
@@ -1307,7 +1307,7 @@ var KISSY = (function (undefined) {
              * @member KISSY
              */
             unparam: function (str, sep, eq) {
-                if (!S.isString(str) || !(str = S.trim(str))) {
+                if (typeof str != 'string' || !(str = S.trim(str))) {
                     return {};
                 }
                 sep = sep || SEP;
@@ -1381,7 +1381,7 @@ var KISSY = (function (undefined) {
                     f,
                     r;
 
-                if (S.isString(fn)) {
+                if (typeof fn == 'string') {
                     m = context[fn];
                 }
 
@@ -2459,7 +2459,7 @@ var KISSY = (function (undefined) {
             var self = this, _queryMap;
             parseQuery(self);
             _queryMap = self._queryMap;
-            if (S.isString(key)) {
+            if (typeof key == 'string') {
                 self._queryMap[key] = value;
             } else {
                 if (key instanceof Query) {
@@ -2659,7 +2659,7 @@ var KISSY = (function (undefined) {
          */
         resolve: function (relativeUri) {
 
-            if (S.isString(relativeUri)) {
+            if (typeof relativeUri == 'string') {
                 relativeUri = new Uri(relativeUri);
             }
 
@@ -2805,7 +2805,7 @@ var KISSY = (function (undefined) {
          * @return this
          */
         'setQuery': function (query) {
-            if (S.isString(query)) {
+            if (typeof query == 'string') {
                 if (S.startsWith(query, '?')) {
                     query = query.slice(1);
                 }
@@ -3310,7 +3310,7 @@ var KISSY = (function (undefined) {
          * @return {String[]}
          */
         getModNamesAsArray: function (modNames) {
-            if (S.isString(modNames)) {
+            if (typeof modNames == 'string') {
                 modNames = modNames.replace(/\s+/g, '').split(',');
             }
             return modNames;
@@ -3997,7 +3997,7 @@ var KISSY = (function (undefined) {
                 }
 
                 // S.add(name[, fn[, config]])
-                if (S.isString(name)) {
+                if (typeof name == 'string') {
 
                     utils.registerModule(runtime, name, fn, config);
 
@@ -4603,7 +4603,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121012004838'
+            tag: '20121015140542'
         }, getBaseInfo()));
     }
 

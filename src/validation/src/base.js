@@ -15,7 +15,7 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
     function Validation(form, config) {
         var self = this;
 
-        if (S.isString(form)) {
+        if (typeof form == 'string') {
             form = S.get(form);
         }
 

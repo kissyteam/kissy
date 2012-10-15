@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 15 14:05
 */
 /**
  * @fileOverview model and control for overlay
@@ -190,7 +190,7 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
                     },
                     setter: function (v) {
                         var effect = v.effect;
-                        if (S.isString(effect) && !effects[effect]) {
+                        if (typeof effect == 'string' && !effects[effect]) {
                             v.effect = '';
                         }
                     }
@@ -642,7 +642,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                  */
                 trigger:{                          // 触发器
                     setter:function (v) {
-                        if (S.isString(v)) {
+                        if (typeof v == 'string') {
                             v = S.all(v);
                         }
                         return v;

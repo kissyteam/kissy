@@ -11,7 +11,7 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
     }
 
     S.augment(FlashBridge, S.EventTarget, {
-        _init:function (cfg) {
+        _init: function (cfg) {
             var self = this,
                 id = S.guid("flashbridge-"),
                 callback = "KISSY.Editor.FlashBridge.EventHandler";
@@ -22,31 +22,31 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
                 attrs = cfg.attrs,
                 params = cfg.params;
             S.mix(attrs, {
-                id:id,
+                id: id,
                 //http://yiminghe.javaeye.com/blog/764872
                 //firefox 必须使创建的flash以及容器可见，才会触发contentReady
                 //默认给flash自身很大的宽高，容器小点就可以了，
-                width:'100%',
-                height:'100%'
+                width: '100%',
+                height: '100%'
             }, false);
             //这几个要放在 param 里面，主要是允许 flash js沟通
             S.mix(params, {
-                allowScriptAccess:'always',
-                allowNetworking:'all',
-                scale:'noScale'
+                allowScriptAccess: 'always',
+                allowNetworking: 'all',
+                scale: 'noScale'
             }, false);
             S.mix(flashVars, {
-                shareData:false,
-                useCompression:false
+                shareData: false,
+                useCompression: false
             }, false);
             var swfCore = {
-                YUISwfId:id,
-                YUIBridgeCallback:callback
+                YUISwfId: id,
+                YUIBridgeCallback: callback
             };
             if (cfg.ajbridge) {
                 swfCore = {
-                    swfID:id,
-                    jsEntry:callback
+                    swfID: id,
+                    jsEntry: callback
                 };
             }
             S.mix(flashVars, swfCore);
@@ -55,7 +55,7 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
             self.swf = flashUtils.createSWFRuntime(cfg.movie, cfg);
             self._expose(cfg.methods);
         },
-        _expose:function (methods) {
+        _expose: function (methods) {
             var self = this;
             for (var i = 0; i < methods.length; i++) {
                 var m = methods[i];
@@ -71,7 +71,7 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
          * @param func {String} the name of the function to call
          * @param args {Array} the set of arguments to pass to the function.
          */
-        _callSWF:function (func, args) {
+        _callSWF: function (func, args) {
             var self = this;
             args = args || [];
             try {
@@ -89,7 +89,7 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
                 return (new Function('self', 'return self.swf.' + func + '(' + params + ');'))(self);
             }
         },
-        _eventHandler:function (event) {
+        _eventHandler: function (event) {
             var self = this,
                 type = event.type;
 
@@ -99,7 +99,7 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
                 self.fire(type, event);
             }
         },
-        ready:function (fn) {
+        ready: function (fn) {
             var self = this;
             if (self._ready) {
                 fn.call(this);
@@ -107,7 +107,7 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
                 self.on("contentReady", fn);
             }
         },
-        destroy:function () {
+        destroy: function () {
             delete instances[this.id];
         }
     });
@@ -171,7 +171,7 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
      numerify(12.2) => 12.2
      */
     function numerify(ver) {
-        var arr = S.isString(ver) ? arrify(ver) : ver, ret = ver;
+        var arr = (typeof ver == 'string') ? arrify(ver) : ver, ret = ver;
         if (S.isArray(arr)) {
             ret = parseFloat(arr[0] + '.' + pad(arr[1], 3) + pad(arr[2], 5));
         }
@@ -220,5 +220,5 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
     return FlashBridge;
 
 }, {
-    requires:['editor', '../flash-common/utils']
+    requires: ['editor', '../flash-common/utils']
 });

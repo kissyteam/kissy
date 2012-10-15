@@ -11,7 +11,7 @@ KISSY.add('cookie', function (S) {
         decode = S.urlDecode;
 
     function isNotEmptyString(val) {
-        return S.isString(val) && val !== '';
+        return (typeof val == 'string') && val !== '';
     }
 
     /**

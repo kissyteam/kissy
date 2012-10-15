@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:56
+build time: Oct 15 14:01
 */
 /**
  * @ignore
@@ -47,7 +47,7 @@ KISSY.add('dd/constrain', function (S, Base, Node) {
                     bottom: t + win.height()
                 };
             }
-            if (constrain.nodeType || S.isString(constrain)) {
+            if (constrain.nodeType || typeof constrain == 'string') {
                 constrain = $(constrain);
             }
             if (constrain.getDOMNode) {
@@ -1184,7 +1184,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                     if (S.isFunction(v)) {
                         v = v.call(self);
                     }
-                    if (S.isString(v) || v.nodeType) {
+                    if ((typeof v == 'string') || v.nodeType) {
                         v = Node.one(v);
                     }
                     vs[i] = v;

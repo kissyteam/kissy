@@ -5,7 +5,7 @@
 KISSY.add("htmlparser/nodes/Text", function (S, Node) {
 
     function Text(v) {
-        if (S.isString(v)) {
+        if (typeof v == 'string') {
             this.nodeValue = v;
             Text.superclass.constructor.apply(this, [null, -1, -1]);
         } else {

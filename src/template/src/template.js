@@ -205,7 +205,7 @@ KISSY.add('template', function (S) {
          * @param {String} o extent tag object.
          */
         addStatement: function (statement, o) {
-            if (S.isString(statement)) {
+            if (typeof statement == 'string') {
                 Statements[statement] = o;
             } else {
                 S.mix(Statements, statement);

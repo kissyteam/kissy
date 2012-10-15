@@ -81,7 +81,7 @@ KISSY.use("dom", function (S, DOM) {
             });
 
             it("should return style correctly", function () {
-                expect(S.isString(DOM.attr(a, "style"))).toBe(true);
+                expect(typeof (DOM.attr(a, "style")) == 'string').toBe(true);
             });
 
             it("should return selected correctly", function () {

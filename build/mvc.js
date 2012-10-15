@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 15 14:05
 */
 /**
  * @fileOverview collection of models
@@ -579,7 +579,7 @@ KISSY.add("mvc/model", function (S, Base) {
     function getUrl(o) {
         var u;
         if (o && (u = o.get("url"))) {
-            if (S.isString(u)) {
+            if (typeof u == 'string') {
                 return u;
             }
             return u.call(o);
@@ -665,9 +665,14 @@ KISSY.add('mvc/router', function (S, Event, Base) {
 
     function getHash(url) {
         // 不能 location.hash
+        // 1.
         // http://xx.com/#yy?z=1
         // ie6 => location.hash = #yy
         // 其他浏览器 => location.hash = #yy?z=1
+        // 2.
+        // #!/home/q={%22thedate%22:%2220121010~20121010%22}
+        // firefox 15 => #!/home/q={"thedate":"20121010~20121010"}
+        // !! :(
         return new S.Uri(url).getFragment().replace(/^!/, "");
     }
 
@@ -927,7 +932,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
     function normFn(self, callback) {
         if (S.isFunction(callback)) {
             return callback;
-        } else if (S.isString(callback)) {
+        } else if (typeof callback == 'string') {
             return self[callback];
         }
         return callback;
@@ -1179,10 +1184,10 @@ KISSY.add('mvc/router', function (S, Event, Base) {
  */
 KISSY.add("mvc/sync", function (S, io, JSON) {
     var methodMap = {
-        'create':'POST',
-        'update':'POST', //'PUT'
-        'delete':'POST', //'DELETE'
-        'read':'GET'
+        'create': 'POST',
+        'update': 'POST', //'PUT'
+        'delete': 'POST', //'DELETE'
+        'read': 'GET'
     };
 
     /**
@@ -1196,17 +1201,20 @@ KISSY.add("mvc/sync", function (S, io, JSON) {
     function sync(self, method, options) {
         var type = methodMap[method],
             ioParam = S.merge({
-                type:type,
-                dataType:'json'
-            }, options);
+                type: type,
+                dataType: 'json'
+            }, options),
+            data,
+            url;
 
-        var data = ioParam.data = ioParam.data || {};
+        data = ioParam.data = ioParam.data || {};
         data['_method'] = method;
 
         if (!ioParam.url) {
-            ioParam.url = S.isString(self.get("url")) ?
-                self.get("url") :
-                self.get("url").call(self);
+            url = self.get("url");
+            ioParam.url = (typeof url == 'string') ?
+                url :
+                url.call(self);
         }
 
         if (method == 'create' || method == 'update') {
@@ -1218,7 +1226,7 @@ KISSY.add("mvc/sync", function (S, io, JSON) {
 
     return sync;
 }, {
-    requires:['ajax', 'json']
+    requires: ['ajax', 'json']
 });/**
  * @fileOverview view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com
@@ -1228,7 +1236,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     var $ = Node.all;
 
     function normFn(self, f) {
-        if (S.isString(f)) {
+        if (typeof f == 'string') {
             return self[f];
         }
         return f;
@@ -1246,7 +1254,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
         var events;
         if (events = this.get("events")) {
             this._afterEventsChange({
-                newVal:events
+                newVal: events
             });
         }
     }
@@ -1267,10 +1275,10 @@ KISSY.add("mvc/view", function (S, Node, Base) {
          * <div>my</div>
          * </code>
          */
-        el:{
-            value:"<div />",
-            getter:function (s) {
-                if (S.isString(s)) {
+        el: {
+            value: "<div />",
+            getter: function (s) {
+                if (typeof s == 'string') {
                     s = $(s);
                     this.setInternal("el", s);
                 }
@@ -1290,7 +1298,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
          * }
          * </code>
          */
-        events:{
+        events: {
 
         }
     };
@@ -1302,7 +1310,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
          */
         {
 
-            _afterEventsChange:function (e) {
+            _afterEventsChange: function (e) {
                 var prevVal = e.prevVal;
                 if (prevVal) {
                     this._removeEvents(prevVal);
@@ -1310,7 +1318,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
                 this._addEvents(e.newVal);
             },
 
-            _removeEvents:function (events) {
+            _removeEvents: function (events) {
                 var el = this.get("el");
                 for (var selector in events) {
                     var event = events[selector];
@@ -1321,7 +1329,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
                 }
             },
 
-            _addEvents:function (events) {
+            _addEvents: function (events) {
                 var el = this.get("el");
                 for (var selector in events) {
                     var event = events[selector];
@@ -1332,14 +1340,14 @@ KISSY.add("mvc/view", function (S, Node, Base) {
                 }
             },
 
-            render:function () {
+            render: function () {
                 return this;
             },
 
             /**
              * Remove root element.
              */
-            destroy:function () {
+            destroy: function () {
                 this.get("el").remove();
             }
 
@@ -1348,5 +1356,5 @@ KISSY.add("mvc/view", function (S, Node, Base) {
     return View;
 
 }, {
-    requires:['node', 'base']
+    requires: ['node', 'base']
 });

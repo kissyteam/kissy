@@ -266,7 +266,7 @@ KISSY.add("mvc/model", function (S, Base) {
     function getUrl(o) {
         var u;
         if (o && (u = o.get("url"))) {
-            if (S.isString(u)) {
+            if (typeof u == 'string') {
                 return u;
             }
             return u.call(o);

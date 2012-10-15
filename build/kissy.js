@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 12 00:48
+build time: Oct 15 14:05
 */
 /**
  * @ignore
@@ -477,11 +477,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121012004838' will replace with current timestamp when compressing.
+         * NOTICE: '20121015140542' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20121012004838';
+        S.__BUILD_TIME = '20121015140542';
     })();
 
     // exports for nodejs
@@ -723,7 +723,7 @@ var KISSY = (function (undefined) {
                 if (a instanceof Date && b instanceof Date) {
                     return a.getTime() == b.getTime();
                 }
-                if (S.isString(a) && S.isString(b)) {
+                if (typeof a == 'string' && typeof b == 'string') {
                     return (a == b);
                 }
                 if (S.isNumber(a) && S.isNumber(b)) {
@@ -790,7 +790,7 @@ var KISSY = (function (undefined) {
              * @param {RegExp} [regexp] to match a piece of template string
              */
             substitute: function (str, o, regexp) {
-                if (!S.isString(str)
+                if (typeof str != 'string'
                     || !S.isPlainObject(o)) {
                     return str;
                 }
@@ -971,7 +971,7 @@ var KISSY = (function (undefined) {
                     var len = arr.length,
                         res = new Array(len);
                     for (var i = 0; i < len; i++) {
-                        var el = S.isString(arr) ? arr.charAt(i) : arr[i];
+                        var el = typeof arr == 'string' ? arr.charAt(i) : arr[i];
                         if (el
                             ||
                             //ie<9 in invalid when typeof arr == string
@@ -1219,7 +1219,7 @@ var KISSY = (function (undefined) {
                     // || o.nodeName
                     // window
                     || o.alert
-                    || S.isString(o)
+                    || typeof o == 'string'
                     || S.isFunction(o)) {
                     return [o];
                 }
@@ -1307,7 +1307,7 @@ var KISSY = (function (undefined) {
              * @member KISSY
              */
             unparam: function (str, sep, eq) {
-                if (!S.isString(str) || !(str = S.trim(str))) {
+                if (typeof str != 'string' || !(str = S.trim(str))) {
                     return {};
                 }
                 sep = sep || SEP;
@@ -1381,7 +1381,7 @@ var KISSY = (function (undefined) {
                     f,
                     r;
 
-                if (S.isString(fn)) {
+                if (typeof fn == 'string') {
                     m = context[fn];
                 }
 
@@ -2459,7 +2459,7 @@ var KISSY = (function (undefined) {
             var self = this, _queryMap;
             parseQuery(self);
             _queryMap = self._queryMap;
-            if (S.isString(key)) {
+            if (typeof key == 'string') {
                 self._queryMap[key] = value;
             } else {
                 if (key instanceof Query) {
@@ -2659,7 +2659,7 @@ var KISSY = (function (undefined) {
          */
         resolve: function (relativeUri) {
 
-            if (S.isString(relativeUri)) {
+            if (typeof relativeUri == 'string') {
                 relativeUri = new Uri(relativeUri);
             }
 
@@ -2805,7 +2805,7 @@ var KISSY = (function (undefined) {
          * @return this
          */
         'setQuery': function (query) {
-            if (S.isString(query)) {
+            if (typeof query == 'string') {
                 if (S.startsWith(query, '?')) {
                     query = query.slice(1);
                 }
@@ -3310,7 +3310,7 @@ var KISSY = (function (undefined) {
          * @return {String[]}
          */
         getModNamesAsArray: function (modNames) {
-            if (S.isString(modNames)) {
+            if (typeof modNames == 'string') {
                 modNames = modNames.replace(/\s+/g, '').split(',');
             }
             return modNames;
@@ -4204,7 +4204,7 @@ var KISSY = (function (undefined) {
                 }
 
                 // S.add(name[, fn[, config]])
-                if (S.isString(name)) {
+                if (typeof name == 'string') {
 
                     utils.registerModule(runtime, name, fn, config);
 
@@ -5293,7 +5293,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121012004838'
+            tag: '20121015140542'
         }, getBaseInfo()));
     }
 
@@ -5598,7 +5598,7 @@ KISSY.config('modules', {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 14:00
+build time: Oct 15 14:05
 */
 /**
  * @ignore
@@ -5989,7 +5989,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:56
+build time: Oct 15 14:01
 */
 /**
  * @ignore
@@ -7023,7 +7023,6 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         var doc = S.Env.host.document,
             NodeType = DOM.NodeType,
             ie = UA['ie'],
-            isString = S.isString,
             DIV = 'div',
             PARENT_NODE = 'parentNode',
             DEFAULT_DIV = doc && doc.createElement(DIV),
@@ -7077,7 +7076,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
 
 
-                    if (!isString(html)) {
+                    if (typeof html != 'string') {
                         return ret;
                     }
 
@@ -8622,7 +8621,6 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             return S.require(selector);
         },
         isArray = S.isArray,
-        isString = S.isString,
         makeArray = S.makeArray,
         isNodeList = DOM._isNodeList,
         getNodeName = DOM.nodeName,
@@ -8657,7 +8655,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         var ret,
             i,
             simpleContext,
-            isSelectorString = isString(selector),
+            isSelectorString = typeof selector == 'string',
         // optimize common usage
             contexts = (context === undefined && (simpleContext = 1)) ?
                 [doc] :
@@ -8732,7 +8730,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     function queryByContexts(selector, context) {
         var ret = [],
-            isSelectorString = isString(selector);
+            isSelectorString = typeof selector == 'string';
         if (isSelectorString && selector.match(REG_QUERY) ||
             !isSelectorString) {
             // 简单选择器自己处理
@@ -8824,7 +8822,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
     // 最简单情况了，单个选择器部分，单个上下文
     function queryBySimple(selector, context) {
         var ret,
-            isSelectorString = isString(selector);
+            isSelectorString = typeof selector == 'string';
         if (isSelectorString) {
             ret = quickFindBySelectorStr(selector, context) || [];
         }
@@ -9124,7 +9122,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                     ret = [];
 
                 // 默认仅支持最简单的 tag.cls 或 #id 形式
-                if (isString(filter) &&
+                if (typeof filter == 'string'&&
                     (filter = trim(filter)) &&
                     (match = REG_QUERY.exec(filter))) {
                     id = match[1];
@@ -9791,12 +9789,15 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              */
             addStyleSheet: function (refWin, cssText, id) {
                 refWin = refWin || WINDOW;
-                if (S.isString(refWin)) {
+
+                if (typeof refWin == 'string') {
                     id = cssText;
                     cssText = refWin;
                     refWin = WINDOW;
                 }
+
                 refWin = DOM.get(refWin);
+
                 var win = DOM._getWin(refWin),
                     doc = win.document,
                     elem;
@@ -9810,16 +9811,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     return;
                 }
 
-                elem = DOM.create('<style>', { id: id }, doc);
+                elem = DOM.create('<style>' + cssText + '</style>', { id: id }, doc);
 
-                // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
                 DOM.get('head', doc).appendChild(elem);
-
-                if (elem.styleSheet) { // IE
-                    elem.styleSheet.cssText = cssText;
-                } else { // W3C
-                    elem.appendChild(doc.createTextNode(cssText));
-                }
             },
 
             /**
@@ -10539,7 +10533,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 12 00:46
+build time: Oct 15 14:04
 */
 /**
  * @ignore
@@ -10790,7 +10784,7 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
             var ret = true, r;
             // custom event firing moved to target.js
             eventData = eventData || {};
-            if (S.isString(eventType)) {
+            if (typeof eventType == 'string') {
                 eventType = trim(eventType);
                 if (eventType.indexOf(' ') > -1) {
                     splitAndRun(eventType, function (t) {
@@ -13278,7 +13272,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 15 14:04
 */
 /**
  * @ignore
@@ -13806,7 +13800,7 @@ KISSY.add("json/json2", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:56
+build time: Oct 15 14:01
 */
 /**
  * @ignore
@@ -15861,7 +15855,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:56
+build time: Oct 15 14:01
 */
 /**
  * @ignore
@@ -15873,10 +15867,10 @@ KISSY.add('cookie', function (S) {
     var doc = S.Env.host.document,
         MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
         encode = encodeURIComponent,
-        decode = decodeURIComponent;
+        decode = S.urlDecode;
 
     function isNotEmptyString(val) {
-        return S.isString(val) && val !== '';
+        return (typeof val == 'string') && val !== '';
     }
 
     /**
@@ -15971,7 +15965,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 14:09
+build time: Oct 15 14:01
 */
 /**
  * @ignore
@@ -15986,7 +15980,7 @@ KISSY.add('base/attribute', function (S, undefined) {
     var INVALID = Attribute.INVALID;
 
     function normalFn(host, method) {
-        if (S.isString(method)) {
+        if (typeof method == 'string') {
             return host[method];
         }
         return method;
@@ -16426,7 +16420,7 @@ KISSY.add('base/attribute', function (S, undefined) {
         reset: function (name, opts) {
             var self = this;
 
-            if (S.isString(name)) {
+            if (typeof name == 'string') {
                 if (self.hasAttr(name)) {
                     // if attribute does not have default value, then set to undefined
                     return self.set(name, getDefAttrVal(self, name), opts);
@@ -16596,7 +16590,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:56
+build time: Oct 15 14:01
 */
 /**
  * @ignore
@@ -16776,7 +16770,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         }
 
         // the transition properties
-        if (S.isString(props)) {
+        if (typeof props == 'string') {
             props = S.unparam(String(props), ';', ':');
         } else {
             // clone to prevent collision within multiple instance
@@ -16915,7 +16909,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             } else {
                 easing = specialEasing[prop] = (specialEasing[prop] || config.easing);
             }
-            if (S.isString(easing)) {
+            if (typeof easing == 'string') {
                 easing = specialEasing[prop] = Easing[easing];
             }
             specialEasing[prop] = easing || Easing['easeNone'];
@@ -17259,7 +17253,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         // default queue
             queueName === null ||
                 // name of specified queue
-                S.isString(queueName) ||
+                typeof queueName == 'string' ||
                 // anims not belong to any queue
                 queueName === false
             ) {
@@ -17302,7 +17296,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             // default queue
                 queueName === null ||
                     // name of specified queue
-                    S.isString(queueName) ||
+                    typeof queueName == 'string' ||
                     // anims not belong to any queue
                     queueName === false
                 ) {
@@ -18132,7 +18126,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 15 14:05
 */
 /**
  * @ignore
@@ -18606,7 +18600,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
             return undefined;
         }
 
-        else if (S.isString(html)) {
+        else if (typeof html == 'string') {
             // create from html
             domNode = DOM.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
@@ -18783,7 +18777,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
             // are we dealing with html string ?
             // TextNode 仍需要自己 new Node
 
-            if (S.isString(selector)
+            if (typeof selector == 'string'
                 && (selector = S.trim(selector))
                 && selector.length >= 3
                 && S.startsWith(selector, '<')
@@ -18899,7 +18893,7 @@ KISSY.add('node/override', function (S, DOM, Event, NodeList) {
         NLP[insertType] = function (html) {
             var newNode = html, self = this;
             // 创建
-            if (S.isString(newNode)) {
+            if (typeof newNode == 'string') {
                 newNode = DOM.create(newNode);
             }
             if (newNode) {
@@ -18913,7 +18907,7 @@ KISSY.add('node/override', function (S, DOM, Event, NodeList) {
         var orig = NLP[fixType];
         NLP[fixType] = function (others) {
             var self = this;
-            if (S.isString(others)) {
+            if (typeof others == 'string') {
                 others = NodeList.all(others, self[0].ownerDocument);
             }
             return orig.call(self, others);

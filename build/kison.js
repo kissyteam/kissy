@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 11 19:24
+build time: Oct 15 14:04
 */
 /**
  * LALR grammar parser
@@ -1195,7 +1195,7 @@ KISSY.add("kison/utils", function (S) {
     return {
         serializeObject: function serializeObject(obj, excludeReg) {
             var ret = [];
-            if (S.isString(obj)) {
+            if (typeof obj == 'string') {
                 return '"' + obj + '"';
             } else if (S.isNumber(obj)) {
                 return obj + "";

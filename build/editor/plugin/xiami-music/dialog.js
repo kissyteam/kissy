@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 15 14:04
 */
 /**
  * xiami-music dialog
@@ -355,9 +355,9 @@ KISSY.add("editor/plugin/xiami-music/dialog", function (S, Editor, FlashDialog, 
     }
 
     function getDisplayName(r) {
-        return decodeURIComponent(r['song_name'])
+        return S.urlDecode(r['song_name'])
             + " - "
-            + decodeURIComponent(r['artist_name']);
+            + S.urlDecode(r['artist_name']);
     }
 
     return XiamiMusicDialog;

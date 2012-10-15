@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 15 14:04
 */
 /**
  * @fileOverview parse html to a hierarchy dom tree
@@ -1789,7 +1789,7 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
         self.attributes = attributes || [];
         self.nodeType = 1;
 
-        if (S.isString(page)) {
+        if (typeof page == 'string') {
             createTag.apply(null, [self].concat(S.makeArray(arguments)));
         } else {
             Tag.superclass.constructor.apply(self, arguments);
@@ -2120,7 +2120,7 @@ KISSY.add("htmlparser/nodes/Tag", function (S, Node, Attribute, Dtd) {
 KISSY.add("htmlparser/nodes/Text", function (S, Node) {
 
     function Text(v) {
-        if (S.isString(v)) {
+        if (typeof v == 'string') {
             this.nodeValue = v;
             Text.superclass.constructor.apply(this, [null, -1, -1]);
         } else {

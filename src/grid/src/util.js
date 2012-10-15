@@ -107,7 +107,7 @@ KISSY.add('grid/util', function (S) {
             if (!d) {
                 return '';
             }
-            if (S.isString(d)) {
+            if (typeof d == 'string') {
                 return d;
             }
             var date = null;
@@ -130,7 +130,7 @@ KISSY.add('grid/util', function (S) {
             if (!d) {
                 return '';
             }
-            if (S.isString(d)) {
+            if (typeof d == 'string') {
                 return d;
             }
             var date = null;
@@ -204,7 +204,7 @@ KISSY.add('grid/util', function (S) {
          * @return {Number} 返回将分转换成元的数字
          */
         moneyCentRenderer:function (v) {
-            if (S.isString(v)) {
+            if (typeof v == 'string') {
                 v = parseFloat(v);
             }
             if (S.isNumber(v)) {

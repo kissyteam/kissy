@@ -29,7 +29,7 @@ KISSY.add(function(S, mvc) {
         setTimeout(function() {
             var index;
             var store = STORE || (window.localStorage ? window.localStorage.getItem(KEY) || [] : []);
-            if (S.isString(store)) {
+            if (typeof store == 'string') {
                 store = JSON.parse(store);
             }
 

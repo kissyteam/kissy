@@ -185,7 +185,7 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
          * 获取数据的 URL, 或是静态数据
          * @type {String|Object}
          */
-        if (S.isString(dataSource)) {
+        if (typeof dataSource == 'string') {
             // 归一化为：http://path/to/suggest.do? or http://path/to/suggest.do?p=1&
             dataSource += (dataSource.indexOf('?') === -1) ? '?' : '&';
             self.dataSource = dataSource + config.callbackName + '=' + (cbFn = config.callbackFn);
@@ -900,7 +900,7 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
             for (i = 0; i < len; ++i) {
                 item = data[i];
 
-                if (S.isString(item)) { // 只有 key 值时
+                if (typeof item == 'string') { // 只有 key 值时
                     arr[j++] = { 'key':item };
                 } else if (S.isArray(item) && item.length > 1) { // ['key', 'result'] 取数组前2个
                     arr[j++] = {'key':item[0], 'result':item[1]};

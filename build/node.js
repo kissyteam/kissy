@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 15 14:05
 */
 /**
  * @ignore
@@ -475,7 +475,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
             return undefined;
         }
 
-        else if (S.isString(html)) {
+        else if (typeof html == 'string') {
             // create from html
             domNode = DOM.create(html, props, ownerDocument);
             // ('<p>1</p><p>2</p>') 转换为 NodeList
@@ -652,7 +652,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
             // are we dealing with html string ?
             // TextNode 仍需要自己 new Node
 
-            if (S.isString(selector)
+            if (typeof selector == 'string'
                 && (selector = S.trim(selector))
                 && selector.length >= 3
                 && S.startsWith(selector, '<')
@@ -768,7 +768,7 @@ KISSY.add('node/override', function (S, DOM, Event, NodeList) {
         NLP[insertType] = function (html) {
             var newNode = html, self = this;
             // 创建
-            if (S.isString(newNode)) {
+            if (typeof newNode == 'string') {
                 newNode = DOM.create(newNode);
             }
             if (newNode) {
@@ -782,7 +782,7 @@ KISSY.add('node/override', function (S, DOM, Event, NodeList) {
         var orig = NLP[fixType];
         NLP[fixType] = function (others) {
             var self = this;
-            if (S.isString(others)) {
+            if (typeof others == 'string') {
                 others = NodeList.all(others, self[0].ownerDocument);
             }
             return orig.call(self, others);

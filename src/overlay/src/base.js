@@ -185,7 +185,7 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
                     },
                     setter: function (v) {
                         var effect = v.effect;
-                        if (S.isString(effect) && !effects[effect]) {
+                        if (typeof effect == 'string' && !effects[effect]) {
                             v.effect = '';
                         }
                     }

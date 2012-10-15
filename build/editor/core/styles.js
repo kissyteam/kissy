@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 15 14:04
 */
 /**
  * Use style to gen element and wrap range's elements.Modified from CKEditor.
@@ -80,7 +80,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
     function replaceVariables(list, variablesValues) {
         for (var item in list) {
-            if (S.isString(list[ item ])) {
+            if (typeof (list[ item ]) == 'string') {
                 list[ item ] = list[ item ].replace(varRegex, function (match, varName) {
                     return variablesValues[ varName ];
                 });

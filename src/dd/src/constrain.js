@@ -42,7 +42,7 @@ KISSY.add('dd/constrain', function (S, Base, Node) {
                     bottom: t + win.height()
                 };
             }
-            if (constrain.nodeType || S.isString(constrain)) {
+            if (constrain.nodeType || typeof constrain == 'string') {
                 constrain = $(constrain);
             }
             if (constrain.getDOMNode) {

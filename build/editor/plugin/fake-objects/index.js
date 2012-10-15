@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 15 14:04
 */
 /**
  * fakeObjects for music ,video,flash
@@ -54,7 +54,7 @@ KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
                 return null;
             }
 
-            var html = (decodeURIComponent(fakeElement.attr('_ke_realelement')));
+            var html = (S.urlDecode(fakeElement.attr('_ke_realelement')));
 
             var temp = new Node('<div>', null, this.get("document")[0]);
             temp.html(html);
@@ -76,7 +76,7 @@ KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
                 var realFragment;
 
                 if (realHtml) {
-                    realFragment = new HtmlParser.Parser(decodeURIComponent(realHtml)).parse();
+                    realFragment = new HtmlParser.Parser(S.urlDecode(realHtml)).parse();
                 }
 
                 var realElement = realFragment && realFragment.childNodes[ 0 ];
@@ -130,7 +130,7 @@ KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
                         return null;
                     }
 
-                    var html = (decodeURIComponent(fakeElement.attr('_ke_realelement')));
+                    var html = (S.urlDecode(fakeElement.attr('_ke_realelement')));
 
                     var temp = new Node('<div>', null, editor.get("document")[0]);
                     temp.html(html);

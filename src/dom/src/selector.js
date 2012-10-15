@@ -12,7 +12,6 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             return S.require(selector);
         },
         isArray = S.isArray,
-        isString = S.isString,
         makeArray = S.makeArray,
         isNodeList = DOM._isNodeList,
         getNodeName = DOM.nodeName,
@@ -47,7 +46,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         var ret,
             i,
             simpleContext,
-            isSelectorString = isString(selector),
+            isSelectorString = typeof selector == 'string',
         // optimize common usage
             contexts = (context === undefined && (simpleContext = 1)) ?
                 [doc] :
@@ -122,7 +121,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     function queryByContexts(selector, context) {
         var ret = [],
-            isSelectorString = isString(selector);
+            isSelectorString = typeof selector == 'string';
         if (isSelectorString && selector.match(REG_QUERY) ||
             !isSelectorString) {
             // 简单选择器自己处理
@@ -214,7 +213,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
     // 最简单情况了，单个选择器部分，单个上下文
     function queryBySimple(selector, context) {
         var ret,
-            isSelectorString = isString(selector);
+            isSelectorString = typeof selector == 'string';
         if (isSelectorString) {
             ret = quickFindBySelectorStr(selector, context) || [];
         }
@@ -514,7 +513,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                     ret = [];
 
                 // 默认仅支持最简单的 tag.cls 或 #id 形式
-                if (isString(filter) &&
+                if (typeof filter == 'string'&&
                     (filter = trim(filter)) &&
                     (match = REG_QUERY.exec(filter))) {
                     id = match[1];

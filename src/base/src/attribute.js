@@ -11,7 +11,7 @@ KISSY.add('base/attribute', function (S, undefined) {
     var INVALID = Attribute.INVALID;
 
     function normalFn(host, method) {
-        if (S.isString(method)) {
+        if (typeof method == 'string') {
             return host[method];
         }
         return method;
@@ -451,7 +451,7 @@ KISSY.add('base/attribute', function (S, undefined) {
         reset: function (name, opts) {
             var self = this;
 
-            if (S.isString(name)) {
+            if (typeof name == 'string') {
                 if (self.hasAttr(name)) {
                     // if attribute does not have default value, then set to undefined
                     return self.set(name, getDefAttrVal(self, name), opts);

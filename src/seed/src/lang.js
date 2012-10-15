@@ -229,7 +229,7 @@
                 if (a instanceof Date && b instanceof Date) {
                     return a.getTime() == b.getTime();
                 }
-                if (S.isString(a) && S.isString(b)) {
+                if (typeof a == 'string' && typeof b == 'string') {
                     return (a == b);
                 }
                 if (S.isNumber(a) && S.isNumber(b)) {
@@ -296,7 +296,7 @@
              * @param {RegExp} [regexp] to match a piece of template string
              */
             substitute: function (str, o, regexp) {
-                if (!S.isString(str)
+                if (typeof str != 'string'
                     || !S.isPlainObject(o)) {
                     return str;
                 }
@@ -477,7 +477,7 @@
                     var len = arr.length,
                         res = new Array(len);
                     for (var i = 0; i < len; i++) {
-                        var el = S.isString(arr) ? arr.charAt(i) : arr[i];
+                        var el = typeof arr == 'string' ? arr.charAt(i) : arr[i];
                         if (el
                             ||
                             //ie<9 in invalid when typeof arr == string
@@ -725,7 +725,7 @@
                     // || o.nodeName
                     // window
                     || o.alert
-                    || S.isString(o)
+                    || typeof o == 'string'
                     || S.isFunction(o)) {
                     return [o];
                 }
@@ -813,7 +813,7 @@
              * @member KISSY
              */
             unparam: function (str, sep, eq) {
-                if (!S.isString(str) || !(str = S.trim(str))) {
+                if (typeof str != 'string' || !(str = S.trim(str))) {
                     return {};
                 }
                 sep = sep || SEP;
@@ -887,7 +887,7 @@
                     f,
                     r;
 
-                if (S.isString(fn)) {
+                if (typeof fn == 'string') {
                     m = context[fn];
                 }
 

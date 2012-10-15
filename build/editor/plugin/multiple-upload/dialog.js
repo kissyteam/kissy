@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 15 14:04
 */
 /**
  * multiple-upload dialog
@@ -577,7 +577,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                 data = localStorage.getItem(KEY),
                 tbl = self._list[0];
             if (!data) return;
-            data = JSON.parse(decodeURIComponent(data));
+            data = JSON.parse(S.urlDecode(data));
             for (var i = 0; i < data.length; i++) {
                 var d = data[i];
                 d.complete = 1;

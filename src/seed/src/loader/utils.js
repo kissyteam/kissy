@@ -251,7 +251,7 @@
          * @return {String[]}
          */
         getModNamesAsArray: function (modNames) {
-            if (S.isString(modNames)) {
+            if (typeof modNames == 'string') {
                 modNames = modNames.replace(/\s+/g, '').split(',');
             }
             return modNames;

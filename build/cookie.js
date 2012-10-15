@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:56
+build time: Oct 15 14:01
 */
 /**
  * @ignore
@@ -13,10 +13,10 @@ KISSY.add('cookie', function (S) {
     var doc = S.Env.host.document,
         MILLISECONDS_OF_DAY = 24 * 60 * 60 * 1000,
         encode = encodeURIComponent,
-        decode = decodeURIComponent;
+        decode = S.urlDecode;
 
     function isNotEmptyString(val) {
-        return S.isString(val) && val !== '';
+        return (typeof val == 'string') && val !== '';
     }
 
     /**

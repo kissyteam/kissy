@@ -7,7 +7,7 @@ KISSY.add("kison/utils", function (S) {
     return {
         serializeObject: function serializeObject(obj, excludeReg) {
             var ret = [];
-            if (S.isString(obj)) {
+            if (typeof obj == 'string') {
                 return '"' + obj + '"';
             } else if (S.isNumber(obj)) {
                 return obj + "";

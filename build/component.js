@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:56
+build time: Oct 15 14:01
 */
 /**
  * @ignore
@@ -1970,7 +1970,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                     self.setInternal(p, v.call(self, srcNode));
                 }
                 // 单选选择器
-                else if (S.isString(v)) {
+                else if (typeof v == 'string') {
                     self.setInternal(p, srcNode.one(v));
                 }
                 // 多选选择器
@@ -2298,7 +2298,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
 
         baseName = name = "UIBaseDerived";
 
-        if (S.isString(t = args[args.length - 1])) {
+        if (typeof (t = args[args.length - 1]) == 'string') {
             name = t;
         }
 
@@ -3748,7 +3748,7 @@ KISSY.add("component/uibase/stdmod-render", function (S, Node) {
 
     function _setStdModRenderContent(self, part, v) {
         part = self.get(part);
-        if (S.isString(v)) {
+        if (typeof v == 'string') {
             part.html(v);
         } else {
             part.html("")

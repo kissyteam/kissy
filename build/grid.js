@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 15 14:04
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -4477,7 +4477,7 @@ KISSY.add('grid/store',function(S){
 				if(obj2 === undefined){
 					obj2 = '';
 				}
-				if(S.isString(obj1)){
+				if(typeof obj1 == 'string'){
 					return obj1.localeCompare(obj2);
 				}
 
@@ -5182,7 +5182,7 @@ KISSY.add('grid/util', function (S) {
             if (!d) {
                 return '';
             }
-            if (S.isString(d)) {
+            if (typeof d == 'string') {
                 return d;
             }
             var date = null;
@@ -5205,7 +5205,7 @@ KISSY.add('grid/util', function (S) {
             if (!d) {
                 return '';
             }
-            if (S.isString(d)) {
+            if (typeof d == 'string') {
                 return d;
             }
             var date = null;
@@ -5279,7 +5279,7 @@ KISSY.add('grid/util', function (S) {
          * @return {Number} 返回将分转换成元的数字
          */
         moneyCentRenderer:function (v) {
-            if (S.isString(v)) {
+            if (typeof v == 'string') {
                 v = parseFloat(v);
             }
             if (S.isNumber(v)) {

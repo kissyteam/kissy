@@ -298,7 +298,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
     function normFn(self, callback) {
         if (S.isFunction(callback)) {
             return callback;
-        } else if (S.isString(callback)) {
+        } else if (typeof callback == 'string') {
             return self[callback];
         }
         return callback;

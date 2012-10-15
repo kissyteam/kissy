@@ -4,10 +4,10 @@
  */
 KISSY.add("mvc/sync", function (S, io, JSON) {
     var methodMap = {
-        'create':'POST',
-        'update':'POST', //'PUT'
-        'delete':'POST', //'DELETE'
-        'read':'GET'
+        'create': 'POST',
+        'update': 'POST', //'PUT'
+        'delete': 'POST', //'DELETE'
+        'read': 'GET'
     };
 
     /**
@@ -21,17 +21,20 @@ KISSY.add("mvc/sync", function (S, io, JSON) {
     function sync(self, method, options) {
         var type = methodMap[method],
             ioParam = S.merge({
-                type:type,
-                dataType:'json'
-            }, options);
+                type: type,
+                dataType: 'json'
+            }, options),
+            data,
+            url;
 
-        var data = ioParam.data = ioParam.data || {};
+        data = ioParam.data = ioParam.data || {};
         data['_method'] = method;
 
         if (!ioParam.url) {
-            ioParam.url = S.isString(self.get("url")) ?
-                self.get("url") :
-                self.get("url").call(self);
+            url = self.get("url");
+            ioParam.url = (typeof url == 'string') ?
+                url :
+                url.call(self);
         }
 
         if (method == 'create' || method == 'update') {
@@ -43,5 +46,5 @@ KISSY.add("mvc/sync", function (S, io, JSON) {
 
     return sync;
 }, {
-    requires:['ajax', 'json']
+    requires: ['ajax', 'json']
 });

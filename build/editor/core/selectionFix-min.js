@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 15 14:04
 */
 KISSY.add("editor/core/selectionFix",function(q,l){function u(c){function f(b,a){var c=e.body.createTextRange();try{c.moveToPoint(b,a)}catch(g){c=s}return c}function j(){var b=e.selection.createRange();a&&!b.item&&0===b.compareEndPoints("StartToEnd",b)&&a.select();n.remove(e,"mouseup",j);n.remove(e,"mousemove",h);a=d=0}function h(b){if(b.button){if(b=f(b.pageX,b.pageY))0<b.compareEndPoints("StartToStart",a)?b.setEndPoint("StartToStart",a):b.setEndPoint("EndToEnd",a),b.select()}else j()}var d,i=c.get("window")[0],
 e=c.get("document")[0],a;n.on(e,"mousedown contextmenu",function(b){var c=e.documentElement;if(b.target===c&&(d&&j(),!(c.scrollHeight>c.clientHeight)&&(d=1,a=f(b.pageX,b.pageY))))n.on(e,"mouseup",j),n.on(e,"mousemove",h),i.focus(),a.select()})}function v(c){function m(b){if(e){var a=c.getSelection(),h=a&&a.getType(),g=a&&j.selection;if(b&&g&&h==w.SELECTION_NONE&&!j.queryCommandEnabled("InsertImage"))setTimeout(function(){m(f)},50);else{var d;if(!g||!g.type||!("Control"!=g.type&&(d=g.createRange())&&

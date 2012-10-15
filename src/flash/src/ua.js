@@ -2,9 +2,9 @@
  * @fileOverview Flash UA 探测
  * @author kingfo<oicuicu@gmail.com>
  */
-KISSY.add('flash/ua', function(S, UA) {
+KISSY.add('flash/ua', function (S, UA) {
 
-    var fpv, fpvF, firstRun = true,win=S.Env.host;
+    var fpv, fpvF, firstRun = true, win = S.Env.host;
 
     /**
      * 获取 Flash 版本号
@@ -21,7 +21,7 @@ KISSY.add('flash/ua', function(S, UA) {
         else if (win.ActiveXObject) {
             try {
                 ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
-            } catch(ex) {
+            } catch (ex) {
                 //S.log('getFlashVersion failed via ActiveXObject');
                 // nothing to do, just return undefined
             }
@@ -49,7 +49,7 @@ KISSY.add('flash/ua', function(S, UA) {
      * numerify(12.2) => 12.2
      */
     function numerify(ver) {
-        var arr = S.isString(ver) ? arrify(ver) : ver, ret = ver;
+        var arr = typeof ver == 'string' ? arrify(ver) : ver, ret = ver;
         if (S.isArray(arr)) {
             ret = parseFloat(arr[0] + '.' + pad(arr[1], 3) + pad(arr[2], 5));
         }
@@ -72,7 +72,7 @@ KISSY.add('flash/ua', function(S, UA) {
      * 返回数据 [M, S, R] 若未安装，则返回 undefined
      * fpv 全称是 flash player version
      */
-    UA.fpv = function(force) {
+    UA.fpv = function (force) {
         // 考虑 new ActiveX 和 try catch 的 性能损耗，延迟初始化到第一次调用时
         if (force || firstRun) {
             firstRun = false;
@@ -90,12 +90,12 @@ KISSY.add('flash/ua', function(S, UA) {
      *    if(S.UA.fpvGEQ('9.9.2')) { ... }
      * </code>
      */
-    UA.fpvGEQ = function(ver, force) {
+    UA.fpvGEQ = function (ver, force) {
         if (firstRun) UA.fpv(force);
         return !!fpvF && (fpvF >= numerify(ver));
     };
 
-}, { requires:["ua"] });
+}, { requires: ["ua"] });
 
 /**
  * NOTES:

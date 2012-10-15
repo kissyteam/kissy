@@ -15,7 +15,7 @@ KISSY.add('xtemplate/base', function (S, compiler) {
     function XTemplate(tpl, option) {
         var self = this;
         // prevent messing up with velocity
-        if (S.isString(tpl)) {
+        if (typeof tpl == 'string') {
             tpl = tpl.replace(/\{\{@/g, '{{#');
         }
         self.tpl = tpl;

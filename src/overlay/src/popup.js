@@ -158,7 +158,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                  */
                 trigger:{                          // 触发器
                     setter:function (v) {
-                        if (S.isString(v)) {
+                        if (typeof v == 'string') {
                             v = S.all(v);
                         }
                         return v;

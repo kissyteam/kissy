@@ -87,7 +87,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         }
 
         // the transition properties
-        if (S.isString(props)) {
+        if (typeof props == 'string') {
             props = S.unparam(String(props), ';', ':');
         } else {
             // clone to prevent collision within multiple instance
@@ -226,7 +226,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             } else {
                 easing = specialEasing[prop] = (specialEasing[prop] || config.easing);
             }
-            if (S.isString(easing)) {
+            if (typeof easing == 'string') {
                 easing = specialEasing[prop] = Easing[easing];
             }
             specialEasing[prop] = easing || Easing['easeNone'];
@@ -570,7 +570,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         // default queue
             queueName === null ||
                 // name of specified queue
-                S.isString(queueName) ||
+                typeof queueName == 'string' ||
                 // anims not belong to any queue
                 queueName === false
             ) {
@@ -613,7 +613,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
             // default queue
                 queueName === null ||
                     // name of specified queue
-                    S.isString(queueName) ||
+                    typeof queueName == 'string' ||
                     // anims not belong to any queue
                     queueName === false
                 ) {

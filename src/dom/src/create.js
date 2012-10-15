@@ -8,7 +8,6 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         var doc = S.Env.host.document,
             NodeType = DOM.NodeType,
             ie = UA['ie'],
-            isString = S.isString,
             DIV = 'div',
             PARENT_NODE = 'parentNode',
             DEFAULT_DIV = doc && doc.createElement(DIV),
@@ -62,7 +61,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
 
 
-                    if (!isString(html)) {
+                    if (typeof html != 'string') {
                         return ret;
                     }
 

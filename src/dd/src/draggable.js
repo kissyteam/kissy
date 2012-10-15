@@ -315,7 +315,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
                     if (S.isFunction(v)) {
                         v = v.call(self);
                     }
-                    if (S.isString(v) || v.nodeType) {
+                    if ((typeof v == 'string') || v.nodeType) {
                         v = Node.one(v);
                     }
                     vs[i] = v;

@@ -61,7 +61,7 @@ KISSY.add("component/uibase/stdmod-render", function (S, Node) {
 
     function _setStdModRenderContent(self, part, v) {
         part = self.get(part);
-        if (S.isString(v)) {
+        if (typeof v == 'string') {
             part.html(v);
         } else {
             part.html("")

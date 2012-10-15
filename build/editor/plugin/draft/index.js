@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 10 13:59
+build time: Oct 15 14:04
 */
 /**
  * draft for kissy editor
@@ -76,7 +76,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                      * 原生 localStorage 必须串行化
                      */
                     drafts = (localStorage == window.localStorage) ?
-                        JSON.parse(decodeURIComponent(str)) : str;
+                        JSON.parse(S.urlDecode(str)) : str;
                 }
                 self.drafts = drafts;
             }
