@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 22:35
+build time: Oct 15 23:19
 */
 /**
  * LALR grammar parser
@@ -968,6 +968,10 @@ KISSY.add("kison", function (S, Grammar, Production, Lexer, Utils) {
     Kison.Production = Production;
     Kison.Lexer = Lexer;
     Kison.Utils = Utils;
+    if (!S.trim('@DEBUG@')) {
+        alert('kison can only use uncompressed version!');
+        return null;
+    }
     return Kison;
 
 }, {

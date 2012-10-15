@@ -573,12 +573,13 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     info = e;
 
                 }
-
-                expect(S.startsWith(info, 'parse error at line 3:\n' +
-                    '{{#if title}} shoot\n\n' +
-                    '--------------------^\n' +
-                    'expect'));
-                // OPEN_END_BLOCK
+                if (S.config('debug')) {
+                    expect(S.startsWith(info, 'parse error at line 3:\n' +
+                        '{{#if title}} shoot\n\n' +
+                        '--------------------^\n' +
+                        'expect'));
+                    // OPEN_END_BLOCK
+                }
             });
 
             it('warn about missing property', function () {

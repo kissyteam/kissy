@@ -9,6 +9,10 @@ KISSY.add("kison", function (S, Grammar, Production, Lexer, Utils) {
     Kison.Production = Production;
     Kison.Lexer = Lexer;
     Kison.Utils = Utils;
+    if (!S.trim('@DEBUG@')) {
+        alert('kison can only use uncompressed version!');
+        return null;
+    }
     return Kison;
 
 }, {
