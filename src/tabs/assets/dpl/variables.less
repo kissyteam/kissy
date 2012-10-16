@@ -4,15 +4,17 @@
 
 @tabBorder: 1px solid transparent;
 
-@tabHoverBorderColor: @grayLighter;
+@tabHoverColor: @grayLighter;
 
-@tabHoverBackgroundColor: @grayLighter;
+@tabHoverBorderColor: @tabHoverColor;
 
-@tabSelectedColor: @gray;
+@tabHoverBackgroundColor: @tabHoverColor;
 
 @tabSelectedBackgroundColor: @white;
 
-@tabBarBorderColor: #DDD;
+@tabSelectedColor: darken(@tabHoverColor, 40%);
+
+@tabBarBorderColor: darken(@tabHoverColor, 20%);
 
 @tabBarMargin: 18px;
 

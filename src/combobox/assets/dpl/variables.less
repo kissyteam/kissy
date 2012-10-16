@@ -2,7 +2,9 @@
 
 @comboboxTransition: border linear .2s, box-shadow linear .2 s;
 
-@comboboxBorder: 1px solid #CCC;
+@comboboxBorderColor:	#CCC;
+
+@comboboxBorder: 1px solid @comboboxBorderColor;
 
 @comboboxBorderRadius: 3px;
 
@@ -12,4 +14,4 @@
 
 @comboboxFocusedBoxShadown: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(82,168,236,.6);
 
-@comboboxTriggerBorderLeft: 1px solid #CCC;
+@comboboxTriggerBorderLeft: 1px solid @comboboxBorderColor;

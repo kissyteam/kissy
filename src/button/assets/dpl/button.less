@@ -13,11 +13,11 @@
 .ks-button {
     padding: 4px 10px 4px;
     font-size: @baseFontSize;
-    color: @grayDark;
+    color: @btnColor;
     text-align: center;
     text-shadow: 0 1px 1px rgba(255, 255, 255, .75);
     vertical-align: middle;
-    .buttonState(@btnBackground, @btnBackgroundHighlight,@grayDark,@grayDark);
+    .buttonState(@btnBackground, @btnBackgroundHighlight, @btnColor, @btnColor);
     border: 1px solid @btnBorder;
     *border: 0; // Remove the border to prevent IE7's black border on input:focus
     border-bottom-color: darken(@btnBorder, 10%);
@@ -68,30 +68,30 @@
 // Set the backgrounds
 // -------------------------
 .ks-button-primary {
-    .buttonState(@btnPrimaryBackground, @btnPrimaryBackgroundHighlight,@white,@btnOtherActiveColor);
+    .buttonState(@btnPrimaryBackground, @btnPrimaryBackgroundHighlight,@btnInverseColor,@btnOtherActiveColor);
 }
 
 // Warning appears are orange
 .ks-button-warning {
-    .buttonState(@btnWarningBackground, @btnWarningBackgroundHighlight,@white,@btnOtherActiveColor);
+    .buttonState(@btnWarningBackground, @btnWarningBackgroundHighlight,@btnInverseColor,@btnOtherActiveColor);
 }
 
 // Danger and error appear as red
 .ks-button-danger {
-    .buttonState(@btnDangerBackground, @btnDangerBackgroundHighlight,@white,@btnOtherActiveColor);
+    .buttonState(@btnDangerBackground, @btnDangerBackgroundHighlight,@btnInverseColor,@btnOtherActiveColor);
 }
 
 // Success appears as green
 .ks-button-success {
-    .buttonState(@btnSuccessBackground, @btnSuccessBackgroundHighlight,@white,@btnOtherActiveColor);
+    .buttonState(@btnSuccessBackground, @btnSuccessBackgroundHighlight,@btnInverseColor,@btnOtherActiveColor);
 }
 
 // Info appears as a neutral blue
 .ks-button-info {
-    .buttonState(@btnInfoBackground, @btnInfoBackgroundHighlight,@white,@btnOtherActiveColor);
+    .buttonState(@btnInfoBackground, @btnInfoBackgroundHighlight,@btnInverseColor,@btnOtherActiveColor);
 }
 
 // Inverse appears as dark gray
 .ks-button-inverse {
-    .buttonState(@btnInverseBackground, @btnInverseBackgroundHighlight,@white,@btnOtherActiveColor);
+    .buttonState(@btnInverseBackground, @btnInverseBackgroundHighlight,@btnInverseColor,@btnOtherActiveColor);
 }

@@ -51,6 +51,7 @@ textarea[class*="span"] {
 
 // Everything else
 textarea,
+select,
 input[type="text"],
 input[type="password"],
 input[type="datetime"],
@@ -99,7 +100,7 @@ input[type="color"],
 .uneditable-input {
     padding: 4px;
     line-height: @baseLineHeight;
-    color: @gray;
+    color: @inputColor;
 }
 
 input[type="radio"], input[type="checkbox"] {
@@ -144,7 +145,7 @@ select[readonly],
 textarea[readonly] {
     cursor: not-allowed;
     background-color: @inputDisabledBackground;
-    border-color: #ddd;
+    border-color: @inputDisabledColor;
 }
 // Explicitly reset the colors here
 input[type="radio"][disabled],
