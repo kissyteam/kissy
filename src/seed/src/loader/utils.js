@@ -199,11 +199,15 @@
          * @return {Array}
          */
         getModules: function (runtime, modNames) {
-            var mods = [runtime], mod;
+            var mods = [runtime], mod, alias;
 
             S.each(modNames, function (modName) {
                 mod = runtime.Env.mods[modName];
                 if (!mod || mod.getType() != 'css') {
+                    if (alias = mod.alias) {
+                        // fetch first alias module's value as module's value
+                        modName = alias[0];
+                    }
                     mods.push(runtime.require(modName));
                 }
             });

@@ -19,7 +19,7 @@ var argv = require('optimist')
         .usage('generate kissy module file from kissy xtemplate file.\n' +
         'usage: $0 -t [tpl file] -m [module name]').argv,
 
-    S = require('../build/kissy-nodejs-min'),
+    S = require('../build/kissy-nodejs'),
 
     js_beautify = require('js-beautify').js_beautify,
 
@@ -28,18 +28,18 @@ var argv = require('optimist')
     path = require('path'),
     encoding = argv.e || 'utf-8';
 
-S.log('*********** tpl:');
-S.log(tpl);
+// S.log('*********** tpl:');
+// S.log(tpl);
 
 var tplBaseName = path.basename(tpl, '-tpl.html');
 
-S.log('*********** tplBaseName:');
-S.log(tplBaseName);
+// S.log('*********** tplBaseName:');
+// S.log(tplBaseName);
 
 var modulePath = path.resolve(tpl, '../' + tplBaseName + '.js');
 
-S.log('*********** modulePath:');
-S.log(modulePath);
+// S.log('*********** modulePath:');
+// S.log(modulePath);
 
 
 var codeTemplate = '' +
@@ -63,25 +63,22 @@ function my_js_beautify(str) {
     return js_beautify(str, opts);
 }
 
-S.use('xtemplate', function (S, XTemplate) {
+S.use('xtemplate/compiler', function (S, XTemplateCompiler) {
 
     function compile() {
 
         var tplContent = fs.readFileSync(tpl, encoding);
-        S.log('*********** tplContent:');
-        S.log(tplContent);
+        // S.log('*********** tplContent:');
+        // S.log(tplContent);
 
-        var code = new XTemplate(tplContent, {
-            name: tplBaseName + '-tpl',
-            cache: false
-        }).compile().toString();
+        var code = XTemplateCompiler.compileToStr(tplContent);
 
         var moduleCode = my_js_beautify(S.substitute(codeTemplate, {
             module: module,
             code: code
         }));
 
-        S.log(moduleCode);
+        // S.log(moduleCode);
 
         fs.writeFileSync(modulePath, moduleCode, encoding);
 

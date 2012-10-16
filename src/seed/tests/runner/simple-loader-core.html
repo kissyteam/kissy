@@ -1,12 +1,12 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
-<title>Seed Test Runner</title>
-<link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
-<script src="../../../../tools/jasmine/jasmine.js"></script>
-<script src="../../../../tools/jasmine/jasmine-html.js"></script>
-<script src="../../../../build/seed.js" charset="utf-8"></script>
+    <meta charset="utf-8"/>
+    <title>Seed Test Runner</title>
+    <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
+    <script src="../../../../tools/jasmine/jasmine.js"></script>
+    <script src="../../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../../build/seed.js" charset="utf-8"></script>
 </head>
 <body>
 <h1>KISSY Simple Loader Core Test Cases</h1>
@@ -18,7 +18,9 @@
 
             var ret = 0;
 
-            KISSY.use("core", function () {
+            KISSY.use("core", function (S, Core) {
+                // alias to be first
+                expect(Core).toBe(S.DOM);
                 ret = 1;
             });
 

@@ -1,8 +1,8 @@
 /**
- * enhanced kissy template engine
+ * xtemplate runtime
  * @author yiminghe@gmail.com
  */
-KISSY.add('xtemplate', function (S, XTemplate, commands) {
+KISSY.add('xtemplate/runtime', function (S, XTemplate, commands) {
 
     XTemplate.addCommand = function (commandName, fn) {
         commands[commandName] = fn;
@@ -19,10 +19,10 @@ KISSY.add('xtemplate', function (S, XTemplate, commands) {
     };
 
     return XTemplate;
-
 }, {
-    requires: ['xtemplate/base', 'xtemplate/commands']
+    requires: ['./runtime/base', './runtime/commands']
 });
+
 /**
  * 2012-09-12 yiminghe@gmail.com
  *  - 参考 velocity, 扩充 ast

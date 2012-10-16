@@ -1,15 +1,31 @@
 /**
- * setup xtemplate constructor
+ * xtemplate base
  * @author yiminghe@gmail.com
  */
-KISSY.add('xtemplate/base', function (S, compiler) {
+KISSY.add('xtemplate/runtime/base', function (S) {
 
     var guid = 0;
 
     var cache = {};
 
     var defaultConfig = {
-        cache: true
+        cache: true,
+        utils: {
+            'getProperty': function (parts, from) {
+                if (!from) {
+                    return false;
+                }
+                parts = parts.split('.');
+                var len = parts.length, i, v = from;
+                for (i = 0; i < len; i++) {
+                    if (!(parts[i] in v)) {
+                        return false;
+                    }
+                    v = v[parts[i]];
+                }
+                return [v];
+            }
+        }
     };
 
     function XTemplate(tpl, option) {
@@ -20,29 +36,36 @@ KISSY.add('xtemplate/base', function (S, compiler) {
         }
         self.tpl = tpl;
         option = S.merge(defaultConfig, option);
-        self.subTpls = S.merge(option.subTpls, XTemplate.subTpls);
-        self.commands = S.merge(option.commands, XTemplate.commands);
+        option.subTpls = S.merge(option.subTpls, XTemplate.subTpls);
+        option.commands = S.merge(option.commands, XTemplate.commands);
         this.option = option;
     }
 
     XTemplate.prototype = {
         constructor: XTemplate,
-        removeSubTpl: function (subTplName) {
-            delete this.subTpls[subTplName];
+        'removeSubTpl': function (subTplName) {
+            delete this.option.subTpls[subTplName];
         },
-        removeCommand: function (commandName) {
-            delete this.commands[commandName];
+        'removeCommand': function (commandName) {
+            delete this.option.commands[commandName];
         },
         addSubTpl: function (subTplName, def) {
-            this.subTpls[subTplName] = def;
+            this.option.subTpls[subTplName] = def;
         },
         addCommand: function (commandName, fn) {
-            this.commands[commandName] = fn;
+            this.option.commands[commandName] = fn;
         },
         __compile: function () {
             var self = this,
-                option = this.option,
+                option = self.option,
+                compiler = S.require('xtemplate/compiler'),
                 tpl = self.tpl;
+
+            if (!compiler) {
+                S.error('you have to use/require xtemplate/compiler first!');
+                return null;
+            }
+
             var code = compiler.compile(tpl);
             // eval is not ok for eval("(function(){})") ie
             return (Function.apply(null, []
@@ -53,7 +76,7 @@ KISSY.add('xtemplate/base', function (S, compiler) {
         compile: function () {
             var self = this,
                 tpl = self.tpl,
-                option = this.option;
+                option = self.option;
             if (!self.compiled) {
                 if (S.isFunction(tpl)) {
                 } else if (option.cache) {
@@ -61,7 +84,7 @@ KISSY.add('xtemplate/base', function (S, compiler) {
                 } else {
                     self.tpl = self.__compile();
                 }
-                self.compiled = 1;
+                self.compiled = !!self.tpl;
             }
             return self.tpl;
         },
@@ -71,16 +94,9 @@ KISSY.add('xtemplate/base', function (S, compiler) {
             if (!S.isArray(data)) {
                 data = [data];
             }
-            return self.tpl(data, {
-                commands: self.commands,
-                subTpls: self.subTpls
-            });
+            return self.tpl(data, self.option);
         }
     };
 
-    XTemplate.compiler = compiler;
-
     return XTemplate;
-}, {
-    requires: ['./compiler']
 });

@@ -13,6 +13,9 @@
         modules: {
             core: {
                 alias: ['dom', 'event', 'ajax', 'anim', 'base', 'node', 'json']
+            },
+            'xtemplate': {
+                alias: ['xtemplate/runtime', 'xtemplate/compiler']
             }
         }
     });

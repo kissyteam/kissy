@@ -33,7 +33,7 @@
             <fileset dir="${src.dir}/editor/core"
                      includes="**/*.js"/>
             <filterchain>
-                <deletecharacters chars="&#xFEFF;"/>
+                <deletecharacters chars="${bom}"/>
             </filterchain>
         </concat>
     </target>
@@ -45,7 +45,7 @@
             <path location="${editor.theme.dir}/editor-common.css"/>
             <fileset dir="${editor.theme.dir}/cool/" includes="**/*.css"/>
             <filterchain>
-                <deletecharacters chars="&#xFEFF;"/>
+                <deletecharacters chars="${bom}"/>
             </filterchain>
         </concat>
 
@@ -67,7 +67,7 @@
                      excludes="**/dialog.js,**/dynamic/**/*.js"
                      includes="**/*.js"/>
             <filterchain>
-                <deletecharacters chars="&#xFEFF;"/>
+                <deletecharacters chars="${bom}"/>
             </filterchain>
             <path location="${src.dir}/editor/full.js"/>
         </concat>

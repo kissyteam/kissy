@@ -12,7 +12,7 @@
             <fileset dir="${src.dir}" includes="**/*.js"/>
             <!-- remove bom for utf-8 -->
             <filterchain>
-                <deletecharacters chars="&#xFEFF;" />
+                <deletecharacters chars="${bom}" />
             </filterchain>
         </concat>
     </target>

@@ -230,6 +230,18 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 });
 
+                it('support escape "', function () {
+                    var tpl = '"haha \\"';
+
+                    var data = {
+                        title: '<a>'
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe(tpl);
+                });
+
             });
 
 

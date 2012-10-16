@@ -10,7 +10,7 @@
         <concat destfile="${component.src.dir.tmp}/menubutton-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <fileset dir="${src.dir}" includes="**/*.js"/>
             <filterchain>
-                <deletecharacters chars="&#xFEFF;" />
+                <deletecharacters chars="${bom}" />
             </filterchain>
         </concat>
         <copy todir="${component.src.dir.tmp}">

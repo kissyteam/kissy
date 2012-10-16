@@ -33,7 +33,7 @@
             <path location="${src.dir}/meta.js"/>
             <path location="${src.dir}/deps.js"/>
             <filterchain>
-                <deletecharacters chars="&#xFEFF;"/>
+                <deletecharacters chars="${bom}"/>
             </filterchain>
         </concat>
 
@@ -61,7 +61,7 @@
             <path location="${src.dir}/web.js"/>
             <path location="${src.dir}/meta.js"/>
             <filterchain>
-                <deletecharacters chars="&#xFEFF;"/>
+                <deletecharacters chars="${bom}"/>
             </filterchain>
         </concat>
     </target>

@@ -1,15 +1,13 @@
-<project name="validation.build" default="build" basedir=".">
-    <description>Validation Build File</description>
+<project name="xtemplate/runtime.build" default="build" basedir=".">
+    <description>xtemplate Build File</description>
 
-    <property name="component.name" value="validation"/>
+    <property name="component.name" value="xtemplate/runtime"/>
     <property name="src.dir" location="./src/"/>
 
-    <import file="../../tools/build-xml/common.xml"/>
-
+    <import file="../../../../tools/build-xml/common.xml"/>
 
     <target name="concat">
-
-        <concat destfile="${component.src.dir.tmp}/validation-pkg.js"
+        <concat destfile="${component.src.dir.tmp}/runtime-pkg.js"
                 encoding="${charset}"
                 outputencoding="${charset}">
             <fileset dir="${src.dir}" includes="**/*.js"/>
@@ -17,10 +15,6 @@
                 <deletecharacters chars="${bom}"/>
             </filterchain>
         </concat>
-
-        <copy todir="${component.src.dir.tmp}">
-            <fileset dir="." includes="assets/**/*"/>
-        </copy>
     </target>
 
     <target name="build" depends="concat,common.build">

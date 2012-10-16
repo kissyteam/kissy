@@ -7,8 +7,6 @@
 
     <property name="copyright.files" value="*-min.css, *-min.js"/>
     <property name="component.name" value="core"/>
-    <property name="bom" value="&#xFEFF;"/>
-
     <import file="../common.xml"/>
 
     <target name="build-seed">

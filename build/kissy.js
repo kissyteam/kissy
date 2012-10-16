@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 20:24
+build time: Oct 16 22:20
 */
 /**
  * @ignore
@@ -83,11 +83,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121015202413' will replace with current timestamp when compressing.
+         * NOTICE: '20121016222037' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121015202413',
+        __BUILD_TIME: '20121016222037',
         /**
          * KISSY Environment.
          * @private
@@ -3228,11 +3228,15 @@ var KISSY = (function (undefined) {
          * @return {Array}
          */
         getModules: function (runtime, modNames) {
-            var mods = [runtime], mod;
+            var mods = [runtime], mod, alias;
 
             S.each(modNames, function (modName) {
                 mod = runtime.Env.mods[modName];
                 if (!mod || mod.getType() != 'css') {
+                    if (alias = mod.alias) {
+                        // fetch first alias module's value as module's value
+                        modName = alias[0];
+                    }
                     mods.push(runtime.require(modName));
                 }
             });
@@ -5265,7 +5269,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121015202413'
+            tag: '20121016222037'
         }, getBaseInfo()));
     }
 
@@ -5523,6 +5527,9 @@ var KISSY = (function (undefined) {
         modules: {
             core: {
                 alias: ['dom', 'event', 'ajax', 'anim', 'base', 'node', 'json']
+            },
+            'xtemplate': {
+                alias: ['xtemplate/runtime', 'xtemplate/compiler']
             }
         }
     });

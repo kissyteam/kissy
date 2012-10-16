@@ -15,7 +15,11 @@ KISSY.add("kison/utils", function (S) {
             } else {
                 quote = "'";
             }
-            return str.replace(/\\/g, '\\\\').replace(regexp, '\\' + quote);
+            return str.replace(/\\/g, '\\\\')
+                .replace(/\r/g, '\\r')
+                .replace(/\n/g, '\\n')
+                .replace(/\t/g, '\\t')
+                .replace(regexp, '\\' + quote);
         },
 
         serializeObject: function serializeObject(obj, excludeReg) {

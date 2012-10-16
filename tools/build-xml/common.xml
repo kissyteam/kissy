@@ -1,6 +1,6 @@
 <!--
  各个组件的公用构建文件
- @author lifesinger@gmail.com , yiminghe@gmaill.com
+ @author yiminghe@gmaill.com, lifesinger@gmail.com
  @refer http://ant.apache.org/manual/Tasks/subant.html
 -->
 <project name="common-build" basedir="../" xmlns:ac="antlib:net.sf.antcontrib">
@@ -16,6 +16,7 @@
     <property name="copyright.files" value="**/*.css, **/*.js"/>
     <property name="component.src.dir.tmp" location="tmp/"/>
     <property name="component.files" value="**/*.*"/>
+    <property name="bom" value="&#xFEFF;"/>
 
     <!-- 需要组件覆盖的属性 -->
     <property name="component.name" value="component.name.need.override"/>
@@ -139,13 +140,13 @@
                                   casesensitive="false"/>
                     </not>
                     <then>
-                        <ac:var name="copyright.bomOrEmpty" value="&#xFEFF;"/>
+                        <ac:var name="copyright.bomOrEmpty" value="${bom}"/>
                     </then>
                 </ac:if>
                 <concat destfile="@{file}.tmp"
                         encoding="${charset}"
                         outputencoding="${charset}">
-                    <!-- ie need bom , wierd -->
+                    <!-- ie need bom , odd -->
                     <header filtering="no" trimleading="yes">${copyright.bomOrEmpty}/*
                         Copyright ${build.year}, KISSY UI Library v${version}
                         MIT Licensed
@@ -154,7 +155,7 @@
                     </header>
                     <fileset file="@{file}"/>
                     <filterchain>
-                        <deletecharacters chars="&#xFEFF;"/>
+                        <deletecharacters chars="${bom}"/>
                     </filterchain>
                 </concat>
                 <move file="@{file}.tmp"
@@ -206,7 +207,7 @@
     <target name="common.build" depends="prepare,compress,native2ascii,copyright,fix-cr-lf">
 
         <!-- 1.2 不需要 pkg ,pkg 移到外围 -->
-        <move encoding="${charset}" todir="${kissy.build.dir}">
+        <move encoding="${charset}" todir="${component.build.dir}/../">
             <fileset dir="${component.build.dir}" includes="*-pkg*"/>
             <mapper type="regexp" from="(.*)-pkg(.*)" to="\1\2"/>
         </move>

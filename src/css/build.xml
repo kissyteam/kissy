@@ -20,7 +20,7 @@
             <path location="${src.dir}/dpl/grids.css"/>
             <path location="${src.dir}/dpl/common.css"/>
             <filterchain>
-                <deletecharacters chars="&#xFEFF;" />
+                <deletecharacters chars="${bom}" />
             </filterchain>
         </concat>
     </target>

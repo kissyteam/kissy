@@ -2,15 +2,35 @@
  * translate ast to js function code
  * @author yiminghe@gmail.com
  */
-KISSY.add("xtemplate/compiler", function (S, parser, ast, commands) {
+KISSY.add("xtemplate/compiler", function (S, parser, ast) {
 
     parser.yy = ast;
 
+    // native commands should be same with runtime/commands
+    var commands = {'each': 1, 'with': 1, 'if': 1, 'set': 1, 'include': 1};
+    var utils = {'getProperty': 1};
+    var doubleReg = /"/g, single = /'/g, escapeString;
     var arrayPush = [].push;
 
-    function escapeString(str) {
-        return str.replace(/\r/g, '\\r').replace(/\n/g, '\\n').replace(/\t/g, '\\t');
-    }
+    /**
+     * @ignore
+     * @param str
+     * @param [quote]
+     * @return {*}
+     */
+    escapeString = function (str, quote) {
+        var regexp = single;
+        if (quote == '"') {
+            regexp = doubleReg;
+        } else {
+            quote = "'";
+        }
+        return str.replace(/\\/g, '\\\\')
+            .replace(/\r/g, '\\r')
+            .replace(/\n/g, '\\n')
+            .replace(/\t/g, '\\t')
+            .replace(regexp, '\\' + quote);
+    };
 
     function pushToArray(to, from) {
         arrayPush.apply(to, from);
@@ -19,21 +39,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, commands) {
     function lastOfArray(arr) {
         return arr[arr.length - 1];
     }
-
-    var getProperty = function (parts, from) {
-        if (!from) {
-            return false;
-        }
-        parts = parts.split('.');
-        var len = parts.length, i, v = from;
-        for (i = 0; i < len; i++) {
-            if (!(parts[i] in v)) {
-                return false;
-            }
-            v = v[parts[i]];
-        }
-        return [v];
-    };
 
     var gen = {
 
@@ -51,16 +56,21 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, commands) {
                     'log = S.log,' +
                     'error = S.error,');
 
-                var nativeCommands = '';
+                var natives = '', c;
 
-                for (var c in commands) {
-                    nativeCommands += c + 'Command = commands["' + c + '"],';
+                for (c in commands) {
+                    natives += c + 'Command = commands["' + c + '"],';
+                }
+
+                for (c in utils) {
+                    natives += c + ' = utils["' + c + '"],';
                 }
 
                 source.push('commands = option.commands,' +
-                    nativeCommands +
-                    'subTpls=option.subTpls;');
-                source.push('var getProperty=' + getProperty.toString() + ';');
+                    'utils = option.utils,' +
+                    'cache=option.cache,' +
+                    natives +
+                    'subTpls = option.subTpls;');
             }
             if (statements) {
                 for (var i = 0, len = statements.length; i < len; i++) {
@@ -197,6 +207,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, commands) {
 
             source.push('var ' + optionName + ' = {' +
                 'commands: commands,' +
+                'utils: utils,' +
+                'cache: cache,' +
                 'subTpls: subTpls' +
                 '};');
 
@@ -366,7 +378,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, commands) {
         },
 
         'content': function (contentNode) {
-            return ['buffer += "' + escapeString(contentNode.value.replace(/"/g, "\\")) + '";'];
+            return ['buffer += \'' + escapeString(contentNode.value) + '\';'];
         },
 
         'tpl': function (tplNode) {
@@ -421,5 +433,5 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, commands) {
     };
 
 }, {
-    requires: ['./parser', './ast', './commands']
+    requires: ['./compiler/parser', './compiler/ast']
 });

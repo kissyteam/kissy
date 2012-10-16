@@ -2,9 +2,9 @@
  * native commands for xtemplate.
  * @author yiminghe@gmail.com
  */
-KISSY.add("xtemplate/commands", function (S, XTemplate) {
+KISSY.add("xtemplate/runtime/commands", function (S, XTemplate) {
 
-    var commands = {
+    return {
         'each': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 1) {
@@ -85,14 +85,14 @@ KISSY.add("xtemplate/commands", function (S, XTemplate) {
             if (!(tpl = subTpls[param0])) {
                 throw new Error('does not include sub template "' + param0 + '"');
             }
-            var XTemplate = S.require('xtemplate');
             return new XTemplate(tpl, {
+                cache: option.cache,
                 commands: option.commands,
                 subTpls: option.subTpls
             }).render(scopes);
         }
     };
 
-    return commands;
-
+}, {
+    requires: ['./base']
 });
