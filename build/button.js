@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:01
+build time: Oct 16 20:36
 */
 /**
  * @fileOverview Button control for KISSY.

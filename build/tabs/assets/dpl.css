@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:05
+build time: Oct 16 20:37
 */
 /**
 * Variables to customize the look and feel from Bootstrap.
@@ -46,6 +46,7 @@ build time: Oct 15 14:05
   padding: 8px 12px 8px 12px;
   margin: 0;
   border: 1px solid transparent;
+  color: #aeaeae;
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   background: none;
 }
@@ -56,7 +57,7 @@ build time: Oct 15 14:05
 }
 .ks-tabs-tab.ks-tabs-tab-selected,
 .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
-  color: #555555;
+  color: #888888;
   background-color: #ffffff;
   cursor: default;
   -webkit-box-shadow: none;
@@ -65,7 +66,7 @@ build time: Oct 15 14:05
 }
 .ks-tabs-top  > .ks-tabs-bar {
   *zoom: 1;
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #bbbbbb;
 }
 .ks-tabs-top  > .ks-tabs-bar:before,
 .ks-tabs-top  > .ks-tabs-bar:after {
@@ -89,14 +90,14 @@ build time: Oct 15 14:05
 }
 .ks-tabs-top  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
 .ks-tabs-top  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
-  border-color: #dddddd #dddddd transparent #dddddd;
+  border-color: #bbbbbb #bbbbbb transparent #bbbbbb;
   /* ie7 transparent border makes bar border leaks*/
 
   *border-bottom-color: white;
 }
 .ks-tabs-bottom  > .ks-tabs-bar {
   *zoom: 1;
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid #bbbbbb;
 }
 .ks-tabs-bottom  > .ks-tabs-bar:before,
 .ks-tabs-bottom  > .ks-tabs-bar:after {
@@ -115,12 +116,12 @@ build time: Oct 15 14:05
 }
 .ks-tabs-bottom  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
 .ks-tabs-bottom  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
-  border-color: transparent #dddddd #dddddd #dddddd;
+  border-color: transparent #bbbbbb #bbbbbb #bbbbbb;
   *border-top-color: white;
 }
 .ks-tabs-left  > .ks-tabs-bar {
   margin-right: 18px;
-  border-right: 1px solid #dddddd;
+  border-right: 1px solid #bbbbbb;
   float: left;
 }
 .ks-tabs-left  > .ks-tabs-bar > .ks-tabs-tab {
@@ -131,12 +132,12 @@ build time: Oct 15 14:05
 }
 .ks-tabs-left  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
 .ks-tabs-left  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
-  border-color: #dddddd transparent #dddddd #dddddd;
+  border-color: #bbbbbb transparent #bbbbbb #bbbbbb;
   *border-right-color: white;
 }
 .ks-tabs-right  > .ks-tabs-bar {
   margin-left: 18px;
-  border-left: 1px solid #dddddd;
+  border-left: 1px solid #bbbbbb;
   float: right;
 }
 .ks-tabs-right  > .ks-tabs-bar > .ks-tabs-tab {
@@ -147,6 +148,6 @@ build time: Oct 15 14:05
 }
 .ks-tabs-right  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected,
 .ks-tabs-right  > .ks-tabs-bar > .ks-tabs-tab.ks-tabs-tab-selected.ks-tabs-tab-active {
-  border-color: #dddddd #dddddd #dddddd transparent;
+  border-color: #bbbbbb #bbbbbb #bbbbbb transparent;
   *border-left-color: white;
 }

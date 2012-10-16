@@ -97,6 +97,7 @@ textarea[class*="span"] {
   margin-left: 0;
 }
 textarea,
+select,
 input[type="text"],
 input[type="password"],
 input[type="datetime"],
@@ -125,6 +126,7 @@ input[type="color"],
   transition: border linear 0.2s, box-shadow linear 0.2 s;
 }
 textarea:focus,
+select:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
 input[type="datetime"]:focus,
@@ -220,7 +222,7 @@ select[readonly],
 textarea[readonly] {
   cursor: not-allowed;
   background-color: #eeeeee;
-  border-color: #ddd;
+  border-color: #dddddd;
 }
 input[type="radio"][disabled],
 input[type="checkbox"][disabled],

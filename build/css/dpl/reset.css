@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:01
+build time: Oct 16 20:37
 */
 /**
 * KISSY New DPL CSS Reset Based on
@@ -83,7 +83,7 @@ audio:not([controls]) {
  */
 mark {
   background: #ff0;
-  color: #000;
+  color: #333333;
 }
 /*
  * Addresses margin not present in IE6/7/8.

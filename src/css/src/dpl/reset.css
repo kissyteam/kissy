@@ -78,7 +78,7 @@ audio:not([controls]) {
  */
 mark {
   background: #ff0;
-  color: #000;
+  color: #333333;
 }
 /*
  * Addresses margin not present in IE6/7/8.
