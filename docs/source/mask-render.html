@@ -88,6 +88,29 @@ KISSY.add(&quot;component/uibase/mask-render&quot;, function (S, UA, Node) {
             }
         },
 
+        __syncUI: function () {
+            var self = this;
+            if (self.get('mask')) {
+                self.ksSetMaskVisible(self.get('visible'), 1);
+            }
+        },
+
+        ksSetMaskVisible: function (shown, hideInline) {
+            var self = this,
+                shownCls = self.getCssClassWithState('-mask-shown'),
+                maskNode = self.get('maskNode'),
+                hiddenCls = self.getCssClassWithState('-mask-hidden');
+            if (shown) {
+                maskNode.removeClass(hiddenCls).addClass(shownCls);
+            } else {
+                maskNode.removeClass(shownCls).addClass(hiddenCls);
+
+            }
+            if (!hideInline) {
+                maskNode.css('visibility', shown ? 'visible' : 'hidden');
+            }
+        },
+
         __destructor: function () {
             var self = this, mask;
             if (mask = self.get(&quot;maskNode&quot;)) {

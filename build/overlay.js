@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 17 19:43
+build time: Oct 17 20:16
 */
 /**
  * @fileOverview controller for overlay
@@ -99,11 +99,11 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
         }
         var duration = effectCfg.duration,
             easing = effectCfg.easing,
+            originalVisibility = el.css('visibility'),
             index = show ? 1 : 0;
         // 队列中的也要移去
         // run complete fn to restore window's original height
         el.stop(1, 1);
-        var originalVisibility = el.css('visibility');
         el.css({
             // must show, override box-render _uiSetVisible
             "visibility": "visible",
@@ -130,14 +130,14 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
      * KISSY Overlay Component.
      * xclass: 'overlay'.
      * @class Overlay
-     * @extends Component.Controller
-     * @extends Component.UIBase.ContentBox
-     * @extends Component.UIBase.Position
-     * @extends Component.UIBase.Loading
-     * @extends Component.UIBase.Align
-     * @extends Component.UIBase.Close
-     * @extends Component.UIBase.Resize
-     * @extends Component.UIBase.Mask
+     * @extends KISSY.Component.Controller
+     * @extends KISSY.Component.UIBase.ContentBox
+     * @extends KISSY.Component.UIBase.Position
+     * @extends KISSY.Component.UIBase.Loading
+     * @extends KISSY.Component.UIBase.Align
+     * @extends KISSY.Component.UIBase.Close
+     * @extends KISSY.Component.UIBase.Resize
+     * @extends KISSY.Component.UIBase.Mask
      */
     var Overlay = Component.Controller.extend([
         require("content-box"),

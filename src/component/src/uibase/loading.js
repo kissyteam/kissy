@@ -6,7 +6,7 @@
 KISSY.add("component/uibase/loading", function () {
 
     /**
-     * @class KISSY.DD.UIBase.Loading
+     * @class KISSY.Component.UIBase.Loading
      * Loading extension class. Make component to be able to mask loading.
      */
     function Loading() {

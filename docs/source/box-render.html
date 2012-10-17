@@ -183,6 +183,7 @@ KISSY.add('component/uibase/box-render', function (S) {
                 el.removeClass(shownCls);
                 el.addClass(hiddenCls);
             }
+            //return;
             // !TODO 兼容代码，去除，通过 css 控制隐藏属性
             if (visibleMode == &quot;visibility&quot;) {
                 el.css(&quot;visibility&quot;, visible ? &quot;visible&quot; : &quot;hidden&quot;);

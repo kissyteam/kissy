@@ -244,18 +244,18 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
                         el.on(&quot;dblclick&quot;, wrapBehavior(self, &quot;handleDblClick&quot;));
                     }
                 } else {
-                    t = getWrapBehavior(self, &quot;handleMouseEnter&quot;) &amp;&amp;
+                    (t = getWrapBehavior(self, &quot;handleMouseEnter&quot;)) &amp;&amp;
                         el.detach(&quot;mouseenter&quot;, t);
-                    t = getWrapBehavior(self, &quot;handleMouseLeave&quot;) &amp;&amp;
+                    (t = getWrapBehavior(self, &quot;handleMouseLeave&quot;)) &amp;&amp;
                         el.detach(&quot;mouseleave&quot;, t);
-                    t = getWrapBehavior(self, &quot;handleContextMenu&quot;) &amp;&amp;
+                    (t = getWrapBehavior(self, &quot;handleContextMenu&quot;)) &amp;&amp;
                         el.detach(&quot;contextmenu&quot;, t);
-                    t = getWrapBehavior(self, &quot;handleMouseDown&quot;) &amp;&amp;
+                    (t = getWrapBehavior(self, &quot;handleMouseDown&quot;)) &amp;&amp;
                         el.detach(&quot;mousedown&quot;, t);
-                    t = getWrapBehavior(self, &quot;handleMouseUp&quot;) &amp;&amp;
+                    (t = getWrapBehavior(self, &quot;handleMouseUp&quot;)) &amp;&amp;
                         el.detach(&quot;mouseup&quot;, t);
                     if (ie &amp;&amp; ie &lt; 9) {
-                        t = getWrapBehavior(self, &quot;handleDblClick&quot;) &amp;&amp;
+                        (t = getWrapBehavior(self, &quot;handleDblClick&quot;)) &amp;&amp;
                             el.detach(&quot;dblclick&quot;, t);
                     }
                 }

@@ -20,7 +20,7 @@
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;component/uibase/mask&quot;, function (S) {
+KISSY.add(&quot;component/uibase/mask&quot;, function () {
 
 <span id='KISSY-Component-UIBase-Mask'>    /**
 </span>     * @class KISSY.Component.UIBase.Mask
@@ -65,13 +65,17 @@ KISSY.add(&quot;component/uibase/mask&quot;, function (S) {
     var NONE = 'none',
         effects = {fade: [&quot;Out&quot;, &quot;In&quot;], slide: [&quot;Up&quot;, &quot;Down&quot;]};
 
-    function processMask(mask, el, show) {
+    function processMask(mask, el, show, view) {
+
         var effect = mask.effect || NONE;
 
         if (effect == NONE) {
-            el[show ? 'show' : 'hide']();
+            view.ksSetMaskVisible(show);
             return;
         }
+
+        // no inline style, leave it to anim(fadeIn/Out)
+        view.ksSetMaskVisible(show, 1);
 
         var duration = mask.duration,
             easing = mask.easing,
@@ -80,6 +84,8 @@ KISSY.add(&quot;component/uibase/mask&quot;, function (S) {
 
         // run complete fn to restore window's original height
         el.stop(1, 1);
+
+        el.css('display', show ? 'none' : 'block');
 
         m = effect + effects[effect][index];
 
@@ -102,7 +108,7 @@ KISSY.add(&quot;component/uibase/mask&quot;, function (S) {
                         var elZIndex = parseInt(el.css('z-index')) || 1;
                         maskNode.css('z-index', elZIndex - 1);
                     }
-                    processMask(mask, maskNode, v)
+                    processMask(mask, maskNode, v, view)
                 });
             }
         }
