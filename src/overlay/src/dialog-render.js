@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview render for dialog
  * @author yiminghe@gmail.com
  */

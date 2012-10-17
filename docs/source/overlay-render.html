@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview KISSY Overlay
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;overlay/overlay-render&quot;, function (S, UA, Component) {
+
+    function require(s) {
+        return S.require(&quot;component/uibase/&quot; + s);
+    }
+
+    return Component.Render.extend([
+        require(&quot;content-box-render&quot;),
+        require(&quot;position-render&quot;),
+        require(&quot;loading-render&quot;),
+        UA['ie'] === 6 ? require(&quot;shim-render&quot;) : null,
+        require(&quot;close-render&quot;),
+        require(&quot;mask-render&quot;)
+    ]);
+}, {
+    requires:[&quot;ua&quot;, &quot;component&quot;]
+});
+
+<span id='global-property-'>/**
+</span> * @ignore
+ * 2010-11-09 2010-11-10 yiminghe@gmail.com重构，attribute-base-uibase-Overlay ，采用 UIBase.create
+ */
+</pre>
+</body>
+</html>

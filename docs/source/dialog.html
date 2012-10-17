@@ -1,5 +1,22 @@
-/**
- * @ignore
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
  * @fileOverview KISSY.Dialog
  * @author yiminghe@gmail.com
  */
@@ -8,23 +25,23 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
     var $ = Node.all;
 
     function require(s) {
-        return S.require("component/uibase/" + s);
+        return S.require(&quot;component/uibase/&quot; + s);
     }
 
-    /**
-     * @class KISSY.Overlay.Dialog
+<span id='KISSY-Overlay-Dialog'>    /**
+</span>     * @class KISSY.Overlay.Dialog
      * KISSY Dialog Component. xclass: 'overlay-dialog'.
      * @extends KISSY.Overlay
      * @mixins KISSY.Component.UIBase.StdMod
      * @mixins KISSY.Component.UIBase.Drag
      */
     var Dialog = Overlay.extend([
-        require("stdmod"),
-        require("drag")
+        require(&quot;stdmod&quot;),
+        require(&quot;drag&quot;)
     ], {
             initializer: function () {
                 var self = this, draggable;
-                if (draggable = self.get("draggable")) {
+                if (draggable = self.get(&quot;draggable&quot;)) {
                     if (!draggable.handlers) {
                         // default to drag header
                         draggable.handlers = [function () {
@@ -35,9 +52,9 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
             },
 
             handleKeyEventInternal: function (e) {
-                if (this.get('escapeToClose') &&
+                if (this.get('escapeToClose') &amp;&amp;
                     e.keyCode === Node.KeyCodes.ESC) {
-                    if (e.target.nodeName.toLowerCase() == 'select' &&
+                    if (e.target.nodeName.toLowerCase() == 'select' &amp;&amp;
                         !e.target.disabled) {
                         // escape at select
                     } else {
@@ -53,11 +70,11 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 var self = this, el = self.get('el');
                 if (v) {
                     self.__lastActive = el[0].ownerDocument.activeElement;
-                    el[0].focus && el[0].focus();
-                    el.attr("aria-hidden", "false");
+                    el[0].focus &amp;&amp; el[0].focus();
+                    el.attr(&quot;aria-hidden&quot;, &quot;false&quot;);
                 } else {
-                    el.attr("aria-hidden", "true");
-                    self.__lastActive && self.__lastActive.focus();
+                    el.attr(&quot;aria-hidden&quot;, &quot;true&quot;);
+                    self.__lastActive &amp;&amp; self.__lastActive.focus();
                 }
                 // prevent display none for effect
                 Dialog.superclass._uiSetVisible.apply(self, arguments);
@@ -67,16 +84,16 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         {
             ATTRS: {
 
-                /**
-                 * whether this component can be closed.
+<span id='KISSY-Overlay-Dialog-cfg-closable'>                /**
+</span>                 * whether this component can be closed.
                  *
                  * Defaults to: true
                  *
                  * @cfg {Boolean} closable
                  * @protected
                  */
-                /**
-                 * @ignore
+<span id='global-property-closable'>                /**
+</span>                 * @ignore
                  */
                 closable: {
                     value: true
@@ -86,32 +103,32 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                     value: DialogRender
                 },
 
-                /**
-                 * whether this component can be focused.
+<span id='KISSY-Overlay-Dialog-cfg-focusable'>                /**
+</span>                 * whether this component can be focused.
                  *
                  * Defaults to: true
                  *
                  * @cfg {Boolean} focusable
                  * @protected
                  */
-                /**
-                 * @ignore
+<span id='global-property-focusable'>                /**
+</span>                 * @ignore
                  */
                 focusable: {
                     value: true
                 },
 
 
-                /**
-                 * whether this component can be closed by press escape key.
+<span id='KISSY-Overlay-Dialog-cfg-escapeToClose'>                /**
+</span>                 * whether this component can be closed by press escape key.
                  *
                  * Defaults to: true
                  *
                  * @cfg {Boolean} escapeToClose
                  * @since 1.3.0
                  */
-                /**
-                 * @ignore
+<span id='global-property-escapeToClose'>                /**
+</span>                 * @ignore
                  */
                 escapeToClose: {
                     value: true
@@ -134,7 +151,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         if (keyCode != KEY_TAB) {
             return;
         }
-        var el = self.get("el");
+        var el = self.get(&quot;el&quot;);
         // summary:
         // Handles the keyboard events for accessibility reasons
 
@@ -148,12 +165,12 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         // assumes el and lastFocusItem maintained by dialog object
 
         // see if we are shift-tabbing from first focusable item on dialog
-        if (node.equals(el) && e.shiftKey) {
+        if (node.equals(el) &amp;&amp; e.shiftKey) {
             lastFocusItem[0].focus(); // send focus to last item in dialog
             e.halt(); //stop the tab keypress event
         }
         // see if we are tabbing from the last focusable item
-        else if (node.equals(lastFocusItem) && !e.shiftKey) {
+        else if (node.equals(lastFocusItem) &amp;&amp; !e.shiftKey) {
             el[0].focus(); // send focus to first item in dialog
             e.halt(); //stop the tab keypress event
         }
@@ -170,11 +187,11 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
     return Dialog;
 
 }, {
-    requires: [ "./base", './dialog-render', 'node']
+    requires: [ &quot;./base&quot;, './dialog-render', 'node']
 });
 
-/**
- * @ignore
+<span id='global-property-'>/**
+</span> * @ignore
  *
  * 2012-09-06 yiminghe@gmail.com
  *  merge aria with dialog
@@ -186,3 +203,6 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
 
 
+</pre>
+</body>
+</html>

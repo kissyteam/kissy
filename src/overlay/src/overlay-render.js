@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview KISSY Overlay
  * @author yiminghe@gmail.com
  */
@@ -21,5 +22,6 @@ KISSY.add("overlay/overlay-render", function (S, UA, Component) {
 });
 
 /**
+ * @ignore
  * 2010-11-09 2010-11-10 yiminghe@gmail.com重构，attribute-base-uibase-Overlay ，采用 UIBase.create
  */

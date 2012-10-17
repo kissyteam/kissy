@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview overlay
  * @author yiminghe@gmail.com
  */

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview controller for overlay
  * @author yiminghe@gmail.com
  */
@@ -123,17 +124,16 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
     }
 
     /**
-     * KISSY Overlay Component.
-     * xclass: 'overlay'.
-     * @class Overlay
+     * KISSY Overlay Component. xclass: 'overlay'.
+     * @class KISSY.Overlay
      * @extends KISSY.Component.Controller
-     * @extends KISSY.Component.UIBase.ContentBox
-     * @extends KISSY.Component.UIBase.Position
-     * @extends KISSY.Component.UIBase.Loading
-     * @extends KISSY.Component.UIBase.Align
-     * @extends KISSY.Component.UIBase.Close
-     * @extends KISSY.Component.UIBase.Resize
-     * @extends KISSY.Component.UIBase.Mask
+     * @mixins KISSY.Component.UIBase.ContentBox
+     * @mixins KISSY.Component.UIBase.Position
+     * @mixins KISSY.Component.UIBase.Loading
+     * @mixins KISSY.Component.UIBase.Align
+     * @mixins KISSY.Component.UIBase.Close
+     * @mixins KISSY.Component.UIBase.Resize
+     * @mixins KISSY.Component.UIBase.Mask
      */
     var Overlay = Component.Controller.extend([
         require("content-box"),
@@ -143,14 +143,9 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
         require("close"),
         require("resize"),
         require("mask")
-    ],
-        /**
-         * @lends Overlay#
-         */
-        {
+    ],{
             /**
-             * For overlay with effect,
-             * it should listen show and hide instead of afterVisibleChange.
+             * For overlay with effect, it should listen show and hide instead of afterVisibleChange.
              * @protected
              */
             _uiSetVisible: function (v) {
@@ -164,18 +159,24 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
             }
 
         }, {
-            ATTRS: /**
-             * @lends Overlay#
-             */
-            {
+            ATTRS: {
 
                 /**
-                 * Set v as overlay 's show effect <br>
-                 * v.effect (String): Default:none. can be set as "fade" or "slide" <br>
-                 * v.target (String|KISS.Node): The target node from which overlay should animate from while showing. Since KISSY 1.3.<br>
-                 * v.duration (Number): in seconds. Default:0.5. <br>
-                 * v.easing (String): see {@link KISSY.Anim.Easing} <br>
-                 * @type {Object}
+                 * Set v as overlay 's show effect
+                 *
+                 * v.effect (String): Default:none. can be set as "fade" or "slide"
+                 *
+                 * v.target (String|KISS.Node): The target node from which overlay should animate from while showing.
+                 * Since KISSY 1.3.
+                 *
+                 * v.duration (Number): in seconds. Default:0.5.
+                 *
+                 * v.easing (String): see {@link KISSY.Anim.Easing}
+                 *
+                 * @cfg {Object} effect
+                 */
+                /**
+                 * @ignore
                  */
                 effect: {
                     value: {
@@ -193,20 +194,45 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
 
                 },
 
-                // do not has focus
+                /**
+                 * overlay can not have focus.
+                 *
+                 * Defaults to: false.
+                 *
+                 * @cfg {boolean} focusable
+                 * @protected
+                 */
+                /**
+                 * @ignore
+                 */
                 focusable: {
                     value: false
                 },
 
-                // allowTextSelection
+                /**
+                 * overlay can have text selection.
+                 *
+                 * Defaults to: true.
+                 *
+                 * @cfg {boolean} allowTextSelection
+                 * @protected
+                 */
+                /**
+                 * @ignore
+                 */
                 allowTextSelection: {
                     value: true
                 },
 
                 /**
                  * whether this component can be closed.
-                 * @default false
-                 * @type {Boolean}
+                 *
+                 * Defaults to: false
+                 *
+                 * @cfg {Boolean} closable
+                 */
+                /**
+                 * @ignore
                  */
                 closable: {
                     value: false
@@ -214,8 +240,14 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
 
                 /**
                  * whether this component can be responsive to mouse.
-                 * @default false
-                 * @type {Boolean}
+                 *
+                 * Defaults to: false
+                 *
+                 * @cfg {Boolean} handleMouseEvents
+                 * @protected
+                 */
+                /**
+                 * @ignore
                  */
                 handleMouseEvents: {
                     value: false
