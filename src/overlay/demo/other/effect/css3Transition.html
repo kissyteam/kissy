@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>KISSY css3 effect</title>
+    <script src="../../../../../build/kissy.js"></script>
+    <link rel="stylesheet" href="../assets/cool.css"/>
+    <style>
+        .ks-overlay, .ks-overlay-mask {
+            -webkit-transition-duration: 1s;
+            -webkit-transition-property: visibility,opacity;
+            -moz-transition-duration: 1s;
+            -moz-transition-property: visibility,opacity;
+        }
+
+        .ks-overlay-shown {
+            opacity: 1;
+        }
+
+        .ks-overlay-mask-shown {
+            opacity: 0.3;
+        }
+
+        .ks-overlay-hidden, .ks-overlay-mask-hidden {
+            opacity: 0;
+
+        }
+    </style>
+</head>
+<body>
+
+<div style="height:800px;width: 950px;margin: 0 auto;padding: 20px;">
+    <button id="t2">open dialog with css3 effect</button>
+</div>
+
+<script>
+    KISSY.ready(function (S) {
+        S.use("overlay", function (S, Overlay) {
+            var o = new Overlay.Dialog({
+                width: 500,
+                height: 500,
+                mask: true,
+                zIndex: 1000,
+                closable: true,
+                bodyContent: '<div style="height: 200px">test</div>'
+            });
+            S.all("#t2").on("click", function () {
+                o.center().show();
+            });
+            o.on('show', function () {
+                S.log('show');
+            });
+            o.on('hide', function () {
+                S.log('hide');
+            });
+        });
+    });
+</script>
+</body>
+</html>

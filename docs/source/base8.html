@@ -56,7 +56,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
             return undefined;
         }
 
-        else if (S.isString(html)) {
+        else if (typeof html == 'string') {
             // create from html
             domNode = DOM.create(html, props, ownerDocument);
             // ('&lt;p&gt;1&lt;/p&gt;&lt;p&gt;2&lt;/p&gt;') 转换为 NodeList
@@ -233,7 +233,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
             // are we dealing with html string ?
             // TextNode 仍需要自己 new Node
 
-            if (S.isString(selector)
+            if (typeof selector == 'string'
                 &amp;&amp; (selector = S.trim(selector))
                 &amp;&amp; selector.length &gt;= 3
                 &amp;&amp; S.startsWith(selector, '&lt;')

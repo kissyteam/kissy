@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:01
+build time: Oct 17 19:45
 */
 /**
  * @ignore
@@ -10,8 +10,8 @@ build time: Oct 15 14:01
  */
 KISSY.add("component/base", function (S, UIBase, Manager) {
     /**
-     * @name Component
-     * @namespace
+     * @class KISSY.Component
+     * @singleton
      * Component infrastructure.
      */
     var Component = {
@@ -23,21 +23,21 @@ KISSY.add("component/base", function (S, UIBase, Manager) {
      * Create a component instance using json with xclass.
      * @param {Object} component Component's json notation with xclass attribute.
      * @param {String} component.xclass Component to be newed 's xclass.
-     * @param {Controller} self Component From which new component generated will inherit prefixCls
+     * @param {KISSY.Component.Controller} self Component From which new component generated will inherit prefixCls
      * if component 's prefixCls is undefined.
-     * @memberOf Component
-     * @example
-     * <code>
-     *  create({
-     *     xclass:'menu',
-     *     children:[{
-     *        xclass:'menuitem',
-     *        content:"1"
-     *     }]
-     *  })
-     * </code>
+     * @member KISSY.Component
+     *
+     *  for example:
+     *
+     *      create({
+     *          xclass:'menu',
+     *          children:[{
+     *              xclass:'menuitem',
+     *              content:"1"
+     *          }]
+     *      })
      */
-    function create(component, self) {
+    Component.create = function (component, self) {
         var childConstructor, xclass;
         if (component && (xclass = component.xclass)) {
             if (self && !component.prefixCls) {
@@ -50,9 +50,7 @@ KISSY.add("component/base", function (S, UIBase, Manager) {
             component = new childConstructor(component);
         }
         return component;
-    }
-
-    Component.create = create;
+    };
 
     return Component;
 }, {
@@ -90,46 +88,20 @@ KISSY.add("component", function (S, Component, Controller, Render, Container, De
  */
 KISSY.add("component/container", function (S, Controller, DelegateChildren, DecorateChildren) {
     /**
-     * @name Container
-     * @extends Component.Controller
-     * @memberOf Component
-     * @class
+     * @extends KISSY.Component.Controller
+     * @class KISSY.Component.Container
      * Container class. Extend it to acquire the abilities of
-     * delegating events and
-     * decorate from pre-rendered dom
+     * delegating events and decorate from pre-rendered dom
      * for child components.
      */
-    return Controller.extend([DelegateChildren, DecorateChildren],
-        /**
-         * @lends Component.Container
-         */
-        {
-
-
-            /**
-             * Generate child component from root element.
-             * @protected
-             * @method
-             * @name decorateInternal
-             * @memberOf Component.Container#
-             * @param {KISSY.NodeList} element Root element of current component.
-             */
-
-            /**
-             * Get child component which contains current event target node.             *
-             * @protected
-             * @name getOwnerControl
-             * @method
-             * @memberOf Component.Container#
-             * @param {HTMLElement} target Current event target node.
-             */
-        });
+    return Controller.extend([DelegateChildren, DecorateChildren]);
 
 }, {
     requires: ['./controller', './delegate-children', './decorate-children']
 });
 
 /**
+ * @ignore
  * TODO
  *  - handleMouseEvents false for container ?
  *//**
@@ -191,9 +163,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             v,
             Render = self.get('xrender');
 
-        /**
-         * 将渲染层初始化所需要的属性，直接构造器设置过去
-         */
+        // 将渲染层初始化所需要的属性，直接构造器设置过去
         attrs = self.getAttrs();
 
         // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
@@ -259,18 +229,22 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
     /**
      * Base Controller class for KISSY Component.
      * xclass: 'controller'.
-     * @extends Component.UIBase
-     * @mixins Component.UIBase.Box
-     * @class Component.Controller
+     * @extends KISSY.Component.UIBase
+     * @mixins KISSY.Component.UIBase.Box
+     * @class KISSY.Component.Controller
      */
-    var Controller = UIBase.extend([UIBase.Box],
-        {
+    var Controller = UIBase.extend([UIBase.Box], {
 
+            /**
+             * mark current instance as controller instance.
+             * @type {boolean}
+             * @member KISSY.Component.Controller
+             */
             isController: true,
 
             /**
-             * Get full class name for current component
-             * @param classes {String} class names without prefixCls. Separated by space.
+             * Get full class name for current component.
+             * @param {String} classes class names without prefixCls. Separated by space.
              * @method
              * @protected
              * @return {String} class name with prefixCls
@@ -278,7 +252,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             getCssClassWithPrefix: Manager.getCssClassWithPrefix,
 
             /**
-             * From UIBase, Initialize this component.             *
+             * Initialize this component.             *
              * @protected
              */
             initializer: function () {
@@ -287,7 +261,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             },
 
             /**
-             * From UIBase. Constructor(or get) view object to create ui elements.
+             * Constructor(or get) view object to create ui elements.
              * @protected
              *
              */
@@ -303,7 +277,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             },
 
             /**
-             * From UIBase. Call view object to render ui elements.
+             * Call view object to render ui elements.
              * @protected
              *
              */
@@ -319,7 +293,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 }
             },
 
-            _uiSetFocusable: function (focusable) {
+            '_uiSetFocusable': function (focusable) {
                 var self = this,
                     t,
                     el = self.getKeyEventTarget();
@@ -345,7 +319,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 }
             },
 
-            _uiSetHandleMouseEvents: function (handleMouseEvents) {
+            '_uiSetHandleMouseEvents': function (handleMouseEvents) {
                 var self = this, el = self.get("el"), t;
                 if (handleMouseEvents) {
                     el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
@@ -359,40 +333,42 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                         el.on("dblclick", wrapBehavior(self, "handleDblClick"));
                     }
                 } else {
-                    t = getWrapBehavior(self, "handleMouseEnter") &&
+                    (t = getWrapBehavior(self, "handleMouseEnter")) &&
                         el.detach("mouseenter", t);
-                    t = getWrapBehavior(self, "handleMouseLeave") &&
+                    (t = getWrapBehavior(self, "handleMouseLeave")) &&
                         el.detach("mouseleave", t);
-                    t = getWrapBehavior(self, "handleContextMenu") &&
+                    (t = getWrapBehavior(self, "handleContextMenu")) &&
                         el.detach("contextmenu", t);
-                    t = getWrapBehavior(self, "handleMouseDown") &&
+                    (t = getWrapBehavior(self, "handleMouseDown")) &&
                         el.detach("mousedown", t);
-                    t = getWrapBehavior(self, "handleMouseUp") &&
+                    (t = getWrapBehavior(self, "handleMouseUp")) &&
                         el.detach("mouseup", t);
                     if (ie && ie < 9) {
-                        t = getWrapBehavior(self, "handleDblClick") &&
+                        (t = getWrapBehavior(self, "handleDblClick")) &&
                             el.detach("dblclick", t);
                     }
                 }
             },
 
-            _uiSetFocused: function (v) {
+            '_uiSetFocused': function (v) {
                 if (v) {
                     this.getKeyEventTarget()[0].focus();
                 }
             },
 
             /**
-             * 子组件将要渲染到的节点，在 render 类上覆盖对应方法
-             * @ignore
+             * child component's render container.
+             * @protected
+             * @return {KISSY.NodeList}
              */
             getContentElement: function () {
                 return this.get('view').getContentElement();
             },
 
             /**
-             * 焦点所在元素即键盘事件处理元素，在 render 类上覆盖对应方法
-             * @ignore
+             * focusable element of component.
+             * @protected
+             * @return {KISSY.NodeList}
              */
             getKeyEventTarget: function () {
                 return this.get('view').getKeyEventTarget();
@@ -401,7 +377,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Add the specified component as a child of current component
              * at the given 0-based index.
-             * @param {Component.Controller|Object} c
+             * @param {KISSY.Component.Controller|Object} c
              * Child component instance to be added
              * or
              * Object describe child component
@@ -409,6 +385,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @param {Number} [index]  0-based index at which
              * the new child component is to be inserted;
              * If not specified , the new child component will be inserted at last position.
+             * @return {KISSY.Component.Controller} this
              */
             addChild: function (c, index) {
                 var self = this,
@@ -432,15 +409,15 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Removed the given child from this component,and returns it.
              *
-             * If destroy is true, calls {@link Component.UIBase.#destroy} on the removed child component,
+             * If destroy is true, calls {@link KISSY.Component.UIBase#destroy} on the removed child component,
              * and subsequently detaches the child's DOM from the document.
              * Otherwise it is the caller's responsibility to
              * clean up the child component's DOM.
              *
-             * @param {Component.Controller} c The child component to be removed.
+             * @param {KISSY.Component.Controller} c The child component to be removed.
              * @param {Boolean} [destroy=false] If true,
-             * calls {@link Component.UIBase.#destroy} on the removed child component.
-             * @return {Component.Controller} The removed component.
+             * calls {@link KISSY.Component.UIBase#destroy} on the removed child component.
+             * @return {KISSY.Component.Controller} The removed component.
              */
             removeChild: function (c, destroy) {
                 var self = this,
@@ -451,17 +428,18 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 }
                 if (destroy &&
                     // c is still json
-                    c.destroy) {
-                    c.destroy();
+                    c['destroy']) {
+                    c['destroy']();
                 }
                 return c;
             },
 
             /**
              * Removes every child component attached to current component.
-             * @see Component.Controller#removeChild
+             * see {@link KISSY.Component.Controller#removeChild}
              * @param {Boolean} [destroy] If true,
-             * calls {@link Component.UIBase.#destroy} on the removed child component.
+             * calls {@link KISSY.Component.UIBase#destroy} on the removed child component.
+             * @return {KISSY.Component.Controller} this
              */
             removeChildren: function (destroy) {
                 var self = this,
@@ -470,12 +448,13 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 for (i = 0; i < t.length; i++) {
                     self.removeChild(t[i], destroy);
                 }
+                return self;
             },
 
             /**
              * Returns the child at the given index, or null if the index is out of bounds.
              * @param {Number} index 0-based index.
-             * @return {Component.Controller} The child at the given index; null if none.
+             * @return {KISSY.Component.Controller} The child at the given index; null if none.
              */
             getChildAt: function (index) {
                 var children = this.get("children");
@@ -485,9 +464,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Hack click in ie<9 by handling dblclick events.
              * By default, this performs its associated action by calling
-             * {@link Component.Controller#performActionInternal}.
+             * {@link KISSY.Component.Controller#performActionInternal}.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleDblClick: function (ev) {
                 this.performActionInternal(ev);
@@ -496,7 +475,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Called by it's container component to dispatch mouseenter event.
              * @private
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleMouseOver: function (ev) {
                 var self = this,
@@ -509,7 +488,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Called by it's container component to dispatch mouseleave event.
              * @private
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleMouseOut: function (ev) {
                 var self = this,
@@ -522,7 +501,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleMouseEnter: function (ev) {
                 this.set("highlighted", !!ev);
@@ -531,7 +510,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handle mouseleave events. If the component is not disabled, de-highlights it.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleMouseLeave: function (ev) {
                 var self = this;
@@ -545,7 +524,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * If the component is focusable, then focus it,
              * else prevent it from receiving keyboard focus.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleMouseDown: function (ev) {
                 var self = this,
@@ -577,9 +556,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles mouseup events.
              * If this component is not disabled, performs its associated action by calling
-             * {@link Component.Controller#performActionInternal}, then deactivates it.
+             * {@link KISSY.Component.Controller#performActionInternal}, then deactivates it.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleMouseUp: function (ev) {
                 var self = this;
@@ -593,7 +572,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles context menu.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleContextMenu: function (ev) {
             },
@@ -601,7 +580,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles focus events. Style focused class.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleFocus: function (ev) {
                 this.set("focused", !!ev);
@@ -611,7 +590,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles blur events. Remove focused class.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleBlur: function (ev) {
                 this.set("focused", !ev);
@@ -619,9 +598,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             },
 
             /**
-             * Handle enter keydown event to {@link Component.Controller#performActionInternal}.
+             * Handle enter keydown event to {@link KISSY.Component.Controller#performActionInternal}.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleKeyEventInternal: function (ev) {
                 if (ev.keyCode == Event.KeyCodes.ENTER) {
@@ -631,9 +610,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
             /**
              * Handle keydown events.
-             * If the component is not disabled, call {@link Component.Controller#handleKeyEventInternal}
+             * If the component is not disabled, call {@link KISSY.Component.Controller#handleKeyEventInternal}
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleKeydown: function (ev) {
                 var self = this;
@@ -646,7 +625,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Performs the appropriate action when this component is activated by the user.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             performActionInternal: function (ev) {
             },
@@ -669,9 +648,14 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * Enables or disables mouse event handling for the component.
                  * Containers may set this attribute to disable mouse event handling
                  * in their child component.
-                 * @default true.
-                 * @type {Boolean}
+                 *
+                 * Defaults to: true.
+                 *
+                 * @cfg {Boolean} handleMouseEvents
                  * @protected
+                 */
+                /**
+                 * @ignore
                  */
                 handleMouseEvents: {
                     value: true
@@ -679,9 +663,14 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Whether this component can get focus.
-                 * @default true.
+                 *
+                 * Defaults to: true.
+                 *
                  * @protected
-                 * @type {Boolean}
+                 * @cfg {Boolean} focusable
+                 */
+                /**
+                 * @ignore
                  */
                 focusable: {
                     value: true,
@@ -692,13 +681,11 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * 1. Whether allow select this component's text.<br/>
                  * 2. Whether not to lose last component's focus if click current one (set false).
                  *
-                 * Defaults to: false.
-                 * @type {Boolean}
-                 * @property allowTextSelection
+                 * Defaults to: false
+                 *
+                 * @cfg {Boolean} allowTextSelection
                  * @protected
                  */
-
-
                 /**
                  * @ignore
                  */
@@ -710,9 +697,14 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Whether this component can be activated.
-                 * @default true.
-                 * @type {Boolean}
+                 *
+                 * Defaults to: true.
+                 *
+                 * @cfg {Boolean} activeable
                  * @protected
+                 */
+                /**
+                 * @ignore
                  */
                 activeable: {
                     value: true
@@ -721,6 +713,14 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Whether this component has focus.
                  * @type {Boolean}
+                 * @property focused
+                 */
+                /**
+                 * Whether this component has focus on initialization.
+                 * @cfg {Boolean} focused
+                 */
+                /**
+                 * @ignore
                  */
                 focused: {
                     view: 1
@@ -729,6 +729,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Whether this component is activated.
                  * @type {Boolean}
+                 * @property active
+                 */
+                /**
+                 * @ignore
                  */
                 active: {
                     view: 1
@@ -737,6 +741,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Whether this component is highlighted.
                  * @type {Boolean}
+                 * @property highlighted
+                 */
+                /**
+                 * @ignore
                  */
                 highlighted: {
                     view: 1
@@ -744,7 +752,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Array of child components
-                 * @type {Component.Controller[]}
+                 * @cfg {KISSY.Component.Controller[]} children
+                 */
+                /**
+                 * @ignore
                  */
                 children: {
                     value: []
@@ -752,7 +763,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * This component's prefix css class.
-                 * @type {String}
+                 * @cfg {String} prefixCls
+                 */
+                /**
+                 * @ignore
                  */
                 prefixCls: {
                     value: 'ks-', // box srcNode need
@@ -761,7 +775,15 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * This component's parent component.
-                 * @type {Component.Controller}
+                 * @type {KISSY.Component.Controller}
+                 * @property parent
+                 */
+                /**
+                 * This component's parent component.
+                 * @cfg {KISSY.Component.Controller} parent
+                 */
+                /**
+                 * @ignore
                  */
                 parent: {
                     setter: function (p) {
@@ -773,6 +795,14 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Whether this component is disabled.
                  * @type {Boolean}
+                 * @property disabled
+                 */
+                /**
+                 * Whether this component is disabled.
+                 * @cfg {Boolean} disabled
+                 */
+                /**
+                 * @ignore
                  */
                 disabled: {
                     view: 1
@@ -781,7 +811,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Render class.
                  * @protected
-                 * @type {Component.Render}
+                 * @cfg {*} xrender
+                 */
+                /**
+                 * @ignore
                  */
                 xrender: {
                     value: Render
@@ -885,7 +918,13 @@ KISSY.add("component/decorate-children", function (S, Manager) {
     }
 
     S.augment(DecorateChildren, {
-        decorateInternal:function (el) {
+        /**
+         * Generate child component from root element.
+         * @protected
+         * @member KISSY.Component.Container
+         * @param {KISSY.NodeList} el Root element of current component.
+         */
+        decorateInternal: function (el) {
             var self = this;
             // 不用 setInternal , 通知 view 更新
             self.set("el", el);
@@ -894,10 +933,11 @@ KISSY.add("component/decorate-children", function (S, Manager) {
 
         /**
          * Get component's constructor from KISSY Node.
+         * @member KISSY.Component.Container
          * @protected
          * @param {KISSY.NodeList} childNode Child component's root node.
          */
-        findUIConstructorByNode:function (childNode, ignoreError) {
+        findUIConstructorByNode: function (childNode, ignoreError) {
             var self = this,
                 cls = childNode.attr("class") || "",
                 prefixCls = self.get("prefixCls");
@@ -912,16 +952,21 @@ KISSY.add("component/decorate-children", function (S, Manager) {
         },
 
         // 生成一个组件
-        decorateChildrenInternal:function (UI, c) {
+        decorateChildrenInternal: function (UI, c) {
             var self = this;
             self.addChild(new UI({
-                srcNode:c,
-                prefixCls:self.get("prefixCls")
+                srcNode: c,
+                prefixCls: self.get("prefixCls")
             }));
         },
 
-        // container 需要在装饰时对儿子特殊处理，递归装饰
-        decorateChildren:function (el) {
+        /**
+         * decorate child element from parent component's root element.
+         * @private
+         * @member KISSY.Component.Container
+         * @param {KISSY.NodeList} el component's root element.
+         */
+        decorateChildren: function (el) {
             var self = this,
                 children = el.children();
             children.each(function (c) {
@@ -934,7 +979,7 @@ KISSY.add("component/decorate-children", function (S, Manager) {
     return DecorateChildren;
 
 }, {
-    requires:['./manager']
+    requires: ['./manager']
 });/**
  * @ignore
  * @fileOverview delegate events for children
@@ -997,10 +1042,11 @@ KISSY.add("component/delegate-children", function (S, UA) {
         },
 
         /**
-         * Get child component which is receiving event.
+         * Get child component which contains current event target node.
          * @protected
-         * @param {HTMLElement} target event target.
-         * @return {*}
+         * @member KISSY.Component.Container
+         * @param {HTMLElement} target Current event target node.
+         * @return {KISSY.Component.Controller}
          */
         getOwnerControl: function (target) {
             var self = this,
@@ -1087,32 +1133,51 @@ KISSY.add("component/manager", function (S) {
     var componentInstances = {};
 
     /**
-     * @name Manager
-     * @memberOf Component
-     * @namespace
+     * @class KISSY.Component.Manager
+     * @member Component
+     * @singleton
      * Manage component metadata.
      */
-    var Manager = /** @lends Component.Manager */{
+    var Manager =  {
 
         __instances:componentInstances,
 
+        /**
+         * associate id with component
+         * @param {String} id
+         * @param {KISSY.Component.Controller} component
+         */
         addComponent:function (id, component) {
             componentInstances[id] = component;
         },
 
+        /**
+         * remove association id with component
+         * @param {String} id
+         */
         removeComponent:function (id) {
             delete componentInstances[id];
         },
 
-        getComponent:function (id) {
+        /**
+         * get component by id
+         * @param {String} id
+         * @return {KISSY.Component.Controller}
+         */
+        'getComponent':function (id) {
             return componentInstances[id];
         },
 
+        /**
+         * complete css by prefix prefixCls
+         * @return {String}
+         * @method
+         * @param {String} css
+         */
         getCssClassWithPrefix:getCssClassWithPrefix,
         /**
          * Get css class name for this component constructor.
          * @param {Function} constructor Component's constructor.
-         * @type {Function}
          * @return {String}
          * @method
          */
@@ -1120,14 +1185,12 @@ KISSY.add("component/manager", function (S) {
         /**
          * Get component constructor by css class name.
          * @param {String} classNames Class names separated by space.
-         * @type {Function}
          * @return {Function}
          * @method
          */
         getConstructorByXClass:getConstructorByXClass,
         /**
          * Associate css class with component constructor.
-         * @type {Function}
          * @param {String} className Component's class name.
          * @param {Function} componentConstructor Component's constructor.
          * @method
@@ -1147,8 +1210,7 @@ KISSY.add("component/manager", function (S) {
 KISSY.add("component/render", function (S, Component, UIBase, Manager) {
 
     /**
-     * @extends Component.UIBase
-     * @class Component.Render
+     * @ignore
      * Base Render class for KISSY Component.
      */
     return UIBase.extend([UIBase.Box.Render],
@@ -1158,8 +1220,9 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              * Get all css class name to be applied to the root element of this component for given state.
              * the css class names are prefixed with component name.
              * @param {String} [state] This component's state info.
+             * @ignore
              */
-            getComponentCssClassWithState: function (state) {
+            getCssClassWithState: function (state) {
                 var self = this,
                     componentCls = self.get("ksComponentCss");
                 state = state || "";
@@ -1171,39 +1234,40 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              * @param classes {String} class names without prefixCls. Separated by space.
              * @method
              * @return {String} class name with prefixCls
-             * @private
+             * @ignore
              */
             getCssClassWithPrefix: Manager.getCssClassWithPrefix,
 
             createDom: function () {
                 var self = this;
-                self.get("el").addClass(self.getComponentCssClassWithState());
+                self.get("el").addClass(self.getCssClassWithState());
             },
 
             /**
              * Returns the dom element which is responsible for listening keyboard events.
              * @return {KISSY.NodeList}
+             * @ignore
              */
             getKeyEventTarget: function () {
                 return this.get("el");
             },
 
             /**
-             * @protected
+             * @ignore
              */
             _uiSetHighlighted: function (v) {
                 var self = this,
-                    componentCls = self.getComponentCssClassWithState("-hover"),
+                    componentCls = self.getCssClassWithState("-hover"),
                     el = self.get("el");
                 el[v ? 'addClass' : 'removeClass'](componentCls);
             },
 
             /**
-             * @protected
+             * @ignore
              */
             _uiSetDisabled: function (v) {
                 var self = this,
-                    componentCls = self.getComponentCssClassWithState("-disabled"),
+                    componentCls = self.getCssClassWithState("-disabled"),
                     el = self.get("el");
                 el[v ? 'addClass' : 'removeClass'](componentCls)
                     .attr("aria-disabled", v);
@@ -1213,69 +1277,55 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
                 }
             },
             /**
-             * @protected
+             * @ignore
              */
             _uiSetActive: function (v) {
                 var self = this,
-                    componentCls = self.getComponentCssClassWithState("-active");
+                    componentCls = self.getCssClassWithState("-active");
                 self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
                     .attr("aria-pressed", !!v);
             },
             /**
-             * @protected
+             * @ignore
              */
             _uiSetFocused: function (v) {
                 var self = this,
                     el = self.get("el"),
-                    componentCls = self.getComponentCssClassWithState("-focused");
+                    componentCls = self.getCssClassWithState("-focused");
                 el[v ? 'addClass' : 'removeClass'](componentCls);
             },
 
             /**
              * Return the dom element into which child component to be rendered.
              * @return {KISSY.NodeList}
+             * @ignore
              */
             getContentElement: function () {
                 return this.get("contentEl") || this.get("el");
             }
 
         }, {//  screen state
-            ATTRS: /**
-             * @lends Component.Render#
-             */
-            {
-                /**
-                 * see {@link Component.Controller#prefixCls}
-                 */
+            ATTRS: {
+
                 prefixCls: {
                     value: "ks-"
                 },
-                /**
-                 * see {@link Component.Controller#focusable}
-                 */
+
                 focusable: {
                     value: true
                 },
-                /**
-                 * see {@link Component.Controller#focused}
-                 */
+
                 focused: {},
-                /**
-                 * see {@link Component.Controller#active}
-                 */
+
                 active: {},
-                /**
-                 * see {@link Component.Controller#disabled}
-                 */
+
                 disabled: {},
-                /**
-                 * see {@link Component.Controller#highlighted}
-                 */
+
                 highlighted: {}
             },
             HTML_PARSER: {
                 disabled: function (el) {
-                    var self = this, componentCls = self.getComponentCssClassWithState("-disabled");
+                    var self = this, componentCls = self.getCssClassWithState("-disabled");
                     return self.get("el").hasClass(componentCls);
                 }
             }
@@ -2254,8 +2304,9 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             },
 
             /**
-             * Get xclass of current component instance.
-             * @cfg {String} xclass
+             * get xclass of current component instance.
+             * @property xclass
+             * @type {String}
              */
             /**
              * @ignore
@@ -2537,10 +2588,9 @@ KISSY.add('component/uibase/box-render', function (S) {
          * 通过 render 来重建原有的内容
          */
         __createDom: function () {
-            var self = this;
+            var self = this, el, contentEl;
             if (!self.get("srcNode")) {
-                var el,
-                    contentEl = self.get("contentEl");
+                contentEl = self.get("contentEl");
 
                 el = $("<" + self.get("elTagName") + ">");
 
@@ -2593,13 +2643,25 @@ KISSY.add('component/uibase/box-render', function (S) {
             }
         },
 
-        _uiSetVisible: function (isVisible) {
-            var el = this.get("el"),
-                visibleMode = this.get("visibleMode");
-            if (visibleMode == "visibility") {
-                el.css("visibility", isVisible ? "visible" : "hidden");
+        _uiSetVisible: function (visible) {
+            var self = this,
+                el = self.get("el"),
+                shownCls = self.getCssClassWithState('-shown'),
+                hiddenCls = self.getCssClassWithState('-hidden'),
+                visibleMode = self.get("visibleMode");
+            if (visible) {
+                el.removeClass(hiddenCls);
+                el.addClass(shownCls);
             } else {
-                el.css("display", isVisible ? "" : "none");
+                el.removeClass(shownCls);
+                el.addClass(hiddenCls);
+            }
+            //return;
+            // !TODO 兼容代码，去除，通过 css 控制隐藏属性
+            if (visibleMode == "visibility") {
+                el.css("visibility", visible ? "visible" : "hidden");
+            } else {
+                el.css("display", visible ? "" : "none");
             }
         },
 
@@ -2760,12 +2822,16 @@ KISSY.add('component/uibase/box', function () {
         },
 
         /**
-         * whether this component is visible.
+         * whether this component is visible after created.
+         * will add css class {prefix}{component}-hidden or {prefix}{component}-shown to component's root el.
+         *
          * Defaults to: true.
+         *
          * @cfg {Boolean} visible
          */
         /**
          * whether this component is visible.
+         * will add css class {prefix}{component}-hidden or {prefix}{component}-shown to component's root el.
          * @type {Boolean}
          * @property visible
          */
@@ -2900,7 +2966,9 @@ KISSY.add("component/uibase/close", function () {
     Close.ATTRS =    {
         /**
          * Whether close button is visible.
+         *
          * Defaults to: true.
+         *
          * @cfg {Boolean} closable
          */
         /**
@@ -2930,8 +2998,9 @@ KISSY.add("component/uibase/close", function () {
 
         /**
          * Whether to destroy or hide current element when click close button.
+         * Can set "destroy" to destroy it when click close button.
          *
-         * Defaults to: "hide". Can set "destroy" to destroy it when click close button.
+         * Defaults to: "hide".
          *
          * @cfg {String} closeAction
          */
@@ -3068,13 +3137,13 @@ KISSY.add("component/uibase/drag", function (S) {
          *      @example
          *      {
          *          proxy:{
-         *              // see {@link KISSY.DD.Proxy}
+         *              // see {@link KISSY.DD.Proxy} config
          *          },
          *          scroll:{
-         *              // see {@link KISSY.DD.Scroll}
+         *              // see {@link KISSY.DD.Scroll} config
          *          },
          *          constrain:{
-         *              // see {@link KISSY.DD.Constrain}
+         *              // see {@link KISSY.DD.Constrain} config
          *          },
          *      }
          */
@@ -3265,7 +3334,7 @@ KISSY.add("component/uibase/mask-render", function (S, UA, Node) {
     }
 
     function initMask(self) {
-        var maskCls = self.get("prefixCls") + "ext-mask " + self.getComponentCssClassWithState('-mask'),
+        var maskCls = self.get("prefixCls") + "ext-mask " + self.getCssClassWithState('-mask'),
             mask = $("<div " +
                 " style='width:" + docWidth() + ";" +
                 "left:0;" +
@@ -3319,6 +3388,29 @@ KISSY.add("component/uibase/mask-render", function (S, UA, Node) {
             }
         },
 
+        __syncUI: function () {
+            var self = this;
+            if (self.get('mask')) {
+                self.ksSetMaskVisible(self.get('visible'), 1);
+            }
+        },
+
+        ksSetMaskVisible: function (shown, hideInline) {
+            var self = this,
+                shownCls = self.getCssClassWithState('-mask-shown'),
+                maskNode = self.get('maskNode'),
+                hiddenCls = self.getCssClassWithState('-mask-hidden');
+            if (shown) {
+                maskNode.removeClass(hiddenCls).addClass(shownCls);
+            } else {
+                maskNode.removeClass(shownCls).addClass(hiddenCls);
+
+            }
+            if (!hideInline) {
+                maskNode.css('visibility', shown ? 'visible' : 'hidden');
+            }
+        },
+
         __destructor: function () {
             var self = this, mask;
             if (mask = self.get("maskNode")) {
@@ -3336,7 +3428,7 @@ KISSY.add("component/uibase/mask-render", function (S, UA, Node) {
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/mask", function (S) {
+KISSY.add("component/uibase/mask", function () {
 
     /**
      * @class KISSY.Component.UIBase.Mask
@@ -3381,13 +3473,17 @@ KISSY.add("component/uibase/mask", function (S) {
     var NONE = 'none',
         effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
 
-    function processMask(mask, el, show) {
+    function processMask(mask, el, show, view) {
+
         var effect = mask.effect || NONE;
 
         if (effect == NONE) {
-            el[show ? 'show' : 'hide']();
+            view.ksSetMaskVisible(show);
             return;
         }
+
+        // no inline style, leave it to anim(fadeIn/Out)
+        view.ksSetMaskVisible(show, 1);
 
         var duration = mask.duration,
             easing = mask.easing,
@@ -3396,6 +3492,8 @@ KISSY.add("component/uibase/mask", function (S) {
 
         // run complete fn to restore window's original height
         el.stop(1, 1);
+
+        el.css('display', show ? 'none' : 'block');
 
         m = effect + effects[effect][index];
 
@@ -3418,7 +3516,7 @@ KISSY.add("component/uibase/mask", function (S) {
                         var elZIndex = parseInt(el.css('z-index')) || 1;
                         maskNode.css('z-index', elZIndex - 1);
                     }
-                    processMask(mask, maskNode, v)
+                    processMask(mask, maskNode, v, view)
                 });
             }
         }
@@ -3575,7 +3673,9 @@ KISSY.add("component/uibase/position", function (S) {
         /**
          * Positionable element is by default visible false.
          * For compatibility in overlay and PopupMenu.
+         *
          * Defaults to: false
+         *
          * @ignore
          */
         visible: {

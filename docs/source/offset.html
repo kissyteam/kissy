@@ -54,7 +54,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
          */
         {
 
-<span id='-method-offset'>            /**
+<span id='KISSY-DOM-method-offset'>            /**
 </span>             * Get the current coordinates of the first element in the set of matched elements, relative to the document.
              * or
              * Set the current coordinates of every element in the set of matched elements, relative to the document.
@@ -86,7 +86,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                 return undefined;
             },
 
-<span id='-method-scrollIntoView'>            /**
+<span id='KISSY-DOM-method-scrollIntoView'>            /**
 </span>             * Makes the first of matched elements visible in the container
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|HTMLElement|HTMLDocument} [container=window] Container element
@@ -217,31 +217,31 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
                     }
                 }
             },
-<span id='-method-docWidth'>            /**
+<span id='KISSY-DOM-method-docWidth'>            /**
 </span>             * Get the width of document
              * @param {window} [win=window] Window to be referred.
              * @method
              */
             docWidth: 0,
-<span id='-method-docHeight'>            /**
+<span id='KISSY-DOM-method-docHeight'>            /**
 </span>             * Get the height of document
              * @param {window} [win=window] Window to be referred.
              * @method
              */
             docHeight: 0,
-<span id='-method-viewportHeight'>            /**
+<span id='KISSY-DOM-method-viewportHeight'>            /**
 </span>             * Get the height of window
              * @param {window} [win=window] Window to be referred.
              * @method
              */
             viewportHeight: 0,
-<span id='-method-viewportWidth'>            /**
+<span id='KISSY-DOM-method-viewportWidth'>            /**
 </span>             * Get the width of document
              * @param {window} [win=window] Window to be referred.
              * @method
              */
             viewportWidth: 0,
-<span id='-method-scrollTop'>            /**
+<span id='KISSY-DOM-method-scrollTop'>            /**
 </span>             * Get the current vertical position of the scroll bar for the first element in the set of matched elements.
              * or
              * Set the current vertical position of the scroll bar for each of the set of matched elements.
@@ -250,7 +250,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
              * @method
              */
             scrollTop: 0,
-<span id='-method-scrollLeft'>            /**
+<span id='KISSY-DOM-method-scrollLeft'>            /**
 </span>             * Get the current horizontal position of the scroll bar for the first element in the set of matched elements.
              * or
              * Set the current horizontal position of the scroll bar for each of the set of matched elements.
@@ -431,10 +431,8 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         var old = getOffset(elem), ret = { }, current, key;
 
         for (key in offset) {
-            if (offset.hasOwnProperty(key)) {
-                current = myParseInt(DOM.css(elem, key), 10) || 0;
-                ret[key] = current + offset[key] - old[key];
-            }
+            current = myParseInt(DOM.css(elem, key), 10) || 0;
+            ret[key] = current + offset[key] - old[key];
         }
         DOM.css(elem, ret);
     }

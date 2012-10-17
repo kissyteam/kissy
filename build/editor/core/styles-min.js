@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:04
+build time: Oct 17 17:29
 */
 KISSY.add("editor/core/styles",function(q,v){function S(a){return!r.attr(a,"_ke_bookmark")}function J(a,e){for(var b in a)"string"==typeof a[b]?a[b]=a[b].replace(T,function(b,a){return e[a]}):J(a[b],e)}function A(a,e){e&&(a=q.clone(a),J(a,e));var b=this.element=this.element=(a.element||"*").toLowerCase();this.type=this.type="#text"==b||U[b]?n.STYLE_BLOCK:K[b]?n.STYLE_OBJECT:n.STYLE_INLINE;this._={definition:a}}function L(a,e){var b=e?this.removeFromRange:this.applyToRange;a.body.focus();for(var c=
 new V(a),d=c.getRanges(),f=0;f<d.length;f++)b.call(this,d[f]);c.selectRanges(d)}function E(a,e,b){var c=a.element;"*"==c&&(c="span");e=new w(e.createElement(c));b&&b._4e_copyAttributes(e);b=a._.definition;a=b.attributes;b=A.getStyleText(b);if(a)for(var d in a)e.attr(d,a[d]);b&&(e[0].style.cssText=b);return e}function W(a){var e=a.createBookmark(j),b=a.createIterator();b.enforceRealBlocks=j;b.enlargeBr=j;for(var c,d=a.document;c=b.getNextParagraph();){var f=E(this,d,c),g=f,f="pre"==g.nodeName,h="pre"==

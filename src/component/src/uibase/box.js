@@ -143,12 +143,16 @@ KISSY.add('component/uibase/box', function () {
         },
 
         /**
-         * whether this component is visible.
+         * whether this component is visible after created.
+         * will add css class {prefix}{component}-hidden or {prefix}{component}-shown to component's root el.
+         *
          * Defaults to: true.
+         *
          * @cfg {Boolean} visible
          */
         /**
          * whether this component is visible.
+         * will add css class {prefix}{component}-hidden or {prefix}{component}-shown to component's root el.
          * @type {Boolean}
          * @property visible
          */

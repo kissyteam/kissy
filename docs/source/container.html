@@ -21,48 +21,22 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;component/container&quot;, function (S, Controller, DelegateChildren, DecorateChildren) {
-<span id=''>    /**
-</span>     * @name Container
-     * @extends Component.Controller
-     * @memberOf Component
-     * @class
+<span id='KISSY-Component-Container'>    /**
+</span>     * @extends KISSY.Component.Controller
+     * @class KISSY.Component.Container
      * Container class. Extend it to acquire the abilities of
-     * delegating events and
-     * decorate from pre-rendered dom
+     * delegating events and decorate from pre-rendered dom
      * for child components.
      */
-    return Controller.extend([DelegateChildren, DecorateChildren],
-<span id='-property-'>        /**
-</span>         * @lends Component.Container
-         */
-        {
-
-
-<span id='-method-'>            /**
-</span>             * Generate child component from root element.
-             * @protected
-             * @method
-             * @name decorateInternal
-             * @memberOf Component.Container#
-             * @param {KISSY.NodeList} element Root element of current component.
-             */
-
-<span id='-method-'>            /**
-</span>             * Get child component which contains current event target node.             *
-             * @protected
-             * @name getOwnerControl
-             * @method
-             * @memberOf Component.Container#
-             * @param {HTMLElement} target Current event target node.
-             */
-        });
+    return Controller.extend([DelegateChildren, DecorateChildren]);
 
 }, {
     requires: ['./controller', './delegate-children', './decorate-children']
 });
 
-<span id='-property-'>/**
-</span> * TODO
+<span id='global-property-'>/**
+</span> * @ignore
+ * TODO
  *  - handleMouseEvents false for container ?
  */</pre>
 </body>

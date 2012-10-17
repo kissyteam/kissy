@@ -83,11 +83,9 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
                 // remove all types of event
                 if (!type) {
                     for (type in events) {
-                        if (events.hasOwnProperty(type)) {
-                            Event.__remove(isNativeTarget,
-                                target, type + groups, originalFn,
-                                originalScope);
-                        }
+                        Event.__remove(isNativeTarget,
+                            target, type + groups, originalFn,
+                            originalScope);
                     }
                     return;
                 }

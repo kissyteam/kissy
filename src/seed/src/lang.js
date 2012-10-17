@@ -654,6 +654,7 @@
              * Call encodeURIComponent to encode a url component
              * @param {String} s part of url to be encoded.
              * @return {String} encoded url part string.
+             * @member KISSY
              */
             urlEncode: function (s) {
                 return encodeURIComponent(String(s));
@@ -664,6 +665,7 @@
              * and replace '+' with space.
              * @param {String} s part of url to be decoded.
              * @return {String} decoded url part string.
+             * @member KISSY
              */
             urlDecode: function (s) {
                 return decodeURIComponent(s.replace(/\+/g, ' '));

@@ -76,11 +76,12 @@ KISSY.add(&quot;component/delegate-children&quot;, function (S, UA) {
             }
         },
 
-<span id='global-method-getOwnerControl'>        /**
-</span>         * Get child component which is receiving event.
+<span id='KISSY-Component-Container-method-getOwnerControl'>        /**
+</span>         * Get child component which contains current event target node.
          * @protected
-         * @param {HTMLElement} target event target.
-         * @return {*}
+         * @member KISSY.Component.Container
+         * @param {HTMLElement} target Current event target node.
+         * @return {KISSY.Component.Controller}
          */
         getOwnerControl: function (target) {
             var self = this,

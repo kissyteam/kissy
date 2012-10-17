@@ -63,32 +63,51 @@ KISSY.add("component/manager", function (S) {
     var componentInstances = {};
 
     /**
-     * @name Manager
-     * @memberOf Component
-     * @namespace
+     * @class KISSY.Component.Manager
+     * @member Component
+     * @singleton
      * Manage component metadata.
      */
-    var Manager = /** @lends Component.Manager */{
+    var Manager =  {
 
         __instances:componentInstances,
 
+        /**
+         * associate id with component
+         * @param {String} id
+         * @param {KISSY.Component.Controller} component
+         */
         addComponent:function (id, component) {
             componentInstances[id] = component;
         },
 
+        /**
+         * remove association id with component
+         * @param {String} id
+         */
         removeComponent:function (id) {
             delete componentInstances[id];
         },
 
-        getComponent:function (id) {
+        /**
+         * get component by id
+         * @param {String} id
+         * @return {KISSY.Component.Controller}
+         */
+        'getComponent':function (id) {
             return componentInstances[id];
         },
 
+        /**
+         * complete css by prefix prefixCls
+         * @return {String}
+         * @method
+         * @param {String} css
+         */
         getCssClassWithPrefix:getCssClassWithPrefix,
         /**
          * Get css class name for this component constructor.
          * @param {Function} constructor Component's constructor.
-         * @type {Function}
          * @return {String}
          * @method
          */
@@ -96,14 +115,12 @@ KISSY.add("component/manager", function (S) {
         /**
          * Get component constructor by css class name.
          * @param {String} classNames Class names separated by space.
-         * @type {Function}
          * @return {Function}
          * @method
          */
         getConstructorByXClass:getConstructorByXClass,
         /**
          * Associate css class with component constructor.
-         * @type {Function}
          * @param {String} className Component's class name.
          * @param {Function} componentConstructor Component's constructor.
          * @method

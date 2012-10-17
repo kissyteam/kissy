@@ -1,18 +1,17 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:05
+build time: Oct 17 19:43
 */
 /**
- * @fileOverview model and control for overlay
+ * @fileOverview controller for overlay
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/base", function (S, Component, OverlayRender) {
 
     var NONE = 'none',
         DURATION = 0.5,
-        effects = {fade: ["Out", "In"], slide: ["Up", "Down"]},
-        displays = ['block', NONE];
+        effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
 
     function getGhost(self) {
         var el = self.get("el"), $ = S.all;
@@ -90,7 +89,6 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
             effectCfg = self.get("effect"),
             effect = effectCfg.effect || NONE,
             target = effectCfg.target;
-
         if (effect == NONE && !target) {
             callback();
             return;
@@ -101,23 +99,25 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
         }
         var duration = effectCfg.duration,
             easing = effectCfg.easing,
-            v = show,
-            index = v ? 1 : 0;
+            index = show ? 1 : 0;
         // 队列中的也要移去
         // run complete fn to restore window's original height
         el.stop(1, 1);
-        var restore = {
+        var originalVisibility = el.css('visibility');
+        el.css({
+            // must show, override box-render _uiSetVisible
             "visibility": "visible",
-            "display": displays[index]
-        };
-        el.css(restore);
+            // fadeIn need display none, fadeOut need display block
+            "display": show ? 'none' : 'block'
+        });
         var m = effect + effects[effect][index];
         el[m](duration, function () {
-            var r2 = {
-                "display": displays[0],
-                "visibility": v ? "visible" : "hidden"
-            };
-            el.css(r2);
+            el.css({
+                // need compute coordinates when show, so do not use display none for hide
+                "display": 'block',
+                // restore to box-render _uiSetVisible
+                "visibility": originalVisibility
+            });
             callback();
         }, easing);
     }

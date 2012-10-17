@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview 数据延迟加载组件
  */
 KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
@@ -32,11 +33,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         return 0;
     }
 
-    /**
-     * 加载图片 src
-     * @static
-     */
-    function loadImgSrc(img, flag) {
+    // 加载图片 src
+    var loadImgSrc = function (img, flag) {
         flag = flag || IMG_SRC_DATA;
         var dataSrc = img.getAttribute(flag);
 
@@ -44,7 +42,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             img.src = dataSrc;
             img.removeAttribute(flag);
         }
-    }
+    };
 
     function removeExisting(newed, exists) {
         var ret = [];
@@ -56,10 +54,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         return ret;
     }
 
-    /**
-     * 从 textarea 中加载数据
-     * @static
-     */
+    // 从 textarea 中加载数据
     function loadAreaData(area, execScript) {
         // 采用隐藏 textarea 但不去除方式，去除会引发 Chrome 下错乱
         area.style.display = NONE;
@@ -70,17 +65,14 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         DOM.html(content, area.value, execScript);
     }
 
-    /**
-     * filter for lazyload textarea
-     */
+    // filter for lazyload textarea
     function filterArea(area) {
         return DOM.hasClass(area, AREA_DATA_CLS);
     }
 
     /**
-     * @name DataLazyload
-     * @class
      * LazyLoad elements which are out of current viewPort.
+     * @class KISSY.DataLazyload
      * @extends KISSY.Base
      */
     function DataLazyload(containers, config) {
@@ -108,92 +100,103 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
         DataLazyload.superclass.constructor.call(self, config);
 
-        /**
-         * 需要延迟下载的图片
-         * @type {Array}
-         * @private
-         */
-        //self._images
 
-        /*
-         * 需要延迟处理的 textarea
-         * @type {Array}
-         * @private
-         */
-        //self._areaes
+        // 需要延迟下载的图片
+        // self._images
 
-        /**
-         * 和延迟项绑定的回调函数
-         * @type {Object}
-         */
-        self._callbacks = {els:[], fns:[]};
+
+        // 需要延迟处理的 textarea
+        // self._areaes
+
+
+        // 和延迟项绑定的回调函数
+        self._callbacks = {els: [], fns: []};
 
         self._init();
     }
 
-    DataLazyload.ATTRS =
-    /**
-     * @lends DataLazyload#
-     */
-    {
-        mod:{
-            value:MANUAL
+    DataLazyload.ATTRS = {
+        /**
+         * Do not use this any more.
+         * @cfg {String} mod
+         * @deprecated
+         */
+        /**
+         * @ignore
+         */
+        mod: {
+            value: MANUAL
         },
         /**
          * Distance outside viewport or specified container to pre load.
-         * @default pre load one screen height and width.
-         * @type {Number|Object}
-         * @example
-         * <code>
-         *  diff : 50 // pre load 50px outside viewport or specified container
-         *  // or more detailed :
-         *  {
-         *    left:20, // pre load 50px outside left edge of viewport or specified container
-         *    right:30, // pre load 50px outside right edge of viewport or specified container
-         *    top:50, // pre load 50px outside top edge of viewport or specified container
-         *    bottom:60 // pre load 50px outside bottom edge of viewport or specified container
-         *  }
-         * </code>
+         * default: pre load one screen height and width.
+         * @cfg {Number|Object} diff
+         *
+         *  for example:
+         *
+         *      diff : 50 // pre load 50px outside viewport or specified container
+         *      // or more detailed :
+         *      diff: {
+         *          left:20, // pre load 50px outside left edge of viewport or specified container
+         *          right:30, // pre load 50px outside right edge of viewport or specified container
+         *          top:50, // pre load 50px outside top edge of viewport or specified container
+         *          bottom:60 // pre load 50px outside bottom edge of viewport or specified container
+         *      }
          */
-        diff:{
-            value:DEFAULT
+        /**
+         * @ignore
+         */
+        diff: {
+            value: DEFAULT
         },
         /**
          * Placeholder img url for lazy loaded _images.
-         * @default empty
-         * @type {String}
+         * default: empty
+         * @cfg {String} placeholder
          */
-        placeholder:{
-            value:NONE
+        /**
+         * @ignore
+         */
+        placeholder: {
+            value: NONE
         },
 
         /**
          * Whether execute script in lazy loaded textarea.
-         * @default true
-         * @type {Boolean}
+         * default: true
+         * @cfg {Boolean} execScript
          */
-        execScript:{
-            value:true
+        /**
+         * @ignore
+         */
+        execScript: {
+            value: true
         },
 
         /**
          * Containers which will be monitor scroll event to lazy load elements within it.
-         * @default [ document ]
-         * @type {HTMLElement[]}
+         * default: [ document ]
+         * @cfg {HTMLElement[]} containers
          */
-        containers:{
-            valueFn:function () {
+        /**
+         * @ignore
+         */
+        containers: {
+            valueFn: function () {
                 return [doc];
             }
         },
 
         /**
          * Whether destroy this component when all lazy loaded elements are loaded.
-         * @default true
-         * @type {Boolean}
+         * default: true
+         * @cfg {Boolean} autoDestroy
          */
-        autoDestroy:{
-            value:true
+        /**
+         * @ignore
+         */
+        autoDestroy: {
+            value: true
         }
     };
 
@@ -209,24 +212,23 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
     S.extend(DataLazyload,
         Base,
-        /**
-         * @lends DataLazyload#
-         */
+
         {
 
             /**
-             * 初始化
+             * @private
              */
-            _init:function () {
+            _init: function () {
                 var self = this;
                 self._filterItems();
                 self._initLoadEvent();
             },
 
             /**
-             * 获取并初始化需要延迟的 _images 和 _areaes
+             * get _images and _areaes which will lazyload.
+             * @private
              */
-            _filterItems:function () {
+            _filterItems: function () {
                 var self = this,
                     containers = self.get("containers"),
                     n, N, imgs, _areaes, img,
@@ -246,8 +248,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
             /**
              * filter for lazyload image
+             * @private
              */
-            _filterImg:function (img) {
+            _filterImg: function (img) {
                 var self = this,
                     dataSrc = img.getAttribute(IMG_SRC_DATA),
                     placeholder = self.get("placeholder"),
@@ -279,14 +282,15 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
 
             /**
-             * 初始化加载事件
+             * attach scroll/resize event
+             * @private
              */
-            _initLoadEvent:function () {
+            _initLoadEvent: function () {
                 var self = this,
                     autoDestroy = self.get("autoDestroy"),
                 // 加载延迟项
                     loadItems = function () {
-                        self._loadItems();
+                        self.loadItems();
                         if (autoDestroy &&
                             self._getItemsLength() === 0) {
                             self.destroy();
@@ -316,9 +320,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             },
 
             /**
-             * 加载延迟项
+             * lazyload all items
              */
-            _loadItems:function () {
+            loadItems: function () {
                 var self = this;
                 self._loadImgs();
                 self._loadAreas();
@@ -326,17 +330,19 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             },
 
             /**
-             * 加载图片
+             * lazyload images
+             * @private
              */
-            _loadImgs:function () {
+            _loadImgs: function () {
                 var self = this;
                 self._images = S.filter(self._images, self._loadImg, self);
             },
 
             /**
-             * 监控滚动，处理图片
+             * check image whether it is inside viewport and load
+             * @private
              */
-            _loadImg:function (img) {
+            _loadImg: function (img) {
                 var self = this;
                 if (self._checkElemInViewport(img)) {
                     loadImgSrc(img);
@@ -347,17 +353,19 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
 
             /**
-             * 加载 textarea 数据
+             * lazyload textareas
+             * @private
              */
-            _loadAreas:function () {
+            _loadAreas: function () {
                 var self = this;
                 self._areaes = S.filter(self._areaes, self._loadArea, self);
             },
 
             /**
-             * 监控滚动，处理 textarea
+             * check textarea whether it is inside viewport and load
+             * @private
              */
-            _loadArea:function (area) {
+            _loadArea: function (area) {
                 var self = this;
                 if (self._checkElemInViewport(area)) {
                     loadAreaData(area, self.get("execScript"));
@@ -367,35 +375,40 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             },
 
             /**
-             * 触发回调
+             * fire callbacks
+             * @private
              */
-            _fireCallbacks:function () {
+            _fireCallbacks: function () {
                 var self = this,
                     callbacks = self._callbacks,
                     els = callbacks.els,
                     fns = callbacks.fns,
-                    i, el, fn, remainEls = [], remainFns = [];
+                    keep = 0,
+                    i, el, fn, remainEls = [],
+                    remainFns = [];
 
                 for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
+                    keep = false;
                     if (self._checkElemInViewport(el)) {
-                        fn.call(el);
-                    } else {
+                        keep = fn.call(el);
+                    }
+                    if (keep === false) {
                         remainEls.push(el);
                         remainFns.push(fn);
                     }
-
                 }
                 callbacks.els = remainEls;
                 callbacks.fns = remainFns;
             },
 
             /**
-             * Register callback function.
-             * When el is in viewport, then fn is called.
+             * Register callback function. When el is in viewport, then fn is called.
              * @param {HTMLElement|String} el html element to be monitored.
-             * @param {Function} fn Callback function to be called when el is in viewport.
+             * @param {function(this: HTMLElement): boolean} fn
+             * Callback function to be called when el is in viewport.
+             * return false to indicate el is actually not in viewport( for example display none element ).
              */
-            addCallback:function (el, fn) {
+            'addCallback': function (el, fn) {
                 var self = this,
                     callbacks = self._callbacks;
                 el = DOM.get(el);
@@ -410,12 +423,12 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             },
 
             /**
-             * Remove a callback function. See {@link DataLazyload#addCallback}
+             * Remove a callback function. See {@link KISSY.DataLazyload#addCallback}
              * @param {HTMLElement|String} el html element to be monitored.
              * @param {Function} [fn] Callback function to be called when el is in viewport.
              *                        If not specified, remove all callbacks associated with el.
              */
-            removeCallback:function (el, fn) {
+            'removeCallback': function (el, fn) {
                 var callbacks = this._callbacks,
                     els = [],
                     fns = [],
@@ -442,7 +455,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              * Add a array of imgs or textareas to be lazy loaded to monitor list.
              * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
              */
-            addElements:function (els) {
+            'addElements': function (els) {
                 if (!S.isArray(els)) {
                     els = [els];
                 }
@@ -466,10 +479,10 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             },
 
             /**
-             * Remove a array of element from monitor list. See {@link DataLazyload#addElements}.
+             * Remove a array of element from monitor list. See {@link KISSY.DataLazyload#addElements}.
              * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
              */
-            removeElements:function (els) {
+            'removeElements': function (els) {
                 if (!S.isArray(els)) {
                     els = [els];
                 }
@@ -490,10 +503,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             },
 
             /**
-             * 获取 c 的有效渲染区域（加上预加载差值）
-             * @protected
+             * get c's bounding area.
+             * @param {window|HTMLElement} c
+             * @private
              */
-            _getBoundingRect:function (c) {
+            _getBoundingRect: function (c) {
                 var vh, vw, left, top;
 
                 if (c !== undefined &&
@@ -535,32 +549,30 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 bottom += diffY1;
 
                 return {
-                    left:left,
-                    top:top,
-                    right:right,
-                    bottom:bottom
+                    left: left,
+                    top: top,
+                    right: right,
+                    bottom: bottom
                 };
             },
 
             /**
-             * 获取当前延迟项的数量
-             * @protected
+             * get num of items waiting to lazyload
+             * @private
              */
-            _getItemsLength:function () {
+            _getItemsLength: function () {
                 var self = this;
                 return self._images.length + self._areaes.length + self._callbacks.els.length;
             },
 
             /**
-             * 判断 textarea 元素是否一部分在可视区域内（容器内并且在窗口 viewport 内）
+             * whether part of elem can be seen by user.
+             * note: it will not handle display none.
              * @private
-             * @param elem
+             * @param {HTMLElement} elem
              */
-            _checkElemInViewport:function (elem) {
-                // 注：elem 可能处于 display: none 状态，DOM.offset(elem).top 返回 0
-                // 这种情况下用 elem.parentNode 的 Y 值来替代
-                elem = DOM.css(elem, DISPLAY) === NONE ? elem.parentNode : elem;
-
+            _checkElemInViewport: function (elem) {
+                // 注：不处理 elem display: none 或处于 display none 元素内的情景
                 var self = this,
                     elemOffset = DOM.offset(elem),
                     inContainer = true,
@@ -571,10 +583,10 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     left = elemOffset.left,
                     top = elemOffset.top,
                     elemRegion = {
-                        left:left,
-                        top:top,
-                        right:left + DOM.outerWidth(elem),
-                        bottom:top + DOM.outerHeight(elem)
+                        left: left,
+                        top: top,
+                        right: left + DOM.outerWidth(elem),
+                        bottom: top + DOM.outerHeight(elem)
                     };
 
                 if (container) {
@@ -591,7 +603,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             /**
              * Destroy this component.Will fire destroy event.
              */
-            destroy:function () {
+            destroy: function () {
                 var self = this, load = self._loadFn;
                 Event.remove(win, SCROLL, load);
                 Event.remove(win, TOUCH_MOVE, load);
@@ -613,6 +625,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
     /**
      * Load lazyload textarea and imgs manually.
+     * @ignore
      * @name loadCustomLazyData
      * @method
      * @memberOf DataLazyload
@@ -665,9 +678,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
     return DataLazyload;
 
-}, { requires:['dom', 'event', 'base'] });
+}, { requires: ['dom', 'event', 'base'] });
 
 /**
+ * @ignore
+ *
  * NOTES:
  *
  * 模式为 auto 时：
@@ -712,15 +727,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
  *     注意：textarea 加载后，会替换掉父容器中的所有内容。
  *  2. 延迟 callback 约定：dataLazyload.addCallback(el, fn) 表示当 el 即将出现时，触发 fn.
  *  3. 所有操作都是最多触发一次，比如 callback. 来回拖动滚动条时，只有 el 第一次出现时会触发 fn 回调。
- */
-
-/**
+ *
  * xTODO:
  *   - [取消] 背景图片的延迟加载（对于 css 里的背景图片和 sprite 很难处理）
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
- */
-
-/**
+ *
  * UPDATE LOG:
  *   - 2012-04-27 yiminghe@gmail.com refactor to extend base, add removeCallback/addElements ...
  *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textaera 可设置高度，宽度

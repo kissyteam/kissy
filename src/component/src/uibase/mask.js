@@ -3,7 +3,7 @@
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/uibase/mask", function (S) {
+KISSY.add("component/uibase/mask", function () {
 
     /**
      * @class KISSY.Component.UIBase.Mask
@@ -48,13 +48,17 @@ KISSY.add("component/uibase/mask", function (S) {
     var NONE = 'none',
         effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
 
-    function processMask(mask, el, show) {
+    function processMask(mask, el, show, view) {
+
         var effect = mask.effect || NONE;
 
         if (effect == NONE) {
-            el[show ? 'show' : 'hide']();
+            view.ksSetMaskVisible(show);
             return;
         }
+
+        // no inline style, leave it to anim(fadeIn/Out)
+        view.ksSetMaskVisible(show, 1);
 
         var duration = mask.duration,
             easing = mask.easing,
@@ -63,6 +67,8 @@ KISSY.add("component/uibase/mask", function (S) {
 
         // run complete fn to restore window's original height
         el.stop(1, 1);
+
+        el.css('display', show ? 'none' : 'block');
 
         m = effect + effects[effect][index];
 
@@ -85,7 +91,7 @@ KISSY.add("component/uibase/mask", function (S) {
                         var elZIndex = parseInt(el.css('z-index')) || 1;
                         maskNode.css('z-index', elZIndex - 1);
                     }
-                    processMask(mask, maskNode, v)
+                    processMask(mask, maskNode, v, view)
                 });
             }
         }

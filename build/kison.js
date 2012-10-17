@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 23:19
+build time: Oct 17 17:29
 */
 /**
  * LALR grammar parser
@@ -1323,7 +1323,11 @@ KISSY.add("kison/utils", function (S) {
             } else {
                 quote = "'";
             }
-            return str.replace(/\\/g, '\\\\').replace(regexp, '\\' + quote);
+            return str.replace(/\\/g, '\\\\')
+                .replace(/\r/g, '\\r')
+                .replace(/\n/g, '\\n')
+                .replace(/\t/g, '\\t')
+                .replace(regexp, '\\' + quote);
         },
 
         serializeObject: function serializeObject(obj, excludeReg) {

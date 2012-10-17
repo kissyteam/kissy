@@ -49,8 +49,6 @@
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
     // include it in the regexp to enforce consistent cross-browser behavior.
         RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
-        encode = encodeURIComponent,
-        decode = decodeURIComponent,
         SEP = '&amp;',
         EQ = '=',
     // [[Class]] -&gt; type pairs
@@ -72,9 +70,9 @@
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
         for (var k in htmlEntities) {
-            if (htmlEntities.hasOwnProperty(k)) {
-                reverseEntities[htmlEntities[k]] = k;
-            }
+
+            reverseEntities[htmlEntities[k]] = k;
+
         }
     })();
 
@@ -248,7 +246,7 @@
                 if (a instanceof Date &amp;&amp; b instanceof Date) {
                     return a.getTime() == b.getTime();
                 }
-                if (S.isString(a) &amp;&amp; S.isString(b)) {
+                if (typeof a == 'string' &amp;&amp; typeof b == 'string') {
                     return (a == b);
                 }
                 if (S.isNumber(a) &amp;&amp; S.isNumber(b)) {
@@ -315,7 +313,7 @@
              * @param {RegExp} [regexp] to match a piece of template string
              */
             substitute: function (str, o, regexp) {
-                if (!S.isString(str)
+                if (typeof str != 'string'
                     || !S.isPlainObject(o)) {
                     return str;
                 }
@@ -496,7 +494,7 @@
                     var len = arr.length,
                         res = new Array(len);
                     for (var i = 0; i &lt; len; i++) {
-                        var el = S.isString(arr) ? arr.charAt(i) : arr[i];
+                        var el = typeof arr == 'string' ? arr.charAt(i) : arr[i];
                         if (el
                             ||
                             //ie&lt;9 in invalid when typeof arr == string
@@ -669,6 +667,27 @@
                 return s.charAt(0).toUpperCase() + s.substring(1);
             },
 
+<span id='KISSY-method-urlEncode'>            /**
+</span>             * Call encodeURIComponent to encode a url component
+             * @param {String} s part of url to be encoded.
+             * @return {String} encoded url part string.
+             * @member KISSY
+             */
+            urlEncode: function (s) {
+                return encodeURIComponent(String(s));
+            },
+
+<span id='KISSY-method-urlDecode'>            /**
+</span>             * Call decodeURIComponent to decode a url component
+             * and replace '+' with space.
+             * @param {String} s part of url to be decoded.
+             * @return {String} decoded url part string.
+             * @member KISSY
+             */
+            urlDecode: function (s) {
+                return decodeURIComponent(s.replace(/\+/g, ' '));
+            },
+
 <span id='KISSY-method-escapeHTML'>            /**
 </span>             * get escaped string from html
              * @see   http://yiminghe.javaeye.com/blog/788929
@@ -725,7 +744,7 @@
                     // || o.nodeName
                     // window
                     || o.alert
-                    || S.isString(o)
+                    || typeof o == 'string'
                     || S.isFunction(o)) {
                     return [o];
                 }
@@ -762,35 +781,36 @@
                 if (S.isUndefined(serializeArray)) {
                     serializeArray = TRUE;
                 }
-                var buf = [], key, i, v, len, val;
+                var buf = [], key, i, v, len, val,
+                    encode = S.urlEncode;
                 for (key in o) {
-                    if (o.hasOwnProperty(key)) {
-                        val = o[key];
-                        key = encode(key);
 
-                        // val is valid non-array value
-                        if (isValidParamValue(val)) {
-                            buf.push(key);
-                            if (val !== undefined) {
-                                buf.push(eq, encode(val + EMPTY));
-                            }
-                            buf.push(sep);
+                    val = o[key];
+                    key = encode(key);
+
+                    // val is valid non-array value
+                    if (isValidParamValue(val)) {
+                        buf.push(key);
+                        if (val !== undefined) {
+                            buf.push(eq, encode(val + EMPTY));
                         }
-                        // val is not empty array
-                        else if (S.isArray(val) &amp;&amp; val.length) {
-                            for (i = 0, len = val.length; i &lt; len; ++i) {
-                                v = val[i];
-                                if (isValidParamValue(v)) {
-                                    buf.push(key, (serializeArray ? encode('[]') : EMPTY));
-                                    if (v !== undefined) {
-                                        buf.push(eq, encode(v + EMPTY));
-                                    }
-                                    buf.push(sep);
-                                }
-                            }
-                        }
-                        // ignore other cases, including empty array, Function, RegExp, Date etc.
+                        buf.push(sep);
                     }
+                    // val is not empty array
+                    else if (S.isArray(val) &amp;&amp; val.length) {
+                        for (i = 0, len = val.length; i &lt; len; ++i) {
+                            v = val[i];
+                            if (isValidParamValue(v)) {
+                                buf.push(key, (serializeArray ? encode('[]') : EMPTY));
+                                if (v !== undefined) {
+                                    buf.push(eq, encode(v + EMPTY));
+                                }
+                                buf.push(sep);
+                            }
+                        }
+                    }
+                    // ignore other cases, including empty array, Function, RegExp, Date etc.
+
                 }
                 buf.pop();
                 return buf.join(EMPTY);
@@ -812,13 +832,14 @@
              * @member KISSY
              */
             unparam: function (str, sep, eq) {
-                if (!S.isString(str) || !(str = S.trim(str))) {
+                if (typeof str != 'string' || !(str = S.trim(str))) {
                     return {};
                 }
                 sep = sep || SEP;
                 eq = eq || EQ;
                 var ret = {},
                     eqIndex,
+                    decode = S.urlDecode,
                     pairs = str.split(sep),
                     key, val,
                     i = 0, len = pairs.length;
@@ -829,6 +850,7 @@
                         key = decode(pairs[i]);
                         val = undefined;
                     } else {
+                        // remember to decode key!
                         key = decode(pairs[i].substring(0, eqIndex));
                         val = pairs[i].substring(eqIndex + 1);
                         try {
@@ -840,7 +862,7 @@
                             key = key.substring(0, key.length - 2);
                         }
                     }
-                    if (hasOwnProperty(ret, key)) {
+                    if (key in ret) {
                         if (S.isArray(ret[key])) {
                             ret[key].push(val);
                         } else {
@@ -884,7 +906,7 @@
                     f,
                     r;
 
-                if (S.isString(fn)) {
+                if (typeof fn == 'string') {
                     m = context[fn];
                 }
 
@@ -1127,12 +1149,12 @@
             }
         } else if (isPlainObject) {
             for (k in input) {
-                if (input.hasOwnProperty(k)) {
-                    if (k !== CLONE_MARKER &amp;&amp;
-                        (!f || (f.call(input, input[k], k, input) !== FALSE))) {
-                        destination[k] = cloneInternal(input[k], f, memory);
-                    }
+
+                if (k !== CLONE_MARKER &amp;&amp;
+                    (!f || (f.call(input, input[k], k, input) !== FALSE))) {
+                    destination[k] = cloneInternal(input[k], f, memory);
                 }
+
             }
         }
 
@@ -1150,30 +1172,30 @@
             return (obj !== null &amp;&amp; obj !== undefined) &amp;&amp; obj[keyName] !== undefined;
         };
         for (var property in b) {
-            if (b.hasOwnProperty(property)) {
-                if (!hasKey(a, property) &amp;&amp; hasKey(b, property)) {
-                    mismatchKeys.push(&quot;expected has key '&quot; + property + &quot;', but missing from actual.&quot;);
-                }
+
+            if (!hasKey(a, property) &amp;&amp; hasKey(b, property)) {
+                mismatchKeys.push(&quot;expected has key '&quot; + property + &quot;', but missing from actual.&quot;);
             }
+
         }
         for (property in a) {
-            if (a.hasOwnProperty(property)) {
-                if (!hasKey(b, property) &amp;&amp; hasKey(a, property)) {
-                    mismatchKeys.push(&quot;expected missing key '&quot; + property + &quot;', but present in actual.&quot;);
-                }
+
+            if (!hasKey(b, property) &amp;&amp; hasKey(a, property)) {
+                mismatchKeys.push(&quot;expected missing key '&quot; + property + &quot;', but present in actual.&quot;);
             }
+
         }
         for (property in b) {
-            if (b.hasOwnProperty(property)) {
-                if (property == COMPARE_MARKER) {
-                    continue;
-                }
-                if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
-                    mismatchValues.push(&quot;'&quot; + property + &quot;' was '&quot; + (b[property] ? (b[property].toString()) : b[property])
-                        + &quot;' in expected, but was '&quot; +
-                        (a[property] ? (a[property].toString()) : a[property]) + &quot;' in actual.&quot;);
-                }
+
+            if (property == COMPARE_MARKER) {
+                continue;
             }
+            if (!S.equals(a[property], b[property], mismatchKeys, mismatchValues)) {
+                mismatchValues.push(&quot;'&quot; + property + &quot;' was '&quot; + (b[property] ? (b[property].toString()) : b[property])
+                    + &quot;' in expected, but was '&quot; +
+                    (a[property] ? (a[property].toString()) : a[property]) + &quot;' in actual.&quot;);
+            }
+
         }
         if (S.isArray(a) &amp;&amp; S.isArray(b) &amp;&amp; a.length != b.length) {
             mismatchValues.push('arrays were not the same length');

@@ -17,7 +17,7 @@ KISSY.add("component/uibase/mask-render", function (S, UA, Node) {
     }
 
     function initMask(self) {
-        var maskCls = self.get("prefixCls") + "ext-mask " + self.getComponentCssClassWithState('-mask'),
+        var maskCls = self.get("prefixCls") + "ext-mask " + self.getCssClassWithState('-mask'),
             mask = $("<div " +
                 " style='width:" + docWidth() + ";" +
                 "left:0;" +
@@ -68,6 +68,29 @@ KISSY.add("component/uibase/mask-render", function (S, UA, Node) {
             var self = this;
             if (self.get('mask')) {
                 self.set('maskNode', initMask(self));
+            }
+        },
+
+        __syncUI: function () {
+            var self = this;
+            if (self.get('mask')) {
+                self.ksSetMaskVisible(self.get('visible'), 1);
+            }
+        },
+
+        ksSetMaskVisible: function (shown, hideInline) {
+            var self = this,
+                shownCls = self.getCssClassWithState('-mask-shown'),
+                maskNode = self.get('maskNode'),
+                hiddenCls = self.getCssClassWithState('-mask-hidden');
+            if (shown) {
+                maskNode.removeClass(hiddenCls).addClass(shownCls);
+            } else {
+                maskNode.removeClass(shownCls).addClass(hiddenCls);
+
+            }
+            if (!hideInline) {
+                maskNode.css('visibility', shown ? 'visible' : 'hidden');
             }
         },
 

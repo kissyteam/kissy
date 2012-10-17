@@ -78,7 +78,7 @@
             },
 
             /**
-             * Evalulates a script in a global context.
+             * Evaluates a script in a global context.
              * @member KISSY
              */
             globalEval: function (data) {

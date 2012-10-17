@@ -7,8 +7,7 @@
 KISSY.add("component/render", function (S, Component, UIBase, Manager) {
 
     /**
-     * @extends Component.UIBase
-     * @class Component.Render
+     * @ignore
      * Base Render class for KISSY Component.
      */
     return UIBase.extend([UIBase.Box.Render],
@@ -18,8 +17,9 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              * Get all css class name to be applied to the root element of this component for given state.
              * the css class names are prefixed with component name.
              * @param {String} [state] This component's state info.
+             * @ignore
              */
-            getComponentCssClassWithState: function (state) {
+            getCssClassWithState: function (state) {
                 var self = this,
                     componentCls = self.get("ksComponentCss");
                 state = state || "";
@@ -31,39 +31,40 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              * @param classes {String} class names without prefixCls. Separated by space.
              * @method
              * @return {String} class name with prefixCls
-             * @private
+             * @ignore
              */
             getCssClassWithPrefix: Manager.getCssClassWithPrefix,
 
             createDom: function () {
                 var self = this;
-                self.get("el").addClass(self.getComponentCssClassWithState());
+                self.get("el").addClass(self.getCssClassWithState());
             },
 
             /**
              * Returns the dom element which is responsible for listening keyboard events.
              * @return {KISSY.NodeList}
+             * @ignore
              */
             getKeyEventTarget: function () {
                 return this.get("el");
             },
 
             /**
-             * @protected
+             * @ignore
              */
             _uiSetHighlighted: function (v) {
                 var self = this,
-                    componentCls = self.getComponentCssClassWithState("-hover"),
+                    componentCls = self.getCssClassWithState("-hover"),
                     el = self.get("el");
                 el[v ? 'addClass' : 'removeClass'](componentCls);
             },
 
             /**
-             * @protected
+             * @ignore
              */
             _uiSetDisabled: function (v) {
                 var self = this,
-                    componentCls = self.getComponentCssClassWithState("-disabled"),
+                    componentCls = self.getCssClassWithState("-disabled"),
                     el = self.get("el");
                 el[v ? 'addClass' : 'removeClass'](componentCls)
                     .attr("aria-disabled", v);
@@ -73,69 +74,55 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
                 }
             },
             /**
-             * @protected
+             * @ignore
              */
             _uiSetActive: function (v) {
                 var self = this,
-                    componentCls = self.getComponentCssClassWithState("-active");
+                    componentCls = self.getCssClassWithState("-active");
                 self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
                     .attr("aria-pressed", !!v);
             },
             /**
-             * @protected
+             * @ignore
              */
             _uiSetFocused: function (v) {
                 var self = this,
                     el = self.get("el"),
-                    componentCls = self.getComponentCssClassWithState("-focused");
+                    componentCls = self.getCssClassWithState("-focused");
                 el[v ? 'addClass' : 'removeClass'](componentCls);
             },
 
             /**
              * Return the dom element into which child component to be rendered.
              * @return {KISSY.NodeList}
+             * @ignore
              */
             getContentElement: function () {
                 return this.get("contentEl") || this.get("el");
             }
 
         }, {//  screen state
-            ATTRS: /**
-             * @lends Component.Render#
-             */
-            {
-                /**
-                 * see {@link Component.Controller#prefixCls}
-                 */
+            ATTRS: {
+
                 prefixCls: {
                     value: "ks-"
                 },
-                /**
-                 * see {@link Component.Controller#focusable}
-                 */
+
                 focusable: {
                     value: true
                 },
-                /**
-                 * see {@link Component.Controller#focused}
-                 */
+
                 focused: {},
-                /**
-                 * see {@link Component.Controller#active}
-                 */
+
                 active: {},
-                /**
-                 * see {@link Component.Controller#disabled}
-                 */
+
                 disabled: {},
-                /**
-                 * see {@link Component.Controller#highlighted}
-                 */
+
                 highlighted: {}
             },
             HTML_PARSER: {
                 disabled: function (el) {
-                    var self = this, componentCls = self.getComponentCssClassWithState("-disabled");
+                    var self = this, componentCls = self.getCssClassWithState("-disabled");
                     return self.get("el").hasClass(componentCls);
                 }
             }

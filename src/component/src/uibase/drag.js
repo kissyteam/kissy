@@ -21,13 +21,13 @@ KISSY.add("component/uibase/drag", function (S) {
          *      @example
          *      {
          *          proxy:{
-         *              // see {@link KISSY.DD.Proxy}
+         *              // see {@link KISSY.DD.Proxy} config
          *          },
          *          scroll:{
-         *              // see {@link KISSY.DD.Scroll}
+         *              // see {@link KISSY.DD.Scroll} config
          *          },
          *          constrain:{
-         *              // see {@link KISSY.DD.Constrain}
+         *              // see {@link KISSY.DD.Constrain} config
          *          },
          *      }
          */

@@ -98,10 +98,9 @@ KISSY.add('component/uibase/box-render', function (S) {
          * 通过 render 来重建原有的内容
          */
         __createDom: function () {
-            var self = this;
+            var self = this, el, contentEl;
             if (!self.get("srcNode")) {
-                var el,
-                    contentEl = self.get("contentEl");
+                contentEl = self.get("contentEl");
 
                 el = $("<" + self.get("elTagName") + ">");
 
@@ -154,13 +153,25 @@ KISSY.add('component/uibase/box-render', function (S) {
             }
         },
 
-        _uiSetVisible: function (isVisible) {
-            var el = this.get("el"),
-                visibleMode = this.get("visibleMode");
-            if (visibleMode == "visibility") {
-                el.css("visibility", isVisible ? "visible" : "hidden");
+        _uiSetVisible: function (visible) {
+            var self = this,
+                el = self.get("el"),
+                shownCls = self.getCssClassWithState('-shown'),
+                hiddenCls = self.getCssClassWithState('-hidden'),
+                visibleMode = self.get("visibleMode");
+            if (visible) {
+                el.removeClass(hiddenCls);
+                el.addClass(shownCls);
             } else {
-                el.css("display", isVisible ? "" : "none");
+                el.removeClass(shownCls);
+                el.addClass(hiddenCls);
+            }
+            //return;
+            // !TODO 兼容代码，去除，通过 css 控制隐藏属性
+            if (visibleMode == "visibility") {
+                el.css("visibility", visible ? "visible" : "hidden");
+            } else {
+                el.css("display", visible ? "" : "none");
             }
         },
 

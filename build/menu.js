@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 16 20:37
+build time: Oct 17 17:29
 */
 /**
  * @fileOverview menu model and controller for kissy,accommodate menu items
@@ -786,14 +786,14 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
         _uiSetChecked: function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getComponentCssClassWithState("-checked");
+                cls = self.getCssClassWithState("-checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
         _uiSetSelected: function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getComponentCssClassWithState("-selected");
+                cls = self.getCssClassWithState("-selected");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 

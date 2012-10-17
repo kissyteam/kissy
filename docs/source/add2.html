@@ -67,7 +67,7 @@
                 }
 
                 // S.add(name[, fn[, config]])
-                if (S.isString(name)) {
+                if (typeof name == 'string') {
 
                     utils.registerModule(runtime, name, fn, config);
 
@@ -168,7 +168,7 @@
         // ie9 or firefox/chrome =&gt; re.src == 'http://localhost/x.js'
         var src = utils.resolveByPage(re.src),
             srcStr = src.toString(),
-            packages = runtime.Env.packages,
+            packages = runtime.config('packages'),
             finalPackagePath,
             p,
             packageBase,
@@ -178,17 +178,17 @@
 
         // 外部模块去除包路径，得到模块名
         for (p in packages) {
-            if (packages.hasOwnProperty(p)) {
-                packageBase = packages[p].getBase();
-                if (S.startsWith(srcStr, packageBase)) {
-                    // longest match
-                    if (packageBase.length &gt; finalPackageLength) {
-                        finalPackageLength = packageBase.length;
-                        finalPackagePath = packageBase;
-                        finalPackageUri = packages[p].getBaseUri();
-                    }
+
+            packageBase = packages[p].getBase();
+            if (S.startsWith(srcStr, packageBase)) {
+                // longest match
+                if (packageBase.length &gt; finalPackageLength) {
+                    finalPackageLength = packageBase.length;
+                    finalPackagePath = packageBase;
+                    finalPackageUri = packages[p].getBaseUri();
                 }
             }
+
         }
         // 注意：模块名不包含后缀名以及参数，所以去除
         // 系统模块去除系统路径

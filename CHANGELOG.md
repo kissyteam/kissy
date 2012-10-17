@@ -84,6 +84,8 @@ History:
  - [!] 所有组件设置 prefixCls 只作用于组件最外层根节点 class
  - [+] Component children 可配置带有 xclass 的组件描述 json 对象
  - [+] Component 可配置 listeners，直接绑定事件
+ - [+] 组件根节点添加 {prefix}{component}-shown/{prefix}{component}-hidden
+ - [+] mask 节点添加 {prefix}{component}-mask-shown/{prefix}{component}-mask-hidden
 
 #### calendar
  - [+] 左莫增强 calendar：新的 ui,增加 destroy 方法
@@ -107,6 +109,7 @@ History:
  - [+] datalazyload 改进, 缓冲检测 scroll 和 resize, 并只加载显示在当前屏幕中的懒加载元素
  - [+] datalazyload 可以监控 div 容器滚动，以及横轴滚动
  - [+] diff 参数可扩充到四个维度
+ - [*] datalazyload addCallback callback 返回 false 时下次仍然检测.
 
 #### switchable
  - [+] switchable 增加 lazyImgAttribute/lazyTextareaClass 解决嵌套 lazyload 问题 #98

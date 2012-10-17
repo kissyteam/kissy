@@ -21,9 +21,9 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;component/base&quot;, function (S, UIBase, Manager) {
-<span id='Component'>    /**
-</span>     * @name Component
-     * @namespace
+<span id='KISSY-Component'>    /**
+</span>     * @class KISSY.Component
+     * @singleton
      * Component infrastructure.
      */
     var Component = {
@@ -31,25 +31,25 @@ KISSY.add(&quot;component/base&quot;, function (S, UIBase, Manager) {
         UIBase:UIBase
     };
 
-<span id='Component-method-create'>    /**
+<span id='KISSY-Component-method-create'>    /**
 </span>     * Create a component instance using json with xclass.
      * @param {Object} component Component's json notation with xclass attribute.
      * @param {String} component.xclass Component to be newed 's xclass.
-     * @param {Controller} self Component From which new component generated will inherit prefixCls
+     * @param {KISSY.Component.Controller} self Component From which new component generated will inherit prefixCls
      * if component 's prefixCls is undefined.
-     * @memberOf Component
-     * @example
-     * &lt;code&gt;
-     *  create({
-     *     xclass:'menu',
-     *     children:[{
-     *        xclass:'menuitem',
-     *        content:&quot;1&quot;
-     *     }]
-     *  })
-     * &lt;/code&gt;
+     * @member KISSY.Component
+     *
+     *  for example:
+     *
+     *      create({
+     *          xclass:'menu',
+     *          children:[{
+     *              xclass:'menuitem',
+     *              content:&quot;1&quot;
+     *          }]
+     *      })
      */
-    function create(component, self) {
+    Component.create = function (component, self) {
         var childConstructor, xclass;
         if (component &amp;&amp; (xclass = component.xclass)) {
             if (self &amp;&amp; !component.prefixCls) {
@@ -62,9 +62,7 @@ KISSY.add(&quot;component/base&quot;, function (S, UIBase, Manager) {
             component = new childConstructor(component);
         }
         return component;
-    }
-
-    Component.create = create;
+    };
 
     return Component;
 }, {

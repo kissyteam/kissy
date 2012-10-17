@@ -89,7 +89,9 @@ KISSY.add("component/uibase/position", function (S) {
         /**
          * Positionable element is by default visible false.
          * For compatibility in overlay and PopupMenu.
+         *
          * Defaults to: false
+         *
          * @ignore
          */
         visible: {

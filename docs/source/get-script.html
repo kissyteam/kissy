@@ -150,8 +150,14 @@
                     end(1);
                 }, timeout * MILLISECONDS_OF_SECOND);
             }
-
-            head.appendChild(node);
+            if (css) {
+                // css order matters
+                // so can not use css in head
+                head.appendChild(node);
+            } else {
+                // can use js in head
+                head.insertBefore(node, head.firstChild);
+            }
             return node;
         }
     });

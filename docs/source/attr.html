@@ -298,7 +298,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
          * @singleton
          */
         {
-<span id='-method-prop'>            /**
+<span id='KISSY-DOM-method-prop'>            /**
 </span>             * Get the value of a property for the first element in the set of matched elements.
              * or
              * Set one or more properties for the set of matched elements.
@@ -341,7 +341,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 return undefined;
             },
 
-<span id='-method-hasProp'>            /**
+<span id='KISSY-DOM-method-hasProp'>            /**
 </span>             * Whether one of the matched elements has specified property name
              * @param {HTMLElement[]|String|HTMLElement} selector 元素
              * @param {String} name The name of property to test
@@ -358,7 +358,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 return false;
             },
 
-<span id='-method-removeProp'>            /**
+<span id='KISSY-DOM-method-removeProp'>            /**
 </span>             * Remove a property for the set of matched elements.
              * @param {HTMLElement[]|String|HTMLElement} selector matched elements
              * @param {String} name The name of the property to remove.
@@ -378,7 +378,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 }
             },
 
-<span id='-method-attr'>            /**
+<span id='KISSY-DOM-method-attr'>            /**
 </span>             * Get the value of an attribute for the first element in the set of matched elements.
              * or
              * Set one or more attributes for the set of matched elements.
@@ -425,9 +425,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 if (S.isPlainObject(name)) {
                     pass = val;
                     for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            DOM.attr(els, k, name[k], pass);
-                        }
+                        DOM.attr(els, k, name[k], pass);
                     }
                     return undefined;
                 }
@@ -502,7 +500,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 return undefined;
             },
 
-<span id='-method-removeAttr'>            /**
+<span id='KISSY-DOM-method-removeAttr'>            /**
 </span>             * Remove an attribute from each element in the set of matched elements.
              * @param {HTMLElement[]|String} selector matched elements
              * @param {String} name An attribute to remove
@@ -524,7 +522,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                 }
             },
 
-<span id='-method-hasAttr'>            /**
+<span id='KISSY-DOM-method-hasAttr'>            /**
 </span>             * Whether one of the matched elements has specified attribute
              * @method
              * @param {HTMLElement[]|String} selector matched elements
@@ -560,7 +558,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
                     return false;
                 },
 
-<span id='-method-val'>            /**
+<span id='KISSY-DOM-method-val'>            /**
 </span>             * Get the current value of the first element in the set of matched elements.
              * or
              * Set the value of each element in the set of matched elements.
@@ -627,7 +625,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
 
             _propHooks: propHooks,
 
-<span id='-method-text'>            /**
+<span id='KISSY-DOM-method-text'>            /**
 </span>             * Get the combined text contents of each element in the set of matched elements, including their descendants.
              * or
              * Set the content of each element in the set of matched elements to the specified text.

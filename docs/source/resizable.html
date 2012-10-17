@@ -182,11 +182,11 @@ KISSY.add(&quot;resizable&quot;, function (S, Node, Base, D, undefined) {
             var self = this,
                 dds = self.dds;
             for (var d in dds) {
-                if (dds.hasOwnProperty(d)) {
-                    dds[d].destroy();
-                    dds[d].get(&quot;node&quot;).remove();
-                    delete dds[d];
-                }
+
+                dds[d].destroy();
+                dds[d].get(&quot;node&quot;).remove();
+                delete dds[d];
+
             }
         }
     }, {

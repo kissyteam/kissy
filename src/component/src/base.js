@@ -5,8 +5,8 @@
  */
 KISSY.add("component/base", function (S, UIBase, Manager) {
     /**
-     * @name Component
-     * @namespace
+     * @class KISSY.Component
+     * @singleton
      * Component infrastructure.
      */
     var Component = {
@@ -18,21 +18,21 @@ KISSY.add("component/base", function (S, UIBase, Manager) {
      * Create a component instance using json with xclass.
      * @param {Object} component Component's json notation with xclass attribute.
      * @param {String} component.xclass Component to be newed 's xclass.
-     * @param {Controller} self Component From which new component generated will inherit prefixCls
+     * @param {KISSY.Component.Controller} self Component From which new component generated will inherit prefixCls
      * if component 's prefixCls is undefined.
-     * @memberOf Component
-     * @example
-     * <code>
-     *  create({
-     *     xclass:'menu',
-     *     children:[{
-     *        xclass:'menuitem',
-     *        content:"1"
-     *     }]
-     *  })
-     * </code>
+     * @member KISSY.Component
+     *
+     *  for example:
+     *
+     *      create({
+     *          xclass:'menu',
+     *          children:[{
+     *              xclass:'menuitem',
+     *              content:"1"
+     *          }]
+     *      })
      */
-    function create(component, self) {
+    Component.create = function (component, self) {
         var childConstructor, xclass;
         if (component && (xclass = component.xclass)) {
             if (self && !component.prefixCls) {
@@ -45,9 +45,7 @@ KISSY.add("component/base", function (S, UIBase, Manager) {
             component = new childConstructor(component);
         }
         return component;
-    }
-
-    Component.create = create;
+    };
 
     return Component;
 }, {

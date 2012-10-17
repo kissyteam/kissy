@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 16 20:36
+build time: Oct 17 17:25
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -134,7 +134,7 @@ KISSY.add("button/buttonRender", function (S, Component) {
         _uiSetChecked:function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getComponentCssClassWithState("-checked");
+                cls = self.getCssClassWithState("-checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
         _uiSetTooltip:function (title) {

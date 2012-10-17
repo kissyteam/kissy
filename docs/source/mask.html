@@ -20,7 +20,7 @@
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;component/uibase/mask&quot;, function () {
+KISSY.add(&quot;component/uibase/mask&quot;, function (S) {
 
 <span id='KISSY-Component-UIBase-Mask'>    /**
 </span>     * @class KISSY.Component.UIBase.Mask
@@ -82,6 +82,7 @@ KISSY.add(&quot;component/uibase/mask&quot;, function () {
         el.stop(1, 1);
 
         m = effect + effects[effect][index];
+
         el[m](duration, null, easing);
     }
 

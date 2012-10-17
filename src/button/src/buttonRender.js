@@ -13,7 +13,7 @@ KISSY.add("button/buttonRender", function (S, Component) {
         _uiSetChecked:function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getComponentCssClassWithState("-checked");
+                cls = self.getCssClassWithState("-checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
         _uiSetTooltip:function (title) {

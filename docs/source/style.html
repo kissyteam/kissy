@@ -183,7 +183,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 return val;
             },
 
-<span id='-method-style'>            /**
+<span id='KISSY-DOM-method-style'>            /**
 </span>             *  Get inline style property from the first element of matched elements
              *  or
              *  Set one or more CSS properties for the set of matched elements.
@@ -197,10 +197,8 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 // supports hash
                 if (S.isPlainObject(name)) {
                     for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            for (i = els.length - 1; i &gt;= 0; i--) {
-                                style(els[i], k, name[k]);
-                            }
+                        for (i = els.length - 1; i &gt;= 0; i--) {
+                            style(els[i], k, name[k]);
                         }
                     }
                     return undefined;
@@ -219,7 +217,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 return undefined;
             },
 
-<span id='-method-css'>            /**
+<span id='KISSY-DOM-method-css'>            /**
 </span>             * Get the computed value of a style property for the first element in the set of matched elements.
              * or
              * Set one or more CSS properties for the set of matched elements.
@@ -231,14 +229,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             css: function (selector, name, val) {
                 var els = DOM.query(selector),
                     elem = els[0],
+                    k,
                     i;
                 // supports hash
                 if (S.isPlainObject(name)) {
-                    for (var k in name) {
-                        if (name.hasOwnProperty(k)) {
-                            for (i = els.length - 1; i &gt;= 0; i--) {
-                                style(els[i], k, name[k]);
-                            }
+                    for (k in name) {
+                        for (i = els.length - 1; i &gt;= 0; i--) {
+                            style(els[i], k, name[k]);
                         }
                     }
                     return undefined;
@@ -268,7 +265,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 return undefined;
             },
 
-<span id='-method-show'>            /**
+<span id='KISSY-DOM-method-show'>            /**
 </span>             * Display the matched elements.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
@@ -288,7 +285,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
             },
 
-<span id='-method-hide'>            /**
+<span id='KISSY-DOM-method-hide'>            /**
 </span>             * Hide the matched elements.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
@@ -306,7 +303,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
             },
 
-<span id='-method-toggle'>            /**
+<span id='KISSY-DOM-method-toggle'>            /**
 </span>             * Display or hide the matched elements.
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
@@ -322,7 +319,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
             },
 
-<span id='-method-addStyleSheet'>            /**
+<span id='KISSY-DOM-method-addStyleSheet'>            /**
 </span>             * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
              * @param {window} [refWin=window] Window which will accept this stylesheet
@@ -331,12 +328,15 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              */
             addStyleSheet: function (refWin, cssText, id) {
                 refWin = refWin || WINDOW;
-                if (S.isString(refWin)) {
+
+                if (typeof refWin == 'string') {
                     id = cssText;
                     cssText = refWin;
                     refWin = WINDOW;
                 }
+
                 refWin = DOM.get(refWin);
+
                 var win = DOM._getWin(refWin),
                     doc = win.document,
                     elem;
@@ -350,19 +350,12 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     return;
                 }
 
-                elem = DOM.create('&lt;style&gt;', { id: id }, doc);
+                elem = DOM.create('&lt;style&gt;' + cssText + '&lt;/style&gt;', { id: id }, doc);
 
-                // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
                 DOM.get('head', doc).appendChild(elem);
-
-                if (elem.styleSheet) { // IE
-                    elem.styleSheet.cssText = cssText;
-                } else { // W3C
-                    elem.appendChild(doc.createTextNode(cssText));
-                }
             },
 
-<span id='-method-unselectable'>            /**
+<span id='KISSY-DOM-method-unselectable'>            /**
 </span>             * Make matched elements unselectable
              * @param {HTMLElement[]|String|HTMLElement} selector  Matched elements.
              */
@@ -397,21 +390,21 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
             },
 
-<span id='-method-innerWidth'>            /**
+<span id='KISSY-DOM-method-innerWidth'>            /**
 </span>             * Get the current computed width for the first element in the set of matched elements, including padding but not border.
              * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @return {Number}
              */
             innerWidth: 0,
-<span id='-method-innerHeight'>            /**
+<span id='KISSY-DOM-method-innerHeight'>            /**
 </span>             * Get the current computed height for the first element in the set of matched elements, including padding but not border.
              * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @return {Number}
              */
             innerHeight: 0,
-<span id='-method-outerWidth'>            /**
+<span id='KISSY-DOM-method-outerWidth'>            /**
 </span>             *  Get the current computed width for the first element in the set of matched elements, including padding and border, and optionally margin.
              * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
@@ -419,7 +412,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * @return {Number}
              */
             outerWidth: 0,
-<span id='-method-outerHeight'>            /**
+<span id='KISSY-DOM-method-outerHeight'>            /**
 </span>             * Get the current computed height for the first element in the set of matched elements, including padding, border, and optionally margin.
              * @method
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
@@ -427,7 +420,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * @return {Number}
              */
             outerHeight: 0,
-<span id='-method-width'>            /**
+<span id='KISSY-DOM-method-width'>            /**
 </span>             * Get the current computed width for the first element in the set of matched elements.
              * or
              * Set the CSS width of each element in the set of matched elements.
@@ -438,7 +431,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * @return {Number|undefined}
              */
             width: 0,
-<span id='-method-height'>            /**
+<span id='KISSY-DOM-method-height'>            /**
 </span>             * Get the current computed height for the first element in the set of matched elements.
              * or
              * Set the CSS height of each element in the set of matched elements.
@@ -545,23 +538,19 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     });
 
     function swap(elem, options, callback) {
-        var old = {};
+        var old = {}, name;
 
         // Remember the old values, and insert the new ones
-        for (var name in options) {
-            if (options.hasOwnProperty(name)) {
-                old[ name ] = elem[STYLE][ name ];
-                elem[STYLE][ name ] = options[ name ];
-            }
+        for (name in options) {
+            old[ name ] = elem[STYLE][ name ];
+            elem[STYLE][ name ] = options[ name ];
         }
 
         callback.call(elem);
 
         // Revert the old values
         for (name in options) {
-            if (options.hasOwnProperty(name)) {
-                elem[STYLE][ name ] = old[ name ];
-            }
+            elem[STYLE][ name ] = old[ name ];
         }
     }
 
@@ -589,6 +578,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             if (val !== undefined) {
                 // ie 无效值报错
                 try {
+                    // EMPTY will unset style!
                     style[name] = val;
                 } catch (e) {
                     S.log('css set error :' + e);
@@ -599,6 +589,9 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
             }
             if (!style.cssText) {
+                // weird for chrome, safari is ok?
+                // https://github.com/kissyteam/kissy/issues/231
+                UA.webkit &amp;&amp; (style = elem.outerHTML);
                 elem.removeAttribute('style');
             }
             return undefined;

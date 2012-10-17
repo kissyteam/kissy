@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 16 22:20
+build time: Oct 17 17:30
 */
 /**
  * @ignore
@@ -83,11 +83,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121016222037' will replace with current timestamp when compressing.
+         * NOTICE: '20121017173021' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121016222037',
+        __BUILD_TIME: '20121017173021',
         /**
          * KISSY Environment.
          * @private
@@ -1118,6 +1118,7 @@ var KISSY = (function (undefined) {
              * Call encodeURIComponent to encode a url component
              * @param {String} s part of url to be encoded.
              * @return {String} encoded url part string.
+             * @member KISSY
              */
             urlEncode: function (s) {
                 return encodeURIComponent(String(s));
@@ -1128,6 +1129,7 @@ var KISSY = (function (undefined) {
              * and replace '+' with space.
              * @param {String} s part of url to be decoded.
              * @return {String} decoded url part string.
+             * @member KISSY
              */
             urlDecode: function (s) {
                 return decodeURIComponent(s.replace(/\+/g, ' '));
@@ -3963,8 +3965,14 @@ var KISSY = (function (undefined) {
                     end(1);
                 }, timeout * MILLISECONDS_OF_SECOND);
             }
-
-            head.appendChild(node);
+            if (css) {
+                // css order matters
+                // so can not use css in head
+                head.appendChild(node);
+            } else {
+                // can use js in head
+                head.insertBefore(node, head.firstChild);
+            }
             return node;
         }
     });
@@ -5269,7 +5277,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121016222037'
+            tag: '20121017173021'
         }, getBaseInfo()));
     }
 
@@ -5361,7 +5369,7 @@ var KISSY = (function (undefined) {
             },
 
             /**
-             * Evalulates a script in a global context.
+             * Evaluates a script in a global context.
              * @member KISSY
              */
             globalEval: function (data) {
@@ -5575,7 +5583,7 @@ KISSY.config('modules', {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:05
+build time: Oct 17 17:30
 */
 /**
  * @ignore
@@ -5966,7 +5974,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:01
+build time: Oct 17 17:26
 */
 /**
  * @ignore
@@ -10510,7 +10518,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:04
+build time: Oct 17 17:29
 */
 /**
  * @ignore
@@ -13249,7 +13257,7 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:04
+build time: Oct 17 17:29
 */
 /**
  * @ignore
@@ -13777,7 +13785,7 @@ KISSY.add("json/json2", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:01
+build time: Oct 17 17:25
 */
 /**
  * @ignore
@@ -15832,7 +15840,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:01
+build time: Oct 17 17:25
 */
 /**
  * @ignore
@@ -15942,7 +15950,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 20:24
+build time: Oct 17 17:25
 */
 /**
  * @ignore
@@ -16571,7 +16579,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:01
+build time: Oct 17 17:25
 */
 /**
  * @ignore
@@ -18107,7 +18115,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:05
+build time: Oct 17 17:29
 */
 /**
  * @ignore

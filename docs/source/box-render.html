@@ -115,10 +115,9 @@ KISSY.add('component/uibase/box-render', function (S) {
          * 通过 render 来重建原有的内容
          */
         __createDom: function () {
-            var self = this;
+            var self = this, el, contentEl;
             if (!self.get(&quot;srcNode&quot;)) {
-                var el,
-                    contentEl = self.get(&quot;contentEl&quot;);
+                contentEl = self.get(&quot;contentEl&quot;);
 
                 el = $(&quot;&lt;&quot; + self.get(&quot;elTagName&quot;) + &quot;&gt;&quot;);
 
@@ -171,13 +170,24 @@ KISSY.add('component/uibase/box-render', function (S) {
             }
         },
 
-        _uiSetVisible: function (isVisible) {
-            var el = this.get(&quot;el&quot;),
-                visibleMode = this.get(&quot;visibleMode&quot;);
-            if (visibleMode == &quot;visibility&quot;) {
-                el.css(&quot;visibility&quot;, isVisible ? &quot;visible&quot; : &quot;hidden&quot;);
+        _uiSetVisible: function (visible) {
+            var self = this,
+                el = self.get(&quot;el&quot;),
+                shownCls = self.getCssClassWithState('-shown'),
+                hiddenCls = self.getCssClassWithState('-hidden'),
+                visibleMode = self.get(&quot;visibleMode&quot;);
+            if (visible) {
+                el.removeClass(hiddenCls);
+                el.addClass(shownCls);
             } else {
-                el.css(&quot;display&quot;, isVisible ? &quot;&quot; : &quot;none&quot;);
+                el.removeClass(shownCls);
+                el.addClass(hiddenCls);
+            }
+            // !TODO 兼容代码，去除，通过 css 控制隐藏属性
+            if (visibleMode == &quot;visibility&quot;) {
+                el.css(&quot;visibility&quot;, visible ? &quot;visible&quot; : &quot;hidden&quot;);
+            } else {
+                el.css(&quot;display&quot;, visible ? &quot;&quot; : &quot;none&quot;);
             }
         },
 

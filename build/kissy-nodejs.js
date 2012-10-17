@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 16 22:20
+build time: Oct 17 17:30
 */
 /**
  * @ignore
@@ -83,11 +83,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121016222037' will replace with current timestamp when compressing.
+         * NOTICE: '20121017173021' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121016222037',
+        __BUILD_TIME: '20121017173021',
         /**
          * KISSY Environment.
          * @private
@@ -1118,6 +1118,7 @@ var KISSY = (function (undefined) {
              * Call encodeURIComponent to encode a url component
              * @param {String} s part of url to be encoded.
              * @return {String} encoded url part string.
+             * @member KISSY
              */
             urlEncode: function (s) {
                 return encodeURIComponent(String(s));
@@ -1128,6 +1129,7 @@ var KISSY = (function (undefined) {
              * and replace '+' with space.
              * @param {String} s part of url to be decoded.
              * @return {String} decoded url part string.
+             * @member KISSY
              */
             urlDecode: function (s) {
                 return decodeURIComponent(s.replace(/\+/g, ' '));
@@ -4579,7 +4581,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121016222037'
+            tag: '20121017173021'
         }, getBaseInfo()));
     }
 
@@ -4671,7 +4673,7 @@ var KISSY = (function (undefined) {
             },
 
             /**
-             * Evalulates a script in a global context.
+             * Evaluates a script in a global context.
              * @member KISSY
              */
             globalEval: function (data) {

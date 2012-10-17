@@ -473,8 +473,9 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             },
 
             /**
-             * Get xclass of current component instance.
-             * @cfg {String} xclass
+             * get xclass of current component instance.
+             * @property xclass
+             * @type {String}
              */
             /**
              * @ignore

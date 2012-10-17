@@ -47,7 +47,7 @@ KISSY.add('node/override', function (S, DOM, Event, NodeList) {
         NLP[insertType] = function (html) {
             var newNode = html, self = this;
             // 创建
-            if (S.isString(newNode)) {
+            if (typeof newNode == 'string') {
                 newNode = DOM.create(newNode);
             }
             if (newNode) {
@@ -61,7 +61,7 @@ KISSY.add('node/override', function (S, DOM, Event, NodeList) {
         var orig = NLP[fixType];
         NLP[fixType] = function (others) {
             var self = this;
-            if (S.isString(others)) {
+            if (typeof others == 'string') {
                 others = NodeList.all(others, self[0].ownerDocument);
             }
             return orig.call(self, others);

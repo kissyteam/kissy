@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:01
+build time: Oct 17 17:25
 */
 KISSY.add("ajax",function(b,g,j){function k(c,f,h,a,e){b.isFunction(f)&&(a=h,h=f,f=i);return j({type:e||"get",url:c,data:f,success:h,dataType:a})}var i=void 0;b.mix(j,{serialize:g.serialize,get:k,post:function(c,f,h,a){b.isFunction(f)&&(a=h,h=f,f=i);return k(c,f,h,a,"post")},jsonp:function(c,f,h){b.isFunction(f)&&(h=f,f=i);return k(c,f,h,"jsonp")},getScript:b.getScript,getJSON:function(c,f,h){b.isFunction(f)&&(h=f,f=i);return k(c,f,h,"json")},upload:function(c,f,h,a,e){b.isFunction(h)&&(e=a,a=h,h=
 i);return j({url:c,type:"post",dataType:e,form:f,data:h,success:a})}});b.mix(b,{Ajax:j,IO:j,ajax:j,io:j,jsonp:j.jsonp});return j},{requires:"ajax/form-serializer,ajax/base,ajax/xhr-transport,ajax/script-transport,ajax/jsonp,ajax/form,ajax/iframe-transport,ajax/methods".split(",")});

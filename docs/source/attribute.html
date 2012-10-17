@@ -28,7 +28,7 @@ KISSY.add('base/attribute', function (S, undefined) {
     var INVALID = Attribute.INVALID;
 
     function normalFn(host, method) {
-        if (S.isString(method)) {
+        if (typeof method == 'string') {
             return host[method];
         }
         return method;
@@ -249,9 +249,7 @@ KISSY.add('base/attribute', function (S, undefined) {
                 a,
                 attrs = getAttrs(self);
             for (a in attrs) {
-                if (attrs.hasOwnProperty(a)) {
-                    o[a] = self.get(a);
-                }
+                o[a] = self.get(a);
             }
             return o;
         },
@@ -304,7 +302,7 @@ KISSY.add('base/attribute', function (S, undefined) {
 </span>         * Checks if the given attribute has been added to the host.
          */
         hasAttr: function (name) {
-            return name &amp;&amp; getAttrs(this).hasOwnProperty(name);
+            return getAttrs(this).hasOwnProperty(name);
         },
 
 <span id='KISSY-Base-Attribute-method-removeAttr'>        /**
@@ -339,12 +337,10 @@ KISSY.add('base/attribute', function (S, undefined) {
                     e,
                     errors = [];
                 for (name in all) {
-                    if (all.hasOwnProperty(name)) {
-                        // bulk validation
-                        // if any one failed,all values are not set
-                        if ((e = validate(self, name, all[name], all)) !== undefined) {
-                            errors.push(e);
-                        }
+                    // bulk validation
+                    // if any one failed,all values are not set
+                    if ((e = validate(self, name, all[name], all)) !== undefined) {
+                        errors.push(e);
                     }
                 }
                 if (errors.length) {
@@ -354,9 +350,7 @@ KISSY.add('base/attribute', function (S, undefined) {
                     return false;
                 }
                 for (name in all) {
-                    if (all.hasOwnProperty(name)) {
-                        setInternal(self, name, all[name], opts, attrs);
-                    }
+                    setInternal(self, name, all[name], opts, attrs);
                 }
                 var attrNames = [],
                     prevVals = [],
@@ -457,6 +451,10 @@ KISSY.add('base/attribute', function (S, undefined) {
                 ret = getter.call(self, ret, name);
             }
 
+            if (!(name in attrVals) &amp;&amp; ret !== undefined) {
+                attrVals[name] = ret;
+            }
+
             if (path) {
                 ret = getValueByPath(ret, path);
             }
@@ -474,7 +472,7 @@ KISSY.add('base/attribute', function (S, undefined) {
         reset: function (name, opts) {
             var self = this;
 
-            if (S.isString(name)) {
+            if (typeof name == 'string') {
                 if (self.hasAttr(name)) {
                     // if attribute does not have default value, then set to undefined
                     return self.set(name, getDefAttrVal(self, name), opts);
@@ -491,9 +489,7 @@ KISSY.add('base/attribute', function (S, undefined) {
 
             // reset all
             for (name in attrs) {
-                if (attrs.hasOwnProperty(name)) {
-                    values[name] = getDefAttrVal(self, name);
-                }
+                values[name] = getDefAttrVal(self, name);
             }
 
             self.set(values, opts);

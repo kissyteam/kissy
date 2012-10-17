@@ -5,10 +5,6 @@
     outline: none;
 }
 
-.ks-overlay-mask {
-    display: none;
-}
-
 .ks-dialog, .ks-popup {
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;

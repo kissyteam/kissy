@@ -57,7 +57,7 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
             if (!dataType.length) {
                 // 获取源数据格式，放在第一个
                 for (type in contents) {
-                    if (contents.hasOwnProperty(type) &amp;&amp; contents[type].test(contentType)) {
+                    if (contents[type].test(contentType)) {
                         if (dataType[0] != type) {
                             dataType.unshift(type);
                         }

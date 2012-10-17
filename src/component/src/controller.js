@@ -57,9 +57,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             v,
             Render = self.get('xrender');
 
-        /**
-         * 将渲染层初始化所需要的属性，直接构造器设置过去
-         */
+        // 将渲染层初始化所需要的属性，直接构造器设置过去
         attrs = self.getAttrs();
 
         // 整理属性，对纯属于 view 的属性，添加 getter setter 直接到 view
@@ -125,18 +123,22 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
     /**
      * Base Controller class for KISSY Component.
      * xclass: 'controller'.
-     * @extends Component.UIBase
-     * @mixins Component.UIBase.Box
-     * @class Component.Controller
+     * @extends KISSY.Component.UIBase
+     * @mixins KISSY.Component.UIBase.Box
+     * @class KISSY.Component.Controller
      */
-    var Controller = UIBase.extend([UIBase.Box],
-        {
+    var Controller = UIBase.extend([UIBase.Box], {
 
+            /**
+             * mark current instance as controller instance.
+             * @type {boolean}
+             * @member KISSY.Component.Controller
+             */
             isController: true,
 
             /**
-             * Get full class name for current component
-             * @param classes {String} class names without prefixCls. Separated by space.
+             * Get full class name for current component.
+             * @param {String} classes class names without prefixCls. Separated by space.
              * @method
              * @protected
              * @return {String} class name with prefixCls
@@ -144,7 +146,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             getCssClassWithPrefix: Manager.getCssClassWithPrefix,
 
             /**
-             * From UIBase, Initialize this component.             *
+             * Initialize this component.             *
              * @protected
              */
             initializer: function () {
@@ -153,7 +155,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             },
 
             /**
-             * From UIBase. Constructor(or get) view object to create ui elements.
+             * Constructor(or get) view object to create ui elements.
              * @protected
              *
              */
@@ -169,7 +171,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             },
 
             /**
-             * From UIBase. Call view object to render ui elements.
+             * Call view object to render ui elements.
              * @protected
              *
              */
@@ -185,7 +187,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 }
             },
 
-            _uiSetFocusable: function (focusable) {
+            '_uiSetFocusable': function (focusable) {
                 var self = this,
                     t,
                     el = self.getKeyEventTarget();
@@ -211,7 +213,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 }
             },
 
-            _uiSetHandleMouseEvents: function (handleMouseEvents) {
+            '_uiSetHandleMouseEvents': function (handleMouseEvents) {
                 var self = this, el = self.get("el"), t;
                 if (handleMouseEvents) {
                     el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
@@ -225,40 +227,42 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                         el.on("dblclick", wrapBehavior(self, "handleDblClick"));
                     }
                 } else {
-                    t = getWrapBehavior(self, "handleMouseEnter") &&
+                    (t = getWrapBehavior(self, "handleMouseEnter")) &&
                         el.detach("mouseenter", t);
-                    t = getWrapBehavior(self, "handleMouseLeave") &&
+                    (t = getWrapBehavior(self, "handleMouseLeave")) &&
                         el.detach("mouseleave", t);
-                    t = getWrapBehavior(self, "handleContextMenu") &&
+                    (t = getWrapBehavior(self, "handleContextMenu")) &&
                         el.detach("contextmenu", t);
-                    t = getWrapBehavior(self, "handleMouseDown") &&
+                    (t = getWrapBehavior(self, "handleMouseDown")) &&
                         el.detach("mousedown", t);
-                    t = getWrapBehavior(self, "handleMouseUp") &&
+                    (t = getWrapBehavior(self, "handleMouseUp")) &&
                         el.detach("mouseup", t);
                     if (ie && ie < 9) {
-                        t = getWrapBehavior(self, "handleDblClick") &&
+                        (t = getWrapBehavior(self, "handleDblClick")) &&
                             el.detach("dblclick", t);
                     }
                 }
             },
 
-            _uiSetFocused: function (v) {
+            '_uiSetFocused': function (v) {
                 if (v) {
                     this.getKeyEventTarget()[0].focus();
                 }
             },
 
             /**
-             * 子组件将要渲染到的节点，在 render 类上覆盖对应方法
-             * @ignore
+             * child component's render container.
+             * @protected
+             * @return {KISSY.NodeList}
              */
             getContentElement: function () {
                 return this.get('view').getContentElement();
             },
 
             /**
-             * 焦点所在元素即键盘事件处理元素，在 render 类上覆盖对应方法
-             * @ignore
+             * focusable element of component.
+             * @protected
+             * @return {KISSY.NodeList}
              */
             getKeyEventTarget: function () {
                 return this.get('view').getKeyEventTarget();
@@ -267,7 +271,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Add the specified component as a child of current component
              * at the given 0-based index.
-             * @param {Component.Controller|Object} c
+             * @param {KISSY.Component.Controller|Object} c
              * Child component instance to be added
              * or
              * Object describe child component
@@ -275,6 +279,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * @param {Number} [index]  0-based index at which
              * the new child component is to be inserted;
              * If not specified , the new child component will be inserted at last position.
+             * @return {KISSY.Component.Controller} this
              */
             addChild: function (c, index) {
                 var self = this,
@@ -298,15 +303,15 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Removed the given child from this component,and returns it.
              *
-             * If destroy is true, calls {@link Component.UIBase.#destroy} on the removed child component,
+             * If destroy is true, calls {@link KISSY.Component.UIBase#destroy} on the removed child component,
              * and subsequently detaches the child's DOM from the document.
              * Otherwise it is the caller's responsibility to
              * clean up the child component's DOM.
              *
-             * @param {Component.Controller} c The child component to be removed.
+             * @param {KISSY.Component.Controller} c The child component to be removed.
              * @param {Boolean} [destroy=false] If true,
-             * calls {@link Component.UIBase.#destroy} on the removed child component.
-             * @return {Component.Controller} The removed component.
+             * calls {@link KISSY.Component.UIBase#destroy} on the removed child component.
+             * @return {KISSY.Component.Controller} The removed component.
              */
             removeChild: function (c, destroy) {
                 var self = this,
@@ -317,17 +322,18 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 }
                 if (destroy &&
                     // c is still json
-                    c.destroy) {
-                    c.destroy();
+                    c['destroy']) {
+                    c['destroy']();
                 }
                 return c;
             },
 
             /**
              * Removes every child component attached to current component.
-             * @see Component.Controller#removeChild
+             * see {@link KISSY.Component.Controller#removeChild}
              * @param {Boolean} [destroy] If true,
-             * calls {@link Component.UIBase.#destroy} on the removed child component.
+             * calls {@link KISSY.Component.UIBase#destroy} on the removed child component.
+             * @return {KISSY.Component.Controller} this
              */
             removeChildren: function (destroy) {
                 var self = this,
@@ -336,12 +342,13 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 for (i = 0; i < t.length; i++) {
                     self.removeChild(t[i], destroy);
                 }
+                return self;
             },
 
             /**
              * Returns the child at the given index, or null if the index is out of bounds.
              * @param {Number} index 0-based index.
-             * @return {Component.Controller} The child at the given index; null if none.
+             * @return {KISSY.Component.Controller} The child at the given index; null if none.
              */
             getChildAt: function (index) {
                 var children = this.get("children");
@@ -351,9 +358,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Hack click in ie<9 by handling dblclick events.
              * By default, this performs its associated action by calling
-             * {@link Component.Controller#performActionInternal}.
+             * {@link KISSY.Component.Controller#performActionInternal}.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleDblClick: function (ev) {
                 this.performActionInternal(ev);
@@ -362,7 +369,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Called by it's container component to dispatch mouseenter event.
              * @private
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleMouseOver: function (ev) {
                 var self = this,
@@ -375,7 +382,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Called by it's container component to dispatch mouseleave event.
              * @private
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleMouseOut: function (ev) {
                 var self = this,
@@ -388,7 +395,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleMouseEnter: function (ev) {
                 this.set("highlighted", !!ev);
@@ -397,7 +404,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handle mouseleave events. If the component is not disabled, de-highlights it.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleMouseLeave: function (ev) {
                 var self = this;
@@ -411,7 +418,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * If the component is focusable, then focus it,
              * else prevent it from receiving keyboard focus.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleMouseDown: function (ev) {
                 var self = this,
@@ -443,9 +450,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles mouseup events.
              * If this component is not disabled, performs its associated action by calling
-             * {@link Component.Controller#performActionInternal}, then deactivates it.
+             * {@link KISSY.Component.Controller#performActionInternal}, then deactivates it.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleMouseUp: function (ev) {
                 var self = this;
@@ -459,7 +466,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles context menu.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleContextMenu: function (ev) {
             },
@@ -467,7 +474,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles focus events. Style focused class.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleFocus: function (ev) {
                 this.set("focused", !!ev);
@@ -477,7 +484,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles blur events. Remove focused class.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleBlur: function (ev) {
                 this.set("focused", !ev);
@@ -485,9 +492,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             },
 
             /**
-             * Handle enter keydown event to {@link Component.Controller#performActionInternal}.
+             * Handle enter keydown event to {@link KISSY.Component.Controller#performActionInternal}.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleKeyEventInternal: function (ev) {
                 if (ev.keyCode == Event.KeyCodes.ENTER) {
@@ -497,9 +504,9 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
             /**
              * Handle keydown events.
-             * If the component is not disabled, call {@link Component.Controller#handleKeyEventInternal}
+             * If the component is not disabled, call {@link KISSY.Component.Controller#handleKeyEventInternal}
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             handleKeydown: function (ev) {
                 var self = this;
@@ -512,7 +519,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Performs the appropriate action when this component is activated by the user.
              * @protected
-             * @param {Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.Object} ev DOM event to handle.
              */
             performActionInternal: function (ev) {
             },
@@ -535,9 +542,14 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * Enables or disables mouse event handling for the component.
                  * Containers may set this attribute to disable mouse event handling
                  * in their child component.
-                 * @default true.
-                 * @type {Boolean}
+                 *
+                 * Defaults to: true.
+                 *
+                 * @cfg {Boolean} handleMouseEvents
                  * @protected
+                 */
+                /**
+                 * @ignore
                  */
                 handleMouseEvents: {
                     value: true
@@ -545,9 +557,14 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Whether this component can get focus.
-                 * @default true.
+                 *
+                 * Defaults to: true.
+                 *
                  * @protected
-                 * @type {Boolean}
+                 * @cfg {Boolean} focusable
+                 */
+                /**
+                 * @ignore
                  */
                 focusable: {
                     value: true,
@@ -558,13 +575,11 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                  * 1. Whether allow select this component's text.<br/>
                  * 2. Whether not to lose last component's focus if click current one (set false).
                  *
-                 * Defaults to: false.
-                 * @type {Boolean}
-                 * @property allowTextSelection
+                 * Defaults to: false
+                 *
+                 * @cfg {Boolean} allowTextSelection
                  * @protected
                  */
-
-
                 /**
                  * @ignore
                  */
@@ -576,9 +591,14 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Whether this component can be activated.
-                 * @default true.
-                 * @type {Boolean}
+                 *
+                 * Defaults to: true.
+                 *
+                 * @cfg {Boolean} activeable
                  * @protected
+                 */
+                /**
+                 * @ignore
                  */
                 activeable: {
                     value: true
@@ -587,6 +607,14 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Whether this component has focus.
                  * @type {Boolean}
+                 * @property focused
+                 */
+                /**
+                 * Whether this component has focus on initialization.
+                 * @cfg {Boolean} focused
+                 */
+                /**
+                 * @ignore
                  */
                 focused: {
                     view: 1
@@ -595,6 +623,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Whether this component is activated.
                  * @type {Boolean}
+                 * @property active
+                 */
+                /**
+                 * @ignore
                  */
                 active: {
                     view: 1
@@ -603,6 +635,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Whether this component is highlighted.
                  * @type {Boolean}
+                 * @property highlighted
+                 */
+                /**
+                 * @ignore
                  */
                 highlighted: {
                     view: 1
@@ -610,7 +646,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * Array of child components
-                 * @type {Component.Controller[]}
+                 * @cfg {KISSY.Component.Controller[]} children
+                 */
+                /**
+                 * @ignore
                  */
                 children: {
                     value: []
@@ -618,7 +657,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * This component's prefix css class.
-                 * @type {String}
+                 * @cfg {String} prefixCls
+                 */
+                /**
+                 * @ignore
                  */
                 prefixCls: {
                     value: 'ks-', // box srcNode need
@@ -627,7 +669,15 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
 
                 /**
                  * This component's parent component.
-                 * @type {Component.Controller}
+                 * @type {KISSY.Component.Controller}
+                 * @property parent
+                 */
+                /**
+                 * This component's parent component.
+                 * @cfg {KISSY.Component.Controller} parent
+                 */
+                /**
+                 * @ignore
                  */
                 parent: {
                     setter: function (p) {
@@ -639,6 +689,14 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Whether this component is disabled.
                  * @type {Boolean}
+                 * @property disabled
+                 */
+                /**
+                 * Whether this component is disabled.
+                 * @cfg {Boolean} disabled
+                 */
+                /**
+                 * @ignore
                  */
                 disabled: {
                     view: 1
@@ -647,7 +705,10 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 /**
                  * Render class.
                  * @protected
-                 * @type {Component.Render}
+                 * @cfg {*} xrender
+                 */
+                /**
+                 * @ignore
                  */
                 xrender: {
                     value: Render

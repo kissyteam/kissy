@@ -29,7 +29,6 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             return S.require(selector);
         },
         isArray = S.isArray,
-        isString = S.isString,
         makeArray = S.makeArray,
         isNodeList = DOM._isNodeList,
         getNodeName = DOM.nodeName,
@@ -64,7 +63,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         var ret,
             i,
             simpleContext,
-            isSelectorString = isString(selector),
+            isSelectorString = typeof selector == 'string',
         // optimize common usage
             contexts = (context === undefined &amp;&amp; (simpleContext = 1)) ?
                 [doc] :
@@ -139,7 +138,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
     function queryByContexts(selector, context) {
         var ret = [],
-            isSelectorString = isString(selector);
+            isSelectorString = typeof selector == 'string';
         if (isSelectorString &amp;&amp; selector.match(REG_QUERY) ||
             !isSelectorString) {
             // 简单选择器自己处理
@@ -231,7 +230,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
     // 最简单情况了，单个选择器部分，单个上下文
     function queryBySimple(selector, context) {
         var ret,
-            isSelectorString = isString(selector);
+            isSelectorString = typeof selector == 'string';
         if (isSelectorString) {
             ret = quickFindBySelectorStr(selector, context) || [];
         }
@@ -478,7 +477,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
          */
         {
 
-<span id='-method-query'>            /**
+<span id='KISSY-DOM-method-query'>            /**
 </span>             * Accepts a string containing a CSS selector which is then used to match a set of elements.
              * @param {String|HTMLElement[]} selector
              * A string containing a selector expression.
@@ -490,7 +489,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
              */
             query: query,
 
-<span id='-method-get'>            /**
+<span id='KISSY-DOM-method-get'>            /**
 </span>             * Accepts a string containing a CSS selector which is then used to match a set of elements.
              * @param {String|HTMLElement[]} selector
              * A string containing a selector expression.
@@ -513,7 +512,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
              */
             unique: unique,
 
-<span id='-method-filter'>            /**
+<span id='KISSY-DOM-method-filter'>            /**
 </span>             * Reduce the set of matched elements to those that match the selector or pass the function's test.
              * @param {String|HTMLElement[]} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
@@ -531,7 +530,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                     ret = [];
 
                 // 默认仅支持最简单的 tag.cls 或 #id 形式
-                if (isString(filter) &amp;&amp;
+                if (typeof filter == 'string'&amp;&amp;
                     (filter = trim(filter)) &amp;&amp;
                     (match = REG_QUERY.exec(filter))) {
                     id = match[1];
@@ -575,7 +574,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                 return ret;
             },
 
-<span id='-method-test'>            /**
+<span id='KISSY-DOM-method-test'>            /**
 </span>             * Returns true if the matched element(s) pass the filter test
              * @param {String|HTMLElement[]} selector Matched elements
              * @param {String|Function} filter Selector string or filter function

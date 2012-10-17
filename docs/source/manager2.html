@@ -79,48 +79,65 @@ KISSY.add(&quot;component/manager&quot;, function (S) {
 
     var componentInstances = {};
 
-<span id='Manager'>    /**
-</span>     * @name Manager
-     * @memberOf Component
-     * @namespace
+<span id='KISSY-Component-Manager'>    /**
+</span>     * @class KISSY.Component.Manager
+     * @member Component
+     * @singleton
      * Manage component metadata.
      */
-<span id='Manager-property-'>    var Manager = /** @lends Component.Manager */{
-</span>
+    var Manager =  {
+
         __instances:componentInstances,
 
+<span id='KISSY-Component-Manager-method-addComponent'>        /**
+</span>         * associate id with component
+         * @param {String} id
+         * @param {KISSY.Component.Controller} component
+         */
         addComponent:function (id, component) {
             componentInstances[id] = component;
         },
 
+<span id='KISSY-Component-Manager-method-removeComponent'>        /**
+</span>         * remove association id with component
+         * @param {String} id
+         */
         removeComponent:function (id) {
             delete componentInstances[id];
         },
 
-        getComponent:function (id) {
+<span id='KISSY-Component-Manager-method-getComponent'>        /**
+</span>         * get component by id
+         * @param {String} id
+         * @return {KISSY.Component.Controller}
+         */
+        'getComponent':function (id) {
             return componentInstances[id];
         },
 
+<span id='KISSY-Component-Manager-method-getCssClassWithPrefix'>        /**
+</span>         * complete css by prefix prefixCls
+         * @return {String}
+         * @method
+         * @param {String} css
+         */
         getCssClassWithPrefix:getCssClassWithPrefix,
-<span id='Manager-method-getXClassByConstructor'>        /**
+<span id='KISSY-Component-Manager-method-getXClassByConstructor'>        /**
 </span>         * Get css class name for this component constructor.
          * @param {Function} constructor Component's constructor.
-         * @type {Function}
          * @return {String}
          * @method
          */
         getXClassByConstructor:getXClassByConstructor,
-<span id='Manager-method-getConstructorByXClass'>        /**
+<span id='KISSY-Component-Manager-method-getConstructorByXClass'>        /**
 </span>         * Get component constructor by css class name.
          * @param {String} classNames Class names separated by space.
-         * @type {Function}
          * @return {Function}
          * @method
          */
         getConstructorByXClass:getConstructorByXClass,
-<span id='Manager-method-setConstructorByXClass'>        /**
+<span id='KISSY-Component-Manager-method-setConstructorByXClass'>        /**
 </span>         * Associate css class with component constructor.
-         * @type {Function}
          * @param {String} className Component's class name.
          * @param {Function} componentConstructor Component's constructor.
          * @method

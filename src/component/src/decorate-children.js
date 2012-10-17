@@ -11,7 +11,13 @@ KISSY.add("component/decorate-children", function (S, Manager) {
     }
 
     S.augment(DecorateChildren, {
-        decorateInternal:function (el) {
+        /**
+         * Generate child component from root element.
+         * @protected
+         * @member KISSY.Component.Container
+         * @param {KISSY.NodeList} el Root element of current component.
+         */
+        decorateInternal: function (el) {
             var self = this;
             // 不用 setInternal , 通知 view 更新
             self.set("el", el);
@@ -20,10 +26,11 @@ KISSY.add("component/decorate-children", function (S, Manager) {
 
         /**
          * Get component's constructor from KISSY Node.
+         * @member KISSY.Component.Container
          * @protected
          * @param {KISSY.NodeList} childNode Child component's root node.
          */
-        findUIConstructorByNode:function (childNode, ignoreError) {
+        findUIConstructorByNode: function (childNode, ignoreError) {
             var self = this,
                 cls = childNode.attr("class") || "",
                 prefixCls = self.get("prefixCls");
@@ -38,16 +45,21 @@ KISSY.add("component/decorate-children", function (S, Manager) {
         },
 
         // 生成一个组件
-        decorateChildrenInternal:function (UI, c) {
+        decorateChildrenInternal: function (UI, c) {
             var self = this;
             self.addChild(new UI({
-                srcNode:c,
-                prefixCls:self.get("prefixCls")
+                srcNode: c,
+                prefixCls: self.get("prefixCls")
             }));
         },
 
-        // container 需要在装饰时对儿子特殊处理，递归装饰
-        decorateChildren:function (el) {
+        /**
+         * decorate child element from parent component's root element.
+         * @private
+         * @member KISSY.Component.Container
+         * @param {KISSY.NodeList} el component's root element.
+         */
+        decorateChildren: function (el) {
             var self = this,
                 children = el.children();
             children.each(function (c) {
@@ -60,5 +72,5 @@ KISSY.add("component/decorate-children", function (S, Manager) {
     return DecorateChildren;
 
 }, {
-    requires:['./manager']
+    requires: ['./manager']
 });

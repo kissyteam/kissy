@@ -262,31 +262,22 @@
 
     function getPackage(self, mod) {
         var modName = mod.name,
-            Env = self.Env,
-            packages = Env.packages || {},
+            Config = self.Config,
+            packages = Config.packages || {},
             pName = '',
-            p,
-            packageDesc;
+            p;
 
         for (p in packages) {
-            if (packages.hasOwnProperty(p)) {
-                // longest match
-                if (S.startsWith(modName, p) &amp;&amp;
-                    p.length &gt; pName.length) {
-                    pName = p;
-                }
+
+            // longest match
+            if (S.startsWith(modName, p) &amp;&amp;
+                p.length &gt; pName.length) {
+                pName = p;
             }
+
         }
 
-        packageDesc = packages[pName] ||
-            Env.defaultPackage ||
-            (Env.defaultPackage = new Loader.Package({
-                runtime: self,
-                // need packageName as key
-                name: ''
-            }));
-
-        return packageDesc;
+        return packages[pName];
     }
 
 

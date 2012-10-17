@@ -25,7 +25,6 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         var doc = S.Env.host.document,
             NodeType = DOM.NodeType,
             ie = UA['ie'],
-            isString = S.isString,
             DIV = 'div',
             PARENT_NODE = 'parentNode',
             DEFAULT_DIV = doc &amp;&amp; doc.createElement(DIV),
@@ -59,7 +58,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
              */
             {
 
-<span id='-method-create'>                /**
+<span id='KISSY-DOM-method-create'>                /**
 </span>                 * Creates DOM elements on the fly from the provided string of raw HTML.
                  * @param {String} html A string of HTML to create on the fly. Note that this parses HTML, not XML.
                  * @param {Object} [props] An map of attributes on the newly-created element.
@@ -79,7 +78,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
 
 
-                    if (!isString(html)) {
+                    if (typeof html != 'string') {
                         return ret;
                     }
 
@@ -148,7 +147,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                 },
 
-<span id='-method-html'>                /**
+<span id='KISSY-DOM-method-html'>                /**
 </span>                 * Get the HTML contents of the first element in the set of matched elements.
                  * or
                  * Set the HTML contents of each element in the set of matched elements.
@@ -209,7 +208,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                 },
 
-<span id='-method-outerHTML'>                /**
+<span id='KISSY-DOM-method-outerHTML'>                /**
 </span>                 * Get the outerHTML of the first element in the set of matched elements.
                  * or
                  * Set the outerHTML of each element in the set of matched elements.
@@ -255,7 +254,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     }
                 },
 
-<span id='-method-remove'>                /**
+<span id='KISSY-DOM-method-remove'>                /**
 </span>                 * Remove the set of matched elements from the DOM.
                  * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  * @param {Boolean} [keepData=false] whether keep bound events and jQuery data associated with the elements from removed.
@@ -341,7 +340,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
                     return clone;
                 },
 
-<span id='-method-empty'>                /**
+<span id='KISSY-DOM-method-empty'>                /**
 </span>                 * Remove(include data and event handlers) all child nodes of the set of matched elements from the DOM.
                  * @param {HTMLElement|String|HTMLElement[]} selector matched elements
                  */

@@ -23,64 +23,65 @@
  */
 KISSY.add(&quot;component/render&quot;, function (S, Component, UIBase, Manager) {
 
-<span id='Component-Render'>    /**
-</span>     * @extends Component.UIBase
-     * @class Component.Render
+<span id='global-property-'>    /**
+</span>     * @ignore
      * Base Render class for KISSY Component.
      */
     return UIBase.extend([UIBase.Box.Render],
         {
 
-<span id='Component-Render-method-getComponentCssClassWithState'>            /**
+<span id='global-method-getCssClassWithState'>            /**
 </span>             * Get all css class name to be applied to the root element of this component for given state.
              * the css class names are prefixed with component name.
              * @param {String} [state] This component's state info.
+             * @ignore
              */
-            getComponentCssClassWithState: function (state) {
+            getCssClassWithState: function (state) {
                 var self = this,
                     componentCls = self.get(&quot;ksComponentCss&quot;);
                 state = state || &quot;&quot;;
                 return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + &quot; &quot;) + state);
             },
 
-<span id='Component-Render-method-getCssClassWithPrefix'>            /**
+<span id='global-method-getCssClassWithPrefix'>            /**
 </span>             * Get full class name (with prefix) for current component
              * @param classes {String} class names without prefixCls. Separated by space.
              * @method
              * @return {String} class name with prefixCls
-             * @private
+             * @ignore
              */
             getCssClassWithPrefix: Manager.getCssClassWithPrefix,
 
             createDom: function () {
                 var self = this;
-                self.get(&quot;el&quot;).addClass(self.getComponentCssClassWithState());
+                self.get(&quot;el&quot;).addClass(self.getCssClassWithState());
             },
 
-<span id='Component-Render-method-getKeyEventTarget'>            /**
+<span id='global-method-getKeyEventTarget'>            /**
 </span>             * Returns the dom element which is responsible for listening keyboard events.
              * @return {KISSY.NodeList}
+             * @ignore
              */
             getKeyEventTarget: function () {
                 return this.get(&quot;el&quot;);
             },
 
-<span id='Component-Render-method-_uiSetHighlighted'>            /**
-</span>             * @protected
+<span id='global-method-_uiSetHighlighted'>            /**
+</span>             * @ignore
              */
             _uiSetHighlighted: function (v) {
                 var self = this,
-                    componentCls = self.getComponentCssClassWithState(&quot;-hover&quot;),
+                    componentCls = self.getCssClassWithState(&quot;-hover&quot;),
                     el = self.get(&quot;el&quot;);
                 el[v ? 'addClass' : 'removeClass'](componentCls);
             },
 
-<span id='Component-Render-method-_uiSetDisabled'>            /**
-</span>             * @protected
+<span id='global-method-_uiSetDisabled'>            /**
+</span>             * @ignore
              */
             _uiSetDisabled: function (v) {
                 var self = this,
-                    componentCls = self.getComponentCssClassWithState(&quot;-disabled&quot;),
+                    componentCls = self.getCssClassWithState(&quot;-disabled&quot;),
                     el = self.get(&quot;el&quot;);
                 el[v ? 'addClass' : 'removeClass'](componentCls)
                     .attr(&quot;aria-disabled&quot;, v);
@@ -89,70 +90,56 @@ KISSY.add(&quot;component/render&quot;, function (S, Component, UIBase, Manager)
                     self.getKeyEventTarget().attr(&quot;tabIndex&quot;, v ? -1 : 0);
                 }
             },
-<span id='Component-Render-method-_uiSetActive'>            /**
-</span>             * @protected
+<span id='global-method-_uiSetActive'>            /**
+</span>             * @ignore
              */
             _uiSetActive: function (v) {
                 var self = this,
-                    componentCls = self.getComponentCssClassWithState(&quot;-active&quot;);
+                    componentCls = self.getCssClassWithState(&quot;-active&quot;);
                 self.get(&quot;el&quot;)[v ? 'addClass' : 'removeClass'](componentCls)
                     .attr(&quot;aria-pressed&quot;, !!v);
             },
-<span id='Component-Render-method-_uiSetFocused'>            /**
-</span>             * @protected
+<span id='global-method-_uiSetFocused'>            /**
+</span>             * @ignore
              */
             _uiSetFocused: function (v) {
                 var self = this,
                     el = self.get(&quot;el&quot;),
-                    componentCls = self.getComponentCssClassWithState(&quot;-focused&quot;);
+                    componentCls = self.getCssClassWithState(&quot;-focused&quot;);
                 el[v ? 'addClass' : 'removeClass'](componentCls);
             },
 
-<span id='Component-Render-method-getContentElement'>            /**
+<span id='global-method-getContentElement'>            /**
 </span>             * Return the dom element into which child component to be rendered.
              * @return {KISSY.NodeList}
+             * @ignore
              */
             getContentElement: function () {
                 return this.get(&quot;contentEl&quot;) || this.get(&quot;el&quot;);
             }
 
         }, {//  screen state
-<span id='Component-Render-property-'>            ATTRS: /**
-</span>             * @lends Component.Render#
-             */
-            {
-<span id='Component-Render-property-prefixCls'>                /**
-</span>                 * see {@link Component.Controller#prefixCls}
-                 */
+            ATTRS: {
+
                 prefixCls: {
                     value: &quot;ks-&quot;
                 },
-<span id='Component-Render-property-focusable'>                /**
-</span>                 * see {@link Component.Controller#focusable}
-                 */
+
                 focusable: {
                     value: true
                 },
-<span id='Component-Render-property-focused'>                /**
-</span>                 * see {@link Component.Controller#focused}
-                 */
+
                 focused: {},
-<span id='Component-Render-property-active'>                /**
-</span>                 * see {@link Component.Controller#active}
-                 */
+
                 active: {},
-<span id='Component-Render-property-disabled'>                /**
-</span>                 * see {@link Component.Controller#disabled}
-                 */
+
                 disabled: {},
-<span id='Component-Render-property-highlighted'>                /**
-</span>                 * see {@link Component.Controller#highlighted}
-                 */
+
                 highlighted: {}
             },
             HTML_PARSER: {
                 disabled: function (el) {
-                    var self = this, componentCls = self.getComponentCssClassWithState(&quot;-disabled&quot;);
+                    var self = this, componentCls = self.getCssClassWithState(&quot;-disabled&quot;);
                     return self.get(&quot;el&quot;).hasClass(componentCls);
                 }
             }
