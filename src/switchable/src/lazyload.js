@@ -1,6 +1,5 @@
 /**
  * @fileOverview Switchable Lazyload Plugin
- * @author lifesinger@gmail.com
  */
 KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
 
@@ -16,9 +15,9 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        lazyImgAttribute:"data-ks-lazyload-custom",
-        lazyTextareaClass:"ks-datalazyload-custom",
-        lazyDataType:AREA_DATA // or IMG_SRC
+        lazyImgAttribute: "data-ks-lazyload-custom",
+        lazyTextareaClass: "ks-datalazyload-custom",
+        lazyDataType: AREA_DATA // or IMG_SRC
     });
 
     /**
@@ -26,22 +25,22 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
      */
     Switchable.addPlugin({
 
-        name:'lazyload',
+        name: 'lazyload',
 
-        init:function (host) {
+        init: function (host) {
             var DataLazyload = S.require("datalazyload"),
                 cfg = host.config,
-                type,
+                type = cfg.lazyDataType,
                 flag;
 
-            if (cfg.lazyDataType === 'img-src') {
-                cfg.lazyDataType = IMG_SRC;
+            if (type === 'img-src') {
+                type = IMG_SRC;
             }
-            if (cfg.lazyDataType === 'area-data') {
-                cfg.lazyDataType = AREA_DATA;
+            else if (type === 'area-data') {
+                type = AREA_DATA;
             }
 
-            type = cfg.lazyDataType;
+            cfg.lazyDataType = type;
             flag = cfg[FLAGS[type]];
             // 没有延迟项
             if (!DataLazyload || !type || !flag) {
@@ -50,11 +49,17 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
 
             host.on(EVENT_BEFORE_SWITCH, loadLazyData);
 
+            // 初始 lazyload activeIndex
+            loadLazyData({
+                toIndex: host.activeIndex
+            });
+
             /**
              * 加载延迟数据
              */
             function loadLazyData(ev) {
-                var steps = cfg.steps,
+                // consider steps == 1
+                var steps = host._realStep || cfg.steps,
                     from = ev.toIndex * steps ,
                     to = from + steps;
                 DataLazyload.loadCustomLazyData(host.panels.slice(from, to),
@@ -94,7 +99,11 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
 
     return Switchable;
 
-}, { requires:["dom", "./base"]});
+}, { requires: ["dom", "./base"]});
 /**
+ * 2012-10-17 yiminghe@gmail.com
+ *  - 初始 lazyload activeIndex
+ *  - consider steps == 1 for carousel
+ *
  * 承玉：2011.06.02 review switchable
  */

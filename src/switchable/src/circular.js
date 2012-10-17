@@ -5,16 +5,16 @@
 KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
     var clearPosition = {
-        position:'',
-        left:'',
-        top:''
+        position: '',
+        left: '',
+        top: ''
     };
 
     /**
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        circular:false
+        circular: false
     });
 
     // 限制条件：总 item 数必须至少等于 一屏数
@@ -48,7 +48,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
         // realStep 补帧
         // 等于时不要补帧，所以限制条件为：总个数至少等于一屏个数
         if (index + _realStep > len) {
-            v = { position:'relative'};
+            v = { position: 'relative'};
             v[prop] = totalXX;
 
             // 补帧数
@@ -231,62 +231,35 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
      */
     Switchable.addPlugin({
 
-        name:'circular',
+        name: 'circular',
 
-        priority:5,
+        priority: 5,
 
         /**
          * 根据 effect, 调整初始状态
          */
-        init:function (host) {
+        init: function (host) {
             var cfg = host.config,
-                realStep,
-                scroller,
-                viewSize,
-                panels,
-                container,
                 effect = cfg.effect;
 
             // 仅有滚动效果需要下面的调整
             if (cfg.circular && (effect === 'scrollx' || effect === 'scrolly')) {
-
                 // 覆盖滚动效果函数
                 cfg.scrollType = effect; // 保存到 scrollType 中
 
                 /*
                  特殊处理：容器宽度比单个 item 宽，但是要求 item 一个个循环滚动，关键在于动画中补全帧的处理
                  */
-                panels = host.panels;
-                container = host.container;
-
-                if (cfg.steps == 1 && panels.length) {
-                    realStep = 1;
-                    scroller = panels[0].parentNode.parentNode;
-                    viewSize = [Math.min(DOM.width(container), DOM.width(scroller)),
-                        Math.min(DOM.height(container), DOM.height(scroller))];
-
-                    if (effect == 'scrollx') {
-                        realStep = Math.floor(viewSize[0] /
-                            ( DOM.outerWidth(panels[0], true)));
-                    } else if (effect == 'scrolly') {
-                        realStep = Math.floor(viewSize[1] /
-                            (DOM.outerHeight(panels[0], true)));
-                    }
-
-                    if (realStep > cfg.steps) {
-                        host._realStep = realStep;
-                        cfg.effect = seamlessCircularScroll;
-                    }
-                }
-
-                if (!host._realStep) {
+                if(host._realStep){
+                    cfg.effect = seamlessCircularScroll;
+                } else {
                     cfg.effect = circularScroll;
                 }
             }
         }
     });
 
-}, { requires:["dom", "anim", "./base", "./effect"]});
+}, { requires: ["dom", "anim", "./base", "./effect"]});
 
 /**
  * 2012-07-20 yiminghe@gmail.com

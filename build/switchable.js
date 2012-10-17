@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 15 14:05
+build time: Oct 17 12:20
 */
 /**
  * @fileOverview accordion aria support
@@ -482,7 +482,6 @@ KISSY.add("switchable/aria", function(S, DOM, Event, Switchable) {
 });
 /**
  * @fileOverview Switchable autoplay Plugin
- * @author lifesinger@gmail.com
  */
 KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined) {
     var DURATION = 200,
@@ -1995,16 +1994,16 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
 KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
     var clearPosition = {
-        position:'',
-        left:'',
-        top:''
+        position: '',
+        left: '',
+        top: ''
     };
 
     /**
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        circular:false
+        circular: false
     });
 
     // 限制条件：总 item 数必须至少等于 一屏数
@@ -2038,7 +2037,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
         // realStep 补帧
         // 等于时不要补帧，所以限制条件为：总个数至少等于一屏个数
         if (index + _realStep > len) {
-            v = { position:'relative'};
+            v = { position: 'relative'};
             v[prop] = totalXX;
 
             // 补帧数
@@ -2221,17 +2220,18 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
      */
     Switchable.addPlugin({
 
-        name:'circular',
+        name: 'circular',
 
-        priority:5,
+        priority: 5,
 
         /**
          * 根据 effect, 调整初始状态
          */
-        init:function (host) {
+        init: function (host) {
             var cfg = host.config,
                 realStep,
                 scroller,
+                containerViewSize,
                 viewSize,
                 panels,
                 container,
@@ -2251,19 +2251,22 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
 
                 if (cfg.steps == 1 && panels.length) {
                     realStep = 1;
+                    viewSize = host.viewSize;
                     scroller = panels[0].parentNode.parentNode;
-                    viewSize = [Math.min(DOM.width(container), DOM.width(scroller)),
-                        Math.min(DOM.height(container), DOM.height(scroller))];
+
+                    containerViewSize = [
+                        Math.min(DOM.width(container), DOM.width(scroller)),
+                        Math.min(DOM.height(container), DOM.height(scroller))
+                    ];
 
                     if (effect == 'scrollx') {
-                        realStep = Math.floor(viewSize[0] /
-                            ( DOM.outerWidth(panels[0], true)));
+                        realStep = Math.floor(containerViewSize[0] / viewSize[0]);
                     } else if (effect == 'scrolly') {
-                        realStep = Math.floor(viewSize[1] /
-                            (DOM.outerHeight(panels[0], true)));
+                        realStep = Math.floor(containerViewSize[1] / viewSize[1]);
                     }
 
                     if (realStep > cfg.steps) {
+                        // !TODO ugly _realStep
                         host._realStep = realStep;
                         cfg.effect = seamlessCircularScroll;
                     }
@@ -2276,7 +2279,7 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
         }
     });
 
-}, { requires:["dom", "anim", "./base", "./effect"]});
+}, { requires: ["dom", "anim", "./base", "./effect"]});
 
 /**
  * 2012-07-20 yiminghe@gmail.com
@@ -2295,7 +2298,6 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
  */
 /**
  * @fileOverview Switchable Effect Plugin
- * @author lifesinger@gmail.com
  */
 KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefined) {
 
@@ -2549,7 +2551,6 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
  */
 /**
  * @fileOverview Switchable Lazyload Plugin
- * @author lifesinger@gmail.com
  */
 KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
 
@@ -2565,9 +2566,9 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        lazyImgAttribute:"data-ks-lazyload-custom",
-        lazyTextareaClass:"ks-datalazyload-custom",
-        lazyDataType:AREA_DATA // or IMG_SRC
+        lazyImgAttribute: "data-ks-lazyload-custom",
+        lazyTextareaClass: "ks-datalazyload-custom",
+        lazyDataType: AREA_DATA // or IMG_SRC
     });
 
     /**
@@ -2575,9 +2576,9 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
      */
     Switchable.addPlugin({
 
-        name:'lazyload',
+        name: 'lazyload',
 
-        init:function (host) {
+        init: function (host) {
             var DataLazyload = S.require("datalazyload"),
                 cfg = host.config,
                 type,
@@ -2599,11 +2600,17 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
 
             host.on(EVENT_BEFORE_SWITCH, loadLazyData);
 
+            // 初始 lazyload activeIndex
+            loadLazyData({
+                toIndex: host.activeIndex
+            });
+
             /**
              * 加载延迟数据
              */
             function loadLazyData(ev) {
-                var steps = cfg.steps,
+                // consider steps == 1
+                var steps = host._realStep || cfg.steps,
                     from = ev.toIndex * steps ,
                     to = from + steps;
                 DataLazyload.loadCustomLazyData(host.panels.slice(from, to),
@@ -2643,8 +2650,12 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
 
     return Switchable;
 
-}, { requires:["dom", "./base"]});
+}, { requires: ["dom", "./base"]});
 /**
+ * 2012-10-17 yiminghe@gmail.com
+ *  - 初始 lazyload activeIndex
+ *  - consider steps == 1 for carousel
+ *
  * 承玉：2011.06.02 review switchable
  */
 /**

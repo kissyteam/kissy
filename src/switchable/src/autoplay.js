@@ -1,6 +1,5 @@
 /**
  * @fileOverview Switchable autoplay Plugin
- * @author lifesinger@gmail.com
  */
 KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined) {
     var DURATION = 200,
