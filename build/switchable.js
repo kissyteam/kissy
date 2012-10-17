@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 17 12:20
+build time: Oct 17 12:29
 */
 /**
  * @fileOverview accordion aria support
@@ -2229,50 +2229,19 @@ KISSY.add('switchable/circular', function (S, DOM, Anim, Switchable) {
          */
         init: function (host) {
             var cfg = host.config,
-                realStep,
-                scroller,
-                containerViewSize,
-                viewSize,
-                panels,
-                container,
                 effect = cfg.effect;
 
             // 仅有滚动效果需要下面的调整
             if (cfg.circular && (effect === 'scrollx' || effect === 'scrolly')) {
-
                 // 覆盖滚动效果函数
                 cfg.scrollType = effect; // 保存到 scrollType 中
 
                 /*
                  特殊处理：容器宽度比单个 item 宽，但是要求 item 一个个循环滚动，关键在于动画中补全帧的处理
                  */
-                panels = host.panels;
-                container = host.container;
-
-                if (cfg.steps == 1 && panels.length) {
-                    realStep = 1;
-                    viewSize = host.viewSize;
-                    scroller = panels[0].parentNode.parentNode;
-
-                    containerViewSize = [
-                        Math.min(DOM.width(container), DOM.width(scroller)),
-                        Math.min(DOM.height(container), DOM.height(scroller))
-                    ];
-
-                    if (effect == 'scrollx') {
-                        realStep = Math.floor(containerViewSize[0] / viewSize[0]);
-                    } else if (effect == 'scrolly') {
-                        realStep = Math.floor(containerViewSize[1] / viewSize[1]);
-                    }
-
-                    if (realStep > cfg.steps) {
-                        // !TODO ugly _realStep
-                        host._realStep = realStep;
-                        cfg.effect = seamlessCircularScroll;
-                    }
-                }
-
-                if (!host._realStep) {
+                if(host._realStep){
+                    cfg.effect = seamlessCircularScroll;
+                } else {
                     cfg.effect = circularScroll;
                 }
             }
@@ -2324,9 +2293,9 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        effect:NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
-        duration:.5, // 动画的时长
-        easing:'easeNone' // easing method
+        effect: NONE, // 'scrollx', 'scrolly', 'fade' 或者直接传入 custom effect fn
+        duration: .5, // 动画的时长
+        easing: 'easeNone' // easing method
     });
 
     /**
@@ -2335,7 +2304,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
     Switchable.Effects = {
 
         // 最朴素的显示/隐藏效果
-        none:function (callback) {
+        none: function (callback) {
             var self = this,
                 panelInfo = self._getFromToPanels(),
                 fromPanels = panelInfo.fromPanels,
@@ -2349,7 +2318,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
         },
 
         // 淡隐淡现效果
-        fade:function (callback) {
+        fade: function (callback) {
 
             var self = this,
                 panelInfo = self._getFromToPanels(),
@@ -2369,8 +2338,8 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                 self.anim.stop();
                 // 防止上个未完，放在最下层
                 DOM.css(self.anim.fromEl, {
-                    zIndex:1,
-                    opacity:0
+                    zIndex: 1,
+                    opacity: 0
                 });
                 // 把上个的 toEl 放在最上面，防止 self.anim.toEl == fromEL
                 // 压不住后面了
@@ -2383,7 +2352,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
             if (fromEl) {
                 // 动画切换
                 self.anim = new Anim(fromEl,
-                    { opacity:0 },
+                    { opacity: 0 },
                     cfg.duration,
                     cfg.easing,
                     function () {
@@ -2403,7 +2372,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
         },
 
         // 水平/垂直滚动效果
-        scroll:function (callback, direction, forceAnimation) {
+        scroll: function (callback, direction, forceAnimation) {
             var self = this,
                 fromIndex = self.fromIndex,
                 cfg = self.config,
@@ -2442,20 +2411,21 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
      */
     Switchable.addPlugin({
 
-        priority:10,
+        priority: 10,
 
-        name:'effect',
+        name: 'effect',
 
         /**
          * 根据 effect, 调整初始状态
          */
-        init:function (host) {
+        init: function (host) {
             var cfg = host.config,
                 effect = cfg.effect,
                 panels = host.panels,
                 content = host.content,
                 steps = cfg.steps,
                 panels0 = panels[0],
+                container = host.container,
                 activeIndex = host.activeIndex;
 
             // 注：所有 panel 的尺寸应该相同
@@ -2496,7 +2466,29 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                         ];
 
                         if (!host.viewSize[0]) {
-                            S.log('switchable must specify viewSize if there is no panels', 'error')
+                            S.error('switchable must specify viewSize if there is no panels');
+                        }
+
+                        if (steps == 1 && panels0) {
+                            var realStep = 1;
+                            var viewSize = host.viewSize;
+                            var scroller = panels0.parentNode.parentNode;
+
+                            var containerViewSize = [
+                                Math.min(DOM.width(container), DOM.width(scroller)),
+                                Math.min(DOM.height(container), DOM.height(scroller))
+                            ];
+
+                            if (effect == 'scrollx') {
+                                realStep = Math.floor(containerViewSize[0] / viewSize[0]);
+                            } else if (effect == 'scrolly') {
+                                realStep = Math.floor(containerViewSize[1] / viewSize[1]);
+                            }
+
+                            if (realStep > cfg.steps) {
+                                // !TODO ugly _realStep
+                                host._realStep = realStep;
+                            }
                         }
 
                         break;
@@ -2510,9 +2502,9 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
                         S.each(panels, function (panel, i) {
                             isActivePanel = i >= min && i <= max;
                             DOM.css(panel, {
-                                opacity:isActivePanel ? 1 : 0,
-                                position:ABSOLUTE,
-                                zIndex:isActivePanel ? 9 : 1
+                                opacity: isActivePanel ? 1 : 0,
+                                position: ABSOLUTE,
+                                zIndex: isActivePanel ? 9 : 1
                             });
                         });
                         break;
@@ -2528,7 +2520,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
      */
     S.augment(Switchable, {
 
-        _switchView:function (direction, ev, callback) {
+        _switchView: function (direction, ev, callback) {
 
             var self = this,
                 cfg = self.config,
@@ -2545,7 +2537,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
 
     return Switchable;
 
-}, { requires:["dom", "event", "anim", "./base"]});
+}, { requires: ["dom", "event", "anim", "./base"]});
 /**
  * 承玉：2011.06.02 review switchable
  */
@@ -2581,17 +2573,17 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
         init: function (host) {
             var DataLazyload = S.require("datalazyload"),
                 cfg = host.config,
-                type,
+                type = cfg.lazyDataType,
                 flag;
 
-            if (cfg.lazyDataType === 'img-src') {
-                cfg.lazyDataType = IMG_SRC;
+            if (type === 'img-src') {
+                type = IMG_SRC;
             }
-            if (cfg.lazyDataType === 'area-data') {
-                cfg.lazyDataType = AREA_DATA;
+            else if (type === 'area-data') {
+                type = AREA_DATA;
             }
 
-            type = cfg.lazyDataType;
+            cfg.lazyDataType = type;
             flag = cfg[FLAGS[type]];
             // 没有延迟项
             if (!DataLazyload || !type || !flag) {
