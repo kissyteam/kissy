@@ -54,27 +54,27 @@ DSL 也是初学，敬请勘误.
 词法关注如何从输入代码中解析出最基本的代码单元（关键词，字符串，数字...），例如 xtemplate 的部分词法
 
     {
-        state: 't',
+        state: ['t'],
         regexp: /^{{/,
         token: 'OPEN'
     },
     {
-        state: 't',
+        state: ['t'],
         regexp: /^}}/,
         token: 'CLOSE'
     },
     {
-        state: 't',
+        state: ['t'],
         regexp: /^<=/,
         token: 'LE'
     },
     {
-        state: 't',
+        state: ['t'],
         regexp: /^\+/,
         token: 'PLUS'
     },
     {
-        state: 't',
+        state: ['t'],
         regexp: /^[a-zA-Z0-9_$-]+/,
         token: 'ID'
     },

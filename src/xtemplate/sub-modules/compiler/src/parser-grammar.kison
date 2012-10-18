@@ -416,7 +416,7 @@
                     token: 'CONTENT'
                 },
                 {
-                    state: 'et',
+                    state: ['et'],
                     token: 'CONTENT',
                     regexp: /^[\s\S]{2,}?(?:(?={{)|$)/,
                     action: function () {
@@ -424,27 +424,27 @@
                     }
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^{{#/,
                     token: 'OPEN_BLOCK'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^{{\//,
                     token: 'OPEN_END_BLOCK'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^{{\s*else/,
                     token: 'OPEN_INVERSE'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^{{{/,
                     token: 'OPEN_UN_ESCAPED'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^{{![\s\S]*?}}/,
                     action: function () {
                         // return to content mode
@@ -454,16 +454,16 @@
                     // ,token: 'COMMENT'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^{{/,
                     token: 'OPEN'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^\s+/
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^}}}/,
                     action: function () {
                         this.popState();
@@ -471,7 +471,7 @@
                     token: 'CLOSE'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^}}/,
                     action: function () {
                         this.popState();
@@ -479,87 +479,87 @@
                     token: 'CLOSE'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^\(/,
                     token: 'LPAREN'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^\)/,
                     token: 'RPAREN'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^\|\|/,
                     token: 'OR'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^&&/,
                     token: 'AND'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^===/,
                     token: 'LOGIC_EQUALS'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^!==/,
                     token: 'LOGIC_NOT_EQUALS'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^>/,
                     token: 'GT'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^>=/,
                     token: 'GE'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^</,
                     token: 'LT'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^<=/,
                     token: 'LE'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^\+/,
                     token: 'PLUS'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^-/,
                     token: 'MINUS'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^\*/,
                     token: 'MULTIPLY'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^\//,
                     token: 'DIVIDE'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^%/,
                     token: 'MODULUS'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^!/,
                     token: 'NOT'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     // notice escaped string
                     regexp: /^"(\\"|[^"])*"/,
                     action: function () {
@@ -568,7 +568,7 @@
                     token: 'STRING'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     // notice escaped string
                     regexp: /^'(\\'|[^'])*'/,
                     action: function () {
@@ -577,27 +577,27 @@
                     token: 'STRING'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^true/,
                     token: 'BOOLEAN'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^false/,
                     token: 'BOOLEAN'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^\d+(?:\.\d+)?(?:e-?\d+)?/i,
                     token: 'NUMBER'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^=/,
                     token: 'EQUALS'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^\.\./,
                     token: 'ID',
                     action: function () {
@@ -606,12 +606,12 @@
                     }
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^\./,
                     token: 'SEP'
                 },
                 {
-                    state: 'ws',
+                    state: ['ws'],
                     regexp: /^\//,
                     token: 'SEP',
                     action: function () {
@@ -619,12 +619,12 @@
                     }
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^[a-zA-Z0-9_$-]+/,
                     token: 'ID'
                 },
                 {
-                    state: 't',
+                    state: ['t'],
                     regexp: /^./,
                     token: 'INVALID'
                 }

@@ -5,22 +5,20 @@
 KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal, Lexer, Production) {
 
     var GrammarConst = {
-        SHIFT_TYPE: 1,
-        REDUCE_TYPE: 2,
-        ACCEPT_TYPE: 0,
-
-        TYPE_INDEX: 0,
-        PRODUCTION_INDEX: 1,
-        TO_INDEX: 2
-    };
-
-    var mix = S.mix, END_TAG = Lexer.STATIC.END_TAG, START_TAG = '$START';
+            SHIFT_TYPE: 1,
+            REDUCE_TYPE: 2,
+            ACCEPT_TYPE: 0,
+            TYPE_INDEX: 0,
+            PRODUCTION_INDEX: 1,
+            TO_INDEX: 2
+        },
+        serializeObject = Utils.serializeObject,
+        mix = S.mix, END_TAG = Lexer.STATIC.END_TAG, START_TAG = '$START';
 
     function setSize(set3) {
         var count = 0, i;
         for (i in set3) {
             count++;
-
         }
         return count;
     }
@@ -47,16 +45,19 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
         build: function () {
             var self = this,
+                lexer = self.lexer,
                 vs = self.get('productions');
+
             vs.unshift({
                 symbol: START_TAG,
                 rhs: [vs[0].symbol]
             });
+
             S.each(vs, function (v, index) {
-                v.symbol = self.mapSymbol(v.symbol);
+                v.symbol = lexer.mapSymbol(v.symbol);
                 var rhs = v.rhs;
                 S.each(rhs, function (r, index) {
-                    rhs[index] = self.mapSymbol(r);
+                    rhs[index] = lexer.mapSymbol(r);
                 });
                 vs[index] = new Production(v);
             });
@@ -76,7 +77,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                 lexer = self.get("lexer"),
                 rules = lexer && lexer.rules,
                 terminals = self.get("terminals");
-            terminals[self.mapSymbol(END_TAG)] = 1;
+            terminals[lexer.mapSymbol(END_TAG)] = 1;
             S.each(rules, function (rule) {
                 var token = rule.token || rule[0];
                 if (token) {
@@ -281,18 +282,8 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                         if (p2.get("symbol") == dotSymbol) {
 
                             var newItem = new Item({
-                                production: p2
-                            });
-
-
-//                            newItem.addLookAhead(finalFirsts);
-//                            if(itemSet.findItemIndex(newItem)==-1){
-//                                newItem.addLookAhead(finalFirsts);
-//                                itemSet.addItem(newItem);
-//                                cont = true;
-//                            }
-//
-//                            return;
+                                    production: p2
+                                }),
 
                             /*
                              2012-07-26
@@ -301,8 +292,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                              merge lookahead with same production
                              and dotPosition
                              */
-
-                            var itemIndex = itemSet.findItemIndex(newItem, true),
+                                itemIndex = itemSet.findItemIndex(newItem, true),
                                 findItem;
 
                             if (itemIndex != -1) {
@@ -322,19 +312,18 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
         },
 
         gotos: function (i, x) {
-            var j = new ItemSet();
-            var iItems = i.get("items");
+            var j = new ItemSet(),
+                iItems = i.get("items");
             S.each(iItems, function (item) {
                 var production = item.get("production"),
                     dotPosition = item.get("dotPosition"),
                     markSymbol = production.get("rhs")[dotPosition];
                 if (markSymbol == x) {
                     var newItem = new Item({
-                        production: production,
-                        dotPosition: dotPosition + 1
-                    });
-
-                    var itemIndex = j.findItemIndex(newItem, true), findItem;
+                            production: production,
+                            dotPosition: dotPosition + 1
+                        }),
+                        itemIndex = j.findItemIndex(newItem, true), findItem;
 
                     if (itemIndex != -1) {
                         findItem = j.getItemAt(itemIndex);
@@ -349,8 +338,8 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
         },
 
         findItemSetIndex: function (itemSet) {
-            var itemSets = this.get("itemSets");
-            for (var i = 0; i < itemSets.length; i++) {
+            var itemSets = this.get("itemSets"), i;
+            for (i = 0; i < itemSets.length; i++) {
                 if (itemSets[i].equals(itemSet)) {
                     return i;
                 }
@@ -365,11 +354,12 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
          */
         buildItemSet: function () {
             var self = this,
+                lexer = self.lexer,
                 itemSets = self.get("itemSets"),
                 lookAheadTmp = {},
                 productions = self.get("productions");
 
-            lookAheadTmp[self.mapSymbol(END_TAG)] = 1;
+            lookAheadTmp[lexer.mapSymbol(END_TAG)] = 1;
 
             var initItemSet = self.closure(
                 new ItemSet({
@@ -383,11 +373,10 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
 
             itemSets.push(initItemSet);
 
-            var condition = true;
+            var condition = true,
+                symbols = S.merge(self.get("terminals"), self.get("nonTerminals"));
 
-            var symbols = S.merge(self.get("terminals"), self.get("nonTerminals"));
-
-            delete  symbols[self.mapSymbol(END_TAG)];
+            delete  symbols[lexer.mapSymbol(END_TAG)];
 
             while (condition) {
                 condition = false;
@@ -430,12 +419,12 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
         },
 
         buildLalrItemSets: function () {
-            var itemSets = this.get("itemSets");
+            var itemSets = this.get("itemSets"), i, j, one, two;
 
-            for (var i = 0; i < itemSets.length; i++) {
-                var one = itemSets[i];
-                for (var j = i + 1; j < itemSets.length; j++) {
-                    var two = itemSets[j];
+            for (i = 0; i < itemSets.length; i++) {
+                one = itemSets[i];
+                for (j = i + 1; j < itemSets.length; j++) {
+                    two = itemSets[j];
                     if (one.equals(two, true)) {
 
                         for (var k = 0; k < one.get("items").length; k++) {
@@ -465,18 +454,22 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
         },
 
         buildTable: function () {
-            var self = this;
-            var table = self.get("table");
-            var itemSets = self.get("itemSets");
-            var productions = self.get("productions");
-            var gotos = {};
-            var action = {};
-            var t;
+            var self = this,
+                lexer = self.lexer,
+                table = self.get("table"),
+                itemSets = self.get("itemSets"),
+                productions = self.get("productions"),
+                gotos = {},
+                action = {},
+                nonTerminals,
+                i,
+                itemSet,
+                t;
             table.gotos = gotos;
             table.action = action;
-            var nonTerminals = self.get("nonTerminals");
-            for (var i = 0; i < itemSets.length; i++) {
-                var itemSet = itemSets[i];
+            nonTerminals = self.get("nonTerminals");
+            for (i = 0; i < itemSets.length; i++) {
+                itemSet = itemSets[i];
 
                 S.each(itemSet.get("gotos"), function (anotherItemSet, symbol) {
                     if (!nonTerminals[symbol]) {
@@ -494,10 +487,10 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                 S.each(itemSet.get("items"), function (item) {
                     var production = item.get("production");
                     if (item.get("dotPosition") == production.get("rhs").length) {
-                        if (production.get("symbol") == self.mapSymbol(START_TAG)) {
-                            if (item.get("lookAhead")[self.mapSymbol(END_TAG)]) {
+                        if (production.get("symbol") == lexer.mapSymbol(START_TAG)) {
+                            if (item.get("lookAhead")[lexer.mapSymbol(END_TAG)]) {
                                 action[i] = action[i] || {};
-                                t = action[i][self.mapSymbol(END_TAG)] = [];
+                                t = action[i][lexer.mapSymbol(END_TAG)] = [];
                                 t[GrammarConst.TYPE_INDEX] = GrammarConst.ACCEPT_TYPE;
                                 t[GrammarConst.TO_INDEX] = t[GrammarConst.PRODUCTION_INDEX] = 0;
                             }
@@ -520,12 +513,12 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
         },
 
         visualizeTable: function () {
-            var self=this;
-            var table = self.get("table");
-            var gotos = table.gotos;
-            var action = table.action;
-            var productions = self.get("productions");
-            var ret = [];
+            var self = this,
+                table = self.get("table"),
+                gotos = table.gotos,
+                action = table.action,
+                productions = self.get("productions"),
+                ret = [];
 
             S.each(self.get("itemSets"), function (itemSet, i) {
                 ret.push(new Array(70).join("*") + " itemSet : " + i);
@@ -564,69 +557,48 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
             return ret;
         },
 
-        mapSymbol: function (symbol) {
+        genCode: function (cfg) {
+
+            cfg = cfg || {};
+
             var self = this,
-                tokenMap = self.tokenMap,
-                symbolMap = self.symbolMap;
-            if (tokenMap && tokenMap[symbol]) {
-                symbol = tokenMap[symbol];
-            } else if (symbolMap) {
-                symbol = symbolMap[symbol] || (symbolMap[symbol] = (++self.symbolId));
-            }
-            return symbol;
-        },
-
-        genCode: function (compress) {
-            if (!arguments.length) {
-                compress = 1;
-            }
-
-            var self=this;
-
-            var table = self.get("table");
-
-            var lexer = self.get("lexer");
-
-            var lexerCode = lexer.genCode(compress);
-
-            if (compress) {
-                self.symbolMap = {};
-
-                self.tokenMap = lexerCode.tokenMap;
-
-                self.symbolId = lexerCode.tokenId + 1;
-            }
+                table = self.get("table"),
+                lexer = self.get("lexer"),
+                lexerCode = lexer.genCode(cfg);
 
             self.build();
 
             var productions = [];
 
             S.each(self.get("productions"), function (p) {
-                var symbol = p.get('symbol'),
-                    rhs = p.get('rhs');
-                productions.push([
-                    symbol,
-                    rhs,
-                    p.get("action") || 0
-                ]);
+                var action = p.get("action"),
+                    ret = [p.get('symbol'), p.get('rhs')];
+                if (action) {
+                    ret.push(action);
+                }
+                productions.push(ret);
             });
 
             var code = [];
 
             code.push("/* Generated by kison from KISSY */");
 
-            code.push("var parser={}," +
-                "S=KISSY," +
-                "GrammarConst=" +
-                Utils.serializeObject(GrammarConst) +
+            code.push("var parser = {}," +
+                "S = KISSY," +
+                "GrammarConst = " + serializeObject(GrammarConst) +
                 ";");
 
-            code.push(lexerCode.code);
+            code.push(lexerCode);
 
-            code.push("parser.lexer=lexer;");
-            code.push('parser.productions=' + Utils.serializeObject(productions) + ";");
-            code.push("parser.table=" + Utils.serializeObject(table) + ";");
-            code.push("parser.parse=" + parse.toString() + ";");
+            code.push("parser.lexer = lexer;");
+
+            if (cfg.compressSymbol) {
+                code.push("lexer.symbolMap = " + serializeObject(lexer.symbolMap) + ";");
+            }
+
+            code.push('parser.productions = ' + serializeObject(productions) + ";");
+            code.push("parser.table = " + serializeObject(table) + ";");
+            code.push("parser.parse = " + parse.toString() + ";");
             code.push("return parser;");
             return code.join("\n");
         }
@@ -648,8 +620,10 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
             lexer: {
                 setter: function (v) {
                     if (!(v instanceof  Lexer)) {
-                        return new Lexer(v);
+                        v = new Lexer(v);
                     }
+                    this.lexer = v;
+                    return v;
                 }
             },
             terminals: {
@@ -685,7 +659,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
             }
 
             if (!symbol) {
-                S.log("it is not a valid input : " + input, "error");
+                S.log("it is not a valid input: " + input, "error");
                 return false;
             }
 
@@ -693,13 +667,16 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
             action = tableAction[state] && tableAction[state][symbol];
 
             if (!action) {
-                var expected = [];
+                var expected = [], error;
                 if (tableAction[state]) {
                     S.each(tableAction[state], function (_, symbol) {
-                        expected.push(symbol);
+                        expected.push(self.lexer.mapReverseSymbol(symbol));
                     });
                 }
-                S.error("parse error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", "));
+                error = "parse error at line " + lexer.lineNumber +
+                    ":\n" + lexer.showDebugInfo() +
+                    "\n" + "expect " + expected.join(", ");
+                S.error(error);
                 return false;
             }
 
@@ -724,19 +701,17 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                     var production = productions[action[GrammarConst.PRODUCTION_INDEX]],
                         reducedSymbol = production.symbol || production[0],
                         reducedAction = production.action || production[2],
-                        reducedRhs = production.rhs || production[1];
-
-                    var len = reducedRhs.length;
-
-                    var $$ = valueStack[valueStack.length - len]; // default to $$ = $1
+                        reducedRhs = production.rhs || production[1],
+                        len = reducedRhs.length,
+                        i,
+                        ret,
+                        $$ = valueStack[valueStack.length - len]; // default to $$ = $1
 
                     self.$$ = $$;
 
-                    for (var i = 0; i < len; i++) {
+                    for (i = 0; i < len; i++) {
                         self["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
                     }
-
-                    var ret;
 
                     if (reducedAction) {
                         ret = reducedAction.call(self);

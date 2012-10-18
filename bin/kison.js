@@ -16,6 +16,12 @@ var argv = require('optimist')
         .alias('encoding', 'e')
         .describe('w', 'watch xtemplate file change')
         .boolean('w')
+        .describe('compressSymbol', 'compress symbol')
+        .boolean('compressSymbol')
+        .default('compressSymbol', true)
+        .describe('compressLexerState', 'compress lexer state')
+        .boolean('compressLexerState')
+        .default('compressLexerState', false)
         .alias('watch', 'w')
         .usage('generate kissy module file from kison grammar file.\n' +
         'usage: $0 -g [grammar file] -m [module name]').argv,
@@ -28,6 +34,12 @@ var argv = require('optimist')
     path = require('path'),
     grammar = path.resolve(argv.grammar),
     encoding = argv.e || 'utf-8';
+
+
+var kisonCfg = {
+    compressLexerState: argv.compressLexerState,
+    compressSymbol: argv.compressSymbol
+};
 
 // S.log('*********** grammar:');
 // S.log(grammar);
@@ -84,7 +96,7 @@ S.use('kison', function (S, KISON) {
         console.info('start generate grammar module: ' + modulePath + '\n');
         var start = S.now();
 
-        var code = new KISON.Grammar(eval(grammarContent)).genCode();
+        var code = new KISON.Grammar(eval(grammarContent)).genCode(kisonCfg);
 
         var moduleCode = my_js_beautify(S.substitute(codeTemplate, {
             module: module,

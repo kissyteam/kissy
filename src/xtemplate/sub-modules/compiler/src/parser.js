@@ -22,7 +22,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
          * [
          *  {
          *   regexp:'\\w+',
-         *   state:'xx',
+         *   state:['xx'],
          *   token:'c',
          *   // this => lex
          *   action:function(){}
@@ -32,13 +32,6 @@ KISSY.add("xtemplate/compiler/parser", function () {
         self.rules = [];
 
         S.mix(self, cfg);
-
-        for (var i = 0, l = self.rules.length; i < l; i++) {
-            var r = self.rules[i];
-            if (!S.isArray(r) && !('state' in r)) {
-                r.state = Lexer.STATIC.INIT;
-            }
-        }
 
         /**
          * Input languages
@@ -50,11 +43,10 @@ KISSY.add("xtemplate/compiler/parser", function () {
     };
     Lexer.prototype = {
         'resetInput': function (input) {
-            var self = this;
-            self.input = input;
-            S.mix(self, {
+            S.mix(this, {
+                input: input,
                 matched: "",
-                stateStack: [Lexer.STATIC.INIT],
+                stateStack: [Lexer.STATIC.INITIAL],
                 match: "",
                 text: "",
                 firstLine: 1,
@@ -66,13 +58,16 @@ KISSY.add("xtemplate/compiler/parser", function () {
         },
         'getCurrentRules': function () {
             var self = this,
-                stateMap = self.stateMap || {},
                 currentState = self.stateStack[self.stateStack.length - 1],
                 rules = [];
-            currentState = stateMap[currentState] || currentState;
+            currentState = self.mapState(currentState);
             S.each(self.rules, function (r) {
                 var state = r.state || r[3];
-                if (state == currentState) {
+                if (!state) {
+                    if (currentState == Lexer.STATIC.INITIAL) {
+                        rules.push(r);
+                    }
+                } else if (S.inArray(currentState, state)) {
                     rules.push(r);
                 }
             });
@@ -82,7 +77,10 @@ KISSY.add("xtemplate/compiler/parser", function () {
             this.stateStack.push(state);
         },
         'popState': function () {
-            this.stateStack.pop();
+            return this.stateStack.pop();
+        },
+        'getStateStack': function () {
+            return this.stateStack;
         },
         'showDebugInfo': function () {
             var self = this,
@@ -96,14 +94,45 @@ KISSY.add("xtemplate/compiler/parser", function () {
             next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
             return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
         },
+        'mapSymbol': function (t) {
+            var self = this,
+                symbolMap = self.symbolMap;
+            if (!symbolMap) {
+                return t;
+            }
+            return symbolMap[t] || (symbolMap[t] = (++self.symbolId));
+        },
+        'mapReverseSymbol': function (rs) {
+            var self = this,
+                symbolMap = self.symbolMap,
+                i,
+                reverseSymbolMap = self.reverseSymbolMap;
+            if (!reverseSymbolMap && symbolMap) {
+                reverseSymbolMap = self.reverseSymbolMap = {};
+                for (i in symbolMap) {
+                    reverseSymbolMap[symbolMap[i]] = i;
+                }
+            }
+            if (reverseSymbolMap) {
+                return reverseSymbolMap[rs];
+            } else {
+                return rs;
+            }
+        },
+        'mapState': function (s) {
+            var self = this,
+                stateMap = self.stateMap;
+            if (!stateMap) {
+                return s;
+            }
+            return stateMap[s] || (stateMap[s] = (++self.stateId));
+        },
         'lex': function () {
             var self = this,
-                tokenMap = self.tokenMap || {},
                 input = self.input,
                 i,
                 rule,
                 m,
-                END_TAG = Lexer.STATIC.END_TAG,
                 ret,
                 lines,
                 rules = self.getCurrentRules();
@@ -111,7 +140,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
             self.match = self.text = "";
 
             if (!S.trim(input)) {
-                return tokenMap[END_TAG] || END_TAG;
+                return self.mapSymbol(Lexer.STATIC.END_TAG);
             }
 
             for (i = 0; i < rules.length; i++) {
@@ -144,7 +173,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
                     if (ret == undefined) {
                         ret = token;
                     } else {
-                        ret = tokenMap[ret] || ret;
+                        ret = self.mapSymbol(ret);
                     }
                     input = input.slice(match.length);
                     self.input = input;
@@ -162,7 +191,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
         }
     };
     Lexer.STATIC = {
-        'INIT': 'ks13503112577192',
+        'INITIAL': 'I',
         'DEBUG_CONTEXT_LIMIT': 20,
         'END_TAG': '$EOF'
     };
@@ -179,75 +208,67 @@ KISSY.add("xtemplate/compiler/parser", function () {
                 if (this.text) {
                     return 'CONTENT';
                 }
-            },
-            1],
-            [2, /^[\s\S]+/, 0, 1],
+            }],
+            [2, /^[\s\S]+/, 0],
             [2, /^[\s\S]{2,}?(?:(?={{)|$)/, function () {
                 this.popState();
-            },
-            2],
-            [3, /^{{#/, 0, 3],
-            [4, /^{{\//, 0, 3],
-            [5, /^{{\s*else/, 0, 3],
-            [6, /^{{{/, 0, 3],
+            }, ['et']],
+            [3, /^{{#/, 0, ['t']],
+            [4, /^{{\//, 0, ['t']],
+            [5, /^{{\s*else/, 0, ['t']],
+            [6, /^{{{/, 0, ['t']],
             [0, /^{{![\s\S]*?}}/, function () {
                 // return to content mode
                 this.popState();
-            },
-            3],
-            [7, /^{{/, 0, 3],
-            [0, /^\s+/, 0, 3],
+            }, ['t']],
+            [7, /^{{/, 0, ['t']],
+            [0, /^\s+/, 0, ['t']],
             [8, /^}}}/, function () {
                 this.popState();
-            },
-            3],
+            }, ['t']],
             [8, /^}}/, function () {
                 this.popState();
-            },
-            3],
-            [9, /^\(/, 0, 3],
-            [10, /^\)/, 0, 3],
-            [11, /^\|\|/, 0, 3],
-            [12, /^&&/, 0, 3],
-            [13, /^===/, 0, 3],
-            [14, /^!==/, 0, 3],
-            [15, /^>/, 0, 3],
-            [16, /^>=/, 0, 3],
-            [17, /^</, 0, 3],
-            [18, /^<=/, 0, 3],
-            [19, /^\+/, 0, 3],
-            [20, /^-/, 0, 3],
-            [21, /^\*/, 0, 3],
-            [22, /^\//, 0, 3],
-            [23, /^%/, 0, 3],
-            [24, /^!/, 0, 3],
+            }, ['t']],
+            [9, /^\(/, 0, ['t']],
+            [10, /^\)/, 0, ['t']],
+            [11, /^\|\|/, 0, ['t']],
+            [12, /^&&/, 0, ['t']],
+            [13, /^===/, 0, ['t']],
+            [14, /^!==/, 0, ['t']],
+            [15, /^>/, 0, ['t']],
+            [16, /^>=/, 0, ['t']],
+            [17, /^</, 0, ['t']],
+            [18, /^<=/, 0, ['t']],
+            [19, /^\+/, 0, ['t']],
+            [20, /^-/, 0, ['t']],
+            [21, /^\*/, 0, ['t']],
+            [22, /^\//, 0, ['t']],
+            [23, /^%/, 0, ['t']],
+            [24, /^!/, 0, ['t']],
             [25, /^"(\\"|[^"])*"/, function () {
                 this.text = this.text.slice(1, - 1).replace(/\\"/g, '"');
-            },
-            3],
+            }, ['t']],
             [25, /^'(\\'|[^'])*'/, function () {
                 this.text = this.text.slice(1, - 1).replace(/\\'/g, "'");
-            },
-            3],
-            [26, /^true/, 0, 3],
-            [26, /^false/, 0, 3],
-            [27, /^\d+(?:\.\d+)?(?:e-?\d+)?/i, 0, 3],
-            [28, /^=/, 0, 3],
+            }, ['t']],
+            [26, /^true/, 0, ['t']],
+            [26, /^false/, 0, ['t']],
+            [27, /^\d+(?:\.\d+)?(?:e-?\d+)?/i, 0, ['t']],
+            [28, /^=/, 0, ['t']],
             [29, /^\.\./, function () {
                 // wait for '/'
                 this.pushState('ws');
-            },
-            3],
-            [30, /^\./, 0, 3],
+            }, ['t']],
+            [30, /^\./, 0, ['t']],
             [30, /^\//, function () {
                 this.popState();
-            },
-            4],
-            [29, /^[a-zA-Z0-9_$-]+/, 0, 3],
-            [31, /^./, 0, 3]
+            }, ['ws']],
+            [29, /^[a-zA-Z0-9_$-]+/, 0, ['t']],
+            [31, /^./, 0, ['t']]
         ]
     });
-    lexer.tokenMap = {
+    parser.lexer = lexer;
+    lexer.symbolMap = {
         '$EOF': 1,
         'CONTENT': 2,
         'OPEN_BLOCK': 3,
@@ -278,430 +299,448 @@ KISSY.add("xtemplate/compiler/parser", function () {
         'EQUALS': 28,
         'ID': 29,
         'SEP': 30,
-        'INVALID': 31
+        'INVALID': 31,
+        '$START': 32,
+        'program': 33,
+        'statements': 34,
+        'inverse': 35,
+        'statement': 36,
+        'openBlock': 37,
+        'closeBlock': 38,
+        'tpl': 39,
+        'inTpl': 40,
+        'path': 41,
+        'Expression': 42,
+        'params': 43,
+        'hash': 44,
+        'param': 45,
+        'ConditionalOrExpression': 46,
+        'ConditionalAndExpression': 47,
+        'EqualityExpression': 48,
+        'RelationalExpression': 49,
+        'AdditiveExpression': 50,
+        'MultiplicativeExpression': 51,
+        'UnaryExpression': 52,
+        'PrimaryExpression': 53,
+        'hashSegments': 54,
+        'hashSegment': 55,
+        'pathSegments': 56
     };
-    lexer.stateMap = {
-        'ks13503112577192': 1,
-        'et': 2,
-        't': 3,
-        'ws': 4
-    };
-    parser.lexer = lexer;
     parser.productions = [
-        [33, [34], 0],
-        [34, [35, 36, 35], function () {
+        [32, [33]],
+        [33, [34, 35, 34], function () {
             return new this.yy.ProgramNode(this.lexer.lineNumber, this.$1, this.$3);
         }],
-        [34, [35], function () {
+        [33, [34], function () {
             return new this.yy.ProgramNode(this.lexer.lineNumber, this.$1);
         }],
-        [35, [37], function () {
+        [34, [36], function () {
             return [this.$1];
         }],
-        [35, [35, 37], function () {
+        [34, [34, 36], function () {
             this.$1.push(this.$2);
         }],
-        [37, [38, 34, 39], function () {
+        [36, [37, 33, 38], function () {
             return new this.yy.BlockNode(this.lexer.lineNumber, this.$1, this.$2, this.$3);
         }],
-        [37, [40], 0],
-        [37, [2], function () {
+        [36, [39]],
+        [36, [2], function () {
             return new this.yy.ContentNode(this.lexer.lineNumber, this.$1);
         }],
-        [38, [3, 41, 8], function () {
+        [37, [3, 40, 8], function () {
             return this.$2;
         }],
-        [39, [4, 42, 8], function () {
+        [38, [4, 41, 8], function () {
             return this.$2;
         }],
-        [40, [7, 41, 8], function () {
+        [39, [7, 40, 8], function () {
             return this.$2;
         }],
-        [40, [6, 41, 8], function () {
+        [39, [6, 40, 8], function () {
             this.$2.escaped = false;
             return this.$2;
         }],
-        [40, [7, 43, 8], function () {
+        [39, [7, 42, 8], function () {
             return new this.yy.TplExpressionNode(this.lexer.lineNumber,
             this.$2);
         }],
-        [40, [6, 43, 8], function () {
+        [39, [6, 42, 8], function () {
             var tpl = new this.yy.TplExpressionNode(this.lexer.lineNumber,
             this.$2);
             tpl.escaped = false;
             return tpl;
         }],
-        [36, [5, 8], 0],
-        [41, [42, 44, 45], function () {
+        [35, [5, 8]],
+        [40, [41, 43, 44], function () {
             return new this.yy.TplNode(this.lexer.lineNumber, this.$1, this.$2, this.$3);
         }],
-        [41, [42, 44], function () {
+        [40, [41, 43], function () {
             return new this.yy.TplNode(this.lexer.lineNumber, this.$1, this.$2);
         }],
-        [41, [42, 45], function () {
+        [40, [41, 44], function () {
             return new this.yy.TplNode(this.lexer.lineNumber, this.$1, null, this.$2);
         }],
-        [41, [42], function () {
+        [40, [41], function () {
             return new this.yy.TplNode(this.lexer.lineNumber, this.$1);
         }],
-        [44, [44, 46], function () {
+        [43, [43, 45], function () {
             this.$1.push(this.$2);
         }],
-        [44, [46], function () {
+        [43, [45], function () {
             return [this.$1];
         }],
-        [46, [43], 0],
-        [43, [47], 0],
-        [47, [48], 0],
-        [47, [47, 11, 48], function () {
+        [45, [42]],
+        [42, [46]],
+        [46, [47]],
+        [46, [46, 11, 47], function () {
             return new this.yy.ConditionalOrExpression(this.$1, this.$3);
         }],
-        [48, [49], 0],
-        [48, [48, 12, 49], function () {
+        [47, [48]],
+        [47, [47, 12, 48], function () {
             return new this.yy.ConditionalAndExpression(this.$1, this.$3);
         }],
-        [49, [50], 0],
-        [49, [49, 13, 50], function () {
+        [48, [49]],
+        [48, [48, 13, 49], function () {
             return new this.yy.EqualityExpression(this.$1, '===', this.$3);
         }],
-        [49, [49, 14, 50], function () {
+        [48, [48, 14, 49], function () {
             return new this.yy.EqualityExpression(this.$1, '!==', this.$3);
         }],
-        [50, [51], 0],
-        [50, [50, 17, 51], function () {
+        [49, [50]],
+        [49, [49, 17, 50], function () {
             return new this.yy.RelationalExpression(this.$1, '<=', this.$3);
         }],
-        [50, [50, 15, 51], function () {
+        [49, [49, 15, 50], function () {
             return new this.yy.RelationalExpression(this.$1, '>', this.$3);
         }],
-        [50, [50, 18, 51], function () {
+        [49, [49, 18, 50], function () {
             return new this.yy.RelationalExpression(this.$1, '<=', this.$3);
         }],
-        [50, [50, 16, 51], function () {
+        [49, [49, 16, 50], function () {
             return new this.yy.RelationalExpression(this.$1, '>=', this.$3);
         }],
-        [51, [52], 0],
-        [51, [51, 19, 52], function () {
+        [50, [51]],
+        [50, [50, 19, 51], function () {
             return new this.yy.AdditiveExpression(this.$1, '+', this.$3);
         }],
-        [51, [51, 20, 52], function () {
+        [50, [50, 20, 51], function () {
             return new this.yy.AdditiveExpression(this.$1, '-', this.$3);
         }],
-        [52, [53], 0],
-        [52, [52, 21, 53], function () {
+        [51, [52]],
+        [51, [51, 21, 52], function () {
             return new this.yy.MultiplicativeExpression(this.$1, '*', this.$3);
         }],
-        [52, [52, 22, 53], function () {
+        [51, [51, 22, 52], function () {
             return new this.yy.MultiplicativeExpression(this.$1, '/', this.$3);
         }],
-        [52, [52, 23, 53], function () {
+        [51, [51, 23, 52], function () {
             return new this.yy.MultiplicativeExpression(this.$1, '%', this.$3);
         }],
-        [53, [24, 53], function () {
+        [52, [24, 52], function () {
             return new this.yy.UnaryExpression(this.$1);
         }],
-        [53, [54], 0],
-        [54, [25], function () {
+        [52, [53]],
+        [53, [25], function () {
             return new this.yy.StringNode(this.lexer.lineNumber, this.$1);
         }],
-        [54, [27], function () {
+        [53, [27], function () {
             return new this.yy.NumberNode(this.lexer.lineNumber, this.$1);
         }],
-        [54, [26], function () {
+        [53, [26], function () {
             return new this.yy.BooleanNode(this.lexer.lineNumber, this.$1);
         }],
-        [54, [42], 0],
-        [54, [9, 43, 10], function () {
+        [53, [41]],
+        [53, [9, 42, 10], function () {
             return this.$2;
         }],
-        [45, [55], function () {
+        [44, [54], function () {
             return new this.yy.HashNode(this.lexer.lineNumber, this.$1);
         }],
-        [55, [55, 56], function () {
+        [54, [54, 55], function () {
             this.$1.push(this.$2);
         }],
-        [55, [56], function () {
+        [54, [55], function () {
             return [this.$1];
         }],
-        [56, [29, 28, 43], function () {
+        [55, [29, 28, 42], function () {
             return [this.$1, this.$3];
         }],
-        [42, [57], function () {
+        [41, [56], function () {
             return new this.yy.IdNode(this.lexer.lineNumber, this.$1);
         }],
-        [57, [57, 30, 29], function () {
+        [56, [56, 30, 29], function () {
             this.$1.push(this.$3);
         }],
-        [57, [57, 30, 27], function () {
+        [56, [56, 30, 27], function () {
             this.$1.push(this.$3);
         }],
-        [57, [29], function () {
+        [56, [29], function () {
             return [this.$1];
         }]
     ];
     parser.table = {
         'gotos': {
             '0': {
-                '34': 5,
-                '35': 6,
-                '37': 7,
-                '38': 8,
-                '40': 9
+                '33': 5,
+                '34': 6,
+                '36': 7,
+                '37': 8,
+                '39': 9
             },
             '2': {
-                '41': 11,
-                '42': 12,
-                '57': 13
+                '40': 11,
+                '41': 12,
+                '56': 13
             },
             '3': {
-                '41': 19,
-                '42': 20,
-                '43': 21,
-                '47': 22,
-                '48': 23,
-                '49': 24,
-                '50': 25,
-                '51': 26,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '40': 19,
+                '41': 20,
+                '42': 21,
+                '46': 22,
+                '47': 23,
+                '48': 24,
+                '49': 25,
+                '50': 26,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '56': 13
             },
             '4': {
-                '41': 30,
-                '42': 20,
-                '43': 31,
-                '47': 22,
-                '48': 23,
-                '49': 24,
-                '50': 25,
-                '51': 26,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '40': 30,
+                '41': 20,
+                '42': 31,
+                '46': 22,
+                '47': 23,
+                '48': 24,
+                '49': 25,
+                '50': 26,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '56': 13
             },
             '6': {
-                '36': 33,
-                '37': 34,
-                '38': 8,
-                '40': 9
+                '35': 33,
+                '36': 34,
+                '37': 8,
+                '39': 9
             },
             '8': {
-                '34': 35,
-                '35': 6,
-                '37': 7,
-                '38': 8,
-                '40': 9
+                '33': 35,
+                '34': 6,
+                '36': 7,
+                '37': 8,
+                '39': 9
             },
             '12': {
-                '42': 38,
-                '43': 39,
-                '44': 40,
-                '45': 41,
-                '46': 42,
-                '47': 22,
-                '48': 23,
-                '49': 24,
-                '50': 25,
-                '51': 26,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '55': 43,
-                '56': 44,
-                '57': 13
+                '41': 38,
+                '42': 39,
+                '43': 40,
+                '44': 41,
+                '45': 42,
+                '46': 22,
+                '47': 23,
+                '48': 24,
+                '49': 25,
+                '50': 26,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '54': 43,
+                '55': 44,
+                '56': 13
             },
             '14': {
-                '42': 38,
-                '43': 46,
-                '47': 22,
-                '48': 23,
-                '49': 24,
-                '50': 25,
-                '51': 26,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '42': 46,
+                '46': 22,
+                '47': 23,
+                '48': 24,
+                '49': 25,
+                '50': 26,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '56': 13
             },
             '15': {
-                '42': 38,
-                '53': 47,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '52': 47,
+                '53': 29,
+                '56': 13
             },
             '20': {
-                '42': 38,
-                '43': 39,
-                '44': 40,
-                '45': 41,
-                '46': 42,
-                '47': 22,
-                '48': 23,
-                '49': 24,
-                '50': 25,
-                '51': 26,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '55': 43,
-                '56': 44,
-                '57': 13
+                '41': 38,
+                '42': 39,
+                '43': 40,
+                '44': 41,
+                '45': 42,
+                '46': 22,
+                '47': 23,
+                '48': 24,
+                '49': 25,
+                '50': 26,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '54': 43,
+                '55': 44,
+                '56': 13
             },
             '33': {
-                '35': 66,
-                '37': 7,
-                '38': 8,
-                '40': 9
+                '34': 66,
+                '36': 7,
+                '37': 8,
+                '39': 9
             },
             '35': {
-                '39': 68
+                '38': 68
             },
             '40': {
-                '42': 38,
-                '43': 39,
-                '45': 70,
-                '46': 71,
-                '47': 22,
-                '48': 23,
-                '49': 24,
-                '50': 25,
-                '51': 26,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '55': 43,
-                '56': 44,
-                '57': 13
+                '41': 38,
+                '42': 39,
+                '44': 70,
+                '45': 71,
+                '46': 22,
+                '47': 23,
+                '48': 24,
+                '49': 25,
+                '50': 26,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '54': 43,
+                '55': 44,
+                '56': 13
             },
             '43': {
-                '56': 73
+                '55': 73
             },
             '50': {
-                '42': 38,
-                '48': 77,
-                '49': 24,
-                '50': 25,
-                '51': 26,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '47': 77,
+                '48': 24,
+                '49': 25,
+                '50': 26,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '56': 13
             },
             '51': {
-                '42': 38,
-                '49': 78,
-                '50': 25,
-                '51': 26,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '48': 78,
+                '49': 25,
+                '50': 26,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '56': 13
             },
             '52': {
-                '42': 38,
-                '50': 79,
-                '51': 26,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '49': 79,
+                '50': 26,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '56': 13
             },
             '53': {
-                '42': 38,
-                '50': 80,
-                '51': 26,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '49': 80,
+                '50': 26,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '56': 13
             },
             '54': {
-                '42': 38,
-                '51': 81,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '50': 81,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '56': 13
             },
             '55': {
-                '42': 38,
-                '51': 82,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '50': 82,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '56': 13
             },
             '56': {
-                '42': 38,
-                '51': 83,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '50': 83,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '56': 13
             },
             '57': {
-                '42': 38,
-                '51': 84,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '50': 84,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '56': 13
             },
             '58': {
-                '42': 38,
-                '52': 85,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '51': 85,
+                '52': 28,
+                '53': 29,
+                '56': 13
             },
             '59': {
-                '42': 38,
-                '52': 86,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '51': 86,
+                '52': 28,
+                '53': 29,
+                '56': 13
             },
             '60': {
-                '42': 38,
-                '53': 87,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '52': 87,
+                '53': 29,
+                '56': 13
             },
             '61': {
-                '42': 38,
-                '53': 88,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '52': 88,
+                '53': 29,
+                '56': 13
             },
             '62': {
-                '42': 38,
-                '53': 89,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '52': 89,
+                '53': 29,
+                '56': 13
             },
             '66': {
-                '37': 34,
-                '38': 8,
-                '40': 9
+                '36': 34,
+                '37': 8,
+                '39': 9
             },
             '67': {
-                '42': 90,
-                '57': 13
+                '41': 90,
+                '56': 13
             },
             '69': {
-                '42': 38,
-                '43': 91,
-                '47': 22,
-                '48': 23,
-                '49': 24,
-                '50': 25,
-                '51': 26,
-                '52': 27,
-                '53': 28,
-                '54': 29,
-                '57': 13
+                '41': 38,
+                '42': 91,
+                '46': 22,
+                '47': 23,
+                '48': 24,
+                '49': 25,
+                '50': 26,
+                '51': 27,
+                '52': 28,
+                '53': 29,
+                '56': 13
             }
         },
         'action': {
@@ -1804,7 +1843,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
             }
 
             if (!symbol) {
-                S.log("it is not a valid input : " + input, "error");
+                S.log("it is not a valid input: " + input, "error");
                 return false;
             }
 
@@ -1812,13 +1851,15 @@ KISSY.add("xtemplate/compiler/parser", function () {
             action = tableAction[state] && tableAction[state][symbol];
 
             if (!action) {
-                var expected = [];
+                var expected = [],
+                    error;
                 if (tableAction[state]) {
                     S.each(tableAction[state], function (_, symbol) {
-                        expected.push(symbol);
+                        expected.push(self.lexer.mapReverseSymbol(symbol));
                     });
                 }
-                S.error("parse error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", "));
+                error = "parse error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", ");
+                S.error(error);
                 return false;
             }
 
@@ -1843,19 +1884,17 @@ KISSY.add("xtemplate/compiler/parser", function () {
                 var production = productions[action[GrammarConst.PRODUCTION_INDEX]],
                     reducedSymbol = production.symbol || production[0],
                     reducedAction = production.action || production[2],
-                    reducedRhs = production.rhs || production[1];
-
-                var len = reducedRhs.length;
-
-                var $$ = valueStack[valueStack.length - len]; // default to $$ = $1
+                    reducedRhs = production.rhs || production[1],
+                    len = reducedRhs.length,
+                    i,
+                    ret,
+                    $$ = valueStack[valueStack.length - len]; // default to $$ = $1
 
                 self.$$ = $$;
 
-                for (var i = 0; i < len; i++) {
+                for (i = 0; i < len; i++) {
                     self["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
                 }
-
-                var ret;
 
                 if (reducedAction) {
                     ret = reducedAction.call(self);

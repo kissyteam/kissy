@@ -22,7 +22,7 @@ KISSY.add("tests/cal", function () {
          * [
          *  {
          *   regexp:'\\w+',
-         *   state:'xx',
+         *   state:['xx'],
          *   token:'c',
          *   // this => lex
          *   action:function(){}
@@ -32,13 +32,6 @@ KISSY.add("tests/cal", function () {
         self.rules = [];
 
         S.mix(self, cfg);
-
-        for (var i = 0, l = self.rules.length; i < l; i++) {
-            var r = self.rules[i];
-            if (!S.isArray(r) && !r.state) {
-                r.state = Lexer.STATIC.INIT;
-            }
-        }
 
         /**
          * Input languages
@@ -50,11 +43,10 @@ KISSY.add("tests/cal", function () {
     };
     Lexer.prototype = {
         'resetInput': function (input) {
-            var self = this;
-            self.input = input;
-            S.mix(self, {
+            S.mix(this, {
+                input: input,
                 matched: "",
-                stateStack: [Lexer.STATIC.INIT],
+                stateStack: [Lexer.STATIC.INITIAL],
                 match: "",
                 text: "",
                 firstLine: 1,
@@ -68,9 +60,14 @@ KISSY.add("tests/cal", function () {
             var self = this,
                 currentState = self.stateStack[self.stateStack.length - 1],
                 rules = [];
+            currentState = self.mapState(currentState);
             S.each(self.rules, function (r) {
                 var state = r.state || r[3];
-                if (state == currentState) {
+                if (!state) {
+                    if (currentState == Lexer.STATIC.INITIAL) {
+                        rules.push(r);
+                    }
+                } else if (S.inArray(currentState, state)) {
                     rules.push(r);
                 }
             });
@@ -80,7 +77,10 @@ KISSY.add("tests/cal", function () {
             this.stateStack.push(state);
         },
         'popState': function () {
-            this.stateStack.pop();
+            return this.stateStack.pop();
+        },
+        'getStateStack': function () {
+            return this.stateStack;
         },
         'showDebugInfo': function () {
             var self = this,
@@ -93,6 +93,39 @@ KISSY.add("tests/cal", function () {
                 next = match + input;
             next = next.slice(0, DEBUG_CONTEXT_LIMIT) + (next.length > DEBUG_CONTEXT_LIMIT ? "..." : "");
             return past + next + "\n" + new Array(past.length + 1).join("-") + "^";
+        },
+        'mapSymbol': function (t) {
+            var self = this,
+                symbolMap = self.symbolMap;
+            if (!symbolMap) {
+                return t;
+            }
+            return symbolMap[t] || (symbolMap[t] = (++self.symbolId));
+        },
+        'mapReverseSymbol': function (rs) {
+            var self = this,
+                symbolMap = self.symbolMap,
+                i,
+                reverseSymbolMap = self.reverseSymbolMap;
+            if (!reverseSymbolMap && symbolMap) {
+                reverseSymbolMap = self.reverseSymbolMap = {};
+                for (i in symbolMap) {
+                    reverseSymbolMap[symbolMap[i]] = i;
+                }
+            }
+            if (reverseSymbolMap) {
+                return reverseSymbolMap[rs];
+            } else {
+                return rs;
+            }
+        },
+        'mapState': function (s) {
+            var self = this,
+                stateMap = self.stateMap;
+            if (!stateMap) {
+                return s;
+            }
+            return stateMap[s] || (stateMap[s] = (++self.stateId));
         },
         'lex': function () {
             var self = this,
@@ -107,7 +140,7 @@ KISSY.add("tests/cal", function () {
             self.match = self.text = "";
 
             if (!S.trim(input)) {
-                return self.END_TAG || Lexer.STATIC.END_TAG;
+                return self.mapSymbol(Lexer.STATIC.END_TAG);
             }
 
             for (i = 0; i < rules.length; i++) {
@@ -139,6 +172,8 @@ KISSY.add("tests/cal", function () {
                     ret = action && action.call(self);
                     if (ret == undefined) {
                         ret = token;
+                    } else {
+                        ret = self.mapSymbol(ret);
                     }
                     input = input.slice(match.length);
                     self.input = input;
@@ -156,45 +191,54 @@ KISSY.add("tests/cal", function () {
         }
     };
     Lexer.STATIC = {
-        'INIT': 1,
+        'INITIAL': 'I',
         'DEBUG_CONTEXT_LIMIT': 20,
         'END_TAG': '$EOF'
     };
     var lexer = new Lexer({
         'rules': [
-            [0, /^\s+/, 0, 1],
-            [2, /^[0-9]+(\.[0-9]+)?\b/, 0, 1],
-            [3, /^\+/, 0, 1],
-            [4, /^-/, 0, 1],
-            [5, /^./, 0, 1]
+            [0, /^\s+/, 0],
+            [2, /^[0-9]+(\.[0-9]+)?\b/, 0],
+            [3, /^\+/, 0],
+            [4, /^-/, 0],
+            [5, /^./, 0]
         ]
     });
-    lexer.END_TAG = 1;
     parser.lexer = lexer;
+    lexer.symbolMap = {
+        '$EOF': 1,
+        'NUMBER': 2,
+        '+': 3,
+        '-': 4,
+        'ERROR_LA': 5,
+        '$START': 6,
+        'expressions': 7,
+        'e': 8
+    };
     parser.productions = [
-        [7, [8], 0],
-        [8, [9], 0],
-        [9, [9, 4, 9], function () {
+        [6, [7]],
+        [7, [8]],
+        [8, [8, 4, 8], function () {
             return this.$1 - this.$3;
         }],
-        [9, [9, 3, 9], function () {
+        [8, [8, 3, 8], function () {
             return this.$1 + this.$3;
         }],
-        [9, [2], function () {
+        [8, [2], function () {
             return Number(this.$1);
         }]
     ];
     parser.table = {
         'gotos': {
             '0': {
-                '8': 2,
-                '9': 3
+                '7': 2,
+                '8': 3
             },
             '4': {
-                '9': 6
+                '8': 6
             },
             '5': {
-                '9': 7
+                '8': 7
             }
         },
         'action': {
@@ -257,7 +301,7 @@ KISSY.add("tests/cal", function () {
             }
 
             if (!symbol) {
-                S.log("it is not a valid input : " + input, "error");
+                S.log("it is not a valid input: " + input, "error");
                 return false;
             }
 
@@ -265,13 +309,15 @@ KISSY.add("tests/cal", function () {
             action = tableAction[state] && tableAction[state][symbol];
 
             if (!action) {
-                var expected = [];
+                var expected = [],
+                    error;
                 if (tableAction[state]) {
                     S.each(tableAction[state], function (_, symbol) {
-                        expected.push(symbol);
+                        expected.push(self.lexer.mapReverseSymbol(symbol));
                     });
                 }
-                S.error("parse error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", "));
+                error = "parse error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", ");
+                S.error(error);
                 return false;
             }
 
@@ -296,19 +342,17 @@ KISSY.add("tests/cal", function () {
                 var production = productions[action[GrammarConst.PRODUCTION_INDEX]],
                     reducedSymbol = production.symbol || production[0],
                     reducedAction = production.action || production[2],
-                    reducedRhs = production.rhs || production[1];
-
-                var len = reducedRhs.length;
-
-                var $$ = valueStack[valueStack.length - len]; // default to $$ = $1
+                    reducedRhs = production.rhs || production[1],
+                    len = reducedRhs.length,
+                    i,
+                    ret,
+                    $$ = valueStack[valueStack.length - len]; // default to $$ = $1
 
                 self.$$ = $$;
 
-                for (var i = 0; i < len; i++) {
+                for (i = 0; i < len; i++) {
                     self["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
                 }
-
-                var ret;
 
                 if (reducedAction) {
                     ret = reducedAction.call(self);

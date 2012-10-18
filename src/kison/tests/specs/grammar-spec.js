@@ -2,9 +2,7 @@
  * TC for KISSY LALR Grammar Parser
  */
 KISSY.use("kison", function (S, Kison) {
-    var Production = Kison.Production;
     var Grammar = Kison.Grammar;
-    var Lexer = Kison.Lexer;
     var Utils = Kison.Utils;
 
     describe("grammar", function () {
@@ -243,14 +241,224 @@ KISSY.use("kison", function (S, Kison) {
                 }
             });
 
-            var compress = true;
+            expect(function () {
+                new Function(grammar.genCode())().parse("dc");
+            }).toThrow('parse error at line 1:\ndc\n--^\n' +
+                'expect c, d');
+
+        });
+
+
+        it("can not parse invalid input in compress mode", function () {
+
+            var grammar = new Grammar({
+                productions: [
+                    {
+                        symbol: "S0",
+                        rhs: [
+                            "S"
+                        ]
+                    },
+                    {
+                        symbol: "S",
+                        rhs: [
+                            "C", "C"
+                        ]
+                    },
+                    {
+                        symbol: "C",
+                        rhs: [
+                            "c", "C"
+                        ]
+                    },
+                    {
+                        symbol: "C",
+                        rhs: [
+                            "d"
+                        ]
+                    }
+                ],
+                lexer: {
+                    rules: [
+                        {
+                            regexp: /^c/,
+                            token: 'c'
+                        },
+                        {
+                            regexp: /^d/,
+                            token: 'd'
+                        }
+                    ]
+                }
+            });
 
             expect(function () {
-                new Function(grammar.genCode('parse error at line 1:\ndc\n--^\nexpect c, d'))().parse("dc")
-            })
-                .toThrow(compress ?
-                'parse error at line 1:\ndc\n--^\nexpect 2, 3' :
-                'parse error at line 1:\ndc\n--^\nexpect c, d');
+                new Function(grammar.genCode({
+                    compressSymbol: 1
+                }))().parse("dc");
+            }).toThrow('parse error at line 1:\ndc\n--^\n' +
+                'expect c, d');
+
+        });
+
+        describe('state', function () {
+
+            it('can parse', function () {
+                var log = [];
+                var grammar = new Grammar({
+                    productions: [
+                        {
+                            symbol: "S",
+                            rhs: [
+                                "a", "b"
+                            ],
+                            action: function () {
+                                this.yy.log.push(this.$1);
+                                this.yy.log.push(this.$2);
+                            }
+                        }
+                    ],
+                    lexer: {
+                        rules: [
+                            {
+                                regexp: /^a/,
+                                token: 'a',
+                                action: function () {
+                                    this.pushState('b');
+                                }
+                            },
+                            {
+                                regexp: /^b/,
+                                state: ['b'],
+                                token: 'b',
+                                action: function () {
+                                    this.popState();
+                                }
+                            }
+                        ]
+                    }
+                });
+                var parser = new Function(grammar.genCode({
+                    compressSymbol: 0
+                }))();
+
+                parser.yy = {
+                    log: log
+                };
+
+                expect(function () {
+                    parser.parse("ab");
+                }).not.toThrow(undefined);
+
+                expect(log.length).toBe(2);
+
+                expect(log[0]).toBe('a');
+
+                expect(log[1]).toBe('b');
+            });
+
+
+            it('can not parse', function () {
+                var log = [];
+                var grammar = new Grammar({
+                    productions: [
+                        {
+                            symbol: "S",
+                            rhs: [
+                                "a", "b", "b"
+                            ],
+                            action: function () {
+                                this.yy.log.push(this.$1);
+                                this.yy.log.push(this.$2);
+                            }
+                        }
+                    ],
+                    lexer: {
+                        rules: [
+                            {
+                                regexp: /^a/,
+                                token: 'a',
+                                action: function () {
+                                    this.pushState('b');
+                                }
+                            },
+                            {
+                                regexp: /^b/,
+                                state: ['b'],
+                                token: 'b',
+                                action: function () {
+                                    this.popState();
+                                }
+                            }
+                        ]
+                    }
+                });
+                var parser = new Function(grammar.genCode({
+                    compressSymbol: 1
+                }))();
+
+                parser.yy = {
+                    log: log
+                };
+
+                expect(function () {
+                    parser.parse("abb");
+                }).toThrow('lex error at line 1:\n' +
+                    'abb\n' +
+                    '--^');
+            });
+
+
+            it('can not parse when compress', function () {
+                var log = [];
+                var grammar = new Grammar({
+                    productions: [
+                        {
+                            symbol: "S",
+                            rhs: [
+                                "a", "b", "b"
+                            ],
+                            action: function () {
+                                this.yy.log.push(this.$1);
+                                this.yy.log.push(this.$2);
+                            }
+                        }
+                    ],
+                    lexer: {
+                        rules: [
+                            {
+                                regexp: /^a/,
+                                token: 'a',
+                                action: function () {
+                                    this.pushState('b');
+                                }
+                            },
+                            {
+                                regexp: /^b/,
+                                state: ['b'],
+                                token: 'b',
+                                action: function () {
+                                    this.popState();
+                                }
+                            }
+                        ]
+                    }
+                });
+                var parser = new Function(grammar.genCode({
+                    compressSymbol: 0
+                }))();
+
+                parser.yy = {
+                    log: log
+                };
+
+                expect(function () {
+                    parser.parse("abb");
+                }).toThrow('lex error at line 1:\n' +
+                    'abb\n' +
+                    '--^');
+            });
+
 
         });
 
@@ -340,7 +548,7 @@ KISSY.use("kison", function (S, Kison) {
 
             expect(function () {
                 new Function(grammar.genCode())().parse("ccdd")
-            }).not.toThrow();
+            }).not.toThrow(undefined);
 
             S.log(window.TEST_RET.join("\n"));
         });
