@@ -1931,5 +1931,5 @@ KISSY.add("xtemplate/compiler/parser", function () {
         return undefined;
 
     };
-    return parser;;
+    return parser;
 });

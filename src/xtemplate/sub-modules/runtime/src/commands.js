@@ -14,7 +14,6 @@ KISSY.add("xtemplate/runtime/commands", function (S, XTemplate) {
             var buffer = '';
             var xcount;
             var single;
-            var singleRet;
             if (S.isArray(param0)) {
                 var opScopes = [0].concat(scopes);
                 xcount = param0.length;

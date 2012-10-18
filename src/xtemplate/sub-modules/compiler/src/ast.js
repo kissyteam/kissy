@@ -6,6 +6,13 @@ KISSY.add("xtemplate/compiler/ast", function (S) {
 
     var ast = {};
 
+    /**
+     * @ignore
+     * @param lineNumber
+     * @param statements
+     * @param [inverse]
+     * @constructor
+     */
     ast.ProgramNode = function (lineNumber, statements, inverse) {
         var self = this;
         self.lineNumber = lineNumber;
@@ -33,6 +40,14 @@ KISSY.add("xtemplate/compiler/ast", function (S) {
 
     ast.BlockNode.prototype.type = 'block';
 
+    /**
+     * @ignore
+     * @param lineNumber
+     * @param path
+     * @param [params]
+     * @param [hash]
+     * @constructor
+     */
     ast.TplNode = function (lineNumber, path, params, hash) {
         var self = this;
         self.lineNumber = lineNumber;
