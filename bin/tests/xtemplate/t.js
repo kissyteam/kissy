@@ -17,44 +17,8 @@ KISSY.add("tests/t", function () {
             includeCommand = commands["include"],
             getProperty = utils["getProperty"],
             subTpls = option.subTpls;
-        buffer += '<div>\r\n    \r\n    ';
-        var option0 = {
-            commands: commands,
-            utils: utils,
-            cache: cache,
-            subTpls: subTpls
-        };
-        var params1 = [];
-        var id2;
-        var tmp3 = getProperty("titles", scopes[0]);
-        if (tmp3 === false) {
-            log("can not find property: 'titles' at line 3", "warn");
-            id2 = "";
-        } else {
-            id2 = tmp3[0];
-        }
-        params1.push(id2);
-        option0.params = params1;
-        option0.fn = function (scopes) {
-            var buffer = "";
-            buffer += '\r\n        ';
-            var id4;
-            var tmp5 = getProperty("title", scopes[0]);
-            if (tmp5 === false) {
-                log("can not find property: 'title' at line 4", "warn");
-                id4 = "";
-            } else {
-                id4 = tmp5[0];
-            }
-            buffer += escapeHTML(id4);
-            buffer += '    \r\n    ';
-            return buffer;
-        };
-        try {
-            buffer += eachCommand(scopes, option0);
-        } catch (e) {
-            error(e.message + ": 'each' at line 3");
-        }
+        buffer += '<div>\r\n    \\\\\r\n    ';
+        buffer += escapeHTML(('\'2    \\') + (2));
         buffer += '\r\n    \r\n</div>';
         return buffer;
     };

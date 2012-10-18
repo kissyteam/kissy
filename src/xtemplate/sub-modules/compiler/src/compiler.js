@@ -296,6 +296,10 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
         },
 
         'string': function (e) {
+            // no need to escape \ or \n
+            // it is code in template too,
+            // just escape ' in case user use " for string in template code
+            // but here we use ' for string in template code
             return ['', ["'" + e.value.replace(/'/g, "\\'") + "'"]];
         },
 
