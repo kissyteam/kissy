@@ -2,21 +2,9 @@
     <description>Separator Build File</description>
 
     <property name="component.name" value="separator"/>
-    <property name="src.dir" location="./src/"/>
 
     <import file="../../tools/build-xml/common.xml"/>
 
-
-    <target name="concat">
-        <concat destfile="${component.src.dir.tmp}/separator-pkg.js"
-                encoding="${charset}" outputencoding="${charset}">
-            <fileset dir="${src.dir}" includes="**/*.js"/>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
-        </concat>
-    </target>
-
-    <target name="build" depends="concat,common.build">
+    <target name="build" depends="common-build.build">
     </target>
 </project>

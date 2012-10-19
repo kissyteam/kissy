@@ -2,13 +2,12 @@
     <description>Editor Build File</description>
 
     <property name="component.name" value="editor"/>
-    <property name="src.dir" location="./src/"/>
 
     <import file="../../tools/build-xml/common.xml"/>
 
     <property name="smartsprites.basedir" location="${kissy-tools.dir}/smartsprites/"/>
     <property name="editor.theme.tmp.dir" location="${component.src.dir.tmp}/theme/"/>
-    <property name="editor.theme.dir" location="${src.dir}/editor/theme/"/>
+    <property name="editor.theme.dir" location="${component.src.dir}/editor/theme/"/>
 
 
     <taskdef resource="smartsprites.xml">
@@ -23,14 +22,14 @@
         <copy todir="${component.src.dir.tmp}"
               encoding="${charset}"
               outputencoding="${charset}">
-            <fileset dir="${src.dir}/editor/"
+            <fileset dir="${component.src.dir}/editor/"
                      includes="**/*"/>
         </copy>
     </target>
 
     <target name="editor-js">
         <concat destfile="${component.src.dir.tmp}/editor-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <fileset dir="${src.dir}/editor/core"
+            <fileset dir="${component.src.dir}/editor/core"
                      includes="**/*.js"/>
             <filterchain>
                 <deletecharacters chars="${bom}"/>
@@ -69,7 +68,7 @@
             <filterchain>
                 <deletecharacters chars="${bom}"/>
             </filterchain>
-            <path location="${src.dir}/editor/full.js"/>
+            <path location="${component.src.dir}/editor/full.js"/>
         </concat>
     </target>
 
@@ -82,7 +81,7 @@
         <java classname="com.taobao.f2e.ExtractDependency">
 
             <arg value="-baseUrls"/>
-            <arg value="${src.dir}/editor/plugin/"/>
+            <arg value="${component.src.dir}/editor/plugin/"/>
 
             <arg value="-encodings"/>
             <arg value="${charset}"/>
@@ -91,15 +90,40 @@
             <arg value="utf-8"/>
 
             <arg value="-output"/>
-            <arg value="${src.dir}/editor/core/deps.js"/>
+            <arg value="${component.src.dir}/editor/core/deps.js"/>
 
             <classpath>
-                <pathelement path="${kissy-tools.dir}/module-compiler/module-compiler.jar"/>
+                <pathelement path="${kissy-tools.module-compiler}"/>
+                <pathelement path="${java.class.path}"/>
+            </classpath>
+        </java>
+
+        <mkdir dir="${component.meta.dir}" />
+
+        <java classname="com.taobao.f2e.ExtractDependency">
+
+            <arg value="-baseUrls"/>
+            <arg value="${component.src.dir}/editor/core/"/>
+
+            <arg value="-encodings"/>
+            <arg value="${charset}"/>
+
+            <arg value="-nameMap"/>
+            <arg value="(editor)(?:/.*)?||$1"/>
+
+            <arg value="-outputEncoding"/>
+            <arg value="utf-8"/>
+
+            <arg value="-output"/>
+            <arg value="${component.meta.dir}/modules.js"/>
+
+            <classpath>
+                <pathelement path="${kissy-tools.module-compiler}"/>
                 <pathelement path="${java.class.path}"/>
             </classpath>
         </java>
     </target>
 
-    <target name="build" depends="extract-dependency,editor,common.build">
+    <target name="build" depends="extract-dependency,editor,common-build.process">
     </target>
 </project>

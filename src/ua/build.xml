@@ -9,7 +9,7 @@
 
     <target name="concat">
         <concat destfile="${component.src.dir.tmp}/ua-pkg.js" encoding="${charset}" outputencoding="${charset}">
-            <fileset dir="${src.dir}" includes="**/*.js"/>
+            <fileset dir="${component.src.dir}" includes="**/*.js"/>
             <filterchain>
                 <deletecharacters chars="${bom}" />
             </filterchain>

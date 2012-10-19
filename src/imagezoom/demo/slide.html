@@ -333,11 +333,11 @@
         <p>淘宝、京东等电子商务网站的宝贝图片细节显示</p>
         <p>
             1) 凡客: 大图, 小图高度不相等.<br/>
-            <a href="http://www.vancl.com/Product_0006045/JianYueShengHuoFanRongNiuPiXiuXianXieefbc88XiDaiKuanefbc89KaQiSe.html"><img src="../assets/fanke.png" style="height: 200px;"/></a>
+            <a href="http://www.vancl.com/Product_0006045/JianYueShengHuoFanRongNiuPiXiuXianXieefbc88XiDaiKuanefbc89KaQiSe.html"><img src="./assets/fanke.png" style="height: 200px;"/></a>
         </p>
         <p>
             2) 京东: 黄色的镜片遮罩影响了色度. 透明的效果好些.<br/>
-            <a href="http://www.360buy.com/product/207169.html"><img src="../assets/jingdong.png" style="height: 200px;"/></a>
+            <a href="http://www.360buy.com/product/207169.html"><img src="./assets/jingdong.png" style="height: 200px;"/></a>
         </p>
     </section>
 </div>
@@ -346,11 +346,11 @@
     <section>
         <p>
             3) 淘宝: 默认有一个放大镜在小图右下角, 提醒用户有放大的功能, 用户引导性比较好. 鼠标移至小图上方, 放大镜消失; 小图上没有镜片效果.<br/>
-            <a href="http://item.taobao.com/auction/item_detail.htm?item_num_id=7168101872"><img src="../assets/taobao.png" style="height: 200px;"/></a>
+            <a href="http://item.taobao.com/auction/item_detail.htm?item_num_id=7168101872"><img src="./assets/taobao.png" style="height: 200px;"/></a>
         </p>
         <p>
             4) Zazzle: 大图和小图的高度有点偏差, 不知道是不是故意这么设计的.<br/>
-            <a href="http://www.zazzle.com/rudy_giuliani_autograph_tshirt-235490375443223402"><img src="../assets/zazzle.png" style="height: 200px;"/></a>
+            <a href="http://www.zazzle.com/rudy_giuliani_autograph_tshirt-235490375443223402"><img src="./assets/zazzle.png" style="height: 200px;"/></a>
         </p>
     </section>
 </div>
@@ -364,7 +364,7 @@
             <br/>* 在大图上移动, 用户鼠标的移动范围要大些, 影响效率;
             <br/>* 用户能直接定位到自己想看的位置.
             <br/>* 小图放大到大图, 过渡很自然.
-            <br/><a href="http://store.apple.com/us/product/IPAD_CASE?mco=MTc0MjU1OTM"><img src="../assets/apple.png" style="height: 200px;"/></a>
+            <br/><a href="http://store.apple.com/us/product/IPAD_CASE?mco=MTc0MjU1OTM"><img src="./assets/apple.png" style="height: 200px;"/></a>
         </p>
     </section>
 </div>
@@ -440,7 +440,7 @@
     <section>
         <p> - 假定：小图和大图的尺寸都已知</p>
         <p> - 小图上某个区域的尺寸也给定</p>
-        <p><img src="../assets/m1.png" style="height:300px;"/></p>
+        <p><img src="./assets/m1.png" style="height:300px;"/></p>
         <p> - 1) 目标显示区域如何计算</p>
         <p> - 2) 如何将小图上的显示区域映射到大图上的显示区域</p>
     </section>
@@ -450,14 +450,14 @@
 <div class="slide">
     <section>
         <p>目标显示区域计算</p>
-        <p><img src="../assets/m2.png" style="height:400px;"/></p>
+        <p><img src="./assets/m2.png" style="height:400px;"/></p>
     </section>
 </div>
 
 <div class="slide">
     <section>
         <p>镜片位置</p>
-        <p><img src="../assets/m4.png" style="height:400px;"/></p>
+        <p><img src="./assets/m4.png" style="height:400px;"/></p>
         <p>边界处理</p>
     </section>
 </div>
@@ -465,7 +465,7 @@
 <div class="slide">
     <section>
         <p>鼠标移动时，小区域映射到大区域</p>
-        <p><img src="../assets/m3.png" style="height:400px;"/></p>
+        <p><img src="./assets/m3.png" style="height:400px;"/></p>
     </section>
 </div>
 
@@ -789,7 +789,7 @@ zoom.on('hide', ...);
             }
             k(this._buildList.shift(), "to-build");
             return true
-        }, };
+        } };
         var n = function (v) {
             this._slides = (v || []).map(function (z, y) {
                 return new f(z, y)
@@ -906,7 +906,7 @@ zoom.on('hide', ...);
                     this.prev()
                 }
             }
-        }, };
+        } };
         var i = new n(e(".slide"))
     })();
 </script>

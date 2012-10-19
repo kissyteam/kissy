@@ -1,9 +1,10 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 17 20:16
+build time: Oct 19 16:43
 */
 /**
+ * @ignore
  * @fileOverview controller for overlay
  * @author yiminghe@gmail.com
  */
@@ -99,6 +100,7 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
         }
         var duration = effectCfg.duration,
             easing = effectCfg.easing,
+        // need to get before stop, in case anim 's complete function change it
             originalVisibility = el.css('visibility'),
             index = show ? 1 : 0;
         // 队列中的也要移去
@@ -127,17 +129,16 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
     }
 
     /**
-     * KISSY Overlay Component.
-     * xclass: 'overlay'.
-     * @class Overlay
+     * KISSY Overlay Component. xclass: 'overlay'.
+     * @class KISSY.Overlay
      * @extends KISSY.Component.Controller
-     * @extends KISSY.Component.UIBase.ContentBox
-     * @extends KISSY.Component.UIBase.Position
-     * @extends KISSY.Component.UIBase.Loading
-     * @extends KISSY.Component.UIBase.Align
-     * @extends KISSY.Component.UIBase.Close
-     * @extends KISSY.Component.UIBase.Resize
-     * @extends KISSY.Component.UIBase.Mask
+     * @mixins KISSY.Component.UIBase.ContentBox
+     * @mixins KISSY.Component.UIBase.Position
+     * @mixins KISSY.Component.UIBase.Loading
+     * @mixins KISSY.Component.UIBase.Align
+     * @mixins KISSY.Component.UIBase.Close
+     * @mixins KISSY.Component.UIBase.Resize
+     * @mixins KISSY.Component.UIBase.Mask
      */
     var Overlay = Component.Controller.extend([
         require("content-box"),
@@ -147,14 +148,9 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
         require("close"),
         require("resize"),
         require("mask")
-    ],
-        /**
-         * @lends Overlay#
-         */
-        {
+    ],{
             /**
-             * For overlay with effect,
-             * it should listen show and hide instead of afterVisibleChange.
+             * For overlay with effect, it should listen show and hide instead of afterVisibleChange.
              * @protected
              */
             _uiSetVisible: function (v) {
@@ -168,18 +164,24 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
             }
 
         }, {
-            ATTRS: /**
-             * @lends Overlay#
-             */
-            {
+            ATTRS: {
 
                 /**
-                 * Set v as overlay 's show effect <br>
-                 * v.effect (String): Default:none. can be set as "fade" or "slide" <br>
-                 * v.target (String|KISS.Node): The target node from which overlay should animate from while showing. Since KISSY 1.3.<br>
-                 * v.duration (Number): in seconds. Default:0.5. <br>
-                 * v.easing (String): see {@link KISSY.Anim.Easing} <br>
-                 * @type {Object}
+                 * Set v as overlay 's show effect
+                 *
+                 * v.effect (String): Default:none. can be set as "fade" or "slide"
+                 *
+                 * v.target (String|KISS.Node): The target node from which overlay should animate from while showing.
+                 * Since KISSY 1.3.
+                 *
+                 * v.duration (Number): in seconds. Default:0.5.
+                 *
+                 * v.easing (String): see {@link KISSY.Anim.Easing}
+                 *
+                 * @cfg {Object} effect
+                 */
+                /**
+                 * @ignore
                  */
                 effect: {
                     value: {
@@ -197,20 +199,45 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
 
                 },
 
-                // do not has focus
+                /**
+                 * overlay can not have focus.
+                 *
+                 * Defaults to: false.
+                 *
+                 * @cfg {boolean} focusable
+                 * @protected
+                 */
+                /**
+                 * @ignore
+                 */
                 focusable: {
                     value: false
                 },
 
-                // allowTextSelection
+                /**
+                 * overlay can have text selection.
+                 *
+                 * Defaults to: true.
+                 *
+                 * @cfg {boolean} allowTextSelection
+                 * @protected
+                 */
+                /**
+                 * @ignore
+                 */
                 allowTextSelection: {
                     value: true
                 },
 
                 /**
                  * whether this component can be closed.
-                 * @default false
-                 * @type {Boolean}
+                 *
+                 * Defaults to: false
+                 *
+                 * @cfg {Boolean} closable
+                 */
+                /**
+                 * @ignore
                  */
                 closable: {
                     value: false
@@ -218,8 +245,14 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
 
                 /**
                  * whether this component can be responsive to mouse.
-                 * @default false
-                 * @type {Boolean}
+                 *
+                 * Defaults to: false
+                 *
+                 * @cfg {Boolean} handleMouseEvents
+                 * @protected
+                 */
+                /**
+                 * @ignore
                  */
                 handleMouseEvents: {
                     value: false
@@ -237,6 +270,7 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
 }, {
     requires: ['component', './overlay-render']
 });/**
+ * @ignore
  * @fileOverview render for dialog
  * @author yiminghe@gmail.com
  */
@@ -269,6 +303,7 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender) {
 }, {
     requires: ['./overlay-render']
 });/**
+ * @ignore
  * @fileOverview KISSY.Dialog
  * @author yiminghe@gmail.com
  */
@@ -281,23 +316,16 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
     }
 
     /**
-     * @class
-     * KISSY Dialog Component.
-     * xclass: 'dialog'.
-     * @name Dialog
-     * @memberOf Overlay
-     * @extends Overlay
-     * @extends Component.UIBase.StdMod
-     * @extends Component.UIBase.Drag
+     * @class KISSY.Overlay.Dialog
+     * KISSY Dialog Component. xclass: 'overlay-dialog'.
+     * @extends KISSY.Overlay
+     * @mixins KISSY.Component.UIBase.StdMod
+     * @mixins KISSY.Component.UIBase.Drag
      */
     var Dialog = Overlay.extend([
         require("stdmod"),
         require("drag")
-    ],
-        /**
-         * @lends Overlay.Dialog#
-         */
-        {
+    ], {
             initializer: function () {
                 var self = this, draggable;
                 if (draggable = self.get("draggable")) {
@@ -341,15 +369,18 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
         },
 
         {
-            ATTRS: /**
-             * @lends Overlay.Dialog#
-             */
-            {
+            ATTRS: {
 
                 /**
                  * whether this component can be closed.
-                 * @default true
-                 * @type {Boolean}
+                 *
+                 * Defaults to: true
+                 *
+                 * @cfg {Boolean} closable
+                 * @protected
+                 */
+                /**
+                 * @ignore
                  */
                 closable: {
                     value: true
@@ -359,19 +390,39 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                     value: DialogRender
                 },
 
+                /**
+                 * whether this component can be focused.
+                 *
+                 * Defaults to: true
+                 *
+                 * @cfg {Boolean} focusable
+                 * @protected
+                 */
+                /**
+                 * @ignore
+                 */
                 focusable: {
                     value: true
                 },
 
+
                 /**
+                 * whether this component can be closed by press escape key.
+                 *
+                 * Defaults to: true
+                 *
+                 * @cfg {Boolean} escapeToClose
                  * @since 1.3.0
+                 */
+                /**
+                 * @ignore
                  */
                 escapeToClose: {
                     value: true
                 }
             }
         }, {
-            xclass: 'dialog',
+            xclass: 'overlay-dialog',
             priority: 20
         });
 
@@ -427,6 +478,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 });
 
 /**
+ * @ignore
+ *
  * 2012-09-06 yiminghe@gmail.com
  *  merge aria with dialog
  *  http://www.w3.org/TR/wai-aria-practices/#trap_focus
@@ -438,6 +491,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
 
 /**
+ * @ignore
  * @fileOverview KISSY Overlay
  * @author yiminghe@gmail.com
  */
@@ -460,9 +514,11 @@ KISSY.add("overlay/overlay-render", function (S, UA, Component) {
 });
 
 /**
+ * @ignore
  * 2010-11-09 2010-11-10 yiminghe@gmail.com重构，attribute-base-uibase-Overlay ，采用 UIBase.create
  */
 /**
+ * @ignore
  * @fileOverview overlay
  * @author yiminghe@gmail.com
  */
@@ -483,211 +539,214 @@ KISSY.add("overlay", function (S, O, OR, D, DR, P) {
         "overlay/popup"
     ]
 });/**
+ * @ignore
  * @fileOverview KISSY.Popup
  * @author qiaohua@taobao.com, yiminghe@gmail.com
  */
 KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
     /**
-     * @class
-     * KISSY Popup Component.
-     * xclass: 'popup'.
-     * @memberOf Overlay
-     * @extends Overlay
-     * @name Popup
+     * @class KISSY.Overlay.Popup
+     * KISSY Popup Component. xclass: 'overlay-popup'.
+     * @extends KISSY.Overlay
      */
-    var Popup = Overlay.extend(
-        /**
-         * @lends Overlay.Popup#
-         */
-        {
-            /**
-             * see {@link Component.UIBase.Box#show}
-             * @name Overlay.Popup#show
-             * @method
-             */
+    var Popup = Overlay.extend({
 
-
-
-            initializer:function () {
-                var self = this,
-                // 获取相关联的 DOM 节点
-                    trigger = self.get("trigger");
-                if (trigger) {
-                    if (self.get("triggerType") === 'mouse') {
-                        self._bindTriggerMouse();
-                        self.on('afterRenderUI', function () {
-                            self._bindContainerMouse();
-                        });
-                    } else {
-                        self._bindTriggerClick();
-                    }
+        initializer: function () {
+            var self = this,
+            // 获取相关联的 DOM 节点
+                trigger = self.get("trigger");
+            if (trigger) {
+                if (self.get("triggerType") === 'mouse') {
+                    self._bindTriggerMouse();
+                    self.on('afterRenderUI', function () {
+                        self._bindContainerMouse();
+                    });
+                } else {
+                    self._bindTriggerClick();
                 }
-            },
+            }
+        },
 
-            _bindTriggerMouse:function () {
-                var self = this,
-                    trigger = self.get("trigger"),
-                    timer;
+        _bindTriggerMouse: function () {
+            var self = this,
+                trigger = self.get("trigger"),
+                timer;
 
-                self.__mouseEnterPopup = function (ev) {
-                    self._clearHiddenTimer();
-                    timer = S.later(function () {
-                        self._showing(ev);
-                        timer = undefined;
-                    }, self.get('mouseDelay') * 1000);
-                };
-
-                S.each(trigger, function (el) {
-                    S.one(el).on('mouseenter', self.__mouseEnterPopup);
-                });
-
-                self._mouseLeavePopup = function () {
-                    if (timer) {
-                        timer.cancel();
-                        timer = undefined;
-                    }
-
-                    self._setHiddenTimer();
-                };
-
-                S.each(trigger, function (el) {
-                    S.one(el).on('mouseleave', self._mouseLeavePopup);
-                });
-            },
-
-            _bindContainerMouse:function () {
-                var self = this;
-                self.get('el')
-                    .on('mouseleave', self._setHiddenTimer, self)
-                    .on('mouseenter', self._clearHiddenTimer, self);
-            },
-
-            _setHiddenTimer:function () {
-                var self = this;
-                self._hiddenTimer = S.later(function () {
-                    self._hiding();
+            self.__mouseEnterPopup = function (ev) {
+                self._clearHiddenTimer();
+                timer = S.later(function () {
+                    self._showing(ev);
+                    timer = undefined;
                 }, self.get('mouseDelay') * 1000);
-            },
+            };
 
-            _clearHiddenTimer:function () {
-                var self = this;
-                if (self._hiddenTimer) {
-                    self._hiddenTimer.cancel();
-                    self._hiddenTimer = undefined;
+            S.each(trigger, function (el) {
+                S.one(el).on('mouseenter', self.__mouseEnterPopup);
+            });
+
+            self._mouseLeavePopup = function () {
+                if (timer) {
+                    timer.cancel();
+                    timer = undefined;
                 }
-            },
 
-            _bindTriggerClick:function () {
-                var self = this;
-                self.__clickPopup = function (ev) {
-                    ev.halt();
-                    if (self.get('toggle')) {
-                        self[self.get('visible') ? '_hiding' : '_showing'](ev);
-                    } else {
-                        self._showing(ev);
-                    }
-                };
-                S.each(self.get("trigger"), function (el) {
-                    S.one(el).on('click', self.__clickPopup);
-                });
-            },
+                self._setHiddenTimer();
+            };
 
-            _showing:function (ev) {
-                var self = this;
-                self.set('currentTrigger', S.one(ev.target));
-                self.show();
-            },
+            S.each(trigger, function (el) {
+                S.one(el).on('mouseleave', self._mouseLeavePopup);
+            });
+        },
 
-            _hiding:function () {
-                this.set('currentTrigger', undefined);
-                this.hide();
-            },
+        _bindContainerMouse: function () {
+            var self = this;
+            self.get('el')
+                .on('mouseleave', self._setHiddenTimer, self)
+                .on('mouseenter', self._clearHiddenTimer, self);
+        },
 
-            destructor:function () {
-                var self = this,
-                    root,
-                    t = self.get("trigger");
-                if (t) {
-                    if (self.__clickPopup) {
-                        t.each(function (el) {
-                            el.detach('click', self.__clickPopup);
-                        });
-                    }
-                    if (self.__mouseEnterPopup) {
-                        t.each(function (el) {
-                            el.detach('mouseenter', self.__mouseEnterPopup);
-                        });
-                    }
+        _setHiddenTimer: function () {
+            var self = this;
+            self._hiddenTimer = S.later(function () {
+                self._hiding();
+            }, self.get('mouseDelay') * 1000);
+        },
 
-                    if (self._mouseLeavePopup) {
-                        t.each(function (el) {
-                            el.detach('mouseleave', self._mouseLeavePopup);
-                        });
-                    }
+        _clearHiddenTimer: function () {
+            var self = this;
+            if (self._hiddenTimer) {
+                self._hiddenTimer.cancel();
+                self._hiddenTimer = undefined;
+            }
+        },
+
+        _bindTriggerClick: function () {
+            var self = this;
+            self.__clickPopup = function (ev) {
+                ev.halt();
+                if (self.get('toggle')) {
+                    self[self.get('visible') ? '_hiding' : '_showing'](ev);
+                } else {
+                    self._showing(ev);
                 }
-                if (root = self.get('el')) {
-                    root.detach('mouseleave', self._setHiddenTimer, self)
-                        .detach('mouseenter', self._clearHiddenTimer, self);
+            };
+            S.each(self.get("trigger"), function (el) {
+                S.one(el).on('click', self.__clickPopup);
+            });
+        },
+
+        _showing: function (ev) {
+            var self = this;
+            self.set('currentTrigger', S.one(ev.target));
+            self.show();
+        },
+
+        _hiding: function () {
+            this.set('currentTrigger', undefined);
+            this.hide();
+        },
+
+        destructor: function () {
+            var self = this,
+                root,
+                t = self.get("trigger");
+            if (t) {
+                if (self.__clickPopup) {
+                    t.each(function (el) {
+                        el.detach('click', self.__clickPopup);
+                    });
+                }
+                if (self.__mouseEnterPopup) {
+                    t.each(function (el) {
+                        el.detach('mouseenter', self.__mouseEnterPopup);
+                    });
+                }
+
+                if (self._mouseLeavePopup) {
+                    t.each(function (el) {
+                        el.detach('mouseleave', self._mouseLeavePopup);
+                    });
                 }
             }
-        }, {
-            ATTRS:/**
-             * @lends Overlay.Popup#
+            if (root = self.get('el')) {
+                root.detach('mouseleave', self._setHiddenTimer, self)
+                    .detach('mouseenter', self._clearHiddenTimer, self);
+            }
+        }
+    }, {
+        ATTRS: {
+            /**
+             * Trigger elements to show popup.
+             * @cfg {KISSY.NodeList} trigger
              */
-            {
-                /**
-                 * Trigger elements to show popup.
-                 * @type {KISSY.NodeList}
-                 */
-                trigger:{                          // 触发器
-                    setter:function (v) {
-                        if (typeof v == 'string') {
-                            v = S.all(v);
-                        }
-                        return v;
+            /**
+             * @ignore
+             */
+            trigger: {                          // 触发器
+                setter: function (v) {
+                    if (typeof v == 'string') {
+                        v = S.all(v);
                     }
-                },
-                /**
-                 * How to activate trigger element, "click" or "mouse",
-                 * @default "click".
-                 * @type {String}
-                 */
-                triggerType:{
-                    // 触发类型
-                    value:'click'
-                },
-                currentTrigger:{},
-                /**
-                 * When trigger type is mouse, the delayed time to show popup.
-                 * @default 0.1, in seconds.
-                 * @type {Number}
-                 */
-                mouseDelay:{
-                    // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
-                    value:0.1
-                },
-                /**
-                 * When trigger type is click, whether support toggle.
-                 * @default false
-                 * @type {Boolean}
-                 */
-                toggle:{
-                    // triggerType 为 click 时, Popup 是否有toggle功能
-                    value:false
+                    return v;
                 }
+            },
+            /**
+             * How to activate trigger element, "click" or "mouse".
+             *
+             * Defaults to: "click".
+             *
+             * @cfg {String} triggerType
+             */
+            /**
+             * @ignore
+             */
+            triggerType: {
+                // 触发类型
+                value: 'click'
+            },
+            currentTrigger: {},
+            /**
+             * When trigger type is mouse, the delayed time to show popup.
+             *
+             * Defaults to: 0.1, in seconds.
+             *
+             * @cfg {Number} mouseDelay
+             */
+            /**
+             * @ignore
+             */
+            mouseDelay: {
+                // triggerType 为 mouse 时, Popup 显示的延迟时间, 默认为 100ms
+                value: 0.1
+            },
+            /**
+             * When trigger type is click, whether support toggle.
+             *
+             * Defaults to: false
+             *
+             * @cfg {Boolean} toggle
+             */
+            /**
+             * @ignore
+             */
+            toggle: {
+                // triggerType 为 click 时, Popup 是否有toggle功能
+                value: false
             }
-        }, {
-            xclass:'popup',
-            priority:20
-        });
+        }
+    }, {
+        xclass: 'overlay-popup',
+        priority: 20
+    });
 
     return Popup;
 }, {
-    requires:["./base"]
+    requires: ["./base"]
 });
 
 /**
+ * @ignore
  * 2011-05-17
  *  - 承玉：利用 initializer , destructor ,ATTRS
  **/

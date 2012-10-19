@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 17 17:26
+build time: Oct 19 16:15
 */
 KISSY.add("dd/constrain",function(i,l,k){function j(){j.superclass.constructor.apply(this,arguments);this[c]={}}function g(c){var b,m,c=c.drag.get("dragNode"),a=this.get("constrain");if(a){if(!0===a||a.setTimeout){var e;e=!0===a?d(f):d(a);this.__constrainRegion={left:b=e.scrollLeft(),top:m=e.scrollTop(),right:b+e.width(),bottom:m+e.height()}}if(a.nodeType||"string"==typeof a)a=d(a);a.getDOMNode?(b=a.offset(),this.__constrainRegion={left:b.left,top:b.top,right:b.left+a.outerWidth(),bottom:b.top+a.outerHeight()}):
 i.isPlainObject(a)&&(this.__constrainRegion=a);this.__constrainRegion&&(this.__constrainRegion.right-=c.outerWidth(),this.__constrainRegion.bottom-=c.outerHeight())}}function h(a){var b={},c=a.left,f=a.top,e=this.__constrainRegion;e&&(b.left=Math.min(Math.max(e.left,c),e.right),b.top=Math.min(Math.max(e.top,f),e.bottom),a.drag.setInternal("actualPos",b))}function a(){this.__constrainRegion=null}var d=k.all,c="__constrain_destructors",e=i.stamp,o=i.guid("__dd_constrain"),f=i.Env.host;i.extend(j,l,

@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 17 17:25
+build time: Oct 19 16:08
 */
 KISSY.add("combobox/base",function(e,m,h,n,d,k,l){function g(a,b){if(b){var c=b.get("textContent"),f=a.get("separatorType");w(a,c+(f==p?"":" "));a._savedInputValue=c}}function j(a,b){var c=a.get("el"),f=a.get("prefixCls")+"combobox-invalid",i=a.get("invalidEl");b?(c.addClass(f),i.attr("title",b),i.show()):(c.removeClass(f),i.hide())}function q(a,b){var c=a.get("menu");if(c&&c.xclass)if(b)c=h.create(c,a),a.setInternal("menu",c);else return null;return c}function r(){var a=q(this);if(a&&a.get("visible"))if(this.get("multiple")&&
 this.get("alignWithCursor")){var b=x(this),c=b.tokens,a=this.get("menu"),f=b.cursorPosition,i=b.tokenIndex,b=this.get("input"),c=c.slice(0,i).join("").length;0<c&&++c;b.prop("selectionStart",c);b.prop("selectionEnd",c);c=b.prop("KsCursorOffset");b.prop("selectionStart",f);b.prop("selectionEnd",f);a.set("xy",[c.left,c.top])}else a=this.get("menu"),f=e.clone(a.get("align")),f.node=this.get("el"),e.mix(f,A,!1),a.set("align",f)}function s(){var a=this;a._focusoutDismissTimer=setTimeout(function(){a.set("collapsed",

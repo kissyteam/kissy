@@ -1,22 +1,10 @@
 <project name="xtemplate/compiler.build" default="build" basedir=".">
-    <description>xtemplate Build File</description>
+    <description>xtemplate compiler Build File</description>
 
     <property name="component.name" value="xtemplate/compiler"/>
-    <property name="src.dir" location="./src/"/>
 
     <import file="../../../../tools/build-xml/common.xml"/>
 
-    <target name="concat">
-        <concat destfile="${component.src.dir.tmp}/compiler-pkg.js"
-                encoding="${charset}"
-                outputencoding="${charset}">
-            <fileset dir="${src.dir}" includes="**/*.js"/>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
-        </concat>
-    </target>
-
-    <target name="build" depends="concat,common.build">
+    <target name="build" depends="common-build.build">
     </target>
 </project>

@@ -1,10 +1,10 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 17 17:29
+build time: Oct 19 16:40
 */
 /**
- * @fileOverview menu model and controller for kissy,accommodate menu items
+ * @fileOverview menu controllerler for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
@@ -946,7 +946,7 @@ KISSY.add("menu/popupmenuRender", function (S, UA, Component, MenuRender) {
 }, {
     requires:['ua', 'component', './menuRender']
 });/**
- * @fileOverview submenu model and control for kissy , transfer item's keycode to menu
+ * @fileOverview submenu controller for kissy , transfer item's keycode to menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender) {

@@ -10,7 +10,7 @@
         <concat destfile="${component.src.dir.tmp}/waterfall-pkg.js"
                 encoding="${charset}"
                 outputencoding="${charset}">
-            <fileset dir="${src.dir}" includes="**/*.js"/>
+            <fileset dir="${component.src.dir}" includes="**/*.js"/>
             <filterchain>
                 <deletecharacters chars="${bom}"/>
             </filterchain>

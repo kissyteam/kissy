@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 17 19:45
+build time: Oct 19 16:08
 */
 /**
  * @ignore
@@ -3289,7 +3289,7 @@ KISSY.add("component/uibase/loading-render", function (S, Node) {
 KISSY.add("component/uibase/loading", function () {
 
     /**
-     * @class KISSY.DD.UIBase.Loading
+     * @class KISSY.Component.UIBase.Loading
      * Loading extension class. Make component to be able to mask loading.
      */
     function Loading() {
@@ -3709,8 +3709,8 @@ KISSY.add("component/uibase/position", function (S) {
 KISSY.add("component/uibase/resize", function (S) {
 
     /**
-     * @name KISSY.Component.UIBase.Resize
-     * @class Resizable extension class. Make component resizable
+     * @class KISSY.Component.UIBase.Resize
+     * Resizable extension class. Make component resizable
      */
     function Resize() {
     }
