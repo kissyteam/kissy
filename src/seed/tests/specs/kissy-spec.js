@@ -311,7 +311,7 @@ describe('kissy.js', function () {
         try {
             S.error('wrong');
         } catch (e) {
-            expect(e).toBe('wrong');
+            expect(e.message).toBe('wrong');
         }
     });
 

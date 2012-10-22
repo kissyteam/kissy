@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 16:15
+build time: Oct 22 19:41
 */
 /**
  * @ignore
@@ -214,6 +214,32 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         _showShimMove = S.throttle(move,
             MOVE_DELAY),
         SHIM_Z_INDEX = 999999;
+
+
+    var TARGET = 'target',
+        BUTTON = 'button',
+        touchSupport = 'ontouchstart' in doc,
+    // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
+        msPointerEnabled = "msPointerEnabled" in win.navigator,
+        CURRENT_TARGET = 'currentTarget',
+        DRAG_START_EVENT ,
+        DRAG_MOVE_EVENT,
+        DRAG_END_EVENT;
+
+    if (touchSupport) {
+        DRAG_START_EVENT = 'touchstart';
+        DRAG_MOVE_EVENT = 'touchmove';
+        DRAG_END_EVENT = 'touchend';
+    } else if (msPointerEnabled) {
+        DRAG_START_EVENT = 'MSPointerDown';
+        DRAG_MOVE_EVENT = 'MSPointerMove';
+        DRAG_END_EVENT = 'MSPointerUp';
+    } else {
+        DRAG_START_EVENT = 'mousedown';
+        DRAG_MOVE_EVENT = 'mousemove';
+        DRAG_END_EVENT = 'mouseup';
+    }
+
 
     /**
      * @class KISSY.DD.DDM
@@ -674,19 +700,12 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
     ddm.cacheWH = cacheWH;
     ddm.PREFIX_CLS = 'ks-dd-';
 
-    var TARGET = 'target',
-        BUTTON = 'button',
-        touchSupport = 'ontouchstart' in doc,
-        CURRENT_TARGET = 'currentTarget',
-        DRAG_START_EVENT = ddm.DRAG_START_EVENT = touchSupport ? 'touchstart' : 'mousedown',
-        DRAG_MOVE_EVENT = ddm.DRAG_MOVE_EVENT = touchSupport ? 'touchmove' : 'mousemove',
-        DRAG_END_EVENT = ddm.DRAG_END_EVENT = touchSupport ? 'touchend' : 'mouseup';
 
-    var normalTouch = function (e, touch) {
+    function normalTouch(e, touch) {
         e[TARGET] = e[TARGET] || touch[TARGET];
         e[CURRENT_TARGET] = e[CURRENT_TARGET] || touch[CURRENT_TARGET];
         e[BUTTON] = e[BUTTON] || 0;
-    };
+    }
 
     ddm._normalHandlePreDragStart = function (handle) {
         return function (e) {
@@ -700,6 +719,10 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             handle.call(this, e);
         };
     };
+
+    ddm.DRAG_START_EVENT = DRAG_START_EVENT;
+    ddm.DRAG_MOVE_EVENT = DRAG_MOVE_EVENT;
+    ddm.DRAG_END_EVENT = DRAG_END_EVENT;
 
     return ddm;
 }, {

@@ -340,7 +340,7 @@ var KISSY = (function (undefined) {
         error: function (msg) {
             if (S.Config.debug) {
                 // with stack info!
-                throw new Error(msg);
+                throw msg instanceof  Error ? msg : new Error(msg);
             }
         },
 

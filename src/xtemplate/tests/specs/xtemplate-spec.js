@@ -582,7 +582,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                 try {
                     new XTemplate(tpl).render(data);
                 } catch (e) {
-                    info = e;
+                    info = e.message;
 
                 }
                 if (S.config('debug')) {
