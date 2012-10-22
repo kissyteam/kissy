@@ -530,11 +530,17 @@ describe('lang.js', function () {
 
 
     it("S.bind", function () {
+
+
         function x() {
             expect(this).toBe(window);
         }
 
         S.bind(x)();
+
+        if (x.bind) {
+            x.bind()();
+        }
 
         function y(a, b, c) {
             expect(a).toBe(1);
@@ -548,6 +554,9 @@ describe('lang.js', function () {
         // when new ,ignore context
         new (S.bind(y, context, 1, 2))(3);
 
+        if (y.bind) {
+            new (y.bind(context, 1, 2))(3);
+        }
 
         function z(a, b, c) {
             expect(a).toBe(1);
@@ -558,6 +567,10 @@ describe('lang.js', function () {
 
         // consider context
         S.bind(z, context, 1, 2)(3);
+
+        if (z.bind) {
+            z.bind(context, 1, 2)(3);
+        }
     });
 
 
