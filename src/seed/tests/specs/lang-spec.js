@@ -1,25 +1,4 @@
 describe('lang.js', function () {
-    beforeEach(function () {
-        this.addMatchers({
-            toBeAlmostEqual: function (expected) {
-                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
-            },
-
-
-            toBeEqual: function (expected) {
-                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
-            },
-
-            toBeArrayEq: function (expected) {
-                var actual = this.actual;
-                if (expected.length != actual.length) return false;
-                for (var i = 0; i < expected.length; i++) {
-                    if (expected[i] != actual[i]) return false;
-                }
-                return true;
-            }
-        });
-    });
     var S = KISSY,
         host = S.Env.host,
         doc = host['document'],
@@ -311,10 +290,15 @@ describe('lang.js', function () {
         }
 
 
-        function X(){}
+        function X() {
+        }
+
         expect(S.isPlainObject(new X())).toBe(false);
-        function Y(){this.x=1;}
-        Y.prototype.z= S.noop;
+        function Y() {
+            this.x = 1;
+        }
+
+        Y.prototype.z = S.noop;
         expect(S.isPlainObject(new Y())).toBe(false);
 
         // Host
@@ -519,14 +503,14 @@ describe('lang.js', function () {
         var singles = ["foot", "goose", "moose"];
         var plurals = S.map(singles, makePseudoPlural);
 
-        expect(plurals).toBeArrayEq(["feet", "geese", "meese"]);
+        expect(plurals).toEqual(["feet", "geese", "meese"]);
 
 
         var a = S.map("Hello World",
             function (x) {
                 return x.charCodeAt(0);
             });
-        expect(a).toBeArrayEq([72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100]);
+        expect(a).toEqual([72, 101, 108, 108, 111, 32, 87, 111, 114, 108, 100]);
 
     });
 
@@ -574,6 +558,37 @@ describe('lang.js', function () {
 
         // consider context
         S.bind(z, context, 1, 2)(3);
+    });
+
+
+    it("S.rbind", function () {
+        function x() {
+            expect(this).toBe(window);
+        }
+
+        S.rbind(x)();
+
+        function y(a, b, c) {
+            expect(a).toBe(3);
+            expect(b).toBe(1);
+            expect(c).toBe(2);
+            expect(this instanceof y).toBe(true);
+        }
+
+        var context = {};
+
+        // when new, ignore context
+        new (S.rbind(y, context, 1, 2))(3);
+
+        function z(a, b, c) {
+            expect(a).toBe(3);
+            expect(b).toBe(1);
+            expect(c).toBe(2);
+            expect(this).toBe(context);
+        }
+
+        // consider context
+        S.rbind(z, context, 1, 2)(3);
     });
 
 

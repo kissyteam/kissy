@@ -23,7 +23,18 @@
     <target name="seed-concat">
         <concat destfile="${component.src.dir.tmp}/seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
             <path location="${component.src.dir}/kissy.js"/>
-            <path location="${component.src.dir}/lang.js"/>
+
+
+            <!-- kissy lang start-->
+            <path location="${component.src.dir}/lang/object.js"/>
+            <path location="${component.src.dir}/lang/array.js"/>
+            <path location="${component.src.dir}/lang/escape.js"/>
+            <path location="${component.src.dir}/lang/function.js"/>
+            <path location="${component.src.dir}/lang/lang.js"/>
+            <path location="${component.src.dir}/lang/string.js"/>
+            <path location="${component.src.dir}/lang/type.js"/>
+            <!-- kissy lang end-->
+
             <path location="${component.src.dir}/promise.js"/>
             <path location="${component.src.dir}/path.js"/>
             <path location="${component.src.dir}/uri.js"/>
@@ -54,7 +65,17 @@
         <concat destfile="${component.src.dir.tmp}/kissy-nodejs-pkg.js" encoding="${charset}"
                 outputencoding="${charset}">
             <path location="${component.src.dir}/kissy.js"/>
-            <path location="${component.src.dir}/lang.js"/>
+
+            <!-- kissy lang start-->
+            <path location="${component.src.dir}/lang/object.js"/>
+            <path location="${component.src.dir}/lang/array.js"/>
+            <path location="${component.src.dir}/lang/escape.js"/>
+            <path location="${component.src.dir}/lang/function.js"/>
+            <path location="${component.src.dir}/lang/lang.js"/>
+            <path location="${component.src.dir}/lang/string.js"/>
+            <path location="${component.src.dir}/lang/type.js"/>
+            <!-- kissy lang end-->
+
             <path location="${component.src.dir}/promise.js"/>
             <path location="${component.src.dir}/path.js"/>
             <path location="${component.src.dir}/uri.js"/>

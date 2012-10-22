@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 22 19:30
+build time: Oct 22 21:07
 */
 /**
  * @ignore
@@ -31,16 +31,6 @@ build time: Oct 22 19:30
 var KISSY = (function (undefined) {
 
     var host = this,
-        MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
-        hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
-        enumProperties = [
-            'hasOwnProperty',
-            'isPrototypeOf',
-            'propertyIsEnumerable',
-            'toString',
-            'toLocaleString',
-            'valueOf'
-        ],
         S,
         guid = 0,
         EMPTY = '';
@@ -48,46 +38,12 @@ var KISSY = (function (undefined) {
     S = {
 
         /**
-         * Copies all the properties of s to r.
-         * @method
-         * @param {Object} r the augmented object
-         * @param {Object} s the object need to augment
-         * @param {Boolean|Object} [ov=true] whether overwrite existing property or config.
-         * @param {Boolean} [ov.overwrite=true] whether overwrite existing property.
-         * @param {String[]} [ov.whitelist] array of white-list properties
-         * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
-         * @param {String[]} [wl] array of white-list properties
-         * @param [deep=false] {Boolean} whether recursive mix if encounter object.
-         * @return {Object} the augmented object
-         *
-         * for example:
-         *     @example
-         *     var t = {};
-         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true}) => {x: {y: 3, z: 4, a: {}}}, a !== t
-         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true, overwrite: false}) => {x: {y: 2, z: 4, a: {}}}, a !== t
-         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, 1) => {x: {y: 3, a: t}}
-         */
-        mix: function (r, s, ov, wl, deep) {
-            if (typeof ov === 'object') {
-                wl = ov['whitelist'];
-                deep = ov['deep'];
-                ov = ov['overwrite'];
-            }
-            var cache = [], c, i = 0;
-            mixInternal(r, s, ov, wl, deep, cache);
-            while (c = cache[i++]) {
-                delete c[MIX_CIRCULAR_DETECTION];
-            }
-            return r;
-        },
-
-        /**
          * The build time of the library.
-         * NOTICE: '20121022193028' will replace with current timestamp when compressing.
+         * NOTICE: '20121022210741' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121022193028',
+        __BUILD_TIME: '20121022210741',
         /**
          * KISSY Environment.
          * @private
@@ -117,139 +73,6 @@ var KISSY = (function (undefined) {
          * @type {String}
          */
         version: '1.40dev',
-
-        /**
-         * Returns a new object containing all of the properties of
-         * all the supplied objects. The properties from later objects
-         * will overwrite those in earlier objects. Passing in a
-         * single object will create a shallow copy of it.
-         * @param {...Object} var_args objects need to be merged
-         * @return {Object} the new merged object
-         */
-        merge: function (var_args) {
-            var_args = S.makeArray(arguments);
-            var o = {}, i, l = var_args.length;
-            for (i = 0; i < l; i++) {
-                S.mix(o, var_args[i]);
-            }
-            return o;
-        },
-
-        /**
-         * Applies prototype properties from the supplier to the receiver.
-         * @param   {Object} r received object
-         * @param   {...Object} var_args object need to  augment
-         *          {Boolean} [ov=true] whether overwrite existing property
-         *          {String[]} [wl] array of white-list properties
-         * @return  {Object} the augmented object
-         */
-        augment: function (r, var_args) {
-            var args = S.makeArray(arguments),
-                len = args.length - 2,
-                i = 1,
-                ov = args[len],
-                wl = args[len + 1];
-
-            if (!S.isArray(wl)) {
-                ov = wl;
-                wl = undefined;
-                len++;
-            }
-            if (!S.isBoolean(ov)) {
-                ov = undefined;
-                len++;
-            }
-
-            for (; i < len; i++) {
-                S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
-            }
-
-            return r;
-        },
-
-        /**
-         * Utility to set up the prototype, constructor and superclass properties to
-         * support an inheritance strategy that can chain constructors and methods.
-         * Static members will not be inherited.
-         * @param r {Function} the object to modify
-         * @param s {Function} the object to inherit
-         * @param {Object} [px] prototype properties to add/override
-         * @param {Object} [sx] static properties to add/override
-         * @return r {Object}
-         */
-        extend: function (r, s, px, sx) {
-            if (!s || !r) {
-                return r;
-            }
-
-            var create = Object.create ?
-                    function (proto, c) {
-                        return Object.create(proto, {
-                            constructor: {
-                                value: c
-                            }
-                        });
-                    } :
-                    function (proto, c) {
-                        function F() {
-                        }
-
-                        F.prototype = proto;
-
-                        var o = new F();
-                        o.constructor = c;
-                        return o;
-                    },
-                sp = s.prototype,
-                rp;
-
-            // add prototype chain
-            rp = create(sp, r);
-            r.prototype = S.mix(rp, r.prototype);
-            r.superclass = create(sp, s);
-
-            // add prototype overrides
-            if (px) {
-                S.mix(rp, px);
-            }
-
-            // add object overrides
-            if (sx) {
-                S.mix(r, sx);
-            }
-
-            return r;
-        },
-
-        // The KISSY System Framework
-
-        /**
-         * Returns the namespace specified and creates it if it doesn't exist. Be careful
-         * when naming packages. Reserved words may work in some browsers and not others.
-         *
-         * for example:
-         *      @example
-         *      S.namespace('KISSY.app'); // returns KISSY.app
-         *      S.namespace('app.Shop'); // returns KISSY.app.Shop
-         *      S.namespace('TB.app.Shop', true); // returns TB.app.Shop
-         *
-         * @return {Object}  A reference to the last namespace object created
-         */
-        namespace: function () {
-            var args = S.makeArray(arguments),
-                l = args.length,
-                o = null, i, j, p,
-                global = (args[l - 1] === true && l--);
-
-            for (i = 0; i < l; i++) {
-                p = (EMPTY + args[i]).split('.');
-                o = global ? host : this;
-                for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                    o = o[p[j]] = o[p[j]] || { };
-                }
-            }
-            return o;
-        },
 
         /**
          * set KISSY configuration
@@ -356,7 +179,74 @@ var KISSY = (function (undefined) {
          */
         guid: function (pre) {
             return (pre || EMPTY) + guid++;
+        }
+    };
+
+    // exports for nodejs
+    if (S.Env.nodejs) {
+        S.KISSY = S;
+        module.exports = S;
+    }
+
+    return S;
+
+})();/**
+ * @ignore
+ * @fileOverview object utilities of lang
+ * @author yiminghe@gmail.com
+ *
+ */
+(function (S, undefined) {
+
+    var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
+        STAMP_MARKER = '__~ks_stamped',
+        host = this,
+        TRUE=true,
+        EMPTY = '',
+        hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
+        enumProperties = [
+            'hasOwnProperty',
+            'isPrototypeOf',
+            'propertyIsEnumerable',
+            'toString',
+            'toLocaleString',
+            'valueOf'
+        ];
+
+    function mix(r, s) {
+        for (var i in s) {
+            r[i] = s[i];
+        }
+    }
+
+    mix(S, {
+        /**
+         * stamp a object by guid
+         * @param {Object} o object needed to be stamped
+         * @param {Boolean} [readOnly] while set marker on o if marker does not exist
+         * @param {String} [marker] the marker will be set on Object
+         * @return {String} guid associated with this object
+         * @member KISSY
+         */
+        stamp: function (o, readOnly, marker) {
+            if (!o) {
+                return o
+            }
+            marker = marker || STAMP_MARKER;
+            var guid = o[marker];
+            if (guid) {
+                return guid;
+            } else if (!readOnly) {
+                try {
+                    guid = o[marker] = S.guid(marker);
+                }
+                catch (e) {
+                    guid = undefined;
+                }
+            }
+            return guid;
         },
+
 
         /**
          * Get all the property names of o as array
@@ -379,8 +269,177 @@ var KISSY = (function (undefined) {
             }
 
             return result;
+        },
+
+
+        /**
+         * Copies all the properties of s to r.
+         * @method
+         * @param {Object} r the augmented object
+         * @param {Object} s the object need to augment
+         * @param {Boolean|Object} [ov=TRUE] whether overwrite existing property or config.
+         * @param {Boolean} [ov.overwrite=TRUE] whether overwrite existing property.
+         * @param {String[]} [ov.whitelist] array of white-list properties
+         * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
+         * @param {String[]} [wl] array of white-list properties
+         * @param [deep=false] {Boolean} whether recursive mix if encounter object.
+         * @return {Object} the augmented object
+         *
+         * for example:
+         *     @example
+         *     var t = {};
+         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: TRUE}) => {x: {y: 3, z: 4, a: {}}}, a !== t
+         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: TRUE, overwrite: false}) => {x: {y: 2, z: 4, a: {}}}, a !== t
+         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, 1) => {x: {y: 3, a: t}}
+         */
+        mix: function (r, s, ov, wl, deep) {
+            if (typeof ov === 'object') {
+                wl = ov['whitelist'];
+                deep = ov['deep'];
+                ov = ov['overwrite'];
+            }
+            var cache = [], c, i = 0;
+            mixInternal(r, s, ov, wl, deep, cache);
+            while (c = cache[i++]) {
+                delete c[MIX_CIRCULAR_DETECTION];
+            }
+            return r;
+        },
+
+        /**
+         * Returns a new object containing all of the properties of
+         * all the supplied objects. The properties from later objects
+         * will overwrite those in earlier objects. Passing in a
+         * single object will create a shallow copy of it.
+         * @param {...Object} var_args objects need to be merged
+         * @return {Object} the new merged object
+         */
+        merge: function (var_args) {
+            var_args = S.makeArray(arguments);
+            var o = {}, i, l = var_args.length;
+            for (i = 0; i < l; i++) {
+                S.mix(o, var_args[i]);
+            }
+            return o;
+        },
+
+        /**
+         * Applies prototype properties from the supplier to the receiver.
+         * @param   {Object} r received object
+         * @param   {...Object} var_args object need to  augment
+         *          {Boolean} [ov=TRUE] whether overwrite existing property
+         *          {String[]} [wl] array of white-list properties
+         * @return  {Object} the augmented object
+         */
+        augment: function (r, var_args) {
+            var args = S.makeArray(arguments),
+                len = args.length - 2,
+                i = 1,
+                ov = args[len],
+                wl = args[len + 1];
+
+            if (!S.isArray(wl)) {
+                ov = wl;
+                wl = undefined;
+                len++;
+            }
+            if (!S.isBoolean(ov)) {
+                ov = undefined;
+                len++;
+            }
+
+            for (; i < len; i++) {
+                S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
+            }
+
+            return r;
+        },
+
+        /**
+         * Utility to set up the prototype, constructor and superclass properties to
+         * support an inheritance strategy that can chain constructors and methods.
+         * Static members will not be inherited.
+         * @param r {Function} the object to modify
+         * @param s {Function} the object to inherit
+         * @param {Object} [px] prototype properties to add/override
+         * @param {Object} [sx] static properties to add/override
+         * @return r {Object}
+         */
+        extend: function (r, s, px, sx) {
+            if (!s || !r) {
+                return r;
+            }
+
+            var create = Object.create ?
+                    function (proto, c) {
+                        return Object.create(proto, {
+                            constructor: {
+                                value: c
+                            }
+                        });
+                    } :
+                    function (proto, c) {
+                        function F() {
+                        }
+
+                        F.prototype = proto;
+
+                        var o = new F();
+                        o.constructor = c;
+                        return o;
+                    },
+                sp = s.prototype,
+                rp;
+
+            // add prototype chain
+            rp = create(sp, r);
+            r.prototype = S.mix(rp, r.prototype);
+            r.superclass = create(sp, s);
+
+            // add prototype overrides
+            if (px) {
+                S.mix(rp, px);
+            }
+
+            // add object overrides
+            if (sx) {
+                S.mix(r, sx);
+            }
+
+            return r;
+        },
+
+
+        /**
+         * Returns the namespace specified and creates it if it doesn't exist. Be careful
+         * when naming packages. Reserved words may work in some browsers and not others.
+         *
+         * for example:
+         *      @example
+         *      S.namespace('KISSY.app'); // returns KISSY.app
+         *      S.namespace('app.Shop'); // returns KISSY.app.Shop
+         *      S.namespace('TB.app.Shop', TRUE); // returns TB.app.Shop
+         *
+         * @return {Object}  A reference to the last namespace object created
+         */
+        namespace: function () {
+            var args = S.makeArray(arguments),
+                l = args.length,
+                o = null, i, j, p,
+                global = (args[l - 1] === TRUE && l--);
+
+            for (i = 0; i < l; i++) {
+                p = (EMPTY + args[i]).split('.');
+                o = global ? host : this;
+                for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
+                    o = o[p[j]] = o[p[j]] || { };
+                }
+            }
+            return o;
         }
-    };
+
+    });
+
 
     function mixInternal(r, s, ov, wl, deep, cache) {
         if (!s || !r) {
@@ -388,7 +447,7 @@ var KISSY = (function (undefined) {
         }
 
         if (ov === undefined) {
-            ov = true;
+            ov = TRUE;
         }
 
         var i = 0, p, len;
@@ -447,60 +506,364 @@ var KISSY = (function (undefined) {
                         target :
                         (S.isArray(src) ? [] : {});
                     r[p] = clone;
-                    mixInternal(clone, src, ov, wl, true, cache);
+                    mixInternal(clone, src, ov, wl, TRUE, cache);
                 }
             } else if (src !== undefined && (ov || !(p in r))) {
                 r[p] = src;
             }
         }
     }
-
-    // exports for nodejs
-    if (S.Env.nodejs) {
-        S.KISSY = S;
-        module.exports = S;
-    }
-
-    return S;
-
-})();/**
+})(KISSY);/**
  * @ignore
- * @fileOverview   lang
- * @author  lifesinger@gmail.com, yiminghe@gmail.com
- * @description this code can run in any ecmascript compliant environment
+ * @fileOverview array utilities of lang
+ * @author yiminghe@gmail.com
+ *
  */
 (function (S, undefined) {
-
-    function hasOwnProperty(o, p) {
-        return Object.prototype.hasOwnProperty.call(o, p);
-    }
-
-    var TRUE = true,
-        FALSE = false,
-        OP = Object.prototype,
-        toString = OP.toString,
+    
+    var TRUE=true,
         AP = Array.prototype,
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
         filter = AP.filter,
         every = AP.every,
         some = AP.some,
-    //reduce = AP.reduce,
-        trim = String.prototype.trim,
         map = AP.map,
-        EMPTY = '',
-        HEX_BASE = 16,
-        CLONE_MARKER = '__~ks_cloned',
-        COMPARE_MARKER = '__~ks_compared',
-        STAMP_MARKER = '__~ks_stamped',
+        FALSE=false;
+
+    S.mix(S,{
+        /**
+         * Executes the supplied function on each item in the array.
+         * @param object {Object} the object to iterate
+         * @param fn {Function} the function to execute on each item. The function
+         *        receives three arguments: the value, the index, the full array.
+         * @param {Object} [context]
+         * @member KISSY
+         */
+        each: function (object, fn, context) {
+            if (object) {
+                var key,
+                    val,
+                    i = 0,
+                    length = object && object.length,
+                    isObj = length === undefined || S.type(object) === 'function';
+
+                context = context || null;
+
+                if (isObj) {
+                    for (key in object) {
+                        // can not use hasOwnProperty
+                        if (fn.call(context, object[key], key, object) === FALSE) {
+                            break;
+                        }
+                    }
+                } else {
+                    for (val = object[0];
+                         i < length && fn.call(context, val, i, object) !== FALSE; val = object[++i]) {
+                    }
+                }
+            }
+            return object;
+        },
+
+        /**
+         * Search for a specified value within an array.
+         * @param item individual item to be searched
+         * @method
+         * @member KISSY
+         * @param {Array} arr the array of items where item will be search
+         * @return {number} item's index in array
+         */
+        indexOf: indexOf ?
+            function (item, arr) {
+                return indexOf.call(arr, item);
+            } :
+            function (item, arr) {
+                for (var i = 0, len = arr.length; i < len; ++i) {
+                    if (arr[i] === item) {
+                        return i;
+                    }
+                }
+                return -1;
+            },
+
+        /**
+         * Returns the index of the last item in the array
+         * that contains the specified value, -1 if the
+         * value isn't found.
+         * @method
+         * @param item individual item to be searched
+         * @param {Array} arr the array of items where item will be search
+         * @return {number} item's last index in array
+         * @member KISSY
+         */
+        lastIndexOf: (lastIndexOf) ?
+            function (item, arr) {
+                return lastIndexOf.call(arr, item);
+            } :
+            function (item, arr) {
+                for (var i = arr.length - 1; i >= 0; i--) {
+                    if (arr[i] === item) {
+                        break;
+                    }
+                }
+                return i;
+            },
+
+        /**
+         * Returns a copy of the array with the duplicate entries removed
+         * @param a {Array} the array to find the subset of unique for
+         * @param [override] {Boolean} if override is TRUE, S.unique([a, b, a]) => [b, a].
+         * if override is FALSE, S.unique([a, b, a]) => [a, b]
+         * @return {Array} a copy of the array with duplicate entries removed
+         * @member KISSY
+         */
+        unique: function (a, override) {
+            var b = a.slice();
+            if (override) {
+                b.reverse();
+            }
+            var i = 0,
+                n,
+                item;
+
+            while (i < b.length) {
+                item = b[i];
+                while ((n = S.lastIndexOf(item, b)) !== i) {
+                    b.splice(n, 1);
+                }
+                i += 1;
+            }
+
+            if (override) {
+                b.reverse();
+            }
+            return b;
+        },
+
+        /**
+         * Search for a specified value index within an array.
+         * @param item individual item to be searched
+         * @param {Array} arr the array of items where item will be search
+         * @return {Boolean} the item exists in arr
+         * @member KISSY
+         */
+        inArray: function (item, arr) {
+            return S.indexOf(item, arr) > -1;
+        },
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * Returns a new array containing the items that the supplied
+         * function returned TRUE for.
+         * @member KISSY
+         * @method
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item
+         * @param [context] {Object} optional context object
+         * @return {Array} The items on which the supplied function returned TRUE.
+         * If no items matched an empty array is returned.
+         * @member KISSY
+         */
+        filter: filter ?
+            function (arr, fn, context) {
+                return filter.call(arr, fn, context || this);
+            } :
+            function (arr, fn, context) {
+                var ret = [];
+                S.each(arr, function (item, i, arr) {
+                    if (fn.call(context || this, item, i, arr)) {
+                        ret.push(item);
+                    }
+                });
+                return ret;
+            },
+
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * Returns a new array containing the items that the supplied
+         * function returned for.
+         * @method
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item
+         * @param [context] {Object} optional context object
+         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
+         * @return {Array} The items on which the supplied function returned
+         * @member KISSY
+         */
+        map: map ?
+            function (arr, fn, context) {
+                return map.call(arr, fn, context || this);
+            } :
+            function (arr, fn, context) {
+                var len = arr.length,
+                    res = new Array(len);
+                for (var i = 0; i < len; i++) {
+                    var el = typeof arr == 'string' ? arr.charAt(i) : arr[i];
+                    if (el
+                        ||
+                        //ie<9 in invalid when typeof arr == string
+                        i in arr) {
+                        res[i] = fn.call(context || this, el, i, arr);
+                    }
+                }
+                return res;
+            },
+
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * Returns a value which is accumulation of the value that the supplied
+         * function returned.
+         *
+         * @param arr {Array} the array to iterate
+         * @param callback {Function} the function to execute on each item
+         * @param initialValue {number} optional context object
+         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         * @return {Array} The items on which the supplied function returned
+         * @member KISSY
+         */
+        reduce: /*
+         NaN ?
+         reduce ? function(arr, callback, initialValue) {
+         return arr.reduce(callback, initialValue);
+         } : */function (arr, callback, initialValue) {
+            var len = arr.length;
+            if (typeof callback !== 'function') {
+                throw new TypeError('callback is not function!');
+            }
+
+            // no value to return if no initial value and an empty array
+            if (len === 0 && arguments.length == 2) {
+                throw new TypeError('arguments invalid');
+            }
+
+            var k = 0;
+            var accumulator;
+            if (arguments.length >= 3) {
+                accumulator = arguments[2];
+            }
+            else {
+                do {
+                    if (k in arr) {
+                        accumulator = arr[k++];
+                        break;
+                    }
+
+                    // if array contains no values, no initial value to return
+                    k += 1;
+                    if (k >= len) {
+                        throw new TypeError();
+                    }
+                }
+                while (TRUE);
+            }
+
+            while (k < len) {
+                if (k in arr) {
+                    accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
+                }
+                k++;
+            }
+
+            return accumulator;
+        },
+
+        /**
+         * Tests whether all elements in the array pass the test implemented by the provided function.
+         * @method
+         * @param arr {Array} the array to iterate
+         * @param callback {Function} the function to execute on each item
+         * @param [context] {Object} optional context object
+         * @member KISSY
+         * @return {Boolean} whether all elements in the array pass the test implemented by the provided function.
+         */
+        every: every ?
+            function (arr, fn, context) {
+                return every.call(arr, fn, context || this);
+            } :
+            function (arr, fn, context) {
+                var len = arr && arr.length || 0;
+                for (var i = 0; i < len; i++) {
+                    if (i in arr && !fn.call(context, arr[i], i, arr)) {
+                        return FALSE;
+                    }
+                }
+                return TRUE;
+            },
+
+        /**
+         * Tests whether some element in the array passes the test implemented by the provided function.
+         * @method
+         * @param arr {Array} the array to iterate
+         * @param callback {Function} the function to execute on each item
+         * @param [context] {Object} optional context object
+         * @member KISSY
+         * @return {Boolean} whether some element in the array passes the test implemented by the provided function.
+         */
+        some: some ?
+            function (arr, fn, context) {
+                return some.call(arr, fn, context || this);
+            } :
+            function (arr, fn, context) {
+                var len = arr && arr.length || 0;
+                for (var i = 0; i < len; i++) {
+                    if (i in arr && fn.call(context, arr[i], i, arr)) {
+                        return TRUE;
+                    }
+                }
+                return FALSE;
+            },
+        /**
+         * Converts object to a TRUE array.
+         * @param o {object|Array} array like object or array
+         * @return {Array} native Array
+         * @member KISSY
+         */
+        makeArray: function (o) {
+            if (o == null) {
+                return [];
+            }
+            if (S.isArray(o)) {
+                return o;
+            }
+
+            // The strings and functions also have 'length'
+            if (typeof o.length !== 'number'
+                // form.elements in ie78 has nodeName 'form'
+                // then caution select
+                // || o.nodeName
+                // window
+                || o.alert
+                || typeof o == 'string'
+                || S.isFunction(o)) {
+                return [o];
+            }
+            var ret = [];
+            for (var i = 0, l = o.length; i < l; i++) {
+                ret[i] = o[i];
+            }
+            return ret;
+        }
+    });
+
+})(KISSY);/**
+ * @ignore
+ * @fileOverview escape of lang
+ * @author yiminghe@gmail.com
+ *
+ */
+(function (S, undefined) {
     // IE doesn't include non-breaking-space (0xa0) in their \s character
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
     // include it in the regexp to enforce consistent cross-browser behavior.
-        RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
-        SEP = '&',
+    var SEP = '&',
+        EMPTY = '',
         EQ = '=',
-    // [[Class]] -> type pairs
-        class2type = {},
+        TRUE = true,
+    // FALSE = false,
+        HEX_BASE = 16,
     // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
         htmlEntities = {
             '&amp;': '&',
@@ -518,11 +881,15 @@ var KISSY = (function (undefined) {
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
         for (var k in htmlEntities) {
-
             reverseEntities[htmlEntities[k]] = k;
-
         }
     })();
+
+    function isValidParamValue(val) {
+        var t = typeof val;
+        // If the type of val is null, undefined, number, string, boolean, return TRUE.
+        return val == null || (t !== 'object' && t !== 'function');
+    }
 
     function getEscapeReg() {
         if (escapeReg) {
@@ -548,130 +915,387 @@ var KISSY = (function (undefined) {
         return unEscapeReg = new RegExp(str, 'g');
     }
 
+    S.mix(S, {
 
-    function isValidParamValue(val) {
-        var t = typeof val;
-        // If the type of val is null, undefined, number, string, boolean, return true.
-        return val == null || (t !== 'object' && t !== 'function');
+        /**
+         * Call encodeURIComponent to encode a url component
+         * @param {String} s part of url to be encoded.
+         * @return {String} encoded url part string.
+         * @member KISSY
+         */
+        urlEncode: function (s) {
+            return encodeURIComponent(String(s));
+        },
+
+        /**
+         * Call decodeURIComponent to decode a url component
+         * and replace '+' with space.
+         * @param {String} s part of url to be decoded.
+         * @return {String} decoded url part string.
+         * @member KISSY
+         */
+        urlDecode: function (s) {
+            return decodeURIComponent(s.replace(/\+/g, ' '));
+        },
+
+        /**
+         * frequently used in taobao cookie about nick
+         * @member KISSY
+         * @return {String} un-unicode string.
+         */
+        fromUnicode: function (str) {
+            return str.replace(/\\u([a-f\d]{4})/ig, function (m, u) {
+                return  String.fromCharCode(parseInt(u, HEX_BASE));
+            });
+        },
+        /**
+         * get escaped string from html
+         * @see   http://yiminghe.javaeye.com/blog/788929
+         *        http://wonko.com/post/html-escaping
+         * @param str {string} text2html show
+         * @member KISSY
+         * @return {String} escaped html
+         */
+        escapeHTML: function (str) {
+            return (str + '').replace(getEscapeReg(), function (m) {
+                return reverseEntities[m];
+            });
+        },
+
+        /**
+         * get escaped regexp string for construct regexp
+         * @param str
+         * @member KISSY
+         * @return {String} escaped regexp
+         */
+        escapeRegExp: function (str) {
+            return str.replace(escapeRegExp, '\\$&');
+        },
+
+        /**
+         * un-escape html to string
+         * @param str {string} html2text
+         * @member KISSY
+         * @return {String} un-escaped html
+         */
+        unEscapeHTML: function (str) {
+            return str.replace(getUnEscapeReg(), function (m, n) {
+                return htmlEntities[m] || String.fromCharCode(+n);
+            });
+        },
+        /**
+         * Creates a serialized string of an array or object.
+         *
+         * for example:
+         *     @example
+         *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
+         *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         *     {foo: TRUE, bar: 2}    // -> 'foo=TRUE&bar=2'
+         *
+         * @param {Object} o json data
+         * @param {String} [sep='&'] separator between each pair of data
+         * @param {String} [eq='='] separator between key and value of data
+         * @param {Boolean} [serializeArray =TRUE] whether add '[]' to array key of data
+         * @return {String}
+         * @member KISSY
+         */
+        param: function (o, sep, eq, serializeArray) {
+            if (!S.isPlainObject(o)) {
+                return EMPTY;
+            }
+            sep = sep || SEP;
+            eq = eq || EQ;
+            if (S.isUndefined(serializeArray)) {
+                serializeArray = TRUE;
+            }
+            var buf = [], key, i, v, len, val,
+                encode = S.urlEncode;
+            for (key in o) {
+
+                val = o[key];
+                key = encode(key);
+
+                // val is valid non-array value
+                if (isValidParamValue(val)) {
+                    buf.push(key);
+                    if (val !== undefined) {
+                        buf.push(eq, encode(val + EMPTY));
+                    }
+                    buf.push(sep);
+                }
+                // val is not empty array
+                else if (S.isArray(val) && val.length) {
+                    for (i = 0, len = val.length; i < len; ++i) {
+                        v = val[i];
+                        if (isValidParamValue(v)) {
+                            buf.push(key, (serializeArray ? encode('[]') : EMPTY));
+                            if (v !== undefined) {
+                                buf.push(eq, encode(v + EMPTY));
+                            }
+                            buf.push(sep);
+                        }
+                    }
+                }
+                // ignore other cases, including empty array, Function, RegExp, Date etc.
+
+            }
+            buf.pop();
+            return buf.join(EMPTY);
+        },
+
+        /**
+         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
+         *
+         * for example:
+         *      @example
+         *      'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+         *      'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+         *      'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+         *      'id=45&raw'        // -> {id: '45', raw: ''}
+         * @param {String} str param string
+         * @param {String} [sep='&'] separator between each pair of data
+         * @param {String} [eq='='] separator between key and value of data
+         * @return {Object} json data
+         * @member KISSY
+         */
+        unparam: function (str, sep, eq) {
+            if (typeof str != 'string' || !(str = S.trim(str))) {
+                return {};
+            }
+            sep = sep || SEP;
+            eq = eq || EQ;
+            var ret = {},
+                eqIndex,
+                decode = S.urlDecode,
+                pairs = str.split(sep),
+                key, val,
+                i = 0, len = pairs.length;
+
+            for (; i < len; ++i) {
+                eqIndex = pairs[i].indexOf(eq);
+                if (eqIndex == -1) {
+                    key = decode(pairs[i]);
+                    val = undefined;
+                } else {
+                    // remember to decode key!
+                    key = decode(pairs[i].substring(0, eqIndex));
+                    val = pairs[i].substring(eqIndex + 1);
+                    try {
+                        val = decode(val);
+                    } catch (e) {
+                        S.log(e + 'decodeURIComponent error : ' + val, 'error');
+                    }
+                    if (S.endsWith(key, '[]')) {
+                        key = key.substring(0, key.length - 2);
+                    }
+                }
+                if (key in ret) {
+                    if (S.isArray(ret[key])) {
+                        ret[key].push(val);
+                    } else {
+                        ret[key] = [ret[key], val];
+                    }
+                } else {
+                    ret[key] = val;
+                }
+            }
+            return ret;
+        }
+    });
+})(KISSY);/**
+ * @ignore
+ * @fileOverview function utilities of lang
+ * @author yiminghe@gmail.com
+ *
+ */
+(function (S, undefined) {
+
+    function bindFn(r, fn, obj) {
+        var slice = [].slice,
+            args = slice.call(arguments, 3),
+            fNOP = function () {
+            },
+            bound = function () {
+                var inArgs = slice.call(arguments);
+                return fn.apply(
+                    this instanceof fNOP ? this : obj,
+                    (r ? inArgs.concat(args) : args.concat(inArgs))
+                );
+            };
+        fNOP.prototype = fn.prototype;
+        bound.prototype = new fNOP();
+        return bound;
     }
 
+    S.mix(S, {
+        /**
+         * empty function
+         * @member KISSY
+         */
+        noop: function () {
+        },
+        /**
+         * Creates a new function that, when called, itself calls this function in the context of the provided this value,
+         * with a given sequence of arguments preceding any provided when the new function was called.
+         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * @param {Function} fn internal called function
+         * @param {Object} obj context in which fn runs
+         * @param {...} var_args extra arguments
+         * @member KISSY
+         * @return {Function} new function with context and arguments
+         */
+        bind: bindFn(0, bindFn, null, 0),
 
-    S.mix(S,
-        {
+        /**
+         * Creates a new function that, when called, itself calls this function in the context of the provided this value,
+         * with a given sequence of arguments preceding any provided when the new function was called.
+         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * @param {Function} fn internal called function
+         * @param {Object} obj context in which fn runs
+         * @param {...} var_args extra arguments
+         * @member KISSY
+         * @return {Function} new function with context and arguments
+         */
+        rbind: bindFn(0, bindFn, null, 1),
 
-            /**
-             * stamp a object by guid
-             * @param {Object} o object needed to be stamped
-             * @param {Boolean} [readOnly] while set marker on o if marker does not exist
-             * @param {String} [marker] the marker will be set on Object
-             * @return {String} guid associated with this object
-             * @member KISSY
-             */
-            stamp: function (o, readOnly, marker) {
-                if (!o) {
-                    return o
-                }
-                marker = marker || STAMP_MARKER;
-                var guid = o[marker];
-                if (guid) {
-                    return guid;
-                } else if (!readOnly) {
-                    try {
-                        guid = o[marker] = S.guid(marker);
+        /**
+         * Executes the supplied function in the context of the supplied
+         * object 'when' milliseconds later. Executes the function a
+         * single time unless periodic is set to true.
+         *
+         * @param fn {Function|String} the function to execute or the name of the method in
+         * the 'o' object to execute.
+         *
+         * @param when {Number} the number of milliseconds to wait until the fn is executed.
+         *
+         * @param {Boolean} [periodic] if true, executes continuously at supplied interval
+         * until canceled.
+         *
+         * @param {Object} [context] the context object.
+         *
+         * @param [data] that is provided to the function. This accepts either a single
+         * item or an array. If an array is provided, the function is executed with
+         * one parameter for each array item. If you need to pass a single array
+         * parameter, it needs to be wrapped in an array [myarray].
+         *
+         * @return {Object} a timer object. Call the cancel() method on this object to stop
+         * the timer.
+         *
+         * @member KISSY
+         */
+        later: function (fn, when, periodic, context, data) {
+            when = when || 0;
+            var m = fn,
+                d = S.makeArray(data),
+                f,
+                r;
+
+            if (typeof fn == 'string') {
+                m = context[fn];
+            }
+
+            if (!m) {
+                S.error('method undefined');
+            }
+
+            f = function () {
+                m.apply(context, d);
+            };
+
+            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
+
+            return {
+                id: r,
+                interval: periodic,
+                cancel: function () {
+                    if (this.interval) {
+                        clearInterval(r);
+                    } else {
+                        clearTimeout(r);
                     }
-                    catch (e) {
-                        guid = undefined;
-                    }
                 }
-                return guid;
-            },
+            };
+        },
 
-            /**
-             * empty function
-             * @member KISSY
-             */
-            noop: function () {
-            },
 
-            /**
-             * Determine the internal JavaScript [[Class]] of an object.
-             * @member KISSY
-             */
-            type: function (o) {
-                return o == null ?
-                    String(o) :
-                    class2type[toString.call(o)] || 'object';
-            },
+        /**
+         * Throttles a call to a method based on the time between calls.
+         * @param {Function} fn The function call to throttle.
+         * @param {Object} [context] context fn to run
+         * @param {Number} [ms] The number of milliseconds to throttle the method call.
+         * Passing a -1 will disable the throttle. Defaults to 150.
+         * @return {Function} Returns a wrapped function that calls fn throttled.
+         * @member KISSY
+         */
+        throttle: function (fn, ms, context) {
+            ms = ms || 150;
 
-            /**
-             * whether o === null
-             * @param o
-             * @member KISSY
-             */
-            isNull: function (o) {
-                return o === null;
-            },
+            if (ms === -1) {
+                return (function () {
+                    fn.apply(context || this, arguments);
+                });
+            }
 
-            /**
-             * whether o === undefined
-             * @param o
-             * @member KISSY
-             */
-            isUndefined: function (o) {
-                return o === undefined;
-            },
+            var last = S.now();
 
-            /**
-             * Checks to see if an object is empty.
-             * @member KISSY
-             */
-            isEmptyObject: function (o) {
-                for (var p in o) {
-                    if (p !== undefined) {
-                        return FALSE;
-                    }
+            return (function () {
+                var now = S.now();
+                if (now - last > ms) {
+                    last = now;
+                    fn.apply(context || this, arguments);
                 }
-                return TRUE;
-            },
+            });
+        },
 
-            /**
-             * Checks to see if an object is a plain object (created using '{}'
-             * or 'new Object()' but not 'new FunctionClass()').
-             * @member KISSY
-             */
-            isPlainObject: function (obj) {
-                // credits to jq
+        /**
+         * buffers a call between a fixed time
+         * @param {Function} fn
+         * @param {Number} ms
+         * @param {Object} [context]
+         * @return {Function} Returns a wrapped function that calls fn buffered.
+         * @member KISSY
+         */
+        buffer: function (fn, ms, context) {
+            ms = ms || 150;
 
-                // Must be an Object.
-                // Because of IE, we also have to check the presence of the constructor property.
-                // Make sure that DOM nodes and window objects don't pass through, as well
-                if (!obj || S.type(obj) !== "object" || obj.nodeType || obj.window == obj) {
-                    return false;
+            if (ms === -1) {
+                return function () {
+                    fn.apply(context || this, arguments);
+                };
+            }
+            var bufferTimer = null;
+
+            function f() {
+                f.stop();
+                bufferTimer = S.later(fn, ms, 0, context || this, arguments);
+            }
+
+            f.stop = function () {
+                if (bufferTimer) {
+                    bufferTimer.cancel();
+                    bufferTimer = 0;
                 }
+            };
 
-                try {
-                    // Not own constructor property must be Object
-                    if (obj.constructor &&
-                        !hasOwnProperty(obj, "constructor") &&
-                        !hasOwnProperty(obj.constructor.prototype, "isPrototypeOf")) {
-                        return false;
-                    }
-                } catch (e) {
-                    // IE8,9 Will throw exceptions on certain host objects #9897
-                    return false;
-                }
+            return f;
+        }
+    });
+})(KISSY);/**
+ * @ignore
+ * @fileOverview   lang
+ * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ *
+ */
+(function (S, undefined) {
 
-                // Own properties are enumerated firstly, so to speed up,
-                // if last one is own, then all properties are own.
+    var TRUE = true,
+        FALSE = false,
+        CLONE_MARKER = '__~ks_cloned',
+        COMPARE_MARKER = '__~ks_compared';
 
-                var key;
-                for (key in obj) {
-                }
-
-                return key === undefined || hasOwnProperty(obj, key);
-            },
-
-
+    S.mix(S, {
             /**
              * Checks to see whether two object are equals.
              * @param a 比较目标1
@@ -740,349 +1364,6 @@ var KISSY = (function (undefined) {
             },
 
             /**
-             * Removes the whitespace from the beginning and end of a string.
-             * @method
-             * @member KISSY
-             */
-            trim: trim ?
-                function (str) {
-                    return str == null ? EMPTY : trim.call(str);
-                } :
-                function (str) {
-                    return str == null ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
-                },
-
-            /**
-             * Substitutes keywords in a string using an object/array.
-             * Removes undefined keywords and ignores escaped keywords.
-             * @param {String} str template string
-             * @param {Object} o json data
-             * @member KISSY
-             * @param {RegExp} [regexp] to match a piece of template string
-             */
-            substitute: function (str, o, regexp) {
-                if (typeof str != 'string'
-                    || !S.isPlainObject(o)) {
-                    return str;
-                }
-
-                return str.replace(regexp || /\\?\{([^{}]+)\}/g, function (match, name) {
-                    if (match.charAt(0) === '\\') {
-                        return match.slice(1);
-                    }
-                    return (o[name] === undefined) ? EMPTY : o[name];
-                });
-            },
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * @param object {Object} the object to iterate
-             * @param fn {Function} the function to execute on each item. The function
-             *        receives three arguments: the value, the index, the full array.
-             * @param {Object} [context]
-             * @member KISSY
-             */
-            each: function (object, fn, context) {
-                if (object) {
-                    var key,
-                        val,
-                        i = 0,
-                        length = object && object.length,
-                        isObj = length === undefined || S.type(object) === 'function';
-
-                    context = context || null;
-
-                    if (isObj) {
-                        for (key in object) {
-                            // can not use hasOwnProperty
-                            if (fn.call(context, object[key], key, object) === FALSE) {
-                                break;
-                            }
-                        }
-                    } else {
-                        for (val = object[0];
-                             i < length && fn.call(context, val, i, object) !== FALSE; val = object[++i]) {
-                        }
-                    }
-                }
-                return object;
-            },
-
-            /**
-             * Search for a specified value within an array.
-             * @param item individual item to be searched
-             * @method
-             * @member KISSY
-             * @param {Array} arr the array of items where item will be search
-             * @return {number} item's index in array
-             */
-            indexOf: indexOf ?
-                function (item, arr) {
-                    return indexOf.call(arr, item);
-                } :
-                function (item, arr) {
-                    for (var i = 0, len = arr.length; i < len; ++i) {
-                        if (arr[i] === item) {
-                            return i;
-                        }
-                    }
-                    return -1;
-                },
-
-            /**
-             * Returns the index of the last item in the array
-             * that contains the specified value, -1 if the
-             * value isn't found.
-             * @method
-             * @param item individual item to be searched
-             * @param {Array} arr the array of items where item will be search
-             * @return {number} item's last index in array
-             * @member KISSY
-             */
-            lastIndexOf: (lastIndexOf) ?
-                function (item, arr) {
-                    return lastIndexOf.call(arr, item);
-                } :
-                function (item, arr) {
-                    for (var i = arr.length - 1; i >= 0; i--) {
-                        if (arr[i] === item) {
-                            break;
-                        }
-                    }
-                    return i;
-                },
-
-            /**
-             * Returns a copy of the array with the duplicate entries removed
-             * @param a {Array} the array to find the subset of unique for
-             * @param [override] {Boolean} if override is true, S.unique([a, b, a]) => [b, a].
-             * if override is false, S.unique([a, b, a]) => [a, b]
-             * @return {Array} a copy of the array with duplicate entries removed
-             * @member KISSY
-             */
-            unique: function (a, override) {
-                var b = a.slice();
-                if (override) {
-                    b.reverse();
-                }
-                var i = 0,
-                    n,
-                    item;
-
-                while (i < b.length) {
-                    item = b[i];
-                    while ((n = S.lastIndexOf(item, b)) !== i) {
-                        b.splice(n, 1);
-                    }
-                    i += 1;
-                }
-
-                if (override) {
-                    b.reverse();
-                }
-                return b;
-            },
-
-            /**
-             * Search for a specified value index within an array.
-             * @param item individual item to be searched
-             * @param {Array} arr the array of items where item will be search
-             * @return {Boolean} the item exists in arr
-             * @member KISSY
-             */
-            inArray: function (item, arr) {
-                return S.indexOf(item, arr) > -1;
-            },
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * Returns a new array containing the items that the supplied
-             * function returned true for.
-             * @member KISSY
-             * @method
-             * @param arr {Array} the array to iterate
-             * @param fn {Function} the function to execute on each item
-             * @param [context] {Object} optional context object
-             * @return {Array} The items on which the supplied function returned true.
-             * If no items matched an empty array is returned.
-             * @member KISSY
-             */
-            filter: filter ?
-                function (arr, fn, context) {
-                    return filter.call(arr, fn, context || this);
-                } :
-                function (arr, fn, context) {
-                    var ret = [];
-                    S.each(arr, function (item, i, arr) {
-                        if (fn.call(context || this, item, i, arr)) {
-                            ret.push(item);
-                        }
-                    });
-                    return ret;
-                },
-
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * Returns a new array containing the items that the supplied
-             * function returned for.
-             * @method
-             * @param arr {Array} the array to iterate
-             * @param fn {Function} the function to execute on each item
-             * @param [context] {Object} optional context object
-             * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
-             * @return {Array} The items on which the supplied function returned
-             * @member KISSY
-             */
-            map: map ?
-                function (arr, fn, context) {
-                    return map.call(arr, fn, context || this);
-                } :
-                function (arr, fn, context) {
-                    var len = arr.length,
-                        res = new Array(len);
-                    for (var i = 0; i < len; i++) {
-                        var el = typeof arr == 'string' ? arr.charAt(i) : arr[i];
-                        if (el
-                            ||
-                            //ie<9 in invalid when typeof arr == string
-                            i in arr) {
-                            res[i] = fn.call(context || this, el, i, arr);
-                        }
-                    }
-                    return res;
-                },
-
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * Returns a value which is accumulation of the value that the supplied
-             * function returned.
-             *
-             * @param arr {Array} the array to iterate
-             * @param callback {Function} the function to execute on each item
-             * @param initialValue {number} optional context object
-             * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
-             * @return {Array} The items on which the supplied function returned
-             * @member KISSY
-             */
-            reduce: /*
-             NaN ?
-             reduce ? function(arr, callback, initialValue) {
-             return arr.reduce(callback, initialValue);
-             } : */function (arr, callback, initialValue) {
-                var len = arr.length;
-                if (typeof callback !== 'function') {
-                    throw new TypeError('callback is not function!');
-                }
-
-                // no value to return if no initial value and an empty array
-                if (len === 0 && arguments.length == 2) {
-                    throw new TypeError('arguments invalid');
-                }
-
-                var k = 0;
-                var accumulator;
-                if (arguments.length >= 3) {
-                    accumulator = arguments[2];
-                }
-                else {
-                    do {
-                        if (k in arr) {
-                            accumulator = arr[k++];
-                            break;
-                        }
-
-                        // if array contains no values, no initial value to return
-                        k += 1;
-                        if (k >= len) {
-                            throw new TypeError();
-                        }
-                    }
-                    while (TRUE);
-                }
-
-                while (k < len) {
-                    if (k in arr) {
-                        accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
-                    }
-                    k++;
-                }
-
-                return accumulator;
-            },
-
-            /**
-             * Tests whether all elements in the array pass the test implemented by the provided function.
-             * @method
-             * @param arr {Array} the array to iterate
-             * @param callback {Function} the function to execute on each item
-             * @param [context] {Object} optional context object
-             * @member KISSY
-             * @return {Boolean} whether all elements in the array pass the test implemented by the provided function.
-             */
-            every: every ?
-                function (arr, fn, context) {
-                    return every.call(arr, fn, context || this);
-                } :
-                function (arr, fn, context) {
-                    var len = arr && arr.length || 0;
-                    for (var i = 0; i < len; i++) {
-                        if (i in arr && !fn.call(context, arr[i], i, arr)) {
-                            return FALSE;
-                        }
-                    }
-                    return TRUE;
-                },
-
-            /**
-             * Tests whether some element in the array passes the test implemented by the provided function.
-             * @method
-             * @param arr {Array} the array to iterate
-             * @param callback {Function} the function to execute on each item
-             * @param [context] {Object} optional context object
-             * @member KISSY
-             * @return {Boolean} whether some element in the array passes the test implemented by the provided function.
-             */
-            some: some ?
-                function (arr, fn, context) {
-                    return some.call(arr, fn, context || this);
-                } :
-                function (arr, fn, context) {
-                    var len = arr && arr.length || 0;
-                    for (var i = 0; i < len; i++) {
-                        if (i in arr && fn.call(context, arr[i], i, arr)) {
-                            return TRUE;
-                        }
-                    }
-                    return FALSE;
-                },
-
-            /**
-             * Creates a new function that, when called, itself calls this function in the context of the provided this value,
-             * with a given sequence of arguments preceding any provided when the new function was called.
-             * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
-             * @param {Function} fn internal called function
-             * @param {Object} obj context in which fn runs
-             * @param {...*} arg1 extra arguments
-             * @member KISSY
-             * @return {Function} new function with context and arguments
-             */
-            bind: function (fn, obj, arg1) {
-                var slice = [].slice,
-                    args = slice.call(arguments, 2),
-                    fNOP = function () {
-                    },
-                    bound = function () {
-                        return fn.apply(this instanceof fNOP ? this : obj,
-                            args.concat(slice.call(arguments)));
-                    };
-                fNOP.prototype = fn.prototype;
-                bound.prototype = new fNOP();
-                return bound;
-            },
-
-            /**
              * Gets current date in milliseconds.
              * @method
              * @see  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
@@ -1093,458 +1374,6 @@ var KISSY = (function (undefined) {
              */
             now: Date.now || function () {
                 return +new Date();
-            },
-            /**
-             * frequently used in taobao cookie about nick
-             * @member KISSY
-             * @return {String} un-unicode string.
-             */
-            fromUnicode: function (str) {
-                return str.replace(/\\u([a-f\d]{4})/ig, function (m, u) {
-                    return  String.fromCharCode(parseInt(u, HEX_BASE));
-                });
-            },
-
-            /** uppercase first character.
-             * @member KISSY
-             * @param s
-             * @return {String}
-             */
-            ucfirst: function (s) {
-                s += '';
-                return s.charAt(0).toUpperCase() + s.substring(1);
-            },
-
-            /**
-             * Call encodeURIComponent to encode a url component
-             * @param {String} s part of url to be encoded.
-             * @return {String} encoded url part string.
-             * @member KISSY
-             */
-            urlEncode: function (s) {
-                return encodeURIComponent(String(s));
-            },
-
-            /**
-             * Call decodeURIComponent to decode a url component
-             * and replace '+' with space.
-             * @param {String} s part of url to be decoded.
-             * @return {String} decoded url part string.
-             * @member KISSY
-             */
-            urlDecode: function (s) {
-                return decodeURIComponent(s.replace(/\+/g, ' '));
-            },
-
-            /**
-             * get escaped string from html
-             * @see   http://yiminghe.javaeye.com/blog/788929
-             *        http://wonko.com/post/html-escaping
-             * @param str {string} text2html show
-             * @member KISSY
-             * @return {String} escaped html
-             */
-            escapeHTML: function (str) {
-                return (str + '').replace(getEscapeReg(), function (m) {
-                    return reverseEntities[m];
-                });
-            },
-
-            /**
-             * get escaped regexp string for construct regexp
-             * @param str
-             * @member KISSY
-             * @return {String} escaped regexp
-             */
-            escapeRegExp: function (str) {
-                return str.replace(escapeRegExp, '\\$&');
-            },
-
-            /**
-             * un-escape html to string
-             * @param str {string} html2text
-             * @member KISSY
-             * @return {String} un-escaped html
-             */
-            unEscapeHTML: function (str) {
-                return str.replace(getUnEscapeReg(), function (m, n) {
-                    return htmlEntities[m] || String.fromCharCode(+n);
-                });
-            },
-            /**
-             * Converts object to a true array.
-             * @param o {object|Array} array like object or array
-             * @return {Array} native Array
-             * @member KISSY
-             */
-            makeArray: function (o) {
-                if (o == null) {
-                    return [];
-                }
-                if (S.isArray(o)) {
-                    return o;
-                }
-
-                // The strings and functions also have 'length'
-                if (typeof o.length !== 'number'
-                    // form.elements in ie78 has nodeName 'form'
-                    // then caution select
-                    // || o.nodeName
-                    // window
-                    || o.alert
-                    || typeof o == 'string'
-                    || S.isFunction(o)) {
-                    return [o];
-                }
-                var ret = [];
-                for (var i = 0, l = o.length; i < l; i++) {
-                    ret[i] = o[i];
-                }
-                return ret;
-            },
-            /**
-             * Creates a serialized string of an array or object.
-             *
-             * for example:
-             *     @example
-             *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-             *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
-             *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
-             *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-             *     {foo: true, bar: 2}    // -> 'foo=true&bar=2'
-             *
-             * @param {Object} o json data
-             * @param {String} [sep='&'] separator between each pair of data
-             * @param {String} [eq='='] separator between key and value of data
-             * @param {Boolean} [serializeArray =true] whether add '[]' to array key of data
-             * @return {String}
-             * @member KISSY
-             */
-            param: function (o, sep, eq, serializeArray) {
-                if (!S.isPlainObject(o)) {
-                    return EMPTY;
-                }
-                sep = sep || SEP;
-                eq = eq || EQ;
-                if (S.isUndefined(serializeArray)) {
-                    serializeArray = TRUE;
-                }
-                var buf = [], key, i, v, len, val,
-                    encode = S.urlEncode;
-                for (key in o) {
-
-                    val = o[key];
-                    key = encode(key);
-
-                    // val is valid non-array value
-                    if (isValidParamValue(val)) {
-                        buf.push(key);
-                        if (val !== undefined) {
-                            buf.push(eq, encode(val + EMPTY));
-                        }
-                        buf.push(sep);
-                    }
-                    // val is not empty array
-                    else if (S.isArray(val) && val.length) {
-                        for (i = 0, len = val.length; i < len; ++i) {
-                            v = val[i];
-                            if (isValidParamValue(v)) {
-                                buf.push(key, (serializeArray ? encode('[]') : EMPTY));
-                                if (v !== undefined) {
-                                    buf.push(eq, encode(v + EMPTY));
-                                }
-                                buf.push(sep);
-                            }
-                        }
-                    }
-                    // ignore other cases, including empty array, Function, RegExp, Date etc.
-
-                }
-                buf.pop();
-                return buf.join(EMPTY);
-            },
-
-            /**
-             * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-             *
-             * for example:
-             *      @example
-             *      'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-             *      'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
-             *      'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
-             *      'id=45&raw'        // -> {id: '45', raw: ''}
-             * @param {String} str param string
-             * @param {String} [sep='&'] separator between each pair of data
-             * @param {String} [eq='='] separator between key and value of data
-             * @return {Object} json data
-             * @member KISSY
-             */
-            unparam: function (str, sep, eq) {
-                if (typeof str != 'string' || !(str = S.trim(str))) {
-                    return {};
-                }
-                sep = sep || SEP;
-                eq = eq || EQ;
-                var ret = {},
-                    eqIndex,
-                    decode = S.urlDecode,
-                    pairs = str.split(sep),
-                    key, val,
-                    i = 0, len = pairs.length;
-
-                for (; i < len; ++i) {
-                    eqIndex = pairs[i].indexOf(eq);
-                    if (eqIndex == -1) {
-                        key = decode(pairs[i]);
-                        val = undefined;
-                    } else {
-                        // remember to decode key!
-                        key = decode(pairs[i].substring(0, eqIndex));
-                        val = pairs[i].substring(eqIndex + 1);
-                        try {
-                            val = decode(val);
-                        } catch (e) {
-                            S.log(e + 'decodeURIComponent error : ' + val, 'error');
-                        }
-                        if (S.endsWith(key, '[]')) {
-                            key = key.substring(0, key.length - 2);
-                        }
-                    }
-                    if (key in ret) {
-                        if (S.isArray(ret[key])) {
-                            ret[key].push(val);
-                        } else {
-                            ret[key] = [ret[key], val];
-                        }
-                    } else {
-                        ret[key] = val;
-                    }
-                }
-                return ret;
-            },
-            /**
-             * Executes the supplied function in the context of the supplied
-             * object 'when' milliseconds later. Executes the function a
-             * single time unless periodic is set to true.
-             *
-             * @param fn {Function|String} the function to execute or the name of the method in
-             * the 'o' object to execute.
-             *
-             * @param when {Number} the number of milliseconds to wait until the fn is executed.
-             *
-             * @param {Boolean} [periodic] if true, executes continuously at supplied interval
-             * until canceled.
-             *
-             * @param {Object} [context] the context object.
-             *
-             * @param [data] that is provided to the function. This accepts either a single
-             * item or an array. If an array is provided, the function is executed with
-             * one parameter for each array item. If you need to pass a single array
-             * parameter, it needs to be wrapped in an array [myarray].
-             *
-             * @return {Object} a timer object. Call the cancel() method on this object to stop
-             * the timer.
-             *
-             * @member KISSY
-             */
-            later: function (fn, when, periodic, context, data) {
-                when = when || 0;
-                var m = fn,
-                    d = S.makeArray(data),
-                    f,
-                    r;
-
-                if (typeof fn == 'string') {
-                    m = context[fn];
-                }
-
-                if (!m) {
-                    S.error('method undefined');
-                }
-
-                f = function () {
-                    m.apply(context, d);
-                };
-
-                r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
-
-                return {
-                    id: r,
-                    interval: periodic,
-                    cancel: function () {
-                        if (this.interval) {
-                            clearInterval(r);
-                        } else {
-                            clearTimeout(r);
-                        }
-                    }
-                };
-            },
-
-            /**
-             * test whether a string start with a specified substring
-             * @param {String} str the whole string
-             * @param {String} prefix a specified substring
-             * @return {Boolean} whether str start with prefix
-             * @member KISSY
-             */
-            startsWith: function (str, prefix) {
-                return str.lastIndexOf(prefix, 0) === 0;
-            },
-
-            /**
-             * test whether a string end with a specified substring
-             * @param {String} str the whole string
-             * @param {String} suffix a specified substring
-             * @return {Boolean} whether str end with suffix
-             * @member KISSY
-             */
-            endsWith: function (str, suffix) {
-                var ind = str.length - suffix.length;
-                return ind >= 0 && str.indexOf(suffix, ind) == ind;
-            },
-
-            /**
-             * Throttles a call to a method based on the time between calls.
-             * @param {Function} fn The function call to throttle.
-             * @param {Object} [context] context fn to run
-             * @param {Number} [ms] The number of milliseconds to throttle the method call.
-             * Passing a -1 will disable the throttle. Defaults to 150.
-             * @return {Function} Returns a wrapped function that calls fn throttled.
-             * @member KISSY
-             */
-            throttle: function (fn, ms, context) {
-                ms = ms || 150;
-
-                if (ms === -1) {
-                    return (function () {
-                        fn.apply(context || this, arguments);
-                    });
-                }
-
-                var last = S.now();
-
-                return (function () {
-                    var now = S.now();
-                    if (now - last > ms) {
-                        last = now;
-                        fn.apply(context || this, arguments);
-                    }
-                });
-            },
-
-            /**
-             * buffers a call between a fixed time
-             * @param {Function} fn
-             * @param {Number} ms
-             * @param {Object} [context]
-             * @return {Function} Returns a wrapped function that calls fn buffered.
-             * @member KISSY
-             */
-            buffer: function (fn, ms, context) {
-                ms = ms || 150;
-
-                if (ms === -1) {
-                    return function () {
-                        fn.apply(context || this, arguments);
-                    };
-                }
-                var bufferTimer = null;
-
-                function f() {
-                    f.stop();
-                    bufferTimer = S.later(fn, ms, FALSE, context || this, arguments);
-                }
-
-                f.stop = function () {
-                    if (bufferTimer) {
-                        bufferTimer.cancel();
-                        bufferTimer = 0;
-                    }
-                };
-
-                return f;
-            }
-
-        });
-
-    // for idea ..... auto-hint
-    S.mix(S,
-        {
-            /**
-             * test whether o is boolean
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isBoolean: isValidParamValue,
-            /**
-             * test whether o is number
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isNumber: isValidParamValue,
-            /**
-             * test whether o is String
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isString: isValidParamValue,
-            /**
-             * test whether o is function
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isFunction: isValidParamValue,
-            /**
-             * test whether o is Array
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isArray: isValidParamValue,
-            /**
-             * test whether o is Date
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isDate: isValidParamValue,
-            /**
-             * test whether o is RegExp
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isRegExp: isValidParamValue,
-            /**
-             * test whether o is Object
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isObject: isValidParamValue
-        });
-
-    S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
-        function (name, lc) {
-            // populate the class2type map
-            class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
-
-            // add isBoolean/isNumber/...
-            S['is' + name] = function (o) {
-                return S.type(o) == lc;
             }
         });
 
@@ -1655,6 +1484,264 @@ var KISSY = (function (undefined) {
 
 })(KISSY);
 /**
+ * @ignore
+ * @fileOverview string utilities of lang
+ * @author yiminghe@gmail.com
+ *
+ */
+(function (S, undefined) {
+
+    // IE doesn't include non-breaking-space (0xa0) in their \s character
+    // class (as required by section 7.2 of the ECMAScript spec), we explicitly
+    // include it in the regexp to enforce consistent cross-browser behavior.
+    var RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
+        trim = String.prototype.trim,
+        EMPTY = '';
+
+    S.mix(S, {
+        /**
+         * Removes the whitespace from the beginning and end of a string.
+         * @method
+         * @member KISSY
+         */
+        trim: trim ?
+            function (str) {
+                return str == null ? EMPTY : trim.call(str);
+            } :
+            function (str) {
+                return str == null ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+            },
+
+        /**
+         * Substitutes keywords in a string using an object/array.
+         * Removes undefined keywords and ignores escaped keywords.
+         * @param {String} str template string
+         * @param {Object} o json data
+         * @member KISSY
+         * @param {RegExp} [regexp] to match a piece of template string
+         */
+        substitute: function (str, o, regexp) {
+            if (typeof str != 'string'
+                || !S.isPlainObject(o)) {
+                return str;
+            }
+
+            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function (match, name) {
+                if (match.charAt(0) === '\\') {
+                    return match.slice(1);
+                }
+                return (o[name] === undefined) ? EMPTY : o[name];
+            });
+        },
+
+        /** uppercase first character.
+         * @member KISSY
+         * @param s
+         * @return {String}
+         */
+        ucfirst: function (s) {
+            s += '';
+            return s.charAt(0).toUpperCase() + s.substring(1);
+        },
+        /**
+         * test whether a string start with a specified substring
+         * @param {String} str the whole string
+         * @param {String} prefix a specified substring
+         * @return {Boolean} whether str start with prefix
+         * @member KISSY
+         */
+        startsWith: function (str, prefix) {
+            return str.lastIndexOf(prefix, 0) === 0;
+        },
+
+        /**
+         * test whether a string end with a specified substring
+         * @param {String} str the whole string
+         * @param {String} suffix a specified substring
+         * @return {Boolean} whether str end with suffix
+         * @member KISSY
+         */
+        endsWith: function (str, suffix) {
+            var ind = str.length - suffix.length;
+            return ind >= 0 && str.indexOf(suffix, ind) == ind;
+        }
+
+    });
+})(KISSY);/**
+ * @ignore
+ * @fileOverview   type of land
+ * @author  lifesinger@gmail.com, yiminghe@gmail.com
+ *
+ */
+(function (S, undefined) {
+    // [[Class]] -> type pairs
+    var class2type = {},
+        FALSE = false,
+        OP = Object.prototype,
+        toString = OP.toString;
+
+    function hasOwnProperty(o, p) {
+        return Object.prototype.hasOwnProperty.call(o, p);
+    }
+
+    S.mix(S,
+        {
+            /**
+             * test whether o is boolean
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isBoolean: 0,
+            /**
+             * test whether o is number
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isNumber: 0,
+            /**
+             * test whether o is String
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isString: 0,
+            /**
+             * test whether o is function
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isFunction: 0,
+            /**
+             * test whether o is Array
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isArray: 0,
+            /**
+             * test whether o is Date
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isDate: 0,
+            /**
+             * test whether o is RegExp
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isRegExp: 0,
+            /**
+             * test whether o is Object
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isObject: 0,
+
+            /**
+             * Determine the internal JavaScript [[Class]] of an object.
+             * @member KISSY
+             */
+            type: function (o) {
+                return o == null ?
+                    String(o) :
+                    class2type[toString.call(o)] || 'object';
+            },
+
+            /**
+             * whether o === null
+             * @param o
+             * @member KISSY
+             */
+            isNull: function (o) {
+                return o === null;
+            },
+
+            /**
+             * whether o === undefined
+             * @param o
+             * @member KISSY
+             */
+            isUndefined: function (o) {
+                return o === undefined;
+            },
+
+            /**
+             * Checks to see if an object is empty.
+             * @member KISSY
+             */
+            isEmptyObject: function (o) {
+                for (var p in o) {
+                    if (p !== undefined) {
+                        return FALSE;
+                    }
+                }
+                return true;
+            },
+
+            /**
+             * Checks to see if an object is a plain object (created using '{}'
+             * or 'new Object()' but not 'new FunctionClass()').
+             * @member KISSY
+             */
+            isPlainObject: function (obj) {
+                // credits to jq
+
+                // Must be an Object.
+                // Because of IE, we also have to check the presence of the constructor property.
+                // Make sure that DOM nodes and window objects don't pass through, as well
+                if (!obj || S.type(obj) !== "object" || obj.nodeType || obj.window == obj) {
+                    return FALSE;
+                }
+
+                try {
+                    // Not own constructor property must be Object
+                    if (obj.constructor &&
+                        !hasOwnProperty(obj, "constructor") &&
+                        !hasOwnProperty(obj.constructor.prototype, "isPrototypeOf")) {
+                        return FALSE;
+                    }
+                } catch (e) {
+                    // IE8,9 Will throw exceptions on certain host objects #9897
+                    return FALSE;
+                }
+
+                // Own properties are enumerated firstly, so to speed up,
+                // if last one is own, then all properties are own.
+
+                var key;
+                for (key in obj) {
+                }
+
+                return key === undefined || hasOwnProperty(obj, key);
+            }
+        });
+
+    S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
+        function (name, lc) {
+            // populate the class2type map
+            class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
+
+            // add isBoolean/isNumber/...
+            S['is' + name] = function (o) {
+                return S.type(o) == lc;
+            }
+        });
+
+})(KISSY);/**
  * @ignore
  * @fileOverview implement Promise specification by KISSY
  * @author yiminghe@gmail.com
@@ -5278,7 +5365,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121022193028'
+            tag: '20121022210741'
         }, getBaseInfo()));
     }
 
