@@ -13,7 +13,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
     /**
      * @class KISSY.Overlay.Dialog
-     * KISSY Dialog Component. xclass: 'overlay-dialog'.
+     * KISSY Dialog Component. xclass: 'dialog'.
      * @extends KISSY.Overlay
      * @mixins KISSY.Component.UIBase.StdMod
      * @mixins KISSY.Component.UIBase.Drag
@@ -118,7 +118,10 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 }
             }
         }, {
-            xclass: 'overlay-dialog',
+
+            // TODO either change to overlay-dialog
+            // or move dialog to outer module
+            xclass: 'dialog',
             priority: 20
         });
 
@@ -183,6 +186,3 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
  * 2010-11-10 yiminghe@gmail.com
  *  重构，使用扩展类
  */
-
-
-

@@ -238,6 +238,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                         self.detach("docReady", save);
                     });
                     self._setData(textarea.val());
+                    textarea.hide();
                     self.fire("wysiwygMode");
                 } else {
                     // 刚开始就配置 mode 为 sourcecode
@@ -932,7 +933,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     ev.preventDefault();
                 }
             });
-            // Prevent from editig textfield/textarea value.
+            // Prevent from editing textfield/textarea value.
             Event.on(doc, "mouseup", function (ev) {
                 var control = new Node(ev.target);
                 if (S.inArray(control.nodeName(), ['input', 'textarea'])) {

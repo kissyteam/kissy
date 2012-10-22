@@ -7,7 +7,17 @@
     <import file="../../tools/build-xml/common.xml"/>
 
     <target name="merge-dependency">
-
+        <concat destfile="${component.src.dir}/modules.js" encoding="${charset}" outputencoding="${charset}">
+            <header filtering="no" trimleading="yes">
+                (function(config){
+            </header>
+            <fileset dir="${kissy.src.dir}" includes="**/meta/modules.js"/>
+            <footer>
+                })(function(c){
+                KISSY.config('modules', c);
+                });
+            </footer>
+        </concat>
     </target>
 
     <target name="seed-concat">
@@ -34,7 +44,7 @@
 
             <path location="${component.src.dir}/web.js"/>
             <path location="${component.src.dir}/meta.js"/>
-            <path location="${component.src.dir}/deps.js"/>
+            <path location="${component.src.dir}/modules.js"/>
             <filterchain>
                 <deletecharacters chars="${bom}"/>
             </filterchain>
@@ -62,7 +72,7 @@
             <!--kissy loader end-->
 
             <path location="${component.src.dir}/web.js"/>
-            <path location="${component.src.dir}/meta.js"/>
+            <path location="${component.src.dir}/modules.js"/>
             <filterchain>
                 <deletecharacters chars="${bom}"/>
             </filterchain>

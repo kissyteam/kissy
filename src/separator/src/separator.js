@@ -5,7 +5,7 @@
 KISSY.add("separator", function (S, Component, SeparatorRender) {
 
     /**
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      * @class
      * separator.
      * xclass: 'separator'.

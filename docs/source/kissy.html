@@ -356,7 +356,8 @@ var KISSY = (function (undefined) {
          */
         error: function (msg) {
             if (S.Config.debug) {
-                throw msg;
+                // with stack info!
+                throw new Error(msg);
             }
         },
 

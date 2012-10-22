@@ -30,7 +30,7 @@ KISSY.add('grid/editor', function (S, Component) {
      * This is a base class of grid's editor,which can be used in column's configuration.
      * @name Grid.Editor
      * @constructor
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      */
     var GridEditor = Component.Controller.extend({
 
@@ -423,7 +423,7 @@ KISSY.add('grid/editor', function (S, Component) {
      * This is a subclass of grid's editor,which can be used in column's configuration.
      * @name Grid.Editor.Text
      * @constructor
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      */
 	var textEditor = GridEditor.extend({},{
 		xclass:'grid-text-editor',

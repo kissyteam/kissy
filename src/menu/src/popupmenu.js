@@ -16,8 +16,8 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
      * Popup Menu.
      * xclass: 'popupmenu'.
      * @extends Menu
-     * @extends Component.UIBase.Position
-     * @extends Component.UIBase.Align
+     * @extends KISSY.Component.UIBase.Position
+     * @extends KISSY.Component.UIBase.Align
      */
     var PopupMenu = Menu.extend([
         UIBase.ContentBox,

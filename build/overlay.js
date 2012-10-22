@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 16:43
+build time: Oct 22 17:01
 */
 /**
  * @ignore
@@ -317,7 +317,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
 
     /**
      * @class KISSY.Overlay.Dialog
-     * KISSY Dialog Component. xclass: 'overlay-dialog'.
+     * KISSY Dialog Component. xclass: 'dialog'.
      * @extends KISSY.Overlay
      * @mixins KISSY.Component.UIBase.StdMod
      * @mixins KISSY.Component.UIBase.Drag
@@ -422,7 +422,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 }
             }
         }, {
-            xclass: 'overlay-dialog',
+            xclass: 'dialog',
             priority: 20
         });
 
@@ -547,7 +547,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
     /**
      * @class KISSY.Overlay.Popup
-     * KISSY Popup Component. xclass: 'overlay-popup'.
+     * KISSY Popup Component. xclass: 'popup'.
      * @extends KISSY.Overlay
      */
     var Popup = Overlay.extend({
@@ -736,7 +736,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             }
         }
     }, {
-        xclass: 'overlay-popup',
+        xclass: 'popup',
         priority: 20
     });
 

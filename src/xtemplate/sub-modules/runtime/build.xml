@@ -5,17 +5,6 @@
 
     <import file="../../../../tools/build-xml/common.xml"/>
 
-    <target name="concat">
-        <concat destfile="${component.src.dir.tmp}/runtime-pkg.js"
-                encoding="${charset}"
-                outputencoding="${charset}">
-            <fileset dir="${component.src.dir}" includes="**/*.js"/>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
-        </concat>
-    </target>
-
-    <target name="build" depends="extract-dependency, concat,common.build">
+    <target name="build" depends="common-build.build">
     </target>
 </project>

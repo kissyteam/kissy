@@ -2,24 +2,9 @@
     <description>Tabs Build File</description>
 
     <property name="component.name" value="tabs"/>
-    <property name="src.dir" location="./src/"/>
 
     <import file="../../tools/build-xml/common.xml"/>
 
-
-    <target name="concat">
-        <concat destfile="${component.src.dir.tmp}/tabs-pkg.js"
-                encoding="${charset}" outputencoding="${charset}">
-            <fileset dir="${component.src.dir}" includes="**/*.js"/>
-            <filterchain>
-                <deletecharacters chars="${bom}" />
-            </filterchain>
-        </concat>
-        <copy todir="${component.src.dir.tmp}">
-            <fileset dir="." includes="assets/**/dpl.css"/>
-        </copy>
-    </target>
-
-    <target name="build" depends="concat,common.build">
+    <target name="build" depends="common-build.build">
     </target>
 </project>

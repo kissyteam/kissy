@@ -14,7 +14,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
      * @class
      * KISSY Menu.
      * xclass: 'menu'.
-     * @extends Component.Container
+     * @extends KISSY.Component.Container
      */
     var Menu = Component.Container.extend(
         /** @lends Menu.prototype*/

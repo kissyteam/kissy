@@ -339,7 +339,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
      * In general, this class will not be instanced directly, instead a viewConfig option is passed to the grid
      * @name Grid.GridBody
      * @constructor
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      * @extends Grid.Bindable
      */
     var GridBody = Component.Controller.extend([Bindable],

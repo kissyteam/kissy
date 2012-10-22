@@ -86,7 +86,7 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
      * @class
      * KISSY Toolbar.
      * xclass: 'toolbar'.
-     * @extends Component.Container
+     * @extends KISSY.Component.Container
      */
     var Toolbar = Component.Container.extend(
         /**

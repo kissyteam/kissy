@@ -18,7 +18,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
     /**
      * @name ComboBox
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      * @class
      * KISSY ComboBox.
      * xclass: 'combobox'.

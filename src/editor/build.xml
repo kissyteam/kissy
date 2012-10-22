@@ -23,7 +23,8 @@
               encoding="${charset}"
               outputencoding="${charset}">
             <fileset dir="${component.src.dir}/editor/"
-                     includes="**/*"/>
+                     excludes="core/*,theme/cool/*.css"
+            />
         </copy>
     </target>
 
@@ -90,7 +91,7 @@
             <arg value="utf-8"/>
 
             <arg value="-output"/>
-            <arg value="${component.src.dir}/editor/core/deps.js"/>
+            <arg value="${component.src.dir}/editor/core/modules.js"/>
 
             <classpath>
                 <pathelement path="${kissy-tools.module-compiler}"/>
@@ -98,7 +99,7 @@
             </classpath>
         </java>
 
-        <mkdir dir="${component.meta.dir}" />
+        <mkdir dir="${component.meta.dir}"/>
 
         <java classname="com.taobao.f2e.ExtractDependency">
 
@@ -113,6 +114,9 @@
 
             <arg value="-outputEncoding"/>
             <arg value="utf-8"/>
+
+            <arg value="-compact"/>
+            <arg value="true"/>
 
             <arg value="-output"/>
             <arg value="${component.meta.dir}/modules.js"/>

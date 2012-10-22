@@ -12,7 +12,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
      * xclass: 'tree-node'.
      * @name Node
      * @memberOf Tree
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      */
     var TreeNode = Component.Container.extend(
         [

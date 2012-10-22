@@ -11,7 +11,7 @@
 
     <target name="build-seed">
         <!--
-        build seed first，刷新 seed 前的时间戳到最新
+        build seed first，刷新 seed 的时间戳到最新
         seed 的时间戳也代表 kissy 的时间戳
         -->
         <delete>
@@ -45,6 +45,6 @@
         </concat>
     </target>
 
-    <target name="build" depends="combine-core,common.build">
+    <target name="build" depends="combine-core,common-build.process">
     </target>
 </project>

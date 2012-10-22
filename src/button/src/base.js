@@ -8,7 +8,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
     /**
      * @name Button
      * @constructor
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      * @class
      * KISSY Button.
      */

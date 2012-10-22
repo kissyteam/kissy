@@ -11,7 +11,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
      * BarItem class a control used in toolbar ,for example button,select,text,input an so on
      * @name BarItem
      * @constructor
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      * @memberOf Grid.Bar
      */
 	var BarItem = Component.Controller.extend({

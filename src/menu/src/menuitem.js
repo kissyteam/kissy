@@ -12,7 +12,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
      * xclass: 'menuitem'.
      * @name Item
      * @memberOf Menu
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      */
     var MenuItem = Component.Controller.extend(
         /**

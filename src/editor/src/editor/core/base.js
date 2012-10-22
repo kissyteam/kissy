@@ -8,7 +8,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
      * @class
      * KISSY Editor.
      * xclass: 'editor'.
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      * @name Editor
      */
     var Editor = Component.Controller.extend(
