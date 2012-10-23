@@ -10,7 +10,6 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         AREA_DATA_CLS = 'ks-datalazyload',
         CUSTOM = '-custom',
         MANUAL = 'manual',
-        DISPLAY = 'display',
         DEFAULT = 'default',
         NONE = 'none',
         SCROLL = 'scroll',
@@ -20,6 +19,10 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
     function isValidContainer(c) {
         return c.nodeType != 9;
+    }
+
+    function inDocument(el) {
+        return DOM.contains(doc, el);
     }
 
     function getContainer(elem, cs) {
@@ -344,7 +347,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              */
             _loadImg: function (img) {
                 var self = this;
-                if (self._checkElemInViewport(img)) {
+                if (!inDocument(img)) {
+
+                } else if (self._checkElemInViewport(img)) {
                     loadImgSrc(img);
                 } else {
                     return true;
@@ -367,7 +372,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              */
             _loadArea: function (area) {
                 var self = this;
-                if (self._checkElemInViewport(area)) {
+                if (!inDocument(area)) {
+
+                } else if (self._checkElemInViewport(area)) {
                     loadAreaData(area, self.get("execScript"));
                 } else {
                     return true;
@@ -383,16 +390,18 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     callbacks = self._callbacks,
                     els = callbacks.els,
                     fns = callbacks.fns,
-                    keep = 0,
+                    remove = 0,
                     i, el, fn, remainEls = [],
                     remainFns = [];
 
                 for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
-                    keep = false;
-                    if (self._checkElemInViewport(el)) {
-                        keep = fn.call(el);
+                    remove = false;
+                    if (!inDocument(el)) {
+                        remove = true;
+                    } else if (self._checkElemInViewport(el)) {
+                        remove = fn.call(el);
                     }
-                    if (keep === false) {
+                    if (remove === false) {
                         remainEls.push(el);
                         remainFns.push(fn);
                     }
@@ -504,7 +513,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
             /**
              * get c's bounding area.
-             * @param {window|HTMLElement} c
+             * @param {window|HTMLElement} [c]
              * @private
              */
             _getBoundingRect: function (c) {
@@ -734,7 +743,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
  *
  * UPDATE LOG:
  *   - 2012-04-27 yiminghe@gmail.com refactor to extend base, add removeCallback/addElements ...
- *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textaera 可设置高度，宽度
+ *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textarea 可设置高度，宽度
  *   - 2012-04-25 yiminghe@gmail.com refactor, 监控容器内滚动，包括横轴滚动
  *   - 2012-04-12 yiminghe@gmail.com monitor touchmove in iphone
  *   - 2011-12-21 yiminghe@gmail.com 增加 removeElements 与 destroy 接口

@@ -106,6 +106,7 @@ History:
 #### datalazyload
  - [+] datalazyload 增加 autoDestroy 配置
  - [+] datalazyload 增加 removeElements/addElements/removeCallback 与 destroy 接口
+    addElements 可用于将动态产生的内容加入到监控滚动处理中.
  - [+] datalazyload 改进, 缓冲检测 scroll 和 resize, 并只加载显示在当前屏幕中的懒加载元素
  - [+] datalazyload 可以监控 div 容器滚动，以及横轴滚动
  - [+] diff 参数可扩充到四个维度

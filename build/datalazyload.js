@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 16:14
+build time: Oct 23 12:42
 */
 /**
  * @ignore
@@ -15,7 +15,6 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         AREA_DATA_CLS = 'ks-datalazyload',
         CUSTOM = '-custom',
         MANUAL = 'manual',
-        DISPLAY = 'display',
         DEFAULT = 'default',
         NONE = 'none',
         SCROLL = 'scroll',
@@ -25,6 +24,10 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
     function isValidContainer(c) {
         return c.nodeType != 9;
+    }
+
+    function inDocument(el) {
+        return DOM.contains(doc, el);
     }
 
     function getContainer(elem, cs) {
@@ -349,7 +352,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              */
             _loadImg: function (img) {
                 var self = this;
-                if (self._checkElemInViewport(img)) {
+                if (!inDocument(img)) {
+
+                } else if (self._checkElemInViewport(img)) {
                     loadImgSrc(img);
                 } else {
                     return true;
@@ -372,7 +377,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              */
             _loadArea: function (area) {
                 var self = this;
-                if (self._checkElemInViewport(area)) {
+                if (!inDocument(area)) {
+
+                } else if (self._checkElemInViewport(area)) {
                     loadAreaData(area, self.get("execScript"));
                 } else {
                     return true;
@@ -388,16 +395,18 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     callbacks = self._callbacks,
                     els = callbacks.els,
                     fns = callbacks.fns,
-                    keep = 0,
+                    remove = 0,
                     i, el, fn, remainEls = [],
                     remainFns = [];
 
                 for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
-                    keep = false;
-                    if (self._checkElemInViewport(el)) {
-                        keep = fn.call(el);
+                    remove = false;
+                    if (!inDocument(el)) {
+                        remove = true;
+                    } else if (self._checkElemInViewport(el)) {
+                        remove = fn.call(el);
                     }
-                    if (keep === false) {
+                    if (remove === false) {
                         remainEls.push(el);
                         remainFns.push(fn);
                     }
@@ -509,7 +518,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
             /**
              * get c's bounding area.
-             * @param {window|HTMLElement} c
+             * @param {window|HTMLElement} [c]
              * @private
              */
             _getBoundingRect: function (c) {
