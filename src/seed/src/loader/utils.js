@@ -78,18 +78,6 @@
          */
         IE: !!ua.match(/MSIE/),
 
-        addEventListener: host.addEventListener ? function (node, type, callback) {
-            node.addEventListener(type, callback, false);
-        } : function (node, type, callback) {
-            node.attachEvent('on' + type, callback);
-        },
-
-        removeEventListener: host.removeEventListener ? function (node, type, callback) {
-            node.removeEventListener(type, callback, false);
-        } : function (node, type, callback) {
-            node.detachEvent('on' + type, callback);
-        },
-
         /**
          * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
          * @param moduleName current module 's name

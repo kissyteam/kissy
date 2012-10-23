@@ -33,104 +33,102 @@
 
         RE_NOT_WHITE = /\S/;
 
-    S.mix(S,
-        {
+    S.mix(S, {
 
 
-            /**
-             * A crude way of determining if an object is a window
-             * @member KISSY
-             */
-            isWindow: function (obj) {
-                return obj != null && obj == obj.window;
-            },
+        /**
+         * A crude way of determining if an object is a window
+         * @member KISSY
+         */
+        isWindow: function (obj) {
+            return obj != null && obj == obj.window;
+        },
 
 
-            /**
-             * get xml representation of data
-             * @param {String} data
-             * @member KISSY
-             */
-            parseXML: function (data) {
-                // already a xml
-                if (data.documentElement) {
-                    return data;
-                }
-                var xml;
-                try {
-                    // Standard
-                    if (win['DOMParser']) {
-                        xml = new DOMParser().parseFromString(data, 'text/xml');
-                    } else { // IE
-                        xml = new ActiveXObject('Microsoft.XMLDOM');
-                        xml.async = 'false';
-                        xml.loadXML(data);
-                    }
-                } catch (e) {
-                    S.log('parseXML error : ');
-                    S.log(e);
-                    xml = undefined;
-                }
-                if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
-                    S.error('Invalid XML: ' + data);
-                }
-                return xml;
-            },
-
-            /**
-             * Evaluates a script in a global context.
-             * @member KISSY
-             */
-            globalEval: function (data) {
-                if (data && RE_NOT_WHITE.test(data)) {
-                    // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
-                    ( win.execScript || function (data) {
-                        win[ 'eval' ].call(win, data);
-                    } )(data);
-                }
-            },
-
-            /**
-             * Specify a function to execute when the DOM is fully loaded.
-             * @param fn {Function} A function to execute after the DOM is ready
-             *
-             * for example:
-             *      @example
-             *      KISSY.ready(function(S){});
-             *
-             * @return {KISSY}
-             * @member KISSY
-             */
-            ready: function (fn) {
-
-                readyPromise.then(fn);
-
-                return this;
-            },
-
-            /**
-             * Executes the supplied callback when the item with the supplied id is found.
-             * @param id <String> The id of the element, or an array of ids to look for.
-             * @param fn <Function> What to execute when the element is found.
-             * @member KISSY
-             */
-            available: function (id, fn) {
-                id = (id + EMPTY).match(RE_IDSTR)[1];
-                if (!id || !S.isFunction(fn)) {
-                    return;
-                }
-
-                var retryCount = 1,
-                    node,
-                    timer = S.later(function () {
-                        if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
-                            ++retryCount > POLL_RETIRES) {
-                            timer.cancel();
-                        }
-                    }, POLL_INTERVAL, true);
+        /**
+         * get xml representation of data
+         * @param {String} data
+         * @member KISSY
+         */
+        parseXML: function (data) {
+            // already a xml
+            if (data.documentElement) {
+                return data;
             }
-        });
+            var xml;
+            try {
+                // Standard
+                if (win['DOMParser']) {
+                    xml = new DOMParser().parseFromString(data, 'text/xml');
+                } else { // IE
+                    xml = new ActiveXObject('Microsoft.XMLDOM');
+                    xml.async = 'false';
+                    xml.loadXML(data);
+                }
+            } catch (e) {
+                S.log('parseXML error : ');
+                S.log(e);
+                xml = undefined;
+            }
+            if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
+                S.error('Invalid XML: ' + data);
+            }
+            return xml;
+        },
 
+        /**
+         * Evaluates a script in a global context.
+         * @member KISSY
+         */
+        globalEval: function (data) {
+            if (data && RE_NOT_WHITE.test(data)) {
+                // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
+                ( win.execScript || function (data) {
+                    win[ 'eval' ].call(win, data);
+                } )(data);
+            }
+        },
+
+        /**
+         * Specify a function to execute when the DOM is fully loaded.
+         * @param fn {Function} A function to execute after the DOM is ready
+         *
+         * for example:
+         *      @example
+         *      KISSY.ready(function(S){});
+         *
+         * @return {KISSY}
+         * @member KISSY
+         */
+        ready: function (fn) {
+
+            readyPromise.then(fn);
+
+            return this;
+        },
+
+        /**
+         * Executes the supplied callback when the item with the supplied id is found.
+         * @param id <String> The id of the element, or an array of ids to look for.
+         * @param fn <Function> What to execute when the element is found.
+         * @member KISSY
+         */
+        available: function (id, fn) {
+            id = (id + EMPTY).match(RE_IDSTR)[1];
+            if (!id || !S.isFunction(fn)) {
+                return;
+            }
+
+            var retryCount = 1,
+                node,
+                timer = S.later(function () {
+                    if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
+                        ++retryCount > POLL_RETIRES) {
+                        timer.cancel();
+                    }
+                }, POLL_INTERVAL, true);
+        }
+    });
 
     /**
      * Binds ready events.
