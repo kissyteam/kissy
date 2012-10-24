@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>淘宝网 - 淘！我喜欢</title>
+
+</head>
+<body>
+
+
+<button onclick="window.fireEvent();">fire</button>
+
+<script src="../../../../../../build/seed.js" charset="utf-8"></script>
+<script>
+
+    KISSY.use('event/custom', function (S, Event) {
+
+        var t = S.mix({}, Event.Target);
+
+        t.on('click.my', function (e) {
+            S.log('t my clicked, ' + e.data);
+        });
+
+        t.on('click.you', function (e) {
+            S.log('t you clicked, ' + e.data);
+        });
+
+        window.fireEvent = function () {
+            t.fire('click', {
+                data: 2
+            });
+        };
+
+    });
+
+</script>
+
+</body>
+</html>

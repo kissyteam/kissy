@@ -169,7 +169,7 @@ KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) 
              * @member KISSY.Event
              * @param {String} [type] The type of event to remove.
              * use space to separate multiple event types.
-             * @param {Function} [fn] The event handler/listener.
+             * @param {Function} [fn] The event listener.
              * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
              */
             remove: function (targets, type, fn, scope) {

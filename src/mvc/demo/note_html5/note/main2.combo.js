@@ -107,7 +107,7 @@ KISSY.add("note/mods/NotesCollection", function(S, mvc, NoteModel) {
   function NotesModel() {
     NotesModel.superclass.constructor.apply(this, arguments)
   }
-  S.extend(NotesModel, mvc.Collection, {ATTRS:{Model:{value:NoteModel}}});
+  S.extend(NotesModel, mvc.Collection, {ATTRS:{model:{value:NoteModel}}});
   return NotesModel
 }, {requires:["mvc", "./NoteModel"]});
 KISSY.add("note/mods/SearchView", function(S, Node, mvc, Template) {
@@ -179,7 +179,7 @@ KISSY.add("note/mods/router", function(S, Node, mvc, NotesView, EditView, NotesC
     editView.set("note", new NoteModel);
     editView.render().get("el").show()
   }, search:function(path, query) {
-    var q = decodeURIComponent(query.q), self = this;
+    var q = S.urlDecode(query.q), self = this;
     self.searchView.searchInput.val(q);
     self.searchView.get("notes").load({data:{q:q}, success:function() {
       $(".page").hide();
@@ -208,7 +208,7 @@ KISSY.add("note/mods/sync", function(S, mvc) {
     setTimeout(function() {
       var index;
       var store = STORE || (window.localStorage ? window.localStorage.getItem(KEY) || [] : []);
-      if(S.isString(store)) {
+      if(typeof store == "string") {
         store = JSON.parse(store)
       }
       var ret, id, error, i;

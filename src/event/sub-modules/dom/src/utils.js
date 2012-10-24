@@ -4,25 +4,8 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/utils', function (S, DOM) {
-    var EVENT_GUID = 'ksEventTargetId' + S.now();
-
-    var data;
-
-    data = {
-        hasData: function (elem) {
-            return DOM.hasData(elem, EVENT_GUID);
-        },
-
-        data: function (elem, v) {
-            return DOM.data(elem, EVENT_GUID, v);
-        },
-
-        removeData: function (elem) {
-            return DOM.removeData(elem, EVENT_GUID);
-        }
-    };
-
-    var doc = S.Env.host.document,
+    var EVENT_GUID = 'ksEventTargetId_1.30',
+        doc = S.Env.host.document,
         simpleAdd = doc && doc.addEventListener ?
             function (el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -46,12 +29,19 @@ KISSY.add('event/dom/utils', function (S, DOM) {
                 }
             };
 
-
-    return S.mix({
-        EVENT_GUID: EVENT_GUID,
+    return {
         simpleAdd: simpleAdd,
-        simpleRemove: simpleRemove
-    }, data);
+
+        simpleRemove: simpleRemove,
+
+        data: function (elem, v) {
+            return DOM.data(elem, EVENT_GUID, v);
+        },
+
+        removeData: function (elem) {
+            return DOM.removeData(elem, EVENT_GUID);
+        }
+    };
 
 }, {
     requires: ['dom']

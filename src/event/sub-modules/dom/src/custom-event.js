@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * custom event for dom.
  * @author yiminghe@gmail.com
  */
@@ -7,25 +8,51 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
     // 记录手工 fire(domElement,type) 时的 type
     // 再在浏览器通知的系统 eventHandler 中检查
     // 如果相同，那么证明已经 fire 过了，不要再次触发了
-    var triggeredEvent = '',
-        _Utils = Event._Utils;
+    var _Utils = Event._Utils;
 
+    /**
+     * custom event for dom
+     * @param {Object} cfg
+     * @class KISSY.Event.DOMCustomEvent
+     */
     function DOMCustomEvent(cfg) {
         var self = this;
         S.mix(self, cfg);
         self.reset();
+        /**
+         * html node which binds current custom event
+         * @cfg {HTMLElement} currentTarget
+         */
     }
 
     S.extend(DOMCustomEvent, Event._BaseCustomEvent, {
+
+        setup: function () {
+            var self = this,
+                type = self.type,
+                s = special[type] || {},
+                currentTarget = self.currentTarget,
+                handle = Utils.data(currentTarget).handle;
+            // 第一次注册该事件，dom 节点才需要注册 dom 事件
+            if (!s.setup || s.setup.call(currentTarget) === false) {
+                Utils.simpleAdd(currentTarget, type, handle)
+            }
+        },
+
         constructor: DOMCustomEvent,
+
         reset: function () {
             var self = this;
             DOMCustomEvent.superclass.reset.call(self);
             self.delegateCount = 0;
             self.lastCount = 0;
         },
+
         /**
-         * notify all subscribers
+         * notify current event 's subscribers
+         * @param {KISSY.Event.DOMEventObject} event
+         * @return {*} return false if one of custom event 's subscribers  else
+         * return last value of custom event 's subscribers 's return value.
          */
         notify: function (event) {
             /*
@@ -37,29 +64,28 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
             /*
              DOM3 Events: EventListenerList objects in the DOM are live. ??
              */
-            var target = event.target,
+            var target = event['target'],
                 self = this,
                 currentTarget = self.currentTarget,
-                subscribers = self..subscribers,
+                subscribers = self.subscribers,
                 currentTarget0,
                 allSubscribers = [],
                 ret,
                 gRet,
-                handlerObj,
+                subscriberObj,
                 i,
                 j,
-                delegateCount = subscribers.delegateCount || 0,
+                delegateCount = self.delegateCount || 0,
                 len,
                 currentTargetSubscribers,
                 currentTargetSubscriber,
                 subscriber;
 
             // collect delegated subscribers and corresponding element
-            if (delegateCount &&
-                // by jq
-                // Avoid disabled elements in IE (#6911)
-                // non-left-click bubbling in Firefox (#3861),firefox 8 fix it
-                !target.disabled) {
+            // by jq
+            // Avoid disabled elements in IE (#6911)
+            // non-left-click bubbling in Firefox (#3861),firefox 8 fix it
+            if (delegateCount && !target.disabled) {
                 while (target != currentTarget) {
                     currentTargetSubscribers = [];
                     for (i = 0; i < delegateCount; i++) {
@@ -85,21 +111,16 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
                 currentTargetSubscribers: subscribers.slice(delegateCount)
             });
 
-            for (i = 0, len = allSubscribers.length;
-                 !event.isPropagationStopped() && i < len;
-                 ++i) {
+            for (i = 0, len = allSubscribers.length; !event.isPropagationStopped() && i < len; ++i) {
 
-                handlerObj = allSubscribers[i];
-                currentTargetSubscribers = handlerObj.currentTargetSubscribers;
-                currentTarget0 = handlerObj.currentTarget;
+                subscriberObj = allSubscribers[i];
+                currentTargetSubscribers = subscriberObj.currentTargetSubscribers;
+                currentTarget0 = subscriberObj.currentTarget;
                 event.currentTarget = currentTarget0;
 
-                for (j = 0;
-                     !event.isImmediatePropagationStopped && j < currentTargetSubscribers.length;
-                     j++) {
+                for (j = 0; !event.isImmediatePropagationStopped() && j < currentTargetSubscribers.length; j++) {
 
                     currentTargetSubscriber = currentTargetSubscribers[j];
-
 
                     ret = currentTargetSubscriber.notify(event, self);
 
@@ -117,11 +138,18 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
             return gRet;
         },
 
-        fire: function (eventData, onlyHandlers) {
+        /**
+         * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
+         * @param {Object|KISSY.Event.DOMEventObject} [eventData] additional event data
+         * @return {*} return false if one of custom event 's subscribers (include bubbled) else
+         * return last value of custom event 's subscribers (include bubbled) 's return value.
+         */
+        fire: function (eventData, onlyHandlers/*internal usage*/) {
 
             eventData = eventData || {};
 
-            var eventType = this.type,
+            var self = this,
+                eventType = self.type,
                 s = special[eventType];
 
             // TODO bug: when fire mouseenter, it also fire mouseover in firefox/chrome
@@ -130,22 +158,24 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
             }
 
             var event,
-                currentTarget = this.currentTarget,
+                customEvent,
+                currentTarget = self.currentTarget,
                 ret = true;
+
             eventData.type = eventType;
 
             if (eventData instanceof DOMEventObject) {
                 event = eventData;
             } else {
-                eventData.currentTarget = currentTarget;
-                event = new DOMEventObject();
+                event = new DOMEventObject({
+                    currentTarget: currentTarget
+                });
                 S.mix(event, eventData);
             }
 
             // onlyHandlers is equal to event.halt()
             // but we can not call event.halt()
             // because handle will check event.isPropagationStopped
-
             var cur = currentTarget,
                 t,
                 win = DOM._getWin(cur.ownerDocument || cur),
@@ -154,17 +184,19 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
             //bubble up dom tree
             do {
                 event.currentTarget = cur;
-                t = self.notify(event);
-                if (ret !== false) {
-                    ret = t;
+                customEvent = DOMCustomEvent.getCustomEventFromNodeByType(cur, eventType);
+                if (customEvent) {
+                    t = customEvent.notify(event);
+                    if (ret !== false) {
+                        ret = t;
+                    }
                 }
                 // Trigger an inline bound script
                 if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
                     event.preventDefault();
                 }
                 // Bubble up to document, then to window
-                cur = cur.parentNode ||
-                    cur.ownerDocument ||
+                cur = cur.parentNode || cur.ownerDocument ||
                     (cur === currentTarget.ownerDocument) && win;
             } while (!onlyHandlers && cur && !event.isPropagationStopped());
 
@@ -174,14 +206,15 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
                 // https://developer.mozilla.org/en-US/docs/DOM/element.click
 
                 var old;
+
                 try {
                     // execute default action on dom node
                     // so exclude window
                     // exclude focus/blue on hidden element
-                    if (ontype &&
-                        currentTarget[ eventType ] &&
+                    if (ontype && currentTarget[ eventType ] &&
                         (
-                            (eventType !== 'focus' && eventType !== 'blur') ||
+                            (
+                                eventType !== 'focus' && eventType !== 'blur') ||
                                 currentTarget.offsetWidth !== 0
                             ) &&
                         !S.isWindow(currentTarget)) {
@@ -193,7 +226,7 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
                         }
 
                         // 记录当前 trigger 触发
-                        triggeredEvent = eventType;
+                        DOMCustomEvent.triggeredEvent = eventType;
 
                         // 只触发默认事件，而不要执行绑定的用户回调
                         // 同步触发
@@ -208,67 +241,55 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
                     currentTarget[ ontype ] = old;
                 }
 
-                triggeredEvent = '';
+                DOMCustomEvent.triggeredEvent = '';
 
             }
             return ret;
         },
 
+        /**
+         * add a subscriber to custom event's subscribers
+         * @param {Object} cfg {@link KISSY.Event.DOMSubscriber} 's config
+         */
         on: function (cfg) {
             var self = this,
                 subscribers = self.subscribers,
-                i,
-                subscriber = new DOMSubscriber(cfg);
+                s = special[self.type] || {},
+            // clone event
+                subscriber = cfg instanceof DOMSubscriber ? cfg : new DOMSubscriber(cfg);
 
-            for (i = subscribers.length - 1; i >= 0; --i) {
-                /*
-                 If multiple identical EventListeners are registered on the same EventTarget
-                 with the same parameters the duplicate instances are discarded.
-                 They do not cause the EventListener to be called twice
-                 and since they are discarded
-                 they do not need to be removed with the removeEventListener method.
-                 */
-                if (subscriber.equals(subscribers[i])) {
-                    return;
-                }
-            }
-
-            // 增加 listener
-            if (subscriber.selector) {
-                subscribers.splice(self.delegateCount, 0, subscriber);
-                self.delegateCount++;
-            } else {
-                if (subscriber.last) {
-                    subscribers.push(subscriber);
-                    self.lastCount++;
+            if (self.findSubscriber(subscriber) == -1) {
+                // 增加 listener
+                if (subscriber.selector) {
+                    subscribers.splice(self.delegateCount, 0, subscriber);
+                    self.delegateCount++;
                 } else {
-                    subscribers.splice(subscribers.length - self.lastCount, 0, subscriber);
+                    if (subscriber.last) {
+                        subscribers.push(subscriber);
+                        self.lastCount++;
+                    } else {
+                        subscribers.splice(subscribers.length - self.lastCount, 0, subscriber);
+                    }
+                }
+
+                if (s.add) {
+                    s.add.call(self.currentTarget, subscriber);
                 }
             }
-
-            return subscriber;
         },
 
-
-        'fn': function (event) {
-            // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
-            // 已经在 fire 中 bubble 过一次了
-            // in case after page has unloaded
-            if (triggeredEvent == event.type || typeof KISSY == 'undefined') {
-                return;
-            }
-            var self = this;
-            event.currentTarget = self.currentTarget;
-            event = new DOMEventObject(event);
-            return self.notify(event);
-        },
-
+        /**
+         * remove some subscribers from current event 's subscribers by subscriber config param
+         * @param {Object} cfg {@link KISSY.Event.DOMSubscriber} 's config
+         */
         detach: function (cfg) {
             var groupsRe,
                 self = this,
+                s = special[self.type] || {},
                 hasSelector = 'selector' in self,
                 selector = self.selector,
-                scope = self.scope,
+                context = self.context,
+                fn = cfg.fn,
                 currentTarget = self.currentTarget,
                 subscribers = self.subscribers,
                 groups = cfg.groups;
@@ -281,17 +302,17 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
                 groupsRe = _Utils.getGroupsRe(groups);
             }
 
-            var i, j, t, subscriber, subscriberScope, len = subscribers.length;
+            var i, j, t, subscriber, subscriberContext, len = subscribers.length;
 
             // 移除 fn
             if (fn || hasSelector || groupsRe) {
-                scope = scope || currentTarget;
+                context = context || currentTarget;
 
                 for (i = 0, j = 0, t = []; i < len; ++i) {
                     subscriber = subscribers[i];
-                    subscriberScope = subscriber.scope || currentTarget;
+                    subscriberContext = subscriber.context || currentTarget;
                     if (
-                        (scope != subscriberScope) ||
+                        (context != subscriberContext) ||
                             // 指定了函数，函数不相等，保留
                             (fn && fn != subscriber.fn) ||
                             // 1.没指定函数
@@ -327,8 +348,8 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
                         if (subscriber.last && self.lastCount) {
                             self.lastCount--;
                         }
-                        if (special.remove) {
-                            special.remove.call(currentTarget, subscriber);
+                        if (s.remove) {
+                            s.remove.call(currentTarget, subscriber);
                         }
                     }
                 }
@@ -338,11 +359,67 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
                 // 全部删除
                 self.reset();
             }
+
+            self.checkNodeMemory();
+        },
+
+        removeSubscriber: function () {
+            var self = this;
+            DOMCustomEvent.superclass.removeSubscriber.apply(self, arguments);
+            self.checkNodeMemory();
+        },
+
+        checkNodeMemory: function () {
+            var self = this,
+                type = self.type,
+                events,
+                s = special[type] || {},
+                currentTarget = self.currentTarget,
+                eventDesc = Utils.data(currentTarget);
+            if (eventDesc) {
+                events = eventDesc.events;
+                if (!self.hasSubscriber()) {
+                    // remove(el, type) or fn 已移除光
+                    // dom node need to detach handler from dom node
+                    if (!s['tearDown'] || s['tearDown'].call(currentTarget) === false) {
+                        Utils.simpleRemove(currentTarget, type, eventDesc.handle);
+                    }
+                    // remove currentTarget's single event description
+                    delete events[type];
+                }
+
+                // remove currentTarget's  all events description
+                if (S.isEmptyObject(events)) {
+                    eventDesc.handle = null;
+                    Utils.removeData(currentTarget);
+                }
+            }
         }
     });
+
+    DOMCustomEvent.triggeredEvent = '';
+
+    /**
+     * get custom event from html node by event type.
+     * @param {HTMLElement} node
+     * @param {String} type event type
+     * @return {KISSY.Event.DOMCustomEvent}
+     */
+    DOMCustomEvent.getCustomEventFromNodeByType = function (node, type) {
+
+        var eventDesc = Utils.data(node), events;
+        if (eventDesc) {
+            events = eventDesc.events;
+        }
+        if (events) {
+            return events[type];
+        }
+
+        return undefined;
+    };
 
     return DOMCustomEvent;
 
 }, {
-    requires: ['dom', './special', './utils', './subscriber', 'event-object', 'event/base']
+    requires: ['dom', './special', './utils', './subscriber', './object', 'event/base']
 });

@@ -1,12 +1,13 @@
 /**
- * custom event mechanism for kissy
+ * @ignore
+ * custom facade
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom', function (S, Target, Event) {
+KISSY.add('event/custom', function (S, Event, Target) {
     S.EventTarget = Event.Target = Target;
     return {
         Target: Target
     };
 }, {
-    requires: ['./custom/target', './base']
+    requires: ['./base', './custom/target']
 });

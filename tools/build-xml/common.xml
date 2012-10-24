@@ -118,6 +118,9 @@
 
 
     <target name="extract-dependency">
+
+        <delete file="${component.meta.dir}/modules.js"></delete>
+
         <java classname="com.taobao.f2e.ExtractDependency">
 
             <arg value="-baseUrls"/>

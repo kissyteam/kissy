@@ -32,7 +32,7 @@ KISSY.add('event', function (S, _data, KeyCodes, Event, Target, Object) {
              * @param {String|Function} selector filter selector string or function to find right element
              * @param {String} [eventType] The type of event to delegate.
              * use space to separate multiple event types.
-             * @param {Function} [fn] The event handler/listener.
+             * @param {Function} [fn] The event listener.
              * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
              * @member KISSY.Event
              */
@@ -49,7 +49,7 @@ KISSY.add('event', function (S, _data, KeyCodes, Event, Target, Object) {
              * @param {String} [eventType] The type of event to undelegate.
              * use space to separate multiple event types.
              * @param {String|Function} [selector] filter selector string or function to find right element
-             * @param {Function} [fn] The event handler/listener.
+             * @param {Function} [fn] The event listener.
              * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
              * @member KISSY.Event
              */

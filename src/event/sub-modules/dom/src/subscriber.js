@@ -1,46 +1,61 @@
 /**
+ * @ignore
  * subscriber for dom event.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/subscriber', function (S, special, Subscriber) {
+KISSY.add('event/dom/subscriber', function (S, special, Event) {
 
-
-    var KEYS = ['fn', 'selector', 'data', 'scope', 'originalType', 'groups', 'last'];
-
+    /**
+     * subscriber for dom event
+     * @class KISSY.Event.DOMSubscriber
+     * @extends KISSY.Event.Subscriber
+     */
     function DOMSubscriber(cfg) {
         DOMSubscriber.superclass.constructor.apply(this, arguments);
+        /**
+         * filter selector string or function to find right element
+         * @cfg {String} selector
+         */
+        /**
+         * extra data as second parameter of listener
+         * @cfg {*} data
+         */
     }
 
-    S.extend(DOMSubscriber, Subscriber, {
-        keys: ['fn', 'selector', 'data', 'scope', 'originalType', 'groups', 'last'],
+    S.extend(DOMSubscriber, Event._Subscriber, {
+
+        keys: ['fn', 'selector', 'data', 'context', 'originalType', 'groups', 'last'],
+
         notifyInternal: function (event, ce) {
-            var self = this, s, t, ret;
+            var self = this,
+                s, t, ret,
+                type = event.type;
+
             // restore originalType if involving delegate/onFix handlers
             if (self.originalType) {
                 event.type = self.originalType;
             }
 
-            // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
+            // context undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
             if ((s = special[event.type]) && s.handle) {
-                t = s.handle(event, self);
+                t = s.handle(event, self, ce);
                 // can handle
-                if (t.length > 0) {
+                if (t && t.length > 0) {
                     ret = t[0];
-                    if (this.once) {
-                        ce.removeSubscriber(this);
-                    }
                 }
             } else {
-                ret = DOMSubscriber.superclass.notifyInternal.apply(this, arguments);
+                ret = this.simpleNotify(event, ce);
             }
 
-            return ret;
+            event.type = type;
 
+            return ret;
         }
+
     });
 
     return DOMSubscriber;
 
 }, {
-    requires: ['./special', 'event/base/subscriber']
+    requires: ['./special', 'event/base']
 });

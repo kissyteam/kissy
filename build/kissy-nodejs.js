@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 22 21:07
+build time: Oct 24 16:59
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121022210741' will replace with current timestamp when compressing.
+         * NOTICE: '20121024165913' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121022210741',
+        __BUILD_TIME: '20121024165913',
         /**
          * KISSY Environment.
          * @private
@@ -3197,18 +3197,6 @@ var KISSY = (function (undefined) {
          */
         IE: !!ua.match(/MSIE/),
 
-        addEventListener: host.addEventListener ? function (node, type, callback) {
-            node.addEventListener(type, callback, false);
-        } : function (node, type, callback) {
-            node.attachEvent('on' + type, callback);
-        },
-
-        removeEventListener: host.removeEventListener ? function (node, type, callback) {
-            node.removeEventListener(type, callback, false);
-        } : function (node, type, callback) {
-            node.detachEvent('on' + type, callback);
-        },
-
         /**
          * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
          * @param moduleName current module 's name
@@ -4669,7 +4657,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121022210741'
+            tag: '20121024165913'
         }, getBaseInfo()));
     }
 
@@ -4720,104 +4708,102 @@ var KISSY = (function (undefined) {
 
         RE_NOT_WHITE = /\S/;
 
-    S.mix(S,
-        {
+    S.mix(S, {
 
 
-            /**
-             * A crude way of determining if an object is a window
-             * @member KISSY
-             */
-            isWindow: function (obj) {
-                return obj != null && obj == obj.window;
-            },
+        /**
+         * A crude way of determining if an object is a window
+         * @member KISSY
+         */
+        isWindow: function (obj) {
+            return obj != null && obj == obj.window;
+        },
 
 
-            /**
-             * get xml representation of data
-             * @param {String} data
-             * @member KISSY
-             */
-            parseXML: function (data) {
-                // already a xml
-                if (data.documentElement) {
-                    return data;
-                }
-                var xml;
-                try {
-                    // Standard
-                    if (win['DOMParser']) {
-                        xml = new DOMParser().parseFromString(data, 'text/xml');
-                    } else { // IE
-                        xml = new ActiveXObject('Microsoft.XMLDOM');
-                        xml.async = 'false';
-                        xml.loadXML(data);
-                    }
-                } catch (e) {
-                    S.log('parseXML error : ');
-                    S.log(e);
-                    xml = undefined;
-                }
-                if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
-                    S.error('Invalid XML: ' + data);
-                }
-                return xml;
-            },
-
-            /**
-             * Evaluates a script in a global context.
-             * @member KISSY
-             */
-            globalEval: function (data) {
-                if (data && RE_NOT_WHITE.test(data)) {
-                    // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
-                    ( win.execScript || function (data) {
-                        win[ 'eval' ].call(win, data);
-                    } )(data);
-                }
-            },
-
-            /**
-             * Specify a function to execute when the DOM is fully loaded.
-             * @param fn {Function} A function to execute after the DOM is ready
-             *
-             * for example:
-             *      @example
-             *      KISSY.ready(function(S){});
-             *
-             * @return {KISSY}
-             * @member KISSY
-             */
-            ready: function (fn) {
-
-                readyPromise.then(fn);
-
-                return this;
-            },
-
-            /**
-             * Executes the supplied callback when the item with the supplied id is found.
-             * @param id <String> The id of the element, or an array of ids to look for.
-             * @param fn <Function> What to execute when the element is found.
-             * @member KISSY
-             */
-            available: function (id, fn) {
-                id = (id + EMPTY).match(RE_IDSTR)[1];
-                if (!id || !S.isFunction(fn)) {
-                    return;
-                }
-
-                var retryCount = 1,
-                    node,
-                    timer = S.later(function () {
-                        if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
-                            ++retryCount > POLL_RETIRES) {
-                            timer.cancel();
-                        }
-                    }, POLL_INTERVAL, true);
+        /**
+         * get xml representation of data
+         * @param {String} data
+         * @member KISSY
+         */
+        parseXML: function (data) {
+            // already a xml
+            if (data.documentElement) {
+                return data;
             }
-        });
+            var xml;
+            try {
+                // Standard
+                if (win['DOMParser']) {
+                    xml = new DOMParser().parseFromString(data, 'text/xml');
+                } else { // IE
+                    xml = new ActiveXObject('Microsoft.XMLDOM');
+                    xml.async = 'false';
+                    xml.loadXML(data);
+                }
+            } catch (e) {
+                S.log('parseXML error : ');
+                S.log(e);
+                xml = undefined;
+            }
+            if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
+                S.error('Invalid XML: ' + data);
+            }
+            return xml;
+        },
 
+        /**
+         * Evaluates a script in a global context.
+         * @member KISSY
+         */
+        globalEval: function (data) {
+            if (data && RE_NOT_WHITE.test(data)) {
+                // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
+                ( win.execScript || function (data) {
+                    win[ 'eval' ].call(win, data);
+                } )(data);
+            }
+        },
+
+        /**
+         * Specify a function to execute when the DOM is fully loaded.
+         * @param fn {Function} A function to execute after the DOM is ready
+         *
+         * for example:
+         *      @example
+         *      KISSY.ready(function(S){});
+         *
+         * @return {KISSY}
+         * @member KISSY
+         */
+        ready: function (fn) {
+
+            readyPromise.then(fn);
+
+            return this;
+        },
+
+        /**
+         * Executes the supplied callback when the item with the supplied id is found.
+         * @param id <String> The id of the element, or an array of ids to look for.
+         * @param fn <Function> What to execute when the element is found.
+         * @member KISSY
+         */
+        available: function (id, fn) {
+            id = (id + EMPTY).match(RE_IDSTR)[1];
+            if (!id || !S.isFunction(fn)) {
+                return;
+            }
+
+            var retryCount = 1,
+                node,
+                timer = S.later(function () {
+                    if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
+                        ++retryCount > POLL_RETIRES) {
+                        timer.cancel();
+                    }
+                }, POLL_INTERVAL, true);
+        }
+    });
 
     /**
      * Binds ready events.
@@ -4966,9 +4952,17 @@ config({
 config({
 'editor': {requires: ['htmlparser','component','core']}
 });
+config({
+    "event": {
+        "alias": ["event/base", "event/dom", "event/custom"]
+    }
+});/*Generated by KISSY Module Compiler*/
+config({
+'event/custom': {requires: ['event/base']}
+});
 /*Generated by KISSY Module Compiler*/
 config({
-'event': {requires: ['ua','dom']}
+'event/dom': {requires: ['event/base','dom','ua']}
 });
 /*Generated by KISSY Module Compiler*/
 config({

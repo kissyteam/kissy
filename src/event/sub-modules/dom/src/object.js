@@ -16,32 +16,41 @@ KISSY.add('event/dom/object', function (S, Event) {
             'target toElement view wheelDelta which axis').split(' ');
 
     /**
-     * @class KISSY.Event.Object
-     *
-     * KISSY 's event system normalizes the event object according to
+     * KISSY 's dom event system normalizes the event object according to
      * W3C standards. The event object is guaranteed to be passed to
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
+     *
+     * @class KISSY.Event.DOMEventObject
+     * @param domEvent native dom event
      */
     function DOMEventObject(domEvent) {
         var self = this;
         self.originalEvent = domEvent;
         // in case dom event has been mark as default prevented by lower dom node
         self.isDefaultPrevented = ( domEvent['defaultPrevented'] || domEvent.returnValue === FALSE ||
-            domEvent['getPreventDefault'] && domEvent['getPreventDefault']() ) ? function(){
+            domEvent['getPreventDefault'] && domEvent['getPreventDefault']() ) ? function () {
             return TRUE;
-        } : function(){
+        } : function () {
             return FALSE;
         };
         fix(self);
         fixMouseWheel(self);
+        /**
+         * source html node of current event
+         * @cfg {HTMLElement} target
+         */
+        /**
+         * current htm node which processes current event
+         * @cfg {HTMLElement} currentTarget
+         */
     }
 
     function fix(self) {
         var originalEvent = self.originalEvent,
             l = props.length,
             prop,
-            ct = self.currentTarget,
+            ct = originalEvent.currentTarget,
             ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
 
         // clone properties of the original event object
@@ -136,10 +145,9 @@ KISSY.add('event/dom/object', function (S, Event) {
     }
 
     S.extend(DOMEventObject, Event._Object, {
+
         constructor: DOMEventObject,
-        /**
-         * Prevents the event's default behavior
-         */
+
         preventDefault: function () {
             var e = this.originalEvent;
 
@@ -154,9 +162,7 @@ KISSY.add('event/dom/object', function (S, Event) {
 
             DOMEventObject.superclass.preventDefault.call(this);
         },
-        /**
-         * Stops the propagation to the next bubble target
-         */
+
         stopPropagation: function () {
             var e = this.originalEvent;
 
@@ -180,10 +186,13 @@ KISSY.add('event/dom/object', function (S, Event) {
 });
 
 /*
- merge with mousewheel:
- not perfect in osx : accelerated scroll
+ 2010.04
+ - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
 
- refer:
+ 2012-10-24
+ - merge with mousewheel: not perfect in osx : accelerated scroll
+
+ - refer:
  https://github.com/brandonaaron/jquery-mousewheel/blob/master/jquery.mousewheel.js
  http://www.planabc.net/2010/08/12/mousewheel_event_in_javascript/
  http://www.switchonthecode.com/tutorials/javascript-tutorial-the-scroll-wheel
@@ -193,8 +202,4 @@ KISSY.add('event/dom/object', function (S, Event) {
  http://plugins.jquery.com/project/mousewheel
  http://www.cnblogs.com/aiyuchen/archive/2011/04/19/2020843.html
  http://www.w3.org/TR/DOM-Level-3-Events/#events-mousewheelevents
- */
-
-/*
- http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
  */

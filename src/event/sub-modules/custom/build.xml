@@ -1,0 +1,10 @@
+<project name="event/custom.build" default="build" basedir=".">
+    <description>Event Build File</description>
+
+    <property name="component.name" value="event/custom"/>
+
+    <import file="../../../../tools/build-xml/common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

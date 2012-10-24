@@ -25,7 +25,7 @@ KISSY.use("event", function (S, Event) {
             var t = new Test();
 
             t.fire("test test2", {
-                a:1
+                a: 1
             });
 
             expect(args).toEqual([1, 1]);
@@ -39,7 +39,7 @@ KISSY.use("event", function (S, Event) {
 
             function Test() {
                 this.publish("test", {
-                    bubbles:1
+                    bubbles: 1
                 });
 
                 this.on("test", function (e) {
@@ -63,7 +63,7 @@ KISSY.use("event", function (S, Event) {
             t2.addTarget(t);
 
             t2.fire("test", {
-                a:1
+                a: 1
             });
 
             expect(ret).toEqual([2, 1]);
@@ -75,7 +75,7 @@ KISSY.use("event", function (S, Event) {
             t2.removeTarget(t);
 
             t2.fire("test", {
-                a:1
+                a: 1
             });
 
             expect(ret).toEqual([2]);
@@ -89,7 +89,7 @@ KISSY.use("event", function (S, Event) {
 
             function Test() {
                 this.publish("test", {
-                    bubbles:1
+                    bubbles: 1
                 });
 
                 this.on("test", function (e) {
@@ -129,7 +129,7 @@ KISSY.use("event", function (S, Event) {
             r3.addTarget(r2);
 
             r3.publish("click", {
-                bubbles:1
+                bubbles: 1
             });
 
             var ret = 0;
@@ -143,6 +143,8 @@ KISSY.use("event", function (S, Event) {
             expect(ret).toBe(1);
 
         });
+
+        // TODO: add defaultFn tc
     });
 
 });

@@ -1,27 +1,50 @@
 /**
- * custom event mechanism for kissy
+ * @ignore
+ * base custom event mechanism for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/base/custom-event', function (S) {
 
+    /**
+     * base custom event for registering and un-registering subscriber for specified event.
+     * @class KISSY.Event.BaseCustomEvent
+     * @private
+     * @param {Object} cfg custom event's attribute
+     */
     function BaseCustomEvent(cfg) {
-        S.mix(this, cfg);
+        var self = this;
+        S.mix(self, cfg);
         self.reset();
+        /**
+         * current event type
+         * @cfg {String} type
+         */
     }
 
     BaseCustomEvent.prototype = {
 
         constructor: BaseCustomEvent,
 
+        /**
+         * whether current event has subscribers
+         * @return {Boolean}
+         */
         hasSubscriber: function () {
-            return !!this.subscribers;
+            return !!this.subscribers.length;
         },
 
+        /**
+         * reset current event's status
+         */
         reset: function () {
             var self = this;
             self.subscribers = [];
         },
 
+        /**
+         * remove one subscriber from current event's subscribers
+         * @param {KISSY.Event.Subscriber} s
+         */
         removeSubscriber: function (s) {
             var subscribers = this.subscribers,
                 len = subscribers.length;
@@ -33,6 +56,11 @@ KISSY.add('event/base/custom-event', function (S) {
             }
         },
 
+        /**
+         * Search for a specified subscriber within current event's subscribers
+         * @param {KISSY.Event.Subscriber} subscriber
+         * @return {Number} subscriber's index in subscribers
+         */
         findSubscriber: function (subscriber) {
             var subscribers = this.subscribers, i;
 

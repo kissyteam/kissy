@@ -12,7 +12,7 @@ KISSY.add(function(S, mvc, NoteModel) {
 
     S.extend(NotesModel, mvc.Collection, {
         ATTRS:{
-            Model:{
+            model:{
                 value:NoteModel
             }
         }

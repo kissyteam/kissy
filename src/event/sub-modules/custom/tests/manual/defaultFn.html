@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>淘宝网 - 淘！我喜欢</title>
+</head>
+<body>
+
+
+<button onclick="window.fireEvent();">fireEvent</button>
+
+<button onclick="window.fireEventWithDefault();">fireEventWithDefault</button>
+
+<script src="../../../../../../build/seed.js" charset="utf-8"></script>
+<script>
+
+    KISSY.use('event/custom', function (S, Event) {
+
+        var t = S.mix({}, Event.Target);
+
+        t.publish('click', {
+            defaultFn: function () {
+                S.log('click default');
+            }
+        });
+
+        t.publish('clickWithDefault', {
+            defaultFn: function () {
+                S.log('clickWithDefault default');
+            }
+        });
+
+        t.on('click', function (e) {
+            S.log('click');
+            e.preventDefault();
+        });
+
+        t.on('clickWithDefault', function (e) {
+            S.log('clickWithDefault');
+
+        });
+
+        window.fireEvent = function () {
+            t.fire('click', {
+                data: 2
+            });
+        };
+
+        window.fireEventWithDefault = function () {
+            t.fire('clickWithDefault', {
+                data: 2
+            });
+        };
+
+    });
+
+</script>
+
+</body>
+</html>

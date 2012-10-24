@@ -10,20 +10,6 @@ KISSY.add('event/custom/target', function (S, Event, CustomEvent) {
         splitAndRun = _Utils.splitAndRun,
         KS_BUBBLE_TARGETS = '__~ks_bubble_targets';
 
-    function attach(method) {
-        return function (type, cfg) {
-            var self = this;
-            type = trim(type);
-            splitAndRun(type, function (t) {
-                var customEvent = self.__getCustomEvent(t);
-                if (customEvent) {
-                    customEvent[method](cfg);
-                }
-            });
-            return self; // chain
-        };
-    }
-
     /**
      * @class KISSY.Event.Target
      * @singleton
@@ -35,10 +21,19 @@ KISSY.add('event/custom/target', function (S, Event, CustomEvent) {
      */
     var Target = {
 
-        __getCustomEvent: function (t) {
+        __getCustomEvent: function (t, create) {
             var self = this,
+                customEvent,
                 customEvents = self[KS_CUSTOM_EVENTS];
-            return customEvents && customEvents[t];
+            customEvent = customEvents && customEvents[t];
+            if (!customEvent && create) {
+                customEvents = self[KS_CUSTOM_EVENTS] = customEvents || {};
+                customEvent = customEvents[t] = new CustomEvent({
+                    currentTarget: self,
+                    type: t
+                });
+            }
+            return customEvent;
         },
 
         /**
@@ -47,52 +42,37 @@ KISSY.add('event/custom/target', function (S, Event, CustomEvent) {
          * and the {@link KISSY.Event.Object} created will be mixed with eventData
          * @param {String} type The type of the event
          * @param {Object} [eventData] The data will be mixed with {@link KISSY.Event.Object} created
-         * @return {Boolean|*} If any listen returns false, then the returned value is false. else return the last listener's returned value
+         * @return {*} If any listen returns false, then the returned value is false. else return the last listener's returned value
          */
         fire: function (type, eventData) {
-            var self = this,
-                ret = undefined,
-                r2,
-                typedGroups,
-                _ks_groups,
-                customEvent;
+            var self = this, ret = undefined;
 
             eventData = eventData || {};
 
-            type = trim(type);
+            splitAndRun(type, function (type) {
+                var r2, customEvent,
+                    typedGroups = _Utils.getTypedGroups(type),
+                    _ks_groups = typedGroups[1];
 
-            if (type.indexOf(' ') > 0) {
-                splitAndRun(type, function (t) {
-                    r2 = self.fire(t, eventData);
-                    if (ret !== false) {
-                        ret = r2;
-                    }
-                });
-                return ret;
-            }
+                type = typedGroups[0];
 
-            typedGroups = _Utils.getTypedGroups(type);
-            _ks_groups = typedGroups[1];
+                if (_ks_groups) {
+                    _ks_groups = _Utils.getGroupsRe(_ks_groups);
+                    eventData._ks_groups = _ks_groups;
+                }
 
-            type = typedGroups[0];
+                customEvent = self.__getCustomEvent(type);
 
-            if (_ks_groups) {
-                _ks_groups = Utils.getGroupsRe(_ks_groups);
-            }
+                if (customEvent) {
+                    r2 = customEvent.fire(eventData);
+                }
 
-            S.mix(eventData, {
-                // protect type
-                type: type,
-                _ks_groups: _ks_groups
+                if (ret !== false) {
+                    ret = r2;
+                }
             });
 
-            customEvent = self.__getCustomEvent(type);
-
-            if (customEvent) {
-                ret = customEvent.fire(eventData);
-            }
-
-            return ret
+            return ret;
         },
 
         /**
@@ -102,18 +82,12 @@ KISSY.add('event/custom/target', function (S, Event, CustomEvent) {
          * @param {Boolean} [cfg.bubbles=false] whether or not this event bubbles
          */
         publish: function (type, cfg) {
-            var self = this, customEvents, customEvent;
-            customEvents = self[KS_CUSTOM_EVENTS] = self[KS_CUSTOM_EVENTS] || {};
+            var self = this, customEvent;
 
-            type = trim(type);
-            if (type) {
-                splitAndRun(type, function (t) {
-                    if (!(customEvent = customEvents[t])) {
-                        customEvent = customEvents[t] = new CustomEvent();
-                    }
-                    S.mix(customEvent, cfg)
-                });
-            }
+            splitAndRun(type, function (t) {
+                customEvent = self.__getCustomEvent(t, 1);
+                S.mix(customEvent, cfg)
+            });
         },
 
         /**
@@ -137,7 +111,7 @@ KISSY.add('event/custom/target', function (S, Event, CustomEvent) {
                 targets = self.getTargets(),
                 index = S.indexOf(target, targets);
             if (index != -1) {
-                targets.splice(index, target);
+                targets.splice(index, 1);
             }
         },
 
@@ -151,17 +125,53 @@ KISSY.add('event/custom/target', function (S, Event, CustomEvent) {
          * @method
          * @param {String} type The name of the event
          * @param {Function} fn The callback to execute in response to the event
-         * @param {Object} [scope] this object in callback
+         * @param {Object} [context] this object in callback
          */
-        on: attach('on'),
+        on: function (type, fn, context) {
+            var self = this;
+            type = trim(type);
+            _Utils.batchForType(function (type, fn, context) {
+                var cfg = _Utils.normalizeParam(type, fn, context),
+                    customEvent;
+                type = cfg.type;
+                customEvent = self.__getCustomEvent(type, 1);
+                if (customEvent) {
+                    customEvent.on(cfg);
+                }
+            }, 0, type, fn, context);
+
+            return self; // chain
+        },
+
         /**
          * Detach one or more listeners the from the specified event
          * @method
          * @param {String} type The name of the event
          * @param {Function} [fn] The subscribed function to un-subscribe. if not supplied, all subscribers will be removed.
-         * @param {Object} [scope] The custom object passed to subscribe.
+         * @param {Object} [context] The custom object passed to subscribe.
          */
-        detach: attach('detach')
+        detach: function (type, fn, context) {
+            var self = this;
+            type = trim(type);
+            _Utils.batchForType(function (type, fn, context) {
+                var cfg = _Utils.normalizeParam(type, fn, context),
+                    customEvent;
+                type = cfg.type;
+                if (!type) {
+                    var customEvents = self[KS_CUSTOM_EVENTS] || {};
+                    S.each(customEvents, function (customEvent) {
+                        customEvent.detach(cfg);
+                    });
+                } else {
+                    customEvent = self.__getCustomEvent(type, 1);
+                    if (customEvent) {
+                        customEvent.detach(cfg);
+                    }
+                }
+            }, 0, type, fn, context);
+
+            return self; // chain
+        }
     };
 
     return Target;
@@ -169,6 +179,9 @@ KISSY.add('event/custom/target', function (S, Event, CustomEvent) {
     requires: ['event/base', './custom-event']
 });
 /*
+ yiminghe: 2012-10-24
+ - implement defaultFn for custom event
+
  yiminghe: 2011-10-17
  - implement bubble for custom event
  */

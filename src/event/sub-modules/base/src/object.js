@@ -1,15 +1,21 @@
 /**
+ * @ignore
  * base event object for custom and dom event.
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/base/object', function () {
 
-    var FALSE = function () {
+    var FALSE_FN = function () {
         return false;
-    }, TRUE = function () {
+    }, TRUE_FN = function () {
         return true;
     };
 
+    /**
+     * @class KISSY.Event.Object
+     *
+     * KISSY 's base event object for custom and dom event.
+     */
     function EventObject() {
     }
 
@@ -17,34 +23,33 @@ KISSY.add('event/base/object', function () {
         constructor: EventObject,
         /**
          * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
-         * @type {Boolean}
+         * @method
          */
-        isDefaultPrevented: FALSE,
+        isDefaultPrevented: FALSE_FN,
         /**
          * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
-         * @type {Boolean}
+         * @method
          */
-        isPropagationStopped: FALSE,
+        isPropagationStopped: FALSE_FN,
         /**
          * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
-         * @type {Boolean}
+         * @method
          */
-        isImmediatePropagationStopped: FALSE,
+        isImmediatePropagationStopped: FALSE_FN,
 
         /**
          * Prevents the event's default behavior
          */
         preventDefault: function () {
-            this.isDefaultPrevented = TRUE;
+            this.isDefaultPrevented = TRUE_FN;
         },
 
         /**
          * Stops the propagation to the next bubble target
          */
         stopPropagation: function () {
-            this.isPropagationStopped = TRUE;
+            this.isPropagationStopped = TRUE_FN;
         },
-
 
         /**
          * Stops the propagation to the next bubble target and
@@ -53,7 +58,7 @@ KISSY.add('event/base/object', function () {
          */
         stopImmediatePropagation: function () {
             var self = this;
-            self.isImmediatePropagationStopped = TRUE;
+            self.isImmediatePropagationStopped = TRUE_FN;
             // fixed 1.2
             // call stopPropagation implicitly
             self.stopPropagation();
