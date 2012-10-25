@@ -1,14 +1,14 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 00:44
+build time: Oct 26 01:55
 */
 /**
  * @ignore
  * setup event/dom api module
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEvent, DOMEventObject) {
+KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, ObservableDOMEvent, DOMEventObject) {
     var _Utils = Event._Utils;
 
     function fixType(cfg, type) {
@@ -23,7 +23,7 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
                     type = s['delegateFix'];
                 }
             } else {
-                // when on mouseenter , it's actually on mouseover , and subscribers is saved with mouseover!
+                // when on mouseenter , it's actually on mouseover , and observers is saved with mouseover!
                 // TODO need evaluate!
                 if (s['onFix']) {
                     cfg.originalType = type;
@@ -44,7 +44,7 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
         type = fixType(cfg, type);
 
         // 获取事件描述
-        eventDesc = DOMCustomEvent.getCustomEvents(currentTarget, 1);
+        eventDesc = ObservableDOMEvent.getCustomEvents(currentTarget, 1);
 
         if (!(handle = eventDesc.handle)) {
             handle = eventDesc.handle = function (event) {
@@ -54,11 +54,11 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
                 var type = event.type,
                     customEvent,
                     currentTarget = handle.currentTarget;
-                if (DOMCustomEvent.triggeredEvent == type ||
+                if (ObservableDOMEvent.triggeredEvent == type ||
                     typeof KISSY == 'undefined') {
                     return;
                 }
-                customEvent = DOMCustomEvent.getCustomEvent(currentTarget, type);
+                customEvent = ObservableDOMEvent.getCustomEvent(currentTarget, type);
                 if (customEvent) {
                     event.currentTarget = currentTarget;
                     event = new DOMEventObject(event);
@@ -76,7 +76,7 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
         customEvent = events[type];
 
         if (!customEvent) {
-            customEvent = events[type] = new DOMCustomEvent({
+            customEvent = events[type] = new ObservableDOMEvent({
                 type: type,
                 fn: handle,
                 currentTarget: currentTarget
@@ -97,7 +97,7 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
 
         type = fixType(cfg, type);
 
-        var eventDesc = DOMCustomEvent.getCustomEvents(currentTarget),
+        var eventDesc = ObservableDOMEvent.getCustomEvents(currentTarget),
             events = (eventDesc || {}).events;
 
         if (!eventDesc || !events) {
@@ -224,8 +224,8 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
          * @param targets html nodes
          * @param {String} eventType event type
          * @param [eventData] additional event data
-         * @return {*} return false if one of custom event 's subscribers (include bubbled) else
-         * return last value of custom event 's subscribers (include bubbled) 's return value.
+         * @return {*} return false if one of custom event 's observers (include bubbled) else
+         * return last value of custom event 's observers (include bubbled) 's return value.
          */
         fire: function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
             var ret = undefined;
@@ -264,12 +264,12 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     target = targets[i];
-                    customEvent = DOMCustomEvent
+                    customEvent = ObservableDOMEvent
                         .getCustomEvent(target, eventType);
                     // bubbling
                     // html dom event defaults to bubble
                     if (!onlyHandlers && !customEvent) {
-                        customEvent = new DOMCustomEvent({
+                        customEvent = new ObservableDOMEvent({
                             type: eventType,
                             currentTarget: target
                         });
@@ -293,8 +293,8 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
          * @param targets html nodes
          * @param {String} eventType event type
          * @param [eventData] additional event data
-         * @return {*} return false if one of custom event 's subscribers (include bubbled) else
-         * return last value of custom event 's subscribers (include bubbled) 's return value.
+         * @return {*} return false if one of custom event 's observers (include bubbled) else
+         * return last value of custom event 's observers (include bubbled) 's return value.
          */
         fireHandler: function (targets, eventType, eventData) {
             return Event.fire(targets, eventType, eventData, 1);
@@ -309,19 +309,19 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
          */
         _clone: function (src, dest) {
             var eventDesc, events;
-            if (!(eventDesc = DOMCustomEvent.getCustomEvents(src))) {
+            if (!(eventDesc = ObservableDOMEvent.getCustomEvents(src))) {
                 return;
             }
             events = eventDesc.events;
             S.each(events, function (customEvent, type) {
-                S.each(customEvent.subscribers, function (subscriber) {
+                S.each(customEvent.observers, function (observer) {
                     // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
-                    addInternal(dest, type, subscriber);
+                    addInternal(dest, type, observer);
                 });
             });
         },
 
-        _DOMCustomEvent: DOMCustomEvent
+        _ObservableDOMEvent: ObservableDOMEvent
     });
 
     /**
@@ -339,7 +339,7 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
 
     return Event;
 }, {
-    requires: ['../base', 'dom', './special', './utils', './custom-event', './object']
+    requires: ['../base', 'dom', './special', './utils', './observable', './object']
 });
 /*
  2012-02-12 yiminghe@gmail.com note:
@@ -459,437 +459,6 @@ KISSY.add('event/dom/change', function (S, UA, Event, DOM, special) {
     }
 }, {
     requires: ['ua', './api', 'dom', './special']
-});/**
- * @ignore
- * custom event for dom.
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscriber, DOMEventObject, Event) {
-
-    // 记录手工 fire(domElement,type) 时的 type
-    // 再在浏览器通知的系统 eventHandler 中检查
-    // 如果相同，那么证明已经 fire 过了，不要再次触发了
-    var _Utils = Event._Utils;
-
-    /**
-     * custom event for dom
-     * @param {Object} cfg
-     * @class KISSY.Event.DOMCustomEvent
-     */
-    function DOMCustomEvent(cfg) {
-        var self = this;
-        S.mix(self, cfg);
-        self.reset();
-        /**
-         * html node which binds current custom event
-         * @cfg {HTMLElement} currentTarget
-         */
-    }
-
-    S.extend(DOMCustomEvent, Event._BaseCustomEvent, {
-
-        setup: function () {
-            var self = this,
-                type = self.type,
-                s = special[type] || {},
-                currentTarget = self.currentTarget,
-                eventDesc = Utils.data(currentTarget),
-                handle = eventDesc.handle;
-            // 第一次注册该事件，dom 节点才需要注册 dom 事件
-            if (!s.setup || s.setup.call(currentTarget) === false) {
-                Utils.simpleAdd(currentTarget, type, handle)
-            }
-        },
-
-        constructor: DOMCustomEvent,
-
-        reset: function () {
-            var self = this;
-            DOMCustomEvent.superclass.reset.call(self);
-            self.delegateCount = 0;
-            self.lastCount = 0;
-        },
-
-        /**
-         * notify current event 's subscribers
-         * @param {KISSY.Event.DOMEventObject} event
-         * @return {*} return false if one of custom event 's subscribers  else
-         * return last value of custom event 's subscribers 's return value.
-         */
-        notify: function (event) {
-            /*
-             As some listeners may remove themselves from the
-             event, the original array length is dynamic. So,
-             let's make a copy of all listeners, so we are
-             sure we'll call all of them.
-             */
-            /*
-             DOM3 Events: EventListenerList objects in the DOM are live. ??
-             */
-            var target = event['target'],
-                self = this,
-                currentTarget = self.currentTarget,
-                subscribers = self.subscribers,
-                currentTarget0,
-                allSubscribers = [],
-                ret,
-                gRet,
-                subscriberObj,
-                i,
-                j,
-                delegateCount = self.delegateCount || 0,
-                len,
-                currentTargetSubscribers,
-                currentTargetSubscriber,
-                subscriber;
-
-            // collect delegated subscribers and corresponding element
-            // by jq
-            // Avoid disabled elements in IE (#6911)
-            // non-left-click bubbling in Firefox (#3861),firefox 8 fix it
-            if (delegateCount && !target.disabled) {
-                while (target != currentTarget) {
-                    currentTargetSubscribers = [];
-                    for (i = 0; i < delegateCount; i++) {
-                        subscriber = subscribers[i];
-                        if (DOM.test(target, subscriber.selector)) {
-                            currentTargetSubscribers.push(subscriber);
-                        }
-                    }
-                    if (currentTargetSubscribers.length) {
-                        allSubscribers.push({
-                            currentTarget: target,
-                            'currentTargetSubscribers': currentTargetSubscribers
-                        });
-                    }
-                    target = target.parentNode || currentTarget;
-                }
-            }
-
-            // root node's subscribers is placed at end position of add subscribers
-            // in case child node stopPropagation of root node's subscribers
-            allSubscribers.push({
-                currentTarget: currentTarget,
-                currentTargetSubscribers: subscribers.slice(delegateCount)
-            });
-
-            for (i = 0, len = allSubscribers.length; !event.isPropagationStopped() && i < len; ++i) {
-
-                subscriberObj = allSubscribers[i];
-                currentTargetSubscribers = subscriberObj.currentTargetSubscribers;
-                currentTarget0 = subscriberObj.currentTarget;
-                event.currentTarget = currentTarget0;
-
-                for (j = 0; !event.isImmediatePropagationStopped() && j < currentTargetSubscribers.length; j++) {
-
-                    currentTargetSubscriber = currentTargetSubscribers[j];
-
-                    ret = currentTargetSubscriber.notify(event, self);
-
-                    // 和 jQuery 逻辑保持一致
-                    // 有一个 false，最终结果就是 false
-                    // 否则等于最后一个返回值
-                    if (gRet !== false) {
-                        gRet = ret;
-                    }
-                }
-            }
-
-            // fire 时判断如果 preventDefault，则返回 false 否则返回 true
-            // 这里返回值意义不同
-            return gRet;
-        },
-
-        /**
-         * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
-         * @param {Object|KISSY.Event.DOMEventObject} [event] additional event data
-         * @return {*} return false if one of custom event 's subscribers (include bubbled) else
-         * return last value of custom event 's subscribers (include bubbled) 's return value.
-         */
-        fire: function (event, onlyHandlers/*internal usage*/) {
-
-            event = event || {};
-
-            var self = this,
-                eventType = self.type,
-                s = special[eventType];
-
-            // TODO bug: when fire mouseenter, it also fire mouseover in firefox/chrome
-            if (s && s['onFix']) {
-                eventType = s['onFix'];
-            }
-
-            var customEvent,
-                eventData,
-                currentTarget = self.currentTarget,
-                ret = true;
-
-            event.type = eventType;
-
-            if (!(event instanceof DOMEventObject)) {
-                eventData = event;
-                event = new DOMEventObject({
-                    currentTarget: currentTarget,
-                    target: currentTarget
-                });
-                S.mix(event, eventData);
-            }
-
-            // onlyHandlers is equal to event.halt()
-            // but we can not call event.halt()
-            // because handle will check event.isPropagationStopped
-            var cur = currentTarget,
-                t,
-                win = DOM._getWin(cur.ownerDocument || cur),
-                ontype = 'on' + eventType;
-
-            //bubble up dom tree
-            do {
-                event.currentTarget = cur;
-                customEvent = DOMCustomEvent.getCustomEvent(cur, eventType);
-                // default bubble for html node
-                if (customEvent) {
-                    t = customEvent.notify(event);
-                    if (ret !== false) {
-                        ret = t;
-                    }
-                }
-                // Trigger an inline bound script
-                if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
-                    event.preventDefault();
-                }
-                // Bubble up to document, then to window
-                cur = cur.parentNode || cur.ownerDocument ||
-                    (cur === currentTarget.ownerDocument) && win;
-            } while (!onlyHandlers && cur && !event.isPropagationStopped());
-
-            if (!onlyHandlers && !event.isDefaultPrevented()) {
-
-                // now all browser support click
-                // https://developer.mozilla.org/en-US/docs/DOM/element.click
-
-                var old;
-
-                try {
-                    // execute default action on dom node
-                    // so exclude window
-                    // exclude focus/blue on hidden element
-                    if (ontype && currentTarget[ eventType ] &&
-                        (
-                            (
-                                eventType !== 'focus' && eventType !== 'blur') ||
-                                currentTarget.offsetWidth !== 0
-                            ) &&
-                        !S.isWindow(currentTarget)) {
-                        // Don't re-trigger an onFOO event when we call its FOO() method
-                        old = currentTarget[ ontype ];
-
-                        if (old) {
-                            currentTarget[ ontype ] = null;
-                        }
-
-                        // 记录当前 trigger 触发
-                        DOMCustomEvent.triggeredEvent = eventType;
-
-                        // 只触发默认事件，而不要执行绑定的用户回调
-                        // 同步触发
-                        currentTarget[ eventType ]();
-                    }
-                } catch (eError) {
-                    S.log('trigger action error: ');
-                    S.log(eError);
-                }
-
-                if (old) {
-                    currentTarget[ ontype ] = old;
-                }
-
-                DOMCustomEvent.triggeredEvent = '';
-
-            }
-            return ret;
-        },
-
-        /**
-         * add a subscriber to custom event's subscribers
-         * @param {Object} cfg {@link KISSY.Event.DOMSubscriber} 's config
-         */
-        on: function (cfg) {
-            var self = this,
-                subscribers = self.subscribers,
-                s = special[self.type] || {},
-            // clone event
-                subscriber = cfg instanceof DOMSubscriber ? cfg : new DOMSubscriber(cfg);
-
-            if (self.findSubscriber(subscriber) == -1) {
-                // 增加 listener
-                if (subscriber.selector) {
-                    subscribers.splice(self.delegateCount, 0, subscriber);
-                    self.delegateCount++;
-                } else {
-                    if (subscriber.last) {
-                        subscribers.push(subscriber);
-                        self.lastCount++;
-                    } else {
-                        subscribers.splice(subscribers.length - self.lastCount, 0, subscriber);
-                    }
-                }
-
-                if (s.add) {
-                    s.add.call(self.currentTarget, subscriber);
-                }
-            }
-        },
-
-        /**
-         * remove some subscribers from current event 's subscribers by subscriber config param
-         * @param {Object} cfg {@link KISSY.Event.DOMSubscriber} 's config
-         */
-        detach: function (cfg) {
-            var groupsRe,
-                self = this,
-                s = special[self.type] || {},
-                hasSelector = 'selector' in cfg,
-                selector = cfg.selector,
-                context = cfg.context,
-                fn = cfg.fn,
-                currentTarget = self.currentTarget,
-                subscribers = self.subscribers,
-                groups = cfg.groups;
-
-            if (!subscribers.length) {
-                return;
-            }
-
-            if (groups) {
-                groupsRe = _Utils.getGroupsRe(groups);
-            }
-
-            var i, j, t, subscriber, subscriberContext, len = subscribers.length;
-
-            // 移除 fn
-            if (fn || hasSelector || groupsRe) {
-                context = context || currentTarget;
-
-                for (i = 0, j = 0, t = []; i < len; ++i) {
-                    subscriber = subscribers[i];
-                    subscriberContext = subscriber.context || currentTarget;
-                    if (
-                        (context != subscriberContext) ||
-                            // 指定了函数，函数不相等，保留
-                            (fn && fn != subscriber.fn) ||
-                            // 1.没指定函数
-                            // 1.1 没有指定选择器,删掉 else2
-                            // 1.2 指定选择器,字符串为空
-                            // 1.2.1 指定选择器,字符串为空,待比较 subscriber 有选择器,删掉 else
-                            // 1.2.2 指定选择器,字符串为空,待比较 subscriber 没有选择器,保留
-                            // 1.3 指定选择器,字符串不为空,字符串相等,删掉 else
-                            // 1.4 指定选择器,字符串不为空,字符串不相等,保留
-                            // 2.指定了函数且函数相等
-                            // 2.1 没有指定选择器,删掉 else
-                            // 2.2 指定选择器,字符串为空
-                            // 2.2.1 指定选择器,字符串为空,待比较 subscriber 有选择器,删掉 else
-                            // 2.2.2 指定选择器,字符串为空,待比较 subscriber 没有选择器,保留
-                            // 2.3 指定选择器,字符串不为空,字符串相等,删掉  else
-                            // 2.4 指定选择器,字符串不为空,字符串不相等,保留
-                            (
-                                hasSelector &&
-                                    (
-                                        (selector && selector != subscriber.selector) ||
-                                            (!selector && !subscriber.selector)
-                                        )
-                                ) ||
-
-                            // 指定了删除的某些组，而该 subscriber 不属于这些组，保留，否则删除
-                            (groupsRe && !subscriber.groups.match(groupsRe))
-                        ) {
-                        t[j++] = subscriber;
-                    } else {
-                        if (subscriber.selector && self.delegateCount) {
-                            self.delegateCount--;
-                        }
-                        if (subscriber.last && self.lastCount) {
-                            self.lastCount--;
-                        }
-                        if (s.remove) {
-                            s.remove.call(currentTarget, subscriber);
-                        }
-                    }
-                }
-
-                self.subscribers = t;
-            } else {
-                // 全部删除
-                self.reset();
-            }
-
-            self.checkMemory();
-        },
-
-        checkMemory: function () {
-            var self = this,
-                type = self.type,
-                events,
-                handle,
-                s = special[type] || {},
-                currentTarget = self.currentTarget,
-                eventDesc = Utils.data(currentTarget);
-            if (eventDesc) {
-                events = eventDesc.events;
-                if (!self.hasSubscriber()) {
-                    handle = eventDesc.handle;
-                    // remove(el, type) or fn 已移除光
-                    // dom node need to detach handler from dom node
-                    if ((!s['tearDown'] || s['tearDown'].call(currentTarget) === false)) {
-                        Utils.simpleRemove(currentTarget, type, handle);
-                    }
-                    // remove currentTarget's single event description
-                    delete events[type];
-                }
-
-                // remove currentTarget's  all events description
-                if (S.isEmptyObject(events)) {
-                    eventDesc.handle = null;
-                    Utils.removeData(currentTarget);
-                }
-            }
-        }
-    });
-
-    DOMCustomEvent.triggeredEvent = '';
-
-    /**
-     * get custom event from html node by event type.
-     * @param {HTMLElement} node
-     * @param {String} type event type
-     * @return {KISSY.Event.DOMCustomEvent}
-     */
-    DOMCustomEvent.getCustomEvent = function (node, type) {
-
-        var eventDesc = Utils.data(node), events;
-        if (eventDesc) {
-            events = eventDesc.events;
-        }
-        if (events) {
-            return events[type];
-        }
-
-        return undefined;
-    };
-
-
-    DOMCustomEvent.getCustomEvents = function (node, create) {
-        var eventDesc = Utils.data(node);
-        if (!eventDesc && create) {
-            Utils.data(node, eventDesc = {});
-        }
-        return eventDesc;
-    };
-
-    return DOMCustomEvent;
-
-}, {
-    requires: ['dom', './special', './utils', './subscriber', './object', 'event/base']
 });/**
  * @ignore
  * @fileOverview dom event facade
@@ -1764,7 +1333,7 @@ KISSY.add('event/dom/mouseenter', function (S, Event, DOM, UA, special) {
             onFix: o.fix,
             // all browser need
             delegateFix: o.fix,
-            handle: function (event, subscriber, ce) {
+            handle: function (event, observer, ce) {
                 var currentTarget = event.currentTarget,
                     relatedTarget = event.relatedTarget;
                 // 在自身外边就触发
@@ -1782,7 +1351,7 @@ KISSY.add('event/dom/mouseenter', function (S, Event, DOM, UA, special) {
                     // mouseover 采样时跳跃的，可能 2,1 的 mouseover 事件
                     // target 都是 3,而 relatedTarget 都是 0
                     // event.stopPropagation();
-                    return [subscriber.simpleNotify(event, ce)];
+                    return [observer.simpleNotify(event, ce)];
                 }
             }
         };
@@ -2022,6 +1591,497 @@ KISSY.add('event/dom/object', function (S, Event) {
  http://www.w3.org/TR/DOM-Level-3-Events/#events-mousewheelevents
  *//**
  * @ignore
+ * custom event for dom.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/observable', function (S, DOM, special, Utils, DOMEventObserver, DOMEventObject, Event) {
+
+    // 记录手工 fire(domElement,type) 时的 type
+    // 再在浏览器通知的系统 eventHandler 中检查
+    // 如果相同，那么证明已经 fire 过了，不要再次触发了
+    var _Utils = Event._Utils;
+
+    /**
+     * custom event for dom
+     * @param {Object} cfg
+     * @class KISSY.Event.ObservableDOMEvent
+     */
+    function ObservableDOMEvent(cfg) {
+        var self = this;
+        S.mix(self, cfg);
+        self.reset();
+        /**
+         * html node which binds current custom event
+         * @cfg {HTMLElement} currentTarget
+         */
+    }
+
+    S.extend(ObservableDOMEvent, Event._ObservableEvent, {
+
+        setup: function () {
+            var self = this,
+                type = self.type,
+                s = special[type] || {},
+                currentTarget = self.currentTarget,
+                eventDesc = Utils.data(currentTarget),
+                handle = eventDesc.handle;
+            // 第一次注册该事件，dom 节点才需要注册 dom 事件
+            if (!s.setup || s.setup.call(currentTarget) === false) {
+                Utils.simpleAdd(currentTarget, type, handle)
+            }
+        },
+
+        constructor: ObservableDOMEvent,
+
+        reset: function () {
+            var self = this;
+            ObservableDOMEvent.superclass.reset.call(self);
+            self.delegateCount = 0;
+            self.lastCount = 0;
+        },
+
+        /**
+         * notify current event 's observers
+         * @param {KISSY.Event.DOMEventObject} event
+         * @return {*} return false if one of custom event 's observers  else
+         * return last value of custom event 's observers 's return value.
+         */
+        notify: function (event) {
+            /*
+             As some listeners may remove themselves from the
+             event, the original array length is dynamic. So,
+             let's make a copy of all listeners, so we are
+             sure we'll call all of them.
+             */
+            /*
+             DOM3 Events: EventListenerList objects in the DOM are live. ??
+             */
+            var target = event['target'],
+                self = this,
+                currentTarget = self.currentTarget,
+                observers = self.observers,
+                currentTarget0,
+                allObservers = [],
+                ret,
+                gRet,
+                observerObj,
+                i,
+                j,
+                delegateCount = self.delegateCount || 0,
+                len,
+                currentTargetObservers,
+                currentTargetObserver,
+                observer;
+
+            // collect delegated observers and corresponding element
+            // by jq
+            // Avoid disabled elements in IE (#6911)
+            // non-left-click bubbling in Firefox (#3861),firefox 8 fix it
+            if (delegateCount && !target.disabled) {
+                while (target != currentTarget) {
+                    currentTargetObservers = [];
+                    for (i = 0; i < delegateCount; i++) {
+                        observer = observers[i];
+                        if (DOM.test(target, observer.selector)) {
+                            currentTargetObservers.push(observer);
+                        }
+                    }
+                    if (currentTargetObservers.length) {
+                        allObservers.push({
+                            currentTarget: target,
+                            'currentTargetObservers': currentTargetObservers
+                        });
+                    }
+                    target = target.parentNode || currentTarget;
+                }
+            }
+
+            // root node's observers is placed at end position of add observers
+            // in case child node stopPropagation of root node's observers
+            allObservers.push({
+                currentTarget: currentTarget,
+                currentTargetObservers: observers.slice(delegateCount)
+            });
+
+            for (i = 0, len = allObservers.length; !event.isPropagationStopped() && i < len; ++i) {
+
+                observerObj = allObservers[i];
+                currentTargetObservers = observerObj.currentTargetObservers;
+                currentTarget0 = observerObj.currentTarget;
+                event.currentTarget = currentTarget0;
+
+                for (j = 0; !event.isImmediatePropagationStopped() && j < currentTargetObservers.length; j++) {
+
+                    currentTargetObserver = currentTargetObservers[j];
+
+                    ret = currentTargetObserver.notify(event, self);
+
+                    // 和 jQuery 逻辑保持一致
+                    // 有一个 false，最终结果就是 false
+                    // 否则等于最后一个返回值
+                    if (gRet !== false) {
+                        gRet = ret;
+                    }
+                }
+            }
+
+            // fire 时判断如果 preventDefault，则返回 false 否则返回 true
+            // 这里返回值意义不同
+            return gRet;
+        },
+
+        /**
+         * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
+         * @param {Object|KISSY.Event.DOMEventObject} [event] additional event data
+         * @return {*} return false if one of custom event 's observers (include bubbled) else
+         * return last value of custom event 's observers (include bubbled) 's return value.
+         */
+        fire: function (event, onlyHandlers/*internal usage*/) {
+
+            event = event || {};
+
+            var self = this,
+                eventType = self.type,
+                s = special[eventType];
+
+            // TODO bug: when fire mouseenter, it also fire mouseover in firefox/chrome
+            if (s && s['onFix']) {
+                eventType = s['onFix'];
+            }
+
+            var customEvent,
+                eventData,
+                currentTarget = self.currentTarget,
+                ret = true;
+
+            event.type = eventType;
+
+            if (!(event instanceof DOMEventObject)) {
+                eventData = event;
+                event = new DOMEventObject({
+                    currentTarget: currentTarget,
+                    target: currentTarget
+                });
+                S.mix(event, eventData);
+            }
+
+            // onlyHandlers is equal to event.halt()
+            // but we can not call event.halt()
+            // because handle will check event.isPropagationStopped
+            var cur = currentTarget,
+                t,
+                win = DOM._getWin(cur.ownerDocument || cur),
+                ontype = 'on' + eventType;
+
+            //bubble up dom tree
+            do {
+                event.currentTarget = cur;
+                customEvent = ObservableDOMEvent.getCustomEvent(cur, eventType);
+                // default bubble for html node
+                if (customEvent) {
+                    t = customEvent.notify(event);
+                    if (ret !== false) {
+                        ret = t;
+                    }
+                }
+                // Trigger an inline bound script
+                if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
+                    event.preventDefault();
+                }
+                // Bubble up to document, then to window
+                cur = cur.parentNode || cur.ownerDocument ||
+                    (cur === currentTarget.ownerDocument) && win;
+            } while (!onlyHandlers && cur && !event.isPropagationStopped());
+
+            if (!onlyHandlers && !event.isDefaultPrevented()) {
+
+                // now all browser support click
+                // https://developer.mozilla.org/en-US/docs/DOM/element.click
+
+                var old;
+
+                try {
+                    // execute default action on dom node
+                    // so exclude window
+                    // exclude focus/blue on hidden element
+                    if (ontype && currentTarget[ eventType ] &&
+                        (
+                            (
+                                eventType !== 'focus' && eventType !== 'blur') ||
+                                currentTarget.offsetWidth !== 0
+                            ) &&
+                        !S.isWindow(currentTarget)) {
+                        // Don't re-trigger an onFOO event when we call its FOO() method
+                        old = currentTarget[ ontype ];
+
+                        if (old) {
+                            currentTarget[ ontype ] = null;
+                        }
+
+                        // 记录当前 trigger 触发
+                        ObservableDOMEvent.triggeredEvent = eventType;
+
+                        // 只触发默认事件，而不要执行绑定的用户回调
+                        // 同步触发
+                        currentTarget[ eventType ]();
+                    }
+                } catch (eError) {
+                    S.log('trigger action error: ');
+                    S.log(eError);
+                }
+
+                if (old) {
+                    currentTarget[ ontype ] = old;
+                }
+
+                ObservableDOMEvent.triggeredEvent = '';
+
+            }
+            return ret;
+        },
+
+        /**
+         * add a observer to custom event's observers
+         * @param {Object} cfg {@link KISSY.Event.DOMEventObserver} 's config
+         */
+        on: function (cfg) {
+            var self = this,
+                observers = self.observers,
+                s = special[self.type] || {},
+            // clone event
+                observer = cfg instanceof DOMEventObserver ? cfg : new DOMEventObserver(cfg);
+
+            if (self.findObserver(observer) == -1) {
+                // 增加 listener
+                if (observer.selector) {
+                    observers.splice(self.delegateCount, 0, observer);
+                    self.delegateCount++;
+                } else {
+                    if (observer.last) {
+                        observers.push(observer);
+                        self.lastCount++;
+                    } else {
+                        observers.splice(observers.length - self.lastCount, 0, observer);
+                    }
+                }
+
+                if (s.add) {
+                    s.add.call(self.currentTarget, observer);
+                }
+            }
+        },
+
+        /**
+         * remove some observers from current event 's observers by observer config param
+         * @param {Object} cfg {@link KISSY.Event.DOMEventObserver} 's config
+         */
+        detach: function (cfg) {
+            var groupsRe,
+                self = this,
+                s = special[self.type] || {},
+                hasSelector = 'selector' in cfg,
+                selector = cfg.selector,
+                context = cfg.context,
+                fn = cfg.fn,
+                currentTarget = self.currentTarget,
+                observers = self.observers,
+                groups = cfg.groups;
+
+            if (!observers.length) {
+                return;
+            }
+
+            if (groups) {
+                groupsRe = _Utils.getGroupsRe(groups);
+            }
+
+            var i, j, t, observer, observerContext, len = observers.length;
+
+            // 移除 fn
+            if (fn || hasSelector || groupsRe) {
+                context = context || currentTarget;
+
+                for (i = 0, j = 0, t = []; i < len; ++i) {
+                    observer = observers[i];
+                    observerContext = observer.context || currentTarget;
+                    if (
+                        (context != observerContext) ||
+                            // 指定了函数，函数不相等，保留
+                            (fn && fn != observer.fn) ||
+                            // 1.没指定函数
+                            // 1.1 没有指定选择器,删掉 else2
+                            // 1.2 指定选择器,字符串为空
+                            // 1.2.1 指定选择器,字符串为空,待比较 observer 有选择器,删掉 else
+                            // 1.2.2 指定选择器,字符串为空,待比较 observer 没有选择器,保留
+                            // 1.3 指定选择器,字符串不为空,字符串相等,删掉 else
+                            // 1.4 指定选择器,字符串不为空,字符串不相等,保留
+                            // 2.指定了函数且函数相等
+                            // 2.1 没有指定选择器,删掉 else
+                            // 2.2 指定选择器,字符串为空
+                            // 2.2.1 指定选择器,字符串为空,待比较 observer 有选择器,删掉 else
+                            // 2.2.2 指定选择器,字符串为空,待比较 observer 没有选择器,保留
+                            // 2.3 指定选择器,字符串不为空,字符串相等,删掉  else
+                            // 2.4 指定选择器,字符串不为空,字符串不相等,保留
+                            (
+                                hasSelector &&
+                                    (
+                                        (selector && selector != observer.selector) ||
+                                            (!selector && !observer.selector)
+                                        )
+                                ) ||
+
+                            // 指定了删除的某些组，而该 observer 不属于这些组，保留，否则删除
+                            (groupsRe && !observer.groups.match(groupsRe))
+                        ) {
+                        t[j++] = observer;
+                    } else {
+                        if (observer.selector && self.delegateCount) {
+                            self.delegateCount--;
+                        }
+                        if (observer.last && self.lastCount) {
+                            self.lastCount--;
+                        }
+                        if (s.remove) {
+                            s.remove.call(currentTarget, observer);
+                        }
+                    }
+                }
+
+                self.observers = t;
+            } else {
+                // 全部删除
+                self.reset();
+            }
+
+            self.checkMemory();
+        },
+
+        checkMemory: function () {
+            var self = this,
+                type = self.type,
+                events,
+                handle,
+                s = special[type] || {},
+                currentTarget = self.currentTarget,
+                eventDesc = Utils.data(currentTarget);
+            if (eventDesc) {
+                events = eventDesc.events;
+                if (!self.hasObserver()) {
+                    handle = eventDesc.handle;
+                    // remove(el, type) or fn 已移除光
+                    // dom node need to detach handler from dom node
+                    if ((!s['tearDown'] || s['tearDown'].call(currentTarget) === false)) {
+                        Utils.simpleRemove(currentTarget, type, handle);
+                    }
+                    // remove currentTarget's single event description
+                    delete events[type];
+                }
+
+                // remove currentTarget's  all events description
+                if (S.isEmptyObject(events)) {
+                    eventDesc.handle = null;
+                    Utils.removeData(currentTarget);
+                }
+            }
+        }
+    });
+
+    ObservableDOMEvent.triggeredEvent = '';
+
+    /**
+     * get custom event from html node by event type.
+     * @param {HTMLElement} node
+     * @param {String} type event type
+     * @return {KISSY.Event.ObservableDOMEvent}
+     */
+    ObservableDOMEvent.getCustomEvent = function (node, type) {
+
+        var eventDesc = Utils.data(node), events;
+        if (eventDesc) {
+            events = eventDesc.events;
+        }
+        if (events) {
+            return events[type];
+        }
+
+        return undefined;
+    };
+
+
+    ObservableDOMEvent.getCustomEvents = function (node, create) {
+        var eventDesc = Utils.data(node);
+        if (!eventDesc && create) {
+            Utils.data(node, eventDesc = {});
+        }
+        return eventDesc;
+    };
+
+    return ObservableDOMEvent;
+
+}, {
+    requires: ['dom', './special', './utils', './observer', './object', 'event/base']
+});/**
+ * @ignore
+ * observer for dom event.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/observer', function (S, special, Event) {
+
+    /**
+     * observer for dom event
+     * @class KISSY.Event.DOMEventObserver
+     * @extends KISSY.Event.Observer
+     */
+    function DOMEventObserver(cfg) {
+        DOMEventObserver.superclass.constructor.apply(this, arguments);
+        /**
+         * filter selector string or function to find right element
+         * @cfg {String} selector
+         */
+        /**
+         * extra data as second parameter of listener
+         * @cfg {*} data
+         */
+    }
+
+    S.extend(DOMEventObserver, Event._Observer, {
+
+        keys: ['fn', 'selector', 'data', 'context', 'originalType', 'groups', 'last'],
+
+        notifyInternal: function (event, ce) {
+            var self = this,
+                s, t, ret,
+                type = event.type;
+
+            // restore originalType if involving delegate/onFix handlers
+            if (self.originalType) {
+                event.type = self.originalType;
+            }
+
+            // context undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
+            if ((s = special[event.type]) && s.handle) {
+                t = s.handle(event, self, ce);
+                // can handle
+                if (t && t.length > 0) {
+                    ret = t[0];
+                }
+            } else {
+                ret = self.simpleNotify(event, ce);
+            }
+
+            event.type = type;
+
+            return ret;
+        }
+
+    });
+
+    return DOMEventObserver;
+
+}, {
+    requires: ['./special', 'event/base']
+});/**
+ * @ignore
  * @fileOverview special house for special events
  * @author yiminghe@gmail.com
  */
@@ -2106,66 +2166,6 @@ KISSY.add('event/dom/submit', function (S, UA, Event, DOM, special) {
  modified from jq, fix submit in ie<9
  - http://bugs.jquery.com/ticket/11049
  *//**
- * @ignore
- * subscriber for dom event.
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/subscriber', function (S, special, Event) {
-
-    /**
-     * subscriber for dom event
-     * @class KISSY.Event.DOMSubscriber
-     * @extends KISSY.Event.Subscriber
-     */
-    function DOMSubscriber(cfg) {
-        DOMSubscriber.superclass.constructor.apply(this, arguments);
-        /**
-         * filter selector string or function to find right element
-         * @cfg {String} selector
-         */
-        /**
-         * extra data as second parameter of listener
-         * @cfg {*} data
-         */
-    }
-
-    S.extend(DOMSubscriber, Event._Subscriber, {
-
-        keys: ['fn', 'selector', 'data', 'context', 'originalType', 'groups', 'last'],
-
-        notifyInternal: function (event, ce) {
-            var self = this,
-                s, t, ret,
-                type = event.type;
-
-            // restore originalType if involving delegate/onFix handlers
-            if (self.originalType) {
-                event.type = self.originalType;
-            }
-
-            // context undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
-            if ((s = special[event.type]) && s.handle) {
-                t = s.handle(event, self, ce);
-                // can handle
-                if (t && t.length > 0) {
-                    ret = t[0];
-                }
-            } else {
-                ret = self.simpleNotify(event, ce);
-            }
-
-            event.type = type;
-
-            return ret;
-        }
-
-    });
-
-    return DOMSubscriber;
-
-}, {
-    requires: ['./special', 'event/base']
-});/**
  * @ignore
  * @fileOverview utils for event
  * @author yiminghe@gmail.com

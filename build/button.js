@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 16:05
+build time: Oct 26 01:52
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -13,7 +13,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
     /**
      * @name Button
      * @constructor
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      * @class
      * KISSY Button.
      */
@@ -22,9 +22,6 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
         {
             bindUI:function () {
                 this.get("el").on("keyup", this.handleKeyEventInternal, this);
-                this.publish("click", {
-                    bubbles:1
-                });
             },
 
             handleKeyEventInternal:function (e) {

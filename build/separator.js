@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 16:46
+build time: Oct 26 01:55
 */
 /**
  * @fileOverview separator def
@@ -10,7 +10,7 @@ build time: Oct 19 16:46
 KISSY.add("separator", function (S, Component, SeparatorRender) {
 
     /**
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      * @class
      * separator.
      * xclass: 'separator'.

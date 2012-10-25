@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 22 17:01
+build time: Oct 26 01:59
 */
 /**
  * @ignore
@@ -422,6 +422,9 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
                 }
             }
         }, {
+
+            // TODO either change to overlay-dialog
+            // or move dialog to outer module
             xclass: 'dialog',
             priority: 20
         });
@@ -486,11 +489,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
  *
  * 2010-11-10 yiminghe@gmail.com
  *  重构，使用扩展类
- */
-
-
-
-/**
+ *//**
  * @ignore
  * @fileOverview KISSY Overlay
  * @author yiminghe@gmail.com
@@ -736,6 +735,8 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             }
         }
     }, {
+        // TODO either change to overlay-popup
+        // or move popup to outer module
         xclass: 'popup',
         priority: 20
     });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 22 19:41
+build time: Oct 26 01:52
 */
 /**
  * @ignore
@@ -913,7 +913,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         var self = this;
         Draggable.superclass.constructor.apply(self, arguments);
         self.addTarget(DDM);
-        S.each([
+
 
         /**
          * fired when need to compute draggable 's position during dragging
@@ -930,7 +930,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param {KISSY.Event.Object} e
          * @param e.drag current draggable object
          */
-            'dragalign',
+
 
         /**
          * fired during dragging
@@ -955,7 +955,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param e.pageX mouse position left
          * @param e.pageY mouse position top
          */
-            'drag',
+
 
         /**
          * fired after drop a draggable onto a droppable object
@@ -974,7 +974,6 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'dragdrophit',
 
 
         /**
@@ -992,7 +991,6 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param {KISSY.Event.Object} e
          * @param e.drag current draggable object
          */
-            'dragend',
 
 
         /**
@@ -1010,7 +1008,6 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param {KISSY.Event.Object} e
          * @param e.drag current draggable object
          */
-            'dragdropmiss',
 
 
         /**
@@ -1030,7 +1027,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'dragexit',
+
 
         /**
          * fired after a draggable object mouseenter a droppable object
@@ -1049,7 +1046,6 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'dragenter',
 
 
         /**
@@ -1069,7 +1065,6 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'dragover',
 
 
         /**
@@ -1087,13 +1082,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param {KISSY.Event.Object} e
          * @param e.drag current draggable object
          */
-            'dragstart'
-        ], function (e) {
-            self.publish(e, {
-                bubbles: 1
-            });
-        });
-        // dragNode is equal to node in single mode
+
+            // dragNode is equal to node in single mode
         self.setInternal('dragNode', self.get('node'));
         self.on('afterDisabledChange', self._uiSetDisabledChange, self);
         var disabled;
@@ -1895,7 +1885,7 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
         var self = this;
         Droppable.superclass.constructor.apply(self, arguments);
         self.addTarget(DDM);
-        S.each([
+
         /**
          * fired after a draggable leaves a droppable
          * @event dropexit
@@ -1914,7 +1904,7 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'dropexit',
+
 
         /**
          * fired after a draggable object mouseenter a droppable object
@@ -1934,7 +1924,6 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
          * @param e.drop current droppable object
          */
 
-            'dropenter',
 
         /**
          *
@@ -1955,7 +1944,7 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'dropover',
+
 
         /**
          *
@@ -1976,12 +1965,7 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'drophit'
-        ], function (e) {
-            self.publish(e, {
-                bubbles: 1
-            });
-        });
+
         self._init();
     }
 

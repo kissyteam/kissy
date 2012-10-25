@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 22 16:16
+build time: Oct 26 02:00
 */
 /**
  * @fileOverview TabBar for KISSY.
@@ -290,9 +290,6 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
     return Button.extend({
         isTabsTab: true,
         bindUI: function () {
-            this.publish("afterSelectedChange", {
-                bubbles: 1
-            });
             this.on("click", function () {
                 this.set("selected", true);
             });

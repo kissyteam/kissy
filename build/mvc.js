@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 16:42
+build time: Oct 26 01:55
 */
 /**
  * @fileOverview collection of models
@@ -337,11 +337,8 @@ KISSY.add("mvc/model", function (S, Base) {
         var self = this;
         Model.superclass.constructor.apply(self, arguments);
         /*
-         should bubble to its collections
+         *Change should bubble to its collections
          */
-        self.publish("*Change", {
-            bubbles:1
-        });
         self.collections = {};
     }
 

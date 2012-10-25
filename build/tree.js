@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 01:00
+build time: Oct 26 02:00
 */
 /**
  * @fileOverview root node represent a simple tree

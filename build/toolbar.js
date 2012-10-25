@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 22 16:17
+build time: Oct 26 02:00
 */
 /**
  * Toolbar for KISSY.
@@ -80,10 +80,6 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
         // 交给容器代理
         c.set("handleMouseEvents", false);
         c.set("focusable", false);
-        // managed by parent toolbar
-        c.publish("afterCollapsedChange afterHighlightedChange", {
-            bubbles: 1
-        });
     }
 
     /**
@@ -91,7 +87,7 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
      * @class
      * KISSY Toolbar.
      * xclass: 'toolbar'.
-     * @extends Component.Container
+     * @extends KISSY.Component.Container
      */
     var Toolbar = Component.Container.extend(
         /**

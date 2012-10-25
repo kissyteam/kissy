@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 16:08
+build time: Oct 26 01:52
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -23,7 +23,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
     /**
      * @name ComboBox
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      * @class
      * KISSY ComboBox.
      * xclass: 'combobox'.

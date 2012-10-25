@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 16:35
+build time: Oct 26 01:55
 */
 /**
  * @fileOverview parse html to a hierarchy dom tree

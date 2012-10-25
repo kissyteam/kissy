@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 25 23:03
+build time: Oct 26 01:52
 */
 /**
  * @ignore
@@ -1224,7 +1224,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              */
             getCssClassWithState: function (state) {
                 var self = this,
-                    componentCls = self.get("ksComponentCss");
+                    componentCls = self.get("ksComponentCss")||"";
                 state = state || "";
                 return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
             },

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 16:11
+build time: Oct 26 01:52
 */
 /**
  * @ignore
@@ -47,7 +47,7 @@ KISSY.add('cookie', function (S) {
          * @param {String} name The name of the cookie to set
          * @param {String} val The value to set for cookie
          * @param {Number|Date} expires
-         * if Number secified how many days this cookie will expire
+         * if Number specified how many days this cookie will expire
          * @param {String} domain set cookie's domain
          * @param {String} path set cookie's path
          * @param {Boolean} secure whether this cookie can only be sent to server on https
