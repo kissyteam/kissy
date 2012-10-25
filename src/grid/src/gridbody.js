@@ -587,11 +587,6 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 if (!parent) {
                     return;
                 }
-                S.each(events, function (event) {
-                    _self.publish(event, {
-                        bubbles:1
-                    });
-                });
             },
             _rowClickEvent:function (event) {
                 var _self = this,

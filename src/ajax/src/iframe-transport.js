@@ -33,6 +33,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
     function createIframe(xhr) {
         var id = S.guid('ajax-iframe'),
             iframe,
+        // empty src, so no history
             src = DOM.getEmptyIframeSrc();
 
         iframe = xhr.iframe = DOM.create('<iframe ' +

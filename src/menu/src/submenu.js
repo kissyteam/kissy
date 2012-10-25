@@ -28,7 +28,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              * Protected for subclass overridden.
              * @protected
              */
-            bindSubMenu:function () {
+            bindSubMenu: function () {
                 /**
                  * 自己不是 menu，自己只是 menuitem，其所属的 menu 为 get("parent")
                  */
@@ -55,6 +55,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     // 通知父级菜单
                     menu.on("afterActiveItemChange", function (ev) {
                         parentMenu.set("activeItem", ev.newVal);
+                        ev.stopPropagation();
                     });
 
 
@@ -64,6 +65,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                             // 2. fix #160
                             self.set("highlighted", true);
                         }
+                        ev.stopPropagation();
                     });
 
                     // 只绑定一次
@@ -77,10 +79,11 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 // menu render 后才会注册 afterHighlightedItemChange 到 _uiSet
                 // 这里的 beforeSubMenuHighlightChange 比 afterHighlightedItemChange 先执行
                 // 保险点用 beforeHighlightedItemChange
-                menu.on("beforeHighlightedItemChange", beforeSubMenuHighlightChange, self);
+                menu.on("beforeHighlightedItemChange",
+                    beforeSubMenuHighlightChange, self);
             },
 
-            handleMouseEnter:function (e) {
+            handleMouseEnter: function (e) {
                 var self = this;
                 if (SubMenu.superclass.handleMouseEnter.call(self, e)) {
                     return true;
@@ -97,7 +100,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              * accuracy when moving to sub menus.
              * @protected
              */
-            _uiSetHighlighted:function (e) {
+            _uiSetHighlighted: function (e) {
                 var self = this;
                 if (!e) {
                     self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay") * 1000, false, self);
@@ -107,7 +110,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             /**
              * Clears the show and hide timers for the sub menu.
              */
-            clearSubMenuTimers:function () {
+            clearSubMenuTimers: function () {
                 var self = this,
                     dismissTimer_,
                     showTimer_;
@@ -122,7 +125,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             },
 
             // click ，立即显示
-            performActionInternal:function () {
+            performActionInternal: function () {
                 var self = this;
                 self.clearSubMenuTimers();
                 showMenu.call(self);
@@ -140,7 +143,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              * @protected
              * @return {Boolean} Whether the event was handled.
              */
-            handleKeydown:function (e) {
+            handleKeydown: function (e) {
                 var self = this,
                     menu = getMenu(self),
                     hasKeyboardControl_ = menu && menu.get("visible"),
@@ -180,7 +183,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 return true;
             },
 
-            hideParentMenusBuffer:function () {
+            hideParentMenusBuffer: function () {
                 var self = this, parentMenu = self.get("parent");
                 self.dismissTimer_ = S.later(function () {
                         var submenu = self,
@@ -208,26 +211,26 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     self);
             },
 
-            containsElement:function (element) {
+            containsElement: function (element) {
                 var menu = getMenu(this);
                 return menu && menu.containsElement(element);
             },
 
             // 默认 addChild，这里里面的元素需要放到 menu 属性中
-            decorateChildrenInternal:function (ui, el) {
+            decorateChildrenInternal: function (ui, el) {
                 // 不能用 display:none
                 el.css("visibility", "hidden");
                 var self = this,
                     docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
                 var menu = new ui({
-                    srcNode:el,
-                    prefixCls:self.get("prefixCls")
+                    srcNode: el,
+                    prefixCls: self.get("prefixCls")
                 });
                 self.setInternal("menu", menu);
             },
 
-            destructor:function () {
+            destructor: function () {
                 var self = this,
                     parentMenu = self.get("parent"),
                     menu = getMenu(self);
@@ -250,7 +253,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             }
         },
         {
-            ATTRS:/**
+            ATTRS: /**
              * @lends Menu.SubMenu#
              */
             {
@@ -261,32 +264,32 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                  * @default 0.15
                  * @type {Number}
                  */
-                menuDelay:{
-                    value:MENU_DELAY
+                menuDelay: {
+                    value: MENU_DELAY
                 },
                 /**
                  * Menu config or instance.
                  * @type {Menu|Object}
                  */
-                menu:{
-                    setter:function (m) {
+                menu: {
+                    setter: function (m) {
                         if (m instanceof  Component.Controller) {
                             m.setInternal("parent", this);
                         }
                     }
                 },
-                decorateChildCls:{
-                    valueFn:function () {
+                decorateChildCls: {
+                    valueFn: function () {
                         return this.get("prefixCls") + "popupmenu"
                     }
                 },
-                xrender:{
-                    value:SubMenuRender
+                xrender: {
+                    value: SubMenuRender
                 }
             }
         }, {
-            xclass:'submenu',
-            priority:20
+            xclass: 'submenu',
+            priority: 20
         });
 
     // # -------------------------------- private start
@@ -365,18 +368,20 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             // 导致本类 _uiSetHighlighted 调用，又把子菜单隐藏了
             self.get("parent").set("highlightedItem", self);
         }
+        e.stopPropagation();
     }
 
-    function onParentHide() {
+    function onParentHide(e) {
         var menu = getMenu(this);
         menu && menu.hide();
+        e.stopPropagation();
     }
 
     // # ------------------------------------ private end
 
     return SubMenu;
 }, {
-    requires:['event', 'component', './menuitem', './submenuRender']
+    requires: ['event', 'component', './menuitem', './submenuRender']
 });
 
 /**

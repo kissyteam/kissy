@@ -21,7 +21,7 @@ KISSY.add("component/render", function (S, Component, UIBase, Manager) {
              */
             getCssClassWithState: function (state) {
                 var self = this,
-                    componentCls = self.get("ksComponentCss");
+                    componentCls = self.get("ksComponentCss")||"";
                 state = state || "";
                 return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
             },

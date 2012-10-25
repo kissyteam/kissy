@@ -3,7 +3,7 @@
  * setup event/dom api module
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEvent, DOMEventObject) {
+KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, ObservableDOMEvent, DOMEventObject) {
     var _Utils = Event._Utils;
 
     function fixType(cfg, type) {
@@ -18,7 +18,7 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
                     type = s['delegateFix'];
                 }
             } else {
-                // when on mouseenter , it's actually on mouseover , and subscribers is saved with mouseover!
+                // when on mouseenter , it's actually on mouseover , and observers is saved with mouseover!
                 // TODO need evaluate!
                 if (s['onFix']) {
                     cfg.originalType = type;
@@ -39,11 +39,7 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
         type = fixType(cfg, type);
 
         // 获取事件描述
-        eventDesc = Utils.data(currentTarget);
-
-        if (!eventDesc) {
-            Utils.data(currentTarget, eventDesc = {});
-        }
+        eventDesc = ObservableDOMEvent.getCustomEvents(currentTarget, 1);
 
         if (!(handle = eventDesc.handle)) {
             handle = eventDesc.handle = function (event) {
@@ -53,10 +49,11 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
                 var type = event.type,
                     customEvent,
                     currentTarget = handle.currentTarget;
-                if (DOMCustomEvent.triggeredEvent == type || typeof KISSY == 'undefined') {
+                if (ObservableDOMEvent.triggeredEvent == type ||
+                    typeof KISSY == 'undefined') {
                     return;
                 }
-                customEvent = DOMCustomEvent.getCustomEventFromNodeByType(currentTarget, type);
+                customEvent = ObservableDOMEvent.getCustomEvent(currentTarget, type);
                 if (customEvent) {
                     event.currentTarget = currentTarget;
                     event = new DOMEventObject(event);
@@ -74,7 +71,7 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
         customEvent = events[type];
 
         if (!customEvent) {
-            customEvent = events[type] = new DOMCustomEvent({
+            customEvent = events[type] = new ObservableDOMEvent({
                 type: type,
                 fn: handle,
                 currentTarget: currentTarget
@@ -95,7 +92,7 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
 
         type = fixType(cfg, type);
 
-        var eventDesc = Utils.data(currentTarget),
+        var eventDesc = ObservableDOMEvent.getCustomEvents(currentTarget),
             events = (eventDesc || {}).events;
 
         if (!eventDesc || !events) {
@@ -112,7 +109,9 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
 
         customEvent = events[type];
 
-        customEvent.detach(cfg);
+        if (customEvent) {
+            customEvent.detach(cfg);
+        }
     }
 
     S.mix(Event, {
@@ -135,22 +134,13 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
             // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
             targets = DOM.query(targets);
 
-            if (_Utils.batchForType(Event.add, null, 1, targets, type, fn, context)) {
-                return targets;
-            }
-
-            var cfg = fn, i;
-
-            if (S.isFunction(fn)) {
-                cfg = {
-                    fn: fn,
-                    context: context
-                };
-            }
-
-            for (i = targets.length - 1; i >= 0; i--) {
-                addInternal(targets[i], type, cfg);
-            }
+            _Utils.batchForType(function (targets, type, fn, context) {
+                var cfg = _Utils.normalizeParam(type, fn, context), i;
+                type = cfg.type;
+                for (i = targets.length - 1; i >= 0; i--) {
+                    addInternal(targets[i], type, cfg);
+                }
+            }, 1, targets, type, fn, context);
 
             return targets;
         },
@@ -174,17 +164,16 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
 
             targets = DOM.query(targets);
 
-            if (_Utils.batchForType(Event.remove, null, 1, targets, type, fn, context)) {
-                return targets;
-            }
+            _Utils.batchForType(function (targets, type, fn, context) {
+                var cfg = _Utils.normalizeParam(type, fn, context), i;
 
-            var cfg = _Utils.normalizeParam(type, fn, context), i;
+                type = cfg.type;
 
-            type = cfg.type;
+                for (i = targets.length - 1; i >= 0; i--) {
+                    removeInternal(targets[i], type, cfg);
+                }
+            }, 1, targets, type, fn, context);
 
-            for (i = targets.length - 1; i >= 0; i--) {
-                removeInternal(targets[i], type, cfg);
-            }
 
             return targets;
 
@@ -230,13 +219,19 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
          * @param targets html nodes
          * @param {String} eventType event type
          * @param [eventData] additional event data
-         * @return {*} return false if one of custom event 's subscribers (include bubbled) else
-         * return last value of custom event 's subscribers (include bubbled) 's return value.
+         * @return {*} return false if one of custom event 's observers (include bubbled) else
+         * return last value of custom event 's observers (include bubbled) 's return value.
          */
         fire: function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
             var ret = undefined;
             // custom event firing moved to target.js
             eventData = eventData || {};
+
+            /**
+             * identify event as fired manually
+             * @ignore
+             */
+            eventData._ks_fired = 1;
 
             _Utils.splitAndRun(eventType, function (eventType) {
                 // protect event type
@@ -244,12 +239,13 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
 
                 var r,
                     i,
+                    target,
                     customEvent,
                     typedGroups = _Utils.getTypedGroups(eventType),
                     _ks_groups = typedGroups[1];
 
                 if (_ks_groups) {
-                    _ks_groups = Utils.getGroupsRe(_ks_groups);
+                    _ks_groups = _Utils.getGroupsRe(_ks_groups);
                 }
 
                 eventType = typedGroups[0];
@@ -262,7 +258,17 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
                 targets = DOM.query(targets);
 
                 for (i = targets.length - 1; i >= 0; i--) {
-                    customEvent = DOMCustomEvent.getCustomEventFromNodeByType(targets[i], eventType);
+                    target = targets[i];
+                    customEvent = ObservableDOMEvent
+                        .getCustomEvent(target, eventType);
+                    // bubbling
+                    // html dom event defaults to bubble
+                    if (!onlyHandlers && !customEvent) {
+                        customEvent = new ObservableDOMEvent({
+                            type: eventType,
+                            currentTarget: target
+                        });
+                    }
                     if (customEvent) {
                         r = customEvent.fire(eventData, onlyHandlers);
                         if (ret !== false) {
@@ -282,8 +288,8 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
          * @param targets html nodes
          * @param {String} eventType event type
          * @param [eventData] additional event data
-         * @return {*} return false if one of custom event 's subscribers (include bubbled) else
-         * return last value of custom event 's subscribers (include bubbled) 's return value.
+         * @return {*} return false if one of custom event 's observers (include bubbled) else
+         * return last value of custom event 's observers (include bubbled) 's return value.
          */
         fireHandler: function (targets, eventType, eventData) {
             return Event.fire(targets, eventType, eventData, 1);
@@ -297,18 +303,20 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
          * @private
          */
         _clone: function (src, dest) {
-            if (!Utils.data(src)) {
+            var eventDesc, events;
+            if (!(eventDesc = ObservableDOMEvent.getCustomEvents(src))) {
                 return;
             }
-            var eventDesc = Utils.data(src),
-                events = eventDesc.events;
+            events = eventDesc.events;
             S.each(events, function (customEvent, type) {
-                S.each(customEvent.subscribers, function (subscriber) {
+                S.each(customEvent.observers, function (observer) {
                     // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
-                    addInternal(dest, type, subscriber);
+                    addInternal(dest, type, observer);
                 });
             });
-        }
+        },
+
+        _ObservableDOMEvent: ObservableDOMEvent
     });
 
     /**
@@ -326,7 +334,7 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
 
     return Event;
 }, {
-    requires: ['../base', 'dom', './special', './utils', './custom-event', './object']
+    requires: ['../base', 'dom', './special', './utils', './observable', './object']
 });
 /*
  2012-02-12 yiminghe@gmail.com note:

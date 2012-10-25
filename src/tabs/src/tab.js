@@ -7,9 +7,6 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
     return Button.extend({
         isTabsTab: true,
         bindUI: function () {
-            this.publish("afterSelectedChange", {
-                bubbles: 1
-            });
             this.on("click", function () {
                 this.set("selected", true);
             });

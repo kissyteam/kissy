@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 15:57
+build time: Oct 25 23:25
 */
 /**
  * @ignore
@@ -738,6 +738,12 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
 });
 
 /*
+
+ // !TODO
+ // 去除 event/custom 依赖，用户不载入就不能监听
+ // 载入后通过 custom.on(IO,type) 监听
+
+
  2012-08-16
  - transform IO to class, remove XhrObject class.
  - support ifModified
@@ -922,6 +928,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
     function createIframe(xhr) {
         var id = S.guid('ajax-iframe'),
             iframe,
+        // empty src, so no history
             src = DOM.getEmptyIframeSrc();
 
         iframe = xhr.iframe = DOM.create('<iframe ' +

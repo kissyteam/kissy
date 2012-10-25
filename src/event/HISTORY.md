@@ -6,8 +6,8 @@
  - rewrite
  - separate event target and dom event
  - new architecture
-    - CustomEvent
-    - Subscriber
+    - ObservableEvent
+    - Observer
     - EventObject
     - EventTarget
     - Event

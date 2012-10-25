@@ -13,7 +13,7 @@ KISSY.add('event/dom/mouseenter', function (S, Event, DOM, UA, special) {
             onFix: o.fix,
             // all browser need
             delegateFix: o.fix,
-            handle: function (event, subscriber, ce) {
+            handle: function (event, observer, ce) {
                 var currentTarget = event.currentTarget,
                     relatedTarget = event.relatedTarget;
                 // 在自身外边就触发
@@ -31,7 +31,7 @@ KISSY.add('event/dom/mouseenter', function (S, Event, DOM, UA, special) {
                     // mouseover 采样时跳跃的，可能 2,1 的 mouseover 事件
                     // target 都是 3,而 relatedTarget 都是 0
                     // event.stopPropagation();
-                    return [subscriber.simpleNotify(event, ce)];
+                    return [observer.simpleNotify(event, ce)];
                 }
             }
         };

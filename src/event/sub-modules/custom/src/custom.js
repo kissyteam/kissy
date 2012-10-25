@@ -3,11 +3,30 @@
  * custom facade
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/custom', function (S, Event, Target) {
-    S.EventTarget = Event.Target = Target;
-    return {
+KISSY.add('event/custom', function (S, Event, api, ObservableCustomEvent) {
+    var Target = {};
+
+    S.each(api, function (fn, name) {
+        Target[name] = function () {
+            var args = S.makeArray(arguments);
+            args.unshift(this);
+            return fn.apply(null, args);
+        }
+    });
+
+    S.EventTarget = Target;
+
+    var custom = S.mix({
+        _ObservableCustomEvent: ObservableCustomEvent,
         Target: Target
-    };
+    }, api);
+
+    S.mix(Event, {
+        Target: Target,
+        custom: custom
+    });
+
+    return custom;
 }, {
-    requires: ['./base', './custom/target']
+    requires: ['./base', './custom/api-impl', './custom/observable']
 });

@@ -1,14 +1,14 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 25 00:37
+build time: Oct 26 01:29
 */
 /**
  * @ignore
  * scalable event framework for kissy (refer DOM3 Events)
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base', function (S, Utils, Object, Subscriber, BaseCustomEvent) {
+KISSY.add('event/base', function (S, Utils, Object, Observer, ObservableEvent) {
     /**
      * The event utility provides functions to add and remove event listeners.
      * @class KISSY.Event
@@ -17,11 +17,11 @@ KISSY.add('event/base', function (S, Utils, Object, Subscriber, BaseCustomEvent)
     return S.Event = {
         _Utils: Utils,
         _Object: Object,
-        _Subscriber: Subscriber,
-        _BaseCustomEvent: BaseCustomEvent
+        _Observer: Observer,
+        _ObservableEvent: ObservableEvent
     };
 }, {
-    requires: ['./base/utils', './base/object', './base/subscriber', './base/custom-event']
+    requires: ['./base/utils', './base/object', './base/observer', './base/observable']
 });
 
 
@@ -43,91 +43,6 @@ KISSY.add('event/base', function (S, Utils, Object, Subscriber, BaseCustomEvent)
  - 减少闭包使用，prevent ie 内存泄露？
  - 增加 fire ，模拟冒泡处理 dom 事件
  *//**
- * @ignore
- * base custom event mechanism for kissy
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/base/custom-event', function (S) {
-
-    /**
-     * base custom event for registering and un-registering subscriber for specified event.
-     * @class KISSY.Event.BaseCustomEvent
-     * @private
-     * @param {Object} cfg custom event's attribute
-     */
-    function BaseCustomEvent(cfg) {
-        var self = this;
-        S.mix(self, cfg);
-        self.reset();
-        /**
-         * current event type
-         * @cfg {String} type
-         */
-    }
-
-    BaseCustomEvent.prototype = {
-
-        constructor: BaseCustomEvent,
-
-        /**
-         * whether current event has subscribers
-         * @return {Boolean}
-         */
-        hasSubscriber: function () {
-            return !!this.subscribers.length;
-        },
-
-        /**
-         * reset current event's status
-         */
-        reset: function () {
-            var self = this;
-            self.subscribers = [];
-        },
-
-        /**
-         * remove one subscriber from current event's subscribers
-         * @param {KISSY.Event.Subscriber} s
-         */
-        removeSubscriber: function (s) {
-            var subscribers = this.subscribers,
-                len = subscribers.length;
-            for (var i = 0; i < len; i++) {
-                if (subscribers[i] == s) {
-                    subscribers.splice(i, 1);
-                    break;
-                }
-            }
-        },
-
-        /**
-         * Search for a specified subscriber within current event's subscribers
-         * @param {KISSY.Event.Subscriber} subscriber
-         * @return {Number} subscriber's index in subscribers
-         */
-        findSubscriber: function (subscriber) {
-            var subscribers = this.subscribers, i;
-
-            for (i = subscribers.length - 1; i >= 0; --i) {
-                /*
-                 If multiple identical EventListeners are registered on the same EventTarget
-                 with the same parameters the duplicate instances are discarded.
-                 They do not cause the EventListener to be called twice
-                 and since they are discarded
-                 they do not need to be removed with the removeEventListener method.
-                 */
-                if (subscriber.equals(subscribers[i])) {
-                    return i;
-                }
-            }
-
-            return -1;
-        }
-    };
-
-    return BaseCustomEvent;
-
-});/**
  * @ignore
  * base event object for custom and dom event.
  * @author yiminghe@gmail.com
@@ -213,45 +128,137 @@ KISSY.add('event/base/object', function () {
 
 });/**
  * @ignore
- * subscriber for event.
+ * base custom event mechanism for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/subscriber', function (S) {
+KISSY.add('event/base/observable', function (S) {
 
     /**
-     * KISSY 's base subscriber for handle user-specified function
+     * base custom event for registering and un-registering observer for specified event.
+     * @class KISSY.Event.ObservableEvent
      * @private
-     * @class KISSY.Event.Subscriber
+     * @param {Object} cfg custom event's attribute
+     */
+    function ObservableEvent(cfg) {
+        var self = this;
+        S.mix(self, cfg);
+        self.reset();
+        /**
+         * current event type
+         * @cfg {String} type
+         */
+    }
+
+    ObservableEvent.prototype = {
+
+        constructor: ObservableEvent,
+
+        /**
+         * whether current event has observers
+         * @return {Boolean}
+         */
+        hasObserver: function () {
+            return !!this.observers.length;
+        },
+
+        /**
+         * reset current event's status
+         */
+        reset: function () {
+            var self = this;
+            self.observers = [];
+        },
+
+        /**
+         * remove one observer from current event's observers
+         * @param {KISSY.Event.Observer} s
+         */
+        removeObserver: function (s) {
+            var self = this,
+                i,
+                observers = self.observers,
+                len = observers.length;
+            for (i = 0; i < len; i++) {
+                if (observers[i] == s) {
+                    observers.splice(i, 1);
+                    break;
+                }
+            }
+            self.checkMemory();
+        },
+
+        checkMemory: function () {
+
+        },
+
+        /**
+         * Search for a specified observer within current event's observers
+         * @param {KISSY.Event.Observer} observer
+         * @return {Number} observer's index in observers
+         */
+        findObserver: function (observer) {
+            var observers = this.observers, i;
+
+            for (i = observers.length - 1; i >= 0; --i) {
+                /*
+                 If multiple identical EventListeners are registered on the same EventTarget
+                 with the same parameters the duplicate instances are discarded.
+                 They do not cause the EventListener to be called twice
+                 and since they are discarded
+                 they do not need to be removed with the removeEventListener method.
+                 */
+                if (observer.equals(observers[i])) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+    };
+
+    return ObservableEvent;
+
+});/**
+ * @ignore
+ * observer for event.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/base/observer', function (S) {
+
+    /**
+     * KISSY 's base observer for handle user-specified function
+     * @private
+     * @class KISSY.Event.Observer
      * @param {Object} cfg
      */
-    function Subscriber(cfg) {
+    function Observer(cfg) {
         S.mix(this, cfg);
 
         /**
-         * context in which subscriber's fn runs
+         * context in which observer's fn runs
          * @cfg {Object} context
          */
         /**
-         * current subscriber's user-defined function
+         * current observer's user-defined function
          * @cfg {Function} fn
          */
         /**
-         * whether un-subscriber current subscriber once after running subscriber's user-defined function
+         * whether un-observer current observer once after running observer's user-defined function
          * @cfg {Boolean} once
          */
         /**
-         * groups separated by '.' which current subscriber belongs
+         * groups separated by '.' which current observer belongs
          * @cfg {String} groups
          */
     }
 
-    Subscriber.prototype = {
+    Observer.prototype = {
 
-        constructor: Subscriber,
+        constructor: Observer,
 
         /**
-         * whether current subscriber equals s2
-         * @param {KISSY.Event.Subscriber} s2 another subscriber
+         * whether current observer equals s2
+         * @param {KISSY.Event.Observer} s2 another observer
          * @return {Boolean}
          */
         equals: function (s2) {
@@ -262,10 +269,10 @@ KISSY.add('event/base/subscriber', function (S) {
         },
 
         /**
-         * simple run current subscriber's user-defined function
+         * simple run current observer's user-defined function
          * @param {KISSY.Event.Object} event
-         * @param {KISSY.Event.BaseCustomEvent} ce
-         * @return {*} return value of current subscriber's user-defined function
+         * @param {KISSY.Event.ObservableEvent} ce
+         * @return {*} return value of current observer's user-defined function
          */
         simpleNotify: function (event, ce) {
             var ret, self = this;
@@ -274,23 +281,23 @@ KISSY.add('event/base/subscriber', function (S) {
                 event, self.data
             );
             if (self.once) {
-                ce.removeSubscriber(self);
+                ce.removeObserver(self);
             }
             return ret;
         },
 
         /**
-         * current subscriber's notification.
+         * current observer's notification.
          * @protected
          * @param {KISSY.Event.Object} event
-         * @param {KISSY.Event.BaseCustomEvent} ce
+         * @param {KISSY.Event.ObservableEvent} ce
          */
         notifyInternal: function (event, ce) {
-            this.simpleNotify(event, ce);
+            return this.simpleNotify(event, ce);
         },
 
         /**
-         * run current subscriber's user-defined function
+         * run current observer's user-defined function
          * @param event
          * @param ce
          */
@@ -311,11 +318,13 @@ KISSY.add('event/base/subscriber', function (S) {
             if (ret === false) {
                 event.halt();
             }
+
+            return ret;
         }
 
     };
 
-    return Subscriber;
+    return Observer;
 
 });/**
  * @ignore

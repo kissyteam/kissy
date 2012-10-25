@@ -1,0 +1,42 @@
+<script src="http://yui.yahooapis.com/3.7.3/build/yui/yui-min.js"></script>
+<script>
+    // Create a new YUI instance and populate it with the required modules.
+    YUI({
+        filter: ''
+    }).use('event-custom', function (Y) {
+
+                // EventTarget is available and ready for use. Add implementation
+                // code here.
+                console.log(Y.EventTarget);
+
+                var x = new Y.EventTarget();
+                x.id = 1;
+                x.publish('click',{
+                   emitFacade:1
+                });
+
+                var y = new Y.EventTarget();
+                y.id = 2;
+
+                var z = new Y.EventTarget();
+                z.id = 3;
+
+                y.on('click',function(){});
+
+                x.addTarget(y);
+
+                y.addTarget(z);
+
+                z.on('click', function (e) {
+                    console.log(e.target.id + ' click at ' + e.currentTarget.id);
+                });
+
+                x.on('click', function (e) {
+                    console.log((e.target||{}).id + ' click at ' +
+                            (e.currentTarget||{}).id);
+                });
+
+                x.fire('click',{});
+
+            });
+</script>

@@ -96,7 +96,7 @@ KISSY.add('event/dom/change', function (S, UA, Event, DOM, special) {
             // in case stopped by user's callback,same with submit
             // http://bugs.jquery.com/ticket/11049
             // see : test/change/bubble.html
-                e.isPropagationStopped ||
+                e.isPropagationStopped() ||
                     // checkbox/radio already bubble using another technique
                     isCheckBoxOrRadio(fel)) {
                 return;

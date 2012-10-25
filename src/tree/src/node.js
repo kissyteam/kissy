@@ -23,11 +23,6 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
          * @lends Tree.Node#
          */
         {
-            bindUI: function () {
-                this.publish("click expand collapse", {
-                    bubbles: 1
-                });
-            },
 
             syncUI: function () {
                 // 集中设置样式
@@ -147,7 +142,6 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
             performActionInternal: function (e) {
                 var self = this,
                     target = $(e.target),
-                    type = e.type,
                     expanded = self.get("expanded"),
                     tree = self.get("tree");
                 tree.get("el")[0].focus();

@@ -564,6 +564,12 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
 });
 
 /*
+
+ // !TODO
+ // 去除 event/custom 依赖，用户不载入就不能监听
+ // 载入后通过 custom.on(IO,type) 监听
+
+
  2012-08-16
  - transform IO to class, remove XhrObject class.
  - support ifModified

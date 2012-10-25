@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 22 16:17
+build time: Oct 26 01:00
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -552,7 +552,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
      * xclass: 'tree-node'.
      * @name Node
      * @memberOf Tree
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      */
     var TreeNode = Component.Container.extend(
         [
@@ -563,11 +563,6 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
          * @lends Tree.Node#
          */
         {
-            bindUI: function () {
-                this.publish("click expand collapse", {
-                    bubbles: 1
-                });
-            },
 
             syncUI: function () {
                 // 集中设置样式
@@ -687,7 +682,6 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
             performActionInternal: function (e) {
                 var self = this,
                     target = $(e.target),
-                    type = e.type,
                     expanded = self.get("expanded"),
                     tree = self.get("tree");
                 tree.get("el")[0].focus();

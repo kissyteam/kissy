@@ -234,11 +234,11 @@ KISSY.use("component", function (S, Component) {
                 node.remove();
             });
 
-            var BoxRender = UIBase.extend([UIBase.Box.Render]);
+            var BoxController = Component.Controller;
 
             it("should get html", function () {
                 var node = $("<div>123</div>").appendTo("body");
-                var n = new BoxRender({
+                var n = new BoxController({
                     srcNode: node
                 });
                 expect(n.get("content")).toBe('123');
@@ -247,9 +247,8 @@ KISSY.use("component", function (S, Component) {
 
             it("can not override html", function () {
                 var node = $("<div>123</div>").appendTo("body");
-                var n = new BoxRender({
+                var n = new BoxController({
                     srcNode: node,
-                    el: node,
                     content: '4',
                     autoRender: true
                 });
@@ -259,7 +258,7 @@ KISSY.use("component", function (S, Component) {
             });
 
             it("html can be node without srcNode", function () {
-                var n = new BoxRender({
+                var n = new BoxController({
                     content: $('<span>4</span>'),
                     autoRender: true
                 });
@@ -271,7 +270,7 @@ KISSY.use("component", function (S, Component) {
 
         describe("contentEl", function () {
 
-            var ContentEl = UIBase.extend([UIBase.Box.Render,
+            var ContentEl = Component.Render.extend([,
                 UIBase.ContentBox.Render], {}, {
                 ATTRS: {
                     prefixCls: {
@@ -289,8 +288,6 @@ KISSY.use("component", function (S, Component) {
                     var el = $("<div>23</div>").appendTo("body");
 
                     var content = new ContentEl({
-                        // srcNode->el 在 box 上
-                        el: el,
                         srcNode: el
                     }).render();
 
@@ -307,7 +304,6 @@ KISSY.use("component", function (S, Component) {
                     var el = $("<div>23</div>").appendTo("body");
 
                     var content = new ContentEl({
-                        el: el,
                         srcNode: el,
                         content: '4'
                     }).render();
@@ -326,7 +322,6 @@ KISSY.use("component", function (S, Component) {
 
                     var content = new ContentEl({
                         srcNode: el,
-                        el: el,
                         content: $('<s>4</s>')
                     }).render();
 

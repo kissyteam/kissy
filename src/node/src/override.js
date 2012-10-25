@@ -3,7 +3,7 @@
  * @fileOverview overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add('node/override', function (S, DOM, Event, NodeList) {
+KISSY.add('node/override', function (S, DOM,NodeList) {
 
     var NLP = NodeList.prototype;
 
@@ -52,7 +52,7 @@ KISSY.add('node/override', function (S, DOM, Event, NodeList) {
     })
 
 }, {
-    requires: ['dom', 'event', './base', './attach']
+    requires: ['dom', './base']
 });
 
 /*

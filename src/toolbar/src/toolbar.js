@@ -75,10 +75,6 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
         // 交给容器代理
         c.set("handleMouseEvents", false);
         c.set("focusable", false);
-        // managed by parent toolbar
-        c.publish("afterCollapsedChange afterHighlightedChange", {
-            bubbles: 1
-        });
     }
 
     /**

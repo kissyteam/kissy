@@ -19,11 +19,6 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
          * @lends Menu.Item#
          */
         {
-            bindUI:function () {
-                this.publish("click", {
-                    bubbles:1
-                });
-            },
 
             /**
              * Handle mouseenter event. Make parent menu to highlight itself.

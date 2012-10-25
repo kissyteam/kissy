@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 16:42
+build time: Oct 25 19:43
 */
 /**
  * @ignore
@@ -355,6 +355,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             'undelegate'
         ];
 
+    NodeList.KeyCodes = Event.KeyCodes;
 
     function accessNorm(fn, self, args) {
         args.unshift(self);
@@ -422,7 +423,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
     });
 
 }, {
-    requires: ['dom', 'event', './base']
+    requires: ['dom', 'event/dom', './base']
 });
 
 /*
@@ -719,18 +720,16 @@ KISSY.add('node/base', function (S, DOM, undefined) {
  * @fileOverview node
  * @author yiminghe@gmail.com
  */
-KISSY.add('node', function (S, Event, Node) {
-    Node.KeyCodes = Event.KeyCodes;
+KISSY.add('node', function (S, Node) {
     S.mix(S, {
-        Node:Node,
-        NodeList:Node,
-        one:Node.one,
-        all:Node.all
+        Node: Node,
+        NodeList: Node,
+        one: Node.one,
+        all: Node.all
     });
     return Node;
 }, {
-    requires:[
-        'event',
+    requires: [
         'node/base',
         'node/attach',
         'node/override',
@@ -741,7 +740,7 @@ KISSY.add('node', function (S, Event, Node) {
  * @fileOverview overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add('node/override', function (S, DOM, Event, NodeList) {
+KISSY.add('node/override', function (S, DOM,NodeList) {
 
     var NLP = NodeList.prototype;
 
@@ -790,7 +789,7 @@ KISSY.add('node/override', function (S, DOM, Event, NodeList) {
     })
 
 }, {
-    requires: ['dom', 'event', './base', './attach']
+    requires: ['dom', './base']
 });
 
 /*

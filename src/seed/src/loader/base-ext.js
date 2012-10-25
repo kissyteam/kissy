@@ -197,10 +197,23 @@
              * @return {KISSY.Loader.Module[]}
              */
             getRequiredMods: function () {
-                var mods = this.runtime.Env.mods;
-                return S.map(this.getNormalizedRequires(), function (r) {
+                var self=this,mods = self.runtime.Env.mods;
+                return S.map(self.getNormalizedRequires(), function (r) {
                     return mods[r];
                 });
+            },
+
+            getRequiresWithAlias: function () {
+                var self = this,
+                    requiresWithAlias = self.requiresWithAlias,
+                    requires = self.requires;
+                if (!requires || requires.length == 0) {
+                    return requires || [];
+                } else if (!requiresWithAlias) {
+                    self.requiresWithAlias = requiresWithAlias =
+                        Utils.normalizeModNamesWithAlias(self.runtime, requires, self.name);
+                }
+                return requiresWithAlias;
             },
 
 

@@ -42,10 +42,10 @@ KISSY.add('event/dom/valuechange', function (S, Event, DOM, special) {
             h = DOM.data(target, HISTORY_KEY);
         if (v !== h) {
             // 只触发自己绑定的 handler
-            Event.fire(target, VALUE_CHANGE, {
+            Event.fireHandler(target, VALUE_CHANGE, {
                 prevVal: h,
                 newVal: v
-            }, true);
+            });
             DOM.data(target, HISTORY_KEY, v);
         }
     }
@@ -107,9 +107,9 @@ KISSY.add('event/dom/valuechange', function (S, Event, DOM, special) {
 });
 
 /*
-  2012-02-08 yiminghe@gmail.com note about webkitspeechchange :
-   当 input 没焦点立即点击语音
-    -> mousedown -> blur -> focus -> blur -> webkitspeechchange -> focus
-   第二次：
-    -> mousedown -> blur -> webkitspeechchange -> focus
+ 2012-02-08 yiminghe@gmail.com note about webkitspeechchange :
+ 当 input 没焦点立即点击语音
+ -> mousedown -> blur -> focus -> blur -> webkitspeechchange -> focus
+ 第二次：
+ -> mousedown -> blur -> webkitspeechchange -> focus
  */

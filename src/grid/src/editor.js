@@ -46,12 +46,6 @@ KISSY.add('grid/editor', function (S, Component) {
             if (binder) {
                 binder.call(this);
             }
-
-            S.each(events, function (event) {
-                _self.publish(event, {
-                    bubbles:1
-                });
-            });
             _self.bindControlEvent();
         },
 		/**

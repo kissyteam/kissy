@@ -21,7 +21,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         var self = this;
         Draggable.superclass.constructor.apply(self, arguments);
         self.addTarget(DDM);
-        S.each([
+
 
         /**
          * fired when need to compute draggable 's position during dragging
@@ -38,7 +38,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param {KISSY.Event.Object} e
          * @param e.drag current draggable object
          */
-            'dragalign',
+
 
         /**
          * fired during dragging
@@ -63,7 +63,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param e.pageX mouse position left
          * @param e.pageY mouse position top
          */
-            'drag',
+
 
         /**
          * fired after drop a draggable onto a droppable object
@@ -82,7 +82,6 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'dragdrophit',
 
 
         /**
@@ -100,7 +99,6 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param {KISSY.Event.Object} e
          * @param e.drag current draggable object
          */
-            'dragend',
 
 
         /**
@@ -118,7 +116,6 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param {KISSY.Event.Object} e
          * @param e.drag current draggable object
          */
-            'dragdropmiss',
 
 
         /**
@@ -138,7 +135,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'dragexit',
+
 
         /**
          * fired after a draggable object mouseenter a droppable object
@@ -157,7 +154,6 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'dragenter',
 
 
         /**
@@ -177,7 +173,6 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'dragover',
 
 
         /**
@@ -195,13 +190,8 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
          * @param {KISSY.Event.Object} e
          * @param e.drag current draggable object
          */
-            'dragstart'
-        ], function (e) {
-            self.publish(e, {
-                bubbles: 1
-            });
-        });
-        // dragNode is equal to node in single mode
+
+            // dragNode is equal to node in single mode
         self.setInternal('dragNode', self.get('node'));
         self.on('afterDisabledChange', self._uiSetDisabledChange, self);
         var disabled;

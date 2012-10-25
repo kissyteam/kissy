@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 24 16:59
+build time: Oct 26 01:31
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121024165913' will replace with current timestamp when compressing.
+         * NOTICE: '20121026013143' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121024165913',
+        __BUILD_TIME: '20121026013143',
         /**
          * KISSY Environment.
          * @private
@@ -3333,16 +3333,15 @@ var KISSY = (function (undefined) {
             }
 
             var fn = mod.fn,
-                requires,
                 value;
-
-            // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            requires = mod.requires = mod.getNormalizedRequires();
 
             if (fn) {
                 if (S.isFunction(fn)) {
                     // context is mod info
-                    value = fn.apply(mod, Utils.getModules(runtime, requires));
+                    value = fn.apply(mod, Utils.getModules(runtime,
+                        // 需要解开 index，相对路径，去除 tag，
+                        // 但是需要保留 alias，防止值不对应
+                        mod.getRequiresWithAlias()));
                 } else {
                     value = fn;
                 }
@@ -3483,37 +3482,38 @@ var KISSY = (function (undefined) {
                 }
             }
             return path;
-        },
-
-        memoize: function (fn, hasher) {
-            hasher = hasher || function (x) {
-                return x;
-            };
-            var memo = {},
-                queues = {},
-                memoized = function () {
-                    var args = S.makeArray(arguments),
-                        callback = args.pop(),
-                        key = hasher.apply(null, args);
-                    if (key in memo) {
-                        callback.apply(null, memo[key]);
-                    } else if (key in queues) {
-                        queues[key].push(callback);
-                    } else {
-                        queues[key] = [callback];
-                        fn.apply(null, args.concat([function () {
-                            memo[key] = arguments;
-                            var q = queues[key];
-                            delete queues[key];
-                            for (var i = 0, l = q.length; i < l; i++) {
-                                q[i].apply(null, arguments);
-                            }
-                        }]));
-                    }
-                };
-            memoized.unmemoized = fn;
-            return memoized;
         }
+        /*
+         ,memoize: function (fn, hasher) {
+         hasher = hasher || function (x) {
+         return x;
+         };
+         var memo = {},
+         queues = {},
+         memoized = function () {
+         var args = S.makeArray(arguments),
+         callback = args.pop(),
+         key = hasher.apply(null, args);
+         if (key in memo) {
+         callback.apply(null, memo[key]);
+         } else if (key in queues) {
+         queues[key].push(callback);
+         } else {
+         queues[key] = [callback];
+         fn.apply(null, args.concat([function () {
+         memo[key] = arguments;
+         var q = queues[key];
+         delete queues[key];
+         for (var i = 0, l = q.length; i < l; i++) {
+         q[i].apply(null, arguments);
+         }
+         }]));
+         }
+         };
+         memoized.unmemoized = fn;
+         return memoized;
+         }
+         */
     });
 
     function isStatus(runtime, modNames, status) {
@@ -3730,10 +3730,23 @@ var KISSY = (function (undefined) {
              * @return {KISSY.Loader.Module[]}
              */
             getRequiredMods: function () {
-                var mods = this.runtime.Env.mods;
-                return S.map(this.getNormalizedRequires(), function (r) {
+                var self=this,mods = self.runtime.Env.mods;
+                return S.map(self.getNormalizedRequires(), function (r) {
                     return mods[r];
                 });
+            },
+
+            getRequiresWithAlias: function () {
+                var self = this,
+                    requiresWithAlias = self.requiresWithAlias,
+                    requires = self.requires;
+                if (!requires || requires.length == 0) {
+                    return requires || [];
+                } else if (!requiresWithAlias) {
+                    self.requiresWithAlias = requiresWithAlias =
+                        Utils.normalizeModNamesWithAlias(self.runtime, requires, self.name);
+                }
+                return requiresWithAlias;
             },
 
 
@@ -4657,7 +4670,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121024165913'
+            tag: '20121026013143'
         }, getBaseInfo()));
     }
 
@@ -5002,7 +5015,7 @@ config({
 });
 /*Generated by KISSY Module Compiler*/
 config({
-'node': {requires: ['dom','event','anim']}
+'node': {requires: ['dom','event/dom','anim']}
 });
 /*Generated by KISSY Module Compiler*/
 config({

@@ -5,8 +5,9 @@
 KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
     var KeyCodes = Event.KeyCodes;
 
-    function onMenuHide() {
+    function onMenuHide(e) {
         this.set("highlightedItem", null);
+        e.stopPropagation();
     }
 
     /**

@@ -139,8 +139,7 @@ KISSY.add('event/dom/object', function (S, Event) {
         S.mix(e, {
             deltaY: deltaY,
             delta: delta,
-            deltaX: deltaX,
-            type: 'mousewheel'
+            deltaX: deltaX
         });
     }
 

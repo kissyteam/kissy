@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 16:35
+build time: Oct 26 01:01
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -78,7 +78,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
      * BarItem class a control used in toolbar ,for example button,select,text,input an so on
      * @name BarItem
      * @constructor
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      * @memberOf Grid.Bar
      */
 	var BarItem = Component.Controller.extend({
@@ -316,7 +316,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
      * This class specifies the definition for the grid which contains {@link Grid.Header},{@link Grid.GridBody}
      * @name Grid
      * @constructor
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      * @extends Grid.Bindable
      */
     var grid = Component.Controller.extend({
@@ -990,7 +990,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
      * In general, this class will not be created directly, rather an array of column configurations will be passed to the grid
      * @name Grid.Column
      * @constructor
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      */
     var column = Component.Controller.extend(
         /**
@@ -1003,18 +1003,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                     v = sortState ? (sortState === SORT_ASC ? SORT_DESC : SORT_ASC) : SORT_ASC;
                 _self.set('sortState', v);
             },
-            /**
-             * @see {Component.Controller#bindUI}
-             */
-            bindUI:function () {
-                var _self = this,
-                    events = _self.get('events');
-                S.each(events, function (event) {
-                    _self.publish(event, {
-                        bubbles:1
-                    });
-                });
-            },
+
             /**
              * {Component.Controller#performActionInternal}
              * @private
@@ -1656,7 +1645,7 @@ KISSY.add('grid/editor', function (S, Component) {
      * This is a base class of grid's editor,which can be used in column's configuration.
      * @name Grid.Editor
      * @constructor
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      */
     var GridEditor = Component.Controller.extend({
 
@@ -1672,12 +1661,6 @@ KISSY.add('grid/editor', function (S, Component) {
             if (binder) {
                 binder.call(this);
             }
-
-            S.each(events, function (event) {
-                _self.publish(event, {
-                    bubbles:1
-                });
-            });
             _self.bindControlEvent();
         },
 		/**
@@ -2049,7 +2032,7 @@ KISSY.add('grid/editor', function (S, Component) {
      * This is a subclass of grid's editor,which can be used in column's configuration.
      * @name Grid.Editor.Text
      * @constructor
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      */
 	var textEditor = GridEditor.extend({},{
 		xclass:'grid-text-editor',
@@ -2126,8 +2109,8 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 	 * @private
      * @name Grid.GridEditorPanel
      * @constructor
-     * @extends Component.Controller
-	 * @extends Component.UIBase.Align
+     * @extends KISSY.Component.Controller
+	 * @extends KISSY.Component.UIBase.Align
      */
 	var GridEditorPanel = Component.Controller.extend([
 			Component.UIBase.Position,
@@ -2585,7 +2568,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
      * In general, this class will not be instanced directly, instead a viewConfig option is passed to the grid
      * @name Grid.GridBody
      * @constructor
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      * @extends Grid.Bindable
      */
     var GridBody = Component.Controller.extend([Bindable],
@@ -2833,11 +2816,6 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 if (!parent) {
                     return;
                 }
-                S.each(events, function (event) {
-                    _self.publish(event, {
-                        bubbles:1
-                    });
-                });
             },
             _rowClickEvent:function (event) {
                 var _self = this,
@@ -3151,7 +3129,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
      * the header container is responsible for triggering changes within the view.
      * @name Grid.Header
      * @constructor
-     * @extends Component.Controller
+     * @extends KISSY.Component.Controller
      */
     var header = Component.Controller.extend(
         /**

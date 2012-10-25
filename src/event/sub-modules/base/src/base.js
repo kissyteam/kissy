@@ -3,7 +3,7 @@
  * scalable event framework for kissy (refer DOM3 Events)
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base', function (S, Utils, Object, Subscriber, BaseCustomEvent) {
+KISSY.add('event/base', function (S, Utils, Object, Observer, ObservableEvent) {
     /**
      * The event utility provides functions to add and remove event listeners.
      * @class KISSY.Event
@@ -12,11 +12,11 @@ KISSY.add('event/base', function (S, Utils, Object, Subscriber, BaseCustomEvent)
     return S.Event = {
         _Utils: Utils,
         _Object: Object,
-        _Subscriber: Subscriber,
-        _BaseCustomEvent: BaseCustomEvent
+        _Observer: Observer,
+        _ObservableEvent: ObservableEvent
     };
 }, {
-    requires: ['./base/utils', './base/object', './base/subscriber', './base/custom-event']
+    requires: ['./base/utils', './base/object', './base/observer', './base/observable']
 });
 
 

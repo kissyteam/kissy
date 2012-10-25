@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 22 19:30
+build time: Oct 26 01:31
 */
 /**
  * @ignore
@@ -31,16 +31,6 @@ build time: Oct 22 19:30
 var KISSY = (function (undefined) {
 
     var host = this,
-        MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
-        hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
-        enumProperties = [
-            'hasOwnProperty',
-            'isPrototypeOf',
-            'propertyIsEnumerable',
-            'toString',
-            'toLocaleString',
-            'valueOf'
-        ],
         S,
         guid = 0,
         EMPTY = '';
@@ -48,46 +38,12 @@ var KISSY = (function (undefined) {
     S = {
 
         /**
-         * Copies all the properties of s to r.
-         * @method
-         * @param {Object} r the augmented object
-         * @param {Object} s the object need to augment
-         * @param {Boolean|Object} [ov=true] whether overwrite existing property or config.
-         * @param {Boolean} [ov.overwrite=true] whether overwrite existing property.
-         * @param {String[]} [ov.whitelist] array of white-list properties
-         * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
-         * @param {String[]} [wl] array of white-list properties
-         * @param [deep=false] {Boolean} whether recursive mix if encounter object.
-         * @return {Object} the augmented object
-         *
-         * for example:
-         *     @example
-         *     var t = {};
-         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true}) => {x: {y: 3, z: 4, a: {}}}, a !== t
-         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: true, overwrite: false}) => {x: {y: 2, z: 4, a: {}}}, a !== t
-         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, 1) => {x: {y: 3, a: t}}
-         */
-        mix: function (r, s, ov, wl, deep) {
-            if (typeof ov === 'object') {
-                wl = ov['whitelist'];
-                deep = ov['deep'];
-                ov = ov['overwrite'];
-            }
-            var cache = [], c, i = 0;
-            mixInternal(r, s, ov, wl, deep, cache);
-            while (c = cache[i++]) {
-                delete c[MIX_CIRCULAR_DETECTION];
-            }
-            return r;
-        },
-
-        /**
          * The build time of the library.
-         * NOTICE: '20121022193028' will replace with current timestamp when compressing.
+         * NOTICE: '20121026013143' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121022193028',
+        __BUILD_TIME: '20121026013143',
         /**
          * KISSY Environment.
          * @private
@@ -117,139 +73,6 @@ var KISSY = (function (undefined) {
          * @type {String}
          */
         version: '1.40dev',
-
-        /**
-         * Returns a new object containing all of the properties of
-         * all the supplied objects. The properties from later objects
-         * will overwrite those in earlier objects. Passing in a
-         * single object will create a shallow copy of it.
-         * @param {...Object} var_args objects need to be merged
-         * @return {Object} the new merged object
-         */
-        merge: function (var_args) {
-            var_args = S.makeArray(arguments);
-            var o = {}, i, l = var_args.length;
-            for (i = 0; i < l; i++) {
-                S.mix(o, var_args[i]);
-            }
-            return o;
-        },
-
-        /**
-         * Applies prototype properties from the supplier to the receiver.
-         * @param   {Object} r received object
-         * @param   {...Object} var_args object need to  augment
-         *          {Boolean} [ov=true] whether overwrite existing property
-         *          {String[]} [wl] array of white-list properties
-         * @return  {Object} the augmented object
-         */
-        augment: function (r, var_args) {
-            var args = S.makeArray(arguments),
-                len = args.length - 2,
-                i = 1,
-                ov = args[len],
-                wl = args[len + 1];
-
-            if (!S.isArray(wl)) {
-                ov = wl;
-                wl = undefined;
-                len++;
-            }
-            if (!S.isBoolean(ov)) {
-                ov = undefined;
-                len++;
-            }
-
-            for (; i < len; i++) {
-                S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
-            }
-
-            return r;
-        },
-
-        /**
-         * Utility to set up the prototype, constructor and superclass properties to
-         * support an inheritance strategy that can chain constructors and methods.
-         * Static members will not be inherited.
-         * @param r {Function} the object to modify
-         * @param s {Function} the object to inherit
-         * @param {Object} [px] prototype properties to add/override
-         * @param {Object} [sx] static properties to add/override
-         * @return r {Object}
-         */
-        extend: function (r, s, px, sx) {
-            if (!s || !r) {
-                return r;
-            }
-
-            var create = Object.create ?
-                    function (proto, c) {
-                        return Object.create(proto, {
-                            constructor: {
-                                value: c
-                            }
-                        });
-                    } :
-                    function (proto, c) {
-                        function F() {
-                        }
-
-                        F.prototype = proto;
-
-                        var o = new F();
-                        o.constructor = c;
-                        return o;
-                    },
-                sp = s.prototype,
-                rp;
-
-            // add prototype chain
-            rp = create(sp, r);
-            r.prototype = S.mix(rp, r.prototype);
-            r.superclass = create(sp, s);
-
-            // add prototype overrides
-            if (px) {
-                S.mix(rp, px);
-            }
-
-            // add object overrides
-            if (sx) {
-                S.mix(r, sx);
-            }
-
-            return r;
-        },
-
-        // The KISSY System Framework
-
-        /**
-         * Returns the namespace specified and creates it if it doesn't exist. Be careful
-         * when naming packages. Reserved words may work in some browsers and not others.
-         *
-         * for example:
-         *      @example
-         *      S.namespace('KISSY.app'); // returns KISSY.app
-         *      S.namespace('app.Shop'); // returns KISSY.app.Shop
-         *      S.namespace('TB.app.Shop', true); // returns TB.app.Shop
-         *
-         * @return {Object}  A reference to the last namespace object created
-         */
-        namespace: function () {
-            var args = S.makeArray(arguments),
-                l = args.length,
-                o = null, i, j, p,
-                global = (args[l - 1] === true && l--);
-
-            for (i = 0; i < l; i++) {
-                p = (EMPTY + args[i]).split('.');
-                o = global ? host : this;
-                for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
-                    o = o[p[j]] = o[p[j]] || { };
-                }
-            }
-            return o;
-        },
 
         /**
          * set KISSY configuration
@@ -356,7 +179,74 @@ var KISSY = (function (undefined) {
          */
         guid: function (pre) {
             return (pre || EMPTY) + guid++;
+        }
+    };
+
+    // exports for nodejs
+    if (S.Env.nodejs) {
+        S.KISSY = S;
+        module.exports = S;
+    }
+
+    return S;
+
+})();/**
+ * @ignore
+ * @fileOverview object utilities of lang
+ * @author yiminghe@gmail.com
+ *
+ */
+(function (S, undefined) {
+
+    var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
+        STAMP_MARKER = '__~ks_stamped',
+        host = this,
+        TRUE=true,
+        EMPTY = '',
+        hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
+        enumProperties = [
+            'hasOwnProperty',
+            'isPrototypeOf',
+            'propertyIsEnumerable',
+            'toString',
+            'toLocaleString',
+            'valueOf'
+        ];
+
+    function mix(r, s) {
+        for (var i in s) {
+            r[i] = s[i];
+        }
+    }
+
+    mix(S, {
+        /**
+         * stamp a object by guid
+         * @param {Object} o object needed to be stamped
+         * @param {Boolean} [readOnly] while set marker on o if marker does not exist
+         * @param {String} [marker] the marker will be set on Object
+         * @return {String} guid associated with this object
+         * @member KISSY
+         */
+        stamp: function (o, readOnly, marker) {
+            if (!o) {
+                return o
+            }
+            marker = marker || STAMP_MARKER;
+            var guid = o[marker];
+            if (guid) {
+                return guid;
+            } else if (!readOnly) {
+                try {
+                    guid = o[marker] = S.guid(marker);
+                }
+                catch (e) {
+                    guid = undefined;
+                }
+            }
+            return guid;
         },
+
 
         /**
          * Get all the property names of o as array
@@ -379,8 +269,177 @@ var KISSY = (function (undefined) {
             }
 
             return result;
+        },
+
+
+        /**
+         * Copies all the properties of s to r.
+         * @method
+         * @param {Object} r the augmented object
+         * @param {Object} s the object need to augment
+         * @param {Boolean|Object} [ov=TRUE] whether overwrite existing property or config.
+         * @param {Boolean} [ov.overwrite=TRUE] whether overwrite existing property.
+         * @param {String[]} [ov.whitelist] array of white-list properties
+         * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
+         * @param {String[]} [wl] array of white-list properties
+         * @param [deep=false] {Boolean} whether recursive mix if encounter object.
+         * @return {Object} the augmented object
+         *
+         * for example:
+         *     @example
+         *     var t = {};
+         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: TRUE}) => {x: {y: 3, z: 4, a: {}}}, a !== t
+         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, {deep: TRUE, overwrite: false}) => {x: {y: 2, z: 4, a: {}}}, a !== t
+         *     S.mix({x: {y: 2, z: 4}}, {x: {y: 3, a: t}}, 1) => {x: {y: 3, a: t}}
+         */
+        mix: function (r, s, ov, wl, deep) {
+            if (typeof ov === 'object') {
+                wl = ov['whitelist'];
+                deep = ov['deep'];
+                ov = ov['overwrite'];
+            }
+            var cache = [], c, i = 0;
+            mixInternal(r, s, ov, wl, deep, cache);
+            while (c = cache[i++]) {
+                delete c[MIX_CIRCULAR_DETECTION];
+            }
+            return r;
+        },
+
+        /**
+         * Returns a new object containing all of the properties of
+         * all the supplied objects. The properties from later objects
+         * will overwrite those in earlier objects. Passing in a
+         * single object will create a shallow copy of it.
+         * @param {...Object} var_args objects need to be merged
+         * @return {Object} the new merged object
+         */
+        merge: function (var_args) {
+            var_args = S.makeArray(arguments);
+            var o = {}, i, l = var_args.length;
+            for (i = 0; i < l; i++) {
+                S.mix(o, var_args[i]);
+            }
+            return o;
+        },
+
+        /**
+         * Applies prototype properties from the supplier to the receiver.
+         * @param   {Object} r received object
+         * @param   {...Object} var_args object need to  augment
+         *          {Boolean} [ov=TRUE] whether overwrite existing property
+         *          {String[]} [wl] array of white-list properties
+         * @return  {Object} the augmented object
+         */
+        augment: function (r, var_args) {
+            var args = S.makeArray(arguments),
+                len = args.length - 2,
+                i = 1,
+                ov = args[len],
+                wl = args[len + 1];
+
+            if (!S.isArray(wl)) {
+                ov = wl;
+                wl = undefined;
+                len++;
+            }
+            if (!S.isBoolean(ov)) {
+                ov = undefined;
+                len++;
+            }
+
+            for (; i < len; i++) {
+                S.mix(r.prototype, args[i].prototype || args[i], ov, wl);
+            }
+
+            return r;
+        },
+
+        /**
+         * Utility to set up the prototype, constructor and superclass properties to
+         * support an inheritance strategy that can chain constructors and methods.
+         * Static members will not be inherited.
+         * @param r {Function} the object to modify
+         * @param s {Function} the object to inherit
+         * @param {Object} [px] prototype properties to add/override
+         * @param {Object} [sx] static properties to add/override
+         * @return r {Object}
+         */
+        extend: function (r, s, px, sx) {
+            if (!s || !r) {
+                return r;
+            }
+
+            var create = Object.create ?
+                    function (proto, c) {
+                        return Object.create(proto, {
+                            constructor: {
+                                value: c
+                            }
+                        });
+                    } :
+                    function (proto, c) {
+                        function F() {
+                        }
+
+                        F.prototype = proto;
+
+                        var o = new F();
+                        o.constructor = c;
+                        return o;
+                    },
+                sp = s.prototype,
+                rp;
+
+            // add prototype chain
+            rp = create(sp, r);
+            r.prototype = S.mix(rp, r.prototype);
+            r.superclass = create(sp, s);
+
+            // add prototype overrides
+            if (px) {
+                S.mix(rp, px);
+            }
+
+            // add object overrides
+            if (sx) {
+                S.mix(r, sx);
+            }
+
+            return r;
+        },
+
+
+        /**
+         * Returns the namespace specified and creates it if it doesn't exist. Be careful
+         * when naming packages. Reserved words may work in some browsers and not others.
+         *
+         * for example:
+         *      @example
+         *      S.namespace('KISSY.app'); // returns KISSY.app
+         *      S.namespace('app.Shop'); // returns KISSY.app.Shop
+         *      S.namespace('TB.app.Shop', TRUE); // returns TB.app.Shop
+         *
+         * @return {Object}  A reference to the last namespace object created
+         */
+        namespace: function () {
+            var args = S.makeArray(arguments),
+                l = args.length,
+                o = null, i, j, p,
+                global = (args[l - 1] === TRUE && l--);
+
+            for (i = 0; i < l; i++) {
+                p = (EMPTY + args[i]).split('.');
+                o = global ? host : this;
+                for (j = (host[p[0]] === o) ? 1 : 0; j < p.length; ++j) {
+                    o = o[p[j]] = o[p[j]] || { };
+                }
+            }
+            return o;
         }
-    };
+
+    });
+
 
     function mixInternal(r, s, ov, wl, deep, cache) {
         if (!s || !r) {
@@ -388,7 +447,7 @@ var KISSY = (function (undefined) {
         }
 
         if (ov === undefined) {
-            ov = true;
+            ov = TRUE;
         }
 
         var i = 0, p, len;
@@ -447,60 +506,364 @@ var KISSY = (function (undefined) {
                         target :
                         (S.isArray(src) ? [] : {});
                     r[p] = clone;
-                    mixInternal(clone, src, ov, wl, true, cache);
+                    mixInternal(clone, src, ov, wl, TRUE, cache);
                 }
             } else if (src !== undefined && (ov || !(p in r))) {
                 r[p] = src;
             }
         }
     }
-
-    // exports for nodejs
-    if (S.Env.nodejs) {
-        S.KISSY = S;
-        module.exports = S;
-    }
-
-    return S;
-
-})();/**
+})(KISSY);/**
  * @ignore
- * @fileOverview   lang
- * @author  lifesinger@gmail.com, yiminghe@gmail.com
- * @description this code can run in any ecmascript compliant environment
+ * @fileOverview array utilities of lang
+ * @author yiminghe@gmail.com
+ *
  */
 (function (S, undefined) {
-
-    function hasOwnProperty(o, p) {
-        return Object.prototype.hasOwnProperty.call(o, p);
-    }
-
-    var TRUE = true,
-        FALSE = false,
-        OP = Object.prototype,
-        toString = OP.toString,
+    
+    var TRUE=true,
         AP = Array.prototype,
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
         filter = AP.filter,
         every = AP.every,
         some = AP.some,
-    //reduce = AP.reduce,
-        trim = String.prototype.trim,
         map = AP.map,
-        EMPTY = '',
-        HEX_BASE = 16,
-        CLONE_MARKER = '__~ks_cloned',
-        COMPARE_MARKER = '__~ks_compared',
-        STAMP_MARKER = '__~ks_stamped',
+        FALSE=false;
+
+    S.mix(S,{
+        /**
+         * Executes the supplied function on each item in the array.
+         * @param object {Object} the object to iterate
+         * @param fn {Function} the function to execute on each item. The function
+         *        receives three arguments: the value, the index, the full array.
+         * @param {Object} [context]
+         * @member KISSY
+         */
+        each: function (object, fn, context) {
+            if (object) {
+                var key,
+                    val,
+                    i = 0,
+                    length = object && object.length,
+                    isObj = length === undefined || S.type(object) === 'function';
+
+                context = context || null;
+
+                if (isObj) {
+                    for (key in object) {
+                        // can not use hasOwnProperty
+                        if (fn.call(context, object[key], key, object) === FALSE) {
+                            break;
+                        }
+                    }
+                } else {
+                    for (val = object[0];
+                         i < length && fn.call(context, val, i, object) !== FALSE; val = object[++i]) {
+                    }
+                }
+            }
+            return object;
+        },
+
+        /**
+         * Search for a specified value within an array.
+         * @param item individual item to be searched
+         * @method
+         * @member KISSY
+         * @param {Array} arr the array of items where item will be search
+         * @return {number} item's index in array
+         */
+        indexOf: indexOf ?
+            function (item, arr) {
+                return indexOf.call(arr, item);
+            } :
+            function (item, arr) {
+                for (var i = 0, len = arr.length; i < len; ++i) {
+                    if (arr[i] === item) {
+                        return i;
+                    }
+                }
+                return -1;
+            },
+
+        /**
+         * Returns the index of the last item in the array
+         * that contains the specified value, -1 if the
+         * value isn't found.
+         * @method
+         * @param item individual item to be searched
+         * @param {Array} arr the array of items where item will be search
+         * @return {number} item's last index in array
+         * @member KISSY
+         */
+        lastIndexOf: (lastIndexOf) ?
+            function (item, arr) {
+                return lastIndexOf.call(arr, item);
+            } :
+            function (item, arr) {
+                for (var i = arr.length - 1; i >= 0; i--) {
+                    if (arr[i] === item) {
+                        break;
+                    }
+                }
+                return i;
+            },
+
+        /**
+         * Returns a copy of the array with the duplicate entries removed
+         * @param a {Array} the array to find the subset of unique for
+         * @param [override] {Boolean} if override is TRUE, S.unique([a, b, a]) => [b, a].
+         * if override is FALSE, S.unique([a, b, a]) => [a, b]
+         * @return {Array} a copy of the array with duplicate entries removed
+         * @member KISSY
+         */
+        unique: function (a, override) {
+            var b = a.slice();
+            if (override) {
+                b.reverse();
+            }
+            var i = 0,
+                n,
+                item;
+
+            while (i < b.length) {
+                item = b[i];
+                while ((n = S.lastIndexOf(item, b)) !== i) {
+                    b.splice(n, 1);
+                }
+                i += 1;
+            }
+
+            if (override) {
+                b.reverse();
+            }
+            return b;
+        },
+
+        /**
+         * Search for a specified value index within an array.
+         * @param item individual item to be searched
+         * @param {Array} arr the array of items where item will be search
+         * @return {Boolean} the item exists in arr
+         * @member KISSY
+         */
+        inArray: function (item, arr) {
+            return S.indexOf(item, arr) > -1;
+        },
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * Returns a new array containing the items that the supplied
+         * function returned TRUE for.
+         * @member KISSY
+         * @method
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item
+         * @param [context] {Object} optional context object
+         * @return {Array} The items on which the supplied function returned TRUE.
+         * If no items matched an empty array is returned.
+         * @member KISSY
+         */
+        filter: filter ?
+            function (arr, fn, context) {
+                return filter.call(arr, fn, context || this);
+            } :
+            function (arr, fn, context) {
+                var ret = [];
+                S.each(arr, function (item, i, arr) {
+                    if (fn.call(context || this, item, i, arr)) {
+                        ret.push(item);
+                    }
+                });
+                return ret;
+            },
+
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * Returns a new array containing the items that the supplied
+         * function returned for.
+         * @method
+         * @param arr {Array} the array to iterate
+         * @param fn {Function} the function to execute on each item
+         * @param [context] {Object} optional context object
+         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
+         * @return {Array} The items on which the supplied function returned
+         * @member KISSY
+         */
+        map: map ?
+            function (arr, fn, context) {
+                return map.call(arr, fn, context || this);
+            } :
+            function (arr, fn, context) {
+                var len = arr.length,
+                    res = new Array(len);
+                for (var i = 0; i < len; i++) {
+                    var el = typeof arr == 'string' ? arr.charAt(i) : arr[i];
+                    if (el
+                        ||
+                        //ie<9 in invalid when typeof arr == string
+                        i in arr) {
+                        res[i] = fn.call(context || this, el, i, arr);
+                    }
+                }
+                return res;
+            },
+
+
+        /**
+         * Executes the supplied function on each item in the array.
+         * Returns a value which is accumulation of the value that the supplied
+         * function returned.
+         *
+         * @param arr {Array} the array to iterate
+         * @param callback {Function} the function to execute on each item
+         * @param initialValue {number} optional context object
+         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         * @return {Array} The items on which the supplied function returned
+         * @member KISSY
+         */
+        reduce: /*
+         NaN ?
+         reduce ? function(arr, callback, initialValue) {
+         return arr.reduce(callback, initialValue);
+         } : */function (arr, callback, initialValue) {
+            var len = arr.length;
+            if (typeof callback !== 'function') {
+                throw new TypeError('callback is not function!');
+            }
+
+            // no value to return if no initial value and an empty array
+            if (len === 0 && arguments.length == 2) {
+                throw new TypeError('arguments invalid');
+            }
+
+            var k = 0;
+            var accumulator;
+            if (arguments.length >= 3) {
+                accumulator = arguments[2];
+            }
+            else {
+                do {
+                    if (k in arr) {
+                        accumulator = arr[k++];
+                        break;
+                    }
+
+                    // if array contains no values, no initial value to return
+                    k += 1;
+                    if (k >= len) {
+                        throw new TypeError();
+                    }
+                }
+                while (TRUE);
+            }
+
+            while (k < len) {
+                if (k in arr) {
+                    accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
+                }
+                k++;
+            }
+
+            return accumulator;
+        },
+
+        /**
+         * Tests whether all elements in the array pass the test implemented by the provided function.
+         * @method
+         * @param arr {Array} the array to iterate
+         * @param callback {Function} the function to execute on each item
+         * @param [context] {Object} optional context object
+         * @member KISSY
+         * @return {Boolean} whether all elements in the array pass the test implemented by the provided function.
+         */
+        every: every ?
+            function (arr, fn, context) {
+                return every.call(arr, fn, context || this);
+            } :
+            function (arr, fn, context) {
+                var len = arr && arr.length || 0;
+                for (var i = 0; i < len; i++) {
+                    if (i in arr && !fn.call(context, arr[i], i, arr)) {
+                        return FALSE;
+                    }
+                }
+                return TRUE;
+            },
+
+        /**
+         * Tests whether some element in the array passes the test implemented by the provided function.
+         * @method
+         * @param arr {Array} the array to iterate
+         * @param callback {Function} the function to execute on each item
+         * @param [context] {Object} optional context object
+         * @member KISSY
+         * @return {Boolean} whether some element in the array passes the test implemented by the provided function.
+         */
+        some: some ?
+            function (arr, fn, context) {
+                return some.call(arr, fn, context || this);
+            } :
+            function (arr, fn, context) {
+                var len = arr && arr.length || 0;
+                for (var i = 0; i < len; i++) {
+                    if (i in arr && fn.call(context, arr[i], i, arr)) {
+                        return TRUE;
+                    }
+                }
+                return FALSE;
+            },
+        /**
+         * Converts object to a TRUE array.
+         * @param o {object|Array} array like object or array
+         * @return {Array} native Array
+         * @member KISSY
+         */
+        makeArray: function (o) {
+            if (o == null) {
+                return [];
+            }
+            if (S.isArray(o)) {
+                return o;
+            }
+
+            // The strings and functions also have 'length'
+            if (typeof o.length !== 'number'
+                // form.elements in ie78 has nodeName 'form'
+                // then caution select
+                // || o.nodeName
+                // window
+                || o.alert
+                || typeof o == 'string'
+                || S.isFunction(o)) {
+                return [o];
+            }
+            var ret = [];
+            for (var i = 0, l = o.length; i < l; i++) {
+                ret[i] = o[i];
+            }
+            return ret;
+        }
+    });
+
+})(KISSY);/**
+ * @ignore
+ * @fileOverview escape of lang
+ * @author yiminghe@gmail.com
+ *
+ */
+(function (S, undefined) {
     // IE doesn't include non-breaking-space (0xa0) in their \s character
     // class (as required by section 7.2 of the ECMAScript spec), we explicitly
     // include it in the regexp to enforce consistent cross-browser behavior.
-        RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
-        SEP = '&',
+    var SEP = '&',
+        EMPTY = '',
         EQ = '=',
-    // [[Class]] -> type pairs
-        class2type = {},
+        TRUE = true,
+    // FALSE = false,
+        HEX_BASE = 16,
     // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
         htmlEntities = {
             '&amp;': '&',
@@ -518,11 +881,15 @@ var KISSY = (function (undefined) {
         escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
     (function () {
         for (var k in htmlEntities) {
-
             reverseEntities[htmlEntities[k]] = k;
-
         }
     })();
+
+    function isValidParamValue(val) {
+        var t = typeof val;
+        // If the type of val is null, undefined, number, string, boolean, return TRUE.
+        return val == null || (t !== 'object' && t !== 'function');
+    }
 
     function getEscapeReg() {
         if (escapeReg) {
@@ -548,130 +915,387 @@ var KISSY = (function (undefined) {
         return unEscapeReg = new RegExp(str, 'g');
     }
 
+    S.mix(S, {
 
-    function isValidParamValue(val) {
-        var t = typeof val;
-        // If the type of val is null, undefined, number, string, boolean, return true.
-        return val == null || (t !== 'object' && t !== 'function');
+        /**
+         * Call encodeURIComponent to encode a url component
+         * @param {String} s part of url to be encoded.
+         * @return {String} encoded url part string.
+         * @member KISSY
+         */
+        urlEncode: function (s) {
+            return encodeURIComponent(String(s));
+        },
+
+        /**
+         * Call decodeURIComponent to decode a url component
+         * and replace '+' with space.
+         * @param {String} s part of url to be decoded.
+         * @return {String} decoded url part string.
+         * @member KISSY
+         */
+        urlDecode: function (s) {
+            return decodeURIComponent(s.replace(/\+/g, ' '));
+        },
+
+        /**
+         * frequently used in taobao cookie about nick
+         * @member KISSY
+         * @return {String} un-unicode string.
+         */
+        fromUnicode: function (str) {
+            return str.replace(/\\u([a-f\d]{4})/ig, function (m, u) {
+                return  String.fromCharCode(parseInt(u, HEX_BASE));
+            });
+        },
+        /**
+         * get escaped string from html
+         * @see   http://yiminghe.javaeye.com/blog/788929
+         *        http://wonko.com/post/html-escaping
+         * @param str {string} text2html show
+         * @member KISSY
+         * @return {String} escaped html
+         */
+        escapeHTML: function (str) {
+            return (str + '').replace(getEscapeReg(), function (m) {
+                return reverseEntities[m];
+            });
+        },
+
+        /**
+         * get escaped regexp string for construct regexp
+         * @param str
+         * @member KISSY
+         * @return {String} escaped regexp
+         */
+        escapeRegExp: function (str) {
+            return str.replace(escapeRegExp, '\\$&');
+        },
+
+        /**
+         * un-escape html to string
+         * @param str {string} html2text
+         * @member KISSY
+         * @return {String} un-escaped html
+         */
+        unEscapeHTML: function (str) {
+            return str.replace(getUnEscapeReg(), function (m, n) {
+                return htmlEntities[m] || String.fromCharCode(+n);
+            });
+        },
+        /**
+         * Creates a serialized string of an array or object.
+         *
+         * for example:
+         *     @example
+         *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
+         *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
+         *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
+         *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
+         *     {foo: TRUE, bar: 2}    // -> 'foo=TRUE&bar=2'
+         *
+         * @param {Object} o json data
+         * @param {String} [sep='&'] separator between each pair of data
+         * @param {String} [eq='='] separator between key and value of data
+         * @param {Boolean} [serializeArray =TRUE] whether add '[]' to array key of data
+         * @return {String}
+         * @member KISSY
+         */
+        param: function (o, sep, eq, serializeArray) {
+            if (!S.isPlainObject(o)) {
+                return EMPTY;
+            }
+            sep = sep || SEP;
+            eq = eq || EQ;
+            if (S.isUndefined(serializeArray)) {
+                serializeArray = TRUE;
+            }
+            var buf = [], key, i, v, len, val,
+                encode = S.urlEncode;
+            for (key in o) {
+
+                val = o[key];
+                key = encode(key);
+
+                // val is valid non-array value
+                if (isValidParamValue(val)) {
+                    buf.push(key);
+                    if (val !== undefined) {
+                        buf.push(eq, encode(val + EMPTY));
+                    }
+                    buf.push(sep);
+                }
+                // val is not empty array
+                else if (S.isArray(val) && val.length) {
+                    for (i = 0, len = val.length; i < len; ++i) {
+                        v = val[i];
+                        if (isValidParamValue(v)) {
+                            buf.push(key, (serializeArray ? encode('[]') : EMPTY));
+                            if (v !== undefined) {
+                                buf.push(eq, encode(v + EMPTY));
+                            }
+                            buf.push(sep);
+                        }
+                    }
+                }
+                // ignore other cases, including empty array, Function, RegExp, Date etc.
+
+            }
+            buf.pop();
+            return buf.join(EMPTY);
+        },
+
+        /**
+         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
+         *
+         * for example:
+         *      @example
+         *      'section=blog&id=45'        // -> {section: 'blog', id: '45'}
+         *      'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
+         *      'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
+         *      'id=45&raw'        // -> {id: '45', raw: ''}
+         * @param {String} str param string
+         * @param {String} [sep='&'] separator between each pair of data
+         * @param {String} [eq='='] separator between key and value of data
+         * @return {Object} json data
+         * @member KISSY
+         */
+        unparam: function (str, sep, eq) {
+            if (typeof str != 'string' || !(str = S.trim(str))) {
+                return {};
+            }
+            sep = sep || SEP;
+            eq = eq || EQ;
+            var ret = {},
+                eqIndex,
+                decode = S.urlDecode,
+                pairs = str.split(sep),
+                key, val,
+                i = 0, len = pairs.length;
+
+            for (; i < len; ++i) {
+                eqIndex = pairs[i].indexOf(eq);
+                if (eqIndex == -1) {
+                    key = decode(pairs[i]);
+                    val = undefined;
+                } else {
+                    // remember to decode key!
+                    key = decode(pairs[i].substring(0, eqIndex));
+                    val = pairs[i].substring(eqIndex + 1);
+                    try {
+                        val = decode(val);
+                    } catch (e) {
+                        S.log(e + 'decodeURIComponent error : ' + val, 'error');
+                    }
+                    if (S.endsWith(key, '[]')) {
+                        key = key.substring(0, key.length - 2);
+                    }
+                }
+                if (key in ret) {
+                    if (S.isArray(ret[key])) {
+                        ret[key].push(val);
+                    } else {
+                        ret[key] = [ret[key], val];
+                    }
+                } else {
+                    ret[key] = val;
+                }
+            }
+            return ret;
+        }
+    });
+})(KISSY);/**
+ * @ignore
+ * @fileOverview function utilities of lang
+ * @author yiminghe@gmail.com
+ *
+ */
+(function (S, undefined) {
+
+    function bindFn(r, fn, obj) {
+        var slice = [].slice,
+            args = slice.call(arguments, 3),
+            fNOP = function () {
+            },
+            bound = function () {
+                var inArgs = slice.call(arguments);
+                return fn.apply(
+                    this instanceof fNOP ? this : obj,
+                    (r ? inArgs.concat(args) : args.concat(inArgs))
+                );
+            };
+        fNOP.prototype = fn.prototype;
+        bound.prototype = new fNOP();
+        return bound;
     }
 
+    S.mix(S, {
+        /**
+         * empty function
+         * @member KISSY
+         */
+        noop: function () {
+        },
+        /**
+         * Creates a new function that, when called, itself calls this function in the context of the provided this value,
+         * with a given sequence of arguments preceding any provided when the new function was called.
+         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * @param {Function} fn internal called function
+         * @param {Object} obj context in which fn runs
+         * @param {...} var_args extra arguments
+         * @member KISSY
+         * @return {Function} new function with context and arguments
+         */
+        bind: bindFn(0, bindFn, null, 0),
 
-    S.mix(S,
-        {
+        /**
+         * Creates a new function that, when called, itself calls this function in the context of the provided this value,
+         * with a given sequence of arguments preceding any provided when the new function was called.
+         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * @param {Function} fn internal called function
+         * @param {Object} obj context in which fn runs
+         * @param {...} var_args extra arguments
+         * @member KISSY
+         * @return {Function} new function with context and arguments
+         */
+        rbind: bindFn(0, bindFn, null, 1),
 
-            /**
-             * stamp a object by guid
-             * @param {Object} o object needed to be stamped
-             * @param {Boolean} [readOnly] while set marker on o if marker does not exist
-             * @param {String} [marker] the marker will be set on Object
-             * @return {String} guid associated with this object
-             * @member KISSY
-             */
-            stamp: function (o, readOnly, marker) {
-                if (!o) {
-                    return o
-                }
-                marker = marker || STAMP_MARKER;
-                var guid = o[marker];
-                if (guid) {
-                    return guid;
-                } else if (!readOnly) {
-                    try {
-                        guid = o[marker] = S.guid(marker);
+        /**
+         * Executes the supplied function in the context of the supplied
+         * object 'when' milliseconds later. Executes the function a
+         * single time unless periodic is set to true.
+         *
+         * @param fn {Function|String} the function to execute or the name of the method in
+         * the 'o' object to execute.
+         *
+         * @param when {Number} the number of milliseconds to wait until the fn is executed.
+         *
+         * @param {Boolean} [periodic] if true, executes continuously at supplied interval
+         * until canceled.
+         *
+         * @param {Object} [context] the context object.
+         *
+         * @param [data] that is provided to the function. This accepts either a single
+         * item or an array. If an array is provided, the function is executed with
+         * one parameter for each array item. If you need to pass a single array
+         * parameter, it needs to be wrapped in an array [myarray].
+         *
+         * @return {Object} a timer object. Call the cancel() method on this object to stop
+         * the timer.
+         *
+         * @member KISSY
+         */
+        later: function (fn, when, periodic, context, data) {
+            when = when || 0;
+            var m = fn,
+                d = S.makeArray(data),
+                f,
+                r;
+
+            if (typeof fn == 'string') {
+                m = context[fn];
+            }
+
+            if (!m) {
+                S.error('method undefined');
+            }
+
+            f = function () {
+                m.apply(context, d);
+            };
+
+            r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
+
+            return {
+                id: r,
+                interval: periodic,
+                cancel: function () {
+                    if (this.interval) {
+                        clearInterval(r);
+                    } else {
+                        clearTimeout(r);
                     }
-                    catch (e) {
-                        guid = undefined;
-                    }
                 }
-                return guid;
-            },
+            };
+        },
 
-            /**
-             * empty function
-             * @member KISSY
-             */
-            noop: function () {
-            },
 
-            /**
-             * Determine the internal JavaScript [[Class]] of an object.
-             * @member KISSY
-             */
-            type: function (o) {
-                return o == null ?
-                    String(o) :
-                    class2type[toString.call(o)] || 'object';
-            },
+        /**
+         * Throttles a call to a method based on the time between calls.
+         * @param {Function} fn The function call to throttle.
+         * @param {Object} [context] context fn to run
+         * @param {Number} [ms] The number of milliseconds to throttle the method call.
+         * Passing a -1 will disable the throttle. Defaults to 150.
+         * @return {Function} Returns a wrapped function that calls fn throttled.
+         * @member KISSY
+         */
+        throttle: function (fn, ms, context) {
+            ms = ms || 150;
 
-            /**
-             * whether o === null
-             * @param o
-             * @member KISSY
-             */
-            isNull: function (o) {
-                return o === null;
-            },
+            if (ms === -1) {
+                return (function () {
+                    fn.apply(context || this, arguments);
+                });
+            }
 
-            /**
-             * whether o === undefined
-             * @param o
-             * @member KISSY
-             */
-            isUndefined: function (o) {
-                return o === undefined;
-            },
+            var last = S.now();
 
-            /**
-             * Checks to see if an object is empty.
-             * @member KISSY
-             */
-            isEmptyObject: function (o) {
-                for (var p in o) {
-                    if (p !== undefined) {
-                        return FALSE;
-                    }
+            return (function () {
+                var now = S.now();
+                if (now - last > ms) {
+                    last = now;
+                    fn.apply(context || this, arguments);
                 }
-                return TRUE;
-            },
+            });
+        },
 
-            /**
-             * Checks to see if an object is a plain object (created using '{}'
-             * or 'new Object()' but not 'new FunctionClass()').
-             * @member KISSY
-             */
-            isPlainObject: function (obj) {
-                // credits to jq
+        /**
+         * buffers a call between a fixed time
+         * @param {Function} fn
+         * @param {Number} ms
+         * @param {Object} [context]
+         * @return {Function} Returns a wrapped function that calls fn buffered.
+         * @member KISSY
+         */
+        buffer: function (fn, ms, context) {
+            ms = ms || 150;
 
-                // Must be an Object.
-                // Because of IE, we also have to check the presence of the constructor property.
-                // Make sure that DOM nodes and window objects don't pass through, as well
-                if (!obj || S.type(obj) !== "object" || obj.nodeType || obj.window == obj) {
-                    return false;
+            if (ms === -1) {
+                return function () {
+                    fn.apply(context || this, arguments);
+                };
+            }
+            var bufferTimer = null;
+
+            function f() {
+                f.stop();
+                bufferTimer = S.later(fn, ms, 0, context || this, arguments);
+            }
+
+            f.stop = function () {
+                if (bufferTimer) {
+                    bufferTimer.cancel();
+                    bufferTimer = 0;
                 }
+            };
 
-                try {
-                    // Not own constructor property must be Object
-                    if (obj.constructor &&
-                        !hasOwnProperty(obj, "constructor") &&
-                        !hasOwnProperty(obj.constructor.prototype, "isPrototypeOf")) {
-                        return false;
-                    }
-                } catch (e) {
-                    // IE8,9 Will throw exceptions on certain host objects #9897
-                    return false;
-                }
+            return f;
+        }
+    });
+})(KISSY);/**
+ * @ignore
+ * @fileOverview   lang
+ * @author  yiminghe@gmail.com, lifesinger@gmail.com
+ *
+ */
+(function (S, undefined) {
 
-                // Own properties are enumerated firstly, so to speed up,
-                // if last one is own, then all properties are own.
+    var TRUE = true,
+        FALSE = false,
+        CLONE_MARKER = '__~ks_cloned',
+        COMPARE_MARKER = '__~ks_compared';
 
-                var key;
-                for (key in obj) {
-                }
-
-                return key === undefined || hasOwnProperty(obj, key);
-            },
-
-
+    S.mix(S, {
             /**
              * Checks to see whether two object are equals.
              * @param a 比较目标1
@@ -740,349 +1364,6 @@ var KISSY = (function (undefined) {
             },
 
             /**
-             * Removes the whitespace from the beginning and end of a string.
-             * @method
-             * @member KISSY
-             */
-            trim: trim ?
-                function (str) {
-                    return str == null ? EMPTY : trim.call(str);
-                } :
-                function (str) {
-                    return str == null ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
-                },
-
-            /**
-             * Substitutes keywords in a string using an object/array.
-             * Removes undefined keywords and ignores escaped keywords.
-             * @param {String} str template string
-             * @param {Object} o json data
-             * @member KISSY
-             * @param {RegExp} [regexp] to match a piece of template string
-             */
-            substitute: function (str, o, regexp) {
-                if (typeof str != 'string'
-                    || !S.isPlainObject(o)) {
-                    return str;
-                }
-
-                return str.replace(regexp || /\\?\{([^{}]+)\}/g, function (match, name) {
-                    if (match.charAt(0) === '\\') {
-                        return match.slice(1);
-                    }
-                    return (o[name] === undefined) ? EMPTY : o[name];
-                });
-            },
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * @param object {Object} the object to iterate
-             * @param fn {Function} the function to execute on each item. The function
-             *        receives three arguments: the value, the index, the full array.
-             * @param {Object} [context]
-             * @member KISSY
-             */
-            each: function (object, fn, context) {
-                if (object) {
-                    var key,
-                        val,
-                        i = 0,
-                        length = object && object.length,
-                        isObj = length === undefined || S.type(object) === 'function';
-
-                    context = context || null;
-
-                    if (isObj) {
-                        for (key in object) {
-                            // can not use hasOwnProperty
-                            if (fn.call(context, object[key], key, object) === FALSE) {
-                                break;
-                            }
-                        }
-                    } else {
-                        for (val = object[0];
-                             i < length && fn.call(context, val, i, object) !== FALSE; val = object[++i]) {
-                        }
-                    }
-                }
-                return object;
-            },
-
-            /**
-             * Search for a specified value within an array.
-             * @param item individual item to be searched
-             * @method
-             * @member KISSY
-             * @param {Array} arr the array of items where item will be search
-             * @return {number} item's index in array
-             */
-            indexOf: indexOf ?
-                function (item, arr) {
-                    return indexOf.call(arr, item);
-                } :
-                function (item, arr) {
-                    for (var i = 0, len = arr.length; i < len; ++i) {
-                        if (arr[i] === item) {
-                            return i;
-                        }
-                    }
-                    return -1;
-                },
-
-            /**
-             * Returns the index of the last item in the array
-             * that contains the specified value, -1 if the
-             * value isn't found.
-             * @method
-             * @param item individual item to be searched
-             * @param {Array} arr the array of items where item will be search
-             * @return {number} item's last index in array
-             * @member KISSY
-             */
-            lastIndexOf: (lastIndexOf) ?
-                function (item, arr) {
-                    return lastIndexOf.call(arr, item);
-                } :
-                function (item, arr) {
-                    for (var i = arr.length - 1; i >= 0; i--) {
-                        if (arr[i] === item) {
-                            break;
-                        }
-                    }
-                    return i;
-                },
-
-            /**
-             * Returns a copy of the array with the duplicate entries removed
-             * @param a {Array} the array to find the subset of unique for
-             * @param [override] {Boolean} if override is true, S.unique([a, b, a]) => [b, a].
-             * if override is false, S.unique([a, b, a]) => [a, b]
-             * @return {Array} a copy of the array with duplicate entries removed
-             * @member KISSY
-             */
-            unique: function (a, override) {
-                var b = a.slice();
-                if (override) {
-                    b.reverse();
-                }
-                var i = 0,
-                    n,
-                    item;
-
-                while (i < b.length) {
-                    item = b[i];
-                    while ((n = S.lastIndexOf(item, b)) !== i) {
-                        b.splice(n, 1);
-                    }
-                    i += 1;
-                }
-
-                if (override) {
-                    b.reverse();
-                }
-                return b;
-            },
-
-            /**
-             * Search for a specified value index within an array.
-             * @param item individual item to be searched
-             * @param {Array} arr the array of items where item will be search
-             * @return {Boolean} the item exists in arr
-             * @member KISSY
-             */
-            inArray: function (item, arr) {
-                return S.indexOf(item, arr) > -1;
-            },
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * Returns a new array containing the items that the supplied
-             * function returned true for.
-             * @member KISSY
-             * @method
-             * @param arr {Array} the array to iterate
-             * @param fn {Function} the function to execute on each item
-             * @param [context] {Object} optional context object
-             * @return {Array} The items on which the supplied function returned true.
-             * If no items matched an empty array is returned.
-             * @member KISSY
-             */
-            filter: filter ?
-                function (arr, fn, context) {
-                    return filter.call(arr, fn, context || this);
-                } :
-                function (arr, fn, context) {
-                    var ret = [];
-                    S.each(arr, function (item, i, arr) {
-                        if (fn.call(context || this, item, i, arr)) {
-                            ret.push(item);
-                        }
-                    });
-                    return ret;
-                },
-
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * Returns a new array containing the items that the supplied
-             * function returned for.
-             * @method
-             * @param arr {Array} the array to iterate
-             * @param fn {Function} the function to execute on each item
-             * @param [context] {Object} optional context object
-             * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
-             * @return {Array} The items on which the supplied function returned
-             * @member KISSY
-             */
-            map: map ?
-                function (arr, fn, context) {
-                    return map.call(arr, fn, context || this);
-                } :
-                function (arr, fn, context) {
-                    var len = arr.length,
-                        res = new Array(len);
-                    for (var i = 0; i < len; i++) {
-                        var el = typeof arr == 'string' ? arr.charAt(i) : arr[i];
-                        if (el
-                            ||
-                            //ie<9 in invalid when typeof arr == string
-                            i in arr) {
-                            res[i] = fn.call(context || this, el, i, arr);
-                        }
-                    }
-                    return res;
-                },
-
-
-            /**
-             * Executes the supplied function on each item in the array.
-             * Returns a value which is accumulation of the value that the supplied
-             * function returned.
-             *
-             * @param arr {Array} the array to iterate
-             * @param callback {Function} the function to execute on each item
-             * @param initialValue {number} optional context object
-             * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
-             * @return {Array} The items on which the supplied function returned
-             * @member KISSY
-             */
-            reduce: /*
-             NaN ?
-             reduce ? function(arr, callback, initialValue) {
-             return arr.reduce(callback, initialValue);
-             } : */function (arr, callback, initialValue) {
-                var len = arr.length;
-                if (typeof callback !== 'function') {
-                    throw new TypeError('callback is not function!');
-                }
-
-                // no value to return if no initial value and an empty array
-                if (len === 0 && arguments.length == 2) {
-                    throw new TypeError('arguments invalid');
-                }
-
-                var k = 0;
-                var accumulator;
-                if (arguments.length >= 3) {
-                    accumulator = arguments[2];
-                }
-                else {
-                    do {
-                        if (k in arr) {
-                            accumulator = arr[k++];
-                            break;
-                        }
-
-                        // if array contains no values, no initial value to return
-                        k += 1;
-                        if (k >= len) {
-                            throw new TypeError();
-                        }
-                    }
-                    while (TRUE);
-                }
-
-                while (k < len) {
-                    if (k in arr) {
-                        accumulator = callback.call(undefined, accumulator, arr[k], k, arr);
-                    }
-                    k++;
-                }
-
-                return accumulator;
-            },
-
-            /**
-             * Tests whether all elements in the array pass the test implemented by the provided function.
-             * @method
-             * @param arr {Array} the array to iterate
-             * @param callback {Function} the function to execute on each item
-             * @param [context] {Object} optional context object
-             * @member KISSY
-             * @return {Boolean} whether all elements in the array pass the test implemented by the provided function.
-             */
-            every: every ?
-                function (arr, fn, context) {
-                    return every.call(arr, fn, context || this);
-                } :
-                function (arr, fn, context) {
-                    var len = arr && arr.length || 0;
-                    for (var i = 0; i < len; i++) {
-                        if (i in arr && !fn.call(context, arr[i], i, arr)) {
-                            return FALSE;
-                        }
-                    }
-                    return TRUE;
-                },
-
-            /**
-             * Tests whether some element in the array passes the test implemented by the provided function.
-             * @method
-             * @param arr {Array} the array to iterate
-             * @param callback {Function} the function to execute on each item
-             * @param [context] {Object} optional context object
-             * @member KISSY
-             * @return {Boolean} whether some element in the array passes the test implemented by the provided function.
-             */
-            some: some ?
-                function (arr, fn, context) {
-                    return some.call(arr, fn, context || this);
-                } :
-                function (arr, fn, context) {
-                    var len = arr && arr.length || 0;
-                    for (var i = 0; i < len; i++) {
-                        if (i in arr && fn.call(context, arr[i], i, arr)) {
-                            return TRUE;
-                        }
-                    }
-                    return FALSE;
-                },
-
-            /**
-             * Creates a new function that, when called, itself calls this function in the context of the provided this value,
-             * with a given sequence of arguments preceding any provided when the new function was called.
-             * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
-             * @param {Function} fn internal called function
-             * @param {Object} obj context in which fn runs
-             * @param {...*} arg1 extra arguments
-             * @member KISSY
-             * @return {Function} new function with context and arguments
-             */
-            bind: function (fn, obj, arg1) {
-                var slice = [].slice,
-                    args = slice.call(arguments, 2),
-                    fNOP = function () {
-                    },
-                    bound = function () {
-                        return fn.apply(this instanceof fNOP ? this : obj,
-                            args.concat(slice.call(arguments)));
-                    };
-                fNOP.prototype = fn.prototype;
-                bound.prototype = new fNOP();
-                return bound;
-            },
-
-            /**
              * Gets current date in milliseconds.
              * @method
              * @see  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
@@ -1093,458 +1374,6 @@ var KISSY = (function (undefined) {
              */
             now: Date.now || function () {
                 return +new Date();
-            },
-            /**
-             * frequently used in taobao cookie about nick
-             * @member KISSY
-             * @return {String} un-unicode string.
-             */
-            fromUnicode: function (str) {
-                return str.replace(/\\u([a-f\d]{4})/ig, function (m, u) {
-                    return  String.fromCharCode(parseInt(u, HEX_BASE));
-                });
-            },
-
-            /** uppercase first character.
-             * @member KISSY
-             * @param s
-             * @return {String}
-             */
-            ucfirst: function (s) {
-                s += '';
-                return s.charAt(0).toUpperCase() + s.substring(1);
-            },
-
-            /**
-             * Call encodeURIComponent to encode a url component
-             * @param {String} s part of url to be encoded.
-             * @return {String} encoded url part string.
-             * @member KISSY
-             */
-            urlEncode: function (s) {
-                return encodeURIComponent(String(s));
-            },
-
-            /**
-             * Call decodeURIComponent to decode a url component
-             * and replace '+' with space.
-             * @param {String} s part of url to be decoded.
-             * @return {String} decoded url part string.
-             * @member KISSY
-             */
-            urlDecode: function (s) {
-                return decodeURIComponent(s.replace(/\+/g, ' '));
-            },
-
-            /**
-             * get escaped string from html
-             * @see   http://yiminghe.javaeye.com/blog/788929
-             *        http://wonko.com/post/html-escaping
-             * @param str {string} text2html show
-             * @member KISSY
-             * @return {String} escaped html
-             */
-            escapeHTML: function (str) {
-                return (str + '').replace(getEscapeReg(), function (m) {
-                    return reverseEntities[m];
-                });
-            },
-
-            /**
-             * get escaped regexp string for construct regexp
-             * @param str
-             * @member KISSY
-             * @return {String} escaped regexp
-             */
-            escapeRegExp: function (str) {
-                return str.replace(escapeRegExp, '\\$&');
-            },
-
-            /**
-             * un-escape html to string
-             * @param str {string} html2text
-             * @member KISSY
-             * @return {String} un-escaped html
-             */
-            unEscapeHTML: function (str) {
-                return str.replace(getUnEscapeReg(), function (m, n) {
-                    return htmlEntities[m] || String.fromCharCode(+n);
-                });
-            },
-            /**
-             * Converts object to a true array.
-             * @param o {object|Array} array like object or array
-             * @return {Array} native Array
-             * @member KISSY
-             */
-            makeArray: function (o) {
-                if (o == null) {
-                    return [];
-                }
-                if (S.isArray(o)) {
-                    return o;
-                }
-
-                // The strings and functions also have 'length'
-                if (typeof o.length !== 'number'
-                    // form.elements in ie78 has nodeName 'form'
-                    // then caution select
-                    // || o.nodeName
-                    // window
-                    || o.alert
-                    || typeof o == 'string'
-                    || S.isFunction(o)) {
-                    return [o];
-                }
-                var ret = [];
-                for (var i = 0, l = o.length; i < l; i++) {
-                    ret[i] = o[i];
-                }
-                return ret;
-            },
-            /**
-             * Creates a serialized string of an array or object.
-             *
-             * for example:
-             *     @example
-             *     {foo: 1, bar: 2}    // -> 'foo=1&bar=2'
-             *     {foo: 1, bar: [2, 3]}    // -> 'foo=1&bar=2&bar=3'
-             *     {foo: '', bar: 2}    // -> 'foo=&bar=2'
-             *     {foo: undefined, bar: 2}    // -> 'foo=undefined&bar=2'
-             *     {foo: true, bar: 2}    // -> 'foo=true&bar=2'
-             *
-             * @param {Object} o json data
-             * @param {String} [sep='&'] separator between each pair of data
-             * @param {String} [eq='='] separator between key and value of data
-             * @param {Boolean} [serializeArray =true] whether add '[]' to array key of data
-             * @return {String}
-             * @member KISSY
-             */
-            param: function (o, sep, eq, serializeArray) {
-                if (!S.isPlainObject(o)) {
-                    return EMPTY;
-                }
-                sep = sep || SEP;
-                eq = eq || EQ;
-                if (S.isUndefined(serializeArray)) {
-                    serializeArray = TRUE;
-                }
-                var buf = [], key, i, v, len, val,
-                    encode = S.urlEncode;
-                for (key in o) {
-
-                    val = o[key];
-                    key = encode(key);
-
-                    // val is valid non-array value
-                    if (isValidParamValue(val)) {
-                        buf.push(key);
-                        if (val !== undefined) {
-                            buf.push(eq, encode(val + EMPTY));
-                        }
-                        buf.push(sep);
-                    }
-                    // val is not empty array
-                    else if (S.isArray(val) && val.length) {
-                        for (i = 0, len = val.length; i < len; ++i) {
-                            v = val[i];
-                            if (isValidParamValue(v)) {
-                                buf.push(key, (serializeArray ? encode('[]') : EMPTY));
-                                if (v !== undefined) {
-                                    buf.push(eq, encode(v + EMPTY));
-                                }
-                                buf.push(sep);
-                            }
-                        }
-                    }
-                    // ignore other cases, including empty array, Function, RegExp, Date etc.
-
-                }
-                buf.pop();
-                return buf.join(EMPTY);
-            },
-
-            /**
-             * Parses a URI-like query string and returns an object composed of parameter/value pairs.
-             *
-             * for example:
-             *      @example
-             *      'section=blog&id=45'        // -> {section: 'blog', id: '45'}
-             *      'section=blog&tag=js&tag=doc' // -> {section: 'blog', tag: ['js', 'doc']}
-             *      'tag=ruby%20on%20rails'        // -> {tag: 'ruby on rails'}
-             *      'id=45&raw'        // -> {id: '45', raw: ''}
-             * @param {String} str param string
-             * @param {String} [sep='&'] separator between each pair of data
-             * @param {String} [eq='='] separator between key and value of data
-             * @return {Object} json data
-             * @member KISSY
-             */
-            unparam: function (str, sep, eq) {
-                if (typeof str != 'string' || !(str = S.trim(str))) {
-                    return {};
-                }
-                sep = sep || SEP;
-                eq = eq || EQ;
-                var ret = {},
-                    eqIndex,
-                    decode = S.urlDecode,
-                    pairs = str.split(sep),
-                    key, val,
-                    i = 0, len = pairs.length;
-
-                for (; i < len; ++i) {
-                    eqIndex = pairs[i].indexOf(eq);
-                    if (eqIndex == -1) {
-                        key = decode(pairs[i]);
-                        val = undefined;
-                    } else {
-                        // remember to decode key!
-                        key = decode(pairs[i].substring(0, eqIndex));
-                        val = pairs[i].substring(eqIndex + 1);
-                        try {
-                            val = decode(val);
-                        } catch (e) {
-                            S.log(e + 'decodeURIComponent error : ' + val, 'error');
-                        }
-                        if (S.endsWith(key, '[]')) {
-                            key = key.substring(0, key.length - 2);
-                        }
-                    }
-                    if (key in ret) {
-                        if (S.isArray(ret[key])) {
-                            ret[key].push(val);
-                        } else {
-                            ret[key] = [ret[key], val];
-                        }
-                    } else {
-                        ret[key] = val;
-                    }
-                }
-                return ret;
-            },
-            /**
-             * Executes the supplied function in the context of the supplied
-             * object 'when' milliseconds later. Executes the function a
-             * single time unless periodic is set to true.
-             *
-             * @param fn {Function|String} the function to execute or the name of the method in
-             * the 'o' object to execute.
-             *
-             * @param when {Number} the number of milliseconds to wait until the fn is executed.
-             *
-             * @param {Boolean} [periodic] if true, executes continuously at supplied interval
-             * until canceled.
-             *
-             * @param {Object} [context] the context object.
-             *
-             * @param [data] that is provided to the function. This accepts either a single
-             * item or an array. If an array is provided, the function is executed with
-             * one parameter for each array item. If you need to pass a single array
-             * parameter, it needs to be wrapped in an array [myarray].
-             *
-             * @return {Object} a timer object. Call the cancel() method on this object to stop
-             * the timer.
-             *
-             * @member KISSY
-             */
-            later: function (fn, when, periodic, context, data) {
-                when = when || 0;
-                var m = fn,
-                    d = S.makeArray(data),
-                    f,
-                    r;
-
-                if (typeof fn == 'string') {
-                    m = context[fn];
-                }
-
-                if (!m) {
-                    S.error('method undefined');
-                }
-
-                f = function () {
-                    m.apply(context, d);
-                };
-
-                r = (periodic) ? setInterval(f, when) : setTimeout(f, when);
-
-                return {
-                    id: r,
-                    interval: periodic,
-                    cancel: function () {
-                        if (this.interval) {
-                            clearInterval(r);
-                        } else {
-                            clearTimeout(r);
-                        }
-                    }
-                };
-            },
-
-            /**
-             * test whether a string start with a specified substring
-             * @param {String} str the whole string
-             * @param {String} prefix a specified substring
-             * @return {Boolean} whether str start with prefix
-             * @member KISSY
-             */
-            startsWith: function (str, prefix) {
-                return str.lastIndexOf(prefix, 0) === 0;
-            },
-
-            /**
-             * test whether a string end with a specified substring
-             * @param {String} str the whole string
-             * @param {String} suffix a specified substring
-             * @return {Boolean} whether str end with suffix
-             * @member KISSY
-             */
-            endsWith: function (str, suffix) {
-                var ind = str.length - suffix.length;
-                return ind >= 0 && str.indexOf(suffix, ind) == ind;
-            },
-
-            /**
-             * Throttles a call to a method based on the time between calls.
-             * @param {Function} fn The function call to throttle.
-             * @param {Object} [context] context fn to run
-             * @param {Number} [ms] The number of milliseconds to throttle the method call.
-             * Passing a -1 will disable the throttle. Defaults to 150.
-             * @return {Function} Returns a wrapped function that calls fn throttled.
-             * @member KISSY
-             */
-            throttle: function (fn, ms, context) {
-                ms = ms || 150;
-
-                if (ms === -1) {
-                    return (function () {
-                        fn.apply(context || this, arguments);
-                    });
-                }
-
-                var last = S.now();
-
-                return (function () {
-                    var now = S.now();
-                    if (now - last > ms) {
-                        last = now;
-                        fn.apply(context || this, arguments);
-                    }
-                });
-            },
-
-            /**
-             * buffers a call between a fixed time
-             * @param {Function} fn
-             * @param {Number} ms
-             * @param {Object} [context]
-             * @return {Function} Returns a wrapped function that calls fn buffered.
-             * @member KISSY
-             */
-            buffer: function (fn, ms, context) {
-                ms = ms || 150;
-
-                if (ms === -1) {
-                    return function () {
-                        fn.apply(context || this, arguments);
-                    };
-                }
-                var bufferTimer = null;
-
-                function f() {
-                    f.stop();
-                    bufferTimer = S.later(fn, ms, FALSE, context || this, arguments);
-                }
-
-                f.stop = function () {
-                    if (bufferTimer) {
-                        bufferTimer.cancel();
-                        bufferTimer = 0;
-                    }
-                };
-
-                return f;
-            }
-
-        });
-
-    // for idea ..... auto-hint
-    S.mix(S,
-        {
-            /**
-             * test whether o is boolean
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isBoolean: isValidParamValue,
-            /**
-             * test whether o is number
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isNumber: isValidParamValue,
-            /**
-             * test whether o is String
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isString: isValidParamValue,
-            /**
-             * test whether o is function
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isFunction: isValidParamValue,
-            /**
-             * test whether o is Array
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isArray: isValidParamValue,
-            /**
-             * test whether o is Date
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isDate: isValidParamValue,
-            /**
-             * test whether o is RegExp
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isRegExp: isValidParamValue,
-            /**
-             * test whether o is Object
-             * @method
-             * @param  o
-             * @return {Boolean}
-             * @member KISSY
-             */
-            isObject: isValidParamValue
-        });
-
-    S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
-        function (name, lc) {
-            // populate the class2type map
-            class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
-
-            // add isBoolean/isNumber/...
-            S['is' + name] = function (o) {
-                return S.type(o) == lc;
             }
         });
 
@@ -1655,6 +1484,264 @@ var KISSY = (function (undefined) {
 
 })(KISSY);
 /**
+ * @ignore
+ * @fileOverview string utilities of lang
+ * @author yiminghe@gmail.com
+ *
+ */
+(function (S, undefined) {
+
+    // IE doesn't include non-breaking-space (0xa0) in their \s character
+    // class (as required by section 7.2 of the ECMAScript spec), we explicitly
+    // include it in the regexp to enforce consistent cross-browser behavior.
+    var RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
+        trim = String.prototype.trim,
+        EMPTY = '';
+
+    S.mix(S, {
+        /**
+         * Removes the whitespace from the beginning and end of a string.
+         * @method
+         * @member KISSY
+         */
+        trim: trim ?
+            function (str) {
+                return str == null ? EMPTY : trim.call(str);
+            } :
+            function (str) {
+                return str == null ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+            },
+
+        /**
+         * Substitutes keywords in a string using an object/array.
+         * Removes undefined keywords and ignores escaped keywords.
+         * @param {String} str template string
+         * @param {Object} o json data
+         * @member KISSY
+         * @param {RegExp} [regexp] to match a piece of template string
+         */
+        substitute: function (str, o, regexp) {
+            if (typeof str != 'string'
+                || !S.isPlainObject(o)) {
+                return str;
+            }
+
+            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function (match, name) {
+                if (match.charAt(0) === '\\') {
+                    return match.slice(1);
+                }
+                return (o[name] === undefined) ? EMPTY : o[name];
+            });
+        },
+
+        /** uppercase first character.
+         * @member KISSY
+         * @param s
+         * @return {String}
+         */
+        ucfirst: function (s) {
+            s += '';
+            return s.charAt(0).toUpperCase() + s.substring(1);
+        },
+        /**
+         * test whether a string start with a specified substring
+         * @param {String} str the whole string
+         * @param {String} prefix a specified substring
+         * @return {Boolean} whether str start with prefix
+         * @member KISSY
+         */
+        startsWith: function (str, prefix) {
+            return str.lastIndexOf(prefix, 0) === 0;
+        },
+
+        /**
+         * test whether a string end with a specified substring
+         * @param {String} str the whole string
+         * @param {String} suffix a specified substring
+         * @return {Boolean} whether str end with suffix
+         * @member KISSY
+         */
+        endsWith: function (str, suffix) {
+            var ind = str.length - suffix.length;
+            return ind >= 0 && str.indexOf(suffix, ind) == ind;
+        }
+
+    });
+})(KISSY);/**
+ * @ignore
+ * @fileOverview   type of land
+ * @author  lifesinger@gmail.com, yiminghe@gmail.com
+ *
+ */
+(function (S, undefined) {
+    // [[Class]] -> type pairs
+    var class2type = {},
+        FALSE = false,
+        OP = Object.prototype,
+        toString = OP.toString;
+
+    function hasOwnProperty(o, p) {
+        return Object.prototype.hasOwnProperty.call(o, p);
+    }
+
+    S.mix(S,
+        {
+            /**
+             * test whether o is boolean
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isBoolean: 0,
+            /**
+             * test whether o is number
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isNumber: 0,
+            /**
+             * test whether o is String
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isString: 0,
+            /**
+             * test whether o is function
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isFunction: 0,
+            /**
+             * test whether o is Array
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isArray: 0,
+            /**
+             * test whether o is Date
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isDate: 0,
+            /**
+             * test whether o is RegExp
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isRegExp: 0,
+            /**
+             * test whether o is Object
+             * @method
+             * @param  o
+             * @return {Boolean}
+             * @member KISSY
+             */
+            isObject: 0,
+
+            /**
+             * Determine the internal JavaScript [[Class]] of an object.
+             * @member KISSY
+             */
+            type: function (o) {
+                return o == null ?
+                    String(o) :
+                    class2type[toString.call(o)] || 'object';
+            },
+
+            /**
+             * whether o === null
+             * @param o
+             * @member KISSY
+             */
+            isNull: function (o) {
+                return o === null;
+            },
+
+            /**
+             * whether o === undefined
+             * @param o
+             * @member KISSY
+             */
+            isUndefined: function (o) {
+                return o === undefined;
+            },
+
+            /**
+             * Checks to see if an object is empty.
+             * @member KISSY
+             */
+            isEmptyObject: function (o) {
+                for (var p in o) {
+                    if (p !== undefined) {
+                        return FALSE;
+                    }
+                }
+                return true;
+            },
+
+            /**
+             * Checks to see if an object is a plain object (created using '{}'
+             * or 'new Object()' but not 'new FunctionClass()').
+             * @member KISSY
+             */
+            isPlainObject: function (obj) {
+                // credits to jq
+
+                // Must be an Object.
+                // Because of IE, we also have to check the presence of the constructor property.
+                // Make sure that DOM nodes and window objects don't pass through, as well
+                if (!obj || S.type(obj) !== "object" || obj.nodeType || obj.window == obj) {
+                    return FALSE;
+                }
+
+                try {
+                    // Not own constructor property must be Object
+                    if (obj.constructor &&
+                        !hasOwnProperty(obj, "constructor") &&
+                        !hasOwnProperty(obj.constructor.prototype, "isPrototypeOf")) {
+                        return FALSE;
+                    }
+                } catch (e) {
+                    // IE8,9 Will throw exceptions on certain host objects #9897
+                    return FALSE;
+                }
+
+                // Own properties are enumerated firstly, so to speed up,
+                // if last one is own, then all properties are own.
+
+                var key;
+                for (key in obj) {
+                }
+
+                return key === undefined || hasOwnProperty(obj, key);
+            }
+        });
+
+    S.each('Boolean Number String Function Array Date RegExp Object'.split(' '),
+        function (name, lc) {
+            // populate the class2type map
+            class2type['[object ' + name + ']'] = (lc = name.toLowerCase());
+
+            // add isBoolean/isNumber/...
+            S['is' + name] = function (o) {
+                return S.type(o) == lc;
+            }
+        });
+
+})(KISSY);/**
  * @ignore
  * @fileOverview implement Promise specification by KISSY
  * @author yiminghe@gmail.com
@@ -3110,18 +3197,6 @@ var KISSY = (function (undefined) {
          */
         IE: !!ua.match(/MSIE/),
 
-        addEventListener: host.addEventListener ? function (node, type, callback) {
-            node.addEventListener(type, callback, false);
-        } : function (node, type, callback) {
-            node.attachEvent('on' + type, callback);
-        },
-
-        removeEventListener: host.removeEventListener ? function (node, type, callback) {
-            node.removeEventListener(type, callback, false);
-        } : function (node, type, callback) {
-            node.detachEvent('on' + type, callback);
-        },
-
         /**
          * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
          * @param moduleName current module 's name
@@ -3258,16 +3333,15 @@ var KISSY = (function (undefined) {
             }
 
             var fn = mod.fn,
-                requires,
                 value;
-
-            // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            requires = mod.requires = mod.getNormalizedRequires();
 
             if (fn) {
                 if (S.isFunction(fn)) {
                     // context is mod info
-                    value = fn.apply(mod, Utils.getModules(runtime, requires));
+                    value = fn.apply(mod, Utils.getModules(runtime,
+                        // 需要解开 index，相对路径，去除 tag，
+                        // 但是需要保留 alias，防止值不对应
+                        mod.getRequiresWithAlias()));
                 } else {
                     value = fn;
                 }
@@ -3408,37 +3482,38 @@ var KISSY = (function (undefined) {
                 }
             }
             return path;
-        },
-
-        memoize: function (fn, hasher) {
-            hasher = hasher || function (x) {
-                return x;
-            };
-            var memo = {},
-                queues = {},
-                memoized = function () {
-                    var args = S.makeArray(arguments),
-                        callback = args.pop(),
-                        key = hasher.apply(null, args);
-                    if (key in memo) {
-                        callback.apply(null, memo[key]);
-                    } else if (key in queues) {
-                        queues[key].push(callback);
-                    } else {
-                        queues[key] = [callback];
-                        fn.apply(null, args.concat([function () {
-                            memo[key] = arguments;
-                            var q = queues[key];
-                            delete queues[key];
-                            for (var i = 0, l = q.length; i < l; i++) {
-                                q[i].apply(null, arguments);
-                            }
-                        }]));
-                    }
-                };
-            memoized.unmemoized = fn;
-            return memoized;
         }
+        /*
+         ,memoize: function (fn, hasher) {
+         hasher = hasher || function (x) {
+         return x;
+         };
+         var memo = {},
+         queues = {},
+         memoized = function () {
+         var args = S.makeArray(arguments),
+         callback = args.pop(),
+         key = hasher.apply(null, args);
+         if (key in memo) {
+         callback.apply(null, memo[key]);
+         } else if (key in queues) {
+         queues[key].push(callback);
+         } else {
+         queues[key] = [callback];
+         fn.apply(null, args.concat([function () {
+         memo[key] = arguments;
+         var q = queues[key];
+         delete queues[key];
+         for (var i = 0, l = q.length; i < l; i++) {
+         q[i].apply(null, arguments);
+         }
+         }]));
+         }
+         };
+         memoized.unmemoized = fn;
+         return memoized;
+         }
+         */
     });
 
     function isStatus(runtime, modNames, status) {
@@ -3655,10 +3730,23 @@ var KISSY = (function (undefined) {
              * @return {KISSY.Loader.Module[]}
              */
             getRequiredMods: function () {
-                var mods = this.runtime.Env.mods;
-                return S.map(this.getNormalizedRequires(), function (r) {
+                var self=this,mods = self.runtime.Env.mods;
+                return S.map(self.getNormalizedRequires(), function (r) {
                     return mods[r];
                 });
+            },
+
+            getRequiresWithAlias: function () {
+                var self = this,
+                    requiresWithAlias = self.requiresWithAlias,
+                    requires = self.requires;
+                if (!requires || requires.length == 0) {
+                    return requires || [];
+                } else if (!requiresWithAlias) {
+                    self.requiresWithAlias = requiresWithAlias =
+                        Utils.normalizeModNamesWithAlias(self.runtime, requires, self.name);
+                }
+                return requiresWithAlias;
             },
 
 
@@ -5278,7 +5366,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121022193028'
+            tag: '20121026013143'
         }, getBaseInfo()));
     }
 
@@ -5329,104 +5417,102 @@ var KISSY = (function (undefined) {
 
         RE_NOT_WHITE = /\S/;
 
-    S.mix(S,
-        {
+    S.mix(S, {
 
 
-            /**
-             * A crude way of determining if an object is a window
-             * @member KISSY
-             */
-            isWindow: function (obj) {
-                return obj != null && obj == obj.window;
-            },
+        /**
+         * A crude way of determining if an object is a window
+         * @member KISSY
+         */
+        isWindow: function (obj) {
+            return obj != null && obj == obj.window;
+        },
 
 
-            /**
-             * get xml representation of data
-             * @param {String} data
-             * @member KISSY
-             */
-            parseXML: function (data) {
-                // already a xml
-                if (data.documentElement) {
-                    return data;
-                }
-                var xml;
-                try {
-                    // Standard
-                    if (win['DOMParser']) {
-                        xml = new DOMParser().parseFromString(data, 'text/xml');
-                    } else { // IE
-                        xml = new ActiveXObject('Microsoft.XMLDOM');
-                        xml.async = 'false';
-                        xml.loadXML(data);
-                    }
-                } catch (e) {
-                    S.log('parseXML error : ');
-                    S.log(e);
-                    xml = undefined;
-                }
-                if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
-                    S.error('Invalid XML: ' + data);
-                }
-                return xml;
-            },
-
-            /**
-             * Evaluates a script in a global context.
-             * @member KISSY
-             */
-            globalEval: function (data) {
-                if (data && RE_NOT_WHITE.test(data)) {
-                    // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
-                    ( win.execScript || function (data) {
-                        win[ 'eval' ].call(win, data);
-                    } )(data);
-                }
-            },
-
-            /**
-             * Specify a function to execute when the DOM is fully loaded.
-             * @param fn {Function} A function to execute after the DOM is ready
-             *
-             * for example:
-             *      @example
-             *      KISSY.ready(function(S){});
-             *
-             * @return {KISSY}
-             * @member KISSY
-             */
-            ready: function (fn) {
-
-                readyPromise.then(fn);
-
-                return this;
-            },
-
-            /**
-             * Executes the supplied callback when the item with the supplied id is found.
-             * @param id <String> The id of the element, or an array of ids to look for.
-             * @param fn <Function> What to execute when the element is found.
-             * @member KISSY
-             */
-            available: function (id, fn) {
-                id = (id + EMPTY).match(RE_IDSTR)[1];
-                if (!id || !S.isFunction(fn)) {
-                    return;
-                }
-
-                var retryCount = 1,
-                    node,
-                    timer = S.later(function () {
-                        if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
-                            ++retryCount > POLL_RETIRES) {
-                            timer.cancel();
-                        }
-                    }, POLL_INTERVAL, true);
+        /**
+         * get xml representation of data
+         * @param {String} data
+         * @member KISSY
+         */
+        parseXML: function (data) {
+            // already a xml
+            if (data.documentElement) {
+                return data;
             }
-        });
+            var xml;
+            try {
+                // Standard
+                if (win['DOMParser']) {
+                    xml = new DOMParser().parseFromString(data, 'text/xml');
+                } else { // IE
+                    xml = new ActiveXObject('Microsoft.XMLDOM');
+                    xml.async = 'false';
+                    xml.loadXML(data);
+                }
+            } catch (e) {
+                S.log('parseXML error : ');
+                S.log(e);
+                xml = undefined;
+            }
+            if (!xml || !xml.documentElement || xml.getElementsByTagName('parsererror').length) {
+                S.error('Invalid XML: ' + data);
+            }
+            return xml;
+        },
 
+        /**
+         * Evaluates a script in a global context.
+         * @member KISSY
+         */
+        globalEval: function (data) {
+            if (data && RE_NOT_WHITE.test(data)) {
+                // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
+                ( win.execScript || function (data) {
+                    win[ 'eval' ].call(win, data);
+                } )(data);
+            }
+        },
+
+        /**
+         * Specify a function to execute when the DOM is fully loaded.
+         * @param fn {Function} A function to execute after the DOM is ready
+         *
+         * for example:
+         *      @example
+         *      KISSY.ready(function(S){});
+         *
+         * @return {KISSY}
+         * @member KISSY
+         */
+        ready: function (fn) {
+
+            readyPromise.then(fn);
+
+            return this;
+        },
+
+        /**
+         * Executes the supplied callback when the item with the supplied id is found.
+         * @param id <String> The id of the element, or an array of ids to look for.
+         * @param fn <Function> What to execute when the element is found.
+         * @member KISSY
+         */
+        available: function (id, fn) {
+            id = (id + EMPTY).match(RE_IDSTR)[1];
+            if (!id || !S.isFunction(fn)) {
+                return;
+            }
+
+            var retryCount = 1,
+                node,
+                timer = S.later(function () {
+                    if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
+                        ++retryCount > POLL_RETIRES) {
+                        timer.cancel();
+                    }
+                }, POLL_INTERVAL, true);
+        }
+    });
 
     /**
      * Binds ready events.
@@ -5594,9 +5680,17 @@ config({
 config({
 'editor': {requires: ['htmlparser','component','core']}
 });
+config({
+    "event": {
+        "alias": ["event/base", "event/dom", "event/custom"]
+    }
+});/*Generated by KISSY Module Compiler*/
+config({
+'event/custom': {requires: ['event/base']}
+});
 /*Generated by KISSY Module Compiler*/
 config({
-'event': {requires: ['ua','dom']}
+'event/dom': {requires: ['event/base','dom','ua']}
 });
 /*Generated by KISSY Module Compiler*/
 config({
@@ -5636,7 +5730,7 @@ config({
 });
 /*Generated by KISSY Module Compiler*/
 config({
-'node': {requires: ['dom','event','anim']}
+'node': {requires: ['dom','event/dom','anim']}
 });
 /*Generated by KISSY Module Compiler*/
 config({
@@ -10633,428 +10727,35 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 16:24
+build time: Oct 26 01:29
 */
 /**
  * @ignore
- * @fileOverview responsible for registering event
+ * scalable event framework for kissy (refer DOM3 Events)
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _data, specials) {
-    var simpleAdd = Utils.simpleAdd,
-        isValidTarget = Utils.isValidTarget,
-        isIdenticalHandler = Utils.isIdenticalHandler;
-
-    /*
-     dom node need eventHandler attached to dom node
-     */
-    function addDomEvent(target, type, eventHandler, handlers, handleObj) {
-        var special = specials[type] || {};
-        // 第一次注册该事件，dom 节点才需要注册 dom 事件
-        if (!handlers.length &&
-            (!special.setup || special.setup.call(target) === false)) {
-            simpleAdd(target, type, eventHandler)
-        }
-        if (special.add) {
-            special.add.call(target, handleObj);
-        }
-    }
-
-    S.mix(Event,
-        /**
-         * @override KISSY.Event
-         * @class KISSY.Event.AddMod
-         * @singleton
-         */
-        {
-            // single type , single target , fixed native
-            __add: function (isNativeTarget, target, type, fn, scope) {
-                var typedGroups = Utils.getTypedGroups(type);
-                type = typedGroups[0];
-                var groups = typedGroups[1],
-                    isCustomEvent = !isNativeTarget,
-                    eventDesc,
-                    data,
-                    s = isNativeTarget&&specials[type],
-                // in case overwrite by delegateFix/onFix in specials events
-                // (mouseenter/leave,focusin/out)
-                    originalType,
-                    last,
-                    selector;
-                if (S.isObject(fn)) {
-                    last = fn.last;
-                    scope = fn.scope;
-                    data = fn.data;
-                    selector = fn.selector;
-                    // in case provided by clone
-                    originalType = fn.originalType;
-                    fn = fn.fn;
-                    if (selector && !originalType) {
-                        if (s && s['delegateFix']) {
-                            originalType = type;
-                            type = s['delegateFix'];
-                        }
-                    }
-                }
-                if (!selector && !originalType) {
-                    // when on mouseenter , it's actually on mouseover , and handlers is saved with mouseover!
-                    // TODO need evaluate!
-                    if (s && s['onFix']) {
-                        originalType = type;
-                        type = s['onFix'];
-                    }
-                }
-                // 不是有效的 target 或 参数不对
-                if (!type ||
-                    !target ||
-                    !S.isFunction(fn) ||
-                    (isNativeTarget && !isValidTarget(target))) {
-                    return;
-                }
-                // 获取事件描述
-                eventDesc = _data._data(target,undefined, isCustomEvent);
-                if (!eventDesc) {
-                    _data._data(target, eventDesc = {}, isCustomEvent);
-                }
-                //事件 listeners , similar to eventListeners in DOM3 Events
-                var events = eventDesc.events = eventDesc.events || {},
-                    handlers = events[type] = events[type] || [],
-                    handleObj = {
-                        fn: fn,
-                        scope: scope,
-                        selector: selector,
-                        last: last,
-                        data: data,
-                        groups: groups,
-                        originalType: originalType
-                    },
-                    eventHandler = eventDesc.handler;
-                // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
-                if (
-                // 自定义事件不需要 eventHandler
-                    isNativeTarget &&
-                        !eventHandler
-                    ) {
-                    eventHandler = eventDesc.handler = function (event, data) {
-                        // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
-                        // 已经在 fire 中 bubble 过一次了
-                        // in case after page has unloaded
-                        if (typeof KISSY == 'undefined' ||
-                            event && event.type == Utils.Event_Triggered) {
-                            return;
-                        }
-                        var currentTarget = eventHandler.target, type;
-                        if (!event || !event.fixed) {
-                            event = new EventObject(currentTarget, event);
-                        }
-                        type = event.type;
-                        if (S.isPlainObject(data)) {
-                            S.mix(event, data);
-                        }
-                        // protect type
-                        if (type) {
-                            event.type = type;
-                        }
-                        return handle(currentTarget, event);
-                    };
-                    // as for native dom event , this represents currentTarget !
-                    eventHandler.target = target;
-                }
-
-                for (var i = handlers.length - 1; i >= 0; --i) {
-                    /*
-                     If multiple identical EventListeners are registered on the same EventTarget
-                     with the same parameters the duplicate instances are discarded.
-                     They do not cause the EventListener to be called twice
-                     and since they are discarded
-                     they do not need to be removed with the removeEventListener method.
-                     */
-                    if (isIdenticalHandler(handlers[i], handleObj, target)) {
-                        return;
-                    }
-                }
-
-                if (isNativeTarget) {
-                    addDomEvent(target, type, eventHandler, handlers, handleObj);
-                    //nullify to prevent memory leak in ie ?
-                    target = null;
-                }
-
-                // 增加 listener
-                if (selector) {
-                    var delegateIndex = handlers.delegateCount
-                        = handlers.delegateCount || 0;
-                    handlers.splice(delegateIndex, 0, handleObj);
-                    handlers.delegateCount++;
-                } else {
-                    handlers.lastCount = handlers.lastCount || 0;
-                    if (last) {
-                        handlers.push(handleObj);
-                        handlers.lastCount++;
-                    } else {
-                        handlers.splice(handlers.length - handlers.lastCount,
-                            0, handleObj);
-                    }
-                }
-            },
-
-            /**
-             * Adds an event listener.similar to addEventListener in DOM3 Events
-             * @param targets KISSY selector
-             * @member KISSY.Event
-             * @param type {String} The type of event to append.use space to separate multiple event types.
-             * @param fn {Function} The event handler/listener.
-             * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
-             */
-            add: function (targets, type, fn, scope) {
-                type = S.trim(type);
-                // data : 附加在回调后面的数据，delegate 检查使用
-                // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
-                if (Utils.batchForType(Event.add, targets, type, fn, scope)) {
-                    return targets;
-                }
-                targets = DOM.query(targets);
-                for (var i = targets.length - 1; i >= 0; i--) {
-                    Event.__add(true, targets[i], type, fn, scope);
-                }
-                return targets;
-            }
-        });
-}, {
-    requires: ['./base', 'dom', './utils', './object', './handle', './data', './special']
-});/**
- * @ignore
- * @fileOverview scalable event framework for kissy (refer DOM3 Events)
- * how to fire event just like browser?
- * @author yiminghe@gmail.com, lifesinger@gmail.com
- */
-KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
-
-    var isValidTarget = Utils.isValidTarget,
-        splitAndRun = Utils.splitAndRun,
-        trim = S.trim,
-        TRIGGERED_NONE = Utils.TRIGGERED_NONE;
-
+KISSY.add('event/base', function (S, Utils, Object, Observer, ObservableEvent) {
     /**
      * The event utility provides functions to add and remove event listeners.
      * @class KISSY.Event
      * @singleton
      */
-    var Event =
-    {
-        /**
-         * copy event from src to dest
-         * @param {HTMLElement} src srcElement
-         * @param {HTMLElement} dest destElement
-         * @private
-         */
-        _clone: function (src, dest) {
-            if (!isValidTarget(dest) || !isValidTarget(src) || !_data._hasData(src, false)) {
-                return;
-            }
-            var eventDesc = _data._data(src, undefined, false),
-                events = eventDesc.events;
-            S.each(events, function (handlers, type) {
-                S.each(handlers, function (handler) {
-                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
-                    Event.on(dest, type, {
-                        data: handler.data,
-                        fn: handler.fn,
-                        groups: handler.groups,
-                        last: handler.last,
-                        originalType: handler.originalType,
-                        scope: handler.scope,
-                        selector: handler.selector
-                    });
-                });
-            });
-        },
-
-        /**
-         * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
-         * @param targets html nodes
-         * @param {String|KISSY.Event.Object} eventType event type
-         * @param [eventData] additional event data
-         * @param {Boolean} [onlyHandlers] only fire handlers
-         * @return {Boolean} The return value of fire/dispatchEvent indicates
-         * whether any of the listeners which handled the event called preventDefault.
-         * If preventDefault was called the value is false, else the value is true.
-         */
-        fire: function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
-            var ret = true, r;
-            // custom event firing moved to target.js
-            eventData = eventData || {};
-            if (typeof eventType == 'string') {
-                eventType = trim(eventType);
-                if (eventType.indexOf(' ') > -1) {
-                    splitAndRun(eventType, function (t) {
-                        r = Event.fire(targets, t, eventData, onlyHandlers);
-                        if (ret !== false) {
-                            ret = r;
-                        }
-                    });
-                    return ret;
-                }
-                // protect event type
-                eventData.type = eventType;
-            } else if (eventType instanceof EventObject) {
-                eventData = eventType;
-                eventType = eventData.type;
-            }
-
-            var typedGroups = Utils.getTypedGroups(eventType),
-                _ks_groups = typedGroups[1];
-
-            if (_ks_groups) {
-                _ks_groups = Utils.getGroupsRe(_ks_groups);
-            }
-
-            eventType = typedGroups[0];
-
-            S.mix(eventData, {
-                type: eventType,
-                _ks_groups: _ks_groups
-            });
-
-            targets = DOM.query(targets);
-            for (var i = targets.length - 1; i >= 0; i--) {
-                r = fireDOMEvent(targets[i], eventType, eventData, onlyHandlers);
-                if (ret !== false) {
-                    ret = r;
-                }
-            }
-            return ret;
-        },
-
-        /**
-         * same with fire but:
-         * does not cause default behavior to occur.
-         * does not bubble up the DOM hierarchy.
-         * @param targets
-         * @param {KISSY.Event.Object | String} eventType
-         * @param [eventData]
-         */
-        fireHandler: function (targets, eventType, eventData) {
-            return Event.fire(targets, eventType, eventData, 1);
-        }
+    return S.Event = {
+        _Utils: Utils,
+        _Object: Object,
+        _Observer: Observer,
+        _ObservableEvent: ObservableEvent
     };
-
-    /*
-     fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
-     @return {Boolean} The return value of dispatchEvent indicates
-     whether any of the listeners which handled the event called preventDefault.
-     If preventDefault was called the value is false, else the value is true.
-     */
-    function fireDOMEvent(target, eventType, eventData, onlyHandlers) {
-        if (!isValidTarget(target)) {
-            return false;
-        }
-        var s = special[eventType];
-        // TODO bug : when fire mouseenter , it also fire mouseover in firefox/chrome
-        if (s && s['onFix']) {
-            eventType = s['onFix'];
-        }
-
-        var event,
-            ret = true;
-        if (eventData instanceof EventObject) {
-            event = eventData;
-        } else {
-            event = new EventObject(target, undefined, eventType);
-            S.mix(event, eventData);
-        }
-        /**
-         * identify event as fired manually
-         * @ignore
-         */
-        event._ks_fired = 1;
-        /*
-         The target of the event is the EventTarget on which dispatchEvent is called.
-         */
-        // TODO: protect target , but incompatible
-        // event.target=target;
-        // protect type
-        event.type = eventType;
-
-        // onlyHandlers is equal to event.halt()
-        // but we can not call event.halt()
-        // because handle will check event.isPropagationStopped
-
-        var cur = target,
-            t,
-            win = DOM._getWin(cur.ownerDocument || cur),
-            ontype = 'on' + eventType;
-
-        //bubble up dom tree
-        do {
-            event.currentTarget = cur;
-            t = handle(cur, event);
-            if (ret !== false) {
-                ret = t;
-            }
-            // Trigger an inline bound script
-            if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
-                event.preventDefault();
-            }
-            // Bubble up to document, then to window
-            cur = cur.parentNode ||
-                cur.ownerDocument ||
-                (cur === target.ownerDocument) && win;
-        } while (!onlyHandlers && cur && !event.isPropagationStopped);
-
-        if (!onlyHandlers && !event.isDefaultPrevented) {
-
-            // now all browser support click
-            // https://developer.mozilla.org/en-US/docs/DOM/element.click
-
-            var old;
-            try {
-                // execute default action on dom node
-                // so exclude window
-                // exclude focus/blue on hidden element
-                if (ontype &&
-                    target[ eventType ] &&
-                    (
-                        (eventType !== 'focus' && eventType !== 'blur') ||
-                            target.offsetWidth !== 0
-                        ) &&
-                    !S.isWindow(target)) {
-                    // Don't re-trigger an onFOO event when we call its FOO() method
-                    old = target[ ontype ];
-
-                    if (old) {
-                        target[ ontype ] = null;
-                    }
-
-                    // 记录当前 trigger 触发
-                    Utils.Event_Triggered = eventType;
-
-                    // 只触发默认事件，而不要执行绑定的用户回调
-                    // 同步触发
-                    target[ eventType ]();
-                }
-            } catch (eError) {
-                S.log('trigger action error : ');
-                S.log(eError);
-            }
-
-            if (old) {
-                target[ ontype ] = old;
-            }
-
-            Utils.Event_Triggered = TRIGGERED_NONE;
-
-        }
-        return ret;
-    }
-
-    return Event;
 }, {
-    requires: ['dom', './object', './utils', './handle', './data', './special']
+    requires: ['./base/utils', './base/object', './base/observer', './base/observable']
 });
 
+
 /*
- yiminghe@gmail.com : 2011-12-15
+ yiminghe@gmail.com: 2012-10-24
+ - 重构，新架构，自定义事件，DOM 事件分离
+
+ yiminghe@gmail.com: 2011-12-15
  - 重构，粒度更细，新的架构
 
  2011-11-24
@@ -11067,13 +10768,1235 @@ KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, spe
  - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
  - 减少闭包使用，prevent ie 内存泄露？
  - 增加 fire ，模拟冒泡处理 dom 事件
+ *//**
+ * @ignore
+ * base event object for custom and dom event.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/base/object', function () {
+
+    var FALSE_FN = function () {
+        return false;
+    }, TRUE_FN = function () {
+        return true;
+    };
+
+    /**
+     * @class KISSY.Event.Object
+     *
+     * KISSY 's base event object for custom and dom event.
+     */
+    function EventObject() {
+    }
+
+    EventObject.prototype = {
+        constructor: EventObject,
+        /**
+         * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
+         * @method
+         */
+        isDefaultPrevented: FALSE_FN,
+        /**
+         * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
+         * @method
+         */
+        isPropagationStopped: FALSE_FN,
+        /**
+         * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
+         * @method
+         */
+        isImmediatePropagationStopped: FALSE_FN,
+
+        /**
+         * Prevents the event's default behavior
+         */
+        preventDefault: function () {
+            this.isDefaultPrevented = TRUE_FN;
+        },
+
+        /**
+         * Stops the propagation to the next bubble target
+         */
+        stopPropagation: function () {
+            this.isPropagationStopped = TRUE_FN;
+        },
+
+        /**
+         * Stops the propagation to the next bubble target and
+         * prevents any additional listeners from being executed
+         * on the current target.
+         */
+        stopImmediatePropagation: function () {
+            var self = this;
+            self.isImmediatePropagationStopped = TRUE_FN;
+            // fixed 1.2
+            // call stopPropagation implicitly
+            self.stopPropagation();
+        },
+
+        /**
+         * Stops the event propagation and prevents the default
+         * event behavior.
+         * @param  {Boolean} [immediate] if true additional listeners on the current target will not be executed
+         */
+        halt: function (immediate) {
+            var self = this;
+            if (immediate) {
+                self.stopImmediatePropagation();
+            } else {
+                self.stopPropagation();
+            }
+            self.preventDefault();
+        }
+    };
+
+    return EventObject;
+
+});/**
+ * @ignore
+ * base custom event mechanism for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/base/observable', function (S) {
+
+    /**
+     * base custom event for registering and un-registering observer for specified event.
+     * @class KISSY.Event.ObservableEvent
+     * @private
+     * @param {Object} cfg custom event's attribute
+     */
+    function ObservableEvent(cfg) {
+        var self = this;
+        S.mix(self, cfg);
+        self.reset();
+        /**
+         * current event type
+         * @cfg {String} type
+         */
+    }
+
+    ObservableEvent.prototype = {
+
+        constructor: ObservableEvent,
+
+        /**
+         * whether current event has observers
+         * @return {Boolean}
+         */
+        hasObserver: function () {
+            return !!this.observers.length;
+        },
+
+        /**
+         * reset current event's status
+         */
+        reset: function () {
+            var self = this;
+            self.observers = [];
+        },
+
+        /**
+         * remove one observer from current event's observers
+         * @param {KISSY.Event.Observer} s
+         */
+        removeObserver: function (s) {
+            var self = this,
+                i,
+                observers = self.observers,
+                len = observers.length;
+            for (i = 0; i < len; i++) {
+                if (observers[i] == s) {
+                    observers.splice(i, 1);
+                    break;
+                }
+            }
+            self.checkMemory();
+        },
+
+        checkMemory: function () {
+
+        },
+
+        /**
+         * Search for a specified observer within current event's observers
+         * @param {KISSY.Event.Observer} observer
+         * @return {Number} observer's index in observers
+         */
+        findObserver: function (observer) {
+            var observers = this.observers, i;
+
+            for (i = observers.length - 1; i >= 0; --i) {
+                /*
+                 If multiple identical EventListeners are registered on the same EventTarget
+                 with the same parameters the duplicate instances are discarded.
+                 They do not cause the EventListener to be called twice
+                 and since they are discarded
+                 they do not need to be removed with the removeEventListener method.
+                 */
+                if (observer.equals(observers[i])) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+    };
+
+    return ObservableEvent;
+
+});/**
+ * @ignore
+ * observer for event.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/base/observer', function (S) {
+
+    /**
+     * KISSY 's base observer for handle user-specified function
+     * @private
+     * @class KISSY.Event.Observer
+     * @param {Object} cfg
+     */
+    function Observer(cfg) {
+        S.mix(this, cfg);
+
+        /**
+         * context in which observer's fn runs
+         * @cfg {Object} context
+         */
+        /**
+         * current observer's user-defined function
+         * @cfg {Function} fn
+         */
+        /**
+         * whether un-observer current observer once after running observer's user-defined function
+         * @cfg {Boolean} once
+         */
+        /**
+         * groups separated by '.' which current observer belongs
+         * @cfg {String} groups
+         */
+    }
+
+    Observer.prototype = {
+
+        constructor: Observer,
+
+        /**
+         * whether current observer equals s2
+         * @param {KISSY.Event.Observer} s2 another observer
+         * @return {Boolean}
+         */
+        equals: function (s2) {
+            var s1 = this;
+            return !!S.reduce(s1.keys, function (v, k) {
+                return v && (s1[k] === s2[k]);
+            }, 1);
+        },
+
+        /**
+         * simple run current observer's user-defined function
+         * @param {KISSY.Event.Object} event
+         * @param {KISSY.Event.ObservableEvent} ce
+         * @return {*} return value of current observer's user-defined function
+         */
+        simpleNotify: function (event, ce) {
+            var ret, self = this;
+            ret = self.fn.call(
+                self.context || ce.currentTarget,
+                event, self.data
+            );
+            if (self.once) {
+                ce.removeObserver(self);
+            }
+            return ret;
+        },
+
+        /**
+         * current observer's notification.
+         * @protected
+         * @param {KISSY.Event.Object} event
+         * @param {KISSY.Event.ObservableEvent} ce
+         */
+        notifyInternal: function (event, ce) {
+            return this.simpleNotify(event, ce);
+        },
+
+        /**
+         * run current observer's user-defined function
+         * @param event
+         * @param ce
+         */
+        notify: function (event, ce) {
+
+            var ret,
+                self = this,
+                _ks_groups = event._ks_groups;
+
+            // handler's group does not match specified groups (at fire step)
+            if (_ks_groups && (!self.groups || !(self.groups.match(_ks_groups)))) {
+                return;
+            }
+
+            ret = self.notifyInternal(event, ce);
+
+            // return false 等价 preventDefault + stopPropagation
+            if (ret === false) {
+                event.halt();
+            }
+
+            return ret;
+        }
+
+    };
+
+    return Observer;
+
+});/**
+ * @ignore
+ * @fileOverview utils for event
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/base/utils', function (S) {
+
+    var getTypedGroups, splitAndRun;
+
+    return {
+
+        splitAndRun: splitAndRun = function (type, fn) {
+            type = S.trim(type);
+            if (type.indexOf(' ') == -1) {
+                fn(type);
+            } else {
+                S.each(type.split(/\s+/), fn);
+            }
+        },
+
+        normalizeParam: function (type, fn, context) {
+            var cfg = fn || {};
+
+            if (S.isFunction(fn)) {
+                cfg = {
+                    fn: fn,
+                    context: context
+                };
+            }
+
+            var typedGroups = getTypedGroups(type);
+
+            type = typedGroups[0];
+
+            cfg.groups = typedGroups[1];
+
+            cfg.type = type;
+
+            return cfg;
+        },
+
+        batchForType: function (fn, num) {
+            var args = S.makeArray(arguments),
+                types = args[2 + num];
+            splitAndRun(types, function (type) {
+                var args2 = [].concat(args);
+                args2.splice(0, 2);
+                args2[num] = type;
+                fn.apply(null, args2);
+            });
+        },
+
+        getTypedGroups: getTypedGroups = function (type) {
+            if (type.indexOf('.') < 0) {
+                return [type, ''];
+            }
+            var m = type.match(/([^.]+)?(\..+)?$/),
+                t = m[1],
+                ret = [t],
+                gs = m[2];
+            if (gs) {
+                gs = gs.split('.').sort();
+                ret.push(gs.join('.'));
+            } else {
+                ret.push('');
+            }
+            return ret;
+        },
+
+        getGroupsRe: function (groups) {
+            return new RegExp(groups.split('.').join('.*\\.') + '(?:\\.|$)');
+        }
+
+    };
+
+});
+/*
+Copyright 2012, KISSY UI Library v1.40dev
+MIT Licensed
+build time: Oct 26 01:29
+*/
+/**
+ * @ignore
+ * @fileOverview custom event target for publish and subscribe
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEvent) {
+    var trim = S.trim,
+        _Utils = Event._Utils,
+        splitAndRun = _Utils.splitAndRun,
+        KS_BUBBLE_TARGETS = '__~ks_bubble_targets';
+
+    /**
+     * @class KISSY.Event.Target
+     * @singleton
+     * EventTarget provides the implementation for any object to publish, subscribe and fire to custom events,
+     * and also allows other EventTargets to target the object with events sourced from the other object.
+     * EventTarget is designed to be used with S.augment to allow events to be listened to and fired by name.
+     * This makes it possible for implementing code to subscribe to an event that either has not been created yet,
+     * or will not be created at all.
+     */
+    return S.mix(api, {
+
+        /**
+         * Fire a custom event by name.
+         * The callback functions will be executed from the context specified when the event was created,
+         * and the {@link KISSY.Event.Object} created will be mixed with eventData
+         * @param {String} type The type of the event
+         * @param {Object} [eventData] The data will be mixed with {@link KISSY.Event.Object} created
+         * @return {*} If any listen returns false, then the returned value is false. else return the last listener's returned value
+         */
+        fire: function (target, type, eventData) {
+            var self = target, ret = undefined;
+
+            eventData = eventData || {};
+
+            splitAndRun(type, function (type) {
+                var r2, customEvent,
+                    typedGroups = _Utils.getTypedGroups(type),
+                    _ks_groups = typedGroups[1];
+
+                type = typedGroups[0];
+
+                if (_ks_groups) {
+                    _ks_groups = _Utils.getGroupsRe(_ks_groups);
+                    eventData._ks_groups = _ks_groups;
+                }
+
+                customEvent = ObservableCustomEvent.getCustomEvent(self, type) ||
+                    // in case no publish custom event but we need bubble
+                    // because bubbles defaults to true!
+                    new ObservableCustomEvent({
+                        currentTarget: target,
+                        type: type
+                    });
+
+
+                r2 = customEvent.fire(eventData);
+
+
+                if (ret !== false) {
+                    ret = r2;
+                }
+            });
+
+            return ret;
+        },
+
+        /**
+         * Creates a new custom event of the specified type
+         * @param {String} type The type of the event
+         * @param {Object} cfg Config params
+         * @param {Boolean} [cfg.bubbles=true] whether or not this event bubbles
+         */
+        publish: function (target, type, cfg) {
+            var self = target, customEvent;
+
+            splitAndRun(type, function (t) {
+                customEvent = ObservableCustomEvent.getCustomEvent(self, t, 1);
+                S.mix(customEvent, cfg)
+            });
+        },
+
+        /**
+         * Registers another EventTarget as a bubble target.
+         * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to add
+         */
+        addTarget: function (target, anotherTarget) {
+            var targets = api.getTargets(target);
+            if (!S.inArray(anotherTarget, targets)) {
+                targets.push(anotherTarget);
+            }
+        },
+
+        /**
+         * Removes a bubble target
+         * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to remove
+         */
+        removeTarget: function (target, anotherTarget) {
+            var targets = api.getTargets(target),
+                index = S.indexOf(anotherTarget, targets);
+            if (index != -1) {
+                targets.splice(index, 1);
+            }
+        },
+
+        /**
+         * @private
+         * @return {*}
+         */
+        getTargets: function (target) {
+            target[KS_BUBBLE_TARGETS] = target[KS_BUBBLE_TARGETS] || [];
+            return target[KS_BUBBLE_TARGETS];
+        },
+
+        /**
+         * Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
+         * @method
+         * @param {String} type The name of the event
+         * @param {Function} fn The callback to execute in response to the event
+         * @param {Object} [context] this object in callback
+         */
+        on: function (target, type, fn, context) {
+            var self = target;
+            type = trim(type);
+            _Utils.batchForType(function (type, fn, context) {
+                var cfg = _Utils.normalizeParam(type, fn, context),
+                    customEvent;
+                type = cfg.type;
+                customEvent = ObservableCustomEvent.getCustomEvent(self, type, 1);
+                if (customEvent) {
+                    customEvent.on(cfg);
+                }
+            }, 0, type, fn, context);
+
+            return self; // chain
+        },
+
+        /**
+         * Detach one or more listeners the from the specified event
+         * @method
+         * @param {String} type The name of the event
+         * @param {Function} [fn] The subscribed function to un-subscribe. if not supplied, all observers will be removed.
+         * @param {Object} [context] The custom object passed to subscribe.
+         */
+        detach: function (target, type, fn, context) {
+            var self = target;
+            type = trim(type);
+            _Utils.batchForType(function (type, fn, context) {
+                var cfg = _Utils.normalizeParam(type, fn, context),
+                    customEvent;
+                type = cfg.type;
+                if (!type) {
+                    var customEvents = ObservableCustomEvent.getCustomEvents(self);
+                    S.each(customEvents, function (customEvent) {
+                        customEvent.detach(cfg);
+                    });
+                } else {
+                    customEvent = ObservableCustomEvent.getCustomEvent(self, type, 1);
+                    if (customEvent) {
+                        customEvent.detach(cfg);
+                    }
+                }
+            }, 0, type, fn, context);
+
+            return self; // chain
+        }
+    });
+}, {
+    requires: ['./api', 'event/base', './observable']
+});
+/*
+ yiminghe: 2012-10-24
+ - implement defaultFn for custom event
+
+ yiminghe: 2011-10-17
+ - implement bubble for custom event
+ *//**
+ * @ignore
+ * @fileOverview custom event target for publish and subscribe
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/custom/api', function () {
+    return {
+
+    };
+});/**
+ * @ignore
+ * custom facade
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/custom', function (S, Event, api, ObservableCustomEvent) {
+    var Target = {};
+
+    S.each(api, function (fn, name) {
+        Target[name] = function () {
+            var args = S.makeArray(arguments);
+            args.unshift(this);
+            return fn.apply(null, args);
+        }
+    });
+
+    S.EventTarget = Target;
+
+    var custom = S.mix({
+        _ObservableCustomEvent: ObservableCustomEvent,
+        Target: Target
+    }, api);
+
+    S.mix(Event, {
+        Target: Target,
+        custom: custom
+    });
+
+    return custom;
+}, {
+    requires: ['./base', './custom/api-impl', './custom/observable']
+});/**
+ * @ignore
+ * simple custom event object for custom event mechanism.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/custom/object', function (S, Event) {
+
+    /**
+     * Custom event object
+     * @class KISSY.Event.CustomEventObject
+     * @param {Object} data data which will be mixed into custom event instance
+     * @extends KISSY.Event.Object
+     */
+    function CustomEventObject(data) {
+        S.mix(this, data);
+        /**
+         * source target of current event
+         * @cfg {KISSY.Event.Target} target
+         */
+        /**
+         * current target which processes current event
+         * @cfg {KISSY.Event.Target} currentTarget
+         */
+    }
+
+    S.extend(CustomEventObject, Event._Object);
+
+    return CustomEventObject;
+
+}, {
+    requires: ['event/base']
+});/**
+ * @ignore
+ * custom event mechanism for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, CustomEventObject, Event) {
+
+    var _Utils = Event._Utils;
+
+    /**
+     * custom event for registering and un-registering observer for specified event on normal object.
+     * @class KISSY.Event.ObservableCustomEvent
+     * @extends KISSY.Event.ObservableEvent
+     * @private
+     */
+    function ObservableCustomEvent() {
+        var self = this;
+        ObservableCustomEvent.superclass.constructor.apply(self, arguments);
+        self.defaultFn = null;
+        self.defaultTargetOnly = false;
+
+        /**
+         * whether this event can bubble.
+         * Defaults to: true
+         * @cfg {Boolean} bubbles
+         */
+        self.bubbles = true;
+        /**
+         * event target which binds current custom event
+         * @cfg {KISSY.Event.Target} currentTarget
+         */
+    }
+
+    S.extend(ObservableCustomEvent, Event._ObservableEvent, {
+
+        constructor: ObservableCustomEvent,
+
+        /**
+         * add a observer to custom event's observers
+         * @param {Object} cfg {@link KISSY.Event.CustomEventObserver} 's config
+         */
+        on: function (cfg) {
+            var observer = new CustomEventObserver(cfg);
+            if (this.findObserver(observer) == -1) {
+                this.observers.push(observer);
+            }
+        },
+
+        checkMemory: function () {
+            var self = this,
+                currentTarget = self.currentTarget,
+                events = ObservableCustomEvent.getCustomEvents(currentTarget);
+            if (events) {
+                if (!self.hasObserver()) {
+                    delete events[self.type];
+                }
+                if (S.isEmptyObject(events)) {
+                    delete currentTarget[KS_CUSTOM_EVENTS];
+                }
+            }
+        },
+
+        /**
+         * notify current custom event 's observers and then bubble up if this event can bubble.
+         * @param {KISSY.Event.CustomEventObject} eventData
+         * @return {*} return false if one of custom event 's observers (include bubbled) else
+         * return last value of custom event 's observers (include bubbled) 's return value.
+         */
+        fire: function (eventData) {
+
+            if (!this.hasObserver() && !this.bubbles) {
+                return;
+            }
+
+            eventData = eventData || {};
+
+            var self = this,
+                type = self.type,
+                defaultFn = self.defaultFn,
+                i,
+                parents,
+                len,
+                currentTarget = self.currentTarget,
+                customEvent = eventData,
+                gRet, ret;
+
+            eventData.type = type;
+
+            if (!(customEvent instanceof  CustomEventObject)) {
+                customEvent.target = currentTarget;
+                customEvent = new CustomEventObject(customEvent);
+            }
+
+            customEvent.currentTarget = currentTarget;
+
+            ret = self.notify(customEvent);
+
+            if (gRet !== false) {
+                gRet = ret;
+            }
+
+            if (self.bubbles) {
+                parents = api.getTargets(currentTarget);
+                len = parents && parents.length || 0;
+
+                for (i = 0; i < len && !customEvent.isPropagationStopped(); i++) {
+
+                    ret = api.fire(parents[i], type, customEvent);
+
+                    // false 优先返回
+                    if (gRet !== false) {
+                        gRet = ret;
+                    }
+
+                }
+            }
+
+            if (defaultFn && !customEvent.isDefaultPrevented()) {
+                var lowestCustomEvent = ObservableCustomEvent.getCustomEvent(customEvent.target, customEvent.type);
+                if ((!self.defaultTargetOnly && !lowestCustomEvent.defaultTargetOnly) ||
+                    self == customEvent.target) {
+                    defaultFn.call(self);
+                }
+            }
+
+            return gRet;
+
+        },
+
+        /**
+         * notify current event 's observers
+         * @param {KISSY.Event.CustomEventObject} event
+         * @return {*} return false if one of custom event 's observers  else
+         * return last value of custom event 's observers 's return value.
+         */
+        notify: function (event) {
+            var observers = this.observers,
+                ret,
+                gRet,
+                len = observers.length, i;
+
+            for (i = 0; i < len && !event.isImmediatePropagationStopped(); i++) {
+                ret = observers[i].notify(event, this);
+                if (gRet !== false) {
+                    gRet = ret;
+                }
+                if (ret === false) {
+                    event.halt();
+                }
+            }
+
+            return gRet;
+        },
+
+        /**
+         * remove some observers from current event 's observers by observer config param
+         * @param {Object} cfg {@link KISSY.Event.CustomEventObserver} 's config
+         */
+        detach: function (cfg) {
+            var groupsRe,
+                self = this,
+                fn = cfg.fn,
+                context = cfg.context,
+                currentTarget = self.currentTarget,
+                observers = self.observers,
+                groups = cfg.groups;
+
+            if (!observers.length) {
+                return;
+            }
+
+            if (groups) {
+                groupsRe = _Utils.getGroupsRe(groups);
+            }
+
+            var i, j, t, observer, observerContext, len = observers.length;
+
+            // 移除 fn
+            if (fn || groupsRe) {
+                context = context || currentTarget;
+
+                for (i = 0, j = 0, t = []; i < len; ++i) {
+                    observer = observers[i];
+                    observerContext = observer.context || currentTarget;
+                    if (
+                        (context != observerContext) ||
+                            // 指定了函数，函数不相等，保留
+                            (fn && fn != observer.fn) ||
+                            // 指定了删除的某些组，而该 observer 不属于这些组，保留，否则删除
+                            (groupsRe && !observer.groups.match(groupsRe))
+                        ) {
+                        t[j++] = observer;
+                    }
+                }
+
+                self.observers = t;
+            } else {
+                // 全部删除
+                self.reset();
+            }
+
+            self.checkMemory();
+        }
+    });
+
+    var KS_CUSTOM_EVENTS = '__~ks_custom_events';
+
+    ObservableCustomEvent.getCustomEvent = function (target, type, create) {
+        var self = this,
+            customEvent,
+            customEvents = ObservableCustomEvent.getCustomEvents(target, create);
+        customEvent = customEvents && customEvents[type];
+        if (!customEvent && create) {
+            customEvent = customEvents[type] = new ObservableCustomEvent({
+                currentTarget: target,
+                type: type
+            });
+        }
+        return customEvent;
+    };
+
+    ObservableCustomEvent.getCustomEvents = function (target, create) {
+        if (!target[KS_CUSTOM_EVENTS] && create) {
+            target[KS_CUSTOM_EVENTS] = {};
+        }
+        return target[KS_CUSTOM_EVENTS];
+    };
+
+    return ObservableCustomEvent;
+
+}, {
+    requires: ['./api', './observer', './object', 'event/base']
+});
+/**
+ * 2012-10-26 yiminghe@gmail.com
+ *  - custom event can bubble by default!
+ *//**
+ * @ignore
+ * Observer for custom event
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/custom/observer', function (S, Event) {
+
+    /**
+     * Observer for custom event
+     * @class KISSY.Event.CustomEventObserver
+     * @extends KISSY.Event.Observer
+     */
+    function CustomEventObserver() {
+        CustomEventObserver.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(CustomEventObserver, Event._Observer, {
+
+        keys:['fn','context','groups']
+
+    });
+
+    return CustomEventObserver;
+
+}, {
+    requires: ['event/base']
+});
+/*
+Copyright 2012, KISSY UI Library v1.40dev
+MIT Licensed
+build time: Oct 26 00:44
+*/
+/**
+ * @ignore
+ * setup event/dom api module
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEvent, DOMEventObject) {
+    var _Utils = Event._Utils;
+
+    function fixType(cfg, type) {
+        var s = special[type] || {};
+        // in case overwrite by delegateFix/onFix in special events
+        // (mouseenter/leave,focusin/out)
+
+        if (!cfg.originalType) {
+            if (cfg.selector) {
+                if (s['delegateFix']) {
+                    cfg.originalType = type;
+                    type = s['delegateFix'];
+                }
+            } else {
+                // when on mouseenter , it's actually on mouseover , and subscribers is saved with mouseover!
+                // TODO need evaluate!
+                if (s['onFix']) {
+                    cfg.originalType = type;
+                    type = s['onFix'];
+                }
+            }
+        }
+
+        return type;
+    }
+
+    function addInternal(currentTarget, type, cfg) {
+        var eventDesc,
+            customEvent,
+            events,
+            handle;
+
+        type = fixType(cfg, type);
+
+        // 获取事件描述
+        eventDesc = DOMCustomEvent.getCustomEvents(currentTarget, 1);
+
+        if (!(handle = eventDesc.handle)) {
+            handle = eventDesc.handle = function (event) {
+                // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
+                // 已经在 fire 中 bubble 过一次了
+                // in case after page has unloaded
+                var type = event.type,
+                    customEvent,
+                    currentTarget = handle.currentTarget;
+                if (DOMCustomEvent.triggeredEvent == type ||
+                    typeof KISSY == 'undefined') {
+                    return;
+                }
+                customEvent = DOMCustomEvent.getCustomEvent(currentTarget, type);
+                if (customEvent) {
+                    event.currentTarget = currentTarget;
+                    event = new DOMEventObject(event);
+                    return customEvent.notify(event);
+                }
+            };
+            handle.currentTarget = currentTarget;
+        }
+
+        if (!(events = eventDesc.events)) {
+            events = eventDesc.events = {};
+        }
+
+        //事件 listeners , similar to eventListeners in DOM3 Events
+        customEvent = events[type];
+
+        if (!customEvent) {
+            customEvent = events[type] = new DOMCustomEvent({
+                type: type,
+                fn: handle,
+                currentTarget: currentTarget
+            });
+
+            customEvent.setup();
+        }
+
+        customEvent.on(cfg);
+
+        currentTarget = null;
+    }
+
+    function removeInternal(currentTarget, type, cfg) {
+        cfg = cfg || {};
+
+        var customEvent;
+
+        type = fixType(cfg, type);
+
+        var eventDesc = DOMCustomEvent.getCustomEvents(currentTarget),
+            events = (eventDesc || {}).events;
+
+        if (!eventDesc || !events) {
+            return;
+        }
+
+        // remove all types of event
+        if (!type) {
+            for (type in events) {
+                events[type].detach(cfg);
+            }
+            return;
+        }
+
+        customEvent = events[type];
+
+        if (customEvent) {
+            customEvent.detach(cfg);
+        }
+    }
+
+    S.mix(Event, {
+        /**
+         * Adds an event listener.similar to addEventListener in DOM3 Events
+         * @param targets KISSY selector
+         * @member KISSY.Event
+         * @param type {String} The type of event to append.
+         * use space to separate multiple event types.
+         * @param fn {Function|Object} The event listener or event description object.
+         * @param {Function} fn.fn The event listener
+         * @param {Function} fn.context The context (this reference) in which the handler function is executed.
+         * @param {String|Function} fn.selector filter selector string or function to find right element
+         * @param {Boolean} fn.once whether fn will be removed once after it is executed.
+         * @param {Object} [context] The context (this reference) in which the handler function is executed.
+         */
+        add: function (targets, type, fn, context) {
+            type = S.trim(type);
+            // data : 附加在回调后面的数据，delegate 检查使用
+            // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
+            targets = DOM.query(targets);
+
+            _Utils.batchForType(function (targets, type, fn, context) {
+                var cfg = _Utils.normalizeParam(type, fn, context), i;
+                type = cfg.type;
+                for (i = targets.length - 1; i >= 0; i--) {
+                    addInternal(targets[i], type, cfg);
+                }
+            }, 1, targets, type, fn, context);
+
+            return targets;
+        },
+
+        /**
+         * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
+         * @param targets KISSY selector
+         * @member KISSY.Event
+         * @param {String} [type] The type of event to remove.
+         * use space to separate multiple event types.
+         * @param fn {Function|Object} The event listener or event description object.
+         * @param {Function} fn.fn The event listener
+         * @param {Function} fn.context The context (this reference) in which the handler function is executed.
+         * @param {String|Function} fn.selector filter selector string or function to find right element
+         * @param {Boolean} fn.once whether fn will be removed once after it is executed.
+         * @param {Object} [context] The context (this reference) in which the handler function is executed.
+         */
+        remove: function (targets, type, fn, context) {
+
+            type = S.trim(type);
+
+            targets = DOM.query(targets);
+
+            _Utils.batchForType(function (targets, type, fn, context) {
+                var cfg = _Utils.normalizeParam(type, fn, context), i;
+
+                type = cfg.type;
+
+                for (i = targets.length - 1; i >= 0; i--) {
+                    removeInternal(targets[i], type, cfg);
+                }
+            }, 1, targets, type, fn, context);
+
+
+            return targets;
+
+        },
+
+        /**
+         * Delegate event.
+         * @param targets KISSY selector
+         * @param {String|Function} selector filter selector string or function to find right element
+         * @param {String} [eventType] The type of event to delegate.
+         * use space to separate multiple event types.
+         * @param {Function} [fn] The event listener.
+         * @param {Object} [context] The context (this reference) in which the handler function is executed.
+         * @member KISSY.Event
+         */
+        delegate: function (targets, eventType, selector, fn, context) {
+            return Event.add(targets, eventType, {
+                fn: fn,
+                context: context,
+                selector: selector
+            });
+        },
+        /**
+         * undelegate event.
+         * @param targets KISSY selector
+         * @param {String} [eventType] The type of event to undelegate.
+         * use space to separate multiple event types.
+         * @param {String|Function} [selector] filter selector string or function to find right element
+         * @param {Function} [fn] The event listener.
+         * @param {Object} [context] The context (this reference) in which the handler function is executed.
+         * @member KISSY.Event
+         */
+        undelegate: function (targets, eventType, selector, fn, context) {
+            return Event.remove(targets, eventType, {
+                fn: fn,
+                context: context,
+                selector: selector
+            });
+        },
+
+        /**
+         * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
+         * @param targets html nodes
+         * @param {String} eventType event type
+         * @param [eventData] additional event data
+         * @return {*} return false if one of custom event 's subscribers (include bubbled) else
+         * return last value of custom event 's subscribers (include bubbled) 's return value.
+         */
+        fire: function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
+            var ret = undefined;
+            // custom event firing moved to target.js
+            eventData = eventData || {};
+
+            /**
+             * identify event as fired manually
+             * @ignore
+             */
+            eventData._ks_fired = 1;
+
+            _Utils.splitAndRun(eventType, function (eventType) {
+                // protect event type
+                eventData.type = eventType;
+
+                var r,
+                    i,
+                    target,
+                    customEvent,
+                    typedGroups = _Utils.getTypedGroups(eventType),
+                    _ks_groups = typedGroups[1];
+
+                if (_ks_groups) {
+                    _ks_groups = _Utils.getGroupsRe(_ks_groups);
+                }
+
+                eventType = typedGroups[0];
+
+                S.mix(eventData, {
+                    type: eventType,
+                    _ks_groups: _ks_groups
+                });
+
+                targets = DOM.query(targets);
+
+                for (i = targets.length - 1; i >= 0; i--) {
+                    target = targets[i];
+                    customEvent = DOMCustomEvent
+                        .getCustomEvent(target, eventType);
+                    // bubbling
+                    // html dom event defaults to bubble
+                    if (!onlyHandlers && !customEvent) {
+                        customEvent = new DOMCustomEvent({
+                            type: eventType,
+                            currentTarget: target
+                        });
+                    }
+                    if (customEvent) {
+                        r = customEvent.fire(eventData, onlyHandlers);
+                        if (ret !== false) {
+                            ret = r;
+                        }
+                    }
+                }
+            });
+
+            return ret;
+        },
+
+        /**
+         * same with fire but:
+         * - does not cause default behavior to occur.
+         * - does not bubble up the DOM hierarchy.
+         * @param targets html nodes
+         * @param {String} eventType event type
+         * @param [eventData] additional event data
+         * @return {*} return false if one of custom event 's subscribers (include bubbled) else
+         * return last value of custom event 's subscribers (include bubbled) 's return value.
+         */
+        fireHandler: function (targets, eventType, eventData) {
+            return Event.fire(targets, eventType, eventData, 1);
+        },
+
+
+        /**
+         * copy event from src to dest
+         * @param {HTMLElement} src srcElement
+         * @param {HTMLElement} dest destElement
+         * @private
+         */
+        _clone: function (src, dest) {
+            var eventDesc, events;
+            if (!(eventDesc = DOMCustomEvent.getCustomEvents(src))) {
+                return;
+            }
+            events = eventDesc.events;
+            S.each(events, function (customEvent, type) {
+                S.each(customEvent.subscribers, function (subscriber) {
+                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
+                    addInternal(dest, type, subscriber);
+                });
+            });
+        },
+
+        _DOMCustomEvent: DOMCustomEvent
+    });
+
+    /**
+     * Same with {@link KISSY.Event#add}
+     * @method
+     * @member KISSY.Event
+     */
+    Event.on = Event.add;
+    /**
+     * Same with {@link KISSY.Event#remove}
+     * @method
+     * @member KISSY.Event
+     */
+    Event.detach = Event.remove;
+
+    return Event;
+}, {
+    requires: ['../base', 'dom', './special', './utils', './custom-event', './object']
+});
+/*
+ 2012-02-12 yiminghe@gmail.com note:
+ - 普通 remove() 不管 selector 都会查，如果 fn context 相等就移除
+ - undelegate() selector 为 ''，那么去除所有委托绑定的 handler
  */
 /**
  * @ignore
  * @fileOverview  change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/change', function (S, UA, Event, DOM, special) {
+KISSY.add('event/dom/change', function (S, UA, Event, DOM, special) {
     var doc = S.Env.host.document,
         mode = doc && doc['documentMode'];
 
@@ -11166,7 +12089,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
             // in case stopped by user's callback,same with submit
             // http://bugs.jquery.com/ticket/11049
             // see : test/change/bubble.html
-                e.isPropagationStopped ||
+                e.isPropagationStopped() ||
                     // checkbox/radio already bubble using another technique
                     isCheckBoxOrRadio(fel)) {
                 return;
@@ -11180,151 +12103,469 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
 
     }
 }, {
-    requires: ['ua', './base', 'dom', './special']
+    requires: ['ua', './api', 'dom', './special']
 });/**
  * @ignore
- * @fileOverview for other kissy core usage
+ * custom event for dom.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/data', function (S, DOM, Utils) {
-    var EVENT_GUID = Utils.EVENT_GUID,
-        data;
+KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscriber, DOMEventObject, Event) {
 
-    data = {
-        _hasData: function (elem, isCustomEvent) {
-            if (isCustomEvent) {
-                return elem[EVENT_GUID] && (!S.isEmptyObject(elem[EVENT_GUID]));
-            } else {
-                return DOM.hasData(elem, EVENT_GUID);
+    // 记录手工 fire(domElement,type) 时的 type
+    // 再在浏览器通知的系统 eventHandler 中检查
+    // 如果相同，那么证明已经 fire 过了，不要再次触发了
+    var _Utils = Event._Utils;
+
+    /**
+     * custom event for dom
+     * @param {Object} cfg
+     * @class KISSY.Event.DOMCustomEvent
+     */
+    function DOMCustomEvent(cfg) {
+        var self = this;
+        S.mix(self, cfg);
+        self.reset();
+        /**
+         * html node which binds current custom event
+         * @cfg {HTMLElement} currentTarget
+         */
+    }
+
+    S.extend(DOMCustomEvent, Event._BaseCustomEvent, {
+
+        setup: function () {
+            var self = this,
+                type = self.type,
+                s = special[type] || {},
+                currentTarget = self.currentTarget,
+                eventDesc = Utils.data(currentTarget),
+                handle = eventDesc.handle;
+            // 第一次注册该事件，dom 节点才需要注册 dom 事件
+            if (!s.setup || s.setup.call(currentTarget) === false) {
+                Utils.simpleAdd(currentTarget, type, handle)
             }
         },
 
-        _data: function (elem, v, isCustomEvent) {
-            if (isCustomEvent) {
-                if (v !== undefined) {
-                    return elem[EVENT_GUID] = v;
-                } else {
-                    return elem[EVENT_GUID];
+        constructor: DOMCustomEvent,
+
+        reset: function () {
+            var self = this;
+            DOMCustomEvent.superclass.reset.call(self);
+            self.delegateCount = 0;
+            self.lastCount = 0;
+        },
+
+        /**
+         * notify current event 's subscribers
+         * @param {KISSY.Event.DOMEventObject} event
+         * @return {*} return false if one of custom event 's subscribers  else
+         * return last value of custom event 's subscribers 's return value.
+         */
+        notify: function (event) {
+            /*
+             As some listeners may remove themselves from the
+             event, the original array length is dynamic. So,
+             let's make a copy of all listeners, so we are
+             sure we'll call all of them.
+             */
+            /*
+             DOM3 Events: EventListenerList objects in the DOM are live. ??
+             */
+            var target = event['target'],
+                self = this,
+                currentTarget = self.currentTarget,
+                subscribers = self.subscribers,
+                currentTarget0,
+                allSubscribers = [],
+                ret,
+                gRet,
+                subscriberObj,
+                i,
+                j,
+                delegateCount = self.delegateCount || 0,
+                len,
+                currentTargetSubscribers,
+                currentTargetSubscriber,
+                subscriber;
+
+            // collect delegated subscribers and corresponding element
+            // by jq
+            // Avoid disabled elements in IE (#6911)
+            // non-left-click bubbling in Firefox (#3861),firefox 8 fix it
+            if (delegateCount && !target.disabled) {
+                while (target != currentTarget) {
+                    currentTargetSubscribers = [];
+                    for (i = 0; i < delegateCount; i++) {
+                        subscriber = subscribers[i];
+                        if (DOM.test(target, subscriber.selector)) {
+                            currentTargetSubscribers.push(subscriber);
+                        }
+                    }
+                    if (currentTargetSubscribers.length) {
+                        allSubscribers.push({
+                            currentTarget: target,
+                            'currentTargetSubscribers': currentTargetSubscribers
+                        });
+                    }
+                    target = target.parentNode || currentTarget;
                 }
-            } else {
-                return DOM.data(elem, EVENT_GUID, v);
+            }
+
+            // root node's subscribers is placed at end position of add subscribers
+            // in case child node stopPropagation of root node's subscribers
+            allSubscribers.push({
+                currentTarget: currentTarget,
+                currentTargetSubscribers: subscribers.slice(delegateCount)
+            });
+
+            for (i = 0, len = allSubscribers.length; !event.isPropagationStopped() && i < len; ++i) {
+
+                subscriberObj = allSubscribers[i];
+                currentTargetSubscribers = subscriberObj.currentTargetSubscribers;
+                currentTarget0 = subscriberObj.currentTarget;
+                event.currentTarget = currentTarget0;
+
+                for (j = 0; !event.isImmediatePropagationStopped() && j < currentTargetSubscribers.length; j++) {
+
+                    currentTargetSubscriber = currentTargetSubscribers[j];
+
+                    ret = currentTargetSubscriber.notify(event, self);
+
+                    // 和 jQuery 逻辑保持一致
+                    // 有一个 false，最终结果就是 false
+                    // 否则等于最后一个返回值
+                    if (gRet !== false) {
+                        gRet = ret;
+                    }
+                }
+            }
+
+            // fire 时判断如果 preventDefault，则返回 false 否则返回 true
+            // 这里返回值意义不同
+            return gRet;
+        },
+
+        /**
+         * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
+         * @param {Object|KISSY.Event.DOMEventObject} [event] additional event data
+         * @return {*} return false if one of custom event 's subscribers (include bubbled) else
+         * return last value of custom event 's subscribers (include bubbled) 's return value.
+         */
+        fire: function (event, onlyHandlers/*internal usage*/) {
+
+            event = event || {};
+
+            var self = this,
+                eventType = self.type,
+                s = special[eventType];
+
+            // TODO bug: when fire mouseenter, it also fire mouseover in firefox/chrome
+            if (s && s['onFix']) {
+                eventType = s['onFix'];
+            }
+
+            var customEvent,
+                eventData,
+                currentTarget = self.currentTarget,
+                ret = true;
+
+            event.type = eventType;
+
+            if (!(event instanceof DOMEventObject)) {
+                eventData = event;
+                event = new DOMEventObject({
+                    currentTarget: currentTarget,
+                    target: currentTarget
+                });
+                S.mix(event, eventData);
+            }
+
+            // onlyHandlers is equal to event.halt()
+            // but we can not call event.halt()
+            // because handle will check event.isPropagationStopped
+            var cur = currentTarget,
+                t,
+                win = DOM._getWin(cur.ownerDocument || cur),
+                ontype = 'on' + eventType;
+
+            //bubble up dom tree
+            do {
+                event.currentTarget = cur;
+                customEvent = DOMCustomEvent.getCustomEvent(cur, eventType);
+                // default bubble for html node
+                if (customEvent) {
+                    t = customEvent.notify(event);
+                    if (ret !== false) {
+                        ret = t;
+                    }
+                }
+                // Trigger an inline bound script
+                if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
+                    event.preventDefault();
+                }
+                // Bubble up to document, then to window
+                cur = cur.parentNode || cur.ownerDocument ||
+                    (cur === currentTarget.ownerDocument) && win;
+            } while (!onlyHandlers && cur && !event.isPropagationStopped());
+
+            if (!onlyHandlers && !event.isDefaultPrevented()) {
+
+                // now all browser support click
+                // https://developer.mozilla.org/en-US/docs/DOM/element.click
+
+                var old;
+
+                try {
+                    // execute default action on dom node
+                    // so exclude window
+                    // exclude focus/blue on hidden element
+                    if (ontype && currentTarget[ eventType ] &&
+                        (
+                            (
+                                eventType !== 'focus' && eventType !== 'blur') ||
+                                currentTarget.offsetWidth !== 0
+                            ) &&
+                        !S.isWindow(currentTarget)) {
+                        // Don't re-trigger an onFOO event when we call its FOO() method
+                        old = currentTarget[ ontype ];
+
+                        if (old) {
+                            currentTarget[ ontype ] = null;
+                        }
+
+                        // 记录当前 trigger 触发
+                        DOMCustomEvent.triggeredEvent = eventType;
+
+                        // 只触发默认事件，而不要执行绑定的用户回调
+                        // 同步触发
+                        currentTarget[ eventType ]();
+                    }
+                } catch (eError) {
+                    S.log('trigger action error: ');
+                    S.log(eError);
+                }
+
+                if (old) {
+                    currentTarget[ ontype ] = old;
+                }
+
+                DOMCustomEvent.triggeredEvent = '';
+
+            }
+            return ret;
+        },
+
+        /**
+         * add a subscriber to custom event's subscribers
+         * @param {Object} cfg {@link KISSY.Event.DOMSubscriber} 's config
+         */
+        on: function (cfg) {
+            var self = this,
+                subscribers = self.subscribers,
+                s = special[self.type] || {},
+            // clone event
+                subscriber = cfg instanceof DOMSubscriber ? cfg : new DOMSubscriber(cfg);
+
+            if (self.findSubscriber(subscriber) == -1) {
+                // 增加 listener
+                if (subscriber.selector) {
+                    subscribers.splice(self.delegateCount, 0, subscriber);
+                    self.delegateCount++;
+                } else {
+                    if (subscriber.last) {
+                        subscribers.push(subscriber);
+                        self.lastCount++;
+                    } else {
+                        subscribers.splice(subscribers.length - self.lastCount, 0, subscriber);
+                    }
+                }
+
+                if (s.add) {
+                    s.add.call(self.currentTarget, subscriber);
+                }
             }
         },
 
-        _removeData: function (elem, isCustomEvent) {
-            if (isCustomEvent) {
-                delete elem[EVENT_GUID];
+        /**
+         * remove some subscribers from current event 's subscribers by subscriber config param
+         * @param {Object} cfg {@link KISSY.Event.DOMSubscriber} 's config
+         */
+        detach: function (cfg) {
+            var groupsRe,
+                self = this,
+                s = special[self.type] || {},
+                hasSelector = 'selector' in cfg,
+                selector = cfg.selector,
+                context = cfg.context,
+                fn = cfg.fn,
+                currentTarget = self.currentTarget,
+                subscribers = self.subscribers,
+                groups = cfg.groups;
+
+            if (!subscribers.length) {
+                return;
+            }
+
+            if (groups) {
+                groupsRe = _Utils.getGroupsRe(groups);
+            }
+
+            var i, j, t, subscriber, subscriberContext, len = subscribers.length;
+
+            // 移除 fn
+            if (fn || hasSelector || groupsRe) {
+                context = context || currentTarget;
+
+                for (i = 0, j = 0, t = []; i < len; ++i) {
+                    subscriber = subscribers[i];
+                    subscriberContext = subscriber.context || currentTarget;
+                    if (
+                        (context != subscriberContext) ||
+                            // 指定了函数，函数不相等，保留
+                            (fn && fn != subscriber.fn) ||
+                            // 1.没指定函数
+                            // 1.1 没有指定选择器,删掉 else2
+                            // 1.2 指定选择器,字符串为空
+                            // 1.2.1 指定选择器,字符串为空,待比较 subscriber 有选择器,删掉 else
+                            // 1.2.2 指定选择器,字符串为空,待比较 subscriber 没有选择器,保留
+                            // 1.3 指定选择器,字符串不为空,字符串相等,删掉 else
+                            // 1.4 指定选择器,字符串不为空,字符串不相等,保留
+                            // 2.指定了函数且函数相等
+                            // 2.1 没有指定选择器,删掉 else
+                            // 2.2 指定选择器,字符串为空
+                            // 2.2.1 指定选择器,字符串为空,待比较 subscriber 有选择器,删掉 else
+                            // 2.2.2 指定选择器,字符串为空,待比较 subscriber 没有选择器,保留
+                            // 2.3 指定选择器,字符串不为空,字符串相等,删掉  else
+                            // 2.4 指定选择器,字符串不为空,字符串不相等,保留
+                            (
+                                hasSelector &&
+                                    (
+                                        (selector && selector != subscriber.selector) ||
+                                            (!selector && !subscriber.selector)
+                                        )
+                                ) ||
+
+                            // 指定了删除的某些组，而该 subscriber 不属于这些组，保留，否则删除
+                            (groupsRe && !subscriber.groups.match(groupsRe))
+                        ) {
+                        t[j++] = subscriber;
+                    } else {
+                        if (subscriber.selector && self.delegateCount) {
+                            self.delegateCount--;
+                        }
+                        if (subscriber.last && self.lastCount) {
+                            self.lastCount--;
+                        }
+                        if (s.remove) {
+                            s.remove.call(currentTarget, subscriber);
+                        }
+                    }
+                }
+
+                self.subscribers = t;
             } else {
-                return DOM.removeData(elem, EVENT_GUID);
+                // 全部删除
+                self.reset();
+            }
+
+            self.checkMemory();
+        },
+
+        checkMemory: function () {
+            var self = this,
+                type = self.type,
+                events,
+                handle,
+                s = special[type] || {},
+                currentTarget = self.currentTarget,
+                eventDesc = Utils.data(currentTarget);
+            if (eventDesc) {
+                events = eventDesc.events;
+                if (!self.hasSubscriber()) {
+                    handle = eventDesc.handle;
+                    // remove(el, type) or fn 已移除光
+                    // dom node need to detach handler from dom node
+                    if ((!s['tearDown'] || s['tearDown'].call(currentTarget) === false)) {
+                        Utils.simpleRemove(currentTarget, type, handle);
+                    }
+                    // remove currentTarget's single event description
+                    delete events[type];
+                }
+
+                // remove currentTarget's  all events description
+                if (S.isEmptyObject(events)) {
+                    eventDesc.handle = null;
+                    Utils.removeData(currentTarget);
+                }
             }
         }
-    };
-    return data;
-}, {
-    requires: ['dom', './utils']
-});/**
- * @ignore
- * @fileOverview KISSY Scalable Event Framework
- * @author yiminghe@gmail.com
- */
-KISSY.add('event', function (S, _data, KeyCodes, Event, Target, Object) {
-    S.mix(Event,
-        /**
-         * @override KISSY.Event
-         * @class KISSY.Event.EventMod
-         * @singleton
-         */
-        {
-            KeyCodes:KeyCodes,
-            Target:Target,
-            Object:Object,
-            /**
-             * Same with {@link KISSY.Event#add}
-             * @method
-             * @member KISSY.Event
-             */
-            on:Event.add,
-            /**
-             * Same with {@link KISSY.Event#remove}
-             * @method
-             * @member KISSY.Event
-             */
-            detach:Event.remove,
-            /**
-             * Delegate event.
-             * @param targets KISSY selector             *
-             * @param {String|Function} selector filter selector string or function to find right element
-             * @param {String} [eventType] The type of event to delegate.
-             * use space to separate multiple event types.
-             * @param {Function} [fn] The event handler/listener.
-             * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
-             * @member KISSY.Event
-             */
-            delegate:function (targets, eventType, selector, fn, scope) {
-                return Event.add(targets, eventType, {
-                    fn:fn,
-                    scope:scope,
-                    selector:selector
-                });
-            },
-            /**
-             * undelegate event.
-             * @param targets KISSY selector
-             * @param {String} [eventType] The type of event to undelegate.
-             * use space to separate multiple event types.
-             * @param {String|Function} [selector] filter selector string or function to find right element
-             * @param {Function} [fn] The event handler/listener.
-             * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
-             * @member KISSY.Event
-             */
-            undelegate:function (targets, eventType, selector, fn, scope) {
-                return Event.remove(targets, eventType, {
-                    fn:fn,
-                    scope:scope,
-                    selector:selector
-                });
-            }
-        });
-
-    // for debugger
-    S.mix(Event, _data);
-
-    S.mix(S, {
-        Event:Event,
-        EventTarget:Event.Target,
-        EventObject:Event.Object
     });
 
+    DOMCustomEvent.triggeredEvent = '';
+
+    /**
+     * get custom event from html node by event type.
+     * @param {HTMLElement} node
+     * @param {String} type event type
+     * @return {KISSY.Event.DOMCustomEvent}
+     */
+    DOMCustomEvent.getCustomEvent = function (node, type) {
+
+        var eventDesc = Utils.data(node), events;
+        if (eventDesc) {
+            events = eventDesc.events;
+        }
+        if (events) {
+            return events[type];
+        }
+
+        return undefined;
+    };
+
+
+    DOMCustomEvent.getCustomEvents = function (node, create) {
+        var eventDesc = Utils.data(node);
+        if (!eventDesc && create) {
+            Utils.data(node, eventDesc = {});
+        }
+        return eventDesc;
+    };
+
+    return DOMCustomEvent;
+
+}, {
+    requires: ['dom', './special', './utils', './subscriber', './object', 'event/base']
+});/**
+ * @ignore
+ * @fileOverview dom event facade
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom', function (S, Event, KeyCodes, _DOMUtils) {
+    S.mix(Event, {
+        KeyCodes: KeyCodes,
+        _DOMUtils: _DOMUtils
+    });
     return Event;
 }, {
-    requires:[
-        'event/data',
-        'event/key-codes',
-        'event/base',
-        'event/target',
-        'event/object',
-        'event/focusin',
-        'event/hashchange',
-        'event/valuechange',
-        'event/mouseenter',
-        'event/submit',
-        'event/change',
-        'event/mousewheel',
-        'event/add',
-        'event/remove'
-    ]
+    requires: ['./base',
+        './dom/key-codes',
+        './dom/utils',
+        './dom/api',
+        './dom/change',
+        './dom/submit',
+        './dom/focusin',
+        './dom/hashchange',
+        './dom/mouseenter',
+        './dom/mousewheel',
+        './dom/valuechange']
 });
 
-/*
-   2012-02-12 yiminghe@gmail.com note:
-    - 普通 remove() 不管 selector 都会查，如果 fn scope 相等就移除
-    - undelegate() selector 为 ''，那么去除所有委托绑定的 handler
- *//**
+/**
  * @ignore
  * @fileOverview event-focusin
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/focusin', function (S, UA, Event, special) {
+KISSY.add('event/dom/focusin', function (S, UA, Event, special) {
     // 让非 IE 浏览器支持 focusin/focusout
     if (!UA['ie']) {
         S.each([
@@ -11375,164 +12616,19 @@ KISSY.add('event/focusin', function (S, UA, Event, special) {
 
     return Event;
 }, {
-    requires:['ua', './base', './special']
+    requires:['ua', './api', './special']
 });
 
 /*
   承玉:2011-06-07
-  - refactor to jquery , 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
-
-  NOTES:
-   - webkit 和 opera 已支持 DOMFocusIn/DOMFocusOut 事件，但上面的写法已经能达到预期效果，暂时不考虑原生支持。
+  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */
 /**
- * @ignore
- * @fileOverview responsible for handling event from browser to KISSY Event
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/handle', function (S, DOM, _data, special) {
-
-    function getEvents(target, isCustomEvent) {
-        // 获取事件描述
-        var eventDesc = _data._data(target, undefined,isCustomEvent);
-        return eventDesc && eventDesc.events;
-    }
-
-    function getHandlers(target, type, isCustomEvent) {
-        var events = getEvents(target, isCustomEvent) || {};
-        return events[type] || [];
-    }
-
-    return function (currentTarget, event, isCustomEvent) {
-        /*
-         As some listeners may remove themselves from the
-         event, the original array length is dynamic. So,
-         let's make a copy of all listeners, so we are
-         sure we'll call all of them.
-         */
-        /*
-         DOM3 Events: EventListenerList objects in the DOM are live. ??
-         */
-        var handlers = getHandlers(currentTarget, event.type, isCustomEvent),
-            target = event.target,
-            currentTarget0,
-            allHandlers = [],
-            ret,
-            gRet,
-            handlerObj,
-            i,
-            j,
-            delegateCount = handlers.delegateCount || 0,
-            len,
-            currentTargetHandlers,
-            currentTargetHandler,
-            handler;
-
-        // collect delegated handlers and corresponding element
-        if (delegateCount &&
-            // by jq
-            // Avoid disabled elements in IE (#6911)
-            // non-left-click bubbling in Firefox (#3861),firefox 8 fix it
-            !target.disabled) {
-            while (target != currentTarget) {
-                currentTargetHandlers = [];
-                for (i = 0; i < delegateCount; i++) {
-                    handler = handlers[i];
-                    if (DOM.test(target, handler.selector)) {
-                        currentTargetHandlers.push(handler);
-                    }
-                }
-                if (currentTargetHandlers.length) {
-                    allHandlers.push({
-                        currentTarget: target,
-                        'currentTargetHandlers': currentTargetHandlers
-                    });
-                }
-                target = target.parentNode || currentTarget;
-            }
-        }
-
-        // root node's handlers is placed at end position of add handlers
-        // in case child node stopPropagation of root node's handlers
-        allHandlers.push({
-            currentTarget: currentTarget,
-            currentTargetHandlers: handlers.slice(delegateCount)
-        });
-
-        // backup eventType
-        var eventType = event.type,
-            s,
-            t,
-            _ks_groups = event._ks_groups;
-
-        for (i = 0, len = allHandlers.length;
-             !event.isPropagationStopped && i < len;
-             ++i) {
-
-            handlerObj = allHandlers[i];
-            currentTargetHandlers = handlerObj.currentTargetHandlers;
-            currentTarget0 = handlerObj.currentTarget;
-            event.currentTarget = currentTarget0;
-
-            for (j = 0;
-                 !event.isImmediatePropagationStopped && j < currentTargetHandlers.length;
-                 j++) {
-
-                currentTargetHandler = currentTargetHandlers[j];
-
-                // handler's group does not match specified groups (at fire step)
-                if (_ks_groups &&
-                    (!currentTargetHandler.groups ||
-                        !(currentTargetHandler.groups.match(_ks_groups)))) {
-                    continue;
-                }
-
-                var data = currentTargetHandler.data;
-
-                // restore originalType if involving delegate/onFix handlers
-                event.type = currentTargetHandler.originalType || eventType;
-
-                // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
-                if (// 非自定义事件
-                    !isCustomEvent &&
-                        (s = special[event.type]) &&
-                        s.handle) {
-                    t = s.handle(event, currentTargetHandler, data);
-                    // can handle
-                    if (t.length > 0) {
-                        ret = t[0];
-                    }
-                } else {
-                    ret = currentTargetHandler.fn.call(
-                        currentTargetHandler.scope || currentTarget,
-                        event, data
-                    );
-                }
-                // 和 jQuery 逻辑保持一致
-                // 有一个 false，最终结果就是 false
-                // 否则等于最后一个返回值
-                if (gRet !== false) {
-                    gRet = ret;
-                }
-                // return false 等价 preventDefault + stopPropagation
-                if (ret === false) {
-                    event.halt();
-                }
-            }
-        }
-
-        // fire 时判断如果 preventDefault，则返回 false 否则返回 true
-        // 这里返回值意义不同
-        return gRet;
-    }
-}, {
-    requires: ['dom', './data', './special']
-});/**
  * @ignore
  * @fileOverview event-hashchange
  * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
-KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
+KISSY.add('event/dom/hashchange', function (S, Event, DOM, UA, special) {
 
     var win = S.Env.host,
         doc = win.document,
@@ -11754,7 +12850,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
         };
     }
 }, {
-    requires: ['./base', 'dom', 'ua', './special']
+    requires: ['./api', 'dom', 'ua', './special']
 });
 
 /*
@@ -11770,7 +12866,7 @@ KISSY.add('event/hashchange', function (S, Event, DOM, UA, special) {
  * @fileOverview some key-codes definition and utils from closure-library
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/key-codes', function (S, UA) {
+KISSY.add('event/dom/key-codes', function (S, UA) {
     /**
      * @enum {Number} KISSY.Event.KeyCodes
      * All key codes.
@@ -12200,7 +13296,7 @@ KISSY.add('event/key-codes', function (S, UA) {
 
     /**
      * whether text and modified key is entered at the same time.
-     * @param {KISSY.Event.Object} e event object
+     * @param {KISSY.Event.DOMEventObject} e event object
      * @return {Boolean}
      */
     KeyCodes.isTextModifyingKeyEvent = function (e) {
@@ -12303,17 +13399,17 @@ KISSY.add('event/key-codes', function (S, UA) {
  * @fileOverview event-mouseenter
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
+KISSY.add('event/dom/mouseenter', function (S, Event, DOM, UA, special) {
     S.each([
-        { name:'mouseenter', fix:'mouseover' },
-        { name:'mouseleave', fix:'mouseout' }
+        { name: 'mouseenter', fix: 'mouseover' },
+        { name: 'mouseleave', fix: 'mouseout' }
     ], function (o) {
         special[o.name] = {
             // fix #75
-            onFix:o.fix,
+            onFix: o.fix,
             // all browser need
-            delegateFix:o.fix,
-            handle:function (event, handler, data) {
+            delegateFix: o.fix,
+            handle: function (event, subscriber, ce) {
                 var currentTarget = event.currentTarget,
                     relatedTarget = event.relatedTarget;
                 // 在自身外边就触发
@@ -12331,41 +13427,143 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
                     // mouseover 采样时跳跃的，可能 2,1 的 mouseover 事件
                     // target 都是 3,而 relatedTarget 都是 0
                     // event.stopPropagation();
-                    return [handler.fn.call(handler.scope || currentTarget, event, data)];
+                    return [subscriber.simpleNotify(event, ce)];
                 }
-                return [];
             }
         };
     });
 
     return Event;
 }, {
-    requires:['./base', 'dom', 'ua', './special']
+    requires: ['./api', 'dom', 'ua', './special']
 });
 
 /*
-  yiminghe@gmail.com:2011-12-15
-  - 借鉴 jq 1.7 新的架构
+ yiminghe@gmail.com:2011-12-15
+ - 借鉴 jq 1.7 新的架构
 
-  承玉：2011-06-07
-  - 根据新结构，调整 mouseenter 兼容处理
-  - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
+ 承玉：2011-06-07
+ - 根据新结构，调整 mouseenter 兼容处理
+ - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
  */
 /**
  * @ignore
  * @fileOverview normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/mousewheel', function (S, Event, UA, Utils, EventObject, handle, _data, special) {
+KISSY.add('event/dom/mousewheel', function (S, special,UA) {
 
-    var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel',
-        simpleRemove = Utils.simpleRemove,
-        simpleAdd = Utils.simpleAdd,
-        MOUSE_WHEEL_HANDLER = 'mousewheelHandler';
+    var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
 
-    function handler(e) {
+    special['mousewheel'] = {
+        onFix: MOUSE_WHEEL,
+        delegateFix: MOUSE_WHEEL
+    };
+
+}, {
+    requires: ['./special','ua']
+});/**
+ * @ignore
+ * @fileOverview event object for dom
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/object', function (S, Event) {
+
+    var doc = S.Env.host.document,
+        TRUE = true,
+        FALSE = false,
+        props = ('type altKey attrChange attrName bubbles button cancelable ' +
+            'charCode clientX clientY ctrlKey currentTarget data detail ' +
+            'eventPhase fromElement handler keyCode metaKey ' +
+            'newValue offsetX offsetY originalTarget pageX pageY prevValue ' +
+            'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
+            'target toElement view wheelDelta which axis').split(' ');
+
+    /**
+     * KISSY 's dom event system normalizes the event object according to
+     * W3C standards. The event object is guaranteed to be passed to
+     * the event handler. Most properties from the original event are
+     * copied over and normalized to the new event object.
+     *
+     * @class KISSY.Event.DOMEventObject
+     * @param domEvent native dom event
+     */
+    function DOMEventObject(domEvent) {
+        var self = this;
+        self.originalEvent = domEvent;
+        // in case dom event has been mark as default prevented by lower dom node
+        self.isDefaultPrevented = ( domEvent['defaultPrevented'] || domEvent.returnValue === FALSE ||
+            domEvent['getPreventDefault'] && domEvent['getPreventDefault']() ) ? function () {
+            return TRUE;
+        } : function () {
+            return FALSE;
+        };
+        fix(self);
+        fixMouseWheel(self);
+        /**
+         * source html node of current event
+         * @cfg {HTMLElement} target
+         */
+        /**
+         * current htm node which processes current event
+         * @cfg {HTMLElement} currentTarget
+         */
+    }
+
+    function fix(self) {
+        var originalEvent = self.originalEvent,
+            l = props.length,
+            prop,
+            ct = originalEvent.currentTarget,
+            ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
+
+        // clone properties of the original event object
+        while (l) {
+            prop = props[--l];
+            self[prop] = originalEvent[prop];
+        }
+
+        // fix target property, if necessary
+        if (!self.target) {
+            self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
+        }
+
+        // check if target is a text node (safari)
+        if (self.target.nodeType === 3) {
+            self.target = self.target.parentNode;
+        }
+
+        // add relatedTarget, if necessary
+        if (!self.relatedTarget && self.fromElement) {
+            self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
+        }
+
+        // calculate pageX/Y if missing and clientX/Y available
+        if (self.pageX === undefined && self.clientX !== undefined) {
+            var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
+            self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
+            self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
+        }
+
+        // add which for key events
+        if (self.which === undefined) {
+            self.which = (self.charCode === undefined) ? self.keyCode : self.charCode;
+        }
+
+        // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
+        if (self.metaKey === undefined) {
+            self.metaKey = self.ctrlKey;
+        }
+
+        // add which for click: 1 === left; 2 === middle; 3 === right
+        // Note: button is not normalized, so don't use it
+        if (!self.which && self.button !== undefined) {
+            self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
+        }
+    }
+
+    function fixMouseWheel(e) {
         var deltaX,
-            currentTarget = this,
             deltaY,
             delta,
             detail = e.detail;
@@ -12402,176 +13600,17 @@ KISSY.add('event/mousewheel', function (S, Event, UA, Utils, EventObject, handle
             deltaY = delta;
         }
 
-        // can not invoke eventDesc.handler , it will protect type
-        // but here in firefox , we want to change type really
-        e = new EventObject(currentTarget, e);
-
         S.mix(e, {
-            deltaY:deltaY,
-            delta:delta,
-            deltaX:deltaX,
-            type:'mousewheel'
+            deltaY: deltaY,
+            delta: delta,
+            deltaX: deltaX
         });
-
-        return  handle(currentTarget, e);
     }
 
-    special['mousewheel'] = {
-        setup:function () {
-            var el = this,
-                mousewheelHandler,
-                eventDesc = _data._data(el,undefined,false);
-            // solve this in ie
-            mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER] = S.bind(handler, el);
-            simpleAdd(this, MOUSE_WHEEL, mousewheelHandler);
-        },
-        tearDown:function () {
-            var el = this,
-                mousewheelHandler,
-                eventDesc = _data._data(el,undefined,false);
-            mousewheelHandler = eventDesc[MOUSE_WHEEL_HANDLER];
-            simpleRemove(this, MOUSE_WHEEL, mousewheelHandler);
-            delete eventDesc[mousewheelHandler];
-        }
-    };
+    S.extend(DOMEventObject, Event._Object, {
 
-}, {
-    requires:['./base', 'ua', './utils',
-        './object', './handle',
-        './data', './special']
-});
+        constructor: DOMEventObject,
 
-/*
- note:
- not perfect in osx : accelerated scroll
- refer:
- https://github.com/brandonaaron/jquery-mousewheel/blob/master/jquery.mousewheel.js
- http://www.planabc.net/2010/08/12/mousewheel_event_in_javascript/
- http://www.switchonthecode.com/tutorials/javascript-tutorial-the-scroll-wheel
- http://stackoverflow.com/questions/5527601/normalizing-mousewheel-speed-across-browsers/5542105#5542105
- http://www.javascriptkit.com/javatutors/onmousewheel.shtml
- http://www.adomas.org/javascript-mouse-wheel/
- http://plugins.jquery.com/project/mousewheel
- http://www.cnblogs.com/aiyuchen/archive/2011/04/19/2020843.html
- http://www.w3.org/TR/DOM-Level-3-Events/#events-mousewheelevents
-*//**
- * @ignore
- * @fileOverview EventObject
- * @author lifesinger@gmail.com, yiminghe@gmail.com
- */
-KISSY.add('event/object', function (S, undefined) {
-
-    var doc = S.Env.host.document,
-        TRUE = true,
-        FALSE = false,
-        props = ('altKey attrChange attrName bubbles button cancelable ' +
-            'charCode clientX clientY ctrlKey currentTarget data detail ' +
-            'eventPhase fromElement handler keyCode metaKey ' +
-            'newValue offsetX offsetY originalTarget pageX pageY prevValue ' +
-            'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
-            'target toElement view wheelDelta which axis').split(' ');
-
-    /**
-     * @class KISSY.Event.Object
-     *
-     * KISSY 's event system normalizes the event object according to
-     * W3C standards. The event object is guaranteed to be passed to
-     * the event handler. Most properties from the original event are
-     * copied over and normalized to the new event object.
-     */
-    function EventObject(currentTarget, domEvent, type) {
-        var self = this;
-        self.originalEvent = domEvent || { };
-        self.currentTarget = currentTarget;
-        if (domEvent) { // html element
-            self.type = domEvent.type;
-            // in case dom event has been mark as default prevented by lower dom node
-            self.isDefaultPrevented = ( domEvent['defaultPrevented'] || domEvent.returnValue === FALSE ||
-                domEvent['getPreventDefault'] && domEvent['getPreventDefault']() ) ? TRUE : FALSE;
-            self._fix();
-        }
-        else { // custom
-            self.type = type;
-            self.target = currentTarget;
-        }
-        // bug fix: in _fix() method, ie maybe reset currentTarget to undefined.
-        self.currentTarget = currentTarget;
-        self.fixed = TRUE;
-    }
-
-    EventObject.prototype = {
-        constructor: EventObject,
-        /**
-         * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
-         * @type {Boolean}
-         */
-        isDefaultPrevented: FALSE,
-        /**
-         * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
-         * @type {Boolean}
-         */
-        isPropagationStopped: FALSE,
-        /**
-         * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
-         * @type {Boolean}
-         */
-        isImmediatePropagationStopped: FALSE,
-
-        _fix: function () {
-            var self = this,
-                originalEvent = self.originalEvent,
-                l = props.length, prop,
-                ct = self.currentTarget,
-                ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
-
-            // clone properties of the original event object
-            while (l) {
-                prop = props[--l];
-                self[prop] = originalEvent[prop];
-            }
-
-            // fix target property, if necessary
-            if (!self.target) {
-                self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
-            }
-
-            // check if target is a textnode (safari)
-            if (self.target.nodeType === 3) {
-                self.target = self.target.parentNode;
-            }
-
-            // add relatedTarget, if necessary
-            if (!self.relatedTarget && self.fromElement) {
-                self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
-            }
-
-            // calculate pageX/Y if missing and clientX/Y available
-            if (self.pageX === undefined && self.clientX !== undefined) {
-                var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
-                self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
-                self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
-            }
-
-            // add which for key events
-            if (self.which === undefined) {
-                self.which = (self.charCode === undefined) ? self.keyCode : self.charCode;
-            }
-
-            // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
-            if (self.metaKey === undefined) {
-                self.metaKey = self.ctrlKey;
-            }
-
-            // add which for click: 1 === left; 2 === middle; 3 === right
-            // Note: button is not normalized, so don't use it
-            if (!self.which && self.button !== undefined) {
-                self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
-            }
-        },
-
-        /**
-         * Prevents the event's default behavior
-         */
         preventDefault: function () {
             var e = this.originalEvent;
 
@@ -12584,12 +13623,9 @@ KISSY.add('event/object', function (S, undefined) {
                 e.returnValue = FALSE;
             }
 
-            this.isDefaultPrevented = TRUE;
+            DOMEventObject.superclass.preventDefault.call(this);
         },
 
-        /**
-         * Stops the propagation to the next bubble target
-         */
         stopPropagation: function () {
             var e = this.originalEvent;
 
@@ -12602,259 +13638,46 @@ KISSY.add('event/object', function (S, undefined) {
                 e.cancelBubble = TRUE;
             }
 
-            this.isPropagationStopped = TRUE;
-        },
-
-
-        /**
-         * Stops the propagation to the next bubble target and
-         * prevents any additional listeners from being exectued
-         * on the current target.
-         */
-        stopImmediatePropagation: function () {
-            var self = this;
-            self.isImmediatePropagationStopped = TRUE;
-            // fixed 1.2
-            // call stopPropagation implicitly
-            self.stopPropagation();
-        },
-
-        /**
-         * Stops the event propagation and prevents the default
-         * event behavior.
-         * @param  {Boolean} [immediate] if true additional listeners on the current target will not be executed
-         */
-        halt: function (immediate) {
-            var self = this;
-            if (immediate) {
-                self.stopImmediatePropagation();
-            } else {
-                self.stopPropagation();
-            }
-            self.preventDefault();
+            DOMEventObject.superclass.stopPropagation.call(this);
         }
-    };
+    });
 
-    return EventObject;
+    return DOMEventObject;
 
+}, {
+    requires: ['event/base']
 });
 
 /*
-  NOTES:
+ 2010.04
+ - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
 
-   2010.04
-    - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
+ 2012-10-24
+ - merge with mousewheel: not perfect in osx : accelerated scroll
 
-  TODO:
-    - pageX, clientX, scrollLeft, clientLeft 的详细测试
- */
-/**
- * @ignore
- * @fileOverview responsible for un-registering event
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/remove', function (S, Event, DOM, Utils, _data, EVENT_SPECIAL) {
-    var isValidTarget = Utils.isValidTarget,
-        simpleRemove = Utils.simpleRemove;
-
-    S.mix(Event,
-        /**
-         * @override KISSY.Event
-         * @class KISSY.Event.RemoveMod
-         * @singleton
-         */
-        {
-            // single target, single type, fixed native
-            __remove: function (isNativeTarget, target, type, fn, scope) {
-
-                if (!target || (isNativeTarget && !isValidTarget(target))) {
-                    return;
-                }
-
-                var typedGroups = Utils.getTypedGroups(type);
-                type = typedGroups[0];
-                var groups = typedGroups[1],
-                    isCustomEvent = !isNativeTarget,
-                    selector,
-                // in case type is undefined
-                    originalFn = fn,
-                    originalScope = scope,
-                    hasSelector, s = EVENT_SPECIAL[type];
-
-                if (S.isObject(fn)) {
-                    scope = fn.scope;
-                    hasSelector = ('selector' in fn);
-                    selector = fn.selector;
-                    fn = fn.fn;
-                    if (selector) {
-                        if (s && s['delegateFix']) {
-                            type = s['delegateFix'];
-                        }
-                    }
-                }
-
-                if (!selector) {
-                    if (s && s['onFix']) {
-                        type = s['onFix'];
-                    }
-                }
-
-                var eventDesc = _data._data(target, undefined, isCustomEvent),
-                    events = eventDesc && eventDesc.events,
-                    handlers,
-                    handler,
-                    len,
-                    i,
-                    j,
-                    t,
-                    special = (isNativeTarget && EVENT_SPECIAL[type]) || { };
-
-                if (!events) {
-                    return;
-                }
-
-                // remove all types of event
-                if (!type) {
-                    for (type in events) {
-                        Event.__remove(isNativeTarget,
-                            target, type + groups, originalFn,
-                            originalScope);
-                    }
-                    return;
-                }
-
-                var groupsRe;
-
-                if (groups) {
-                    groupsRe = Utils.getGroupsRe(groups);
-                }
-
-                if ((handlers = events[type])) {
-                    len = handlers.length;
-                    // 移除 fn
-                    if ((fn || hasSelector || groupsRe ) && len) {
-                        scope = scope || target;
-
-                        for (i = 0, j = 0, t = []; i < len; ++i) {
-                            handler = handlers[i];
-                            var handlerScope = handler.scope || target;
-                            if (
-                                (scope != handlerScope) ||
-                                    // 指定了函数，函数不相等，保留
-                                    (fn && fn != handler.fn) ||
-                                    // 1.没指定函数
-                                    // 1.1 没有指定选择器,删掉 else2
-                                    // 1.2 指定选择器,字符串为空
-                                    // 1.2.1 指定选择器,字符串为空,待比较 handler 有选择器,删掉 else
-                                    // 1.2.2 指定选择器,字符串为空,待比较 handler 没有选择器,保留
-                                    // 1.3 指定选择器,字符串不为空,字符串相等,删掉 else
-                                    // 1.4 指定选择器,字符串不为空,字符串不相等,保留
-                                    // 2.指定了函数且函数相等
-                                    // 2.1 没有指定选择器,删掉 else
-                                    // 2.2 指定选择器,字符串为空
-                                    // 2.2.1 指定选择器,字符串为空,待比较 handler 有选择器,删掉 else
-                                    // 2.2.2 指定选择器,字符串为空,待比较 handler 没有选择器,保留
-                                    // 2.3 指定选择器,字符串不为空,字符串相等,删掉  else
-                                    // 2.4 指定选择器,字符串不为空,字符串不相等,保留
-                                    (
-                                        hasSelector &&
-                                            (
-                                                (selector && selector != handler.selector) ||
-                                                    (!selector && !handler.selector)
-                                                )
-                                        ) ||
-
-                                    // 指定了删除的某些组，而该 handler 不属于这些组，保留，否则删除
-                                    (groupsRe && !handler.groups.match(groupsRe))
-
-                                ) {
-                                t[j++] = handler;
-                            }
-                            else {
-                                if (handler.selector && handlers.delegateCount) {
-                                    handlers.delegateCount--;
-                                }
-                                if (handler.last && handlers.lastCount) {
-                                    handlers.lastCount--;
-                                }
-                                if (special.remove) {
-                                    special.remove.call(target, handler);
-                                }
-                            }
-                        }
-                        t.delegateCount = handlers.delegateCount;
-                        t.lastCount = handlers.lastCount;
-                        events[type] = t;
-                        len = t.length;
-                    } else {
-                        // 全部删除
-                        len = 0;
-                    }
-
-                    if (!len) {
-                        // remove(el, type) or fn 已移除光
-                        // dom node need to detach handler from dom node
-                        if (isNativeTarget &&
-                            (!special['tearDown'] ||
-                                special['tearDown'].call(target) === false)) {
-                            simpleRemove(target, type, eventDesc.handler);
-                        }
-                        // remove target's single event description
-                        delete events[type];
-                    }
-                }
-
-                // remove target's  all events description
-                if (S.isEmptyObject(events)) {
-                    (eventDesc.handler || {}).target = null;
-                    delete eventDesc.handler;
-                    delete eventDesc.events;
-                    _data._removeData(target, isCustomEvent);
-                }
-            },
-
-            /**
-             * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
-             * @param targets KISSY selector
-             * @member KISSY.Event
-             * @param {String} [type] The type of event to remove.
-             * use space to separate multiple event types.
-             * @param {Function} [fn] The event handler/listener.
-             * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
-             */
-            remove: function (targets, type, fn, scope) {
-
-                type = S.trim(type);
-
-                if (Utils.batchForType(Event.remove, targets, type, fn, scope)) {
-                    return targets;
-                }
-
-                targets = DOM.query(targets);
-
-                for (var i = targets.length - 1; i >= 0; i--) {
-                    Event.__remove(true, targets[i], type, fn, scope);
-                }
-
-                return targets;
-
-            }
-        });
-}, {
-    requires: ['./base', 'dom', './utils', './data', './special']
-});/**
+ - refer:
+ https://github.com/brandonaaron/jquery-mousewheel/blob/master/jquery.mousewheel.js
+ http://www.planabc.net/2010/08/12/mousewheel_event_in_javascript/
+ http://www.switchonthecode.com/tutorials/javascript-tutorial-the-scroll-wheel
+ http://stackoverflow.com/questions/5527601/normalizing-mousewheel-speed-across-browsers/5542105#5542105
+ http://www.javascriptkit.com/javatutors/onmousewheel.shtml
+ http://www.adomas.org/javascript-mouse-wheel/
+ http://plugins.jquery.com/project/mousewheel
+ http://www.cnblogs.com/aiyuchen/archive/2011/04/19/2020843.html
+ http://www.w3.org/TR/DOM-Level-3-Events/#events-mousewheelevents
+ *//**
  * @ignore
  * @fileOverview special house for special events
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/special', function () {
+KISSY.add('event/dom/special', function () {
     return {};
 });/**
  * @ignore
- * @fileOverview patch for ie<9 submit : does not bubble !
+ * @fileOverview patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
+KISSY.add('event/dom/submit', function (S, UA, Event, DOM, special) {
 
     var doc = S.Env.host.document,
         mode = doc && doc['documentMode'];
@@ -12870,7 +13693,7 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
                 }
                 // lazy add submit for inside forms
                 // note event order : click/keypress -> submit
-                // keypoint : find the forms
+                // key point : find the forms
                 Event.on(el, 'click keypress', detector);
             },
             tearDown: function () {
@@ -12911,7 +13734,7 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
             var form = this;
             if (form.parentNode &&
                 // it is stopped by user callback
-                !e.isPropagationStopped &&
+                !e.isPropagationStopped() &&
                 // it is not fired manually
                 !e._ks_fired) {
                 // simulated bubble for submit
@@ -12922,278 +13745,79 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
     }
 
 }, {
-    requires: ['ua', './base', 'dom', './special']
+    requires: ['ua', './api', 'dom', './special']
 });
 /*
- modified from jq ,fix submit in ie<9
+ modified from jq, fix submit in ie<9
  - http://bugs.jquery.com/ticket/11049
  *//**
  * @ignore
- * @fileOverview 提供事件发布和订阅机制
+ * subscriber for dom event.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/target', function (S, Event, EventObject, Utils, handle, undefined) {
-    var KS_PUBLISH = '__~ks_publish',
-        trim = S.trim,
-        splitAndRun = Utils.splitAndRun,
-        KS_BUBBLE_TARGETS = '__~ks_bubble_targets',
-        ALL_EVENT = '*';
-
-    function getCustomEvent(self, type, eventData) {
-        if (eventData instanceof EventObject) {
-            // set currentTarget in the process of bubbling
-            eventData.currentTarget = self;
-            return eventData;
-        }
-        var customEvent = new EventObject(self, undefined, type);
-        S.mix(customEvent, eventData);
-        return customEvent
-    }
-
-    function getEventPublishObj(self) {
-        self[KS_PUBLISH] = self[KS_PUBLISH] || {};
-        return self[KS_PUBLISH];
-    }
-
-    function getBubbleTargetsObj(self) {
-        self[KS_BUBBLE_TARGETS] = self[KS_BUBBLE_TARGETS] || {};
-        return self[KS_BUBBLE_TARGETS];
-    }
-
-    function canBubble(self, eventType) {
-        var publish = getEventPublishObj(self);
-        return publish[eventType] && publish[eventType].bubbles || publish[ALL_EVENT] && publish[ALL_EVENT].bubbles
-    }
-
-    function attach(method) {
-        return function (type, fn, scope) {
-            var self = this;
-            type = trim(type);
-            splitAndRun(type, function (t) {
-                Event['__' + method](false, self, t, fn, scope);
-            });
-            return self; // chain
-        };
-    }
+KISSY.add('event/dom/subscriber', function (S, special, Event) {
 
     /**
-     * @class KISSY.Event.Target
-     * @singleton
-     * EventTarget provides the implementation for any object to publish, subscribe and fire to custom events,
-     * and also allows other EventTargets to target the object with events sourced from the other object.
-     * EventTarget is designed to be used with S.augment to allow events to be listened to and fired by name.
-     * This makes it possible for implementing code to subscribe to an event that either has not been created yet,
-     * or will not be created at all.
+     * subscriber for dom event
+     * @class KISSY.Event.DOMSubscriber
+     * @extends KISSY.Event.Subscriber
      */
-    var Target = {
+    function DOMSubscriber(cfg) {
+        DOMSubscriber.superclass.constructor.apply(this, arguments);
         /**
-         * Fire a custom event by name.
-         * The callback functions will be executed from the context specified when the event was created,
-         * and the {@link KISSY.Event.Object} created will be mixed with eventData
-         * @param {String} type The type of the event
-         * @param {Object} [eventData] The data will be mixed with {@link KISSY.Event.Object} created
-         * @return {Boolean|*} If any listen returns false, then the returned value is false. else return the last listener's returned value
+         * filter selector string or function to find right element
+         * @cfg {String} selector
          */
-        fire: function (type, eventData) {
+        /**
+         * extra data as second parameter of listener
+         * @cfg {*} data
+         */
+    }
+
+    S.extend(DOMSubscriber, Event._Subscriber, {
+
+        keys: ['fn', 'selector', 'data', 'context', 'originalType', 'groups', 'last'],
+
+        notifyInternal: function (event, ce) {
             var self = this,
-                ret = undefined,
-                r2,
-                typedGroups,
-                _ks_groups,
-                customEvent;
+                s, t, ret,
+                type = event.type;
 
-            eventData = eventData || {};
-
-            type = trim(type);
-
-            if (type.indexOf(' ') > 0) {
-                splitAndRun(type, function (t) {
-                    r2 = self.fire(t, eventData);
-                    if (ret !== false) {
-                        ret = r2;
-                    }
-                });
-                return ret;
+            // restore originalType if involving delegate/onFix handlers
+            if (self.originalType) {
+                event.type = self.originalType;
             }
 
-            typedGroups = Utils.getTypedGroups(type);
-            _ks_groups = typedGroups[1];
-
-            type = typedGroups[0];
-
-            if (_ks_groups) {
-                _ks_groups = Utils.getGroupsRe(_ks_groups);
-            }
-
-            S.mix(eventData, {
-                // protect type
-                type: type,
-                _ks_groups: _ks_groups
-            });
-
-            customEvent = getCustomEvent(self, type, eventData);
-
-            ret = handle(self, customEvent,true);
-
-            if (!customEvent.isPropagationStopped && (
-                // 冒泡过来的，不检查继续冒泡
-                customEvent.target != self ||
-                    canBubble(self, type))) {
-
-                r2 = self.bubble(type, customEvent);
-
-                // false 优先返回
-                if (ret !== false) {
-                    ret = r2;
+            // context undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
+            if ((s = special[event.type]) && s.handle) {
+                t = s.handle(event, self, ce);
+                // can handle
+                if (t && t.length > 0) {
+                    ret = t[0];
                 }
-
+            } else {
+                ret = self.simpleNotify(event, ce);
             }
-            return ret
-        },
 
-        /**
-         * Creates a new custom event of the specified type
-         * @param {String} type The type of the event
-         * @param {Object} cfg Config params
-         * @param {Boolean} [cfg.bubbles=false] whether or not this event bubbles
-         */
-        publish: function (type, cfg) {
-            var self = this,
-                publish = getEventPublishObj(self);
-            type = trim(type);
-            if (type) {
-                splitAndRun(type, function (t) {
-                    publish[t] = cfg;
-                });
-            }
-        },
+            event.type = type;
 
-        /**
-         * bubble event to its targets
-         * @param type
-         * @param eventData
-         * @private
-         */
-        bubble: function (type, eventData) {
-            var self = this,
-                ret = undefined,
-                targets = getBubbleTargetsObj(self);
-            S.each(targets, function (t) {
-                var r2 = t.fire(type, eventData);
-                if (ret !== false) {
-                    ret = r2;
-                }
-            });
             return ret;
-        },
+        }
 
-        /**
-         * Registers another EventTarget as a bubble target.
-         * @param {KISSY.Event.Target} target Another EventTarget instance to add
-         */
-        addTarget: function (target) {
-            var self = this,
-                targets = getBubbleTargetsObj(self);
-            targets[S.stamp(target)] = target;
-        },
+    });
 
-        /**
-         * Removes a bubble target
-         * @param {KISSY.Event.Target} target Another EventTarget instance to remove
-         */
-        removeTarget: function (target) {
-            var self = this,
-                targets = getBubbleTargetsObj(self);
-            delete targets[S.stamp(target)];
-        },
+    return DOMSubscriber;
 
-        /**
-         * Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
-         * @method
-         * @param {String} type The name of the event
-         * @param {Function} fn The callback to execute in response to the event
-         * @param {Object} [scope] this object in callback
-         */
-        on: attach('add'),
-        /**
-         * Detach one or more listeners the from the specified event
-         * @method
-         * @param {String} type The name of the event
-         * @param {Function} [fn] The subscribed function to unsubscribe. if not supplied, all subscribers will be removed.
-         * @param {Object} [scope] The custom object passed to subscribe.
-         */
-        detach: attach('remove')
-    };
-
-    return Target;
 }, {
-    requires: ['./base', './object', './utils', './handle']
-});
-/*
-   yiminghe: 2011-10-17
-    - implement bubble for custom event
-*//**
+    requires: ['./special', 'event/base']
+});/**
  * @ignore
  * @fileOverview utils for event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/utils', function (S, DOM) {
-
-    var NodeType = DOM.NodeType;
-
-    /*
-     whether two event listens are the same
-     @param h1 已有的 handler 描述
-     @param h2 用户提供的 handler 描述
-     */
-    function isIdenticalHandler(h1, h2, el) {
-        var scope1 = h1.scope || el,
-            ret = 1,
-            scope2 = h2.scope || el;
-        if (
-            h1.fn !== h2.fn ||
-                h1.selector !== h2.selector ||
-                h1.data !== h2.data ||
-                scope1 !== scope2 ||
-                h1.originalType !== h2.originalType ||
-                h1.groups !== h2.groups ||
-                h1.last !== h2.last
-            ) {
-            ret = 0;
-        }
-        return ret;
-    }
-
-
-    function isValidTarget(target) {
-        // 3 - is text node
-        // 8 - is comment node
-        return target &&
-            target.nodeType !== NodeType.TEXT_NODE &&
-            target.nodeType !== NodeType.COMMENT_NODE;
-    }
-
-
-    function batchForType(fn, targets, types) {
-        // on(target, 'click focus', fn)
-        if (types && types.indexOf(' ') > 0) {
-            var args = S.makeArray(arguments);
-            S.each(types.split(/\s+/), function (type) {
-                var args2 = [].concat(args);
-                args2.splice(0, 3, targets, type);
-                fn.apply(null, args2);
-            });
-            return true;
-        }
-        return 0;
-    }
-
-
-    function splitAndRun(type, fn) {
-        S.each(type.split(/\s+/), fn);
-    }
-
-    var doc = S.Env.host.document,
+KISSY.add('event/dom/utils', function (S, DOM) {
+    var EVENT_GUID = 'ksEventTargetId_1.30',
+        doc = S.Env.host.document,
         simpleAdd = doc && doc.addEventListener ?
             function (el, type, fn, capture) {
                 if (el.addEventListener) {
@@ -13217,38 +13841,17 @@ KISSY.add('event/utils', function (S, DOM) {
                 }
             };
 
-
     return {
-        // 记录手工 fire(domElement,type) 时的 type
-        // 再在浏览器通知的系统 eventHandler 中检查
-        // 如果相同，那么证明已经 fire 过了，不要再次触发了
-        Event_Triggered: '',
-        TRIGGERED_NONE: 'trigger-none-' + S.now(),
-        EVENT_GUID: 'ksEventTargetId' + S.now(),
-        splitAndRun: splitAndRun,
-        batchForType: batchForType,
-        isValidTarget: isValidTarget,
-        isIdenticalHandler: isIdenticalHandler,
         simpleAdd: simpleAdd,
+
         simpleRemove: simpleRemove,
-        getTypedGroups: function (type) {
-            if (type.indexOf('.') < 0) {
-                return [type, ''];
-            }
-            var m = type.match(/([^.]+)?(\..+)?$/),
-                t = m[1],
-                ret = [t],
-                gs = m[2];
-            if (gs) {
-                gs = gs.split('.').sort();
-                ret.push(gs.join('.'));
-            } else {
-                ret.push('');
-            }
-            return ret;
+
+        data: function (elem, v) {
+            return DOM.data(elem, EVENT_GUID, v);
         },
-        getGroupsRe: function (groups) {
-            return new RegExp(groups.split('.').join('.*\\.') + '(?:\\.|$)');
+
+        removeData: function (elem) {
+            return DOM.removeData(elem, EVENT_GUID);
         }
     };
 
@@ -13268,7 +13871,7 @@ KISSY.add('event/utils', function (S, DOM) {
  *
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/valuechange', function (S, Event, DOM, special) {
+KISSY.add('event/dom/valuechange', function (S, Event, DOM, special) {
     var VALUE_CHANGE = 'valuechange',
         getNodeName = DOM.nodeName,
         KEY = 'event/valuechange',
@@ -13298,10 +13901,10 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
             h = DOM.data(target, HISTORY_KEY);
         if (v !== h) {
             // 只触发自己绑定的 handler
-            Event.fire(target, VALUE_CHANGE, {
+            Event.fireHandler(target, VALUE_CHANGE, {
                 prevVal: h,
                 newVal: v
-            }, true);
+            });
             DOM.data(target, HISTORY_KEY, v);
         }
     }
@@ -13359,15 +13962,15 @@ KISSY.add('event/valuechange', function (S, Event, DOM, special) {
     };
     return Event;
 }, {
-    requires: ['./base', 'dom', './special']
+    requires: ['./api', 'dom', './special']
 });
 
 /*
-  2012-02-08 yiminghe@gmail.com note about webkitspeechchange :
-   当 input 没焦点立即点击语音
-    -> mousedown -> blur -> focus -> blur -> webkitspeechchange -> focus
-   第二次：
-    -> mousedown -> blur -> webkitspeechchange -> focus
+ 2012-02-08 yiminghe@gmail.com note about webkitspeechchange :
+ 当 input 没焦点立即点击语音
+ -> mousedown -> blur -> focus -> blur -> webkitspeechchange -> focus
+ 第二次：
+ -> mousedown -> blur -> webkitspeechchange -> focus
  */
 /*
 Copyright 2012, KISSY UI Library v1.40dev
@@ -13900,7 +14503,7 @@ KISSY.add("json/json2", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 15:57
+build time: Oct 25 23:25
 */
 /**
  * @ignore
@@ -14637,6 +15240,12 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
 });
 
 /*
+
+ // !TODO
+ // 去除 event/custom 依赖，用户不载入就不能监听
+ // 载入后通过 custom.on(IO,type) 监听
+
+
  2012-08-16
  - transform IO to class, remove XhrObject class.
  - support ifModified
@@ -14821,6 +15430,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
     function createIframe(xhr) {
         var id = S.guid('ajax-iframe'),
             iframe,
+        // empty src, so no history
             src = DOM.getEmptyIframeSrc();
 
         iframe = xhr.iframe = DOM.create('<iframe ' +
@@ -18230,7 +18840,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 19 16:42
+build time: Oct 25 19:43
 */
 /**
  * @ignore
@@ -18584,6 +19194,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
             'undelegate'
         ];
 
+    NodeList.KeyCodes = Event.KeyCodes;
 
     function accessNorm(fn, self, args) {
         args.unshift(self);
@@ -18651,7 +19262,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
     });
 
 }, {
-    requires: ['dom', 'event', './base']
+    requires: ['dom', 'event/dom', './base']
 });
 
 /*
@@ -18948,18 +19559,16 @@ KISSY.add('node/base', function (S, DOM, undefined) {
  * @fileOverview node
  * @author yiminghe@gmail.com
  */
-KISSY.add('node', function (S, Event, Node) {
-    Node.KeyCodes = Event.KeyCodes;
+KISSY.add('node', function (S, Node) {
     S.mix(S, {
-        Node:Node,
-        NodeList:Node,
-        one:Node.one,
-        all:Node.all
+        Node: Node,
+        NodeList: Node,
+        one: Node.one,
+        all: Node.all
     });
     return Node;
 }, {
-    requires:[
-        'event',
+    requires: [
         'node/base',
         'node/attach',
         'node/override',
@@ -18970,7 +19579,7 @@ KISSY.add('node', function (S, Event, Node) {
  * @fileOverview overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
-KISSY.add('node/override', function (S, DOM, Event, NodeList) {
+KISSY.add('node/override', function (S, DOM,NodeList) {
 
     var NLP = NodeList.prototype;
 
@@ -19019,7 +19628,7 @@ KISSY.add('node/override', function (S, DOM, Event, NodeList) {
     })
 
 }, {
-    requires: ['dom', 'event', './base', './attach']
+    requires: ['dom', './base']
 });
 
 /*

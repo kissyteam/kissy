@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 25 00:37
+build time: Oct 26 00:44
 */
 /**
  * @ignore
@@ -44,11 +44,7 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
         type = fixType(cfg, type);
 
         // 获取事件描述
-        eventDesc = Utils.data(currentTarget);
-
-        if (!eventDesc) {
-            Utils.data(currentTarget, eventDesc = {});
-        }
+        eventDesc = DOMCustomEvent.getCustomEvents(currentTarget, 1);
 
         if (!(handle = eventDesc.handle)) {
             handle = eventDesc.handle = function (event) {
@@ -58,10 +54,11 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
                 var type = event.type,
                     customEvent,
                     currentTarget = handle.currentTarget;
-                if (DOMCustomEvent.triggeredEvent == type || typeof KISSY == 'undefined') {
+                if (DOMCustomEvent.triggeredEvent == type ||
+                    typeof KISSY == 'undefined') {
                     return;
                 }
-                customEvent = DOMCustomEvent.getCustomEventFromNodeByType(currentTarget, type);
+                customEvent = DOMCustomEvent.getCustomEvent(currentTarget, type);
                 if (customEvent) {
                     event.currentTarget = currentTarget;
                     event = new DOMEventObject(event);
@@ -100,7 +97,7 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
 
         type = fixType(cfg, type);
 
-        var eventDesc = Utils.data(currentTarget),
+        var eventDesc = DOMCustomEvent.getCustomEvents(currentTarget),
             events = (eventDesc || {}).events;
 
         if (!eventDesc || !events) {
@@ -117,7 +114,9 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
 
         customEvent = events[type];
 
-        customEvent.detach(cfg);
+        if (customEvent) {
+            customEvent.detach(cfg);
+        }
     }
 
     S.mix(Event, {
@@ -140,22 +139,13 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
             // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
             targets = DOM.query(targets);
 
-            if (_Utils.batchForType(Event.add, null, 1, targets, type, fn, context)) {
-                return targets;
-            }
-
-            var cfg = fn, i;
-
-            if (S.isFunction(fn)) {
-                cfg = {
-                    fn: fn,
-                    context: context
-                };
-            }
-
-            for (i = targets.length - 1; i >= 0; i--) {
-                addInternal(targets[i], type, cfg);
-            }
+            _Utils.batchForType(function (targets, type, fn, context) {
+                var cfg = _Utils.normalizeParam(type, fn, context), i;
+                type = cfg.type;
+                for (i = targets.length - 1; i >= 0; i--) {
+                    addInternal(targets[i], type, cfg);
+                }
+            }, 1, targets, type, fn, context);
 
             return targets;
         },
@@ -179,17 +169,16 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
 
             targets = DOM.query(targets);
 
-            if (_Utils.batchForType(Event.remove, null, 1, targets, type, fn, context)) {
-                return targets;
-            }
+            _Utils.batchForType(function (targets, type, fn, context) {
+                var cfg = _Utils.normalizeParam(type, fn, context), i;
 
-            var cfg = _Utils.normalizeParam(type, fn, context), i;
+                type = cfg.type;
 
-            type = cfg.type;
+                for (i = targets.length - 1; i >= 0; i--) {
+                    removeInternal(targets[i], type, cfg);
+                }
+            }, 1, targets, type, fn, context);
 
-            for (i = targets.length - 1; i >= 0; i--) {
-                removeInternal(targets[i], type, cfg);
-            }
 
             return targets;
 
@@ -243,18 +232,25 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
             // custom event firing moved to target.js
             eventData = eventData || {};
 
+            /**
+             * identify event as fired manually
+             * @ignore
+             */
+            eventData._ks_fired = 1;
+
             _Utils.splitAndRun(eventType, function (eventType) {
                 // protect event type
                 eventData.type = eventType;
 
                 var r,
                     i,
+                    target,
                     customEvent,
                     typedGroups = _Utils.getTypedGroups(eventType),
                     _ks_groups = typedGroups[1];
 
                 if (_ks_groups) {
-                    _ks_groups = Utils.getGroupsRe(_ks_groups);
+                    _ks_groups = _Utils.getGroupsRe(_ks_groups);
                 }
 
                 eventType = typedGroups[0];
@@ -267,7 +263,17 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
                 targets = DOM.query(targets);
 
                 for (i = targets.length - 1; i >= 0; i--) {
-                    customEvent = DOMCustomEvent.getCustomEventFromNodeByType(targets[i], eventType);
+                    target = targets[i];
+                    customEvent = DOMCustomEvent
+                        .getCustomEvent(target, eventType);
+                    // bubbling
+                    // html dom event defaults to bubble
+                    if (!onlyHandlers && !customEvent) {
+                        customEvent = new DOMCustomEvent({
+                            type: eventType,
+                            currentTarget: target
+                        });
+                    }
                     if (customEvent) {
                         r = customEvent.fire(eventData, onlyHandlers);
                         if (ret !== false) {
@@ -302,18 +308,20 @@ KISSY.add('event/dom/api', function (S, Event, DOM, special, Utils, DOMCustomEve
          * @private
          */
         _clone: function (src, dest) {
-            if (!Utils.data(src)) {
+            var eventDesc, events;
+            if (!(eventDesc = DOMCustomEvent.getCustomEvents(src))) {
                 return;
             }
-            var eventDesc = Utils.data(src),
-                events = eventDesc.events;
+            events = eventDesc.events;
             S.each(events, function (customEvent, type) {
                 S.each(customEvent.subscribers, function (subscriber) {
                     // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
                     addInternal(dest, type, subscriber);
                 });
             });
-        }
+        },
+
+        _DOMCustomEvent: DOMCustomEvent
     });
 
     /**
@@ -436,7 +444,7 @@ KISSY.add('event/dom/change', function (S, UA, Event, DOM, special) {
             // in case stopped by user's callback,same with submit
             // http://bugs.jquery.com/ticket/11049
             // see : test/change/bubble.html
-                e.isPropagationStopped ||
+                e.isPropagationStopped() ||
                     // checkbox/radio already bubble using another technique
                     isCheckBoxOrRadio(fel)) {
                 return;
@@ -485,7 +493,8 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
                 type = self.type,
                 s = special[type] || {},
                 currentTarget = self.currentTarget,
-                handle = Utils.data(currentTarget).handle;
+                eventDesc = Utils.data(currentTarget),
+                handle = eventDesc.handle;
             // 第一次注册该事件，dom 节点才需要注册 dom 事件
             if (!s.setup || s.setup.call(currentTarget) === false) {
                 Utils.simpleAdd(currentTarget, type, handle)
@@ -593,13 +602,13 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
 
         /**
          * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
-         * @param {Object|KISSY.Event.DOMEventObject} [eventData] additional event data
+         * @param {Object|KISSY.Event.DOMEventObject} [event] additional event data
          * @return {*} return false if one of custom event 's subscribers (include bubbled) else
          * return last value of custom event 's subscribers (include bubbled) 's return value.
          */
-        fire: function (eventData, onlyHandlers/*internal usage*/) {
+        fire: function (event, onlyHandlers/*internal usage*/) {
 
-            eventData = eventData || {};
+            event = event || {};
 
             var self = this,
                 eventType = self.type,
@@ -610,18 +619,18 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
                 eventType = s['onFix'];
             }
 
-            var event,
-                customEvent,
+            var customEvent,
+                eventData,
                 currentTarget = self.currentTarget,
                 ret = true;
 
-            eventData.type = eventType;
+            event.type = eventType;
 
-            if (eventData instanceof DOMEventObject) {
-                event = eventData;
-            } else {
+            if (!(event instanceof DOMEventObject)) {
+                eventData = event;
                 event = new DOMEventObject({
-                    currentTarget: currentTarget
+                    currentTarget: currentTarget,
+                    target: currentTarget
                 });
                 S.mix(event, eventData);
             }
@@ -637,7 +646,8 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
             //bubble up dom tree
             do {
                 event.currentTarget = cur;
-                customEvent = DOMCustomEvent.getCustomEventFromNodeByType(cur, eventType);
+                customEvent = DOMCustomEvent.getCustomEvent(cur, eventType);
+                // default bubble for html node
                 if (customEvent) {
                     t = customEvent.notify(event);
                     if (ret !== false) {
@@ -739,9 +749,9 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
             var groupsRe,
                 self = this,
                 s = special[self.type] || {},
-                hasSelector = 'selector' in self,
-                selector = self.selector,
-                context = self.context,
+                hasSelector = 'selector' in cfg,
+                selector = cfg.selector,
+                context = cfg.context,
                 fn = cfg.fn,
                 currentTarget = self.currentTarget,
                 subscribers = self.subscribers,
@@ -813,29 +823,25 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
                 self.reset();
             }
 
-            self.checkNodeMemory();
+            self.checkMemory();
         },
 
-        removeSubscriber: function () {
-            var self = this;
-            DOMCustomEvent.superclass.removeSubscriber.apply(self, arguments);
-            self.checkNodeMemory();
-        },
-
-        checkNodeMemory: function () {
+        checkMemory: function () {
             var self = this,
                 type = self.type,
                 events,
+                handle,
                 s = special[type] || {},
                 currentTarget = self.currentTarget,
                 eventDesc = Utils.data(currentTarget);
             if (eventDesc) {
                 events = eventDesc.events;
                 if (!self.hasSubscriber()) {
+                    handle = eventDesc.handle;
                     // remove(el, type) or fn 已移除光
                     // dom node need to detach handler from dom node
-                    if (!s['tearDown'] || s['tearDown'].call(currentTarget) === false) {
-                        Utils.simpleRemove(currentTarget, type, eventDesc.handle);
+                    if ((!s['tearDown'] || s['tearDown'].call(currentTarget) === false)) {
+                        Utils.simpleRemove(currentTarget, type, handle);
                     }
                     // remove currentTarget's single event description
                     delete events[type];
@@ -858,7 +864,7 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
      * @param {String} type event type
      * @return {KISSY.Event.DOMCustomEvent}
      */
-    DOMCustomEvent.getCustomEventFromNodeByType = function (node, type) {
+    DOMCustomEvent.getCustomEvent = function (node, type) {
 
         var eventDesc = Utils.data(node), events;
         if (eventDesc) {
@@ -871,6 +877,15 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
         return undefined;
     };
 
+
+    DOMCustomEvent.getCustomEvents = function (node, create) {
+        var eventDesc = Utils.data(node);
+        if (!eventDesc && create) {
+            Utils.data(node, eventDesc = {});
+        }
+        return eventDesc;
+    };
+
     return DOMCustomEvent;
 
 }, {
@@ -880,16 +895,19 @@ KISSY.add('event/dom/custom-event', function (S, DOM, special, Utils, DOMSubscri
  * @fileOverview dom event facade
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom', function (S, Event, KeyCodes) {
+KISSY.add('event/dom', function (S, Event, KeyCodes, _DOMUtils) {
     S.mix(Event, {
-        KeyCodes: KeyCodes
+        KeyCodes: KeyCodes,
+        _DOMUtils: _DOMUtils
     });
     return Event;
 }, {
     requires: ['./base',
         './dom/key-codes',
+        './dom/utils',
         './dom/api',
         './dom/change',
+        './dom/submit',
         './dom/focusin',
         './dom/hashchange',
         './dom/mouseenter',
@@ -1940,8 +1958,7 @@ KISSY.add('event/dom/object', function (S, Event) {
         S.mix(e, {
             deltaY: deltaY,
             delta: delta,
-            deltaX: deltaX,
-            type: 'mousewheel'
+            deltaX: deltaX
         });
     }
 
@@ -2072,7 +2089,7 @@ KISSY.add('event/dom/submit', function (S, UA, Event, DOM, special) {
             var form = this;
             if (form.parentNode &&
                 // it is stopped by user callback
-                !e.isPropagationStopped &&
+                !e.isPropagationStopped() &&
                 // it is not fired manually
                 !e._ks_fired) {
                 // simulated bubble for submit
@@ -2134,7 +2151,7 @@ KISSY.add('event/dom/subscriber', function (S, special, Event) {
                     ret = t[0];
                 }
             } else {
-                ret = this.simpleNotify(event, ce);
+                ret = self.simpleNotify(event, ce);
             }
 
             event.type = type;
@@ -2239,10 +2256,10 @@ KISSY.add('event/dom/valuechange', function (S, Event, DOM, special) {
             h = DOM.data(target, HISTORY_KEY);
         if (v !== h) {
             // 只触发自己绑定的 handler
-            Event.fire(target, VALUE_CHANGE, {
+            Event.fireHandler(target, VALUE_CHANGE, {
                 prevVal: h,
                 newVal: v
-            }, true);
+            });
             DOM.data(target, HISTORY_KEY, v);
         }
     }
@@ -2304,9 +2321,9 @@ KISSY.add('event/dom/valuechange', function (S, Event, DOM, special) {
 });
 
 /*
-  2012-02-08 yiminghe@gmail.com note about webkitspeechchange :
-   当 input 没焦点立即点击语音
-    -> mousedown -> blur -> focus -> blur -> webkitspeechchange -> focus
-   第二次：
-    -> mousedown -> blur -> webkitspeechchange -> focus
+ 2012-02-08 yiminghe@gmail.com note about webkitspeechchange :
+ 当 input 没焦点立即点击语音
+ -> mousedown -> blur -> focus -> blur -> webkitspeechchange -> focus
+ 第二次：
+ -> mousedown -> blur -> webkitspeechchange -> focus
  */

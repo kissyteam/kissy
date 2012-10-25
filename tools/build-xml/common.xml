@@ -37,7 +37,6 @@
     <!-- 清空与复制等准备工作 -->
     <target name="prepare">
         <mkdir dir="${component.build.dir}"/>
-        <mkdir dir="${component.meta.dir}"/>
         <copy todir="${component.build.dir}">
             <fileset dir="${component.src.dir.tmp}" includes="${component.files}"/>
         </copy>
@@ -118,6 +117,8 @@
 
 
     <target name="extract-dependency">
+
+        <mkdir dir="${component.meta.dir}"/>
 
         <delete file="${component.meta.dir}/modules.js"></delete>
 

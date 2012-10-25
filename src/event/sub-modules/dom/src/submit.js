@@ -60,7 +60,7 @@ KISSY.add('event/dom/submit', function (S, UA, Event, DOM, special) {
             var form = this;
             if (form.parentNode &&
                 // it is stopped by user callback
-                !e.isPropagationStopped &&
+                !e.isPropagationStopped() &&
                 // it is not fired manually
                 !e._ks_fired) {
                 // simulated bubble for submit

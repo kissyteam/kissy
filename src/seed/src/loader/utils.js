@@ -214,16 +214,15 @@
             }
 
             var fn = mod.fn,
-                requires,
                 value;
-
-            // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            requires = mod.requires = mod.getNormalizedRequires();
 
             if (fn) {
                 if (S.isFunction(fn)) {
                     // context is mod info
-                    value = fn.apply(mod, Utils.getModules(runtime, requires));
+                    value = fn.apply(mod, Utils.getModules(runtime,
+                        // 需要解开 index，相对路径，去除 tag，
+                        // 但是需要保留 alias，防止值不对应
+                        mod.getRequiresWithAlias()));
                 } else {
                     value = fn;
                 }
@@ -364,37 +363,38 @@
                 }
             }
             return path;
-        },
-
-        memoize: function (fn, hasher) {
-            hasher = hasher || function (x) {
-                return x;
-            };
-            var memo = {},
-                queues = {},
-                memoized = function () {
-                    var args = S.makeArray(arguments),
-                        callback = args.pop(),
-                        key = hasher.apply(null, args);
-                    if (key in memo) {
-                        callback.apply(null, memo[key]);
-                    } else if (key in queues) {
-                        queues[key].push(callback);
-                    } else {
-                        queues[key] = [callback];
-                        fn.apply(null, args.concat([function () {
-                            memo[key] = arguments;
-                            var q = queues[key];
-                            delete queues[key];
-                            for (var i = 0, l = q.length; i < l; i++) {
-                                q[i].apply(null, arguments);
-                            }
-                        }]));
-                    }
-                };
-            memoized.unmemoized = fn;
-            return memoized;
         }
+        /*
+         ,memoize: function (fn, hasher) {
+         hasher = hasher || function (x) {
+         return x;
+         };
+         var memo = {},
+         queues = {},
+         memoized = function () {
+         var args = S.makeArray(arguments),
+         callback = args.pop(),
+         key = hasher.apply(null, args);
+         if (key in memo) {
+         callback.apply(null, memo[key]);
+         } else if (key in queues) {
+         queues[key].push(callback);
+         } else {
+         queues[key] = [callback];
+         fn.apply(null, args.concat([function () {
+         memo[key] = arguments;
+         var q = queues[key];
+         delete queues[key];
+         for (var i = 0, l = q.length; i < l; i++) {
+         q[i].apply(null, arguments);
+         }
+         }]));
+         }
+         };
+         memoized.unmemoized = fn;
+         return memoized;
+         }
+         */
     });
 
     function isStatus(runtime, modNames, status) {

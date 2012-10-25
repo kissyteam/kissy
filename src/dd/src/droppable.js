@@ -16,7 +16,7 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
         var self = this;
         Droppable.superclass.constructor.apply(self, arguments);
         self.addTarget(DDM);
-        S.each([
+
         /**
          * fired after a draggable leaves a droppable
          * @event dropexit
@@ -35,7 +35,7 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'dropexit',
+
 
         /**
          * fired after a draggable object mouseenter a droppable object
@@ -55,7 +55,6 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
          * @param e.drop current droppable object
          */
 
-            'dropenter',
 
         /**
          *
@@ -76,7 +75,7 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'dropover',
+
 
         /**
          *
@@ -97,12 +96,7 @@ KISSY.add('dd/droppable', function (S, Node, Base, DDM) {
          * @param e.drag current draggable object
          * @param e.drop current droppable object
          */
-            'drophit'
-        ], function (e) {
-            self.publish(e, {
-                bubbles: 1
-            });
-        });
+
         self._init();
     }
 

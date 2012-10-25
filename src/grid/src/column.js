@@ -116,18 +116,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                     v = sortState ? (sortState === SORT_ASC ? SORT_DESC : SORT_ASC) : SORT_ASC;
                 _self.set('sortState', v);
             },
-            /**
-             * @see {Component.Controller#bindUI}
-             */
-            bindUI:function () {
-                var _self = this,
-                    events = _self.get('events');
-                S.each(events, function (event) {
-                    _self.publish(event, {
-                        bubbles:1
-                    });
-                });
-            },
+
             /**
              * {Component.Controller#performActionInternal}
              * @private

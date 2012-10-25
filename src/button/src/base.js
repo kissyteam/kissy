@@ -17,9 +17,6 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
         {
             bindUI:function () {
                 this.get("el").on("keyup", this.handleKeyEventInternal, this);
-                this.publish("click", {
-                    bubbles:1
-                });
             },
 
             handleKeyEventInternal:function (e) {
