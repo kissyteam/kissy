@@ -1,39 +1,41 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
-<title>DOM Test Runner</title>
-<link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
-<script src="../../../../tools/jasmine/jasmine.js"></script>
-<script src="../../../../tools/jasmine/event-simulate.js"></script>
-<script src="../../../../tools/jasmine/jasmine-html.js"></script>
-<script src="../../../../tools/third-party/jquery.js" charset="utf-8"></script>
-<script src="../../../../build/seed.js" charset="utf-8"></script>
-<script src="../../../../build/ua.js" charset="utf-8"></script>
-<!--<script src="../../../build/sizzle.js" charset="utf-8"></script>-->
-<!--<script>-->
-<!--KISSY.use("sizzle");-->
-<!--</script>-->
-<script src="../../src/data.js" charset="utf-8"></script>
-<script src="../../src/attr.js" charset="utf-8"></script>
-<script src="../../src/base.js" charset="utf-8"></script>
-<script src="../../src/class.js" charset="utf-8"></script>
-<script src="../../src/create.js" charset="utf-8"></script>
-<script src="../../src/insertion.js" charset="utf-8"></script>
-<script src="../../src/offset.js" charset="utf-8"></script>
-<script src="../../src/selector.js" charset="utf-8"></script>
-<script src="../../src/style-ie.js" charset="utf-8"></script>
-<script src="../../src/style.js" charset="utf-8"></script>
-<script src="../../src/traversal.js" charset="utf-8"></script>
-<script src="../../src/dom.js" charset="utf-8"></script>
+    <meta charset="utf-8"/>
+    <title>DOM Test Runner</title>
+    <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
+    <script src="../../../../tools/jasmine/jasmine.js"></script>
+    <script src="../../../../tools/jasmine/event-simulate.js"></script>
+    <script src="../../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../../tools/third-party/jquery.js" charset="utf-8"></script>
+    <script src="../../../../build/seed.js" charset="utf-8"></script>
+    <script src="../../../../build/ua.js" charset="utf-8"></script>
 
-<script src="../../../../build/event.js" charset="utf-8"></script>
+    <!--<script src="../../../build/sizzle.js" charset="utf-8"></script>-->
+    <!--<script>-->
+    <!--KISSY.use("sizzle");-->
+    <!--</script>-->
+    <script src="../../src/data.js" charset="utf-8"></script>
+    <script src="../../src/attr.js" charset="utf-8"></script>
+    <script src="../../src/base.js" charset="utf-8"></script>
+    <script src="../../src/class.js" charset="utf-8"></script>
+    <script src="../../src/create.js" charset="utf-8"></script>
+    <script src="../../src/insertion.js" charset="utf-8"></script>
+    <script src="../../src/offset.js" charset="utf-8"></script>
+    <script src="../../src/selector.js" charset="utf-8"></script>
+    <script src="../../src/style-ie.js" charset="utf-8"></script>
+    <script src="../../src/style.js" charset="utf-8"></script>
+    <script src="../../src/traversal.js" charset="utf-8"></script>
+    <script src="../../src/dom.js" charset="utf-8"></script>
+    <script src="../../../../build/event/base.js" charset="utf-8"></script>
+    <script src="../../../../build/event/dom.js" charset="utf-8"></script>
 
-<style>
-    body, html {
-        font-size: 16px;
-    }
-</style>
+
+    <style>
+        body, html {
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
 <h1>KISSY DOM Test Cases</h1>
@@ -61,6 +63,7 @@
 <!-- attr-spec start-->
 <div id="test-data">
     <input id='hidepass'/>
+
     <p id="foo">
         <a href="../kissy/"
            style="color:red; border-top:1px solid #333;"
@@ -159,93 +162,172 @@ offset-spec end
 
 <!--scroll-spec start-->
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
 
 <div style="width:200px;height:200px;overflow:auto;border: 5px solid #ccc;" id="scroll-container">
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <div id="scroll-el" style="border:3px solid #9f9;">
         test
     </div>
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
+
     <p>x</p>
 </div>
 
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
 <iframe src="../others/test-dom-offset-iframe.html"
         id="test-iframe"
@@ -256,30 +338,50 @@ offset-spec end
         scrolling="no"
         ></iframe>
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
+
 <p>x</p>
 <!--scroll-spec end-->
 
 <!--traversal-spec start-->
 <div id="test-children" class="test-parent">
     <p id="test-next"><a>1</a></p>
+
     <p class="test-next-p"><a class="test-a">2</a></p>
+
     <p class="test-next"><a id="test-parent3">3</a></p>
+
     <p class="test-p" id="test-prev"><em class="test-em"><span><a id="test-parent4">4</a></span></em></p>
 </div>
 <div id="test-contains">text node</div>
@@ -287,12 +389,12 @@ offset-spec end
 
 <!-- script clone insert spec start-->
 <div id="scriptTestHolder">
- <script>
-    if (!window.scriptTest1) {
-    window.scriptTest1 = 1;
-} else {
-    window.scriptTest1++;
-}
+    <script>
+        if (!window.scriptTest1) {
+            window.scriptTest1 = 1;
+        } else {
+            window.scriptTest1++;
+        }
     </script>
     <script src="../others/scripts-exec/clone-ie-tc.js"></script>
 </div>
@@ -314,10 +416,10 @@ offset-spec end
 <script src="../specs/script-spec.js"></script>
 <script>
 
-    window.onload = function() {
+    window.onload = function () {
 
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().execute(function() {
+        jasmine.getEnv().execute(function () {
             jasmine.kissyNext(this.results().failedCount);
             document.getElementById("test_cases").style.display = "none";
         });

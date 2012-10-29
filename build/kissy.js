@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 29 21:55
+build time: Oct 30 01:09
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121029215533' will replace with current timestamp when compressing.
+         * NOTICE: '20121030010906' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121029215533',
+        __BUILD_TIME: '20121030010906',
         /**
          * KISSY Environment.
          * @private
@@ -5366,7 +5366,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121029215533'
+            tag: '20121030010906'
         }, getBaseInfo()));
     }
 
@@ -6183,7 +6183,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 29 21:51
+build time: Oct 30 01:09
 */
 /**
  * @ignore
@@ -7235,7 +7235,7 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
         }
 
         function cleanData(els) {
-            var Event = S.require('event');
+            var Event = S.require('event/dom');
             if (Event) {
                 Event.detach(els);
             }
@@ -7574,23 +7574,25 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
 
         // 克隆除了事件的 data
         function cloneWithDataAndEvent(src, dest) {
-            var Event = S.require('event');
+            var Event = S.require('event/dom'),
+                srcData,
+                d;
 
             if (dest.nodeType == NodeType.ELEMENT_NODE && !DOM.hasData(src)) {
                 return;
             }
 
-            var srcData = DOM.data(src);
+            srcData = DOM.data(src);
 
             // 浅克隆，data 也放在克隆节点上
-            for (var d in srcData) {
+            for (d in srcData) {
                 DOM.data(dest, d, srcData[d]);
             }
 
             // 事件要特殊点
             if (Event) {
                 // remove event data (but without dom attached listener) which is copied from above DOM.data
-                Event._removeData(dest);
+                Event._DOMUtils.removeData(dest);
                 // attach src's event data and dom attached listener to dest
                 Event._clone(src, dest);
             }
@@ -7612,14 +7614,14 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
             }
 
             var nodeName = dest.nodeName.toLowerCase(),
-                srcChilds = src.childNodes;
+                srcChildren = src.childNodes;
 
             // IE6-8 fail to clone children inside object elements that use
             // the proprietary classid attribute value (rather than the type
             // attribute) to identify the type of content to display
             if (nodeName === 'object' && !dest.childNodes.length) {
-                for (var i = 0; i < srcChilds.length; i++) {
-                    dest.appendChild(srcChilds[i].cloneNode(true));
+                for (var i = 0; i < srcChildren.length; i++) {
+                    dest.appendChild(srcChildren[i].cloneNode(true));
                 }
                 // dest.outerHTML = src.outerHTML;
             } else if (nodeName === 'input' && (src.type === 'checkbox' || src.type === 'radio')) {
@@ -7756,13 +7758,11 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
  2011-08
  remove 需要对子孙节点以及自身清除事件以及自定义 data
  create 修改，支持 <style></style> ie 下直接创建
- TODO: jquery clone ,clean 实现
 
  TODO:
  - 研究 jQuery 的 buildFragment 和 clean
  - 增加 cache, 完善 test cases
  - 支持更多 props
- - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
  */
 /**
  * @ignore

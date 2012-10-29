@@ -1,4 +1,5 @@
-KISSY.use("dom,event", function (S, DOM, Event) {
+KISSY.use("dom,event/dom", function (S, DOM, Event) {
+
     describe("clone", function () {
 
         it("works for checkbox", function () {
@@ -45,7 +46,7 @@ KISSY.use("dom,event", function (S, DOM, Event) {
         it("works with data and event", function () {
             var div = DOM.create("<div><" + "/div>");
             DOM.append(div, "body");
-            var x = {x:1};
+            var x = {x: 1};
             DOM.data(div, "web", x);
             DOM.data(div, "web2", 2);
 
@@ -60,8 +61,8 @@ KISSY.use("dom,event", function (S, DOM, Event) {
             expect(d).toBe(2);
 
             var cloned = DOM.clone(div, {
-                deep:false,
-                withDataAndEvent:true
+                deep: false,
+                withDataAndEvent: true
             });
             expect(DOM.data(cloned, "web").x).toBe(1);
             expect(DOM.data(cloned, "web2")).toBe(2);
@@ -99,7 +100,7 @@ KISSY.use("dom,event", function (S, DOM, Event) {
             var div = DOM.create("<div><span><" + "/span><" + "/div>");
             var span = DOM.get("span", div);
             DOM.append(div, "body");
-            var x = {x:1};
+            var x = {x: 1};
             DOM.data(span, "web", x);
             DOM.data(span, "web2", 2);
 
@@ -114,9 +115,9 @@ KISSY.use("dom,event", function (S, DOM, Event) {
             expect(d).toBe(2);
 
             var cloned = DOM.clone(div, {
-                    withDataAndEvent:true,
-                    deep:true,
-                    deepWithDataAndEvent:true
+                    withDataAndEvent: true,
+                    deep: true,
+                    deepWithDataAndEvent: true
                 }),
                 clonedSpan = DOM.get("span", cloned);
 
@@ -150,6 +151,100 @@ KISSY.use("dom,event", function (S, DOM, Event) {
 
         });
 
+        it('does not mess event with cloned src element', function () {
+            var div = DOM.create("<div><span id='t1'><" + "/span><" + "/div>");
+
+            var span = DOM.get("span", div);
+
+            DOM.append(div, "body");
+
+            var d = {
+                t1: 1,
+                t2: 1
+            };
+
+            Event.on(span, "click", function () {
+                d[this.id]++;
+            });
+
+
+            var span2 = DOM.clone(span, {
+                withDataAndEvent: true,
+                deep: true,
+                deepWithDataAndEvent: true
+            });
+
+            Event.on(span2,'click',function(){});
+
+            span2.id = 't2';
+
+            DOM.append(span2, "body");
+
+            jasmine.simulate(span2, 'click');
+
+            waits(100);
+
+            runs(function () {
+
+                expect(d.t1).toBe(1);
+                expect(d.t2).toBe(2);
+
+            });
+
+            runs(function () {
+
+            jasmine.simulate(span, 'click');
+
+            });
+
+            waits(100);
+
+            runs(function () {
+
+                expect(d.t1).toBe(2);
+                expect(d.t2).toBe(2);
+
+            });
+        });
+
+
+        it('does not mess event with cloned src element by firing', function () {
+            var div = DOM.create("<div><span id='t1'><" + "/span><" + "/div>");
+
+            var span = DOM.get("span", div);
+
+            DOM.append(div, "body");
+
+            var d = {
+                t1: 1,
+                t2: 1
+            };
+
+            Event.on(span, "click", function () {
+                d[this.id]++;
+            });
+
+            var span2 = DOM.clone(span, {
+                withDataAndEvent: true,
+                deep: true,
+                deepWithDataAndEvent: true
+            });
+
+            span2.id = 't2';
+
+            DOM.append(span2, "body");
+
+            Event.fire(span2,'click');
+
+            waits(100);
+
+            runs(function () {
+
+                expect(d.t1).toBe(1);
+                expect(d.t2).toBe(2);
+
+            });
+        });
 
     });
 });
