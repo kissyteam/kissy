@@ -547,11 +547,9 @@ KISSY.add('dom/create', function (S, DOM, UA, undefined) {
  2011-08
  remove 需要对子孙节点以及自身清除事件以及自定义 data
  create 修改，支持 <style></style> ie 下直接创建
- TODO: jquery clone ,clean 实现
 
  TODO:
  - 研究 jQuery 的 buildFragment 和 clean
  - 增加 cache, 完善 test cases
  - 支持更多 props
- - remove 时，是否需要移除事件，以避免内存泄漏？需要详细的测试。
  */
