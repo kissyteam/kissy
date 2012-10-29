@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 01:55
+build time: Oct 29 21:53
 */
 /**
  * Add maximizeWindow/restoreWindow to Editor.
@@ -44,6 +44,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
 
             if (self._resize) {
                 Event.remove(window, "resize", self._resize);
+                self._resize.stop();
                 self._resize = 0;
             } else {
                 return;
@@ -299,6 +300,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             var self = this;
             if (self._resize) {
                 Event.remove(window, "resize", self._resize);
+                self._resize.stop();
                 self._resize = 0;
             }
         }

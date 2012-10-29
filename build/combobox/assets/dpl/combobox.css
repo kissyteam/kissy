@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 29 10:56
+build time: Oct 29 21:51
 */
 /**
  * Combobox Style for KISSY.
@@ -291,6 +291,7 @@ build time: Oct 29 10:56
 }
 .ks-combobox-input:focus {
   outline: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .ks-combobox-placeholder {
   position: absolute;

@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 01:55
+build time: Oct 29 21:53
 */
 KISSY.add("editor/plugin/justify-center/cmd",function(c,a){return{init:function(b){a.addCommand(b,"justifyCenter","center")}}},{requires:["../justify-utils/cmd"]});

@@ -22,6 +22,7 @@
     list-style: none;
     margin: 2px;
     outline: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     padding: 0;
     text-decoration: none;
     vertical-align: middle;

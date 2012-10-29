@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 02:00
+build time: Oct 29 21:55
 */
 /**
 * Variables to customize the look and feel from Bootstrap.
@@ -31,6 +31,7 @@ build time: Oct 26 02:00
 }
 .ks-tabs-bar {
   outline: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   margin-bottom: 18px;
 }
 .ks-tabs-body {

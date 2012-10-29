@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 02:01
+build time: Oct 29 21:55
 */
 /**
  * xtemplate base

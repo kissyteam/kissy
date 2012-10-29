@@ -96,6 +96,7 @@
   *display: inline;
   *zoom: 1;
   outline: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .ks-button.ks-button-hover,
 .ks-button:hover {

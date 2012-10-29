@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 01:52
+build time: Oct 29 21:51
 */
 /**
  * @ignore
@@ -622,6 +622,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 Event.remove(win, SCROLL, load);
                 Event.remove(win, TOUCH_MOVE, load);
                 Event.remove(win, RESIZE, load);
+                load.stop();
                 S.each(self.get("containers"), function (c) {
                     if (isValidContainer(c)) {
                         Event.remove(c, SCROLL, load);

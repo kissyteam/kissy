@@ -39,6 +39,7 @@
     <target name="build-all">
         <!--
         各个组件构建
+        // https://issues.apache.org/bugzilla/show_bug.cgi?id=33061 oom
         -->
         <subant target="" failonerror="false" inheritall="false">
             <fileset dir="${kissy.src.dir}" includes="**/build.xml"/>

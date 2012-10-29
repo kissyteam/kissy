@@ -25,6 +25,7 @@
     vertical-align: middle;
     cursor: default;
     outline: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     border-radius: 2px;
     border-style: solid;
     border-color: #aaa;

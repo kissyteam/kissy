@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 01:55
+build time: Oct 29 21:53
 */
 /**
  * bubble or tip view for kissy editor
@@ -175,6 +175,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
             // 刚开始就配置 mode 为 sourcecode
             if (editorWin) {
                 editorWin.detach("scroll", onScroll);
+                bufferScroll.stop();
             }
         }
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 01:55
+build time: Oct 29 21:53
 */
 /**
  * Add indent and outdent command identifier for KISSY Editor.

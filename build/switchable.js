@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 02:00
+build time: Oct 29 21:55
 */
 /**
  * @fileOverview accordion aria support
@@ -581,6 +581,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
         destroy:function (host) {
             if (host.__scrollDetect) {
                 Event.remove(win, "scroll", host.__scrollDetect);
+                host.__scrollDetect.stop();
             }
         }
     });

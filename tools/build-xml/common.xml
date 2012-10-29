@@ -122,7 +122,7 @@
 
         <delete file="${component.meta.dir}/modules.js"></delete>
 
-        <java classname="com.taobao.f2e.ExtractDependency">
+        <java classname="com.taobao.f2e.ExtractDependency" fork="true">
 
             <arg value="-baseUrls"/>
             <!--

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 01:55
+build time: Oct 29 21:54
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -40,8 +40,6 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             menu.set("align", align);
         }
     }
-
-    var repositionBuffer = S.buffer(reposition, 50);
 
     function hideMenu(self) {
         var menu = getMenu(self);
@@ -110,8 +108,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     self.set("activeItem", ev.newVal);
                 });
 
+                self.__repositionBuffer = S.buffer(reposition, 50);
+
                 // 窗口改变大小，重新调整
-                $(win).on("resize", repositionBuffer, self);
+                $(win).on("resize", self.__repositionBuffer, self);
 
                 if (self.get("collapseOnClick")) {
                     menu.on("click", function () {
@@ -277,7 +277,8 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
             destructor:function () {
                 var self = this;
-                $(win).detach("resize", repositionBuffer, self);
+                $(win).detach("resize", self.__repositionBuffer, self);
+                self.__repositionBuffer.stop();
                 var menu = self.get("menu");
                 if (menu.destroy) {
                     menu.destroy();

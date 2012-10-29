@@ -79,7 +79,7 @@
 
 
     <target name="extract-dependency">
-        <java classname="com.taobao.f2e.ExtractDependency">
+        <java classname="com.taobao.f2e.ExtractDependency" fork="true">
 
             <arg value="-baseUrls"/>
             <arg value="${component.src.dir}/editor/plugin/"/>
@@ -101,7 +101,7 @@
 
         <mkdir dir="${component.meta.dir}"/>
 
-        <java classname="com.taobao.f2e.ExtractDependency">
+        <java classname="com.taobao.f2e.ExtractDependency" fork="true">
 
             <arg value="-baseUrls"/>
             <arg value="${component.src.dir}/editor/core/"/>

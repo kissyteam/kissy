@@ -40,7 +40,7 @@ build example for kissy loader
                 <echo>
                     build ${var.modname} in @{page}
                 </echo>
-                <java classname="com.taobao.f2e.Main">
+                <java classname="com.taobao.f2e.Main" fork="true">
 
                     <arg value="-require"/>
                     <!-- 入口模块 -->

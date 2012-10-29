@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 01:52
+build time: Oct 29 21:51
 */
 /**
 * Variables to customize the look and feel from Bootstrap.
@@ -56,6 +56,7 @@ build time: Oct 26 01:52
   *display: inline;
   *zoom: 1;
   outline: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .ks-button.ks-button-hover,
 .ks-button:hover {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 01:55
+build time: Oct 29 21:53
 */
 /**
  * Set up editor constructor
@@ -9359,6 +9359,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
             // 刚开始就配置 mode 为 sourcecode
             if (editorWin) {
                 editorWin.detach("scroll", onScroll);
+                bufferScroll.stop();
             }
         }
 
@@ -13874,6 +13875,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
 
             if (self._resize) {
                 Event.remove(window, "resize", self._resize);
+                self._resize.stop();
                 self._resize = 0;
             } else {
                 return;
@@ -14129,6 +14131,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             var self = this;
             if (self._resize) {
                 Event.remove(window, "resize", self._resize);
+                self._resize.stop();
                 self._resize = 0;
             }
         }

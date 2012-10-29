@@ -21,6 +21,7 @@
     margin: 0;
     outline: none;
     padding: 4px 0;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 .ks-ext-position {

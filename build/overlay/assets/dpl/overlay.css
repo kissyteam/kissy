@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 01:59
+build time: Oct 29 21:54
 */
 /**
 * Variables to customize the look and feel from Bootstrap.
@@ -24,6 +24,7 @@ build time: Oct 26 01:59
   top: -9999px;
   visibility: hidden;
   outline: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 .ks-ext-close {
   display: inline-block;
