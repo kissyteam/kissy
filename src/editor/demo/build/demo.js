@@ -184,7 +184,7 @@
                         width: 480,
                         height: 400,
                         detect: function (url) {
-                            var m = url.match(/id_([^.]+)\.html$/);
+                            var m = url.match(/id_([^.]+)\.html(\?[^?]+)?$/);
                             if (m) {
                                 return "http://player.youku.com/player.php/sid/" + m[1] + "/v.swf";
                             }
@@ -209,7 +209,7 @@
                         width: 480,
                         height: 400,
                         detect: function (url) {
-                            var m = url.match(/show[^\/]*\/([^.]+)\.html$/);
+                            var m = url.match(/show[^\/]*\/([^\/]+)\.html(\?[^?]+)?$/);
                             if (m) {
                                 return "http://player.ku6.com/refer/" + m[1] + "/v.swf";
                             }
