@@ -293,7 +293,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     autoDestroy = self.get("autoDestroy"),
                 // 加载延迟项
                     loadItems = function () {
-                        self.loadItems();
+                        self._loadItems();
                         if (autoDestroy &&
                             self._getItemsLength() === 0) {
                             self.destroy();
@@ -323,9 +323,18 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             },
 
             /**
-             * lazyload all items
+             * force datalazyload to recheck constraints and load lazyload
+             * @public
              */
-            loadItems: function () {
+            refresh: function () {
+                this._loadItems();
+            },
+
+            /**
+             * lazyload all items
+             * @private
+             */
+            _loadItems: function () {
                 var self = this;
                 self._loadImgs();
                 self._loadAreas();

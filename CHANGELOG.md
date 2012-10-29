@@ -110,6 +110,7 @@ History:
  - [+] datalazyload 改进, 缓冲检测 scroll 和 resize, 并只加载显示在当前屏幕中的懒加载元素
  - [+] datalazyload 可以监控 div 容器滚动，以及横轴滚动
  - [+] diff 参数可扩充到四个维度
+ - [+] datalazyload 增加 refresh api，重新检测并条件加载懒加载
  - [*] datalazyload addCallback callback 返回 false 时下次仍然检测.
 
 #### switchable
