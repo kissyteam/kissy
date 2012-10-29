@@ -39,6 +39,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
 
             if (self._resize) {
                 Event.remove(window, "resize", self._resize);
+                self._resize.stop();
                 self._resize = 0;
             } else {
                 return;
@@ -294,6 +295,7 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
             var self = this;
             if (self._resize) {
                 Event.remove(window, "resize", self._resize);
+                self._resize.stop();
                 self._resize = 0;
             }
         }

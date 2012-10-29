@@ -118,7 +118,10 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
              * Stop monitor scroll on window.
              */
             end: function () {
-                $(win).detach("scroll", this.__onScroll);
+                var self = this;
+                $(win).detach("scroll", self.__onScroll);
+                self.__onScroll.stop();
+                self.__started = 0;
             },
 
             /**
@@ -143,8 +146,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
             destroy: function () {
                 var self = this;
                 Loader.superclass.destroy.apply(self, arguments);
-                $(win).detach("scroll", self.__onScroll);
-                self.__started = 0;
+                self.end();
             }
         });
 

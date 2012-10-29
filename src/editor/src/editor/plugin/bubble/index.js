@@ -170,6 +170,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
             // 刚开始就配置 mode 为 sourcecode
             if (editorWin) {
                 editorWin.detach("scroll", onScroll);
+                bufferScroll.stop();
             }
         }
 

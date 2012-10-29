@@ -99,6 +99,7 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
         destroy:function (host) {
             if (host.__scrollDetect) {
                 Event.remove(win, "scroll", host.__scrollDetect);
+                host.__scrollDetect.stop();
             }
         }
     });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 01:52
+build time: Oct 29 10:56
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -262,7 +262,9 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                     );
                 });
 
-                win.on("resize", repositionBuffer, self);
+                self.__repositionBuffer = S.buffer(reposition, 50);
+
+                win.on("resize", self.__repositionBuffer, self);
 
                 el = menu.get("el");
                 contentEl = menu.get("contentEl");
@@ -306,7 +308,9 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
              * @protected
              */
             destructor: function () {
-                win.detach("resize", repositionBuffer, this);
+                var self=this;
+                win.detach("resize", self.__repositionBuffer, this);
+                self.__repositionBuffer.stop();
             }
         },
         {
@@ -612,8 +616,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
             }
         }
     }
-
-    var repositionBuffer = S.buffer(reposition, 50);
 
     function delayHide() {
         var self = this;

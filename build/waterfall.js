@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 26 02:01
+build time: Oct 29 10:56
 */
 /**
  * @fileOverview Make Elements flow like waterfall.
@@ -338,20 +338,21 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
              * Whether is adding waterfall item.
              * @return Boolean
              */
-            isAdding: function () {
+            'isAdding': function () {
                 return !!this._adder;
             },
 
             _init: function () {
-                var self = this;
-                // 一开始就 adjust 一次，可以对已有静态数据处理
-                doResize.call(self);
+                var self = this,
+                    onResize;
                 // windows ie<9
                 //  - 出滚动条就会触发 resize 事件
                 //  - ie<8 出不出滚动条，窗口区域一致
                 //  - ie=8 出了滚动条窗口区域和以前不一样了，触发调整逻辑
-                self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
-                $(win).on("resize", self.__onResize);
+                onResize = self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
+                // 一开始就 adjust 一次，可以对已有静态数据处理
+                onResize();
+                $(win).on("resize", onResize);
             },
 
 
@@ -560,7 +561,9 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
              * Destroy current instance.
              */
             destroy: function () {
-                $(win).detach("resize", this.__onResize);
+                var onResize = this.__onResize;
+                $(win).detach("resize", onResize);
+                onResize.stop();
             }
         });
 
@@ -698,7 +701,10 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
              * Stop monitor scroll on window.
              */
             end: function () {
-                $(win).detach("scroll", this.__onScroll);
+                var self = this;
+                $(win).detach("scroll", self.__onScroll);
+                self.__onScroll.stop();
+                self.__started = 0;
             },
 
             /**
@@ -723,8 +729,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
             destroy: function () {
                 var self = this;
                 Loader.superclass.destroy.apply(self, arguments);
-                $(win).detach("scroll", self.__onScroll);
-                self.__started = 0;
+                self.end();
             }
         });
 

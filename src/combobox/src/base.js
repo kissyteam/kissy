@@ -257,7 +257,9 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                     );
                 });
 
-                win.on("resize", repositionBuffer, self);
+                self.__repositionBuffer = S.buffer(reposition, 50);
+
+                win.on("resize", self.__repositionBuffer, self);
 
                 el = menu.get("el");
                 contentEl = menu.get("contentEl");
@@ -301,7 +303,9 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
              * @protected
              */
             destructor: function () {
-                win.detach("resize", repositionBuffer, this);
+                var self=this;
+                win.detach("resize", self.__repositionBuffer, this);
+                self.__repositionBuffer.stop();
             }
         },
         {
@@ -607,8 +611,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
             }
         }
     }
-
-    var repositionBuffer = S.buffer(reposition, 50);
 
     function delayHide() {
         var self = this;

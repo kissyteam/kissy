@@ -617,6 +617,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 Event.remove(win, SCROLL, load);
                 Event.remove(win, TOUCH_MOVE, load);
                 Event.remove(win, RESIZE, load);
+                load.stop();
                 S.each(self.get("containers"), function (c) {
                     if (isValidContainer(c)) {
                         Event.remove(c, SCROLL, load);

@@ -36,8 +36,6 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         }
     }
 
-    var repositionBuffer = S.buffer(reposition, 50);
-
     function hideMenu(self) {
         var menu = getMenu(self);
         if (menu) {
@@ -105,8 +103,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     self.set("activeItem", ev.newVal);
                 });
 
+                self.__repositionBuffer = S.buffer(reposition, 50);
+
                 // 窗口改变大小，重新调整
-                $(win).on("resize", repositionBuffer, self);
+                $(win).on("resize", self.__repositionBuffer, self);
 
                 if (self.get("collapseOnClick")) {
                     menu.on("click", function () {
@@ -272,7 +272,8 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
             destructor:function () {
                 var self = this;
-                $(win).detach("resize", repositionBuffer, self);
+                $(win).detach("resize", self.__repositionBuffer, self);
+                self.__repositionBuffer.stop();
                 var menu = self.get("menu");
                 if (menu.destroy) {
                     menu.destroy();
