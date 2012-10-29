@@ -30,6 +30,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         DRAG_MOVE_EVENT,
         DRAG_END_EVENT;
 
+    // 不能同时绑定 touchstart 与 mousedown 会导致 iphone 不能选择文本
     if (touchSupport) {
         DRAG_START_EVENT = 'touchstart';
         DRAG_MOVE_EVENT = 'touchmove';
