@@ -1,0 +1,46 @@
+<html>
+<head>
+</head>
+<body>
+<div id='t'>
+    <form id='f'>
+        <input type='submit' id='s'/>
+    </form>
+</div>
+<script src="../../../../../../../../../build/seed.js" charset="utf-8"></script>
+
+<script>
+    KISSY.use("node", function (S, Node) {
+        var $ = Node.all,
+                ret = [];
+
+        $("#t").on("submit", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        $('#s')[0].click();
+
+        setTimeout(function () {
+
+            $("#t").on("submit", function (e) {
+                ret.push(1);
+                e.preventDefault();
+                e.stopPropagation();
+            });
+
+            $("#f").on("submit", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+
+            $('#s')[0].click();
+
+            setTimeout(function () {
+                alert(ret.length == 0);
+            }, 100);
+        }, 100);
+    });
+</script>
+</body>
+</html>

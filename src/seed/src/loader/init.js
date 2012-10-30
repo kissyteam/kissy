@@ -87,9 +87,7 @@
              * @member KISSY
              */
             require: function (moduleName) {
-                var mods = this.Env.mods,
-                    mod = mods[moduleName];
-                return mod && mod.value;
+                return utils.getModules(this, [moduleName])[1];
             }
         });
 
@@ -183,7 +181,6 @@
     }
 
     // empty mod for conditional loading
-    S.add('empty', function () {
-    });
+    S.add('empty', S.noop);
 
 })(KISSY);

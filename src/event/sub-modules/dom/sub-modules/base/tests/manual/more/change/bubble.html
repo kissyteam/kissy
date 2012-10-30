@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>simulated bubble event example</title>
+    <script src="../../../../../../../../../build/seed.js" charset="utf-8"></script>
+    <style type="text/css">
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+<div id='t' style="width:500px;margin:20px auto;line-height: 2;">
+    <h1>bubble event manual test</h1>
+
+    <form action="http://www.g.cn">
+        <label>
+            <input id='inp'/></label>
+        <br/>
+        <label>
+            <input type='checkbox' id='checkb'/></label>
+        <br/>
+        <input type="submit"/>
+        <br/>
+    </form>
+    <button id='r'>remove bubble</button>
+</div>
+<script>
+    var S = KISSY;
+
+    KISSY.use("dom,event/dom", function (S, DOM, Event) {
+
+        setTimeout(function () {
+            Event.on("#inp", "change", function (e) {
+                S.log("input changed");
+                e.stopPropagation();
+            });
+            S.log("can produce bug in ie");
+        }, 2000);
+
+
+        Event.on("#t", "change", function (e) {
+            S.log(e.target.type + " changed by bubble");
+        });
+
+    });
+
+</script>
+</body>
+</html>

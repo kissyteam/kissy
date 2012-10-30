@@ -1,0 +1,10 @@
+<project name="event/dom/base.build" default="build">
+    <description>event/dom/base Build File</description>
+
+    <property name="component.name" value="event/dom/base"/>
+
+    <import file="../../../../../../tools/build-xml/common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

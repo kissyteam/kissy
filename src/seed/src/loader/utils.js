@@ -187,16 +187,25 @@
          * @return {Array}
          */
         getModules: function (runtime, modNames) {
-            var mods = [runtime], mod, alias;
+            var mods = [runtime], mod,
+                unalias,
+                allOk,
+                m,
+                runtimeMods = runtime.Env.mods;
 
             S.each(modNames, function (modName) {
-                mod = runtime.Env.mods[modName];
+                mod = runtimeMods[modName];
                 if (!mod || mod.getType() != 'css') {
-                    if (alias = mod.alias) {
-                        // fetch first alias module's value as module's value
-                        modName = alias[0];
+                    unalias = Utils.unalias(runtime, modName);
+                    allOk = S.reduce(unalias, function (a, n) {
+                        m = runtimeMods[n];
+                        return a && m && m.status == ATTACHED;
+                    }, true);
+                    if (allOk) {
+                        mods.push(runtimeMods[unalias[0]].value);
+                    } else {
+                        mods.push(null);
                     }
-                    mods.push(runtime.require(modName));
                 }
             });
 
