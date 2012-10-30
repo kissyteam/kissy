@@ -9,6 +9,7 @@
 
     /**
      * @class KISSY.Features
+     * @private
      * @singleton
      */
     S.Features = {

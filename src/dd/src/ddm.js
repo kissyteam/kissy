@@ -22,28 +22,10 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     var TARGET = 'target',
         BUTTON = 'button',
-        touchSupport = 'ontouchstart' in doc,
-    // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
-        msPointerEnabled = "msPointerEnabled" in win.navigator,
+        Gesture = Event.Gesture,
         CURRENT_TARGET = 'currentTarget',
-        DRAG_START_EVENT ,
-        DRAG_MOVE_EVENT,
-        DRAG_END_EVENT;
-
-    // 不能同时绑定 touchstart 与 mousedown 会导致 iphone 不能选择文本
-    if (touchSupport) {
-        DRAG_START_EVENT = 'touchstart';
-        DRAG_MOVE_EVENT = 'touchmove';
-        DRAG_END_EVENT = 'touchend';
-    } else if (msPointerEnabled) {
-        DRAG_START_EVENT = 'MSPointerDown';
-        DRAG_MOVE_EVENT = 'MSPointerMove';
-        DRAG_END_EVENT = 'MSPointerUp';
-    } else {
-        DRAG_START_EVENT = 'mousedown';
-        DRAG_MOVE_EVENT = 'mousemove';
-        DRAG_END_EVENT = 'mouseup';
-    }
+        DRAG_MOVE_EVENT = Gesture.moveEvent,
+        DRAG_END_EVENT = Gesture.endEvent;
 
 
     /**
@@ -524,10 +506,6 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
             handle.call(this, e);
         };
     };
-
-    ddm.DRAG_START_EVENT = DRAG_START_EVENT;
-    ddm.DRAG_MOVE_EVENT = DRAG_MOVE_EVENT;
-    ddm.DRAG_END_EVENT = DRAG_END_EVENT;
 
     return ddm;
 }, {

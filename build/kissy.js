@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 30 23:28
+build time: Oct 30 23:46
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121030232852' will replace with current timestamp when compressing.
+         * NOTICE: '20121030234649' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121030232852',
+        __BUILD_TIME: '20121030234649',
         /**
          * KISSY Environment.
          * @private
@@ -3001,6 +3001,7 @@ var KISSY = (function (undefined) {
 
     /**
      * @class KISSY.Features
+     * @private
      * @singleton
      */
     S.Features = {
@@ -5400,7 +5401,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121030232852'
+            tag: '20121030234649'
         }, getBaseInfo()));
     }
 
@@ -11686,7 +11687,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 30 23:28
+build time: Oct 30 23:42
 */
 /**
  * @ignore
@@ -12036,16 +12037,18 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
  * @fileOverview dom event facade
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils) {
+KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture) {
     S.mix(Event, {
         KeyCodes: KeyCodes,
-        _DOMUtils: _DOMUtils
+        _DOMUtils: _DOMUtils,
+        Gesture: Gesture
     });
     return Event;
 }, {
     requires: ['event/base',
         './base/key-codes',
         './base/utils',
+        './base/gesture',
         './base/api',
         './base/change',
         './base/submit',
@@ -12236,10 +12239,30 @@ KISSY.add('event/dom/base/focusin', function (S, UA, Event, special) {
  * gesture normalization for pc and touch.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/gesture', function () {
+KISSY.add('event/dom/base/gesture', function (S) {
 
+    var Features = S.Features, startEvent, moveEvent, endEvent;
 
+    // 不能同时绑定 touchstart 与 mousedown 会导致 iphone 不能选择文本
+    if (Features.isTouchSupported) {
+        startEvent = 'touchstart';
+        moveEvent = 'touchmove';
+        endEvent = 'touchend';
+    } else if (Features.isMsPointerEnabled) {
+        startEvent = 'MSPointerDown';
+        moveEvent = 'MSPointerMove';
+        endEvent = 'MSPointerUp';
+    } else {
+        startEvent = 'mousedown';
+        moveEvent = 'mousemove';
+        endEvent = 'mouseup';
+    }
 
+    return {
+        startEvent: startEvent,
+        moveEvent: moveEvent,
+        endEvent: endEvent
+    };
 
 });/**
  * @ignore

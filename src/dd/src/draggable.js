@@ -3,9 +3,10 @@
  * @fileOverview dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
+KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM,Event) {
 
     var each = S.each,
+        DRAG_START_EVENT=Event.Gesture.startEvent,
         ie = UA['ie'],
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
@@ -583,7 +584,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         _init: function () {
             var self = this,
                 node = self.get('node');
-            node.on(DDM.DRAG_START_EVENT, handlePreDragStart, self)
+            node.on(DRAG_START_EVENT, handlePreDragStart, self)
                 .on('dragstart', self._fixDragStart);
         },
 
@@ -800,7 +801,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         destroy: function () {
             var self = this,
                 node = self.get('dragNode');
-            node.detach(DDM.DRAG_START_EVENT, handlePreDragStart, self)
+            node.detach(DRAG_START_EVENT, handlePreDragStart, self)
                 .detach('dragstart', self._fixDragStart);
             self.detach();
         }
@@ -809,5 +810,5 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
     return Draggable;
 
 }, {
-    requires: ['ua', 'node', 'base', './ddm']
+    requires: ['ua', 'node', 'base', './ddm','event']
 });

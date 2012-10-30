@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 29 21:51
+build time: Oct 30 23:46
 */
 /**
  * @ignore
@@ -218,27 +218,10 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     var TARGET = 'target',
         BUTTON = 'button',
-        touchSupport = 'ontouchstart' in doc,
-    // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
-        msPointerEnabled = "msPointerEnabled" in win.navigator,
+        Gesture = Event.Gesture,
         CURRENT_TARGET = 'currentTarget',
-        DRAG_START_EVENT ,
-        DRAG_MOVE_EVENT,
-        DRAG_END_EVENT;
-
-    if (touchSupport) {
-        DRAG_START_EVENT = 'touchstart';
-        DRAG_MOVE_EVENT = 'touchmove';
-        DRAG_END_EVENT = 'touchend';
-    } else if (msPointerEnabled) {
-        DRAG_START_EVENT = 'MSPointerDown';
-        DRAG_MOVE_EVENT = 'MSPointerMove';
-        DRAG_END_EVENT = 'MSPointerUp';
-    } else {
-        DRAG_START_EVENT = 'mousedown';
-        DRAG_MOVE_EVENT = 'mousemove';
-        DRAG_END_EVENT = 'mouseup';
-    }
+        DRAG_MOVE_EVENT = Gesture.moveEvent,
+        DRAG_END_EVENT = Gesture.endEvent;
 
 
     /**
@@ -720,10 +703,6 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         };
     };
 
-    ddm.DRAG_START_EVENT = DRAG_START_EVENT;
-    ddm.DRAG_MOVE_EVENT = DRAG_MOVE_EVENT;
-    ddm.DRAG_END_EVENT = DRAG_END_EVENT;
-
     return ddm;
 }, {
     requires: ['ua', 'dom', 'event', 'node', 'base']
@@ -733,9 +712,10 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
  * @fileOverview delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, DOM, Node) {
+KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, DOM, Node,Event) {
 
-    var PREFIX_CLS = DDM.PREFIX_CLS;
+    var PREFIX_CLS = DDM.PREFIX_CLS,
+        DRAG_START_EVENT=Event.Gesture.startEvent;
 
     /**
      * @extends KISSY.DD.Draggable
@@ -799,7 +779,7 @@ KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, DOM, Node) {
             _init: function () {
                 var self = this,
                     node = self.get('container');
-                node.on(DDM.DRAG_START_EVENT, handlePreDragStart, self)
+                node.on(DRAG_START_EVENT, handlePreDragStart, self)
                     .on('dragstart', self._fixDragStart);
             },
 
@@ -836,7 +816,7 @@ KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, DOM, Node) {
             destroy: function () {
                 var self = this;
                 self.get('container')
-                    .detach(DDM.DRAG_START_EVENT,
+                    .detach(DRAG_START_EVENT,
                     handlePreDragStart,
                     self)
                     .detach('dragstart', self._fixDragStart);
@@ -889,15 +869,16 @@ KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, DOM, Node) {
 
     return DraggableDelegate;
 }, {
-    requires: ['./ddm', './draggable', 'dom', 'node']
+    requires: ['./ddm', './draggable', 'dom', 'node','event']
 });/**
  * @ignore
  * @fileOverview dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
+KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM,Event) {
 
     var each = S.each,
+        DRAG_START_EVENT=Event.Gesture.startEvent,
         ie = UA['ie'],
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
@@ -1475,7 +1456,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         _init: function () {
             var self = this,
                 node = self.get('node');
-            node.on(DDM.DRAG_START_EVENT, handlePreDragStart, self)
+            node.on(DRAG_START_EVENT, handlePreDragStart, self)
                 .on('dragstart', self._fixDragStart);
         },
 
@@ -1692,7 +1673,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
         destroy: function () {
             var self = this,
                 node = self.get('dragNode');
-            node.detach(DDM.DRAG_START_EVENT, handlePreDragStart, self)
+            node.detach(DRAG_START_EVENT, handlePreDragStart, self)
                 .detach('dragstart', self._fixDragStart);
             self.detach();
         }
@@ -1701,7 +1682,7 @@ KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM) {
     return Draggable;
 
 }, {
-    requires: ['ua', 'node', 'base', './ddm']
+    requires: ['ua', 'node', 'base', './ddm','event']
 });
 /**
  * @ignore

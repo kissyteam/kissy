@@ -3,9 +3,10 @@
  * @fileOverview delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, DOM, Node) {
+KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, DOM, Node,Event) {
 
-    var PREFIX_CLS = DDM.PREFIX_CLS;
+    var PREFIX_CLS = DDM.PREFIX_CLS,
+        DRAG_START_EVENT=Event.Gesture.startEvent;
 
     /**
      * @extends KISSY.DD.Draggable
@@ -69,7 +70,7 @@ KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, DOM, Node) {
             _init: function () {
                 var self = this,
                     node = self.get('container');
-                node.on(DDM.DRAG_START_EVENT, handlePreDragStart, self)
+                node.on(DRAG_START_EVENT, handlePreDragStart, self)
                     .on('dragstart', self._fixDragStart);
             },
 
@@ -106,7 +107,7 @@ KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, DOM, Node) {
             destroy: function () {
                 var self = this;
                 self.get('container')
-                    .detach(DDM.DRAG_START_EVENT,
+                    .detach(DRAG_START_EVENT,
                     handlePreDragStart,
                     self)
                     .detach('dragstart', self._fixDragStart);
@@ -159,5 +160,5 @@ KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, DOM, Node) {
 
     return DraggableDelegate;
 }, {
-    requires: ['./ddm', './draggable', 'dom', 'node']
+    requires: ['./ddm', './draggable', 'dom', 'node','event']
 });

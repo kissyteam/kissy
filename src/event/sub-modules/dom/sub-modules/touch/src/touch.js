@@ -1,4 +1,4 @@
-KISSY.add('event/dom/touch',function(){
+KISSY.add('event/dom/touch',function(S,EventDomBase){
 
 },{
     requires:['event/dom/base']
