@@ -13,7 +13,8 @@ KISSY.add('event/dom/object', function (S, Event) {
             'eventPhase fromElement handler keyCode metaKey ' +
             'newValue offsetX offsetY originalTarget pageX pageY prevValue ' +
             'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
-            'target toElement view wheelDelta which axis').split(' ');
+            'target toElement view wheelDelta which axis ' +
+            'changedTouches touches targetTouches').split(' ');
 
     /**
      * KISSY 's dom event system normalizes the event object according to
@@ -185,11 +186,14 @@ KISSY.add('event/dom/object', function (S, Event) {
 });
 
 /*
- 2010.04
- - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
+ 2012-10-30
+ - consider touch properties
 
  2012-10-24
  - merge with mousewheel: not perfect in osx : accelerated scroll
+
+ 2010.04
+ - http://www.w3.org/TR/2003/WD-DOM-Level-3-Events-20030331/ecma-script-binding.html
 
  - refer:
  https://github.com/brandonaaron/jquery-mousewheel/blob/master/jquery.mousewheel.js
