@@ -14,6 +14,14 @@ Legend of version history:
 History:
 ---------------------------
 
+### v1.3.0 -> v1.4.0
+
+#### event
+ - [+] Event.on(target,name,opts), opts.once/selector
+
+### Happy 3nd Anniversary (2012/10/26)
+ - [!] Still Alive
+
 ### v1.2.0 -> v1.3.0
 
 #### structure
