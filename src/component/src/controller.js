@@ -5,7 +5,10 @@
  */
 KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager, Render, undefined) {
 
-    var ie = S.Env.host.document.documentMode || S.UA.ie;
+    var ie = S.Env.host.document.documentMode || S.UA.ie,
+        Features = S.Features,
+        Gesture = Event.Gesture,
+        isTouchSupported = Features.isTouchSupported || Features.isMsPointerEnabled;
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
@@ -214,32 +217,49 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             },
 
             '_uiSetHandleMouseEvents': function (handleMouseEvents) {
+
                 var self = this, el = self.get("el"), t;
+
                 if (handleMouseEvents) {
-                    el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
-                        .on("mouseleave", wrapBehavior(self, "handleMouseLeave"))
-                        .on("contextmenu", wrapBehavior(self, "handleContextMenu"))
-                        .on("mousedown", wrapBehavior(self, "handleMouseDown"))
-                        .on("mouseup", wrapBehavior(self, "handleMouseUp"));
+
+                    if (!isTouchSupported) {
+                        el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
+                            .on("mouseleave", wrapBehavior(self, "handleMouseLeave"))
+                            .on("contextmenu", wrapBehavior(self, "handleContextMenu"))
+                    }
+
+                    el.on(Gesture.start, wrapBehavior(self, "handleMouseDown"))
+                        .on(Gesture.end, wrapBehavior(self, "handleMouseUp"))
+                        // consider touch environment
+                        .on(Gesture.tap, wrapBehavior(self, "performActionInternal"));
+
                     // click quickly only trigger click and dblclick in ie<9
                     // others click click dblclick
                     if (ie && ie < 9) {
                         el.on("dblclick", wrapBehavior(self, "handleDblClick"));
                     }
+
                 } else {
-                    (t = getWrapBehavior(self, "handleMouseEnter")) &&
+
+                    if (!isTouchSupported) {
+                        (t = getWrapBehavior(self, "handleMouseEnter")) &&
                         el.detach("mouseenter", t);
-                    (t = getWrapBehavior(self, "handleMouseLeave")) &&
+                        (t = getWrapBehavior(self, "handleMouseLeave")) &&
                         el.detach("mouseleave", t);
-                    (t = getWrapBehavior(self, "handleContextMenu")) &&
+                        (t = getWrapBehavior(self, "handleContextMenu")) &&
                         el.detach("contextmenu", t);
+                    }
+
                     (t = getWrapBehavior(self, "handleMouseDown")) &&
-                        el.detach("mousedown", t);
+                    el.detach(Gesture.start, t);
                     (t = getWrapBehavior(self, "handleMouseUp")) &&
-                        el.detach("mouseup", t);
+                    el.detach(Gesture.end, t);
+                    (t = getWrapBehavior(self, "performActionInternal")) &&
+                    el.detach(Gesture.tap, t);
+
                     if (ie && ie < 9) {
                         (t = getWrapBehavior(self, "handleDblClick")) &&
-                            el.detach("dblclick", t);
+                        el.detach("dblclick", t);
                     }
                 }
             },
@@ -425,7 +445,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     n,
                     isMouseActionButton = ev['which'] == 1,
                     el;
-                if (isMouseActionButton) {
+                if (isMouseActionButton||isTouchSupported) {
                     el = self.getKeyEventTarget();
                     if (self.get("activeable")) {
                         self.set("active", true);
@@ -457,8 +477,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             handleMouseUp: function (ev) {
                 var self = this;
                 // 左键
-                if (self.get("active") && ev.which == 1) {
-                    self.performActionInternal(ev);
+                if (self.get("active") && (ev.which == 1||isTouchSupported)) {
                     self.set("active", false);
                 }
             },
@@ -723,6 +742,12 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
     requires: ['event', './base', './uibase', './manager', './render']
 });
 /*
+
+ yiminghe@gmail.com - 2012.10.31
+ - 考虑触屏，绑定 Event.Gesture.tap 为主行为事件
+ - handleMouseDown/up 对应 Gesture.start/end
+
+
  事件冒泡机制
  - child 组件的冒泡源配置为其所属的 parent
  - 性能考虑:不是 child 的所有事件都冒泡到 parent，要具体配置哪些事件需要冒泡

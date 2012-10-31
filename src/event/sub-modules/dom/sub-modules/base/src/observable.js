@@ -35,7 +35,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 eventDesc = Utils.data(currentTarget),
                 handle = eventDesc.handle;
             // 第一次注册该事件，dom 节点才需要注册 dom 事件
-            if (!s.setup || s.setup.call(currentTarget) === false) {
+            if (!s.setup || s.setup.call(currentTarget,type) === false) {
                 Utils.simpleAdd(currentTarget, type, handle)
             }
         },
@@ -379,7 +379,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                     handle = eventDesc.handle;
                     // remove(el, type) or fn 已移除光
                     // dom node need to detach handler from dom node
-                    if ((!s['tearDown'] || s['tearDown'].call(currentTarget) === false)) {
+                    if ((!s['tearDown'] || s['tearDown'].call(currentTarget,type) === false)) {
                         Utils.simpleRemove(currentTarget, type, handle);
                     }
                     // remove currentTarget's single event description

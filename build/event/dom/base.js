@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 30 23:51
+build time: Oct 31 19:57
 */
 /**
  * @ignore
@@ -351,11 +351,12 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
  * @fileOverview dom event facade
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture) {
+KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Special) {
     S.mix(Event, {
         KeyCodes: KeyCodes,
         _DOMUtils: _DOMUtils,
-        Gesture: Gesture
+        Gesture: Gesture,
+        _Special: Special
     });
     return Event;
 }, {
@@ -363,6 +364,7 @@ KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture) {
         './base/key-codes',
         './base/utils',
         './base/gesture',
+        './base/special',
         './base/api',
         './base/change',
         './base/submit',
@@ -556,9 +558,10 @@ KISSY.add('event/dom/base/focusin', function (S, UA, Event, special) {
 KISSY.add('event/dom/base/gesture', function (S) {
 
     return {
-        startEvent: 'mousedown',
-        moveEvent: 'mousemove',
-        endEvent: 'mouseup'
+        start: 'mousedown',
+        move: 'mousemove',
+        end: 'mouseup',
+        tap: 'click'
     };
 
 });/**
@@ -1416,7 +1419,7 @@ KISSY.add('event/dom/base/object', function (S, Event) {
             'newValue offsetX offsetY originalTarget pageX pageY prevValue ' +
             'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
             'target toElement view wheelDelta which axis ' +
-            'changedTouches touches targetTouches').split(' ');
+            'changedTouches touches targetTouches rotation scale').split(' ');
 
     /**
      * KISSY 's dom event system normalizes the event object according to
@@ -1644,7 +1647,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 eventDesc = Utils.data(currentTarget),
                 handle = eventDesc.handle;
             // 第一次注册该事件，dom 节点才需要注册 dom 事件
-            if (!s.setup || s.setup.call(currentTarget) === false) {
+            if (!s.setup || s.setup.call(currentTarget,type) === false) {
                 Utils.simpleAdd(currentTarget, type, handle)
             }
         },
@@ -1988,7 +1991,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                     handle = eventDesc.handle;
                     // remove(el, type) or fn 已移除光
                     // dom node need to detach handler from dom node
-                    if ((!s['tearDown'] || s['tearDown'].call(currentTarget) === false)) {
+                    if ((!s['tearDown'] || s['tearDown'].call(currentTarget,type) === false)) {
                         Utils.simpleRemove(currentTarget, type, handle);
                     }
                     // remove currentTarget's single event description

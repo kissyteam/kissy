@@ -2,33 +2,23 @@
  * touch event logic module
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch', function (S, EventDomBase) {
+KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHandle) {
 
-    var Gesture = EventDomBase.Gesture,
-        Features = S.Features,
-        startEvent,
-        moveEvent,
-        endEvent;
+    var Special = EventDomBase._Special;
 
-    // 不能同时绑定 touchstart 与 mousedown 会导致 iphone 不能选择文本
-    // bind mousedown to turn element into clickable element
-    if (Features.isTouchSupported) {
-        startEvent = 'touchstart';
-        moveEvent = 'touchmove';
-        endEvent = 'touchend';
-    } else if (Features.isMsPointerEnabled) {
-        startEvent = 'MSPointerDown';
-        moveEvent = 'MSPointerMove';
-        endEvent = 'MSPointerUp';
-    }
+    var specialEvent = {
+        setup: function (event) {
+            eventHandle.addDocumentHandle(this, event);
+        },
+        tearDown: function (event) {
+            eventHandle.removeDocumentHandle(this, event);
+        }
+    }, e;
 
-    // force to load event/dom/touch in pc to use mouse to simulate touch
-    if (startEvent) {
-        Gesture.startEvent = startEvent;
-        Gesture.moveEvent = moveEvent;
-        Gesture.endEvent = endEvent;
+    for (e in eventHandleMap) {
+        Special[e] = specialEvent;
     }
 
 }, {
-    requires: ['event/dom/base']
+    requires: ['event/dom/base', './touch/handle-map', './touch/handle']
 });

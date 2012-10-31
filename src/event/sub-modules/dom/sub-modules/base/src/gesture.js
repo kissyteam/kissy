@@ -5,9 +5,10 @@
 KISSY.add('event/dom/base/gesture', function (S) {
 
     return {
-        startEvent: 'mousedown',
-        moveEvent: 'mousemove',
-        endEvent: 'mouseup'
+        start: 'mousedown',
+        move: 'mousemove',
+        end: 'mouseup',
+        tap: 'click'
     };
 
 });

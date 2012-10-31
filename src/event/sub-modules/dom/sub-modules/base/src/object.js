@@ -14,7 +14,7 @@ KISSY.add('event/dom/base/object', function (S, Event) {
             'newValue offsetX offsetY originalTarget pageX pageY prevValue ' +
             'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
             'target toElement view wheelDelta which axis ' +
-            'changedTouches touches targetTouches').split(' ');
+            'changedTouches touches targetTouches rotation scale').split(' ');
 
     /**
      * KISSY 's dom event system normalizes the event object according to

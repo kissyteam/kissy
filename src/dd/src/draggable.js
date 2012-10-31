@@ -6,7 +6,7 @@
 KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM,Event) {
 
     var each = S.each,
-        DRAG_START_EVENT=Event.Gesture.startEvent,
+        DRAG_START_EVENT=Event.Gesture.start,
         ie = UA['ie'],
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,

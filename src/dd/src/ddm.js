@@ -24,8 +24,8 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         BUTTON = 'button',
         Gesture = Event.Gesture,
         CURRENT_TARGET = 'currentTarget',
-        DRAG_MOVE_EVENT = Gesture.moveEvent,
-        DRAG_END_EVENT = Gesture.endEvent;
+        DRAG_MOVE_EVENT = Gesture.move,
+        DRAG_END_EVENT = Gesture.end;
 
 
     /**

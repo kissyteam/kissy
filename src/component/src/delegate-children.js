@@ -3,9 +3,12 @@
  * @fileOverview delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/delegate-children", function (S, UA) {
+KISSY.add("component/delegate-children", function (S, UA, Event) {
 
-    var ie = S.Env.host.document.documentMode || UA.ie;
+    var ie = S.Env.host.document.documentMode || UA.ie,
+        Features = S.Features,
+        Gesture = Event.Gesture,
+        isTouchSupported = Features.isTouchSupported || Features.isMsPointerEnabled;
 
     function DelegateChildren() {
     }
@@ -16,11 +19,14 @@ KISSY.add("component/delegate-children", function (S, UA) {
             if (control && !control.get("disabled")) {
                 // Child control identified; forward the event.
                 switch (e.type) {
-                    case "mousedown":
+                    case Gesture.start:
                         control.handleMouseDown(e);
                         break;
-                    case "mouseup":
+                    case Gesture.end:
                         control.handleMouseUp(e);
+                        break;
+                    case Gesture.tap:
+                        control.performActionInternal(e);
                         break;
                     case "mouseover":
                         control.handleMouseOver(e);
@@ -50,12 +56,18 @@ KISSY.add("component/delegate-children", function (S, UA) {
     S.augment(DelegateChildren, {
 
         __bindUI: function () {
-            var self = this;
+            var self = this,
+                events;
             if (self.get("delegateChildren")) {
-                self.get("el").on("mousedown mouseup mouseover mouseout " +
-                    (ie && ie < 9 ? "dblclick " : "") +
-                    "contextmenu",
-                    handleChildMouseEvents, self);
+
+                events = Gesture.start + " " + Gesture.end + " " + Gesture.tap + " ";
+
+                if (!isTouchSupported) {
+                    events += "mouseover mouseout contextmenu " +
+                        (ie && ie < 9 ? "dblclick " : "");
+                }
+
+                self.get("el").on(events, handleChildMouseEvents, self);
             }
         },
 
@@ -85,5 +97,5 @@ KISSY.add("component/delegate-children", function (S, UA) {
 
     return DelegateChildren;
 }, {
-    requires: ['ua']
+    requires: ['ua', 'event']
 });

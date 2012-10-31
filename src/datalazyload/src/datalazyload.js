@@ -755,7 +755,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
  *   - 2012-04-27 yiminghe@gmail.com refactor to extend base, add removeCallback/addElements ...
  *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textarea 可设置高度，宽度
  *   - 2012-04-25 yiminghe@gmail.com refactor, 监控容器内滚动，包括横轴滚动
- *   - 2012-04-12 yiminghe@gmail.com monitor touchmove in iphone
+ *   - 2012-04-12 yiminghe@gmail.com monitor touchmove in ios
  *   - 2011-12-21 yiminghe@gmail.com 增加 removeElements 与 destroy 接口
  *   - 2010-07-31 yubo IMG_SRC_DATA 由 data-lazyload-src 更名为 data-ks-lazyload + 支持 touch 设备
  *   - 2010-07-10 yiminghe@gmail.com 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调

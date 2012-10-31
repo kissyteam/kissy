@@ -6,7 +6,7 @@
 KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, DOM, Node,Event) {
 
     var PREFIX_CLS = DDM.PREFIX_CLS,
-        DRAG_START_EVENT=Event.Gesture.startEvent;
+        DRAG_START_EVENT=Event.Gesture.start;
 
     /**
      * @extends KISSY.DD.Draggable

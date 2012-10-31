@@ -42,6 +42,7 @@
 <script src="../../src/button.js"></script>
 <script src="../../src/base.js"></script>
 <script src="../../src/buttonRender.js"></script>
+<script src="../../../log.js"></script>
 <script>
 
     KISSY.Config.tag = Math.random();
@@ -60,7 +61,7 @@
 
         b.on("click", function () {
             setTimeout(function () {
-                alert("button click");
+                log("button click");
             }, 0);
         });
 
@@ -85,7 +86,7 @@
         });
         exist.render();
         exist.on("click", function () {
-            alert("渐进增强 click");
+            log("渐进增强 click");
         });
 
         Component.create({
@@ -95,7 +96,7 @@
             listeners:{
                 click:{
                     fn:function () {
-                        S.log('json');
+                        log('json');
                     }
                 }
             }
