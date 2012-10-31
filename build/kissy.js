@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 29 16:22
+build time: Nov 1 01:09
 */
 /**
  * @ignore
@@ -479,11 +479,11 @@ build time: Sep 29 16:22
 
         /**
          * The build time of the library.
-         * NOTICE: '20120929162159' will replace with current timestamp when compressing.
+         * NOTICE: '20121101010943' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        S.__BUILD_TIME = '20120929162159';
+        S.__BUILD_TIME = '20121101010943';
     })();
 
     return S;
@@ -4954,75 +4954,79 @@ build time: Sep 29 16:22
                 type,
                 comboPrefix = Config.comboPrefix,
                 comboSep = Config.comboSep,
+                maxFileNum = Config.comboMaxFileNum,
                 maxUrlLength = Config.comboMaxUrlLength;
 
             for (packageName in combos) {
-                if (combos.hasOwnProperty(packageName)) {
-                    for (type in combos[packageName]) {
-                        if (combos[packageName].hasOwnProperty(type)) {
+
+                for (type in combos[packageName]) {
+
+                    t = [];
+
+                    var jss = combos[packageName][type],
+                        tag = jss.tag,
+                        suffix = (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
+                        suffixLength = suffix.length,
+                        packageBase = jss.packageBase,
+                        prefix,
+                        path,
+                        fullpath,
+                        l,
+                        packagePath = packageBase +
+                            (packageName ? (packageName + '/') : '');
+
+                    res[type][packageName] = [];
+                    res[type][packageName].charset = jss.charset;
+                    // current package's mods
+                    res[type][packageName].mods = [];
+                    // add packageName to common prefix
+                    // combo grouped by package
+                    prefix = packagePath + comboPrefix;
+                    l = prefix.length;
+
+                    function pushComboUrl() {
+                        // map the whole combo path
+                        res[type][packageName].push(utils.getMappedPath(
+                            SS,
+                            prefix +
+                                t.join(comboSep) +
+                                suffix,
+                            Config.mappedComboRules || []
+                        ));
+                    }
+
+                    for (i = 0; i < jss.length; i++) {
+
+                        // map individual module
+                        fullpath = jss[i].getFullPath();
+
+                        res[type][packageName].mods.push(jss[i]);
+
+                        if (!jss.combine || !S.startsWith(fullpath, packagePath)) {
+                            res[type][packageName].push(fullpath);
+                            continue;
+                        }
+
+                        // ignore query parameter
+                        path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
+
+                        t.push(path);
+
+                        if (
+                            (t.length > maxFileNum) ||
+                                (l + t.join(comboSep).length + suffixLength > maxUrlLength)) {
+                            t.pop();
+                            pushComboUrl();
                             t = [];
-
-                            var jss = combos[packageName][type],
-                                tag = jss.tag,
-                                packageBase = jss.packageBase,
-                                prefix,
-                                path,
-                                fullpath,
-                                l,
-                                packagePath = packageBase +
-                                    (packageName ? (packageName + '/') : '');
-
-                            res[type][packageName] = [];
-                            res[type][packageName].charset = jss.charset;
-                            // current package's mods
-                            res[type][packageName].mods = [];
-                            // add packageName to common prefix
-                            // combo grouped by package
-                            prefix = packagePath + comboPrefix;
-                            l = prefix.length;
-
-                            function pushComboUrl() {
-                                // map the whole combo path
-                                res[type][packageName].push(utils.getMappedPath(
-                                    SS,
-                                    prefix +
-                                        t.join(comboSep) +
-                                        (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
-                                    Config.mappedComboRules || []
-                                ));
-                            }
-
-                            for (i = 0; i < jss.length; i++) {
-
-                                // map individual module
-                                fullpath = jss[i].getFullPath();
-
-                                res[type][packageName].mods.push(jss[i]);
-
-                                if (!jss.combine || !S.startsWith(fullpath, packagePath)) {
-                                    res[type][packageName].push(fullpath);
-                                    continue;
-                                }
-
-                                // ignore query parameter
-                                path = fullpath.slice(packagePath.length).replace(/\?.*$/, '');
-
-                                t.push(path);
-
-                                if (l + t.join(comboSep).length > maxUrlLength) {
-                                    t.pop();
-                                    pushComboUrl();
-                                    t = [];
-                                    i--;
-                                }
-                            }
-                            if (t.length) {
-                                pushComboUrl();
-                            }
-
+                            i--;
                         }
                     }
+                    if (t.length) {
+                        pushComboUrl();
+                    }
+
                 }
+
             }
 
             return res;
@@ -5189,7 +5193,9 @@ build time: Sep 29 16:22
         // 2k
         comboMaxUrlLength: 2048,
         charset: 'utf-8',
-        tag: '20120929162159'
+        // file limit number for a single combo url
+        comboMaxFileNum: 40,
+        tag: '20121101010943'
     }, getBaseInfo()));
 
     // Initializes loader.
@@ -5454,7 +5460,6 @@ build time: Sep 29 16:22
     });
 })(KISSY);
 /*Generated by KISSY Module Compiler*/
-if(KISSY.Loader){
 KISSY.config('modules', {
 'flash': {requires: ['ua','dom','json']},
 'combobox': {requires: ['component','node','input-selection','menu','ajax']},
@@ -5489,7 +5494,6 @@ KISSY.config('modules', {
 'separator': {requires: ['component']},
 'tabs': {requires: ['button','component','toolbar']}
 });
-}
 /*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
