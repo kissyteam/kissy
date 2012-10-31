@@ -147,7 +147,7 @@
 
     S.config(S.mix({
         // 2k
-        comboMaxUrlLength: 2048,
+        comboMaxUrlLength: 2000,
         charset: 'utf-8',
         // file limit number for a single combo url
         comboMaxFileNum: 40,
