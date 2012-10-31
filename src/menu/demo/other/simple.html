@@ -1,48 +1,56 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
-<title>普通菜单</title>
-<link href="../../../build/css/dpl/base.css" rel="stylesheet"/>
-<link href="../assets/menu.css" rel="stylesheet"/>
-<link href="../assets/menuitem.css" rel="stylesheet"/>
-<link href="../assets/submenu.css" rel="stylesheet"/>
-<style>
-    .ks-menuitem-delete {
-        color: #000000;
-        left: auto;
-        padding-right: 6px;
-        position: absolute;
-        right: 0;
-        text-align: right;
-        border: 1px solid red;
-        margin-right: 5px;
-        padding: 0 5px;
-    }
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>普通菜单</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../assets/menu.css" rel="stylesheet"/>
+    <link href="../assets/menuitem.css" rel="stylesheet"/>
+    <link href="../assets/submenu.css" rel="stylesheet"/>
+    <style>
+        .ks-menuitem-delete {
+            color: #000000;
+            left: auto;
+            padding-right: 6px;
+            position: absolute;
+            right: 0;
+            text-align: right;
+            border: 1px solid red;
+            margin-right: 5px;
+            padding: 0 5px;
+        }
 
-    .ks-menu-disabled .ks-menuitem-delete {
-        color: #ccc;
-        border: #ccc;
-    }
-</style>
-<style>
-    h1 {
-        font-size: 2em;
-        margin: 10px;
-        text-align: center;
-    }
+        .ks-menu-disabled .ks-menuitem-delete {
+            color: #ccc;
+            border: #ccc;
+        }
+    </style>
+    <style>
+        h1 {
+            font-size: 2em;
+            margin: 10px;
+            text-align: center;
+        }
 
-    h2 {
-        font-size: 1.5em;
-        margin: 10px;
-        text-align: center;
-    }
+        h2 {
+            font-size: 1.5em;
+            margin: 10px;
+            text-align: center;
+        }
 
-    #wrap {
-        width: 990px;
-        margin: 0 auto;
-    }
-</style>
+        #wrap {
+            width: 90%;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
 <div id="wrap">
@@ -57,17 +65,17 @@
 <script src="../../../../build/kissy.js"></script>
 <script>
 
-//    KISSY.config({
-//        map:[
-//            [/\?t=.+$/, ""]
-//        ],
-//        "combine":true
-//    });
+    //    KISSY.config({
+    //        map:[
+    //            [/\?t=.+$/, ""]
+    //        ],
+    //        "combine":true
+    //    });
 
 
     (function () {
         KISSY.use("node,menu,separator",
-                function (S, Node, Menu,Separator) {
+                function (S, Node, Menu, Separator) {
                     //view
                     //render to container : button_container
 
@@ -77,17 +85,17 @@
                     var sb = new Menu.PopupMenu({
                         // boolean，是否鼠标脱离菜单后自动隐藏
                         //autoHideOnMouseLeave:true,
-                        elStyle:{
-                            color:"red"
+                        elStyle: {
+                            color: "red"
                         }
                     });
 
                     sb.addChild(new Menu.Item({
-                        content:"submenuitem1"
+                        content: "submenuitem1"
                     }));
 
                     sb.addChild(new Menu.Item({
-                        content:"submenuitem2"
+                        content: "submenuitem2"
                     }));
 
                     sb.addChild(new Separator());
@@ -97,38 +105,38 @@
 
                             // boolean，是否鼠标脱离菜单后自动隐藏
                             //autoHideOnMouseLeave:true,
-                            children:[
+                            children: [
                                 new Menu.Item({
 
-                                    content:"submenuitem141"})
+                                    content: "submenuitem141"})
                             ],
                             // bug elStyle 无效
-                            elStyle:{
-                                color:"red"
+                            elStyle: {
+                                color: "red"
                             }
                         });
 
                         sb2.addChild(new Menu.Item({
-                            content:"submenuitem22"
+                            content: "submenuitem22"
                         }));
 
                         var b2 = new Menu.SubMenu({
-                            content:"sub-sub-menu",
-                            menu:sb2
+                            content: "sub-sub-menu",
+                            menu: sb2
                         });
 
                         sb.addChild(b2);
                     }
 
                     var b = new Menu.SubMenu({
-                        content:"submenu",
-                        menu:sb
+                        content: "submenu",
+                        menu: sb
                     });
 
                     var menu = new Menu({
-                        render:"#menuitem_container",
-                        children:[b, new Menu.Item({
-                            content:"alone"
+                        render: "#menuitem_container",
+                        children: [b, new Menu.Item({
+                            content: "alone"
                         })]
                     });
 

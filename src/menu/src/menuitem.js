@@ -27,7 +27,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * @protected
              *
              */
-            handleMouseEnter:function (e) {
+            handleMouseEnter: function (e) {
                 // 父亲不允许自己处理
                 if (MenuItem.superclass.handleMouseEnter.call(this, e)) {
                     return true;
@@ -42,12 +42,21 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * @protected
              *
              */
-            handleMouseLeave:function (e) {
+            handleMouseLeave: function (e) {
                 // 父亲不允许自己处理
                 if (MenuItem.superclass.handleMouseLeave.call(this, e)) {
                     return true;
                 }
                 this.get("parent").set("highlightedItem", null);
+            },
+
+            // for ios, ios only has touchdown
+            handleMouseDown: function (e) {
+                // 父亲不允许自己处理
+                if (MenuItem.superclass.handleMouseDown.call(this, e)) {
+                    return true;
+                }
+                this.get("parent").set("highlightedItem", this);
             },
 
             /**
@@ -58,7 +67,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * @protected
              *
              */
-            performActionInternal:function () {
+            performActionInternal: function () {
                 var self = this;
                 // 可选
                 if (self.get("selectable")) {
@@ -72,7 +81,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 return true;
             },
 
-            _uiSetHighlighted:function (v) {
+            _uiSetHighlighted: function (v) {
                 // 是否要滚动到当前菜单项(横向，纵向)
                 if (v) {
                     var el = this.get("el"),
@@ -92,22 +101,22 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * Check whether this menu item contains specified element.
              * @param {KISSY.NodeList} element Element to be tested.
              */
-            containsElement:function (element) {
+            containsElement: function (element) {
                 return this.get('view') && this.get('view').containsElement(element);
             }
 
         }, {
-            ATTRS:/**
+            ATTRS: /**
              * @lends Menu.Item#
              */
             {
 
-                focusable:{
-                    value:false
+                focusable: {
+                    value: false
                 },
 
-                handleMouseEvents:{
-                    value:false
+                handleMouseEvents: {
+                    value: false
                 },
 
                 /**
@@ -115,8 +124,8 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                  * Set to true for option.
                  * @type {Boolean}
                  */
-                selectable:{
-                    view:1
+                selectable: {
+                    view: 1
                 },
 
                 /**
@@ -124,41 +133,41 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                  * Set to true for checkbox option.
                  * @type {Boolean}
                  */
-                checkable:{
-                    view:1
+                checkable: {
+                    view: 1
                 },
 
                 /**
                  * The value associated with the menu item.
                  */
-                value:{},
+                value: {},
 
                 /**
                  * Whether the menu item is checked.
                  * @type {Boolean}
                  */
-                checked:{
-                    view:1
+                checked: {
+                    view: 1
                 },
 
                 /**
                  * Whether the menu item is selected.
                  * @type {Boolean}
                  */
-                selected:{
-                    view:1
+                selected: {
+                    view: 1
                 },
 
-                xrender:{
-                    value:MenuItemRender
+                xrender: {
+                    value: MenuItemRender
                 }
             }
         }, {
-            xclass:"menuitem",
-            priority:10
+            xclass: "menuitem",
+            priority: 10
         });
 
     return MenuItem;
 }, {
-    requires:['component', './menuitemRender']
+    requires: ['component', './menuitemRender']
 });

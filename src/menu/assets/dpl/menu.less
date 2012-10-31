@@ -23,7 +23,8 @@
     border-top: 4px solid transparent;
 }
 
-.ks-menuitem-hover .ks-submenu-arrow {
+.ks-menuitem-hover .ks-submenu-arrow,
+.ks-menuitem-active .ks-submenu-arrow{
     .opacity(100);
 }
 
@@ -78,7 +79,7 @@
         cursor: default;
     }
 
-    .ks-menuitem-hover {
+    .ks-menuitem-hover, .ks-menuitem-active {
         color: @menuitemColorHover;
         text-decoration: none;
         background-color: @menuitemBackgroundHover;

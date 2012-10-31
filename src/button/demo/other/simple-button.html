@@ -1,41 +1,48 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
-<title>Demo - SimpleButton</title>
-<link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
-<link href="../assets/custombutton.css" rel="stylesheet"/>
-<style>
-    h1 {
-        font-size: 2em;
-        margin: 10px;
-        text-align: center;
-    }
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>Demo - SimpleButton</title>
+    <link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../assets/custombutton.css" rel="stylesheet"/>
+    <style>
+        h1 {
+            font-size: 2em;
+            margin: 10px;
+            text-align: center;
+        }
 
-    h2 {
-        font-size: 1.5em;
-        margin: 10px;
-        text-align: center;
-    }
+        h2 {
+            font-size: 1.5em;
+            margin: 10px;
+            text-align: center;
+        }
 
-    #wrap {
-        width: 990px;
-        margin: 0 auto;
-    }
-</style>
+        #wrap {
+            width: 90%;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
 <div id="wrap">
     <h1 id="describe">simple button demo</h1>
 
     <h2>显示构造器生成</h2>
+
     <div id="button_container"></div>
     <label>禁用：<input type="checkbox" id='dis'/></label>
 
     <h2>从已知元素生成</h2>
+
     <div id="exist" class="ks-button">渐进增强</div>
 
     <h2>从 json 描述生成</h2>
+
     <div id="button_container2"></div>
 </div>
 <script src="../../../../build/kissy.js"></script>
@@ -52,9 +59,9 @@
         // controller
         // view as a parameter
         var b = new Button({
-            content:"by new",
-            describedby:"describe",
-            render:"#button_container"
+            content: "by new",
+            describedby: "describe",
+            render: "#button_container"
         });
 
         b.render();
@@ -82,7 +89,7 @@
         }
 
         var exist = new Button({
-            srcNode:"#exist"
+            srcNode: "#exist"
         });
         exist.render();
         exist.on("click", function () {
@@ -90,12 +97,12 @@
         });
 
         Component.create({
-            xclass:'button',
-            content:'json',
-            render:"#button_container2",
-            listeners:{
-                click:{
-                    fn:function () {
+            xclass: 'button',
+            content: 'json',
+            render: "#button_container2",
+            listeners: {
+                click: {
+                    fn: function () {
                         log('json');
                     }
                 }

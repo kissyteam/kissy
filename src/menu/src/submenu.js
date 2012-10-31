@@ -317,7 +317,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         // only hide this menu, if click outside this menu and this menu's submenus
         if (!parentMenu.containsElement(target)) {
             menu && menu.hide();
-            // submenuitem should also hide
+            // sub menuitem should also hide
             self.get("parent").set("highlightedItem", null);
         }
     }

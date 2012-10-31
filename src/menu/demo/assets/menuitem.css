@@ -56,6 +56,7 @@
 
 /* State: hover. */
 .ks-menuitem-highlight,
+.ks-menuitem-active,
 .ks-menuitem-hover {
     background-color: #d6e9f8;
     /* Use an explicit top and bottom border so that the selection is visible
