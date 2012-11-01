@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 30 23:46
+build time: Nov 1 21:31
 */
 /**
  * @ignore
@@ -220,8 +220,8 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         BUTTON = 'button',
         Gesture = Event.Gesture,
         CURRENT_TARGET = 'currentTarget',
-        DRAG_MOVE_EVENT = Gesture.moveEvent,
-        DRAG_END_EVENT = Gesture.endEvent;
+        DRAG_MOVE_EVENT = Gesture.move,
+        DRAG_END_EVENT = Gesture.end;
 
 
     /**
@@ -715,7 +715,7 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
 KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, DOM, Node,Event) {
 
     var PREFIX_CLS = DDM.PREFIX_CLS,
-        DRAG_START_EVENT=Event.Gesture.startEvent;
+        DRAG_START_EVENT=Event.Gesture.start;
 
     /**
      * @extends KISSY.DD.Draggable
@@ -878,7 +878,7 @@ KISSY.add('dd/draggable-delegate', function (S, DDM, Draggable, DOM, Node,Event)
 KISSY.add('dd/draggable', function (S, UA, Node, Base, DDM,Event) {
 
     var each = S.each,
-        DRAG_START_EVENT=Event.Gesture.startEvent,
+        DRAG_START_EVENT=Event.Gesture.start,
         ie = UA['ie'],
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,

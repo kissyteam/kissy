@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 31 23:14
+build time: Nov 1 21:31
 */
 /**
  * @ignore
@@ -551,7 +551,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                     n,
                     isMouseActionButton = ev['which'] == 1,
                     el;
-                if (isMouseActionButton||isTouchSupported) {
+                if (isMouseActionButton || isTouchSupported) {
                     el = self.getKeyEventTarget();
                     if (self.get("activeable")) {
                         self.set("active", true);
@@ -583,7 +583,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             handleMouseUp: function (ev) {
                 var self = this;
                 // 左键
-                if (self.get("active") && (ev.which == 1||isTouchSupported)) {
+                if (self.get("active") && (ev.which == 1 || isTouchSupported)) {
                     self.set("active", false);
                 }
             },

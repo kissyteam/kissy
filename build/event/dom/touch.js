@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 31 22:43
+build time: Nov 1 21:34
 */
 /**
  * patch gesture for touch
@@ -14,7 +14,7 @@ KISSY.add('event/dom/touch/gesture', function (S, EventDomBase) {
         moveEvent,
         endEvent;
 
-    // 不能同时绑定 touchstart 与 mousedown 会导致 iphone 不能选择文本
+    // 不能同时绑定 touchstart 与 mousedown 会导致 ios 不能选择文本
     // bind mousedown to turn element into clickable element
     if (Features.isTouchSupported) {
         startEvent = 'touchstart';
@@ -242,7 +242,7 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event) {
  *
  * yiminghe@gmail.com 2012-10-31
  *
- * 页面改动必须先用桌面 chrome 刷新下，再用 iphone 刷新，否则很可能不生效??
+ * 页面改动必须先用桌面 chrome 刷新下，再用 ios 刷新，否则很可能不生效??
  *
  * why to implement tap:
  * 1.   click 造成 clickable element 有 -webkit-tap-highlight-color 其内不能选择文字

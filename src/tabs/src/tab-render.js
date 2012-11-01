@@ -29,8 +29,6 @@ KISSY.add("tabs/tab-render", function (S, Button) {
                 return el.hasClass(this.get("selectedCls"));
             }
         }
-    }, {
-        xclass: 'tabs-tab'
     });
 
 }, {

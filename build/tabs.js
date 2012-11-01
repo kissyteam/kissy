@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 29 21:55
+build time: Nov 1 21:56
 */
 /**
  * @fileOverview TabBar for KISSY.
@@ -178,8 +178,6 @@ KISSY.add("tabs/panel-render", function (S, Component) {
                 return el.hasClass(this.get("selectedCls"));
             }
         }
-    }, {
-        xclass: 'tabs-panel'
     });
 
 }, {
@@ -275,8 +273,6 @@ KISSY.add("tabs/tab-render", function (S, Button) {
                 return el.hasClass(this.get("selectedCls"));
             }
         }
-    }, {
-        xclass: 'tabs-tab'
     });
 
 }, {

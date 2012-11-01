@@ -33,8 +33,6 @@ KISSY.add("tabs/panel-render", function (S, Component) {
                 return el.hasClass(this.get("selectedCls"));
             }
         }
-    }, {
-        xclass: 'tabs-panel'
     });
 
 }, {

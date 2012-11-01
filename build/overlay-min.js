@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Oct 29 21:54
+build time: Nov 1 21:34
 */
 KISSY.add("overlay/base",function(c,d,f){function a(a){var g=a.get("el"),h=c.all,g=g[0].cloneNode(!0);g.style.visibility="";g.style.overflow="hidden";g.className+=" "+a.get("prefixCls")+"overlay-ghost";var b;if(b=a.get("body"))a=h("."+a.get("prefixCls")+"stdmod-body",g),a.css({height:b.height(),width:b.width()}),a.html("");return h(g)}function h(j,g,h){j.__effectGhost&&j.__effectGhost.stop(1);var b=j.get("el"),k=c.all,i=j.get("effect"),e=k(i.target),k=i.duration,e=c.mix(e.offset(),{width:e.width(),
 height:e.height()}),f=c.mix(b.offset(),{width:b.width(),height:b.height()}),d=a(j),i=i.easing;d.insertAfter(b);b.hide();g?(g=e,e=f):g=f;d.css(g);j.__effectGhost=d;d.animate(e,{duration:k,easing:i,complete:function(){j.__effectGhost=null;d.remove();b.show();h()}})}function e(a,b,c){var e=a.get("el"),d=a.get("effect"),f=d.effect||k,l=d.target;if(f==k&&!l)c();else if(l)h(a,b,c);else{var a=d.duration,d=d.easing,m=e.css("visibility"),l=b?1:0;e.stop(1,1);e.css({visibility:"visible",display:b?"none":"block"});
