@@ -575,7 +575,7 @@ KISSY.add('calendar/page', function (S, UA, Node, Calendar) {
                         cls += ' ks-today';
                     }
 
-                    s += '<a ' + (cls ? 'class=' + cls : '') + ' href="javascript:void(0);">' + i + '</a>';
+                    s += '<a ' + (cls ? 'class="' + cls + '"' : '') + ' href="javascript:void(0);">' + i + '</a>';
                 }
                 cc.ds = s;
                 return this;
