@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 1 21:35
+build time: Nov 2 11:36
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121101213553' will replace with current timestamp when compressing.
+         * NOTICE: '20121102113616' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121101213553',
+        __BUILD_TIME: '20121102113616',
         /**
          * KISSY Environment.
          * @private
@@ -5401,7 +5401,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121101213553'
+            tag: '20121102113616'
         }, getBaseInfo()));
     }
 
@@ -14569,7 +14569,7 @@ KISSY.add("json/json2", function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 1 21:30
+build time: Nov 2 11:36
 */
 /**
  * @ignore
@@ -15468,6 +15468,8 @@ KISSY.add('ajax/form', function (S, io, DOM, FormSerializer) {
  */
 KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
 
+    'use strict';
+
     var doc = S.Env.host.document,
         OK_CODE = 200,
         ERROR_CODE = 500,
@@ -15611,33 +15613,47 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
             io.iframe = null;
 
             if (eventType == 'load') {
-                iframeDoc = iframe.contentWindow.document;
-                // ie<9
-                if (iframeDoc && iframeDoc.body) {
-                    io.responseText = S.trim(DOM.text(iframeDoc.body));
-                    // ie still can retrieve xml 's responseText
-                    if (S.startsWith(io.responseText, '<?xml')) {
-                        io.responseText = undefined;
-                    }
-                }
-                // ie<9
-                // http://help.dottoro.com/ljbcjfot.php
-                // http://msdn.microsoft.com/en-us/library/windows/desktop/ms766512(v=vs.85).aspx
-                /*
-                 In Internet Explorer, XML documents can also be embedded into HTML documents with the xml HTML elements.
-                 To get an XMLDocument object that represents the embedded XML data island,
-                 use the XMLDocument property of the xml element.
-                 Note that the support for the XMLDocument property has been removed in Internet Explorer 9.
-                 */
-                if (iframeDoc && iframeDoc['XMLDocument']) {
-                    io.responseXML = iframeDoc['XMLDocument'];
-                }
-                // ie9 firefox chrome
-                else {
-                    io.responseXML = iframeDoc;
-                }
 
-                io._ioReady(OK_CODE, 'success');
+                try {
+                    iframeDoc = iframe.contentWindow.document;
+                    // ie<9
+                    if (iframeDoc && iframeDoc.body) {
+                        io.responseText = S.trim(DOM.text(iframeDoc.body));
+                        // ie still can retrieve xml 's responseText
+                        if (S.startsWith(io.responseText, '<?xml')) {
+                            io.responseText = undefined;
+                        }
+                    }
+                    // ie<9
+                    // http://help.dottoro.com/ljbcjfot.php
+                    // http://msdn.microsoft.com/en-us/library/windows/desktop/ms766512(v=vs.85).aspx
+                    /*
+                     In Internet Explorer, XML documents can also be embedded into HTML documents with the xml HTML elements.
+                     To get an XMLDocument object that represents the embedded XML data island,
+                     use the XMLDocument property of the xml element.
+                     Note that the support for the XMLDocument property has been removed in Internet Explorer 9.
+                     */
+                    if (iframeDoc && iframeDoc['XMLDocument']) {
+                        io.responseXML = iframeDoc['XMLDocument'];
+                    }
+                    // ie9 firefox chrome
+                    else {
+                        io.responseXML = iframeDoc;
+                    }
+                    if (iframeDoc) {
+                        io._ioReady(OK_CODE, 'success');
+                    } else {
+                        // chrome does not throw exception:
+                        // Unsafe JavaScript attempt to access frame with URL upload.php from frame with URL test.html.
+                        // Domains, protocols and ports must match.
+                        // chrome will get iframeDoc to null
+                        // so this error is parser error to normalize all browsers
+                        io._ioReady(ERROR_CODE, 'parser error');
+                    }
+                } catch (e) {
+                    // #245 submit to a  cross domain page except chrome
+                    io._ioReady(ERROR_CODE, 'parser error');
+                }
             } else if (eventType == 'error') {
                 io._ioReady(ERROR_CODE, 'error');
             }

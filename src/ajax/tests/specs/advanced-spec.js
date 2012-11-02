@@ -535,5 +535,45 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             });
         });
 
+        it('should error when upload to a cross domain page', function () {
+            var form = $('<form enctype="multipart/form-data">' +
+                '<input name="test" value=\'1\'/>' +
+                '<input name="test2" value=\'2\'/>' +
+                '</form>').appendTo("body");
+
+            var ok = 0;
+
+            var uploadRc = new S.Uri(location.href).resolve('../others/form/upload.php');
+
+            uploadRc.setHostname('yiminghe.taobao.net');
+
+            S.log(uploadRc.toString());
+
+
+            io({
+                form: form[0],
+                dataType: 'json',
+                url: uploadRc.toString(),
+                success: function (data) {
+                    ok = 0;
+                },
+                error: function (data, statusText) {
+                    expect(statusText).toBe('parser error');
+                    ok=1;
+                }
+            });
+
+
+            waitsFor(function () {
+                return ok;
+            });
+
+            runs(function () {
+                form.remove();
+            });
+
+
+        });
+
     });
 });
