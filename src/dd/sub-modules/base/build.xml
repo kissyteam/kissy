@@ -1,0 +1,10 @@
+<project name="dd/base.build" default="build" basedir=".">
+    <description>dd/base Build File</description>
+
+    <property name="component.name" value="dd/base"/>
+
+    <import file="../../../../tools/build-xml/common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

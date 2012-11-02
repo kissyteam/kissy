@@ -1,0 +1,10 @@
+<project name="dd/constrain.build" default="build" basedir=".">
+    <description>dd/constrain Build File</description>
+
+    <property name="component.name" value="dd/constrain"/>
+
+    <import file="../../../../tools/build-xml/common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

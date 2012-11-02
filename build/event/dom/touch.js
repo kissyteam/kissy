@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 1 21:34
+build time: Nov 2 16:55
 */
 /**
  * patch gesture for touch
@@ -54,6 +54,7 @@ KISSY.add('event/dom/touch/handle-map', function () {
 KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Gesture) {
 
     var key = S.guid('touch-handle'),
+        Features = S.Features,
         MOVE_DELAY = 30,
         touchEvents = {
         };
@@ -94,17 +95,19 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
 
         normalize: function (e) {
             var type = e.type,
+                notUp,
                 touchList;
-            if (type.indexOf('mouse') != -1) {
-                if (e.which != 1) {
+            if (Features.isTouchSupported) {
+                return e;
+            } else {
+                if (type.indexOf('mouse') != -1 && e.which != 1) {
                     return;
                 }
                 touchList = [e];
-                e.touches = (type !== 'mouseup') ? touchList : [];
-                e.targetTouches = (type !== 'mouseup') ? touchList : [];
+                notUp = !type.match(/up$/i);
+                e.touches = notUp ? touchList : [];
+                e.targetTouches = notUp ? touchList : [];
                 e.changedTouches = touchList;
-                return e;
-            } else {
                 return e;
             }
         },
