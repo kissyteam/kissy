@@ -368,5 +368,40 @@ KISSY.use("ua,json,ajax,node", function(S, UA, JSON, io, Node) {
         });
 
 
+
+        it('should error when upload to a cross domain page', function () {
+            var form = $('<form enctype="multipart/form-data">' +
+                '<input name="test" value=\'1\'/>' +
+                '<input name="test2" value=\'2\'/>' +
+                '</form>').appendTo("body");
+
+            var ok = 0;
+
+            io({
+                form: form[0],
+                dataType: 'json',
+                url: 'http://yiminghe.taobao.net/kissy_git/kissy1.2/src/ajax/tests/form/upload.php ',
+                success: function (data) {
+                    ok = 0;
+                },
+                error: function (data, statusText) {
+                    expect(statusText).toBe('parser error');
+                    ok=1;
+                }
+            });
+
+
+            waitsFor(function () {
+                return ok;
+            });
+
+            runs(function () {
+                form.remove();
+            });
+
+
+        });
+
+
     });
 });

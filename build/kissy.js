@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.20
 MIT Licensed
-build time: Oct 10 18:15
+build time: Nov 2 11:43
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: Oct 10 18:15
          */
         version:'1.20',
 
-        buildTime:'20121010181509',
+        buildTime:'20121102114320',
 
         /**
          * Returns a new object containing all of the properties of
@@ -12482,19 +12482,19 @@ KISSY.add("ajax/form", function(S, io, DOM, FormSerializer) {
  * non-refresh upload file with form by iframe
  * @author  yiminghe@gmail.com
  */
-KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
+KISSY.add("ajax/iframe-upload", function (S, DOM, Event, io) {
 
     var doc = document;
 
-    var OK_CODE = 200,ERROR_CODE = 500,BREATH_INTERVAL = 30;
+    var OK_CODE = 200, ERROR_CODE = 500, BREATH_INTERVAL = 30;
 
     // iframe 内的内容就是 body.innerText
     io.setupConfig({
-        converters:{
+        converters: {
             // iframe 到其他类型的转化和 text 一样
-            iframe:io.getConfig().converters.text,
-            text:{
-                iframe:function(text) {
+            iframe: io.getConfig().converters.text,
+            text: {
+                iframe: function (text) {
                     return text;
                 }
             }}});
@@ -12539,7 +12539,7 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     }
 
     S.augment(IframeTransport, {
-        send:function() {
+        send: function () {
             //debugger
             var xhr = this.xhr,
                 c = xhr.config,
@@ -12547,15 +12547,15 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
                 form = DOM.get(c.form);
 
             this.attrs = {
-                target:DOM.attr(form, "target") || "",
-                action:DOM.attr(form, "action") || ""
+                target: DOM.attr(form, "target") || "",
+                action: DOM.attr(form, "action") || ""
             };
             this.form = form;
 
             createIframe(xhr);
 
             // set target to iframe to avoid main page refresh
-            DOM.attr(form, {"target": xhr.iframeId,"action": c.url});
+            DOM.attr(form, {"target": xhr.iframeId, "action": c.url});
 
             if (c.data) {
                 fields = addDataToForm(c.data, form, c.serializeArray);
@@ -12571,8 +12571,8 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
 
         },
 
-        _callback:function(event
-                           //, abort
+        _callback: function (event
+                             //, abort
             ) {
             //debugger
             var form = this.form,
@@ -12587,10 +12587,18 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
             DOM.attr(form, this.attrs);
 
             if (eventType == "load") {
-                var iframeDoc = iframe.contentWindow.document;
-                xhr.responseXML = iframeDoc;
-                xhr.responseText = DOM.text(iframeDoc.body);
-                xhr.callback(OK_CODE, "success");
+                try {
+                    var iframeDoc = iframe.contentWindow.document;
+                    if (iframeDoc) {
+                        xhr.responseXML = iframeDoc;
+                        xhr.responseText = DOM.text(iframeDoc.body);
+                        xhr.callback(OK_CODE, "success");
+                    } else {
+                        xhr.callback(ERROR_CODE, "parser error");
+                    }
+                } catch (e) {
+                    xhr.callback(ERROR_CODE, "parser error");
+                }
             } else if (eventType == 'error') {
                 xhr.callback(ERROR_CODE, "error");
             }
@@ -12600,7 +12608,7 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
 
             Event.detach(iframe);
 
-            setTimeout(function() {
+            setTimeout(function () {
                 // firefox will keep loading if not settimeout
                 DOM.remove(iframe);
             }, BREATH_INTERVAL);
@@ -12609,7 +12617,7 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
             xhr.iframe = null;
         },
 
-        abort:function() {
+        abort: function () {
             this._callback(0, 1);
         }
     });
@@ -12619,7 +12627,7 @@ KISSY.add("ajax/iframe-upload", function(S, DOM, Event, io) {
     return io;
 
 }, {
-    requires:["dom","event","./base"]
+    requires: ["dom", "event", "./base"]
 });
 
 KISSY.add("ajax", function(S, serializer, io) {
