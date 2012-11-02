@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 1 21:31
+build time: Nov 2 11:54
 */
 /**
  * @fileOverview KISSY Calendar
@@ -1524,7 +1524,7 @@ KISSY.add('calendar/page', function (S, UA, Node, Calendar) {
                         cls += ' ks-today';
                     }
 
-                    s += '<a ' + (cls ? 'class=' + cls : '') + ' href="javascript:void(0);">' + i + '</a>';
+                    s += '<a ' + (cls ? 'class="' + cls + '"' : '') + ' href="javascript:void(0);">' + i + '</a>';
                 }
                 cc.ds = s;
                 return this;
