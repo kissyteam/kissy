@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30rc
 MIT Licensed
-build time: Sep 28 14:48
+build time: Nov 5 11:41
 */
 /**
  * @fileOverview parse html to a hierarchy dom tree
@@ -2877,6 +2877,14 @@ KISSY.add("htmlparser/writer/filter", function (S) {
             }
             // node can be replaced with another node
             if (el && ret && ret != el) {
+                // text filter can return string value directly
+                if (typeof ret == 'string') {
+                    if (el.toHtml() == ret) {
+                        return el;
+                    }
+                    el.nodeValue = ret;
+                    ret = el;
+                }
                 return this.onNode(ret);
             }
         }
@@ -2919,7 +2927,7 @@ KISSY.add("htmlparser/writer/filter", function (S) {
          * }
          * @param {Number} [priority] 值越小，优先级越高 ,最低 1
          */
-        addRules:function (rules, priority) {
+        addRules: function (rules, priority) {
             priority = priority || 10;
             for (var r in rules) {
                 if (rules.hasOwnProperty(r)) {
@@ -2927,8 +2935,8 @@ KISSY.add("htmlparser/writer/filter", function (S) {
                     if (holder) {
                         var index = findIndexToInsert(holder, priority);
                         holder.splice(index, 0, {
-                            value:rules[r],
-                            priority:priority
+                            value: rules[r],
+                            priority: priority
                         });
                     }
                 }
@@ -2939,31 +2947,31 @@ KISSY.add("htmlparser/writer/filter", function (S) {
          * when encounter element name transformer ,directly transform
          * @param v
          */
-        onTagName:function (v) {
+        onTagName: function (v) {
             return filterName(this.tagNames, v);
         },
 
-        onAttributeName:function (v) {
+        onAttributeName: function (v) {
             return filterName(this.attributeNames, v);
         },
 
-        onText:function (el) {
+        onText: function (el) {
             return filterFn.call(this, this.text, [el.toHtml(), el], el, el);
         },
 
-        onCData:function (el) {
+        onCData: function (el) {
             return filterFn.call(this, this.cdata, [el.toHtml(), el], el, el);
         },
 
-        onAttribute:function (attrNode, el) {
+        onAttribute: function (attrNode, el) {
             return filterAttr(this.attributes, attrNode, el, attrNode);
         },
 
-        onComment:function (el) {
+        onComment: function (el) {
             return filterFn.call(this, this.comment, [el.toHtml(), el], el, el);
         },
 
-        onNode:function (el) {
+        onNode: function (el) {
             var t = el.nodeType;
             if (t === 1) {
                 return this.onTag(el);
@@ -2974,11 +2982,11 @@ KISSY.add("htmlparser/writer/filter", function (S) {
             }
         },
 
-        onFragment:function (el) {
+        onFragment: function (el) {
             return filterFn.call(this, this.root, [el], el, el);
         },
 
-        onTag:function (el) {
+        onTag: function (el) {
             // ^ tagName $
             var filters = ["^", el.tagName, "$"],
                 tags = this.tags,
