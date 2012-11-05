@@ -1,19 +1,19 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 1 21:35
+build time: Nov 5 19:00
 */
 /**
  * @ignore
  * @fileOverview resizable support for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("resizable", function (S, Node, Base, D, undefined) {
+KISSY.add("resizable", function (S, Node, Base, DD, undefined) {
 
     var $ = Node.all,
         i,
         j,
-        Draggable = D.Draggable,
+        Draggable = DD.Draggable,
         CLS_PREFIX = "resizable-handler",
         horizontal = ["l", "r"],
         vertical = ["t", "b"],
@@ -335,4 +335,4 @@ KISSY.add("resizable", function (S, Node, Base, D, undefined) {
 
     return Resizable;
 
-}, { requires: ["node", "base", "dd"] });
+}, { requires: ["node", "base", "dd/base"] });

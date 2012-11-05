@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 1 21:35
+build time: Nov 5 18:54
 */
 /**
  * @fileOverview validation
@@ -129,8 +129,6 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
 
         /**
          * 触发校验,指定字段则只校验指定字段，否则校验所有字段
-         * @param {?String}
-            * @return {Boolean} 是否验证通过
          */
         isValid: function(field) {
             var self = this, store = self.fields;
@@ -234,7 +232,7 @@ KISSY.add("validation/define",function(){
  * @fileOverview Validation.Field
  * @author 常胤 <lzlu.com>
  */
-KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote, Warn) {
+KISSY.add("validation/field", function (S, DOM, Event, Util, Define, Rule, Remote, Warn) {
     var symbol = Define.Const.enumvalidsign,
         doc = document;
 
@@ -267,8 +265,8 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
 
     //默认配置
     Field.Config = {
-        required: [true,'此项为必填项。'],
-        initerror : "data-showerror"
+        required: [true, '此项为必填项。'],
+        initerror: "data-showerror"
     };
 
     S.augment(Field, {
@@ -277,7 +275,7 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
          * init field
          * @private
          */
-        _init: function(config) {
+        _init: function (config) {
             var self = this,
                 cfg = S.merge(Field.Config, config || {});
 
@@ -304,13 +302,13 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
          * 初始化字段,如果是checkbox or radio 则将self.el保存为数组
          * @private
          */
-        _initField: function() {
+        _initField: function () {
             var self = this, el = self.el;
             //如果为checkbox/radio则保存为数组
             if ("checkbox,radio".indexOf(DOM.attr(el, "type")) > -1) {
                 var form = el.form, elName = DOM.attr(el, "name");
                 var els = [];
-                S.each(doc.getElementsByName(elName), function(item) {
+                S.each(doc.getElementsByName(elName), function (item) {
                     if (item.form == form) {
                         els.push(item);
                     }
@@ -323,7 +321,7 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
          * 获取静态配置规则
          * @private
          */
-        _initVType: function(vtype) {
+        _initVType: function (vtype) {
             var self = this, el = self.el;
 
             //从config中获取所有规则
@@ -336,11 +334,11 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
 
             //ajax校验
             if (vtype['remote']) {
-                var ajaxCfg = S.isArray(vtype['remote']) ? {url:vtype['remote'][0]} : vtype['remote'];
-                var ajax = new Remote(el, ajaxCfg, function(est, msg) {
+                var ajaxCfg = S.isArray(vtype['remote']) ? {url: vtype['remote'][0]} : vtype['remote'];
+                var ajax = new Remote(el, ajaxCfg, function (est, msg) {
                     self.showMessage(est, msg);
                 });
-                self.addRule("ajax", function(value) {
+                self.addRule("ajax", function (value) {
                     return ajax.check(value);
                 });
             }
@@ -353,10 +351,10 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
          *  2.Warn的名称
          *  3.style名称
          */
-        _initWarn: function(config) {
+        _initWarn: function (config) {
             var self = this,
-                clsWarn,    //Warn类
-                insWarn,    //Warn实例
+                clsWarn, //Warn类
+                insWarn, //Warn实例
                 cfg = {};	//传入Warn的配置
 
             //如果配置Warn类
@@ -381,7 +379,7 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
 
 
             //绑定验证事件
-            insWarn._bindEvent(self.el, config.event || insWarn.event, function() {
+            insWarn._bindEvent(self.el, config.event || insWarn.event, function () {
                 var result = self._validateValue();
                 if (S.isArray(result) && result.length == 2) {
                     self.showMessage(result[1], result[0]);
@@ -402,15 +400,15 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
          * 1.事件驱动focus，blur,click等
          * 2.方法驱动submit
          */
-        _validateValue: function() {
+        _validateValue: function () {
             var self = this,
                 rule = self.rule,
                 value = self._getValue(),
                 rs = rule.getAll(),
 
-                //格式化返回数据
-                make = function(estate, msg) {
-                    return [msg,estate]
+            //格式化返回数据
+                make = function (estate, msg) {
+                    return [msg, estate]
                 };
 
             //无需校验
@@ -461,18 +459,18 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
         /**
          * 取值
          */
-        _getValue: function() {
+        _getValue: function () {
             var self = this, ele = self.el,
                 val = [];
             switch (DOM.attr(ele, "type")) {
                 case "select-multiple":
-                    S.each(ele.options, function(el) {
+                    S.each(ele.options, function (el) {
                         if (el.selected)val.push(el.value);
                     });
                     break;
                 case "radio":
                 case "checkbox":
-                    S.each(ele, function(el) {
+                    S.each(ele, function (el) {
                         if (el.checked)val.push(el.value);
                     });
                     break;
@@ -488,7 +486,7 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
          * @param {String} name 规则名称
          * @param {Object} argument 规则可配置
          */
-        addRule: function(name, argument) {
+        addRule: function (name, argument) {
             var self = this, rule = self.rule;
 
             //通过实例方法直接增加函数
@@ -511,7 +509,7 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
          * 匿名函数不能移除
          * 同一规则配置多次后不能单个移除
          */
-        removeRule: function(name) {
+        removeRule: function (name) {
             var self = this, rule = self.rule;
             rule.remove(name);
         },
@@ -520,7 +518,7 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
          * 触发字段的错误显示
          * @param {Object} msg
          */
-        showMessage: function(est, msg, type) {
+        showMessage: function (est, msg, type) {
             var self = this;
             self.warn.showMessage(est, msg, type);
         },
@@ -528,15 +526,15 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
         /**
          * 校验field
          */
-        isValid: function() {
+        isValid: function () {
             var self = this, result = self._validateValue();
             self.showMessage(result[1], result[0]);
-			//return result[1] != 0;  //这么写存在一个bug,只有ok/ignore才能返回true
-			if(result[1]===1 || result[1]===3){
-				return true;
-			}else{
-				return false;
-			}
+            //return result[1] != 0;  //这么写存在一个bug,只有ok/ignore才能返回true
+            if (result[1] == true || result[1] === 1 || result[1] === 3) {
+                return true;
+            } else {
+                return false;
+            }
         }
 
     });
@@ -544,7 +542,7 @@ KISSY.add("validation/field", function(S, DOM, Event, Util, Define, Rule, Remote
 
     return Field;
 
-}, { requires: ['dom',"event","./utils","./define","./rule","./rule/remote","./warn"] });/**
+}, { requires: ['dom', "event", "./utils", "./define", "./rule", "./rule/remote", "./warn"] });/**
  * @fileOverview  校验规则管理
  * @author 常胤 <lzlu.com>
  */

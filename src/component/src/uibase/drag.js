@@ -49,7 +49,10 @@ KISSY.add("component/uibase/drag", function (S) {
         _uiSetDraggable: function (dragCfg) {
             var self = this,
                 handlers,
-                DD = S.require("dd"),
+                DD = S.require("dd/base"),
+                Proxy,
+                Scroll,
+                Constrain,
                 Draggable,
                 p,
                 d = self.__drag,
@@ -65,14 +68,16 @@ KISSY.add("component/uibase/drag", function (S) {
                     move: 1
                 });
 
-                if (dragCfg.proxy) {
+                if (dragCfg.proxy && (Proxy = S.require('dd/proxy'))) {
                     dragCfg.proxy.moveOnEnd = true;
 
-                    p = self.__proxy = new DD.Proxy(dragCfg.proxy);
+                    p = self.__proxy = new Proxy(dragCfg.proxy);
                     p.attachDrag(d);
                 }
 
-                __constrain = self.__constrain = new DD.Constrain().attachDrag(d);
+                if (Constrain = S.require('dd/constrain')) {
+                    __constrain = self.__constrain = new Constrain().attachDrag(d);
+                }
 
                 d.on("dragend", function () {
                     var proxyOffset;
@@ -85,8 +90,8 @@ KISSY.add("component/uibase/drag", function (S) {
                     }
                 });
 
-                if (dragCfg.scroll) {
-                    var s = self.__scroll = new DD.Scroll(dragCfg.scroll);
+                if (dragCfg.scroll && (Scroll = S.require('dd/scroll'))) {
+                    var s = self.__scroll = new Scroll(dragCfg.scroll);
                     s.attachDrag(d);
                 }
 
@@ -98,10 +103,12 @@ KISSY.add("component/uibase/drag", function (S) {
 
             if (dragCfg && d) {
                 handlers = dragCfg.handlers;
-                if ("constrain" in dragCfg) {
-                    __constrain.set("constrain", dragCfg.constrain);
-                } else {
-                    __constrain.set("constrain", false);
+                if (__constrain) {
+                    if ("constrain" in dragCfg) {
+                        __constrain.set("constrain", dragCfg.constrain);
+                    } else {
+                        __constrain.set("constrain", false);
+                    }
                 }
                 if (handlers && handlers.length > 0) {
                     d.set("handlers", handlers);

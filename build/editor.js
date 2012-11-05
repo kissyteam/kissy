@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 1 21:34
+build time: Nov 5 18:56
 */
 /**
  * Set up editor constructor
@@ -3783,7 +3783,7 @@ KISSY.config('modules', {
 'editor/plugin/table/index': {requires: ['editor','editor/plugin/dialog-loader/','editor/plugin/contextmenu/']},
 'editor/plugin/word-filter/dynamic/index': {requires: ['htmlparser']},
 'editor/plugin/justify-left/cmd': {requires: ['editor/plugin/justify-utils/cmd']},
-'editor/plugin/resize/index': {requires: ['editor','dd']},
+'editor/plugin/resize/index': {requires: ['editor','dd/base']},
 'editor/plugin/video/dialog': {requires: ['editor','editor/plugin/flash/dialog','editor/plugin/menubutton/']},
 'editor/plugin/focus-fix/index': {requires: ['editor']},
 'editor/plugin/xiami-music/index': {requires: ['editor','editor/plugin/flash-common/baseClass','editor/plugin/flash-common/utils','editor/plugin/fake-objects/']},
@@ -3796,7 +3796,7 @@ KISSY.config('modules', {
 'editor/plugin/undo/btn': {requires: ['editor','editor/plugin/button/']},
 'editor/plugin/menubutton/index': {requires: ['editor','menubutton']},
 'editor/plugin/flash/index': {requires: ['editor','editor/plugin/flash-common/baseClass','editor/plugin/flash-common/utils','editor/plugin/fake-objects/']},
-'editor/plugin/overlay/index': {requires: ['editor','overlay','editor/plugin/focus-fix/','dd']},
+'editor/plugin/overlay/index': {requires: ['editor','overlay','editor/plugin/focus-fix/','dd/base']},
 'editor/plugin/link/utils': {requires: ['editor']},
 'editor/plugin/xiami-music/dialog': {requires: ['editor','editor/plugin/flash/dialog','editor/plugin/menubutton/']},
 'editor/plugin/list-utils/cmd': {requires: ['editor','editor/plugin/list-utils/']},

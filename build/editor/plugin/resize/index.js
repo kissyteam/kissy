@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 1 21:34
+build time: Nov 5 18:56
 */
 /**
  * resize functionality
@@ -82,5 +82,5 @@ this.config=config||{};
 
     return Resize;
 }, {
-    requires:['editor', 'dd']
+    requires:['editor', 'dd/base']
 });
