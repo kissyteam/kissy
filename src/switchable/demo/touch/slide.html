@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="../../../../../kissy-dpl/base/build/css/form.css"/>
 
     <script src="../../../../build/kissy.js"></script>
-    <script src="../../../../../kissy-dpl/base/assets/kissy-docs.js"></script>
     <script src="../../src/base.js"></script>
     <script src="../../src/aria.js"></script>
     <script src="../../src/accordion/base.js"></script>
@@ -139,26 +138,46 @@
                         <a target="_blank" href="http://www.g.cn">
                             测试1 测试1 测试1 测试1 测试1 测试1 测试1 测试1 测试1
                         </a>
+
+                        <p>
+                            可选 可选 可选 可选可选 可选可选 可选可选 可选可选 可选可选 可选
+                        </p>
                     </li>
                     <li class="hidden">
                         <a target="_blank" href="http://www.g.cn">
                             测试2 测试2 测试2 测试2 测试2 测试2 测试2 测试2 测试2
                         </a>
+
+                        <p>
+                            可选 可选 可选 可选可选 可选可选 可选可选 可选可选 可选可选 可选
+                        </p>
                     </li>
                     <li class="hidden">
                         <a target="_blank" href="http://www.g.cn">
                             测试3 测试3 测试3 测试3 测试3 测试3 测试3 测试3 测试3
                         </a>
+
+                        <p>
+                            可选 可选 可选 可选可选 可选可选 可选可选 可选可选 可选可选 可选
+                        </p>
                     </li>
                     <li class="hidden">
                         <a target="_blank" href="http://www.g.cn">
                             测试4 测试4 测试4 测试4 测试4 测试4 测试4 测试4 测试4
                         </a>
+
+                        <p>
+                            可选 可选 可选 可选可选 可选可选 可选可选 可选可选 可选可选 可选
+                        </p>
                     </li>
                     <li class="hidden">
                         <a target="_blank" href="http://www.g.cn">
                             测试5 测试5 测试5 测试5 测试5 测试5 测试5 测试5 测试5
                         </a>
+
+                        <p>
+                            可选 可选 可选 可选可选 可选可选 可选可选 可选可选 可选可选 可选
+                        </p>
                     </li>
                 </ol>
             </div>
@@ -171,30 +190,29 @@
                     var DOM = S.DOM;
 
                     // s.ready ios 出错
-                   // S.ready(function (S) {
-                        var s = Slide('#demo2', {
-                            effect: 'scrolly',
-                            // slide特效组件其实不需要
-                            aria: false,
-                            isMouseAsTouch:true,
-                            pauseOnScroll: true,
-                            easing: 'easeOutStrong'
-                            // if no panels must specify viewSize
-                            // , viewSize:[470, 150]
-                            //countdown: true,
-                            //countdownFromStyle: 'width:18px'
-                        });
+                    // S.ready(function (S) {
+                    var s = Slide('#demo2', {
+                        effect: 'scrolly',
+                        // slide特效组件其实不需要
+                        aria: false,
+                        isMouseAsTouch: true,
+                        pauseOnScroll: true,
+                        easing: 'easeOutStrong'
+                        // if no panels must specify viewSize
+                        // , viewSize:[470, 150]
+                        //countdown: true,
+                        //countdownFromStyle: 'width:18px'
+                    });
 
-                        window.slide = s;
+                    window.slide = s;
 
-                        s.on("switch", function () {
-                            //S.log("switch");
-                        });
+                    s.on("switch", function () {
+                        //S.log("switch");
+                    });
                     //});
                 });
             </script>
         </div>
-        <a class="s-view-code" href="#">显示源码</a>
     </div>
 </div>
 </body>

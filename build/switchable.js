@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 2 16:33
+build time: Nov 5 20:46
 */
 /**
  * @fileOverview accordion aria support
@@ -2693,10 +2693,10 @@ KISSY.add('switchable/slide/base', function (S, Switchable) {
  */
 KISSY.add("switchable", function (S, Switchable, Accordion, Carousel, Slide, Tabs) {
     var re = {
-        Accordion:Accordion,
-        Carousel:Carousel,
-        Slide:Slide,
-        Tabs:Tabs
+        Accordion: Accordion,
+        Carousel: Carousel,
+        Slide: Slide,
+        Tabs: Tabs
     };
     S.mix(Switchable, re);
 
@@ -2704,7 +2704,7 @@ KISSY.add("switchable", function (S, Switchable, Accordion, Carousel, Slide, Tab
 
     return Switchable;
 }, {
-    requires:[
+    requires: [
         "switchable/base",
         "switchable/accordion/base",
         "switchable/carousel/base",
@@ -2717,7 +2717,8 @@ KISSY.add("switchable", function (S, Switchable, Accordion, Carousel, Slide, Tab
         "switchable/autoplay",
         "switchable/aria",
         "switchable/tabs/aria",
-        "switchable/accordion/aria"
+        "switchable/accordion/aria",
+        "switchable/touch"
     ]
 });
 /**
@@ -3005,6 +3006,13 @@ KISSY.add('switchable/tabs/base', function(S, Switchable) {
  */
 KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
 
+    /**
+     * 添加默认配置
+     */
+    S.mix(Switchable.Config, {
+        isMouseAsTouch: false
+    });
+
     Switchable.addPlugin({
 
         name: 'touch',
@@ -3032,6 +3040,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                     containerRegion = {},
                     prop = "left",
                     diff,
+                    pause = 0,
                     viewSize;
 
                 if (effect == 'scrolly') {
@@ -3044,9 +3053,11 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                     // resetPosition 瞬移会导致 startContentOffset 变化，复杂了
                         self.panels[self.activeIndex].style.position == 'relative') {
                         // S.log("edge adjusting, wait !");
-                        contentDD.stopDrag();
+                        pause = 1;
                         return;
                     }
+
+                    pause = 0;
 
                     // 停止自动播放
                     if (self.stop) {
@@ -3071,6 +3082,10 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                 }
 
                 function move(e) {
+
+                    if (pause) {
+                        return;
+                    }
 
                     var currentOffset = {},
                         inRegion;
@@ -3126,6 +3141,10 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                 }
 
                 function end() {
+                    if (pause) {
+                        pause = 0;
+                        return;
+                    }
 
                     /*
                      circular logic
@@ -3166,6 +3185,9 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                 }
 
 
+                if (cfg.isMouseAsTouch) {
+                    DD = S.require('dd/base');
+                }
                 if (DD) {
                     var contentDD = new DD.Draggable({
                         node: content
@@ -3179,6 +3201,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                     contentDD.on("dragend", end);
                     self.__touchDD = contentDD;
                 }
+
             }
         },
 

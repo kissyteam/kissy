@@ -7,10 +7,9 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
 <title>ImageZoom Demo</title>
-<link href="../../build/css/reset.css" rel="stylesheet"/>
+<link href="../../build/css/dpl.css" rel="stylesheet"/>
 
 <script src="../../build/kissy.js"></script>
-<script src="../../build/component.js"></script>
 
 <script src="./src/base.js"></script>
 <script src="./src/zoomer.js"></script>
@@ -184,39 +183,6 @@
                 m.set("bigImageWidth", parseInt(DOM.attr(this, 'data-bigImageWidth')));
                 m.set("bigImageHeight", parseInt(DOM.attr(this, 'data-bigImageHeight')))
             }
-        });
-    });
-</script>
-<p class="code-switch">显示源码</p>
-
-
-<script>
-    KISSY.use("ua,dom,event,node", function (S, UA, DOM, Event, Node) {
-        var NodeList = Node,
-                SHOW_CODE = '显示源码', HIDE_CODE = '隐藏源码';
-
-        NodeList.all('p.code-switch').each(function (p) {
-            p.on('click', function () {
-                var showing = (p.text() === SHOW_CODE),
-                        next = p.next(),
-                        pre = next;
-
-                if (next[0].nodeName !== 'PRE') {
-                    pre = Node('<pre>');
-
-                    pre.attr('class', 'code')
-                            .html(p.prev().html());
-
-                    if (UA['ie']) {
-                        pre.html(pre.html() + '<br />// 请用非 ie 内核浏览器查看。');
-                    }
-
-                    DOM.insertAfter(pre[0], p[0]);
-                }
-
-                pre.css('display', showing ? 'block' : 'none');
-                p.html(showing ? HIDE_CODE : SHOW_CODE);
-            });
         });
     });
 </script>

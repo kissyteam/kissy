@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 2 16:25
+build time: Nov 5 20:56
 */
 /**
  * @ignore
@@ -156,19 +156,21 @@ KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
         var self = this,
             __activeToDrag ,
             activeDrag;
+
+        //防止 ie 选择到字
+        ev.preventDefault();
+
         // 先处理预备役，效率!
         if (__activeToDrag = self.__activeToDrag) {
-            //防止 ie 选择到字
-            ev.preventDefault();
+
             __activeToDrag._move(ev);
 
         } else if (activeDrag = self.get('activeDrag')) {
-            //防止 ie 选择到字
-            ev.preventDefault();
-            activeDrag._move(ev);
 
+            activeDrag._move(ev);
             // 获得当前的激活drop
             notifyDropsMove(self, ev, activeDrag);
+
         }
     }
 
@@ -1365,8 +1367,13 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
             // 防止 firefox/chrome 选中 text
             // 非 ie，阻止了 html dd 的默认行为
             if (self.get('halt')) {
-                ev.halt();
-            } else {
+                ev.stopPropagation();
+            }
+
+            // in touch device
+            // prevent touchdown
+            // will prevent text selection and link click
+            if (!Features.isTouchSupported) {
                 ev.preventDefault();
             }
 

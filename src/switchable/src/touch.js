@@ -45,6 +45,11 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                 }
 
                 function start() {
+                    // interesting!
+                    // in touch device:
+                    // absolute content can not be touched (edge panel can not be touched)
+                    // if its panel relative positioned to edge
+
                     if (// edge adjusting, wait
                     // 暂时不像 circular 那样处理
                     // resetPosition 瞬移会导致 startContentOffset 变化，复杂了
@@ -174,20 +179,21 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
 
                 if (cfg.isMouseAsTouch) {
                     DD = S.require('dd/base');
-                    if (DD) {
-                        var contentDD = new DD.Draggable({
-                            node: content
-                        });
-                        contentDD.on("dragstart", function () {
-                            start();
-                            startX = contentDD.get('startMousePos').left;
-                            startY = contentDD.get('startMousePos').top;
-                        });
-                        contentDD.on("drag", move);
-                        contentDD.on("dragend", end);
-                        self.__touchDD = contentDD;
-                    }
                 }
+                if (DD) {
+                    var contentDD = new DD.Draggable({
+                        node: content
+                    });
+                    contentDD.on("dragstart", function () {
+                        start();
+                        startX = contentDD.get('startMousePos').left;
+                        startY = contentDD.get('startMousePos').top;
+                    });
+                    contentDD.on("drag", move);
+                    contentDD.on("dragend", end);
+                    self.__touchDD = contentDD;
+                }
+
             }
         },
 

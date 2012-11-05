@@ -3,10 +3,10 @@
  */
 KISSY.add("switchable", function (S, Switchable, Accordion, Carousel, Slide, Tabs) {
     var re = {
-        Accordion:Accordion,
-        Carousel:Carousel,
-        Slide:Slide,
-        Tabs:Tabs
+        Accordion: Accordion,
+        Carousel: Carousel,
+        Slide: Slide,
+        Tabs: Tabs
     };
     S.mix(Switchable, re);
 
@@ -14,7 +14,7 @@ KISSY.add("switchable", function (S, Switchable, Accordion, Carousel, Slide, Tab
 
     return Switchable;
 }, {
-    requires:[
+    requires: [
         "switchable/base",
         "switchable/accordion/base",
         "switchable/carousel/base",
@@ -27,6 +27,7 @@ KISSY.add("switchable", function (S, Switchable, Accordion, Carousel, Slide, Tab
         "switchable/autoplay",
         "switchable/aria",
         "switchable/tabs/aria",
-        "switchable/accordion/aria"
+        "switchable/accordion/aria",
+        "switchable/touch"
     ]
 });

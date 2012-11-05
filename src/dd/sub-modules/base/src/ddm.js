@@ -129,19 +129,21 @@ KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
         var self = this,
             __activeToDrag ,
             activeDrag;
+
+        //防止 ie 选择到字
+        ev.preventDefault();
+
         // 先处理预备役，效率!
         if (__activeToDrag = self.__activeToDrag) {
-            //防止 ie 选择到字
-            ev.preventDefault();
+
             __activeToDrag._move(ev);
 
         } else if (activeDrag = self.get('activeDrag')) {
-            //防止 ie 选择到字
-            ev.preventDefault();
-            activeDrag._move(ev);
 
+            activeDrag._move(ev);
             // 获得当前的激活drop
             notifyDropsMove(self, ev, activeDrag);
+
         }
     }
 

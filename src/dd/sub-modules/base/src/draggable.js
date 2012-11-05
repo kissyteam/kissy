@@ -662,8 +662,13 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
             // 防止 firefox/chrome 选中 text
             // 非 ie，阻止了 html dd 的默认行为
             if (self.get('halt')) {
-                ev.halt();
-            } else {
+                ev.stopPropagation();
+            }
+
+            // in touch device
+            // prevent touchdown
+            // will prevent text selection and link click
+            if (!Features.isTouchSupported) {
                 ev.preventDefault();
             }
 
