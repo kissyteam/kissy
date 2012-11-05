@@ -8,7 +8,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        isMouseAsTouch: false
+        mouseAsTouch: false
     });
 
     Switchable.addPlugin({
@@ -177,7 +177,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                 }
 
 
-                if (cfg.isMouseAsTouch) {
+                if (cfg.mouseAsTouch) {
                     DD = S.require('dd/base');
                 }
                 if (DD) {

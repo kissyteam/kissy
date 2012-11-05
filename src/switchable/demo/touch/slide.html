@@ -184,7 +184,7 @@
 
             <script>
 
-                KISSY.use("event,switchable,dd/base,event/dom/touch", function (S, Event, Switchable) {
+                KISSY.use("event,switchable,dd/base", function (S, Event, Switchable) {
                     var Slide = Switchable.Slide;
 
                     var DOM = S.DOM;
@@ -195,7 +195,8 @@
                         effect: 'scrolly',
                         // slide特效组件其实不需要
                         aria: false,
-                        isMouseAsTouch: true,
+                        // 仅作 pc 端调试
+                        mouseAsTouch: true,
                         pauseOnScroll: true,
                         easing: 'easeOutStrong'
                         // if no panels must specify viewSize

@@ -155,7 +155,7 @@
                     <li>&bull;</li>
                 </ul>
                 <script>
-                    KISSY.use("event,switchable,datalazyload", function (S, Event, Switchable) {
+                    KISSY.use("event,switchable,datalazyload,dd/base", function (S, Event, Switchable) {
                         var Carousel = Switchable.Carousel;
 
                         S.ready(function (S) {
@@ -167,6 +167,7 @@
                                 circular:false,
                                 prevBtnCls:'prev',
                                 nextBtnCls:'next',
+                                // 仅作 pc 端调试
                                 mouseAsTouch:true,
                                 //autoplay:true,
                                 disableBtnCls:'disable',

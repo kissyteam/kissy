@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 5 20:46
+build time: Nov 5 21:20
 */
 /**
  * @fileOverview accordion aria support
@@ -3010,7 +3010,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
      * 添加默认配置
      */
     S.mix(Switchable.Config, {
-        isMouseAsTouch: false
+        mouseAsTouch: false
     });
 
     Switchable.addPlugin({
@@ -3040,7 +3040,6 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                     containerRegion = {},
                     prop = "left",
                     diff,
-                    pause = 0,
                     viewSize;
 
                 if (effect == 'scrolly') {
@@ -3048,16 +3047,19 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                 }
 
                 function start() {
+                    // interesting!
+                    // in touch device:
+                    // absolute content can not be touched (edge panel can not be touched)
+                    // if its panel relative positioned to edge
+
                     if (// edge adjusting, wait
                     // 暂时不像 circular 那样处理
                     // resetPosition 瞬移会导致 startContentOffset 变化，复杂了
                         self.panels[self.activeIndex].style.position == 'relative') {
                         // S.log("edge adjusting, wait !");
-                        pause = 1;
+                        contentDD.stopDrag();
                         return;
                     }
-
-                    pause = 0;
 
                     // 停止自动播放
                     if (self.stop) {
@@ -3082,10 +3084,6 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                 }
 
                 function move(e) {
-
-                    if (pause) {
-                        return;
-                    }
 
                     var currentOffset = {},
                         inRegion;
@@ -3141,10 +3139,6 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                 }
 
                 function end() {
-                    if (pause) {
-                        pause = 0;
-                        return;
-                    }
 
                     /*
                      circular logic
@@ -3185,7 +3179,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                 }
 
 
-                if (cfg.isMouseAsTouch) {
+                if (cfg.mouseAsTouch) {
                     DD = S.require('dd/base');
                 }
                 if (DD) {
