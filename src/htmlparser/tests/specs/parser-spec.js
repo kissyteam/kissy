@@ -1,3 +1,7 @@
+/**
+ * parser of htmlparser tc
+ * @author yiminghe@gmail.com
+ */
 KISSY.use("htmlparser", function (S, HtmlParser) {
     var Parser = HtmlParser.Parser;
     describe("Parser", function () {
@@ -13,15 +17,15 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
 
             expect(node.childNodes.length).toBe(2);
 
-            var childnode1 = node.childNodes;
+            var childNode1 = node.childNodes;
 
-            expect(childnode1[0].nodeName).toBe("span");
+            expect(childNode1[0].nodeName).toBe("span");
 
-            expect(childnode1[0].childNodes[0].toHtml()).toBe("1");
+            expect(childNode1[0].childNodes[0].toHtml()).toBe("1");
 
-            expect(childnode1[1].nodeName).toBe("a");
+            expect(childNode1[1].nodeName).toBe("a");
 
-            expect(childnode1[1].childNodes[0].toHtml()).toBe("http://www.taobao.com");
+            expect(childNode1[1].childNodes[0].toHtml()).toBe("http://www.taobao.com");
         });
 
         it("works for none-valid html", function () {
@@ -36,11 +40,11 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
 
             expect(node.childNodes.length).toBe(1);
 
-            var childnode1 = node.childNodes;
+            var childNode1 = node.childNodes;
 
-            expect(childnode1[0].nodeName).toBe("span");
+            expect(childNode1[0].nodeName).toBe("span");
 
-            var childnode2 = childnode1[0].childNodes;
+            var childnode2 = childNode1[0].childNodes;
 
             expect(childnode2[0].toHtml()).toBe("1");
 
@@ -112,7 +116,7 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
             // <a>1<p>2</p>3</a> , move <a> inside => <a>1</a><p><a>2</a></p><a>3</a>
             var html = "<a>我<p>测试</p>一下</a>",
                 parser = new Parser(html, {
-                    fixByDtd:1
+                    fixByDtd: 1
                 }),
                 node = parser.parse(),
                 writer = new HtmlParser.BasicWriter();
@@ -124,8 +128,8 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
         it("adjust non-valid nest tag soup by dtd and auto paragraph", function () {
             var html = "<a>我<p>测试</p>一下</a>",
                 parser = new Parser(html, {
-                    fixByDtd:1,
-                    autoParagraph:1
+                    fixByDtd: 1,
+                    autoParagraph: 1
                 }),
                 node = parser.parse(),
                 writer = new HtmlParser.BasicWriter();
@@ -141,8 +145,8 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
                 filter = new HtmlParser.Filter();
 
             filter.addRules({
-                tags:{
-                    $:function (el) {
+                tags: {
+                    $: function (el) {
                         if (el.getAttribute("class") == "li") {
                             el.nodeName = el.tagName = "li";
                             el.removeAttribute("class");
@@ -165,29 +169,47 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
             expect(writer.getHtml()).toBe("<ul><li>1</li><li>2</li></ul>");
         });
 
+        it('can replace text', function () {
+
+            var html = "<li>12</li><li>21</li>",
+                parser = new Parser(html),
+                node = parser.parse(),
+                writer = new HtmlParser.BasicWriter(),
+                filter = new HtmlParser.Filter();
+
+            filter.addRules({
+                text: function (value) {
+                    return value.replace(/2/g, '3');
+                }
+            });
+            node.writeHtml(writer, filter);
+            expect(writer.getHtml()).toBe("<li>13</li><li>31</li>");
+
+        });
+
         it("should parse nested li", function () {
             var html = "<ol><li><ol><li></li></ol></li></ol>";
             var n = HtmlParser.parse(html).childNodes[0];
             expect(HtmlParser.serialize(n)).toBe(html);
         });
 
-        describe('writer',function(){
+        describe('writer', function () {
 
-            it('works for empty attribute',function(){
+            it('works for empty attribute', function () {
 
                 var html = "<img alt='' />",
                     parser = new Parser(html),
                     node = parser.parse(),
                     writer = new HtmlParser.BasicWriter();
                 node.writeHtml(writer);
-               expect(writer.getHtml()).toBe('<img alt="alt" />');
+                expect(writer.getHtml()).toBe('<img alt="alt" />');
 
 
-                var  beatifyWriter = new HtmlParser.BeautifyWriter();
+                var beatifyWriter = new HtmlParser.BeautifyWriter();
                 node.writeHtml(beatifyWriter);
                 expect(beatifyWriter.getHtml()).toBe('<img alt="alt" />');
 
-                var  minifyWriter = new HtmlParser.MinifyWriter();
+                var minifyWriter = new HtmlParser.MinifyWriter();
                 node.writeHtml(minifyWriter);
                 expect(minifyWriter.getHtml()).toBe('<img alt="" />');
             });
