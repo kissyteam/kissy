@@ -124,8 +124,6 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
 
         /**
          * 触发校验,指定字段则只校验指定字段，否则校验所有字段
-         * @param {?String}
-            * @return {Boolean} 是否验证通过
          */
         isValid: function(field) {
             var self = this, store = self.fields;
