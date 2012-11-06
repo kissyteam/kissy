@@ -35,7 +35,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 eventDesc = Utils.data(currentTarget),
                 handle = eventDesc.handle;
             // 第一次注册该事件，dom 节点才需要注册 dom 事件
-            if (!s.setup || s.setup.call(currentTarget,type) === false) {
+            if (!s.setup || s.setup.call(currentTarget, type) === false) {
                 Utils.simpleAdd(currentTarget, type, handle)
             }
         },
@@ -109,6 +109,9 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             // in case child node stopPropagation of root node's observers
             allObservers.push({
                 currentTarget: currentTarget,
+                // http://www.w3.org/TR/dom/#dispatching-events
+                // Let listeners be a static list of the event listeners
+                // associated with the object for which these steps are run.
                 currentTargetObservers: observers.slice(delegateCount)
             });
 
@@ -180,9 +183,26 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             var cur = currentTarget,
                 t,
                 win = DOM._getWin(cur.ownerDocument || cur),
+                curDocument = win.document,
+                eventPath = [],
+                eventPathIndex = 0,
                 ontype = 'on' + eventType;
 
-            //bubble up dom tree
+
+            // http://www.w3.org/TR/dom/#dispatching-events
+            // let event path be a static ordered list of all its ancestors in tree order,
+            // or let event path be the empty list otherwise.
+            do {
+                eventPath.push(cur);
+                // Bubble up to document, then to window
+                cur = cur.parentNode ||
+                    cur.ownerDocument ||
+                    (cur === curDocument) && win;
+            } while (cur);
+
+            cur = eventPath[eventPathIndex];
+
+            // bubble up dom tree
             do {
                 event.currentTarget = cur;
                 customEvent = ObservableDOMEvent.getCustomEvent(cur, eventType);
@@ -197,9 +217,8 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
                     event.preventDefault();
                 }
-                // Bubble up to document, then to window
-                cur = cur.parentNode || cur.ownerDocument ||
-                    (cur === currentTarget.ownerDocument) && win;
+
+                cur = eventPath[++eventPathIndex];
             } while (!onlyHandlers && cur && !event.isPropagationStopped());
 
             if (!onlyHandlers && !event.isDefaultPrevented()) {
@@ -379,7 +398,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                     handle = eventDesc.handle;
                     // remove(el, type) or fn 已移除光
                     // dom node need to detach handler from dom node
-                    if ((!s['tearDown'] || s['tearDown'].call(currentTarget,type) === false)) {
+                    if ((!s['tearDown'] || s['tearDown'].call(currentTarget, type) === false)) {
                         Utils.simpleRemove(currentTarget, type, handle);
                     }
                     // remove currentTarget's single event description
