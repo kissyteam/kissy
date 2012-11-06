@@ -1,6 +1,7 @@
 /**
  * @ignore
- * custom event mechanism for kissy
+ * custom event mechanism for kissy.
+ * refer: http://www.w3.org/TR/domcore/#interface-customevent
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, CustomEventObject, Event) {
