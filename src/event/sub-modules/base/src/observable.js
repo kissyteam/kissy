@@ -59,6 +59,10 @@ KISSY.add('event/base/observable', function (S) {
             self.checkMemory();
         },
 
+        /**
+         * check memory after detach
+         * @private
+         */
         checkMemory: function () {
 
         },

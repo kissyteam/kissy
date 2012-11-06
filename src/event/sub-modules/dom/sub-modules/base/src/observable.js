@@ -13,7 +13,9 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
     /**
      * custom event for dom
      * @param {Object} cfg
+     * @private
      * @class KISSY.Event.ObservableDOMEvent
+     * @extends KISSY.Event.ObservableEvent
      */
     function ObservableDOMEvent(cfg) {
         var self = this;

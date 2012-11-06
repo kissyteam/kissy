@@ -22,7 +22,10 @@
  */
 KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBase, Manager, Render, undefined) {
 
-    var ie = S.Env.host.document.documentMode || S.UA.ie;
+    var ie = S.Env.host.document.documentMode || S.UA.ie,
+        Features = S.Features,
+        Gesture = Event.Gesture,
+        isTouchSupported = Features.isTouchSupported || Features.isMsPointerEnabled;
 
     function wrapperViewSetter(attrName) {
         return function (ev) {
@@ -231,32 +234,49 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
             },
 
             '_uiSetHandleMouseEvents': function (handleMouseEvents) {
+
                 var self = this, el = self.get(&quot;el&quot;), t;
+
                 if (handleMouseEvents) {
-                    el.on(&quot;mouseenter&quot;, wrapBehavior(self, &quot;handleMouseEnter&quot;))
-                        .on(&quot;mouseleave&quot;, wrapBehavior(self, &quot;handleMouseLeave&quot;))
-                        .on(&quot;contextmenu&quot;, wrapBehavior(self, &quot;handleContextMenu&quot;))
-                        .on(&quot;mousedown&quot;, wrapBehavior(self, &quot;handleMouseDown&quot;))
-                        .on(&quot;mouseup&quot;, wrapBehavior(self, &quot;handleMouseUp&quot;));
+
+                    if (!isTouchSupported) {
+                        el.on(&quot;mouseenter&quot;, wrapBehavior(self, &quot;handleMouseEnter&quot;))
+                            .on(&quot;mouseleave&quot;, wrapBehavior(self, &quot;handleMouseLeave&quot;))
+                            .on(&quot;contextmenu&quot;, wrapBehavior(self, &quot;handleContextMenu&quot;))
+                    }
+
+                    el.on(Gesture.start, wrapBehavior(self, &quot;handleMouseDown&quot;))
+                        .on(Gesture.end, wrapBehavior(self, &quot;handleMouseUp&quot;))
+                        // consider touch environment
+                        .on(Gesture.tap, wrapBehavior(self, &quot;performActionInternal&quot;));
+
                     // click quickly only trigger click and dblclick in ie&lt;9
                     // others click click dblclick
                     if (ie &amp;&amp; ie &lt; 9) {
                         el.on(&quot;dblclick&quot;, wrapBehavior(self, &quot;handleDblClick&quot;));
                     }
+
                 } else {
-                    (t = getWrapBehavior(self, &quot;handleMouseEnter&quot;)) &amp;&amp;
+
+                    if (!isTouchSupported) {
+                        (t = getWrapBehavior(self, &quot;handleMouseEnter&quot;)) &amp;&amp;
                         el.detach(&quot;mouseenter&quot;, t);
-                    (t = getWrapBehavior(self, &quot;handleMouseLeave&quot;)) &amp;&amp;
+                        (t = getWrapBehavior(self, &quot;handleMouseLeave&quot;)) &amp;&amp;
                         el.detach(&quot;mouseleave&quot;, t);
-                    (t = getWrapBehavior(self, &quot;handleContextMenu&quot;)) &amp;&amp;
+                        (t = getWrapBehavior(self, &quot;handleContextMenu&quot;)) &amp;&amp;
                         el.detach(&quot;contextmenu&quot;, t);
+                    }
+
                     (t = getWrapBehavior(self, &quot;handleMouseDown&quot;)) &amp;&amp;
-                        el.detach(&quot;mousedown&quot;, t);
+                    el.detach(Gesture.start, t);
                     (t = getWrapBehavior(self, &quot;handleMouseUp&quot;)) &amp;&amp;
-                        el.detach(&quot;mouseup&quot;, t);
+                    el.detach(Gesture.end, t);
+                    (t = getWrapBehavior(self, &quot;performActionInternal&quot;)) &amp;&amp;
+                    el.detach(Gesture.tap, t);
+
                     if (ie &amp;&amp; ie &lt; 9) {
                         (t = getWrapBehavior(self, &quot;handleDblClick&quot;)) &amp;&amp;
-                            el.detach(&quot;dblclick&quot;, t);
+                        el.detach(&quot;dblclick&quot;, t);
                     }
                 }
             },
@@ -377,7 +397,7 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
              * By default, this performs its associated action by calling
              * {@link KISSY.Component.Controller#performActionInternal}.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleDblClick: function (ev) {
                 this.performActionInternal(ev);
@@ -386,7 +406,7 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 <span id='KISSY-Component-Controller-method-handleMouseOver'>            /**
 </span>             * Called by it's container component to dispatch mouseenter event.
              * @private
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseOver: function (ev) {
                 var self = this,
@@ -399,7 +419,7 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 <span id='KISSY-Component-Controller-method-handleMouseOut'>            /**
 </span>             * Called by it's container component to dispatch mouseleave event.
              * @private
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseOut: function (ev) {
                 var self = this,
@@ -412,7 +432,7 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 <span id='KISSY-Component-Controller-method-handleMouseEnter'>            /**
 </span>             * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseEnter: function (ev) {
                 this.set(&quot;highlighted&quot;, !!ev);
@@ -421,7 +441,7 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 <span id='KISSY-Component-Controller-method-handleMouseLeave'>            /**
 </span>             * Handle mouseleave events. If the component is not disabled, de-highlights it.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseLeave: function (ev) {
                 var self = this;
@@ -435,14 +455,14 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
              * If the component is focusable, then focus it,
              * else prevent it from receiving keyboard focus.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseDown: function (ev) {
                 var self = this,
                     n,
                     isMouseActionButton = ev['which'] == 1,
                     el;
-                if (isMouseActionButton) {
+                if (isMouseActionButton || isTouchSupported) {
                     el = self.getKeyEventTarget();
                     if (self.get(&quot;activeable&quot;)) {
                         self.set(&quot;active&quot;, true);
@@ -469,13 +489,12 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
              * If this component is not disabled, performs its associated action by calling
              * {@link KISSY.Component.Controller#performActionInternal}, then deactivates it.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseUp: function (ev) {
                 var self = this;
                 // 左键
-                if (self.get(&quot;active&quot;) &amp;&amp; ev.which == 1) {
-                    self.performActionInternal(ev);
+                if (self.get(&quot;active&quot;) &amp;&amp; (ev.which == 1 || isTouchSupported)) {
                     self.set(&quot;active&quot;, false);
                 }
             },
@@ -483,7 +502,7 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 <span id='KISSY-Component-Controller-method-handleContextMenu'>            /**
 </span>             * Handles context menu.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleContextMenu: function (ev) {
             },
@@ -491,7 +510,7 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 <span id='KISSY-Component-Controller-method-handleFocus'>            /**
 </span>             * Handles focus events. Style focused class.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleFocus: function (ev) {
                 this.set(&quot;focused&quot;, !!ev);
@@ -501,7 +520,7 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 <span id='KISSY-Component-Controller-method-handleBlur'>            /**
 </span>             * Handles blur events. Remove focused class.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleBlur: function (ev) {
                 this.set(&quot;focused&quot;, !ev);
@@ -511,7 +530,7 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 <span id='KISSY-Component-Controller-method-handleKeyEventInternal'>            /**
 </span>             * Handle enter keydown event to {@link KISSY.Component.Controller#performActionInternal}.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleKeyEventInternal: function (ev) {
                 if (ev.keyCode == Event.KeyCodes.ENTER) {
@@ -523,7 +542,7 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 </span>             * Handle keydown events.
              * If the component is not disabled, call {@link KISSY.Component.Controller#handleKeyEventInternal}
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleKeydown: function (ev) {
                 var self = this;
@@ -536,7 +555,7 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 <span id='KISSY-Component-Controller-method-performActionInternal'>            /**
 </span>             * Performs the appropriate action when this component is activated by the user.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             performActionInternal: function (ev) {
             },
@@ -740,6 +759,12 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
     requires: ['event', './base', './uibase', './manager', './render']
 });
 /*
+
+ yiminghe@gmail.com - 2012.10.31
+ - 考虑触屏，绑定 Event.Gesture.tap 为主行为事件
+ - handleMouseDown/up 对应 Gesture.start/end
+
+
  事件冒泡机制
  - child 组件的冒泡源配置为其所属的 parent
  - 性能考虑:不是 child 的所有事件都冒泡到 parent，要具体配置哪些事件需要冒泡

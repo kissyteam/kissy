@@ -380,7 +380,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * By default, this performs its associated action by calling
              * {@link KISSY.Component.Controller#performActionInternal}.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleDblClick: function (ev) {
                 this.performActionInternal(ev);
@@ -389,7 +389,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Called by it's container component to dispatch mouseenter event.
              * @private
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseOver: function (ev) {
                 var self = this,
@@ -402,7 +402,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Called by it's container component to dispatch mouseleave event.
              * @private
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseOut: function (ev) {
                 var self = this,
@@ -415,7 +415,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseEnter: function (ev) {
                 this.set("highlighted", !!ev);
@@ -424,7 +424,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handle mouseleave events. If the component is not disabled, de-highlights it.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseLeave: function (ev) {
                 var self = this;
@@ -438,7 +438,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * If the component is focusable, then focus it,
              * else prevent it from receiving keyboard focus.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseDown: function (ev) {
                 var self = this,
@@ -472,7 +472,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * If this component is not disabled, performs its associated action by calling
              * {@link KISSY.Component.Controller#performActionInternal}, then deactivates it.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseUp: function (ev) {
                 var self = this;
@@ -485,7 +485,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles context menu.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleContextMenu: function (ev) {
             },
@@ -493,7 +493,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles focus events. Style focused class.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleFocus: function (ev) {
                 this.set("focused", !!ev);
@@ -503,7 +503,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles blur events. Remove focused class.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleBlur: function (ev) {
                 this.set("focused", !ev);
@@ -513,7 +513,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handle enter keydown event to {@link KISSY.Component.Controller#performActionInternal}.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleKeyEventInternal: function (ev) {
                 if (ev.keyCode == Event.KeyCodes.ENTER) {
@@ -525,7 +525,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * Handle keydown events.
              * If the component is not disabled, call {@link KISSY.Component.Controller#handleKeyEventInternal}
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleKeydown: function (ev) {
                 var self = this;
@@ -538,7 +538,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Performs the appropriate action when this component is activated by the user.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             performActionInternal: function (ev) {
             },

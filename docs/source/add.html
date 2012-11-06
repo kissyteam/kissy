@@ -17,191 +17,235 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview responsible for registering event
- * @author yiminghe@gmail.com
+ * @fileOverview add module to kissy simple loader
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('event/add', function (S, Event, DOM, Utils, EventObject, handle, _data, specials) {
-    var simpleAdd = Utils.simpleAdd,
-        isValidTarget = Utils.isValidTarget,
-        isIdenticalHandler = Utils.isIdenticalHandler;
+(function (S, undefined) {
 
-    /*
-     dom node need eventHandler attached to dom node
-     */
-    function addDomEvent(target, type, eventHandler, handlers, handleObj) {
-        var special = specials[type] || {};
-        // 第一次注册该事件，dom 节点才需要注册 dom 事件
-        if (!handlers.length &amp;&amp;
-            (!special.setup || special.setup.call(target) === false)) {
-            simpleAdd(target, type, eventHandler)
-        }
-        if (special.add) {
-            special.add.call(target, handleObj);
-        }
-    }
+    var Loader = S.Loader,
+        Path = S.Path,
+        utils = Loader.Utils;
 
-    S.mix(Event,
-<span id='KISSY-Event-AddMod'>        /**
-</span>         * @override KISSY.Event
-         * @class KISSY.Event.AddMod
-         * @singleton
-         */
+
+    S.augment(Loader,
+        Loader.Target,
         {
-            // single type , single target , fixed native
-            __add: function (isNativeTarget, target, type, fn, scope) {
-                var typedGroups = Utils.getTypedGroups(type);
-                type = typedGroups[0];
-                var groups = typedGroups[1],
-                    isCustomEvent = !isNativeTarget,
-                    eventDesc,
-                    data,
-                    s = isNativeTarget&amp;&amp;specials[type],
-                // in case overwrite by delegateFix/onFix in specials events
-                // (mouseenter/leave,focusin/out)
-                    originalType,
-                    last,
-                    selector;
-                if (S.isObject(fn)) {
-                    last = fn.last;
-                    scope = fn.scope;
-                    data = fn.data;
-                    selector = fn.selector;
-                    // in case provided by clone
-                    originalType = fn.originalType;
-                    fn = fn.fn;
-                    if (selector &amp;&amp; !originalType) {
-                        if (s &amp;&amp; s['delegateFix']) {
-                            originalType = type;
-                            type = s['delegateFix'];
-                        }
-                    }
-                }
-                if (!selector &amp;&amp; !originalType) {
-                    // when on mouseenter , it's actually on mouseover , and handlers is saved with mouseover!
-                    // TODO need evaluate!
-                    if (s &amp;&amp; s['onFix']) {
-                        originalType = type;
-                        type = s['onFix'];
-                    }
-                }
-                // 不是有效的 target 或 参数不对
-                if (!type ||
-                    !target ||
-                    !S.isFunction(fn) ||
-                    (isNativeTarget &amp;&amp; !isValidTarget(target))) {
-                    return;
-                }
-                // 获取事件描述
-                eventDesc = _data._data(target,undefined, isCustomEvent);
-                if (!eventDesc) {
-                    _data._data(target, eventDesc = {}, isCustomEvent);
-                }
-                //事件 listeners , similar to eventListeners in DOM3 Events
-                var events = eventDesc.events = eventDesc.events || {},
-                    handlers = events[type] = events[type] || [],
-                    handleObj = {
-                        fn: fn,
-                        scope: scope,
-                        selector: selector,
-                        last: last,
-                        data: data,
-                        groups: groups,
-                        originalType: originalType
-                    },
-                    eventHandler = eventDesc.handler;
-                // 该元素没有 handler ，并且该元素是 dom 节点时才需要注册 dom 事件
-                if (
-                // 自定义事件不需要 eventHandler
-                    isNativeTarget &amp;&amp;
-                        !eventHandler
-                    ) {
-                    eventHandler = eventDesc.handler = function (event, data) {
-                        // 是经过 fire 手动调用而浏览器同步触发导致的，就不要再次触发了，
-                        // 已经在 fire 中 bubble 过一次了
-                        // in case after page has unloaded
-                        if (typeof KISSY == 'undefined' ||
-                            event &amp;&amp; event.type == Utils.Event_Triggered) {
-                            return;
-                        }
-                        var currentTarget = eventHandler.target, type;
-                        if (!event || !event.fixed) {
-                            event = new EventObject(currentTarget, event);
-                        }
-                        type = event.type;
-                        if (S.isPlainObject(data)) {
-                            S.mix(event, data);
-                        }
-                        // protect type
-                        if (type) {
-                            event.type = type;
-                        }
-                        return handle(currentTarget, event);
-                    };
-                    // as for native dom event , this represents currentTarget !
-                    eventHandler.target = target;
+
+            //firefox,ie9,chrome 如果 add 没有模块名，模块定义先暂存这里
+            __currentModule: null,
+
+            //ie6,7,8开始载入脚本的时间
+            __startLoadTime: 0,
+
+            //ie6,7,8开始载入脚本对应的模块名
+            __startLoadModuleName: null,
+
+<span id='KISSY-Loader-method-add'>            /**
+</span>             * Registers a module.
+             * @param {String|Object} [name] module name
+             * @param {Function|Object} [fn] entry point into the module that is used to bind module to KISSY
+             * @param {Object} [config] special config for this add
+             * @param {String[]} [config.requires] array of mod's name that current module requires
+             * @member KISSY.Loader
+             *
+             * for example:
+             *      @example
+             *      KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
+             */
+            add: function (name, fn, config) {
+                var self = this,
+                    runtime = self.runtime,
+                    mod,
+                    requires,
+                    mods = runtime.Env.mods;
+
+                // 兼容
+                if (S.isPlainObject(name)) {
+                    return runtime.config({
+                        modules: name
+                    });
                 }
 
-                for (var i = handlers.length - 1; i &gt;= 0; --i) {
-                    /*
-                     If multiple identical EventListeners are registered on the same EventTarget
-                     with the same parameters the duplicate instances are discarded.
-                     They do not cause the EventListener to be called twice
-                     and since they are discarded
-                     they do not need to be removed with the removeEventListener method.
-                     */
-                    if (isIdenticalHandler(handlers[i], handleObj, target)) {
+                // S.add(name[, fn[, config]])
+                if (typeof name == 'string') {
+
+                    utils.registerModule(runtime, name, fn, config);
+
+                    mod = mods[name];
+
+                    // 显示指定 add 不 attach
+                    if (config &amp;&amp; config['attach'] === false) {
                         return;
                     }
-                }
 
-                if (isNativeTarget) {
-                    addDomEvent(target, type, eventHandler, handlers, handleObj);
-                    //nullify to prevent memory leak in ie ?
-                    target = null;
-                }
-
-                // 增加 listener
-                if (selector) {
-                    var delegateIndex = handlers.delegateCount
-                        = handlers.delegateCount || 0;
-                    handlers.splice(delegateIndex, 0, handleObj);
-                    handlers.delegateCount++;
-                } else {
-                    handlers.lastCount = handlers.lastCount || 0;
-                    if (last) {
-                        handlers.push(handleObj);
-                        handlers.lastCount++;
-                    } else {
-                        handlers.splice(handlers.length - handlers.lastCount,
-                            0, handleObj);
+                    if (config) {
+                        requires = mod.getNormalizedRequires();
                     }
-                }
-            },
 
-<span id='KISSY-Event-method-add'>            /**
-</span>             * Adds an event listener.similar to addEventListener in DOM3 Events
-             * @param targets KISSY selector
-             * @member KISSY.Event
-             * @param type {String} The type of event to append.use space to separate multiple event types.
-             * @param fn {Function} The event handler/listener.
-             * @param {Object} [scope] The scope (this reference) in which the handler function is executed.
-             */
-            add: function (targets, type, fn, scope) {
-                type = S.trim(type);
-                // data : 附加在回调后面的数据，delegate 检查使用
-                // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
-                if (Utils.batchForType(Event.add, targets, type, fn, scope)) {
-                    return targets;
+                    if (!requires || utils.isAttached(runtime, requires)) {
+                        utils.attachMod(runtime, mod);
+                    }
+
+                    return;
                 }
-                targets = DOM.query(targets);
-                for (var i = targets.length - 1; i &gt;= 0; i--) {
-                    Event.__add(true, targets[i], type, fn, scope);
+                // S.add(fn,config);
+                else if (S.isFunction(name)) {
+                    config = fn;
+                    fn = name;
+                    if (utils.IE) {
+                        /*
+                         Kris Zyp
+                         2010年10月21日, 上午11时34分
+                         We actually had some discussions off-list, as it turns out the required
+                         technique is a little different than described in this thread. Briefly,
+                         to identify anonymous modules from scripts:
+                         * In non-IE browsers, the onload event is sufficient, it always fires
+                         immediately after the script is executed.
+                         * In IE, if the script is in the cache, it actually executes *during*
+                         the DOM insertion of the script tag, so you can keep track of which
+                         script is being requested in case define() is called during the DOM
+                         insertion.
+                         * In IE, if the script is not in the cache, when define() is called you
+                         can iterate through the script tags and the currently executing one will
+                         have a script.readyState == 'interactive'
+                         See RequireJS source code if you need more hints.
+                         Anyway, the bottom line from a spec perspective is that it is
+                         implemented, it works, and it is possible. Hope that helps.
+                         Kris
+                         */
+                        // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
+                        // use onload to get module name is not right in ie
+                        name = findModuleNameByInteractive(self);
+                        S.log('old_ie get modName by interactive : ' + name);
+                        utils.registerModule(runtime, name, fn, config);
+                        self.__startLoadModuleName = null;
+                        self.__startLoadTime = 0;
+                    } else {
+                        // 其他浏览器 onload 时，关联模块名与模块定义
+                        self.__currentModule = {
+                            fn: fn,
+                            config: config
+                        };
+                    }
+                    return;
                 }
-                return targets;
+                S.log('invalid format for KISSY.add !', 'error');
             }
         });
-}, {
-    requires: ['./base', 'dom', './utils', './object', './handle', './data', './special']
-});</pre>
+
+
+    // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
+    // 如果找不到，返回发送前那个脚本
+    function findModuleNameByInteractive(self) {
+        var runtime = self.runtime,
+            scripts = S.Env.host.document.getElementsByTagName('script'),
+            re,
+            i,
+            script;
+
+        for (i = 0; i &lt; scripts.length; i++) {
+            script = scripts[i];
+            if (script.readyState == 'interactive') {
+                re = script;
+                break;
+            }
+        }
+        if (!re) {
+            // sometimes when read module file from cache , interactive status is not triggered
+            // module code is executed right after inserting into dom
+            // i has to preserve module name before insert module script into dom , then get it back here
+            S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
+            S.log('old_ie get mod name from cache : ' + self.__startLoadModuleName);
+            return self.__startLoadModuleName;
+        }
+
+        // src 必定是绝对路径
+        // or re.hasAttribute ? re.src :  re.getAttribute('src', 4);
+        // http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
+        // note:
+        // &lt;script src='/x.js'&gt;&lt;/script&gt;
+        // ie6-8 =&gt; re.src == '/x.js'
+        // ie9 or firefox/chrome =&gt; re.src == 'http://localhost/x.js'
+        var src = utils.resolveByPage(re.src),
+            srcStr = src.toString(),
+            packages = runtime.config('packages'),
+            finalPackagePath,
+            p,
+            packageBase,
+            Config = runtime.Config,
+            finalPackageUri,
+            finalPackageLength = -1;
+
+        // 外部模块去除包路径，得到模块名
+        for (p in packages) {
+
+            packageBase = packages[p].getBase();
+            if (S.startsWith(srcStr, packageBase)) {
+                // longest match
+                if (packageBase.length &gt; finalPackageLength) {
+                    finalPackageLength = packageBase.length;
+                    finalPackagePath = packageBase;
+                    finalPackageUri = packages[p].getBaseUri();
+                }
+            }
+
+        }
+        // 注意：模块名不包含后缀名以及参数，所以去除
+        // 系统模块去除系统路径
+        // 需要 base norm , 防止 base 被指定为相对路径
+        // configs 统一处理
+        if (finalPackagePath) {
+            return utils.removeExtname(Path.relative(finalPackageUri.getPath(),
+                src.getPath()));
+        } else if (S.startsWith(srcStr, Config.base)) {
+            return utils.removeExtname(Path.relative(Config.baseUri.getPath(),
+                src.getPath()));
+        }
+
+        S.log('interactive script does not have package config ：' + src, 'error');
+        return undefined;
+    }
+
+})(KISSY);
+
+/*
+ 2012-02-21 yiminghe@gmail.com refactor:
+
+ 拆分 ComboLoader 与 Loader
+
+ 2011-01-04 chengyu&lt;yiminghe@gmail.com&gt; refactor:
+
+ adopt requirejs :
+
+ 1. packages(cfg) , cfg :{
+ name : 包名，用于指定业务模块前缀
+ path: 前缀包名对应的路径
+ charset: 该包下所有文件的编码
+
+ 2. add(moduleName,function(S,depModule){return function(){}},{requires:['depModuleName']});
+ moduleName add 时可以不写
+ depModuleName 可以写相对地址 (./ , ../)，相对于 moduleName
+
+ 3. S.use(['dom'],function(S,DOM){
+ });
+ 依赖注入，发生于 add 和 use 时期
+
+ 4. add,use 不支持 css loader ,getScript 仍然保留支持
+
+ 5. 部分更新模块文件代码 x/y?t=2011 ，加载过程中注意去除事件戳，仅在载入文件时使用
+
+ demo : http://lite-ext.googlecode.com/svn/trunk/lite-ext/playground/module_package/index.html
+
+ 2011-03-01 yiminghe@gmail.com note:
+
+ compatibility
+
+ 1. 保持兼容性
+ 如果 requires 都已经 attached，支持 add 后立即 attach
+ 支持 { attach : false } 显示控制 add 时是否 attach
+
+ 2011-05-04 初步拆分文件，tmd 乱了
+ */
+</pre>
 </body>
 </html>

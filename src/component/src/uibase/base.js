@@ -274,7 +274,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event beforeCreateDom
                  * fired before root node is created
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
                 self.fire('beforeCreateDom');
                 callMethodByHierarchy(self, "createDom", "__createDom");
@@ -282,7 +282,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event afterCreateDom
                  * fired when root node is created
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
                 self.fire('afterCreateDom');
                 actionPlugins(self, self.get("plugins"), "createDom");
@@ -303,7 +303,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event beforeRenderUI
                  * fired when root node is ready
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
 
                 self.fire('beforeRenderUI');
@@ -312,7 +312,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event afterRenderUI
                  * fired after root node is rendered into dom
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
 
                 self.fire('afterRenderUI');
@@ -321,7 +321,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event beforeBindUI
                  * fired before component 's internal event is bind.
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
 
                 self.fire('beforeBindUI');
@@ -331,7 +331,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event afterBindUI
                  * fired when component 's internal event is bind.
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
 
                 self.fire('afterBindUI');
@@ -340,7 +340,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event beforeSyncUI
                  * fired before component 's internal state is synchronized.
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
 
                 self.fire('beforeSyncUI');
@@ -351,7 +351,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event afterSyncUI
                  * fired after component 's internal state is synchronized.
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
 
                 self.fire('afterSyncUI');

@@ -33,10 +33,10 @@
         /**
          * Creates a new function that, when called, itself calls this function in the context of the provided this value,
          * with a given sequence of arguments preceding any provided when the new function was called.
-         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
          * @param {Function} fn internal called function
          * @param {Object} obj context in which fn runs
-         * @param {...} var_args extra arguments
+         * @param {*...} var_args extra arguments
          * @member KISSY
          * @return {Function} new function with context and arguments
          */
@@ -45,10 +45,10 @@
         /**
          * Creates a new function that, when called, itself calls this function in the context of the provided this value,
          * with a given sequence of arguments preceding any provided when the new function was called.
-         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
          * @param {Function} fn internal called function
          * @param {Object} obj context in which fn runs
-         * @param {...} var_args extra arguments
+         * @param {*...} var_args extra arguments
          * @member KISSY
          * @return {Function} new function with context and arguments
          */

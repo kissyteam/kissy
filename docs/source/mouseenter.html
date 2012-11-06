@@ -20,17 +20,17 @@
  * @fileOverview event-mouseenter
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
+KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, UA, special) {
     S.each([
-        { name:'mouseenter', fix:'mouseover' },
-        { name:'mouseleave', fix:'mouseout' }
+        { name: 'mouseenter', fix: 'mouseover' },
+        { name: 'mouseleave', fix: 'mouseout' }
     ], function (o) {
         special[o.name] = {
             // fix #75
-            onFix:o.fix,
+            onFix: o.fix,
             // all browser need
-            delegateFix:o.fix,
-            handle:function (event, handler, data) {
+            delegateFix: o.fix,
+            handle: function (event, observer, ce) {
                 var currentTarget = event.currentTarget,
                     relatedTarget = event.relatedTarget;
                 // 在自身外边就触发
@@ -48,25 +48,24 @@ KISSY.add('event/mouseenter', function (S, Event, DOM, UA, special) {
                     // mouseover 采样时跳跃的，可能 2,1 的 mouseover 事件
                     // target 都是 3,而 relatedTarget 都是 0
                     // event.stopPropagation();
-                    return [handler.fn.call(handler.scope || currentTarget, event, data)];
+                    return [observer.simpleNotify(event, ce)];
                 }
-                return [];
             }
         };
     });
 
     return Event;
 }, {
-    requires:['./base', 'dom', 'ua', './special']
+    requires: ['./api', 'dom', 'ua', './special']
 });
 
 /*
-  yiminghe@gmail.com:2011-12-15
-  - 借鉴 jq 1.7 新的架构
+ yiminghe@gmail.com:2011-12-15
+ - 借鉴 jq 1.7 新的架构
 
-  承玉：2011-06-07
-  - 根据新结构，调整 mouseenter 兼容处理
-  - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
+ 承玉：2011-06-07
+ - 根据新结构，调整 mouseenter 兼容处理
+ - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
  */
 </pre>
 </body>

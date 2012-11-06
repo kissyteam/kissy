@@ -134,7 +134,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
          * @event complete
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.Object} e
+         * @param {KISSY.Event.CustomEventObject} e
          * @param {KISSY.IO} e.io current io
          */
 
@@ -143,7 +143,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
          * @event success
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.Object} e
+         * @param {KISSY.Event.CustomEventObject} e
          * @param {KISSY.IO} e.io current io
          */
 
@@ -152,7 +152,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
          * @event error
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.Object} e
+         * @param {KISSY.Event.CustomEventObject} e
          * @param {KISSY.IO} e.io current io
          */
         IO.fire(eventType, {
@@ -412,7 +412,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
          * @event start
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.Object} e
+         * @param {KISSY.Event.CustomEventObject} e
          * @param {KISSY.IO} e.io current io
          */
 
@@ -478,7 +478,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
          * @event send
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.Object} e
+         * @param {KISSY.Event.CustomEventObject} e
          * @param {KISSY.IO} e.io current io
          */
 

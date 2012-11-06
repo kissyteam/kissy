@@ -20,101 +20,54 @@
  * @fileOverview utils for event
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/utils', function (S, DOM) {
+KISSY.add('event/base/utils', function (S) {
 
-    var NodeType = DOM.NodeType;
-
-    /*
-     whether two event listens are the same
-     @param h1 已有的 handler 描述
-     @param h2 用户提供的 handler 描述
-     */
-    function isIdenticalHandler(h1, h2, el) {
-        var scope1 = h1.scope || el,
-            ret = 1,
-            scope2 = h2.scope || el;
-        if (
-            h1.fn !== h2.fn ||
-                h1.selector !== h2.selector ||
-                h1.data !== h2.data ||
-                scope1 !== scope2 ||
-                h1.originalType !== h2.originalType ||
-                h1.groups !== h2.groups ||
-                h1.last !== h2.last
-            ) {
-            ret = 0;
-        }
-        return ret;
-    }
-
-
-    function isValidTarget(target) {
-        // 3 - is text node
-        // 8 - is comment node
-        return target &amp;&amp;
-            target.nodeType !== NodeType.TEXT_NODE &amp;&amp;
-            target.nodeType !== NodeType.COMMENT_NODE;
-    }
-
-
-    function batchForType(fn, targets, types) {
-        // on(target, 'click focus', fn)
-        if (types &amp;&amp; types.indexOf(' ') &gt; 0) {
-            var args = S.makeArray(arguments);
-            S.each(types.split(/\s+/), function (type) {
-                var args2 = [].concat(args);
-                args2.splice(0, 3, targets, type);
-                fn.apply(null, args2);
-            });
-            return true;
-        }
-        return 0;
-    }
-
-
-    function splitAndRun(type, fn) {
-        S.each(type.split(/\s+/), fn);
-    }
-
-    var doc = S.Env.host.document,
-        simpleAdd = doc &amp;&amp; doc.addEventListener ?
-            function (el, type, fn, capture) {
-                if (el.addEventListener) {
-                    el.addEventListener(type, fn, !!capture);
-                }
-            } :
-            function (el, type, fn) {
-                if (el.attachEvent) {
-                    el.attachEvent('on' + type, fn);
-                }
-            },
-        simpleRemove = doc &amp;&amp; doc.removeEventListener ?
-            function (el, type, fn, capture) {
-                if (el.removeEventListener) {
-                    el.removeEventListener(type, fn, !!capture);
-                }
-            } :
-            function (el, type, fn) {
-                if (el.detachEvent) {
-                    el.detachEvent('on' + type, fn);
-                }
-            };
-
+    var getTypedGroups, splitAndRun;
 
     return {
-        // 记录手工 fire(domElement,type) 时的 type
-        // 再在浏览器通知的系统 eventHandler 中检查
-        // 如果相同，那么证明已经 fire 过了，不要再次触发了
-        Event_Triggered: '',
-        TRIGGERED_NONE: 'trigger-none-' + S.now(),
-        EVENT_GUID: 'ksEventTargetId' + S.now(),
-        splitAndRun: splitAndRun,
-        batchForType: batchForType,
-        isValidTarget: isValidTarget,
-        isIdenticalHandler: isIdenticalHandler,
-        simpleAdd: simpleAdd,
-        simpleRemove: simpleRemove,
-        getTypedGroups: function (type) {
+
+        splitAndRun: splitAndRun = function (type, fn) {
+            type = S.trim(type);
+            if (type.indexOf(' ') == -1) {
+                fn(type);
+            } else {
+                S.each(type.split(/\s+/), fn);
+            }
+        },
+
+        normalizeParam: function (type, fn, context) {
+            var cfg = fn || {};
+
+            if (S.isFunction(fn)) {
+                cfg = {
+                    fn: fn,
+                    context: context
+                };
+            }
+
+            var typedGroups = getTypedGroups(type);
+
+            type = typedGroups[0];
+
+            cfg.groups = typedGroups[1];
+
+            cfg.type = type;
+
+            return cfg;
+        },
+
+        batchForType: function (fn, num) {
+            var args = S.makeArray(arguments),
+                types = args[2 + num];
+            splitAndRun(types, function (type) {
+                var args2 = [].concat(args);
+                args2.splice(0, 2);
+                args2[num] = type;
+                fn.apply(null, args2);
+            });
+        },
+
+        getTypedGroups: getTypedGroups = function (type) {
             if (type.indexOf('.') &lt; 0) {
                 return [type, ''];
             }
@@ -130,13 +83,13 @@ KISSY.add('event/utils', function (S, DOM) {
             }
             return ret;
         },
+
         getGroupsRe: function (groups) {
             return new RegExp(groups.split('.').join('.*\\.') + '(?:\\.|$)');
         }
+
     };
 
-}, {
-    requires: ['dom']
 });</pre>
 </body>
 </html>

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * gesture tap or click for pc
  * @author yiminghe@gmail.com
  */

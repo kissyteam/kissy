@@ -13,11 +13,16 @@ KISSY.add('event/base/object', function (S) {
 
     /**
      * @class KISSY.Event.Object
-     *
+     * @private
      * KISSY 's base event object for custom and dom event.
      */
     function EventObject() {
         this.timeStamp = S.now();
+        /**
+         * current event type
+         * @property type
+         * @type {String}
+         */
     }
 
     EventObject.prototype = {

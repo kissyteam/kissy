@@ -20,8 +20,9 @@
  * @fileOverview generate proxy drag object,
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/proxy', function (S, Node, Base, DDM) {
+KISSY.add('dd/proxy', function (S, Node, Base, DD) {
     var DESTRUCTOR_ID = '__proxy_destructors',
+        DDM = DD.DDM,
         stamp = S.stamp,
         MARKER = S.guid('__dd_proxy');
 
@@ -189,9 +190,11 @@ KISSY.add('dd/proxy', function (S, Node, Base, DDM) {
     ProxyPrototype.attach = ProxyPrototype.attachDrag;
     ProxyPrototype.unAttach = ProxyPrototype.detachDrag;
 
+    DD.Proxy = Proxy;
+
     return Proxy;
 }, {
-    requires: ['node', 'base', './ddm']
+    requires: ['node', 'base', 'dd/base']
 });</pre>
 </body>
 </html>

@@ -20,12 +20,12 @@
  * @fileOverview resizable support for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;resizable&quot;, function (S, Node, Base, D, undefined) {
+KISSY.add(&quot;resizable&quot;, function (S, Node, Base, DD, undefined) {
 
     var $ = Node.all,
         i,
         j,
-        Draggable = D.Draggable,
+        Draggable = DD.Draggable,
         CLS_PREFIX = &quot;resizable-handler&quot;,
         horizontal = [&quot;l&quot;, &quot;r&quot;],
         vertical = [&quot;t&quot;, &quot;b&quot;],
@@ -347,7 +347,7 @@ KISSY.add(&quot;resizable&quot;, function (S, Node, Base, D, undefined) {
 
     return Resizable;
 
-}, { requires: [&quot;node&quot;, &quot;base&quot;, &quot;dd&quot;] });
+}, { requires: [&quot;node&quot;, &quot;base&quot;, &quot;dd/base&quot;] });
 </pre>
 </body>
 </html>

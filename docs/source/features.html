@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * detect if current browser supports various features.
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+
+    var win = S.Env.host,
+        doc = win.document;
+
+<span id='KISSY-Features'>    /**
+</span>     * test browser features
+     * @class KISSY.Features
+     * @private
+     * @singleton
+     */
+    S.Features = {
+        // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
+<span id='KISSY-Features-property-isMsPointerEnabled'>        /**
+</span>         * whether support win8 pointer event.
+         * @type {Boolean}
+         */
+        isMsPointerEnabled: &quot;msPointerEnabled&quot; in win.navigator,
+<span id='KISSY-Features-property-isTouchSupported'>        /**
+</span>         * whether support touch event.
+         * @type {Boolean}
+         */
+        isTouchSupported: 'ontouchstart' in doc
+    };
+
+})(KISSY);</pre>
+</body>
+</html>

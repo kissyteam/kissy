@@ -20,7 +20,7 @@
  * @fileOverview  change bubble and checkbox/radio fix patch for ie&lt;9
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/change', function (S, UA, Event, DOM, special) {
+KISSY.add('event/dom/base/change', function (S, UA, Event, DOM, special) {
     var doc = S.Env.host.document,
         mode = doc &amp;&amp; doc['documentMode'];
 
@@ -113,7 +113,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
             // in case stopped by user's callback,same with submit
             // http://bugs.jquery.com/ticket/11049
             // see : test/change/bubble.html
-                e.isPropagationStopped ||
+                e.isPropagationStopped() ||
                     // checkbox/radio already bubble using another technique
                     isCheckBoxOrRadio(fel)) {
                 return;
@@ -127,7 +127,7 @@ KISSY.add('event/change', function (S, UA, Event, DOM, special) {
 
     }
 }, {
-    requires: ['ua', './base', 'dom', './special']
+    requires: ['ua', './api', 'dom', './special']
 });</pre>
 </body>
 </html>

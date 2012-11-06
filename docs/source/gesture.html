@@ -17,35 +17,34 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview dd support for kissy
+ * gesture normalization for pc and touch.
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd', function (S, DDM, Draggable, Droppable, Proxy, Constrain, Delegate, DroppableDelegate, Scroll) {
+KISSY.add('event/dom/base/gesture', function (S) {
 
-    var DD;
-    DD = {
-        Draggable: Draggable,
-        Droppable: Droppable,
-        DDM: DDM,
-        'Constrain': Constrain,
-        Proxy: Proxy,
-        DraggableDelegate: Delegate,
-        DroppableDelegate: DroppableDelegate,
-        Scroll: Scroll
+<span id='KISSY-Event-Gesture'>    /**
+</span>     * gesture for event
+     * @enum {String} KISSY.Event.Gesture
+     */
+    return {
+<span id='KISSY-Event-Gesture-property-start'>        /**
+</span>         * start gesture
+         */
+        start: 'mousedown',
+<span id='KISSY-Event-Gesture-property-move'>        /**
+</span>         * move gesture
+         */
+        move: 'mousemove',
+<span id='KISSY-Event-Gesture-property-end'>        /**
+</span>         * end gesture
+         */
+        end: 'mouseup',
+<span id='KISSY-Event-Gesture-property-tap'>        /**
+</span>         * tap gesture
+         */
+        tap: 'click'
     };
 
-    KISSY.DD = DD;
-
-    return DD;
-}, {
-    requires: ['dd/ddm',
-        'dd/draggable',
-        'dd/droppable',
-        'dd/proxy',
-        'dd/constrain',
-        'dd/draggable-delegate',
-        'dd/droppable-delegate',
-        'dd/scroll']
 });</pre>
 </body>
 </html>

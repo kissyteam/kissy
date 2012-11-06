@@ -20,9 +20,10 @@
  * @fileOverview auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/scroll', function (S, DDM, Base, Node, DOM) {
+KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
 
     var TAG_DRAG = '__dd-scroll-id-',
+        DDM = DD.DDM,
         win = S.Env.host,
         stamp = S.stamp,
         RATE = [10, 10],
@@ -178,7 +179,7 @@ KISSY.add('dd/scroll', function (S, DDM, Base, Node, DOM) {
                 destructors = self[DESTRUCTORS];
 
             if (destructors[tag]) {
-                return this;
+                return self;
             }
 
             var rate = self.get('rate'),
@@ -316,7 +317,7 @@ KISSY.add('dd/scroll', function (S, DDM, Base, Node, DOM) {
                 }
             }
 
-            return this;
+            return self;
         }
     });
 
@@ -324,9 +325,12 @@ KISSY.add('dd/scroll', function (S, DDM, Base, Node, DOM) {
     var ScrollPrototype = Scroll.prototype;
     ScrollPrototype.attach = ScrollPrototype.attachDrag;
     ScrollPrototype.unAttach = ScrollPrototype.detachDrag;
+
+    DD.Scroll = Scroll;
+
     return Scroll;
 }, {
-    requires: ['./ddm', 'base', 'node', 'dom']
+    requires: ['dd/base', 'base', 'node', 'dom']
 });</pre>
 </body>
 </html>

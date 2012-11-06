@@ -17,146 +17,160 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview responsible for handling event from browser to KISSY Event
+ * base handle for touch gesture
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/handle', function (S, DOM, _data, special) {
+KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Gesture) {
 
-    function getEvents(target, isCustomEvent) {
-        // 获取事件描述
-        var eventDesc = _data._data(target, undefined,isCustomEvent);
-        return eventDesc &amp;&amp; eventDesc.events;
+    var key = S.guid('touch-handle'),
+        Features = S.Features,
+        MOVE_DELAY = 30,
+        touchEvents = {
+        };
+
+    touchEvents[Gesture.start] = 'onTouchStart';
+    touchEvents[Gesture.move] = 'onTouchMove';
+    touchEvents[Gesture.end] = 'onTouchEnd';
+
+    if (Gesture.start !== 'mousedown') {
+        touchEvents.touchcancel = 'onTouchEnd';
     }
 
-    function getHandlers(target, type, isCustomEvent) {
-        var events = getEvents(target, isCustomEvent) || {};
-        return events[type] || [];
+    function DocumentHandler(doc) {
+
+        var self = this;
+
+        self.doc = doc;
+
+        self.eventHandle = {
+        };
+
+        self.init();
+
     }
 
-    return function (currentTarget, event, isCustomEvent) {
-        /*
-         As some listeners may remove themselves from the
-         event, the original array length is dynamic. So,
-         let's make a copy of all listeners, so we are
-         sure we'll call all of them.
-         */
-        /*
-         DOM3 Events: EventListenerList objects in the DOM are live. ??
-         */
-        var handlers = getHandlers(currentTarget, event.type, isCustomEvent),
-            target = event.target,
-            currentTarget0,
-            allHandlers = [],
-            ret,
-            gRet,
-            handlerObj,
-            i,
-            j,
-            delegateCount = handlers.delegateCount || 0,
-            len,
-            currentTargetHandlers,
-            currentTargetHandler,
-            handler;
+    DocumentHandler.prototype = {
 
-        // collect delegated handlers and corresponding element
-        if (delegateCount &amp;&amp;
-            // by jq
-            // Avoid disabled elements in IE (#6911)
-            // non-left-click bubbling in Firefox (#3861),firefox 8 fix it
-            !target.disabled) {
-            while (target != currentTarget) {
-                currentTargetHandlers = [];
-                for (i = 0; i &lt; delegateCount; i++) {
-                    handler = handlers[i];
-                    if (DOM.test(target, handler.selector)) {
-                        currentTargetHandlers.push(handler);
+        init: function () {
+            var self = this,
+                doc = self.doc,
+                e, h;
+            self.onTouchMove = S.throttle(self.onTouchMove, MOVE_DELAY);
+            for (e in touchEvents) {
+                h = touchEvents[e];
+                Event.on(doc, e, self[h], self);
+            }
+        },
+
+        normalize: function (e) {
+            var type = e.type,
+                notUp,
+                touchList;
+            if (Features.isTouchSupported) {
+                return e;
+            } else {
+                if (type.indexOf('mouse') != -1 &amp;&amp; e.which != 1) {
+                    return;
+                }
+                touchList = [e];
+                notUp = !type.match(/up$/i);
+                e.touches = notUp ? touchList : [];
+                e.targetTouches = notUp ? touchList : [];
+                e.changedTouches = touchList;
+                return e;
+            }
+        },
+
+        onTouchStart: function (event) {
+            var e, h,
+                self = this;
+            for (e in self.eventHandle) {
+                h = self.eventHandle[e];
+                h.isActive = true;
+            }
+            self.callEventHandle('onTouchStart', event);
+        },
+
+        onTouchMove: function (event) {
+            this.callEventHandle('onTouchMove', event);
+        },
+
+        onTouchEnd: function (event) {
+            this.callEventHandle('onTouchEnd', event);
+        },
+
+        callEventHandle: function (method, event) {
+            var self = this,
+                e, h;
+            event = self.normalize(event);
+            if (event) {
+                for (e in self.eventHandle) {
+                    h = self.eventHandle[e];
+                    if (h.isActive &amp;&amp; h[method](event) === false) {
+                        h.isActive = false;
                     }
                 }
-                if (currentTargetHandlers.length) {
-                    allHandlers.push({
-                        currentTarget: target,
-                        'currentTargetHandlers': currentTargetHandlers
-                    });
-                }
-                target = target.parentNode || currentTarget;
+            }
+        },
+
+        addEventHandle: function (event) {
+            var self = this;
+            if (!self.eventHandle[event]) {
+                self.eventHandle[event] = new (eventHandleMap[event])();
+            }
+        },
+
+        'removeEventHandle': function (event) {
+            delete this.eventHandle[event];
+        },
+
+        destroy: function () {
+            var self = this,
+                doc = self.doc,
+                e, h;
+            for (e in touchEvents) {
+                h = touchEvents[e];
+                Event.detach(doc, e, self[h], self);
             }
         }
 
-        // root node's handlers is placed at end position of add handlers
-        // in case child node stopPropagation of root node's handlers
-        allHandlers.push({
-            currentTarget: currentTarget,
-            currentTargetHandlers: handlers.slice(delegateCount)
-        });
+    };
 
-        // backup eventType
-        var eventType = event.type,
-            s,
-            t,
-            _ks_groups = event._ks_groups;
+    return {
 
-        for (i = 0, len = allHandlers.length;
-             !event.isPropagationStopped &amp;&amp; i &lt; len;
-             ++i) {
+        addDocumentHandle: function (el, event) {
+            var win = DOM._getWin(el.ownerDocument || el),
+                doc = win.document,
+                handle = DOM.data(doc, key);
+            if (!handle) {
+                DOM.data(doc, key, handle = new DocumentHandler(doc));
+            }
+            handle.addEventHandle(event);
+        },
 
-            handlerObj = allHandlers[i];
-            currentTargetHandlers = handlerObj.currentTargetHandlers;
-            currentTarget0 = handlerObj.currentTarget;
-            event.currentTarget = currentTarget0;
-
-            for (j = 0;
-                 !event.isImmediatePropagationStopped &amp;&amp; j &lt; currentTargetHandlers.length;
-                 j++) {
-
-                currentTargetHandler = currentTargetHandlers[j];
-
-                // handler's group does not match specified groups (at fire step)
-                if (_ks_groups &amp;&amp;
-                    (!currentTargetHandler.groups ||
-                        !(currentTargetHandler.groups.match(_ks_groups)))) {
-                    continue;
-                }
-
-                var data = currentTargetHandler.data;
-
-                // restore originalType if involving delegate/onFix handlers
-                event.type = currentTargetHandler.originalType || eventType;
-
-                // scope undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
-                if (// 非自定义事件
-                    !isCustomEvent &amp;&amp;
-                        (s = special[event.type]) &amp;&amp;
-                        s.handle) {
-                    t = s.handle(event, currentTargetHandler, data);
-                    // can handle
-                    if (t.length &gt; 0) {
-                        ret = t[0];
-                    }
-                } else {
-                    ret = currentTargetHandler.fn.call(
-                        currentTargetHandler.scope || currentTarget,
-                        event, data
-                    );
-                }
-                // 和 jQuery 逻辑保持一致
-                // 有一个 false，最终结果就是 false
-                // 否则等于最后一个返回值
-                if (gRet !== false) {
-                    gRet = ret;
-                }
-                // return false 等价 preventDefault + stopPropagation
-                if (ret === false) {
-                    event.halt();
+        removeDocumentHandle: function (el, event) {
+            var win = DOM._getWin(el.ownerDocument || el),
+                doc = win.document,
+                handle = DOM.data(doc, key);
+            if (handle) {
+                handle.removeEventHandle(event);
+                if (S.isEmptyObject(eventHandle)) {
+                    handle.destroy();
+                    DOM.removeData(doc, key);
                 }
             }
         }
 
-        // fire 时判断如果 preventDefault，则返回 false 否则返回 true
-        // 这里返回值意义不同
-        return gRet;
-    }
+    };
+
 }, {
-    requires: ['dom', './data', './special']
+    requires: [
+        'dom',
+        './handle-map',
+        'event/dom/base',
+        './gesture',
+        './tap'
+    ]
 });</pre>
 </body>
 </html>

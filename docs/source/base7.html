@@ -17,250 +17,252 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview scalable event framework for kissy (refer DOM3 Events)
- * how to fire event just like browser?
- * @author yiminghe@gmail.com, lifesinger@gmail.com
+ * @fileOverview droppable for kissy
+ * @author yiminghe@gmail.com
  */
-KISSY.add('event/base', function (S, DOM, EventObject, Utils, handle, _data, special) {
+KISSY.add('dd/droppable/base', function (S, Node, Base, DD) {
 
-    var isValidTarget = Utils.isValidTarget,
-        splitAndRun = Utils.splitAndRun,
-        trim = S.trim,
-        TRIGGERED_NONE = Utils.TRIGGERED_NONE;
+        var DDM = DD.DDM,
+            PREFIX_CLS = DDM.PREFIX_CLS;
 
-<span id='KISSY-Event'>    /**
-</span>     * The event utility provides functions to add and remove event listeners.
-     * @class KISSY.Event
-     * @singleton
-     */
-    var Event =
-    {
-<span id='KISSY-Event-method-_clone'>        /**
-</span>         * copy event from src to dest
-         * @param {HTMLElement} src srcElement
-         * @param {HTMLElement} dest destElement
-         * @private
+<span id='KISSY-DD-Droppable'>        /**
+</span>         * @class KISSY.DD.Droppable
+         * @extends KISSY.Base
+         * Make a node droppable.
          */
-        _clone: function (src, dest) {
-            if (!isValidTarget(dest) || !isValidTarget(src) || !_data._hasData(src, false)) {
-                return;
-            }
-            var eventDesc = _data._data(src, undefined, false),
-                events = eventDesc.events;
-            S.each(events, function (handlers, type) {
-                S.each(handlers, function (handler) {
-                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
-                    Event.on(dest, type, {
-                        data: handler.data,
-                        fn: handler.fn,
-                        groups: handler.groups,
-                        last: handler.last,
-                        originalType: handler.originalType,
-                        scope: handler.scope,
-                        selector: handler.selector
-                    });
-                });
-            });
-        },
+        function Droppable() {
+            var self = this;
+            Droppable.superclass.constructor.apply(self, arguments);
+            self.addTarget(DDM);
 
-<span id='KISSY-Event-method-fire'>        /**
-</span>         * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
-         * @param targets html nodes
-         * @param {String|KISSY.Event.Object} eventType event type
-         * @param [eventData] additional event data
-         * @param {Boolean} [onlyHandlers] only fire handlers
-         * @return {Boolean} The return value of fire/dispatchEvent indicates
-         * whether any of the listeners which handled the event called preventDefault.
-         * If preventDefault was called the value is false, else the value is true.
-         */
-        fire: function (targets, eventType, eventData, onlyHandlers/*internal usage*/) {
-            var ret = true, r;
-            // custom event firing moved to target.js
-            eventData = eventData || {};
-            if (typeof eventType == 'string') {
-                eventType = trim(eventType);
-                if (eventType.indexOf(' ') &gt; -1) {
-                    splitAndRun(eventType, function (t) {
-                        r = Event.fire(targets, t, eventData, onlyHandlers);
-                        if (ret !== false) {
-                            ret = r;
-                        }
-                    });
-                    return ret;
-                }
-                // protect event type
-                eventData.type = eventType;
-            } else if (eventType instanceof EventObject) {
-                eventData = eventType;
-                eventType = eventData.type;
-            }
+<span id='KISSY-DD-DDM-event-dropexit'>            /**
+</span>             * fired after a draggable leaves a droppable
+             * @event dropexit
+             * @member KISSY.DD.DDM
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
 
-            var typedGroups = Utils.getTypedGroups(eventType),
-                _ks_groups = typedGroups[1];
+<span id='KISSY-DD-Droppable-event-dropexit'>            /**
+</span>             *
+             * fired after a draggable leaves a droppable
+             * @event dropexit
+             * @member KISSY.DD.Droppable
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
 
-            if (_ks_groups) {
-                _ks_groups = Utils.getGroupsRe(_ks_groups);
-            }
 
-            eventType = typedGroups[0];
+<span id='KISSY-DD-DDM-event-dropenter'>            /**
+</span>             * fired after a draggable object mouseenter a droppable object
+             * @event dropenter
+             * @member KISSY.DD.DDM
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
 
-            S.mix(eventData, {
-                type: eventType,
-                _ks_groups: _ks_groups
-            });
+<span id='KISSY-DD-Droppable-event-dropenter'>            /**
+</span>             * fired after a draggable object mouseenter a droppable object
+             * @event dropenter
+             * @member KISSY.DD.Droppable
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
 
-            targets = DOM.query(targets);
-            for (var i = targets.length - 1; i &gt;= 0; i--) {
-                r = fireDOMEvent(targets[i], eventType, eventData, onlyHandlers);
-                if (ret !== false) {
-                    ret = r;
-                }
-            }
-            return ret;
-        },
 
-<span id='KISSY-Event-method-fireHandler'>        /**
-</span>         * same with fire but:
-         * does not cause default behavior to occur.
-         * does not bubble up the DOM hierarchy.
-         * @param targets
-         * @param {KISSY.Event.Object | String} eventType
-         * @param [eventData]
-         */
-        fireHandler: function (targets, eventType, eventData) {
-            return Event.fire(targets, eventType, eventData, 1);
-        }
-    };
+<span id='KISSY-DD-DDM-event-dropover'>            /**
+</span>             *
+             * fired after a draggable object mouseover a droppable object
+             * @event dropover
+             * @member KISSY.DD.DDM
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
 
-    /*
-     fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
-     @return {Boolean} The return value of dispatchEvent indicates
-     whether any of the listeners which handled the event called preventDefault.
-     If preventDefault was called the value is false, else the value is true.
-     */
-    function fireDOMEvent(target, eventType, eventData, onlyHandlers) {
-        if (!isValidTarget(target)) {
-            return false;
-        }
-        var s = special[eventType];
-        // TODO bug : when fire mouseenter , it also fire mouseover in firefox/chrome
-        if (s &amp;&amp; s['onFix']) {
-            eventType = s['onFix'];
+<span id='KISSY-DD-Droppable-event-dropover'>            /**
+</span>             *
+             * fired after a draggable object mouseover a droppable object
+             * @event dropover
+             * @member KISSY.DD.Droppable
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+
+<span id='KISSY-DD-DDM-event-drophit'>            /**
+</span>             *
+             * fired after drop a draggable onto a droppable object
+             * @event drophit
+             * @member KISSY.DD.DDM
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+<span id='KISSY-DD-Droppable-event-drophit'>            /**
+</span>             *
+             * fired after drop a draggable onto a droppable object
+             * @event drophit
+             * @member KISSY.DD.Droppable
+             * @param e
+             * @param e.drag current draggable object
+             * @param e.drop current droppable object
+             */
+
+            self._init();
         }
 
-        var event,
-            ret = true;
-        if (eventData instanceof EventObject) {
-            event = eventData;
-        } else {
-            event = new EventObject(target, undefined, eventType);
-            S.mix(event, eventData);
-        }
-<span id='global-property-_ks_fired'>        /**
-</span>         * identify event as fired manually
-         * @ignore
-         */
-        event._ks_fired = 1;
-        /*
-         The target of the event is the EventTarget on which dispatchEvent is called.
-         */
-        // TODO: protect target , but incompatible
-        // event.target=target;
-        // protect type
-        event.type = eventType;
-
-        // onlyHandlers is equal to event.halt()
-        // but we can not call event.halt()
-        // because handle will check event.isPropagationStopped
-
-        var cur = target,
-            t,
-            win = DOM._getWin(cur.ownerDocument || cur),
-            ontype = 'on' + eventType;
-
-        //bubble up dom tree
-        do {
-            event.currentTarget = cur;
-            t = handle(cur, event);
-            if (ret !== false) {
-                ret = t;
-            }
-            // Trigger an inline bound script
-            if (cur[ ontype ] &amp;&amp; cur[ ontype ].call(cur) === false) {
-                event.preventDefault();
-            }
-            // Bubble up to document, then to window
-            cur = cur.parentNode ||
-                cur.ownerDocument ||
-                (cur === target.ownerDocument) &amp;&amp; win;
-        } while (!onlyHandlers &amp;&amp; cur &amp;&amp; !event.isPropagationStopped);
-
-        if (!onlyHandlers &amp;&amp; !event.isDefaultPrevented) {
-
-            // now all browser support click
-            // https://developer.mozilla.org/en-US/docs/DOM/element.click
-
-            var old;
-            try {
-                // execute default action on dom node
-                // so exclude window
-                // exclude focus/blue on hidden element
-                if (ontype &amp;&amp;
-                    target[ eventType ] &amp;&amp;
-                    (
-                        (eventType !== 'focus' &amp;&amp; eventType !== 'blur') ||
-                            target.offsetWidth !== 0
-                        ) &amp;&amp;
-                    !S.isWindow(target)) {
-                    // Don't re-trigger an onFOO event when we call its FOO() method
-                    old = target[ ontype ];
-
-                    if (old) {
-                        target[ ontype ] = null;
+        Droppable.ATTRS = {
+<span id='KISSY-DD-Droppable-cfg-node'>            /**
+</span>             * droppable element
+             * @cfg {String|HTMLElement|KISSY.NodeList} node
+             * @member KISSY.DD.Droppable
+             */
+<span id='KISSY-DD-Droppable-property-node'>            /**
+</span>             * droppable element
+             * @type {KISSY.NodeList}
+             * @property node
+             * @member KISSY.DD.Droppable
+             */
+<span id='global-property-node'>            /**
+</span>             * @ignore
+             */
+            node: {
+                setter: function (v) {
+                    if (v) {
+                        return Node.one(v);
                     }
-
-                    // 记录当前 trigger 触发
-                    Utils.Event_Triggered = eventType;
-
-                    // 只触发默认事件，而不要执行绑定的用户回调
-                    // 同步触发
-                    target[ eventType ]();
                 }
-            } catch (eError) {
-                S.log('trigger action error : ');
-                S.log(eError);
+            },
+
+<span id='KISSY-DD-Droppable-cfg-groups'>            /**
+</span>             * groups this droppable object belongs to. true to match any group.
+             * default  true
+             * @cfg {Object|Boolean} groups
+             * @member KISSY.DD.Droppable
+             */
+<span id='global-property-groups'>            /**
+</span>             * @ignore
+             */
+            groups: {
+                value: true
             }
 
-            if (old) {
-                target[ ontype ] = old;
+        };
+
+        function validDrop(dropGroups, dragGroups) {
+            if (dropGroups === true) {
+                return 1;
             }
-
-            Utils.Event_Triggered = TRIGGERED_NONE;
-
+            for (var d in dropGroups) {
+                if (dragGroups[d]) {
+                    return 1;
+                }
+            }
+            return 0;
         }
-        return ret;
-    }
 
-    return Event;
-}, {
-    requires: ['dom', './object', './utils', './handle', './data', './special']
-});
+        S.extend(Droppable, Base,
+            {
+<span id='KISSY-DD-Droppable-method-getNodeFromTarget'>                /**
+</span>                 * Get drop node from target
+                 * @protected
+                 */
+                getNodeFromTarget: function (ev, dragNode, proxyNode) {
+                    var node = this.get('node'),
+                        domNode = node[0];
+                    // 排除当前拖放和代理节点
+                    return domNode == dragNode ||
+                        domNode == proxyNode
+                        ? null : node;
+                },
 
-/*
- yiminghe@gmail.com : 2011-12-15
- - 重构，粒度更细，新的架构
+                _init: function () {
+                    DDM._regDrop(this);
+                },
 
- 2011-11-24
- - 自定义事件和 dom 事件操作彻底分离
- - TODO: group event from DOM3 Event
+                _active: function () {
+                    var self = this,
+                        drag = DDM.get('activeDrag'),
+                        node = self.get('node'),
+                        dropGroups = self.get('groups'),
+                        dragGroups = drag.get('groups');
+                    if (validDrop(dropGroups, dragGroups)) {
+                        DDM._addValidDrop(self);
+                        // 委托时取不到节点
+                        if (node) {
+                            node.addClass(PREFIX_CLS + 'drop-active-valid');
+                            DDM.cacheWH(node);
+                        }
+                    } else if (node) {
+                        node.addClass(PREFIX_CLS + 'drop-active-invalid');
+                    }
+                },
 
- 2011-06-07
- - refer : http://www.w3.org/TR/2001/WD-DOM-Level-3-Events-20010823/events.html
- - 重构
- - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
- - 减少闭包使用，prevent ie 内存泄露？
- - 增加 fire ，模拟冒泡处理 dom 事件
- */
-</pre>
+                _deActive: function () {
+                    var node = this.get('node');
+                    if (node) {
+                        node.removeClass(PREFIX_CLS + 'drop-active-valid')
+                            .removeClass(PREFIX_CLS + 'drop-active-invalid');
+                    }
+                },
+
+                __getCustomEvt: function (ev) {
+                    return S.mix({
+                        drag: DDM.get('activeDrag'),
+                        drop: this
+                    }, ev);
+                },
+
+                _handleOut: function () {
+                    var self = this,
+                        ret = self.__getCustomEvt();
+                    self.get('node').removeClass(PREFIX_CLS + 'drop-over');
+
+                    // html5 =&gt; dragleave
+                    self.fire('dropexit', ret);
+                },
+
+                _handleEnter: function (ev) {
+                    var self = this,
+                        e = self.__getCustomEvt(ev);
+                    e.drag._handleEnter(e);
+                    self.get('node').addClass(PREFIX_CLS + 'drop-over');
+                    self.fire('dropenter', e);
+                },
+
+
+                _handleOver: function (ev) {
+                    var self = this,
+                        e = self.__getCustomEvt(ev);
+                    e.drag._handleOver(e);
+                    self.fire('dropover', e);
+                },
+
+                _end: function () {
+                    var self = this,
+                        ret = self.__getCustomEvt();
+                    self.get('node').removeClass(PREFIX_CLS + 'drop-over');
+                    self.fire('drophit', ret);
+                },
+
+<span id='KISSY-DD-Droppable-method-destroy'>                /**
+</span>                 * make this droppable' element undroppable
+                 */
+                destroy: function () {
+                    DDM._unRegDrop(this);
+                }
+            });
+
+        return Droppable;
+
+    },
+    { requires: ['node', 'base', 'dd/base'] });</pre>
 </body>
 </html>

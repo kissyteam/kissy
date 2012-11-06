@@ -3,7 +3,7 @@
  * @fileOverview event object for dom
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/object', function (S, Event) {
+KISSY.add('event/dom/base/object', function (S, Event, undefined) {
 
     var doc = S.Env.host.document,
         TRUE = true,
@@ -11,23 +11,225 @@ KISSY.add('event/dom/base/object', function (S, Event) {
         props = ('type altKey attrChange attrName bubbles button cancelable ' +
             'charCode clientX clientY ctrlKey currentTarget data detail ' +
             'eventPhase fromElement handler keyCode metaKey ' +
-            'newValue offsetX offsetY originalTarget pageX pageY prevValue ' +
+            'newValue offsetX offsetY pageX pageY prevValue ' +
             'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
             'target toElement view wheelDelta which axis ' +
             'changedTouches touches targetTouches rotation scale').split(' ');
 
     /**
+     * Do not new by yourself.
+     *
      * KISSY 's dom event system normalizes the event object according to
-     * W3C standards. The event object is guaranteed to be passed to
-     * the event handler. Most properties from the original event are
-     * copied over and normalized to the new event object.
-     * refer: http://www.w3.org/TR/dom/#event
+     * W3C standards.
+     *
+     * The event object is guaranteed to be passed to
+     * the event handler.
+     *
+     * Most properties from the original event are
+     * copied over and normalized to the new event object
+     * according to [W3C standards](http://www.w3.org/TR/dom/#event).
      *
      * @class KISSY.Event.DOMEventObject
+     * @extends KISSY.Event.Object
      * @param domEvent native dom event
      */
     function DOMEventObject(domEvent) {
         var self = this;
+
+        if ('@DEBUG@') {
+            /**
+             * altKey
+             * @property altKey
+             */
+            self.altKey = undefined;
+            /**
+             * attrChange
+             * @property attrChange
+             */
+            self.attrChange = undefined;
+            /**
+             * attrName
+             * @property attrName
+             */
+            self.attrName = undefined;
+            /**
+             * bubbles
+             * @property bubbles
+             */
+            self.bubbles = undefined;
+            /**
+             * button
+             * @property button
+             */
+            self.button = undefined;
+            /**
+             * cancelable
+             * @property cancelable
+             */
+            self.cancelable = undefined;
+            /**
+             * charCode
+             * @property charCode
+             */
+            self.charCode = undefined;
+            /**
+             * clientX
+             * @property clientX
+             */
+            self.clientX = undefined;
+            /**
+             * clientY
+             * @property clientY
+             */
+            self.clientY = undefined;
+            /**
+             * ctrlKey
+             * @property ctrlKey
+             */
+            self.ctrlKey = undefined;
+            /**
+             * data
+             * @property data
+             */
+            self.data = undefined;
+            /**
+             * detail
+             * @property detail
+             */
+            self.detail = undefined;
+            /**
+             * eventPhase
+             * @property eventPhase
+             */
+            self.eventPhase = undefined;
+            /**
+             * fromElement
+             * @property fromElement
+             */
+            self.fromElement = undefined;
+            /**
+             * handler
+             * @property handler
+             */
+            self.handler = undefined;
+            /**
+             * keyCode
+             * @property keyCode
+             */
+            self.keyCode = undefined;
+            /**
+             * metaKey
+             * @property metaKey
+             */
+            self.metaKey = undefined;
+            /**
+             * newValue
+             * @property newValue
+             */
+            self.newValue = undefined;
+            /**
+             * offsetX
+             * @property offsetX
+             */
+            self.offsetX = undefined;
+            /**
+             * offsetY
+             * @property offsetY
+             */
+            self.offsetY = undefined;
+            /**
+             * pageX
+             * @property pageX
+             */
+            self.pageX = undefined;
+            /**
+             * pageY
+             * @property pageY
+             */
+            self.pageY = undefined;
+            /**
+             * prevValue
+             * @property prevValue
+             */
+            self.prevValue = undefined;
+            /**
+             * relatedNode
+             * @property relatedNode
+             */
+            self.relatedNode = undefined;
+            /**
+             * relatedTarget
+             * @property relatedTarget
+             */
+            self.relatedTarget = undefined;
+            /**
+             * screenX
+             * @property screenX
+             */
+            self.screenX = undefined;
+            /**
+             * screenY
+             * @property screenY
+             */
+            self.screenY = undefined;
+            /**
+             * shiftKey
+             * @property shiftKey
+             */
+            self.shiftKey = undefined;
+            /**
+             * srcElement
+             * @property srcElement
+             */
+            self.srcElement = undefined;
+
+            /**
+             * toElement
+             * @property toElement
+             */
+            self.toElement = undefined;
+            /**
+             * view
+             * @property view
+             */
+            self.view = undefined;
+            /**
+             * wheelDelta
+             * @property wheelDelta
+             */
+            self.wheelDelta = undefined;
+            /**
+             * which
+             * @property which
+             */
+            self.which = undefined;
+            /**
+             * changedTouches
+             * @property changedTouches
+             */
+            self.changedTouches = undefined;
+            /**
+             * touches
+             * @property touches
+             */
+            self.touches = undefined;
+            /**
+             * targetTouches
+             * @property targetTouches
+             */
+            self.targetTouches = undefined;
+            /**
+             * rotation
+             * @property rotation
+             */
+            self.rotation = undefined;
+            /**
+             * scale
+             * @property scale
+             */
+            self.scale = undefined;
+        }
+
         DOMEventObject.superclass.constructor.call(self);
         self.originalEvent = domEvent;
         // in case dom event has been mark as default prevented by lower dom node
@@ -41,11 +243,13 @@ KISSY.add('event/dom/base/object', function (S, Event) {
         fixMouseWheel(self);
         /**
          * source html node of current event
-         * @cfg {HTMLElement} target
+         * @property target
+         * @type {HTMLElement}
          */
         /**
          * current htm node which processes current event
-         * @cfg {HTMLElement} currentTarget
+         * @property currentTarget
+         * @type {HTMLElement}
          */
     }
 
@@ -138,12 +342,27 @@ KISSY.add('event/dom/base/object', function (S, Event) {
         if (!deltaX && !deltaY) {
             deltaY = delta;
         }
-
-        S.mix(e, {
-            deltaY: deltaY,
-            delta: delta,
-            deltaX: deltaX
-        });
+        if (deltaX !== undefined ||
+            deltaY !== undefined ||
+            delta !== undefined) {
+            S.mix(e, {
+                /**
+                 * deltaY of mousewheel event
+                 * @property deltaY
+                 */
+                deltaY: deltaY,
+                /**
+                 * delta of mousewheel event
+                 * @property delta
+                 */
+                delta: delta,
+                /**
+                 * deltaX of mousewheel event
+                 * @property deltaX
+                 */
+                deltaX: deltaX
+            });
+        }
     }
 
     S.extend(DOMEventObject, Event._Object, {

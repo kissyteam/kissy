@@ -6,7 +6,9 @@
 KISSY.add('event/custom/object', function (S, Event) {
 
     /**
-     * Custom event object
+     * Do not new by yourself.
+     *
+     * Custom event object.
      * @class KISSY.Event.CustomEventObject
      * @param {Object} data data which will be mixed into custom event instance
      * @extends KISSY.Event.Object
@@ -16,11 +18,13 @@ KISSY.add('event/custom/object', function (S, Event) {
         S.mix(this, data);
         /**
          * source target of current event
-         * @cfg {KISSY.Event.Target} target
+         * @property  target
+         * @type {KISSY.Event.Target}
          */
         /**
          * current target which processes current event
-         * @cfg {KISSY.Event.Target} currentTarget
+         * @property currentTarget
+         * @type {KISSY.Event.Target}
          */
     }
 

@@ -27,7 +27,6 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         AREA_DATA_CLS = 'ks-datalazyload',
         CUSTOM = '-custom',
         MANUAL = 'manual',
-        DISPLAY = 'display',
         DEFAULT = 'default',
         NONE = 'none',
         SCROLL = 'scroll',
@@ -37,6 +36,10 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
     function isValidContainer(c) {
         return c.nodeType != 9;
+    }
+
+    function inDocument(el) {
+        return DOM.contains(doc, el);
     }
 
     function getContainer(elem, cs) {
@@ -307,7 +310,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     autoDestroy = self.get(&quot;autoDestroy&quot;),
                 // 加载延迟项
                     loadItems = function () {
-                        self.loadItems();
+                        self._loadItems();
                         if (autoDestroy &amp;&amp;
                             self._getItemsLength() === 0) {
                             self.destroy();
@@ -336,10 +339,19 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 }
             },
 
-<span id='KISSY-DataLazyload-method-loadItems'>            /**
-</span>             * lazyload all items
+<span id='KISSY-DataLazyload-method-refresh'>            /**
+</span>             * force datalazyload to recheck constraints and load lazyload
+             * @public
              */
-            loadItems: function () {
+            refresh: function () {
+                this._loadItems();
+            },
+
+<span id='KISSY-DataLazyload-method-_loadItems'>            /**
+</span>             * lazyload all items
+             * @private
+             */
+            _loadItems: function () {
                 var self = this;
                 self._loadImgs();
                 self._loadAreas();
@@ -361,7 +373,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              */
             _loadImg: function (img) {
                 var self = this;
-                if (self._checkElemInViewport(img)) {
+                if (!inDocument(img)) {
+
+                } else if (self._checkElemInViewport(img)) {
                     loadImgSrc(img);
                 } else {
                     return true;
@@ -384,7 +398,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              */
             _loadArea: function (area) {
                 var self = this;
-                if (self._checkElemInViewport(area)) {
+                if (!inDocument(area)) {
+
+                } else if (self._checkElemInViewport(area)) {
                     loadAreaData(area, self.get(&quot;execScript&quot;));
                 } else {
                     return true;
@@ -400,16 +416,18 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     callbacks = self._callbacks,
                     els = callbacks.els,
                     fns = callbacks.fns,
-                    keep = 0,
+                    remove = 0,
                     i, el, fn, remainEls = [],
                     remainFns = [];
 
                 for (i = 0; (el = els[i]) &amp;&amp; (fn = fns[i++]);) {
-                    keep = false;
-                    if (self._checkElemInViewport(el)) {
-                        keep = fn.call(el);
+                    remove = false;
+                    if (!inDocument(el)) {
+                        remove = true;
+                    } else if (self._checkElemInViewport(el)) {
+                        remove = fn.call(el);
                     }
-                    if (keep === false) {
+                    if (remove === false) {
                         remainEls.push(el);
                         remainFns.push(fn);
                     }
@@ -521,7 +539,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
 <span id='KISSY-DataLazyload-method-_getBoundingRect'>            /**
 </span>             * get c's bounding area.
-             * @param {window|HTMLElement} c
+             * @param {window|HTMLElement} [c]
              * @private
              */
             _getBoundingRect: function (c) {
@@ -625,6 +643,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 Event.remove(win, SCROLL, load);
                 Event.remove(win, TOUCH_MOVE, load);
                 Event.remove(win, RESIZE, load);
+                load.stop();
                 S.each(self.get(&quot;containers&quot;), function (c) {
                     if (isValidContainer(c)) {
                         Event.remove(c, SCROLL, load);
@@ -751,9 +770,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
  *
  * UPDATE LOG:
  *   - 2012-04-27 yiminghe@gmail.com refactor to extend base, add removeCallback/addElements ...
- *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textaera 可设置高度，宽度
+ *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textarea 可设置高度，宽度
  *   - 2012-04-25 yiminghe@gmail.com refactor, 监控容器内滚动，包括横轴滚动
- *   - 2012-04-12 yiminghe@gmail.com monitor touchmove in iphone
+ *   - 2012-04-12 yiminghe@gmail.com monitor touchmove in ios
  *   - 2011-12-21 yiminghe@gmail.com 增加 removeElements 与 destroy 接口
  *   - 2010-07-31 yubo IMG_SRC_DATA 由 data-lazyload-src 更名为 data-ks-lazyload + 支持 touch 设备
  *   - 2010-07-10 yiminghe@gmail.com 重构，使用正则表达式识别 html 中的脚本，使用 EventTarget 自定义事件机制来处理回调

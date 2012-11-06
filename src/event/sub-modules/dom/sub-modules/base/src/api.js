@@ -151,11 +151,11 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * @member KISSY.Event
          * @param {String} [type] The type of event to remove.
          * use space to separate multiple event types.
-         * @param fn {Function|Object} The event listener or event description object.
+         * @param [fn] {Function|Object} The event listener or event description object.
          * @param {Function} fn.fn The event listener
-         * @param {Function} fn.context The context (this reference) in which the handler function is executed.
-         * @param {String|Function} fn.selector filter selector string or function to find right element
-         * @param {Boolean} fn.once whether fn will be removed once after it is executed.
+         * @param {Function} [fn.context] The context (this reference) in which the handler function is executed.
+         * @param {String|Function} [fn.selector] filter selector string or function to find right element
+         * @param {Boolean} [fn.once] whether fn will be removed once after it is executed.
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
          */
         remove: function (targets, type, fn, context) {
@@ -217,6 +217,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
         /**
          * fire event,simulate bubble in browser. similar to dispatchEvent in DOM3 Events
          * @param targets html nodes
+         * @member KISSY.Event
          * @param {String} eventType event type
          * @param [eventData] additional event data
          * @return {*} return false if one of custom event 's observers (include bubbled) else
@@ -286,6 +287,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * - does not cause default behavior to occur.
          * - does not bubble up the DOM hierarchy.
          * @param targets html nodes
+         * @member KISSY.Event
          * @param {String} eventType event type
          * @param [eventData] additional event data
          * @return {*} return false if one of custom event 's observers (include bubbled) else
@@ -298,6 +300,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 
         /**
          * copy event from src to dest
+         * @member KISSY.Event
          * @param {HTMLElement} src srcElement
          * @param {HTMLElement} dest destElement
          * @private

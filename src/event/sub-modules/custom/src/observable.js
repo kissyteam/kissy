@@ -206,6 +206,16 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
 
     var KS_CUSTOM_EVENTS = '__~ks_custom_events';
 
+    /**
+     * Get custom event for specified event
+     * @static
+     * @private
+     * @member KISSY.Event.ObservableCustomEvent
+     * @param {HTMLElement} target
+     * @param {String} type event type
+     * @param {Boolean} [create] whether create custom event on fly
+     * @return {KISSY.Event.ObservableCustomEvent}
+     */
     ObservableCustomEvent.getCustomEvent = function (target, type, create) {
         var self = this,
             customEvent,
@@ -220,6 +230,14 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
         return customEvent;
     };
 
+    /**
+     * Get custom events holder
+     * @private
+     * @static
+     * @param {HTMLElement} target
+     * @param {Boolean} [create] whether create custom event container on fly
+     * @return {Object}
+     */
     ObservableCustomEvent.getCustomEvents = function (target, create) {
         if (!target[KS_CUSTOM_EVENTS] && create) {
             target[KS_CUSTOM_EVENTS] = {};
@@ -233,6 +251,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
     requires: ['./api', './observer', './object', 'event/base']
 });
 /**
+ * @ignore
  * 2012-10-26 yiminghe@gmail.com
  *  - custom event can bubble by default!
  */

@@ -20,7 +20,7 @@
  * @fileOverview dd support for kissy , dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
+KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     var win = S.Env.host,
         doc = win.document,
@@ -35,6 +35,15 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         _showShimMove = S.throttle(move,
             MOVE_DELAY),
         SHIM_Z_INDEX = 999999;
+
+
+    var TARGET = 'target',
+        BUTTON = 'button',
+        Gesture = Event.Gesture,
+        CURRENT_TARGET = 'currentTarget',
+        DRAG_MOVE_EVENT = Gesture.move,
+        DRAG_END_EVENT = Gesture.end;
+
 
 <span id='KISSY-DD-DDM'>    /**
 </span>     * @class KISSY.DD.DDM
@@ -137,19 +146,21 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
         var self = this,
             __activeToDrag ,
             activeDrag;
+
+        //防止 ie 选择到字
+        ev.preventDefault();
+
         // 先处理预备役，效率!
         if (__activeToDrag = self.__activeToDrag) {
-            //防止 ie 选择到字
-            ev.preventDefault();
+
             __activeToDrag._move(ev);
 
         } else if (activeDrag = self.get('activeDrag')) {
-            //防止 ie 选择到字
-            ev.preventDefault();
-            activeDrag._move(ev);
 
+            activeDrag._move(ev);
             // 获得当前的激活drop
             notifyDropsMove(self, ev, activeDrag);
+
         }
     }
 
@@ -495,19 +506,12 @@ KISSY.add('dd/ddm', function (S, UA, DOM, Event, Node, Base) {
     ddm.cacheWH = cacheWH;
     ddm.PREFIX_CLS = 'ks-dd-';
 
-    var TARGET = 'target',
-        BUTTON = 'button',
-        touchSupport = 'ontouchstart' in doc,
-        CURRENT_TARGET = 'currentTarget',
-        DRAG_START_EVENT = ddm.DRAG_START_EVENT = touchSupport ? 'touchstart' : 'mousedown',
-        DRAG_MOVE_EVENT = ddm.DRAG_MOVE_EVENT = touchSupport ? 'touchmove' : 'mousemove',
-        DRAG_END_EVENT = ddm.DRAG_END_EVENT = touchSupport ? 'touchend' : 'mouseup';
 
-    var normalTouch = function (e, touch) {
+    function normalTouch(e, touch) {
         e[TARGET] = e[TARGET] || touch[TARGET];
         e[CURRENT_TARGET] = e[CURRENT_TARGET] || touch[CURRENT_TARGET];
         e[BUTTON] = e[BUTTON] || 0;
-    };
+    }
 
     ddm._normalHandlePreDragStart = function (handle) {
         return function (e) {

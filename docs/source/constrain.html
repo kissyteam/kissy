@@ -20,7 +20,7 @@
  * @fileOverview Config constrain region for drag and drop
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/constrain', function (S, Base, Node) {
+KISSY.add('dd/constrain', function (S, Base, Node, DD) {
 
     var $ = Node.all,
         DESTRUCTOR_ID = '__constrain_destructors',
@@ -172,9 +172,11 @@ KISSY.add('dd/constrain', function (S, Base, Node) {
         }
     });
 
+    DD.Constrain = Constrain;
+
     return Constrain;
 }, {
-    requires: ['base', 'node']
+    requires: ['base', 'node', 'dd/base']
 });</pre>
 </body>
 </html>

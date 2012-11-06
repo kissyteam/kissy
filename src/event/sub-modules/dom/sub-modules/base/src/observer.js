@@ -9,6 +9,7 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
      * observer for dom event
      * @class KISSY.Event.DOMEventObserver
      * @extends KISSY.Event.Observer
+     * @private
      */
     function DOMEventObserver(cfg) {
         DOMEventObserver.superclass.constructor.apply(this, arguments);

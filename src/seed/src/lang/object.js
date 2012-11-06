@@ -9,7 +9,7 @@
     var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
         STAMP_MARKER = '__~ks_stamped',
         host = this,
-        TRUE=true,
+        TRUE = true,
         EMPTY = '',
         hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
         enumProperties = [
@@ -60,6 +60,7 @@
          * Get all the property names of o as array
          * @param {Object} o
          * @return {Array}
+         * @member KISSY
          */
         keys: function (o) {
             var result = [], p;
@@ -92,6 +93,7 @@
          * @param {String[]} [wl] array of white-list properties
          * @param [deep=false] {Boolean} whether recursive mix if encounter object.
          * @return {Object} the augmented object
+         * @member KISSY
          *
          * for example:
          *     @example
@@ -121,6 +123,7 @@
          * single object will create a shallow copy of it.
          * @param {...Object} var_args objects need to be merged
          * @return {Object} the new merged object
+         * @member KISSY
          */
         merge: function (var_args) {
             var_args = S.makeArray(arguments);
@@ -138,6 +141,7 @@
          *          {Boolean} [ov=TRUE] whether overwrite existing property
          *          {String[]} [wl] array of white-list properties
          * @return  {Object} the augmented object
+         * @member KISSY
          */
         augment: function (r, var_args) {
             var args = S.makeArray(arguments),
@@ -172,6 +176,7 @@
          * @param {Object} [px] prototype properties to add/override
          * @param {Object} [sx] static properties to add/override
          * @return r {Object}
+         * @member KISSY
          */
         extend: function (r, s, px, sx) {
             if (!s || !r) {
@@ -229,6 +234,7 @@
          *      S.namespace('TB.app.Shop', TRUE); // returns TB.app.Shop
          *
          * @return {Object}  A reference to the last namespace object created
+         * @member KISSY
          */
         namespace: function () {
             var args = S.makeArray(arguments),

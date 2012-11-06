@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * detect if current browser supports various features.
  * @author yiminghe@gmail.com
  */
@@ -8,6 +9,7 @@
         doc = win.document;
 
     /**
+     * test browser features
      * @class KISSY.Features
      * @private
      * @singleton

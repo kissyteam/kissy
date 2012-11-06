@@ -187,6 +187,7 @@ KISSY.add('base/attribute', function (S, undefined) {
 
     /**
      * @class KISSY.Base.Attribute
+     * @private
      * Attribute provides configurable attribute support along with attribute change events.
      * It is designed to be augmented on to a host class,
      * and provides the host with the ability to configure attributes to store and retrieve state,

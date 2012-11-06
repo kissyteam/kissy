@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * base handle for touch gesture
  * @author yiminghe@gmail.com
  */

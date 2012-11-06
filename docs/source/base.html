@@ -151,7 +151,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
          * @event complete
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.Object} e
+         * @param {KISSY.Event.CustomEventObject} e
          * @param {KISSY.IO} e.io current io
          */
 
@@ -160,7 +160,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
          * @event success
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.Object} e
+         * @param {KISSY.Event.CustomEventObject} e
          * @param {KISSY.IO} e.io current io
          */
 
@@ -169,7 +169,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
          * @event error
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.Object} e
+         * @param {KISSY.Event.CustomEventObject} e
          * @param {KISSY.IO} e.io current io
          */
         IO.fire(eventType, {
@@ -429,7 +429,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
          * @event start
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.Object} e
+         * @param {KISSY.Event.CustomEventObject} e
          * @param {KISSY.IO} e.io current io
          */
 
@@ -495,7 +495,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
          * @event send
          * @member KISSY.IO
          * @static
-         * @param {KISSY.Event.Object} e
+         * @param {KISSY.Event.CustomEventObject} e
          * @param {KISSY.IO} e.io current io
          */
 
@@ -581,6 +581,12 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
 });
 
 /*
+
+ // !TODO
+ // 去除 event/custom 依赖，用户不载入就不能监听
+ // 载入后通过 custom.on(IO,type) 监听
+
+
  2012-08-16
  - transform IO to class, remove XhrObject class.
  - support ifModified

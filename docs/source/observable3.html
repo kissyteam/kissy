@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * custom event mechanism for kissy.
+ * refer: http://www.w3.org/TR/domcore/#interface-customevent
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, CustomEventObject, Event) {
+
+    var _Utils = Event._Utils;
+
+<span id='KISSY-Event-ObservableCustomEvent'>    /**
+</span>     * custom event for registering and un-registering observer for specified event on normal object.
+     * @class KISSY.Event.ObservableCustomEvent
+     * @extends KISSY.Event.ObservableEvent
+     * @private
+     */
+    function ObservableCustomEvent() {
+        var self = this;
+        ObservableCustomEvent.superclass.constructor.apply(self, arguments);
+        self.defaultFn = null;
+        self.defaultTargetOnly = false;
+
+<span id='KISSY-Event-ObservableCustomEvent-cfg-bubbles'>        /**
+</span>         * whether this event can bubble.
+         * Defaults to: true
+         * @cfg {Boolean} bubbles
+         */
+        self.bubbles = true;
+<span id='KISSY-Event-ObservableCustomEvent-cfg-currentTarget'>        /**
+</span>         * event target which binds current custom event
+         * @cfg {KISSY.Event.Target} currentTarget
+         */
+    }
+
+    S.extend(ObservableCustomEvent, Event._ObservableEvent, {
+
+        constructor: ObservableCustomEvent,
+
+<span id='KISSY-Event-ObservableCustomEvent-method-on'>        /**
+</span>         * add a observer to custom event's observers
+         * @param {Object} cfg {@link KISSY.Event.CustomEventObserver} 's config
+         */
+        on: function (cfg) {
+            var observer = new CustomEventObserver(cfg);
+            if (this.findObserver(observer) == -1) {
+                this.observers.push(observer);
+            }
+        },
+
+        checkMemory: function () {
+            var self = this,
+                currentTarget = self.currentTarget,
+                events = ObservableCustomEvent.getCustomEvents(currentTarget);
+            if (events) {
+                if (!self.hasObserver()) {
+                    delete events[self.type];
+                }
+                if (S.isEmptyObject(events)) {
+                    delete currentTarget[KS_CUSTOM_EVENTS];
+                }
+            }
+        },
+
+<span id='KISSY-Event-ObservableCustomEvent-method-fire'>        /**
+</span>         * notify current custom event 's observers and then bubble up if this event can bubble.
+         * @param {KISSY.Event.CustomEventObject} eventData
+         * @return {*} return false if one of custom event 's observers (include bubbled) else
+         * return last value of custom event 's observers (include bubbled) 's return value.
+         */
+        fire: function (eventData) {
+
+            if (!this.hasObserver() &amp;&amp; !this.bubbles) {
+                return;
+            }
+
+            eventData = eventData || {};
+
+            var self = this,
+                type = self.type,
+                defaultFn = self.defaultFn,
+                i,
+                parents,
+                len,
+                currentTarget = self.currentTarget,
+                customEvent = eventData,
+                gRet, ret;
+
+            eventData.type = type;
+
+            if (!(customEvent instanceof  CustomEventObject)) {
+                customEvent.target = currentTarget;
+                customEvent = new CustomEventObject(customEvent);
+            }
+
+            customEvent.currentTarget = currentTarget;
+
+            ret = self.notify(customEvent);
+
+            if (gRet !== false) {
+                gRet = ret;
+            }
+
+            if (self.bubbles) {
+                parents = api.getTargets(currentTarget);
+                len = parents &amp;&amp; parents.length || 0;
+
+                for (i = 0; i &lt; len &amp;&amp; !customEvent.isPropagationStopped(); i++) {
+
+                    ret = api.fire(parents[i], type, customEvent);
+
+                    // false 优先返回
+                    if (gRet !== false) {
+                        gRet = ret;
+                    }
+
+                }
+            }
+
+            if (defaultFn &amp;&amp; !customEvent.isDefaultPrevented()) {
+                var lowestCustomEvent = ObservableCustomEvent.getCustomEvent(customEvent.target, customEvent.type);
+                if ((!self.defaultTargetOnly &amp;&amp; !lowestCustomEvent.defaultTargetOnly) ||
+                    self == customEvent.target) {
+                    defaultFn.call(self);
+                }
+            }
+
+            return gRet;
+
+        },
+
+<span id='KISSY-Event-ObservableCustomEvent-method-notify'>        /**
+</span>         * notify current event 's observers
+         * @param {KISSY.Event.CustomEventObject} event
+         * @return {*} return false if one of custom event 's observers  else
+         * return last value of custom event 's observers 's return value.
+         */
+        notify: function (event) {
+            var observers = this.observers,
+                ret,
+                gRet,
+                len = observers.length, i;
+
+            for (i = 0; i &lt; len &amp;&amp; !event.isImmediatePropagationStopped(); i++) {
+                ret = observers[i].notify(event, this);
+                if (gRet !== false) {
+                    gRet = ret;
+                }
+                if (ret === false) {
+                    event.halt();
+                }
+            }
+
+            return gRet;
+        },
+
+<span id='KISSY-Event-ObservableCustomEvent-method-detach'>        /**
+</span>         * remove some observers from current event 's observers by observer config param
+         * @param {Object} cfg {@link KISSY.Event.CustomEventObserver} 's config
+         */
+        detach: function (cfg) {
+            var groupsRe,
+                self = this,
+                fn = cfg.fn,
+                context = cfg.context,
+                currentTarget = self.currentTarget,
+                observers = self.observers,
+                groups = cfg.groups;
+
+            if (!observers.length) {
+                return;
+            }
+
+            if (groups) {
+                groupsRe = _Utils.getGroupsRe(groups);
+            }
+
+            var i, j, t, observer, observerContext, len = observers.length;
+
+            // 移除 fn
+            if (fn || groupsRe) {
+                context = context || currentTarget;
+
+                for (i = 0, j = 0, t = []; i &lt; len; ++i) {
+                    observer = observers[i];
+                    observerContext = observer.context || currentTarget;
+                    if (
+                        (context != observerContext) ||
+                            // 指定了函数，函数不相等，保留
+                            (fn &amp;&amp; fn != observer.fn) ||
+                            // 指定了删除的某些组，而该 observer 不属于这些组，保留，否则删除
+                            (groupsRe &amp;&amp; !observer.groups.match(groupsRe))
+                        ) {
+                        t[j++] = observer;
+                    }
+                }
+
+                self.observers = t;
+            } else {
+                // 全部删除
+                self.reset();
+            }
+
+            self.checkMemory();
+        }
+    });
+
+    var KS_CUSTOM_EVENTS = '__~ks_custom_events';
+
+<span id='KISSY-Event-ObservableCustomEvent-static-method-getCustomEvent'>    /**
+</span>     * Get custom event for specified event
+     * @static
+     * @private
+     * @member KISSY.Event.ObservableCustomEvent
+     * @param {HTMLElement} target
+     * @param {String} type event type
+     * @param {Boolean} [create] whether create custom event on fly
+     * @return {KISSY.Event.ObservableCustomEvent}
+     */
+    ObservableCustomEvent.getCustomEvent = function (target, type, create) {
+        var self = this,
+            customEvent,
+            customEvents = ObservableCustomEvent.getCustomEvents(target, create);
+        customEvent = customEvents &amp;&amp; customEvents[type];
+        if (!customEvent &amp;&amp; create) {
+            customEvent = customEvents[type] = new ObservableCustomEvent({
+                currentTarget: target,
+                type: type
+            });
+        }
+        return customEvent;
+    };
+
+<span id='KISSY-Event-ObservableCustomEvent-static-method-getCustomEvents'>    /**
+</span>     * Get custom events holder
+     * @private
+     * @static
+     * @param {HTMLElement} target
+     * @param {Boolean} [create] whether create custom event container on fly
+     * @return {Object}
+     */
+    ObservableCustomEvent.getCustomEvents = function (target, create) {
+        if (!target[KS_CUSTOM_EVENTS] &amp;&amp; create) {
+            target[KS_CUSTOM_EVENTS] = {};
+        }
+        return target[KS_CUSTOM_EVENTS];
+    };
+
+    return ObservableCustomEvent;
+
+}, {
+    requires: ['./api', './observer', './object', 'event/base']
+});
+<span id='global-property-'>/**
+</span> * @ignore
+ * 2012-10-26 yiminghe@gmail.com
+ *  - custom event can bubble by default!
+ */</pre>
+</body>
+</html>

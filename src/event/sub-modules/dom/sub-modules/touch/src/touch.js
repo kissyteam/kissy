@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * touch event logic module
  * @author yiminghe@gmail.com
  */

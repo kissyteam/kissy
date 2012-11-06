@@ -20,9 +20,12 @@
  * @fileOverview delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;component/delegate-children&quot;, function (S, UA) {
+KISSY.add(&quot;component/delegate-children&quot;, function (S, UA, Event) {
 
-    var ie = S.Env.host.document.documentMode || UA.ie;
+    var ie = S.Env.host.document.documentMode || UA.ie,
+        Features = S.Features,
+        Gesture = Event.Gesture,
+        isTouchSupported = Features.isTouchSupported || Features.isMsPointerEnabled;
 
     function DelegateChildren() {
     }
@@ -33,11 +36,14 @@ KISSY.add(&quot;component/delegate-children&quot;, function (S, UA) {
             if (control &amp;&amp; !control.get(&quot;disabled&quot;)) {
                 // Child control identified; forward the event.
                 switch (e.type) {
-                    case &quot;mousedown&quot;:
+                    case Gesture.start:
                         control.handleMouseDown(e);
                         break;
-                    case &quot;mouseup&quot;:
+                    case Gesture.end:
                         control.handleMouseUp(e);
+                        break;
+                    case Gesture.tap:
+                        control.performActionInternal(e);
                         break;
                     case &quot;mouseover&quot;:
                         control.handleMouseOver(e);
@@ -67,12 +73,18 @@ KISSY.add(&quot;component/delegate-children&quot;, function (S, UA) {
     S.augment(DelegateChildren, {
 
         __bindUI: function () {
-            var self = this;
+            var self = this,
+                events;
             if (self.get(&quot;delegateChildren&quot;)) {
-                self.get(&quot;el&quot;).on(&quot;mousedown mouseup mouseover mouseout &quot; +
-                    (ie &amp;&amp; ie &lt; 9 ? &quot;dblclick &quot; : &quot;&quot;) +
-                    &quot;contextmenu&quot;,
-                    handleChildMouseEvents, self);
+
+                events = Gesture.start + &quot; &quot; + Gesture.end + &quot; &quot; + Gesture.tap + &quot; &quot;;
+
+                if (!isTouchSupported) {
+                    events += &quot;mouseover mouseout contextmenu &quot; +
+                        (ie &amp;&amp; ie &lt; 9 ? &quot;dblclick &quot; : &quot;&quot;);
+                }
+
+                self.get(&quot;el&quot;).on(events, handleChildMouseEvents, self);
             }
         },
 
@@ -102,7 +114,7 @@ KISSY.add(&quot;component/delegate-children&quot;, function (S, UA) {
 
     return DelegateChildren;
 }, {
-    requires: ['ua']
+    requires: ['ua', 'event']
 });</pre>
 </body>
 </html>

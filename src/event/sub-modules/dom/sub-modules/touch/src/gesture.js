@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * patch gesture for touch
  * @author yiminghe@gmail.com
  */

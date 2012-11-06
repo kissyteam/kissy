@@ -17,430 +17,51 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview Utils for kissy loader
+ * @fileOverview utils for event
  * @author yiminghe@gmail.com
  */
-(function (S) {
-
-    var Loader = S.Loader,
-        Path = S.Path,
-        Uri = S.Uri,
-        host = S.Env.host,
-        ua = host.navigator &amp;&amp; navigator.userAgent || &quot;&quot;,
-        startsWith = S.startsWith,
-        data = Loader.STATUS,
-        ATTACHED = data.ATTACHED,
-        LOADED = data.LOADED,
-<span id='KISSY-Loader-Utils'>        /**
-</span>         * @class KISSY.Loader.Utils
-         * Utils for KISSY Loader
-         * @singleton
-         * @private
-         */
-            Utils = {},
-
-        isWebKit = !!ua.match(/AppleWebKit/),
-        doc = host.document,
-        simulatedLocation = new Uri(host.location &amp;&amp; location.href || &quot;&quot;);
-
-
-    // http://wiki.commonjs.org/wiki/Packages/Mappings/A
-    // 如果模块名以 / 结尾，自动加 index
-    function indexMap(s) {
-        if (S.isArray(s)) {
-            var ret = [], i = 0;
-            for (; i &lt; s.length; i++) {
-                ret[i] = indexMapStr(s[i]);
-            }
-            return ret;
-        }
-        return indexMapStr(s);
-    }
-
-    function indexMapStr(s) {
-        // 'x/' 'x/y/z/'
-        if (S.endsWith(Path.basename(s), '/')) {
-            s += 'index';
-        }
-        return s;
-    }
-
-    S.mix(Utils, {
-
-<span id='KISSY-Loader-Utils-method-docHead'>        /**
-</span>         * get document head
-         * @return {HTMLElement}
-         */
-        docHead: function () {
-            return doc.getElementsByTagName('head')[0] || doc.documentElement;
-        },
-
-<span id='KISSY-Loader-Utils-property-isWebKit'>        /**
-</span>         * isWebkit
-         */
-        isWebKit: isWebKit,
-
-<span id='KISSY-Loader-Utils-property-isGecko'>        /**
-</span>         * isGecko
-         */
-        isGecko: !isWebKit &amp;&amp; !!ua.match(/Gecko/),
-
-<span id='KISSY-Loader-Utils-property-isPresto'>        /**
-</span>         * isPresto
-         */
-        isPresto: !!ua.match(/Presto/),
-
-<span id='KISSY-Loader-Utils-property-IE'>        /**
-</span>         * IE
-         */
-        IE: !!ua.match(/MSIE/),
-
-        addEventListener: host.addEventListener ? function (node, type, callback) {
-            node.addEventListener(type, callback, false);
-        } : function (node, type, callback) {
-            node.attachEvent('on' + type, callback);
-        },
-
-        removeEventListener: host.removeEventListener ? function (node, type, callback) {
-            node.removeEventListener(type, callback, false);
-        } : function (node, type, callback) {
-            node.detachEvent('on' + type, callback);
-        },
-
-<span id='KISSY-Loader-Utils-method-normalDepModuleName'>        /**
-</span>         * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
-         * @param moduleName current module 's name
-         * @param depName dep module 's name
-         * @return {string|Array}
-         */
-        normalDepModuleName: function (moduleName, depName) {
-            var i = 0;
-
-            if (!depName) {
-                return depName;
-            }
-
-            if (S.isArray(depName)) {
-                for (; i &lt; depName.length; i++) {
-                    depName[i] = Utils.normalDepModuleName(moduleName, depName[i]);
+KISSY.add('event/dom/base/utils', function (S, DOM) {
+    var EVENT_GUID = 'ksEventTargetId_1.30',
+        doc = S.Env.host.document,
+        simpleAdd = doc &amp;&amp; doc.addEventListener ?
+            function (el, type, fn, capture) {
+                if (el.addEventListener) {
+                    el.addEventListener(type, fn, !!capture);
                 }
-                return depName;
-            }
-
-            if (startsWith(depName, '../') || startsWith(depName, './')) {
-                // x/y/z -&gt; x/y/
-                return Path.resolve(Path.dirname(moduleName), depName);
-            }
-
-            return Path.normalize(depName);
-        },
-
-<span id='KISSY-Loader-Utils-method-removeExtname'>        /**
-</span>         * remove ext name
-         * @param path
-         * @return {String}
-         */
-        removeExtname: function (path) {
-            return path.replace(/(-min)?\.js$/i, '');
-        },
-
-<span id='KISSY-Loader-Utils-method-resolveByPage'>        /**
-</span>         * resolve according to current page location.
-         * @return {String}
-         */
-        resolveByPage: function (path) {
-            return simulatedLocation.resolve(path);
-        },
-
-<span id='KISSY-Loader-Utils-method-createModulesInfo'>        /**
-</span>         * create modules info
-         * @param runtime
-         * @param modNames
-         */
-        createModulesInfo: function (runtime, modNames) {
-            S.each(modNames, function (m) {
-                Utils.createModuleInfo(runtime, m);
-            });
-        },
-
-<span id='KISSY-Loader-Utils-method-createModuleInfo'>        /**
-</span>         * create single module info
-         * @param runtime
-         * @param modName
-         * @param [cfg]
-         * @return {KISSY.Loader.Module}
-         */
-        createModuleInfo: function (runtime, modName, cfg) {
-            modName = indexMapStr(modName);
-
-            var mods = runtime.Env.mods,
-                mod = mods[modName];
-
-            if (mod) {
-                return mod;
-            }
-
-            // 防止 cfg 里有 tag，构建 fullpath 需要
-            mods[modName] = mod = new Loader.Module(S.mix({
-                name: modName,
-                runtime: runtime
-            }, cfg));
-
-            return mod;
-        },
-
-<span id='KISSY-Loader-Utils-method-isAttached'>        /**
-</span>         * Whether modNames is attached.
-         * @param runtime
-         * @param modNames
-         * @return {Boolean}
-         */
-        isAttached: function (runtime, modNames) {
-            return isStatus(runtime, modNames, ATTACHED);
-        },
-
-<span id='KISSY-Loader-Utils-method-isLoaded'>        /**
-</span>         * Whether modNames is loaded.
-         * @param runtime
-         * @param modNames
-         * @return {Boolean}
-         */
-        isLoaded: function (runtime, modNames) {
-            return isStatus(runtime, modNames, LOADED);
-        },
-
-<span id='KISSY-Loader-Utils-method-getModules'>        /**
-</span>         * Get module values
-         * @param runtime
-         * @param modNames
-         * @return {Array}
-         */
-        getModules: function (runtime, modNames) {
-            var mods = [runtime], mod, alias;
-
-            S.each(modNames, function (modName) {
-                mod = runtime.Env.mods[modName];
-                if (!mod || mod.getType() != 'css') {
-                    if (alias = mod.alias) {
-                        // fetch first alias module's value as module's value
-                        modName = alias[0];
-                    }
-                    mods.push(runtime.require(modName));
+            } :
+            function (el, type, fn) {
+                if (el.attachEvent) {
+                    el.attachEvent('on' + type, fn);
                 }
-            });
-
-            return mods;
-        },
-
-<span id='KISSY-Loader-Utils-method-attachMod'>        /**
-</span>         * Attach specified mod.
-         * @param runtime
-         * @param mod
-         */
-        attachMod: function (runtime, mod) {
-            if (mod.status != LOADED) {
-                return;
-            }
-
-            var fn = mod.fn,
-                requires,
-                value;
-
-            // 需要解开 index，相对路径，去除 tag，但是需要保留 alias，防止值不对应
-            requires = mod.requires = mod.getNormalizedRequires();
-
-            if (fn) {
-                if (S.isFunction(fn)) {
-                    // context is mod info
-                    value = fn.apply(mod, Utils.getModules(runtime, requires));
-                } else {
-                    value = fn;
+            },
+        simpleRemove = doc &amp;&amp; doc.removeEventListener ?
+            function (el, type, fn, capture) {
+                if (el.removeEventListener) {
+                    el.removeEventListener(type, fn, !!capture);
                 }
-                mod.value = value;
-            }
-
-            mod.status = ATTACHED;
-
-            runtime.getLoader().fire('afterModAttached', {
-                mod: mod
-            });
-        },
-
-<span id='KISSY-Loader-Utils-method-getModNamesAsArray'>        /**
-</span>         * Get mod names as array.
-         * @param modNames
-         * @return {String[]}
-         */
-        getModNamesAsArray: function (modNames) {
-            if (typeof modNames == 'string') {
-                modNames = modNames.replace(/\s+/g, '').split(',');
-            }
-            return modNames;
-        },
-
-<span id='KISSY-Loader-Utils-method-normalizeModNames'>        /**
-</span>         * Three effects:
-         * 1. add index : / =&gt; /index
-         * 2. unalias : core =&gt; dom,event,ua
-         * 3. relative to absolute : ./x =&gt; y/x
-         * @param {KISSY} runtime Global KISSY instance
-         * @param {String|String[]} modNames Array of module names
-         * or module names string separated by comma
-         * @return {String[]}
-         */
-        normalizeModNames: function (runtime, modNames, refModName) {
-            return Utils.unalias(runtime, Utils.normalizeModNamesWithAlias(runtime, modNames, refModName));
-        },
-
-<span id='KISSY-Loader-Utils-method-unalias'>        /**
-</span>         * unalias module name.
-         * @param runtime
-         * @param names
-         * @return {Array}
-         */
-        unalias: function (runtime, names) {
-            var ret = [].concat(names),
-                i,
-                m,
-                alias,
-                ok = 0,
-                mods = runtime['Env'].mods;
-            while (!ok) {
-                ok = 1;
-                for (i = ret.length - 1; i &gt;= 0; i--) {
-                    if ((m = mods[ret[i]]) &amp;&amp; (alias = m.alias)) {
-                        ok = 0;
-                        ret.splice.apply(ret, [i, 1].concat(indexMap(alias)));
-                    }
+            } :
+            function (el, type, fn) {
+                if (el.detachEvent) {
+                    el.detachEvent('on' + type, fn);
                 }
-            }
-            return ret;
-        },
-
-<span id='KISSY-Loader-Utils-method-normalizeModNamesWithAlias'>        /**
-</span>         * normalize module names
-         * @param runtime
-         * @param modNames
-         * @param [refModName]
-         * @return {Array}
-         */
-        normalizeModNamesWithAlias: function (runtime, modNames, refModName) {
-            var ret = [], i, l;
-            if (modNames) {
-                // 1. index map
-                for (i = 0, l = modNames.length; i &lt; l; i++) {
-                    // conditional loader
-                    // requires:[window.localStorage?&quot;local-storage&quot;:&quot;&quot;]
-                    if (modNames[i]) {
-                        ret.push(indexMap(modNames[i]));
-                    }
-                }
-            }
-            // 3. relative to absolute (optional)
-            if (refModName) {
-                ret = Utils.normalDepModuleName(refModName, ret);
-            }
-            return ret;
-        },
-
-<span id='KISSY-Loader-Utils-method-registerModule'>        /**
-</span>         * register module with factory
-         * @param runtime
-         * @param name
-         * @param fn
-         * @param [config]
-         */
-        registerModule: function (runtime, name, fn, config) {
-            var mods = runtime.Env.mods,
-                mod = mods[name];
-
-            if (mod &amp;&amp; mod.fn) {
-                S.log(name + ' is defined more than once');
-                return;
-            }
-
-            // 没有 use，静态载入的 add 可能执行
-            Utils.createModuleInfo(runtime, name);
-
-            mod = mods[name];
-
-            // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
-            // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-            S.mix(mod, { name: name, status: LOADED });
-
-            mod.fn = fn;
-
-            S.mix((mods[name] = mod), config);
-
-            // S.log(name + ' is loaded', 'info');
-        },
-
-<span id='KISSY-Loader-Utils-method-getMappedPath'>        /**
-</span>         * Get mapped path.
-         * @param runtime
-         * @param path
-         * @return {String}
-         */
-        getMappedPath: function (runtime, path, rules) {
-            var __mappedRules = rules || runtime.Config.mappedRules || [],
-                i,
-                m,
-                rule;
-            for (i = 0; i &lt; __mappedRules.length; i++) {
-                rule = __mappedRules[i];
-                if (m = path.match(rule[0])) {
-                    return path.replace(rule[0], rule[1]);
-                }
-            }
-            return path;
-        },
-
-        memoize: function (fn, hasher) {
-            hasher = hasher || function (x) {
-                return x;
             };
-            var memo = {},
-                queues = {},
-                memoized = function () {
-                    var args = S.makeArray(arguments),
-                        callback = args.pop(),
-                        key = hasher.apply(null, args);
-                    if (key in memo) {
-                        callback.apply(null, memo[key]);
-                    } else if (key in queues) {
-                        queues[key].push(callback);
-                    } else {
-                        queues[key] = [callback];
-                        fn.apply(null, args.concat([function () {
-                            memo[key] = arguments;
-                            var q = queues[key];
-                            delete queues[key];
-                            for (var i = 0, l = q.length; i &lt; l; i++) {
-                                q[i].apply(null, arguments);
-                            }
-                        }]));
-                    }
-                };
-            memoized.unmemoized = fn;
-            return memoized;
+
+    return {
+        simpleAdd: simpleAdd,
+
+        simpleRemove: simpleRemove,
+
+        data: function (elem, v) {
+            return DOM.data(elem, EVENT_GUID, v);
+        },
+
+        removeData: function (elem) {
+            return DOM.removeData(elem, EVENT_GUID);
         }
-    });
+    };
 
-    function isStatus(runtime, modNames, status) {
-        var mods = runtime.Env.mods,
-            i;
-        modNames = S.makeArray(modNames);
-        for (i = 0; i &lt; modNames.length; i++) {
-            var mod = mods[modNames[i]];
-            if (!mod || mod.status !== status) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    Loader.Utils = Utils;
-
-})(KISSY);</pre>
+}, {
+    requires: ['dom']
+});</pre>
 </body>
 </html>

@@ -17,10 +17,10 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview patch for ie&lt;9 submit : does not bubble !
+ * @fileOverview patch for ie&lt;9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
+KISSY.add('event/dom/base/submit', function (S, UA, Event, DOM, special) {
 
     var doc = S.Env.host.document,
         mode = doc &amp;&amp; doc['documentMode'];
@@ -36,7 +36,7 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
                 }
                 // lazy add submit for inside forms
                 // note event order : click/keypress -&gt; submit
-                // keypoint : find the forms
+                // key point : find the forms
                 Event.on(el, 'click keypress', detector);
             },
             tearDown: function () {
@@ -77,7 +77,7 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
             var form = this;
             if (form.parentNode &amp;&amp;
                 // it is stopped by user callback
-                !e.isPropagationStopped &amp;&amp;
+                !e.isPropagationStopped() &amp;&amp;
                 // it is not fired manually
                 !e._ks_fired) {
                 // simulated bubble for submit
@@ -88,10 +88,10 @@ KISSY.add('event/submit', function (S, UA, Event, DOM, special) {
     }
 
 }, {
-    requires: ['ua', './base', 'dom', './special']
+    requires: ['ua', './api', 'dom', './special']
 });
 /*
- modified from jq ,fix submit in ie&lt;9
+ modified from jq, fix submit in ie&lt;9
  - http://bugs.jquery.com/ticket/11049
  */</pre>
 </body>
