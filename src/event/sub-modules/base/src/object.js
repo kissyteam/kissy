@@ -3,7 +3,7 @@
  * base event object for custom and dom event.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/object', function () {
+KISSY.add('event/base/object', function (S) {
 
     var FALSE_FN = function () {
         return false;
@@ -17,6 +17,7 @@ KISSY.add('event/base/object', function () {
      * KISSY 's base event object for custom and dom event.
      */
     function EventObject() {
+        this.timeStamp = S.now();
     }
 
     EventObject.prototype = {

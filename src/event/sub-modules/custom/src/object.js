@@ -12,6 +12,7 @@ KISSY.add('event/custom/object', function (S, Event) {
      * @extends KISSY.Event.Object
      */
     function CustomEventObject(data) {
+        CustomEventObject.superclass.constructor.call(this);
         S.mix(this, data);
         /**
          * source target of current event

@@ -28,6 +28,7 @@ KISSY.add('event/dom/base/object', function (S, Event) {
      */
     function DOMEventObject(domEvent) {
         var self = this;
+        DOMEventObject.superclass.constructor.call(self);
         self.originalEvent = domEvent;
         // in case dom event has been mark as default prevented by lower dom node
         self.isDefaultPrevented = ( domEvent['defaultPrevented'] || domEvent.returnValue === FALSE ||
