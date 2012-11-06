@@ -54,9 +54,11 @@ KISSY.add("component/uibase/drag", function (S) {
                 Scroll,
                 Constrain,
                 Draggable,
+                scrollCfg,
+                constrainCfg,
                 p,
                 d = self.__drag,
-                __constrain = self.__constrain,
+                c = self.__constrain,
                 el = self.get("el");
 
             if (dragCfg && !d && DD) {
@@ -71,12 +73,7 @@ KISSY.add("component/uibase/drag", function (S) {
                 if (dragCfg.proxy && (Proxy = S.require('dd/proxy'))) {
                     dragCfg.proxy.moveOnEnd = true;
 
-                    p = self.__proxy = new Proxy(dragCfg.proxy);
-                    p.attachDrag(d);
-                }
-
-                if (Constrain = S.require('dd/constrain')) {
-                    __constrain = self.__constrain = new Constrain().attachDrag(d);
+                    p = self.__proxy = new Proxy(dragCfg.proxy).attachDrag(d);
                 }
 
                 d.on("dragend", function () {
@@ -90,9 +87,8 @@ KISSY.add("component/uibase/drag", function (S) {
                     }
                 });
 
-                if (dragCfg.scroll && (Scroll = S.require('dd/scroll'))) {
-                    var s = self.__scroll = new Scroll(dragCfg.scroll);
-                    s.attachDrag(d);
+                if ((scrollCfg = dragCfg.scroll) && (Scroll = S.require('dd/scroll'))) {
+                    self.__scroll = new Scroll(scrollCfg).attachDrag(d);
                 }
 
             }
@@ -103,11 +99,16 @@ KISSY.add("component/uibase/drag", function (S) {
 
             if (dragCfg && d) {
                 handlers = dragCfg.handlers;
-                if (__constrain) {
-                    if ("constrain" in dragCfg) {
-                        __constrain.set("constrain", dragCfg.constrain);
+                if (Constrain = S.require('dd/constrain')) {
+                    if (constrainCfg = dragCfg.constrain) {
+                        if (!c) {
+                            c = self.__constrain = new Constrain().attachDrag(d);
+                        }
+                        c.set("constrain", constrainCfg);
                     } else {
-                        __constrain.set("constrain", false);
+                        if (c) {
+                            c.set("constrain", false);
+                        }
                     }
                 }
                 if (handlers && handlers.length > 0) {
@@ -120,11 +121,11 @@ KISSY.add("component/uibase/drag", function (S) {
             var self = this,
                 p = self.__proxy,
                 s = self.__scroll,
-                __constrain = self.__constrain,
+                c = self.__constrain,
                 d = self.__drag;
             s && s.destroy();
             p && p.destroy();
-            __constrain && __constrain.destroy();
+            c && c.destroy();
             d && d.destroy();
         }
 

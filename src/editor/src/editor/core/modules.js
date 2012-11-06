@@ -36,7 +36,7 @@ KISSY.config('modules', {
 'editor/plugin/undo/btn': {requires: ['editor','editor/plugin/button/']},
 'editor/plugin/menubutton/index': {requires: ['editor','menubutton']},
 'editor/plugin/flash/index': {requires: ['editor','editor/plugin/flash-common/baseClass','editor/plugin/flash-common/utils','editor/plugin/fake-objects/']},
-'editor/plugin/overlay/index': {requires: ['editor','overlay','editor/plugin/focus-fix/','dd/base']},
+'editor/plugin/overlay/index': {requires: ['editor','overlay','editor/plugin/focus-fix/','dd/base','dd/constrain']},
 'editor/plugin/link/utils': {requires: ['editor']},
 'editor/plugin/xiami-music/dialog': {requires: ['editor','editor/plugin/flash/dialog','editor/plugin/menubutton/']},
 'editor/plugin/list-utils/cmd': {requires: ['editor','editor/plugin/list-utils/']},

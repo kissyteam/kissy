@@ -21,6 +21,7 @@ KISSY.add('event/dom/base/object', function (S, Event) {
      * W3C standards. The event object is guaranteed to be passed to
      * the event handler. Most properties from the original event are
      * copied over and normalized to the new event object.
+     * refer: http://www.w3.org/TR/dom/#event
      *
      * @class KISSY.Event.DOMEventObject
      * @param domEvent native dom event
