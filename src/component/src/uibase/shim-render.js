@@ -9,16 +9,18 @@ KISSY.add("component/uibase/shim-render", function () {
     }
 
     Shim.prototype = {
-        __createDom:function () {
+        __createDom: function () {
             this.get("el").prepend("<" + "iframe style='position: absolute;" +
                 "border: none;" +
-                "width: expression(this.parentNode.offsetWidth);" +
+                // consider border
+                // bug fix: 2012-11-07
+                "width: expression(this.parentNode.clientWidth);" +
                 "top: 0;" +
                 "opacity: 0;" +
                 "filter: alpha(opacity=0);" +
                 "left: 0;" +
                 "z-index: -1;" +
-                "height: expression(this.parentNode.offsetHeight);" + "'/>");
+                "height: expression(this.parentNode.clientHeight);" + "'/>");
         }
     };
 

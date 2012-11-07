@@ -13,6 +13,7 @@ KISSY.add("editor/plugin/fore-color/index", function (S, Editor, Button, cmd) {
             cmd.init(editor);
             Button.init(editor, {
                 cmdType: 'foreColor',
+                defaultColor: 'rgb(204, 0, 0)',
                 tooltip: "文本颜色"
             });
         }

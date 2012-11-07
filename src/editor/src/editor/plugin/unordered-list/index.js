@@ -8,17 +8,35 @@ KISSY.add("editor/plugin/unordered-list/index", function (S, Editor, ListButton,
     }
 
     S.augment(unorderedList, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
             ListCmd.init(editor);
 
-            editor.addButton("unorderedList", {
-                cmdType:"insertUnorderedList",
-                mode:Editor.WYSIWYG_MODE
-            }, ListButton);
+            ListButton.init(editor, {
+                cmdType: "insertUnorderedList",
+                buttonId: 'unorderedList',
+                menu: {
+                    width:75,
+                    children: [
+                        {
+                            content: '● 圆点',
+                            value: 'disc'
+                        },
+                        {
+                            content: '○ 圆圈',
+                            value: 'circle'
+                        },
+                        {
+                            content: '■ 方块',
+                            value: 'square'
+                        }
+                    ]
+                },
+                tooltip: '无序列表'
+            });
         }
     });
 
     return unorderedList;
 }, {
-    requires:['editor', '../list-utils/btn', './cmd']
+    requires: ['editor', '../list-utils/btn', './cmd']
 });

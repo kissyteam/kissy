@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 6 19:56
+build time: Nov 7 16:53
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121106195619' will replace with current timestamp when compressing.
+         * NOTICE: '20121107165313' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121106195619',
+        __BUILD_TIME: '20121107165313',
         /**
          * KISSY Environment.
          * @private
@@ -201,7 +201,7 @@ var KISSY = (function (undefined) {
     var MIX_CIRCULAR_DETECTION = '__MIX_CIRCULAR',
         STAMP_MARKER = '__~ks_stamped',
         host = this,
-        TRUE=true,
+        TRUE = true,
         EMPTY = '',
         hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
         enumProperties = [
@@ -252,6 +252,7 @@ var KISSY = (function (undefined) {
          * Get all the property names of o as array
          * @param {Object} o
          * @return {Array}
+         * @member KISSY
          */
         keys: function (o) {
             var result = [], p;
@@ -284,6 +285,7 @@ var KISSY = (function (undefined) {
          * @param {String[]} [wl] array of white-list properties
          * @param [deep=false] {Boolean} whether recursive mix if encounter object.
          * @return {Object} the augmented object
+         * @member KISSY
          *
          * for example:
          *     @example
@@ -313,6 +315,7 @@ var KISSY = (function (undefined) {
          * single object will create a shallow copy of it.
          * @param {...Object} var_args objects need to be merged
          * @return {Object} the new merged object
+         * @member KISSY
          */
         merge: function (var_args) {
             var_args = S.makeArray(arguments);
@@ -330,6 +333,7 @@ var KISSY = (function (undefined) {
          *          {Boolean} [ov=TRUE] whether overwrite existing property
          *          {String[]} [wl] array of white-list properties
          * @return  {Object} the augmented object
+         * @member KISSY
          */
         augment: function (r, var_args) {
             var args = S.makeArray(arguments),
@@ -364,6 +368,7 @@ var KISSY = (function (undefined) {
          * @param {Object} [px] prototype properties to add/override
          * @param {Object} [sx] static properties to add/override
          * @return r {Object}
+         * @member KISSY
          */
         extend: function (r, s, px, sx) {
             if (!s || !r) {
@@ -421,6 +426,7 @@ var KISSY = (function (undefined) {
          *      S.namespace('TB.app.Shop', TRUE); // returns TB.app.Shop
          *
          * @return {Object}  A reference to the last namespace object created
+         * @member KISSY
          */
         namespace: function () {
             var args = S.makeArray(arguments),
@@ -1139,10 +1145,10 @@ var KISSY = (function (undefined) {
         /**
          * Creates a new function that, when called, itself calls this function in the context of the provided this value,
          * with a given sequence of arguments preceding any provided when the new function was called.
-         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
          * @param {Function} fn internal called function
          * @param {Object} obj context in which fn runs
-         * @param {...} var_args extra arguments
+         * @param {*...} var_args extra arguments
          * @member KISSY
          * @return {Function} new function with context and arguments
          */
@@ -1151,10 +1157,10 @@ var KISSY = (function (undefined) {
         /**
          * Creates a new function that, when called, itself calls this function in the context of the provided this value,
          * with a given sequence of arguments preceding any provided when the new function was called.
-         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
+         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function/bind
          * @param {Function} fn internal called function
          * @param {Object} obj context in which fn runs
-         * @param {...} var_args extra arguments
+         * @param {*...} var_args extra arguments
          * @member KISSY
          * @return {Function} new function with context and arguments
          */
@@ -2991,6 +2997,7 @@ var KISSY = (function (undefined) {
  - http://unixpapa.com/js/querystring.html
  - http://code.stephenmorley.org/javascript/parsing-query-strings-for-get-data/
  *//**
+ * @ignore
  * detect if current browser supports various features.
  * @author yiminghe@gmail.com
  */
@@ -3000,6 +3007,7 @@ var KISSY = (function (undefined) {
         doc = win.document;
 
     /**
+     * test browser features
      * @class KISSY.Features
      * @private
      * @singleton
@@ -5401,7 +5409,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121106195619'
+            tag: '20121107165313'
         }, getBaseInfo()));
     }
 

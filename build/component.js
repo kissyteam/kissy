@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 6 18:36
+build time: Nov 7 16:37
 */
 /**
  * @ignore
@@ -486,7 +486,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * By default, this performs its associated action by calling
              * {@link KISSY.Component.Controller#performActionInternal}.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleDblClick: function (ev) {
                 this.performActionInternal(ev);
@@ -495,7 +495,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Called by it's container component to dispatch mouseenter event.
              * @private
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseOver: function (ev) {
                 var self = this,
@@ -508,7 +508,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Called by it's container component to dispatch mouseleave event.
              * @private
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseOut: function (ev) {
                 var self = this,
@@ -521,7 +521,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handle mouseenter events. If the component is not disabled, highlights it.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseEnter: function (ev) {
                 this.set("highlighted", !!ev);
@@ -530,7 +530,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handle mouseleave events. If the component is not disabled, de-highlights it.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseLeave: function (ev) {
                 var self = this;
@@ -544,7 +544,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * If the component is focusable, then focus it,
              * else prevent it from receiving keyboard focus.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseDown: function (ev) {
                 var self = this,
@@ -578,7 +578,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * If this component is not disabled, performs its associated action by calling
              * {@link KISSY.Component.Controller#performActionInternal}, then deactivates it.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleMouseUp: function (ev) {
                 var self = this;
@@ -591,7 +591,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles context menu.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleContextMenu: function (ev) {
             },
@@ -599,7 +599,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles focus events. Style focused class.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleFocus: function (ev) {
                 this.set("focused", !!ev);
@@ -609,7 +609,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handles blur events. Remove focused class.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleBlur: function (ev) {
                 this.set("focused", !ev);
@@ -619,7 +619,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Handle enter keydown event to {@link KISSY.Component.Controller#performActionInternal}.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleKeyEventInternal: function (ev) {
                 if (ev.keyCode == Event.KeyCodes.ENTER) {
@@ -631,7 +631,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
              * Handle keydown events.
              * If the component is not disabled, call {@link KISSY.Component.Controller#handleKeyEventInternal}
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             handleKeydown: function (ev) {
                 var self = this;
@@ -644,7 +644,7 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
             /**
              * Performs the appropriate action when this component is activated by the user.
              * @protected
-             * @param {KISSY.Event.Object} ev DOM event to handle.
+             * @param {KISSY.Event.DOMEventObject} ev DOM event to handle.
              */
             performActionInternal: function (ev) {
             },
@@ -2142,7 +2142,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event beforeCreateDom
                  * fired before root node is created
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
                 self.fire('beforeCreateDom');
                 callMethodByHierarchy(self, "createDom", "__createDom");
@@ -2150,7 +2150,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event afterCreateDom
                  * fired when root node is created
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
                 self.fire('afterCreateDom');
                 actionPlugins(self, self.get("plugins"), "createDom");
@@ -2171,7 +2171,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event beforeRenderUI
                  * fired when root node is ready
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
 
                 self.fire('beforeRenderUI');
@@ -2180,7 +2180,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event afterRenderUI
                  * fired after root node is rendered into dom
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
 
                 self.fire('afterRenderUI');
@@ -2189,7 +2189,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event beforeBindUI
                  * fired before component 's internal event is bind.
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
 
                 self.fire('beforeBindUI');
@@ -2199,7 +2199,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event afterBindUI
                  * fired when component 's internal event is bind.
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
 
                 self.fire('afterBindUI');
@@ -2208,7 +2208,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event beforeSyncUI
                  * fired before component 's internal state is synchronized.
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
 
                 self.fire('beforeSyncUI');
@@ -2219,7 +2219,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
                 /**
                  * @event afterSyncUI
                  * fired after component 's internal state is synchronized.
-                 * @param {KISSY.Event.Object} e
+                 * @param {KISSY.Event.CustomEventObject} e
                  */
 
                 self.fire('afterSyncUI');
@@ -3816,16 +3816,18 @@ KISSY.add("component/uibase/shim-render", function () {
     }
 
     Shim.prototype = {
-        __createDom:function () {
+        __createDom: function () {
             this.get("el").prepend("<" + "iframe style='position: absolute;" +
                 "border: none;" +
-                "width: expression(this.parentNode.offsetWidth);" +
+                // consider border
+                // bug fix: 2012-11-07
+                "width: expression(this.parentNode.clientWidth);" +
                 "top: 0;" +
                 "opacity: 0;" +
                 "filter: alpha(opacity=0);" +
                 "left: 0;" +
                 "z-index: -1;" +
-                "height: expression(this.parentNode.offsetHeight);" + "'/>");
+                "height: expression(this.parentNode.clientHeight);" + "'/>");
         }
     };
 

@@ -91,7 +91,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                     prefixCls: prefixCls
                 }),
                 autoRender: true,
-                width: 170,
+                width: 172,
                 zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)
             });
 
@@ -170,22 +170,23 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
     ColorButton.init = function (editor, cfg) {
         var prefix = editor.get('prefixCls') + 'editor-toolbar-',
             cmdType = cfg.cmdType,
+            defaultColor=cfg.defaultColor,
             tooltip = cfg.tooltip;
 
         var button = editor.addButton(cmdType, {
             elCls: cmdType + 'Btn',
             content: S.substitute(tpl, {
-                defaultColor: '#9a9b9a',
+                defaultColor: defaultColor,
                 icon: prefix + 'item ' + prefix + cmdType,
                 indicator: prefix + 'color-indicator'
             }),
+            mode: Editor.WYSIWYG_MODE,
             tooltip: "设置" + tooltip
         });
 
         var arrow = editor.addButton(cmdType + 'Arrow', {
             tooltip: "选择并设置" + tooltip,
-            elCls: cmdType + 'ArrowBtn',
-            pluginConfig: this.config
+            elCls: cmdType + 'ArrowBtn'
         }, ColorButton);
 
         var indicator = button.get('el').one('.' + prefix + 'color-indicator');
@@ -197,7 +198,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
 
         button.on('click', function () {
             runCmd(editor, cmdType, indicator.style('background-color'));
-        })
+        });
     };
 
     return ColorButton;

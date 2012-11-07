@@ -12,6 +12,7 @@ KISSY.add("editor/plugin/back-color/index", function (S, Editor, Button, cmd) {
         renderUI: function (editor) {
             cmd.init(editor);
             Button.init(editor, {
+                defaultColor: 'rgb(255, 217, 102)',
                 cmdType: "backColor",
                 tooltip: "背景颜色"
             });

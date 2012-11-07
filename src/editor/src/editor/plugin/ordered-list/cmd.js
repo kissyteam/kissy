@@ -13,9 +13,9 @@ KISSY.add("editor/plugin/ordered-list/cmd", function (S, Editor, listCmd) {
         init:function (editor) {
             if (!editor.hasCommand(insertOrderedList)) {
                 editor.addCommand(insertOrderedList, {
-                    exec:function (editor) {
+                    exec:function (editor,listStyleType) {
                         editor.focus();
-                        olCmd.exec(editor);
+                        olCmd.exec(editor,listStyleType);
                     }
                 });
             }

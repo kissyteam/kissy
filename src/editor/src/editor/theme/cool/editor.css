@@ -120,10 +120,47 @@ ks-editor-toolbar-padding {
 
 .ks-editor-toolbar-orderedList {
     background-image: url("ol.png"); /** sprite-ref: cool; */
+    margin-right: 0;
 }
 
 .ks-editor-toolbar-unorderedList {
     background-image: url("ul.png"); /** sprite-ref: cool; */
+    margin-right: 0;
+}
+
+.ks-editor-tools .ks-editor-toolbar-unorderedListArrowBtn,
+.ks-editor-tools .ks-editor-toolbar-orderedListArrowBtn {
+    border-color: transparent;
+    _border-color: tomato;
+    _filter: chroma(color = tomato);
+}
+
+.ks-editor-tools .ks-editor-toolbar-unorderedListBtn,
+.ks-editor-tools .ks-editor-toolbar-orderedListBtn {
+    margin-right: 0;
+}
+
+.ks-editor-tools .ks-editor-toolbar-unorderedListArrowBtn .ks-editor-menu-button-caption,
+.ks-editor-tools .ks-editor-toolbar-orderedListArrowBtn .ks-editor-menu-button-caption {
+    margin: 0;
+    padding: 0;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    overflow: hidden;
+}
+
+.ks-editor-tools .ks-editor-toolbar-unorderedListArrowBtn .ks-editor-menu-button-dropdown,
+.ks-editor-tools .ks-editor-toolbar-orderedListArrowBtn .ks-editor-menu-button-dropdown {
+    position: static;
+    width: 0;
+    height: 0;
+    border: 3px solid transparent;
+    _border-color: tomato;
+    _filter: chroma(color = tomato);
+    border-top-color: #000000;
+    margin: 8px 2px;
+    background: none;
 }
 
 .ks-editor-toolbar-outdent {
@@ -184,6 +221,8 @@ ks-editor-toolbar-padding {
     margin-left: 2px;
     margin-bottom: 2px;
     width: 20px;
+    font-size: 0;
+    overflow: hidden;
 }
 
 .ks-editor-toolbar-backColorArrowBtn,
@@ -196,6 +235,9 @@ ks-editor-toolbar-padding {
     width: 0;
     height: 0;
     border: 3px solid transparent;
+    /* ie6 does not support transparent */
+    _border-color: tomato;
+    _filter: chroma(color = tomato);
     border-top-color: #000000;
     margin: 8px 2px;
 }

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 1 21:31
+build time: Nov 7 16:53
 */
 /**
  * @ignore
@@ -2669,7 +2669,8 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             simpleContext,
             isSelectorString = typeof selector == 'string',
         // optimize common usage
-            contexts = (context === undefined && (simpleContext = 1)) ?
+        // consider context == null
+            contexts = (context == undefined && (simpleContext = 1)) ?
                 [doc] :
                 tuneContext(context);
         // 常见的空
@@ -3134,7 +3135,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                     ret = [];
 
                 // 默认仅支持最简单的 tag.cls 或 #id 形式
-                if (typeof filter == 'string'&&
+                if (typeof filter == 'string' &&
                     (filter = trim(filter)) &&
                     (match = REG_QUERY.exec(filter))) {
                     id = match[1];

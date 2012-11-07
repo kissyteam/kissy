@@ -13,9 +13,9 @@ KISSY.add("editor/plugin/unordered-list/cmd", function (S, Editor, listCmd) {
         init:function (editor) {
             if (!editor.hasCommand(insertUnorderedList)) {
                 editor.addCommand(insertUnorderedList, {
-                    exec:function (editor) {
+                    exec:function (editor,type) {
                         editor.focus();
-                        ulCmd.exec(editor);
+                        ulCmd.exec(editor,type);
                     }
                 });
             }
