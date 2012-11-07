@@ -11,31 +11,38 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
         if (ButtonType === undefined) {
             ButtonType = Button;
         }
-
-
         var self = this,
-            prefixCls = self.get("prefixCls") + "editor-",
-            b = new ButtonType(S.mix({
-                render:self.get("toolBarEl"),
-                autoRender:true,
-                content:'<span ' +
-                    'class="' + prefixCls + 'toolbar-item ' +
-                    prefixCls + 'toolbar-' + id +
-                    '"></span' +
-                    '>',
-                elCls:prefixCls + 'toolbar-button',
-                prefixCls:prefixCls,
-                editor:self
-            }, cfg)), contentEl = b.get("el").one("span");
+            prefixCls = self.get("prefixCls") + "editor-toolbar-";
+
+        if (cfg.elCls) {
+            cfg.elCls = prefixCls + cfg.elCls;
+        }
+
+        cfg.elCls = prefixCls + 'button ' + (cfg.elCls || "");
+
+        var b = new ButtonType(S.mix({
+            render: self.get("toolBarEl"),
+            autoRender: true,
+            content: '<span ' +
+                'class="' + prefixCls + 'item ' +
+                prefixCls + id +
+                '"></span' +
+                '>',
+            prefixCls: self.get("prefixCls") + "editor-",
+            editor: self
+        }, cfg));
 
         // preserver selection in editor iframe
         // magic happens when tabIndex and unselectable are both set
         b.get("el").unselectable();
 
-        b.on("afterContentClsChange", function (e) {
-            contentEl[0].className = prefixCls + 'toolbar-item ' +
-                prefixCls + 'toolbar-' + e.newVal;
-        });
+        if (!cfg.content) {
+            var contentEl = b.get("el").one("span");
+            b.on("afterContentClsChange", function (e) {
+                contentEl[0].className = prefixCls + 'item ' +
+                    prefixCls + e.newVal;
+            });
+        }
 
         if (b.get("mode") == Editor.WYSIWYG_MODE) {
             self.on("wysiwygMode", function () {
@@ -53,5 +60,5 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
 
     return Button;
 }, {
-    requires:['editor', 'button']
+    requires: ['editor', 'button']
 });

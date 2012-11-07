@@ -400,6 +400,9 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
         }
     });
 
+    // back compatible for shop caja
+    S.EventObject = DOMEventObject;
+
     return DOMEventObject;
 
 }, {

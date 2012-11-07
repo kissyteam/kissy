@@ -154,19 +154,50 @@ ks-editor-toolbar-padding {
     background-image: url("multiple-image.png"); /** sprite-ref: cool; */
 }
 
-.ks-editor-toolbar-backColor {
+.ks-editor-toolbar-backColorBtn,
+.ks-editor-toolbar-foreColorBtn {
+    margin-right: 0;
+}
+
+.ks-editor-toolbar-backColor,
+.ks-editor-toolbar-foreColor {
     background-image: url("bgcolor.png"); /** sprite-ref: cool; */
-    width: 24px;
+    width: 18px;
     height: 15px;
-    margin-top: 3px;
+    margin-top: 2px;
+    margin-right: 0;
+    margin-left: 4px;
+    margin-bottom: 1px;
+}
+
+.ks-editor-toolbar-backColor {
+    position: relative;
+    left: -1px;
 }
 
 .ks-editor-toolbar-foreColor {
     background-image: url("color.png"); /** sprite-ref: cool; */
-    width: 24px;
-    height: 14px;
-    margin-top: 3px;
-    margin-bottom: 3px;
+}
+
+.ks-editor-toolbar-color-indicator {
+    height: 4px;
+    margin-left: 2px;
+    margin-bottom: 2px;
+    width: 20px;
+}
+
+.ks-editor-toolbar-backColorArrowBtn,
+.ks-editor-toolbar-foreColorArrowBtn {
+    margin-left: 0;
+}
+
+.ks-editor-toolbar-backColorArrow,
+.ks-editor-toolbar-foreColorArrow {
+    width: 0;
+    height: 0;
+    border: 3px solid transparent;
+    border-top-color: #000000;
+    margin: 8px 2px;
 }
 
 .ks-editor-toolbar-undo {

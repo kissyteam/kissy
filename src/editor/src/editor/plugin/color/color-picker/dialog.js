@@ -174,25 +174,25 @@ KISSY.add("editor/plugin/color/color-picker/dialog", function (S, Editor, Overla
             var win = self.dialog,
                 body = win.get("body"),
                 foot = win.get("footer"),
-                indicator = body.one("."+prefixCls+"editor-color-advanced-indicator"),
-                indicatorValue = body.one("."+prefixCls+"editor-color-advanced-value"),
-                left = body.one("."+prefixCls+"editor-color-advanced-picker-left"),
-                right = body.one("."+prefixCls+"editor-color-advanced-picker-right"),
-                ok = foot.one("."+prefixCls+"editor-color-advanced-ok"),
-                cancel = foot.one("."+prefixCls+"editor-color-advanced-cancel");
+                indicator = body.one("." + prefixCls + "editor-color-advanced-indicator"),
+                indicatorValue = body.one("." + prefixCls + "editor-color-advanced-value"),
+                left = body.one("." + prefixCls + "editor-color-advanced-picker-left"),
+                right = body.one("." + prefixCls + "editor-color-advanced-picker-right"),
+                ok = foot.one("." + prefixCls + "editor-color-advanced-ok"),
+                cancel = foot.one("." + prefixCls + "editor-color-advanced-cancel");
 
             ok.on("click", function (ev) {
                 var v = S.trim(indicatorValue.val()),
-                    cmd = self.cmd;
+                    colorButtonArrow = self.colorButtonArrow;
                 if (!/^#([a-f0-9]{1,2}){3,3}$/i.test(v)) {
                     alert("请输入正确的颜色代码");
                     return;
                 }
                 //先隐藏窗口，使得编辑器恢复焦点，恢复原先range
                 self.hide();
-                setTimeout(function () {
-                    self.editor.execCommand(cmd, indicatorValue.val());
-                }, 0);
+                colorButtonArrow.fire('selectColor', {
+                    color: indicatorValue.val()
+                });
                 ev.halt();
             });
 
@@ -235,15 +235,15 @@ KISSY.add("editor/plugin/color/color-picker/dialog", function (S, Editor, Overla
                 body = win.get("body"),
                 editor = self.editor,
                 prefixCls = editor.get('prefixCls'),
-                detailPanel = body.one("."+prefixCls+"editor-color-advanced-picker-right");
+                detailPanel = body.one("." + prefixCls + "editor-color-advanced-picker-right");
 
             detailPanel.html(map(ColorGrads(["#ffffff", color, "#000000"], 40),
                 function (x) {
                     return "<a style='background-color:" + hex(x) + "'></a>";
                 }).join(""));
         },
-        show: function (cmd) {
-            this.cmd = cmd;
+        show: function (colorButtonArrow) {
+            this.colorButtonArrow = colorButtonArrow;
             this.dialog.show();
         },
         hide: function () {
