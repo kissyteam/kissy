@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 17:24
+build time: Nov 7 17:31
 */
 /**
  * @fileOverview validation
@@ -1092,11 +1092,13 @@ KISSY.add("validation/utils", function(S, undefined) {
  * @version 1.2
  * @date 2011.06.21
  */
-KISSY.add("validation", function(S, Validation) {
-	    return Validation;
-	}, {
-		requires:["validation/base","validation/assets/base.css"]
-	}
+KISSY.add("validation", function (S, Validation) {
+        // for compatibility
+        S.Validation = Validation;
+        return Validation;
+    }, {
+        requires: ["validation/base", "validation/assets/base.css"]
+    }
 );/**
  * @fileOverview 信息提示类及管理
  * @author 常胤 <lzlu.com>

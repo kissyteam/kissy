@@ -4,9 +4,11 @@
  * @version 1.2
  * @date 2011.06.21
  */
-KISSY.add("validation", function(S, Validation) {
-	    return Validation;
-	}, {
-		requires:["validation/base","validation/assets/base.css"]
-	}
+KISSY.add("validation", function (S, Validation) {
+        // for compatibility
+        S.Validation = Validation;
+        return Validation;
+    }, {
+        requires: ["validation/base", "validation/assets/base.css"]
+    }
 );
