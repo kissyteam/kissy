@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 6 18:41
+build time: Nov 7 17:23
 */
 /**
  * Add ul/ol button.
@@ -10,21 +10,58 @@ build time: Nov 6 18:41
 KISSY.add("editor/plugin/ordered-list/index", function (S, Editor, ListButton, ListCmd) {
 
     function orderedList() {
-
     }
 
     S.augment(orderedList, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
             ListCmd.init(editor);
 
-            editor.addButton("orderedList", {
-                cmdType:"insertOrderedList",
-                mode:Editor.WYSIWYG_MODE
-            }, ListButton);
+            ListButton.init(editor, {
+                cmdType: "insertOrderedList",
+                buttonId: 'orderedList',
+                menu: {
+                    width: 75,
+                    children: [
+                        {
+                            content: '1,2,3...',
+                            value: 'decimal'
+                        },
+                        {
+                            content: 'a,b,c...',
+                            value: 'lower-alpha'
+                        },
+                        {
+                            content: 'A,B,C...',
+                            value: 'upper-alpha'
+                        },
+                        // ie 678 not support!
+//                        {
+//                            content: 'α,β,γ...',
+//                            value: 'lower-greek'
+//                        },
+//
+//                        {
+//                            content: 'Α,Β,Γ...',
+//                            value: 'upper-greek'
+//                        },
+
+                        {
+                            content: 'i,ii,iii...',
+                            value: 'lower-roman'
+                        },
+
+                        {
+                            content: 'I,II,III...',
+                            value: 'upper-roman'
+                        }
+                    ]
+                },
+                tooltip: '有序列表'
+            });
         }
     });
 
     return orderedList;
 }, {
-    requires:['editor', '../list-utils/btn', './cmd']
+    requires: ['editor', '../list-utils/btn', './cmd']
 });

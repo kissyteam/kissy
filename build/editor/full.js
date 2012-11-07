@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 6 18:41
+build time: Nov 7 17:23
 */
 /**
  * Set up editor constructor
@@ -220,10 +220,13 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
                 range = new KERange(doc);
 
             // Create container to paste into
-            var pastebin = $(UA['webkit'] ? '<body></body>' : '<div></div>', null, doc);
+            var pastebin = $(UA['webkit'] ? '<body></body>' :
+                // ie6 must use create ...
+                doc.createElement('div'), null, doc);
             pastebin.attr('id', 'ke_pastebin');
             // Safari requires a filler node inside the div to have the content pasted into it. (#4882)
             UA['webkit'] && pastebin[0].appendChild(doc.createTextNode('\xa0'));
+
             doc.body.appendChild(pastebin[0]);
 
             pastebin.css({
@@ -3834,7 +3837,7 @@ KISSY.config('modules', {
 'editor/plugin/element-path/index': {requires: ['editor']},
 'editor/plugin/source-area/index': {requires: ['editor','editor/plugin/button/']},
 'editor/plugin/justify-right/index': {requires: ['editor','editor/plugin/justify-right/cmd']},
-'editor/plugin/list-utils/btn': {requires: ['editor','editor/plugin/button/']},
+'editor/plugin/list-utils/btn': {requires: ['editor','editor/plugin/button/','editor/plugin/menubutton/']},
 'editor/plugin/justify-left/index': {requires: ['editor','editor/plugin/justify-left/cmd']},
 'editor/plugin/outdent/index': {requires: ['editor','editor/plugin/outdent/cmd']},
 'editor/plugin/fake-objects/index': {requires: ['editor']},
@@ -9112,24 +9115,24 @@ KISSY.add("editor/plugin/back-color/cmd", function (S, cmd) {
 KISSY.add("editor/plugin/back-color/index", function (S, Editor, Button, cmd) {
 
     function backColor(config) {
-        this.config=config||{};
+        this.config = config || {};
     }
 
     S.augment(backColor, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
             cmd.init(editor);
-            editor.addButton("backColor", {
-                cmdType:'backColor',
-                tooltip:"背景颜色",
-                pluginConfig:this.config
-            }, Button);
+            Button.init(editor, {
+                defaultColor: 'rgb(255, 217, 102)',
+                cmdType: "backColor",
+                tooltip: "背景颜色"
+            });
         }
     });
 
     return backColor;
 
 }, {
-    requires:['editor', '../color/btn', './cmd']
+    requires: ['editor', '../color/btn', './cmd']
 });/**
  * bold command.
  * @author yiminghe@gmail.com
@@ -9415,31 +9418,38 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
         if (ButtonType === undefined) {
             ButtonType = Button;
         }
-
-
         var self = this,
-            prefixCls = self.get("prefixCls") + "editor-",
-            b = new ButtonType(S.mix({
-                render:self.get("toolBarEl"),
-                autoRender:true,
-                content:'<span ' +
-                    'class="' + prefixCls + 'toolbar-item ' +
-                    prefixCls + 'toolbar-' + id +
-                    '"></span' +
-                    '>',
-                elCls:prefixCls + 'toolbar-button',
-                prefixCls:prefixCls,
-                editor:self
-            }, cfg)), contentEl = b.get("el").one("span");
+            prefixCls = self.get("prefixCls") + "editor-toolbar-";
+
+        if (cfg.elCls) {
+            cfg.elCls = prefixCls + cfg.elCls;
+        }
+
+        cfg.elCls = prefixCls + 'button ' + (cfg.elCls || "");
+
+        var b = new ButtonType(S.mix({
+            render: self.get("toolBarEl"),
+            autoRender: true,
+            content: '<span ' +
+                'class="' + prefixCls + 'item ' +
+                prefixCls + id +
+                '"></span' +
+                '>',
+            prefixCls: self.get("prefixCls") + "editor-",
+            editor: self
+        }, cfg));
 
         // preserver selection in editor iframe
         // magic happens when tabIndex and unselectable are both set
         b.get("el").unselectable();
 
-        b.on("afterContentClsChange", function (e) {
-            contentEl[0].className = prefixCls + 'toolbar-item ' +
-                prefixCls + 'toolbar-' + e.newVal;
-        });
+        if (!cfg.content) {
+            var contentEl = b.get("el").one("span");
+            b.on("afterContentClsChange", function (e) {
+                contentEl[0].className = prefixCls + 'item ' +
+                    prefixCls + e.newVal;
+            });
+        }
 
         if (b.get("mode") == Editor.WYSIWYG_MODE) {
             self.on("wysiwygMode", function () {
@@ -9457,7 +9467,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
 
     return Button;
 }, {
-    requires:['editor', 'button']
+    requires: ['editor', 'button']
 });
 /**
  * checkbox source editor for kissy editor
@@ -9615,7 +9625,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
 
     initHtml();
 
-    return Button.extend({
+    var ColorButton = Button.extend({
 
         initializer: function () {
             var self = this;
@@ -9651,7 +9661,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                     prefixCls: prefixCls
                 }),
                 autoRender: true,
-                width: 170,
+                width: 172,
                 zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)
             });
 
@@ -9665,9 +9675,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
-                DialogLoader.useDialog(editor, "color/color-picker",
-                    self.get("pluginConfig"),
-                    self.get("cmdType"));
+                DialogLoader.useDialog(editor, "color/color-picker", self);
             });
             self._prepare = self._show;
             self._show();
@@ -9696,7 +9704,9 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                 prefixCls = editor.get('prefixCls'),
                 t = new Node(ev.target);
             if (t.hasClass(prefixCls + "editor-color-a")) {
-                self.get("editor").execCommand(self.get("cmdType"), t.style("background-color"));
+                self.fire('selectColor', {
+                    color: t.style("background-color")
+                });
             }
         },
 
@@ -9716,6 +9726,52 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             }
         }
     });
+
+    var tpl = '<div class="{icon}"></div>' +
+        '<div style="background-color:{defaultColor}"' +
+        ' class="{indicator}"></div>';
+
+    function runCmd(editor, cmdType, color) {
+        setTimeout(function () {
+            editor.execCommand(cmdType, color);
+        }, 0);
+    }
+
+    ColorButton.init = function (editor, cfg) {
+        var prefix = editor.get('prefixCls') + 'editor-toolbar-',
+            cmdType = cfg.cmdType,
+            defaultColor=cfg.defaultColor,
+            tooltip = cfg.tooltip;
+
+        var button = editor.addButton(cmdType, {
+            elCls: cmdType + 'Btn',
+            content: S.substitute(tpl, {
+                defaultColor: defaultColor,
+                icon: prefix + 'item ' + prefix + cmdType,
+                indicator: prefix + 'color-indicator'
+            }),
+            mode: Editor.WYSIWYG_MODE,
+            tooltip: "设置" + tooltip
+        });
+
+        var arrow = editor.addButton(cmdType + 'Arrow', {
+            tooltip: "选择并设置" + tooltip,
+            elCls: cmdType + 'ArrowBtn'
+        }, ColorButton);
+
+        var indicator = button.get('el').one('.' + prefix + 'color-indicator');
+
+        arrow.on('selectColor', function (e) {
+            indicator.css('background-color', e.color);
+            runCmd(editor, cmdType, e.color);
+        });
+
+        button.on('click', function () {
+            runCmd(editor, cmdType, indicator.style('background-color'));
+        });
+    };
+
+    return ColorButton;
 
 }, {
     requires: ['editor', '../button/', '../overlay/', '../dialog-loader/']
@@ -12234,19 +12290,19 @@ KISSY.add("editor/plugin/fore-color/index", function (S, Editor, Button, cmd) {
     }
 
     S.augment(ForeColorPlugin, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
             cmd.init(editor);
-            editor.addButton("foreColor", {
-                cmdType:'foreColor',
-                tooltip:"文本颜色",
-                pluginConfig:this.config
-            }, Button);
+            Button.init(editor, {
+                cmdType: 'foreColor',
+                defaultColor: 'rgb(204, 0, 0)',
+                tooltip: "文本颜色"
+            });
         }
     });
 
     return ForeColorPlugin;
 }, {
-    requires:['editor', '../color/btn', './cmd']
+    requires: ['editor', '../color/btn', './cmd']
 });/**
  * Adds a heading tag around a selection or insertion point line.
  * Requires the tag-name string to be passed in as a value argument (i.e. "H1", "H6")
@@ -13129,41 +13185,62 @@ KISSY.add("editor/plugin/link/utils", function (S, Editor) {
  * Common btn for list.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/list-utils/btn", function (S, Editor, Button) {
+KISSY.add("editor/plugin/list-utils/btn", function (S, Editor) {
 
-    function onClick() {
-        var editor = this.get("editor");
-        var cmd = this.get("cmdType");
-        editor.execCommand(cmd);
-        editor.focus();
-    }
+    return {
 
-    return Button.extend({
-        initializer:function () {
-            var self = this;
-            self.on("click", onClick, self);
-            var editor = self.get("editor");
+        init: function (editor, cfg) {
+            var buttonId = cfg.buttonId,
+                cmdType = cfg.cmdType,
+                tooltip = cfg.tooltip;
+
+            var button = editor.addButton(buttonId, {
+                elCls: buttonId + 'Btn',
+                mode: Editor.WYSIWYG_MODE,
+                tooltip: "设置" + tooltip
+            });
+
             editor.on("selectionChange", function () {
-                var cmd = self.get("cmdType");
-                if (editor.queryCommandValue(cmd)) {
-                    self.set("checked", true);
+                var v;
+                if (v = editor.queryCommandValue(cmdType)) {
+                    button.set("checked", true);
+                    arrow.set('value', v);
                 } else {
-                    self.set("checked", false);
+                    button.set("checked", false);
                 }
-            })
+            });
+
+            var arrow = editor.addSelect(buttonId + 'Arrow', {
+                tooltip: "选择并设置" + tooltip,
+                mode: Editor.WYSIWYG_MODE,
+                menu: cfg.menu,
+                matchElWidth: false,
+                elCls: 'toolbar-' + buttonId + 'ArrowBtn'
+            });
+
+            arrow.on('click', function (e) {
+                var v = e.target.get('value');
+                button.listValue = v;
+                editor.execCommand(cmdType, v);
+                editor.focus();
+            });
+
+            button.on('click', function () {
+                var v = button.listValue;
+                // checked 取 arrow 的 value，用来取消
+                if (button.get('checked')) {
+                    v = arrow.get('value');
+                }
+                editor.execCommand(cmdType, v);
+                editor.focus();
+            });
         }
-    }, {
-        ATTRS:{
-            checkable:{
-                value:true
-            },
-            mode:{
-                value:Editor.WYSIWYG_MODE
-            }
-        }
-    });
+
+    };
+
+
 }, {
-    requires:['editor', '../button/']
+    requires: ['editor', '../button/', '../menubutton/']
 });/**
  * Add ul and ol command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
@@ -13172,7 +13249,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
 
     var insertUnorderedList = "insertUnorderedList",
         insertOrderedList = "insertOrderedList",
-        listNodeNames = {"ol":insertOrderedList, "ul":insertUnorderedList},
+        listNodeNames = {"ol": insertOrderedList, "ul": insertUnorderedList},
         KER = Editor.RANGE,
         ElementPath = Editor.ElementPath,
         Walker = Editor.Walker,
@@ -13187,7 +13264,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
 
     ListCommand.prototype = {
 
-        changeListType:function (editor, groupObj, database, listsCreated) {
+        changeListType: function (editor, groupObj, database, listsCreated, listStyleType) {
             // This case is easy...
             // 1. Convert the whole list into a one-dimensional array.
             // 2. Change the list type by modifying the array.
@@ -13208,6 +13285,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
             }
 
             var fakeParent = new Node(groupObj.root[0].ownerDocument.createElement(this.type));
+            fakeParent.css('list-style-type', listStyleType);
             for (i = 0; i < selectedListItems.length; i++) {
                 var listIndex = selectedListItems[i].data('listarray_index');
                 listArray[listIndex].parent = fakeParent;
@@ -13223,7 +13301,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
             groupObj.root.remove();
         },
 
-        createList:function (editor, groupObj, listsCreated) {
+        createList: function (editor, groupObj, listsCreated, listStyleType) {
             var contents = groupObj.contents,
                 doc = groupObj.root[0].ownerDocument,
                 listContents = [];
@@ -13266,9 +13344,10 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
                 return;
 
             // Insert the list to the DOM tree.
-            var insertAnchor = new Node(
-                    listContents[ listContents.length - 1 ][0].nextSibling),
+            var insertAnchor = new Node(listContents[ listContents.length - 1 ][0].nextSibling),
                 listNode = new Node(doc.createElement(this.type));
+
+            listNode.css('list-style-type', listStyleType);
 
             listsCreated.push(listNode);
             while (listContents.length) {
@@ -13296,7 +13375,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
             }
         },
 
-        removeList:function (editor, groupObj, database) {
+        removeList: function (editor, groupObj, database) {
             // This is very much like the change list type operation.
             // Except that we're changing the selected items' indent to -1 in the list array.
             var listArray = ListUtils.listToArray(groupObj.root, database,
@@ -13351,7 +13430,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
                     && ( siblingNode = groupObj.root[ isStart ? 'prev' : 'next' ]
                     (Walker.whitespaces(true), 1) )
                     && !( boundaryNode[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
-                    siblingNode._4e_isBlockBoundary({ br:1 }, undefined) )) {
+                    siblingNode._4e_isBlockBoundary({ br: 1 }, undefined) )) {
                     boundaryNode[ isStart ? 'before' : 'after' ](editor.get("document")[0].createElement('br'));
                 }
             }
@@ -13362,7 +13441,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
             groupObj.root.remove();
         },
 
-        exec:function (editor) {
+        exec: function (editor, listStyleType) {
             var selection = editor.getSelection(),
                 ranges = selection && selection.getRanges();
 
@@ -13436,7 +13515,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
                             if (groupObj)
                                 groupObj.contents.push(block);
                             else {
-                                groupObj = { root:element, contents:[ block ] };
+                                groupObj = { root: element, contents: [ block ] };
                                 listGroups.push(groupObj);
                                 element._4e_setMarker(database, 'list_group_object', groupObj, undefined);
                             }
@@ -13454,7 +13533,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
                     if (root.data('list_group_object')) {
                         root.data('list_group_object').contents.push(block);
                     } else {
-                        groupObj = { root:root, contents:[ block ] };
+                        groupObj = { root: root, contents: [ block ] };
                         root._4e_setMarker(database, 'list_group_object', groupObj, undefined);
                         listGroups.push(groupObj);
                     }
@@ -13469,16 +13548,20 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
                 groupObj = listGroups.shift();
                 if (!state) {
                     if (listNodeNames[ groupObj.root.nodeName() ]) {
-                        this.changeListType(editor, groupObj, database, listsCreated);
+                        this.changeListType(editor, groupObj, database, listsCreated, listStyleType);
                     } else {
                         //2010-11-17
                         //先将之前原来元素的 expando 去除，
                         //防止 ie li 复制原来标签属性带来的输出代码多余
                         Editor.Utils.clearAllMarkers(database);
-                        this.createList(editor, groupObj, listsCreated);
+                        this.createList(editor, groupObj, listsCreated, listStyleType);
                     }
                 } else if (listNodeNames[ groupObj.root.nodeName() ]) {
-                    this.removeList(editor, groupObj, database);
+                    if (groupObj.root.css('list-style-type') == listStyleType) {
+                        this.removeList(editor, groupObj, database);
+                    } else {
+                        groupObj.root.css('list-style-type', listStyleType)
+                    }
                 }
             }
 
@@ -13493,8 +13576,11 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
                 function mergeSibling(rtl, listNode) {
                     var sibling = listNode[ rtl ?
                         'prev' : 'next' ](Walker.whitespaces(true), 1);
-                    if (sibling && sibling[0] &&
-                        sibling.nodeName() == self.type) {
+                    if (sibling &&
+                        sibling[0] &&
+                        sibling.nodeName() == self.type &&
+                        // consider list-style-type @ 2012-11-07
+                        sibling.css('list-style-type') == listStyleType) {
                         sibling.remove();
                         // Move children order by merge direction.(#3820)
                         sibling._4e_moveChildren(listNode, rtl ? true : false, undefined);
@@ -13514,6 +13600,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
     function queryActive(type, elementPath) {
         var element,
             name,
+            i,
             blockLimit = elementPath.blockLimit,
             elements = elementPath.elements;
         if (!blockLimit) {
@@ -13521,13 +13608,13 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
         }
         // Grouping should only happen under blockLimit.(#3940).
         if (elements) {
-            for (var i = 0; i < elements.length &&
+            for (i = 0; i < elements.length &&
                 ( element = elements[ i ] ) &&
                 element[0] !== blockLimit[0];
                  i++) {
                 if (listNodeNames[name = element.nodeName()]) {
                     if (name == type) {
-                        return true;
+                        return element.css('list-style-type');
                     }
                 }
             }
@@ -13537,12 +13624,12 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
 
 
     return {
-        ListCommand:ListCommand,
-        queryActive:queryActive
+        ListCommand: ListCommand,
+        queryActive: queryActive
     };
 
 }, {
-    requires:['editor', '../list-utils/']
+    requires: ['editor', '../list-utils/']
 });/**
  * list Utils
  * @author yiminghe@gmail.com
@@ -14232,12 +14319,16 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
                     child.xclass = 'option';
                 });
             }
+
+            if (cfg.elCls) {
+                cfg.elCls = prefixCls + cfg.elCls;
+            }
         }
 
         var s = new SelectType(S.mix({
-            render:self.get("toolBarEl"),
-            prefixCls:prefixCls,
-            autoRender:true
+            render: self.get("toolBarEl"),
+            prefixCls: prefixCls,
+            autoRender: true
         }, cfg));
 
         s.get("el").unselectable();
@@ -14257,7 +14348,7 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
 
     return MenuButton;
 }, {
-    requires:['editor', 'menubutton']
+    requires: ['editor', 'menubutton']
 });/**
  * multipleUpload button
  * @author yiminghe@gmail.com
@@ -14303,9 +14394,9 @@ KISSY.add("editor/plugin/ordered-list/cmd", function (S, Editor, listCmd) {
         init:function (editor) {
             if (!editor.hasCommand(insertOrderedList)) {
                 editor.addCommand(insertOrderedList, {
-                    exec:function (editor) {
+                    exec:function (editor,listStyleType) {
                         editor.focus();
-                        olCmd.exec(editor);
+                        olCmd.exec(editor,listStyleType);
                     }
                 });
             }
@@ -14336,23 +14427,60 @@ KISSY.add("editor/plugin/ordered-list/cmd", function (S, Editor, listCmd) {
 KISSY.add("editor/plugin/ordered-list/index", function (S, Editor, ListButton, ListCmd) {
 
     function orderedList() {
-
     }
 
     S.augment(orderedList, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
             ListCmd.init(editor);
 
-            editor.addButton("orderedList", {
-                cmdType:"insertOrderedList",
-                mode:Editor.WYSIWYG_MODE
-            }, ListButton);
+            ListButton.init(editor, {
+                cmdType: "insertOrderedList",
+                buttonId: 'orderedList',
+                menu: {
+                    width: 75,
+                    children: [
+                        {
+                            content: '1,2,3...',
+                            value: 'decimal'
+                        },
+                        {
+                            content: 'a,b,c...',
+                            value: 'lower-alpha'
+                        },
+                        {
+                            content: 'A,B,C...',
+                            value: 'upper-alpha'
+                        },
+                        // ie 678 not support!
+//                        {
+//                            content: 'α,β,γ...',
+//                            value: 'lower-greek'
+//                        },
+//
+//                        {
+//                            content: 'Α,Β,Γ...',
+//                            value: 'upper-greek'
+//                        },
+
+                        {
+                            content: 'i,ii,iii...',
+                            value: 'lower-roman'
+                        },
+
+                        {
+                            content: 'I,II,III...',
+                            value: 'upper-roman'
+                        }
+                    ]
+                },
+                tooltip: '有序列表'
+            });
         }
     });
 
     return orderedList;
 }, {
-    requires:['editor', '../list-utils/btn', './cmd']
+    requires: ['editor', '../list-utils/btn', './cmd']
 });/**
  * Add indent and outdent command identifier for KISSY Editor.
  * @author yiminghe@gmail.com
@@ -16180,9 +16308,9 @@ KISSY.add("editor/plugin/unordered-list/cmd", function (S, Editor, listCmd) {
         init:function (editor) {
             if (!editor.hasCommand(insertUnorderedList)) {
                 editor.addCommand(insertUnorderedList, {
-                    exec:function (editor) {
+                    exec:function (editor,type) {
                         editor.focus();
-                        ulCmd.exec(editor);
+                        ulCmd.exec(editor,type);
                     }
                 });
             }
@@ -16216,19 +16344,37 @@ KISSY.add("editor/plugin/unordered-list/index", function (S, Editor, ListButton,
     }
 
     S.augment(unorderedList, {
-        renderUI:function (editor) {
+        renderUI: function (editor) {
             ListCmd.init(editor);
 
-            editor.addButton("unorderedList", {
-                cmdType:"insertUnorderedList",
-                mode:Editor.WYSIWYG_MODE
-            }, ListButton);
+            ListButton.init(editor, {
+                cmdType: "insertUnorderedList",
+                buttonId: 'unorderedList',
+                menu: {
+                    width:75,
+                    children: [
+                        {
+                            content: '● 圆点',
+                            value: 'disc'
+                        },
+                        {
+                            content: '○ 圆圈',
+                            value: 'circle'
+                        },
+                        {
+                            content: '■ 方块',
+                            value: 'square'
+                        }
+                    ]
+                },
+                tooltip: '无序列表'
+            });
         }
     });
 
     return unorderedList;
 }, {
-    requires:['editor', '../list-utils/btn', './cmd']
+    requires: ['editor', '../list-utils/btn', './cmd']
 });/**
  * video button.
  * @author yiminghe@gmail.com

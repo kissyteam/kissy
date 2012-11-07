@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 1 21:35
+build time: Nov 7 17:25
 */
 KISSY.add("xtemplate/runtime/base",function(e){function c(a,g){"string"==typeof a&&(a=a.replace(/\{\{@/g,"{{#"));this.tpl=a;g=e.merge(b,g);g.subTpls=e.merge(g.subTpls,c.subTpls);g.commands=e.merge(g.commands,c.commands);this.option=g}var f=0,d={},b={cache:!0,utils:{getProperty:function(a,b){if(!b)return!1;var a=a.split("."),d=a.length,f,e=b;for(f=0;f<d;f++){if(!(a[f]in e))return!1;e=e[a[f]]}return[e]}}};c.prototype={constructor:c,removeSubTpl:function(a){delete this.option.subTpls[a]},removeCommand:function(a){delete this.option.commands[a]},
 addSubTpl:function(a,b){this.option.subTpls[a]=b},addCommand:function(a,b){this.option.commands[a]=b},__compile:function(){var a=this.option,b=e.require("xtemplate/compiler");if(!b)return null;b=b.compile(this.tpl);return Function.apply(null,[].concat(b.params).concat(b.source.join("\n")+"//@ sourceURL="+(a.name?a.name:"xtemplate"+f++)+".js"))},compile:function(){var a=this.tpl,b=this.option;this.compiled||(e.isFunction(a)||(this.tpl=b.cache?d[a]||(d[a]=this.__compile()):this.__compile()),this.compiled=

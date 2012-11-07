@@ -74,7 +74,7 @@ KISSY.config('modules', {
 'editor/plugin/element-path/index': {requires: ['editor']},
 'editor/plugin/source-area/index': {requires: ['editor','editor/plugin/button/']},
 'editor/plugin/justify-right/index': {requires: ['editor','editor/plugin/justify-right/cmd']},
-'editor/plugin/list-utils/btn': {requires: ['editor','editor/plugin/button/']},
+'editor/plugin/list-utils/btn': {requires: ['editor','editor/plugin/button/','editor/plugin/menubutton/']},
 'editor/plugin/justify-left/index': {requires: ['editor','editor/plugin/justify-left/cmd']},
 'editor/plugin/outdent/index': {requires: ['editor','editor/plugin/outdent/cmd']},
 'editor/plugin/fake-objects/index': {requires: ['editor']},

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 6 18:41
+build time: Nov 7 17:23
 */
 /**
  * select component for kissy editor.
@@ -27,12 +27,16 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
                     child.xclass = 'option';
                 });
             }
+
+            if (cfg.elCls) {
+                cfg.elCls = prefixCls + cfg.elCls;
+            }
         }
 
         var s = new SelectType(S.mix({
-            render:self.get("toolBarEl"),
-            prefixCls:prefixCls,
-            autoRender:true
+            render: self.get("toolBarEl"),
+            prefixCls: prefixCls,
+            autoRender: true
         }, cfg));
 
         s.get("el").unselectable();
@@ -52,5 +56,5 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
 
     return MenuButton;
 }, {
-    requires:['editor', 'menubutton']
+    requires: ['editor', 'menubutton']
 });

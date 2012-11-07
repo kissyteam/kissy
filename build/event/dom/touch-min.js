@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 2 16:55
+build time: Nov 7 17:23
 */
 KISSY.add("event/dom/touch/gesture",function(h,f){var e=f.Gesture,g=h.Features,b,k,i;g.isTouchSupported?(b="touchstart",k="touchmove",i="touchend"):g.isMsPointerEnabled&&(b="MSPointerDown",k="MSPointerMove",i="MSPointerUp");b&&(e.start=b,e.move=k,e.end=i,e.tap="tap");return e},{requires:["event/dom/base"]});KISSY.add("event/dom/touch/handle-map",function(){return{}});
 KISSY.add("event/dom/touch/handle",function(h,f,e,g,b){function k(a){this.doc=a;this.eventHandle={};this.init()}var i=h.guid("touch-handle"),l=h.Features,j={};j[b.start]="onTouchStart";j[b.move]="onTouchMove";j[b.end]="onTouchEnd";"mousedown"!==b.start&&(j.touchcancel="onTouchEnd");k.prototype={init:function(){var a=this.doc,d,c;this.onTouchMove=h.throttle(this.onTouchMove,30);for(d in j){c=j[d];g.on(a,d,this[c],this)}},normalize:function(a){var d=a.type,c;if(!l.isTouchSupported){if(d.indexOf("mouse")!=

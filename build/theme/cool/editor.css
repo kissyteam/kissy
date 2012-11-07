@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 6 18:41
+build time: Nov 7 17:23
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -718,10 +718,47 @@ ks-editor-toolbar-padding {
 
 .ks-editor-toolbar-orderedList {
     background-image: url("ol.png"); /** sprite-ref: cool; */
+    margin-right: 0;
 }
 
 .ks-editor-toolbar-unorderedList {
     background-image: url("ul.png"); /** sprite-ref: cool; */
+    margin-right: 0;
+}
+
+.ks-editor-tools .ks-editor-toolbar-unorderedListArrowBtn,
+.ks-editor-tools .ks-editor-toolbar-orderedListArrowBtn {
+    border-color: transparent;
+    _border-color: tomato;
+    _filter: chroma(color = tomato);
+}
+
+.ks-editor-tools .ks-editor-toolbar-unorderedListBtn,
+.ks-editor-tools .ks-editor-toolbar-orderedListBtn {
+    margin-right: 0;
+}
+
+.ks-editor-tools .ks-editor-toolbar-unorderedListArrowBtn .ks-editor-menu-button-caption,
+.ks-editor-tools .ks-editor-toolbar-orderedListArrowBtn .ks-editor-menu-button-caption {
+    margin: 0;
+    padding: 0;
+    width: 0;
+    height: 0;
+    font-size: 0;
+    overflow: hidden;
+}
+
+.ks-editor-tools .ks-editor-toolbar-unorderedListArrowBtn .ks-editor-menu-button-dropdown,
+.ks-editor-tools .ks-editor-toolbar-orderedListArrowBtn .ks-editor-menu-button-dropdown {
+    position: static;
+    width: 0;
+    height: 0;
+    border: 3px solid transparent;
+    _border-color: tomato;
+    _filter: chroma(color = tomato);
+    border-top-color: #000000;
+    margin: 8px 2px;
+    background: none;
 }
 
 .ks-editor-toolbar-outdent {
@@ -752,19 +789,60 @@ ks-editor-toolbar-padding {
     background-image: url("multiple-image.png"); /** sprite-ref: cool; */
 }
 
-.ks-editor-toolbar-backColor {
+.ks-editor-toolbar-backColorBtn,
+.ks-editor-toolbar-foreColorBtn {
+    margin-right: 0;
+}
+
+.ks-editor-toolbar-backColor,
+.ks-editor-toolbar-foreColor {
     background-image: url("bgcolor.png"); /** sprite-ref: cool; */
-    width: 24px;
+    width: 18px;
     height: 15px;
-    margin-top: 3px;
+    margin-top: 2px;
+    margin-right: 0;
+    margin-left: 4px;
+    margin-bottom: 1px;
+}
+
+.ks-editor-toolbar-backColor {
+    position: relative;
+    left: -1px;
 }
 
 .ks-editor-toolbar-foreColor {
     background-image: url("color.png"); /** sprite-ref: cool; */
-    width: 24px;
-    height: 14px;
-    margin-top: 3px;
-    margin-bottom: 3px;
+}
+
+.ks-editor-toolbar-color-indicator {
+    height: 4px;
+    margin-left: 2px;
+    margin-bottom: 2px;
+    /*
+      ie67 need this
+      block div is inside inline-block element, can not get auto width!
+      set 100% is also not ok!(note: 100% != auto width)
+    */
+    width: 20px;
+    font-size: 0;
+    overflow: hidden;
+}
+
+.ks-editor-toolbar-backColorArrowBtn,
+.ks-editor-toolbar-foreColorArrowBtn {
+    margin-left: 0;
+}
+
+.ks-editor-toolbar-backColorArrow,
+.ks-editor-toolbar-foreColorArrow {
+    width: 0;
+    height: 0;
+    border: 3px solid transparent;
+    /* ie6 does not support transparent */
+    _border-color: tomato;
+    _filter: chroma(color = tomato);
+    border-top-color: #000000;
+    margin: 8px 2px;
 }
 
 .ks-editor-toolbar-undo {
@@ -1077,8 +1155,6 @@ select style for kissy editor
 .ks-editor-menu-button-disabled .ks-editor-menu-button-hover,
 .ks-editor-menu-button-disabled .ks-editor-menu-button {
     cursor: default;
-    opacity: 0.7;
-    filter: alpha(opacity = 70);
     color: gray;
     border-color: rgb(193, 200, 209);
 }

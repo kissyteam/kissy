@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 6 18:41
+build time: Nov 7 17:23
 */
 /**
  * Add ul and ol command identifier for KISSY Editor.
@@ -11,7 +11,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
 
     var insertUnorderedList = "insertUnorderedList",
         insertOrderedList = "insertOrderedList",
-        listNodeNames = {"ol":insertOrderedList, "ul":insertUnorderedList},
+        listNodeNames = {"ol": insertOrderedList, "ul": insertUnorderedList},
         KER = Editor.RANGE,
         ElementPath = Editor.ElementPath,
         Walker = Editor.Walker,
@@ -26,7 +26,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
 
     ListCommand.prototype = {
 
-        changeListType:function (editor, groupObj, database, listsCreated) {
+        changeListType: function (editor, groupObj, database, listsCreated, listStyleType) {
             // This case is easy...
             // 1. Convert the whole list into a one-dimensional array.
             // 2. Change the list type by modifying the array.
@@ -47,6 +47,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
             }
 
             var fakeParent = new Node(groupObj.root[0].ownerDocument.createElement(this.type));
+            fakeParent.css('list-style-type', listStyleType);
             for (i = 0; i < selectedListItems.length; i++) {
                 var listIndex = selectedListItems[i].data('listarray_index');
                 listArray[listIndex].parent = fakeParent;
@@ -62,7 +63,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
             groupObj.root.remove();
         },
 
-        createList:function (editor, groupObj, listsCreated) {
+        createList: function (editor, groupObj, listsCreated, listStyleType) {
             var contents = groupObj.contents,
                 doc = groupObj.root[0].ownerDocument,
                 listContents = [];
@@ -105,9 +106,10 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
                 return;
 
             // Insert the list to the DOM tree.
-            var insertAnchor = new Node(
-                    listContents[ listContents.length - 1 ][0].nextSibling),
+            var insertAnchor = new Node(listContents[ listContents.length - 1 ][0].nextSibling),
                 listNode = new Node(doc.createElement(this.type));
+
+            listNode.css('list-style-type', listStyleType);
 
             listsCreated.push(listNode);
             while (listContents.length) {
@@ -135,7 +137,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
             }
         },
 
-        removeList:function (editor, groupObj, database) {
+        removeList: function (editor, groupObj, database) {
             // This is very much like the change list type operation.
             // Except that we're changing the selected items' indent to -1 in the list array.
             var listArray = ListUtils.listToArray(groupObj.root, database,
@@ -190,7 +192,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
                     && ( siblingNode = groupObj.root[ isStart ? 'prev' : 'next' ]
                     (Walker.whitespaces(true), 1) )
                     && !( boundaryNode[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
-                    siblingNode._4e_isBlockBoundary({ br:1 }, undefined) )) {
+                    siblingNode._4e_isBlockBoundary({ br: 1 }, undefined) )) {
                     boundaryNode[ isStart ? 'before' : 'after' ](editor.get("document")[0].createElement('br'));
                 }
             }
@@ -201,7 +203,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
             groupObj.root.remove();
         },
 
-        exec:function (editor) {
+        exec: function (editor, listStyleType) {
             var selection = editor.getSelection(),
                 ranges = selection && selection.getRanges();
 
@@ -275,7 +277,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
                             if (groupObj)
                                 groupObj.contents.push(block);
                             else {
-                                groupObj = { root:element, contents:[ block ] };
+                                groupObj = { root: element, contents: [ block ] };
                                 listGroups.push(groupObj);
                                 element._4e_setMarker(database, 'list_group_object', groupObj, undefined);
                             }
@@ -293,7 +295,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
                     if (root.data('list_group_object')) {
                         root.data('list_group_object').contents.push(block);
                     } else {
-                        groupObj = { root:root, contents:[ block ] };
+                        groupObj = { root: root, contents: [ block ] };
                         root._4e_setMarker(database, 'list_group_object', groupObj, undefined);
                         listGroups.push(groupObj);
                     }
@@ -308,16 +310,20 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
                 groupObj = listGroups.shift();
                 if (!state) {
                     if (listNodeNames[ groupObj.root.nodeName() ]) {
-                        this.changeListType(editor, groupObj, database, listsCreated);
+                        this.changeListType(editor, groupObj, database, listsCreated, listStyleType);
                     } else {
                         //2010-11-17
                         //先将之前原来元素的 expando 去除，
                         //防止 ie li 复制原来标签属性带来的输出代码多余
                         Editor.Utils.clearAllMarkers(database);
-                        this.createList(editor, groupObj, listsCreated);
+                        this.createList(editor, groupObj, listsCreated, listStyleType);
                     }
                 } else if (listNodeNames[ groupObj.root.nodeName() ]) {
-                    this.removeList(editor, groupObj, database);
+                    if (groupObj.root.css('list-style-type') == listStyleType) {
+                        this.removeList(editor, groupObj, database);
+                    } else {
+                        groupObj.root.css('list-style-type', listStyleType)
+                    }
                 }
             }
 
@@ -332,8 +338,11 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
                 function mergeSibling(rtl, listNode) {
                     var sibling = listNode[ rtl ?
                         'prev' : 'next' ](Walker.whitespaces(true), 1);
-                    if (sibling && sibling[0] &&
-                        sibling.nodeName() == self.type) {
+                    if (sibling &&
+                        sibling[0] &&
+                        sibling.nodeName() == self.type &&
+                        // consider list-style-type @ 2012-11-07
+                        sibling.css('list-style-type') == listStyleType) {
                         sibling.remove();
                         // Move children order by merge direction.(#3820)
                         sibling._4e_moveChildren(listNode, rtl ? true : false, undefined);
@@ -353,6 +362,7 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
     function queryActive(type, elementPath) {
         var element,
             name,
+            i,
             blockLimit = elementPath.blockLimit,
             elements = elementPath.elements;
         if (!blockLimit) {
@@ -360,13 +370,13 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
         }
         // Grouping should only happen under blockLimit.(#3940).
         if (elements) {
-            for (var i = 0; i < elements.length &&
+            for (i = 0; i < elements.length &&
                 ( element = elements[ i ] ) &&
                 element[0] !== blockLimit[0];
                  i++) {
                 if (listNodeNames[name = element.nodeName()]) {
                     if (name == type) {
-                        return true;
+                        return element.css('list-style-type');
                     }
                 }
             }
@@ -376,10 +386,10 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
 
 
     return {
-        ListCommand:ListCommand,
-        queryActive:queryActive
+        ListCommand: ListCommand,
+        queryActive: queryActive
     };
 
 }, {
-    requires:['editor', '../list-utils/']
+    requires: ['editor', '../list-utils/']
 });

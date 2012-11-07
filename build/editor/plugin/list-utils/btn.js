@@ -1,45 +1,66 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 6 18:41
+build time: Nov 7 17:23
 */
 /**
  * Common btn for list.
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/list-utils/btn", function (S, Editor, Button) {
+KISSY.add("editor/plugin/list-utils/btn", function (S, Editor) {
 
-    function onClick() {
-        var editor = this.get("editor");
-        var cmd = this.get("cmdType");
-        editor.execCommand(cmd);
-        editor.focus();
-    }
+    return {
 
-    return Button.extend({
-        initializer:function () {
-            var self = this;
-            self.on("click", onClick, self);
-            var editor = self.get("editor");
+        init: function (editor, cfg) {
+            var buttonId = cfg.buttonId,
+                cmdType = cfg.cmdType,
+                tooltip = cfg.tooltip;
+
+            var button = editor.addButton(buttonId, {
+                elCls: buttonId + 'Btn',
+                mode: Editor.WYSIWYG_MODE,
+                tooltip: "设置" + tooltip
+            });
+
             editor.on("selectionChange", function () {
-                var cmd = self.get("cmdType");
-                if (editor.queryCommandValue(cmd)) {
-                    self.set("checked", true);
+                var v;
+                if (v = editor.queryCommandValue(cmdType)) {
+                    button.set("checked", true);
+                    arrow.set('value', v);
                 } else {
-                    self.set("checked", false);
+                    button.set("checked", false);
                 }
-            })
+            });
+
+            var arrow = editor.addSelect(buttonId + 'Arrow', {
+                tooltip: "选择并设置" + tooltip,
+                mode: Editor.WYSIWYG_MODE,
+                menu: cfg.menu,
+                matchElWidth: false,
+                elCls: 'toolbar-' + buttonId + 'ArrowBtn'
+            });
+
+            arrow.on('click', function (e) {
+                var v = e.target.get('value');
+                button.listValue = v;
+                editor.execCommand(cmdType, v);
+                editor.focus();
+            });
+
+            button.on('click', function () {
+                var v = button.listValue;
+                // checked 取 arrow 的 value，用来取消
+                if (button.get('checked')) {
+                    v = arrow.get('value');
+                }
+                editor.execCommand(cmdType, v);
+                editor.focus();
+            });
         }
-    }, {
-        ATTRS:{
-            checkable:{
-                value:true
-            },
-            mode:{
-                value:Editor.WYSIWYG_MODE
-            }
-        }
-    });
+
+    };
+
+
 }, {
-    requires:['editor', '../button/']
+    requires: ['editor', '../button/', '../menubutton/']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 2 15:44
+build time: Nov 7 17:20
 */
 /**
  * @ignore
@@ -167,7 +167,7 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
                 destructors = self[DESTRUCTORS];
 
             if (destructors[tag]) {
-                return this;
+                return self;
             }
 
             var rate = self.get('rate'),
@@ -305,7 +305,7 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
                 }
             }
 
-            return this;
+            return self;
         }
     });
 

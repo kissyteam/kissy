@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 1 21:34
+build time: Nov 7 17:23
 */
 /**
  * @ignore
@@ -47,7 +47,7 @@ KISSY.add('event/base', function (S, Utils, Object, Observer, ObservableEvent) {
  * base event object for custom and dom event.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/object', function () {
+KISSY.add('event/base/object', function (S) {
 
     var FALSE_FN = function () {
         return false;
@@ -57,10 +57,16 @@ KISSY.add('event/base/object', function () {
 
     /**
      * @class KISSY.Event.Object
-     *
+     * @private
      * KISSY 's base event object for custom and dom event.
      */
     function EventObject() {
+        this.timeStamp = S.now();
+        /**
+         * current event type
+         * @property type
+         * @type {String}
+         */
     }
 
     EventObject.prototype = {
@@ -187,6 +193,10 @@ KISSY.add('event/base/observable', function (S) {
             self.checkMemory();
         },
 
+        /**
+         * check memory after detach
+         * @private
+         */
         checkMemory: function () {
 
         },

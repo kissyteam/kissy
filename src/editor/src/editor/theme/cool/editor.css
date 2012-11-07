@@ -220,6 +220,11 @@ ks-editor-toolbar-padding {
     height: 4px;
     margin-left: 2px;
     margin-bottom: 2px;
+    /*
+      ie67 need this
+      block div is inside inline-block element, can not get auto width!
+      set 100% is also not ok!(note: 100% != auto width)
+    */
     width: 20px;
     font-size: 0;
     overflow: hidden;

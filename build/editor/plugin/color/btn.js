@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 6 18:41
+build time: Nov 7 17:23
 */
 /**
  * color button.
@@ -60,7 +60,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
 
     initHtml();
 
-    return Button.extend({
+    var ColorButton = Button.extend({
 
         initializer: function () {
             var self = this;
@@ -96,7 +96,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                     prefixCls: prefixCls
                 }),
                 autoRender: true,
-                width: 170,
+                width: 172,
                 zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)
             });
 
@@ -110,9 +110,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
-                DialogLoader.useDialog(editor, "color/color-picker",
-                    self.get("pluginConfig"),
-                    self.get("cmdType"));
+                DialogLoader.useDialog(editor, "color/color-picker", self);
             });
             self._prepare = self._show;
             self._show();
@@ -141,7 +139,9 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                 prefixCls = editor.get('prefixCls'),
                 t = new Node(ev.target);
             if (t.hasClass(prefixCls + "editor-color-a")) {
-                self.get("editor").execCommand(self.get("cmdType"), t.style("background-color"));
+                self.fire('selectColor', {
+                    color: t.style("background-color")
+                });
             }
         },
 
@@ -161,6 +161,52 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             }
         }
     });
+
+    var tpl = '<div class="{icon}"></div>' +
+        '<div style="background-color:{defaultColor}"' +
+        ' class="{indicator}"></div>';
+
+    function runCmd(editor, cmdType, color) {
+        setTimeout(function () {
+            editor.execCommand(cmdType, color);
+        }, 0);
+    }
+
+    ColorButton.init = function (editor, cfg) {
+        var prefix = editor.get('prefixCls') + 'editor-toolbar-',
+            cmdType = cfg.cmdType,
+            defaultColor=cfg.defaultColor,
+            tooltip = cfg.tooltip;
+
+        var button = editor.addButton(cmdType, {
+            elCls: cmdType + 'Btn',
+            content: S.substitute(tpl, {
+                defaultColor: defaultColor,
+                icon: prefix + 'item ' + prefix + cmdType,
+                indicator: prefix + 'color-indicator'
+            }),
+            mode: Editor.WYSIWYG_MODE,
+            tooltip: "设置" + tooltip
+        });
+
+        var arrow = editor.addButton(cmdType + 'Arrow', {
+            tooltip: "选择并设置" + tooltip,
+            elCls: cmdType + 'ArrowBtn'
+        }, ColorButton);
+
+        var indicator = button.get('el').one('.' + prefix + 'color-indicator');
+
+        arrow.on('selectColor', function (e) {
+            indicator.css('background-color', e.color);
+            runCmd(editor, cmdType, e.color);
+        });
+
+        button.on('click', function () {
+            runCmd(editor, cmdType, indicator.style('background-color'));
+        });
+    };
+
+    return ColorButton;
 
 }, {
     requires: ['editor', '../button/', '../overlay/', '../dialog-loader/']

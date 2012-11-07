@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 6 18:41
+build time: Nov 7 17:23
 */
 /**
  * orderedList command
@@ -18,9 +18,9 @@ KISSY.add("editor/plugin/ordered-list/cmd", function (S, Editor, listCmd) {
         init:function (editor) {
             if (!editor.hasCommand(insertOrderedList)) {
                 editor.addCommand(insertOrderedList, {
-                    exec:function (editor) {
+                    exec:function (editor,listStyleType) {
                         editor.focus();
-                        olCmd.exec(editor);
+                        olCmd.exec(editor,listStyleType);
                     }
                 });
             }

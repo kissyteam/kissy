@@ -1,9 +1,10 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 2 16:55
+build time: Nov 7 17:23
 */
 /**
+ * @ignore
  * patch gesture for touch
  * @author yiminghe@gmail.com
  */
@@ -38,6 +39,7 @@ KISSY.add('event/dom/touch/gesture', function (S, EventDomBase) {
 }, {
     requires: ['event/dom/base']
 });/**
+ * @ignore
  * handles for gesture events
  * @author yiminghe@gmail.com
  */
@@ -48,6 +50,7 @@ KISSY.add('event/dom/touch/handle-map', function () {
     };
 
 });/**
+ * @ignore
  * base handle for touch gesture
  * @author yiminghe@gmail.com
  */
@@ -203,6 +206,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         './tap'
     ]
 });/**
+ * @ignore
  * gesture tap or click for pc
  * @author yiminghe@gmail.com
  */
@@ -258,6 +262,7 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event) {
  *      同时阻止了touch 的 mouse/click 相关事件触发
  * 2.   反应更灵敏
  *//**
+ * @ignore
  * touch event logic module
  * @author yiminghe@gmail.com
  */

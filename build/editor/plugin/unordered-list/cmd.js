@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 6 18:41
+build time: Nov 7 17:23
 */
 /**
  * ol command
@@ -18,9 +18,9 @@ KISSY.add("editor/plugin/unordered-list/cmd", function (S, Editor, listCmd) {
         init:function (editor) {
             if (!editor.hasCommand(insertUnorderedList)) {
                 editor.addCommand(insertUnorderedList, {
-                    exec:function (editor) {
+                    exec:function (editor,type) {
                         editor.focus();
-                        ulCmd.exec(editor);
+                        ulCmd.exec(editor,type);
                     }
                 });
             }
