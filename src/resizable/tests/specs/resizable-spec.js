@@ -12,6 +12,28 @@ KISSY.use('resizable', function (S, Resizable) {
 
     describe('resizable works', function () {
 
+        this.addMatchers({
+            toBeAlmostEqual: function (expected) {
+                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+            },
+
+            toBeEqualRect:function(expect){
+                var actual=this.actual;
+                for(var i in actual){
+                    if(actual[i]-expect[i]<5){
+                        continue;
+                    }else{
+                        return false;
+                    }
+                }
+                return true;
+            },
+
+
+            toBeEqual: function (expected) {
+                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+            }
+        });
 
         var cssText = 'position: absolute;' +
             'width: 100px;height: 100px;' +
@@ -149,8 +171,8 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                expect(dom.height()).toBe(120);
-                expect(dom.offset().top).toBe(80);
+                expect(dom.height()).toBeEqual(120);
+                expect(dom.offset().top).toBeEqual(80);
             });
         });
 
@@ -180,8 +202,8 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                expect(dom.height()).toBe(120);
-                expect(dom.offset().top).toBe(100);
+                expect(dom.height()).toBeEqual(120);
+                expect(dom.offset().top).toBeEqual(100);
             });
         });
 
@@ -211,10 +233,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                expect(dom.height()).toBe(120);
-                expect(dom.width()).toBe(120);
-                expect(dom.offset().top).toBe(100);
-                expect(dom.offset().left).toBe(80);
+                expect(dom.height()).toBeEqual(120);
+                expect(dom.width()).toBeEqual(120);
+                expect(dom.offset().top).toBeEqual(100);
+                expect(dom.offset().left).toBeEqual(80);
             });
             runs(function () {
                 expect(start).toBe('bl');
@@ -248,10 +270,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                expect(dom.height()).toBe(80);
-                expect(dom.width()).toBe(80);
-                expect(dom.offset().top).toBe(120);
-                expect(dom.offset().left).toBe(120);
+                expect(dom.height()).toBeEqual(80);
+                expect(dom.width()).toBeEqual(80);
+                expect(dom.offset().top).toBeEqual(120);
+                expect(dom.offset().left).toBeEqual(120);
             });
         });
 
@@ -281,10 +303,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                expect(dom.height()).toBe(120);
-                expect(dom.width()).toBe(120);
-                expect(dom.offset().top).toBe(80);
-                expect(dom.offset().left).toBe(100);
+                expect(dom.height()).toBeEqual(120);
+                expect(dom.width()).toBeEqual(120);
+                expect(dom.offset().top).toBeEqual(80);
+                expect(dom.offset().left).toBeEqual(100);
             });
         });
 
@@ -314,10 +336,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                expect(dom.height()).toBe(120);
-                expect(dom.width()).toBe(120);
-                expect(dom.offset().top).toBe(100);
-                expect(dom.offset().left).toBe(100);
+                expect(dom.height()).toBeEqual(120);
+                expect(dom.width()).toBeEqual(120);
+                expect(dom.offset().top).toBeEqual(100);
+                expect(dom.offset().left).toBeEqual(100);
             });
         });
 
@@ -348,8 +370,8 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                expect(dom.width()).toBe(100);
-                expect(dom.offset().left).toBe(100);
+                expect(dom.width()).toBeEqual(100);
+                expect(dom.offset().left).toBeEqual(100);
             });
 
         });
@@ -381,8 +403,8 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                expect(dom.width()).toBe(120);
-                expect(dom.offset().left).toBe(80);
+                expect(dom.width()).toBeEqual(120);
+                expect(dom.offset().left).toBeEqual(80);
             });
 
         });

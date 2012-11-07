@@ -6,13 +6,7 @@ describe("KISSY ComboLoader", function () {
 
     it("should works simply", function () {
 
-        var p = KISSY.config("packages");
-        for (var i in p) {
-
-            delete p[i];
-
-        }
-
+        KISSY.clearLoader();
         var ret = 0;
 
         KISSY.config({
@@ -172,12 +166,7 @@ describe("KISSY ComboLoader", function () {
 
     it("should works for packages", function () {
 
-        var p = KISSY.config("packages");
-        for (var i in p) {
-
-            delete p[i];
-
-        }
+        var p = KISSY.clearLoader();
 
         expect(S.Env._comboLoader.loading).toBe(0);
 
@@ -225,12 +214,7 @@ describe("KISSY ComboLoader", function () {
 
     it("should works for multiple use at the same time", function () {
 
-        var p = KISSY.config("packages");
-        for (var i in p) {
-
-            delete p[i];
-
-        }
+        S.clearLoader();
 
         expect(S.Env._comboLoader.loading).toBe(0);
 
@@ -328,12 +312,7 @@ describe("KISSY ComboLoader", function () {
 
 
     it("should load mod not config", function () {
-        var p = KISSY.config("packages");
-        for (var i in p) {
-
-            delete p[i];
-
-        }
+        S.clearLoader();
 
         S.Env.mods = {};
 
@@ -391,11 +370,6 @@ describe("KISSY ComboLoader", function () {
     });
 
     it("clean", function () {
-        var p = KISSY.config("packages");
-        for (var i in p) {
-
-            delete p[i];
-
-        }
+        S.clearLoader();
     });
 });

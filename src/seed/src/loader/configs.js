@@ -79,6 +79,8 @@
             Config.packages = {
                 '': Config.packages['']
             };
+        } else {
+            return ps;
         }
     };
 

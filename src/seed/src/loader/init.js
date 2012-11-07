@@ -62,6 +62,9 @@
                     return Env._loader;
                 }
             },
+            /**
+             * @private
+             */
             clearLoader: function () {
                 var self = this,
                     Env = self.Env,

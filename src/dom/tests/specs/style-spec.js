@@ -18,15 +18,6 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
 
                 toBeExactEqual: function (expected) {
                     return Math.abs(Number(this.actual) - Number(expected)) < 1e-6;
-                },
-
-                toBeArrayEq: function (expected) {
-                    var actual = this.actual;
-                    if (expected.length != actual.length) return false;
-                    for (var i = 0; i < expected.length; i++) {
-                        if (expected[i] != actual[i]) return false;
-                    }
-                    return true;
                 }
 
             });

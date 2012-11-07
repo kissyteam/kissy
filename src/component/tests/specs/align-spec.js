@@ -4,6 +4,31 @@ KISSY.use("component", function (S, Component) {
     var $ = S.all;
     describe("uibase-align", function () {
 
+        beforeEach(function () {
+            this.addMatchers({
+                toBeAlmostEqual: function (expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+                },
+
+                toBeEqualRect:function(expect){
+                    var actual=this.actual;
+                    for(var i in actual){
+                        if(actual[i]-expect[i]<5){
+                            continue;
+                        }else{
+                            return false;
+                        }
+                    }
+                    return true;
+                },
+
+
+                toBeEqual: function (expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                }
+            });
+        });
+
         it("unified getOffsetParent method", function () {
             var getOffsetParent = Align.__getOffsetParent;
             var test = [];
@@ -75,7 +100,6 @@ KISSY.use("component", function (S, Component) {
             }
 
 
-
             // 1
             window.scrollTo(10, 10);
 
@@ -85,32 +109,30 @@ KISSY.use("component", function (S, Component) {
                 bottom = 10 + DOM.viewportHeight();
 
             rect = getVisibleRectForElement(dom[0].firstChild);
-            expect(rect).toEqual({
-                left:10,
-                top:10,
-                right:right,
-                bottom:bottom
-            });
+            expect(rect.left).toBeEqual(10);
+            expect(rect.top).toBeEqual(10);
+            expect(rect.right).toBeEqual(right);
+            expect(rect.bottom).toBeEqual(bottom);
 
             window.scrollTo(200, 200);
             rect = getVisibleRectForElement(dom[0].firstChild);
-            expect(rect).toEqual({
-                left:200,
-                top:200,
-                right:200 + DOM.viewportWidth(),
-                bottom:200 + DOM.viewportHeight()
-            });
+
+            expect(rect.left).toEqual(200);
+            expect(rect.bottom).toEqual(200 + DOM.viewportHeight());
+            expect(rect.top).toEqual(200);
+            expect(rect.right).toEqual(200 + DOM.viewportWidth());
+
             DOM.remove(dom[0]);
 
 
             // 2
             window.scrollTo(10, 10);
             rect = getVisibleRectForElement(dom[1].firstChild);
-            expect(rect).toEqual({
-                left:10,
-                top:10,
-                right:100,
-                bottom:100
+            expect(rect).toBeEqualRect({
+                left: 10,
+                top: 10,
+                right: 100,
+                bottom: 100
             });
 
             window.scrollTo(200, 200);
@@ -122,11 +144,11 @@ KISSY.use("component", function (S, Component) {
             // 3
             window.scrollTo(10, 10);
             rect = getVisibleRectForElement(dom[2].firstChild);
-            expect(rect).toEqual({
-                left:10,
-                top:10,
-                right:100,
-                bottom:100
+            expect(rect).toBeEqualRect({
+                left: 10,
+                top: 10,
+                right: 100,
+                bottom: 100
             });
 
             window.scrollTo(200, 200);
@@ -138,11 +160,11 @@ KISSY.use("component", function (S, Component) {
             // 4
             window.scrollTo(10, 10);
             rect = getVisibleRectForElement(dom[3].firstChild);
-            expect(rect).toEqual({
-                left:10,
-                top:10,
-                right:100,
-                bottom:100
+            expect(rect).toBeEqualRect({
+                left: 10,
+                top: 10,
+                right: 100,
+                bottom: 100
             });
 
             window.scrollTo(200, 200);
@@ -185,28 +207,30 @@ KISSY.use("component", function (S, Component) {
                         lower = node.children().item(2);
 
                     var obj = {
-                        get:function (arg) {
+                        get: function (arg) {
                             if (arg == "el") {
                                 return target;
                             }
-                            else  if (arg == "view") {
-                               return {
-                                   setInternal:function(){}
-                               };
+                            else if (arg == "view") {
+                                return {
+                                    setInternal: function () {
+                                    }
+                                };
                             }
                             else {
                                 alert('error')
                             }
                         },
-                        setInternal:function(){},
-                        set:function (arg, v) {
+                        setInternal: function () {
+                        },
+                        set: function (arg, v) {
                             if (arg == "x") {
                                 target.offset({
-                                    left:v
+                                    left: v
                                 });
                             } else if (arg == "y") {
                                 target.offset({
-                                    top:v
+                                    top: v
                                 });
                             }
                         }
@@ -217,7 +241,7 @@ KISSY.use("component", function (S, Component) {
                     alignPrototype.align.call(obj,
                         lower, ["tl", "bl"], undefined, {
 
-                    });
+                        });
 
                     //    _____________
                     //   |             |
@@ -226,14 +250,17 @@ KISSY.use("component", function (S, Component) {
                     //   |______|______|
                     //   |_____________|
 
-                    expect(target.offset()).toEqual({
-                        left:containerOffset.left,
-                        top:containerOffset.top + 30
-                    });
+                    expect(target.offset().left).toBeEqual(
+                        containerOffset.left
+                    );
+
+                    expect(target.offset().top).toBeEqual(
+                        containerOffset.top + 30
+                    );
 
                     alignPrototype.align.call(obj, lower, ["bl", "tl"], undefined, {
-                        adjustX:1,
-                        adjustY:1
+                        adjustX: 1,
+                        adjustY: 1
                     });
 
                     //    _____________
@@ -243,10 +270,13 @@ KISSY.use("component", function (S, Component) {
                     //   |______|______|
                     //   |_____________|
                     // flip 然后 ok
-                    expect(target.offset()).toEqual({
-                        left:containerOffset.left,
-                        top:containerOffset.top + 30
-                    });
+                    expect(target.offset().left).toBeEqual(
+                        containerOffset.left
+                    );
+
+                    expect(target.offset().top).toBeEqual(
+                        containerOffset.top + 30
+                    );
 
                 })();
 
@@ -270,28 +300,30 @@ KISSY.use("component", function (S, Component) {
                         lower = node.children().item(2);
 
                     var obj = {
-                        get:function (arg) {
+                        get: function (arg) {
                             if (arg == "el") {
                                 return target;
                             }
-                            else  if (arg == "view") {
+                            else if (arg == "view") {
                                 return {
-                                    setInternal:function(){}
+                                    setInternal: function () {
+                                    }
                                 };
                             }
                             else {
                                 alert('error')
                             }
                         },
-                        setInternal:function(){},
-                        set:function (arg, v) {
+                        setInternal: function () {
+                        },
+                        set: function (arg, v) {
                             if (arg == "x") {
                                 target.offset({
-                                    left:v
+                                    left: v
                                 });
                             } else if (arg == "y") {
                                 target.offset({
-                                    top:v
+                                    top: v
                                 });
                             }
                         }
@@ -310,14 +342,17 @@ KISSY.use("component", function (S, Component) {
                     //   |______|______|
                     //   |_____________|
 
-                    expect(target.offset()).toEqual({
-                        left:containerOffset.left,
-                        top:containerOffset.top - 10
-                    });
+                    expect(target.offset().left).toBeEqual(
+                        containerOffset.left
+                    );
+
+                    expect(target.offset().top).toBeEqual(
+                        containerOffset.top - 10
+                    );
 
                     alignPrototype.align.call(obj, lower, ["tl", "bl"], undefined, {
-                        adjustX:1,
-                        adjustY:1
+                        adjustX: 1,
+                        adjustY: 1
                     });
 
                     //    _____________
@@ -328,10 +363,13 @@ KISSY.use("component", function (S, Component) {
                     //   |      |      |
                     //   |______|______|
                     // flip 不 ok，对 flip 后的 adjustY 到视窗边界
-                    expect(target.offset()).toEqual({
-                        left:containerOffset.left,
-                        top:containerOffset.top + 10
-                    });
+                    expect(target.offset().left).toBeEqual(
+                        containerOffset.left
+                    );
+
+                    expect(target.offset().top).toBeEqual(
+                        containerOffset.top + 10
+                    );
 
                 })();
 

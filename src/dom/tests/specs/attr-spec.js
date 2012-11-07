@@ -21,15 +21,6 @@ KISSY.use("dom", function (S, DOM) {
 
                 toBeEqual:function (expected) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
-                },
-
-                toBeArrayEq:function (expected) {
-                    var actual = this.actual;
-                    if (expected.length != actual.length) return false;
-                    for (var i = 0; i < expected.length; i++) {
-                        if (expected[i] != actual[i]) return false;
-                    }
-                    return true;
                 }
             });
         });
@@ -237,7 +228,7 @@ KISSY.use("dom", function (S, DOM) {
                 // select
                 expect(DOM.val(select)).toBe('1');
                 expect(DOM.val(select2)).toBe('2');
-                expect(DOM.val(select3)).toBeArrayEq(['1', '2']);
+                expect(DOM.val(select3)).toEqual(['1', '2']);
             });
 
             it("should works for radio", function () {
@@ -260,7 +251,7 @@ KISSY.use("dom", function (S, DOM) {
                 // restore
                 DOM.val(select, 0);
                 DOM.val(select3, ['2', '3']);
-                expect(DOM.val(select3)).toBeArrayEq(['2', '3']);
+                expect(DOM.val(select3)).toEqual(['2', '3']);
 
                 //restore
                 DOM.val(select3, ['1', '2']);

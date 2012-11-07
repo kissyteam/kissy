@@ -20,9 +20,19 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
                 return obj.css('display') === 'none' || obj.css('visibility') === 'hidden';
             }
         });
+        this.addMatchers({
+            toBeAlmostEqual: function (expected) {
+                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
+            },
+
+            toBeEqual: function (expected) {
+                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+            }
+        });
     });
     describe('图片放大组件', function () {
         describe('标准模式下,', function () {
+
             var a = new ImageZoom({
                 imageNode: "#standard",
                 align: {
@@ -105,9 +115,9 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
                         top: a.get("lensTop")
                     };
                     expect(a.bigImage.css('left'))
-                        .toEqual(-Math.round((lenOffset.left - oft.left) * 900 / 310) + 'px');
+                        .toBeEqual(-Math.round((lenOffset.left - oft.left) * 900 / 310) + 'px');
                     expect(a.bigImage.css('top'))
-                        .toEqual(-Math.round((lenOffset.top - oft.top) * 900 / 310) + 'px');
+                        .toBeEqual(-Math.round((lenOffset.top - oft.top) * 900 / 310) + 'px');
                 });
             });
 
@@ -149,7 +159,7 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
 
                 waits(500);
                 runs(function () {
-                    expect(a.get("el").offset().left).toEqual(a.image.offset().left);
+                    expect(a.get("el").offset().left).toBeEqual(a.image.offset().left);
                     expect(a.lens).toBeUndefined();
                 });
             });

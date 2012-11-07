@@ -5,19 +5,21 @@
 KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
     var DOM = S.DOM, $ = Node.all;
 
-    beforeEach(function () {
-        this.addMatchers({
-            toBeEqual: function (expected) {
-                return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
-            }
-        });
-    });
-
     var Dialog = Overlay.Dialog;
 
     describe("dialog", function () {
 
-        describe("从页面中取得已渲染元素", function () {
+        beforeEach(function () {
+            this.addMatchers({
+                toBeEqual: function (expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                }
+            });
+        });
+
+
+        it("头体尾已经渲染完毕", function () {
+
             var d = new Dialog({
                 srcNode: "#drender",
                 width: 200,
@@ -30,19 +32,10 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
             d.center();
             d.show();
 
-            window.dialog = d;
-
-
-            it("头体尾已经渲染完毕", function () {
-                expect(d.get("header").html()).toBe("prerender header");
-                expect(d.get("body").html()).toBe("prerender body");
-                expect(d.get("footer").html()).toBe("prerender footer");
-            });
-
-            runs(function () {
-                d.destroy();
-            });
-
+            expect(d.get("header").html()).toBe("prerender header");
+            expect(d.get("body").html()).toBe("prerender body");
+            expect(d.get("footer").html()).toBe("prerender footer");
+            d.destroy();
         });
 
         it("create works", function () {
@@ -63,86 +56,87 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
 
         describe("完全由 javascript 创建", function () {
 
-            var d = new Dialog({
-                headerContent: "头",
-                bodyContent: "体",
-                footerContent: "尾",
-                width: 200,
-                draggable: {
-                    constrain: true
-                }
-
-            });
-
-            d.render();
-            d.center();
-            d.show();
-
-            window.dialog = d;
+            var d;
 
             it("头体尾已经渲染完毕", function () {
+                d = new Dialog({
+                    headerContent: "头",
+                    bodyContent: "体",
+                    footerContent: "尾",
+                    width: 200,
+                    draggable: {
+                        constrain: true
+                    }
+
+                });
+
+                d.render();
+                d.center();
+                d.show();
                 expect(d.get("header").html()).toBe("头");
                 expect(d.get("body").html()).toBe("体");
                 expect(d.get("footer").html()).toBe("尾");
             });
 
-            it("应该可以拖动", function () {
-                if (UA.ie == 9) {
-                    return;
-                }
+            if (UA.ie !== 9) {
+                it("应该可以拖动", function () {
+                    var xy = d.get("xy");
 
-                var xy = d.get("xy");
+                    waits(100);
 
-                waits(100);
+                    runs(function () {
+                        jasmine.simulate(d.get("header")[0], "mousedown", {
 
-                runs(function () {
-                    jasmine.simulate(d.get("header")[0], "mousedown", {
-
-                        clientX: xy[0] + 10,
-                        clientY: xy[1] + 10
-                    });
-                });
-
-                waits(100);
-                runs(function () {
-                    jasmine.simulate(document, "mousemove", {
-
-                        clientX: xy[0] + 150,
-                        clientY: xy[1] + 150
-                    });
-                });
-                waits(100);
-                runs(function () {
-
-                    jasmine.simulate(document, "mousemove", {
-
-                        clientX: xy[0] + 100,
-                        clientY: xy[1] + 100
+                            clientX: xy[0] + 10,
+                            clientY: xy[1] + 10
+                        });
                     });
 
+                    waits(100);
+                    runs(function () {
+                        jasmine.simulate(document, "mousemove", {
+
+                            clientX: xy[0] + 150,
+                            clientY: xy[1] + 150
+                        });
+                    });
+                    waits(100);
+                    runs(function () {
+
+                        jasmine.simulate(document, "mousemove", {
+
+                            clientX: xy[0] + 100,
+                            clientY: xy[1] + 100
+                        });
+
+                    });
+
+                    waits(100);
+
+                    runs(function () {
+                        jasmine.simulate(document, "mouseup");
+                    });
+
+                    runs(function () {
+                        var dxy = d.get("xy");
+
+                        expect(dxy[0] - xy[0]).toBeEqual(90);
+                        expect(dxy[1] - xy[1]).toBeEqual(90);
+                    });
+
                 });
+            }
 
-                waits(100);
 
-                runs(function () {
-                    jasmine.simulate(document, "mouseup");
-                });
-
-                runs(function () {
-                    var dxy = d.get("xy");
-
-                    expect(dxy[0] - xy[0]).toBeEqual(90);
-                    expect(dxy[1] - xy[1]).toBeEqual(90);
-                });
-
-            });
-
+            if ((UA.ie == 7 || UA.ie == 8) &&
+                window.frameElement ||
+                UA.ie == 9) {
+                return;
+            }
 
             it("只能在当前视窗范围拖动", function () {
-                if (UA.ie == 9) return;
 
                 var xy = d.get("xy");
-
 
                 jasmine.simulate(d.get("header")[0], "mousedown", {
                     clientX: xy[0] + 10,
@@ -178,16 +172,16 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
 
                 runs(function () {
                     var dxy = d.get("xy"),
-                        width = 200,
+                        width = d.get("el").outerWidth(),
                         height = d.get("el").outerHeight();
 
                     expect(DOM.viewportWidth() - width).toBeEqual(dxy[0]);
                     expect(DOM.viewportHeight() - height).toBeEqual(dxy[1]);
                 });
-            });
 
-            runs(function () {
-                d.destroy();
+                runs(function () {
+                    d.destroy();
+                });
             });
 
 

@@ -62,8 +62,10 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
 
             expect(Router.hasRoute('/list2/what/item')).toBe(true);
 
+
             // restore hash to its original value
-            location.hash = '#';
+            location.hash = '';
+
 
             Router.start({
                 urlRoot: '/my',
@@ -114,6 +116,11 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
 
         if (ie && ie < 8) {
             // return;
+        }
+
+        // ie8 iframe 内 重复刷新！
+        if ((ie == 8 || ie == 9) && window.frameElement) {
+            return;
         }
 
         // ie<8 can only used on event handler

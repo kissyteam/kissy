@@ -38,7 +38,11 @@ function kissyNext() {
     index++;
     if (tests[index]) {
         if (tests[index].indexOf("grid") == -1) {
-            testIframe.src = tests[index] + "?" + (+new Date());
+            window.scrollTo(0, 0);
+            setTimeout(function () {
+                testIframe.src = tests[index] + "?" + (+new Date());
+            }, 50);
+
         } else {
             kissyNext();
         }

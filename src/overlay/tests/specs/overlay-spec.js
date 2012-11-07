@@ -336,9 +336,9 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
 
                 var oel = o.get("el");
 
-                expect(o.get("y")).toBe(90);
+                expect(o.get("y")).toBeEqual(90);
 
-                expect(oel.css("top")).toBe("90px");
+                expect(parseInt(oel.css("top"))).toBeEqual(90);
 
                 node[0].scrollTop = 20;
 
@@ -346,7 +346,7 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
 
                 expect(o.get("y")).toBe(90);
 
-                expect(oel.css("top")).toBe("110px");
+                expect(parseInt(oel.css("top"))).toBeEqual(110);
 
                 node.remove();
 
