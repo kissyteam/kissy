@@ -10,15 +10,15 @@ KISSY.use("menu", function (S, Menu) {
 
         var menu = new Menu({
 
-            width:150,
-            children:[
+            width: 150,
+            children: [
                 {
-                    content:"item1",
-                    xclass:'menuitem'
+                    content: "item1",
+                    xclass: 'menuitem'
                 },
                 {
-                    content:'item2',
-                    xclass:'menuitem'
+                    content: 'item2',
+                    xclass: 'menuitem'
                 }
             ]
 
@@ -85,10 +85,10 @@ KISSY.use("menu", function (S, Menu) {
 
             runs(function () {
                 jasmine.simulate(menuEl[0], "keydown", {
-                    keyCode:KeyCodes.UP
+                    keyCode: KeyCodes.UP
                 });
                 jasmine.simulate(menuEl[0], "keyup", {
-                    keyCode:KeyCodes.UP
+                    keyCode: KeyCodes.UP
                 });
             });
 
@@ -101,10 +101,10 @@ KISSY.use("menu", function (S, Menu) {
 
             runs(function () {
                 jasmine.simulate(menuEl[0], "keydown", {
-                    keyCode:KeyCodes.UP
+                    keyCode: KeyCodes.UP
                 });
                 jasmine.simulate(menuEl[0], "keyup", {
-                    keyCode:KeyCodes.UP
+                    keyCode: KeyCodes.UP
                 });
             });
 
@@ -149,10 +149,10 @@ KISSY.use("menu", function (S, Menu) {
 
             runs(function () {
                 jasmine.simulate(menuEl[0], "keydown", {
-                    keyCode:KeyCodes.ENTER
+                    keyCode: KeyCodes.ENTER
                 });
                 jasmine.simulate(menuEl[0], "keyup", {
-                    keyCode:KeyCodes.ENTER
+                    keyCode: KeyCodes.ENTER
                 });
             });
 
@@ -169,10 +169,10 @@ KISSY.use("menu", function (S, Menu) {
 
             runs(function () {
                 jasmine.simulate(menuEl[0], "keydown", {
-                    keyCode:KeyCodes.ENTER
+                    keyCode: KeyCodes.ENTER
                 });
                 jasmine.simulate(menuEl[0], "keyup", {
-                    keyCode:KeyCodes.ENTER
+                    keyCode: KeyCodes.ENTER
                 });
             });
 
@@ -202,13 +202,13 @@ KISSY.use("menu", function (S, Menu) {
                 jasmine.simulate(firstEl, "mouseout");
             });
 
-            waits(10);
+            waits(100);
 
             runs(function () {
                 jasmine.simulate(secondEl, "mouseover");
             });
 
-            waits(10);
+            waits(100);
 
             runs(function () {
                 expect(menuChildren[0].get("highlighted")).toBe(false);
@@ -219,9 +219,10 @@ KISSY.use("menu", function (S, Menu) {
                 // click
                 jasmine.simulate(secondEl, "mousedown");
                 jasmine.simulate(secondEl, "mouseup");
+                jasmine.simulate(secondEl, "click");
             });
 
-            waits(10);
+            waits(100);
 
             runs(function () {
                 expect(ret1).toBe(1);
@@ -237,7 +238,7 @@ KISSY.use("menu", function (S, Menu) {
                 jasmine.simulate(secondEl, "mouseup");
             });
 
-            waits(10);
+            waits(100);
 
             runs(function () {
                 expect(ret1).toBe(1);

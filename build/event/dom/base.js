@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 17:23
+build time: Nov 7 18:56
 */
 /**
  * @ignore
@@ -1825,7 +1825,6 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
         }
     });
 
-    // back compatible for shop caja
     S.EventObject = DOMEventObject;
 
     return DOMEventObject;

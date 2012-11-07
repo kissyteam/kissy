@@ -7,7 +7,7 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
 
     beforeEach(function () {
         this.addMatchers({
-            toBeEqual:function (expected) {
+            toBeEqual: function (expected) {
                 return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
             }
         });
@@ -19,10 +19,10 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
 
         describe("从页面中取得已渲染元素", function () {
             var d = new Dialog({
-                srcNode:"#drender",
-                width:200,
-                drag:{
-                    constrain:true
+                srcNode: "#drender",
+                width: 200,
+                drag: {
+                    constrain: true
                 }
             });
 
@@ -39,7 +39,7 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
                 expect(d.get("footer").html()).toBe("prerender footer");
             });
 
-            runs(function(){
+            runs(function () {
                 d.destroy();
             });
 
@@ -47,10 +47,10 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
 
         it("create works", function () {
             var d = new Dialog({
-                width:200,
-                closable:true,
-                bodyContent:"1",
-                headerContent:"2"
+                width: 200,
+                closable: true,
+                bodyContent: "1",
+                headerContent: "2"
             });
             d.create();
             expect(d.get("header")).not.toBe(undefined);
@@ -64,12 +64,12 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
         describe("完全由 javascript 创建", function () {
 
             var d = new Dialog({
-                headerContent:"头",
-                bodyContent:"体",
-                footerContent:"尾",
-                width:200,
-                draggable:{
-                    constrain:true
+                headerContent: "头",
+                bodyContent: "体",
+                footerContent: "尾",
+                width: 200,
+                draggable: {
+                    constrain: true
                 }
 
             });
@@ -93,25 +93,31 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
 
                 var xy = d.get("xy");
 
+                waits(100);
 
-                jasmine.simulate(d.get("header")[0], "mousedown", {
-                    clientX:xy[0] + 10,
-                    clientY:xy[1] + 10
+                runs(function () {
+                    jasmine.simulate(d.get("header")[0], "mousedown", {
+
+                        clientX: xy[0] + 10,
+                        clientY: xy[1] + 10
+                    });
                 });
 
                 waits(100);
                 runs(function () {
                     jasmine.simulate(document, "mousemove", {
-                        clientX:xy[0] + 150,
-                        clientY:xy[1] + 150
+
+                        clientX: xy[0] + 150,
+                        clientY: xy[1] + 150
                     });
                 });
                 waits(100);
                 runs(function () {
 
                     jasmine.simulate(document, "mousemove", {
-                        clientX:xy[0] + 100,
-                        clientY:xy[1] + 100
+
+                        clientX: xy[0] + 100,
+                        clientY: xy[1] + 100
                     });
 
                 });
@@ -139,16 +145,16 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
 
 
                 jasmine.simulate(d.get("header")[0], "mousedown", {
-                    clientX:xy[0] + 10,
-                    clientY:xy[1] + 10
+                    clientX: xy[0] + 10,
+                    clientY: xy[1] + 10
                 });
 
                 waits(100);
                 runs(function () {
 
                     jasmine.simulate(document, "mousemove", {
-                        clientX:xy[0] + 15,
-                        clientY:xy[1] + 15
+                        clientX: xy[0] + 15,
+                        clientY: xy[1] + 15
                     });
 
                 });
@@ -156,8 +162,9 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
                 runs(function () {
 
                     jasmine.simulate(document, "mousemove", {
-                        clientX:xy[0] + DOM.viewportWidth(),
-                        clientY:xy[1] + DOM.viewportHeight()
+
+                        clientX: xy[0] + DOM.viewportWidth(),
+                        clientY: xy[1] + DOM.viewportHeight()
                     });
 
                 });
@@ -179,7 +186,7 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
                 });
             });
 
-            runs(function(){
+            runs(function () {
                 d.destroy();
             });
 

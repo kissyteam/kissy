@@ -551,35 +551,18 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
     }
 
     /*
-     normal event between devices
-     */
-    function normalEvent(e) {
-
-        var type = e.type,
-            notUp,
-            touchList;
-        if (Features.isTouchSupported) {
-            return e;
-        } else {
-            if (type.indexOf('mouse') != -1 && e.which != 1) {
-                return;
-            }
-            touchList = [e];
-            notUp = !type.match(/up$/i);
-            e.touches = notUp ? touchList : [];
-            e.targetTouches = notUp ? touchList : [];
-            e.changedTouches = touchList;
-            return e;
-        }
-    }
-
-
-    /*
      鼠标按下时，查看触发源是否是属于 handler 集合，
      保存当前状态
      通知全局管理器开始作用
      */
-    var handlePreDragStart = DDM._normalHandlePreDragStart(function (ev) {
+    var handlePreDragStart = function (ev) {
+
+        ev = DDM._normalEvent(ev);
+
+        if (!ev) {
+            return;
+        }
+
         var self = this,
             t = ev.target;
 
@@ -589,9 +572,9 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
                 return;
             }
 
-            self._prepare(normalEvent(ev));
+            self._prepare(ev);
         }
-    });
+    };
 
     S.extend(Draggable, Base, {
         /**
@@ -631,21 +614,19 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
         },
 
         _checkDragStartValid: function (ev) {
-            var self = this, type = ev.type;
-            if (type.indexOf('mouse') != -1) {
-                if (self.get('primaryButtonOnly') && ev.which != 1 ||
-                    self.get('disabled')) {
-                    return 0;
-                }
-            } else if (Features.isTouchSupported) {
-                if (ev.touches.length > 1) {
-                    return 0;
-                }
+            var self = this;
+            if (self.get('primaryButtonOnly') && ev.which != 1 ||
+                self.get('disabled')) {
+                return 0;
             }
             return 1;
         },
 
         _prepare: function (ev) {
+
+            if (!ev) {
+                return;
+            }
 
             var self = this;
 
@@ -673,8 +654,8 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
             }
 
             var node = self.get('node'),
-                mx = ev.touches[0].pageX,
-                my = ev.touches[0].pageY,
+                mx = ev.pageX,
+                my = ev.pageY,
                 nxy = node.offset();
 
             self.setInternal('startMousePos', self.mousePos = {
@@ -714,12 +695,10 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
 
         _move: function (ev) {
 
-            ev = normalEvent(ev);
-
             var self = this,
                 ret,
-                pageX = ev.touches[0].pageX,
-                pageY = ev.touches[0].pageY;
+                pageX = ev.pageX,
+                pageY = ev.pageY;
 
             if (!self.get('dragging')) {
                 var startMousePos = self.get('startMousePos'),

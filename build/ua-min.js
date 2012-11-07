@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 17:24
+build time: Nov 7 18:57
 */
 KISSY.add("ua/base",function(i,f){var b=i.Env.host,d=b.document,c=(b=b.navigator)&&b.userAgent||"",g=b="",a,j=[6,9],d=d&&d.createElement("div"),k=[],e={webkit:f,trident:f,gecko:f,presto:f,chrome:f,safari:f,firefox:f,ie:f,opera:f,mobile:f,core:f,shell:f},h=function(a){var b=0;return parseFloat(a.replace(/\./g,function(){return 0===b++?".":""}))};d&&(d.innerHTML="<\!--[if IE {{version}}]><s></s><![endif]--\>".replace("{{version}}",""),k=d.getElementsByTagName("s"));if(0<k.length){g="ie";e[b="trident"]=
 0.1;if((a=c.match(/Trident\/([\d.]*)/))&&a[1])e[b]=h(a[1]);a=j[0];for(j=j[1];a<=j;a++)if(d.innerHTML="<\!--[if IE {{version}}]><s></s><![endif]--\>".replace("{{version}}",a),0<k.length){e[g]=a;break}}else if((a=c.match(/AppleWebKit\/([\d.]*)/))&&a[1]){e[b="webkit"]=h(a[1]);if((a=c.match(/Chrome\/([\d.]*)/))&&a[1])e[g="chrome"]=h(a[1]);else if((a=c.match(/\/([\d.]*) Safari/))&&a[1])e[g="safari"]=h(a[1]);if(/ Mobile\//.test(c))e.mobile="apple";else if(a=c.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))e.mobile=

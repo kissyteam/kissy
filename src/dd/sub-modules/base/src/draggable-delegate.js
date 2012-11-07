@@ -3,10 +3,10 @@
  * @fileOverview delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node,Event) {
+KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, Event) {
 
     var PREFIX_CLS = DDM.PREFIX_CLS,
-        DRAG_START_EVENT=Event.Gesture.start;
+        DRAG_START_EVENT = Event.Gesture.start;
 
     /**
      * @extends KISSY.DD.Draggable
@@ -22,7 +22,14 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node,E
     /*
      父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
      */
-    var handlePreDragStart = DDM._normalHandlePreDragStart(function (ev) {
+    var handlePreDragStart = function (ev) {
+
+        ev = DDM._normalEvent(ev);
+
+        if(!ev){
+            return;
+        }
+
         var self = this,
             handler,
             node;
@@ -58,7 +65,7 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node,E
         self.setInternal('node', node);
         self.setInternal('dragNode', node);
         self._prepare(ev);
-    });
+    };
 
     S.extend(DraggableDelegate, Draggable, {
 
@@ -160,5 +167,5 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node,E
 
     return DraggableDelegate;
 }, {
-    requires: ['./ddm', './draggable', 'dom', 'node','event']
+    requires: ['./ddm', './draggable', 'dom', 'node', 'event']
 });

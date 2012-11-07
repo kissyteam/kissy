@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>KISSY.Overlay Test Runner</title>
-<link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
-<script src="../../../../tools/jasmine/jasmine.js"></script>
-<script src="../../../../tools/jasmine/jasmine-html.js"></script>
-<script src="../../../../tools/jasmine/event-simulate.js"></script>
-<link href="../../demo/other/assets/cool.css" rel="stylesheet"/>
-<script src="../../../../build/kissy.js"></script>
-<script src="../../../../build/component.js"></script>
-<script src="../../../../build/dd.js"></script>
-<script src="../../../../build/resizable.js"></script>
-<script src="../../../../build/overlay.js"></script>
-<style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        border: 0;
-    }
+    <meta charset="utf-8">
+    <title>KISSY.Overlay Test Runner</title>
+    <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
+    <script src="../../../../tools/jasmine/jasmine.js"></script>
+    <script src="../../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../../tools/jasmine/event-simulate.js"></script>
+    <link href="../../demo/other/assets/cool.css" rel="stylesheet"/>
+    <script src="../../../../build/kissy.js"></script>
+    <script src="../../../../build/component.js"></script>
 
-    .popup {
-        border: 1px solid red;
-    }
-</style>
+    <script src="../../../../build/dd/base.js"></script>
+    <script src="../../../../build/dd/constrain.js"></script>
+    <script src="../../../../build/dd/droppable.js"></script>
+    <script src="../../../../build/dd/proxy.js"></script>
+    <script src="../../../../build/dd/scroll.js"></script>
+
+    <script src="../../../../build/resizable.js"></script>
+    <script src="../../../../build/overlay.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        .popup {
+            border: 1px solid red;
+        }
+    </style>
 </head>
 <body>
 <h1>KISSY Overlay Test Cases</h1>
+
 <div id="render" class='popup'>
     prerender
 </div>

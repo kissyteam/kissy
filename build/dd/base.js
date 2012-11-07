@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 17:20
+build time: Nov 7 19:00
 */
 /**
  * @ignore
@@ -156,6 +156,12 @@ KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
         var self = this,
             __activeToDrag ,
             activeDrag;
+
+        ev = ddm._normalEvent(ev);
+
+        if (!ev) {
+            return;
+        }
 
         //防止 ie 选择到字
         ev.preventDefault();
@@ -516,24 +522,24 @@ KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
     ddm.cacheWH = cacheWH;
     ddm.PREFIX_CLS = 'ks-dd-';
 
-
-    function normalTouch(e, touch) {
-        e[TARGET] = e[TARGET] || touch[TARGET];
-        e[CURRENT_TARGET] = e[CURRENT_TARGET] || touch[CURRENT_TARGET];
-        e[BUTTON] = e[BUTTON] || 0;
-    }
-
-    ddm._normalHandlePreDragStart = function (handle) {
-        return function (e) {
-            var originalEvent = e.originalEvent, touches;
-            if (touches = originalEvent['touches']) {
-                if (touches.length != 1) {
-                    return;
-                }
-                normalTouch(e, touches[0]);
+    /*
+     normal event between devices
+     */
+    ddm._normalEvent = function (e) {
+        var touches = e.touches,
+            touch;
+        if (touches) {
+            if (touches.length != 1) {
+                return undefined;
             }
-            handle.call(this, e);
-        };
+            touch = touches[0];
+            e[TARGET] = e[TARGET] || touch[TARGET];
+            e[CURRENT_TARGET] = e[CURRENT_TARGET] || touch[CURRENT_TARGET];
+            e.which = 1;
+            e.pageX = touch.pageX;
+            e.pageY = touch.pageY;
+        }
+        return e;
     };
 
     return ddm;
@@ -545,10 +551,10 @@ KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
  * @fileOverview delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node,Event) {
+KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, Event) {
 
     var PREFIX_CLS = DDM.PREFIX_CLS,
-        DRAG_START_EVENT=Event.Gesture.start;
+        DRAG_START_EVENT = Event.Gesture.start;
 
     /**
      * @extends KISSY.DD.Draggable
@@ -564,7 +570,14 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node,E
     /*
      父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
      */
-    var handlePreDragStart = DDM._normalHandlePreDragStart(function (ev) {
+    var handlePreDragStart = function (ev) {
+
+        ev = DDM._normalEvent(ev);
+
+        if(!ev){
+            return;
+        }
+
         var self = this,
             handler,
             node;
@@ -600,7 +613,7 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node,E
         self.setInternal('node', node);
         self.setInternal('dragNode', node);
         self._prepare(ev);
-    });
+    };
 
     S.extend(DraggableDelegate, Draggable, {
 
@@ -702,7 +715,7 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node,E
 
     return DraggableDelegate;
 }, {
-    requires: ['./ddm', './draggable', 'dom', 'node','event']
+    requires: ['./ddm', './draggable', 'dom', 'node', 'event']
 });/**
  * @ignore
  * @fileOverview dd support for kissy, drag for dd
@@ -1256,35 +1269,18 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
     }
 
     /*
-     normal event between devices
-     */
-    function normalEvent(e) {
-
-        var type = e.type,
-            notUp,
-            touchList;
-        if (Features.isTouchSupported) {
-            return e;
-        } else {
-            if (type.indexOf('mouse') != -1 && e.which != 1) {
-                return;
-            }
-            touchList = [e];
-            notUp = !type.match(/up$/i);
-            e.touches = notUp ? touchList : [];
-            e.targetTouches = notUp ? touchList : [];
-            e.changedTouches = touchList;
-            return e;
-        }
-    }
-
-
-    /*
      鼠标按下时，查看触发源是否是属于 handler 集合，
      保存当前状态
      通知全局管理器开始作用
      */
-    var handlePreDragStart = DDM._normalHandlePreDragStart(function (ev) {
+    var handlePreDragStart = function (ev) {
+
+        ev = DDM._normalEvent(ev);
+
+        if (!ev) {
+            return;
+        }
+
         var self = this,
             t = ev.target;
 
@@ -1294,9 +1290,9 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
                 return;
             }
 
-            self._prepare(normalEvent(ev));
+            self._prepare(ev);
         }
-    });
+    };
 
     S.extend(Draggable, Base, {
         /**
@@ -1336,21 +1332,19 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
         },
 
         _checkDragStartValid: function (ev) {
-            var self = this, type = ev.type;
-            if (type.indexOf('mouse') != -1) {
-                if (self.get('primaryButtonOnly') && ev.which != 1 ||
-                    self.get('disabled')) {
-                    return 0;
-                }
-            } else if (Features.isTouchSupported) {
-                if (ev.touches.length > 1) {
-                    return 0;
-                }
+            var self = this;
+            if (self.get('primaryButtonOnly') && ev.which != 1 ||
+                self.get('disabled')) {
+                return 0;
             }
             return 1;
         },
 
         _prepare: function (ev) {
+
+            if (!ev) {
+                return;
+            }
 
             var self = this;
 
@@ -1378,8 +1372,8 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
             }
 
             var node = self.get('node'),
-                mx = ev.touches[0].pageX,
-                my = ev.touches[0].pageY,
+                mx = ev.pageX,
+                my = ev.pageY,
                 nxy = node.offset();
 
             self.setInternal('startMousePos', self.mousePos = {
@@ -1419,12 +1413,10 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
 
         _move: function (ev) {
 
-            ev = normalEvent(ev);
-
             var self = this,
                 ret,
-                pageX = ev.touches[0].pageX,
-                pageY = ev.touches[0].pageY;
+                pageX = ev.pageX,
+                pageY = ev.pageY;
 
             if (!self.get('dragging')) {
                 var startMousePos = self.get('startMousePos'),

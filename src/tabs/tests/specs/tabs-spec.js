@@ -59,13 +59,7 @@ KISSY.use("tabs", function (S, Tabs) {
 
                 var tabB = $(".ks-tabs-tab").item(1);
 
-                jasmine.simulate(tabB[0], "mousedown");
-
-                waits(10);
-
-                jasmine.simulate(tabB[0], "mouseup");
-
-                waits(10);
+                jasmine.simulate(tabB[0], "click");
 
                 runs(function () {
                     expect(tabs.getSelectedTab().get("content")).toBe("tab-2");
