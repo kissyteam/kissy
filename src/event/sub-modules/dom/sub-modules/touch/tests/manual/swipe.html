@@ -15,16 +15,18 @@
 </head>
 <body>
 
-<h1>open in ios safari test tap event</h1>
+<h1>open in ios safari test swipe event</h1>
 
-<a href="http://www.g.cn">google</a>
+<h2>swipe</h2>
 
-<div id='t' tabindex='0' style='border:1px solid green;width:100px;height:100px;margin:10px'>
-    tttt ttttt ttttt tttttt tttttt
-</div>
-
-<div id='t2' style='border:1px solid red;width:100px;height:100px;margin:10px'>
-    t2t2t2t2t 2t2t2t2t2t 2t2t2t2t 2t2t2
+<div id="t"
+     class='placeholder'
+     style="
+     width: 200px;
+     height: 200px;
+     overflow: auto;
+     border: 1px solid red;
+     ">
 </div>
 
 <script>
@@ -33,19 +35,17 @@
 
         var $ = S.all;
 
-        Event.on(document, 'touchstart touchmove touchend', function (e) {
-            // log("document: " + e.type);
-            // 阻止默认 mouse/click 触发
-            // 阻止链接打开！
-            // e.preventDefault();
+        $('.placeholder').html('<a href="http://www.g.cn">google</a> ' +
+                new Array(2).join('<p> ' + (new Array(2).join('h')) + '  </p>'));
+
+
+        Event.on('#t', "swipe", function (e) {
+            S.log(e);
         });
 
-        Event.on('#t', "click tap", function (e) {
-            log("t: " + e.type);
-        });
-
-        Event.on('#t2', "tap", function (e) {
-            log("t2: " + e.type);
+        // prevent native scroll
+        Event.on('#t','touchmove',function(e){
+            e.preventDefault();
         });
 
     });

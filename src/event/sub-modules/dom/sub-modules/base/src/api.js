@@ -232,7 +232,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
              * identify event as fired manually
              * @ignore
              */
-            eventData._ks_fired = 1;
+            eventData.synthetic = 1;
 
             _Utils.splitAndRun(eventType, function (eventType) {
                 // protect event type

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:56
+build time: Nov 8 17:28
 */
 /**
  * @ignore
@@ -203,8 +203,153 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         './handle-map',
         'event/dom/base',
         './gesture',
-        './tap'
+        './tap',
+        './horizontal-swipe',
+        './vertical-swipe'
     ]
+});/**
+ * @ignore
+ * gesture horizontalSwipe
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/touch/horizontal-swipe', function (S, eventHandleMap, Swipe) {
+
+    var event = 'horizontalSwipe';
+    function HorizontalSwipe() {
+        this.event=event;
+    }
+
+    S.extend(HorizontalSwipe, Swipe, {
+        onTouchStart: function () {
+            var r;
+            r=HorizontalSwipe.superclass.onTouchStart.apply(this, arguments);
+            this.isVertical = 0;
+            return r;
+        }
+    });
+
+    eventHandleMap[event] = HorizontalSwipe;
+
+    return HorizontalSwipe;
+
+}, {
+    requires: ['./handle-map', './swipe']
+});/**
+ * @ignore
+ * gesture swipe inspired by sencha touch
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
+
+    var event = 'swipe';
+
+    var MAX_DURATION = 1000,
+        MAX_OFFSET = 35,
+        MIN_DISTANCE = 50;
+
+    function Swipe() {
+        this.event = event;
+    }
+
+    Swipe.prototype = {
+
+        onTouchStart: function (e) {
+            var touches = e.touches, touch;
+            // single touch(mouse)down/up
+            if (touches.length > 1) {
+                return false;
+            }
+            touch = touches[0];
+            this.startTime = e.timeStamp;
+
+            this.isHorizontal = 1;
+            this.isVertical = 1;
+
+            this.startX = touch.pageX;
+            this.startY = touch.pageY;
+
+            if (e.type.indexOf('mouse') != -1) {
+                e.preventDefault();
+            }
+        },
+
+        onTouchMove: function (e) {
+            var touches = e.changedTouches,
+                touch = touches[0],
+                x = touch.pageX,
+                y = touch.pageY,
+                absDeltaX = Math.abs(x - this.startX),
+                absDeltaY = Math.abs(y - this.startY),
+                time = e.timeStamp;
+
+            if (time - this.startTime > MAX_DURATION) {
+                return false;
+            }
+
+            if (this.isVertical && absDeltaX > MAX_OFFSET) {
+                this.isVertical = 0;
+            }
+
+            if (this.isHorizontal && absDeltaY > MAX_OFFSET) {
+                this.isHorizontal = 0;
+            }
+
+            if (!this.isHorizontal && !this.isVertical) {
+                return false;
+            }
+
+        },
+
+        onTouchEnd: function (e) {
+            if (this.onTouchMove(e) === false) {
+                return false;
+            }
+
+            var touches = e.changedTouches,
+                touch = touches[0],
+                x = touch.pageX,
+                y = touch.pageY,
+                deltaX = x - this.startX,
+                deltaY = y - this.startY,
+                absDeltaX = Math.abs(deltaX),
+                absDeltaY = Math.abs(deltaY),
+                distance,
+                direction;
+
+            if (this.isVertical && absDeltaY < MIN_DISTANCE) {
+                this.isVertical = 0;
+            }
+
+            if (this.isHorizontal && absDeltaX < MIN_DISTANCE) {
+                this.isHorizontal = 0;
+            }
+
+            if (this.isHorizontal) {
+                direction = deltaX < 0 ? 'left' : 'right';
+                distance = absDeltaX;
+            } else if (this.isVertical) {
+                direction = deltaY < 0 ? 'up' : 'down';
+                distance = absDeltaY;
+            } else {
+                return false;
+            }
+
+            Event.fire(e.target, this.event, {
+                touch: touch,
+                direction: direction,
+                distance: distance,
+                duration: e.timeStamp - this.startTime
+            });
+        }
+
+    };
+
+    eventHandleMap[event] = Swipe;
+
+    return Swipe;
+
+}, {
+    requires: ['./handle-map', 'event/dom/base']
 });/**
  * @ignore
  * gesture tap or click for pc
@@ -285,4 +430,32 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
 
 }, {
     requires: ['event/dom/base', './touch/handle-map', './touch/handle']
+});/**
+ * @ignore
+ * gesture verticalSwipe
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/touch/vertical-swipe', function (S, eventHandleMap, Swipe) {
+
+    var event = 'verticalSwipe';
+
+    function VerticalSwipe() {
+        this.event = event;
+    }
+
+    S.extend(VerticalSwipe, Swipe, {
+        onTouchStart: function () {
+            var r;
+            r = VerticalSwipe.superclass.onTouchStart.apply(this, arguments);
+            this.isHorizontal = 0;
+            return r;
+        }
+    });
+
+    eventHandleMap[event] = VerticalSwipe;
+
+    return VerticalSwipe;
+
+}, {
+    requires: ['./handle-map', './swipe']
 });

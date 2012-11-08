@@ -62,7 +62,7 @@ KISSY.add('event/dom/base/submit', function (S, UA, Event, DOM, special) {
                 // it is stopped by user callback
                 !e.isPropagationStopped() &&
                 // it is not fired manually
-                !e._ks_fired) {
+                !e.synthetic) {
                 // simulated bubble for submit
                 // fire from parentNode. if form.on('submit') , this logic is never run!
                 Event.fire(form.parentNode, 'submit', e);

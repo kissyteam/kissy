@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:56
+build time: Nov 8 16:38
 */
 /**
  * @ignore
@@ -237,7 +237,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
              * identify event as fired manually
              * @ignore
              */
-            eventData._ks_fired = 1;
+            eventData.synthetic = 1;
 
             _Utils.splitAndRun(eventType, function (eventType) {
                 // protect event type
@@ -2437,7 +2437,7 @@ KISSY.add('event/dom/base/submit', function (S, UA, Event, DOM, special) {
                 // it is stopped by user callback
                 !e.isPropagationStopped() &&
                 // it is not fired manually
-                !e._ks_fired) {
+                !e.synthetic) {
                 // simulated bubble for submit
                 // fire from parentNode. if form.on('submit') , this logic is never run!
                 Event.fire(form.parentNode, 'submit', e);
