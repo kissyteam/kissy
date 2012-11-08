@@ -57,8 +57,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             self.decorateInternal(srcNode);
         }
 
-        var listener,
-            n,
+        var n,
             plugins = self.get(&quot;plugins&quot;),
             listeners = self.get(&quot;listeners&quot;);
 
@@ -67,8 +66,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         actionPlugins(self, plugins, &quot;initializer&quot;);
 
         for (n in listeners) {
-            listener = listeners[n];
-            self.on(n, listener.fn || listener, listener.scope);
+            self.on(n, listeners[n]);
         }
 
         // 是否自动渲染

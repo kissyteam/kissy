@@ -147,6 +147,12 @@ KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
             __activeToDrag ,
             activeDrag;
 
+        ev = ddm._normalEvent(ev);
+
+        if (!ev) {
+            return;
+        }
+
         //防止 ie 选择到字
         ev.preventDefault();
 
@@ -506,24 +512,24 @@ KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
     ddm.cacheWH = cacheWH;
     ddm.PREFIX_CLS = 'ks-dd-';
 
-
-    function normalTouch(e, touch) {
-        e[TARGET] = e[TARGET] || touch[TARGET];
-        e[CURRENT_TARGET] = e[CURRENT_TARGET] || touch[CURRENT_TARGET];
-        e[BUTTON] = e[BUTTON] || 0;
-    }
-
-    ddm._normalHandlePreDragStart = function (handle) {
-        return function (e) {
-            var originalEvent = e.originalEvent, touches;
-            if (touches = originalEvent['touches']) {
-                if (touches.length != 1) {
-                    return;
-                }
-                normalTouch(e, touches[0]);
+    /*
+     normal event between devices
+     */
+    ddm._normalEvent = function (e) {
+        var touches = e.touches,
+            touch;
+        if (touches) {
+            if (touches.length != 1) {
+                return undefined;
             }
-            handle.call(this, e);
-        };
+            touch = touches[0];
+            e[TARGET] = e[TARGET] || touch[TARGET];
+            e[CURRENT_TARGET] = e[CURRENT_TARGET] || touch[CURRENT_TARGET];
+            e.which = 1;
+            e.pageX = touch.pageX;
+            e.pageY = touch.pageY;
+        }
+        return e;
     };
 
     return ddm;

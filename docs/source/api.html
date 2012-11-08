@@ -245,11 +245,11 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
             // custom event firing moved to target.js
             eventData = eventData || {};
 
-<span id='global-property-_ks_fired'>            /**
+<span id='global-property-synthetic'>            /**
 </span>             * identify event as fired manually
              * @ignore
              */
-            eventData._ks_fired = 1;
+            eventData.synthetic = 1;
 
             _Utils.splitAndRun(eventType, function (eventType) {
                 // protect event type

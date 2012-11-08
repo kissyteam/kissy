@@ -64,6 +64,7 @@
             },
             /**
              * @private
+             * @member KISSY
              */
             clearLoader: function () {
                 var self = this,

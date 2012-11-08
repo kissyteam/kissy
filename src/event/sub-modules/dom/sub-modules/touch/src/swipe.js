@@ -99,9 +99,40 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
             }
 
             Event.fire(e.target, this.event, {
+                /**
+                 *
+                 * native touch property **only for event swipe**.
+                 *
+                 * @property touch
+                 * @member KISSY.Event.DOMEventObject
+                 */
                 touch: touch,
+                /**
+                 *
+                 * direction property **only for event swipe**.
+                 *
+                 * can be one of 'up' 'down' 'left' 'right'
+                 * @property {String} direction
+                 * @member KISSY.Event.DOMEventObject
+                 */
                 direction: direction,
+                /**
+                 *
+                 * distance property **only for event swipe**.
+                 *
+                 * the distance swipe gesture costs
+                 * @property {Number} distance
+                 * @member KISSY.Event.DOMEventObject
+                 */
                 distance: distance,
+                /**
+                 *
+                 * duration property **only for event swipe**.
+                 *
+                 * the duration swipe gesture costs
+                 * @property {Number} duration
+                 * @member KISSY.Event.DOMEventObject
+                 */
                 duration: e.timeStamp - this.startTime
             });
         }
