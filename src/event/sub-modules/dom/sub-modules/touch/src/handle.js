@@ -97,9 +97,12 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         },
 
         addEventHandle: function (event) {
-            var self = this;
-            if (!self.eventHandle[event]) {
-                self.eventHandle[event] = new (eventHandleMap[event])();
+            var self = this, constructor = eventHandleMap[event];
+            if (!self.eventHandle[event] &&
+                // event processor shared by multiple events
+                !constructor.used) {
+                self.eventHandle[event] = new constructor();
+                constructor.used = 1;
             }
         },
 
@@ -153,6 +156,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         'event/dom/base',
         './gesture',
         './tap',
-        './swipe'
+        './swipe',
+        './double-tap'
     ]
 });

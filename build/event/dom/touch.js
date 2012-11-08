@@ -1,9 +1,95 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 8 17:37
+build time: Nov 8 19:16
 */
 /**
+ * @ignore
+ * gesture single tap double tap
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/touch/double-tap',
+    function (S, eventHandleMap, Event, SingleTouch) {
+
+        var SINGLE_TAP = 'singleTap',
+            DOUBLE_TAP = 'doubleTap';
+
+        var MAX_DURATION = 300;
+
+        function DoubleTap() {
+        }
+
+        S.extend(DoubleTap, SingleTouch, {
+
+            onTouchStart: function (e) {
+                if (DoubleTap.superclass.onTouchStart.apply(this, arguments) === false) {
+                    return false;
+                }
+                this.startTime = e.timeStamp;
+                if (this.singleTapTimer) {
+                    clearTimeout(this.singleTapTimer);
+                    this.singleTapTimer = 0;
+                }
+            },
+
+            onTouchMove: function () {
+                return false;
+            },
+
+            onTouchEnd: function (e) {
+                var lastEndTime = this.lastEndTime,
+                    time = e.timeStamp,
+                    target = e.target,
+                    touch = e.changedTouches[0],
+                    duration = time - this.startTime;
+                this.lastEndTime = time;
+                // second touch end
+                if (lastEndTime) {
+                    // time between current up and last up
+                    duration = time - lastEndTime;
+                    // a double tap
+                    if (duration < MAX_DURATION) {
+                        // a new double tap cycle
+                        this.lastEndTime = 0;
+
+                        Event.fire(target, DOUBLE_TAP, {
+                            touch: touch,
+                            duration: duration
+                        });
+                        return;
+                    }
+                    // else treat as the first tap cycle
+                }
+
+                // time between down and up is long enough
+                // then a singleTap
+                duration = time - this.startTime;
+                if (duration > MAX_DURATION) {
+                    Event.fire(target, SINGLE_TAP, {
+                        touch: touch,
+                        duration: duration
+                    })
+                } else {
+                    // buffer singleTap
+                    // wait for a second tap
+                    this.singleTapTimer = setTimeout(function () {
+                        Event.fire(target, SINGLE_TAP, {
+                            touch: touch,
+                            duration: duration
+                        });
+                    }, MAX_DURATION);
+                }
+
+            }
+        });
+
+        eventHandleMap[SINGLE_TAP] = eventHandleMap[DOUBLE_TAP] = DoubleTap;
+
+        return DoubleTap;
+
+    }, {
+        requires: ['./handle-map', 'event/dom/base', './single-touch']
+    });/**
  * @ignore
  * patch gesture for touch
  * @author yiminghe@gmail.com
@@ -148,9 +234,12 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         },
 
         addEventHandle: function (event) {
-            var self = this;
-            if (!self.eventHandle[event]) {
-                self.eventHandle[event] = new (eventHandleMap[event])();
+            var self = this, constructor = eventHandleMap[event];
+            if (!self.eventHandle[event] &&
+                // event processor shared by multiple events
+                !constructor.used) {
+                self.eventHandle[event] = new constructor();
+                constructor.used = 1;
             }
         },
 
@@ -204,14 +293,37 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         'event/dom/base',
         './gesture',
         './tap',
-        './swipe'
+        './swipe',
+        './double-tap'
     ]
+});/**
+ * single touch guard
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/touch/single-touch', function (S) {
+
+    function SingleTouch() {
+    }
+
+    SingleTouch.prototype = {
+        onTouchStart: function (e) {
+            var touches = e.touches;
+            // single touch(mouse)down/up
+            if (touches.length > 1) {
+                return false;
+            }
+        },
+        onTouchMove: S.noop,
+        onTouchEnd: S.noop
+    };
+
+    return SingleTouch;
 });/**
  * @ignore
  * gesture swipe inspired by sencha touch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
+KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTouch) {
 
     var event = 'swipe';
 
@@ -223,15 +335,13 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
         this.event = event;
     }
 
-    Swipe.prototype = {
+    S.extend(Swipe, SingleTouch, {
 
         onTouchStart: function (e) {
-            var touches = e.touches, touch;
-            // single touch(mouse)down/up
-            if (touches.length > 1) {
+            if (Swipe.superclass.onTouchStart.apply(this, arguments) === false) {
                 return false;
             }
-            touch = touches[0];
+            var touch = e.touches[0];
             this.startTime = e.timeStamp;
 
             this.isHorizontal = 1;
@@ -307,27 +417,58 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
             }
 
             Event.fire(e.target, this.event, {
+                /**
+                 *
+                 * native touch property **only for event swipe**.
+                 *
+                 * @property touch
+                 * @member KISSY.Event.DOMEventObject
+                 */
                 touch: touch,
+                /**
+                 *
+                 * direction property **only for event swipe/singleTap/doubleTap**.
+                 *
+                 * can be one of 'up' 'down' 'left' 'right'
+                 * @property {String} direction
+                 * @member KISSY.Event.DOMEventObject
+                 */
                 direction: direction,
+                /**
+                 *
+                 * distance property **only for event swipe**.
+                 *
+                 * the distance swipe gesture costs
+                 * @property {Number} distance
+                 * @member KISSY.Event.DOMEventObject
+                 */
                 distance: distance,
+                /**
+                 *
+                 * duration property **only for event swipe**.
+                 *
+                 * the duration swipe gesture costs
+                 * @property {Number} duration
+                 * @member KISSY.Event.DOMEventObject
+                 */
                 duration: e.timeStamp - this.startTime
             });
         }
 
-    };
+    });
 
     eventHandleMap[event] = Swipe;
 
     return Swipe;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base']
+    requires: ['./handle-map', 'event/dom/base', './single-touch']
 });/**
  * @ignore
  * gesture tap or click for pc
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event) {
+KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch) {
 
     var event = 'tap';
 
@@ -335,31 +476,26 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event) {
 
     }
 
-    Tap.prototype = {
-
-        onTouchStart: function (e) {
-            // single touch(mouse)down/up
-            if (e.touches.length > 1) {
-                return false;
-            }
-        },
+    S.extend(Tap, SingleTouch, {
 
         onTouchMove: function () {
             return false;
         },
 
         onTouchEnd: function (e) {
-            Event.fire(e.target, event, e);
+            Event.fire(e.target, event, {
+                touch: e.changedTouches[0]
+            });
         }
 
-    };
+    });
 
     eventHandleMap[event] = Tap;
 
     return Tap;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base']
+    requires: ['./handle-map', 'event/dom/base', './single-touch']
 });
 /**
  * @ignore

@@ -3,7 +3,7 @@
  * gesture swipe inspired by sencha touch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
+KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTouch) {
 
     var event = 'swipe';
 
@@ -15,15 +15,13 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
         this.event = event;
     }
 
-    Swipe.prototype = {
+    S.extend(Swipe, SingleTouch, {
 
         onTouchStart: function (e) {
-            var touches = e.touches, touch;
-            // single touch(mouse)down/up
-            if (touches.length > 1) {
+            if (Swipe.superclass.onTouchStart.apply(this, arguments) === false) {
                 return false;
             }
-            touch = touches[0];
+            var touch = e.touches[0];
             this.startTime = e.timeStamp;
 
             this.isHorizontal = 1;
@@ -109,7 +107,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
                 touch: touch,
                 /**
                  *
-                 * direction property **only for event swipe**.
+                 * direction property **only for event swipe/singleTap/doubleTap**.
                  *
                  * can be one of 'up' 'down' 'left' 'right'
                  * @property {String} direction
@@ -137,12 +135,12 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
             });
         }
 
-    };
+    });
 
     eventHandleMap[event] = Swipe;
 
     return Swipe;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base']
+    requires: ['./handle-map', 'event/dom/base', './single-touch']
 });

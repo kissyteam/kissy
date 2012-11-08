@@ -3,7 +3,7 @@
  * gesture tap or click for pc
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event) {
+KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch) {
 
     var event = 'tap';
 
@@ -11,31 +11,26 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event) {
 
     }
 
-    Tap.prototype = {
-
-        onTouchStart: function (e) {
-            // single touch(mouse)down/up
-            if (e.touches.length > 1) {
-                return false;
-            }
-        },
+    S.extend(Tap, SingleTouch, {
 
         onTouchMove: function () {
             return false;
         },
 
         onTouchEnd: function (e) {
-            Event.fire(e.target, event, e);
+            Event.fire(e.target, event, {
+                touch: e.changedTouches[0]
+            });
         }
 
-    };
+    });
 
     eventHandleMap[event] = Tap;
 
     return Tap;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base']
+    requires: ['./handle-map', 'event/dom/base', './single-touch']
 });
 /**
  * @ignore
