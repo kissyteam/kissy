@@ -12,7 +12,35 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
         MIN_DISTANCE = 50;
 
     function Swipe() {
+        this.requiredTouchCount = 1;
         this.event = event;
+    }
+
+    function checkSwipeMove(self, e, touches) {
+        var touch = touches[0],
+            x = touch.pageX,
+            y = touch.pageY,
+            absDeltaX = Math.abs(x - self.startX),
+            absDeltaY = Math.abs(y - self.startY),
+            time = e.timeStamp;
+
+        if (time - self.startTime > MAX_DURATION) {
+            return false;
+        }
+
+        if (self.isVertical && absDeltaX > MAX_OFFSET) {
+            self.isVertical = 0;
+        }
+
+        if (self.isHorizontal && absDeltaY > MAX_OFFSET) {
+            self.isHorizontal = 0;
+        }
+
+        if (!self.isHorizontal && !self.isVertical) {
+            return false;
+        }
+
+        return undefined;
     }
 
     S.extend(Swipe, SingleTouch, {
@@ -36,34 +64,17 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
         },
 
         onTouchMove: function (e) {
-            var touches = e.changedTouches,
-                touch = touches[0],
-                x = touch.pageX,
-                y = touch.pageY,
-                absDeltaX = Math.abs(x - this.startX),
-                absDeltaY = Math.abs(y - this.startY),
-                time = e.timeStamp;
-
-            if (time - this.startTime > MAX_DURATION) {
+            // ignore
+            if (Swipe.superclass.onTouchMove.apply(this, arguments) === true) {
+                return;
+            }
+            if (checkSwipeMove(this, e, e.touches) == false) {
                 return false;
             }
-
-            if (this.isVertical && absDeltaX > MAX_OFFSET) {
-                this.isVertical = 0;
-            }
-
-            if (this.isHorizontal && absDeltaY > MAX_OFFSET) {
-                this.isHorizontal = 0;
-            }
-
-            if (!this.isHorizontal && !this.isVertical) {
-                return false;
-            }
-
         },
 
         onTouchEnd: function (e) {
-            if (this.onTouchMove(e) === false) {
+            if (checkSwipeMove(this, e, e.changedTouches) == false) {
                 return false;
             }
 
@@ -142,5 +153,5 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     return Swipe;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './single-touch']
+    requires: ['./handle-map', 'event/dom/base', './base-touch']
 });

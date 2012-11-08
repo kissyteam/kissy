@@ -157,6 +157,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         './gesture',
         './tap',
         './swipe',
-        './double-tap'
+        './double-tap',
+        './pinch'
     ]
 });

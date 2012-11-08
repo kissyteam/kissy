@@ -8,7 +8,7 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch
     var event = 'tap';
 
     function Tap() {
-
+        this.requiredTouchCount = 1;
     }
 
     S.extend(Tap, SingleTouch, {
@@ -30,7 +30,7 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch
     return Tap;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './single-touch']
+    requires: ['./handle-map', 'event/dom/base', './base-touch']
 });
 /**
  * @ignore

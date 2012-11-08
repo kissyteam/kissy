@@ -1,9 +1,36 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 8 19:16
+build time: Nov 8 21:37
 */
 /**
+ * touch count guard
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/touch/base-touch', function (S) {
+
+    function BaseTouch() {
+        this.requiredTouchCount = 1;
+    }
+
+    BaseTouch.prototype = {
+        onTouchStart: function (e) {
+            if (e.touches.length != this.requiredTouchCount) {
+                return false;
+            }
+        },
+        onTouchMove: function (e) {
+            // ignore current move
+            if (e.touches.length != this.requiredTouchCount) {
+                return false;
+            }
+        },
+        onTouchEnd: S.noop
+    };
+
+    return BaseTouch;
+
+});/**
  * @ignore
  * gesture single tap double tap
  * @author yiminghe@gmail.com
@@ -17,6 +44,7 @@ KISSY.add('event/dom/touch/double-tap',
         var MAX_DURATION = 300;
 
         function DoubleTap() {
+            this.requiredTouchCount=1;
         }
 
         S.extend(DoubleTap, SingleTouch, {
@@ -88,7 +116,7 @@ KISSY.add('event/dom/touch/double-tap',
         return DoubleTap;
 
     }, {
-        requires: ['./handle-map', 'event/dom/base', './single-touch']
+        requires: ['./handle-map', 'event/dom/base', './base-touch']
     });/**
  * @ignore
  * patch gesture for touch
@@ -294,30 +322,110 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         './gesture',
         './tap',
         './swipe',
-        './double-tap'
+        './double-tap',
+        './pinch'
     ]
 });/**
- * single touch guard
+ * @ignore
+ * gesture pinch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/single-touch', function (S) {
+KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch, DOM) {
 
-    function SingleTouch() {
+    var PINCH = 'pinch',
+        PINCH_START = 'pinchStart',
+        PINCH_END = 'pinchEnd';
+
+    function getDistance(p1, p2) {
+        var deltaX = p1.pageX - p2.pageX,
+            deltaY = p1.pageY - p2.pageY;
+        return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     }
 
-    SingleTouch.prototype = {
+    function getCommonTarget(t1, t2) {
+        if (t1 == t2) {
+            return t1;
+        }
+        if (DOM.contains(t1, t2)) {
+            return t1;
+        }
+
+        while (1) {
+            if (DOM.contains(t2, t1)) {
+                return t2;
+            }
+            t2 = t2.parentNode;
+        }
+        S.error('getCommonTarget error!');
+        return undefined;
+    }
+
+    function Pinch() {
+        this.requiredTouchCount = 2;
+        this.event = event;
+    }
+
+    S.extend(Pinch, BaseTouch, {
+
         onTouchStart: function (e) {
-            var touches = e.touches;
-            // single touch(mouse)down/up
-            if (touches.length > 1) {
+            //S.log('onTouchStart'+ e.touches.length);
+            if (Pinch.superclass.onTouchStart.apply(this, arguments) === false) {
                 return false;
             }
-        },
-        onTouchMove: S.noop,
-        onTouchEnd: S.noop
-    };
+            var touches = e.touches,
+                distance = getDistance(touches[0], touches[1]);
 
-    return SingleTouch;
+            this.startDistance = distance;
+
+            var target = this.target = getCommonTarget(touches[0].target, touches[1].target);
+
+            Event.fire(target,
+                PINCH_START, {
+                    touches: touches,
+                    distance: distance,
+                    scale: 1
+                });
+        },
+
+        onTouchMove: function (e) {
+            //S.log('onTouchMove'+' : ' +e.touches.length+' : '+ e.changedTouches.length);
+            var r = Pinch.superclass.onTouchMove.apply(this, arguments);
+            if (r === false) {
+                return false;
+            }
+            if (r === true) {
+                return;
+            }
+            var touches = e.touches,
+                distance = getDistance(touches[0], touches[1]);
+
+            Event.fire(this.target,
+                PINCH, {
+                    touches: touches,
+                    distance: distance,
+                    scale: distance / this.startDistance
+                });
+
+            this.lastTouches = touches;
+        },
+
+        onTouchEnd: function () {
+            //S.log('touchend');
+            Event.fire(this.target, PINCH_END, {
+                touches: this.lastTouches
+            });
+        }
+
+    });
+
+    eventHandleMap[PINCH] =
+        eventHandleMap[PINCH_END] =
+            eventHandleMap[PINCH_END] = Pinch;
+
+    return Pinch;
+
+}, {
+    requires: ['./handle-map', 'event/dom/base', './base-touch', 'dom']
 });/**
  * @ignore
  * gesture swipe inspired by sencha touch
@@ -332,7 +440,35 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
         MIN_DISTANCE = 50;
 
     function Swipe() {
+        this.requiredTouchCount = 1;
         this.event = event;
+    }
+
+    function checkSwipeMove(self, e, touches) {
+        var touch = touches[0],
+            x = touch.pageX,
+            y = touch.pageY,
+            absDeltaX = Math.abs(x - self.startX),
+            absDeltaY = Math.abs(y - self.startY),
+            time = e.timeStamp;
+
+        if (time - self.startTime > MAX_DURATION) {
+            return false;
+        }
+
+        if (self.isVertical && absDeltaX > MAX_OFFSET) {
+            self.isVertical = 0;
+        }
+
+        if (self.isHorizontal && absDeltaY > MAX_OFFSET) {
+            self.isHorizontal = 0;
+        }
+
+        if (!self.isHorizontal && !self.isVertical) {
+            return false;
+        }
+
+        return undefined;
     }
 
     S.extend(Swipe, SingleTouch, {
@@ -356,34 +492,17 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
         },
 
         onTouchMove: function (e) {
-            var touches = e.changedTouches,
-                touch = touches[0],
-                x = touch.pageX,
-                y = touch.pageY,
-                absDeltaX = Math.abs(x - this.startX),
-                absDeltaY = Math.abs(y - this.startY),
-                time = e.timeStamp;
-
-            if (time - this.startTime > MAX_DURATION) {
+            // ignore
+            if (Swipe.superclass.onTouchMove.apply(this, arguments) === true) {
+                return;
+            }
+            if (checkSwipeMove(this, e, e.touches) == false) {
                 return false;
             }
-
-            if (this.isVertical && absDeltaX > MAX_OFFSET) {
-                this.isVertical = 0;
-            }
-
-            if (this.isHorizontal && absDeltaY > MAX_OFFSET) {
-                this.isHorizontal = 0;
-            }
-
-            if (!this.isHorizontal && !this.isVertical) {
-                return false;
-            }
-
         },
 
         onTouchEnd: function (e) {
-            if (this.onTouchMove(e) === false) {
+            if (checkSwipeMove(this, e, e.changedTouches) == false) {
                 return false;
             }
 
@@ -462,7 +581,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     return Swipe;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './single-touch']
+    requires: ['./handle-map', 'event/dom/base', './base-touch']
 });/**
  * @ignore
  * gesture tap or click for pc
@@ -473,7 +592,7 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch
     var event = 'tap';
 
     function Tap() {
-
+        this.requiredTouchCount = 1;
     }
 
     S.extend(Tap, SingleTouch, {
@@ -495,7 +614,7 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch
     return Tap;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './single-touch']
+    requires: ['./handle-map', 'event/dom/base', './base-touch']
 });
 /**
  * @ignore

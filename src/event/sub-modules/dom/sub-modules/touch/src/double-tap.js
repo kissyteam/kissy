@@ -12,6 +12,7 @@ KISSY.add('event/dom/touch/double-tap',
         var MAX_DURATION = 300;
 
         function DoubleTap() {
+            this.requiredTouchCount=1;
         }
 
         S.extend(DoubleTap, SingleTouch, {
@@ -83,5 +84,5 @@ KISSY.add('event/dom/touch/double-tap',
         return DoubleTap;
 
     }, {
-        requires: ['./handle-map', 'event/dom/base', './single-touch']
+        requires: ['./handle-map', 'event/dom/base', './base-touch']
     });
