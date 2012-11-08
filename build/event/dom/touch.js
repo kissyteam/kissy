@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 8 17:28
+build time: Nov 8 17:37
 */
 /**
  * @ignore
@@ -204,36 +204,8 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         'event/dom/base',
         './gesture',
         './tap',
-        './horizontal-swipe',
-        './vertical-swipe'
+        './swipe'
     ]
-});/**
- * @ignore
- * gesture horizontalSwipe
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/touch/horizontal-swipe', function (S, eventHandleMap, Swipe) {
-
-    var event = 'horizontalSwipe';
-    function HorizontalSwipe() {
-        this.event=event;
-    }
-
-    S.extend(HorizontalSwipe, Swipe, {
-        onTouchStart: function () {
-            var r;
-            r=HorizontalSwipe.superclass.onTouchStart.apply(this, arguments);
-            this.isVertical = 0;
-            return r;
-        }
-    });
-
-    eventHandleMap[event] = HorizontalSwipe;
-
-    return HorizontalSwipe;
-
-}, {
-    requires: ['./handle-map', './swipe']
 });/**
  * @ignore
  * gesture swipe inspired by sencha touch
@@ -430,32 +402,4 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
 
 }, {
     requires: ['event/dom/base', './touch/handle-map', './touch/handle']
-});/**
- * @ignore
- * gesture verticalSwipe
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/touch/vertical-swipe', function (S, eventHandleMap, Swipe) {
-
-    var event = 'verticalSwipe';
-
-    function VerticalSwipe() {
-        this.event = event;
-    }
-
-    S.extend(VerticalSwipe, Swipe, {
-        onTouchStart: function () {
-            var r;
-            r = VerticalSwipe.superclass.onTouchStart.apply(this, arguments);
-            this.isHorizontal = 0;
-            return r;
-        }
-    });
-
-    eventHandleMap[event] = VerticalSwipe;
-
-    return VerticalSwipe;
-
-}, {
-    requires: ['./handle-map', './swipe']
 });
