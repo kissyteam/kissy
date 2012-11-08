@@ -40,8 +40,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
             self.decorateInternal(srcNode);
         }
 
-        var listener,
-            n,
+        var n,
             plugins = self.get("plugins"),
             listeners = self.get("listeners");
 
@@ -50,8 +49,7 @@ KISSY.add('component/uibase/base', function (S, Base, Node, Manager, undefined) 
         actionPlugins(self, plugins, "initializer");
 
         for (n in listeners) {
-            listener = listeners[n];
-            self.on(n, listener.fn || listener, listener.scope);
+            self.on(n, listeners[n]);
         }
 
         // 是否自动渲染
