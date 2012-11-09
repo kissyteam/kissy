@@ -6,7 +6,8 @@
 (function (S) {
 
     var win = S.Env.host,
-        doc = win.document;
+    // nodejs
+        doc = win.document || {};
 
     /**
      * test browser features
@@ -20,7 +21,7 @@
          * whether support win8 pointer event.
          * @type {Boolean}
          */
-        isMsPointerEnabled: "msPointerEnabled" in win.navigator,
+        isMsPointerEnabled: "msPointerEnabled" in (win.navigator || {}),
         /**
          * whether support touch event.
          * @type {Boolean}
