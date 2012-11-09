@@ -12,12 +12,10 @@ KISSY.use("dom", function (S, DOM) {
             expect(DOM.parent(t, 'em').className).toBe('test-em');
             expect(DOM.parent(t, '.test-p').tagName.toLowerCase()).toBe('p');
             // Unsupported selector: p.test-p em
-            if (!S.require("sizzle")) {
-                expect(
-                    function () {
-                        DOM.parent(t, 'p.test-p em')
-                    }).toThrow();
-            }
+            expect(
+                function () {
+                    DOM.parent(t, 'p.test-p em')
+                }).toThrow(undefined);
             expect(DOM.parent(t,
                 function (elem) {
                     return elem.tagName.toLowerCase() === 'p';

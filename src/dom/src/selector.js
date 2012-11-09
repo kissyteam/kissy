@@ -129,7 +129,12 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             ret = queryBySimple(selector, context);
         }
         // 如果选择器有, 分开递归一部分一部分来
-        else if (isSelectorString && selector.indexOf(COMMA) > -1) {
+        else if (isSelectorString &&
+            // #255
+            // [data-key='a,b']
+            selector
+                .replace(/"(?:(?:\\.)|[^"])*"/g, '')
+                .replace(/'(?:(?:\\.)|[^'])*'/g, '').indexOf(COMMA) > -1) {
             ret = queryBySelectors(selector, context);
         }
         else {

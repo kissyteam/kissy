@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 19:49
+build time: Nov 9 15:26
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121107194937' will replace with current timestamp when compressing.
+         * NOTICE: '20121109152615' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121107194937',
+        __BUILD_TIME: '20121109152615',
         /**
          * KISSY Environment.
          * @private
@@ -5305,6 +5305,10 @@ var KISSY = (function (undefined) {
                     return Env._loader;
                 }
             },
+            /**
+             * @private
+             * @member KISSY
+             */
             clearLoader: function () {
                 var self = this,
                     Env = self.Env,
@@ -5411,7 +5415,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121107194937'
+            tag: '20121109152615'
         }, getBaseInfo()));
     }
 
@@ -6257,7 +6261,7 @@ KISSY.add('ua', function (S, UA) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:53
+build time: Nov 9 15:26
 */
 /**
  * @ignore
@@ -9006,7 +9010,12 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             ret = queryBySimple(selector, context);
         }
         // 如果选择器有, 分开递归一部分一部分来
-        else if (isSelectorString && selector.indexOf(COMMA) > -1) {
+        else if (isSelectorString &&
+            // #255
+            // [data-key='a,b']
+            selector
+                .replace(/"(?:(?:\\.)|[^"])*"/g, '')
+                .replace(/'(?:(?:\\.)|[^'])*'/g, '').indexOf(COMMA) > -1) {
             ret = queryBySelectors(selector, context);
         }
         else {
@@ -11762,7 +11771,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:56
+build time: Nov 8 16:38
 */
 /**
  * @ignore
@@ -11998,7 +12007,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
              * identify event as fired manually
              * @ignore
              */
-            eventData._ks_fired = 1;
+            eventData.synthetic = 1;
 
             _Utils.splitAndRun(eventType, function (eventType) {
                 // protect event type
@@ -14198,7 +14207,7 @@ KISSY.add('event/dom/base/submit', function (S, UA, Event, DOM, special) {
                 // it is stopped by user callback
                 !e.isPropagationStopped() &&
                 // it is not fired manually
-                !e._ks_fired) {
+                !e.synthetic) {
                 // simulated bubble for submit
                 // fire from parentNode. if form.on('submit') , this logic is never run!
                 Event.fire(form.parentNode, 'submit', e);
