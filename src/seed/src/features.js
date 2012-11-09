@@ -5,9 +5,17 @@
  */
 (function (S) {
 
-    var win = S.Env.host,
+    var Env = S.Env,
+        win = Env.host,
     // nodejs
-        doc = win.document || {};
+        doc = win.document || {},
+        documentMode = doc.documentMode,
+        isNativeJSONSupported = ((Env.nodejs && typeof global === 'object') ? global : win).JSON;
+
+    // ie 8.0.7600.16315@win7 json bug!
+    if (documentMode && documentMode < 9) {
+        isNativeJSONSupported = 0;
+    }
 
     /**
      * test browser features
@@ -26,7 +34,13 @@
          * whether support touch event.
          * @type {Boolean}
          */
-        isTouchSupported: 'ontouchstart' in doc
+        isTouchSupported: 'ontouchstart' in doc,
+
+        /**
+         * whether support native json
+         * @type {Boolean}
+         */
+        isNativeJSONSupported: isNativeJSONSupported
     };
 
 })(KISSY);

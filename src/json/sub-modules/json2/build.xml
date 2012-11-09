@@ -1,0 +1,10 @@
+<project name="json/json2.build" default="build" basedir=".">
+    <description>JSON2 Build File</description>
+
+    <property name="component.name" value="json/json2"/>
+
+    <import file="../../../../tools/build-xml/common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

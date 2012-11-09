@@ -41,9 +41,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 }, self.get('mouseDelay') * 1000);
             };
 
-            S.each(trigger, function (el) {
-                S.one(el).on('mouseenter', self.__mouseEnterPopup);
-            });
+            trigger.on('mouseenter', self.__mouseEnterPopup);
 
             self._mouseLeavePopup = function () {
                 if (timer) {
@@ -54,9 +52,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 self._setHiddenTimer();
             };
 
-            S.each(trigger, function (el) {
-                S.one(el).on('mouseleave', self._mouseLeavePopup);
-            });
+            trigger.on('mouseleave', self._mouseLeavePopup);
         },
 
         _bindContainerMouse: function () {
@@ -91,9 +87,8 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                     self._showing(ev);
                 }
             };
-            S.each(self.get("trigger"), function (el) {
-                S.one(el).on('click', self.__clickPopup);
-            });
+
+            self.get("trigger").on('click', self.__clickPopup);
         },
 
         _showing: function (ev) {
@@ -113,20 +108,20 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                 t = self.get("trigger");
             if (t) {
                 if (self.__clickPopup) {
-                    t.each(function (el) {
-                        el.detach('click', self.__clickPopup);
-                    });
+
+                    t.detach('click', self.__clickPopup);
+
                 }
                 if (self.__mouseEnterPopup) {
-                    t.each(function (el) {
-                        el.detach('mouseenter', self.__mouseEnterPopup);
-                    });
+
+                    t.detach('mouseenter', self.__mouseEnterPopup);
+
                 }
 
                 if (self._mouseLeavePopup) {
-                    t.each(function (el) {
-                        el.detach('mouseleave', self._mouseLeavePopup);
-                    });
+
+                    t.detach('mouseleave', self._mouseLeavePopup);
+
                 }
             }
             if (root = self.get('el')) {
@@ -145,10 +140,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
              */
             trigger: {                          // 触发器
                 setter: function (v) {
-                    if (typeof v == 'string') {
-                        v = S.all(v);
-                    }
-                    return v;
+                    return S.all(v);
                 }
             },
             /**

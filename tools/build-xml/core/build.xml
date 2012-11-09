@@ -32,6 +32,7 @@
             <path path="${kissy.build.dir}/event/base.js"/>
             <path path="${kissy.build.dir}/event/custom.js"/>
             <path path="${kissy.build.dir}/event/dom/base.js"/>
+            <path path="${kissy.build.dir}/json/json2.js"/>
             <path path="${kissy.build.dir}/json.js"/>
             <path path="${kissy.build.dir}/ajax.js"/>
             <path path="${kissy.build.dir}/cookie.js"/>

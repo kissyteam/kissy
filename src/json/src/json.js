@@ -1,8 +1,10 @@
 /**
  * @ignore
- * @fileOverview adapt json2 to kissy
+ * @fileOverview kissy json use json2 or native conditionally
  */
 KISSY.add('json', function (S, JSON) {
+
+    JSON = JSON || window.JSON;
 
     /**
      * Provide json utils for KISSY.
@@ -32,5 +34,9 @@ KISSY.add('json', function (S, JSON) {
         stringify: JSON.stringify
     };
 }, {
-    requires: ["json/json2"]
+    requires: [
+        KISSY.Features.isNativeJSONSupported ?
+            "empty" :
+            "json/json2"
+    ]
 });
