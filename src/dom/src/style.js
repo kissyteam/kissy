@@ -10,6 +10,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         isIE = UA['ie'],
         STYLE = 'style',
         FLOAT = 'float',
+        RE_MARGIN = /^margin/,
         CSS_FLOAT = 'cssFloat',
         STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width',
@@ -19,7 +20,6 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         OLD_DISPLAY = DISPLAY + S.now(),
         NONE = 'none',
         myParseInt = parseInt,
-        RE_NUM_PX = /^-?\d+(?:px)?$/i,
         cssNumber = {
             'fillOpacity': 1,
             'fontWeight': 1,
@@ -62,7 +62,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         defaultDisplayDetectIframeDoc;
 
     // modified from jquery : bullet-proof method of getting default display
-    // fix domain problem in ie>6 , ie6 still access denied
+    // fix domain problem in ie>6, ie6 still access denied
     function getDefaultDisplay(tagName) {
         var body,
             elem;
@@ -148,6 +148,10 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             _getComputedStyle: function (elem, name) {
                 var val = '',
                     computedStyle,
+                    width,
+                    minWidth,
+                    maxWidth,
+                    style,
                     d = elem.ownerDocument;
 
                 name = name.replace(R_UPPER, '-$1').toLowerCase();
@@ -158,9 +162,24 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
 
                 // 还没有加入到 document，就取行内
-                if (val == '' && !DOM.contains(d.documentElement, elem)) {
+                if (val === '' && !DOM.contains(d, elem)) {
                     name = cssProps[name] || name;
                     val = elem[STYLE][name];
+                }
+
+                // Safari 5.1 returns percentage for margin
+                if (DOM._RE_NUM_NO_PX.test(val) && RE_MARGIN.test(name)) {
+                    style = elem.style;
+                    width = style.width;
+                    minWidth = style.minWidth;
+                    maxWidth = style.maxWidth;
+
+                    style.minWidth = style.maxWidth = style.width = val;
+                    val = computedStyle.width;
+
+                    style.width = width;
+                    style.minWidth = minWidth;
+                    style.maxWidth = maxWidth;
                 }
 
                 return val;
@@ -467,16 +486,6 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             get: function (elem, computed) {
                 if (computed) {
                     return getWHIgnoreDisplay(elem, name) + 'px';
-                }
-            },
-            set: function (elem, value) {
-                if (RE_NUM_PX.test(value)) {
-                    value = parseFloat(value);
-                    if (value >= 0) {
-                        return value + 'px';
-                    }
-                } else {
-                    return value;
                 }
             }
         };

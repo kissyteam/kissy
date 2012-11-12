@@ -8,13 +8,13 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
     var win = S.Env.host,
         EXPANDO = '__ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
         dataCache = { }, // 存储 node 节点的 data
-        winDataCache = { };    // 避免污染全局
+        winDataCache = { }, // 避免污染全局
 
 
     // The following elements throw uncatchable exceptions if you
     // attempt to add expando properties to them.
-    var noData = {
-    };
+        noData = {
+        };
     noData['applet'] = 1;
     noData['object'] = 1;
     noData['embed'] = 1;

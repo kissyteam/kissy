@@ -7,7 +7,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
 
     var PARENT_NODE = 'parentNode',
         NodeType = DOM.NodeType,
-        R_FORM_EL = /^(?:button|input|object|select|textarea)$/i,
+        RE_FORM_EL = /^(?:button|input|object|select|textarea)$/i,
         getNodeName = DOM.nodeName,
         makeArray = S.makeArray,
         splice = [].splice,
@@ -69,7 +69,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
             } else {
                 if (el.nodeType == NodeType.ELEMENT_NODE &&
                     // ie checkbox getElementsByTagName 后造成 checked 丢失
-                    !R_FORM_EL.test(nodeName)) {
+                    !RE_FORM_EL.test(nodeName)) {
                     var tmp = [],
                         s,
                         j,

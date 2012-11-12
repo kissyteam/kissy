@@ -348,5 +348,18 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
             expect(ret).toBe(1);
         });
 
+        it('css works for margin-right for safari 5.1', function () {
+
+            var div = DOM.create('<div style="width:100px;">' +
+                '<div style="margin-left:10%"></div></div>');
+
+            DOM.append(div, document.body);
+
+            expect(DOM.css(div.firstChild, 'margin-left')).toBe('10px');
+
+            DOM.remove(div);
+
+        });
+
     });
 });

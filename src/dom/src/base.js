@@ -7,6 +7,8 @@ KISSY.add('dom/base', function (S, UA, undefined) {
 
     var WINDOW = S.Env.host;
 
+    var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
+
     /**
      * DOM Element node type.
      * @enum {Number} KISSY.DOM.NodeType
@@ -146,7 +148,9 @@ KISSY.add('dom/base', function (S, UA, undefined) {
                 }
             }
             return nodeName;
-        }
+        },
+
+        _RE_NUM_NO_PX: new RegExp("^(" + RE_NUM + ")(?!px)[a-z%]+$", "i")
     };
 
     S.mix(DOM, NodeType);
