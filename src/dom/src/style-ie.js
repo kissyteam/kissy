@@ -159,7 +159,7 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
                 // Remember the original values
                 var style = elem[STYLE],
                     left = style[LEFT],
-                    rsLeft = elem[RUNTIME_STYLE] && elem[RUNTIME_STYLE][LEFT];
+                    rsLeft = elem[RUNTIME_STYLE][LEFT];
 
                 // prevent flashing of content
                 elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
