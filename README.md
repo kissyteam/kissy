@@ -20,6 +20,7 @@ Vision
 Structure
 -------------------------------
  - bin:           kissy-nodejs 命令行执行文件
+ - reports:       nodejs 下的单元测试报告
  - build:         构建好的发布文件
  - docs:          API 文档
  - src:           源码、测试等开发资源
