@@ -5,7 +5,11 @@ KISSY.use("kison", function (S, Kison) {
     var Grammar = Kison.Grammar;
     var Utils = Kison.Utils;
 
-    describe("grammar", function () {
+    if (typeof global == 'undefined') {
+        window.global = {};
+    }
+
+    describe("kison", function () {
 
         it('escape correctly', function () {
 
@@ -64,29 +68,29 @@ KISSY.use("kison", function (S, Kison) {
             var itemSets = grammar.get("itemSets");
 
             S.each(itemSets, function (itemSet, i) {
-                S.log("************************* " + i);
-                S.log(itemSet.toString());
+                // S.log("************************* " + i);
+                // S.log(itemSet.toString());
             });
 
             expect(itemSets.length).toBe(8);
 
-            S.log(itemSets);
+            // S.log(itemSets);
 
             var i1gotos = itemSets[1].get("gotos");
 
             expect(itemSets[0].get("gotos")['c']).toBe(itemSets[1]);
 
-            S.log("!!!!!!!!!!!!!!!");
-            // S.log(itemSets[4].get("gotos")['c'].toString());
-            S.log("!!!!!!!!!!!!!!!");
+            // S.log("!!!!!!!!!!!!!!!");
+            // // S.log(itemSets[4].get("gotos")['c'].toString());
+            // S.log("!!!!!!!!!!!!!!!");
 
             // expect(itemSets[4].get("gotos")['c']).toBe(itemSets[1]);
 
             var num = 0;
 
             S.each(i1gotos, function (itemSet, symbol) {
-                S.log("************************* " + symbol);
-                S.log(itemSet.toString());
+                // S.log("************************* " + symbol);
+                // S.log(itemSet.toString());
                 if (symbol == "c") {
                     expect(itemSet).toBe(itemSets[1]);
                 }
@@ -100,7 +104,7 @@ KISSY.use("kison", function (S, Kison) {
 
         it("generate table ok", function () {
 
-            S.log('it("generate table ok", function () {');
+            // S.log('it("generate table ok", function () {');
 
             var grammar = new Grammar({
                 productions: [
@@ -147,7 +151,7 @@ KISSY.use("kison", function (S, Kison) {
 
             var table = grammar.visualizeTable();
 
-            S.log(table.join("\n"));
+            // S.log(table.join("\n"));
 
         });
 
@@ -465,12 +469,12 @@ KISSY.use("kison", function (S, Kison) {
 
         it("parse ok with action", function () {
 
-            S.log("---------------- parse ok with action : ccdd by ");
-            S.log(" S0 => S ");
-            S.log(" S => CC ");
-            S.log(" C => cC ");
-            S.log(" C => d ");
-            S.log("------------------------------------------------\n");
+            // S.log("---------------- parse ok with action : ccdd by ");
+            // S.log(" S0 => S ");
+            // S.log(" S => CC ");
+            // S.log(" C => cC ");
+            // S.log(" C => d ");
+            // S.log("------------------------------------------------\n");
 
             // S0 => S
             // S => CC
@@ -486,7 +490,7 @@ KISSY.use("kison", function (S, Kison) {
                             "S"
                         ],
                         action: function () {
-                            var ret = window.TEST_RET || (window.TEST_RET = []);
+                            var ret = global.TEST_RET || (global.TEST_RET = []);
                             ret.push("S0 => S");
                             ret.push("|_____ " + this.$1 + " -> S0");
                             ret.push("");
@@ -498,7 +502,7 @@ KISSY.use("kison", function (S, Kison) {
                             "C", "C"
                         ],
                         action: function () {
-                            var ret = window.TEST_RET || (window.TEST_RET = []);
+                            var ret = global.TEST_RET || (global.TEST_RET = []);
                             ret.push("S => C C");
                             ret.push("|_____ " + this.$1 + " + " + this.$2 + " -> S");
                             ret.push("");
@@ -511,7 +515,7 @@ KISSY.use("kison", function (S, Kison) {
                             "c", "C"
                         ],
                         action: function () {
-                            var ret = window.TEST_RET || (window.TEST_RET = []);
+                            var ret = global.TEST_RET || (global.TEST_RET = []);
                             ret.push("C => c C");
                             ret.push("|_____ " + this.$1 + " + " + this.$2 + " -> C");
                             ret.push("");
@@ -524,7 +528,7 @@ KISSY.use("kison", function (S, Kison) {
                             "d"
                         ],
                         action: function () {
-                            var ret = window.TEST_RET || (window.TEST_RET = []);
+                            var ret = global.TEST_RET || (global.TEST_RET = []);
                             ret.push("C => d");
                             ret.push("|_____ " + this.$1 + " -> C");
                             ret.push("");
@@ -550,7 +554,7 @@ KISSY.use("kison", function (S, Kison) {
                 new Function(grammar.genCode())().parse("ccdd")
             }).not.toThrow(undefined);
 
-            S.log(window.TEST_RET.join("\n"));
+            // S.log(global.TEST_RET.join("\n"));
         });
 
 

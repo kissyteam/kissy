@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites>
+<testsuite name="xtemplate" errors="0" tests="0" failures="0" time="0" timestamp="2012-11-13T16:08:48">
+</testsuite>
+<testsuite name="xtemplate.feature" errors="0" tests="6" failures="0" time="0.054" timestamp="2012-11-13T16:08:48">
+  <testcase classname="xtemplate.feature" name="support {{variable}}" time="0.004"></testcase>
+  <testcase classname="xtemplate.feature" name="support function as template" time="0.001"></testcase>
+  <testcase classname="xtemplate.feature" name="support cache" time="0"></testcase>
+  <testcase classname="xtemplate.feature" name="support {{#if}}" time="0.005"></testcase>
+  <testcase classname="xtemplate.feature" name="support comment" time="0.001"></testcase>
+  <testcase classname="xtemplate.feature" name="support set" time="0.001"></testcase>
+</testsuite>
+<testsuite name="xtemplate.feature.each" errors="0" tests="3" failures="0" time="0.01" timestamp="2012-11-13T16:08:48">
+  <testcase classname="xtemplate.feature.each" name="support object" time="0.007"></testcase>
+  <testcase classname="xtemplate.feature.each" name="support simple array" time="0.002"></testcase>
+  <testcase classname="xtemplate.feature.each" name="support parent scope" time="0.001"></testcase>
+</testsuite>
+<testsuite name="xtemplate.feature.with" errors="0" tests="2" failures="0" time="0.004" timestamp="2012-11-13T16:08:48">
+  <testcase classname="xtemplate.feature.with" name="support object" time="0.001"></testcase>
+  <testcase classname="xtemplate.feature.with" name="support parent scope" time="0.003"></testcase>
+</testsuite>
+<testsuite name="xtemplate.feature.escape" errors="0" tests="4" failures="0" time="0.001" timestamp="2012-11-13T16:08:48">
+  <testcase classname="xtemplate.feature.escape" name="support escape {{" time="0"></testcase>
+  <testcase classname="xtemplate.feature.escape" name="support escape {{ more" time="0"></testcase>
+  <testcase classname="xtemplate.feature.escape" name="support escapeHTML" time="0.001"></testcase>
+  <testcase classname="xtemplate.feature.escape" name="support escape &quot;" time="0"></testcase>
+</testsuite>
+<testsuite name="xtemplate.feature.command" errors="0" tests="4" failures="0" time="0.003" timestamp="2012-11-13T16:08:48">
+  <testcase classname="xtemplate.feature.command" name="support global command for variable" time="0.001"></testcase>
+  <testcase classname="xtemplate.feature.command" name="support global command for block" time="0"></testcase>
+  <testcase classname="xtemplate.feature.command" name="support local command for variable" time="0.001"></testcase>
+  <testcase classname="xtemplate.feature.command" name="support local command for block" time="0.001"></testcase>
+</testsuite>
+<testsuite name="xtemplate.feature.sub template" errors="0" tests="4" failures="0" time="0.002" timestamp="2012-11-13T16:08:48">
+  <testcase classname="xtemplate.feature.sub template" name="support global sub template as string" time="0.001"></testcase>
+  <testcase classname="xtemplate.feature.sub template" name="support global sub template as function" time="0"></testcase>
+  <testcase classname="xtemplate.feature.sub template" name="support local sub template as string" time="0.001"></testcase>
+  <testcase classname="xtemplate.feature.sub template" name="support local sub template as function" time="0"></testcase>
+</testsuite>
+<testsuite name="xtemplate.feature.expression" errors="0" tests="5" failures="0" time="0.019" timestamp="2012-11-13T16:08:48">
+  <testcase classname="xtemplate.feature.expression" name="support expression for variable" time="0.001"></testcase>
+  <testcase classname="xtemplate.feature.expression" name="support expression for variable in string" time="0.001"></testcase>
+  <testcase classname="xtemplate.feature.expression" name="support relational expression" time="0.014"></testcase>
+  <testcase classname="xtemplate.feature.expression" name="support relational expression in each" time="0.001"></testcase>
+  <testcase classname="xtemplate.feature.expression" name="support relational expression in with" time="0.002"></testcase>
+</testsuite>
+<testsuite name="xtemplate.feature.support mustache" errors="0" tests="2" failures="0" time="0.003" timestamp="2012-11-13T16:08:48">
+  <testcase classname="xtemplate.feature.support mustache" name="support object" time="0.002"></testcase>
+  <testcase classname="xtemplate.feature.support mustache" name="support array" time="0.001"></testcase>
+</testsuite>
+<testsuite name="xtemplate.error detection" errors="0" tests="3" failures="0" time="0.002" timestamp="2012-11-13T16:08:48">
+  <testcase classname="xtemplate.error detection" name="detect un-closed block tag" time="0.001"></testcase>
+  <testcase classname="xtemplate.error detection" name="warn about missing property" time="0"></testcase>
+  <testcase classname="xtemplate.error detection" name="detect unmatched" time="0.001"></testcase>
+</testsuite>
+</testsuites>

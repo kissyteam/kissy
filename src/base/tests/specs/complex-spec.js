@@ -3,7 +3,7 @@
  *  @author yiminghe@gmail.com
  */
 KISSY.use("base", function (S, Base) {
-    describe("complex base/attribute", function () {
+    describe("base_complex", function () {
 
         it("can merge property value object from parent class", function () {
             function a() {

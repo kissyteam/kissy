@@ -1,6 +1,6 @@
 KISSY.use("htmlparser", function(S, HtmlParser) {
     var Lexer = HtmlParser.Lexer;
-    describe("Lexer", function() {
+    describe("htmlparser_lexer", function() {
 
 
         it("works", function() {

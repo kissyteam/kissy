@@ -1,15 +1,17 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 9 16:14
+build time: Nov 13 13:58
 */
 /**
  * @ignore
  * @fileOverview kissy json use json2 or native conditionally
  */
-KISSY.add('json', function (S, JSON) {
+KISSY.add('json', function (S, J) {
 
-    JSON = JSON || window.JSON;
+    if (typeof JSON !== 'undefined') {
+        J = JSON;
+    }
 
     /**
      * Provide json utils for KISSY.
@@ -28,7 +30,7 @@ KISSY.add('json', function (S, JSON) {
             if (text == null || text === '') {
                 return null;
             }
-            return JSON.parse(text);
+            return J.parse(text);
         },
         /**
          * serialize json object to string.
@@ -36,7 +38,7 @@ KISSY.add('json', function (S, JSON) {
          * @param {Object} jsonObject
          * @return {String}
          */
-        stringify: JSON.stringify
+        stringify: J.stringify
     };
 }, {
     requires: [

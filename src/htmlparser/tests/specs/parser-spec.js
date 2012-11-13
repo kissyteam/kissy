@@ -4,7 +4,7 @@
  */
 KISSY.use("htmlparser", function (S, HtmlParser) {
     var Parser = HtmlParser.Parser;
-    describe("Parser", function () {
+    describe("htmlparser_parser", function () {
 
         it("works for valid html", function () {
             // valid html is fine

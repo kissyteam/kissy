@@ -1,9 +1,26 @@
 KISSY.use("htmlparser", function (S, HtmlParser) {
     var UA = S.UA;
-    describe("htmlparser for editor works", function () {
+
+
+    function getTextSync(path, callback) {
+        if (S.Env.nodejs) {
+            path=require('path').resolve(__dirname,path);
+            var fs = require('fs');
+            callback(fs.readFileSync(path, 'utf-8'));
+        } else {
+            S.io({
+                url: path,
+                dataType: 'text',
+                async: false,
+                success: callback
+            });
+        }
+    }
+
+    describe("htmlparser_for_editor", function () {
         it("can filter elementNames", function () {
             var dataFilterRules = {
-                tagNames:[
+                tagNames: [
                     [  /^script$/i , '' ],
                     [  /^iframe$/i , '' ],
                     [  /^style$/i , '' ],
@@ -32,11 +49,11 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
 
         it("can filter imagedata in vml@ie", function () {
             var dataFilterRules = {
-                tagNames:[
+                tagNames: [
                     [/^\?xml.*$/i, '']
                 ],
-                tags:{
-                    $:function (el) {
+                tags: {
+                    $: function (el) {
                         var tagName = el.tagName || "";
                         if (tagName.indexOf(':') != -1 && !/^ke/.test(tagName)) {
                             if (tagName == 'v:imagedata') {
@@ -66,13 +83,8 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
 
             var before = "";
 
-            S.io({
-                url:"../others/editor/vml_img.html",
-                dataType:'text',
-                async:false,
-                success:function (d) {
-                    before = d;
-                }
+            getTextSync("../others/editor/vml_img.html", function (d) {
+                before = d;
             });
 
             var n = new HtmlParser.Parser(before).parse();
@@ -132,8 +144,9 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
 
                         });
 
-                    for (var i = 0; i < rules.length; i++)
+                    for (var i = 0; i < rules.length; i++) {
                         rules[ i ] = rules[ i ].join(':');
+                    }
 
                     return rules.length ?
                         ( rules.join(';') + ';' ) : false;
@@ -153,9 +166,9 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
             ]);
 
             var dataFilterRules = {
-                attributes:{
+                attributes: {
                     // word
-                    "class":function (value) {
+                    "class": function (value) {
 
                         if (
                             !value ||
@@ -165,7 +178,7 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
                         }
                         return value;
                     },
-                    'style':function (value) {
+                    'style': function (value) {
                         //去除<i style="mso-bidi-font-style: normal">微软垃圾
                         var re = filterStyle(value);
                         if (!re) {
@@ -199,8 +212,9 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
                 var childNodes = block.childNodes,
                     lastIndex = childNodes.length,
                     last = childNodes[ lastIndex - 1 ];
-                while (last && last.nodeType == 3 && !S.trim(last.nodeValue))
+                while (last && last.nodeType == 3 && !S.trim(last.nodeValue)) {
                     last = childNodes[ --lastIndex ];
+                }
                 return last;
             }
 
@@ -254,8 +268,8 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
 
 
             var dataFilterRules = {
-                tags:{
-                    p:extendBlockForDisplay
+                tags: {
+                    p: extendBlockForDisplay
                 }
             };
 
@@ -279,17 +293,17 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
 
         it("filter children works while modify html", function () {
             var rules = {
-                tags:{
+                tags: {
 
-                    p:function (el) {
+                    p: function (el) {
                         el.filterChildren();
                     }
                 }
             };
 
             var rules2 = {
-                tags:{
-                    p:function (el) {
+                tags: {
+                    p: function (el) {
                         el.appendChild(new HtmlParser.Text("&nbsp;"));
                     }
                 }
@@ -314,11 +328,11 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
         it("filter will run only once", function () {
             var count = 0;
             var rules = {
-                tags:{
-                    p:function (el) {
+                tags: {
+                    p: function (el) {
                         el.filterChildren();
                     },
-                    span:function () {
+                    span: function () {
                         count++;
                     }
                 }
@@ -340,7 +354,7 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
 
         it("can filter attributeNames", function () {
             var rules = {
-                attributeNames:[
+                attributeNames: [
                     // 把保存的作为真正的属性，替换掉原来的
                     // replace(/^_ke_saved_/,"")
                     // _ke_saved_href -> href
