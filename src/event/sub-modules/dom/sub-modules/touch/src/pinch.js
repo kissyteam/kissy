@@ -3,7 +3,7 @@
  * gesture pinch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch, DOM) {
+KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch) {
 
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
@@ -13,24 +13,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch
         var deltaX = p1.pageX - p2.pageX,
             deltaY = p1.pageY - p2.pageY;
         return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-    }
-
-    function getCommonTarget(t1, t2) {
-        if (t1 == t2) {
-            return t1;
-        }
-        if (DOM.contains(t1, t2)) {
-            return t1;
-        }
-
-        while (1) {
-            if (DOM.contains(t2, t1)) {
-                return t2;
-            }
-            t2 = t2.parentNode;
-        }
-        S.error('getCommonTarget error!');
-        return undefined;
     }
 
     function Pinch() {
@@ -50,7 +32,7 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch
 
             this.startDistance = distance;
 
-            var target = this.target = getCommonTarget(touches[0].target, touches[1].target);
+            var target = this.target = this.getCommonTarget(e);
 
             Event.fire(target,
                 PINCH_START, {
@@ -78,8 +60,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch
                     distance: distance,
                     scale: distance / this.startDistance
                 });
-
-            this.lastTouches = touches;
         },
 
         onTouchEnd: function () {
@@ -98,5 +78,5 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch
     return Pinch;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './base-touch', 'dom']
+    requires: ['./handle-map', 'event/dom/base', './base-touch']
 });

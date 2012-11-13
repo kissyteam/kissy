@@ -1,13 +1,14 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 8 21:37
+build time: Nov 13 21:41
 */
 /**
+ * @ignore
  * touch count guard
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/base-touch', function (S) {
+KISSY.add('event/dom/touch/base-touch', function (S, DOM) {
 
     function BaseTouch() {
         this.requiredTouchCount = 1;
@@ -18,18 +19,42 @@ KISSY.add('event/dom/touch/base-touch', function (S) {
             if (e.touches.length != this.requiredTouchCount) {
                 return false;
             }
+            this.lastTouches= e.touches;
         },
         onTouchMove: function (e) {
             // ignore current move
             if (e.touches.length != this.requiredTouchCount) {
                 return false;
             }
+            this.lastTouches= e.touches;
+        },
+        getCommonTarget: function (e) {
+            var touches = e.touches,
+                t1 = touches[0].target,
+                t2 = touches[1].target;
+            if (t1 == t2) {
+                return t1;
+            }
+            if (DOM.contains(t1, t2)) {
+                return t1;
+            }
+
+            while (1) {
+                if (DOM.contains(t2, t1)) {
+                    return t2;
+                }
+                t2 = t2.parentNode;
+            }
+            S.error('getCommonTarget error!');
+            return undefined;
         },
         onTouchEnd: S.noop
     };
 
     return BaseTouch;
 
+}, {
+    requires: ['dom']
 });/**
  * @ignore
  * gesture single tap double tap
@@ -323,14 +348,16 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         './tap',
         './swipe',
         './double-tap',
-        './pinch'
+        './pinch',
+        './tap-hold',
+        './rotate'
     ]
 });/**
  * @ignore
  * gesture pinch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch, DOM) {
+KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch) {
 
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
@@ -340,24 +367,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch
         var deltaX = p1.pageX - p2.pageX,
             deltaY = p1.pageY - p2.pageY;
         return Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-    }
-
-    function getCommonTarget(t1, t2) {
-        if (t1 == t2) {
-            return t1;
-        }
-        if (DOM.contains(t1, t2)) {
-            return t1;
-        }
-
-        while (1) {
-            if (DOM.contains(t2, t1)) {
-                return t2;
-            }
-            t2 = t2.parentNode;
-        }
-        S.error('getCommonTarget error!');
-        return undefined;
     }
 
     function Pinch() {
@@ -377,7 +386,7 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch
 
             this.startDistance = distance;
 
-            var target = this.target = getCommonTarget(touches[0].target, touches[1].target);
+            var target = this.target = this.getCommonTarget(e);
 
             Event.fire(target,
                 PINCH_START, {
@@ -405,8 +414,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch
                     distance: distance,
                     scale: distance / this.startDistance
                 });
-
-            this.lastTouches = touches;
         },
 
         onTouchEnd: function () {
@@ -425,7 +432,96 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch
     return Pinch;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './base-touch', 'dom']
+    requires: ['./handle-map', 'event/dom/base', './base-touch']
+});/**
+ * @ignore
+ * fired when rotate using two fingers
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, BaseTouch, Event) {
+    var ROTATE_START = 'rotateStart',
+        ROTATE = 'rotate',
+        RAD_2_DEG = 180 / Math.PI,
+        ROTATE_END = 'rotateEnd';
+
+    function Rotate() {
+        this.requiredTouchCount = 2;
+    }
+
+    S.extend(Rotate, BaseTouch, {
+        onTouchStart: function (e) {
+            var self = this;
+
+            if (Rotate.superclass.onTouchStart.call(self, e) === false) {
+                return false;
+            }
+
+            var touches = e.touches,
+                one = touches[0],
+                two = touches[1],
+                angle = Math.atan2(two.pageY - one.pageY,
+                    two.pageX - one.pageX) * RAD_2_DEG;
+
+            self.lastAngle = self.startAngle = angle;
+
+            self.target = self.getCommonTarget(e);
+
+            Event.fire(self.target, ROTATE_START, {
+                touches: e.touches,
+                angle: angle,
+                rotation: 0
+            });
+        },
+
+        onTouchMove: function (e) {
+            var self = this;
+
+            if (Rotate.superclass.onTouchMove.call(self, e) === false) {
+                return false;
+            }
+
+            var touches = e.touches,
+                one = touches[0],
+                two = touches[1],
+                lastAngle = self.lastAngle,
+                angle = Math.atan2(two.pageY - one.pageY,
+                    two.pageX - one.pageX) * RAD_2_DEG;
+
+            var diff = Math.abs(angle - lastAngle);
+            var positiveAngle = angle + 360;
+            var negativeAngle = angle - 360;
+
+            // process '>' scenario: top -> bottom
+            if (Math.abs(positiveAngle - lastAngle) < diff) {
+                angle = positiveAngle;
+            }
+            // process '>' scenario: bottom -> top
+            else if (Math.abs(negativeAngle - lastAngle) < diff) {
+                angle = negativeAngle;
+            }
+
+            self.lastAngle = angle;
+
+            Event.fire(self.target, ROTATE, {
+                touches: touches,
+                angle: angle,
+                rotation: angle - self.startAngle
+            });
+        },
+
+        onTouchEnd: function () {
+            Event.fire(this.target, ROTATE_END, {
+                touches: this.lastTouches
+            });
+        }
+    });
+
+    eventHandleMap[ROTATE] = eventHandleMap[ROTATE_END] = eventHandleMap[ROTATE_START] = Rotate;
+
+    return Rotate;
+
+}, {
+    requires: ['./handle-map', './base-touch', 'event/dom/base']
 });/**
  * @ignore
  * gesture swipe inspired by sencha touch
@@ -538,7 +634,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
             Event.fire(e.target, this.event, {
                 /**
                  *
-                 * native touch property **only for event swipe**.
+                 * native touch property **only for touch event**.
                  *
                  * @property touch
                  * @member KISSY.Event.DOMEventObject
@@ -564,7 +660,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
                 distance: distance,
                 /**
                  *
-                 * duration property **only for event swipe**.
+                 * duration property **only for touch event**.
                  *
                  * the duration swipe gesture costs
                  * @property {Number} duration
@@ -582,6 +678,50 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
 
 }, {
     requires: ['./handle-map', 'event/dom/base', './base-touch']
+});/**
+ * @ignore
+ * fired when tap and hold for more than 1s
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, BaseTouch, Event) {
+    var event = 'tapHold';
+
+    var duration = 1000;
+
+    function TapHold() {
+        this.requiredTouchCount = 1;
+    }
+
+    S.extend(TapHold, BaseTouch, {
+        onTouchStart: function (e) {
+            var self = this;
+            if (TapHold.superclass.onTouchStart.call(self, e) === false) {
+                return false;
+            }
+            self.timer = setTimeout(function () {
+                Event.fire(e.target, event, {
+                    touch: e.touches[0],
+                    duration: (S.now() - e.timeStamp)
+                });
+            }, duration);
+        },
+
+        onTouchMove: function () {
+            clearTimeout(this.timer);
+            return false;
+        },
+
+        onTouchEnd: function () {
+            clearTimeout(this.timer);
+        }
+    });
+
+    eventHandleMap[event] = TapHold;
+
+    return TapHold;
+
+}, {
+    requires: ['./handle-map', './base-touch', 'event/dom/base']
 });/**
  * @ignore
  * gesture tap or click for pc

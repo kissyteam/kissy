@@ -110,7 +110,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
             Event.fire(e.target, this.event, {
                 /**
                  *
-                 * native touch property **only for event swipe**.
+                 * native touch property **only for touch event**.
                  *
                  * @property touch
                  * @member KISSY.Event.DOMEventObject
@@ -136,7 +136,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
                 distance: distance,
                 /**
                  *
-                 * duration property **only for event swipe**.
+                 * duration property **only for touch event**.
                  *
                  * the duration swipe gesture costs
                  * @property {Number} duration

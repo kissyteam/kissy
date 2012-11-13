@@ -15,23 +15,33 @@
 </head>
 <body>
 
-<h1>open in ios safari test doubleTap event</h1>
+<h1>open in ios safari test rotate event</h1>
 
 <a href="http://www.g.cn">google</a>
 
 <div id='t' tabindex='0'
      style='border:1px solid green;
-     width:100px;height:100px;margin:10px'>
+     width:200px;height:200px;margin:10px'>
     tttt ttttt ttttt tttttt tttttt
 </div>
 
 <script>
 
-    KISSY.use('event,event/dom/touch', function (S, Event) {
+    KISSY.use('event', function (S, Event) {
 
-        Event.on('#t', "singleTap doubleTap", function (e) {
-            log(e.type + ' : ' + e.duration);
+        Event.on(document, "touchmove", function (e) {
+            // e.preventDefault();
         });
+
+        Event.on('#t', 'touchstart', function (e) {
+            e.preventDefault();
+        });
+
+        Event.on('#t', "rotate rotateStart rotateEnd", function (e) {
+            log(e.type + ' : ' + e.rotation+' : '+ e.angle);
+            //S.log(e.type + ' : ' + e.rotation);
+        });
+
 
     });
 

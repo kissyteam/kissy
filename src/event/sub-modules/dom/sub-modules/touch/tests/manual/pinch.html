@@ -10,7 +10,7 @@
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <script src="../../../../../../../../build/kissy.js"></script>
+    <script src="../../../../../../../../build/seed.js"></script>
     <script src="../../../../../../../log.js"></script>
 </head>
 <body>
@@ -30,7 +30,11 @@
     KISSY.use('event', function (S, Event) {
 
         Event.on(document, "touchmove", function (e) {
-           // e.preventDefault();
+            // e.preventDefault();
+        });
+
+        Event.on('#t', 'touchstart', function (e) {
+            e.preventDefault();
         });
 
         Event.on('#t', "pinch pinchStart pinchEnd", function (e) {
