@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:56
+build time: Nov 14 21:54
 */
 /**
  * @fileOverview separator def
@@ -51,7 +51,7 @@ KISSY.add("separator", function (S, Component, SeparatorRender) {
     return Separator;
 
 }, {
-    requires:['component', 'separator/separatorRender']
+    requires:['component/base', 'separator/separatorRender']
 });/**
  * @fileOverview separator render def
  * @author yiminghe@gmail.com
@@ -65,5 +65,5 @@ KISSY.add("separator/separatorRender", function (S, Component) {
     });
 
 }, {
-    requires:['component']
+    requires:['component/base']
 });

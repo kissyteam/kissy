@@ -2,7 +2,7 @@
  * uibase tc
  * @author yiminghe@gmaill.com
  */
-KISSY.use("component", function (S, Component) {
+KISSY.use("component/base,component/extension", function (S, Component,extension) {
 
     var UIBase = Component.UIBase, $ = S.all;
 
@@ -271,7 +271,7 @@ KISSY.use("component", function (S, Component) {
         describe("contentEl", function () {
 
             var ContentEl = Component.Render.extend([,
-                UIBase.ContentBox.Render], {}, {
+                extension.ContentBox.Render], {}, {
                 ATTRS: {
                     prefixCls: {
                         value: 'ks-'

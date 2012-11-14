@@ -78,5 +78,5 @@ KISSY.add("split-button", function (S, Component, Button, MenuButton) {
 
 
 }, {
-    requires: ['component', 'button', 'menubutton']
+    requires: ['component/base', 'button', 'menubutton']
 });

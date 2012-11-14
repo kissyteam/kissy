@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:55
+build time: Nov 14 21:52
 */
 /**
  * draft for kissy editor
@@ -133,9 +133,8 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                         }
                     },
                     matchElWidth: false,
-                    autoRender: true,
                     content: "恢复编辑历史"
-                });
+                }).render();
             self.versions = versions;
             // 点击才开始 parse
             versions.on("beforeCollapsedChange", function (e) {
@@ -245,11 +244,10 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             self.helpPopup = new Overlay({
                 content: help,
                 prefixCls: prefixCls + 'editor-',
-                autoRender: true,
                 width: help.width() + "px",
                 zIndex: Editor.baseZIndex(Editor.zIndexManager.OVERLAY),
                 mask: false
-            });
+            }).render();
             self.helpPopup.get("el")
                 .css("border", "none");
             self.helpPopup.arrow = arrow;

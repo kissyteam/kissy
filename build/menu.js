@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:56
+build time: Nov 14 21:53
 */
 /**
  * @fileOverview menu controllerler for kissy,accommodate menu items
@@ -200,7 +200,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
     return Menu;
 
 }, {
-    requires:['event', 'component', './menuRender', './submenu']
+    requires:['event', 'component/base', './menuRender', './submenu']
 });
 
 /**
@@ -592,7 +592,7 @@ KISSY.add("menu/menuRender", function(S, UA, Component) {
         }
     });
 }, {
-    requires:['ua','component']
+    requires:['ua','component/base']
 });/**
  * @fileOverview menu item ,child component for menu
  * @author yiminghe@gmail.com
@@ -764,7 +764,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
 
     return MenuItem;
 }, {
-    requires: ['component', './menuitemRender']
+    requires: ['component/base', './menuitemRender']
 });/**
  * @fileOverview simple menuitem render
  * @author yiminghe@gmail.com
@@ -846,16 +846,16 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
         }
     });
 }, {
-    requires: ['node', 'component']
+    requires: ['node', 'component/base']
 });/**
  * @fileOverview positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
+KISSY.add("menu/popupmenu", function (S,
+                                      extension,
+                                      Menu, PopupMenuRender) {
 
     var autoHideOnMouseLeave = "autoHideOnMouseLeave";
-
-    var UIBase = Component.UIBase;
 
 
     /**
@@ -869,9 +869,9 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
      * @extends KISSY.Component.UIBase.Align
      */
     var PopupMenu = Menu.extend([
-        UIBase.ContentBox,
-        UIBase.Position,
-        UIBase.Align
+        extension.ContentBox,
+        extension.Position,
+        extension.Align
     ],
         /**
          * @lends Menu.PopupMenu#
@@ -936,20 +936,21 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
     return PopupMenu;
 
 }, {
-    requires:['component', './base', './popupmenuRender']
+    requires:['component/extension',
+        './base', './popupmenuRender']
 });/**
  * @fileOverview popup menu render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenuRender", function (S, UA, Component, MenuRender) {
-    var UIBase = Component.UIBase;
+KISSY.add("menu/popupmenuRender", function (S, UA, extension, MenuRender) {
+
     return MenuRender.extend([
-        UIBase.ContentBox.Render,
-        UIBase.Position.Render,
-        UA['ie'] === 6 ? UIBase.Shim.Render : null
+        extension.ContentBox.Render,
+        extension.Position.Render,
+        UA['ie'] === 6 ? extension.Shim.Render : null
     ]);
 }, {
-    requires:['ua', 'component', './menuRender']
+    requires:['ua', 'component/extension', './menuRender']
 });/**
  * @fileOverview submenu controller for kissy , transfer item's keycode to menu
  * @author yiminghe@gmail.com
@@ -1333,7 +1334,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
     return SubMenu;
 }, {
-    requires: ['event', 'component', './menuitem', './submenuRender']
+    requires: ['event', 'component/base', './menuitem', './submenuRender']
 });
 
 /**

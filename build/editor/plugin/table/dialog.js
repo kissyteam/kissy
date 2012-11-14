@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:55
+build time: Nov 14 21:52
 */
 /**
  * table dialog
@@ -177,13 +177,12 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             var self = this,
                 prefixCls = self.editor.get('prefixCls'),
                 d = new Dialog({
-                    autoRender: true,
                     width: "500px",
                     mask: true,
                     headerContent: "表格", //属性",
                     bodyContent: replacePrefix(TABLE_HTML, prefixCls),
                     footerContent: replacePrefix(footHtml, prefixCls)
-                }),
+                }).render(),
                 dbody = d.get("body"),
                 foot = d.get("footer");
             d.twidth = dbody.one(replacePrefix(".{prefixCls}editor-table-width", prefixCls));

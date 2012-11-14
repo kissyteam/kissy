@@ -3,22 +3,22 @@
  * @fileOverview KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay-render", function (S, UA, Component) {
-
-    function require(s) {
-        return S.require("component/uibase/" + s);
-    }
+KISSY.add("overlay/overlay-render", function (S, UA, Component, Extension, Loading, Close, Mask) {
 
     return Component.Render.extend([
-        require("content-box-render"),
-        require("position-render"),
-        require("loading-render"),
-        UA['ie'] === 6 ? require("shim-render") : null,
-        require("close-render"),
-        require("mask-render")
+        Extension.ContentBox.Render,
+        Extension.Position.Render,
+        Loading,
+        UA['ie'] === 6 ? Extension.Shim.Render : null,
+        Close,
+        Mask
     ]);
+
 }, {
-    requires:["ua", "component"]
+    requires: ["ua", "component/base", 'component/extension',
+        './extension/loading-render',
+        './extension/close-render',
+        './extension/mask-render']
 });
 
 /**

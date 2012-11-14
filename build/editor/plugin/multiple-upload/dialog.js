@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:55
+build time: Nov 14 21:52
 */
 /**
  * multiple-upload dialog
@@ -74,10 +74,9 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                 draggable: {
                     constrain: false
                 },
-                autoRender: true,
                 focus4e: false,
                 width: "600px"
-            });
+            }).render();
             var d = self.dialog;
 
             // ie 6,7,8 upload swf 的容器如果设计了 visibility hidden 又 visible ，
@@ -360,10 +359,9 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
                 var previewWin = new (S.require("overlay"))({
                     mask: false,
                     prefixCls: replacePrefix('{prefixCls}editor-', prefixCls),
-                    autoRender: true,
                     width: previewWidth,
                     render: listWrap
-                });
+                }).render();
                 self.addRes(previewWin);
                 var preview = previewWin.get("contentEl");
                 preview.css("border", "none");

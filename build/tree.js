@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 19:21
+build time: Nov 14 21:54
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -34,7 +34,7 @@ KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager
     });
 
 }, {
-    requires: ['component', './node', './tree-render', './tree-manager']
+    requires: ['component/base', './node', './tree-render', './tree-manager']
 });
 
 /*
@@ -294,7 +294,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
     return CheckTree;
 
 }, {
-    requires: ['component', './check-node', './check-tree-render', './tree-manager']
+    requires: ['component/base', './check-node', './check-tree-render', './tree-manager']
 });/**
  * @fileOverview common render for node
  * @author yiminghe@gmail.com
@@ -503,7 +503,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
     });
 
 }, {
-    requires: ['node', 'component']
+    requires: ['node', 'component/base']
 });/**
  * @fileOverview abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
@@ -960,7 +960,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
     return TreeNode;
 
 }, {
-    requires: ['node', 'component', './node-render']
+    requires: ['node', 'component/base', './node-render']
 });
 
 /**

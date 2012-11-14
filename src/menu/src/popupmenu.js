@@ -2,11 +2,11 @@
  * @fileOverview positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
+KISSY.add("menu/popupmenu", function (S,
+                                      extension,
+                                      Menu, PopupMenuRender) {
 
     var autoHideOnMouseLeave = "autoHideOnMouseLeave";
-
-    var UIBase = Component.UIBase;
 
 
     /**
@@ -20,9 +20,9 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
      * @extends KISSY.Component.UIBase.Align
      */
     var PopupMenu = Menu.extend([
-        UIBase.ContentBox,
-        UIBase.Position,
-        UIBase.Align
+        extension.ContentBox,
+        extension.Position,
+        extension.Align
     ],
         /**
          * @lends Menu.PopupMenu#
@@ -87,5 +87,6 @@ KISSY.add("menu/popupmenu", function (S, Component, Menu, PopupMenuRender) {
     return PopupMenu;
 
 }, {
-    requires:['component', './base', './popupmenuRender']
+    requires:['component/extension',
+        './base', './popupmenuRender']
 });

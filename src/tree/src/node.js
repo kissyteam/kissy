@@ -454,7 +454,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
     return TreeNode;
 
 }, {
-    requires: ['node', 'component', './node-render']
+    requires: ['node', 'component/base', './node-render']
 });
 
 /**

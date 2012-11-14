@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:56
+build time: Nov 14 21:53
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -359,7 +359,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
     return MenuButton;
 }, {
-    requires:[ "node", "button", "./baseRender", "menu", "component"]
+    requires:[ "node", "button", "./baseRender", "menu", "component/base"]
 });/**
  * @fileOverview render aria and drop arrow for menubutton
  * @author yiminghe@gmail.com

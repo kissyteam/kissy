@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:57
+build time: Nov 14 21:54
 */
 /**
  * @fileOverview TabBar for KISSY.
@@ -142,7 +142,7 @@ KISSY.add("tabs/body", function (S, Component) {
     });
 
 }, {
-    requires: ['component']
+    requires: ['component/base']
 });/**
  * @fileOverview single tab panel render.
  * @author yiminghe@gmail.com
@@ -181,7 +181,7 @@ KISSY.add("tabs/panel-render", function (S, Component) {
     });
 
 }, {
-    requires: ['component']
+    requires: ['component/base']
 });/**
  * @fileOverview single tab panel.
  * @author yiminghe@gmail.com
@@ -213,7 +213,7 @@ KISSY.add("tabs/panel", function (S, Component, PanelRender) {
     })
 
 }, {
-    requires: ['component', './panel-render']
+    requires: ['component/base', './panel-render']
 });/**
  * @fileOverview Tabs render.
  * @author yiminghe@gmail.com
@@ -241,7 +241,7 @@ KISSY.add("tabs/render", function (S, Component) {
         }
     });
 }, {
-    requires: ['component']
+    requires: ['component/base']
 });/**
  * @fileOverview Single tab render in tab bar.
  * @author yiminghe@gmail.com
@@ -635,5 +635,5 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
 
     return Tabs;
 }, {
-    requires: ['component', 'tabs/bar', 'tabs/body', 'tabs/tab', 'tabs/panel', 'tabs/render']
+    requires: ['component/base', 'tabs/bar', 'tabs/body', 'tabs/tab', 'tabs/panel', 'tabs/render']
 });

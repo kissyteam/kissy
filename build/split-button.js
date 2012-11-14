@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:57
+build time: Nov 14 21:54
 */
 /**
  * SplitButton for KISSY. Combination of button and menubutton.
@@ -83,5 +83,5 @@ KISSY.add("split-button", function (S, Component, Button, MenuButton) {
 
 
 }, {
-    requires: ['component', 'button', 'menubutton']
+    requires: ['component/base', 'button', 'menubutton']
 });

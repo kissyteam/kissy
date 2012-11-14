@@ -25,5 +25,5 @@ KISSY.add("tabs/render", function (S, Component) {
         }
     });
 }, {
-    requires: ['component']
+    requires: ['component/base']
 });

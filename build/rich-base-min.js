@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 20:18
+build time: Nov 14 21:53
 */
 KISSY.add("rich-base",function(e,k){function i(){var c,b;k.apply(this,arguments);b=this.get("listeners");for(c in b)this.on(c,b[c]);this.callMethodByHierarchy("initializer","constructor");this.constructPlugins();this.callPluginsMethod("initializer")}var l=e.noop;e.extend(i,k,{callMethodByHierarchy:function(c,b){for(var d=this.constructor,a=[],e,j,f,g,h;d;){h=[];if(g=d.__ks_exts)for(f=0;f<g.length;f++)if(e=g[f])"constructor"!=b&&(e=e.prototype.hasOwnProperty(b)?e.prototype[b]:null),e&&h.push(e);d.prototype.hasOwnProperty(c)&&
 (j=d.prototype[c])&&h.push(j);h.length&&a.push.apply(a,h.reverse());d=d.superclass&&d.superclass.constructor}for(f=a.length-1;0<=f;f--)a[f]&&a[f].call(this)},callPluginsMethod:function(c){var b=this;e.each(b.get("plugins"),function(d){if(d[c])d[c](b)})},constructPlugins:function(){var c=this.get("plugins");e.each(c,function(b,d){e.isFunction(b)&&(c[d]=new b)})},initializer:l,destructor:l,destroy:function(){this.callPluginsMethod("destructor");for(var c=this.constructor,b,d,a;c;){c.prototype.hasOwnProperty("destructor")&&

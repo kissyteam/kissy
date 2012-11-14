@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:52
+build time: Nov 14 21:49
 */
 /**
  * @fileOverview Button control for KISSY.
@@ -103,7 +103,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
     return Button;
 
 }, {
-    requires:['event', 'component', './buttonRender']
+    requires:['event', 'component/base', './buttonRender']
 });/**
  * @fileOverview simulated button for kissy , inspired by goog button
  * @author yiminghe@gmail.com
@@ -148,5 +148,5 @@ KISSY.add("button/buttonRender", function (S, Component) {
         }
     });
 }, {
-    requires:['component']
+    requires:['component/base']
 });

@@ -318,5 +318,5 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
 
     return Tabs;
 }, {
-    requires: ['component', 'tabs/bar', 'tabs/body', 'tabs/tab', 'tabs/panel', 'tabs/render']
+    requires: ['component/base', 'tabs/bar', 'tabs/body', 'tabs/tab', 'tabs/panel', 'tabs/render']
 });

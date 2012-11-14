@@ -2,7 +2,7 @@
  * component tc
  * @author yiminghe@gmail.com
  */
-KISSY.use("component", function (S, Component) {
+KISSY.use("component/base", function (S, Component) {
 
     function invalidNode(n) {
         return n == null || n.nodeType == 11;

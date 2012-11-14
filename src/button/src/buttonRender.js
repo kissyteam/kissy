@@ -30,5 +30,5 @@ KISSY.add("button/buttonRender", function (S, Component) {
         }
     });
 }, {
-    requires:['component']
+    requires:['component/base']
 });

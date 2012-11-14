@@ -79,5 +79,5 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
 
     return LocalDataSource;
 }, {
-    requires:['component']
+    requires:['component/base']
 });

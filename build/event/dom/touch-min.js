@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 13 21:41
+build time: Nov 14 21:53
 */
 KISSY.add("event/dom/touch/base-touch",function(h,d){function f(){this.requiredTouchCount=1}f.prototype={onTouchStart:function(b){if(b.touches.length!=this.requiredTouchCount)return!1;this.lastTouches=b.touches},onTouchMove:function(b){if(b.touches.length!=this.requiredTouchCount)return!1;this.lastTouches=b.touches},getCommonTarget:function(b){var a=b.touches,b=a[0].target,a=a[1].target;if(b==a||d.contains(b,a))return b;for(;;){if(d.contains(a,b))return a;a=a.parentNode}},onTouchEnd:h.noop};return f},
 {requires:["dom"]});

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 9 15:26
+build time: Nov 14 21:50
 */
 /**
  * @ignore
@@ -684,6 +684,8 @@ KISSY.add('dom/base', function (S, UA, undefined) {
 
     var WINDOW = S.Env.host;
 
+    var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
+
     /**
      * DOM Element node type.
      * @enum {Number} KISSY.DOM.NodeType
@@ -823,7 +825,9 @@ KISSY.add('dom/base', function (S, UA, undefined) {
                 }
             }
             return nodeName;
-        }
+        },
+
+        _RE_NUM_NO_PX: new RegExp("^(" + RE_NUM + ")(?!px)[a-z%]+$", "i")
     };
 
     S.mix(DOM, NodeType);
@@ -847,11 +851,11 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
 
     var SPACE = ' ',
         NodeType=DOM.NodeType,
-        REG_SPLIT = /[\.\s]\s*\.?/,
-        REG_CLASS = /[\n\t]/g;
+        RE_SPLIT = /[\.\s]\s*\.?/,
+        RE_CLASS = /[\n\t]/g;
 
     function norm(elemClass) {
-        return (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE);
+        return (SPACE + elemClass + SPACE).replace(RE_CLASS, SPACE);
     }
 
     S.mix(DOM,
@@ -988,7 +992,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
 
         var elems = DOM.query(selector),
             len = elems.length,
-            tmp = value.split(REG_SPLIT),
+            tmp = value.split(RE_SPLIT),
             elem,
             ret;
 
@@ -1592,13 +1596,13 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
     var win = S.Env.host,
         EXPANDO = '__ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
         dataCache = { }, // 存储 node 节点的 data
-        winDataCache = { };    // 避免污染全局
+        winDataCache = { }, // 避免污染全局
 
 
     // The following elements throw uncatchable exceptions if you
     // attempt to add expando properties to them.
-    var noData = {
-    };
+        noData = {
+        };
     noData['applet'] = 1;
     noData['object'] = 1;
     noData['embed'] = 1;
@@ -1882,7 +1886,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
 
     var PARENT_NODE = 'parentNode',
         NodeType = DOM.NodeType,
-        R_FORM_EL = /^(?:button|input|object|select|textarea)$/i,
+        RE_FORM_EL = /^(?:button|input|object|select|textarea)$/i,
         getNodeName = DOM.nodeName,
         makeArray = S.makeArray,
         splice = [].splice,
@@ -1944,7 +1948,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
             } else {
                 if (el.nodeType == NodeType.ELEMENT_NODE &&
                     // ie checkbox getElementsByTagName 后造成 checked 丢失
-                    !R_FORM_EL.test(nodeName)) {
+                    !RE_FORM_EL.test(nodeName)) {
                     var tmp = [],
                         s,
                         j,
@@ -2641,8 +2645,8 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         COMMA = ',',
         trim = S.trim,
         ANY = '*',
-        REG_ID = /^#[\w-]+$/,
-        REG_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
+        RE_ID = /^#[\w-]+$/,
+        RE_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
     function query_each(f) {
         var self = this, el, i;
@@ -2744,7 +2748,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
     function queryByContexts(selector, context) {
         var ret = [],
             isSelectorString = typeof selector == 'string';
-        if (isSelectorString && selector.match(REG_QUERY) ||
+        if (isSelectorString && selector.match(RE_QUERY) ||
             !isSelectorString) {
             // 简单选择器自己处理
             ret = queryBySimple(selector, context);
@@ -2793,7 +2797,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
     function quickFindBySelectorStr(selector, context) {
         var ret, t, match, id, tag, cls;
         // selector 为 #id 是最常见的情况，特殊优化处理
-        if (REG_ID.test(selector)) {
+        if (RE_ID.test(selector)) {
             t = getElementById(selector.slice(1), context);
             if (t) {
                 // #id 无效时，返回空数组
@@ -2804,7 +2808,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         }
         // selector 为支持列表中的其它 6 种
         else {
-            match = REG_QUERY.exec(selector);
+            match = RE_QUERY.exec(selector);
             if (match) {
                 // 获取匹配出的信息
                 id = match[1];
@@ -3142,7 +3146,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                 // 默认仅支持最简单的 tag.cls 或 #id 形式
                 if (typeof filter == 'string' &&
                     (filter = trim(filter)) &&
-                    (match = REG_QUERY.exec(filter))) {
+                    (match = RE_QUERY.exec(filter))) {
                     id = match[1];
                     tag = match[2];
                     cls = match[3];
@@ -3270,7 +3274,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
  #id .cls
  tag.cls
  #id tag.cls
- 注 1：REG_QUERY 还会匹配 #id.cls
+ 注 1：RE_QUERY 还会匹配 #id.cls
  注 2：tag 可以为 * 字符
  注 3: 支持 , 号分组
 
@@ -3311,14 +3315,13 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
         docElem = doc && doc.documentElement,
         OPACITY = 'opacity',
         STYLE = 'style',
+        RE_POS = /^(top|right|bottom|left)$/,
         FILTER = 'filter',
         CURRENT_STYLE = 'currentStyle',
         RUNTIME_STYLE = 'runtimeStyle',
         LEFT = 'left',
         PX = 'px',
         CUSTOM_STYLES = Style._CUSTOM_STYLES,
-        RE_NUM_PX = /^-?\d+(?:px)?$/i,
-        RE_NUM = /^-?\d/,
         backgroundPosition = 'backgroundPosition',
         R_OPACITY = /opacity\s*=\s*([^)]*)/,
         R_ALPHA = /alpha\([^)]*\)/i;
@@ -3450,27 +3453,24 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
             // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
-            if ((!RE_NUM_PX.test(ret) &&
-                RE_NUM.test(ret)) &&
-                // '0px 0px'
-                ret.indexOf(' ') == -1) {
+            // exclude left right for relativity
+            if (DOM._RE_NUM_NO_PX.test(ret) && !RE_POS.test(name)) {
                 // Remember the original values
                 var style = elem[STYLE],
                     left = style[LEFT],
-                    rsLeft = elem[RUNTIME_STYLE] && elem[RUNTIME_STYLE][LEFT];
+                    rsLeft = elem[RUNTIME_STYLE][LEFT];
+
+                // prevent flashing of content
+                elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
 
                 // Put in the new values to get a computed value out
-                if (rsLeft) {
-                    elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
-                }
                 style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
                 ret = style['pixelLeft'] + PX;
 
                 // Revert the changed values
                 style[LEFT] = left;
-                if (rsLeft) {
-                    elem[RUNTIME_STYLE][LEFT] = rsLeft;
-                }
+
+                elem[RUNTIME_STYLE][LEFT] = rsLeft;
             }
             return ret === '' ? 'auto' : ret;
         };
@@ -3506,6 +3506,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         isIE = UA['ie'],
         STYLE = 'style',
         FLOAT = 'float',
+        RE_MARGIN = /^margin/,
         CSS_FLOAT = 'cssFloat',
         STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width',
@@ -3515,7 +3516,6 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         OLD_DISPLAY = DISPLAY + S.now(),
         NONE = 'none',
         myParseInt = parseInt,
-        RE_NUM_PX = /^-?\d+(?:px)?$/i,
         cssNumber = {
             'fillOpacity': 1,
             'fontWeight': 1,
@@ -3558,7 +3558,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         defaultDisplayDetectIframeDoc;
 
     // modified from jquery : bullet-proof method of getting default display
-    // fix domain problem in ie>6 , ie6 still access denied
+    // fix domain problem in ie>6, ie6 still access denied
     function getDefaultDisplay(tagName) {
         var body,
             elem;
@@ -3644,6 +3644,10 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             _getComputedStyle: function (elem, name) {
                 var val = '',
                     computedStyle,
+                    width,
+                    minWidth,
+                    maxWidth,
+                    style,
                     d = elem.ownerDocument;
 
                 name = name.replace(R_UPPER, '-$1').toLowerCase();
@@ -3654,9 +3658,24 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
 
                 // 还没有加入到 document，就取行内
-                if (val == '' && !DOM.contains(d.documentElement, elem)) {
+                if (val === '' && !DOM.contains(d, elem)) {
                     name = cssProps[name] || name;
                     val = elem[STYLE][name];
+                }
+
+                // Safari 5.1 returns percentage for margin
+                if (DOM._RE_NUM_NO_PX.test(val) && RE_MARGIN.test(name)) {
+                    style = elem.style;
+                    width = style.width;
+                    minWidth = style.minWidth;
+                    maxWidth = style.maxWidth;
+
+                    style.minWidth = style.maxWidth = style.width = val;
+                    val = computedStyle.width;
+
+                    style.width = width;
+                    style.minWidth = minWidth;
+                    style.maxWidth = maxWidth;
                 }
 
                 return val;
@@ -3963,16 +3982,6 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             get: function (elem, computed) {
                 if (computed) {
                     return getWHIgnoreDisplay(elem, name) + 'px';
-                }
-            },
-            set: function (elem, value) {
-                if (RE_NUM_PX.test(value)) {
-                    value = parseFloat(value);
-                    if (value >= 0) {
-                        return value + 'px';
-                    }
-                } else {
-                    return value;
                 }
             }
         };
@@ -4537,7 +4546,6 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
  2012-04-05 yiminghe@gmail.com
  - 增加 contents 方法
 
-
  2011-08 yiminghe@gmail.com
  - 添加 closest , first ,last 完全摆脱原生属性
 
@@ -4546,5 +4554,4 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
  - api 的设计上，没有跟随 jQuery. 一是为了和其他 api 一致，保持 first-all 原则。二是
  遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
-
  */

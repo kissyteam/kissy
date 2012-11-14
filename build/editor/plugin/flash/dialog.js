@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:55
+build time: Nov 14 21:52
 */
 /**
  * flash dialog
@@ -105,13 +105,12 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
         _prepareShow: function () {
             var self = this;
             self.dialog = new Dialog({
-                autoRender: true,
                 headerContent: self._title,
                 bodyContent: self._bodyHtml,
                 footerContent: self._footHtml,
                 width: self._config_dwidth || "500px",
                 mask: true
-            });
+            }).render();
             self.addRes(self.dialog);
             self._initD();
         },

@@ -29,5 +29,5 @@ KISSY.add("tabs/panel", function (S, Component, PanelRender) {
     })
 
 }, {
-    requires: ['component', './panel-render']
+    requires: ['component/base', './panel-render']
 });

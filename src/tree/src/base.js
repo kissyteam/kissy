@@ -29,7 +29,7 @@ KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager
     });
 
 }, {
-    requires: ['component', './node', './tree-render', './tree-manager']
+    requires: ['component/base', './node', './tree-render', './tree-manager']
 });
 
 /*

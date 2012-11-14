@@ -128,5 +128,5 @@ KISSY.add("combobox/render", function (S, Component) {
 
     return ComboboxRender;
 }, {
-    requires: ['component']
+    requires: ['component/base']
 });

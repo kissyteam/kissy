@@ -229,5 +229,5 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
     return Toolbar;
 
 }, {
-    requires: ['component', 'node']
+    requires: ['component/base', 'node']
 });

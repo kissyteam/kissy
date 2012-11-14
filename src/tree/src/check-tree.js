@@ -35,5 +35,5 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
     return CheckTree;
 
 }, {
-    requires: ['component', './check-node', './check-tree-render', './tree-manager']
+    requires: ['component/base', './check-node', './check-tree-render', './tree-manager']
 });

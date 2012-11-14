@@ -1,14 +1,14 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:55
+build time: Nov 14 21:52
 */
 /*
  thanks to CKSource's intelligent work on CKEditor
  @author yiminghe@gmail.com
 */
 KISSY.add("editor/core/base",function(e,m,u){m=u.Controller.extend({initializer:function(){this.__commands={};this.__controls={}}},{Config:{},XHTML_DTD:m.DTD,ATTRS:{textarea:{},iframe:{},window:{},document:{},toolBarEl:{},statusBarEl:{},handleMouseEvents:{value:!1},focusable:{value:!1},mode:{value:1},data:{getter:function(){return this._getData()},setter:function(e){return this._setData(e)}},formatData:{getter:function(){return this._getData(1)},setter:function(e){return this._setData(e)}},customStyle:{value:""},
-customLink:{value:[]}}},{xclass:"editor"});m.HTML_PARSER={textarea:function(e){return e.one("."+this.get("prefixCls")+"editor-textarea")}};e.mix(m,e.EventTarget);return KISSY.Editor=m},{requires:["htmlparser","component","core"]});
+customLink:{value:[]}}},{xclass:"editor"});m.HTML_PARSER={textarea:function(e){return e.one("."+this.get("prefixCls")+"editor-textarea")}};e.mix(m,e.EventTarget);return KISSY.Editor=m},{requires:["htmlparser","component/base","core"]});
 KISSY.add("editor/core/clipboard",function(e,m,u,q){function r(a){this.editor=a;this._init()}function i(a){if(k.ie&&"BackCompat"!=a.get("document")[0].compatMode){var b=a.getSelection(),d;if(b.getType()==q.SELECTION_ELEMENT&&(d=b.getSelectedElement())){var g=b.getRanges()[0],c=f(a.get("document")[0].createTextNode(""));c.insertBefore(d);g.setStartBefore(c);g.setEndAfter(d);b.selectRanges([g]);setTimeout(function(){d.parent()&&(c.remove(),b.selectElement(d))},0)}}}var f=e.all,k=e.UA,o=m.RANGE,n=e.Event;
 e.augment(r,{_init:function(){var a=this.editor,h=a.get("document")[0].body;n.on(h,k.ie?"beforepaste":"paste",this._paste,this);n.on(h,"contextmenu",function(){b=1;setTimeout(function(){b=0},10)});a.addCommand("copy",new w("copy"));a.addCommand("cut",new w("cut"));a.addCommand("paste",new w("paste"))},_paste:function(){if(!b){var a=this.editor,h=a.get("document")[0];if(!h.getElementById("ke_pastebin")){var d=a.getSelection(),g=new u(h),c=f(k.webkit?"<body></body>":h.createElement("div"),null,h);c.attr("id",
 "ke_pastebin");k.webkit&&c[0].appendChild(h.createTextNode("\u00a0"));h.body.appendChild(c[0]);c.css({position:"absolute",top:d.getStartElement().offset().top+"px",width:"1px",height:"1px",overflow:"hidden"});c.css("left","-1000px");var l=d.createBookmarks();g.setStartAt(c,o.POSITION_AFTER_START);g.setEndAt(c,o.POSITION_BEFORE_END);g.select(!0);setTimeout(function(){var b;c=k.webkit&&(b=c.first())&&b.hasClass("Apple-style-span")?b:c;d.selectBookmarks(l);c.remove();var g=c.html();if(g=e.trim(g.replace(/<span[^>]+_ke_bookmark[^<]*?<\/span>(&nbsp;)*/ig,

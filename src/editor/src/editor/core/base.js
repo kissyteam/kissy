@@ -140,5 +140,5 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
 
     return Editor;
 }, {
-    requires:['htmlparser', 'component', 'core']
+    requires:['htmlparser', 'component/base', 'core']
 });

@@ -3,13 +3,9 @@
  * @fileOverview KISSY.Dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
+KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Drag) {
 
     var $ = Node.all;
-
-    function require(s) {
-        return S.require("component/uibase/" + s);
-    }
 
     /**
      * @class KISSY.Overlay.Dialog
@@ -19,8 +15,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
      * @mixins KISSY.Component.UIBase.Drag
      */
     var Dialog = Overlay.extend([
-        require("stdmod"),
-        require("drag")
+        StdMod,
+        Drag
     ], {
             initializer: function () {
                 var self = this, draggable;
@@ -173,7 +169,9 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
     return Dialog;
 
 }, {
-    requires: [ "./base", './dialog-render', 'node']
+    requires: [ "./base", './dialog-render',
+        'node', './extension/stdmod',
+        './extension/drag']
 });
 
 /**

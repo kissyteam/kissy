@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 20:18
+build time: Nov 14 21:53
 */
 /**
  * infrastructure for create plugin/extension-enabled class

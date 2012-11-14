@@ -1,5 +1,5 @@
-KISSY.use("component", function (S, Component) {
-    var Align = Component.UIBase.Align;
+KISSY.use("component/extension", function (S, extension) {
+    var Align = extension.Align;
     var DOM = S.DOM;
     var $ = S.all;
     describe("uibase-align", function () {
@@ -14,7 +14,7 @@ KISSY.use("component", function (S, Component) {
                     var actual=this.actual;
                     for(var i in actual){
                         if(actual[i]-expect[i]<5){
-                            continue;
+
                         }else{
                             return false;
                         }
@@ -99,7 +99,7 @@ KISSY.use("component", function (S, Component) {
                 DOM.prepend(dom[i], "body");
             }
 
-
+debugger
             // 1
             window.scrollTo(10, 10);
 
@@ -109,6 +109,7 @@ KISSY.use("component", function (S, Component) {
                 bottom = 10 + DOM.viewportHeight();
 
             rect = getVisibleRectForElement(dom[0].firstChild);
+
             expect(rect.left).toBeEqual(10);
             expect(rect.top).toBeEqual(10);
             expect(rect.right).toBeEqual(right);
@@ -203,7 +204,7 @@ KISSY.use("component", function (S, Component) {
                         "</div>").appendTo("body");
 
                     var target = node.first(),
-                        upper = node.children().item(1),
+                        //upper = node.children().item(1),
                         lower = node.children().item(2);
 
                     var obj = {
@@ -296,7 +297,7 @@ KISSY.use("component", function (S, Component) {
                         "</div>").appendTo("body");
 
                     var target = node.first(),
-                        upper = node.children().item(1),
+                        //upper = node.children().item(1),
                         lower = node.children().item(2);
 
                     var obj = {

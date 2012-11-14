@@ -381,7 +381,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
     return SubMenu;
 }, {
-    requires: ['event', 'component', './menuitem', './submenuRender']
+    requires: ['event', 'component/base', './menuitem', './submenuRender']
 });
 
 /**

@@ -169,5 +169,5 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
 
     return MenuItem;
 }, {
-    requires: ['component', './menuitemRender']
+    requires: ['component/base', './menuitemRender']
 });

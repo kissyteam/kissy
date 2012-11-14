@@ -46,5 +46,5 @@ KISSY.add("separator", function (S, Component, SeparatorRender) {
     return Separator;
 
 }, {
-    requires:['component', 'separator/separatorRender']
+    requires:['component/base', 'separator/separatorRender']
 });

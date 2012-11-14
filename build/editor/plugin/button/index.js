@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:55
+build time: Nov 14 21:52
 */
 /**
  * Encapsulate KISSY toggle button for kissy editor
@@ -27,7 +27,6 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
 
         var b = new ButtonType(S.mix({
             render: self.get("toolBarEl"),
-            autoRender: true,
             content: '<span ' +
                 'class="' + prefixCls + 'item ' +
                 prefixCls + id +
@@ -35,7 +34,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
                 '>',
             prefixCls: self.get("prefixCls") + "editor-",
             editor: self
-        }, cfg));
+        }, cfg)).render();
 
         // preserver selection in editor iframe
         // magic happens when tabIndex and unselectable are both set

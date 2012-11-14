@@ -79,5 +79,5 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
         }
     });
 }, {
-    requires: ['node', 'component']
+    requires: ['node', 'component/base']
 });

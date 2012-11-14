@@ -39,5 +39,5 @@ KISSY.add("menu/menuRender", function(S, UA, Component) {
         }
     });
 }, {
-    requires:['ua','component']
+    requires:['ua','component/base']
 });

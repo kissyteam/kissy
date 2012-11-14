@@ -1,14 +1,22 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 9 16:26
+build time: Nov 14 21:53
 */
 /**
  * @ignore
  * @fileOverview controller for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/base", function (S, Component, OverlayRender) {
+KISSY.add("overlay/base", function (S, Component,
+                                    Extension,
+
+                                    Loading,
+
+                                    Close,
+                                    Resize,
+                                    Mask,
+                                    OverlayRender) {
 
     var NONE = 'none',
         DURATION = 0.5,
@@ -124,10 +132,6 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
         }, easing);
     }
 
-    function require(s) {
-        return S.require("component/uibase/" + s);
-    }
-
     /**
      * KISSY Overlay Component. xclass: 'overlay'.
      * @class KISSY.Overlay
@@ -141,13 +145,13 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
      * @mixins KISSY.Component.UIBase.Mask
      */
     var Overlay = Component.Controller.extend([
-        require("content-box"),
-        require("position"),
-        require("loading"),
-        require("align"),
-        require("close"),
-        require("resize"),
-        require("mask")
+        Extension.ContentBox,
+        Extension.Position,
+        Loading,
+        Extension.Align,
+        Close,
+        Resize,
+        Mask
     ],{
             /**
              * For overlay with effect, it should listen show and hide instead of afterVisibleChange.
@@ -268,19 +272,22 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
 
     return Overlay;
 }, {
-    requires: ['component', './overlay-render']
+    requires: [
+        'component/base',
+        'component/extension',
+        "./extension/loading",
+        "./extension/close",
+        "./extension/resize",
+        "./extension/mask",
+        './overlay-render']
 });/**
  * @ignore
  * @fileOverview render for dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/dialog-render", function (S, OverlayRender) {
-    function require(s) {
-        return S.require("component/uibase/" + s);
-    }
-
+KISSY.add("overlay/dialog-render", function (S, OverlayRender,StdMod) {
     return OverlayRender.extend([
-        require("stdmod-render")
+        StdMod
     ], {
         createDom: function () {
             var self = this,
@@ -301,19 +308,15 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender) {
         }
     });
 }, {
-    requires: ['./overlay-render']
+    requires: ['./overlay-render','./extension/stdmod-render']
 });/**
  * @ignore
  * @fileOverview KISSY.Dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
+KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Drag) {
 
     var $ = Node.all;
-
-    function require(s) {
-        return S.require("component/uibase/" + s);
-    }
 
     /**
      * @class KISSY.Overlay.Dialog
@@ -323,8 +326,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
      * @mixins KISSY.Component.UIBase.Drag
      */
     var Dialog = Overlay.extend([
-        require("stdmod"),
-        require("drag")
+        StdMod,
+        Drag
     ], {
             initializer: function () {
                 var self = this, draggable;
@@ -477,7 +480,9 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
     return Dialog;
 
 }, {
-    requires: [ "./base", './dialog-render', 'node']
+    requires: [ "./base", './dialog-render',
+        'node', './extension/stdmod',
+        './extension/drag']
 });
 
 /**
@@ -491,25 +496,880 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
  *  重构，使用扩展类
  *//**
  * @ignore
+ * @fileOverview close extension for kissy dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/extension/close-render", function (S, Node) {
+
+    var CLS_PREFIX = 'ext-';
+
+    function getCloseRenderBtn(prefixCls) {
+        return new Node("<a " +
+            "tabindex='0' " +
+            "href='javascript:void(\"关闭\")' " +
+            "role='button' " +
+            "style='z-index:9' " +
+            "class='" + prefixCls + CLS_PREFIX + "close" + "'>" +
+            "<span class='" +
+            prefixCls + CLS_PREFIX + "close-x" +
+            "'>关闭<" + "/span>" +
+            "<" + "/a>");
+    }
+
+    function CloseRender() {
+    }
+
+    CloseRender.ATTRS = {
+        closable: {
+            value: true
+        },
+        closeBtn: {
+        }
+    };
+
+    CloseRender.HTML_PARSER = {
+        closeBtn: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + 'close');
+        }
+    };
+
+    CloseRender.prototype = {
+        _uiSetClosable: function (v) {
+            var self = this,
+                btn = self.get("closeBtn");
+            if (v) {
+                if (!btn) {
+                    self.setInternal("closeBtn", btn = getCloseRenderBtn(self.get('prefixCls')));
+                }
+                self.get("el").prepend(btn);
+            } else {
+                if (btn) {
+                    btn.remove();
+                }
+            }
+        }
+    };
+
+    return CloseRender;
+
+}, {
+    requires: ["node"]
+});/**
+ * @ignore
+ * @fileOverview close extension for kissy dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/extension/close", function () {
+
+    /**
+     * @class KISSY.Component.Extension.Close
+     * Close extension class. Represent a close button.
+     */
+    function Close() {
+    }
+
+    var HIDE = "hide";
+
+    Close.ATTRS =    {
+        /**
+         * Whether close button is visible.
+         *
+         * Defaults to: true.
+         *
+         * @cfg {Boolean} closable
+         */
+        /**
+         * Whether close button is visible.
+         * @type {Boolean}
+         * @property closable
+         */
+        /**
+         * @ignore
+         */
+        closable:{
+            view:1
+        },
+
+        /**
+         * close button element.
+         * @type {KISSY.NodeList}
+         * @property closeBtn
+         * @readonly
+         */
+        /**
+         * @ignore
+         */
+        closeBtn:{
+            view:1
+        },
+
+        /**
+         * Whether to destroy or hide current element when click close button.
+         * Can set "destroy" to destroy it when click close button.
+         *
+         * Defaults to: "hide".
+         *
+         * @cfg {String} closeAction
+         */
+        /**
+         * @ignore
+         */
+        closeAction:{
+            value:HIDE
+        }
+    };
+
+    var actions = {
+        hide:HIDE,
+        destroy:"destroy"
+    };
+
+    Close.prototype = {
+        _uiSetClosable:function (v) {
+            var self = this;
+            if (v && !self.__bindCloseEvent) {
+                self.__bindCloseEvent = 1;
+                self.get("closeBtn").on("click", function (ev) {
+                    self.close();
+                    ev.preventDefault();
+                });
+            }
+        },
+        /**
+         * hide or destroy according to {@link KISSY.Component.Extension.Close#closeAction}
+         */
+        close:function(){
+            var self=this;
+            self[actions[self.get("closeAction")] || HIDE]();
+        },
+        __destructor:function () {
+            var btn = this.get("closeBtn");
+            btn && btn.detach();
+        }
+    };
+    return Close;
+
+});/**
+ * @ignore
+ * @fileOverview drag extension for position
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/extension/drag", function (S) {
+
+    /**
+     * @class KISSY.Component.Extension.Drag
+     * Drag extension class. Make element draggable.
+     */
+    function Drag() {
+    }
+
+    Drag.ATTRS = {
+        /**
+         * Whether current element is draggable and draggable config.
+         * @cfg {Boolean|Object} draggable
+         *
+         * for example:
+         *      @example
+         *      {
+         *          proxy:{
+         *              // see {@link KISSY.DD.Proxy} config
+         *          },
+         *          scroll:{
+         *              // see {@link KISSY.DD.Scroll} config
+         *          },
+         *          constrain:{
+         *              // see {@link KISSY.DD.Constrain} config
+         *          },
+         *      }
+         */
+        /**
+         * @ignore
+         */
+        draggable: {
+            setter: function (v) {
+                if (v === true) {
+                    return {};
+                }
+            },
+            value: {}
+        }
+    };
+
+    Drag.prototype = {
+
+        _uiSetDraggable: function (dragCfg) {
+            var self = this,
+                handlers,
+                DD = S.require("dd/base"),
+                Proxy,
+                Scroll,
+                Constrain,
+                Draggable,
+                scrollCfg,
+                constrainCfg,
+                p,
+                d = self.__drag,
+                c = self.__constrain,
+                el = self.get("el");
+
+            if (dragCfg && !d && DD) {
+
+                Draggable = DD.Draggable;
+
+                d = self.__drag = new Draggable({
+                    node: el,
+                    move: 1
+                });
+
+                if (dragCfg.proxy && (Proxy = S.require('dd/proxy'))) {
+                    dragCfg.proxy.moveOnEnd = true;
+
+                    p = self.__proxy = new Proxy(dragCfg.proxy).attachDrag(d);
+                }
+
+                d.on("dragend", function () {
+                    var proxyOffset;
+                    proxyOffset = el.offset();
+                    self.set("x", proxyOffset.left);
+                    self.set("y", proxyOffset.top);
+                    // 存在代理时
+                    if (p) {
+                        el.css("visibility", "visible");
+                    }
+                });
+
+                if ((scrollCfg = dragCfg.scroll) && (Scroll = S.require('dd/scroll'))) {
+                    self.__scroll = new Scroll(scrollCfg).attachDrag(d);
+                }
+
+            }
+
+            if (d) {
+                d.set("disabled", !dragCfg);
+            }
+
+            if (dragCfg && d) {
+                handlers = dragCfg.handlers;
+                if (Constrain = S.require('dd/constrain')) {
+                    if (constrainCfg = dragCfg.constrain) {
+                        if (!c) {
+                            c = self.__constrain = new Constrain().attachDrag(d);
+                        }
+                        c.set("constrain", constrainCfg);
+                    } else {
+                        if (c) {
+                            c.set("constrain", false);
+                        }
+                    }
+                }
+                if (handlers && handlers.length > 0) {
+                    d.set("handlers", handlers);
+                }
+            }
+        },
+
+        __destructor: function () {
+            var self = this,
+                p = self.__proxy,
+                s = self.__scroll,
+                c = self.__constrain,
+                d = self.__drag;
+            s && s.destroy();
+            p && p.destroy();
+            c && c.destroy();
+            d && d.destroy();
+        }
+
+    };
+
+    return Drag;
+
+});/**
+ * @ignore
+ * @fileOverview loading mask support for overlay
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/extension/loading-render", function (S, Node) {
+
+    function Loading() {
+    }
+
+    Loading.prototype = {
+        loading: function () {
+            var self = this;
+            if (!self._loadingExtEl) {
+                self._loadingExtEl = new Node("<div " +
+                    "class='" +
+                    self.get('prefixCls') + "ext-loading'" +
+                    " style='position: absolute;" +
+                    "border: none;" +
+                    "width: 100%;" +
+                    "top: 0;" +
+                    "left: 0;" +
+                    "z-index: 99999;" +
+                    "height:100%;" +
+                    "*height: expression(this.parentNode.offsetHeight);" + "'/>")
+                    .appendTo(self.get("el"));
+            }
+            self._loadingExtEl.show();
+        },
+
+        unloading: function () {
+            var lel = this._loadingExtEl;
+            lel && lel.hide();
+        }
+    };
+
+    return Loading;
+
+}, {
+    requires: ['node']
+});/**
+ * @ignore
+ * @fileOverview loading mask support for overlay
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/extension/loading", function () {
+
+    /**
+     * @class KISSY.Component.Extension.Loading
+     * Loading extension class. Make component to be able to mask loading.
+     */
+    function Loading() {
+    }
+
+    Loading.prototype = {
+        /**
+         * mask component as loading
+         */
+        loading: function () {
+            this.get("view").loading();
+            return this;
+        },
+
+        /**
+         * unmask component as loading
+         */
+        unloading: function () {
+            this.get("view").unloading();
+            return this;
+        }
+    };
+
+    return Loading;
+
+});/**
+ * @ignore
+ * @fileOverview mask extension for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/extension/mask-render", function (S, UA, Node) {
+
+    var ie6 = (UA['ie'] === 6),
+        $ = Node.all;
+
+    function docWidth() {
+        return  ie6 ? ("expression(KISSY.DOM.docWidth())") : "100%";
+    }
+
+    function docHeight() {
+        return ie6 ? ("expression(KISSY.DOM.docHeight())") : "100%";
+    }
+
+    function initMask(self) {
+        var maskCls = self.get("prefixCls") + "ext-mask " + self.getCssClassWithState('-mask'),
+            mask = $("<div " +
+                " style='width:" + docWidth() + ";" +
+                "left:0;" +
+                "top:0;" +
+                "height:" + docHeight() + ";" +
+                "position:" + (ie6 ? "absolute" : "fixed") + ";'" +
+                " class='" +
+                maskCls +
+                "'>" +
+                (ie6 ? "<" + "iframe " +
+                    "style='position:absolute;" +
+                    "left:" + "0" + ";" +
+                    "top:" + "0" + ";" +
+                    "background:red;" +
+                    "width: expression(this.parentNode.offsetWidth);" +
+                    "height: expression(this.parentNode.offsetHeight);" +
+                    "filter:alpha(opacity=0);" +
+                    "z-index:-1;'></iframe>" : "") +
+                "</div>")
+                .prependTo("body");
+        /*
+         点 mask 焦点不转移
+         */
+        mask.unselectable();
+        mask.on("mousedown", function (e) {
+            e.preventDefault();
+        });
+        return mask;
+    }
+
+    function Mask() {
+    }
+
+    Mask.ATTRS = {
+
+        mask: {
+            value: false
+        },
+        maskNode: {
+
+        }
+
+    };
+
+    Mask.prototype = {
+
+        __renderUI: function () {
+            var self = this;
+            if (self.get('mask')) {
+                self.set('maskNode', initMask(self));
+            }
+        },
+
+        __syncUI: function () {
+            var self = this;
+            if (self.get('mask')) {
+                self.ksSetMaskVisible(self.get('visible'), 1);
+            }
+        },
+
+        ksSetMaskVisible: function (shown, hideInline) {
+            var self = this,
+                shownCls = self.getCssClassWithState('-mask-shown'),
+                maskNode = self.get('maskNode'),
+                hiddenCls = self.getCssClassWithState('-mask-hidden');
+            if (shown) {
+                maskNode.removeClass(hiddenCls).addClass(shownCls);
+            } else {
+                maskNode.removeClass(shownCls).addClass(hiddenCls);
+
+            }
+            if (!hideInline) {
+                maskNode.css('visibility', shown ? 'visible' : 'hidden');
+            }
+        },
+
+        __destructor: function () {
+            var self = this, mask;
+            if (mask = self.get("maskNode")) {
+                mask.remove();
+            }
+        }
+
+    };
+
+    return Mask;
+}, {
+    requires: ["ua", "node"]
+});/**
+ * @ignore
+ * @fileOverview mask extension for kissy
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/extension/mask", function () {
+
+    /**
+     * @class KISSY.Component.Extension.Mask
+     * Mask extension class. Make component to be able to show with mask.
+     */
+    function Mask() {
+    }
+
+    Mask.ATTRS = {
+        /**
+         * Whether show mask layer when component shows and effect
+         * @cfg {Boolean|Object} mask
+         *
+         * for example:
+         *      @example
+         *      {
+         *          effect:'fade', // slide
+         *          duration:0.5,
+         *          easing:'easingNone'
+         *      }
+         */
+        /**
+         * @ignore
+         */
+        mask: {
+            view: 1
+        },
+        /**
+         * Mask node of current component.
+         * @type {KISSY.NodeList}
+         * @property maskNode
+         * @readonly
+         */
+        /**
+         * @ignore
+         */
+        maskNode: {
+            view: 1
+        }
+    };
+
+    var NONE = 'none',
+        effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
+
+    function processMask(mask, el, show, view) {
+
+        var effect = mask.effect || NONE;
+
+        if (effect == NONE) {
+            view.ksSetMaskVisible(show);
+            return;
+        }
+
+        // no inline style, leave it to anim(fadeIn/Out)
+        view.ksSetMaskVisible(show, 1);
+
+        var duration = mask.duration,
+            easing = mask.easing,
+            m,
+            index = show ? 1 : 0;
+
+        // run complete fn to restore window's original height
+        el.stop(1, 1);
+
+        el.css('display', show ? 'none' : 'block');
+
+        m = effect + effects[effect][index];
+
+        el[m](duration, null, easing);
+    }
+
+    Mask.prototype = {
+
+        __bindUI: function () {
+            var self = this,
+                maskNode,
+                mask,
+                el = self.get('el'),
+                view = self.get("view");
+            if (mask = self.get("mask")) {
+                maskNode = self.get('maskNode');
+                self.on('afterVisibleChange', function (e) {
+                    var v;
+                    if (v = e.newVal) {
+                        var elZIndex = parseInt(el.css('z-index')) || 1;
+                        maskNode.css('z-index', elZIndex - 1);
+                    }
+                    processMask(mask, maskNode, v, view)
+                });
+            }
+        }
+    };
+
+
+    return Mask;
+}, {requires: ["ua"]});/**
+ * @ignore
+ * @fileOverview resize extension using resizable
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/extension/resize", function (S) {
+
+    /**
+     * @class KISSY.Component.Extension.Resize
+     * Resizable extension class. Make component resizable
+     */
+    function Resize() {
+    }
+
+    Resize.ATTRS = {
+        /**
+         * Resizable configuration. See {@link KISSY.Resizable}
+         * @type {Object}
+         * @property resize
+         *
+         * for example:
+         *      @example
+         *      {
+         *          minWidth:100,
+         *          maxWidth:1000,
+         *          minHeight:100,
+         *          maxHeight:1000,
+         *          handlers:["b","t","r","l","tr","tl","br","bl"]
+         *      }
+         *
+         *
+         */
+        /**
+         * @ignore
+         */
+        resize:{
+            value:{
+            }
+        }
+    };
+
+    Resize.prototype = {
+        __destructor:function () {
+            var r = this.resizer;
+            r && r.destroy();
+        },
+        _uiSetResize:function (v) {
+            var Resizable = S.require("resizable"),
+                self = this;
+            self.resizer && self.resizer.destroy();
+            if (Resizable && v) {
+                v.node = self.get("el");
+                self.resizer = new Resizable(v);
+            }
+        }
+    };
+
+
+    return Resize;
+});/**
+ * @ignore
+ * @fileOverview support standard mod for component
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/extension/stdmod-render", function (S, Node) {
+
+
+    var CLS_PREFIX = "stdmod-";
+
+    function StdModRender() {
+    }
+
+    StdModRender.ATTRS = {
+        header: {
+        },
+        body: {
+        },
+        footer: {
+        },
+        bodyStyle: {
+        },
+        footerStyle: {
+        },
+        headerStyle: {
+        },
+        headerContent: {
+        },
+        bodyContent: {
+        },
+        footerContent: {
+        }
+    };
+
+    StdModRender.HTML_PARSER = {
+        header: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + "header");
+        },
+        body: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + "body");
+        },
+        footer: function (el) {
+            return el.one("." + this.get('prefixCls') + CLS_PREFIX + "footer");
+        }
+    };
+
+    function createUI(self, part) {
+        var el = self.get("contentEl"),
+            partEl = self.get(part);
+        if (!partEl) {
+            partEl = new Node("<div class='" +
+                self.get('prefixCls') + CLS_PREFIX + part + "'" +
+                " " +
+                " >" +
+                "</div>");
+            partEl.appendTo(el);
+            self.setInternal(part, partEl);
+        }
+    }
+
+
+    function _setStdModRenderContent(self, part, v) {
+        part = self.get(part);
+        if (typeof v == 'string') {
+            part.html(v);
+        } else {
+            part.html("")
+                .append(v);
+        }
+    }
+
+    StdModRender.prototype = {
+
+        __createDom: function () {
+            createUI(this, "header");
+            createUI(this, "body");
+            createUI(this, "footer");
+        },
+
+        _uiSetBodyStyle: function (v) {
+            this.get("body").css(v);
+        },
+
+        _uiSetHeaderStyle: function (v) {
+            this.get("header").css(v);
+        },
+        _uiSetFooterStyle: function (v) {
+            this.get("footer").css(v);
+        },
+
+        _uiSetBodyContent: function (v) {
+            _setStdModRenderContent(this, "body", v);
+        },
+
+        _uiSetHeaderContent: function (v) {
+            _setStdModRenderContent(this, "header", v);
+        },
+
+        _uiSetFooterContent: function (v) {
+            _setStdModRenderContent(this, "footer", v);
+        }
+    };
+
+    return StdModRender;
+
+}, {
+    requires: ['node']
+});/**
+ * @ignore
+ * @fileOverview support standard mod for component
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("overlay/extension/stdmod", function () {
+
+
+    /**
+     * @class KISSY.Component.Extension.StdMod
+     * StdMod extension class. Generate head, body, foot for component.
+     */
+    function StdMod() {
+    }
+
+    StdMod.ATTRS = {
+        /**
+         * Header element of dialog.
+         * @type {KISSY.NodeList}
+         * @property header
+         * @readonly
+         */
+        /**
+         * @ignore
+         */
+        header:{
+            view:1
+        },
+        /**
+         * Body element of dialog.
+         * @type {KISSY.NodeList}
+         * @property body
+         * @readonly
+         */
+        /**
+         * @ignore
+         */
+        body:{
+            view:1
+        },
+        /**
+         * Footer element of dialog.
+         * @type {KISSY.NodeList}
+         * @property footer
+         * @readonly
+         */
+        /**
+         * @ignore
+         */
+        footer:{
+            view:1
+        },
+        /**
+         * Key-value map of body element's style.
+         * @cfg {Object} bodyStyle
+         */
+        /**
+         * @ignore
+         */
+        bodyStyle:{
+            view:1
+        },
+        /**
+         * Key-value map of footer element's style.
+         * @cfg {Object} footerStyle
+         */
+        /**
+         * @ignore
+         */
+        footerStyle:{
+            view:1
+        },
+        /**
+         * Key-value map of header element's style.
+         * @cfg {Object} headerStyle
+         */
+        /**
+         * @ignore
+         */
+        headerStyle:{
+            view:1
+        },
+        /**
+         * html content of header element.
+         * @cfg {KISSY.NodeList|String} headerContent
+         */
+        /**
+         * @ignore
+         */
+        headerContent:{
+            view:1
+        },
+        /**
+         * html content of body element.
+         * @cfg {KISSY.NodeList|String} bodyContent
+         */
+        /**
+         * @ignore
+         */
+        bodyContent:{
+            view:1
+        },
+        /**
+         * html content of footer element.
+         * @cfg {KISSY.NodeList|String} footerContent
+         */
+        /**
+         * @ignore
+         */
+        footerContent:{
+            view:1
+        }
+    };
+
+    return StdMod;
+
+});/**
+ * @ignore
  * @fileOverview KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay-render", function (S, UA, Component) {
-
-    function require(s) {
-        return S.require("component/uibase/" + s);
-    }
+KISSY.add("overlay/overlay-render", function (S, UA, Component, Extension, Loading, Close, Mask) {
 
     return Component.Render.extend([
-        require("content-box-render"),
-        require("position-render"),
-        require("loading-render"),
-        UA['ie'] === 6 ? require("shim-render") : null,
-        require("close-render"),
-        require("mask-render")
+        Extension.ContentBox.Render,
+        Extension.Position.Render,
+        Loading,
+        UA['ie'] === 6 ? Extension.Shim.Render : null,
+        Close,
+        Mask
     ]);
+
 }, {
-    requires:["ua", "component"]
+    requires: ["ua", "component/base", 'component/extension',
+        './extension/loading-render',
+        './extension/close-render',
+        './extension/mask-render']
 });
 
 /**

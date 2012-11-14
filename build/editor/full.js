@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:55
+build time: Nov 14 21:52
 */
 /**
  * Set up editor constructor
@@ -145,7 +145,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
 
     return Editor;
 }, {
-    requires:['htmlparser', 'component', 'core']
+    requires:['htmlparser', 'component/base', 'core']
 });/**
  * monitor user's paste key ,clear user input,modified from ckeditor
  * @author yiminghe@gmail.com
@@ -9429,7 +9429,6 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
 
         var b = new ButtonType(S.mix({
             render: self.get("toolBarEl"),
-            autoRender: true,
             content: '<span ' +
                 'class="' + prefixCls + 'item ' +
                 prefixCls + id +
@@ -9437,7 +9436,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
                 '>',
             prefixCls: self.get("prefixCls") + "editor-",
             editor: self
-        }, cfg));
+        }, cfg)).render();
 
         // preserver selection in editor iframe
         // magic happens when tabIndex and unselectable are both set
@@ -9660,10 +9659,9 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                 content: S.substitute(html, {
                     prefixCls: prefixCls
                 }),
-                autoRender: true,
                 width: 172,
                 zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)
-            });
+            }).render();
 
             var colorWin = self.colorWin;
             colorPanel = colorWin.get("contentEl");
@@ -10349,9 +10347,8 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                         }
                     },
                     matchElWidth: false,
-                    autoRender: true,
                     content: "恢复编辑历史"
-                });
+                }).render();
             self.versions = versions;
             // 点击才开始 parse
             versions.on("beforeCollapsedChange", function (e) {
@@ -10461,11 +10458,10 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
             self.helpPopup = new Overlay({
                 content: help,
                 prefixCls: prefixCls + 'editor-',
-                autoRender: true,
                 width: help.width() + "px",
                 zIndex: Editor.baseZIndex(Editor.zIndexManager.OVERLAY),
                 mask: false
-            });
+            }).render();
             self.helpPopup.get("el")
                 .css("border", "none");
             self.helpPopup.arrow = arrow;
@@ -14327,9 +14323,8 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
 
         var s = new SelectType(S.mix({
             render: self.get("toolBarEl"),
-            prefixCls: prefixCls,
-            autoRender: true
-        }, cfg));
+            prefixCls: prefixCls
+        }, cfg)).render();
 
         s.get("el").unselectable();
 
@@ -15159,11 +15154,10 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                                     }),
                                     focus4e: false,
                                     width: 300,
-                                    autoRender: true,
                                     elCls: prefixCls + "editor-popup",
                                     zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
                                     mask: false
-                                });
+                                }).render();
                                 smiley.get("el").on("click", function (ev) {
                                     var t = new S.Node(ev.target),
                                         icon;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:55
+build time: Nov 14 21:52
 */
 /**
  * color picker
@@ -173,9 +173,8 @@ KISSY.add("editor/plugin/color/color-picker/dialog", function (S, Editor, Overla
                 footerContent: S.substitute(footHtml, {
                     prefixCls: prefixCls
                 }),
-                autoRender: true,
                 width: "550px"
-            });
+            }).render();
             var win = self.dialog,
                 body = win.get("body"),
                 foot = win.get("footer"),

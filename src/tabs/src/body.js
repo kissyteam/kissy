@@ -49,5 +49,5 @@ KISSY.add("tabs/body", function (S, Component) {
     });
 
 }, {
-    requires: ['component']
+    requires: ['component/base']
 });

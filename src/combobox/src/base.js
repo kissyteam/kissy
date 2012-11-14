@@ -834,7 +834,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 }, {
     requires: [
         'node',
-        'component',
+        'component/base',
         './render',
         'input-selection',
         'menu'

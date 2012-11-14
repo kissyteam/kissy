@@ -36,5 +36,5 @@ KISSY.add("tabs/panel-render", function (S, Component) {
     });
 
 }, {
-    requires: ['component']
+    requires: ['component/base']
 });

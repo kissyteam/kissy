@@ -195,7 +195,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
     return Menu;
 
 }, {
-    requires:['event', 'component', './menuRender', './submenu']
+    requires:['event', 'component/base', './menuRender', './submenu']
 });
 
 /**

@@ -11,5 +11,5 @@ KISSY.add("separator/separatorRender", function (S, Component) {
     });
 
 }, {
-    requires:['component']
+    requires:['component/base']
 });

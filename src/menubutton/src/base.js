@@ -354,5 +354,5 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
     return MenuButton;
 }, {
-    requires:[ "node", "button", "./baseRender", "menu", "component"]
+    requires:[ "node", "button", "./baseRender", "menu", "component/base"]
 });

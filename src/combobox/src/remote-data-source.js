@@ -111,5 +111,5 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
 
     return RemoteDataSource;
 }, {
-    requires:['ajax', 'component']
+    requires:['ajax', 'component/base']
 });

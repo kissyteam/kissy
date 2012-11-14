@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:55
+build time: Nov 14 21:52
 */
 /**
  * image dialog (support upload and remote)
@@ -210,7 +210,6 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
             var editor = self.editor,
                 prefixCls = editor.get('prefixCls') + 'editor-';
             self.dialog = self.d = new Overlay4E.Dialog({
-                autoRender: true,
                 width: 500,
                 headerContent: "图片",
                 bodyContent: S.substitute(IMAGE_DIALOG_BODY_HTML, {
@@ -220,7 +219,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
                     prefixCls: prefixCls
                 }),
                 mask: true
-            });
+            }).render();
 
             var content = self.d.get("el"),
                 cancel = content.one("." + prefixCls + "img-cancel"),

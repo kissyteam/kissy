@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:55
+build time: Nov 14 21:52
 */
 /**
  * select component for kissy editor.
@@ -35,9 +35,8 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
 
         var s = new SelectType(S.mix({
             render: self.get("toolBarEl"),
-            prefixCls: prefixCls,
-            autoRender: true
-        }, cfg));
+            prefixCls: prefixCls
+        }, cfg)).render();
 
         s.get("el").unselectable();
 

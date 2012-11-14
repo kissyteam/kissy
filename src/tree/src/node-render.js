@@ -206,5 +206,5 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
     });
 
 }, {
-    requires: ['node', 'component']
+    requires: ['node', 'component/base']
 });

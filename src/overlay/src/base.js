@@ -3,7 +3,15 @@
  * @fileOverview controller for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/base", function (S, Component, OverlayRender) {
+KISSY.add("overlay/base", function (S, Component,
+                                    Extension,
+
+                                    Loading,
+
+                                    Close,
+                                    Resize,
+                                    Mask,
+                                    OverlayRender) {
 
     var NONE = 'none',
         DURATION = 0.5,
@@ -119,10 +127,6 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
         }, easing);
     }
 
-    function require(s) {
-        return S.require("component/uibase/" + s);
-    }
-
     /**
      * KISSY Overlay Component. xclass: 'overlay'.
      * @class KISSY.Overlay
@@ -136,13 +140,13 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
      * @mixins KISSY.Component.UIBase.Mask
      */
     var Overlay = Component.Controller.extend([
-        require("content-box"),
-        require("position"),
-        require("loading"),
-        require("align"),
-        require("close"),
-        require("resize"),
-        require("mask")
+        Extension.ContentBox,
+        Extension.Position,
+        Loading,
+        Extension.Align,
+        Close,
+        Resize,
+        Mask
     ],{
             /**
              * For overlay with effect, it should listen show and hide instead of afterVisibleChange.
@@ -263,5 +267,12 @@ KISSY.add("overlay/base", function (S, Component, OverlayRender) {
 
     return Overlay;
 }, {
-    requires: ['component', './overlay-render']
+    requires: [
+        'component/base',
+        'component/extension',
+        "./extension/loading",
+        "./extension/close",
+        "./extension/resize",
+        "./extension/mask",
+        './overlay-render']
 });

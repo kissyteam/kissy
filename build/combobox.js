@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:53
+build time: Nov 14 21:49
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -839,7 +839,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 }, {
     requires: [
         'node',
-        'component',
+        'component/base',
         './render',
         'input-selection',
         'menu'
@@ -1009,7 +1009,7 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
 
     return LocalDataSource;
 }, {
-    requires:['component']
+    requires:['component/base']
 });/**
  * @fileOverview Remote datasource for ComboBox
  * @author yiminghe@gmail.com
@@ -1123,7 +1123,7 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
 
     return RemoteDataSource;
 }, {
-    requires:['ajax', 'component']
+    requires:['ajax', 'component/base']
 });/**
  * @fileOverview Render aria properties to input element.
  * @author yiminghe@gmail.com
@@ -1254,5 +1254,5 @@ KISSY.add("combobox/render", function (S, Component) {
 
     return ComboboxRender;
 }, {
-    requires: ['component']
+    requires: ['component/base']
 });

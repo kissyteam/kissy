@@ -1,10 +1,10 @@
 <script src="../../../../../build/seed.js"></script>
-<script >
+<script>
     KISSY.config({
-        map:[
+        map: [
             [
                 /(.+)(overlay|component)\.js(\?.+)/,
-                '$1??overlay.js,component.js'
+                '$1??overlay.js,component/base.js,component/extension.js'
             ]
         ]
     });
