@@ -249,9 +249,9 @@ KISSY.use("component", function (S, Component) {
                 var node = $("<div>123</div>").appendTo("body");
                 var n = new BoxController({
                     srcNode: node,
-                    content: '4',
-                    autoRender: true
+                    content: '4'
                 });
+                n.render();
                 expect(n.get("content")).toBe('4');
                 expect(node.html().toLowerCase()).toBe('123');
                 node.remove();
@@ -259,9 +259,9 @@ KISSY.use("component", function (S, Component) {
 
             it("html can be node without srcNode", function () {
                 var n = new BoxController({
-                    content: $('<span>4</span>'),
-                    autoRender: true
+                    content: $('<span>4</span>')
                 });
+                n.render();
                 expect(n.get("content").html()).toBe('4');
                 expect(n.get("el").html().toLowerCase()).toBe('<span>4</span>');
                 n.destroy();

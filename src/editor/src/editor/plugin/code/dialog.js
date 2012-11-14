@@ -87,7 +87,6 @@ KISSY.add('editor/plugin/code/dialog', function (S, Overlay, MenuButton) {
             d = self.dialog = new Overlay.Dialog({
                 width: 500,
                 mask: true,
-                autoRender: true,
                 headerContent: '插入代码',
                 bodyContent: S.substitute(bodyTpl, {
                     prefixCls: prefixCls
@@ -95,7 +94,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Overlay, MenuButton) {
                 footerContent: S.substitute(footTpl, {
                     prefixCls: prefixCls
                 })
-            });
+            }).render();
             el = d.get('el');
 
             self.insert = el.one('.' + prefixCls + 'code-insert');

@@ -75,23 +75,6 @@ KISSY.add('component/uibase/box-render', function (S) {
 
     BoxRender.prototype = {
 
-        __renderUI: function () {
-            var self = this;
-            // 新建的节点才需要摆放定位
-            if (!self.get("srcNode")) {
-                var render = self.get("render"),
-                    el = self.get("el"),
-                    renderBefore = self.get("elBefore");
-                if (renderBefore) {
-                    el.insertBefore(renderBefore, undefined);
-                } else if (render) {
-                    el.appendTo(render, undefined);
-                } else {
-                    el.appendTo(doc.body, undefined);
-                }
-            }
-        },
-
         /**
          * @ignore
          * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失
@@ -113,6 +96,23 @@ KISSY.add('component/uibase/box-render', function (S) {
                 if (!contentEl) {
                     // 没取到,这里设下值, uiSet 时可以 set("content")  取到
                     self.setInternal("contentEl", el);
+                }
+            }
+        },
+
+        __renderUI: function () {
+            var self = this;
+            // 新建的节点才需要摆放定位
+            if (!self.get("srcNode")) {
+                var render = self.get("render"),
+                    el = self.get("el"),
+                    renderBefore = self.get("elBefore");
+                if (renderBefore) {
+                    el.insertBefore(renderBefore, undefined);
+                } else if (render) {
+                    el.appendTo(render, undefined);
+                } else {
+                    el.appendTo(doc.body, undefined);
                 }
             }
         },

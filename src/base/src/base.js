@@ -18,6 +18,8 @@ KISSY.add('base', function (S, Attribute, Event) {
     function Base(config) {
         var self = this,
             c = self.constructor;
+        // save user config
+        self.userConfig = config;
         // define
         while (c) {
             addAttrs(self, c['ATTRS']);

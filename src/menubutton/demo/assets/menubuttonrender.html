@@ -159,9 +159,8 @@
                 content:"测试",
                 describedby:"describe",
                 menu:menu,
-                render:"#button_container",
-                autoRender:true
-            });
+                render:"#button_container"
+            }).render();
 
             var dis = Node.one("#dis");
 
@@ -204,9 +203,8 @@
             });
             var exist = new MenuButton({
                 srcNode:"#exist",
-                menu:menu,
-                autoRender:true
-            });
+                menu:menu
+            }).render();
 
         })();
 

@@ -11,40 +11,29 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
      * xclass: 'check-tree'.
      * @memberOf Tree
      */
-    var CheckTree = CheckNode.extend([TreeManager],
-        /**
+    var CheckTree = CheckNode.extend([TreeManager], {
+        _uiSetFocused: function () {
+            // check tree 没有 selectedItem 概念，也没有选中状态
+        }
+    }, {
+        ATTRS: /**
          * @lends Tree.CheckTree#
          */
         {
             /**
-             * See {@link Tree.Node#expandAll}
+             * Readonly. Render class.
+             * @type {Function}
              */
-            expandAll:function () {
-                return CheckTree.superclass.expandAll.apply(this, arguments);
-            },
-
-            _uiSetFocused:function () {
-                // check tree 没有 selectedItem 概念，也没有选中状态
+            xrender: {
+                value: CheckTreeRender
             }
-        }, {
-            ATTRS:/**
-             * @lends Tree.CheckTree#
-             */
-            {
-                /**
-                 * Readonly. Render class.
-                 * @type {Function}
-                 */
-                xrender:{
-                    value:CheckTreeRender
-                }
-            }
-        }, {
-            xclass:'check-tree',
-            priority:40
-        });
+        }
+    }, {
+        xclass: 'check-tree',
+        priority: 40
+    });
     return CheckTree;
 
 }, {
-    requires:['component', './check-node', './check-tree-render', './tree-manager']
+    requires: ['component', './check-node', './check-tree-render', './tree-manager']
 });

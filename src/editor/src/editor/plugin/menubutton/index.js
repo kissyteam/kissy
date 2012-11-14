@@ -30,9 +30,8 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
 
         var s = new SelectType(S.mix({
             render: self.get("toolBarEl"),
-            prefixCls: prefixCls,
-            autoRender: true
-        }, cfg));
+            prefixCls: prefixCls
+        }, cfg)).render();
 
         s.get("el").unselectable();
 

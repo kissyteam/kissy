@@ -1,0 +1,11 @@
+<project name="rich-base.build" default="build" basedir=".">
+    <description>rich-base Build File</description>
+
+    <property name="component.name" value="rich-base"/>
+
+    <import file="../../tools/build-xml/common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>
+

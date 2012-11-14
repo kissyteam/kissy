@@ -4,7 +4,6 @@
         var cfg = S.mix({
             // 是否初始聚焦
             focused: true,
-            autoRender: true,
             attachForm: true,
             baseZIndex: 10000,
             // 自定义样式
@@ -268,6 +267,7 @@
 
             cfg.plugins = args;
             var editor = new Editor(cfg);
+            editor.render();
             editor.on("blur", function () {
                 S.log("editor blur");
             });

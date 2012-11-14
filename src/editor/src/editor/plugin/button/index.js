@@ -22,7 +22,6 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
 
         var b = new ButtonType(S.mix({
             render: self.get("toolBarEl"),
-            autoRender: true,
             content: '<span ' +
                 'class="' + prefixCls + 'item ' +
                 prefixCls + id +
@@ -30,7 +29,7 @@ KISSY.add("editor/plugin/button/index", function (S, Editor, Button) {
                 '>',
             prefixCls: self.get("prefixCls") + "editor-",
             editor: self
-        }, cfg));
+        }, cfg)).render();
 
         // preserver selection in editor iframe
         // magic happens when tabIndex and unselectable are both set

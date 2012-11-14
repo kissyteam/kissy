@@ -58,7 +58,6 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
                 editor=self.editor,
                 prefixCls=editor.get('prefixCls'),
                 d = new Dialog({
-                    autoRender:true,
                     width:500,
                     headerContent:"链接",
                     bodyContent: S.substitute(bodyHtml,{
@@ -68,7 +67,7 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
                         prefixCls:prefixCls
                     }),
                     mask:true
-                });
+                }).render();
             self.dialog = d;
             var body = d.get("body"),
                 foot = d.get("footer");

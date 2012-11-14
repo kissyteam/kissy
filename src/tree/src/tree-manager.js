@@ -83,7 +83,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
          * @protected
          * @param target
          */
-        getOwnerControl: function (target,e) {
+        getOwnerControl: function (target) {
             var self = this,
                 n,
                 allNodes = getAllNodes(self),
@@ -100,7 +100,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
         },
 
         // 单选
-        _uiSetSelectedItem: function (n, ev) {
+        '_uiSetSelectedItem': function (n, ev) {
             if (ev.prevVal) {
                 ev.prevVal.set("selected", false);
             }

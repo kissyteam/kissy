@@ -129,7 +129,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
             self.get("el").attr("aria-selected", v);
         },
 
-        _uiSetDepth: function (v) {
+        '_uiSetDepth': function (v) {
             this.get("el").attr("aria-level", v);
         },
 

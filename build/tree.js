@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 7 18:57
+build time: Nov 14 19:21
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -22,45 +22,34 @@ KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager
      * xclass: 'tree'.
      * @extends Tree.Node
      */
-    return TreeNode.extend([TreeManager],
-        /**
-         * @lends Tree#
-         */
-        {
-            /**
-             * See {@link Tree.Node#expandAll}
-             */
-            expandAll:function () {
-                return TreeNode.prototype.expandAll.apply(this, arguments);
+    return TreeNode.extend([TreeManager], {}, {
+        ATTRS: {
+            xrender: {
+                value: TreeRender
             }
-        }, {
-            ATTRS:{
-                xrender:{
-                    value:TreeRender
-                }
-            }
-        }, {
-            xclass:'tree',
-            priority:30
-        });
+        }
+    }, {
+        xclass: 'tree',
+        priority: 30
+    });
 
 }, {
-    requires:['component', './node', './tree-render', './tree-manager']
+    requires: ['component', './node', './tree-render', './tree-manager']
 });
 
 /*
  Refer:
-  - http://www.w3.org/TR/wai-aria-practices/#TreeView
+ - http://www.w3.org/TR/wai-aria-practices/#TreeView
 
  note bug:
-  1. checked tree 根节点总是 selected ！
-  2. 根节点 hover 后取消不了了
+ 1. checked tree 根节点总是 selected ！
+ 2. 根节点 hover 后取消不了了
 
 
 
  支持 aria
-  重用组件框架
-  键盘操作指南
+ 重用组件框架
+ 键盘操作指南
 
  tab 到树，自动选择根节点
 
@@ -74,7 +63,7 @@ KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager
  enter : 触发 click 事件
  home : 移动到根节点
  end : 移动到前序遍历最后一个节点
-*//**
+ *//**
  * @fileOverview check node render
  * @author yiminghe@gmail.com
  */
@@ -130,19 +119,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
      * xclass: 'check-tree-node'.
      * @extends Tree.Node
      */
-    var CheckNode = TreeNode.extend(
-        /**
-         * @lends Tree.CheckNode#
-         */
-        {
-
-            /**
-             * See {@link Tree.Node#expandAll}
-             */
-            expandAll:function () {
-                return CheckNode.superclass.expandAll.apply(this, arguments);
-            },
-
+    var CheckNode = TreeNode.extend({
             performActionInternal:function (e) {
 
                 var self = this,
@@ -293,42 +270,31 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
      * xclass: 'check-tree'.
      * @memberOf Tree
      */
-    var CheckTree = CheckNode.extend([TreeManager],
-        /**
+    var CheckTree = CheckNode.extend([TreeManager], {
+        _uiSetFocused: function () {
+            // check tree 没有 selectedItem 概念，也没有选中状态
+        }
+    }, {
+        ATTRS: /**
          * @lends Tree.CheckTree#
          */
         {
             /**
-             * See {@link Tree.Node#expandAll}
+             * Readonly. Render class.
+             * @type {Function}
              */
-            expandAll:function () {
-                return CheckTree.superclass.expandAll.apply(this, arguments);
-            },
-
-            _uiSetFocused:function () {
-                // check tree 没有 selectedItem 概念，也没有选中状态
+            xrender: {
+                value: CheckTreeRender
             }
-        }, {
-            ATTRS:/**
-             * @lends Tree.CheckTree#
-             */
-            {
-                /**
-                 * Readonly. Render class.
-                 * @type {Function}
-                 */
-                xrender:{
-                    value:CheckTreeRender
-                }
-            }
-        }, {
-            xclass:'check-tree',
-            priority:40
-        });
+        }
+    }, {
+        xclass: 'check-tree',
+        priority: 40
+    });
     return CheckTree;
 
 }, {
-    requires:['component', './check-node', './check-tree-render', './tree-manager']
+    requires: ['component', './check-node', './check-tree-render', './tree-manager']
 });/**
  * @fileOverview common render for node
  * @author yiminghe@gmail.com
@@ -460,7 +426,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
             self.get("el").attr("aria-selected", v);
         },
 
-        _uiSetDepth: function (v) {
+        '_uiSetDepth': function (v) {
             this.get("el").attr("aria-level", v);
         },
 
@@ -1023,7 +989,7 @@ KISSY.add("tree/tree-manager-render", function (S) {
             self.get("rowEl").addClass(self.get('prefixCls') + "tree-row");
         },
 
-        _uiSetShowRootNode: function (v) {
+        '_uiSetShowRootNode': function (v) {
             this.get("rowEl")[v ? "show" : "hide"]();
         }
     });
@@ -1114,7 +1080,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
          * @protected
          * @param target
          */
-        getOwnerControl: function (target,e) {
+        getOwnerControl: function (target) {
             var self = this,
                 n,
                 allNodes = getAllNodes(self),
@@ -1131,7 +1097,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
         },
 
         // 单选
-        _uiSetSelectedItem: function (n, ev) {
+        '_uiSetSelectedItem': function (n, ev) {
             if (ev.prevVal) {
                 ev.prevVal.set("selected", false);
             }

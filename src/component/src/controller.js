@@ -83,8 +83,6 @@ KISSY.add("component/controller", function (S, Event, Component, UIBase, Manager
                 attrCfg.getter = wrapperViewGetter(attrName);
             }
         }
-        // does not autoRender for view
-        delete cfg.autoRender;
         cfg.ksComponentCss = getComponentCss(self);
         return new Render(cfg);
     }

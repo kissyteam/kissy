@@ -16,19 +16,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
      * xclass: 'check-tree-node'.
      * @extends Tree.Node
      */
-    var CheckNode = TreeNode.extend(
-        /**
-         * @lends Tree.CheckNode#
-         */
-        {
-
-            /**
-             * See {@link Tree.Node#expandAll}
-             */
-            expandAll:function () {
-                return CheckNode.superclass.expandAll.apply(this, arguments);
-            },
-
+    var CheckNode = TreeNode.extend({
             performActionInternal:function (e) {
 
                 var self = this,

@@ -40,7 +40,6 @@
         KISSY.use("editor", function (S, Editor) {
 
             var cfg = {
-                autoRender: true,
                 attachForm: true,
                 baseZIndex: 10000,
                 srcNode: "#editor",
@@ -204,7 +203,7 @@
                 });
 
                 cfg.plugins = args;
-                var editor = new Editor(cfg);
+                var editor = new Editor(cfg).render();
             });
 
         });

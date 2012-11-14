@@ -168,9 +168,8 @@ KISSY.add("editor/plugin/color/color-picker/dialog", function (S, Editor, Overla
                 footerContent: S.substitute(footHtml, {
                     prefixCls: prefixCls
                 }),
-                autoRender: true,
                 width: "550px"
-            });
+            }).render();
             var win = self.dialog,
                 body = win.get("body"),
                 foot = win.get("footer"),

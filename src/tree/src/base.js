@@ -17,45 +17,34 @@ KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager
      * xclass: 'tree'.
      * @extends Tree.Node
      */
-    return TreeNode.extend([TreeManager],
-        /**
-         * @lends Tree#
-         */
-        {
-            /**
-             * See {@link Tree.Node#expandAll}
-             */
-            expandAll:function () {
-                return TreeNode.prototype.expandAll.apply(this, arguments);
+    return TreeNode.extend([TreeManager], {}, {
+        ATTRS: {
+            xrender: {
+                value: TreeRender
             }
-        }, {
-            ATTRS:{
-                xrender:{
-                    value:TreeRender
-                }
-            }
-        }, {
-            xclass:'tree',
-            priority:30
-        });
+        }
+    }, {
+        xclass: 'tree',
+        priority: 30
+    });
 
 }, {
-    requires:['component', './node', './tree-render', './tree-manager']
+    requires: ['component', './node', './tree-render', './tree-manager']
 });
 
 /*
  Refer:
-  - http://www.w3.org/TR/wai-aria-practices/#TreeView
+ - http://www.w3.org/TR/wai-aria-practices/#TreeView
 
  note bug:
-  1. checked tree 根节点总是 selected ！
-  2. 根节点 hover 后取消不了了
+ 1. checked tree 根节点总是 selected ！
+ 2. 根节点 hover 后取消不了了
 
 
 
  支持 aria
-  重用组件框架
-  键盘操作指南
+ 重用组件框架
+ 键盘操作指南
 
  tab 到树，自动选择根节点
 
@@ -69,4 +58,4 @@ KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager
  enter : 触发 click 事件
  home : 移动到根节点
  end : 移动到前序遍历最后一个节点
-*/
+ */

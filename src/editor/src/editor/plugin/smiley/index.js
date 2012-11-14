@@ -44,11 +44,10 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
                                     }),
                                     focus4e: false,
                                     width: 300,
-                                    autoRender: true,
                                     elCls: prefixCls + "editor-popup",
                                     zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU),
                                     mask: false
-                                });
+                                }).render();
                                 smiley.get("el").on("click", function (ev) {
                                     var t = new S.Node(ev.target),
                                         icon;

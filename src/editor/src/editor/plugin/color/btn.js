@@ -90,10 +90,9 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
                 content: S.substitute(html, {
                     prefixCls: prefixCls
                 }),
-                autoRender: true,
                 width: 172,
                 zIndex: Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU)
-            });
+            }).render();
 
             var colorWin = self.colorWin;
             colorPanel = colorWin.get("contentEl");
