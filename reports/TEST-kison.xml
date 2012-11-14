@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-<testsuite name="kison" errors="0" tests="7" failures="0" time="0.186" timestamp="2012-11-13T16:08:48">
+<testsuite name="kison" errors="0" tests="7" failures="0" time="0.243" timestamp="2012-11-14T23:02:10">
   <testcase classname="kison" name="escape correctly" time="0.001"></testcase>
-  <testcase classname="kison" name="generate goto map ok" time="0.038"></testcase>
-  <testcase classname="kison" name="generate table ok" time="0.021"></testcase>
-  <testcase classname="kison" name="parse ok" time="0.02"></testcase>
-  <testcase classname="kison" name="can not parse invalid input" time="0.029"></testcase>
-  <testcase classname="kison" name="can not parse invalid input in compress mode" time="0.03"></testcase>
-  <testcase classname="kison" name="parse ok with action" time="0.022"></testcase>
+  <testcase classname="kison" name="generate goto map ok" time="0.061"></testcase>
+  <testcase classname="kison" name="generate table ok" time="0.025"></testcase>
+  <testcase classname="kison" name="parse ok" time="0.048"></testcase>
+  <testcase classname="kison" name="can not parse invalid input" time="0.016"></testcase>
+  <testcase classname="kison" name="can not parse invalid input in compress mode" time="0.037"></testcase>
+  <testcase classname="kison" name="parse ok with action" time="0.03"></testcase>
 </testsuite>
-<testsuite name="kison.state" errors="0" tests="3" failures="0" time="0.025" timestamp="2012-11-13T16:08:49">
-  <testcase classname="kison.state" name="can parse" time="0.006"></testcase>
-  <testcase classname="kison.state" name="can not parse" time="0.007"></testcase>
-  <testcase classname="kison.state" name="can not parse when compress" time="0.012"></testcase>
+<testsuite name="kison.state" errors="0" tests="3" failures="0" time="0.025" timestamp="2012-11-14T23:02:10">
+  <testcase classname="kison.state" name="can parse" time="0.008"></testcase>
+  <testcase classname="kison.state" name="can not parse" time="0.01"></testcase>
+  <testcase classname="kison.state" name="can not parse when compress" time="0.006"></testcase>
 </testsuite>
 </testsuites>

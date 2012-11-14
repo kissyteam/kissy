@@ -38,7 +38,8 @@ var mods = [
     'json',
     'base',
     'htmlparser',
-    'template'
+    'template',
+    'event/custom'
 ];
 
 // ------------ configs end
@@ -59,6 +60,7 @@ for (var key in jasmine) {
 }
 
 S.each(mods, function (m) {
+    m = m.replace(/\//g, '/sub-modules/');
     specFolders.push(m + '/tests/specs/');
 });
 

@@ -2075,7 +2075,7 @@ jasmine.Runner.prototype.execute = function (onComplete) {
     }
     self.queue.start(function () {
         self.finishCallback();
-        onComplete.call(self);
+        onComplete && onComplete.call(self);
     });
 };
 

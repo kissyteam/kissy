@@ -1,4 +1,4 @@
-KISSY.use("template,dom", function (S, T, DOM) {
+KISSY.use("template", function (S, T) {
 
     describe('template', function () {
 

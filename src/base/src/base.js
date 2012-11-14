@@ -87,5 +87,5 @@ KISSY.add('base', function (S, Attribute, Event) {
 
     return Base;
 }, {
-    requires: ['base/attribute', 'event']
+    requires: ['base/attribute', 'event/custom']
 });

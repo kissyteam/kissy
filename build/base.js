@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:49
+build time: Nov 14 22:59
 */
 /**
  * @ignore
@@ -628,5 +628,5 @@ KISSY.add('base', function (S, Attribute, Event) {
 
     return Base;
 }, {
-    requires: ['base/attribute', 'event']
+    requires: ['base/attribute', 'event/custom']
 });

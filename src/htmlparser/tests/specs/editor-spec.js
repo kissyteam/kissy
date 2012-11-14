@@ -1,6 +1,4 @@
-KISSY.use("htmlparser", function (S, HtmlParser) {
-    var UA = S.UA;
-
+KISSY.use("htmlparser,ua", function (S, HtmlParser,UA) {
 
     function getTextSync(path, callback) {
         if (S.Env.nodejs) {
