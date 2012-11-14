@@ -145,13 +145,16 @@ KISSY.add('rich-base', function (S, Base) {
          * @param {Function|Object} plugin
          */
         'plug': function (plugin) {
+            var self = this;
             if (S.isFunction(plugin)) {
                 plugin = new plugin();
             }
             // initialize plugin
             if (plugin['initializer']) {
-                plugin['initializer'](this);
+                plugin['initializer'](self);
             }
+            self.get('plugins').push(plugin);
+            return self;
         },
 
         /**
@@ -160,23 +163,32 @@ KISSY.add('rich-base', function (S, Base) {
          */
         'unplug': function (plugin) {
             var plugins = [],
+                self = this,
                 isString = S.isString(plugin);
 
             S.each(this.get('plugins'), function (p) {
+                var keep = 0;
                 if (plugin) {
                     if (isString) {
                         if (!p.get || p.get('pluginId') != plugin) {
                             plugins.push(p);
+                            keep = 1;
                         }
                     } else {
                         if (p == plugin) {
                             plugins.push(p);
+                            keep = 1;
                         }
                     }
+                }
+
+                if (!keep) {
+                    p.destructor(self);
                 }
             });
 
             this.setInternal('plugins', plugins);
+            return this;
         }
 
     }, {

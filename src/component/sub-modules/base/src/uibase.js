@@ -297,6 +297,22 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
          */
         syncUI: noop,
 
+        plug: function () {
+            var self = this,
+                p,
+                plugins = self.get('plugins');
+            UIBase.superclass.plug.apply(self, arguments);
+            p = plugins[plugins.length - 1];
+            if (self.get('rendered')) {
+                p.createDom(self);
+                p.renderUI(self);
+                p.bindUI(self);
+                p.syncUI(self);
+            } else if (self.get('created')) {
+                p.createDom(self);
+            }
+        },
+
 
         /**
          * Destroy this component.

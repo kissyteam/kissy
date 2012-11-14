@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:49
+build time: Nov 14 23:13
 */
 /**
  * @ignore
@@ -2066,6 +2066,22 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
          * @method
          */
         syncUI: noop,
+
+        plug: function () {
+            var self = this,
+                p,
+                plugins = self.get('plugins');
+            UIBase.superclass.plug.apply(self, arguments);
+            p = plugins[plugins.length - 1];
+            if (self.get('rendered')) {
+                p.createDom(self);
+                p.renderUI(self);
+                p.bindUI(self);
+                p.syncUI(self);
+            } else if (self.get('created')) {
+                p.createDom(self);
+            }
+        },
 
 
         /**
