@@ -28,6 +28,9 @@
         "lib": "./build/"
     },
     "main": "./build/kissy-nodejs.js",
+    "scripts": {
+        "test": "node ./src/jasmine-node"
+    },
     "optionalDependencies": {
         "optimist": ">=0.3.4",
         "jsdom": ">=0.2.0",

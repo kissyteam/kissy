@@ -6,7 +6,7 @@ KISSY.use("event/custom", function (S, Event) {
 
     var FIRST = '1', SECOND = '2', SEP = '=';
 
-    describe("custom event is same as native event.", function () {
+    describe("custom_event", function () {
 
         it("works for any object", function () {
             var r = 0;

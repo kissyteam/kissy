@@ -90,6 +90,7 @@ KISSY.use(mods, function () {
             exitCode = 0;
         } else {
             exitCode = 1;
+            process.exit(exitCode);
         }
 
         process.nextTick(function () {
