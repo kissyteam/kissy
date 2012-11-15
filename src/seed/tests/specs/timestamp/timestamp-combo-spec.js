@@ -1,7 +1,7 @@
 describe("loader", function () {
     describe("timestamp for individual module works in combine mode", function () {
         var S = KISSY;
-        var host = location.hostname;
+        var host = location.host;
 
         it("works theoretically", function () {
 
@@ -17,7 +17,7 @@ describe("loader", function () {
                 packages:{
                     'timestamp':{
                         tag:'a',
-                        base:'/kissy_git/kissy1.3/src/seed/tests/specs/'
+                        base:'/src/seed/tests/specs/'
                     }
                 },
                 modules:{
@@ -43,8 +43,8 @@ describe("loader", function () {
 
                 var comboUrls = loader.getComboUrls(allModNames);
 
-                expect(comboUrls.js['http://' + host + '/kissy_git/kissy1.3/src/seed/tests/specs/'][0])
-                    .toBe("http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/??y.js,x.js,z.js?t=a");
+                expect(comboUrls.js['http://' + host + '/src/seed/tests/specs/'][0])
+                    .toBe("http://" + host + "/src/seed/tests/specs/timestamp/??y.js,x.js,z.js?t=a");
 
             });
 
@@ -62,7 +62,7 @@ describe("loader", function () {
                 packages:{
                     'timestamp':{
                         tag:'a',
-                        base:'/kissy_git/kissy1.3/src/seed/tests/specs/'
+                        base:'/src/seed/tests/specs/'
                     }
                 },
                 modules:{
@@ -108,7 +108,7 @@ describe("loader", function () {
                     'timestamp':{
                         combine:false,
                         tag:'a',
-                        base:'/kissy_git/kissy1.3/src/seed/tests/specs/'
+                        base:'/src/seed/tests/specs/'
                     }
                 },
                 modules:{
@@ -133,13 +133,13 @@ describe("loader", function () {
                 utils.createModulesInfo(S, allModNames);
                 var comboUrls = loader.getComboUrls(allModNames);
 
-                var key = "http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/";
+                var key = "http://" + host + "/src/seed/tests/specs/";
 
                 var jss = comboUrls.js[key];
 
-                expect(jss[0]).toBe("http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/??y.js?t=a");
-                expect(jss[1]).toBe("http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/??x.js?t=b");
-                expect(jss[2]).toBe("http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/??z.js?t=z");
+                expect(jss[0]).toBe("http://" + host + "/src/seed/tests/specs/timestamp/??y.js?t=a");
+                expect(jss[1]).toBe("http://" + host + "/src/seed/tests/specs/timestamp/??x.js?t=b");
+                expect(jss[2]).toBe("http://" + host + "/src/seed/tests/specs/timestamp/??z.js?t=z");
 
             });
 
@@ -157,7 +157,7 @@ describe("loader", function () {
                     'timestamp':{
                         combine:false,
                         tag:'a',
-                        base:'/kissy_git/kissy1.3/src/seed/tests/specs/'
+                        base:'/src/seed/tests/specs/'
                     }
                 },
                 modules:{

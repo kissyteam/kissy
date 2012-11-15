@@ -12,7 +12,7 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
             it('当请求为 404/301 时，get不触发回调', function () {
 
                 //如果不带随机数，ie下会从缓存中取，会认为链接状态为200，从而执行回调
-                IO.get('../data/404_none.php?t=' + S.now(), function () {
+                IO.get('../data/404?t=' + S.now(), function () {
                     expect('此处').toBe('不运行');
                 });
 
@@ -25,7 +25,7 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
 
             it('当请求为404/301时，post不触发回调', function () {
 
-                IO.post('../data/404_none.php?t=' + S.now(), function () {
+                IO.post('../data/404?t=' + S.now(), function () {
                     expect('此处').toBe('不运行');
                 });
 
@@ -39,7 +39,7 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
 
             it('404/301时，jsonp不触发回调', function () {
 
-                IO.jsonp('../data/404_none.php?t=' + S.now(), function () {
+                IO.jsonp('../data/404?t=' + S.now(), function () {
                     expect('此处').toBe('不运行');
                 });
 
@@ -726,7 +726,7 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                         expect(ev.ajaxConfig).not.toBe(undefined);
                         expect(ev.type).toBe('error');
                     });
-                    IO.get('../data/404_none.php?t=' + S.now());
+                    IO.get('../data/404?t=' + S.now());
                 });
 
                 waitsFor(function () {

@@ -57,7 +57,7 @@ KISSY.use("ajax", function (S, io) {
         it('should support fail differently', function () {
             var ok = 0,
                 r = io({
-                    url:'404.php',
+                    url:'404',
                     context:{},
                     data:{
                         x:99

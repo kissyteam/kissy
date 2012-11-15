@@ -99,7 +99,6 @@ KISSY.use("component/extension", function (S, extension) {
                 DOM.prepend(dom[i], "body");
             }
 
-debugger
             // 1
             window.scrollTo(10, 10);
 

@@ -41,43 +41,7 @@
         app.use(express.compress());
         app.use(express.bodyParser());
 
-        app.get('/test', function (req, res) {
-            var codes = [];
-            collectTc(srcDir, codes);
-            res.send(testTpl.render({
-                code: testCode,
-                tests: codes
-            }));
-        });
-
-        app.use(function (req, res, next) {
-            var path = req.path;
-            if (S.endsWith(path, ".jss")) {
-                require(cwd + path)(req, res);
-            } else {
-                next();
-            }
-        });
-
-        //app.use(express.directory(cwd))
-        app.use(express.static(cwd));
-
-        app.use(function (req, res, next) {
-
-            var cur = cwd + req.url;
-            if (fs.existsSync(cur) && fs.statSync(cur).isDirectory()) {
-                var files = fs.readdirSync(cur);
-                res.send(listTpl.render({
-                    cur: req.url,
-                    files: files
-                }));
-
-            } else {
-                next();
-            }
-
-        });
-
+        // combo
         app.use(function (req, res, next) {
             var query = req.query, k,
                 path = cwd + req.path;
@@ -94,6 +58,8 @@
                 var nextQ = k.slice(1).indexOf('?');
                 if (nextQ == -1) {
                     nextQ = k.length;
+                } else {
+                    nextQ++;
                 }
                 k = k.slice(1, nextQ);
                 var files = k.split(',');
@@ -113,6 +79,48 @@
 
         });
 
+        app.use(function (req, res, next) {
+            var path = req.path;
+            if (req.xhr) {
+                var cur = cwd + path;
+                if (fs.existsSync(cur) && fs.statSync(cur).isDirectory()) {
+                    path += '/index.jss';
+                }
+            }
+            if (S.endsWith(path, ".jss")) {
+                require(cwd + path)(req, res);
+            } else {
+                next();
+            }
+        });
+
+        //app.use(express.directory(cwd))
+        app.use(express.static(cwd));
+
+        app.use(function (req, res, next) {
+
+            var cur = cwd + req.path;
+            if (fs.existsSync(cur) && fs.statSync(cur).isDirectory()) {
+                var files = fs.readdirSync(cur);
+                res.send(listTpl.render({
+                    cur: req.url,
+                    files: files
+                }));
+
+            } else {
+                next();
+            }
+
+        });
+
+        app.get('/test', function (req, res) {
+            var codes = [];
+            collectTc(srcDir, codes);
+            res.send(testTpl.render({
+                code: testCode,
+                tests: codes
+            }));
+        });
 
         app.listen(8888);
 

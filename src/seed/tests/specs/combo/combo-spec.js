@@ -1,6 +1,6 @@
 describe("KISSY ComboLoader", function () {
     var S = KISSY,
-        host = location.hostname,
+        host = location.host,
         ComboLoader = S.Loader.Combo;
 
 
@@ -13,7 +13,7 @@ describe("KISSY ComboLoader", function () {
             packages: [
                 {
                     name: 'tests3',
-                    path: '/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
+                    path: '/src/seed/tests/specs/combo/'
                 }
             ]
         });
@@ -176,7 +176,7 @@ describe("KISSY ComboLoader", function () {
             packages: [
                 {
                     name: 'tests',
-                    path: '/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
+                    path: '/src/seed/tests/specs/combo/'
                 }
             ]
         });
@@ -195,10 +195,10 @@ describe("KISSY ComboLoader", function () {
         var mods = S.getLoader().calculate(["tests/a"]);
         S.Loader.Utils.createModulesInfo(S, mods);
         var urls = S.getLoader().getComboUrls(mods);
-        var host = location.hostname;
+        var host = location.host;
 
         expect(urls['js']['tests'][0])
-            .toBe("http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/combo/" +
+            .toBe("http://" + host + "/src/seed/tests/specs/combo/" +
             "tests/??a.js,b.js,c.js?t=" + S.Config.tag);
 
         S.DOM = null;
@@ -224,7 +224,7 @@ describe("KISSY ComboLoader", function () {
             packages: [
                 {
                     name: 'tests2',
-                    path: '/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
+                    path: '/src/seed/tests/specs/combo/'
                 }
             ]
         });
@@ -278,7 +278,7 @@ describe("KISSY ComboLoader", function () {
             packages: {
                 'timestamp': {
                     combine: false,
-                    base: '/kissy_git/kissy1.3/src/seed/tests/specs/'
+                    base: '/src/seed/tests/specs/'
                 }
             },
             modules: {
@@ -303,9 +303,9 @@ describe("KISSY ComboLoader", function () {
 
             var jss = comboUrls.js[key];
 
-            expect(jss[0]).toBe("http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/y.js");
-            expect(jss[1]).toBe("http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/x.js");
-            expect(jss[2]).toBe("http://" + host + "/kissy_git/kissy1.3/src/seed/tests/specs/timestamp/z.js");
+            expect(jss[0]).toBe("http://" + host + "/src/seed/tests/specs/timestamp/y.js");
+            expect(jss[1]).toBe("http://" + host + "/src/seed/tests/specs/timestamp/x.js");
+            expect(jss[2]).toBe("http://" + host + "/src/seed/tests/specs/timestamp/z.js");
 
         });
     });
@@ -320,7 +320,7 @@ describe("KISSY ComboLoader", function () {
             packages: [
                 {
                     name: 'tests4',
-                    path: '/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
+                    path: '/src/seed/tests/specs/combo/'
                 }
             ]
         });
@@ -344,7 +344,7 @@ describe("KISSY ComboLoader", function () {
             packages: [
                 {
                     name: 'test5',
-                    path: '/kissy_git/kissy1.3/src/seed/tests/specs/combo/'
+                    path: '/src/seed/tests/specs/combo/'
                 }
             ]
         });

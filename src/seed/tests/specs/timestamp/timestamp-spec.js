@@ -10,7 +10,7 @@ describe("loader", function () {
                 packages:{
                     'timestamp':{
                         tag:'a',
-                        path:'/kissy_git/kissy1.3/src/seed/tests/specs/'
+                        path:'/src/seed/tests/specs/'
                     }
                 },
                 modules:{
@@ -71,7 +71,7 @@ describe("loader", function () {
                 packages:{
                     'timestamp':{
                         tag:'a',
-                        path:'/kissy_git/kissy1.3/src/seed/tests/specs/'
+                        path:'/src/seed/tests/specs/'
                     }
                 },
                 modules:{
