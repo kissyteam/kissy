@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-<testsuite name="kison" errors="0" tests="7" failures="0" time="0.144" timestamp="2012-11-15T23:15:47">
+<testsuite name="kison" errors="0" tests="7" failures="0" time="0.141" timestamp="2012-11-16T00:13:19">
   <testcase classname="kison" name="escape correctly" time="0"></testcase>
-  <testcase classname="kison" name="generate goto map ok" time="0.024"></testcase>
+  <testcase classname="kison" name="generate goto map ok" time="0.022"></testcase>
   <testcase classname="kison" name="generate table ok" time="0.018"></testcase>
-  <testcase classname="kison" name="parse ok" time="0.019"></testcase>
-  <testcase classname="kison" name="can not parse invalid input" time="0.017"></testcase>
-  <testcase classname="kison" name="can not parse invalid input in compress mode" time="0.023"></testcase>
-  <testcase classname="kison" name="parse ok with action" time="0.019"></testcase>
+  <testcase classname="kison" name="parse ok" time="0.02"></testcase>
+  <testcase classname="kison" name="can not parse invalid input" time="0.016"></testcase>
+  <testcase classname="kison" name="can not parse invalid input in compress mode" time="0.022"></testcase>
+  <testcase classname="kison" name="parse ok with action" time="0.024"></testcase>
 </testsuite>
-<testsuite name="kison.state" errors="0" tests="3" failures="0" time="0.02" timestamp="2012-11-15T23:15:47">
-  <testcase classname="kison.state" name="can parse" time="0.006"></testcase>
+<testsuite name="kison.state" errors="0" tests="3" failures="0" time="0.017" timestamp="2012-11-16T00:13:19">
+  <testcase classname="kison.state" name="can parse" time="0.005"></testcase>
   <testcase classname="kison.state" name="can not parse" time="0.006"></testcase>
-  <testcase classname="kison.state" name="can not parse when compress" time="0.005"></testcase>
+  <testcase classname="kison.state" name="can not parse when compress" time="0.006"></testcase>
 </testsuite>
 </testsuites>

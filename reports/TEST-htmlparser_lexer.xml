@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-<testsuite name="htmlparser_lexer" errors="0" tests="4" failures="0" time="0.007" timestamp="2012-11-15T23:15:47">
-  <testcase classname="htmlparser_lexer" name="works" time="0.002"></testcase>
+<testsuite name="htmlparser_lexer" errors="0" tests="4" failures="0" time="0.002" timestamp="2012-11-16T00:13:19">
+  <testcase classname="htmlparser_lexer" name="works" time="0.001"></testcase>
   <testcase classname="htmlparser_lexer" name="works for isSelfClosed" time="0"></testcase>
   <testcase classname="htmlparser_lexer" name="works for &lt;br/&gt;" time="0"></testcase>
   <testcase classname="htmlparser_lexer" name="works when encounter invalid attribute value" time="0"></testcase>

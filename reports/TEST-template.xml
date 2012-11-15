@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-<testsuite name="template" errors="0" tests="4" failures="0" time="0.016" timestamp="2012-11-15T23:15:47">
+<testsuite name="template" errors="0" tests="4" failures="0" time="0.011" timestamp="2012-11-16T00:13:19">
   <testcase classname="template" name="slash and quote should be escaped" time="0"></testcase>
   <testcase classname="template" name="should also support @" time="0.001"></testcase>
   <testcase classname="template" name="should ignore undefined variable" time="0.002"></testcase>
   <testcase classname="template" name="should support undefined variable in object" time="0"></testcase>
 </testsuite>
-<testsuite name="template.variable" errors="0" tests="2" failures="0" time="0.001" timestamp="2012-11-15T23:15:47">
-  <testcase classname="template.variable" name="should render a normal string" time="0"></testcase>
+<testsuite name="template.variable" errors="0" tests="2" failures="0" time="0.001" timestamp="2012-11-16T00:13:19">
+  <testcase classname="template.variable" name="should render a normal string" time="0.001"></testcase>
   <testcase classname="template.variable" name="should render a normal variable" time="0"></testcase>
 </testsuite>
-<testsuite name="template.statement" errors="0" tests="0" failures="0" time="0" timestamp="2012-11-15T23:15:47">
+<testsuite name="template.statement" errors="0" tests="0" failures="0" time="0" timestamp="2012-11-16T00:13:19">
 </testsuite>
-<testsuite name="template.statement.if" errors="0" tests="1" failures="0" time="0.001" timestamp="2012-11-15T23:15:47">
+<testsuite name="template.statement.if" errors="0" tests="1" failures="0" time="0.001" timestamp="2012-11-16T00:13:19">
   <testcase classname="template.statement.if" name="support if statement" time="0.001"></testcase>
 </testsuite>
-<testsuite name="template.statement.else" errors="0" tests="1" failures="0" time="0.001" timestamp="2012-11-15T23:15:47">
+<testsuite name="template.statement.else" errors="0" tests="1" failures="0" time="0.001" timestamp="2012-11-16T00:13:19">
   <testcase classname="template.statement.else" name="support else statement" time="0.001"></testcase>
 </testsuite>
-<testsuite name="template.statement.elseif" errors="0" tests="1" failures="0" time="0.001" timestamp="2012-11-15T23:15:47">
+<testsuite name="template.statement.elseif" errors="0" tests="1" failures="0" time="0.001" timestamp="2012-11-16T00:13:19">
   <testcase classname="template.statement.elseif" name="support elseif statement" time="0.001"></testcase>
 </testsuite>
-<testsuite name="template.statement.each" errors="0" tests="2" failures="0" time="0.007" timestamp="2012-11-15T23:15:47">
+<testsuite name="template.statement.each" errors="0" tests="2" failures="0" time="0.001" timestamp="2012-11-16T00:13:19">
   <testcase classname="template.statement.each" name="support each function" time="0.001"></testcase>
-  <testcase classname="template.statement.each" name="support custom value, index" time="0.001"></testcase>
+  <testcase classname="template.statement.each" name="support custom value, index" time="0"></testcase>
 </testsuite>
-<testsuite name="template.cache" errors="0" tests="1" failures="0" time="0" timestamp="2012-11-15T23:15:47">
+<testsuite name="template.cache" errors="0" tests="1" failures="0" time="0" timestamp="2012-11-16T00:13:19">
   <testcase classname="template.cache" name="have template cache" time="0"></testcase>
 </testsuite>
-<testsuite name="template.error" errors="0" tests="1" failures="0" time="0.001" timestamp="2012-11-15T23:15:47">
+<testsuite name="template.error" errors="0" tests="1" failures="0" time="0.001" timestamp="2012-11-16T00:13:19">
   <testcase classname="template.error" name="can handle syntax template error" time="0.001"></testcase>
 </testsuite>
-<testsuite name="template.log" errors="0" tests="1" failures="0" time="0" timestamp="2012-11-15T23:15:47">
+<testsuite name="template.log" errors="0" tests="1" failures="0" time="0" timestamp="2012-11-16T00:13:19">
   <testcase classname="template.log" name="can log all compiled template code" time="0"></testcase>
 </testsuite>
-<testsuite name="template.comments" errors="0" tests="1" failures="0" time="0.001" timestamp="2012-11-15T23:15:47">
-  <testcase classname="template.comments" name="supports comments" time="0.001"></testcase>
+<testsuite name="template.comments" errors="0" tests="1" failures="0" time="0" timestamp="2012-11-16T00:13:19">
+  <testcase classname="template.comments" name="supports comments" time="0"></testcase>
 </testsuite>
-<testsuite name="template.nested" errors="0" tests="2" failures="0" time="0" timestamp="2012-11-15T23:15:47">
+<testsuite name="template.nested" errors="0" tests="2" failures="0" time="0.001" timestamp="2012-11-16T00:13:19">
   <testcase classname="template.nested" name="supports nested" time="0"></testcase>
-  <testcase classname="template.nested" name="supports nested with different each variable name" time="0"></testcase>
+  <testcase classname="template.nested" name="supports nested with different each variable name" time="0.001"></testcase>
 </testsuite>
 </testsuites>

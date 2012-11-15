@@ -1,5 +1,4 @@
-KISSY - An Enjoyable JavaScript Library
-=======================================
+# KISSY - An Enjoyable JavaScript Library [![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=master)](https://travis-ci.org/kissyteam/kissy)
 
  * Source: <http://github.com/kissyteam/kissy>
  * Docs: <http://http://docs.kissyui.com/>
@@ -8,8 +7,8 @@ KISSY - An Enjoyable JavaScript Library
  * Nodejs README: <https://github.com/kissyteam/kissy/blob/master/src/seed/nodejs.md>
 
 
-Vision
---------------------------------
+## Vision
+
 小巧灵活，简洁实用，使用起来让人感觉愉悦。
 
     Keep It
@@ -17,8 +16,8 @@ Vision
     Yeah!
 
 
-Structure
--------------------------------
+## Structure
+
  - bin:           kissy-nodejs 命令行执行文件
  - reports:       nodejs 下的单元测试报告
  - build:         构建好的发布文件
@@ -27,15 +26,15 @@ Structure
  - tools:         打包压缩等自动化工具
 
 
-Convention
--------------------------------
+## Convention
+
  * KISSY 源码规范: <http://docs.kissyui.com/docs/html/tutorials/styleguide/kissy-source-style.html>
  * HTML 编码规范: <http://docs.kissyui.com/docs/html/tutorials/styleguide/html-coding-style.html>
  * CSS 编码规范: <http://docs.kissyui.com/docs/html/tutorials/styleguide/css-coding-style.html>
  * 组件开发规范: <http://docs.kissyui.com/docs/html/tutorials/workflow/dev-spec.html>
 
-Questions?
----------------------------------------
+## Questions?
+
  - Docs: <http://docs.kissyui.com>
  - Bug：<http://github.com/kissyteam/kissy/issues>
  - 邮件：<kissyteam@gmail.com>

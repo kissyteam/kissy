@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-<testsuite name="htmlparser_for_editor" errors="0" tests="7" failures="0" time="0.026" timestamp="2012-11-15T23:15:47">
+<testsuite name="htmlparser_for_editor" errors="0" tests="7" failures="0" time="0.024" timestamp="2012-11-16T00:13:19">
   <testcase classname="htmlparser_for_editor" name="can filter elementNames" time="0"></testcase>
-  <testcase classname="htmlparser_for_editor" name="can filter imagedata in vml@ie" time="0.012"></testcase>
-  <testcase classname="htmlparser_for_editor" name="can filter attribute" time="0.001"></testcase>
+  <testcase classname="htmlparser_for_editor" name="can filter imagedata in vml@ie" time="0.01"></testcase>
+  <testcase classname="htmlparser_for_editor" name="can filter attribute" time="0"></testcase>
   <testcase classname="htmlparser_for_editor" name="can modify html structure on fly" time="0"></testcase>
   <testcase classname="htmlparser_for_editor" name="filter children works while modify html" time="0"></testcase>
   <testcase classname="htmlparser_for_editor" name="filter will run only once" time="0.002"></testcase>
