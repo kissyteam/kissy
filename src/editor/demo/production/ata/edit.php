@@ -109,7 +109,7 @@
                     "defaultHeight": "300"
                 },
                 "multiple-upload": {
-                    serverUrl: "upload.php",
+                    serverUrl: "upload.jss",
                     "previewWidth": "80px"
                 },
                 "video": {
@@ -186,7 +186,7 @@
                     suffix: "png,jpg,jpeg,gif",
                     fileInput: "Filedata",
                     sizeLimit: 1000,
-                    serverUrl: "upload.php"
+                    serverUrl: "upload.jss"
                 }
             };
 

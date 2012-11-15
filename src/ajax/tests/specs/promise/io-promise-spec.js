@@ -2,7 +2,7 @@ KISSY.use("ajax", function (S, io) {
 
     var Promise = S.Promise;
 
-    var URL = '/kissy_git/kissy/src/ajax/tests/specs/promise/gen-json.php';
+    var URL = '/src/ajax/tests/specs/promise/gen-json.jss';
 
     describe("S.io as a promise", function () {
 
@@ -16,7 +16,7 @@ KISSY.use("ajax", function (S, io) {
                 },
                 dataType:'json',
                 success:function (d) {
-                    expect(d.x).toBe(99);
+                    expect(d.x).toBe('99');
                     expect(this).toBe(c);
                     ok = 1;
                 }
@@ -39,14 +39,14 @@ KISSY.use("ajax", function (S, io) {
             r.then(function (v) {
                 S.log(arguments);
                 ok++;
-                expect(v[0].x).toBe(99);
+                expect(v[0].x).toBe('99');
                 expect(this).toBe(window);
             });
             r.fin(function (v, ret) {
                 S.log(arguments);
                 ok++;
                 expect(ret).toBe(true);
-                expect(v[0].x).toBe(99);
+                expect(v[0].x).toBe('99');
                 expect(this).toBe(window);
             });
             waitsFor(function () {
@@ -57,7 +57,7 @@ KISSY.use("ajax", function (S, io) {
         it('should support fail differently', function () {
             var ok = 0,
                 r = io({
-                    url:'gen-json2.php',
+                    url:'404.php',
                     context:{},
                     data:{
                         x:99
@@ -98,7 +98,7 @@ KISSY.use("ajax", function (S, io) {
 
             r.then(
                 function (v) {
-                    return v[0].x + 1;
+                    return Number(v[0].x) + 1;
                 }).then(function (v) {
                     v2 = v;
                 });
@@ -124,7 +124,7 @@ KISSY.use("ajax", function (S, io) {
             }), ret;
 
             r.then(function (v) {
-                expect(v[0].x).toBe(99);
+                expect(v[0].x).toBe('99');
                 return io({
                     url:URL,
                     context:{},
@@ -136,7 +136,7 @@ KISSY.use("ajax", function (S, io) {
             })
 
                 .then(function (v) {
-                    expect(v[0].x).toBe(101);
+                    expect(v[0].x).toBe('101');
                     ret = 1;
                 });
 
@@ -168,8 +168,8 @@ KISSY.use("ajax", function (S, io) {
             var ret;
 
             Promise.all([r, r2]).then(function (vs) {
-                expect(vs[0][0].x).toBe(99);
-                expect(vs[1][0].x).toBe(101);
+                expect(vs[0][0].x).toBe('99');
+                expect(vs[1][0].x).toBe('101');
                 ret = 1;
             });
 

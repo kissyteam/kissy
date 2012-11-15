@@ -1,10 +1,10 @@
 <meta charset='utf-8'/>
-<script  src="/lib/jquery/dist/jquery.js"></script>
+<script  src="../../../../../tools/third-party/jquery.js"></script>
 
 <script >
 
     $.ajax({
-        url: "t.php",
+        url: "../../data/ifModified.jss",
         ifModified: true,
         dataType: 'text',
         success: function (data, s, jq) {
@@ -16,7 +16,7 @@
             setTimeout(function () {
 
                 $.ajax({
-                    url: "t.php",
+                    url: "../../data/ifModified.jss",
                     ifModified: true,
                     // same with
 //                    headers: {

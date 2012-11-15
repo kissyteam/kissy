@@ -29,7 +29,7 @@
     },
     "main": "./build/kissy-nodejs.js",
     "scripts": {
-        "test": "node ./src/jasmine-node"
+        "test": "node ./tools/test/jasmine-node"
     },
     "optionalDependencies": {
         "optimist": ">=0.3.4",
@@ -38,7 +38,8 @@
     },
     "devDependencies": {
         "walkdir": ">0.0.4",
-        "jasmine-reporters": ">0.2"
+        "jasmine-reporters": ">0.2",
+        "express":">3.0"
     },
     "licenses": [
         {

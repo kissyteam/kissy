@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-<testsuite name="htmlparser_parser" errors="0" tests="10" failures="0" time="0.011" timestamp="2012-11-15T13:31:30">
+<testsuite name="htmlparser_parser" errors="0" tests="10" failures="0" time="0.012" timestamp="2012-11-15T23:15:47">
   <testcase classname="htmlparser_parser" name="works for valid html" time="0.001"></testcase>
   <testcase classname="htmlparser_parser" name="works for none-valid html" time="0.001"></testcase>
-  <testcase classname="htmlparser_parser" name="works for valid script" time="0.001"></testcase>
+  <testcase classname="htmlparser_parser" name="works for valid script" time="0"></testcase>
   <testcase classname="htmlparser_parser" name="works for none-valid script" time="0"></testcase>
   <testcase classname="htmlparser_parser" name="works for non-valid nest tag soup" time="0"></testcase>
-  <testcase classname="htmlparser_parser" name="adjust non-valid nest tag soup by dtd" time="0.001"></testcase>
+  <testcase classname="htmlparser_parser" name="adjust non-valid nest tag soup by dtd" time="0"></testcase>
   <testcase classname="htmlparser_parser" name="adjust non-valid nest tag soup by dtd and auto paragraph" time="0"></testcase>
   <testcase classname="htmlparser_parser" name="filterChildren should works" time="0.001"></testcase>
   <testcase classname="htmlparser_parser" name="can replace text" time="0"></testcase>
   <testcase classname="htmlparser_parser" name="should parse nested li" time="0.001"></testcase>
 </testsuite>
-<testsuite name="htmlparser_parser.writer" errors="0" tests="1" failures="0" time="0.003" timestamp="2012-11-15T13:31:30">
+<testsuite name="htmlparser_parser.writer" errors="0" tests="1" failures="0" time="0.003" timestamp="2012-11-15T23:15:47">
   <testcase classname="htmlparser_parser.writer" name="works for empty attribute" time="0.003"></testcase>
 </testsuite>
 </testsuites>

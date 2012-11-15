@@ -69,7 +69,7 @@
                 defaultMargin: 0,
                 //remote:false,
                 upload: {
-                    serverUrl: window.UPLOAD_SINGLE_URL || "upload.php",
+                    serverUrl: window.UPLOAD_SINGLE_URL || "upload.jss",
                     serverParams: {
                         waterMark: function () {
                             return S.one("#ke_img_up_watermark_1")[0].checked;
@@ -143,7 +143,7 @@
                 }
             },
             "multiple-upload": {
-                serverUrl: "http://localhost/kissy_git/kissy/src/editor/demo/upload.php",
+                serverUrl: "http://localhost/src/editor/demo/upload.jss",
                 serverParams: {
                     waterMark: function () {
                         return S.one("#ke_img_up_watermark_2")[0].checked;
@@ -244,7 +244,7 @@
                 suffix: "png,jpg,jpeg,gif",
                 fileInput: "Filedata",
                 sizeLimit: 1000,
-                serverUrl: "upload.php",
+                serverUrl: "upload.jss",
                 serverParams: {
                     waterMark: function () {
                         return true;

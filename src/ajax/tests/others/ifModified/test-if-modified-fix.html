@@ -1,24 +1,11 @@
 <meta charset='utf-8'/>
 <script  src="../../../../../build/seed.js"></script>
 
-<script  src="../../../src/base.js"></script>
-<script  src="../../../src/ajax.js"></script>
-<script  src="../../../src/form.js"></script>
-<script  src="../../../src/form-serializer.js"></script>
-<script  src="../../../src/iframe-transport.js"></script>
-<script  src="../../../src/jsonp.js"></script>
-<script  src="../../../src/script-transport.js"></script>
-<script  src="../../../src/sub-domain-transport.js"></script>
-<script  src="../../../src/xdr-flash-transport.js"></script>
-<script  src="../../../src/methods.js"></script>
-<script  src="../../../src/xhr-transport.js"></script>
-<script  src="../../../src/xhr-transport-base.js"></script>
-
 <script >
     KISSY.ready(function (S) {
         S.use("ajax", function (S, io) {
             io({
-                url: "t.php",
+                url: "../../data/ifModified.jss",
                 ifModified: true,
                 dataType: 'text',
                 complete: function (data, s, jq) {
@@ -30,7 +17,7 @@
                     setTimeout(function () {
 
                         io({
-                            url: "t.php",
+                            url: "../../data/ifModified.jss",
                             ifModified: true,
                             headers: {
                                 "If-Modified-Since": "Thu, 18 Jul 2002 15:48:32 GMT"

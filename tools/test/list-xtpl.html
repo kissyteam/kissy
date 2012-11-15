@@ -1,0 +1,18 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+    <title>Index of {{cur}}</title>
+</head>
+<body>
+<h1>Index of {{cur}}</h1>
+<ul>
+    {{#if cur !== '/'}}
+    <li><a href="../"> Parent Directory</a></li>
+    {{/if}}
+    {{#each files}}
+    <li><a href="{{this}}">{{this}}</a></li>
+    {{/each}}
+</ul>
+<address>KISSY Test Server</address>
+</body>
+</html>

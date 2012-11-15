@@ -181,7 +181,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
                         io._ioReady(OK_CODE, 'success');
                     } else {
                         // chrome does not throw exception:
-                        // Unsafe JavaScript attempt to access frame with URL upload.php from frame with URL test.html.
+                        // Unsafe JavaScript attempt to access frame with URL upload.jss from frame with URL test.html.
                         // Domains, protocols and ports must match.
                         // chrome will get iframeDoc to null
                         // so this error is parser error to normalize all browsers

@@ -15,17 +15,17 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             var ok = 0;
 
             io({
-                url: '../data/ifModified.php',
+                url: '../data/ifModified.jss',
                 dataType: "text",
                 success: function (data, status, xhr) {
-                    expect(data).toBe("0");
+                    expect(data).toBe("haha");
                     expect(status).toBe("success");
                     expect(xhr.status).toBe(200);
                     io({
-                        url: '../data/ifModified.php',
+                        url: '../data/ifModified.jss',
                         dataType: "text",
                         success: function (data, status, xhr) {
-                            expect(data).toBe("0");
+                            expect(data).toBe("haha");
                             expect(status).toBe("success");
                             expect(xhr.status).toBe(200);
 
@@ -52,16 +52,16 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             var ok = 0;
 
             io({
-                url: '../data/ifModified.php',
+                url: '../data/ifModified.jss',
                 dataType: "text",
                 cache: false,
                 ifModified: true,
                 success: function (data, status, xhr) {
-                    expect(data).toBe("0");
+                    expect(data).toBe("haha");
                     expect(status).toBe("success");
                     expect(xhr.status).toBe(200);
                     io({
-                        url: '../data/ifModified.php',
+                        url: '../data/ifModified.jss',
                         dataType: "text",
                         cache: false,
                         ifModified: true,
@@ -71,7 +71,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                             expect(status).toBe("not modified");
 
                             expect(io.__lastModifiedCached[
-                                pageUri.resolve('../data/ifModified.php').toString()
+                                pageUri.resolve('../data/ifModified.jss').toString()
                                 ])
                                 .toBe('Thu, 18 Jul 2002 15:48:32 GMT');
 
@@ -95,17 +95,17 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             var form = $("<form><input name='t' value='t'/></form>").appendTo("body");
 
             io({
-                url: '../data/ifModified.php',
+                url: '../data/ifModified.jss',
                 dataType: "text",
                 cache: false,
                 ifModified: true,
                 form: form,
                 success: function (data, status, xhr) {
-                    expect(data).toBe("0");
+                    expect(data).toBe("haha");
                     expect(status).toBe("success");
                     expect(xhr.status).toBe(200);
                     io({
-                        url: '../data/ifModified.php',
+                        url: '../data/ifModified.jss',
                         dataType: "text",
                         cache: false,
                         form: form,
@@ -115,7 +115,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                             expect(xhr.status).toBe(304);
                             expect(status).toBe("not modified");
 
-                            var uri = pageUri.resolve('../data/ifModified.php');
+                            var uri = pageUri.resolve('../data/ifModified.jss');
                             uri.query.add("t", "t");
 
                             expect(io.__lastModifiedCached[
@@ -140,7 +140,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("should jsonp with array arguments", function () {
             var re = false, data;
-            io.jsonp("../data/jsonp-array.php", function (d, status, xhr) {
+            io.jsonp("../data/jsonp-array.jss", function (d, status, xhr) {
                 re = true;
                 data = d;
             });
@@ -157,7 +157,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
         it("should abort for xhr", function () {
             var re = [];
             var xhr = io({
-                url: '../data/ajax.php',
+                url: '../data/ajax.jss',
                 cache: false,
                 success: function (data, status) {
                     var args = S.makeArray(arguments);
@@ -187,7 +187,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             var re = [], ok = false;
 
             var xhr = io({
-                url: '../data/ajax.php',
+                url: '../data/ajax.jss',
                 cache: false,
                 success: function (data, status) {
                     ok = true;
@@ -224,7 +224,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             var xhr = io({
                 forceScript: !(UA.ie == 6),
                 dataType: 'jsonp',
-                url: '../data/jsonp.php',
+                url: '../data/jsonp.jss',
                 cache: false,
                 success: function (data, status) {
                     var args = S.makeArray(arguments);
@@ -255,7 +255,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
             var xhr = io({
                 forceScript: !(UA.ie == 6),
-                url: '../data/ajax.php',
+                url: '../data/ajax.jss',
                 cache: false,
                 success: function (data, status) {
                     ok = true;
@@ -289,7 +289,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
             var re = [], ok;
             var xhr = io({
-                url: '../data/ajax.php',
+                url: '../data/ajax.jss',
                 // ie 默认会缓存，可能直接触发 success
                 // fiddler 看不到请求，自带网络捕获为 304
                 cache: false,
@@ -337,7 +337,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             var ok, d;
 
             var xhr = io({
-                url: '../others/form/upload.php',
+                url: '../others/form/upload.jss',
                 form: "#" + f.prop("id"),
                 type: 'post',
                 dataType: 'json',
@@ -384,7 +384,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
             var re = [], ok, d;
             var xhr = io({
-                url: '../others/form/upload.php',
+                url: '../others/form/upload.jss',
                 form: "#" + f.prop("id"),
                 type: 'post',
                 dataType: 'json',
@@ -427,7 +427,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             var re = [], ok, d;
 
             var xhr = io({
-                url: '../others/form/upload.php',
+                url: '../others/form/upload.jss',
                 form: "#" + f.prop("id"),
                 type: 'post',
                 dataType: 'json',
@@ -474,7 +474,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             var re = [], ok, d;
 
             var xhr = io({
-                url: '../others/form/upload.php',
+                url: '../others/form/upload.jss',
                 form: "#" + f.prop("id"),
                 type: 'post',
                 dataType: 'json',
@@ -517,7 +517,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             io({
                 form: form[0],
                 dataType: 'xml',
-                url: '../others/form/ret.php',
+                url: '../data/xml.jss',
                 success: function (data) {
                     expect(data.nodeType).toBe(9);
                     expect(data.documentElement.nodeType).toBe(1);
@@ -543,7 +543,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
             var ok = 0;
 
-            var uploadRc = new S.Uri(location.href).resolve('../others/form/upload.php');
+            var uploadRc = new S.Uri(location.href).resolve('../others/form/upload.jss');
 
             uploadRc.setHostname('yiminghe.taobao.net');
 

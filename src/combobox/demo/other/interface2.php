@@ -1,9 +1,9 @@
 <?php
 //sleep(10);
 if (isset($_GET['contype'])) {
-    header("Content-type: " . $_GET['contype'] . "; charset=utf-8");
+    header("Content-Type: " . $_GET['contype'] . "; charset=utf-8");
 } else {
-    header("Content-type: text/html; charset=utf-8");
+    header("Content-Type: text/html; charset=utf-8");
 }
 
 $start=intval($_GET['start']);

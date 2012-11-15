@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:49
+build time: Nov 15 23:33
 */
 /**
  * @ignore
@@ -1076,7 +1076,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
                         io._ioReady(OK_CODE, 'success');
                     } else {
                         // chrome does not throw exception:
-                        // Unsafe JavaScript attempt to access frame with URL upload.php from frame with URL test.html.
+                        // Unsafe JavaScript attempt to access frame with URL upload.jss from frame with URL test.html.
                         // Domains, protocols and ports must match.
                         // chrome will get iframeDoc to null
                         // so this error is parser error to normalize all browsers
@@ -1595,6 +1595,7 @@ KISSY.add('ajax/sub-domain-transport', function (S, XhrTransportBase, Event, DOM
                 DOM.prepend(iframe, doc.body || doc.documentElement);
                 iframeUri = new S.Uri();
                 iframeUri.setScheme(uri.getScheme());
+                iframeUri.setPort(uri.getPort());
                 iframeUri.setHostname(hostname);
                 iframeUri.setPath(proxy);
                 iframe.src = iframeUri.toString();

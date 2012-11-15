@@ -67,15 +67,15 @@
 
         //普通 get 请求
         $('#get').on('click', function() {
-            var s = "http://yiminghe.taobao.com/kissy_git/kissy/src/ajax/";
-            IO.get('' + '../tests/data/interface.php?t=get', function(data) {
+            var s = "http://yiminghe.taobao.com:8888/src/ajax/";
+            IO.get('' + '../tests/data/interface.jss?t=get', function(data) {
                 log('GET ' + data);
             });
         });
 
         //普通 post 请求
         $('#post').on('click', function() {
-            IO.post('../tests/data/interface.php?t=post', {
+            IO.post('../tests/data/interface.jss?t=post', {
                 type:'post',
                 name:'jayli',
                 company:'cn.yahoo.com',
@@ -87,7 +87,7 @@
 
         // JSON
         $('#json').on('click', function() {
-            IO.get('../tests/data/interface.php?t=get', function(data) {
+            IO.get('../tests/data/interface.jss?t=get', function(data) {
                 log('json ' + JSON.stringify(data));
             }, 'json');
 
@@ -107,7 +107,7 @@
         $('#sync').on('click', function() {
             var str = IO({
                 type:'get',
-                url:'../tests/data/interface.php?t=get',
+                url:'../tests/data/interface.jss?t=get',
                 async:false,
                 complete: function(data) {
                     log(data);

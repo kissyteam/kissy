@@ -5,9 +5,9 @@
  */
 
 // global
-var S = global.KISSY = require('../' + 'build/kissy-nodejs.js');
+var S = global.KISSY = require('../../' + 'build/kissy-nodejs.js');
 
-var jasmineWrapper = require('../tools/jasmine/jasmine');
+var jasmineWrapper = require('../jasmine/jasmine');
 
 var jasmine = jasmineWrapper.jasmine;
 
@@ -161,7 +161,7 @@ function loadSpecs(loadPath, matcher) {
     return specs;
 }
 
-var jasmineNode = require('../tools/jasmine/node/reporter').jasmineNode;
+var jasmineNode = require('../jasmine/node/reporter').jasmineNode;
 
 function executeSpecsInFolder(folder, done, isVerbose, showColors, matcher, junitReport) {
     var fileMatcher = matcher || new RegExp(".(js)$", "i"),

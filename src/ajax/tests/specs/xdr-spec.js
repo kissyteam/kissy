@@ -20,8 +20,8 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                     // yiminghe:1
                 },
                 dataType:'json',
-                url:'http://yiminghe.taobao.com/' +
-                    'kissy_git/kissy/src/ajax/tests/others/xdr/xdr.php',
+                url:'http://yiminghe.taobao.com:8888/' +
+                    'src/ajax/tests/others/xdr/xdr.jss',
                 xhrFields:{
                     // Cannot use wildcard in Access-Control-Allow-Origin
                     // when credentials flag is true.
@@ -48,8 +48,8 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                         // yiminghe:1
                     },
                     dataType:'json',
-                    url:'http://yiminghe.taobao.com/' +
-                        'kissy_git/kissy/src/ajax/tests/others/xdr/xdr.php',
+                    url:'http://yiminghe.taobao.com:8888/' +
+                        'src/ajax/tests/others/xdr/xdr.jss',
                     xhrFields:{
                         // Cannot use wildcard in Access-Control-Allow-Origin
                         // when credentials flag is true.
@@ -77,10 +77,10 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                 ret = [];
 
             io({
-                url:'http://yiminghe.taobao.ali.com/kissy_git/kissy/src/ajax/tests/data/ajax.php',
+                url:'http://yiminghe.taobao.ali.com:8888/src/ajax/tests/data/ajax.jss',
                 xdr:{
                     subDomain:{
-                        proxy:"/kissy_git/kissy/src/ajax/tests/others/subdomain/proxy.html"
+                        proxy:"/src/ajax/tests/others/subdomain/proxy.html"
                     }
                 },
                 success:function () {
@@ -120,7 +120,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             io({
                 form:form[0],
                 dataType:'json',
-                url:'http://yiminghe.taobao.ali.com/kissy_git/kissy/src/ajax/tests/others/subdomain/upload.php',
+                url:'http://yiminghe.taobao.ali.com:8888/src/ajax/tests/others/subdomain/upload.jss',
                 success:function (data) {
                     expect(data.test).toBe('1');
                     expect(data.test2).toBe('2');

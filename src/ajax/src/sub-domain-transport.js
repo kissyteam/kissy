@@ -58,6 +58,7 @@ KISSY.add('ajax/sub-domain-transport', function (S, XhrTransportBase, Event, DOM
                 DOM.prepend(iframe, doc.body || doc.documentElement);
                 iframeUri = new S.Uri();
                 iframeUri.setScheme(uri.getScheme());
+                iframeUri.setPort(uri.getPort());
                 iframeUri.setHostname(hostname);
                 iframeUri.setPath(proxy);
                 iframe.src = iframeUri.toString();
