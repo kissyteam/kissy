@@ -590,6 +590,10 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              * @param {HTMLElement} elem
              */
             _checkElemInViewport: function (elem) {
+                // it's better to removeElements, but if user want to append it later?
+                if (!DOM.contains(doc, elem)) {
+                    return false;
+                }
                 // 注：不处理 elem display: none 或处于 display none 元素内的情景
                 var self = this,
                     elemOffset = DOM.offset(elem),

@@ -1,3 +1,3 @@
 /**
- * run jasmine in phantom
+ * run jasmine in phantomjs
  */
