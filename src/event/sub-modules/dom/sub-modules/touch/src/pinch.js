@@ -3,7 +3,7 @@
  * gesture pinch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch) {
+KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouch) {
 
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
@@ -16,56 +16,47 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch
     }
 
     function Pinch() {
-        this.requiredTouchCount = 2;
-        this.event = event;
     }
 
-    S.extend(Pinch, BaseTouch, {
-
-        onTouchStart: function (e) {
-            //S.log('onTouchStart'+ e.touches.length);
-            if (Pinch.superclass.onTouchStart.apply(this, arguments) === false) {
-                return false;
-            }
-            var touches = e.touches,
-                distance = getDistance(touches[0], touches[1]);
-
-            this.startDistance = distance;
-
-            var target = this.target = this.getCommonTarget(e);
-
-            Event.fire(target,
-                PINCH_START, {
-                    touches: touches,
-                    distance: distance,
-                    scale: 1
-                });
-        },
+    S.extend(Pinch, MultiTouch, {
 
         onTouchMove: function (e) {
-            //S.log('onTouchMove'+' : ' +e.touches.length+' : '+ e.changedTouches.length);
-            var r = Pinch.superclass.onTouchMove.apply(this, arguments);
-            if (r === false) {
-                return false;
-            }
-            if (r === true) {
+
+            var self = this;
+
+            if (!self.isTracking) {
                 return;
             }
+
             var touches = e.touches,
                 distance = getDistance(touches[0], touches[1]);
 
-            Event.fire(this.target,
-                PINCH, {
-                    touches: touches,
-                    distance: distance,
-                    scale: distance / this.startDistance
-                });
+            if (!self.isStarted) {
+                self.isStarted = true;
+                self.startDistance = distance;
+                var target = self.target = self.getCommonTarget(e);
+                Event.fire(target,
+                    PINCH_START, {
+                        touches: touches,
+                        distance: distance,
+                        scale: 1
+                    });
+            } else {
+                Event.fire(self.target,
+                    PINCH, {
+                        touches: touches,
+                        distance: distance,
+                        scale: distance / self.startDistance
+                    });
+            }
+
+            self.lastTouches = touches;
         },
 
-        onTouchEnd: function () {
-            //S.log('touchend');
-            Event.fire(this.target, PINCH_END, {
-                touches: this.lastTouches
+        fireEnd: function () {
+            var self = this;
+            Event.fire(self.target, PINCH_END, {
+                touches: self.lastTouches
             });
         }
 
@@ -73,10 +64,10 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, BaseTouch
 
     eventHandleMap[PINCH] =
         eventHandleMap[PINCH_END] =
-            eventHandleMap[PINCH_END] = Pinch;
+            eventHandleMap[PINCH_END] = new Pinch();
 
     return Pinch;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './base-touch']
+    requires: ['./handle-map', 'event/dom/base', './multi-touch']
 });

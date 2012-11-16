@@ -3,46 +3,22 @@
  * fired when rotate using two fingers
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, BaseTouch, Event) {
+KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Event) {
     var ROTATE_START = 'rotateStart',
         ROTATE = 'rotate',
         RAD_2_DEG = 180 / Math.PI,
         ROTATE_END = 'rotateEnd';
 
     function Rotate() {
-        this.requiredTouchCount = 2;
     }
 
-    S.extend(Rotate, BaseTouch, {
-        onTouchStart: function (e) {
-            var self = this;
-
-            if (Rotate.superclass.onTouchStart.call(self, e) === false) {
-                return false;
-            }
-
-            var touches = e.touches,
-                one = touches[0],
-                two = touches[1],
-                angle = Math.atan2(two.pageY - one.pageY,
-                    two.pageX - one.pageX) * RAD_2_DEG;
-
-            self.lastAngle = self.startAngle = angle;
-
-            self.target = self.getCommonTarget(e);
-
-            Event.fire(self.target, ROTATE_START, {
-                touches: e.touches,
-                angle: angle,
-                rotation: 0
-            });
-        },
+    S.extend(Rotate, MultiTouch, {
 
         onTouchMove: function (e) {
             var self = this;
 
-            if (Rotate.superclass.onTouchMove.call(self, e) === false) {
-                return false;
+            if (!self.isTracking) {
+                return;
             }
 
             var touches = e.touches,
@@ -52,39 +28,62 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, BaseTouch, Even
                 angle = Math.atan2(two.pageY - one.pageY,
                     two.pageX - one.pageX) * RAD_2_DEG;
 
-            var diff = Math.abs(angle - lastAngle);
-            var positiveAngle = angle + 360;
-            var negativeAngle = angle - 360;
+            if (lastAngle) {
+                var diff = Math.abs(angle - lastAngle);
+                var positiveAngle = angle + 360;
+                var negativeAngle = angle - 360;
 
-            // process '>' scenario: top -> bottom
-            if (Math.abs(positiveAngle - lastAngle) < diff) {
-                angle = positiveAngle;
-            }
-            // process '>' scenario: bottom -> top
-            else if (Math.abs(negativeAngle - lastAngle) < diff) {
-                angle = negativeAngle;
+                // process '>' scenario: top -> bottom
+                if (Math.abs(positiveAngle - lastAngle) < diff) {
+                    angle = positiveAngle;
+                }
+                // process '>' scenario: bottom -> top
+                else if (Math.abs(negativeAngle - lastAngle) < diff) {
+                    angle = negativeAngle;
+                }
             }
 
             self.lastAngle = angle;
 
-            Event.fire(self.target, ROTATE, {
-                touches: touches,
-                angle: angle,
-                rotation: angle - self.startAngle
-            });
+            if (!self.isStarted) {
+                self.isStarted = true;
+
+                self.startAngle = angle;
+
+                self.target = self.getCommonTarget(e);
+
+                Event.fire(self.target, ROTATE_START, {
+                    originalEvent: e.originalEvent,
+                    touches: e.touches,
+                    angle: angle,
+                    rotation: 0
+                });
+
+            } else {
+                Event.fire(self.target, ROTATE, {
+                    touches: touches,
+                    originalEvent: e.originalEvent,
+                    angle: angle,
+                    rotation: angle - self.startAngle
+                });
+            }
         },
 
-        onTouchEnd: function () {
-            Event.fire(this.target, ROTATE_END, {
-                touches: this.lastTouches
+        fireEnd: function (e) {
+            var self = this;
+            Event.fire(self.target, ROTATE_END, {
+                touches: self.lastTouches,
+                originalEvent: e.originalEvent
             });
         }
     });
 
-    eventHandleMap[ROTATE] = eventHandleMap[ROTATE_END] = eventHandleMap[ROTATE_START] = Rotate;
+    eventHandleMap[ROTATE] =
+        eventHandleMap[ROTATE_END] =
+            eventHandleMap[ROTATE_START] = new Rotate();
 
     return Rotate;
 
 }, {
-    requires: ['./handle-map', './base-touch', 'event/dom/base']
+    requires: ['./handle-map', './multi-touch', 'event/dom/base']
 });

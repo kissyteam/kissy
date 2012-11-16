@@ -37,8 +37,17 @@
             e.preventDefault();
         });
 
-        Event.on('#t', "rotate rotateStart rotateEnd", function (e) {
-            log(e.type + ' : ' + e.rotation+' : '+ e.angle);
+        Event.on('#t', "rotateEnd", function (e) {
+            log(e.type + ' : ' +
+                    e.originalEvent.changedTouches[0].target.nodeName + ' : ' +
+                    e.rotation + ' : ' + e.angle);
+            //S.log(e.type + ' : ' + e.rotation);
+        });
+
+        Event.on('#t', "rotate rotateStart", function (e) {
+            log(e.type + ' : ' +
+                    e.originalEvent.touches.length + ' : ' +
+                    e.rotation + ' : ' + e.angle);
             //S.log(e.type + ' : ' + e.rotation);
         });
 

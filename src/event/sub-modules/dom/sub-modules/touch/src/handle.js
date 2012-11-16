@@ -66,10 +66,11 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
 
         onTouchStart: function (event) {
             var e, h,
-                self = this;
-            for (e in self.eventHandle) {
-                h = self.eventHandle[e];
-                h.isActive = true;
+                self = this,
+                eventHandle = self.eventHandle;
+            for (e in eventHandle) {
+                h = eventHandle[e];
+                h.isActive = 1;
             }
             self.callEventHandle('onTouchStart', event);
         },
@@ -84,25 +85,33 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
 
         callEventHandle: function (method, event) {
             var self = this,
+                eventHandle = self.eventHandle,
                 e, h;
             event = self.normalize(event);
             if (event) {
-                for (e in self.eventHandle) {
-                    h = self.eventHandle[e];
-                    if (h.isActive && h[method](event) === false) {
-                        h.isActive = false;
+                for (e in eventHandle) {
+                    // event processor shared by multiple events
+                    h = eventHandle[e];
+                    if (h.processed) {
+                        continue;
                     }
+                    h.processed = 1;
+                    if (h.isActive && h[method](event) === false) {
+                        h.isActive = 0;
+                    }
+                }
+
+                for (e in eventHandle) {
+                    h = eventHandle[e];
+                    h.processed = 0;
                 }
             }
         },
 
         addEventHandle: function (event) {
-            var self = this, constructor = eventHandleMap[event];
-            if (!self.eventHandle[event] &&
-                // event processor shared by multiple events
-                !constructor.used) {
-                self.eventHandle[event] = new constructor();
-                constructor.used = 1;
+            var self = this, handle = eventHandleMap[event];
+            if (!self.eventHandle[event]) {
+                self.eventHandle[event] = handle;
             }
         },
 

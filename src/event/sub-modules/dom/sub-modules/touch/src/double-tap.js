@@ -12,19 +12,19 @@ KISSY.add('event/dom/touch/double-tap',
         var MAX_DURATION = 300;
 
         function DoubleTap() {
-            this.requiredTouchCount=1;
         }
 
         S.extend(DoubleTap, SingleTouch, {
 
             onTouchStart: function (e) {
-                if (DoubleTap.superclass.onTouchStart.apply(this, arguments) === false) {
+                var self = this;
+                if (DoubleTap.superclass.onTouchStart.apply(self, arguments) === false) {
                     return false;
                 }
-                this.startTime = e.timeStamp;
-                if (this.singleTapTimer) {
-                    clearTimeout(this.singleTapTimer);
-                    this.singleTapTimer = 0;
+                self.startTime = e.timeStamp;
+                if (self.singleTapTimer) {
+                    clearTimeout(self.singleTapTimer);
+                    self.singleTapTimer = 0;
                 }
             },
 
@@ -33,12 +33,13 @@ KISSY.add('event/dom/touch/double-tap',
             },
 
             onTouchEnd: function (e) {
-                var lastEndTime = this.lastEndTime,
+                var self = this,
+                    lastEndTime = self.lastEndTime,
                     time = e.timeStamp,
                     target = e.target,
                     touch = e.changedTouches[0],
-                    duration = time - this.startTime;
-                this.lastEndTime = time;
+                    duration = time - self.startTime;
+                self.lastEndTime = time;
                 // second touch end
                 if (lastEndTime) {
                     // time between current up and last up
@@ -46,7 +47,7 @@ KISSY.add('event/dom/touch/double-tap',
                     // a double tap
                     if (duration < MAX_DURATION) {
                         // a new double tap cycle
-                        this.lastEndTime = 0;
+                        self.lastEndTime = 0;
 
                         Event.fire(target, DOUBLE_TAP, {
                             touch: touch,
@@ -59,7 +60,7 @@ KISSY.add('event/dom/touch/double-tap',
 
                 // time between down and up is long enough
                 // then a singleTap
-                duration = time - this.startTime;
+                duration = time - self.startTime;
                 if (duration > MAX_DURATION) {
                     Event.fire(target, SINGLE_TAP, {
                         touch: touch,
@@ -68,7 +69,7 @@ KISSY.add('event/dom/touch/double-tap',
                 } else {
                     // buffer singleTap
                     // wait for a second tap
-                    this.singleTapTimer = setTimeout(function () {
+                    self.singleTapTimer = setTimeout(function () {
                         Event.fire(target, SINGLE_TAP, {
                             touch: touch,
                             duration: duration
@@ -79,10 +80,10 @@ KISSY.add('event/dom/touch/double-tap',
             }
         });
 
-        eventHandleMap[SINGLE_TAP] = eventHandleMap[DOUBLE_TAP] = DoubleTap;
+        eventHandleMap[SINGLE_TAP] = eventHandleMap[DOUBLE_TAP] = new DoubleTap();
 
         return DoubleTap;
 
     }, {
-        requires: ['./handle-map', 'event/dom/base', './base-touch']
+        requires: ['./handle-map', 'event/dom/base', './single-touch']
     });

@@ -3,16 +3,15 @@
  * fired when tap and hold for more than 1s
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, BaseTouch, Event) {
+KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, Event) {
     var event = 'tapHold';
 
     var duration = 1000;
 
     function TapHold() {
-        this.requiredTouchCount = 1;
     }
 
-    S.extend(TapHold, BaseTouch, {
+    S.extend(TapHold, SingleTouch, {
         onTouchStart: function (e) {
             var self = this;
             if (TapHold.superclass.onTouchStart.call(self, e) === false) {
@@ -36,10 +35,10 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, BaseTouch, Ev
         }
     });
 
-    eventHandleMap[event] = TapHold;
+    eventHandleMap[event] = new TapHold();
 
     return TapHold;
 
 }, {
-    requires: ['./handle-map', './base-touch', 'event/dom/base']
+    requires: ['./handle-map', './single-touch', 'event/dom/base']
 });

@@ -40,11 +40,11 @@
 
 
         Event.on('#t', "swipe", function (e) {
-            S.log(e);
+            log(e.type + ' : ' + e.direction + ' : ' + e.duration + ' : ' + e.distance);
         });
 
         // prevent native scroll
-        Event.on('#t','touchmove',function(e){
+        Event.on('#t', 'touchmove', function (e) {
             e.preventDefault();
         });
 

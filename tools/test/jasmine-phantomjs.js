@@ -1,0 +1,3 @@
+/**
+ * run jasmine in phantom
+ */

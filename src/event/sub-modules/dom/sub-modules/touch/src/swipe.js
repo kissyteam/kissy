@@ -12,50 +12,22 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
         MIN_DISTANCE = 50;
 
     function Swipe() {
-        this.requiredTouchCount = 1;
-        this.event = event;
-    }
-
-    function checkSwipeMove(self, e, touches) {
-        var touch = touches[0],
-            x = touch.pageX,
-            y = touch.pageY,
-            absDeltaX = Math.abs(x - self.startX),
-            absDeltaY = Math.abs(y - self.startY),
-            time = e.timeStamp;
-
-        if (time - self.startTime > MAX_DURATION) {
-            return false;
-        }
-
-        if (self.isVertical && absDeltaX > MAX_OFFSET) {
-            self.isVertical = 0;
-        }
-
-        if (self.isHorizontal && absDeltaY > MAX_OFFSET) {
-            self.isHorizontal = 0;
-        }
-
-        if (!self.isHorizontal && !self.isVertical) {
-            return false;
-        }
-
-        return undefined;
     }
 
     S.extend(Swipe, SingleTouch, {
 
         onTouchStart: function (e) {
-            if (Swipe.superclass.onTouchStart.apply(this, arguments) === false) {
+            var self = this;
+            if (Swipe.superclass.onTouchStart.apply(self, arguments) === false) {
                 return false;
             }
             var touch = e.touches[0];
-            this.startTime = e.timeStamp;
+            self.startTime = e.timeStamp;
 
-            this.isHorizontal = 1;
-            this.isVertical = 1;
+            self.isHorizontal = 1;
+            self.isVertical = 1;
 
-            this.startX = touch.pageX;
+            self.startX = touch.pageX;
             this.startY = touch.pageY;
 
             if (e.type.indexOf('mouse') != -1) {
@@ -64,17 +36,34 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
         },
 
         onTouchMove: function (e) {
-            // ignore
-            if (Swipe.superclass.onTouchMove.apply(this, arguments) === true) {
-                return;
+            var self = this,
+                touch = e.changedTouches[0],
+                x = touch.pageX,
+                y = touch.pageY,
+                absDeltaX = Math.abs(x - self.startX),
+                absDeltaY = Math.abs(y - self.startY),
+                time = e.timeStamp;
+
+            if (time - self.startTime > MAX_DURATION) {
+                return false;
             }
-            if (checkSwipeMove(this, e, e.touches) == false) {
+
+            if (self.isVertical && absDeltaX > MAX_OFFSET) {
+                self.isVertical = 0;
+            }
+
+            if (self.isHorizontal && absDeltaY > MAX_OFFSET) {
+                self.isHorizontal = 0;
+            }
+
+            if (!self.isHorizontal && !self.isVertical) {
                 return false;
             }
         },
 
         onTouchEnd: function (e) {
-            if (checkSwipeMove(this, e, e.changedTouches) == false) {
+            var self = this;
+            if (self.onTouchMove(e) === false) {
                 return false;
             }
 
@@ -89,25 +78,25 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
                 distance,
                 direction;
 
-            if (this.isVertical && absDeltaY < MIN_DISTANCE) {
-                this.isVertical = 0;
+            if (self.isVertical && absDeltaY < MIN_DISTANCE) {
+                self.isVertical = 0;
             }
 
-            if (this.isHorizontal && absDeltaX < MIN_DISTANCE) {
-                this.isHorizontal = 0;
+            if (self.isHorizontal && absDeltaX < MIN_DISTANCE) {
+                self.isHorizontal = 0;
             }
 
-            if (this.isHorizontal) {
+            if (self.isHorizontal) {
                 direction = deltaX < 0 ? 'left' : 'right';
                 distance = absDeltaX;
-            } else if (this.isVertical) {
+            } else if (self.isVertical) {
                 direction = deltaY < 0 ? 'up' : 'down';
                 distance = absDeltaY;
             } else {
                 return false;
             }
 
-            Event.fire(e.target, this.event, {
+            Event.fire(e.target, event, {
                 /**
                  *
                  * native touch property **only for touch event**.
@@ -148,10 +137,10 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
 
     });
 
-    eventHandleMap[event] = Swipe;
+    eventHandleMap[event] = new Swipe();
 
     return Swipe;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './base-touch']
+    requires: ['./handle-map', 'event/dom/base', './single-touch']
 });
