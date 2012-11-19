@@ -2,12 +2,17 @@
  * domain spec for event
  * @author yiminghe@gmail.com
  */
-KISSY.use("event/dom/base", function (S, Event) {
+KISSY.use("event/dom/base,dom", function (S, Event, DOM) {
 
     describe("domain in event", function () {
         it("hashchange should consider domain", function () {
             window.location.hash = '';
-            document.domain = "ali.com";
+            document.domain = "localhost";
+
+            // document.domain does not contain port
+            DOM.isCustomDomain = function () {
+                return true;
+            };
 
             var hash = "#ok",
                 current = -1;

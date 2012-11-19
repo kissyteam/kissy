@@ -2,12 +2,9 @@
  * Domain spec for mvc
  * @author yiminghe@gmail.com
  */
-KISSY.use('mvc,event', function (S, MVC, Event) {
+KISSY.use('dom,mvc', function (S, DOM, MVC) {
 
-    var Model = MVC.Model,
-        Collection = MVC.Collection,
-        View = MVC.View,
-        Router = MVC.Router;
+    var Router = MVC.Router;
 
     describe("domain in router", function () {
 
@@ -18,15 +15,18 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
             location.hash = '';
 
             var r = new Router({
-                routes:{
-                    "/*path":function (paths) {
+                routes: {
+                    "/*path": function (paths) {
                         expect(paths.path).toBe("haha/hah2/hah3");
                         ok = 1;
                     }
                 }
             });
 
-            document.domain = 'ali.com';
+            document.domain = 'localhost';
+            DOM.isCustomDomain = function () {
+                return true;
+            };
 
             Router.start();
 

@@ -3,31 +3,34 @@
     KISSY.use("ajax", function (S, io) {
         S.ready(function (S) {
             io({
-                headers:{
+                headers: {
                     // cross domain 设置 header ie 无效
                     // 原生 chrome.firefox 也不行，响应头也不能读
-                    yiminghe:1
+                    yiminghe: 1
                 },
-                dataType:'json',
-                url:'http://yiminghe.daily.taobao.net:8080/' +
+                cache:false,
+                // force to use native xhr no sub domain proxy
+                crossDomain: false,
+                dataType: 'json',
+                url: 'http://localhost:9999/' +
                         'src/ajax/tests/others/xdr/xdr.jss',
-                xhrFields:{
+                xhrFields: {
                     // Cannot use wildcard in Access-Control-Allow-Origin
                     // when credentials flag is true.
-                    // Access-Control-Allow-Origin:http://chengyu.taobao.ali.com
+                    // Access-Control-Allow-Origin:http://localhost
                     // 必须设置完全 hostname 匹配
 
                     // firefox , chrome 携带 cookie
-                    withCredentials:true
+                    withCredentials: true
                 },
-                xdr:{
+                xdr: {
                     // 强制用 flash，ie 可携带cookie
-                    use:"flash"
+                    use: "flash"
                 },
-                data:{
-                    action:"x"
+                data: {
+                    action: "x"
                 },
-                success:function (d, s, r) {
+                success: function (d, s, r) {
                     S.log("x : " + d.x);
                     // 原生 chrome.firefox 也不行，响应头也不能读
                     S.log(r.getResponseHeader("X-Powered-By"));
@@ -37,22 +40,23 @@
             if (1)return;
 
             io({
-                headers:{
+                crossDomain: false,
+                headers: {
                     // cross domain 设置 header ie 无效
                     // yiminghe:1
                 },
-                dataType:'json',
-                url:'http://yiminghe.daily.taobao.net:8080/' +
+                dataType: 'json',
+                url: 'http://localhost:9999/' +
                         'src/ajax/tests/others/xdr/xdr.jss',
-                xhrFields:{
+                xhrFields: {
                     // Cannot use wildcard in Access-Control-Allow-Origin
                     // when credentials flag is true.
                     // withCredentials:true
                 },
-                data:{
-                    action:"y"
+                data: {
+                    action: "y"
                 },
-                success:function (d, s, r) {
+                success: function (d, s, r) {
                     S.log("y : " + d.y);
                     S.log(r.getResponseHeader("X-Powered-By"));
                 }

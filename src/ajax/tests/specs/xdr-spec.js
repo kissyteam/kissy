@@ -5,7 +5,7 @@
 KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
     var $ = Node.all;
 
-    document.domain = 'ali.com';
+    document.domain = 'localhost';
 
     describe("Xdr IO", function () {
 
@@ -19,8 +19,10 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                     // 原生 chrome.firefox 也不行，响应头也不能读
                     // yiminghe:1
                 },
+                // force to use native xhr
+                crossDomain:false,
                 dataType:'json',
-                url:'http://yiminghe.taobao.com:8888/' +
+                url:'http://localhost:9999/' +
                     'src/ajax/tests/others/xdr/xdr.jss',
                 xhrFields:{
                     // Cannot use wildcard in Access-Control-Allow-Origin
@@ -47,8 +49,9 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                         // cross domain 设置 header ie 无效
                         // yiminghe:1
                     },
+                    crossDomain:false,
                     dataType:'json',
-                    url:'http://yiminghe.taobao.com:8888/' +
+                    url:'http://localhost:9999/' +
                         'src/ajax/tests/others/xdr/xdr.jss',
                     xhrFields:{
                         // Cannot use wildcard in Access-Control-Allow-Origin
@@ -77,7 +80,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                 ret = [];
 
             io({
-                url:'http://yiminghe.taobao.ali.com:8888/src/ajax/tests/data/ajax.jss',
+                url:'http://localhost:9999/src/ajax/tests/data/ajax.jss',
                 xdr:{
                     subDomain:{
                         proxy:"/src/ajax/tests/others/subdomain/proxy.html"
@@ -120,7 +123,8 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             io({
                 form:form[0],
                 dataType:'json',
-                url:'http://yiminghe.taobao.ali.com:8888/src/ajax/tests/others/subdomain/upload.jss',
+                url:'http://localhost:9999/src/ajax/' +
+                    'tests/others/subdomain/upload.jss',
                 success:function (data) {
                     expect(data.test).toBe('1');
                     expect(data.test2).toBe('2');

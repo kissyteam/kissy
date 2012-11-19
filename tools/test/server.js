@@ -2,16 +2,18 @@
  * Simple KISSY Test Server
  * @author yiminghe@gmail.com
  */
-(function () {
+
+var path = require('path');
+var fs = require('fs');
+var cwd = process.cwd();
+var srcDir = path.resolve(cwd, 'src');
+var currentDir = __dirname;
+var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
+
+function startServer(port) {
+
     var express = require('express');
     var app = express();
-    var path = require('path');
-    var fs = require('fs');
-    var cwd = process.cwd();
-    var srcDir = path.resolve(cwd, 'src');
-    var currentDir = __dirname;
-    var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
-
 
     function collectTc(baseDir, codes) {
         var files = fs.readdirSync(baseDir);
@@ -122,7 +124,10 @@
             }));
         });
 
-        app.listen(8888);
+        app.listen(port);
 
     });
-})();
+}
+
+startServer(9999);
+startServer(8888);

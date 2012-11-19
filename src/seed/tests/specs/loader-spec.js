@@ -31,7 +31,7 @@
             });
 
             // cross domain
-            var d2 = d.replace("chengyu.taobao.ali.com", "yiminghe.taobao.ali.com");
+            var d2 = d.replace(":8888", ":9999");
             S.getScript(d2 + "getStyle/fp2011b.css", function () {
                 setTimeout(function () {
                     expect(getStyle(document.getElementById("special2"), "fontSize")).toBe("44px");

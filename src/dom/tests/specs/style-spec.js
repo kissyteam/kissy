@@ -172,7 +172,6 @@ KISSY.use("dom,ua", function (S, DOM, UA) {
 
 
         it("show/hide works", function () {
-            //document.domain = 'ali.com';
             DOM.addStyleSheet("div {display:none;}", "test-display-style");
 
             var elem = DOM.create('<div id="test-div" ' +

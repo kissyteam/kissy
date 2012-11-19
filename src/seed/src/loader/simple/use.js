@@ -167,6 +167,7 @@
             // parallel use
             if (status <= LOADING &&
                 // prevent duplicate listen for one use
+                // prevent duplicate getScript for the same url for one use
                 !isWait) {
                 // load and attach this module
                 fetchModule(self, mod, loadChecker);
@@ -218,7 +219,10 @@
                         }
                     }
                 }
-                checkHandler();
+
+                // force to asynchronously, need waitMods filled for loadChecker
+                // in case getScript is synchronous (cache in ie6? nodejs!)
+                S.later(checkHandler);
             },
             error: checkHandler,
             // source:mod.name + '-init',

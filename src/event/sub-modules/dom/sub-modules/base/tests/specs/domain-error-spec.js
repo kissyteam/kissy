@@ -2,7 +2,7 @@
  * domain error spec for event
  * @author yiminghe@gmail.com
  */
-KISSY.use("event/dom/base,ua", function (S, Event, UA) {
+KISSY.use("event/dom/base,ua,dom", function (S, Event, UA,DOM) {
     var ie = document.documentMode || UA.ie;
     describe("domain in event", function () {
         it("hashchange does not work for ie<8 if change domain after bind hashchange event", function () {
@@ -18,8 +18,11 @@ KISSY.use("event/dom/base,ua", function (S, Event, UA) {
             waits(500);
 
             runs(function () {
-                document.domain = "ali.com";
+                document.domain = "localhost";
                 window.location.hash = hash;
+                DOM.isCustomDomain = function () {
+                    return true;
+                };
             });
 
             waits(500);

@@ -6,8 +6,8 @@ module.exports = function (req, res) {
         res.set('Pragma', 'no-cache');
         res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
         res.set('Access-Control-Allow-Credentials', 'true');
-        res.set('Access-Control-Allow-Origin', 'http://chengyu.taobao.ali.com:8888');
-        res.set('Access-Control-Allow-Headers', 'Content-Type, *');
+        res.set('Access-Control-Allow-Origin', 'http://localhost:8888');
+        res.set('Access-Control-Allow-Headers', 'origin, x-requested-with, yiminghe, content-type, accept, *');
         res.send('{"' + req.query.action + '": 1}');
     }, 1000);
 

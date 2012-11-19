@@ -72,7 +72,8 @@ KISSY.add('dom/base', function (S, UA, undefined) {
     var DOM = {
 
         /**
-         * Whether has been set a custom domain,
+         * Whether has been set a custom domain.
+         * Note not perfect: localhost:8888, domain='localhost'
          * @param {window} [win] Test window. Default current window.
          * @return {Boolean}
          */

@@ -17,7 +17,7 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                 });
 
                 IO.get('../data/301.jss', function () {
-                    expect('此处').toBe('不运行');
+                    expect('301 runs').toBe('301 runs');
                 });
 
                 waits(300);
@@ -30,7 +30,7 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                 });
 
                 IO.post('../data/301.jss', function () {
-                    expect('此处').toBe('不运行');
+                    expect('301 runs').toBe('301 runs');
                 });
 
                 waits(300);
@@ -130,7 +130,7 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
             // https://github.com/kissyteam/kissy/issues/187
             it("can ignore protocol", function () {
                 var ok = 0;
-                IO.jsonp('//yiminghe.taobao.com:8888/src/ajax/tests/data/interface.jss', {
+                IO.jsonp('//localhost:9999/src/ajax/tests/data/interface.jss', {
                     myparam: 'taobao'
                 }, function (data) {
                     expect(typeof data).toBe('object');

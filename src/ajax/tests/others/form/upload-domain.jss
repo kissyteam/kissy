@@ -17,13 +17,8 @@ module.exports = function (req, res) {
         if (query.test5) {
             t.test5 = query.test5;
         }
-        var data = '<!doctype html><html><head>' +
-            '<script>document.domain=\'localhost\';</script>' +
-            '</head><body>';
-        data += JSON.stringify(t);
-        data += '</body></html>';
-        res.send(data);
-    }, 1000);
+        res.send('<script>document.domain="localhost";</script>'+JSON.stringify(t));
+    }, 500);
 
 
 };

@@ -32,7 +32,7 @@ KISSY.use('mvc,event,ua', function (S, MVC, Event, UA) {
             waits(500);
 
             runs(function () {
-                document.domain = 'ali.com';
+                document.domain = 'localhost';
                 Router.navigate("/haha/hah2/hah3");
             });
 

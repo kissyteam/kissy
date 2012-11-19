@@ -18,8 +18,6 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
 
         it("works", function () {
 
-            //document.domain='ali.com';
-
             var ok = 0,
                 ok3 = 0,
                 ok4 = 0,

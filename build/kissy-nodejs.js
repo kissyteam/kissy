@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 16 15:30
+build time: Nov 19 18:35
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121116153020' will replace with current timestamp when compressing.
+         * NOTICE: '20121119183543' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121116153020',
+        __BUILD_TIME: '20121119183543',
         /**
          * KISSY Environment.
          * @private
@@ -955,9 +955,14 @@ var KISSY = (function (undefined) {
             });
         },
         /**
-         * get escaped string from html
-         * @see   http://yiminghe.javaeye.com/blog/788929
-         *        http://wonko.com/post/html-escaping
+         * get escaped string from html.
+         * only escape
+         *      & > < ` / " '
+         * refer:
+         *
+         * [http://yiminghe.javaeye.com/blog/788929](http://yiminghe.javaeye.com/blog/788929)
+         *
+         * [http://wonko.com/post/html-escaping](http://wonko.com/post/html-escaping)
          * @param str {string} text2html show
          * @member KISSY
          * @return {String} escaped html
@@ -969,7 +974,7 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * get escaped regexp string for construct regexp
+         * get escaped regexp string for construct regexp.
          * @param str
          * @member KISSY
          * @return {String} escaped regexp
@@ -979,7 +984,9 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * un-escape html to string
+         * un-escape html to string.
+         * only unescape
+         *      &amp; &lt; &gt; &#x60; &#x2F; &quot; &#x27; &#\d{1,5}
          * @param str {string} html2text
          * @member KISSY
          * @return {String} un-escaped html
@@ -1174,7 +1181,7 @@ var KISSY = (function (undefined) {
          * @param fn {Function|String} the function to execute or the name of the method in
          * the 'o' object to execute.
          *
-         * @param when {Number} the number of milliseconds to wait until the fn is executed.
+         * @param [when=0] {Number} the number of milliseconds to wait until the fn is executed.
          *
          * @param {Boolean} [periodic] if true, executes continuously at supplied interval
          * until canceled.
@@ -3903,21 +3910,17 @@ var KISSY = (function (undefined) {
 
             var uri = new S.Uri(url);
 
-            fs.readFile(uri.getPath(), charset || 'utf-8', function (err, mod) {
-                if (err) {
-                    error && error(err);
-                } else {
-                    try {
-                        var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
-                        fn(S);
-                    } catch (e) {
-                        S.log('in file: ' + url);
-                        S.log(e.stack, 'error');
-                        error && error(e);
-                    }
-                    success && success();
-                }
-            });
+            try {
+                var mod = fs.readFileSync(uri.getPath(), charset || 'utf-8');
+                var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
+                fn(S);
+                success && success();
+            } catch (e) {
+                S.log('in file: ' + url);
+                S.log(e.stack, 'error');
+                error && error(e);
+            }
+
         }
 
     });
@@ -4471,6 +4474,7 @@ var KISSY = (function (undefined) {
             // parallel use
             if (status <= LOADING &&
                 // prevent duplicate listen for one use
+                // prevent duplicate getScript for the same url for one use
                 !isWait) {
                 // load and attach this module
                 fetchModule(self, mod, loadChecker);
@@ -4522,7 +4526,10 @@ var KISSY = (function (undefined) {
                         }
                     }
                 }
-                checkHandler();
+
+                // force to asynchronously, need waitMods filled for loadChecker
+                // in case getScript is synchronous (cache in ie6? nodejs!)
+                S.later(checkHandler);
             },
             error: checkHandler,
             // source:mod.name + '-init',
@@ -4734,7 +4741,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121116153020'
+            tag: '20121119183543'
         }, getBaseInfo()));
     }
 

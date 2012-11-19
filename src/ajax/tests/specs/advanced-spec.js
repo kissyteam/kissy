@@ -525,7 +525,6 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                 }
             });
 
-
             waitsFor(function () {
                 return ok;
             });
@@ -543,23 +542,21 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
             var ok = 0;
 
-            var uploadRc = new S.Uri(location.href).resolve('../others/form/upload.jss');
-
-            uploadRc.setHostname('yiminghe.taobao.net');
-
-            S.log(uploadRc.toString());
-
+            // ie upload-domain.jss 必须设置 domain
+            // 否则 localhost:8888 和 localhost:9999 默认可以通信...
+            var uploadRc = 'http://localhost:9999/' +
+                'src/ajax/tests/others/form/upload-domain.jss';
 
             io({
                 form: form[0],
                 dataType: 'json',
-                url: uploadRc.toString(),
+                url: uploadRc,
                 success: function (data) {
                     ok = 0;
                 },
                 error: function (data, statusText) {
                     expect(statusText).toBe('parser error');
-                    ok=1;
+                    ok = 1;
                 }
             });
 

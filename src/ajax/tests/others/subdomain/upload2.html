@@ -14,7 +14,7 @@
 </form>
 <script src="../../../../build/kissy.js"></script>
 <script>
-    document.domain = 'ali.com';
+    document.domain = 'localhost';
     KISSY.ready(function (S) {
         S.use("core", function (S) {
 
@@ -150,15 +150,8 @@
                     }, {
                         s: 1
                     },
-                    'http://yiminghe.taobao.ali.com:8888/' +
+                    'http://localhost:9999/' +
                             'src/ajax/tests/subdomain/upload.jss');
-//            io({
-//                form:S.get('#t'),
-//                url:'http://yiminghe.taobao.ali.com/src/ajax/tests/subdomain/upload.jss',
-//                success:function (data) {
-//                    alert(S.JSON.stringify(data));
-//                }
-//            });
         });
     });
 </script>

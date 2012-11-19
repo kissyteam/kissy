@@ -28,21 +28,17 @@
 
             var uri = new S.Uri(url);
 
-            fs.readFile(uri.getPath(), charset || 'utf-8', function (err, mod) {
-                if (err) {
-                    error && error(err);
-                } else {
-                    try {
-                        var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
-                        fn(S);
-                    } catch (e) {
-                        S.log('in file: ' + url);
-                        S.log(e.stack, 'error');
-                        error && error(e);
-                    }
-                    success && success();
-                }
-            });
+            try {
+                var mod = fs.readFileSync(uri.getPath(), charset || 'utf-8');
+                var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
+                fn(S);
+                success && success();
+            } catch (e) {
+                S.log('in file: ' + url);
+                S.log(e.stack, 'error');
+                error && error(e);
+            }
+
         }
 
     });

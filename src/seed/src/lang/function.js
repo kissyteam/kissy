@@ -62,7 +62,7 @@
          * @param fn {Function|String} the function to execute or the name of the method in
          * the 'o' object to execute.
          *
-         * @param when {Number} the number of milliseconds to wait until the fn is executed.
+         * @param [when=0] {Number} the number of milliseconds to wait until the fn is executed.
          *
          * @param {Boolean} [periodic] if true, executes continuously at supplied interval
          * until canceled.

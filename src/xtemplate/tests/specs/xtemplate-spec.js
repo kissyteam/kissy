@@ -10,7 +10,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
             it('support {{variable}}', function () {
 
-                var tpl = 'this is {{title}}!';
+                var tpl = 'this is class="t" {{title}}!';
 
                 var data = {
                     title: 'o'
@@ -20,7 +20,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     name: 'tpl-variable'
                 }).render(data);
 
-                expect(render).toBe('this is o!');
+                expect(render).toBe('this is class="t" o!');
 
             });
 

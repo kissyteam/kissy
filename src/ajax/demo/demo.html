@@ -67,7 +67,7 @@
 
         //普通 get 请求
         $('#get').on('click', function() {
-            var s = "http://yiminghe.taobao.com:8888/src/ajax/";
+            var s = "http://localhost:9999/src/ajax/";
             IO.get('' + '../tests/data/interface.jss?t=get', function(data) {
                 log('GET ' + data);
             });

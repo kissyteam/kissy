@@ -1,38 +1,45 @@
 <script src="../../../../../build/seed.js"></script>
 <script>
-    KISSY.ready(function(S) {
-        S.use("ajax", function(S, io) {
-            document.domain = 'yiming.com';
+    KISSY.ready(function (S) {
+        S.use("ajax", function (S, io) {
+            document.domain = 'localhost';
+
+            if (0) {
+                io({
+                    url: 'http://localhost:9999/src/ajax/tests/data/ajax.jss',
+                    cache: false,
+                    success: function () {
+                        S.log("success");
+                    },
+                    error: function (d, s) {
+                        S.log(s || "error");
+                    },
+                    complete: function () {
+                        S.log("complete");
+                    }
+                });
+            }
+
             io({
-                url:'http://yy.yiming.com:8888/src/ajax/tests/ajax.jss',
-                xdr:{
-                    subDomain:{
-                        proxy:"/src/ajax/tests/subdomain/proxy.html"
+                url: 'http://localhost:9999/src/ajax/tests/data/ajax.jss',
+                cache: false,
+                xdr: {
+                    subDomain: {
+                        proxy: "/src/ajax/tests/others/subdomain/proxy.html"
                     }
                 },
-                success:function() {
+                success: function () {
                     S.log("success");
                 },
-                error:function(d, s) {
+                error: function (d, s) {
                     S.log(s || "error");
                 },
-                complete:function() {
+                complete: function () {
                     S.log("complete");
                 }
             });
-            io({
-                url:'http://yy.yiming.com:8888/src/ajax/tests/ajax.jss',
 
-                success:function() {
-                    S.log("success");
-                },
-                error:function(d, s) {
-                    S.log(s || "error");
-                },
-                complete:function() {
-                    S.log("complete");
-                }
-            });
+
         });
     });
 </script>
