@@ -5,7 +5,7 @@
 KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs, MenuButton) {
     var dtd = Editor.XHTML_DTD,
         UA = S.UA,
-        Node = S.Node,
+        Node = KISSY.NodeList,
         HTTP_TIP = "http://",
         AUTOMATIC_TIP = "自动",
         MARGIN_DEFAULT = 10,
@@ -173,7 +173,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
         valInput = Editor.Utils.valInput;
 
     function findAWithImg(img) {
-        var ret = img.parent();
+        var ret = img;
         while (ret) {
             var name = ret.nodeName();
             if (name == "a") {
@@ -225,7 +225,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
             self.imgLocalUrl = content.one("." + prefixCls + "img-local-url");
             self.tab = new Tabs({
                 "srcNode": self.d.get("body").one('.' + prefixCls + 'img-tabs'),
-                prefixCls: prefixCls+'img-'
+                prefixCls: prefixCls + 'img-'
             }).render();
             self.imgLocalUrl.val(warning);
             self.imgUrl = content.one("." + prefixCls + "img-url");
@@ -499,48 +499,65 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
                 var link = findAWithImg(img),
                     linkVal = S.trim(valInput(self.imgLink)),
                     sel = self.editor.getSelection(),
+                    target = self.imgLinkBlank.attr("checked") ? "_blank" : "_self",
+                    linkTarget,
+                    skip = 0,
+                    prev,
+                    next,
                     bs;
+
                 if (link) {
-                    if (linkVal) {
-                        link.attr("_ke_saved_href", linkVal)
-                            .attr("href", linkVal)
-                            .attr("target", self.imgLinkBlank.attr("checked") ? "_blank" : "_self");
-                        //editor.notifySelectionChange();
+                    linkTarget = link.attr('target') || "_self";
+                    if (linkVal != link.attr('href') || linkTarget != target) {
+                        img._4e_breakParent(link);
+                        if ((prev = img.prev()) && (prev.nodeName() == 'a') && !(prev[0].childNodes.length)) {
+                            prev.remove();
+                        }
+
+                        if ((next = img.next()) && (next.nodeName() == 'a') && !(next[0].childNodes.length)) {
+                            next.remove();
+                        }
                     } else {
-                        // 删除
-                        bs = sel.createBookmarks();
-                        link._4e_remove(true);
+                        skip = 1;
                     }
-                } else if (linkVal) {
+                }
+
+                if (!skip && linkVal) {
                     // 新增需要 bookmark，标记
-                    bs = sel.createBookmarks();
+                    if (!self.selectedEl) {
+                        bs = sel.createBookmarks();
+                    }
                     link = new Node("<a></a>");
                     link.attr("_ke_saved_href", linkVal)
                         .attr("href", linkVal)
-                        .attr("target", self.imgLinkBlank.attr("checked") ? "_blank" : "_self");
+                        .attr("target", target);
                     var t = img[0];
                     t.parentNode.replaceChild(link[0], t);
                     link.append(t);
                 }
+
                 if (bs) {
                     sel.selectBookmarks(bs);
                 }
-
-                if (self.selectedEl) {
+                else if (self.selectedEl) {
+                    self.editor.getSelection().selectElement(self.selectedEl);
+                }
+                if (!skip) {
                     self.editor.execCommand("save");
                 }
             }, 100);
         },
 
-        _update: function (_selectedEl) {
+        _update: function (selectedEl) {
             var self = this,
                 active = 0,
+                link,
                 resetInput = Editor.Utils.resetInput;
-            self.selectedEl = _selectedEl;
-            if (self.selectedEl && self.imageCfg['remote'] !== false) {
-                valInput(self.imgUrl, self.selectedEl.attr("src"));
-                var w = parseInt(self.selectedEl.style("width")),
-                    h = parseInt(self.selectedEl.style("height"));
+            self.selectedEl = selectedEl;
+            if (selectedEl && self.imageCfg['remote'] !== false) {
+                valInput(self.imgUrl, selectedEl.attr("src"));
+                var w = parseInt(selectedEl.style("width")),
+                    h = parseInt(selectedEl.style("height"));
                 if (h) {
                     valInput(self.imgHeight, h);
                 } else {
@@ -551,21 +568,19 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
                 } else {
                     resetInput(self.imgWidth);
                 }
-                self.imgAlign.set("value", self.selectedEl.style("float") || "none");
-                var margin = parseInt(self.selectedEl.style("margin"))
+                self.imgAlign.set("value", selectedEl.style("float") || "none");
+                var margin = parseInt(selectedEl.style("margin"))
                     || 0;
                 self.imgMargin.val(margin);
                 self.imgRatio[0].disabled = false;
                 self.imgRatioValue = w / h;
-                var link = findAWithImg(self.selectedEl);
-                if (link) {
-                    valInput(self.imgLink, link.attr("_ke_saved_href") || link.attr("href"));
-                    self.imgLinkBlank.attr("checked", link.attr("target") == "_blank");
-                } else {
-                    resetInput(self.imgLink);
-                    self.imgLinkBlank.attr("checked", true);
-                }
+                link = findAWithImg(selectedEl);
             } else {
+                var editor = self.editor;
+                var inElement = editor.getSelection().getCommonAncestor();
+                if (inElement) {
+                    link = findAWithImg(inElement);
+                }
                 var defaultMargin = self.imageCfg['defaultMargin'];
                 if (defaultMargin == undefined) {
                     defaultMargin = MARGIN_DEFAULT;
@@ -582,6 +597,13 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
                 self.imgMargin.val(defaultMargin);
                 self.imgRatio[0].disabled = true;
                 self.imgRatioValue = null;
+            }
+            if (link) {
+                valInput(self.imgLink, link.attr("_ke_saved_href") || link.attr("href"));
+                self.imgLinkBlank.attr("checked", link.attr("target") == "_blank");
+            } else {
+                resetInput(self.imgLink);
+                self.imgLinkBlank.attr("checked", true);
             }
             self.uploadForm[0].reset();
             self.imgLocalUrl.val(warning);

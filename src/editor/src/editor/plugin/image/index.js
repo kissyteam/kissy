@@ -5,7 +5,7 @@
 KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, ContextMenu, DialogLoader) {
 
     var UA = S.UA,
-        Node = S.Node,
+        Node = KISSY.NodeList,
         $ = S.all,
         Event = S.Event,
         checkImg = function (node) {

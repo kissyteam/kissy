@@ -49,8 +49,8 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
                     archor = bubble;
                 }
             }
-            return archor;
         });
+        return archor;
     }
 
     function getXy(bubble) {
@@ -134,7 +134,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
             prefixCls: prefixCls
         });
 
-        bubble = new Overlay(cfg);
+        bubble = new Overlay(cfg).render();
 
         editor.addControl(id + "/bubble", bubble);
 
