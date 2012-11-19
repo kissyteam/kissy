@@ -430,10 +430,10 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
             }
             d.tcaption.val(c);
             var head = selectedTable.first("thead"),
-                rowLenth = (selectedTable.one("tbody") ?
+                rowLength = (selectedTable.one("tbody") ?
                     selectedTable.one("tbody").children().length : 0)
                     + (head ? head.children("tr").length : 0);
-            d.trows.val(rowLenth);
+            d.trows.val(rowLength);
             d.tcols.val(selectedTable.one("tr") ?
                 selectedTable.one("tr").children().length : 0);
             d.thead.set("value", head ? '1' : '');

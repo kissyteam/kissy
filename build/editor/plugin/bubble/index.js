@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:52
+build time: Nov 19 17:14
 */
 /**
  * bubble or tip view for kissy editor
@@ -54,8 +54,8 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
                     archor = bubble;
                 }
             }
-            return archor;
         });
+        return archor;
     }
 
     function getXy(bubble) {
@@ -139,7 +139,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
             prefixCls: prefixCls
         });
 
-        bubble = new Overlay(cfg);
+        bubble = new Overlay(cfg).render();
 
         editor.addControl(id + "/bubble", bubble);
 

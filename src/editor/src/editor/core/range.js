@@ -667,7 +667,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             },
 
             /**
-             * Collpase current range
+             * collapse current range
              * @param {Boolean} toStart
              */
             collapse:function (toStart) {

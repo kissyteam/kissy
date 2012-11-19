@@ -117,7 +117,6 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
 
         // In IE6/7 the blinking cursor appears, but contents are
         // not editable. (#5634)
-        // 终于和ck同步了，我也发现了这个bug，ck3.3.2解决
         if (//ie8 的 7 兼容模式
             Editor.Utils.ieEngine < 8) {
             // The 'click' event is not fired when clicking the

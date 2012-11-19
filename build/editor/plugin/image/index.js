@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:52
+build time: Nov 19 17:14
 */
 /**
  * insert image for kissy editor
@@ -10,7 +10,7 @@ build time: Nov 14 21:52
 KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, ContextMenu, DialogLoader) {
 
     var UA = S.UA,
-        Node = S.Node,
+        Node = KISSY.NodeList,
         $ = S.all,
         Event = S.Event,
         checkImg = function (node) {

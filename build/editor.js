@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:52
+build time: Nov 19 17:14
 */
 /**
  * Set up editor constructor
@@ -3845,7 +3845,7 @@ KISSY.config('modules', {
 'editor/plugin/font-family/cmd': {requires: ['editor','editor/plugin/font/cmd']},
 'editor/plugin/back-color/cmd': {requires: ['editor/plugin/color/cmd']},
 'editor/plugin/multiple-upload/dialog': {requires: ['editor','editor/plugin/progressbar/','editor/plugin/overlay/','editor/plugin/flash-bridge/','editor/plugin/local-storage/']},
-'editor/plugin/code/dialog': {requires: ['editor/plugin/overlay/','menubutton']},
+'editor/plugin/code/dialog': {requires: ['editor','editor/plugin/overlay/','menubutton']},
 'editor/plugin/justify-center/cmd': {requires: ['editor/plugin/justify-utils/cmd']},
 'editor/plugin/flash-common/baseClass': {requires: ['editor','editor/plugin/contextmenu/','editor/plugin/bubble/','editor/plugin/dialog-loader/','editor/plugin/flash-common/utils']},
 'editor/plugin/justify-center/index': {requires: ['editor','editor/plugin/justify-center/cmd']},
@@ -4520,7 +4520,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
             },
 
             /**
-             * Collpase current range
+             * collapse current range
              * @param {Boolean} toStart
              */
             collapse:function (toStart) {
@@ -6545,7 +6545,6 @@ KISSY.add("editor/core/selectionFix", function (S, Editor) {
 
         // In IE6/7 the blinking cursor appears, but contents are
         // not editable. (#5634)
-        // 终于和ck同步了，我也发现了这个bug，ck3.3.2解决
         if (//ie8 的 7 兼容模式
             Editor.Utils.ieEngine < 8) {
             // The 'click' event is not fired when clicking the

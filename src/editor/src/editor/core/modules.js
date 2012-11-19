@@ -82,7 +82,7 @@ KISSY.config('modules', {
 'editor/plugin/font-family/cmd': {requires: ['editor','editor/plugin/font/cmd']},
 'editor/plugin/back-color/cmd': {requires: ['editor/plugin/color/cmd']},
 'editor/plugin/multiple-upload/dialog': {requires: ['editor','editor/plugin/progressbar/','editor/plugin/overlay/','editor/plugin/flash-bridge/','editor/plugin/local-storage/']},
-'editor/plugin/code/dialog': {requires: ['editor/plugin/overlay/','menubutton']},
+'editor/plugin/code/dialog': {requires: ['editor','editor/plugin/overlay/','menubutton']},
 'editor/plugin/justify-center/cmd': {requires: ['editor/plugin/justify-utils/cmd']},
 'editor/plugin/flash-common/baseClass': {requires: ['editor','editor/plugin/contextmenu/','editor/plugin/bubble/','editor/plugin/dialog-loader/','editor/plugin/flash-common/utils']},
 'editor/plugin/justify-center/index': {requires: ['editor','editor/plugin/justify-center/cmd']},
