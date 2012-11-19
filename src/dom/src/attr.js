@@ -370,7 +370,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * @param [val] A value to set for the attribute.
              * @return {String}
              */
-            attr: function (selector, name, val, pass) {
+            attr: function (selector, name, val, /*internal use by anim/fx*/pass) {
                 /*
                  Hazards From Caja Note:
 
