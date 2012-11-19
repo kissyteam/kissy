@@ -22,8 +22,17 @@
  */
 (function (S) {
 
-    var win = S.Env.host,
-        doc = win.document;
+    var Env = S.Env,
+        win = Env.host,
+    // nodejs
+        doc = win.document || {},
+        documentMode = doc.documentMode,
+        isNativeJSONSupported = ((Env.nodejs &amp;&amp; typeof global === 'object') ? global : win).JSON;
+
+    // ie 8.0.7600.16315@win7 json bug!
+    if (documentMode &amp;&amp; documentMode &lt; 9) {
+        isNativeJSONSupported = 0;
+    }
 
 <span id='KISSY-Features'>    /**
 </span>     * test browser features
@@ -37,12 +46,18 @@
 </span>         * whether support win8 pointer event.
          * @type {Boolean}
          */
-        isMsPointerEnabled: &quot;msPointerEnabled&quot; in win.navigator,
+        isMsPointerEnabled: &quot;msPointerEnabled&quot; in (win.navigator || {}),
 <span id='KISSY-Features-property-isTouchSupported'>        /**
 </span>         * whether support touch event.
          * @type {Boolean}
          */
-        isTouchSupported: 'ontouchstart' in doc
+        isTouchSupported: 'ontouchstart' in doc,
+
+<span id='KISSY-Features-property-isNativeJSONSupported'>        /**
+</span>         * whether support native json
+         * @type {Boolean}
+         */
+        isNativeJSONSupported: isNativeJSONSupported
     };
 
 })(KISSY);</pre>

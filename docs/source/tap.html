@@ -20,39 +20,33 @@
  * gesture tap or click for pc
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event) {
+KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch) {
 
     var event = 'tap';
 
     function Tap() {
-
     }
 
-    Tap.prototype = {
-
-        onTouchStart: function (e) {
-            // single touch(mouse)down/up
-            if (e.touches.length &gt; 1) {
-                return false;
-            }
-        },
+    S.extend(Tap, SingleTouch, {
 
         onTouchMove: function () {
             return false;
         },
 
         onTouchEnd: function (e) {
-            Event.fire(e.target, event, e);
+            Event.fire(e.target, event, {
+                touch: e.changedTouches[0]
+            });
         }
 
-    };
+    });
 
-    eventHandleMap[event] = Tap;
+    eventHandleMap[event] = new Tap();
 
     return Tap;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base']
+    requires: ['./handle-map', 'event/dom/base', './single-touch']
 });
 <span id='global-property-'>/**
 </span> * @ignore

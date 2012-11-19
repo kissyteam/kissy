@@ -20,24 +20,20 @@
  * @fileOverview KISSY.Dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
+KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Drag) {
 
     var $ = Node.all;
-
-    function require(s) {
-        return S.require(&quot;component/uibase/&quot; + s);
-    }
 
 <span id='KISSY-Overlay-Dialog'>    /**
 </span>     * @class KISSY.Overlay.Dialog
      * KISSY Dialog Component. xclass: 'dialog'.
      * @extends KISSY.Overlay
-     * @mixins KISSY.Component.UIBase.StdMod
-     * @mixins KISSY.Component.UIBase.Drag
+     * @mixins KISSY.Overlay.Extension.StdMod
+     * @mixins KISSY.Overlay.Extension.Drag
      */
     var Dialog = Overlay.extend([
-        require(&quot;stdmod&quot;),
-        require(&quot;drag&quot;)
+        StdMod,
+        Drag
     ], {
             initializer: function () {
                 var self = this, draggable;
@@ -190,7 +186,9 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node) {
     return Dialog;
 
 }, {
-    requires: [ &quot;./base&quot;, './dialog-render', 'node']
+    requires: [ &quot;./base&quot;, './dialog-render',
+        'node', './extension/stdmod',
+        './extension/drag']
 });
 
 <span id='global-property-'>/**

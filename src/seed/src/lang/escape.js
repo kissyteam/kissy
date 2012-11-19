@@ -99,9 +99,14 @@
             });
         },
         /**
-         * get escaped string from html
-         * @see   http://yiminghe.javaeye.com/blog/788929
-         *        http://wonko.com/post/html-escaping
+         * get escaped string from html.
+         * only escape
+         *      & > < ` / " '
+         * refer:
+         *
+         * [http://yiminghe.javaeye.com/blog/788929](http://yiminghe.javaeye.com/blog/788929)
+         *
+         * [http://wonko.com/post/html-escaping](http://wonko.com/post/html-escaping)
          * @param str {string} text2html show
          * @member KISSY
          * @return {String} escaped html
@@ -113,7 +118,7 @@
         },
 
         /**
-         * get escaped regexp string for construct regexp
+         * get escaped regexp string for construct regexp.
          * @param str
          * @member KISSY
          * @return {String} escaped regexp
@@ -123,7 +128,9 @@
         },
 
         /**
-         * un-escape html to string
+         * un-escape html to string.
+         * only unescape
+         *      &amp; &lt; &gt; &#x60; &#x2F; &quot; &#x27; &#\d{1,5}
          * @param str {string} html2text
          * @member KISSY
          * @return {String} un-escaped html

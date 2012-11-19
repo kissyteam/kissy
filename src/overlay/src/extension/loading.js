@@ -6,7 +6,7 @@
 KISSY.add("overlay/extension/loading", function () {
 
     /**
-     * @class KISSY.Component.Extension.Loading
+     * @class KISSY.Overlay.Extension.Loading
      * Loading extension class. Make component to be able to mask loading.
      */
     function Loading() {

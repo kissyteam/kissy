@@ -20,7 +20,7 @@
  * @fileOverview 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;component/uibase/content-box-render&quot;, function (S, Node, BoxRender, DOM) {
+KISSY.add(&quot;component/extension/content-box-render&quot;, function (S, Node, DOM) {
 
     function ContentBoxRender() {
     }
@@ -55,7 +55,7 @@ KISSY.add(&quot;component/uibase/content-box-render&quot;, function (S, Node, Bo
 
     return ContentBoxRender;
 }, {
-    requires: [&quot;node&quot;, &quot;./box-render&quot;, 'dom']
+    requires: [&quot;node&quot;, 'dom']
 });</pre>
 </body>
 </html>

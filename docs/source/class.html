@@ -24,11 +24,11 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
 
     var SPACE = ' ',
         NodeType=DOM.NodeType,
-        REG_SPLIT = /[\.\s]\s*\.?/,
-        REG_CLASS = /[\n\t]/g;
+        RE_SPLIT = /[\.\s]\s*\.?/,
+        RE_CLASS = /[\n\t]/g;
 
     function norm(elemClass) {
-        return (SPACE + elemClass + SPACE).replace(REG_CLASS, SPACE);
+        return (SPACE + elemClass + SPACE).replace(RE_CLASS, SPACE);
     }
 
     S.mix(DOM,
@@ -165,7 +165,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
 
         var elems = DOM.query(selector),
             len = elems.length,
-            tmp = value.split(REG_SPLIT),
+            tmp = value.split(RE_SPLIT),
             elem,
             ret;
 

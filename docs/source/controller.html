@@ -20,7 +20,7 @@
  * @fileOverview Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBase, Manager, Render, undefined) {
+KISSY.add(&quot;component/base/controller&quot;, function (S,Box, Event, Component, UIBase, Manager, Render, undefined) {
 
     var ie = S.Env.host.document.documentMode || S.UA.ie,
         Features = S.Features,
@@ -100,8 +100,6 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
                 attrCfg.getter = wrapperViewGetter(attrName);
             }
         }
-        // does not autoRender for view
-        delete cfg.autoRender;
         cfg.ksComponentCss = getComponentCss(self);
         return new Render(cfg);
     }
@@ -144,10 +142,10 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 </span>     * Base Controller class for KISSY Component.
      * xclass: 'controller'.
      * @extends KISSY.Component.UIBase
-     * @mixins KISSY.Component.UIBase.Box
+     * @mixins KISSY.Component.Extension.Box
      * @class KISSY.Component.Controller
      */
-    var Controller = UIBase.extend([UIBase.Box], {
+    var Controller = UIBase.extend([Box], {
 
 <span id='KISSY-Component-Controller-property-isController'>            /**
 </span>             * mark current instance as controller instance.
@@ -340,14 +338,14 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 <span id='KISSY-Component-Controller-method-removeChild'>            /**
 </span>             * Removed the given child from this component,and returns it.
              *
-             * If destroy is true, calls {@link KISSY.Component.UIBase#destroy} on the removed child component,
+             * If destroy is true, calls ``destroy()`` on the removed child component,
              * and subsequently detaches the child's DOM from the document.
              * Otherwise it is the caller's responsibility to
              * clean up the child component's DOM.
              *
              * @param {KISSY.Component.Controller} c The child component to be removed.
              * @param {Boolean} [destroy=false] If true,
-             * calls {@link KISSY.Component.UIBase#destroy} on the removed child component.
+             * calls ``destroy()`` on the removed child component.
              * @return {KISSY.Component.Controller} The removed component.
              */
             removeChild: function (c, destroy) {
@@ -369,7 +367,7 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 </span>             * Removes every child component attached to current component.
              * see {@link KISSY.Component.Controller#removeChild}
              * @param {Boolean} [destroy] If true,
-             * calls {@link KISSY.Component.UIBase#destroy} on the removed child component.
+             * calls ``destroy()`` on the removed child component.
              * @return {KISSY.Component.Controller} this
              */
             removeChildren: function (destroy) {
@@ -756,7 +754,7 @@ KISSY.add(&quot;component/controller&quot;, function (S, Event, Component, UIBas
 
     return Controller;
 }, {
-    requires: ['event', './base', './uibase', './manager', './render']
+    requires: ['./box','event', './impl', './uibase', './manager', './render']
 });
 /*
 

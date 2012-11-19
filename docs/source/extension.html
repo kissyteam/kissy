@@ -17,30 +17,29 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview mvc based component framework for kissy
+ * @fileOverview uibase
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;component&quot;, function (S, Component, Controller, Render, Container, DelegateChildren, DecorateChildren, DecorateChild) {
-
-    S.mix(Component, {
-        Controller:Controller,
-        &quot;Render&quot;:Render,
-        &quot;Container&quot;:Container,
-        &quot;DelegateChildren&quot;:DelegateChildren,
-        &quot;DecorateChild&quot;:DecorateChild,
-        &quot;DecorateChildren&quot;:DecorateChildren
-    });
-
-    return Component;
+KISSY.add(&quot;component/extension&quot;, function (S, Align, ContentBox, ContentBoxRender, Position, PositionRender, ShimRender) {
+    Position.Render = PositionRender;
+    ContentBox.Render = ContentBoxRender;
+    return {
+        Align: Align,
+        ContentBox: ContentBox,
+        Position: Position,
+        Shim: {
+            Render: ShimRender
+        }
+    };
 }, {
-    requires:[
-        'component/base',
-        'component/controller',
-        'component/render',
-        'component/container',
-        'component/delegate-children',
-        'component/decorate-children',
-        'component/decorate-child']
+    requires: [
+        &quot;./extension/align&quot;,
+        &quot;./extension/content-box&quot;,
+        &quot;./extension/content-box-render&quot;,
+        &quot;./extension/position&quot;,
+        &quot;./extension/position-render&quot;,
+        &quot;./extension/shim-render&quot;
+    ]
 });</pre>
 </body>
 </html>

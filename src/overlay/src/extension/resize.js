@@ -6,7 +6,7 @@
 KISSY.add("overlay/extension/resize", function (S) {
 
     /**
-     * @class KISSY.Component.Extension.Resize
+     * @class KISSY.Overlay.Extension.Resize
      * Resizable extension class. Make component resizable
      */
     function Resize() {

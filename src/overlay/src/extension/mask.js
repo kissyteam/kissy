@@ -6,7 +6,7 @@
 KISSY.add("overlay/extension/mask", function () {
 
     /**
-     * @class KISSY.Component.Extension.Mask
+     * @class KISSY.Overlay.Extension.Mask
      * Mask extension class. Make component to be able to show with mask.
      */
     function Mask() {

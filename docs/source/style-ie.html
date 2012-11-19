@@ -33,14 +33,13 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
         docElem = doc &amp;&amp; doc.documentElement,
         OPACITY = 'opacity',
         STYLE = 'style',
+        RE_POS = /^(top|right|bottom|left)$/,
         FILTER = 'filter',
         CURRENT_STYLE = 'currentStyle',
         RUNTIME_STYLE = 'runtimeStyle',
         LEFT = 'left',
         PX = 'px',
         CUSTOM_STYLES = Style._CUSTOM_STYLES,
-        RE_NUM_PX = /^-?\d+(?:px)?$/i,
-        RE_NUM = /^-?\d/,
         backgroundPosition = 'backgroundPosition',
         R_OPACITY = /opacity\s*=\s*([^)]*)/,
         R_ALPHA = /alpha\([^)]*\)/i;
@@ -172,27 +171,24 @@ KISSY.add('dom/style-ie', function (S, DOM, UA, Style) {
             // http://erik.eae.net/archives/2007/07/27/18.54.15/#comment-102291
             // If we're not dealing with a regular pixel number
             // but a number that has a weird ending, we need to convert it to pixels
-            if ((!RE_NUM_PX.test(ret) &amp;&amp;
-                RE_NUM.test(ret)) &amp;&amp;
-                // '0px 0px'
-                ret.indexOf(' ') == -1) {
+            // exclude left right for relativity
+            if (DOM._RE_NUM_NO_PX.test(ret) &amp;&amp; !RE_POS.test(name)) {
                 // Remember the original values
                 var style = elem[STYLE],
                     left = style[LEFT],
-                    rsLeft = elem[RUNTIME_STYLE] &amp;&amp; elem[RUNTIME_STYLE][LEFT];
+                    rsLeft = elem[RUNTIME_STYLE][LEFT];
+
+                // prevent flashing of content
+                elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
 
                 // Put in the new values to get a computed value out
-                if (rsLeft) {
-                    elem[RUNTIME_STYLE][LEFT] = elem[CURRENT_STYLE][LEFT];
-                }
                 style[LEFT] = name === 'fontSize' ? '1em' : (ret || 0);
                 ret = style['pixelLeft'] + PX;
 
                 // Revert the changed values
                 style[LEFT] = left;
-                if (rsLeft) {
-                    elem[RUNTIME_STYLE][LEFT] = rsLeft;
-                }
+
+                elem[RUNTIME_STYLE][LEFT] = rsLeft;
             }
             return ret === '' ? 'auto' : ret;
         };

@@ -21,131 +21,130 @@
  * @author yiminghe@gmail.com
  * @see http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add(&quot;component/render&quot;, function (S, Component, UIBase, Manager) {
+KISSY.add(&quot;component/base/render&quot;, function (S, BoxRender, Component, UIBase, Manager) {
 
 <span id='global-property-'>    /**
 </span>     * @ignore
      * Base Render class for KISSY Component.
      */
-    return UIBase.extend([UIBase.Box.Render],
-        {
+    return UIBase.extend([BoxRender], {
 
-<span id='global-method-getCssClassWithState'>            /**
-</span>             * Get all css class name to be applied to the root element of this component for given state.
-             * the css class names are prefixed with component name.
-             * @param {String} [state] This component's state info.
-             * @ignore
-             */
-            getCssClassWithState: function (state) {
-                var self = this,
-                    componentCls = self.get(&quot;ksComponentCss&quot;)||&quot;&quot;;
-                state = state || &quot;&quot;;
-                return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + &quot; &quot;) + state);
-            },
+<span id='global-method-getCssClassWithState'>        /**
+</span>         * Get all css class name to be applied to the root element of this component for given state.
+         * the css class names are prefixed with component name.
+         * @param {String} [state] This component's state info.
+         * @ignore
+         */
+        getCssClassWithState: function (state) {
+            var self = this,
+                componentCls = self.get(&quot;ksComponentCss&quot;) || &quot;&quot;;
+            state = state || &quot;&quot;;
+            return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + &quot; &quot;) + state);
+        },
 
-<span id='global-method-getCssClassWithPrefix'>            /**
-</span>             * Get full class name (with prefix) for current component
-             * @param classes {String} class names without prefixCls. Separated by space.
-             * @method
-             * @return {String} class name with prefixCls
-             * @ignore
-             */
-            getCssClassWithPrefix: Manager.getCssClassWithPrefix,
+<span id='global-method-getCssClassWithPrefix'>        /**
+</span>         * Get full class name (with prefix) for current component
+         * @param classes {String} class names without prefixCls. Separated by space.
+         * @method
+         * @return {String} class name with prefixCls
+         * @ignore
+         */
+        getCssClassWithPrefix: Manager.getCssClassWithPrefix,
 
-            createDom: function () {
-                var self = this;
-                self.get(&quot;el&quot;).addClass(self.getCssClassWithState());
-            },
+        createDom: function () {
+            var self = this;
+            self.get(&quot;el&quot;).addClass(self.getCssClassWithState());
+        },
 
-<span id='global-method-getKeyEventTarget'>            /**
-</span>             * Returns the dom element which is responsible for listening keyboard events.
-             * @return {KISSY.NodeList}
-             * @ignore
-             */
-            getKeyEventTarget: function () {
-                return this.get(&quot;el&quot;);
-            },
+<span id='global-method-getKeyEventTarget'>        /**
+</span>         * Returns the dom element which is responsible for listening keyboard events.
+         * @return {KISSY.NodeList}
+         * @ignore
+         */
+        getKeyEventTarget: function () {
+            return this.get(&quot;el&quot;);
+        },
 
-<span id='global-method-_uiSetHighlighted'>            /**
-</span>             * @ignore
-             */
-            _uiSetHighlighted: function (v) {
-                var self = this,
-                    componentCls = self.getCssClassWithState(&quot;-hover&quot;),
-                    el = self.get(&quot;el&quot;);
-                el[v ? 'addClass' : 'removeClass'](componentCls);
-            },
+<span id='global-method-_uiSetHighlighted'>        /**
+</span>         * @ignore
+         */
+        _uiSetHighlighted: function (v) {
+            var self = this,
+                componentCls = self.getCssClassWithState(&quot;-hover&quot;),
+                el = self.get(&quot;el&quot;);
+            el[v ? 'addClass' : 'removeClass'](componentCls);
+        },
 
-<span id='global-method-_uiSetDisabled'>            /**
-</span>             * @ignore
-             */
-            _uiSetDisabled: function (v) {
-                var self = this,
-                    componentCls = self.getCssClassWithState(&quot;-disabled&quot;),
-                    el = self.get(&quot;el&quot;);
-                el[v ? 'addClass' : 'removeClass'](componentCls)
-                    .attr(&quot;aria-disabled&quot;, v);
-                if (self.get(&quot;focusable&quot;)) {
-                    //不能被 tab focus 到
-                    self.getKeyEventTarget().attr(&quot;tabIndex&quot;, v ? -1 : 0);
-                }
-            },
-<span id='global-method-_uiSetActive'>            /**
-</span>             * @ignore
-             */
-            _uiSetActive: function (v) {
-                var self = this,
-                    componentCls = self.getCssClassWithState(&quot;-active&quot;);
-                self.get(&quot;el&quot;)[v ? 'addClass' : 'removeClass'](componentCls)
-                    .attr(&quot;aria-pressed&quot;, !!v);
-            },
-<span id='global-method-_uiSetFocused'>            /**
-</span>             * @ignore
-             */
-            _uiSetFocused: function (v) {
-                var self = this,
-                    el = self.get(&quot;el&quot;),
-                    componentCls = self.getCssClassWithState(&quot;-focused&quot;);
-                el[v ? 'addClass' : 'removeClass'](componentCls);
-            },
-
-<span id='global-method-getContentElement'>            /**
-</span>             * Return the dom element into which child component to be rendered.
-             * @return {KISSY.NodeList}
-             * @ignore
-             */
-            getContentElement: function () {
-                return this.get(&quot;contentEl&quot;) || this.get(&quot;el&quot;);
+<span id='global-method-_uiSetDisabled'>        /**
+</span>         * @ignore
+         */
+        _uiSetDisabled: function (v) {
+            var self = this,
+                componentCls = self.getCssClassWithState(&quot;-disabled&quot;),
+                el = self.get(&quot;el&quot;);
+            el[v ? 'addClass' : 'removeClass'](componentCls)
+                .attr(&quot;aria-disabled&quot;, v);
+            if (self.get(&quot;focusable&quot;)) {
+                //不能被 tab focus 到
+                self.getKeyEventTarget().attr(&quot;tabIndex&quot;, v ? -1 : 0);
             }
+        },
+<span id='global-method-_uiSetActive'>        /**
+</span>         * @ignore
+         */
+        _uiSetActive: function (v) {
+            var self = this,
+                componentCls = self.getCssClassWithState(&quot;-active&quot;);
+            self.get(&quot;el&quot;)[v ? 'addClass' : 'removeClass'](componentCls)
+                .attr(&quot;aria-pressed&quot;, !!v);
+        },
+<span id='global-method-_uiSetFocused'>        /**
+</span>         * @ignore
+         */
+        _uiSetFocused: function (v) {
+            var self = this,
+                el = self.get(&quot;el&quot;),
+                componentCls = self.getCssClassWithState(&quot;-focused&quot;);
+            el[v ? 'addClass' : 'removeClass'](componentCls);
+        },
 
-        }, {//  screen state
-            ATTRS: {
+<span id='global-method-getContentElement'>        /**
+</span>         * Return the dom element into which child component to be rendered.
+         * @return {KISSY.NodeList}
+         * @ignore
+         */
+        getContentElement: function () {
+            return this.get(&quot;contentEl&quot;) || this.get(&quot;el&quot;);
+        }
 
-                prefixCls: {
-                    value: &quot;ks-&quot;
-                },
+    }, {//  screen state
+        ATTRS: {
 
-                focusable: {
-                    value: true
-                },
-
-                focused: {},
-
-                active: {},
-
-                disabled: {},
-
-                highlighted: {}
+            prefixCls: {
+                value: &quot;ks-&quot;
             },
-            HTML_PARSER: {
-                disabled: function (el) {
-                    var self = this, componentCls = self.getCssClassWithState(&quot;-disabled&quot;);
-                    return self.get(&quot;el&quot;).hasClass(componentCls);
-                }
+
+            focusable: {
+                value: true
+            },
+
+            focused: {},
+
+            active: {},
+
+            disabled: {},
+
+            highlighted: {}
+        },
+        HTML_PARSER: {
+            disabled: function (el) {
+                var self = this, componentCls = self.getCssClassWithState(&quot;-disabled&quot;);
+                return self.get(&quot;el&quot;).hasClass(componentCls);
             }
-        });
+        }
+    });
 }, {
-    requires: ['./base', './uibase', './manager']
+    requires: ['./box-render', './impl', './uibase', './manager']
 });</pre>
 </body>
 </html>

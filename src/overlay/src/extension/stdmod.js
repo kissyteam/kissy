@@ -7,7 +7,7 @@ KISSY.add("overlay/extension/stdmod", function () {
 
 
     /**
-     * @class KISSY.Component.Extension.StdMod
+     * @class KISSY.Overlay.Extension.StdMod
      * StdMod extension class. Generate head, body, foot for component.
      */
     function StdMod() {

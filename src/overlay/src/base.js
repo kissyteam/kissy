@@ -131,13 +131,13 @@ KISSY.add("overlay/base", function (S, Component,
      * KISSY Overlay Component. xclass: 'overlay'.
      * @class KISSY.Overlay
      * @extends KISSY.Component.Controller
-     * @mixins KISSY.Component.UIBase.ContentBox
-     * @mixins KISSY.Component.UIBase.Position
-     * @mixins KISSY.Component.UIBase.Loading
-     * @mixins KISSY.Component.UIBase.Align
-     * @mixins KISSY.Component.UIBase.Close
-     * @mixins KISSY.Component.UIBase.Resize
-     * @mixins KISSY.Component.UIBase.Mask
+     * @mixins KISSY.Component.Extension.ContentBox
+     * @mixins KISSY.Component.Extension.Position
+     * @mixins KISSY.Overlay.Extension.Loading
+     * @mixins KISSY.Component.Extension.Align
+     * @mixins KISSY.Overlay.Extension.Close
+     * @mixins KISSY.Overlay.Extension.Resize
+     * @mixins KISSY.Overlay.Extension.Mask
      */
     var Overlay = Component.Controller.extend([
         Extension.ContentBox,

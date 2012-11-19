@@ -6,7 +6,7 @@
 KISSY.add("overlay/extension/close", function () {
 
     /**
-     * @class KISSY.Component.Extension.Close
+     * @class KISSY.Overlay.Extension.Close
      * Close extension class. Represent a close button.
      */
     function Close() {
@@ -80,7 +80,7 @@ KISSY.add("overlay/extension/close", function () {
             }
         },
         /**
-         * hide or destroy according to {@link KISSY.Component.Extension.Close#closeAction}
+         * hide or destroy according to {@link KISSY.Overlay.Extension.Close#closeAction}
          */
         close:function(){
             var self=this;

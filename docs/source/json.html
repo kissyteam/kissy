@@ -17,9 +17,13 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview adapt json2 to kissy
+ * @fileOverview kissy json use json2 or native conditionally
  */
-KISSY.add('json', function (S, JSON) {
+KISSY.add('json', function (S, J) {
+
+    if (typeof JSON !== 'undefined') {
+        J = JSON;
+    }
 
 <span id='KISSY-JSON'>    /**
 </span>     * Provide json utils for KISSY.
@@ -38,7 +42,7 @@ KISSY.add('json', function (S, JSON) {
             if (text == null || text === '') {
                 return null;
             }
-            return JSON.parse(text);
+            return J.parse(text);
         },
 <span id='KISSY-JSON-method-stringify'>        /**
 </span>         * serialize json object to string.
@@ -46,10 +50,14 @@ KISSY.add('json', function (S, JSON) {
          * @param {Object} jsonObject
          * @return {String}
          */
-        stringify: JSON.stringify
+        stringify: J.stringify
     };
 }, {
-    requires: [&quot;json/json2&quot;]
+    requires: [
+        KISSY.Features.isNativeJSONSupported ?
+            &quot;empty&quot; :
+            &quot;json/json2&quot;
+    ]
 });
 </pre>
 </body>

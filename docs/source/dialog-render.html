@@ -20,13 +20,9 @@
  * @fileOverview render for dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;overlay/dialog-render&quot;, function (S, OverlayRender) {
-    function require(s) {
-        return S.require(&quot;component/uibase/&quot; + s);
-    }
-
+KISSY.add(&quot;overlay/dialog-render&quot;, function (S, OverlayRender,StdMod) {
     return OverlayRender.extend([
-        require(&quot;stdmod-render&quot;)
+        StdMod
     ], {
         createDom: function () {
             var self = this,
@@ -47,7 +43,7 @@ KISSY.add(&quot;overlay/dialog-render&quot;, function (S, OverlayRender) {
         }
     });
 }, {
-    requires: ['./overlay-render']
+    requires: ['./overlay-render','./extension/stdmod-render']
 });</pre>
 </body>
 </html>

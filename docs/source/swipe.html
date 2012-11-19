@@ -20,7 +20,7 @@
  * gesture swipe inspired by sencha touch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
+KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTouch) {
 
     var event = 'swipe';
 
@@ -29,24 +29,22 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
         MIN_DISTANCE = 50;
 
     function Swipe() {
-        this.event = event;
     }
 
-    Swipe.prototype = {
+    S.extend(Swipe, SingleTouch, {
 
         onTouchStart: function (e) {
-            var touches = e.touches, touch;
-            // single touch(mouse)down/up
-            if (touches.length &gt; 1) {
+            var self = this;
+            if (Swipe.superclass.onTouchStart.apply(self, arguments) === false) {
                 return false;
             }
-            touch = touches[0];
-            this.startTime = e.timeStamp;
+            var touch = e.touches[0];
+            self.startTime = e.timeStamp;
 
-            this.isHorizontal = 1;
-            this.isVertical = 1;
+            self.isHorizontal = 1;
+            self.isVertical = 1;
 
-            this.startX = touch.pageX;
+            self.startX = touch.pageX;
             this.startY = touch.pageY;
 
             if (e.type.indexOf('mouse') != -1) {
@@ -55,34 +53,34 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
         },
 
         onTouchMove: function (e) {
-            var touches = e.changedTouches,
-                touch = touches[0],
+            var self = this,
+                touch = e.changedTouches[0],
                 x = touch.pageX,
                 y = touch.pageY,
-                absDeltaX = Math.abs(x - this.startX),
-                absDeltaY = Math.abs(y - this.startY),
+                absDeltaX = Math.abs(x - self.startX),
+                absDeltaY = Math.abs(y - self.startY),
                 time = e.timeStamp;
 
-            if (time - this.startTime &gt; MAX_DURATION) {
+            if (time - self.startTime &gt; MAX_DURATION) {
                 return false;
             }
 
-            if (this.isVertical &amp;&amp; absDeltaX &gt; MAX_OFFSET) {
-                this.isVertical = 0;
+            if (self.isVertical &amp;&amp; absDeltaX &gt; MAX_OFFSET) {
+                self.isVertical = 0;
             }
 
-            if (this.isHorizontal &amp;&amp; absDeltaY &gt; MAX_OFFSET) {
-                this.isHorizontal = 0;
+            if (self.isHorizontal &amp;&amp; absDeltaY &gt; MAX_OFFSET) {
+                self.isHorizontal = 0;
             }
 
-            if (!this.isHorizontal &amp;&amp; !this.isVertical) {
+            if (!self.isHorizontal &amp;&amp; !self.isVertical) {
                 return false;
             }
-
         },
 
         onTouchEnd: function (e) {
-            if (this.onTouchMove(e) === false) {
+            var self = this;
+            if (self.onTouchMove(e) === false) {
                 return false;
             }
 
@@ -97,28 +95,28 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
                 distance,
                 direction;
 
-            if (this.isVertical &amp;&amp; absDeltaY &lt; MIN_DISTANCE) {
-                this.isVertical = 0;
+            if (self.isVertical &amp;&amp; absDeltaY &lt; MIN_DISTANCE) {
+                self.isVertical = 0;
             }
 
-            if (this.isHorizontal &amp;&amp; absDeltaX &lt; MIN_DISTANCE) {
-                this.isHorizontal = 0;
+            if (self.isHorizontal &amp;&amp; absDeltaX &lt; MIN_DISTANCE) {
+                self.isHorizontal = 0;
             }
 
-            if (this.isHorizontal) {
+            if (self.isHorizontal) {
                 direction = deltaX &lt; 0 ? 'left' : 'right';
                 distance = absDeltaX;
-            } else if (this.isVertical) {
+            } else if (self.isVertical) {
                 direction = deltaY &lt; 0 ? 'up' : 'down';
                 distance = absDeltaY;
             } else {
                 return false;
             }
 
-            Event.fire(e.target, this.event, {
+            Event.fire(e.target, event, {
 <span id='KISSY-Event-DOMEventObject-property-touch'>                /**
 </span>                 *
-                 * native touch property **only for event swipe**.
+                 * native touch property **only for touch event**.
                  *
                  * @property touch
                  * @member KISSY.Event.DOMEventObject
@@ -126,7 +124,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
                 touch: touch,
 <span id='KISSY-Event-DOMEventObject-property-direction'>                /**
 </span>                 *
-                 * direction property **only for event swipe**.
+                 * direction property **only for event swipe/singleTap/doubleTap**.
                  *
                  * can be one of 'up' 'down' 'left' 'right'
                  * @property {String} direction
@@ -144,7 +142,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
                 distance: distance,
 <span id='KISSY-Event-DOMEventObject-property-duration'>                /**
 </span>                 *
-                 * duration property **only for event swipe**.
+                 * duration property **only for touch event**.
                  *
                  * the duration swipe gesture costs
                  * @property {Number} duration
@@ -154,14 +152,14 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event) {
             });
         }
 
-    };
+    });
 
-    eventHandleMap[event] = Swipe;
+    eventHandleMap[event] = new Swipe();
 
     return Swipe;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base']
+    requires: ['./handle-map', 'event/dom/base', './single-touch']
 });</pre>
 </body>
 </html>

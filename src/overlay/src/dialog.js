@@ -11,8 +11,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Dr
      * @class KISSY.Overlay.Dialog
      * KISSY Dialog Component. xclass: 'dialog'.
      * @extends KISSY.Overlay
-     * @mixins KISSY.Component.UIBase.StdMod
-     * @mixins KISSY.Component.UIBase.Drag
+     * @mixins KISSY.Overlay.Extension.StdMod
+     * @mixins KISSY.Overlay.Extension.Drag
      */
     var Dialog = Overlay.extend([
         StdMod,

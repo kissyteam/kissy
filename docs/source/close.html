@@ -20,10 +20,10 @@
  * @fileOverview close extension for kissy dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;component/uibase/close&quot;, function () {
+KISSY.add(&quot;overlay/extension/close&quot;, function () {
 
-<span id='KISSY-Component-UIBase-Close'>    /**
-</span>     * @class KISSY.Component.UIBase.Close
+<span id='KISSY-Overlay-Extension-Close'>    /**
+</span>     * @class KISSY.Overlay.Extension.Close
      * Close extension class. Represent a close button.
      */
     function Close() {
@@ -32,14 +32,14 @@ KISSY.add(&quot;component/uibase/close&quot;, function () {
     var HIDE = &quot;hide&quot;;
 
     Close.ATTRS =    {
-<span id='KISSY-Component-UIBase-Close-cfg-closable'>        /**
+<span id='KISSY-Overlay-Extension-Close-cfg-closable'>        /**
 </span>         * Whether close button is visible.
          *
          * Defaults to: true.
          *
          * @cfg {Boolean} closable
          */
-<span id='KISSY-Component-UIBase-Close-property-closable'>        /**
+<span id='KISSY-Overlay-Extension-Close-property-closable'>        /**
 </span>         * Whether close button is visible.
          * @type {Boolean}
          * @property closable
@@ -51,7 +51,7 @@ KISSY.add(&quot;component/uibase/close&quot;, function () {
             view:1
         },
 
-<span id='KISSY-Component-UIBase-Close-property-closeBtn'>        /**
+<span id='KISSY-Overlay-Extension-Close-property-closeBtn'>        /**
 </span>         * close button element.
          * @type {KISSY.NodeList}
          * @property closeBtn
@@ -64,7 +64,7 @@ KISSY.add(&quot;component/uibase/close&quot;, function () {
             view:1
         },
 
-<span id='KISSY-Component-UIBase-Close-cfg-closeAction'>        /**
+<span id='KISSY-Overlay-Extension-Close-cfg-closeAction'>        /**
 </span>         * Whether to destroy or hide current element when click close button.
          * Can set &quot;destroy&quot; to destroy it when click close button.
          *
@@ -96,8 +96,8 @@ KISSY.add(&quot;component/uibase/close&quot;, function () {
                 });
             }
         },
-<span id='KISSY-Component-UIBase-Close-method-close'>        /**
-</span>         * hide or destroy according to {@link KISSY.Component.UIBase.Close#closeAction}
+<span id='KISSY-Overlay-Extension-Close-method-close'>        /**
+</span>         * hide or destroy according to {@link KISSY.Overlay.Extension.Close#closeAction}
          */
         close:function(){
             var self=this;

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * multi-touch base
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/touch/multi-touch', function (S, DOM) {
+
+    function MultiTouch() {
+    }
+
+    MultiTouch.prototype = {
+
+        requiredTouchCount: 2,
+
+        onTouchStart: function (e) {
+            var self = this,
+                requiredTouchesCount = self.requiredTouchCount,
+                touches = e.touches,
+                touchesCount = touches.length;
+
+            if (touchesCount === requiredTouchesCount) {
+                self.start();
+            }
+            else if (touchesCount &gt; requiredTouchesCount) {
+                self.end(e);
+            }
+        },
+
+        onTouchEnd: function (e) {
+            this.end(e);
+        },
+
+        start: function () {
+            var self = this;
+            if (!self.isTracking) {
+                self.isTracking = true;
+                self.isStarted = false;
+            }
+        },
+
+        fireEnd: S.noop,
+
+        getCommonTarget: function (e) {
+            var touches = e.touches,
+                t1 = touches[0].target,
+                t2 = touches[1].target;
+            if (t1 == t2) {
+                return t1;
+            }
+            if (DOM.contains(t1, t2)) {
+                return t1;
+            }
+
+            while (1) {
+                if (DOM.contains(t2, t1)) {
+                    return t2;
+                }
+                t2 = t2.parentNode;
+            }
+            S.error('getCommonTarget error!');
+            return undefined;
+        },
+
+        end: function (e) {
+            var self = this;
+            if (self.isTracking) {
+                self.isTracking = false;
+
+                if (self.isStarted) {
+                    self.isStarted = false;
+
+                    self.fireEnd(e);
+                }
+            }
+        }
+    };
+
+    return MultiTouch;
+
+}, {
+    requires: ['dom']
+});</pre>
+</body>
+</html>

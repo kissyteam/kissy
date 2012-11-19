@@ -116,9 +116,14 @@
             });
         },
 <span id='KISSY-method-escapeHTML'>        /**
-</span>         * get escaped string from html
-         * @see   http://yiminghe.javaeye.com/blog/788929
-         *        http://wonko.com/post/html-escaping
+</span>         * get escaped string from html.
+         * only escape
+         *      &amp; &gt; &lt; ` / &quot; '
+         * refer:
+         * 
+         * [http://yiminghe.javaeye.com/blog/788929](http://yiminghe.javaeye.com/blog/788929)
+         *
+         * [http://wonko.com/post/html-escaping](http://wonko.com/post/html-escaping)
          * @param str {string} text2html show
          * @member KISSY
          * @return {String} escaped html
@@ -130,7 +135,7 @@
         },
 
 <span id='KISSY-method-escapeRegExp'>        /**
-</span>         * get escaped regexp string for construct regexp
+</span>         * get escaped regexp string for construct regexp.
          * @param str
          * @member KISSY
          * @return {String} escaped regexp
@@ -140,7 +145,9 @@
         },
 
 <span id='KISSY-method-unEscapeHTML'>        /**
-</span>         * un-escape html to string
+</span>         * un-escape html to string.
+         * only unescape
+         *      &amp;amp; &amp;lt; &amp;gt; &amp;#x60; &amp;#x2F; &amp;quot; &amp;#x27; &amp;#\d{1,5}
          * @param str {string} html2text
          * @member KISSY
          * @return {String} un-escaped html

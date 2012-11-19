@@ -6,7 +6,7 @@
 KISSY.add("overlay/extension/drag", function (S) {
 
     /**
-     * @class KISSY.Component.Extension.Drag
+     * @class KISSY.Overlay.Extension.Drag
      * Drag extension class. Make element draggable.
      */
     function Drag() {

@@ -17,10 +17,10 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview Component.UIBase.Align
+ * @fileOverview Component.Extension.Align
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
-KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
+KISSY.add('component/extension/align', function (S, UA, DOM, Node) {
 
     var win = S.Env.host;
 
@@ -224,8 +224,8 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
     }
 
 
-<span id='KISSY-Component-UIBase-Align'>    /**
-</span>     * @class KISSY.Component.UIBase.Align
+<span id='KISSY-Component-Extension-Align'>    /**
+</span>     * @class KISSY.Component.Extension.Align
      * Align extension class.Align component with specified element.
      */
     function Align() {
@@ -239,7 +239,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
     Align.ATTRS =
     {
 
-<span id='KISSY-Component-UIBase-Align-property-align'>        /**
+<span id='KISSY-Component-Extension-Align-property-align'>        /**
 </span>         * alignment config.
          * @type {Object}
          * @property align
@@ -254,7 +254,7 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
          */
 
 
-<span id='KISSY-Component-UIBase-Align-cfg-align'>        /**
+<span id='KISSY-Component-Extension-Align-cfg-align'>        /**
 </span>         * alignment config.
          * @cfg {Object} align
          *
@@ -434,10 +434,10 @@ KISSY.add('component/uibase/align', function (S, UA, DOM, Node) {
             return self;
         },
 
-<span id='KISSY-Component-UIBase-Align-method-center'>        /**
+<span id='KISSY-Component-Extension-Align-method-center'>        /**
 </span>         * Make current element center within node.
          * @param {undefined|String|HTMLElement|KISSY.NodeList} node
-         * Same as node config of {@link KISSY.Component.UIBase.Align#cfg-align} .
+         * Same as node config of {@link KISSY.Component.Extension.Align#cfg-align} .
          */
         center:function (node) {
             var self = this;

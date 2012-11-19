@@ -17,252 +17,171 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview droppable for kissy
- * @author yiminghe@gmail.com
+ * @fileOverview dom
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dd/droppable/base', function (S, Node, Base, DD) {
+KISSY.add('dom/base', function (S, UA, undefined) {
 
-        var DDM = DD.DDM,
-            PREFIX_CLS = DDM.PREFIX_CLS;
+    var WINDOW = S.Env.host;
 
-<span id='KISSY-DD-Droppable'>        /**
-</span>         * @class KISSY.DD.Droppable
-         * @extends KISSY.Base
-         * Make a node droppable.
+    var RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source;
+
+<span id='KISSY-DOM-NodeType'>    /**
+</span>     * DOM Element node type.
+     * @enum {Number} KISSY.DOM.NodeType
+     */
+    var NodeType = {
+<span id='KISSY-DOM-NodeType-property-ELEMENT_NODE'>        /**
+</span>         * element type
          */
-        function Droppable() {
-            var self = this;
-            Droppable.superclass.constructor.apply(self, arguments);
-            self.addTarget(DDM);
+        ELEMENT_NODE: 1,
+<span id='KISSY-DOM-NodeType-property-ATTRIBUTE_NODE'>        /**
+</span>         * attribute node type
+         */
+        'ATTRIBUTE_NODE': 2,
+<span id='KISSY-DOM-NodeType-property-TEXT_NODE'>        /**
+</span>         * text node type
+         */
+        TEXT_NODE: 3,
+<span id='KISSY-DOM-NodeType-property-CDATA_SECTION_NODE'>        /**
+</span>         * cdata node type
+         */
+        'CDATA_SECTION_NODE': 4,
+<span id='KISSY-DOM-NodeType-property-ENTITY_REFERENCE_NODE'>        /**
+</span>         * entity reference node type
+         */
+        'ENTITY_REFERENCE_NODE': 5,
+<span id='KISSY-DOM-NodeType-property-ENTITY_NODE'>        /**
+</span>         * entity node type
+         */
+        'ENTITY_NODE': 6,
+<span id='KISSY-DOM-NodeType-property-PROCESSING_INSTRUCTION_NODE'>        /**
+</span>         * processing instruction node type
+         */
+        'PROCESSING_INSTRUCTION_NODE': 7,
+<span id='KISSY-DOM-NodeType-property-COMMENT_NODE'>        /**
+</span>         * comment node type
+         */
+        COMMENT_NODE: 8,
+<span id='KISSY-DOM-NodeType-property-DOCUMENT_NODE'>        /**
+</span>         * document node type
+         */
+        DOCUMENT_NODE: 9,
+<span id='KISSY-DOM-NodeType-property-DOCUMENT_TYPE_NODE'>        /**
+</span>         * document type
+         */
+        'DOCUMENT_TYPE_NODE': 10,
+<span id='KISSY-DOM-NodeType-property-DOCUMENT_FRAGMENT_NODE'>        /**
+</span>         * document fragment type
+         */
+        DOCUMENT_FRAGMENT_NODE: 11,
+<span id='KISSY-DOM-NodeType-property-NOTATION_NODE'>        /**
+</span>         * notation type
+         */
+        'NOTATION_NODE': 12
+    };
+<span id='KISSY-DOM'>    /**
+</span>     * KISSY DOM Utils.
+     * Provides DOM helper methods.
+     * @class KISSY.DOM
+     * @singleton
+     */
+    var DOM = {
 
-<span id='KISSY-DD-DDM-event-dropexit'>            /**
-</span>             * fired after a draggable leaves a droppable
-             * @event dropexit
-             * @member KISSY.DD.DDM
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
+<span id='KISSY-DOM-method-isCustomDomain'>        /**
+</span>         * Whether has been set a custom domain,
+         * @param {window} [win] Test window. Default current window.
+         * @return {Boolean}
+         */
+        isCustomDomain: function (win) {
+            win = win || WINDOW;
+            var domain = win.document.domain,
+                hostname = win.location.hostname;
+            return domain != hostname &amp;&amp;
+                domain != ( '[' + hostname + ']' );	// IPv6 IP support
+        },
 
-<span id='KISSY-DD-Droppable-event-dropexit'>            /**
-</span>             *
-             * fired after a draggable leaves a droppable
-             * @event dropexit
-             * @member KISSY.DD.Droppable
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-
-
-<span id='KISSY-DD-DDM-event-dropenter'>            /**
-</span>             * fired after a draggable object mouseenter a droppable object
-             * @event dropenter
-             * @member KISSY.DD.DDM
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-
-<span id='KISSY-DD-Droppable-event-dropenter'>            /**
-</span>             * fired after a draggable object mouseenter a droppable object
-             * @event dropenter
-             * @member KISSY.DD.Droppable
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-
-
-<span id='KISSY-DD-DDM-event-dropover'>            /**
-</span>             *
-             * fired after a draggable object mouseover a droppable object
-             * @event dropover
-             * @member KISSY.DD.DDM
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-
-<span id='KISSY-DD-Droppable-event-dropover'>            /**
-</span>             *
-             * fired after a draggable object mouseover a droppable object
-             * @event dropover
-             * @member KISSY.DD.Droppable
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-
-
-<span id='KISSY-DD-DDM-event-drophit'>            /**
-</span>             *
-             * fired after drop a draggable onto a droppable object
-             * @event drophit
-             * @member KISSY.DD.DDM
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-
-<span id='KISSY-DD-Droppable-event-drophit'>            /**
-</span>             *
-             * fired after drop a draggable onto a droppable object
-             * @event drophit
-             * @member KISSY.DD.Droppable
-             * @param e
-             * @param e.drag current draggable object
-             * @param e.drop current droppable object
-             */
-
-            self._init();
-        }
-
-        Droppable.ATTRS = {
-<span id='KISSY-DD-Droppable-cfg-node'>            /**
-</span>             * droppable element
-             * @cfg {String|HTMLElement|KISSY.NodeList} node
-             * @member KISSY.DD.Droppable
-             */
-<span id='KISSY-DD-Droppable-property-node'>            /**
-</span>             * droppable element
-             * @type {KISSY.NodeList}
-             * @property node
-             * @member KISSY.DD.Droppable
-             */
-<span id='global-property-node'>            /**
-</span>             * @ignore
-             */
-            node: {
-                setter: function (v) {
-                    if (v) {
-                        return Node.one(v);
-                    }
-                }
-            },
-
-<span id='KISSY-DD-Droppable-cfg-groups'>            /**
-</span>             * groups this droppable object belongs to. true to match any group.
-             * default  true
-             * @cfg {Object|Boolean} groups
-             * @member KISSY.DD.Droppable
-             */
-<span id='global-property-groups'>            /**
-</span>             * @ignore
-             */
-            groups: {
-                value: true
+<span id='KISSY-DOM-method-getEmptyIframeSrc'>        /**
+</span>         * Get appropriate src for new empty iframe.
+         * Consider custom domain.
+         * @param {window} [win] Window new iframe will be inserted into.
+         * @return {String} Src for iframe.
+         */
+        getEmptyIframeSrc: function (win) {
+            win = win || WINDOW;
+            if (UA['ie'] &amp;&amp; DOM.isCustomDomain(win)) {
+                return  'javascript:void(function(){' + encodeURIComponent(
+                    'document.open();' +
+                        &quot;document.domain='&quot; +
+                        win.document.domain
+                        + &quot;';&quot; +
+                        'document.close();') + '}())';
             }
+            return undefined;
+        },
 
-        };
+        NodeType: NodeType,
 
-        function validDrop(dropGroups, dragGroups) {
-            if (dropGroups === true) {
-                return 1;
+<span id='KISSY-DOM-method-_getWin'>        /**
+</span>         * Return corresponding window if elem is document or window or undefined.
+         * Else return false.
+         * @private
+         * @param {undefined|window|HTMLDocument} elem
+         * @return {window|Boolean}
+         */
+        _getWin: function (elem) {
+            if (elem == null) {
+                return WINDOW;
             }
-            for (var d in dropGroups) {
-                if (dragGroups[d]) {
-                    return 1;
+            return ('scrollTo' in elem &amp;&amp; elem['document']) ?
+                elem : elem.nodeType == NodeType.DOCUMENT_NODE ?
+                elem.defaultView || elem.parentWindow :
+                false;
+        },
+
+        // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
+        _isNodeList: function (o) {
+            // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
+            // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
+            // 注3：通过 namedItem 来判断不可靠
+            // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
+            // 注5: 考虑 iframe.contentWindow
+            return o &amp;&amp; !o.nodeType &amp;&amp; o.item &amp;&amp; !o.setTimeout;
+        },
+
+<span id='KISSY-DOM-method-nodeName'>        /**
+</span>         * Get node 's nodeName in lowercase.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
+         * @return {String} el 's nodeName in lowercase
+         */
+        nodeName: function (selector) {
+            var el = DOM.get(selector),
+                nodeName = el.nodeName.toLowerCase();
+            // http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
+            if (UA['ie']) {
+                var scopeName = el['scopeName'];
+                if (scopeName &amp;&amp; scopeName != 'HTML') {
+                    nodeName = scopeName.toLowerCase() + ':' + nodeName;
                 }
             }
-            return 0;
-        }
+            return nodeName;
+        },
 
-        S.extend(Droppable, Base,
-            {
-<span id='KISSY-DD-Droppable-method-getNodeFromTarget'>                /**
-</span>                 * Get drop node from target
-                 * @protected
-                 */
-                getNodeFromTarget: function (ev, dragNode, proxyNode) {
-                    var node = this.get('node'),
-                        domNode = node[0];
-                    // 排除当前拖放和代理节点
-                    return domNode == dragNode ||
-                        domNode == proxyNode
-                        ? null : node;
-                },
+        _RE_NUM_NO_PX: new RegExp(&quot;^(&quot; + RE_NUM + &quot;)(?!px)[a-z%]+$&quot;, &quot;i&quot;)
+    };
 
-                _init: function () {
-                    DDM._regDrop(this);
-                },
+    S.mix(DOM, NodeType);
 
-                _active: function () {
-                    var self = this,
-                        drag = DDM.get('activeDrag'),
-                        node = self.get('node'),
-                        dropGroups = self.get('groups'),
-                        dragGroups = drag.get('groups');
-                    if (validDrop(dropGroups, dragGroups)) {
-                        DDM._addValidDrop(self);
-                        // 委托时取不到节点
-                        if (node) {
-                            node.addClass(PREFIX_CLS + 'drop-active-valid');
-                            DDM.cacheWH(node);
-                        }
-                    } else if (node) {
-                        node.addClass(PREFIX_CLS + 'drop-active-invalid');
-                    }
-                },
+    return DOM;
 
-                _deActive: function () {
-                    var node = this.get('node');
-                    if (node) {
-                        node.removeClass(PREFIX_CLS + 'drop-active-valid')
-                            .removeClass(PREFIX_CLS + 'drop-active-invalid');
-                    }
-                },
+}, {
+    requires: ['ua']
+});
 
-                __getCustomEvt: function (ev) {
-                    return S.mix({
-                        drag: DDM.get('activeDrag'),
-                        drop: this
-                    }, ev);
-                },
-
-                _handleOut: function () {
-                    var self = this,
-                        ret = self.__getCustomEvt();
-                    self.get('node').removeClass(PREFIX_CLS + 'drop-over');
-
-                    // html5 =&gt; dragleave
-                    self.fire('dropexit', ret);
-                },
-
-                _handleEnter: function (ev) {
-                    var self = this,
-                        e = self.__getCustomEvt(ev);
-                    e.drag._handleEnter(e);
-                    self.get('node').addClass(PREFIX_CLS + 'drop-over');
-                    self.fire('dropenter', e);
-                },
-
-
-                _handleOver: function (ev) {
-                    var self = this,
-                        e = self.__getCustomEvt(ev);
-                    e.drag._handleOver(e);
-                    self.fire('dropover', e);
-                },
-
-                _end: function () {
-                    var self = this,
-                        ret = self.__getCustomEvt();
-                    self.get('node').removeClass(PREFIX_CLS + 'drop-over');
-                    self.fire('drophit', ret);
-                },
-
-<span id='KISSY-DD-Droppable-method-destroy'>                /**
-</span>                 * make this droppable' element undroppable
-                 */
-                destroy: function () {
-                    DDM._unRegDrop(this);
-                }
-            });
-
-        return Droppable;
-
-    },
-    { requires: ['node', 'base', 'dd/base'] });</pre>
+/*
+ 2011-08
+ - 添加键盘枚举值，方便依赖程序清晰
+ */
+</pre>
 </body>
 </html>

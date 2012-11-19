@@ -20,18 +20,18 @@
  * @fileOverview support standard mod for component
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;component/uibase/stdmod&quot;, function () {
+KISSY.add(&quot;overlay/extension/stdmod&quot;, function () {
 
 
-<span id='KISSY-Component-UIBase-StdMod'>    /**
-</span>     * @class KISSY.Component.UIBase.StdMod
+<span id='KISSY-Overlay-Extension-StdMod'>    /**
+</span>     * @class KISSY.Overlay.Extension.StdMod
      * StdMod extension class. Generate head, body, foot for component.
      */
     function StdMod() {
     }
 
     StdMod.ATTRS = {
-<span id='KISSY-Component-UIBase-StdMod-property-header'>        /**
+<span id='KISSY-Overlay-Extension-StdMod-property-header'>        /**
 </span>         * Header element of dialog.
          * @type {KISSY.NodeList}
          * @property header
@@ -43,7 +43,7 @@ KISSY.add(&quot;component/uibase/stdmod&quot;, function () {
         header:{
             view:1
         },
-<span id='KISSY-Component-UIBase-StdMod-property-body'>        /**
+<span id='KISSY-Overlay-Extension-StdMod-property-body'>        /**
 </span>         * Body element of dialog.
          * @type {KISSY.NodeList}
          * @property body
@@ -55,7 +55,7 @@ KISSY.add(&quot;component/uibase/stdmod&quot;, function () {
         body:{
             view:1
         },
-<span id='KISSY-Component-UIBase-StdMod-property-footer'>        /**
+<span id='KISSY-Overlay-Extension-StdMod-property-footer'>        /**
 </span>         * Footer element of dialog.
          * @type {KISSY.NodeList}
          * @property footer
@@ -67,7 +67,7 @@ KISSY.add(&quot;component/uibase/stdmod&quot;, function () {
         footer:{
             view:1
         },
-<span id='KISSY-Component-UIBase-StdMod-cfg-bodyStyle'>        /**
+<span id='KISSY-Overlay-Extension-StdMod-cfg-bodyStyle'>        /**
 </span>         * Key-value map of body element's style.
          * @cfg {Object} bodyStyle
          */
@@ -77,7 +77,7 @@ KISSY.add(&quot;component/uibase/stdmod&quot;, function () {
         bodyStyle:{
             view:1
         },
-<span id='KISSY-Component-UIBase-StdMod-cfg-footerStyle'>        /**
+<span id='KISSY-Overlay-Extension-StdMod-cfg-footerStyle'>        /**
 </span>         * Key-value map of footer element's style.
          * @cfg {Object} footerStyle
          */
@@ -87,7 +87,7 @@ KISSY.add(&quot;component/uibase/stdmod&quot;, function () {
         footerStyle:{
             view:1
         },
-<span id='KISSY-Component-UIBase-StdMod-cfg-headerStyle'>        /**
+<span id='KISSY-Overlay-Extension-StdMod-cfg-headerStyle'>        /**
 </span>         * Key-value map of header element's style.
          * @cfg {Object} headerStyle
          */
@@ -97,7 +97,7 @@ KISSY.add(&quot;component/uibase/stdmod&quot;, function () {
         headerStyle:{
             view:1
         },
-<span id='KISSY-Component-UIBase-StdMod-cfg-headerContent'>        /**
+<span id='KISSY-Overlay-Extension-StdMod-cfg-headerContent'>        /**
 </span>         * html content of header element.
          * @cfg {KISSY.NodeList|String} headerContent
          */
@@ -107,7 +107,7 @@ KISSY.add(&quot;component/uibase/stdmod&quot;, function () {
         headerContent:{
             view:1
         },
-<span id='KISSY-Component-UIBase-StdMod-cfg-bodyContent'>        /**
+<span id='KISSY-Overlay-Extension-StdMod-cfg-bodyContent'>        /**
 </span>         * html content of body element.
          * @cfg {KISSY.NodeList|String} bodyContent
          */
@@ -117,7 +117,7 @@ KISSY.add(&quot;component/uibase/stdmod&quot;, function () {
         bodyContent:{
             view:1
         },
-<span id='KISSY-Component-UIBase-StdMod-cfg-footerContent'>        /**
+<span id='KISSY-Overlay-Extension-StdMod-cfg-footerContent'>        /**
 </span>         * html content of footer element.
          * @cfg {KISSY.NodeList|String} footerContent
          */

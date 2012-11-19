@@ -17,26 +17,27 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview UIBase.Box
+ * @fileOverview Box
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/uibase/box', function () {
+KISSY.add('component/base/box', function () {
 
-<span id='KISSY-Component-UIBase-Box'>    /**
+<span id='KISSY-Component-Extension-Box'>    /**
 </span>     * Box extension class.Represent a dom element.
-     * @class KISSY.Component.UIBase.Box
+     * @class KISSY.Component.Extension.Box
+     * @private
      */
     function Box() {
     }
 
     Box.ATTRS =
     {
-<span id='KISSY-Component-UIBase-Box-property-content'>        /**
+<span id='KISSY-Component-Extension-Box-property-content'>        /**
 </span>         * component's html content. Note: content and srcNode can not be set both!
          * @type {String|KISSY.NodeList}
          * @property content
          */
-<span id='KISSY-Component-UIBase-Box-cfg-content'>        /**
+<span id='KISSY-Component-Extension-Box-cfg-content'>        /**
 </span>         * component's html content. Note: content and srcNode can not be set both!
          * @cfg {String|KISSY.NodeList} content
          */
@@ -47,12 +48,12 @@ KISSY.add('component/uibase/box', function () {
             view: 1
         },
 
-<span id='KISSY-Component-UIBase-Box-property-width'>        /**
+<span id='KISSY-Component-Extension-Box-property-width'>        /**
 </span>         * component's width
          * @type {Number|String}
          * @property width
          */
-<span id='KISSY-Component-UIBase-Box-cfg-width'>        /**
+<span id='KISSY-Component-Extension-Box-cfg-width'>        /**
 </span>         * component's width
          * @cfg {Number|String} width
          */
@@ -63,12 +64,12 @@ KISSY.add('component/uibase/box', function () {
             view: 1
         },
 
-<span id='KISSY-Component-UIBase-Box-property-height'>        /**
+<span id='KISSY-Component-Extension-Box-property-height'>        /**
 </span>         * component's height
          * @type {Number|String}
          * @property height
          */
-<span id='KISSY-Component-UIBase-Box-cfg-height'>        /**
+<span id='KISSY-Component-Extension-Box-cfg-height'>        /**
 </span>         * component's height
          * @cfg {Number|String} height
          */
@@ -79,7 +80,7 @@ KISSY.add('component/uibase/box', function () {
             view: 1
         },
 
-<span id='KISSY-Component-UIBase-Box-cfg-elCls'>        /**
+<span id='KISSY-Component-Extension-Box-cfg-elCls'>        /**
 </span>         * css class of component's root element
          * @cfg {String} elCls
          */
@@ -90,7 +91,7 @@ KISSY.add('component/uibase/box', function () {
             view: 1
         },
 
-<span id='KISSY-Component-UIBase-Box-cfg-elStyle'>        /**
+<span id='KISSY-Component-Extension-Box-cfg-elStyle'>        /**
 </span>         * name-value pair css style of component's root element
          * @cfg {Object} elStyle
          */
@@ -101,7 +102,7 @@ KISSY.add('component/uibase/box', function () {
             view: 1
         },
 
-<span id='KISSY-Component-UIBase-Box-cfg-elAttrs'>        /**
+<span id='KISSY-Component-Extension-Box-cfg-elAttrs'>        /**
 </span>         * name-value pair attribute of component's root element
          * @cfg {Object} elAttrs
          */
@@ -112,7 +113,7 @@ KISSY.add('component/uibase/box', function () {
             view: 1
         },
 
-<span id='KISSY-Component-UIBase-Box-cfg-elBefore'>        /**
+<span id='KISSY-Component-Extension-Box-cfg-elBefore'>        /**
 </span>         * archor element where component insert before
          * @cfg {KISSY.NodeList} elBefore
          */
@@ -124,7 +125,7 @@ KISSY.add('component/uibase/box', function () {
             view: 1
         },
 
-<span id='KISSY-Component-UIBase-Box-property-el'>        /**
+<span id='KISSY-Component-Extension-Box-property-el'>        /**
 </span>         * root element of current component
          * @type {KISSY.NodeList}
          * @readonly
@@ -137,7 +138,7 @@ KISSY.add('component/uibase/box', function () {
             view: 1
         },
 
-<span id='KISSY-Component-UIBase-Box-cfg-render'>        /**
+<span id='KISSY-Component-Extension-Box-cfg-render'>        /**
 </span>         * archor element where component append to
          * @cfg {KISSY.NodeList} render
          */
@@ -148,7 +149,7 @@ KISSY.add('component/uibase/box', function () {
             view: 1
         },
 
-<span id='KISSY-Component-UIBase-Box-cfg-visibleMode'>        /**
+<span id='KISSY-Component-Extension-Box-cfg-visibleMode'>        /**
 </span>         * component's visibleMode,use css &quot;display&quot; or &quot;visibility&quot; to show this component
          * @cfg {String} visibleMode
          */
@@ -159,7 +160,7 @@ KISSY.add('component/uibase/box', function () {
             view: 1
         },
 
-<span id='KISSY-Component-UIBase-Box-cfg-visible'>        /**
+<span id='KISSY-Component-Extension-Box-cfg-visible'>        /**
 </span>         * whether this component is visible after created.
          * will add css class {prefix}{component}-hidden or {prefix}{component}-shown to component's root el.
          *
@@ -167,7 +168,7 @@ KISSY.add('component/uibase/box', function () {
          *
          * @cfg {Boolean} visible
          */
-<span id='KISSY-Component-UIBase-Box-property-visible'>        /**
+<span id='KISSY-Component-Extension-Box-property-visible'>        /**
 </span>         * whether this component is visible.
          * will add css class {prefix}{component}-hidden or {prefix}{component}-shown to component's root el.
          * @type {Boolean}
@@ -181,7 +182,7 @@ KISSY.add('component/uibase/box', function () {
             view: 1
         },
 
-<span id='KISSY-Component-UIBase-Box-cfg-srcNode'>        /**
+<span id='KISSY-Component-Extension-Box-cfg-srcNode'>        /**
 </span>         * the node to parse for configuration values,passed to component's HTML_PARSER definition
          * @cfg {KISSY.NodeList} srcNode
          */
@@ -203,7 +204,7 @@ KISSY.add('component/uibase/box', function () {
             }
         },
 
-<span id='KISSY-Component-UIBase-Box-method-show'>        /**
+<span id='KISSY-Component-Extension-Box-method-show'>        /**
 </span>         * show component
          */
         show: function () {
@@ -213,7 +214,7 @@ KISSY.add('component/uibase/box', function () {
             return self;
         },
 
-<span id='KISSY-Component-UIBase-Box-method-hide'>        /**
+<span id='KISSY-Component-Extension-Box-method-hide'>        /**
 </span>         * hide component
          */
         hide: function () {
