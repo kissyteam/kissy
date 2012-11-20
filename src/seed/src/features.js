@@ -9,6 +9,7 @@
         win = Env.host,
     // nodejs
         doc = win.document || {},
+        isTouchSupported = 'ontouchstart' in doc,
         documentMode = doc.documentMode,
         isNativeJSONSupported = ((Env.nodejs && typeof global === 'object') ? global : win).JSON;
 
@@ -26,21 +27,28 @@
     S.Features = {
         // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
         /**
+         * @ignore
          * whether support win8 pointer event.
          * @type {Boolean}
          */
-        isMsPointerEnabled: "msPointerEnabled" in (win.navigator || {}),
+        // isMsPointerEnabled: "msPointerEnabled" in (win.navigator || {}),
         /**
          * whether support touch event.
-         * @type {Boolean}
+         * @method
+         * @return {Boolean}
          */
-        isTouchSupported: 'ontouchstart' in doc,
+        isTouchSupported: function () {
+            return isTouchSupported;
+        },
 
         /**
          * whether support native json
-         * @type {Boolean}
+         * @method
+         * @return {Boolean}
          */
-        isNativeJSONSupported: isNativeJSONSupported
+        isNativeJSONSupported: function () {
+            return isNativeJSONSupported;
+        }
     };
 
 })(KISSY);

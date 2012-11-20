@@ -49,7 +49,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
             var type = e.type,
                 notUp,
                 touchList;
-            if (Features.isTouchSupported) {
+            if (Features.isTouchSupported()) {
                 return e;
             } else {
                 if (type.indexOf('mouse') != -1 && e.which != 1) {

@@ -649,7 +649,7 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
             // in touch device
             // prevent touchdown
             // will prevent text selection and link click
-            if (!Features.isTouchSupported) {
+            if (!Features.isTouchSupported()) {
                 ev.preventDefault();
             }
 

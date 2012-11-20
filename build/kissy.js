@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 16 15:30
+build time: Nov 20 16:22
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121116153020' will replace with current timestamp when compressing.
+         * NOTICE: '20121120162241' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121116153020',
+        __BUILD_TIME: '20121120162241',
         /**
          * KISSY Environment.
          * @private
@@ -955,9 +955,14 @@ var KISSY = (function (undefined) {
             });
         },
         /**
-         * get escaped string from html
-         * @see   http://yiminghe.javaeye.com/blog/788929
-         *        http://wonko.com/post/html-escaping
+         * get escaped string from html.
+         * only escape
+         *      & > < ` / " '
+         * refer:
+         *
+         * [http://yiminghe.javaeye.com/blog/788929](http://yiminghe.javaeye.com/blog/788929)
+         *
+         * [http://wonko.com/post/html-escaping](http://wonko.com/post/html-escaping)
          * @param str {string} text2html show
          * @member KISSY
          * @return {String} escaped html
@@ -969,7 +974,7 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * get escaped regexp string for construct regexp
+         * get escaped regexp string for construct regexp.
          * @param str
          * @member KISSY
          * @return {String} escaped regexp
@@ -979,7 +984,9 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * un-escape html to string
+         * un-escape html to string.
+         * only unescape
+         *      &amp; &lt; &gt; &#x60; &#x2F; &quot; &#x27; &#\d{1,5}
          * @param str {string} html2text
          * @member KISSY
          * @return {String} un-escaped html
@@ -1174,7 +1181,7 @@ var KISSY = (function (undefined) {
          * @param fn {Function|String} the function to execute or the name of the method in
          * the 'o' object to execute.
          *
-         * @param when {Number} the number of milliseconds to wait until the fn is executed.
+         * @param [when=0] {Number} the number of milliseconds to wait until the fn is executed.
          *
          * @param {Boolean} [periodic] if true, executes continuously at supplied interval
          * until canceled.
@@ -3007,6 +3014,7 @@ var KISSY = (function (undefined) {
         win = Env.host,
     // nodejs
         doc = win.document || {},
+        isTouchSupported = 'ontouchstart' in doc,
         documentMode = doc.documentMode,
         isNativeJSONSupported = ((Env.nodejs && typeof global === 'object') ? global : win).JSON;
 
@@ -3024,21 +3032,28 @@ var KISSY = (function (undefined) {
     S.Features = {
         // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
         /**
+         * @ignore
          * whether support win8 pointer event.
          * @type {Boolean}
          */
-        isMsPointerEnabled: "msPointerEnabled" in (win.navigator || {}),
+        // isMsPointerEnabled: "msPointerEnabled" in (win.navigator || {}),
         /**
          * whether support touch event.
-         * @type {Boolean}
+         * @method
+         * @return {Boolean}
          */
-        isTouchSupported: 'ontouchstart' in doc,
+        isTouchSupported: function () {
+            return isTouchSupported;
+        },
 
         /**
          * whether support native json
-         * @type {Boolean}
+         * @method
+         * @return {Boolean}
          */
-        isNativeJSONSupported: isNativeJSONSupported
+        isNativeJSONSupported: function () {
+            return isNativeJSONSupported;
+        }
     };
 
 })(KISSY);/**
@@ -3994,7 +4009,7 @@ var KISSY = (function (undefined) {
 
     S.mix(S, {
         /**
-         * Load a JavaScript/Css file from the server using a GET HTTP request,
+         * Load a javascript/css file from the server using a GET HTTP request,
          * then execute it.
          *
          * for example:
@@ -4007,6 +4022,9 @@ var KISSY = (function (undefined) {
          *          error: fn,
          *          timeout: number
          *      });
+         *
+         * Note 404/500 status in ie<9 will trigger success callback.
+         * If you want a jsonp operation, please use {@link KISSY.IO} instead.
          *
          * @param {String} url resource's url
          * @param {Function|Object} [success] success callback or config
@@ -4684,6 +4702,7 @@ var KISSY = (function (undefined) {
             // parallel use
             if (status <= LOADING &&
                 // prevent duplicate listen for one use
+                // prevent duplicate getScript for the same url for one use
                 !isWait) {
                 // load and attach this module
                 fetchModule(self, mod, loadChecker);
@@ -4735,7 +4754,10 @@ var KISSY = (function (undefined) {
                         }
                     }
                 }
-                checkHandler();
+
+                // force to asynchronously, need waitMods filled for loadChecker
+                // in case getScript is synchronous (cache in ie6? nodejs!)
+                S.later(checkHandler);
             },
             error: checkHandler,
             // source:mod.name + '-init',
@@ -5430,7 +5452,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121116153020'
+            tag: '20121120162241'
         }, getBaseInfo()));
     }
 
@@ -5778,7 +5800,7 @@ config({
     "event/dom": {
         "alias": [
             "event/dom/base",
-            Features.isMsPointerEnabled || Features.isTouchSupported ? 'event/dom/touch' : 'empty'
+            Features.isTouchSupported() ? 'event/dom/touch' : 'empty'
         ]
     }
 });/*Generated by KISSY Module Compiler*/
@@ -5807,7 +5829,7 @@ config({
 });
 /*Generated by KISSY Module Compiler*/
 config({
-'json': {requires: [KISSY.Features.isNativeJSONSupported ? "empty" : "json/json2"]}
+'json': {requires: [KISSY.Features.isNativeJSONSupported() ? "empty" : "json/json2"]}
 });
 /*Generated by KISSY Module Compiler*/
 config({
@@ -5863,7 +5885,7 @@ config({
 });
 /*Generated by KISSY Module Compiler*/
 config({
-'switchable': {requires: ['dom','event','anim',KISSY.Features.isTouchSupported || KISSY.Features.isMsPointerEnabled ? "dd/base" : "empty"]}
+'switchable': {requires: ['dom','event','anim',KISSY.Features.isTouchSupported() ? "dd/base" : "empty"]}
 });
 /*Generated by KISSY Module Compiler*/
 config({
@@ -14420,7 +14442,7 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 16 15:30
+build time: Nov 20 16:19
 */
 /**
  * @ignore
@@ -14549,15 +14571,18 @@ KISSY.add('event/dom/touch/gesture', function (S, EventDomBase) {
 
     // 不能同时绑定 touchstart 与 mousedown 会导致 ios 不能选择文本
     // bind mousedown to turn element into clickable element
-    if (Features.isTouchSupported) {
+    if (Features.isTouchSupported()) {
         startEvent = 'touchstart';
         moveEvent = 'touchmove';
         endEvent = 'touchend';
-    } else if (Features.isMsPointerEnabled) {
-        startEvent = 'MSPointerDown';
-        moveEvent = 'MSPointerMove';
-        endEvent = 'MSPointerUp';
     }
+
+
+//    else if (Features.isMsPointerEnabled) {
+//        startEvent = 'MSPointerDown';
+//        moveEvent = 'MSPointerMove';
+//        endEvent = 'MSPointerUp';
+//    }
 
     // force to load event/dom/touch in pc to use mouse to simulate touch
     if (startEvent) {
@@ -14632,7 +14657,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
             var type = e.type,
                 notUp,
                 touchList;
-            if (Features.isTouchSupported) {
+            if (Features.isTouchSupported()) {
                 return e;
             } else {
                 if (type.indexOf('mouse') != -1 && e.which != 1) {
@@ -15261,6 +15286,11 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
+build time: Nov 20 16:22
+*/
+/*
+Copyright 2012, KISSY UI Library v1.40dev
+MIT Licensed
 build time: Nov 14 21:53
 */
 /*
@@ -15746,7 +15776,7 @@ KISSY.add("json/json2", function () {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:53
+build time: Nov 20 16:22
 */
 /**
  * @ignore
@@ -15787,9 +15817,7 @@ KISSY.add('json', function (S, J) {
     };
 }, {
     requires: [
-        KISSY.Features.isNativeJSONSupported ?
-            "empty" :
-            "json/json2"
+        KISSY.Features.isNativeJSONSupported() ? "empty" : "json/json2"
     ]
 });
 /*

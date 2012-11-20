@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:50
+build time: Nov 20 16:18
 */
 /**
  * @ignore
@@ -1367,7 +1367,7 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
             // in touch device
             // prevent touchdown
             // will prevent text selection and link click
-            if (!Features.isTouchSupported) {
+            if (!Features.isTouchSupported()) {
                 ev.preventDefault();
             }
 

@@ -207,9 +207,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
 }, {
     requires: [
         'dom', 'event', './base',
-        KISSY.Features.isTouchSupported ||
-            KISSY.Features.isMsPointerEnabled ?
-            'dd/base' : 'empty'
+        KISSY.Features.isTouchSupported() ? 'dd/base' : 'empty'
     ]
 });
 

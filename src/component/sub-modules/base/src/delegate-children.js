@@ -8,7 +8,7 @@ KISSY.add("component/base/delegate-children", function (S, UA, Event) {
     var ie = S.Env.host.document.documentMode || UA.ie,
         Features = S.Features,
         Gesture = Event.Gesture,
-        isTouchSupported = Features.isTouchSupported || Features.isMsPointerEnabled;
+        isTouchSupported = Features.isTouchSupported();
 
     function DelegateChildren() {
     }

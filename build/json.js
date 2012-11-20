@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:53
+build time: Nov 20 16:22
 */
 /**
  * @ignore
@@ -42,8 +42,6 @@ KISSY.add('json', function (S, J) {
     };
 }, {
     requires: [
-        KISSY.Features.isNativeJSONSupported ?
-            "empty" :
-            "json/json2"
+        KISSY.Features.isNativeJSONSupported() ? "empty" : "json/json2"
     ]
 });

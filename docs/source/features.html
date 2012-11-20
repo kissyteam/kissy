@@ -26,6 +26,7 @@
         win = Env.host,
     // nodejs
         doc = win.document || {},
+        isTouchSupported = 'ontouchstart' in doc,
         documentMode = doc.documentMode,
         isNativeJSONSupported = ((Env.nodejs &amp;&amp; typeof global === 'object') ? global : win).JSON;
 
@@ -42,22 +43,29 @@
      */
     S.Features = {
         // http://blogs.msdn.com/b/ie/archive/2011/09/20/touch-input-for-ie10-and-metro-style-apps.aspx
-<span id='KISSY-Features-property-isMsPointerEnabled'>        /**
-</span>         * whether support win8 pointer event.
+<span id='global-property-'>        /**
+</span>         * @ignore
+         * whether support win8 pointer event.
          * @type {Boolean}
          */
-        isMsPointerEnabled: &quot;msPointerEnabled&quot; in (win.navigator || {}),
-<span id='KISSY-Features-property-isTouchSupported'>        /**
+        // isMsPointerEnabled: &quot;msPointerEnabled&quot; in (win.navigator || {}),
+<span id='KISSY-Features-method-isTouchSupported'>        /**
 </span>         * whether support touch event.
-         * @type {Boolean}
+         * @method
+         * @return {Boolean}
          */
-        isTouchSupported: 'ontouchstart' in doc,
+        isTouchSupported: function () {
+            return isTouchSupported;
+        },
 
-<span id='KISSY-Features-property-isNativeJSONSupported'>        /**
+<span id='KISSY-Features-method-isNativeJSONSupported'>        /**
 </span>         * whether support native json
-         * @type {Boolean}
+         * @method
+         * @return {Boolean}
          */
-        isNativeJSONSupported: isNativeJSONSupported
+        isNativeJSONSupported: function () {
+            return isNativeJSONSupported;
+        }
     };
 
 })(KISSY);</pre>
