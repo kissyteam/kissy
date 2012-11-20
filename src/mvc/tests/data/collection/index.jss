@@ -1,5 +1,5 @@
 module.exports = function (req, res) {
-    var json, m = req.param("_method");
+    var json={}, m = req.param("_method");
     if (m == "read") {
         json = [{"x":11,"y":22,"id":9}];
     }

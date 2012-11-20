@@ -10,31 +10,32 @@ var srcDir = path.resolve(cwd, 'src');
 var currentDir = __dirname;
 var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
 
-function startServer(port) {
 
-    var express = require('express');
-    var app = express();
+S.use('xtemplate', function (S, XTemplate) {
+    function startServer(port) {
 
-    function collectTc(baseDir, codes) {
-        var files = fs.readdirSync(baseDir);
-        var ts = "tests/runner";
-        S.each(files, function (f) {
-            f = baseDir + '/' + f;
-            if (fs.statSync(f).isDirectory()) {
-                if (S.endsWith(f, ts)) {
-                    var runners = fs.readdirSync(f);
-                    S.each(runners, function (r) {
-                        r = (f + '/' + r).replace(cwd, '').replace(/\\/g, '/');
-                        codes.push("tests.push('" + r + "');\n");
-                    });
-                } else {
-                    collectTc(f, codes);
+        var express = require('express');
+        var app = express();
+
+        function collectTc(baseDir, codes) {
+            var files = fs.readdirSync(baseDir);
+            var ts = "tests/runner";
+            S.each(files, function (f) {
+                f = baseDir + '/' + f;
+                if (fs.statSync(f).isDirectory()) {
+                    if (S.endsWith(f, ts)) {
+                        var runners = fs.readdirSync(f);
+                        S.each(runners, function (r) {
+                            r = (f + '/' + r).replace(cwd, '').replace(/\\/g, '/');
+                            codes.push("tests.push('" + r + "');\n");
+                        });
+                    } else {
+                        collectTc(f, codes);
+                    }
                 }
-            }
-        });
-    }
+            });
+        }
 
-    S.use('xtemplate', function (S, XTemplate) {
 
         var testTpl = new XTemplate(fs.readFileSync(currentDir + '/test-xtpl.html', 'utf-8'));
         var testCode = fs.readFileSync(currentDir + '/test.js');
@@ -83,12 +84,6 @@ function startServer(port) {
 
         app.use(function (req, res, next) {
             var path = req.path;
-            if (req.xhr) {
-                var cur = cwd + path;
-                if (fs.existsSync(cur) && fs.statSync(cur).isDirectory()) {
-                    path += '/index.jss';
-                }
-            }
             if (S.endsWith(path, ".jss")) {
                 require(cwd + path)(req, res);
             } else {
@@ -101,14 +96,20 @@ function startServer(port) {
 
         app.use(function (req, res, next) {
 
-            var cur = cwd + req.path;
+            var cur = cwd + req.path,
+                index = cur + '/index.jss';
+
             if (fs.existsSync(cur) && fs.statSync(cur).isDirectory()) {
+                if (fs.existsSync(index)) {
+                    require(index)(req, res);
+                    return;
+                }
+
                 var files = fs.readdirSync(cur);
                 res.send(listTpl.render({
                     cur: req.url,
                     files: files
                 }));
-
             } else {
                 next();
             }
@@ -126,8 +127,10 @@ function startServer(port) {
 
         app.listen(port);
 
-    });
-}
 
-startServer(9999);
-startServer(8888);
+    }
+
+    startServer(9999);
+    startServer(8888);
+
+});
