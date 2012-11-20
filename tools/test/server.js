@@ -11,7 +11,6 @@ var cwd = process.cwd();
 var currentDir = __dirname;
 var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
 
-
 S.use('xtemplate', function (S, XTemplate) {
     function startServer(port) {
 
