@@ -12,7 +12,7 @@ page.onConsoleMessage = function (m) {
     var match;
     if (match = m.match(/specs?, (\d+) failures? in/)) {
         if (!t && match[1] == '0') {
-            setTimeout(next, 50);
+            setTimeout(next, 100);
         } else {
             phantom.exit(1);
         }

@@ -27,8 +27,6 @@ S.use('xtemplate', function (S, XTemplate) {
         // combo
         app.use(function (req, res, next) {
 
-            console.log(req.url);
-
             var query = req.query, k,
                 path = cwd + req.path;
 
