@@ -98,7 +98,14 @@ KISSY.add('ua/base', function (S, undefined) {
              * @type String
              * @member KISSY.UA
              */
-            shell: undefined
+            shell: undefined,
+
+            /**
+             * PhantomJS version number
+             * @type undefined|Number
+             * @member KISSY.UA
+             */
+            phantomjs: 0
         },
         numberify = function (s) {
             var c = 0;
@@ -161,6 +168,10 @@ KISSY.add('ua/base', function (S, undefined) {
             // Other WebKit Mobile Browsers
             else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
                 UA[MOBILE] = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
+            }
+
+            if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
+                UA.phantomjs = numberify(m[1]);
             }
         }
         // NOT WebKit

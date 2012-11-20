@@ -9,6 +9,6 @@ module.exports = function (req, res) {
         res.set('Access-Control-Allow-Origin', 'http://localhost:8888');
         res.set('Access-Control-Allow-Headers', 'origin, x-requested-with, yiminghe, content-type, accept, *');
         res.send('{"' + req.query.action + '": 1}');
-    }, 1000);
+    }, 10);
 
 };

@@ -1,6 +1,7 @@
-<script src="../../../../../build/kissy-min.js"></script>
+<script src="../../../../../build/kissy.js"></script>
 <script >
     KISSY.config({
+        debug: false,
         combine:true,
         packages:[
             {
@@ -11,7 +12,8 @@
         ]
     });
 
-    KISSY.use("t/t", function (S, t) {
+    KISSY.use("t/t2", function (S, t) {
         alert(t);
+        console.log(t);
     });
 </script>

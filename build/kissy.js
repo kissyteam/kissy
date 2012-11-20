@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 20 16:22
+build time: Nov 21 02:29
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121120162241' will replace with current timestamp when compressing.
+         * NOTICE: '20121121022910' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121120162241',
+        __BUILD_TIME: '20121121022910',
         /**
          * KISSY Environment.
          * @private
@@ -3014,7 +3014,9 @@ var KISSY = (function (undefined) {
         win = Env.host,
     // nodejs
         doc = win.document || {},
-        isTouchSupported = 'ontouchstart' in doc,
+        ua = ((win.navigator || {}).userAgent) || "",
+    // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
+        isTouchSupported = ('ontouchstart' in doc) && !(/PhantomJS/.test(ua)),
         documentMode = doc.documentMode,
         isNativeJSONSupported = ((Env.nodejs && typeof global === 'object') ? global : win).JSON;
 
@@ -3936,41 +3938,45 @@ var KISSY = (function (undefined) {
     // single thread is ok
     function cssPoll() {
 
-        var callbackObj = monitors[url],
-            node = callbackObj.node,
-            exName,
-            loaded = 0;
-        if (utils.isWebKit) {
-            // http://www.w3.org/TR/DOM-Level-2-Style/stylesheets.html
-            if (node['sheet']) {
-                S.log('webkit loaded : ' + url);
-                loaded = 1;
-            }
-        } else if (node['sheet']) {
-            try {
-                var cssRules = node['sheet'].cssRules;
-                if (cssRules) {
-                    S.log('same domain firefox loaded : ' + url);
-                    loaded = 1;
-                }
-            } catch (ex) {
-                exName = ex.name;
-                S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
-                // http://www.w3.org/TR/dom/#dom-domexception-code
-                if (// exName == 'SecurityError' ||
-                // for old firefox
-                    exName == 'NS_ERROR_DOM_SECURITY_ERR') {
-                    S.log(exName + ' firefox loaded : ' + url);
-                    loaded = 1;
-                }
-            }
-        }
+        for (var url in monitors) {
 
-        if (loaded) {
-            if (callbackObj.callback) {
-                callbackObj.callback.call(node);
+            var callbackObj = monitors[url],
+                node = callbackObj.node,
+                exName,
+                loaded = 0;
+            if (utils.isWebKit) {
+                // http://www.w3.org/TR/DOM-Level-2-Style/stylesheets.html
+                if (node['sheet']) {
+                    S.log('webkit loaded : ' + url);
+                    loaded = 1;
+                }
+            } else if (node['sheet']) {
+                try {
+                    var cssRules = node['sheet'].cssRules;
+                    if (cssRules) {
+                        S.log('same domain firefox loaded : ' + url);
+                        loaded = 1;
+                    }
+                } catch (ex) {
+                    exName = ex.name;
+                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                    // http://www.w3.org/TR/dom/#dom-domexception-code
+                    if (// exName == 'SecurityError' ||
+                    // for old firefox
+                        exName == 'NS_ERROR_DOM_SECURITY_ERR') {
+                        S.log(exName + ' firefox loaded : ' + url);
+                        loaded = 1;
+                    }
+                }
             }
-            delete monitors[url];
+
+            if (loaded) {
+                if (callbackObj.callback) {
+                    callbackObj.callback.call(node);
+                }
+                delete monitors[url];
+            }
+
         }
 
         if (S.isEmptyObject(monitors)) {
@@ -4005,7 +4011,13 @@ var KISSY = (function (undefined) {
         doc = S.Env.host.document,
         utils = S.Loader.Utils,
         Path = S.Path,
-        jsCssCallbacks = {};
+        jsCssCallbacks = {},
+        UA = navigator.userAgent,
+    // onload for webkit 535.23  Firefox 9.0
+    // https://bugs.webkit.org/show_activity.cgi?id=38995
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=185236
+    // https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
+        isOldWebKit = Number(UA.replace(/.*AppleWebKit\/(\d+)\..*/, '$1')) < 536;
 
     S.mix(S, {
         /**
@@ -4104,8 +4116,18 @@ var KISSY = (function (undefined) {
                 delete jsCssCallbacks[src];
             };
 
+            var useNative = !css;
+
+            if (css) {
+                if (isOldWebKit) {
+                    useNative = false;
+                } else {
+                    useNative = 'onload' in node;
+                }
+            }
+
             //标准浏览器 css and all script
-            if ('onload' in node || !css) {
+            if (useNative) {
                 node.onload = node.onreadystatechange = function () {
                     var readyState = node.readyState;
                     if (!readyState ||
@@ -5452,7 +5474,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121120162241'
+            tag: '20121121022910'
         }, getBaseInfo()));
     }
 
@@ -5919,7 +5941,7 @@ config({
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:54
+build time: Nov 20 23:00
 */
 /**
  * @ignore
@@ -6021,7 +6043,14 @@ KISSY.add('ua/base', function (S, undefined) {
              * @type String
              * @member KISSY.UA
              */
-            shell: undefined
+            shell: undefined,
+
+            /**
+             * PhantomJS version number
+             * @type undefined|Number
+             * @member KISSY.UA
+             */
+            phantomjs: 0
         },
         numberify = function (s) {
             var c = 0;
@@ -6084,6 +6113,10 @@ KISSY.add('ua/base', function (S, undefined) {
             // Other WebKit Mobile Browsers
             else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
                 UA[MOBILE] = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
+            }
+
+            if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
+                UA.phantomjs = numberify(m[1]);
             }
         }
         // NOT WebKit
@@ -14442,7 +14475,7 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 20 16:19
+build time: Nov 20 23:38
 */
 /**
  * @ignore
@@ -14613,6 +14646,8 @@ KISSY.add('event/dom/touch/handle-map', function () {
  */
 KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Gesture) {
 
+    'use strict';
+
     var key = S.guid('touch-handle'),
         Features = S.Features,
         MOVE_DELAY = 30,
@@ -14757,7 +14792,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
                 handle = DOM.data(doc, key);
             if (handle) {
                 handle.removeEventHandle(event);
-                if (S.isEmptyObject(eventHandle)) {
+                if (S.isEmptyObject(handle.eventHandle)) {
                     handle.destroy();
                     DOM.removeData(doc, key);
                 }

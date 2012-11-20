@@ -2,7 +2,7 @@
  * Router spec for mvc
  * @author yiminghe@gmail.com
  */
-KISSY.use('mvc,event', function (S, MVC, Event) {
+KISSY.use('mvc', function (S, MVC) {
 
     var Router = MVC.Router;
 
@@ -172,6 +172,11 @@ KISSY.use('mvc,event', function (S, MVC, Event) {
             runs(function () {
                 Router.navigate("/go/");
             });
+
+            // phantomjs can not back?
+            if (S.UA.phantomjs) {
+                return;
+            }
 
             waits(200);
 

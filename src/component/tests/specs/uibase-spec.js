@@ -2,7 +2,7 @@
  * uibase tc
  * @author yiminghe@gmaill.com
  */
-KISSY.use("component/base,component/extension", function (S, Component,extension) {
+KISSY.use("component/base,component/extension", function (S, Component, extension) {
 
     var UIBase = Component.UIBase, $ = S.all;
 

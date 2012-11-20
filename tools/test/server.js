@@ -17,26 +17,6 @@ S.use('xtemplate', function (S, XTemplate) {
         var express = require('express');
         var app = express();
 
-        function collectTc(baseDir, codes) {
-            var files = fs.readdirSync(baseDir);
-            var ts = "tests/runner";
-            S.each(files, function (f) {
-                f = baseDir + '/' + f;
-                if (fs.statSync(f).isDirectory()) {
-                    if (S.endsWith(f, ts)) {
-                        var runners = fs.readdirSync(f);
-                        S.each(runners, function (r) {
-                            r = (f + '/' + r).replace(cwd, '').replace(/\\/g, '/');
-                            codes.push("tests.push('" + r + "');\n");
-                        });
-                    } else {
-                        collectTc(f, codes);
-                    }
-                }
-            });
-        }
-
-
         var testTpl = new XTemplate(fs.readFileSync(currentDir + '/test-xtpl.html', 'utf-8'));
         var testCode = fs.readFileSync(currentDir + '/test.js');
         var listTpl = new XTemplate(fs.readFileSync(currentDir + '/list-xtpl.html', 'utf-8'));
@@ -46,6 +26,9 @@ S.use('xtemplate', function (S, XTemplate) {
 
         // combo
         app.use(function (req, res, next) {
+
+            console.log(req.url);
+
             var query = req.query, k,
                 path = cwd + req.path;
 
@@ -116,9 +99,9 @@ S.use('xtemplate', function (S, XTemplate) {
 
         });
 
+        var codes = require('./tc.js')();
+
         app.get('/test', function (req, res) {
-            var codes = [];
-            collectTc(srcDir, codes);
             res.send(testTpl.render({
                 code: testCode,
                 tests: codes

@@ -8,6 +8,11 @@ KISSY.use("ua,flash,dom", function(S, UA, Flash, DOM) {
             return;
         }
 
+        // phantomjs ....
+        if(UA.phantomjs){
+            return;
+        }
+
         var RE_FLASH_TAGS = /object|embed/i,
             F = Flash,
             defconfig = {

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
     <script src="../../../../tools/jasmine/jasmine.js"></script>
     <script src="../../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../../tools/jasmine/jasmine.console_reporter.js"></script>
     <script src="../../../../tools/jasmine/event-simulate.js"></script>
     <link href="../../demo/other/assets/cool.css" rel="stylesheet"/>
     <script src="../../../../build/kissy.js"></script>
@@ -51,6 +52,7 @@
 <script>
     KISSY.use("overlay,resizable,dd", function () {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
         jasmine.getEnv().execute(function () {
             jasmine.kissyNext(this.results().failedCount);
         });

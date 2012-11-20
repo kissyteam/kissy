@@ -46,41 +46,45 @@
     // single thread is ok
     function cssPoll() {
 
-        var callbackObj = monitors[url],
-            node = callbackObj.node,
-            exName,
-            loaded = 0;
-        if (utils.isWebKit) {
-            // http://www.w3.org/TR/DOM-Level-2-Style/stylesheets.html
-            if (node['sheet']) {
-                S.log('webkit loaded : ' + url);
-                loaded = 1;
-            }
-        } else if (node['sheet']) {
-            try {
-                var cssRules = node['sheet'].cssRules;
-                if (cssRules) {
-                    S.log('same domain firefox loaded : ' + url);
-                    loaded = 1;
-                }
-            } catch (ex) {
-                exName = ex.name;
-                S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
-                // http://www.w3.org/TR/dom/#dom-domexception-code
-                if (// exName == 'SecurityError' ||
-                // for old firefox
-                    exName == 'NS_ERROR_DOM_SECURITY_ERR') {
-                    S.log(exName + ' firefox loaded : ' + url);
-                    loaded = 1;
-                }
-            }
-        }
+        for (var url in monitors) {
 
-        if (loaded) {
-            if (callbackObj.callback) {
-                callbackObj.callback.call(node);
+            var callbackObj = monitors[url],
+                node = callbackObj.node,
+                exName,
+                loaded = 0;
+            if (utils.isWebKit) {
+                // http://www.w3.org/TR/DOM-Level-2-Style/stylesheets.html
+                if (node['sheet']) {
+                    S.log('webkit loaded : ' + url);
+                    loaded = 1;
+                }
+            } else if (node['sheet']) {
+                try {
+                    var cssRules = node['sheet'].cssRules;
+                    if (cssRules) {
+                        S.log('same domain firefox loaded : ' + url);
+                        loaded = 1;
+                    }
+                } catch (ex) {
+                    exName = ex.name;
+                    S.log('firefox getStyle : ' + exName + ' ' + ex.code + ' ' + url);
+                    // http://www.w3.org/TR/dom/#dom-domexception-code
+                    if (// exName == 'SecurityError' ||
+                    // for old firefox
+                        exName == 'NS_ERROR_DOM_SECURITY_ERR') {
+                        S.log(exName + ' firefox loaded : ' + url);
+                        loaded = 1;
+                    }
+                }
             }
-            delete monitors[url];
+
+            if (loaded) {
+                if (callbackObj.callback) {
+                    callbackObj.callback.call(node);
+                }
+                delete monitors[url];
+            }
+
         }
 
         if (S.isEmptyObject(monitors)) {

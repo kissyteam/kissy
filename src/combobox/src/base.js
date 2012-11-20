@@ -727,7 +727,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
             return;
         }
         self._savedInputValue = value;
-        S.log("value change: " + value);
+        // S.log("value change: " + value);
         self.sendRequest(value);
     }
 

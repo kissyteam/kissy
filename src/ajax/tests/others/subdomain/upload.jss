@@ -23,7 +23,7 @@ module.exports = function (req, res) {
         data += JSON.stringify(t);
         data += '</body></html>';
         res.send(data);
-    }, 1000);
+    }, 10);
 
 
 };

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 20 16:19
+build time: Nov 20 23:38
 */
 /**
  * @ignore
@@ -172,6 +172,8 @@ KISSY.add('event/dom/touch/handle-map', function () {
  */
 KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Gesture) {
 
+    'use strict';
+
     var key = S.guid('touch-handle'),
         Features = S.Features,
         MOVE_DELAY = 30,
@@ -316,7 +318,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
                 handle = DOM.data(doc, key);
             if (handle) {
                 handle.removeEventHandle(event);
-                if (S.isEmptyObject(eventHandle)) {
+                if (S.isEmptyObject(handle.eventHandle)) {
                     handle.destroy();
                     DOM.removeData(doc, key);
                 }

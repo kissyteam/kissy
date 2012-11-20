@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
 <script src="../../../../tools/jasmine/jasmine.js"></script>
 <script src="../../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../../tools/jasmine/jasmine.console_reporter.js"></script>
 
 <script src="../../../tools/third-party/jquery.js"></script>
 
@@ -37,6 +38,7 @@
 <h1>Serialize Test Cases</h1>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
     jasmine.getEnv().execute(function() {
         jasmine.kissyNext(this.results().failedCount);
     });

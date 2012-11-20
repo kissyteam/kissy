@@ -9,7 +9,14 @@
         doc = S.Env.host.document,
         utils = S.Loader.Utils,
         Path = S.Path,
-        jsCssCallbacks = {};
+        jsCssCallbacks = {},
+        UA = navigator.userAgent,
+    // onload for webkit 535.23  Firefox 9.0
+    // https://bugs.webkit.org/show_activity.cgi?id=38995
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=185236
+    // https://developer.mozilla.org/en/HTML/Element/link#Stylesheet_load_events
+    // phantomjs 1.7 == webkit 534.34
+        isOldWebKit = Number(UA.replace(/.*AppleWebKit\/(\d+)\..*/, '$1')) < 536;
 
     S.mix(S, {
         /**
@@ -108,8 +115,18 @@
                 delete jsCssCallbacks[src];
             };
 
+            var useNative = !css;
+
+            if (css) {
+                if (isOldWebKit) {
+                    useNative = false;
+                } else {
+                    useNative = 'onload' in node;
+                }
+            }
+
             //标准浏览器 css and all script
-            if ('onload' in node || !css) {
+            if (useNative) {
                 node.onload = node.onreadystatechange = function () {
                     var readyState = node.readyState;
                     if (!readyState ||

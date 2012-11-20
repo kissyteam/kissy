@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Parser Test Runner</title>
-<link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
-<script src="../../../../tools/jasmine/jasmine.js"></script>
-<script src="../../../../tools/jasmine/jasmine-html.js"></script>
-<script src="../../../../tools/jasmine/event-simulate.js"></script>
-<script src="../../../../build/kissy.js"></script>
-<script src="../../../../build/htmlparser.js"></script>
+    <meta charset="utf-8">
+    <title>Parser Test Runner</title>
+    <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
+    <script src="../../../../tools/jasmine/jasmine.js"></script>
+    <script src="../../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../../tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="../../../../tools/jasmine/event-simulate.js"></script>
+    <script src="../../../../build/kissy.js"></script>
+    <script src="../../../../build/htmlparser.js"></script>
 </head>
 <body>
 <h1>KISSY HtmlParser TC</h1>
@@ -17,11 +18,10 @@
 <script src="../specs/editor-spec.js"></script>
 <script>
 
-    KISSY.use("htmlparser", function (S) {
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().execute(function () {
-            jasmine.kissyNext(this.results().failedCount);
-        });
+    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+    jasmine.getEnv().execute(function () {
+        jasmine.kissyNext(this.results().failedCount);
     });
 
 </script>

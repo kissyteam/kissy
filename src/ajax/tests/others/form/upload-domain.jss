@@ -18,7 +18,7 @@ module.exports = function (req, res) {
             t.test5 = query.test5;
         }
         res.send('<script>document.domain="localhost";</script>'+JSON.stringify(t));
-    }, 500);
+    }, 10);
 
 
 };

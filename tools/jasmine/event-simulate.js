@@ -3,71 +3,75 @@
  * @creator lifesinger@gmail.com
  * @origin https://github.com/yui/yui3/raw/master/src/event-simulate/js/event-simulate.js
  */
-(function() {
+(function () {
+
+    'use strict';
 
     // shortcuts
     var toString = Object.prototype.toString,
-        isFunction = function(o) {
+        isFunction = function (o) {
             return toString.call(o) === '[object Function]'
         },
-        isString = function(o) {
+        isString = function (o) {
             return toString.call(o) === '[object String]'
         },
-        isBoolean = function(o) {
+        isBoolean = function (o) {
             return toString.call(o) === '[object Boolean]'
         },
-        isObject = function(o) {
+        isObject = function (o) {
             return toString.call(o) === '[object Object]'
         },
-        isNumber = function(o) {
+        isNumber = function (o) {
             return toString.call(o) === '[object Number]'
         },
         doc = document,
 
-        mix = function(r, s) {
-            for (var p in s) r[p] = s[p];
+        mix = function (r, s) {
+            for (var p in s) {
+                r[p] = s[p];
+            }
         },
 
-        // mouse events supported
+    // mouse events supported
         mouseEvents = {
-            click:      1,
-            dblclick:   1,
-            mouseover:  1,
-            mouseout:   1,
+            click: 1,
+            dblclick: 1,
+            mouseover: 1,
+            mouseout: 1,
             mouseenter: 1,
             mouseleave: 1,
-            mousedown:  1,
-            mouseup:    1,
-            mousemove:  1
+            mousedown: 1,
+            mouseup: 1,
+            mousemove: 1
         },
 
-        // key events supported
+    // key events supported
         keyEvents = {
-            keydown:    1,
-            keyup:      1,
-            keypress:   1
+            keydown: 1,
+            keyup: 1,
+            keypress: 1
         },
 
-        // HTML events supported
+    // HTML events supported
         uiEvents = {
-            blur:       1,
-            change:     1,
-            focus:      1,
-            resize:     1,
-            scroll:     1,
-            select:     1
+            blur: 1,
+            change: 1,
+            focus: 1,
+            resize: 1,
+            scroll: 1,
+            select: 1
         },
 
-        // events that bubble by default
+    // events that bubble by default
         bubbleEvents = {
-            scroll:     1,
-            resize:     1,
-            reset:      1,
-            submit:     1,
-            change:     1,
-            select:     1,
-            error:      1,
-            abort:      1
+            scroll: 1,
+            resize: 1,
+            reset: 1,
+            submit: 1,
+            change: 1,
+            select: 1,
+            error: 1,
+            abort: 1
         };
 
     // all key and mouse events bubble
@@ -161,11 +165,27 @@
             charCode = 0;
         }
 
-        // try to create a mouse event
-        var customEvent /*:MouseEvent*/ = null;
+        // try to create a key event
+        var customEvent /*:KeyEvent*/ = null;
+
+        // key event not ok!
+        if (0 && window.CustomEvent) {
+            customEvent = new CustomEvent(type, {
+                bubbles: bubbles,
+                cancelable: cancelable,
+                view: view,
+                ctrlKey: ctrlKey,
+                altKey: altKey,
+                shiftKey: shiftKey,
+                metaKey: metaKey,
+                keyCode: keyCode,
+                charCode: charCode
+            });
+            target.dispatchEvent(customEvent);
+        }
 
         // check for DOM-compliant browsers first
-        if (isFunction(doc.createEvent)) {
+        else if (isFunction(doc.createEvent)) {
 
             try {
 
@@ -279,13 +299,13 @@
      * @param {int} detail (Optional) The number of times the mouse button has
      *      been used. The default value is 1.
      * @param {int} screenX (Optional) The x-coordinate on the screen at which
-     *      point the event occured. The default is 0.
+     *      point the event occurred. The default is 0.
      * @param {int} screenY (Optional) The y-coordinate on the screen at which
-     *      point the event occured. The default is 0.
+     *      point the event occurred. The default is 0.
      * @param {int} clientX (Optional) The x-coordinate on the client at which
-     *      point the event occured. The default is 0.
+     *      point the event occurred. The default is 0.
      * @param {int} clientY (Optional) The y-coordinate on the client at which
-     *      point the event occured. The default is 0.
+     *      point the event occurred. The default is 0.
      * @param {Boolean} ctrlKey (Optional) Indicates if one of the CTRL keys
      *      is pressed while the event is firing. The default is false.
      * @param {Boolean} altKey (Optional) Indicates if one of the ALT keys
@@ -369,8 +389,30 @@
         // try to create a mouse event
         var customEvent /*:MouseEvent*/ = null;
 
+
+        // dom level4 for non-ie
+        if (0 && window.CustomEvent && !document.documentMode) {
+            // use  CustomEvent is stable in phantomjs ??
+            customEvent = new CustomEvent(type, {
+                bubbles: bubbles,
+                cancelable: cancelable,
+                detail: detail,
+                screenX: screenX,
+                screenY: screenY,
+                clientX: clientX,
+                clientY: clientY,
+                view: view,
+                ctrlKey: ctrlKey,
+                altKey: altKey,
+                shiftKey: shiftKey,
+                metaKey: metaKey,
+                button: button,
+                relatedTarget: relatedTarget
+            });
+            target.dispatchEvent(customEvent);
+        }
         // check for DOM-compliant browsers first
-        if (isFunction(doc.createEvent)) {
+        else if (isFunction(doc.createEvent)) {
 
             customEvent = doc.createEvent("MouseEvents");
 
@@ -403,7 +445,7 @@
              * Check to see if relatedTarget has been assigned. Firefox
              * versions less than 2.0 don't allow it to be assigned via
              * initMouseEvent() and the property is readonly after event
-             * creation, so in order to keep YAHOO.util.getRelatedTarget()
+             * creation, so in order to .relatedTarget
              * working, assign to the IE proprietary toElement property
              * for mouseout event and fromElement property for mouseover
              * event.
@@ -420,8 +462,7 @@
             target.dispatchEvent(customEvent);
 
         }
-        else
-        if (doc.createEventObject) { // IE
+        else if (doc.createEventObject) { // IE
 
             // create an IE event object
             customEvent = doc.createEventObject();
@@ -458,7 +499,7 @@
             /*
              * Have to use relatedTarget because IE won't allow assignment
              * to toElement or fromElement on generic events. This keeps
-             * YAHOO.util.customEvent.getRelatedTarget() functional.
+             * .relatedTarget functional.
              */
             customEvent.relatedTarget = relatedTarget;
 
@@ -532,8 +573,19 @@
             detail = 1;  // usually not used but defaulted to this
         }
 
+        if (0 && window.UIEvent) {
+            customEvent = new UIEvent(type, {
+                bubbles: bubbles,
+                cancelable: cancelable,
+                view: view,
+                detail: detail
+            });
+            // fire the event
+            target.dispatchEvent(customEvent);
+        }
+
         // check for DOM-compliant browsers first
-        if (isFunction(doc.createEvent)) {
+        else if (isFunction(doc.createEvent)) {
 
             // just a generic UI Event object is needed
             customEvent = doc.createEvent("UIEvents");
@@ -571,7 +623,7 @@
      * @method simulate
      * @static
      */
-    jasmine.simulate = function(target, type, options) {
+    jasmine.simulate = function (target, type, options) {
 
         options = options || {};
 

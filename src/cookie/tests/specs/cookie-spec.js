@@ -9,7 +9,7 @@ KISSY.use("cookie", function(S,Cookie) {
 
         describe('get', function() {
             document.cookie = '_ks_test_1=1';
-            document.cookie = '_ks_test_2';
+            document.cookie = '_ks_test_2=';
             document.cookie = '_ks_test_3=';
 
             it('should return the cookie value for the given name', function() {

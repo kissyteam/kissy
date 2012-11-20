@@ -17,8 +17,15 @@ describe("combo loader", function () {
             var ok1;
 
             runs(function () {
+                console.log(new Array(20).join('-'));
+                console.log('start load t/t2');
+                console.log(new Array(20).join('-'));
+
                 KISSY.use("t/t2", function () {
                     ok1 = 2;
+                    console.log(new Array(20).join('-'));
+                    console.log('end load t/t2');
+                    console.log(new Array(20).join('-'));
                 });
             });
 

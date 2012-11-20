@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
     <script src="../../../../tools/jasmine/jasmine.js"></script>
     <script src="../../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../../tools/jasmine/jasmine.console_reporter.js"></script>
 
     <script src="../../../../build/seed.js"></script>
     <script src="../specs/json-spec.js"></script>
@@ -19,6 +20,7 @@
 <script>
     KISSY.use('json', function () {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
         jasmine.getEnv().execute(function () {
             jasmine.kissyNext(this.results().failedCount);
         });

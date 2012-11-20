@@ -37,13 +37,13 @@ KISSY.use("ajax", function (S, io) {
                     dataType:'json'
                 });
             r.then(function (v) {
-                S.log(arguments);
+                // S.log(arguments);
                 ok++;
                 expect(v[0].x).toBe('99');
                 expect(this).toBe(window);
             });
             r.fin(function (v, ret) {
-                S.log(arguments);
+                // S.log(arguments);
                 ok++;
                 expect(ret).toBe(true);
                 expect(v[0].x).toBe('99');
@@ -66,17 +66,17 @@ KISSY.use("ajax", function (S, io) {
                 });
             r.then(function () {
             }, function (v) {
-                S.log(arguments);
+                // S.log(arguments);
                 ok++;
                 expect(v[1]).toBe("Not Found");
             });
             r.fail(function (v) {
-                S.log(arguments);
+                // S.log(arguments);
                 ok++;
                 expect(v[1]).toBe("Not Found");
             });
             r.fin(function (v, ret) {
-                S.log(arguments);
+                // S.log(arguments);
                 ok++;
                 expect(v[1]).toBe("Not Found");
                 expect(ret).toBe(false);

@@ -7,3 +7,7 @@ notifications:
 node_js:
   - 0.6
   - 0.8
+
+script:
+  - npm test
+  - phantomjs ./tools/test/jasmine-phantomjs.js

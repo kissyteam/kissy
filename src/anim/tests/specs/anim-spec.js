@@ -2,7 +2,7 @@
  * testcase for kissy.anim
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,anim", function(S, DOM, Anim) {
+KISSY.use("dom,anim", function (S, DOM, Anim) {
 
 
     function padding(s) {
@@ -14,12 +14,12 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
     function normalizeColor(c) {
         if (c.toLowerCase().lastIndexOf("rgb(") == 0) {
             var x = [];
-            c.replace(/\d+/g, function(m) {
+            c.replace(/\d+/g, function (m) {
                 x.push(padding(Number(m).toString(16)));
             });
             c = "#" + x.join("");
         } else if (c.length == 4) {
-            c = c.replace(/[^#]/g, function(c) {
+            c = c.replace(/[^#]/g, function (c) {
                 return c + c;
             });
         }
@@ -34,46 +34,46 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
      transitionName += "Property";
      }
      */
-        //强制不使用 native
+    //强制不使用 native
     var transitionName = '';
 
 
-    describe("anim", function() {
+    describe("anim", function () {
 
-        beforeEach(function() {
+        beforeEach(function () {
             this.addMatchers({
-                toBeAlmostEqual: function(expected) {
+                toBeAlmostEqual: function (expected) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
                 },
 
 
-                toBeEqual: function(expected) {
+                toBeEqual: function (expected) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
                 }
             });
         });
 
 
-        it("should start and end anim properly", function() {
+        it("should start and end anim properly", function () {
 
             var test1 = DOM.get("#test1");
             DOM.css(test1, {
                 //'border-color':"#000",
-                width:10,
-                height:20,
-                left:120,
-                top:20,
-                color:"#000"
+                width: 10,
+                height: 20,
+                left: 120,
+                top: 20,
+                color: "#000"
             });
             var initColor = normalizeColor(DOM.css(test1, "border-color"));
             var anim = Anim(
                 '#test1',
                 {
-                    'background-color':'#fcc',
+                    'background-color': '#fcc',
                     //'border': '5px dashed #999',
-                    'border-wdith':'5px',
-                    'border-color':"#999999",
-                    'border-style':"dashed",
+                    'border-wdith': '5px',
+                    'border-color': "#999999",
+                    'border-style': "dashed",
                     'width': '100px',
                     'height': '50px',
                     'left': '900px',
@@ -90,7 +90,7 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
 
             waits(100);
 
-            runs(function() {
+            runs(function () {
 
                 if (transitionName) {
                     //if native supported , just set css property directly
@@ -111,7 +111,7 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
             });
 
             waits(800);
-            runs(function() {
+            runs(function () {
                 if (transitionName) {
                     expect(DOM.css(test1, transitionName)).toBe("none");
                 }
@@ -126,79 +126,80 @@ KISSY.use("dom,anim", function(S, DOM, Anim) {
 
         });
 
-        it("should animate scroll correctly", function() {
+        it("should animate scroll correctly", function () {
 
             var test = DOM.get("#test8");
             test.scrollLeft = 500;
             var scrollLimit = test.scrollLeft;
             test.scrollLeft = 0;
             Anim(test, {
-                scrollLeft:scrollLimit
+                scrollLeft: scrollLimit
             }, 0.5).run();
             waits(100);
-            runs(function() {
+            runs(function () {
                 expect(test.scrollLeft).not.toBe(0);
             });
             waits(800);
-            runs(function() {
+            runs(function () {
                 expect(test.scrollLeft).toBe(scrollLimit);
             });
 
         });
 
 
-        it("should animate scroll correctly for window", function() {
+        // phantomjs iframe 下不能滚动 window?
+        it("should animate scroll correctly for window", function () {
             DOM.append(DOM.create("<div style='height:2000px'/>"), document.body);
             DOM.scrollTop(window, 0);
             var anim = Anim(window, {
-                scrollTop:100
+                scrollTop: 100
             }, 0.5).run();
             waits(100);
-            runs(function() {
+            runs(function () {
                 expect(DOM.scrollTop(window)).not.toBe(0);
             });
             waits(500);
-            runs(function() {
+            runs(function () {
                 expect(DOM.scrollTop(window)).toBe(100);
             });
-            runs(function() {
+            runs(function () {
                 DOM.scrollTop(window, 0);
                 anim = Anim(window, {
-                    scrollTop:100
+                    scrollTop: 100
                 }, 0.5).run();
             });
 
 
             waits(100);
-            runs(function() {
+            runs(function () {
                 expect(DOM.scrollTop(window)).not.toBe(0);
                 anim.stop();
             });
             waits(500);
-            runs(function() {
+            runs(function () {
                 expect(DOM.scrollTop(window)).not.toBe(100);
                 expect(DOM.scrollTop(window)).not.toBe(0);
             });
 
 
-            runs(function() {
+            runs(function () {
                 DOM.scrollTop(window, 0);
                 anim = Anim(window, {
-                    scrollTop:100
+                    scrollTop: 100
                 }, 0.5).run();
             });
 
 
             waits(100);
-            runs(function() {
+            runs(function () {
                 expect(DOM.scrollTop(window)).not.toBe(0);
                 anim.stop(true);
             });
-            runs(function() {
+            runs(function () {
                 expect(DOM.scrollTop(window)).toBe(100);
                 expect(DOM.scrollTop(window)).not.toBe(0);
             });
-
         });
+
     });
 });

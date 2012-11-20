@@ -14,6 +14,7 @@
 <link href="../../demo/assets/submenu.css" rel="stylesheet"/>
 <script src="../../../../tools/jasmine/jasmine.js"></script>
 <script src="../../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../../tools/jasmine/jasmine.console_reporter.js"></script>
 <script src="../../../../tools/jasmine/event-simulate.js"></script>
 
 <script src="../../../../build/kissy.js"></script>
@@ -36,6 +37,7 @@
 <script src="../specs/menu-spec.js"></script>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
     jasmine.getEnv().execute(function () {
         jasmine.kissyNext(this.results().failedCount);
     });

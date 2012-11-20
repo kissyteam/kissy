@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="../../../../../../../../tools/jasmine/jasmine.css">
     <script src="../../../../../../../../tools/jasmine/jasmine.js"></script>
     <script src="../../../../../../../../tools/jasmine/jasmine-html.js"></script>
+    <script src="../../../../../../../../tools/jasmine/jasmine.console_reporter.js"></script>
     <script src="../../../../../../../../tools/jasmine/event-simulate.js"></script>
 
     <script src="../../../../../../../../build/seed.js"></script>
@@ -15,6 +16,7 @@
     <script src="../../../../../../../../build/anim.js"></script>
     <script src="../../../../../../../../build/event/base.js"></script>
     <script src="../../../../../../../../build/event/custom.js"></script>
+    <script src="../../../../../../../../build/event/dom/touch.js"></script>
     <script src="../../src/observable.js"></script>
     <script src="../../src/object.js"></script>
     <script src="../../src/api.js"></script>
@@ -108,11 +110,10 @@
 move to change/test.html test by man !
 -->
 <script>
-    KISSY.ready(function () {
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().execute(function () {
-            jasmine.kissyNext(this.results().failedCount);
-        });
+    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+    jasmine.getEnv().execute(function () {
+        jasmine.kissyNext(this.results().failedCount);
     });
 </script>
 

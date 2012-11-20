@@ -1,6 +1,5 @@
 module.exports = function (req, res) {
     if (req.get('If-Modified-Since')) {
-        console.log(req.get('If-Modified-Since'));
         res.set('Expires', 'Thu, 16 Aug 2012 01:50:40 GMT');
         res.status(304);
         res.end();

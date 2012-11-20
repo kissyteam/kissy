@@ -322,7 +322,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("should works for form file upload", function () {
 
-            var f = $('<form id="f" method="post" enctype="multipart/form-data">' +
+            var f = $('<form id="f' + S.guid(S.now()) + '" method="post" enctype="multipart/form-data">' +
                 //php need []
                 '<input name="test4[]" value="t6"/>' +
                 '<input name="test4[]" value="t7"/>' +
@@ -372,7 +372,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("should works for common form", function () {
 
-            var f = $('<form id="f2">' +
+            var f = $('<form id="f' + S.guid(S.now()) + '">' +
                 '<input name="test4[]" value="t6"/>' +
                 '<input name="test4[]" value="t7"/>' +
                 '<input name="test5" value="t8"/>' +
@@ -416,7 +416,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("should abort for form file upload", function () {
 
-            var f = $('<form id="f" method="post" enctype="multipart/form-data">' +
+            var f = $('<form id="f' + S.guid(S.now()) + '" method="post" enctype="multipart/form-data">' +
                 //php need []
                 '<select name="test[]" multiple>' +
                 '<option value="t1" selected>v</option>' +
@@ -463,7 +463,11 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("nothing happens if abort after form file upload", function () {
 
-            var f = $('<form id="f" method="post" enctype="multipart/form-data">' +
+
+
+            // error !
+            var f = $('<form id="f' + S.guid(S.now()) + '" method="post" ' +
+                'enctype="multipart/form-data">' +
                 //php need []
                 '<select name="test[]" multiple>' +
                 '<option value="t1" selected>v</option>' +
@@ -507,6 +511,9 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
         });
 
         it("fileupload support xml return data", function () {
+
+
+
             var form = $('<form enctype="multipart/form-data">' +
                 '<input name="test" value=\'1\'/>' +
                 '<input name="test2" value=\'2\'/>' +
@@ -535,6 +542,8 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
         });
 
         it('should error when upload to a cross domain page', function () {
+
+
             var form = $('<form enctype="multipart/form-data">' +
                 '<input name="test" value=\'1\'/>' +
                 '<input name="test2" value=\'2\'/>' +

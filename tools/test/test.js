@@ -37,14 +37,10 @@ function kissyNext() {
     // event hash change ,ie error
     index++;
     if (tests[index]) {
-        if (tests[index].indexOf("grid") == -1) {
-            window.scrollTo(0, 0);
-            setTimeout(function () {
-                testIframe.src = tests[index] + "?" + (+new Date());
-            }, 50);
-
-        } else {
-            kissyNext();
-        }
+        KISSY.log('run: ' + tests[index]);
+        window.scrollTo(0, 0);
+        setTimeout(function () {
+            testIframe.src = tests[index] + "?" + (+new Date());
+        }, 50);
     }
 }

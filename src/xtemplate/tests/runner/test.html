@@ -26,7 +26,7 @@
 <h1>KISSY XTemplate Test Cases</h1>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
     jasmine.getEnv().execute(function () {
         jasmine.kissyNext(this.results().failedCount);
     });

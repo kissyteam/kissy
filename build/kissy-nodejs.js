@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 20 16:22
+build time: Nov 21 02:29
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121120162241' will replace with current timestamp when compressing.
+         * NOTICE: '20121121022910' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121120162241',
+        __BUILD_TIME: '20121121022910',
         /**
          * KISSY Environment.
          * @private
@@ -3014,7 +3014,9 @@ var KISSY = (function (undefined) {
         win = Env.host,
     // nodejs
         doc = win.document || {},
-        isTouchSupported = 'ontouchstart' in doc,
+        ua = ((win.navigator || {}).userAgent) || "",
+    // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
+        isTouchSupported = ('ontouchstart' in doc) && !(/PhantomJS/.test(ua)),
         documentMode = doc.documentMode,
         isNativeJSONSupported = ((Env.nodejs && typeof global === 'object') ? global : win).JSON;
 
@@ -4749,7 +4751,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121120162241'
+            tag: '20121121022910'
         }, getBaseInfo()));
     }
 

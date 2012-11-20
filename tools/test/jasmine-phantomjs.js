@@ -1,3 +1,53 @@
+#!/usr/local/bin/phantomjs
+
 /**
  * run jasmine in phantomjs
+ * @author yiminghe@gmail.com
  */
+
+var page = new WebPage();
+
+page.onConsoleMessage = function (m) {
+    console.log(m);
+    var match;
+    if (match = m.match(/specs?, (\d+) failures? in/)) {
+        if (!t && match[1] == '0') {
+            setTimeout(next, 50);
+        } else {
+            phantom.exit(1);
+        }
+    }
+};
+
+var tests = require('./tc.js')(), index = -1;
+var start = Date.now();
+function next(url) {
+    if (!url) {
+        index++;
+        if (index == tests.length) {
+            var d = (Date.now() - start);
+            console.log('all run success! consume time: ' + d + ' ms / ' +
+                (d / 1000) + ' s / ' +
+                (d / 60000) + ' m ' +
+                ':)');
+            phantom.exit(0);
+            return;
+        }
+    }
+    if (!url) {
+        url = tests[index];
+    }
+    console.log('\n' + 'run test: ' + url);
+    // batch run in separated window, it is better than iframe!
+    page.open('http://localhost:8888' + url, function (s) {
+        if (s != 'success') {
+            console.log('can\'t load the address! :(');
+            phantom.exit(1);
+        }
+    });
+}
+var t = '';
+// t = '/src/seed/tests/runner/lang.html';
+// t='/src/seed/tests/specs/package-raw/test-combo.html';
+// t='/src/seed/tests/specs/css-combo/test.html';
+next(t);

@@ -11,23 +11,23 @@
     <script src="../../../../../tools/jasmine/jasmine.js"></script>
     <script src="../../../../../tools/jasmine/jasmine-html.js"></script>
     <script src="../../../../../tools/jasmine/jasmine.console_reporter.js"></script>
-    <script src="../../../../../build/seed.js" charset="utf-8"></script>
+    <script src="../../../../../build/seed.js" charset="utf-8" data-config="{combine:true}"></script>
 </head>
 <body>
-<h1>KISSY loader map combo Test Cases</h1>
+<h1>KISSY Seed Test Cases</h1>
 
-<script>
-    window.PACKAGE_LOADER_MAP_COMBO_A_PATH = './';
-    KISSY.config({
-        combine: true
-    });
-</script>
+<div id='special'>
+    33px
+</div>
+<div id='special2'>
+    44px
+</div>
 
-<script src="./loader-map-combo-spec.js"></script>
+<script src="./package-raw-combo-spec.js"></script>
 
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+    jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
     jasmine.getEnv().execute(function () {
         jasmine.kissyNext(this.results().failedCount);
     });
