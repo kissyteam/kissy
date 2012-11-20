@@ -45,21 +45,17 @@
 
             var uri = new S.Uri(url);
 
-            fs.readFile(uri.getPath(), charset || 'utf-8', function (err, mod) {
-                if (err) {
-                    error &amp;&amp; error(err);
-                } else {
-                    try {
-                        var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
-                        fn(S);
-                    } catch (e) {
-                        S.log('in file: ' + url);
-                        S.log(e.stack, 'error');
-                        error &amp;&amp; error(e);
-                    }
-                    success &amp;&amp; success();
-                }
-            });
+            try {
+                var mod = fs.readFileSync(uri.getPath(), charset || 'utf-8');
+                var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
+                fn(S);
+                success &amp;&amp; success();
+            } catch (e) {
+                S.log('in file: ' + url);
+                S.log(e.stack, 'error');
+                error &amp;&amp; error(e);
+            }
+
         }
 
     });

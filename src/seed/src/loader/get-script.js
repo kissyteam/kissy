@@ -13,7 +13,7 @@
 
     S.mix(S, {
         /**
-         * Load a JavaScript/Css file from the server using a GET HTTP request,
+         * Load a javascript/css file from the server using a GET HTTP request,
          * then execute it.
          *
          * for example:
@@ -26,6 +26,9 @@
          *          error: fn,
          *          timeout: number
          *      });
+         *
+         * Note 404/500 status in ie<9 will trigger success callback.
+         * If you want a jsonp operation, please use {@link KISSY.IO} instead.
          *
          * @param {String} url resource's url
          * @param {Function|Object} [success] success callback or config

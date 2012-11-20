@@ -60,7 +60,7 @@ KISSY.add('ajax/jsonp', function (S, io) {
             converters.script = converters.script || {};
 
             // script -> jsonp ,jsonp need to see json not as script
-            // if ie onload a 404 file or all browsers onload an invalid script
+            // if ie onload a 404/500 file or all browsers onload an invalid script
             // 404/invalid will be caught here
             // because response is undefined( jsonp callback is never called)
             // error throwed will be caught in conversion step

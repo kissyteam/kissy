@@ -19,7 +19,7 @@ KISSY.add("component/extension/position-render", function () {
         },
         /**
          * @ignore
-         * see {@link Component.Extension.Box#visibleMode}.
+         * see {@link KISSY.Component.Extension.Box#cfg-visibleMode}.
          * @default "visibility"
          */
         visibleMode: {
