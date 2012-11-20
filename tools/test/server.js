@@ -5,8 +5,9 @@
 
 var path = require('path');
 var fs = require('fs');
+fs.exists = fs.exists || require('path').exists;
+fs.existsSync = fs.existsSync || require('path').existsSync;
 var cwd = process.cwd();
-var srcDir = path.resolve(cwd, 'src');
 var currentDir = __dirname;
 var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
 
