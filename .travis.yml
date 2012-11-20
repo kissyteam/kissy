@@ -8,6 +8,9 @@ node_js:
   - 0.6
   - 0.8
 
+before_script:
+  - node ./tools/test/server.js &
+
 script:
   - npm test
   - phantomjs ./tools/test/jasmine-phantomjs.js
