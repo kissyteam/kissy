@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 20 16:18
+build time: Nov 22 00:01
 */
 /**
  * @ignore
@@ -459,11 +459,13 @@ KISSY.add("component/base/container", function (S, Controller, DelegateChildren,
  * @fileOverview Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/base/controller", function (S,Box, Event, Component, UIBase, Manager, Render, undefined) {
+KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBase, Manager, Render, undefined) {
 
     var ie = S.Env.host.document.documentMode || S.UA.ie,
         Features = S.Features,
         Gesture = Event.Gesture,
+        FOCUS_EVENT_GROUP = '.-ks-component-focus' + S.now(),
+        MOUSE_EVENT_GROUP = '.-ks-component-mouse' + S.now(),
         isTouchSupported = Features.isTouchSupported();
 
     function wrapperViewSetter(attrName) {
@@ -566,15 +568,11 @@ KISSY.add("component/base/controller", function (S,Box, Event, Component, UIBase
     }
 
     function wrapBehavior(self, action) {
-        return self["__ks_wrap_" + action] = function (e) {
+        return function (e) {
             if (!self.get("disabled")) {
                 self[action](e);
             }
         };
-    }
-
-    function getWrapBehavior(self, action) {
-        return self["__ks_wrap_" + action];
     }
 
     /**
@@ -646,75 +644,47 @@ KISSY.add("component/base/controller", function (S,Box, Event, Component, UIBase
 
             '_uiSetFocusable': function (focusable) {
                 var self = this,
-                    t,
                     el = self.getKeyEventTarget();
                 if (focusable) {
                     el.attr("tabIndex", 0)
                         // remove smart outline in ie
                         // set outline in style for other standard browser
                         .attr("hideFocus", true)
-                        .on("focus", wrapBehavior(self, "handleFocus"))
-                        .on("blur", wrapBehavior(self, "handleBlur"))
-                        .on("keydown", wrapBehavior(self, "handleKeydown"));
+                        .on("focus" + FOCUS_EVENT_GROUP, wrapBehavior(self, "handleFocus"))
+                        .on("blur" + FOCUS_EVENT_GROUP, wrapBehavior(self, "handleBlur"))
+                        .on("keydown" + FOCUS_EVENT_GROUP, wrapBehavior(self, "handleKeydown"));
                 } else {
                     el.removeAttr("tabIndex");
-                    if (t = getWrapBehavior(self, "handleFocus")) {
-                        el.detach("focus", t);
-                    }
-                    if (t = getWrapBehavior(self, "handleBlur")) {
-                        el.detach("blur", t);
-                    }
-                    if (t = getWrapBehavior(self, "handleKeydown")) {
-                        el.detach("keydown", t);
-                    }
+                    el.detach(FOCUS_EVENT_GROUP);
                 }
             },
 
             '_uiSetHandleMouseEvents': function (handleMouseEvents) {
 
-                var self = this, el = self.get("el"), t;
+                var self = this,
+                    el = self.get("el");
 
                 if (handleMouseEvents) {
 
                     if (!isTouchSupported) {
-                        el.on("mouseenter", wrapBehavior(self, "handleMouseEnter"))
-                            .on("mouseleave", wrapBehavior(self, "handleMouseLeave"))
-                            .on("contextmenu", wrapBehavior(self, "handleContextMenu"))
+                        el.on("mouseenter" + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseEnter"))
+                            .on("mouseleave" + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseLeave"))
+                            .on("contextmenu" + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleContextMenu"))
                     }
 
-                    el.on(Gesture.start, wrapBehavior(self, "handleMouseDown"))
-                        .on(Gesture.end, wrapBehavior(self, "handleMouseUp"))
+                    el.on(Gesture.start + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseDown"))
+                        .on(Gesture.end + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseUp"))
                         // consider touch environment
-                        .on(Gesture.tap, wrapBehavior(self, "performActionInternal"));
+                        .on(Gesture.tap + MOUSE_EVENT_GROUP, wrapBehavior(self, "performActionInternal"));
 
                     // click quickly only trigger click and dblclick in ie<9
                     // others click click dblclick
                     if (ie && ie < 9) {
-                        el.on("dblclick", wrapBehavior(self, "handleDblClick"));
+                        el.on("dblclick" + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleDblClick"));
                     }
 
                 } else {
-
-                    if (!isTouchSupported) {
-                        (t = getWrapBehavior(self, "handleMouseEnter")) &&
-                        el.detach("mouseenter", t);
-                        (t = getWrapBehavior(self, "handleMouseLeave")) &&
-                        el.detach("mouseleave", t);
-                        (t = getWrapBehavior(self, "handleContextMenu")) &&
-                        el.detach("contextmenu", t);
-                    }
-
-                    (t = getWrapBehavior(self, "handleMouseDown")) &&
-                    el.detach(Gesture.start, t);
-                    (t = getWrapBehavior(self, "handleMouseUp")) &&
-                    el.detach(Gesture.end, t);
-                    (t = getWrapBehavior(self, "performActionInternal")) &&
-                    el.detach(Gesture.tap, t);
-
-                    if (ie && ie < 9) {
-                        (t = getWrapBehavior(self, "handleDblClick")) &&
-                        el.detach("dblclick", t);
-                    }
+                    el.detach(MOUSE_EVENT_GROUP);
                 }
             },
 
@@ -1193,7 +1163,7 @@ KISSY.add("component/base/controller", function (S,Box, Event, Component, UIBase
 
     return Controller;
 }, {
-    requires: ['./box','event', './impl', './uibase', './manager', './render']
+    requires: ['./box', 'event', './impl', './uibase', './manager', './render']
 });
 /*
 
