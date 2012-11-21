@@ -1,25 +1,42 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:54
+build time: Nov 22 00:10
 */
 /**
+ * @ignore
  * Normalize operation about stylesheet
  * @author yiminghe@gmail.com
  */
 KISSY.add("stylesheet", function (S, DOM) {
 
     /**
-     * @name StyleSheet
-     * @class
      * Normalize operation about stylesheet
-     * @param ownerNode {HTMLElement} style/link element
+     * @class KISSY.StyleSheet
+     * @param el {HTMLElement} style/link element
      */
-    function StyleSheet(ownerNode) {
-        this['ownerNode'] = DOM.get(ownerNode);
+    function StyleSheet(el) {
+
+        /**
+         * style/link element or selector
+         * @cfg {HTMLElement|String} el
+         */
+
+        /**
+         * style/link element
+         * @type {HTMLElement}
+         * @property el
+         */
+        
+
+        if (el.el) {
+            el = el.el;
+        }
+
+        this['el'] = DOM.get(el);
         // http://msdn.microsoft.com/en-us/library/ie/ms535871(v=vs.85).aspx
         // firefox 跨域时抛出异常
-        var sheet = ownerNode.sheet || ownerNode.styleSheet;
+        var sheet = el.sheet || el.styleSheet;
 
         this.sheet = sheet;
 
@@ -54,7 +71,7 @@ KISSY.add("stylesheet", function (S, DOM) {
 
         /**
          * Make current stylesheet enabled.
-         * @return {StyleSheet} current StyleSheet instance.
+         * @return {KISSY.StyleSheet} current StyleSheet instance.
          */
         enable: function () {
             this.sheet.disabled = false;
@@ -63,7 +80,7 @@ KISSY.add("stylesheet", function (S, DOM) {
 
         /**
          * Make current stylesheet disabled.
-         * @return {StyleSheet} current StyleSheet instance.
+         * @return {KISSY.StyleSheet} current StyleSheet instance.
          */
         disable: function () {
             this.sheet.disabled = true;
@@ -74,7 +91,7 @@ KISSY.add("stylesheet", function (S, DOM) {
          * Whether current stylesheet is enabled.
          * @return {Boolean}
          */
-        isEnabled: function () {
+        'isEnabled': function () {
             return !this.sheet.disabled;
         },
 
@@ -82,14 +99,15 @@ KISSY.add("stylesheet", function (S, DOM) {
          * Set sheet's rule by selectorText and css.
          * @param {String} selectorText selector text separated by ,
          * @param {Object} css style declaration object. set value to "" to unset
-         * @example
+         *
+         * for example:
          * <code>
          *      // set
          *      set("p",{color:'red'})
          *      // unset
          *      set("p",{color:''})
          * </code>
-         * @return {StyleSheet} current StyleSheet instance.
+         * @return {KISSY.StyleSheet} current StyleSheet instance.
          */
         set: function (selectorText, css) {
             var sheet = this.sheet;
@@ -193,7 +211,8 @@ KISSY.add("stylesheet", function (S, DOM) {
     requires: ['dom']
 });
 /**
+ * @ignore
  * Refer
  *  - http://www.w3.org/TR/DOM-Level-2-Style/css.html
- *  - rule.style.cssText 和 el.style.cssText 效果一样，同属于 CSSStyleDeclare
+ *  - rule.style 和 el.style 效果一样，同属于 CSSStyleDeclare
  **/

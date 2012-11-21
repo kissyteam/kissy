@@ -1,24 +1,41 @@
-/**
- * @ignore
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
  * Normalize operation about stylesheet
  * @author yiminghe@gmail.com
  */
-KISSY.add("stylesheet", function (S, DOM) {
+KISSY.add(&quot;stylesheet&quot;, function (S, DOM) {
 
-    /**
-     * Normalize operation about stylesheet
+<span id='KISSY-StyleSheet'>    /**
+</span>     * Normalize operation about stylesheet
      * @class KISSY.StyleSheet
      * @param el {HTMLElement} style/link element
      */
     function StyleSheet(el) {
 
-        /**
-         * style/link element or selector
+<span id='KISSY-StyleSheet-cfg-el'>        /**
+</span>         * style/link element or selector
          * @cfg {HTMLElement|String} el
          */
 
-        /**
-         * style/link element
+<span id='KISSY-StyleSheet-property-el'>        /**
+</span>         * style/link element
          * @type {HTMLElement}
          * @property el
          */
@@ -39,7 +56,7 @@ KISSY.add("stylesheet", function (S, DOM) {
 
         this.cssRules = cssRules;
 
-        var rulesName = sheet && ('cssRules' in sheet) ? 'cssRules' : 'rules';
+        var rulesName = sheet &amp;&amp; ('cssRules' in sheet) ? 'cssRules' : 'rules';
 
         this.rulesName = rulesName;
 
@@ -47,12 +64,12 @@ KISSY.add("stylesheet", function (S, DOM) {
 
         var i, rule, selectorText, styleDeclaration;
 
-        for (i = domCssRules.length - 1; i >= 0; i--) {
+        for (i = domCssRules.length - 1; i &gt;= 0; i--) {
             rule = domCssRules[i];
             selectorText = rule.selectorText;
             // 去重
             if (styleDeclaration = cssRules[selectorText]) {
-                styleDeclaration.style.cssText += ";" + styleDeclaration.style.cssText;
+                styleDeclaration.style.cssText += &quot;;&quot; + styleDeclaration.style.cssText;
                 deleteRule(sheet, i);
             } else {
                 cssRules[selectorText] = rule;
@@ -64,8 +81,8 @@ KISSY.add("stylesheet", function (S, DOM) {
 
         constructor: StyleSheet,
 
-        /**
-         * Make current stylesheet enabled.
+<span id='KISSY-StyleSheet-method-enable'>        /**
+</span>         * Make current stylesheet enabled.
          * @return {KISSY.StyleSheet} current StyleSheet instance.
          */
         enable: function () {
@@ -73,8 +90,8 @@ KISSY.add("stylesheet", function (S, DOM) {
             return this;
         },
 
-        /**
-         * Make current stylesheet disabled.
+<span id='KISSY-StyleSheet-method-disable'>        /**
+</span>         * Make current stylesheet disabled.
          * @return {KISSY.StyleSheet} current StyleSheet instance.
          */
         disable: function () {
@@ -82,26 +99,26 @@ KISSY.add("stylesheet", function (S, DOM) {
             return this;
         },
 
-        /**
-         * Whether current stylesheet is enabled.
+<span id='KISSY-StyleSheet-method-isEnabled'>        /**
+</span>         * Whether current stylesheet is enabled.
          * @return {Boolean}
          */
         'isEnabled': function () {
             return !this.sheet.disabled;
         },
 
-        /**
-         * Set sheet's rule by selectorText and css.
+<span id='KISSY-StyleSheet-method-set'>        /**
+</span>         * Set sheet's rule by selectorText and css.
          * @param {String} selectorText selector text separated by ,
-         * @param {Object} css style declaration object. set value to "" to unset
+         * @param {Object} css style declaration object. set value to &quot;&quot; to unset
          *
          * for example:
-         * <code>
+         * &lt;code&gt;
          *      // set
-         *      set("p",{color:'red'})
+         *      set(&quot;p&quot;,{color:'red'})
          *      // unset
-         *      set("p",{color:''})
-         * </code>
+         *      set(&quot;p&quot;,{color:''})
+         * &lt;/code&gt;
          * @return {KISSY.StyleSheet} current StyleSheet instance.
          */
         set: function (selectorText, css) {
@@ -112,8 +129,8 @@ KISSY.add("stylesheet", function (S, DOM) {
             var multiSelector = selectorText.split(/\s*,\s*/);
             var i;
 
-            if (multiSelector.length > 1) {
-                for (i = 0; i < multiSelector.length - 1; i++) {
+            if (multiSelector.length &gt; 1) {
+                for (i = 0; i &lt; multiSelector.length - 1; i++) {
                     this.set(multiSelector[i], css);
                 }
                 return this;
@@ -126,7 +143,7 @@ KISSY.add("stylesheet", function (S, DOM) {
                 } else {
                     // unset remove this rule
                     delete cssRules[selectorText];
-                    for (i = sheet[rulesName].length - 1; i >= 0; i--) {
+                    for (i = sheet[rulesName].length - 1; i &gt;= 0; i--) {
                         if (sheet[rulesName][i] == rule) {
                             deleteRule(sheet, i);
                             break;
@@ -145,8 +162,8 @@ KISSY.add("stylesheet", function (S, DOM) {
             return this;
         },
 
-        /**
-         * Get cssText corresponding to specified selectorText
+<span id='KISSY-StyleSheet-method-get'>        /**
+</span>         * Get cssText corresponding to specified selectorText
          * @param {String} selectorText specified selector as string
          * @return {String} CssText corresponding to specified selectorText
          */
@@ -162,10 +179,10 @@ KISSY.add("stylesheet", function (S, DOM) {
                 for (selector in cssRules) {
 
                     rule = cssRules[selector];
-                    css.push(rule.selectorText + " {" + rule.style.cssText + "}");
+                    css.push(rule.selectorText + &quot; {&quot; + rule.style.cssText + &quot;}&quot;);
 
                 }
-                return css.join("\n");
+                return css.join(&quot;\n&quot;);
             }
         }
 
@@ -174,10 +191,10 @@ KISSY.add("stylesheet", function (S, DOM) {
 
     // # ------------------ private start
 
-    var workerElement = document.createElement("p");
+    var workerElement = document.createElement(&quot;p&quot;);
 
     function toCssText(css, base) {
-        workerElement.style.cssText = base || "";
+        workerElement.style.cssText = base || &quot;&quot;;
         DOM.css(workerElement, css);
         return workerElement.style.cssText;
     }
@@ -205,9 +222,11 @@ KISSY.add("stylesheet", function (S, DOM) {
 }, {
     requires: ['dom']
 });
-/**
- * @ignore
+<span id='global-property-'>/**
+</span> * @ignore
  * Refer
  *  - http://www.w3.org/TR/DOM-Level-2-Style/css.html
  *  - rule.style 和 el.style 效果一样，同属于 CSSStyleDeclare
- **/
+ **/</pre>
+</body>
+</html>
