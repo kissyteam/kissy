@@ -18,6 +18,7 @@ module.exports = function (req, res) {
         t.test5 = query.test5;
     }
     res.send(JSON.stringify(t));
+    res.end();
 
     //},
     // >10 will error for phantomjs!
