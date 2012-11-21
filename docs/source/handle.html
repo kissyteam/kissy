@@ -22,6 +22,8 @@
  */
 KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Gesture) {
 
+    'use strict';
+
     var key = S.guid('touch-handle'),
         Features = S.Features,
         MOVE_DELAY = 30,
@@ -166,7 +168,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
                 handle = DOM.data(doc, key);
             if (handle) {
                 handle.removeEventHandle(event);
-                if (S.isEmptyObject(eventHandle)) {
+                if (S.isEmptyObject(handle.eventHandle)) {
                     handle.destroy();
                     DOM.removeData(doc, key);
                 }

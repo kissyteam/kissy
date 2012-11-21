@@ -131,11 +131,10 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
             }
 
             self.fields = fields;
-            // ie6 need a setTimeout to avoid handling load triggered if set iframe src
-            setTimeout(function () {
-                Event.on(iframe, 'load error', self._callback, self);
-                form.submit();
-            }, 10);
+
+            // can not setTimeout or else chrome will submit to top window
+            Event.on(iframe, 'load error', self._callback, self);
+            form.submit();
 
         },
 

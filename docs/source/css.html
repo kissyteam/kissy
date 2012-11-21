@@ -45,7 +45,9 @@ KISSY.add('ua/css', function (S, UA) {
                 className += ' ks-' + key;
             }
         });
-        documentElement.className = S.trim(documentElement.className + className);
+        if (S.trim(className)) {
+            documentElement.className = S.trim(documentElement.className + className);
+        }
     }
 }, {
     requires: ['./base']

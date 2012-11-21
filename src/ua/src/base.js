@@ -116,32 +116,32 @@ KISSY.add('ua/base', function (S, undefined) {
 
             /**
              * ipad ios version
-             * @type float
+             * @type Number
              * @member KISSY.UA
              */
             ipad: undefined,
             /**
              * iphone ios version
-             * @type float
+             * @type Number
              * @member KISSY.UA
              */
             iphone: undefined,
             /**
              * ipod ios
-             * @type float
+             * @type Number
              * @member KISSY.UA
              */
             ipod: undefined,
             /**
              * ios version
-             * @type float
+             * @type Number
              * @member KISSY.UA
              */
             ios: undefined,
 
             /**
              * android version
-             * @type float
+             * @type Number
              * @member KISSY.UA
              */
             android: undefined
@@ -149,7 +149,7 @@ KISSY.add('ua/base', function (S, undefined) {
         numberify = function (s) {
             var c = 0;
             // convert '1.2.3.4' to 1.234
-            return parseFloat(s.replace(/\./g, function () {
+            return parseNumber(s.replace(/\./g, function () {
                 return (c++ === 0) ? '.' : '';
             }));
         };

@@ -20,7 +20,7 @@
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;overlay/extension/mask&quot;, function () {
+KISSY.add(&quot;overlay/extension/mask&quot;, function (S, Event) {
 
 <span id='KISSY-Overlay-Extension-Mask'>    /**
 </span>     * @class KISSY.Overlay.Extension.Mask
@@ -37,9 +37,11 @@ KISSY.add(&quot;overlay/extension/mask&quot;, function () {
          * for example:
          *      @example
          *      {
-         *          effect:'fade', // slide
-         *          duration:0.5,
-         *          easing:'easingNone'
+         *          // whether hide current component when click on mask
+         *          hideOnClick: false,
+         *          effect: 'fade', // slide
+         *          duration: 0.5,
+         *          easing: 'easingNone'
          *      }
          */
 <span id='global-property-mask'>        /**
@@ -102,6 +104,11 @@ KISSY.add(&quot;overlay/extension/mask&quot;, function () {
                 view = self.get(&quot;view&quot;);
             if (mask = self.get(&quot;mask&quot;)) {
                 maskNode = self.get('maskNode');
+                if (mask.hideOnClick) {
+                    maskNode.on(Event.Gesture.tap, function () {
+                        self.hide();
+                    });
+                }
                 self.on('afterVisibleChange', function (e) {
                     var v;
                     if (v = e.newVal) {
@@ -116,6 +123,6 @@ KISSY.add(&quot;overlay/extension/mask&quot;, function () {
 
 
     return Mask;
-}, {requires: [&quot;ua&quot;]});</pre>
+}, {requires: [&quot;event&quot;]});</pre>
 </body>
 </html>

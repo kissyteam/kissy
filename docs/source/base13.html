@@ -18,7 +18,6 @@
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
  * @fileOverview ua
- * @author lifesinger@gmail.com
  */
 KISSY.add('ua/base', function (S, undefined) {
 
@@ -27,6 +26,7 @@ KISSY.add('ua/base', function (S, undefined) {
         navigator = win.navigator,
         ua = navigator &amp;&amp; navigator.userAgent || &quot;&quot;,
         EMPTY = '',
+        os,
         MOBILE = 'mobile',
         core = EMPTY,
         shell = EMPTY, m,
@@ -99,28 +99,74 @@ KISSY.add('ua/base', function (S, undefined) {
              */
             opera: undefined,
 <span id='KISSY-UA-property-mobile'>            /**
-</span>             * mobile browser
+</span>             * mobile browser. apple, android.
              * @type String
              * @member KISSY.UA
              */
             mobile: undefined,
 <span id='KISSY-UA-property-core'>            /**
-</span>             * browser core name
+</span>             * browser render engine name. webkit, trident
              * @type String
              * @member KISSY.UA
              */
             core: undefined,
 <span id='KISSY-UA-property-shell'>            /**
-</span>             * browser shell name
+</span>             * browser shell name. ie, chrome, firefox
              * @type String
              * @member KISSY.UA
              */
-            shell: undefined
+            shell: undefined,
+
+<span id='KISSY-UA-property-phantomjs'>            /**
+</span>             * PhantomJS version number
+             * @type undefined|Number
+             * @member KISSY.UA
+             */
+            phantomjs: undefined,
+
+<span id='KISSY-UA-property-os'>            /**
+</span>             * operating system. android, ios, linux, windows
+             * @type string
+             * @member KISSY.UA
+             */
+            os: undefined,
+
+<span id='KISSY-UA-property-ipad'>            /**
+</span>             * ipad ios version
+             * @type Number
+             * @member KISSY.UA
+             */
+            ipad: undefined,
+<span id='KISSY-UA-property-iphone'>            /**
+</span>             * iphone ios version
+             * @type Number
+             * @member KISSY.UA
+             */
+            iphone: undefined,
+<span id='KISSY-UA-property-ipod'>            /**
+</span>             * ipod ios
+             * @type Number
+             * @member KISSY.UA
+             */
+            ipod: undefined,
+<span id='KISSY-UA-property-ios'>            /**
+</span>             * ios version
+             * @type Number
+             * @member KISSY.UA
+             */
+            ios: undefined,
+
+<span id='KISSY-UA-property-android'>            /**
+</span>             * android version
+             * @type Number
+             * @member KISSY.UA
+             */
+            android: undefined
         },
         numberify = function (s) {
             var c = 0;
             // convert '1.2.3.4' to 1.234
-            return parseFloat(s.replace(/\./g, function () {
+            return parseNumber(s.replace(/\./g, function () {
                 return (c++ === 0) ? '.' : '';
             }));
         };
@@ -172,12 +218,35 @@ KISSY.add('ua/base', function (S, undefined) {
             }
 
             // Apple Mobile
-            if (/ Mobile\//.test(ua)) {
+            if (/ Mobile\//.test(ua) &amp;&amp; ua.match(/iPad|iPod|iPhone/)) {
                 UA[MOBILE] = 'apple'; // iPad, iPhone or iPod Touch
+
+                m = ua.match(/OS ([^\s]*)/);
+                if (m &amp;&amp; m[1]) {
+                    m = numberify(m[1].replace('_', '.'));
+                }
+                UA.ios = m;
+                os = 'ios';
+                m = ua.match(/iPad|iPod|iPhone/);
+                if (m &amp;&amp; m[0]) {
+                    UA[m[0].toLowerCase()] = UA.ios;
+                }
+            } else if (/ Android/.test(ua)) {
+                if (/Mobile/.test(ua)) {
+                    os = UA.mobile = 'android';
+                }
+                m = ua.match(/Android ([^\s]*);/);
+                if (m &amp;&amp; m[1]) {
+                    UA.android = numberify(m[1]);
+                }
             }
             // Other WebKit Mobile Browsers
             else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
                 UA[MOBILE] = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
+            }
+
+            if ((m = ua.match(/PhantomJS\/([^\s]*)/)) &amp;&amp; m[1]) {
+                UA.phantomjs = numberify(m[1]);
             }
         }
         // NOT WebKit
@@ -239,6 +308,19 @@ KISSY.add('ua/base', function (S, undefined) {
         }
     }
 
+    if (!os) {
+        if ((/windows|win32/i).test(ua)) {
+            os = 'windows';
+        } else if ((/macintosh|mac_powerpc/i).test(ua)) {
+            os = 'macintosh';
+        } else if ((/linux/i).test(ua)) {
+            os = 'linux';
+        } else if ((/rhino/i).test(ua)) {
+            os = 'rhino';
+        }
+    }
+
+    UA.os = os;
     UA.core = core;
     UA.shell = shell;
     UA._numberify = numberify;
@@ -247,6 +329,8 @@ KISSY.add('ua/base', function (S, undefined) {
 
 /*
  NOTES:
+ 2012.11.21 yiminghe@gmail.com
+ - touch and os support
 
  2011.11.08
  - ie &lt; 10 使用条件注释判断内核，更精确 by gonghaocn@gmail.com
