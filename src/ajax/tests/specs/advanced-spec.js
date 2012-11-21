@@ -543,79 +543,80 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                     expect(re.join(",")).toBe(["success", "success"].join(","));
                 });
             });
+
+            it("fileupload support xml return data", function () {
+
+                console.log("fileupload support xml return data");
+
+                var form = $('<form enctype="multipart/form-data">' +
+                    '<input name="test" value=\'1\'/>' +
+                    '<input name="test2" value=\'2\'/>' +
+                    '</form>').appendTo("body");
+
+                var ok = 0;
+
+                io({
+                    form: form[0],
+                    dataType: 'xml',
+                    url: '../data/xml.jss',
+                    success: function (data) {
+                        expect(data.nodeType).toBe(9);
+                        expect(data.documentElement.nodeType).toBe(1);
+                        ok = 1;
+                    }
+                });
+
+                waitsFor(function () {
+                    return ok;
+                });
+
+                runs(function () {
+                    form.remove();
+                });
+            });
+
+            it('should error when upload to a cross domain page', function () {
+
+                console.log("should error when upload to a cross domain page");
+
+                var form = $('<form enctype="multipart/form-data">' +
+                    '<input name="test" value=\'1\'/>' +
+                    '<input name="test2" value=\'2\'/>' +
+                    '</form>').appendTo("body");
+
+                var ok = 0;
+
+                // ie upload-domain.jss 必须设置 domain
+                // 否则 localhost:8888 和 localhost:9999 默认可以通信...
+                var uploadRc = 'http://localhost:9999/' +
+                    'src/ajax/tests/others/form/upload-domain.jss';
+
+                io({
+                    form: form[0],
+                    dataType: 'json',
+                    url: uploadRc,
+                    success: function (data) {
+                        ok = 0;
+                    },
+                    error: function (data, statusText) {
+                        expect(statusText).toBe('parser error');
+                        ok = 1;
+                    }
+                });
+
+
+                waitsFor(function () {
+                    return ok;
+                });
+
+                runs(function () {
+                    form.remove();
+                });
+
+
+            });
+
         }
-
-        it("fileupload support xml return data", function () {
-
-            console.log("fileupload support xml return data");
-
-            var form = $('<form enctype="multipart/form-data">' +
-                '<input name="test" value=\'1\'/>' +
-                '<input name="test2" value=\'2\'/>' +
-                '</form>').appendTo("body");
-
-            var ok = 0;
-
-            io({
-                form: form[0],
-                dataType: 'xml',
-                url: '../data/xml.jss',
-                success: function (data) {
-                    expect(data.nodeType).toBe(9);
-                    expect(data.documentElement.nodeType).toBe(1);
-                    ok = 1;
-                }
-            });
-
-            waitsFor(function () {
-                return ok;
-            });
-
-            runs(function () {
-                form.remove();
-            });
-        });
-
-        it('should error when upload to a cross domain page', function () {
-
-            console.log("should error when upload to a cross domain page");
-
-            var form = $('<form enctype="multipart/form-data">' +
-                '<input name="test" value=\'1\'/>' +
-                '<input name="test2" value=\'2\'/>' +
-                '</form>').appendTo("body");
-
-            var ok = 0;
-
-            // ie upload-domain.jss 必须设置 domain
-            // 否则 localhost:8888 和 localhost:9999 默认可以通信...
-            var uploadRc = 'http://localhost:9999/' +
-                'src/ajax/tests/others/form/upload-domain.jss';
-
-            io({
-                form: form[0],
-                dataType: 'json',
-                url: uploadRc,
-                success: function (data) {
-                    ok = 0;
-                },
-                error: function (data, statusText) {
-                    expect(statusText).toBe('parser error');
-                    ok = 1;
-                }
-            });
-
-
-            waitsFor(function () {
-                return ok;
-            });
-
-            runs(function () {
-                form.remove();
-            });
-
-
-        });
 
     });
 });
