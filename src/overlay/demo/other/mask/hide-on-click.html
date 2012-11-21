@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>KISSY Shared Mask</title>
+    <link rel="stylesheet" href="../../../../css/src/dpl/base.css"/>
+    <link rel="stylesheet" href="../../../../button/assets/dpl.css"/>
+    <script src="../../../../../build/seed.js"></script>
+    <link rel="stylesheet" href="../assets/cool.css"/>
+</head>
+<body>
+<h1>click mask to hide</h1>
+
+<div style="height:800px;width: 950px;margin: 0px auto;padding: 20px;">
+    <button id="t2" class="ks-button">open dialog with mask</button>
+</div>
+
+<script>
+    KISSY.ready(function (S) {
+        var start = S.now();
+        S.use("overlay", function (S, Overlay) {
+            alert("loaded: " + (S.now() - start));
+            var o = new Overlay.Dialog({
+                width: 500,
+                height: 500,
+                mask: {
+                    hideOnClick: 1
+                },
+//                effect: {
+//                    effect: 'fade'
+//                },
+                zIndex: 1000
+            });
+
+            o.on('show', function () {
+                S.log('show');
+            });
+
+            o.on('hide', function () {
+                S.log('hide');
+            });
+
+            S.all("#t2").on("click", function () {
+                o.show().center();
+            });
+
+        });
+    });
+</script>
+</body>
+</html>

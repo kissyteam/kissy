@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:53
+build time: Nov 21 14:24
 */
 /**
  * @ignore
@@ -136,13 +136,13 @@ KISSY.add("overlay/base", function (S, Component,
      * KISSY Overlay Component. xclass: 'overlay'.
      * @class KISSY.Overlay
      * @extends KISSY.Component.Controller
-     * @mixins KISSY.Component.UIBase.ContentBox
-     * @mixins KISSY.Component.UIBase.Position
-     * @mixins KISSY.Component.UIBase.Loading
-     * @mixins KISSY.Component.UIBase.Align
-     * @mixins KISSY.Component.UIBase.Close
-     * @mixins KISSY.Component.UIBase.Resize
-     * @mixins KISSY.Component.UIBase.Mask
+     * @mixins KISSY.Component.Extension.ContentBox
+     * @mixins KISSY.Component.Extension.Position
+     * @mixins KISSY.Overlay.Extension.Loading
+     * @mixins KISSY.Component.Extension.Align
+     * @mixins KISSY.Overlay.Extension.Close
+     * @mixins KISSY.Overlay.Extension.Resize
+     * @mixins KISSY.Overlay.Extension.Mask
      */
     var Overlay = Component.Controller.extend([
         Extension.ContentBox,
@@ -322,8 +322,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Dr
      * @class KISSY.Overlay.Dialog
      * KISSY Dialog Component. xclass: 'dialog'.
      * @extends KISSY.Overlay
-     * @mixins KISSY.Component.UIBase.StdMod
-     * @mixins KISSY.Component.UIBase.Drag
+     * @mixins KISSY.Overlay.Extension.StdMod
+     * @mixins KISSY.Overlay.Extension.Drag
      */
     var Dialog = Overlay.extend([
         StdMod,
@@ -562,7 +562,7 @@ KISSY.add("overlay/extension/close-render", function (S, Node) {
 KISSY.add("overlay/extension/close", function () {
 
     /**
-     * @class KISSY.Component.Extension.Close
+     * @class KISSY.Overlay.Extension.Close
      * Close extension class. Represent a close button.
      */
     function Close() {
@@ -636,7 +636,7 @@ KISSY.add("overlay/extension/close", function () {
             }
         },
         /**
-         * hide or destroy according to {@link KISSY.Component.Extension.Close#closeAction}
+         * hide or destroy according to {@link KISSY.Overlay.Extension.Close#closeAction}
          */
         close:function(){
             var self=this;
@@ -657,7 +657,7 @@ KISSY.add("overlay/extension/close", function () {
 KISSY.add("overlay/extension/drag", function (S) {
 
     /**
-     * @class KISSY.Component.Extension.Drag
+     * @class KISSY.Overlay.Extension.Drag
      * Drag extension class. Make element draggable.
      */
     function Drag() {
@@ -832,7 +832,7 @@ KISSY.add("overlay/extension/loading-render", function (S, Node) {
 KISSY.add("overlay/extension/loading", function () {
 
     /**
-     * @class KISSY.Component.Extension.Loading
+     * @class KISSY.Overlay.Extension.Loading
      * Loading extension class. Make component to be able to mask loading.
      */
     function Loading() {
@@ -971,10 +971,10 @@ KISSY.add("overlay/extension/mask-render", function (S, UA, Node) {
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/extension/mask", function () {
+KISSY.add("overlay/extension/mask", function (S, Event) {
 
     /**
-     * @class KISSY.Component.Extension.Mask
+     * @class KISSY.Overlay.Extension.Mask
      * Mask extension class. Make component to be able to show with mask.
      */
     function Mask() {
@@ -988,9 +988,11 @@ KISSY.add("overlay/extension/mask", function () {
          * for example:
          *      @example
          *      {
-         *          effect:'fade', // slide
-         *          duration:0.5,
-         *          easing:'easingNone'
+         *          // whether hide current component when click on mask
+         *          hideOnClick: false,
+         *          effect: 'fade', // slide
+         *          duration: 0.5,
+         *          easing: 'easingNone'
          *      }
          */
         /**
@@ -1053,6 +1055,11 @@ KISSY.add("overlay/extension/mask", function () {
                 view = self.get("view");
             if (mask = self.get("mask")) {
                 maskNode = self.get('maskNode');
+                if (mask.hideOnClick) {
+                    maskNode.on(Event.Gesture.tap, function () {
+                        self.hide();
+                    });
+                }
                 self.on('afterVisibleChange', function (e) {
                     var v;
                     if (v = e.newVal) {
@@ -1067,7 +1074,7 @@ KISSY.add("overlay/extension/mask", function () {
 
 
     return Mask;
-}, {requires: ["ua"]});/**
+}, {requires: ["event"]});/**
  * @ignore
  * @fileOverview resize extension using resizable
  * @author yiminghe@gmail.com
@@ -1075,7 +1082,7 @@ KISSY.add("overlay/extension/mask", function () {
 KISSY.add("overlay/extension/resize", function (S) {
 
     /**
-     * @class KISSY.Component.Extension.Resize
+     * @class KISSY.Overlay.Extension.Resize
      * Resizable extension class. Make component resizable
      */
     function Resize() {
@@ -1242,7 +1249,7 @@ KISSY.add("overlay/extension/stdmod", function () {
 
 
     /**
-     * @class KISSY.Component.Extension.StdMod
+     * @class KISSY.Overlay.Extension.StdMod
      * StdMod extension class. Generate head, body, foot for component.
      */
     function StdMod() {
