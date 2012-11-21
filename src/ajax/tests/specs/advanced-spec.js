@@ -294,7 +294,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                 // fiddler 看不到请求，自带网络捕获为 304
                 cache: false,
                 dataType: 'json',
-                timeout: 0.1,
+                timeout: 0.01,
                 success: function (d, status, r) {
                     var args = S.makeArray(arguments);
                     re.push(status);
