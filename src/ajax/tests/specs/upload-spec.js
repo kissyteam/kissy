@@ -6,8 +6,8 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
     var $ = Node.all;
 
     // travis-ci will not pass ...
-    if (S.UA.phantomjs) {
-        // return;
+    if (S.UA.phantomjs && S.UA.os == 'linux') {
+        return;
     }
 
     describe("io upload", function () {

@@ -1,12 +1,11 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 20 23:00
+build time: Nov 21 15:30
 */
 /**
  * @ignore
  * @fileOverview ua
- * @author lifesinger@gmail.com
  */
 KISSY.add('ua/base', function (S, undefined) {
 
@@ -15,6 +14,7 @@ KISSY.add('ua/base', function (S, undefined) {
         navigator = win.navigator,
         ua = navigator && navigator.userAgent || "",
         EMPTY = '',
+        os,
         MOBILE = 'mobile',
         core = EMPTY,
         shell = EMPTY, m,
@@ -87,19 +87,19 @@ KISSY.add('ua/base', function (S, undefined) {
              */
             opera: undefined,
             /**
-             * mobile browser
+             * mobile browser. apple, android.
              * @type String
              * @member KISSY.UA
              */
             mobile: undefined,
             /**
-             * browser core name
+             * browser render engine name. webkit, trident
              * @type String
              * @member KISSY.UA
              */
             core: undefined,
             /**
-             * browser shell name
+             * browser shell name. ie, chrome, firefox
              * @type String
              * @member KISSY.UA
              */
@@ -110,7 +110,46 @@ KISSY.add('ua/base', function (S, undefined) {
              * @type undefined|Number
              * @member KISSY.UA
              */
-            phantomjs: 0
+            phantomjs: undefined,
+
+            /**
+             * operating system. android, ios, linux, windows
+             * @type string
+             * @member KISSY.UA
+             */
+            os: undefined,
+
+            /**
+             * ipad ios version
+             * @type float
+             * @member KISSY.UA
+             */
+            ipad: undefined,
+            /**
+             * iphone ios version
+             * @type float
+             * @member KISSY.UA
+             */
+            iphone: undefined,
+            /**
+             * ipod ios
+             * @type float
+             * @member KISSY.UA
+             */
+            ipod: undefined,
+            /**
+             * ios version
+             * @type float
+             * @member KISSY.UA
+             */
+            ios: null,
+
+            /**
+             * android version
+             * @type float
+             * @member KISSY.UA
+             */
+            android: undefined
         },
         numberify = function (s) {
             var c = 0;
@@ -167,8 +206,27 @@ KISSY.add('ua/base', function (S, undefined) {
             }
 
             // Apple Mobile
-            if (/ Mobile\//.test(ua)) {
+            if (/ Mobile\//.test(ua) && ua.match(/iPad|iPod|iPhone/)) {
                 UA[MOBILE] = 'apple'; // iPad, iPhone or iPod Touch
+
+                m = ua.match(/OS ([^\s]*)/);
+                if (m && m[1]) {
+                    m = numberify(m[1].replace('_', '.'));
+                }
+                UA.ios = m;
+                os = 'ios';
+                m = ua.match(/iPad|iPod|iPhone/);
+                if (m && m[0]) {
+                    UA[m[0].toLowerCase()] = UA.ios;
+                }
+            } else if (/ Android/.test(ua)) {
+                if (/Mobile/.test(ua)) {
+                    os = UA.mobile = 'android';
+                }
+                m = ua.match(/Android ([^\s]*);/);
+                if (m && m[1]) {
+                    UA.android = numberify(m[1]);
+                }
             }
             // Other WebKit Mobile Browsers
             else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
@@ -238,6 +296,19 @@ KISSY.add('ua/base', function (S, undefined) {
         }
     }
 
+    if (!os) {
+        if ((/windows|win32/i).test(ua)) {
+            os = 'windows';
+        } else if ((/macintosh|mac_powerpc/i).test(ua)) {
+            os = 'macintosh';
+        } else if ((/linux/i).test(ua)) {
+            os = 'linux';
+        } else if ((/rhino/i).test(ua)) {
+            os = 'rhino';
+        }
+    }
+
+    UA.os = os;
     UA.core = core;
     UA.shell = shell;
     UA._numberify = numberify;
@@ -246,6 +317,8 @@ KISSY.add('ua/base', function (S, undefined) {
 
 /*
  NOTES:
+ 2012.11.21 yiminghe@gmail.com
+ - touch and os support
 
  2011.11.08
  - ie < 10 使用条件注释判断内核，更精确 by gonghaocn@gmail.com
@@ -293,7 +366,9 @@ KISSY.add('ua/css', function (S, UA) {
                 className += ' ks-' + key;
             }
         });
-        documentElement.className = S.trim(documentElement.className + className);
+        if (S.trim(className)) {
+            documentElement.className = S.trim(documentElement.className + className);
+        }
     }
 }, {
     requires: ['./base']
