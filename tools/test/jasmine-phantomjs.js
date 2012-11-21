@@ -5,7 +5,7 @@
  * @author yiminghe@gmail.com
  */
 
-var page = new WebPage();
+var page = require('webpage').create();
 
 page.onConsoleMessage = function (m) {
     console.log(m);
@@ -17,6 +17,13 @@ page.onConsoleMessage = function (m) {
             phantom.exit(1);
         }
     }
+};
+
+page.onResourceRequested = function (request) {
+    console.log('Request ' + JSON.stringify(request, undefined, 4));
+};
+page.onResourceReceived = function (response) {
+    console.log('Receive ' + JSON.stringify(response, undefined, 4));
 };
 
 var tests = require('./tc.js')(), index = -1;

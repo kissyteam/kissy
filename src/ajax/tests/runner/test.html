@@ -1,50 +1,51 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>IO Test Runner</title>
-<link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
-<script src="../../../../tools/jasmine/jasmine.js"></script>
-<script src="../../../../tools/jasmine/jasmine-html.js"></script>
+    <title>IO Test Runner</title>
+    <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
+    <script src="../../../../tools/jasmine/jasmine.js"></script>
+    <script src="../../../../tools/jasmine/jasmine-html.js"></script>
     <script src="../../../../tools/jasmine/jasmine.console_reporter.js"></script>
 
-<script src="../../../../tools/third-party/jquery.js"></script>
+    <script src="../../../../tools/third-party/jquery.js"></script>
 
-<script src="../../../../build/seed.js"></script>
-<script src="../../../../build/ua.js"></script>
-<script src="../../../../build/dom.js"></script>
-<script src="../../../../build/event/base.js"></script>
+    <script src="../../../../build/seed.js"></script>
+    <script src="../../../../build/ua.js"></script>
+    <script src="../../../../build/dom.js"></script>
+    <script src="../../../../build/event/base.js"></script>
     <script src="../../../../build/event/dom/base.js"></script>
     <script src="../../../../build/event/custom.js"></script>
-<script src="../../../../build/anim.js"></script>
-<script src="../../../../build/node.js"></script>
-<script src="../../../../build/json.js"></script>
+    <script src="../../../../build/anim.js"></script>
+    <script src="../../../../build/node.js"></script>
+    <script src="../../../../build/json.js"></script>
     <script src="../../../../build/json/json2.js"></script>
-<script  src="../../src/base.js"></script>
-<script  src="../../src/methods.js"></script>
-<script  src="../../src/iframe-transport.js"></script>
-<script  src="../../src/form-serializer.js"></script>
-<script  src="../../src/form.js"></script>
-<script  src="../../src/jsonp.js"></script>
-<script  src="../../src/script-transport.js"></script>
-<script  src="../../src/xhr-transport-base.js"></script>
-<script  src="../../src/xhr-transport.js"></script>
-<script  src="../../src/xdr-flash-transport.js"></script>
-<script  src="../../src/sub-domain-transport.js"></script>
-<script  src="../../src/ajax.js"></script>
-<script src="../specs/serialize-spec.js"></script>
-<script src="../specs/promise/io-promise-spec.js"></script>
-<script src="../specs/advanced-spec.js"></script>
+    <script src="../../src/base.js"></script>
+    <script src="../../src/methods.js"></script>
+    <script src="../../src/iframe-transport.js"></script>
+    <script src="../../src/form-serializer.js"></script>
+    <script src="../../src/form.js"></script>
+    <script src="../../src/jsonp.js"></script>
+    <script src="../../src/script-transport.js"></script>
+    <script src="../../src/xhr-transport-base.js"></script>
+    <script src="../../src/xhr-transport.js"></script>
+    <script src="../../src/xdr-flash-transport.js"></script>
+    <script src="../../src/sub-domain-transport.js"></script>
+    <script src="../../src/ajax.js"></script>
+    <script src="../specs/serialize-spec.js"></script>
+    <script src="../specs/promise/io-promise-spec.js"></script>
+    <script src="../specs/advanced-spec.js"></script>
+    <script src="../specs/upload-spec.js"></script>
 </head>
 <body>
 <h1>KISSY IO Advanced Test Cases</h1>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+    jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
     jasmine.getEnv().execute(function () {
         jasmine.kissyNext(this.results().failedCount);
     });
