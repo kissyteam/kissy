@@ -45,7 +45,9 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
             });
 
             it('初始化后, 小图 DOM 结构正确', function () {
-                waits(500);
+                waitsFor(function () {
+                    return a.imageWrap;
+                });
                 runs(function () {
                     expect(a.image).toBeDefined();
                     expect(a.imageWrap).toBeDefined();
@@ -54,7 +56,6 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
             });
 
             it('显示放大镜图标', function () {
-                waits(500);
                 runs(function () {
                     expect(a.icon).toBeDefined();
                     expect(a.icon.hasClass('ks-imagezoom-icon')).toEqual(true);
@@ -144,6 +145,11 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
             });
 
             it('不会显示镜片且大图位置是在小图上', function () {
+
+                waitsFor(function () {
+                    return a.imageWrap;
+                });
+
                 var offset = a.image.offset();
 
                 simulate(a.image, "mouseover", document.body);
@@ -178,6 +184,11 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
             });
 
             it('初始小图显示正常', function () {
+
+                waitsFor(function () {
+                    return a.imageWrap;
+                });
+
                 var offset = a.image.offset();
 
                 simulate(a.image, "mouseover", document.body);

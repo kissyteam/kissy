@@ -113,11 +113,11 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                 }
             },
 
-            _uiSetImageWidth: function (v) {
+            '_uiSetImageWidth': function (v) {
                 this.image.width(v);
             },
 
-            _uiSetImageHeight: function (v) {
+            '_uiSetImageHeight': function (v) {
                 this.image.height(v);
             }
         },

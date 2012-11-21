@@ -54,7 +54,7 @@ function next(url) {
     });
 }
 var t = '';
-// t = '/src/seed/tests/runner/lang.html';
+t = '/src/imagezoom/tests/runner/test.html';
 // t='/src/seed/tests/specs/package-raw/test-combo.html';
 // t='/src/seed/tests/specs/css-combo/test.html';
 next(t);
