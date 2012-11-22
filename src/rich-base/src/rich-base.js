@@ -175,15 +175,16 @@ KISSY.add('rich-base', function (S, Base) {
                 isString = typeof plugin == 'string';
 
             S.each(self.get('plugins'), function (p) {
-                var keep = 0;
+                var keep = 0, pluginId;
                 if (plugin) {
                     if (isString) {
-                        if (!p.get || p.get('pluginId') != plugin) {
+                        pluginId = p.pluginId || p.get && p.get('pluginId');
+                        if (pluginId != plugin) {
                             plugins.push(p);
                             keep = 1;
                         }
                     } else {
-                        if (p == plugin) {
+                        if (p != plugin) {
                             plugins.push(p);
                             keep = 1;
                         }

@@ -161,7 +161,6 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
          * @ignore
          */
         placeholder: {
-            value: NONE
         },
 
         /**
@@ -262,7 +261,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 // 手工模式，只处理有 data-src 的图片
                 if (isManualMod) {
                     if (dataSrc) {
-                        if (placeholder !== NONE) {
+                        if (placeholder) {
                             img.src = placeholder;
                         }
                         return true;
@@ -273,7 +272,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     // 注意：已有 data-src 的项，可能已有其它实例处理过，不用再次处理
                     if (!dataSrc && !self._checkElemInViewport(img)) {
                         DOM.attr(img, IMG_SRC_DATA, img.src);
-                        if (placeholder !== NONE) {
+                        if (placeholder) {
                             img.src = placeholder;
                         } else {
                             img.removeAttribute('src');

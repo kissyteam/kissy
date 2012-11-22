@@ -68,6 +68,8 @@ tests.push('/src/overlay/tests/runner/test.html');
 
 tests.push('/src/resizable/tests/runner/test.html');
 
+tests.push('/src/rich-base/tests/runner/test.html');
+
 tests.push('/src/seed/tests/runner/clean-combo-loader.html');
 
 tests.push('/src/seed/tests/runner/combo-loader-core.html');
