@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:53
+build time: Nov 22 14:09
 */
 /**
  * @fileOverview collection of models
@@ -191,6 +191,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
              * @param {Function} opts.success Callback when load is successful.
              * @param {Function} opts.error Callback when error occurs on loading.
              * @param {Function} opts.complete Callback when load is complete.
+             * @chainable
              */
             load:function (opts) {
                 var self = this;
@@ -407,6 +408,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * @param {Function} opts.success callback when action is done successfully.
              * @param {Function} opts.error callback when error occurs at action.
              * @param {Function} opts.complete callback when action is complete.
+             * @chainable
              */
             destroy:function (opts) {
                 var self = this;
@@ -448,6 +450,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * @param {Function} opts.success callback when action is done successfully.
              * @param {Function} opts.error callback when error occurs at action.
              * @param {Function} opts.complete callback when action is complete.
+             * @chainable
              */
             load:function (opts) {
                 var self = this;
@@ -476,6 +479,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * @param {Function} opts.success callback when action is done successfully.
              * @param {Function} opts.error callback when error occurs at action.
              * @param {Function} opts.complete callback when action is complete.
+             * @chainable
              */
             save:function (opts) {
                 var self = this;
@@ -1337,6 +1341,9 @@ KISSY.add("mvc/view", function (S, Node, Base) {
                 }
             },
 
+            /**
+             * @chainable
+             */
             render: function () {
                 return this;
             },

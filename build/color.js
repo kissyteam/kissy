@@ -1,10 +1,11 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:49
+build time: Nov 22 14:05
 */
 /**
  * Color For KISSY.
+ * @ignore
  * @author yiminghe@gmail.com
  */
 KISSY.add("color", function (S, Base) {
@@ -13,303 +14,324 @@ KISSY.add("color", function (S, Base) {
         hexRe = /\s*#([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)([0-9a-fA-F][0-9a-fA-F]?)\s*/;
 
     /**
-     * @name Color
-     * @class <p>
      * Color for KISSY to normalize HSL, HSV, RGB and HEX.
-     * </p>
+     * @class KISSY.Color
      */
     function Color() {
         Color.superclass.constructor.apply(this, arguments);
     }
 
-    Color.ATTRS =
-    /**
-     * @lends Color#
-     */
-    {
+    Color.ATTRS = {
         /**
          * Red.
          * @type {Number}
+         * @property r
          */
-        r:{
-            getter:function (v) {
+        /**
+         * Red.
+         * @cfg {Number} r
+         */
+        /**
+         * @ignore
+         */
+        r: {
+            getter: function (v) {
                 return Math.round(v);
             },
-            setter:function (v) {
+            setter: function (v) {
                 return constrain255(v);
             }
         },
         /**
          * Green.
          * @type {Number}
+         * @property g
          */
-        g:{
-            getter:function (v) {
+        /**
+         * Green.
+         * @cfg {Number} g
+         */
+        /**
+         * @ignore
+         */
+        g: {
+            getter: function (v) {
                 return Math.round(v);
             },
-            setter:function (v) {
+            setter: function (v) {
                 return constrain255(v);
             }
         },
         /**
          * Blue.
          * @type {Number}
+         * @property b
          */
-        b:{
-            getter:function (v) {
+        /**
+         * Blue.
+         * @cfg {Number} b
+         */
+        /**
+         * @ignore
+         */
+        b: {
+            getter: function (v) {
                 return Math.round(v);
             },
-            setter:function (v) {
+            setter: function (v) {
                 return constrain255(v);
             }
         },
         /**
          * Alpha.
-         * @default 1
          * @type {Number}
+         * @property a
          */
-        a:{
-            getter:function (v) {
+        /**
+         * Alpha.
+         * Defaults to: 1
+         * @cfg {Number} a
+         */
+        /**
+         * @ignore
+         */
+        a: {
+            getter: function (v) {
                 if (v == undefined) {
                     return 1;
                 }
                 return Math.round(v);
             },
-            setter:function (v) {
+            setter: function (v) {
                 return constrain255(v);
             }
         }
     };
 
-    S.extend(Color, Base,
+    S.extend(Color, Base, {
+
         /**
-         * @lends Color#
+         * To hsl string format
+         * @return {String}
          */
-        {
+        toHSL: function () {
+            var hsl = this.getHSL();
+            return "hsl(" + (Math.round(hsl.h || 0)) + "," + percentage(hsl.s) + "," + percentage(hsl.l) + ")";
+        },
+        /**
+         * To hsla string format
+         * @return {String}
+         */
+        toHSLA: function () {
+            var hsl = this.getHSL();
+            return "hsla(" + (Math.round(hsl.h || 0)) + "," + percentage(hsl.s) + "," + percentage(hsl.l) + "," + this.a + ")";
+        },
 
-            /**
-             * To hsl string format
-             * @return {String}
-             */
-            toHSL:function () {
-                var hsl = this.getHSL();
-                return "hsl(" + (Math.round(hsl.h || 0)) + "," + percentage(hsl.s) + "," + percentage(hsl.l) + ")";
-            },
-            /**
-             * To hsla string format
-             * @return {String}
-             */
-            toHSLA:function () {
-                var hsl = this.getHSL();
-                return "hsla(" + (Math.round(hsl.h || 0)) + "," + percentage(hsl.s) + "," + percentage(hsl.l) + "," + this.a + ")";
-            },
+        /**
+         * To rgb string format
+         * @return {String}
+         */
+        toRGB: function () {
+            var self = this;
+            return "rgb(" + self.get("r") + "," + self.get("g") + "," + self.get("b") + ")";
+        },
+        /**
+         * To rgba string format
+         * @return {String}
+         */
+        toRGBA: function () {
+            var self = this;
+            return "rgba(" + self.get("r") + "," + self.get("g") + "," + self.get("b") + "," + self.get("a") + ")";
+        },
+        /**
+         * To hex string format
+         * @return {String}
+         */
+        toHex: function () {
+            var self = this;
+            return "#" + padding2(Number(self.get("r")).toString(16)) +
+                padding2(Number(self.get("g")).toString(16)) + padding2(Number(self.get("b")).toString(16));
+        },
+        /**
+         * Return the color in the rgba format.
+         * @return {String}
+         */
+        toString: function () {
+            return this.toRGBA();
+        },
+        /**
+         * Return the color in the hsl format.
+         * @return {Object}
+         */
+        getHSL: function () {
+            var self = this,
+                r = self.get("r") / 255,
+                g = self.get("g") / 255,
+                b = self.get("b") / 255,
+                max = Math.max(r, g, b),
+                min = Math.min(r, g, b),
+                delta = max - min,
+                h,
+                s = 0,
+                l = 0.5 * (max + min);
 
-            /**
-             * To rgb string format
-             * @return {String}
-             */
-            toRGB:function () {
-                var self = this;
-                return "rgb(" + self.get("r") + "," + self.get("g") + "," + self.get("b") + ")";
-            },
-            /**
-             * To rgba string format
-             * @return {String}
-             */
-            toRGBA:function () {
-                var self = this;
-                return "rgba(" + self.get("r") + "," + self.get("g") + "," + self.get("b") + "," + self.get("a") + ")";
-            },
-            /**
-             * To hex string format
-             * @return {String}
-             */
-            toHex:function () {
-                var self = this;
-                return "#" + padding2(Number(self.get("r")).toString(16)) +
-                    padding2(Number(self.get("g")).toString(16)) + padding2(Number(self.get("b")).toString(16));
-            },
-            /**
-             * Return the color in the rgba format.
-             * @return {String}
-             */
-            toString:function () {
-                return this.toRGBA();
-            },
-            /**
-             * Return the color in the hsl format.
-             * @return {Object}
-             */
-            getHSL:function () {
-                var self = this,
-                    r = self.get("r") / 255,
-                    g = self.get("g") / 255,
-                    b = self.get("b") / 255,
-                    max = Math.max(r, g, b),
-                    min = Math.min(r, g, b),
-                    delta = max - min,
-                    h,
-                    s = 0,
-                    l = 0.5 * (max + min);
-
-                // min==max means achromatic (hue is undefined)
-                if (min != max) {
-                    s = (l < 0.5) ? delta / (max + min) : delta / (2 - max - min);
-                    if (r == max) {
-                        h = 60 * (g - b) / delta;
-                    } else if (g == max) {
-                        h = 120 + 60 * (b - r) / delta;
-                    } else {
-                        h = 240 + 60 * (r - g) / delta;
-                    }
-
-                    h = (h + 360) % 360;
-                }
-                return {
-                    h:h,
-                    s:s,
-                    l:l
-                };
-            },
-
-            /**
-             * Return the color in the hsv format.
-             * @return {Object}
-             */
-            getHSV:function () {
-                return rgb2hsv({
-                    r:this.get("r"),
-                    g:this.get("g"),
-                    b:this.get("b")
-                });
-            },
-
-            /**
-             * Set value by hsv
-             * @param cfg
-             * @param cfg.h
-             * @param cfg.s
-             * @param cfg.v
-             */
-            setHSV:function (cfg) {
-                var self = this,
-                    current,
-                    rgb;
-                if ("h" in cfg && "s" in cfg && "v" in cfg) {
+            // min==max means achromatic (hue is undefined)
+            if (min != max) {
+                s = (l < 0.5) ? delta / (max + min) : delta / (2 - max - min);
+                if (r == max) {
+                    h = 60 * (g - b) / delta;
+                } else if (g == max) {
+                    h = 120 + 60 * (b - r) / delta;
                 } else {
-                    current = self.getHSV();
-                    S.each(["h", "s", "v"], function (x) {
-                        if (x in cfg) {
-                            current[x] = cfg[x];
-                        }
-                    });
-                    cfg = current;
-                }
-                self.set(hsv2rgb(cfg));
-            },
-
-
-            /**
-             * Set value by hsl
-             * @param cfg
-             * @param cfg.h
-             * @param cfg.s
-             * @param cfg.l
-             */
-            setHSL:function (cfg) {
-                var self = this,
-                    current;
-                if ("h" in cfg && "s" in cfg && "l" in cfg) {
-                } else {
-                    current = self.getHSL();
-                    S.each(["h", "s", "l"], function (x) {
-                        if (x in cfg) {
-                            current[x] = cfg[x];
-                        }
-                    });
-                    cfg = current;
-                    // S.mix({x:1},{x:undefined})
+                    h = 240 + 60 * (r - g) / delta;
                 }
 
-                self.set(hsl2rgb(cfg));
+                h = (h + 360) % 360;
             }
-        });
+            return {
+                h: h,
+                s: s,
+                l: l
+            };
+        },
 
-    S.mix(Color,
         /**
-         * @lends Color
+         * Return the color in the hsv format.
+         * @return {Object}
          */
-        {
+        getHSV: function () {
+            return rgb2hsv({
+                r: this.get("r"),
+                g: this.get("g"),
+                b: this.get("b")
+            });
+        },
 
-            /**
-             * Construct color object from String.
-             * @param {String} str string format color( '#rrggbb'  '#rgb' or 'rgb(r,g,b)'  'rgba(r,g,b,a)' )
-             */
-            parse:function (str) {
-                var values, r,
-                    g,
-                    b,
-                    a;
-
-                if ((str.length == 4 || str.length == 7) && str.substr(0, 1) === '#') {
-                    values = str.match(hexRe);
-                    if (values) {
-                        r = parseHex(values[1]);
-                        g = parseHex(values[2]);
-                        b = parseHex(values[3]);
-                        if (str.length == 4) {
-                            r = paddingHex(r);
-                            g = paddingHex(g);
-                            b = paddingHex(b);
-                        }
+        /**
+         * Set value by hsv
+         * @param cfg
+         * @param cfg.h
+         * @param cfg.s
+         * @param cfg.v
+         */
+        setHSV: function (cfg) {
+            var self = this,
+                current,
+                rgb;
+            if ("h" in cfg && "s" in cfg && "v" in cfg) {
+            } else {
+                current = self.getHSV();
+                S.each(["h", "s", "v"], function (x) {
+                    if (x in cfg) {
+                        current[x] = cfg[x];
                     }
-                }
-                else {
-                    values = str.match(rgbaRe);
-                    if (values) {
-                        r = values[1];
-                        g = values[2];
-                        b = values[3];
-                        a = values[4];
-                    }
-                }
-
-                return (typeof r == 'undefined') ? undefined : new Color({
-                    r:r,
-                    g:g,
-                    b:b,
-                    a:a
                 });
-            },
+                cfg = current;
+            }
+            self.set(hsv2rgb(cfg));
+        },
 
-            /**
-             * Construct color object from hsl.
-             * @param {Object} cfg
-             * @param {Number} cfg.h Hue
-             * @param {Number} cfg.s Saturation
-             * @param {Number} cfg.l lightness
-             * @param {Number} cfg.a alpha
-             */
-            fromHSL:function (cfg) {
-                var rgb = hsl2rgb(cfg);
-                rgb.a = cfg.a;
-                return new Color(rgb);
-            },
-            /**
-             * Construct color object from hsv.
-             * @param {Object} cfg
-             * @param {Number} cfg.h Hue
-             * @param {Number} cfg.s Saturation
-             * @param {Number} cfg.v value
-             * @param {Number} cfg.a alpha
-             */
-            fromHSV:function (cfg) {
-                var rgb = hsv2rgb(cfg);
-                rgb.a = cfg.a;
-                return new Color(rgb);
+
+        /**
+         * Set value by hsl
+         * @param cfg
+         * @param cfg.h
+         * @param cfg.s
+         * @param cfg.l
+         */
+        setHSL: function (cfg) {
+            var self = this,
+                current;
+            if ("h" in cfg && "s" in cfg && "l" in cfg) {
+            } else {
+                current = self.getHSL();
+                S.each(["h", "s", "l"], function (x) {
+                    if (x in cfg) {
+                        current[x] = cfg[x];
+                    }
+                });
+                cfg = current;
+                // S.mix({x:1},{x:undefined})
             }
 
-        });
+            self.set(hsl2rgb(cfg));
+        }
+    });
+
+    S.mix(Color, {
+
+        /**
+         * Construct color object from String.
+         * @static
+         * @param {String} str string format color( '#rrggbb'  '#rgb' or 'rgb(r,g,b)'  'rgba(r,g,b,a)' )
+         */
+        parse: function (str) {
+            var values, r,
+                g,
+                b,
+                a;
+
+            if ((str.length == 4 || str.length == 7) && str.substr(0, 1) === '#') {
+                values = str.match(hexRe);
+                if (values) {
+                    r = parseHex(values[1]);
+                    g = parseHex(values[2]);
+                    b = parseHex(values[3]);
+                    if (str.length == 4) {
+                        r = paddingHex(r);
+                        g = paddingHex(g);
+                        b = paddingHex(b);
+                    }
+                }
+            }
+            else {
+                values = str.match(rgbaRe);
+                if (values) {
+                    r = values[1];
+                    g = values[2];
+                    b = values[3];
+                    a = values[4];
+                }
+            }
+
+            return (typeof r == 'undefined') ? undefined : new Color({
+                r: r,
+                g: g,
+                b: b,
+                a: a
+            });
+        },
+
+        /**
+         * Construct color object from hsl.
+         * @static
+         * @param {Object} cfg
+         * @param {Number} cfg.h Hue
+         * @param {Number} cfg.s Saturation
+         * @param {Number} cfg.l lightness
+         * @param {Number} cfg.a alpha
+         */
+        fromHSL: function (cfg) {
+            var rgb = hsl2rgb(cfg);
+            rgb.a = cfg.a;
+            return new Color(rgb);
+        },
+        /**
+         * Construct color object from hsv.
+         * @static
+         * @param {Object} cfg
+         * @param {Number} cfg.h Hue
+         * @param {Number} cfg.s Saturation
+         * @param {Number} cfg.v value
+         * @param {Number} cfg.a alpha
+         */
+        fromHSV: function (cfg) {
+            var rgb = hsv2rgb(cfg);
+            rgb.a = cfg.a;
+            return new Color(rgb);
+        }
+
+    });
 
     // #---------------------------- private start
 
@@ -363,7 +385,7 @@ KISSY.add("color", function (S, Base) {
                 break;
         }
 
-        return {r:constrain255(to255(r)), g:constrain255(to255(g)), b:constrain255(to255(b))};
+        return {r: constrain255(to255(r)), g: constrain255(to255(g)), b: constrain255(to255(b))};
     }
 
     function rgb2hsv(cfg) {
@@ -400,9 +422,9 @@ KISSY.add("color", function (S, Base) {
         s = (max === 0) ? 0 : 1 - (min / max);
 
         hsv = {
-            h:Math.round(h),
-            s:s,
-            v:max
+            h: Math.round(h),
+            s: s,
+            v: max
         };
 
         return hsv;
@@ -455,9 +477,9 @@ KISSY.add("color", function (S, Base) {
             rgb[index] = to255(v);
         });
         return {
-            r:rgb[0],
-            g:rgb[1],
-            b:rgb[2]
+            r: rgb[0],
+            g: rgb[1],
+            b: rgb[2]
         };
     }
 
@@ -490,10 +512,11 @@ KISSY.add("color", function (S, Base) {
     return Color;
 
 }, {
-    requires:['base']
+    requires: ['base']
 });
 
 /**
+ * @ignore
  * Refer:
  *  - http://en.wikipedia.org/wiki/HSL_and_HSV
  */

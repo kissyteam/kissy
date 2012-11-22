@@ -76,6 +76,7 @@
          * @param {String|String[]} modNames names of mods to be loaded,if string then separated by space
          * @param {Function} callback callback when modNames are all loaded,
          * with KISSY as first argument and mod 's value as the following arguments
+         * @chainable
          */
         use: function (modNames, callback) {
             var self = this,

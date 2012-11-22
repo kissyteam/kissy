@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:53
+build time: Nov 22 14:09
 */
 KISSY.add("grid/bar",function(f,g,d,c){return g.extend({getItem:function(b){var a=this.get("children"),e=null;f.each(a,function(a){if(a.get("id")===b)return e=a,!1});return e}},{ATTRS:{focusable:{value:!1},xrender:{value:d}},BarItem:c},{xclass:"grid-bar",priority:1})},{requires:["toolbar","./barrender","./baritem"]});
 KISSY.add("grid/baritem",function(f,g,d,c){var b=c.KeyCodes,g=g.Controller.extend({createDom:function(){var a=this.get("el");a.addClass("ks-inline-block");a.attr("id")||a.attr("id",f.guid("ks-bar-item"))}},{ATTRS:{focusable:{value:!1}}},{xclass:"grid-bar-item",priority:1}),c=g.extend({initializer:function(){var a=this.get("children"),e=this.get("text");a.push(new d({content:e,disabled:this.get("disabled")}))},handleKeyEventInternal:function(a){return a.keyCode==b.ENTER&&"keydown"==a.type||a.keyCode==

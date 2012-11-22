@@ -111,6 +111,9 @@ KISSY.add("mvc/view", function (S, Node, Base) {
                 }
             },
 
+            /**
+             * @chainable
+             */
             render: function () {
                 return this;
             },

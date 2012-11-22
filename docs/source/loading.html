@@ -32,14 +32,17 @@ KISSY.add(&quot;overlay/extension/loading&quot;, function () {
     Loading.prototype = {
 <span id='KISSY-Overlay-Extension-Loading-method-loading'>        /**
 </span>         * mask component as loading
+         * @chainable
          */
         loading: function () {
-            this.get(&quot;view&quot;).loading();
-            return this;
+            var self=this;
+            self.get(&quot;view&quot;).loading();
+            return self;
         },
 
 <span id='KISSY-Overlay-Extension-Loading-method-unloading'>        /**
 </span>         * unmask component as loading
+         * @chainable
          */
         unloading: function () {
             this.get(&quot;view&quot;).unloading();

@@ -179,6 +179,7 @@
 </span>         * Set parameter value corresponding to current key
          * @param {String} key
          * @param value
+         * @chainable
          */
         set: function (key, value) {
             var self = this, _queryMap;
@@ -200,6 +201,7 @@
 <span id='KISSY-Uri-Query-method-remove'>        /**
 </span>         * Remove parameter with specified name.
          * @param {String} key
+         * @chainable
          */
         remove: function (key) {
             var self = this;
@@ -217,6 +219,7 @@
 </span>         * Add parameter value corresponding to current key
          * @param {String} key
          * @param value
+         * @chainable
          */
         add: function (key, value) {
             var self = this,
@@ -445,7 +448,7 @@
 <span id='KISSY-Uri-method-setScheme'>        /**
 </span>         * Set scheme part
          * @param {String} scheme
-         * @return this
+         * @chainable
          */
         setScheme: function (scheme) {
             this.scheme = scheme;
@@ -463,7 +466,7 @@
 <span id='KISSY-Uri-method-setHostname'>        /**
 </span>         * Set hostname
          * @param {String} hostname
-         * @return this
+         * @chainable
          */
         setHostname: function (hostname) {
             this.hostname = hostname;
@@ -473,7 +476,7 @@
 <span id='KISSY-Uri-method-setUserInfo'>        /**
 </span>         * Set user info
          * @param {String} userInfo
-         * @return this
+         * @chainable
          */
         'setUserInfo': function (userInfo) {
             this.userInfo = userInfo;
@@ -491,7 +494,7 @@
 <span id='KISSY-Uri-method-setPort'>        /**
 </span>         * Set port
          * @param {String} port
-         * @return this
+         * @chainable
          */
         'setPort': function (port) {
             this.port = port;
@@ -509,7 +512,7 @@
 <span id='KISSY-Uri-method-setPath'>        /**
 </span>         * Set path
          * @param {string} path
-         * @return this
+         * @chainable
          */
         setPath: function (path) {
             this.path = path;
@@ -527,7 +530,7 @@
 <span id='KISSY-Uri-method-setQuery'>        /**
 </span>         * Set query
          * @param {String|KISSY.Uri.Query} query
-         * @return this
+         * @chainable
          */
         'setQuery': function (query) {
             if (typeof query == 'string') {
@@ -559,7 +562,7 @@
 <span id='KISSY-Uri-method-setFragment'>        /**
 </span>         * Set fragment
          * @param {String} fragment
-         * @return this
+         * @chainable
          */
         'setFragment': function (fragment) {
             if (!S.startsWith(fragment, '#')) {

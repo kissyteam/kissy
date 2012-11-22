@@ -86,7 +86,7 @@ KISSY.add("validation/base", function(S, DOM, Event, Util, Define, Field, Warn, 
             //直接增加Validation.Field实例
             if (S.isObject(field) && field instanceof Field) {
                 fields.add(DOM.attr(field.el, "id"), field);
-                return self;
+                return this;
             }
 
             //实例化Validation.Field后增加

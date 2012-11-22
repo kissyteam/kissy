@@ -186,6 +186,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
              * @param {Function} opts.success Callback when load is successful.
              * @param {Function} opts.error Callback when error occurs on loading.
              * @param {Function} opts.complete Callback when load is complete.
+             * @chainable
              */
             load:function (opts) {
                 var self = this;

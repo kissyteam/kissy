@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:49
+build time: Nov 22 14:06
 */
 /**
  * @ignore
@@ -324,6 +324,7 @@ KISSY.add('component/extension/align', function (S, UA, DOM, Node) {
          * @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
          * @param {String[]} points 对齐方式
          * @param {Number[]} [offset] 偏移
+         * @chainable
          */
         align:function (refNode, points, offset, overflow) {
             refNode = Node.one(refNode || win);
@@ -425,7 +426,8 @@ KISSY.add('component/extension/align', function (S, UA, DOM, Node) {
         /**
          * Make current element center within node.
          * @param {undefined|String|HTMLElement|KISSY.NodeList} node
-         * Same as node config of {@link KISSY.Component.Extension.Align#cfg-align} .
+         * Same as node config of {@link KISSY.Component.Extension.Align#cfg-align}
+         * @chainable
          */
         center:function (node) {
             var self = this;
@@ -569,7 +571,7 @@ KISSY.add("component/extension/position-render", function () {
         },
         /**
          * @ignore
-         * see {@link Component.Extension.Box#visibleMode}.
+         * see {@link KISSY.Component.Extension.Box#cfg-visibleMode}.
          * @default "visibility"
          */
         visibleMode: {
@@ -712,6 +714,7 @@ KISSY.add("component/extension/position", function (S) {
         /**
          * Move to absolute position.
          * @ignore
+         * @chainable
          */
         move: function (x, y) {
             var self = this;

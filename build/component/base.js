@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 00:01
+build time: Nov 22 14:18
 */
 /**
  * @ignore
@@ -233,6 +233,35 @@ KISSY.add('component/base/box', function () {
      * @private
      */
     function Box() {
+
+        /**
+         * @event beforeVisibleChange
+         * fired before visible is changed,
+         * can return false to prevent this change
+         * @param {KISSY.Event.CustomEventObject} e
+         * @param {Boolean} e.prevVal current component 's visible value
+         * @param {Boolean} e.prevVal visible value to be changed
+         */
+
+        /**
+         * @event afterVisibleChange
+         * fired after visible is changed
+         * @param {KISSY.Event.CustomEventObject} e
+         * @param {Boolean} e.prevVal current component 's previous visible value
+         * @param {Boolean} e.prevVal current component 's visible value
+         */
+
+        /**
+         * @event show
+         * fired after current component shows
+         * @param {KISSY.Event.CustomEventObject} e
+         */
+
+        /**
+         * @event hide
+         * fired after current component hides
+         * @param {KISSY.Event.CustomEventObject} e
+         */
     }
 
     Box.ATTRS =
@@ -367,15 +396,18 @@ KISSY.add('component/base/box', function () {
 
         /**
          * whether this component is visible after created.
-         * will add css class {prefix}{component}-hidden or {prefix}{component}-shown to component's root el.
          *
-         * Defaults to: true.
+         * will add css class {prefix}{component}-hidden
+         * or {prefix}{component}-shown to component's root el.
          *
          * @cfg {Boolean} visible
          */
         /**
          * whether this component is visible.
-         * will add css class {prefix}{component}-hidden or {prefix}{component}-shown to component's root el.
+         *
+         * will add css class {prefix}{component}-hidden
+         * or {prefix}{component}-shown to component's root el.
+         *
          * @type {Boolean}
          * @property visible
          */
@@ -388,8 +420,12 @@ KISSY.add('component/base/box', function () {
         },
 
         /**
-         * the node to parse for configuration values,passed to component's HTML_PARSER definition
-         * @cfg {KISSY.NodeList} srcNode
+         * kissy node or css selector to find the first match node
+         *
+         * parsed for configuration values,
+         * passed to component's HTML_PARSER definition
+         * @cfg {KISSY.NodeList|String} srcNode
+         *
          */
         /**
          * @ignore
@@ -411,6 +447,7 @@ KISSY.add('component/base/box', function () {
 
         /**
          * show component
+         * @chainable
          */
         show: function () {
             var self = this;
@@ -421,6 +458,7 @@ KISSY.add('component/base/box', function () {
 
         /**
          * hide component
+         * @chainable
          */
         hide: function () {
             var self = this;
@@ -586,8 +624,16 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
 
             /**
              * mark current instance as controller instance.
+             *
+             * access this property directly.
+             *
+             * for example:
+             *
+             *      menu.isController // => true
+             *
              * @type {boolean}
              * @member KISSY.Component.Controller
+             * @protected
              */
             isController: true,
 
@@ -777,7 +823,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * see {@link KISSY.Component.Controller#removeChild}
              * @param {Boolean} [destroy] If true,
              * calls ``destroy()`` on the removed child component.
-             * @return {KISSY.Component.Controller} this
+             * @chainable
              */
             removeChildren: function (destroy) {
                 var self = this,
@@ -967,6 +1013,10 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             performActionInternal: function (ev) {
             },
 
+            /**
+             * destroy children
+             * @protected
+             */
             destructor: function () {
                 var self = this,
                     i,
@@ -1875,7 +1925,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
     /**
      * @class KISSY.Component.UIBase
-     * @extends KISSY.Base
+     * @extends KISSY.RichBase
      * UIBase for class-based component.
      */
     var UIBase = RichBase.extend({
@@ -1913,6 +1963,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
         /**
          * Create dom structure of this component.
+         * @chainable
          */
         create: function () {
             var self = this;
@@ -1940,6 +1991,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
         /**
          * Put dom structure of this component to document and bind event.
+         * @chainable
          */
         render: function () {
             var self = this;
@@ -2056,15 +2108,14 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
         /**
          * Destroy this component.
+         * @protected
          */
         destructor: function () {
-            var self = this,
-                id;
+            var id;
             // remove instance if set id
-            if (id = self.get("id")) {
+            if (id = this.get("id")) {
                 Manager.removeComponent(id);
             }
-            return self;
         }
     }, {
 
@@ -2073,6 +2124,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
              * Whether this component is rendered.
              * @type {Boolean}
              * @property rendered
+             * @readonly
              */
             /**
              * @ignore
@@ -2084,6 +2136,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
              * Whether this component 's dom structure is created.
              * @type {Boolean}
              * @property created
+             * @readonly
              */
             /**
              * @ignore
@@ -2096,6 +2149,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
              * get xclass of current component instance.
              * @property xclass
              * @type {String}
+             * @readonly
              */
             /**
              * @ignore

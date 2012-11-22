@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:52
+build time: Nov 22 14:09
 */
 /**
  * @ignore
@@ -361,6 +361,7 @@ KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Sp
         Gesture: Gesture,
         _Special: Special
     });
+
     return Event;
 }, {
     requires: ['event/base',
@@ -1825,7 +1826,10 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
         }
     });
 
-    S.EventObject = DOMEventObject;
+    // compatibility
+    // Event.Object = S.EventObject = DOMEventObject;
+
+    Event.DOMEventObject=DOMEventObject;
 
     return DOMEventObject;
 

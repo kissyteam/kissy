@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 15 23:33
+build time: Nov 22 14:05
 */
 /**
  * @ignore
@@ -1009,11 +1009,10 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
             }
 
             self.fields = fields;
-            // ie6 need a setTimeout to avoid handling load triggered if set iframe src
-            setTimeout(function () {
-                Event.on(iframe, 'load error', self._callback, self);
-                form.submit();
-            }, 10);
+
+            // can not setTimeout or else chrome will submit to top window
+            Event.on(iframe, 'load error', self._callback, self);
+            form.submit();
 
         },
 
@@ -1164,7 +1163,7 @@ KISSY.add('ajax/jsonp', function (S, io) {
             converters.script = converters.script || {};
 
             // script -> jsonp ,jsonp need to see json not as script
-            // if ie onload a 404 file or all browsers onload an invalid script
+            // if ie onload a 404/500 file or all browsers onload an invalid script
             // 404/invalid will be caught here
             // because response is undefined( jsonp callback is never called)
             // error throwed will be caught in conversion step
@@ -1334,6 +1333,7 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
              * cancel this request
              * @member KISSY.IO
              * @param {String} [statusText=abort] error reason as current request object's statusText
+             * @chainable
              */
             abort: function (statusText) {
                 var self = this;
@@ -1911,7 +1911,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
 
         _callback: function (event, abort) {
             // Firefox throws exceptions when accessing properties
-            // of an xhr when a network error occured
+            // of an xhr when a network error occurred
             // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
             try {
                 var self = this,

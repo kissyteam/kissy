@@ -125,18 +125,19 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
         /**
          * make node not to scroll while this drag object is dragging
          * @param {KISSY.DD.Draggable} drag
-         * @return {KISSY.DD.Scroll} this
+         * @chainable
          */
         detachDrag: function (drag) {
             var tag,
-                destructors = this[DESTRUCTORS];
+                self=this,
+                destructors = self[DESTRUCTORS];
             if (!(tag = stamp(drag, 1, TAG_DRAG)) ||
                 !destructors[tag]) {
-                return this;
+                return self;
             }
             destructors[tag].fn();
             delete destructors[tag];
-            return this;
+            return self;
         },
 
         /**
@@ -153,7 +154,7 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
         /**
          * make node to scroll while this drag object is dragging
          * @param {KISSY.DD.Draggable} drag
-         * @return {KISSY.DD.Scroll} this
+         * @chainable
          */
         attachDrag: function (drag) {
             var self = this,

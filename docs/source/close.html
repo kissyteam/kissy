@@ -98,10 +98,12 @@ KISSY.add(&quot;overlay/extension/close&quot;, function () {
         },
 <span id='KISSY-Overlay-Extension-Close-method-close'>        /**
 </span>         * hide or destroy according to {@link KISSY.Overlay.Extension.Close#closeAction}
+         * @chainable
          */
         close:function(){
             var self=this;
             self[actions[self.get(&quot;closeAction&quot;)] || HIDE]();
+            return self;
         },
         __destructor:function () {
             var btn = this.get(&quot;closeBtn&quot;);

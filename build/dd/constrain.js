@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:50
+build time: Nov 22 14:06
 */
 /**
  * @ignore
@@ -91,7 +91,7 @@ KISSY.add('dd/constrain', function (S, Base, Node, DD) {
         /**
          * start monitoring drag
          * @param {KISSY.DD.Draggable} drag
-         * @return {KISSY.DD.Constrain} this
+         * @chainable
          */
         attachDrag: function (drag) {
             var self = this,
@@ -112,7 +112,7 @@ KISSY.add('dd/constrain', function (S, Base, Node, DD) {
         /**
          * stop monitoring drag
          * @param {KISSY.DD.Draggable} drag
-         * @return {KISSY.DD.Constrain} this
+         * @chainable
          */
         detachDrag: function (drag) {
             var self = this,

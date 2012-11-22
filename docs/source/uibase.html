@@ -152,7 +152,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
 <span id='KISSY-Component-UIBase'>    /**
 </span>     * @class KISSY.Component.UIBase
-     * @extends KISSY.Base
+     * @extends KISSY.RichBase
      * UIBase for class-based component.
      */
     var UIBase = RichBase.extend({
@@ -190,6 +190,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
 <span id='KISSY-Component-UIBase-method-create'>        /**
 </span>         * Create dom structure of this component.
+         * @chainable
          */
         create: function () {
             var self = this;
@@ -217,6 +218,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
 <span id='KISSY-Component-UIBase-method-render'>        /**
 </span>         * Put dom structure of this component to document and bind event.
+         * @chainable
          */
         render: function () {
             var self = this;
@@ -333,15 +335,14 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
 <span id='KISSY-Component-UIBase-method-destructor'>        /**
 </span>         * Destroy this component.
+         * @protected
          */
         destructor: function () {
-            var self = this,
-                id;
+            var id;
             // remove instance if set id
-            if (id = self.get(&quot;id&quot;)) {
+            if (id = self.this(&quot;id&quot;)) {
                 Manager.removeComponent(id);
             }
-            return self;
         }
     }, {
 
@@ -350,6 +351,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 </span>             * Whether this component is rendered.
              * @type {Boolean}
              * @property rendered
+             * @readonly
              */
 <span id='global-property-rendered'>            /**
 </span>             * @ignore
@@ -361,6 +363,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 </span>             * Whether this component 's dom structure is created.
              * @type {Boolean}
              * @property created
+             * @readonly
              */
 <span id='global-property-created'>            /**
 </span>             * @ignore
@@ -373,6 +376,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 </span>             * get xclass of current component instance.
              * @property xclass
              * @type {String}
+             * @readonly
              */
 <span id='global-property-xclass'>            /**
 </span>             * @ignore

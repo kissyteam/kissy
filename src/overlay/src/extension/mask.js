@@ -15,10 +15,9 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
     Mask.ATTRS = {
         /**
          * Whether show mask layer when component shows and effect
-         * @cfg {Boolean|Object} mask
          *
          * for example:
-         *      @example
+         *
          *      {
          *          // whether hide current component when click on mask
          *          hideOnClick: false,
@@ -26,6 +25,8 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
          *          duration: 0.5,
          *          easing: 'easingNone'
          *      }
+         *
+         * @cfg {Boolean|Object} mask
          */
         /**
          * @ignore

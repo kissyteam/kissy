@@ -147,8 +147,16 @@ KISSY.add(&quot;component/base/controller&quot;, function (S, Box, Event, Compon
 
 <span id='KISSY-Component-Controller-property-isController'>            /**
 </span>             * mark current instance as controller instance.
+             *
+             * access this property directly.
+             *
+             * for example:
+             *
+             *      menu.isController // =&gt; true
+             *
              * @type {boolean}
              * @member KISSY.Component.Controller
+             * @protected
              */
             isController: true,
 
@@ -338,7 +346,7 @@ KISSY.add(&quot;component/base/controller&quot;, function (S, Box, Event, Compon
              * see {@link KISSY.Component.Controller#removeChild}
              * @param {Boolean} [destroy] If true,
              * calls ``destroy()`` on the removed child component.
-             * @return {KISSY.Component.Controller} this
+             * @chainable
              */
             removeChildren: function (destroy) {
                 var self = this,
@@ -528,6 +536,10 @@ KISSY.add(&quot;component/base/controller&quot;, function (S, Box, Event, Compon
             performActionInternal: function (ev) {
             },
 
+<span id='KISSY-Component-Controller-method-destructor'>            /**
+</span>             * destroy children
+             * @protected
+             */
             destructor: function () {
                 var self = this,
                     i,

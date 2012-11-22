@@ -135,7 +135,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
     /**
      * @class KISSY.Component.UIBase
-     * @extends KISSY.Base
+     * @extends KISSY.RichBase
      * UIBase for class-based component.
      */
     var UIBase = RichBase.extend({
@@ -173,6 +173,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
         /**
          * Create dom structure of this component.
+         * @chainable
          */
         create: function () {
             var self = this;
@@ -200,6 +201,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
         /**
          * Put dom structure of this component to document and bind event.
+         * @chainable
          */
         render: function () {
             var self = this;
@@ -316,15 +318,14 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
         /**
          * Destroy this component.
+         * @protected
          */
         destructor: function () {
-            var self = this,
-                id;
+            var id;
             // remove instance if set id
-            if (id = self.get("id")) {
+            if (id = this.get("id")) {
                 Manager.removeComponent(id);
             }
-            return self;
         }
     }, {
 
@@ -333,6 +334,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
              * Whether this component is rendered.
              * @type {Boolean}
              * @property rendered
+             * @readonly
              */
             /**
              * @ignore
@@ -344,6 +346,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
              * Whether this component 's dom structure is created.
              * @type {Boolean}
              * @property created
+             * @readonly
              */
             /**
              * @ignore
@@ -356,6 +359,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
              * get xclass of current component instance.
              * @property xclass
              * @type {String}
+             * @readonly
              */
             /**
              * @ignore

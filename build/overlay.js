@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 21 14:24
+build time: Nov 22 14:09
 */
 /**
  * @ignore
@@ -173,14 +173,17 @@ KISSY.add("overlay/base", function (S, Component,
                 /**
                  * Set v as overlay 's show effect
                  *
-                 * v.effect (String): Default:none. can be set as "fade" or "slide"
+                 * - v.effect (String): Default:none.
+                 * can be set as "fade" or "slide"
                  *
-                 * v.target (String|KISS.Node): The target node from which overlay should animate from while showing.
-                 * Since KISSY 1.3.
+                 * - v.target (String|KISS.Node):
+                 * The target node from which overlay should animate from while showing.
                  *
-                 * v.duration (Number): in seconds. Default:0.5.
+                 * - v.duration (Number): in seconds.
+                 * Default:0.5.
                  *
-                 * v.easing (String): see {@link KISSY.Anim.Easing}
+                 * - v.easing (String|Function):
+                 * for string see {@link KISSY.Anim.Easing} 's method name.
                  *
                  * @cfg {Object} effect
                  */
@@ -637,10 +640,12 @@ KISSY.add("overlay/extension/close", function () {
         },
         /**
          * hide or destroy according to {@link KISSY.Overlay.Extension.Close#closeAction}
+         * @chainable
          */
         close:function(){
             var self=this;
             self[actions[self.get("closeAction")] || HIDE]();
+            return self;
         },
         __destructor:function () {
             var btn = this.get("closeBtn");
@@ -841,14 +846,17 @@ KISSY.add("overlay/extension/loading", function () {
     Loading.prototype = {
         /**
          * mask component as loading
+         * @chainable
          */
         loading: function () {
-            this.get("view").loading();
-            return this;
+            var self=this;
+            self.get("view").loading();
+            return self;
         },
 
         /**
          * unmask component as loading
+         * @chainable
          */
         unloading: function () {
             this.get("view").unloading();
@@ -983,10 +991,9 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
     Mask.ATTRS = {
         /**
          * Whether show mask layer when component shows and effect
-         * @cfg {Boolean|Object} mask
          *
          * for example:
-         *      @example
+         *
          *      {
          *          // whether hide current component when click on mask
          *          hideOnClick: false,
@@ -994,6 +1001,8 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
          *          duration: 0.5,
          *          easing: 'easingNone'
          *      }
+         *
+         * @cfg {Boolean|Object} mask
          */
         /**
          * @ignore

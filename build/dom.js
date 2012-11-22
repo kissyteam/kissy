@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:50
+build time: Nov 22 14:06
 */
 /**
  * @ignore
@@ -375,7 +375,7 @@ KISSY.add('dom/attr', function (S, DOM, UA, undefined) {
              * @param [val] A value to set for the attribute.
              * @return {String}
              */
-            attr: function (selector, name, val, pass) {
+            attr: function (selector, name, val, /*internal use by anim/fx*/pass) {
                 /*
                  Hazards From Caja Note:
 
@@ -749,7 +749,8 @@ KISSY.add('dom/base', function (S, UA, undefined) {
     var DOM = {
 
         /**
-         * Whether has been set a custom domain,
+         * Whether has been set a custom domain.
+         * Note not perfect: localhost:8888, domain='localhost'
          * @param {window} [win] Test window. Default current window.
          * @return {Boolean}
          */

@@ -368,7 +368,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
 <span id='KISSY-Anim-method-pause'>        /**
 </span>         * pause current anim
-         * @return this
+         * @chainable
          */
         pause: function () {
             var self = this;
@@ -383,7 +383,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
 <span id='KISSY-Anim-method-resume'>        /**
 </span>         * resume current anim
-         * @return this
+         * @chainable
          */
         resume: function () {
             var self = this;
@@ -403,6 +403,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
 <span id='KISSY-Anim-method-run'>        /**
 </span>         * start this animation
+         * @chainable
          */
         run: function () {
             var self = this,
@@ -462,7 +463,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 <span id='KISSY-Anim-method-stop'>        /**
 </span>         * stop this animation
          * @param {Boolean} [finish] whether jump to the last position of this animation
-         * @return this;
+         * @chainable
          */
         stop: function (finish) {
             var self = this,

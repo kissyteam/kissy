@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 16 16:01
+build time: Nov 22 14:06
 */
 KISSY.add("datalazyload",function(e,f,h,u,n){function o(a,b){for(var c=[],d=0;d<a.length;d++)e.inArray(a[d],b)||c.push(a[d]);return c}function p(a,b){a.style.display=m;a.className="";var c=f.create("<div>");a.parentNode.insertBefore(c,a);f.html(c,a.value,b)}function v(a){return f.hasClass(a,q)}function i(a,b){if(!(this instanceof i))return new i(a,b);b===n&&(b=a,a=[k]);e.isArray(a)||(a=[f.get(a)||k]);b=b||{};b.containers=a;i.superclass.constructor.call(this,b);this._callbacks={els:[],fns:[]};this._init()}
 function r(a,b){var c,d,g,e;c=Math.max(a.top,b.top);d=Math.min(a.bottom,b.bottom);g=Math.max(a.left,b.left);e=Math.min(a.right,b.right);return d>=c&&e>=g}var l=e.Env.host,k=l.document,q="ks-datalazyload",m="none",s=function(a,b){var b=b||"data-ks-lazyload",c=a.getAttribute(b);c&&a.src!=c&&(a.src=c,a.removeAttribute(b))};i.ATTRS={mod:{value:"manual"},diff:{value:"default"},placeholder:{value:m},execScript:{value:!0},containers:{valueFn:function(){return[k]}},autoDestroy:{value:!0}};e.extend(i,u,{_init:function(){this._filterItems();

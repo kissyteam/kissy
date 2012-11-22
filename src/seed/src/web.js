@@ -97,7 +97,7 @@
          *      @example
          *      KISSY.ready(function(S){});
          *
-         * @return {KISSY}
+         * @chainable
          * @member KISSY
          */
         ready: function (fn) {

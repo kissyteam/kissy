@@ -104,6 +104,7 @@ KISSY.add("component/extension/position", function (S) {
         /**
          * Move to absolute position.
          * @ignore
+         * @chainable
          */
         move: function (x, y) {
             var self = this;

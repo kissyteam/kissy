@@ -162,6 +162,7 @@
          * Set parameter value corresponding to current key
          * @param {String} key
          * @param value
+         * @chainable
          */
         set: function (key, value) {
             var self = this, _queryMap;
@@ -183,6 +184,7 @@
         /**
          * Remove parameter with specified name.
          * @param {String} key
+         * @chainable
          */
         remove: function (key) {
             var self = this;
@@ -200,6 +202,7 @@
          * Add parameter value corresponding to current key
          * @param {String} key
          * @param value
+         * @chainable
          */
         add: function (key, value) {
             var self = this,
@@ -428,7 +431,7 @@
         /**
          * Set scheme part
          * @param {String} scheme
-         * @return this
+         * @chainable
          */
         setScheme: function (scheme) {
             this.scheme = scheme;
@@ -446,7 +449,7 @@
         /**
          * Set hostname
          * @param {String} hostname
-         * @return this
+         * @chainable
          */
         setHostname: function (hostname) {
             this.hostname = hostname;
@@ -456,7 +459,7 @@
         /**
          * Set user info
          * @param {String} userInfo
-         * @return this
+         * @chainable
          */
         'setUserInfo': function (userInfo) {
             this.userInfo = userInfo;
@@ -474,7 +477,7 @@
         /**
          * Set port
          * @param {String} port
-         * @return this
+         * @chainable
          */
         'setPort': function (port) {
             this.port = port;
@@ -492,7 +495,7 @@
         /**
          * Set path
          * @param {string} path
-         * @return this
+         * @chainable
          */
         setPath: function (path) {
             this.path = path;
@@ -510,7 +513,7 @@
         /**
          * Set query
          * @param {String|KISSY.Uri.Query} query
-         * @return this
+         * @chainable
          */
         'setQuery': function (query) {
             if (typeof query == 'string') {
@@ -542,7 +545,7 @@
         /**
          * Set fragment
          * @param {String} fragment
-         * @return this
+         * @chainable
          */
         'setFragment': function (fragment) {
             if (!S.startsWith(fragment, '#')) {

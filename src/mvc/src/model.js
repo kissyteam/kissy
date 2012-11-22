@@ -94,6 +94,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * @param {Function} opts.success callback when action is done successfully.
              * @param {Function} opts.error callback when error occurs at action.
              * @param {Function} opts.complete callback when action is complete.
+             * @chainable
              */
             destroy:function (opts) {
                 var self = this;
@@ -135,6 +136,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * @param {Function} opts.success callback when action is done successfully.
              * @param {Function} opts.error callback when error occurs at action.
              * @param {Function} opts.complete callback when action is complete.
+             * @chainable
              */
             load:function (opts) {
                 var self = this;
@@ -163,6 +165,7 @@ KISSY.add("mvc/model", function (S, Base) {
              * @param {Function} opts.success callback when action is done successfully.
              * @param {Function} opts.error callback when error occurs at action.
              * @param {Function} opts.complete callback when action is complete.
+             * @chainable
              */
             save:function (opts) {
                 var self = this;

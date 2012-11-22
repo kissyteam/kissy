@@ -145,6 +145,7 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
              * cancel this request
              * @member KISSY.IO
              * @param {String} [statusText=abort] error reason as current request object's statusText
+             * @chainable
              */
             abort: function (statusText) {
                 var self = this;

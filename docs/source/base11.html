@@ -185,14 +185,17 @@ KISSY.add(&quot;overlay/base&quot;, function (S, Component,
 <span id='KISSY-Overlay-cfg-effect'>                /**
 </span>                 * Set v as overlay 's show effect
                  *
-                 * v.effect (String): Default:none. can be set as &quot;fade&quot; or &quot;slide&quot;
+                 * - v.effect (String): Default:none.
+                 * can be set as &quot;fade&quot; or &quot;slide&quot;
                  *
-                 * v.target (String|KISS.Node): The target node from which overlay should animate from while showing.
-                 * Since KISSY 1.3.
+                 * - v.target (String|KISS.Node):
+                 * The target node from which overlay should animate from while showing.
                  *
-                 * v.duration (Number): in seconds. Default:0.5.
+                 * - v.duration (Number): in seconds.
+                 * Default:0.5.
                  *
-                 * v.easing (String): see {@link KISSY.Anim.Easing}
+                 * - v.easing (String|Function):
+                 * for string see {@link KISSY.Anim.Easing} 's method name.
                  *
                  * @cfg {Object} effect
                  */

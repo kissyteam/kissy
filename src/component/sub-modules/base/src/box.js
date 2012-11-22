@@ -11,6 +11,35 @@ KISSY.add('component/base/box', function () {
      * @private
      */
     function Box() {
+
+        /**
+         * @event beforeVisibleChange
+         * fired before visible is changed,
+         * can return false to prevent this change
+         * @param {KISSY.Event.CustomEventObject} e
+         * @param {Boolean} e.prevVal current component 's visible value
+         * @param {Boolean} e.prevVal visible value to be changed
+         */
+
+        /**
+         * @event afterVisibleChange
+         * fired after visible is changed
+         * @param {KISSY.Event.CustomEventObject} e
+         * @param {Boolean} e.prevVal current component 's previous visible value
+         * @param {Boolean} e.prevVal current component 's visible value
+         */
+
+        /**
+         * @event show
+         * fired after current component shows
+         * @param {KISSY.Event.CustomEventObject} e
+         */
+
+        /**
+         * @event hide
+         * fired after current component hides
+         * @param {KISSY.Event.CustomEventObject} e
+         */
     }
 
     Box.ATTRS =
@@ -145,15 +174,18 @@ KISSY.add('component/base/box', function () {
 
         /**
          * whether this component is visible after created.
-         * will add css class {prefix}{component}-hidden or {prefix}{component}-shown to component's root el.
          *
-         * Defaults to: true.
+         * will add css class {prefix}{component}-hidden
+         * or {prefix}{component}-shown to component's root el.
          *
          * @cfg {Boolean} visible
          */
         /**
          * whether this component is visible.
-         * will add css class {prefix}{component}-hidden or {prefix}{component}-shown to component's root el.
+         *
+         * will add css class {prefix}{component}-hidden
+         * or {prefix}{component}-shown to component's root el.
+         *
          * @type {Boolean}
          * @property visible
          */
@@ -166,8 +198,12 @@ KISSY.add('component/base/box', function () {
         },
 
         /**
-         * the node to parse for configuration values,passed to component's HTML_PARSER definition
-         * @cfg {KISSY.NodeList} srcNode
+         * kissy node or css selector to find the first match node
+         *
+         * parsed for configuration values,
+         * passed to component's HTML_PARSER definition
+         * @cfg {KISSY.NodeList|String} srcNode
+         *
          */
         /**
          * @ignore
@@ -189,6 +225,7 @@ KISSY.add('component/base/box', function () {
 
         /**
          * show component
+         * @chainable
          */
         show: function () {
             var self = this;
@@ -199,6 +236,7 @@ KISSY.add('component/base/box', function () {
 
         /**
          * hide component
+         * @chainable
          */
         hide: function () {
             var self = this;

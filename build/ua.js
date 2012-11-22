@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 21 15:30
+build time: Nov 22 14:13
 */
 /**
  * @ignore
@@ -121,32 +121,32 @@ KISSY.add('ua/base', function (S, undefined) {
 
             /**
              * ipad ios version
-             * @type float
+             * @type Number
              * @member KISSY.UA
              */
             ipad: undefined,
             /**
              * iphone ios version
-             * @type float
+             * @type Number
              * @member KISSY.UA
              */
             iphone: undefined,
             /**
              * ipod ios
-             * @type float
+             * @type Number
              * @member KISSY.UA
              */
             ipod: undefined,
             /**
              * ios version
-             * @type float
+             * @type Number
              * @member KISSY.UA
              */
-            ios: null,
+            ios: undefined,
 
             /**
              * android version
-             * @type float
+             * @type Number
              * @member KISSY.UA
              */
             android: undefined

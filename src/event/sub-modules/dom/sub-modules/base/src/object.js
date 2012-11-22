@@ -400,7 +400,10 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
         }
     });
 
-    S.EventObject = DOMEventObject;
+    // compatibility
+    // Event.Object = S.EventObject = DOMEventObject;
+
+    Event.DOMEventObject=DOMEventObject;
 
     return DOMEventObject;
 

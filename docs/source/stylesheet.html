@@ -83,7 +83,7 @@ KISSY.add(&quot;stylesheet&quot;, function (S, DOM) {
 
 <span id='KISSY-StyleSheet-method-enable'>        /**
 </span>         * Make current stylesheet enabled.
-         * @return {KISSY.StyleSheet} current StyleSheet instance.
+         * @chainable
          */
         enable: function () {
             this.sheet.disabled = false;
@@ -92,7 +92,7 @@ KISSY.add(&quot;stylesheet&quot;, function (S, DOM) {
 
 <span id='KISSY-StyleSheet-method-disable'>        /**
 </span>         * Make current stylesheet disabled.
-         * @return {KISSY.StyleSheet} current StyleSheet instance.
+         * @chainable
          */
         disable: function () {
             this.sheet.disabled = true;
@@ -119,7 +119,7 @@ KISSY.add(&quot;stylesheet&quot;, function (S, DOM) {
          *      // unset
          *      set(&quot;p&quot;,{color:''})
          * &lt;/code&gt;
-         * @return {KISSY.StyleSheet} current StyleSheet instance.
+         * @chainable
          */
         set: function (selectorText, css) {
             var sheet = this.sheet;

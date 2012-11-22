@@ -1,5 +1,22 @@
-/**
- * @ignore
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
  * infrastructure for create plugin/extension-enabled class
  * @author yiminghe@gmail.com
  */
@@ -8,8 +25,8 @@ KISSY.add('rich-base', function (S, Base) {
     var ATTRS = 'ATTRS',
         noop = S.noop;
 
-    /**
-     * infrastructure for create plugin/extension-enabled class
+<span id='KISSY-RichBase'>    /**
+</span>     * infrastructure for create plugin/extension-enabled class
      * @class KISSY.RichBase
      * @extend KISSY.Base
      */
@@ -20,22 +37,22 @@ KISSY.add('rich-base', function (S, Base) {
         Base.apply(self, arguments);
 
         // setup listeners
-        listeners = self.get("listeners");
+        listeners = self.get(&quot;listeners&quot;);
         for (n in listeners) {
             self.on(n, listeners[n]);
         }
 
         // initialize main class and extension
-        self.callMethodByHierarchy("initializer", "constructor");
+        self.callMethodByHierarchy(&quot;initializer&quot;, &quot;constructor&quot;);
 
         // initialize plugins
         self.constructPlugins();
-        self.callPluginsMethod("initializer");
+        self.callPluginsMethod(&quot;initializer&quot;);
     }
 
     S.extend(RichBase, Base, {
-        /**
-         * call methods on main class and extension class by order
+<span id='KISSY-RichBase-method-callMethodByHierarchy'>        /**
+</span>         * call methods on main class and extension class by order
          * @protected
          * @param mainMethod method name of main class.
          * @param extMethod method name of extension class
@@ -55,10 +72,10 @@ KISSY.add('rich-base', function (S, Base) {
                 // 收集扩展类
                 t = [];
                 if (exts = c.__ks_exts) {
-                    for (i = 0; i < exts.length; i++) {
+                    for (i = 0; i &lt; exts.length; i++) {
                         ext = exts[i];
                         if (ext) {
-                            if (extMethod != "constructor") {
+                            if (extMethod != &quot;constructor&quot;) {
                                 //只调用真正自己构造器原型的定义，继承原型链上的不要管
                                 if (ext.prototype.hasOwnProperty(extMethod)) {
                                     ext = ext.prototype[extMethod];
@@ -66,7 +83,7 @@ KISSY.add('rich-base', function (S, Base) {
                                     ext = null;
                                 }
                             }
-                            ext && t.push(ext);
+                            ext &amp;&amp; t.push(ext);
                         }
                     }
                 }
@@ -75,7 +92,7 @@ KISSY.add('rich-base', function (S, Base) {
                 // 只调用真正自己构造器原型的定义，继承原型链上的不要管 !important
                 // 所以不用自己在 renderUI 中调用 superclass.renderUI 了，UIBase 构造器自动搜寻
                 // 以及 initializer 等同理
-                if (c.prototype.hasOwnProperty(mainMethod) && (main = c.prototype[mainMethod])) {
+                if (c.prototype.hasOwnProperty(mainMethod) &amp;&amp; (main = c.prototype[mainMethod])) {
                     t.push(main);
                 }
 
@@ -84,18 +101,18 @@ KISSY.add('rich-base', function (S, Base) {
                     extChains.push.apply(extChains, t.reverse());
                 }
 
-                c = c.superclass && c.superclass.constructor;
+                c = c.superclass &amp;&amp; c.superclass.constructor;
             }
 
             // 初始化函数
-            // 顺序：父类的所有扩展类函数 -> 父类对应函数 -> 子类的所有扩展函数 -> 子类对应函数
-            for (i = extChains.length - 1; i >= 0; i--) {
-                extChains[i] && extChains[i].call(self);
+            // 顺序：父类的所有扩展类函数 -&gt; 父类对应函数 -&gt; 子类的所有扩展函数 -&gt; 子类对应函数
+            for (i = extChains.length - 1; i &gt;= 0; i--) {
+                extChains[i] &amp;&amp; extChains[i].call(self);
             }
         },
 
-        /**
-         * call plugin method
+<span id='KISSY-RichBase-method-callPluginsMethod'>        /**
+</span>         * call plugin method
          * @protected
          * @param method method name of plugin
          */
@@ -108,8 +125,8 @@ KISSY.add('rich-base', function (S, Base) {
             });
         },
 
-        /**
-         * construct plugins
+<span id='KISSY-RichBase-method-constructPlugins'>        /**
+</span>         * construct plugins
          * @protected
          */
         constructPlugins: function () {
@@ -121,32 +138,32 @@ KISSY.add('rich-base', function (S, Base) {
             });
         },
 
-        /**
-         * initialize for overridden
+<span id='KISSY-RichBase-property-initializer'>        /**
+</span>         * initialize for overridden
          * @protected
          */
         initializer: noop,
 
-        /**
-         * destroy for overridden
+<span id='KISSY-RichBase-property-destructor'>        /**
+</span>         * destroy for overridden
          * @protected
          */
         destructor: noop,
 
-        /**
-         * destroy current instance.
+<span id='KISSY-RichBase-method-destroy'>        /**
+</span>         * destroy current instance.
          */
         destroy: function () {
             var self = this;
-            self.callPluginsMethod("destructor");
+            self.callPluginsMethod(&quot;destructor&quot;);
             destroyHierarchy(self);
             self.fire('destroy');
             self.detach();
             self.fire('destroy');
         },
 
-        /**
-         * plugin a new plugins to current instance
+<span id='KISSY-RichBase-method-plug'>        /**
+</span>         * plugin a new plugins to current instance
          * @param {Function|Object} plugin
          * @chainable
          */
@@ -163,8 +180,8 @@ KISSY.add('rich-base', function (S, Base) {
             return self;
         },
 
-        /**
-         * unplug by pluginId or plugin instance.
+<span id='KISSY-RichBase-method-unplug'>        /**
+</span>         * unplug by pluginId or plugin instance.
          * if called with no parameter, then destroy all plugins.
          * @param {Object|String} [plugin]
          * @chainable
@@ -201,19 +218,19 @@ KISSY.add('rich-base', function (S, Base) {
 
     }, {
         ATTRS: {
-            /**
-             * Plugins for current component.
+<span id='KISSY-RichBase-cfg-plugins'>            /**
+</span>             * Plugins for current component.
              * @cfg {Function[]/Object[]} plugins
              */
-            /**
-             * @ignore
+<span id='global-property-plugins'>            /**
+</span>             * @ignore
              */
             plugins: {
                 value: []
             },
 
-            /**
-             * Config listener on created.
+<span id='KISSY-RichBase-cfg-listeners'>            /**
+</span>             * Config listener on created.
              *
              * for example:
              *
@@ -234,8 +251,8 @@ KISSY.add('rich-base', function (S, Base) {
              *
              * @cfg {Object} listeners
              */
-            /**
-             * @ignore
+<span id='global-property-listeners'>            /**
+</span>             * @ignore
              */
             listeners: {
                 value: []
@@ -244,8 +261,8 @@ KISSY.add('rich-base', function (S, Base) {
     });
 
     S.mix(RichBase, {
-        /**
-         * create a new class from extensions and static/prototype properties/methods.
+<span id='KISSY-RichBase-method-extend'>        /**
+</span>         * create a new class from extensions and static/prototype properties/methods.
          * @param {Function[]} [extensions] extension classes
          * @param {Object} [px] key-value map for prototype properties/methods.
          * @param {Object} [sx] key-value map for static properties/methods.
@@ -263,7 +280,7 @@ KISSY.add('rich-base', function (S, Base) {
          */
         extend: function extend(extensions, px, sx) {
             var baseClass = this,
-                name = "RichBaseDerived",
+                name = &quot;RichBaseDerived&quot;,
                 t,
                 C,
                 args = S.makeArray(arguments);
@@ -288,8 +305,8 @@ KISSY.add('rich-base', function (S, Base) {
                 // debug mode, give the right name for constructor
                 // refer : http://limu.iteye.com/blog/1136712
                 if (S.Config.debug) {
-                    eval("C=function " + name.replace(/[-.]/g, "_") +
-                        "(){ C.superclass.constructor.apply(this, arguments);}");
+                    eval(&quot;C=function &quot; + name.replace(/[-.]/g, &quot;_&quot;) +
+                        &quot;(){ C.superclass.constructor.apply(this, arguments);}&quot;);
                 }
             }
 
@@ -314,7 +331,7 @@ KISSY.add('rich-base', function (S, Base) {
                         // (用 function return 出来)!
                         // a {y:{value:2}} b {y:{value:3,getter:fn}}
                         // b is a extension of a
-                        // =>
+                        // =&gt;
                         // a {y:{value:2,getter:fn}}
 
                         S.each(ext[ATTRS], function (v, name) {
@@ -344,7 +361,7 @@ KISSY.add('rich-base', function (S, Base) {
         }
     });
 
-// 销毁顺序： 子类 destructor -> 子类扩展 destructor -> 父类 destructor -> 父类扩展 destructor
+// 销毁顺序： 子类 destructor -&gt; 子类扩展 destructor -&gt; 父类 destructor -&gt; 父类扩展 destructor
     function destroyHierarchy(self) {
         var c = self.constructor,
             extensions,
@@ -353,18 +370,18 @@ KISSY.add('rich-base', function (S, Base) {
 
         while (c) {
             // 只触发该类真正的析构器，和父亲没关系，所以不要在子类析构器中调用 superclass
-            if (c.prototype.hasOwnProperty("destructor")) {
+            if (c.prototype.hasOwnProperty(&quot;destructor&quot;)) {
                 c.prototype.destructor.apply(self);
             }
 
             if ((extensions = c.__ks_exts)) {
-                for (i = extensions.length - 1; i >= 0; i--) {
-                    d = extensions[i] && extensions[i].prototype.__destructor;
-                    d && d.apply(self);
+                for (i = extensions.length - 1; i &gt;= 0; i--) {
+                    d = extensions[i] &amp;&amp; extensions[i].prototype.__destructor;
+                    d &amp;&amp; d.apply(self);
                 }
             }
 
-            c = c.superclass && c.superclass.constructor;
+            c = c.superclass &amp;&amp; c.superclass.constructor;
         }
     }
 
@@ -372,4 +389,6 @@ KISSY.add('rich-base', function (S, Base) {
 
 }, {
     requires: ['base']
-});
+});</pre>
+</body>
+</html>

@@ -15,14 +15,17 @@ KISSY.add("overlay/extension/loading", function () {
     Loading.prototype = {
         /**
          * mask component as loading
+         * @chainable
          */
         loading: function () {
-            this.get("view").loading();
-            return this;
+            var self=this;
+            self.get("view").loading();
+            return self;
         },
 
         /**
          * unmask component as loading
+         * @chainable
          */
         unloading: function () {
             this.get("view").unloading();

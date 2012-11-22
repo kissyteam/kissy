@@ -149,7 +149,7 @@ KISSY.add('ua/base', function (S, undefined) {
         numberify = function (s) {
             var c = 0;
             // convert '1.2.3.4' to 1.234
-            return parseNumber(s.replace(/\./g, function () {
+            return parseFloat(s.replace(/\./g, function () {
                 return (c++ === 0) ? '.' : '';
             }));
         };

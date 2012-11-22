@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:53
+build time: Nov 22 14:09
 */
 /**
  * @fileOverview 图片放大效果 ImageZoom.
@@ -118,11 +118,11 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                 }
             },
 
-            _uiSetImageWidth: function (v) {
+            '_uiSetImageWidth': function (v) {
                 this.image.width(v);
             },
 
-            _uiSetImageHeight: function (v) {
+            '_uiSetImageHeight': function (v) {
                 this.image.height(v);
             }
         },

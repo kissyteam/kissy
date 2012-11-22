@@ -1,9 +1,10 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 23:13
+build time: Nov 22 14:09
 */
 /**
+ * @ignore
  * infrastructure for create plugin/extension-enabled class
  * @author yiminghe@gmail.com
  */
@@ -12,6 +13,11 @@ KISSY.add('rich-base', function (S, Base) {
     var ATTRS = 'ATTRS',
         noop = S.noop;
 
+    /**
+     * infrastructure for create plugin/extension-enabled class
+     * @class KISSY.RichBase
+     * @extend KISSY.Base
+     */
     function RichBase() {
         var self = this, n, listeners;
 
@@ -142,12 +148,12 @@ KISSY.add('rich-base', function (S, Base) {
             self.fire('destroy');
             self.detach();
             self.fire('destroy');
-            return self;
         },
 
         /**
          * plugin a new plugins to current instance
          * @param {Function|Object} plugin
+         * @chainable
          */
         'plug': function (plugin) {
             var self = this;
@@ -163,15 +169,17 @@ KISSY.add('rich-base', function (S, Base) {
         },
 
         /**
-         * unplug by pluginId or plugin instance
+         * unplug by pluginId or plugin instance.
+         * if called with no parameter, then destroy all plugins.
          * @param {Object|String} [plugin]
+         * @chainable
          */
         'unplug': function (plugin) {
             var plugins = [],
                 self = this,
-                isString = S.isString(plugin);
+                isString = typeof plugin == 'string';
 
-            S.each(this.get('plugins'), function (p) {
+            S.each(self.get('plugins'), function (p) {
                 var keep = 0;
                 if (plugin) {
                     if (isString) {
@@ -192,8 +200,8 @@ KISSY.add('rich-base', function (S, Base) {
                 }
             });
 
-            this.setInternal('plugins', plugins);
-            return this;
+            self.setInternal('plugins', plugins);
+            return self;
         }
 
     }, {
@@ -211,10 +219,9 @@ KISSY.add('rich-base', function (S, Base) {
 
             /**
              * Config listener on created.
-             * @cfg {Object} listeners
              *
              * for example:
-             *      @example
+             *
              *      {
              *          click:{
              *              scope:{x:1},
@@ -229,6 +236,8 @@ KISSY.add('rich-base', function (S, Base) {
              *              alert(this.x);
              *          }
              *      }
+             *
+             * @cfg {Object} listeners
              */
             /**
              * @ignore
@@ -239,93 +248,108 @@ KISSY.add('rich-base', function (S, Base) {
         }
     });
 
+    S.mix(RichBase, {
+        /**
+         * create a new class from extensions and static/prototype properties/methods.
+         * @param {Function[]} [extensions] extension classes
+         * @param {Object} [px] key-value map for prototype properties/methods.
+         * @param {Object} [sx] key-value map for static properties/methods.
+         * @return {Function} new class which extend called, it also has a static extend method
+         *
+         * for example:
+         *
+         *      var parent = RichBase.extend({
+         *          isParent: 1
+         *      });
+         *      var child = parent.extend({
+         *          isChild: 1,
+         *          isParent: 0
+         *      })
+         */
+        extend: function extend(extensions, px, sx) {
+            var baseClass = this,
+                name = "RichBaseDerived",
+                t,
+                C,
+                args = S.makeArray(arguments);
 
-    RichBase.extend = function extend(extensions, px, sx) {
-        var baseClass = this,
-            name = "RichBaseDerived",
-            t,
-            C,
-            args = S.makeArray(arguments);
-
-        if (S.isObject(extensions)) {
-            sx = px;
-            px = extensions;
-            extensions = [];
-        }
-
-        if (typeof (t = args[args.length - 1]) == 'string') {
-            name = t;
-        }
-
-        px = px || {};
-        if (px.hasOwnProperty('constructor')) {
-            C = px.constructor;
-        } else {
-            C = function () {
-                C.superclass.constructor.apply(this, arguments);
-            };
-            // debug mode, give the right name for constructor
-            // refer : http://limu.iteye.com/blog/1136712
-            if (S.Config.debug) {
-                eval("C=function " + name.replace(/[-.]/g, "_") +
-                    "(){ C.superclass.constructor.apply(this, arguments);}");
+            if (extensions == null || S.isObject(extensions)) {
+                sx = px;
+                px = extensions;
+                extensions = [];
             }
-        }
 
-        C.name = name;
+            if (typeof (t = args[args.length - 1]) == 'string') {
+                name = t;
+            }
 
-        S.extend(C, baseClass, px, sx);
+            px = px || {};
+            if (px.hasOwnProperty('constructor')) {
+                C = px.constructor;
+            } else {
+                C = function () {
+                    C.superclass.constructor.apply(this, arguments);
+                };
+                // debug mode, give the right name for constructor
+                // refer : http://limu.iteye.com/blog/1136712
+                if (S.Config.debug) {
+                    eval("C=function " + name.replace(/[-.]/g, "_") +
+                        "(){ C.superclass.constructor.apply(this, arguments);}");
+                }
+            }
 
-        if (extensions) {
-            C.__ks_exts = extensions;
+            C.name = name;
 
-            var attrs = {},
-                prototype = {};
+            S.extend(C, baseClass, px, sx);
 
-            // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
-            // 主类最优先
-            S.each(extensions['concat'](C), function (ext) {
-                if (ext) {
-                    // 合并 ATTRS 到主类
-                    // 不覆盖主类上的定义(主类位于 constructors 最后)
-                    // 因为继承层次上扩展类比主类层次高
-                    // 注意：最好 value 必须是简单对象，自定义 new 出来的对象就会有问题
-                    // (用 function return 出来)!
-                    // a {y:{value:2}} b {y:{value:3,getter:fn}}
-                    // b is a extension of a
-                    // =>
-                    // a {y:{value:2,getter:fn}}
+            if (extensions) {
+                C.__ks_exts = extensions;
 
-                    S.each(ext[ATTRS], function (v, name) {
-                        var av = attrs[name] = attrs[name] || {};
-                        S.mix(av, v);
-                    });
+                var attrs = {},
+                    prototype = {};
 
-                    // 方法合并
-                    var exp = ext.prototype, p;
-                    for (p in exp) {
-                        // do not mess with parent class
-                        if (exp.hasOwnProperty(p)) {
-                            prototype[p] = exp[p];
+                // [ex1,ex2]，扩展类后面的优先，ex2 定义的覆盖 ex1 定义的
+                // 主类最优先
+                S.each(extensions['concat'](C), function (ext) {
+                    if (ext) {
+                        // 合并 ATTRS 到主类
+                        // 不覆盖主类上的定义(主类位于 constructors 最后)
+                        // 因为继承层次上扩展类比主类层次高
+                        // 注意：最好 value 必须是简单对象，自定义 new 出来的对象就会有问题
+                        // (用 function return 出来)!
+                        // a {y:{value:2}} b {y:{value:3,getter:fn}}
+                        // b is a extension of a
+                        // =>
+                        // a {y:{value:2,getter:fn}}
+
+                        S.each(ext[ATTRS], function (v, name) {
+                            var av = attrs[name] = attrs[name] || {};
+                            S.mix(av, v);
+                        });
+
+                        // 方法合并
+                        var exp = ext.prototype, p;
+                        for (p in exp) {
+                            // do not mess with parent class
+                            if (exp.hasOwnProperty(p)) {
+                                prototype[p] = exp[p];
+                            }
                         }
                     }
-                }
-            });
+                });
 
-            C[ATTRS] = attrs;
+                C[ATTRS] = attrs;
 
-            S.augment(C, prototype);
+                S.augment(C, prototype);
+            }
+
+            C.extend = extend;
+
+            return C;
         }
+    });
 
-        C.extend = extend;
-
-        return C;
-    };
-
-    /**
-     * 销毁顺序： 子类 destructor -> 子类扩展 destructor -> 父类 destructor -> 父类扩展 destructor
-     * @ignore
-     */
+// 销毁顺序： 子类 destructor -> 子类扩展 destructor -> 父类 destructor -> 父类扩展 destructor
     function destroyHierarchy(self) {
         var c = self.constructor,
             extensions,

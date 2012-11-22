@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:49
+build time: Nov 22 14:05
 */
 /**
  * @ignore
@@ -445,7 +445,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         /**
          * pause current anim
-         * @return this
+         * @chainable
          */
         pause: function () {
             var self = this;
@@ -460,7 +460,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         /**
          * resume current anim
-         * @return this
+         * @chainable
          */
         resume: function () {
             var self = this;
@@ -480,6 +480,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
 
         /**
          * start this animation
+         * @chainable
          */
         run: function () {
             var self = this,
@@ -539,7 +540,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
         /**
          * stop this animation
          * @param {Boolean} [finish] whether jump to the last position of this animation
-         * @return this;
+         * @chainable
          */
         stop: function (finish) {
             var self = this,

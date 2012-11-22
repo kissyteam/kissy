@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 22:59
+build time: Nov 22 14:05
 */
 /**
  * @ignore
@@ -223,6 +223,7 @@ KISSY.add('base/attribute', function (S, undefined) {
         /**
          * get un-cloned attr config collections
          * @return {Object}
+         * @private
          */
         getAttrs: function () {
             return getAttrs(this);
@@ -258,6 +259,7 @@ KISSY.add('base/attribute', function (S, undefined) {
          * @param {Function} [attrConfig.validator]  call before set attribute 's value
          * if return false,cancel this set action
          * @param {Boolean} [override] whether override existing attribute config ,default true
+         * @chainable
          */
         addAttr: function (name, attrConfig, override) {
             var self = this,
@@ -275,6 +277,7 @@ KISSY.add('base/attribute', function (S, undefined) {
          * Configures a group of attributes, and sets initial values.
          * @param {Object} attrConfigs  An object with attribute name/configuration pairs.
          * @param {Object} initialValues user defined initial values
+         * @chainable
          */
         addAttrs: function (attrConfigs, initialValues) {
             var self = this;
@@ -289,6 +292,8 @@ KISSY.add('base/attribute', function (S, undefined) {
 
         /**
          * Checks if the given attribute has been added to the host.
+         * @param {String} name attribute name
+         * @return {Boolean}
          */
         hasAttr: function (name) {
             return getAttrs(this).hasOwnProperty(name);
@@ -296,6 +301,7 @@ KISSY.add('base/attribute', function (S, undefined) {
 
         /**
          * Removes an attribute from the host object.
+         * @chainable
          */
         removeAttr: function (name) {
             var self = this;
@@ -457,6 +463,7 @@ KISSY.add('base/attribute', function (S, undefined) {
          * @param {String} name name of attribute
          * @param {Object} [opts] some options
          * @param {Boolean} [opts.silent] whether fire change event
+         * @chainable
          */
         reset: function (name, opts) {
             var self = this;

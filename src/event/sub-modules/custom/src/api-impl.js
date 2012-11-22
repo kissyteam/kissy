@@ -75,30 +75,36 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
              * @param {Object} cfg Config params
              * @param {Boolean} [cfg.bubbles=true] whether or not this event bubbles
              * @param {Function} [cfg.defaultFn] this event's default action
+             * @chainable
              */
             publish: function (target, type, cfg) {
-                var self = target, customEvent;
+                var customEvent;
 
                 splitAndRun(type, function (t) {
-                    customEvent = ObservableCustomEvent.getCustomEvent(self, t, 1);
+                    customEvent = ObservableCustomEvent.getCustomEvent(target, t, 1);
                     S.mix(customEvent, cfg)
                 });
+
+                return target;
             },
 
             /**
              * Registers another EventTarget as a bubble target.
              * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to add
+             * @chainable
              */
             addTarget: function (target, anotherTarget) {
                 var targets = api.getTargets(target);
                 if (!S.inArray(anotherTarget, targets)) {
                     targets.push(anotherTarget);
                 }
+                return target;
             },
 
             /**
              * Removes a bubble target
              * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to remove
+             * @chainable
              */
             removeTarget: function (target, anotherTarget) {
                 var targets = api.getTargets(target),
@@ -106,6 +112,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                 if (index != -1) {
                     targets.splice(index, 1);
                 }
+                return target;
             },
 
             /**
@@ -123,21 +130,21 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
              * @param {String} type The name of the event
              * @param {Function} fn The callback to execute in response to the event
              * @param {Object} [context] this object in callback
+             * @chainable
              */
             on: function (target, type, fn, context) {
-                var self = target;
                 type = trim(type);
                 _Utils.batchForType(function (type, fn, context) {
                     var cfg = _Utils.normalizeParam(type, fn, context),
                         customEvent;
                     type = cfg.type;
-                    customEvent = ObservableCustomEvent.getCustomEvent(self, type, 1);
+                    customEvent = ObservableCustomEvent.getCustomEvent(target, type, 1);
                     if (customEvent) {
                         customEvent.on(cfg);
                     }
                 }, 0, type, fn, context);
 
-                return self; // chain
+                return target; // chain
             },
 
             /**
@@ -146,28 +153,28 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
              * @param {String} type The name of the event
              * @param {Function} [fn] The subscribed function to un-subscribe. if not supplied, all observers will be removed.
              * @param {Object} [context] The custom object passed to subscribe.
+             * @chainable
              */
             detach: function (target, type, fn, context) {
-                var self = target;
                 type = trim(type);
                 _Utils.batchForType(function (type, fn, context) {
                     var cfg = _Utils.normalizeParam(type, fn, context),
                         customEvent;
                     type = cfg.type;
                     if (!type) {
-                        var customEvents = ObservableCustomEvent.getCustomEvents(self);
+                        var customEvents = ObservableCustomEvent.getCustomEvents(target);
                         S.each(customEvents, function (customEvent) {
                             customEvent.detach(cfg);
                         });
                     } else {
-                        customEvent = ObservableCustomEvent.getCustomEvent(self, type, 1);
+                        customEvent = ObservableCustomEvent.getCustomEvent(target, type, 1);
                         if (customEvent) {
                             customEvent.detach(cfg);
                         }
                     }
                 }, 0, type, fn, context);
 
-                return self; // chain
+                return target; // chain
             }
         });
 }, {

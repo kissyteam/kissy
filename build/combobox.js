@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 14 21:49
+build time: Nov 22 14:06
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -732,7 +732,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
             return;
         }
         self._savedInputValue = value;
-        S.log("value change: " + value);
+        // S.log("value change: " + value);
         self.sendRequest(value);
     }
 

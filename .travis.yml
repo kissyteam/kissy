@@ -9,6 +9,7 @@ node_js:
   - 0.8
 
 before_script:
+  - node ./tools/test/gen-tc.js
   - node ./tools/test/server.js &
 
 script:

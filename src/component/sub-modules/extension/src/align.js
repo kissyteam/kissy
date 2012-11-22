@@ -319,6 +319,7 @@ KISSY.add('component/extension/align', function (S, UA, DOM, Node) {
          * @param {Element} node 参照元素, 可取配置选项中的设置, 也可是一元素
          * @param {String[]} points 对齐方式
          * @param {Number[]} [offset] 偏移
+         * @chainable
          */
         align:function (refNode, points, offset, overflow) {
             refNode = Node.one(refNode || win);
@@ -420,7 +421,8 @@ KISSY.add('component/extension/align', function (S, UA, DOM, Node) {
         /**
          * Make current element center within node.
          * @param {undefined|String|HTMLElement|KISSY.NodeList} node
-         * Same as node config of {@link KISSY.Component.Extension.Align#cfg-align} .
+         * Same as node config of {@link KISSY.Component.Extension.Align#cfg-align}
+         * @chainable
          */
         center:function (node) {
             var self = this;
