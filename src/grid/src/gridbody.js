@@ -615,14 +615,14 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
              * @private
              *
              */
-            _uiSetWidth:function () {
+            _onSetWidth:function () {
                 var _self = this;
                 //if(_self.get('rendered')){
                 _self.setTableWidth();
                 //}
             },
             //when set this component's height ,the table's width is also changed
-            _uiSetHeight:function () {
+            _onSetHeight:function () {
                 var _self = this;
                 //if(_self.get('rendered')){
                 _self.setTableWidth();

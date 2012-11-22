@@ -117,28 +117,28 @@ KISSY.add('component/base/box-render', function (S) {
             }
         },
 
-        _uiSetElAttrs: function (attrs) {
+        _onSetElAttrs: function (attrs) {
             this.get("el").attr(attrs);
         },
 
-        _uiSetElCls: function (cls) {
+        _onSetElCls: function (cls) {
             this.get("el").addClass(cls);
         },
 
-        _uiSetElStyle: function (style) {
+        _onSetElStyle: function (style) {
             this.get("el").css(style);
         },
 
-        _uiSetWidth: function (w) {
+        _onSetWidth: function (w) {
             this.get("el").width(w);
         },
 
-        _uiSetHeight: function (h) {
+        _onSetHeight: function (h) {
             var self = this;
             self.get("el").height(h);
         },
 
-        _uiSetContent: function (c) {
+        _onSetContent: function (c) {
             var self = this, el;
             // srcNode 时不重新渲染 content
             // 防止内部有改变，而 content 则是老的 html 内容
@@ -153,7 +153,7 @@ KISSY.add('component/base/box-render', function (S) {
             }
         },
 
-        _uiSetVisible: function (visible) {
+        _onSetVisible: function (visible) {
             var self = this,
                 el = self.get("el"),
                 shownCls = self.getCssClassWithState('-shown'),

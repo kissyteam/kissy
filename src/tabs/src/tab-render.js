@@ -8,7 +8,7 @@ KISSY.add("tabs/tab-render", function (S, Button) {
         createDom: function () {
             this.get("el").attr("role", "tab");
         },
-        _uiSetSelected: function (v) {
+        _onSetSelected: function (v) {
             var el = this.get("el");
             el[v ? 'addClass' : 'removeClass'](this.get("selectedCls"));
             el.attr('aria-selected', !!v);

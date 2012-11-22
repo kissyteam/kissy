@@ -76,7 +76,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 // leave submenuitem -> enter menuitem -> menu item highlight ->
                 // -> menu highlight -> beforeSubMenuHighlightChange ->
 
-                // menu render 后才会注册 afterHighlightedItemChange 到 _uiSet
+                // menu render 后才会注册 afterHighlightedItemChange 到 _onSet
                 // 这里的 beforeSubMenuHighlightChange 比 afterHighlightedItemChange 先执行
                 // 保险点用 beforeHighlightedItemChange
                 menu.on("beforeHighlightedItemChange",
@@ -100,7 +100,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              * accuracy when moving to sub menus.
              * @protected
              */
-            _uiSetHighlighted: function (e) {
+            _onSetHighlighted: function (e) {
                 var self = this;
                 if (!e) {
                     self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay") * 1000, false, self);
@@ -365,7 +365,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         if (e.newVal) {
             self.clearSubMenuTimers();
             // superclass(menuitem).handleMouseLeave 已经把自己 highlight 去掉了
-            // 导致本类 _uiSetHighlighted 调用，又把子菜单隐藏了
+            // 导致本类 _onSetHighlighted 调用，又把子菜单隐藏了
             self.get("parent").set("highlightedItem", self);
         }
         e.stopPropagation();

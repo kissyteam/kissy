@@ -192,7 +192,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 return c;
             },
 
-            _uiSetExpanded: function (v) {
+            _onSetExpanded: function (v) {
                 var self = this,
                     tree = self.get("tree");
                 if (self.get("rendered")) {

@@ -50,11 +50,11 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
 
 
             var h1 = UIBase.extend([], {
-                _uiSetA: function () {
+                _onSetA: function () {
                     order.push('a');
                 },
 
-                _uiSetD: function () {
+                _onSetD: function () {
                     order.push('d');
                 }
             }, {
@@ -69,11 +69,11 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
             });
 
             var h2 = h1.extend({
-                _uiSetB: function () {
+                _onSetB: function () {
                     order.push('b');
                 },
 
-                _uiSetC: function () {
+                _onSetC: function () {
                     order.push('c');
                 }
             }, {

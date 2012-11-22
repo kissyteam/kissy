@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 14:09
+build time: Nov 22 17:45
 */
 /**
  * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
@@ -146,15 +146,15 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			// button 的默认行为就是触发 click
 			self.fire("click");
 		},
-		_uiSetDisabled : function(value){
+		_onSetDisabled : function(value){
 			var _self = this,
 				children = _self.get('children');
 			if(children[0]){
 				children[0].set('disabled',value);
 			}
-			//_self.constructor.superclass._uiSetDisabled.call(_self,value);
+			//_self.constructor.superclass._onSetDisabled.call(_self,value);
 		},
-		_uiSetChecked: function(value){
+		_onSetChecked: function(value){
 			var _self = this,
 				children = _self.get('children'),
 				method = value ? 'addClass' : 'removeClass';
@@ -162,7 +162,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 				children[0].get('el')[method]('ks-button-checked');
 			}
 		},
-		_uiSetText : function(v){
+		_onSetText : function(v){
 			var _self = this,
 				children = _self.get('children');
 			if(children[0]){
@@ -246,7 +246,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
      * @memberOf Grid.Bar
      */
 	var TextBarItem = BarItem.extend({
-		_uiSetText : function(text){
+		_onSetText : function(text){
 			var _self = this,
 				el = _self.get('el');
 			el.html(text);
@@ -531,14 +531,14 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             });
         },
         //when set grid's width, the width of its children also changed
-        _uiSetWidth:function (w) {
+        _onSetWidth:function (w) {
             var _self = this;
             _self.get('header').set('width', w);
             _self.get('body').set('width', w);
             _self.get("el").addClass(CLS_GRID_WITH);
         },
         //when set grid's height,the scroll can effect the width of its body and header
-        _uiSetHeight:function (h) {
+        _onSetHeight:function (h) {
             var _self = this,
                 bodyHeight = h,
                 header = _self.get('header'),
@@ -561,12 +561,12 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             }
             _self.get("el").addClass(CLS_GRID_HEIGHT);
         },
-        _uiSetForceFit:function (v) {
+        _onSetForceFit:function (v) {
             var _self = this;
             _self.get('header').set('forceFit', v);
             _self.get('body').set('forceFit', v);
         },
-        _uiSetMultiSelect:function (v) {
+        _onSetMultiSelect:function (v) {
             this.get('body').set('multiSelect', v);
         }
     }, {
@@ -926,21 +926,21 @@ KISSY.add('grid/column', function (S, Component, Template) {
             new S.Node(tpl).appendTo(el);
         },
         //set the title of column
-        _uiSetTitle:function (title) {
+        _onSetTitle:function (title) {
             if (!this.get('rendered')) {
                 return;
             }
             this._setContent();
         },
         //set the draggable of column
-        _uiSetDraggable:function (v) {
+        _onSetDraggable:function (v) {
             if (!this.get('rendered')) {
                 return;
             }
             this._setContent();
         },
         //set the sortableof column
-        _uiSetSortable:function (v) {
+        _onSetSortable:function (v) {
 
             if (!this.get('rendered')) {
                 return;
@@ -948,14 +948,14 @@ KISSY.add('grid/column', function (S, Component, Template) {
             this._setContent();
         },
         //set the sortable of column
-        _uiSetTpl:function (v) {
+        _onSetTpl:function (v) {
             if (!this.get('rendered')) {
                 return;
             }
             this._setContent();
         },
         //set the sort state of column
-        _uiSetSortState:function (v) {
+        _onSetSortState:function (v) {
             var _self = this,
                 el = _self.get('el'),
                 method = v ? 'addClass' : 'removeClass',
@@ -1810,13 +1810,13 @@ KISSY.add('grid/editor', function (S, Component) {
             return !errorMsg;
         },
         //set the value of this component
-        _uiSetValue:function (v) {
+        _onSetValue:function (v) {
             var _self = this;
             v = v ? v.toString() : '';
             _self.setValue(v);
             _self.validEditor();
         },
-        _uiSetRecord:function (v) {
+        _onSetRecord:function (v) {
             if (!v) {
                 return;
             }
@@ -2147,7 +2147,7 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 			}
 		},
 		//set the editing record
-		_uiSetRecord : function(v){
+		_onSetRecord : function(v){
 			var _self = this,
 				children = _self.get('children');
 			S.each(children,function(editor){
@@ -2844,14 +2844,14 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
              * @private
              *
              */
-            _uiSetWidth:function () {
+            _onSetWidth:function () {
                 var _self = this;
                 //if(_self.get('rendered')){
                 _self.setTableWidth();
                 //}
             },
             //when set this component's height ,the table's width is also changed
-            _uiSetHeight:function () {
+            _onSetHeight:function () {
                 var _self = this;
                 //if(_self.get('rendered')){
                 _self.setTableWidth();
@@ -3412,11 +3412,11 @@ KISSY.add('grid/header', function (S, Component, Column) {
                 }
             },
             //when header's width changed, it also effects its columns.
-            _uiSetWidth:function () {
+            _onSetWidth:function () {
                 var _self = this;
                 _self.setTableWidth();
             },
-            _uiSetForceFit:function (v) {
+            _onSetForceFit:function (v) {
                 var _self = this;
                 if (v) {
                     _self.setTableWidth();

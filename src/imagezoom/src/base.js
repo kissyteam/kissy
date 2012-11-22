@@ -105,7 +105,7 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                 });
             },
 
-            _uiSetHasZoom: function (v) {
+            _onSetHasZoom: function (v) {
                 if (v) {
                     show(this.icon);
                 } else {
@@ -113,11 +113,11 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                 }
             },
 
-            '_uiSetImageWidth': function (v) {
+            '_onSetImageWidth': function (v) {
                 this.image.width(v);
             },
 
-            '_uiSetImageHeight': function (v) {
+            '_onSetImageHeight': function (v) {
                 this.image.height(v);
             }
         },

@@ -194,7 +194,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 }
             },
 
-            '_uiSetFocusable': function (focusable) {
+            '_onSetFocusable': function (focusable) {
                 var self = this,
                     el = self.getKeyEventTarget();
                 if (focusable) {
@@ -211,7 +211,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 }
             },
 
-            '_uiSetHandleMouseEvents': function (handleMouseEvents) {
+            '_onSetHandleMouseEvents': function (handleMouseEvents) {
 
                 var self = this,
                     el = self.get("el");
@@ -240,7 +240,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 }
             },
 
-            '_uiSetFocused': function (v) {
+            '_onSetFocused': function (v) {
                 if (v) {
                     this.getKeyEventTarget()[0].focus();
                 }

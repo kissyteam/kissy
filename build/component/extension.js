@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 14:06
+build time: Nov 22 17:42
 */
 /**
  * @ignore
@@ -312,7 +312,7 @@ KISSY.add('component/extension/align', function (S, UA, DOM, Node) {
     }
 
     Align.prototype =    {
-        _uiSetAlign:function (v) {
+        _onSetAlign:function (v) {
             if (v && v.points) {
                 this.align(v.node, v.points, v.offset, v.overflow);
             }
@@ -586,11 +586,11 @@ KISSY.add("component/extension/position-render", function () {
             this.get("el").addClass(this.get('prefixCls') + "ext-position");
         },
 
-        _uiSetZIndex: function (x) {
+        _onSetZIndex: function (x) {
             this.get("el").css("z-index", x);
         },
 
-        _uiSetX: function (x) {
+        _onSetX: function (x) {
             if (x != null) {
                 this.get("el").offset({
                     left: x
@@ -598,7 +598,7 @@ KISSY.add("component/extension/position-render", function () {
             }
         },
 
-        _uiSetY: function (y) {
+        _onSetY: function (y) {
             if (y != null) {
                 this.get("el").offset({
                     top: y

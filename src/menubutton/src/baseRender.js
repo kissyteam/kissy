@@ -28,14 +28,14 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
                 .attr("aria-haspopup", true);
         },
 
-        _uiSetCollapsed: function (v) {
+        _onSetCollapsed: function (v) {
             var self = this,
                 el = self.get("el"),
                 cls = self.getCssClassWithPrefix(COLLAPSE_CLS);
             el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
         },
 
-        _uiSetActiveItem: function (v) {
+        _onSetActiveItem: function (v) {
             this.get("el").attr("aria-activedescendant",
                 (v && v.get("el").attr("id")) || "");
         }

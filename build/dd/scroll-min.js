@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 14:06
+build time: Nov 22 17:43
 */
 KISSY.add("dd/scroll",function(c,e,f,o,m){function g(){g.superclass.constructor.apply(this,arguments);this[p]={}}var t=e.DDM,v=c.Env.host,u=c.stamp,w=100,p="__dd_scrolls";g.ATTRS={node:{valueFn:function(){return o.one(v)},setter:function(a){return o.one(a)}},rate:{value:[10,10]},diff:{value:[20,20]}};var q=c.isWindow;c.extend(g,f,{getRegion:function(a){return q(a[0])?{width:m.viewportWidth(),height:m.viewportHeight()}:{width:a.outerWidth(),height:a.outerHeight()}},getOffset:function(a){return q(a[0])?
 {left:m.scrollLeft(),top:m.scrollTop()}:a.offset()},getScroll:function(a){return{left:a.scrollLeft(),top:a.scrollTop()}},setScroll:function(a,b){a.scrollLeft(b.left);a.scrollTop(b.top)},detachDrag:function(a){var b,c=this[p];if(!(b=u(a,1,"__dd-scroll-id-"))||!c[b])return this;c[b].fn();delete c[b];return this},destroy:function(){var a=this;c.each(a[p],function(b){a.detachDrag(b.drag)})},attachDrag:function(a){function b(){if(q(j[0]))return 0;var b=a.mousePos,c=t.region(j);return!t.inRegion(c,b)?(clearTimeout(n),

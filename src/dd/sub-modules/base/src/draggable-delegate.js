@@ -69,7 +69,7 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
 
     S.extend(DraggableDelegate, Draggable, {
 
-            _uiSetDisabledChange: function (d) {
+            _onSetDisabledChange: function (d) {
                 this.get('container')[d ? 'addClass' :
                     'removeClass'](PREFIX_CLS + '-disabled');
             },

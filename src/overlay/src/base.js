@@ -110,7 +110,7 @@ KISSY.add("overlay/base", function (S, Component,
         // run complete fn to restore window's original height
         el.stop(1, 1);
         el.css({
-            // must show, override box-render _uiSetVisible
+            // must show, override box-render _onSetVisible
             "visibility": "visible",
             // fadeIn need display none, fadeOut need display block
             "display": show ? 'none' : 'block'
@@ -120,7 +120,7 @@ KISSY.add("overlay/base", function (S, Component,
             el.css({
                 // need compute coordinates when show, so do not use display none for hide
                 "display": 'block',
-                // restore to box-render _uiSetVisible
+                // restore to box-render _onSetVisible
                 "visibility": originalVisibility
             });
             callback();
@@ -152,7 +152,7 @@ KISSY.add("overlay/base", function (S, Component,
              * For overlay with effect, it should listen show and hide instead of afterVisibleChange.
              * @protected
              */
-            _uiSetVisible: function (v) {
+            _onSetVisible: function (v) {
                 var self = this;
                 if (self.get('rendered')) {
                     // delay show and hide event after anim

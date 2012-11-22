@@ -21,25 +21,25 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
 
     return Component.Render.extend({
 
-        _uiSetChecked: function (v) {
+        _onSetChecked: function (v) {
             var self = this,
                 el = self.get("el"),
                 cls = self.getCssClassWithState("-checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _uiSetSelected: function (v) {
+        _onSetSelected: function (v) {
             var self = this,
                 el = self.get("el"),
                 cls = self.getCssClassWithState("-selected");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _uiSetSelectable: function (v) {
+        _onSetSelectable: function (v) {
             this.get("el").attr("role", v ? 'menuitemradio' : 'menuitem');
         },
 
-        _uiSetCheckable: function (v) {
+        _onSetCheckable: function (v) {
             if (v) {
                 setUpCheckEl(this);
             }
@@ -64,7 +64,7 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
             selected: {},
             // @inheritedDoc
             // content:{},
-            // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
+            // 属性必须声明，否则无法和 _onSetChecked 绑定在一起
             checked: {}
         },
         HTML_PARSER: {

@@ -151,13 +151,13 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 }
             },
 
-            _uiSetValue:function () {
+            _onSetValue:function () {
                 var self = this;
                 deSelectAllExcept(self);
                 _updateCaption(self);
             },
 
-            _uiSetDefaultCaption:function () {
+            _onSetDefaultCaption:function () {
                 _updateCaption(this);
             }
         },

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 14:09
+build time: Nov 22 17:46
 */
 /**
  * @ignore
@@ -62,7 +62,7 @@ KISSY.add("resizable", function (S, Node, Base, DD, undefined) {
         return Math.min(Math.max(min, v), max);
     }
 
-    function _uiSetHandlers(e) {
+    function _onSetHandlers(e) {
         var self = this,
             v = e.newVal,
             dds = self.dds,
@@ -127,7 +127,7 @@ KISSY.add("resizable", function (S, Node, Base, DD, undefined) {
         }
     }
 
-    function _uiSetDisabled(e) {
+    function _onSetDisabled(e) {
         var v = e.newVal,
             dds = this.dds;
         S.each(dds, function (d) {
@@ -145,18 +145,18 @@ KISSY.add("resizable", function (S, Node, Base, DD, undefined) {
             disabled,
             node;
         Resizable.superclass.constructor.apply(self, arguments);
-        self.on("afterHandlersChange", _uiSetHandlers, self);
-        self.on("afterDisabledChange", _uiSetDisabled, self);
+        self.on("afterHandlersChange", _onSetHandlers, self);
+        self.on("afterDisabledChange", _onSetDisabled, self);
         node = self.get("node");
         self.dds = {};
         if (node.css("position") == "static") {
             node.css("position", "relative");
         }
-        _uiSetHandlers.call(self, {
+        _onSetHandlers.call(self, {
             newVal: self.get("handlers")
         });
         if (disabled = self.get('disabled')) {
-            _uiSetDisabled.call(self, {
+            _onSetDisabled.call(self, {
                 newVal: disabled
             });
         }

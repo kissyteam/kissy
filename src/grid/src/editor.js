@@ -195,13 +195,13 @@ KISSY.add('grid/editor', function (S, Component) {
             return !errorMsg;
         },
         //set the value of this component
-        _uiSetValue:function (v) {
+        _onSetValue:function (v) {
             var _self = this;
             v = v ? v.toString() : '';
             _self.setValue(v);
             _self.validEditor();
         },
-        _uiSetRecord:function (v) {
+        _onSetRecord:function (v) {
             if (!v) {
                 return;
             }

@@ -39,21 +39,21 @@ KISSY.add('grid/column', function (S, Component, Template) {
             new S.Node(tpl).appendTo(el);
         },
         //set the title of column
-        _uiSetTitle:function (title) {
+        _onSetTitle:function (title) {
             if (!this.get('rendered')) {
                 return;
             }
             this._setContent();
         },
         //set the draggable of column
-        _uiSetDraggable:function (v) {
+        _onSetDraggable:function (v) {
             if (!this.get('rendered')) {
                 return;
             }
             this._setContent();
         },
         //set the sortableof column
-        _uiSetSortable:function (v) {
+        _onSetSortable:function (v) {
 
             if (!this.get('rendered')) {
                 return;
@@ -61,14 +61,14 @@ KISSY.add('grid/column', function (S, Component, Template) {
             this._setContent();
         },
         //set the sortable of column
-        _uiSetTpl:function (v) {
+        _onSetTpl:function (v) {
             if (!this.get('rendered')) {
                 return;
             }
             this._setContent();
         },
         //set the sort state of column
-        _uiSetSortState:function (v) {
+        _onSetSortState:function (v) {
             var _self = this,
                 el = _self.get('el'),
                 method = v ? 'addClass' : 'removeClass',

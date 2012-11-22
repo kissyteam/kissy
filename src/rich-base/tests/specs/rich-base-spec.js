@@ -212,11 +212,11 @@ KISSY.use('rich-base', function (S, RichBase) {
 
             var p2;
 
-            t.plug(p2=new Plugin2());
+            t.plug(p2 = new Plugin2());
 
             expect(t.get('plugins').length).toBe(2);
 
-            expect(initializer).toEqual([3,1, 2]);
+            expect(initializer).toEqual([3, 1, 2]);
 
             t.unplug(p2);
 
@@ -229,15 +229,15 @@ KISSY.use('rich-base', function (S, RichBase) {
 
             expect(t.get('plugins').length).toBe(0);
 
-            expect(destructor).toEqual([2,1]);
+            expect(destructor).toEqual([2, 1]);
 
             t.destroy();
 
-            expect(destructor).toEqual([2,1,3]);
+            expect(destructor).toEqual([2, 1, 3]);
 
         });
 
-        it('support unplug all',function(){
+        it('support unplug all', function () {
 
             var initializer = [],
                 destructor = [];
@@ -296,7 +296,34 @@ KISSY.use('rich-base', function (S, RichBase) {
 
             expect(t.get('plugins').length).toBe(0);
 
-            expect(destructor).toEqual([1,2]);
+            expect(destructor).toEqual([1, 2]);
+
+        });
+
+        it('support attr bind', function () {
+
+            var xx = [];
+
+            var T = RichBase.extend({
+                _onSetXx: function (v) {
+                    xx.push(v);
+                }
+            }, {
+                ATTRS: {
+                    xx: {}
+                }
+            });
+
+            var t = new T({
+                xx: 1
+            });
+
+            expect(xx).toEqual([1]);
+
+            t.set('xx', 2);
+
+            expect(xx).toEqual([1, 2]);
+
 
         });
 

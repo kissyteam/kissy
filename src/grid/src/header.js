@@ -332,11 +332,11 @@ KISSY.add('grid/header', function (S, Component, Column) {
                 }
             },
             //when header's width changed, it also effects its columns.
-            _uiSetWidth:function () {
+            _onSetWidth:function () {
                 var _self = this;
                 _self.setTableWidth();
             },
-            _uiSetForceFit:function (v) {
+            _onSetForceFit:function (v) {
                 var _self = this;
                 if (v) {
                     _self.setTableWidth();

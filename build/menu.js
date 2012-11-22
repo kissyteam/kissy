@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 14:09
+build time: Nov 22 17:46
 */
 /**
  * @fileOverview menu controllerler for kissy,accommodate menu items
@@ -25,7 +25,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
     var Menu = Component.Container.extend(
         /** @lends Menu.prototype*/
         {
-            _uiSetHighlightedItem:function (v, ev) {
+            _onSetHighlightedItem:function (v, ev) {
                 var pre = ev && ev.prevVal;
                 if (pre) {
                     pre.set("highlighted", false);
@@ -268,7 +268,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 }
             },
 
-            _uiSetFilterStr:function (v) {
+            _onSetFilterStr:function (v) {
                 // 过滤条件变了立即过滤
                 this.filterItems(v);
             },
@@ -495,7 +495,7 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
             }
         },
 
-        _uiSetLabel:function (v) {
+        _onSetLabel:function (v) {
             this.get("labelEl").html(v);
         }
     }, {
@@ -568,17 +568,17 @@ KISSY.add("menu/menuRender", function(S, UA, Component) {
             }
         },
 
-        _uiSetActiveItem:function(v) {
+        _onSetActiveItem:function(v) {
             var el = this.get("el");
             if (v) {
                 var menuItemEl = v.get("el"),
                     id = menuItemEl.attr("id");
                 el.attr("aria-activedescendant", id);
                 // 会打印重复 ，每个子菜单都会打印，然后冒泡至父菜单，再打印，和该 menuitem 所处层次有关系
-                //S.log("menuRender :" + el.attr("id") + " _uiSetActiveItem : " + v.get("content"));
+                //S.log("menuRender :" + el.attr("id") + " _onSetActiveItem : " + v.get("content"));
             } else {
                 el.attr("aria-activedescendant", "");
-                //S.log("menuRender :" + el.attr("id") + " _uiSetActiveItem : " + "");
+                //S.log("menuRender :" + el.attr("id") + " _onSetActiveItem : " + "");
             }
         },
 
@@ -676,7 +676,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 return true;
             },
 
-            _uiSetHighlighted: function (v) {
+            _onSetHighlighted: function (v) {
                 // 是否要滚动到当前菜单项(横向，纵向)
                 if (v) {
                     var el = this.get("el"),
@@ -788,25 +788,25 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
 
     return Component.Render.extend({
 
-        _uiSetChecked: function (v) {
+        _onSetChecked: function (v) {
             var self = this,
                 el = self.get("el"),
                 cls = self.getCssClassWithState("-checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _uiSetSelected: function (v) {
+        _onSetSelected: function (v) {
             var self = this,
                 el = self.get("el"),
                 cls = self.getCssClassWithState("-selected");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _uiSetSelectable: function (v) {
+        _onSetSelectable: function (v) {
             this.get("el").attr("role", v ? 'menuitemradio' : 'menuitem');
         },
 
-        _uiSetCheckable: function (v) {
+        _onSetCheckable: function (v) {
             if (v) {
                 setUpCheckEl(this);
             }
@@ -831,7 +831,7 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
             selected: {},
             // @inheritedDoc
             // content:{},
-            // 属性必须声明，否则无法和 _uiSetChecked 绑定在一起
+            // 属性必须声明，否则无法和 _onSetChecked 绑定在一起
             checked: {}
         },
         HTML_PARSER: {
@@ -1029,7 +1029,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 // leave submenuitem -> enter menuitem -> menu item highlight ->
                 // -> menu highlight -> beforeSubMenuHighlightChange ->
 
-                // menu render 后才会注册 afterHighlightedItemChange 到 _uiSet
+                // menu render 后才会注册 afterHighlightedItemChange 到 _onSet
                 // 这里的 beforeSubMenuHighlightChange 比 afterHighlightedItemChange 先执行
                 // 保险点用 beforeHighlightedItemChange
                 menu.on("beforeHighlightedItemChange",
@@ -1053,7 +1053,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              * accuracy when moving to sub menus.
              * @protected
              */
-            _uiSetHighlighted: function (e) {
+            _onSetHighlighted: function (e) {
                 var self = this;
                 if (!e) {
                     self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay") * 1000, false, self);
@@ -1318,7 +1318,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         if (e.newVal) {
             self.clearSubMenuTimers();
             // superclass(menuitem).handleMouseLeave 已经把自己 highlight 去掉了
-            // 导致本类 _uiSetHighlighted 调用，又把子菜单隐藏了
+            // 导致本类 _onSetHighlighted 调用，又把子菜单隐藏了
             self.get("parent").set("highlightedItem", self);
         }
         e.stopPropagation();

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 14:09
+build time: Nov 22 17:46
 */
 /**
  * @ignore
@@ -115,7 +115,7 @@ KISSY.add("overlay/base", function (S, Component,
         // run complete fn to restore window's original height
         el.stop(1, 1);
         el.css({
-            // must show, override box-render _uiSetVisible
+            // must show, override box-render _onSetVisible
             "visibility": "visible",
             // fadeIn need display none, fadeOut need display block
             "display": show ? 'none' : 'block'
@@ -125,7 +125,7 @@ KISSY.add("overlay/base", function (S, Component,
             el.css({
                 // need compute coordinates when show, so do not use display none for hide
                 "display": 'block',
-                // restore to box-render _uiSetVisible
+                // restore to box-render _onSetVisible
                 "visibility": originalVisibility
             });
             callback();
@@ -157,7 +157,7 @@ KISSY.add("overlay/base", function (S, Component,
              * For overlay with effect, it should listen show and hide instead of afterVisibleChange.
              * @protected
              */
-            _uiSetVisible: function (v) {
+            _onSetVisible: function (v) {
                 var self = this;
                 if (self.get('rendered')) {
                     // delay show and hide event after anim
@@ -359,7 +359,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Dr
                 trapFocus.call(this, e);
             },
 
-            _uiSetVisible: function (v) {
+            _onSetVisible: function (v) {
                 var self = this, el = self.get('el');
                 if (v) {
                     self.__lastActive = el[0].ownerDocument.activeElement;
@@ -370,7 +370,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Dr
                     self.__lastActive && self.__lastActive.focus();
                 }
                 // prevent display none for effect
-                Dialog.superclass._uiSetVisible.apply(self, arguments);
+                Dialog.superclass._onSetVisible.apply(self, arguments);
             }
         },
 
@@ -537,7 +537,7 @@ KISSY.add("overlay/extension/close-render", function (S, Node) {
     };
 
     CloseRender.prototype = {
-        _uiSetClosable: function (v) {
+        _onSetClosable: function (v) {
             var self = this,
                 btn = self.get("closeBtn");
             if (v) {
@@ -628,7 +628,7 @@ KISSY.add("overlay/extension/close", function () {
     };
 
     Close.prototype = {
-        _uiSetClosable:function (v) {
+        _onSetClosable:function (v) {
             var self = this;
             if (v && !self.__bindCloseEvent) {
                 self.__bindCloseEvent = 1;
@@ -702,7 +702,7 @@ KISSY.add("overlay/extension/drag", function (S) {
 
     Drag.prototype = {
 
-        _uiSetDraggable: function (dragCfg) {
+        _onSetDraggable: function (dragCfg) {
             var self = this,
                 handlers,
                 DD = S.require("dd/base"),
@@ -1129,7 +1129,7 @@ KISSY.add("overlay/extension/resize", function (S) {
             var r = this.resizer;
             r && r.destroy();
         },
-        _uiSetResize:function (v) {
+        _onSetResize:function (v) {
             var Resizable = S.require("resizable"),
                 self = this;
             self.resizer && self.resizer.destroy();
@@ -1221,26 +1221,26 @@ KISSY.add("overlay/extension/stdmod-render", function (S, Node) {
             createUI(this, "footer");
         },
 
-        _uiSetBodyStyle: function (v) {
+        _onSetBodyStyle: function (v) {
             this.get("body").css(v);
         },
 
-        _uiSetHeaderStyle: function (v) {
+        _onSetHeaderStyle: function (v) {
             this.get("header").css(v);
         },
-        _uiSetFooterStyle: function (v) {
+        _onSetFooterStyle: function (v) {
             this.get("footer").css(v);
         },
 
-        _uiSetBodyContent: function (v) {
+        _onSetBodyContent: function (v) {
             _setStdModRenderContent(this, "body", v);
         },
 
-        _uiSetHeaderContent: function (v) {
+        _onSetHeaderContent: function (v) {
             _setStdModRenderContent(this, "header", v);
         },
 
-        _uiSetFooterContent: function (v) {
+        _onSetFooterContent: function (v) {
             _setStdModRenderContent(this, "footer", v);
         }
     };

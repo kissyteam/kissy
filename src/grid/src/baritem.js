@@ -79,15 +79,15 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			// button 的默认行为就是触发 click
 			self.fire("click");
 		},
-		_uiSetDisabled : function(value){
+		_onSetDisabled : function(value){
 			var _self = this,
 				children = _self.get('children');
 			if(children[0]){
 				children[0].set('disabled',value);
 			}
-			//_self.constructor.superclass._uiSetDisabled.call(_self,value);
+			//_self.constructor.superclass._onSetDisabled.call(_self,value);
 		},
-		_uiSetChecked: function(value){
+		_onSetChecked: function(value){
 			var _self = this,
 				children = _self.get('children'),
 				method = value ? 'addClass' : 'removeClass';
@@ -95,7 +95,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 				children[0].get('el')[method]('ks-button-checked');
 			}
 		},
-		_uiSetText : function(v){
+		_onSetText : function(v){
 			var _self = this,
 				children = _self.get('children');
 			if(children[0]){
@@ -179,7 +179,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
      * @memberOf Grid.Bar
      */
 	var TextBarItem = BarItem.extend({
-		_uiSetText : function(text){
+		_onSetText : function(text){
 			var _self = this,
 				el = _self.get('el');
 			el.html(text);

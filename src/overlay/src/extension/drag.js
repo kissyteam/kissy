@@ -46,7 +46,7 @@ KISSY.add("overlay/extension/drag", function (S) {
 
     Drag.prototype = {
 
-        _uiSetDraggable: function (dragCfg) {
+        _onSetDraggable: function (dragCfg) {
             var self = this,
                 handlers,
                 DD = S.require("dd/base"),

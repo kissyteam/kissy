@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 14:06
+build time: Nov 22 17:43
 */
 /**
  * @ignore
@@ -617,7 +617,7 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
 
     S.extend(DraggableDelegate, Draggable, {
 
-            _uiSetDisabledChange: function (d) {
+            _onSetDisabledChange: function (d) {
                 this.get('container')[d ? 'addClass' :
                     'removeClass'](PREFIX_CLS + '-disabled');
             },
@@ -913,10 +913,10 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
 
             // dragNode is equal to node in single mode
         self.setInternal('dragNode', self.get('node'));
-        self.on('afterDisabledChange', self._uiSetDisabledChange, self);
+        self.on('afterDisabledChange', self._onSetDisabledChange, self);
         var disabled;
         if (disabled = self.get('disabled')) {
-            self._uiSetDisabledChange(disabled);
+            self._onSetDisabledChange(disabled);
         }
         self._init();
     }
@@ -1301,7 +1301,7 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
          */
         _bufferTimer: NULL,
 
-        _uiSetDisabledChange: function (d) {
+        _onSetDisabledChange: function (d) {
             this.get('dragNode')[d ? 'addClass' :
                 'removeClass'](PREFIX_CLS + '-disabled');
         },

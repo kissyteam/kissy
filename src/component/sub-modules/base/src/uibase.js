@@ -5,23 +5,10 @@
  */
 KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefined) {
 
-    var UI_SET = '_uiSet',
-        SRC_NODE = 'srcNode',
+    var SRC_NODE = 'srcNode',
         ATTRS = 'ATTRS',
         HTML_PARSER = 'HTML_PARSER',
-        ucfirst = S.ucfirst,
         noop = S.noop;
-
-    // 收集单继承链，子类在前，父类在后
-    function collectConstructorChains(self) {
-        var constructorChains = [],
-            c = self.constructor;
-        while (c) {
-            constructorChains.push(c);
-            c = c.superclass && c.superclass.constructor;
-        }
-        return constructorChains;
-    }
 
     /**
      * init srcNode
@@ -33,7 +20,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
             p,
             constructorChains;
 
-        constructorChains = collectConstructorChains(self);
+        constructorChains = self.collectConstructorChains();
 
         // 从父类到子类开始从 html 读取属性
         for (len = constructorChains.length - 1; len >= 0; len--) {
@@ -72,68 +59,6 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
     }
 
     /**
-     * 根据属性变化设置 UI
-     * @ignore
-     */
-    function bindUI(self) {
-        var attrs = self.getAttrs(),
-            attr, m;
-
-        for (attr in attrs) {
-            m = UI_SET + ucfirst(attr);
-            if (self[m]) {
-                // 自动绑定事件到对应函数
-                (function (attr, m) {
-                    self.on('after' + ucfirst(attr) + 'Change', function (ev) {
-                        // fix! 防止冒泡过来的
-                        if (ev.target === self) {
-                            self[m](ev.newVal, ev);
-                        }
-                    });
-                })(attr, m);
-            }
-        }
-    }
-
-    /**
-     * 根据当前（初始化）状态来设置 UI
-     * @ignore
-     */
-    function syncUI(self) {
-        var v,
-            f,
-            i,
-            c,
-            a,
-            m,
-            cache = {},
-            constructorChains = collectConstructorChains(self),
-            attrs;
-
-        // 从父类到子类执行同步属性函数
-        for (i = constructorChains.length - 1; i >= 0; i--) {
-            c = constructorChains[i];
-            if (attrs = c[ATTRS]) {
-                for (a in attrs) {
-                    // 防止子类覆盖父类属性定义造成重复执行
-                    if (!cache[a]) {
-                        cache[a] = 1;
-                        m = UI_SET + ucfirst(a);
-                        // 存在方法，并且用户设置了初始值或者存在默认值，就同步状态
-                        if ((f = self[m]) &&
-                            // 用户如果设置了显式不同步，就不同步，
-                            // 比如一些值从 html 中读取，不需要同步再次设置
-                            attrs[a].sync !== false &&
-                            (v = self.get(a)) !== undefined) {
-                            f.call(self, v);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
      * @class KISSY.Component.UIBase
      * @extends KISSY.RichBase
      * UIBase for class-based component.
@@ -152,6 +77,12 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
                 self.render();
             }
         },
+
+        // change routine from rich-base for uibase
+        bindInternal: noop,
+
+        // change routine from rich-base for uibase
+        syncInternal: noop,
 
         initializer: function () {
             var self = this,
@@ -235,7 +166,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
                  */
 
                 self.fire('beforeBindUI');
-                bindUI(self);
+                UIBase.superclass.bindInternal.call(self);
                 self.callMethodByHierarchy("bindUI", "__bindUI");
 
                 /**
@@ -255,7 +186,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
 
                 self.fire('beforeSyncUI');
 
-                syncUI(self);
+                UIBase.superclass.syncInternal.call(self);
                 self.callMethodByHierarchy("syncUI", "__syncUI");
 
                 /**

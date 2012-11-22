@@ -12,7 +12,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
      * @memberOf Tree
      */
     var CheckTree = CheckNode.extend([TreeManager], {
-        _uiSetFocused: function () {
+        _onSetFocused: function () {
             // check tree 没有 selectedItem 概念，也没有选中状态
         }
     }, {

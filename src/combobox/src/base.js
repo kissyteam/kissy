@@ -291,7 +291,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
             /**
              * @protected
              */
-            _uiSetCollapsed: function (v) {
+            _onSetCollapsed: function (v) {
                 if (v) {
                     hideMenu(this);
                 } else {

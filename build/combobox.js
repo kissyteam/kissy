@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 14:06
+build time: Nov 22 17:42
 */
 /**
  * @fileOverview Input wrapper for ComboBox component.
@@ -296,7 +296,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
             /**
              * @protected
              */
-            _uiSetCollapsed: function (v) {
+            _onSetCollapsed: function (v) {
                 if (v) {
                     hideMenu(this);
                 } else {
@@ -1198,11 +1198,11 @@ KISSY.add("combobox/render", function (S, Component) {
             return this.get("input");
         },
 
-        _uiSetCollapsed: function (v) {
+        _onSetCollapsed: function (v) {
             this.get("input").attr("aria-expanded", v);
         },
 
-        _uiSetHasTrigger: function (t) {
+        _onSetHasTrigger: function (t) {
             var trigger = this.get("trigger");
             if (t) {
                 this.get("el").prepend(trigger);
@@ -1211,8 +1211,8 @@ KISSY.add("combobox/render", function (S, Component) {
             }
         },
 
-        _uiSetDisabled: function (v) {
-            ComboboxRender.superclass._uiSetDisabled.apply(this, arguments);
+        _onSetDisabled: function (v) {
+            ComboboxRender.superclass._onSetDisabled.apply(this, arguments);
             this.get("input").attr("disabled", v);
         }
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 14:10
+build time: Nov 22 17:47
 */
 /**
  * Toolbar for KISSY.
@@ -105,7 +105,7 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                 this.get("el").attr("role", "toolbar");
             },
 
-            _uiSetHighlightedItem: function (item) {
+            _onSetHighlightedItem: function (item) {
                 var id, self = this, itemEl, el = self.get('el');
                 if (item) {
                     itemEl = item.get('el');

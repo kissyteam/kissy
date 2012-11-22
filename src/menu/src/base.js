@@ -20,7 +20,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
     var Menu = Component.Container.extend(
         /** @lends Menu.prototype*/
         {
-            _uiSetHighlightedItem:function (v, ev) {
+            _onSetHighlightedItem:function (v, ev) {
                 var pre = ev && ev.prevVal;
                 if (pre) {
                     pre.set("highlighted", false);

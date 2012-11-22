@@ -283,7 +283,7 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
             }, seconds);
         },
 
-        _uiSetCurrentMouse: function (ev) {
+        _onSetCurrentMouse: function (ev) {
             var self = this,
                 lt;
 
@@ -315,30 +315,30 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
             self.bigImage.css(lt);
         },
 
-        _uiSetLensWidth: function (v) {
+        _onSetLensWidth: function (v) {
             this.lens && this.lens.width(v);
         },
-        _uiSetLensHeight: function (v) {
+        _onSetLensHeight: function (v) {
             this.lens && this.lens.height(v);
         },
-        _uiSetLensTop: function (v) {
+        _onSetLensTop: function (v) {
             this.lens && this.lens.offset({ 'top': v });
         },
-        _uiSetLensLeft: function (v) {
+        _onSetLensLeft: function (v) {
             this.lens && this.lens.offset({ 'left': v });
         },
 
-        _uiSetBigImageWidth: function (v) {
+        _onSetBigImageWidth: function (v) {
             var self = this;
             v && self.bigImage && self.bigImage.width(v);
             v && self._bigImageCopy && self._bigImageCopy.width(v);
         },
-        _uiSetBigImageHeight: function (v) {
+        _onSetBigImageHeight: function (v) {
             var self = this;
             v && self.bigImage && self.bigImage.height(v);
             v && self._bigImageCopy && self._bigImageCopy.height(v);
         },
-        _uiSetBigImageSrc: function (v) {
+        _onSetBigImageSrc: function (v) {
             v && this.bigImage && this.bigImage.attr('src', v);
 
         },
@@ -351,7 +351,7 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
             var self = this;
             self.image.attr('src', src);
             self._bigImageCopy.attr('src', src);
-            self._uiSetHasZoom(self.get("hasZoom"));
+            self._onSetHasZoom(self.get("hasZoom"));
             self.loading();
         }
     });

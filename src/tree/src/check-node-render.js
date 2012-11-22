@@ -15,7 +15,7 @@ KISSY.add("tree/check-node-render", function (S, Node, TreeNodeRender) {
             self.setInternal("checkIconEl", checkIconEl);
         },
 
-        _uiSetCheckState:function (s) {
+        _onSetCheckState:function (s) {
             var self = this,
                 checkIconEl = self.get("checkIconEl");
             checkIconEl.removeClass(self.getCssClassWithPrefix(ALL_STATES_CLS))

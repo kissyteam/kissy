@@ -57,7 +57,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 }
             },
 
-            _uiSetFilterStr:function (v) {
+            _onSetFilterStr:function (v) {
                 // 过滤条件变了立即过滤
                 this.filterItems(v);
             },

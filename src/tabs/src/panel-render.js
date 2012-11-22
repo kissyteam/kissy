@@ -10,7 +10,7 @@ KISSY.add("tabs/panel-render", function (S, Component) {
             this.get("el").attr("role", "tabpanel");
         },
 
-        _uiSetSelected: function (v) {
+        _onSetSelected: function (v) {
             var el = this.get("el");
             el[v ? "addClass" : "removeClass"](this.get("selectedCls"));
             el.attr("aria-hidden", !v);

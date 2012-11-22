@@ -82,7 +82,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
          * @lends MenuButton.prototype
          */
         {
-            _uiSetCollapsed:function (v) {
+            _onSetCollapsed:function (v) {
                 if (v) {
                     hideMenu(this);
                 } else {
@@ -242,7 +242,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             },
 
             // 禁用时关闭已显示菜单
-            _uiSetDisabled:function (v) {
+            _onSetDisabled:function (v) {
                 var self = this;
                 !v && self.set("collapsed", true);
             },

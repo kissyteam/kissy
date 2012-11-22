@@ -230,14 +230,14 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             });
         },
         //when set grid's width, the width of its children also changed
-        _uiSetWidth:function (w) {
+        _onSetWidth:function (w) {
             var _self = this;
             _self.get('header').set('width', w);
             _self.get('body').set('width', w);
             _self.get("el").addClass(CLS_GRID_WITH);
         },
         //when set grid's height,the scroll can effect the width of its body and header
-        _uiSetHeight:function (h) {
+        _onSetHeight:function (h) {
             var _self = this,
                 bodyHeight = h,
                 header = _self.get('header'),
@@ -260,12 +260,12 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             }
             _self.get("el").addClass(CLS_GRID_HEIGHT);
         },
-        _uiSetForceFit:function (v) {
+        _onSetForceFit:function (v) {
             var _self = this;
             _self.get('header').set('forceFit', v);
             _self.get('body').set('forceFit', v);
         },
-        _uiSetMultiSelect:function (v) {
+        _onSetMultiSelect:function (v) {
             this.get('body').set('multiSelect', v);
         }
     }, {

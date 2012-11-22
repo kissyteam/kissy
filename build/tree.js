@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 14:10
+build time: Nov 22 17:47
 */
 /**
  * @fileOverview root node represent a simple tree
@@ -80,7 +80,7 @@ KISSY.add("tree/check-node-render", function (S, Node, TreeNodeRender) {
             self.setInternal("checkIconEl", checkIconEl);
         },
 
-        _uiSetCheckState:function (s) {
+        _onSetCheckState:function (s) {
             var self = this,
                 checkIconEl = self.get("checkIconEl");
             checkIconEl.removeClass(self.getCssClassWithPrefix(ALL_STATES_CLS))
@@ -152,7 +152,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
                 self.fire("click");
             },
 
-            _uiSetCheckState:function (s) {
+            _onSetCheckState:function (s) {
                 var self = this,
                     parent = self.get("parent"),
                     checkCount,
@@ -271,7 +271,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
      * @memberOf Tree
      */
     var CheckTree = CheckNode.extend([TreeManager], {
-        _uiSetFocused: function () {
+        _onSetFocused: function () {
             // check tree 没有 selectedItem 概念，也没有选中状态
         }
     }, {
@@ -410,7 +410,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
             self.setInternal("iconEl", iconEl);
         },
 
-        _uiSetExpanded: function (v) {
+        _onSetExpanded: function (v) {
             var self = this,
                 childrenEl = self.get("childrenEl");
             if (childrenEl) {
@@ -419,18 +419,18 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
             self.get("el").attr("aria-expanded", v);
         },
 
-        _uiSetSelected: function (v) {
+        _onSetSelected: function (v) {
             var self = this,
                 rowEl = self.get("rowEl");
             rowEl[v ? "addClass" : "removeClass"](self.getCssClassWithPrefix(SELECTED_CLS));
             self.get("el").attr("aria-selected", v);
         },
 
-        '_uiSetDepth': function (v) {
+        '_onSetDepth': function (v) {
             this.get("el").attr("aria-level", v);
         },
 
-        _uiSetTooltip: function (v) {
+        _onSetTooltip: function (v) {
             this.get("el").attr("title", v);
         },
 
@@ -698,7 +698,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 return c;
             },
 
-            _uiSetExpanded: function (v) {
+            _onSetExpanded: function (v) {
                 var self = this,
                     tree = self.get("tree");
                 if (self.get("rendered")) {
@@ -989,7 +989,7 @@ KISSY.add("tree/tree-manager-render", function (S) {
             self.get("rowEl").addClass(self.get('prefixCls') + "tree-row");
         },
 
-        '_uiSetShowRootNode': function (v) {
+        '_onSetShowRootNode': function (v) {
             this.get("rowEl")[v ? "show" : "hide"]();
         }
     });
@@ -1097,14 +1097,14 @@ KISSY.add("tree/tree-manager", function (S, Event) {
         },
 
         // 单选
-        '_uiSetSelectedItem': function (n, ev) {
+        '_onSetSelectedItem': function (n, ev) {
             if (ev.prevVal) {
                 ev.prevVal.set("selected", false);
             }
             n.set("selected", true);
         },
 
-        _uiSetFocused: function (v) {
+        _onSetFocused: function (v) {
             var self = this;
             // 得到焦点时没有选择节点
             // 默认选择自己

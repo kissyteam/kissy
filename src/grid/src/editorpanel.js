@@ -71,7 +71,7 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 			}
 		},
 		//set the editing record
-		_uiSetRecord : function(v){
+		_onSetRecord : function(v){
 			var _self = this,
 				children = _self.get('children');
 			S.each(children,function(editor){

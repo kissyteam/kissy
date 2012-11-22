@@ -100,14 +100,14 @@ KISSY.add("tree/tree-manager", function (S, Event) {
         },
 
         // 单选
-        '_uiSetSelectedItem': function (n, ev) {
+        '_onSetSelectedItem': function (n, ev) {
             if (ev.prevVal) {
                 ev.prevVal.set("selected", false);
             }
             n.set("selected", true);
         },
 
-        _uiSetFocused: function (v) {
+        _onSetFocused: function (v) {
             var self = this;
             // 得到焦点时没有选择节点
             // 默认选择自己

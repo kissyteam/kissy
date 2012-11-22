@@ -6,6 +6,8 @@
 KISSY.add('rich-base', function (S, Base) {
 
     var ATTRS = 'ATTRS',
+        ucfirst = S.ucfirst,
+        ON_SET = '_onSet',
         noop = S.noop;
 
     /**
@@ -28,12 +30,31 @@ KISSY.add('rich-base', function (S, Base) {
         // initialize main class and extension
         self.callMethodByHierarchy("initializer", "constructor");
 
+        self.bindInternal();
+        self.syncInternal();
+
         // initialize plugins
         self.constructPlugins();
         self.callPluginsMethod("initializer");
     }
 
     S.extend(RichBase, Base, {
+
+        /**
+         * collection all constructor by extend hierarchy
+         * @protected
+         * @return {Array}
+         */
+        collectConstructorChains: function () {
+            var self = this,
+                constructorChains = [],
+                c = self.constructor;
+            while (c) {
+                constructorChains.push(c);
+                c = c.superclass && c.superclass.constructor;
+            }
+            return constructorChains;
+        },
         /**
          * call methods on main class and extension class by order
          * @protected
@@ -122,6 +143,63 @@ KISSY.add('rich-base', function (S, Base) {
         },
 
         /**
+         * bind attribute change event
+         * @protected
+         */
+        bindInternal: function () {
+            var self = this,
+                attrs = self.getAttrs(),
+                attr,
+                m;
+
+            for (attr in attrs) {
+                m = ON_SET + ucfirst(attr);
+                if (self[m]) {
+                    // 自动绑定事件到对应函数
+                    self.on('after' + ucfirst(attr) + 'Change', onSetAttrChange);
+                }
+            }
+        },
+
+        /**
+         * sync attribute change event
+         */
+        syncInternal: function () {
+            var self = this,
+                attributeValue,
+                onSetMethod,
+                i,
+                constructor,
+                attributeName,
+                onSetMethodName,
+                cache = {},
+                constructorChains = self.collectConstructorChains(),
+                attrs;
+
+            // 从父类到子类执行同步属性函数
+            for (i = constructorChains.length - 1; i >= 0; i--) {
+                constructor = constructorChains[i];
+                if (attrs = constructor[ATTRS]) {
+                    for (attributeName in attrs) {
+                        // 防止子类覆盖父类属性定义造成重复执行
+                        if (!cache[attributeName]) {
+                            cache[attributeName] = 1;
+                            onSetMethodName = ON_SET + ucfirst(attributeName);
+                            // 存在方法，并且用户设置了初始值或者存在默认值，就同步状态
+                            if ((onSetMethod = self[onSetMethodName]) &&
+                                // 用户如果设置了显式不同步，就不同步，
+                                // 比如一些值从 html 中读取，不需要同步再次设置
+                                attrs[attributeName].sync !== false &&
+                                (attributeValue = self.get(attributeName)) !== undefined) {
+                                onSetMethod.call(self, attributeValue);
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+        /**
          * initialize for overridden
          * @protected
          */
@@ -142,7 +220,6 @@ KISSY.add('rich-base', function (S, Base) {
             destroyHierarchy(self);
             self.fire('destroy');
             self.detach();
-            self.fire('destroy');
         },
 
         /**
@@ -345,7 +422,9 @@ KISSY.add('rich-base', function (S, Base) {
         }
     });
 
-// 销毁顺序： 子类 destructor -> 子类扩展 destructor -> 父类 destructor -> 父类扩展 destructor
+    // # private start --------------------------------------
+
+    // 销毁顺序： 子类 destructor -> 子类扩展 destructor -> 父类 destructor -> 父类扩展 destructor
     function destroyHierarchy(self) {
         var c = self.constructor,
             extensions,
@@ -368,6 +447,16 @@ KISSY.add('rich-base', function (S, Base) {
             c = c.superclass && c.superclass.constructor;
         }
     }
+
+    function onSetAttrChange(e) {
+        // ignore bubbling
+        if (e.target == this) {
+            var m = ON_SET + e.type.slice(5).slice(0, -6);
+            this[m](e.newVal, e);
+        }
+    }
+
+    // # private end --------------------------------------
 
     return RichBase;
 

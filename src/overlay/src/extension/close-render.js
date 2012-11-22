@@ -38,7 +38,7 @@ KISSY.add("overlay/extension/close-render", function (S, Node) {
     };
 
     CloseRender.prototype = {
-        _uiSetClosable: function (v) {
+        _onSetClosable: function (v) {
             var self = this,
                 btn = self.get("closeBtn");
             if (v) {

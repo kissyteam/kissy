@@ -51,7 +51,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         /**
          * @ignore
          */
-        _uiSetHighlighted: function (v) {
+        _onSetHighlighted: function (v) {
             var self = this,
                 componentCls = self.getCssClassWithState("-hover"),
                 el = self.get("el");
@@ -61,7 +61,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         /**
          * @ignore
          */
-        _uiSetDisabled: function (v) {
+        _onSetDisabled: function (v) {
             var self = this,
                 componentCls = self.getCssClassWithState("-disabled"),
                 el = self.get("el");
@@ -75,7 +75,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         /**
          * @ignore
          */
-        _uiSetActive: function (v) {
+        _onSetActive: function (v) {
             var self = this,
                 componentCls = self.getCssClassWithState("-active");
             self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
@@ -84,7 +84,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         /**
          * @ignore
          */
-        _uiSetFocused: function (v) {
+        _onSetFocused: function (v) {
             var self = this,
                 el = self.get("el"),
                 componentCls = self.getCssClassWithState("-focused");

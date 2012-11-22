@@ -45,7 +45,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Dr
                 trapFocus.call(this, e);
             },
 
-            _uiSetVisible: function (v) {
+            _onSetVisible: function (v) {
                 var self = this, el = self.get('el');
                 if (v) {
                     self.__lastActive = el[0].ownerDocument.activeElement;
@@ -56,7 +56,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Dr
                     self.__lastActive && self.__lastActive.focus();
                 }
                 // prevent display none for effect
-                Dialog.superclass._uiSetVisible.apply(self, arguments);
+                Dialog.superclass._onSetVisible.apply(self, arguments);
             }
         },
 

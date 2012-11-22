@@ -5,7 +5,7 @@
 KISSY.add("tabs/render", function (S, Component) {
     var CLS = "tabs-top tabs-bottom tabs-left tabs-right";
     return Component.Render.extend({
-        _uiSetBarOrientation: function (v) {
+        _onSetBarOrientation: function (v) {
             var self = this,
                 el = self.get("el");
             el.removeClass(self.getCssClassWithPrefix(CLS))

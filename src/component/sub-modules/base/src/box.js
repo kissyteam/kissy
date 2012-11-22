@@ -216,7 +216,7 @@ KISSY.add('component/base/box', function () {
     Box.prototype =
     {
 
-        _uiSetVisible: function (v) {
+        _onSetVisible: function (v) {
             // do not fire event at render phrase
             if (this.get('rendered')) {
                 this.fire(v ? "show" : "hide");

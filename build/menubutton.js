@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 14:09
+build time: Nov 22 17:46
 */
 /**
  * @fileOverview combination of menu and button ,similar to native select
@@ -87,7 +87,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
          * @lends MenuButton.prototype
          */
         {
-            _uiSetCollapsed:function (v) {
+            _onSetCollapsed:function (v) {
                 if (v) {
                     hideMenu(this);
                 } else {
@@ -247,7 +247,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             },
 
             // 禁用时关闭已显示菜单
-            _uiSetDisabled:function (v) {
+            _onSetDisabled:function (v) {
                 var self = this;
                 !v && self.set("collapsed", true);
             },
@@ -390,14 +390,14 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
                 .attr("aria-haspopup", true);
         },
 
-        _uiSetCollapsed: function (v) {
+        _onSetCollapsed: function (v) {
             var self = this,
                 el = self.get("el"),
                 cls = self.getCssClassWithPrefix(COLLAPSE_CLS);
             el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
         },
 
-        _uiSetActiveItem: function (v) {
+        _onSetActiveItem: function (v) {
             this.get("el").attr("aria-activedescendant",
                 (v && v.get("el").attr("id")) || "");
         }
@@ -646,13 +646,13 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 }
             },
 
-            _uiSetValue:function () {
+            _onSetValue:function () {
                 var self = this;
                 deSelectAllExcept(self);
                 _updateCaption(self);
             },
 
-            _uiSetDefaultCaption:function () {
+            _onSetDefaultCaption:function () {
                 _updateCaption(this);
             }
         },

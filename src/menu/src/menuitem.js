@@ -81,7 +81,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 return true;
             },
 
-            _uiSetHighlighted: function (v) {
+            _onSetHighlighted: function (v) {
                 // 是否要滚动到当前菜单项(横向，纵向)
                 if (v) {
                     var el = this.get("el"),

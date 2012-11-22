@@ -49,7 +49,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
                 self.fire("click");
             },
 
-            _uiSetCheckState:function (s) {
+            _onSetCheckState:function (s) {
                 var self = this,
                     parent = self.get("parent"),
                     checkCount,

@@ -195,10 +195,10 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
 
             // dragNode is equal to node in single mode
         self.setInternal('dragNode', self.get('node'));
-        self.on('afterDisabledChange', self._uiSetDisabledChange, self);
+        self.on('afterDisabledChange', self._onSetDisabledChange, self);
         var disabled;
         if (disabled = self.get('disabled')) {
-            self._uiSetDisabledChange(disabled);
+            self._onSetDisabledChange(disabled);
         }
         self._init();
     }
@@ -583,7 +583,7 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, Base, DDM, Event) {
          */
         _bufferTimer: NULL,
 
-        _uiSetDisabledChange: function (d) {
+        _onSetDisabledChange: function (d) {
             this.get('dragNode')[d ? 'addClass' :
                 'removeClass'](PREFIX_CLS + '-disabled');
         },

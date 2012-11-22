@@ -33,7 +33,7 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
             });
         },
 
-        _uiSetSelectedTab: function (v, e) {
+        _onSetSelectedTab: function (v, e) {
             var prev;
             if (v) {
                 if (e&&(prev = e.prevVal)) {
@@ -43,11 +43,11 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
             }
         },
 
-        _uiSetHighlightedItem: function () {
+        _onSetHighlightedItem: function () {
             var self = this;
-            TabBar.superclass._uiSetHighlightedItem.apply(self, arguments);
+            TabBar.superclass._onSetHighlightedItem.apply(self, arguments);
             if (self.get('changeType') == 'mouse') {
-                self._uiSetSelectedTab.apply(self, arguments);
+                self._onSetSelectedTab.apply(self, arguments);
             }
         },
 

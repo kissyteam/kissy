@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 14:10
+build time: Nov 22 17:47
 */
 /**
  * @fileOverview TabBar for KISSY.
@@ -38,7 +38,7 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
             });
         },
 
-        _uiSetSelectedTab: function (v, e) {
+        _onSetSelectedTab: function (v, e) {
             var prev;
             if (v) {
                 if (e&&(prev = e.prevVal)) {
@@ -48,11 +48,11 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
             }
         },
 
-        _uiSetHighlightedItem: function () {
+        _onSetHighlightedItem: function () {
             var self = this;
-            TabBar.superclass._uiSetHighlightedItem.apply(self, arguments);
+            TabBar.superclass._onSetHighlightedItem.apply(self, arguments);
             if (self.get('changeType') == 'mouse') {
-                self._uiSetSelectedTab.apply(self, arguments);
+                self._onSetSelectedTab.apply(self, arguments);
             }
         },
 
@@ -155,7 +155,7 @@ KISSY.add("tabs/panel-render", function (S, Component) {
             this.get("el").attr("role", "tabpanel");
         },
 
-        _uiSetSelected: function (v) {
+        _onSetSelected: function (v) {
             var el = this.get("el");
             el[v ? "addClass" : "removeClass"](this.get("selectedCls"));
             el.attr("aria-hidden", !v);
@@ -221,7 +221,7 @@ KISSY.add("tabs/panel", function (S, Component, PanelRender) {
 KISSY.add("tabs/render", function (S, Component) {
     var CLS = "tabs-top tabs-bottom tabs-left tabs-right";
     return Component.Render.extend({
-        _uiSetBarOrientation: function (v) {
+        _onSetBarOrientation: function (v) {
             var self = this,
                 el = self.get("el");
             el.removeClass(self.getCssClassWithPrefix(CLS))
@@ -252,7 +252,7 @@ KISSY.add("tabs/tab-render", function (S, Button) {
         createDom: function () {
             this.get("el").attr("role", "tab");
         },
-        _uiSetSelected: function (v) {
+        _onSetSelected: function (v) {
             var el = this.get("el");
             el[v ? 'addClass' : 'removeClass'](this.get("selectedCls"));
             el.attr('aria-selected', !!v);

@@ -10,16 +10,16 @@ KISSY.add("button/buttonRender", function (S, Component) {
             this.get("el")
                 .attr("role", "button");
         },
-        _uiSetChecked:function (v) {
+        _onSetChecked:function (v) {
             var self = this,
                 el = self.get("el"),
                 cls = self.getCssClassWithState("-checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
-        _uiSetTooltip:function (title) {
+        _onSetTooltip:function (title) {
             this.get("el").attr("title", title);
         },
-        _uiSetDescribedby:function (describedby) {
+        _onSetDescribedby:function (describedby) {
             this.get("el").attr("aria-describedby", describedby);
         }
     }, {

@@ -113,7 +113,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
             self.setInternal("iconEl", iconEl);
         },
 
-        _uiSetExpanded: function (v) {
+        _onSetExpanded: function (v) {
             var self = this,
                 childrenEl = self.get("childrenEl");
             if (childrenEl) {
@@ -122,18 +122,18 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
             self.get("el").attr("aria-expanded", v);
         },
 
-        _uiSetSelected: function (v) {
+        _onSetSelected: function (v) {
             var self = this,
                 rowEl = self.get("rowEl");
             rowEl[v ? "addClass" : "removeClass"](self.getCssClassWithPrefix(SELECTED_CLS));
             self.get("el").attr("aria-selected", v);
         },
 
-        '_uiSetDepth': function (v) {
+        '_onSetDepth': function (v) {
             this.get("el").attr("aria-level", v);
         },
 
-        _uiSetTooltip: function (v) {
+        _onSetTooltip: function (v) {
             this.get("el").attr("title", v);
         },
 

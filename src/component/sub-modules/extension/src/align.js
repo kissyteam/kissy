@@ -307,7 +307,7 @@ KISSY.add('component/extension/align', function (S, UA, DOM, Node) {
     }
 
     Align.prototype =    {
-        _uiSetAlign:function (v) {
+        _onSetAlign:function (v) {
             if (v && v.points) {
                 this.align(v.node, v.points, v.offset, v.overflow);
             }

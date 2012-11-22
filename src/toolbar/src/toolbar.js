@@ -100,7 +100,7 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                 this.get("el").attr("role", "toolbar");
             },
 
-            _uiSetHighlightedItem: function (item) {
+            _onSetHighlightedItem: function (item) {
                 var id, self = this, itemEl, el = self.get('el');
                 if (item) {
                     itemEl = item.get('el');

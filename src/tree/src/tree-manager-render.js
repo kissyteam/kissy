@@ -21,7 +21,7 @@ KISSY.add("tree/tree-manager-render", function (S) {
             self.get("rowEl").addClass(self.get('prefixCls') + "tree-row");
         },
 
-        '_uiSetShowRootNode': function (v) {
+        '_onSetShowRootNode': function (v) {
             this.get("rowEl")[v ? "show" : "hide"]();
         }
     });

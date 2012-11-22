@@ -44,7 +44,7 @@ KISSY.add("overlay/extension/resize", function (S) {
             var r = this.resizer;
             r && r.destroy();
         },
-        _uiSetResize:function (v) {
+        _onSetResize:function (v) {
             var Resizable = S.require("resizable"),
                 self = this;
             self.resizer && self.resizer.destroy();

@@ -44,7 +44,7 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
             }
         },
 
-        _uiSetLabel:function (v) {
+        _onSetLabel:function (v) {
             this.get("labelEl").html(v);
         }
     }, {

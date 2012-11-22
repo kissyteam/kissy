@@ -206,7 +206,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
              * 高度不在 el 上设置，设置 iframeWrap 以及 textarea（for ie）.
              * width 依然在 el 上设置
              */
-            _uiSetHeight: function (v) {
+            _onSetHeight: function (v) {
                 var self = this,
                     textareaEl = self.get("textarea"),
                     toolBarEl = self.get("toolBarEl"),
@@ -219,7 +219,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 textareaEl.css(HEIGHT, v);
             },
 
-            _uiSetMode: function (v) {
+            _onSetMode: function (v) {
                 var self = this,
                     save,
                     rendered = self.get("rendered"),
@@ -252,7 +252,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
             },
 
             // 覆盖 controller
-            _uiSetFocused: function (v) {
+            _onSetFocused: function (v) {
                 var self = this;
                 // docReady 后才能调用
                 if (v && self.__docReady) {
