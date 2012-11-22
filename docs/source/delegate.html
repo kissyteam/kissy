@@ -43,20 +43,11 @@ KISSY.add('dd/droppable/delegate', function (S, DD, Droppable, DOM, Node) {
      * @extend KISSY.DD.Droppable
      * Make multiple nodes droppable under a container using only one droppable instance.
      */
-    function DroppableDelegate() {
-        var self = this;
-        DroppableDelegate.superclass.constructor.apply(self, arguments);
-        // 提高性能，拖放开始时缓存代理节点
-        DDM.on('dragstart', dragStart, self);
-    }
+    var DroppableDelegate = Droppable.extend({
 
-    S.extend(DroppableDelegate, Droppable, {
-
-<span id='KISSY-DD-DroppableDelegate-method-destroy'>            /**
-</span>             * Destroy current instance
-             */
-            destroy: function () {
-                DroppableDelegate.superclass.destroy.apply(this, arguments);
+            initializer: function () {
+                // 提高性能，拖放开始时缓存代理节点
+                DDM.on('dragstart', dragStart, this);
             },
 
 <span id='KISSY-DD-DroppableDelegate-method-getNodeFromTarget'>            /**

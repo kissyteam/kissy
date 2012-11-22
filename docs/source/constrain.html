@@ -17,25 +17,22 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview Config constrain region for drag and drop
+ * @fileOverview plugin constrain region for drag and drop
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/constrain', function (S, Base, Node, DD) {
 
     var $ = Node.all,
-        DESTRUCTOR_ID = '__constrain_destructors',
-        stamp = S.stamp,
-        MARKER = S.guid('__dd_constrain'),
+        CONSTRAIN_EVENT = '.-ks-constrain' + S.now(),
         WIN = S.Env.host;
 
 <span id='KISSY-DD-Constrain'>    /**
 </span>     * @class KISSY.DD.Constrain
      * @extends KISSY.Base
-     * Provide ability to constrain draggable to specified region
+     * Constrain plugin to provide ability to constrain draggable to specified region
      */
     function Constrain() {
         Constrain.superclass.constructor.apply(this, arguments);
-        this[DESTRUCTOR_ID] = {};
     }
 
     function onDragStart(e) {
@@ -98,56 +95,47 @@ KISSY.add('dd/constrain', function (S, Base, Node, DD) {
     }
 
     S.extend(Constrain, Base, {
+
+        pluginId: 'dd/constrain',
+
         __constrainRegion: null,
 
-<span id='KISSY-DD-Constrain-method-attachDrag'>        /**
+<span id='KISSY-DD-Constrain-method-initializer'>        /**
 </span>         * start monitoring drag
          * @param {KISSY.DD.Draggable} drag
-         * @chainable
+         * @private
          */
-        attachDrag: function (drag) {
-            var self = this,
-                destructors = self[DESTRUCTOR_ID],
-                tag = stamp(drag, 0, MARKER);
+        initializer: function (drag) {
+            var self=this;
+            drag['on']('dragstart' + CONSTRAIN_EVENT, onDragStart, self)
+                .on('dragend' + CONSTRAIN_EVENT, onDragEnd, self)
+                .on('dragalign' + CONSTRAIN_EVENT, onDragAlign, self);
+        },
 
-            if (destructors[tag]) {
-                return self;
-            }
-            destructors[tag] = drag;
-            drag['on']('dragstart', onDragStart, self)
-                .on('dragend', onDragEnd, self)
-                .on('dragalign', onDragAlign, self);
-            return self;
+        attachDrag: function (drag) {
+            S.log('dd.constrain.attachDrag is deprecated, call plug on drag please', 'warn');
+            this.initializer(drag);
+        },
+
+        detachDrag: function (drag) {
+            S.log('dd.constrain.detachDrag is deprecated, call unplug/destroy on drag please', 'warn');
+            this.destructor(drag);
         },
 
 
-<span id='KISSY-DD-Constrain-method-detachDrag'>        /**
+<span id='KISSY-DD-Constrain-method-destructor'>        /**
 </span>         * stop monitoring drag
          * @param {KISSY.DD.Draggable} drag
-         * @chainable
+         * @private
          */
-        detachDrag: function (drag) {
-            var self = this,
-                tag = stamp(drag, 1, MARKER),
-                destructors = self[DESTRUCTOR_ID];
-            if (tag &amp;&amp; destructors[tag]) {
-                drag['detach']('dragstart', onDragStart, self)
-                    .detach('dragend', onDragEnd, self)
-                    .detach('dragalign', onDragAlign, self);
-                delete destructors[tag];
-            }
-            return self;
+        destructor: function (drag) {
+            drag['detach'](CONSTRAIN_EVENT,{
+                context:this
+            });
         },
 
-<span id='KISSY-DD-Constrain-method-destroy'>        /**
-</span>         * destroy this constrain.
-         */
         destroy: function () {
-            var self = this,
-                destructors = S.merge(self[DESTRUCTOR_ID]);
-            S.each(destructors, function (drag) {
-                self.detachDrag(drag);
-            });
+            S.log('dd.constrain.destroy is deprecated, call unplug/destroy on drag please', 'warn');
         }
     }, {
         ATTRS: {

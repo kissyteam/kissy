@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 17:45
+build time: Nov 22 19:08
 */
 KISSY.add("event/base",function(e,d,c,a,b){return e.Event={_Utils:d,_Object:c,_Observer:a,_ObservableEvent:b}},{requires:["./base/utils","./base/object","./base/observer","./base/observable"]});
 KISSY.add("event/base/object",function(e){function d(){this.timeStamp=e.now()}var c=function(){return!1},a=function(){return!0};d.prototype={constructor:d,isDefaultPrevented:c,isPropagationStopped:c,isImmediatePropagationStopped:c,preventDefault:function(){this.isDefaultPrevented=a},stopPropagation:function(){this.isPropagationStopped=a},stopImmediatePropagation:function(){this.isImmediatePropagationStopped=a;this.stopPropagation()},halt:function(a){a?this.stopImmediatePropagation():this.stopPropagation();

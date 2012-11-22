@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 17:46
+build time: Nov 22 19:09
 */
 KISSY.add("menu/base",function(e,d,c,b){function a(a){this.set("highlightedItem",null);a.stopPropagation()}var f=d.KeyCodes,i=c.Container.extend({_onSetHighlightedItem:function(a,b){var f=b&&b.prevVal;f&&f.set("highlighted",!1);a&&a.set("highlighted",!0);this.set("activeItem",a)},handleBlur:function(a){i.superclass.handleBlur.call(this,a);this.set("highlightedItem",null)},_getNextEnabledHighlighted:function(a,b){var f=this.get("children"),d=f.length,e=a;do{var c=f[a];if(!c.get("disabled")&&!1!==c.get("visible"))return f[a];
 a=(a+b+d)%d}while(a!=e)},handleKeyEventInternal:function(a){var b=this.get("highlightedItem");if(b&&b.handleKeydown(a))return!0;var d=this.get("children"),c=d.length;if(0!==c){switch(a.keyCode){case f.ESC:return;case f.HOME:this.set("highlightedItem",this._getNextEnabledHighlighted(0,1));break;case f.END:this.set("highlightedItem",this._getNextEnabledHighlighted(c-1,-1));break;case f.UP:b?(a=e.indexOf(b,d),c=(a-1+c)%c):c-=1;this.set("highlightedItem",this._getNextEnabledHighlighted(c,-1));break;case f.DOWN:b?

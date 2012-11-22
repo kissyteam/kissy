@@ -136,7 +136,7 @@
 
             // dragDelegate.set("disabled",true);
 
-            proxy.attachDrag(dragDelegate);
+            dragDelegate.plug(proxy);
 
             var dropDelegate = new DroppableDelegate({
                 container:"#container2",
@@ -171,7 +171,7 @@
                 node:"#container2"
             });
 
-            s.attachDrag(dragDelegate);
+            dragDelegate.plug(s);
 
             var container = $("#container2");
             var id = 4;

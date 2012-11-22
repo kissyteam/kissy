@@ -116,7 +116,7 @@
                 selector:'.component'
             });
 
-            p.attachDrag(delegate);
+            delegate.plug(p);
 
             var drop = new Droppable({
                 node:"#drop3"

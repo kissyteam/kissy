@@ -32,12 +32,12 @@ KISSY.use("ua,node,dd/base,dd/droppable", function (S, UA, Node, DD, Droppable) 
 
             it("should fire dragenter properly", function () {
 
-                runs(function () {
+
                     jasmine.simulate(dragNode[0], "mousedown", {
                         clientX: dragXy.left + 10 - DOM.scrollLeft(),
                         clientY: dragXy.top + 10 - DOM.scrollTop()
                     });
-                });
+
                 waits(100);
 
                 // 10px move to start

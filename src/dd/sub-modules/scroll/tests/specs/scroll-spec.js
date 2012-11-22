@@ -18,10 +18,10 @@ KISSY.use("dom,ua,node,dd/base,dd/scroll", function (S, DOM, UA, Node, DD, Scrol
             node: dragNode
         });
 
-        new Scroll({
+        drag.plug(new Scroll({
             node: dragContainer,
             diff: [10, 10]
-        }).attach(drag);
+        }));
 
         drag.on("drag", function (ev) {
             dragNode.offset(ev);

@@ -131,7 +131,7 @@
             }
         });
 
-        proxy.attachDrag(dragDelegate);
+        dragDelegate.plug(proxy);
 
         /**
          * 一列也为可拖放节点，防止空列无法拖入

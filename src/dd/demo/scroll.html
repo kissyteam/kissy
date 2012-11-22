@@ -247,14 +247,14 @@
                 move: 1
             });
 
-            new Scroll({
+            drag.plug(new Scroll({
                 // container 容器自动滚动
                 node: "#container",
                 //滚动速度
                 rate: [10, 10],
                 //容器边缘高宽度
                 diff: [20, 20]
-            }).attachDrag(drag);
+            }));
         })();
 
 
@@ -264,14 +264,14 @@
                 move: 1
             });
 
-            new Scroll({
+            drag.plug(new Scroll({
                 //默认 window 自动滚动，相当于
                 //node :window
                 rate: [20, 20],
                 diff: [20, 20]
-            }).attachDrag(drag);
+            }));
 
-            new DD.Proxy().attachDrag(drag);
+            drag.plug(new DD.Proxy());
 
         })();
 

@@ -163,6 +163,7 @@ KISSY.add('rich-base', function (S, Base) {
 
         /**
          * sync attribute change event
+         * @protected
          */
         syncInternal: function () {
             var self = this,
@@ -297,7 +298,7 @@ KISSY.add('rich-base', function (S, Base) {
              *
              *      {
              *          click:{
-             *              scope:{x:1},
+             *              context:{x:1},
              *              fn:function(){
              *                  alert(this.x);
              *              }

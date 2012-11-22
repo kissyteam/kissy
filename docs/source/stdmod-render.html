@@ -94,26 +94,26 @@ KISSY.add(&quot;overlay/extension/stdmod-render&quot;, function (S, Node) {
             createUI(this, &quot;footer&quot;);
         },
 
-        _uiSetBodyStyle: function (v) {
+        _onSetBodyStyle: function (v) {
             this.get(&quot;body&quot;).css(v);
         },
 
-        _uiSetHeaderStyle: function (v) {
+        _onSetHeaderStyle: function (v) {
             this.get(&quot;header&quot;).css(v);
         },
-        _uiSetFooterStyle: function (v) {
+        _onSetFooterStyle: function (v) {
             this.get(&quot;footer&quot;).css(v);
         },
 
-        _uiSetBodyContent: function (v) {
+        _onSetBodyContent: function (v) {
             _setStdModRenderContent(this, &quot;body&quot;, v);
         },
 
-        _uiSetHeaderContent: function (v) {
+        _onSetHeaderContent: function (v) {
             _setStdModRenderContent(this, &quot;header&quot;, v);
         },
 
-        _uiSetFooterContent: function (v) {
+        _onSetFooterContent: function (v) {
             _setStdModRenderContent(this, &quot;footer&quot;, v);
         }
     };

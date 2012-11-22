@@ -86,7 +86,7 @@ KISSY.add(&quot;overlay/extension/close&quot;, function () {
     };
 
     Close.prototype = {
-        _uiSetClosable:function (v) {
+        _onSetClosable:function (v) {
             var self = this;
             if (v &amp;&amp; !self.__bindCloseEvent) {
                 self.__bindCloseEvent = 1;

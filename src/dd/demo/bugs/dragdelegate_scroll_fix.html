@@ -71,13 +71,13 @@ width: 300px;height: 200px;left:450px;top:50px;overflow: auto;
 
         new DD.Proxy().attach(d);
 
-        new DD.Scroll({
+        d.plug(new DD.Scroll({
             node:"#col1"
-        }).attachDrag(d);
+        }));
 
-        new DD.Scroll({
+        d.plug(new DD.Scroll({
             node:"#col2"
-        }).attachDrag(d);
+        }));
 
     });
 </script>

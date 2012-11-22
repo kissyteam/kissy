@@ -65,20 +65,20 @@ KISSY.add(&quot;component/base/render&quot;, function (S, BoxRender, Component, 
             return this.get(&quot;el&quot;);
         },
 
-<span id='global-method-_uiSetHighlighted'>        /**
+<span id='global-method-_onSetHighlighted'>        /**
 </span>         * @ignore
          */
-        _uiSetHighlighted: function (v) {
+        _onSetHighlighted: function (v) {
             var self = this,
                 componentCls = self.getCssClassWithState(&quot;-hover&quot;),
                 el = self.get(&quot;el&quot;);
             el[v ? 'addClass' : 'removeClass'](componentCls);
         },
 
-<span id='global-method-_uiSetDisabled'>        /**
+<span id='global-method-_onSetDisabled'>        /**
 </span>         * @ignore
          */
-        _uiSetDisabled: function (v) {
+        _onSetDisabled: function (v) {
             var self = this,
                 componentCls = self.getCssClassWithState(&quot;-disabled&quot;),
                 el = self.get(&quot;el&quot;);
@@ -89,19 +89,19 @@ KISSY.add(&quot;component/base/render&quot;, function (S, BoxRender, Component, 
                 self.getKeyEventTarget().attr(&quot;tabIndex&quot;, v ? -1 : 0);
             }
         },
-<span id='global-method-_uiSetActive'>        /**
+<span id='global-method-_onSetActive'>        /**
 </span>         * @ignore
          */
-        _uiSetActive: function (v) {
+        _onSetActive: function (v) {
             var self = this,
                 componentCls = self.getCssClassWithState(&quot;-active&quot;);
             self.get(&quot;el&quot;)[v ? 'addClass' : 'removeClass'](componentCls)
                 .attr(&quot;aria-pressed&quot;, !!v);
         },
-<span id='global-method-_uiSetFocused'>        /**
+<span id='global-method-_onSetFocused'>        /**
 </span>         * @ignore
          */
-        _uiSetFocused: function (v) {
+        _onSetFocused: function (v) {
             var self = this,
                 el = self.get(&quot;el&quot;),
                 componentCls = self.getCssClassWithState(&quot;-focused&quot;);

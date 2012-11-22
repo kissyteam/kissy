@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 17:46
+build time: Nov 22 19:11
 */
 .ks-overlay{position:absolute;left:-9999px;top:-9999px;visibility:hidden;outline:0;-webkit-tap-highlight-color:rgba(0,0,0,0)}.ks-ext-close{display:inline-block;*display:inline;*zoom:1;width:14px;height:14px;vertical-align:text-top;background-image:url(http://img04.taobaocdn.com/tps/i4/T1bxYzXmxeXXcIVv2D-469-159.png);background-position:14px 14px;background-repeat:no-repeat;*margin-right:.3em;background-position:-312px 0;text-shadow:0 1px 0 white;opacity:.2;filter:alpha(opacity=20);*zoom:1;position:absolute;right:15px;top:9px;z-index:99}.ks-ext-close:last-child{*margin-left:0}.ks-ext-close:hover{opacity:1;filter:alpha(opacity=100);*zoom:1}.ks-ext-close-x{display:none}

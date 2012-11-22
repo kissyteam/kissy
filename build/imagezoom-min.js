@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 17:46
+build time: Nov 22 19:09
 */
 KISSY.add("imagezoom/base",function(g,c,i,h,f){return i.extend([h],{initializer:function(){var b=this,d;(d=b.image=b.get("imageNode"))&&h.__imgOnLoad(d,function(){b.imageWrap||(b._render(),b._bind())})},destructor:function(){this.imageWrap&&(this.image.insertBefore(this.imageWrap,f),this.imageWrap.remove())},_render:function(){var b=this.image;this.imageWrap=(new c(g.substitute("<span class='{wrapClass}'></span>",{wrapClass:this.get("wrapClass")}))).insertBefore(b,f);this.imageWrap.prepend(b);this.get("showIcon")&&
 (this.icon=new c(g.substitute("<span class='{iconClass}'></span>",{iconClass:this.get("iconClass")})),this.imageWrap.append(this.icon))},_bind:function(){var b=this,d;b.image.on("mouseenter",function(k){if(b.get("hasZoom")){var a=b.image.offset();b.set("imageLeft",a.left);b.set("imageTop",a.top);d=g.later(function(){b.set("currentMouse",k);b.show();var a=b.get("align");a.node||(a.node=b.image);b.setInternal("align",f);b.set("align",a);d=f},50)}}).on("mouseleave",function(){d&&(d.cancel(),d=f)});b.on("afterVisibleChange",

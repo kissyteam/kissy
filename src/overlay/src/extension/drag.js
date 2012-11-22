@@ -73,7 +73,7 @@ KISSY.add("overlay/extension/drag", function (S) {
                 if (dragCfg.proxy && (Proxy = S.require('dd/proxy'))) {
                     dragCfg.proxy.moveOnEnd = true;
 
-                    p = self.__proxy = new Proxy(dragCfg.proxy).attachDrag(d);
+                    d.plug(new Proxy(dragCfg.proxy));
                 }
 
                 d.on("dragend", function () {
@@ -87,8 +87,9 @@ KISSY.add("overlay/extension/drag", function (S) {
                     }
                 });
 
-                if ((scrollCfg = dragCfg.scroll) && (Scroll = S.require('dd/scroll'))) {
-                    self.__scroll = new Scroll(scrollCfg).attachDrag(d);
+                if ((scrollCfg = dragCfg.scroll) &&
+                    (Scroll = S.require('dd/scroll'))) {
+                    d.plug(new Scroll(scrollCfg));
                 }
 
             }
@@ -102,7 +103,8 @@ KISSY.add("overlay/extension/drag", function (S) {
                 if (Constrain = S.require('dd/constrain')) {
                     if (constrainCfg = dragCfg.constrain) {
                         if (!c) {
-                            c = self.__constrain = new Constrain().attachDrag(d);
+                            c = self.__constrain = new Constrain();
+                            d.plug(c);
                         }
                         c.set("constrain", constrainCfg);
                     } else {
@@ -118,14 +120,7 @@ KISSY.add("overlay/extension/drag", function (S) {
         },
 
         __destructor: function () {
-            var self = this,
-                p = self.__proxy,
-                s = self.__scroll,
-                c = self.__constrain,
-                d = self.__drag;
-            s && s.destroy();
-            p && p.destroy();
-            c && c.destroy();
+            var d = this.__drag;
             d && d.destroy();
         }
 

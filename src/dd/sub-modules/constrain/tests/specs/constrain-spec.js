@@ -31,6 +31,8 @@ KISSY.use("dd/base,dd/constrain", function (S, DD, Constrain) {
             constrain: container
         });
 
+        draggable.plug(constrain);
+
         it("works for node", function () {
 
             node.css({
@@ -39,8 +41,6 @@ KISSY.use("dd/base,dd/constrain", function (S, DD, Constrain) {
             });
 
             constrain.set("constrain", container);
-
-            constrain.attachDrag(draggable);
 
             jasmine.simulate(node[0], "mousedown", {
                 clientX: 10,
@@ -93,8 +93,6 @@ KISSY.use("dd/base,dd/constrain", function (S, DD, Constrain) {
 
             var win = $(window);
 
-            constrain.attachDrag(draggable);
-
             jasmine.simulate(node[0], "mousedown", {
                 clientX: 10,
                 clientY: 10
@@ -146,8 +144,6 @@ KISSY.use("dd/base,dd/constrain", function (S, DD, Constrain) {
 
             var win = $(window);
 
-            constrain.attachDrag(draggable);
-
             jasmine.simulate(node[0], "mousedown", {
                 clientX: 10,
                 clientY: 10
@@ -196,8 +192,6 @@ KISSY.use("dd/base,dd/constrain", function (S, DD, Constrain) {
             });
 
             constrain.set("constrain", false);
-
-            constrain.attachDrag(draggable);
 
             jasmine.simulate(node[0], "mousedown", {
                 clientX: 10,
@@ -248,7 +242,7 @@ KISSY.use("dd/base,dd/constrain", function (S, DD, Constrain) {
 
             constrain.set("constrain", true);
 
-            constrain.detachDrag(draggable);
+            draggable.unplug(constrain);
 
             jasmine.simulate(node[0], "mousedown", {
                 clientX: 10,

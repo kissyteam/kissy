@@ -8,17 +8,6 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
     var PREFIX_CLS = DDM.PREFIX_CLS,
         DRAG_START_EVENT = Event.Gesture.start;
 
-    /**
-     * @extends KISSY.DD.Draggable
-     * @class KISSY.DD.DraggableDelegate
-     * drag multiple nodes under a container element
-     * using only one draggable instance as a delegate.
-     */
-    function DraggableDelegate() {
-        DraggableDelegate.superclass.constructor.apply(this, arguments);
-    }
-
-
     /*
      父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
      */
@@ -26,7 +15,7 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
 
         ev = DDM._normalEvent(ev);
 
-        if(!ev){
+        if (!ev) {
             return;
         }
 
@@ -67,18 +56,31 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
         self._prepare(ev);
     };
 
-    S.extend(DraggableDelegate, Draggable, {
+    /**
+     * @extends KISSY.DD.Draggable
+     * @class KISSY.DD.DraggableDelegate
+     * drag multiple nodes under a container element
+     * using only one draggable instance as a delegate.
+     */
+    return Draggable.extend({
 
             _onSetDisabledChange: function (d) {
                 this.get('container')[d ? 'addClass' :
                     'removeClass'](PREFIX_CLS + '-disabled');
             },
 
-            _init: function () {
+            bindDragEvent: function () {
                 var self = this,
                     node = self.get('container');
                 node.on(DRAG_START_EVENT, handlePreDragStart, self)
                     .on('dragstart', self._fixDragStart);
+            },
+
+            detachDragEvent: function () {
+                var self = this;
+                self.get('container')
+                    .detach(DRAG_START_EVENT, handlePreDragStart, self)
+                    .detach('dragstart', self._fixDragStart);
             },
 
             /*
@@ -109,16 +111,6 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
              */
             _getNode: function (h) {
                 return h.closest(this.get('selector'), this.get('container'));
-            },
-
-            destroy: function () {
-                var self = this;
-                self.get('container')
-                    .detach(DRAG_START_EVENT,
-                    handlePreDragStart,
-                    self)
-                    .detach('dragstart', self._fixDragStart);
-                self.detach();
             }
         },
         {
@@ -164,8 +156,6 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
                 }
             }
         });
-
-    return DraggableDelegate;
 }, {
     requires: ['./ddm', './draggable', 'dom', 'node', 'event']
 });

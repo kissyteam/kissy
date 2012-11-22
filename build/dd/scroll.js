@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 17:43
+build time: Nov 22 19:06
 */
 /**
  * @ignore
@@ -10,23 +10,19 @@ build time: Nov 22 17:43
  */
 KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
 
-    var TAG_DRAG = '__dd-scroll-id-',
-        DDM = DD.DDM,
+    var DDM = DD.DDM,
         win = S.Env.host,
-        stamp = S.stamp,
+        SCROLL_EVENT = '.-ks-dd-scroll' + S.now(),
         RATE = [10, 10],
         ADJUST_DELAY = 100,
-        DIFF = [20, 20],
-        DESTRUCTORS = '__dd_scrolls';
+        DIFF = [20, 20];
 
     /**
      * @class KISSY.DD.Scroll
-     * Make parent node scroll while dragging.
+     * Scroll plugin to make parent node scroll while dragging.
      */
     function Scroll() {
-        var self = this;
-        Scroll.superclass.constructor.apply(self, arguments);
-        self[DESTRUCTORS] = {};
+        Scroll.superclass.constructor.apply(this, arguments);
     }
 
     Scroll.ATTRS = {
@@ -130,53 +126,39 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
         /**
          * make node not to scroll while this drag object is dragging
          * @param {KISSY.DD.Draggable} drag
-         * @chainable
+         * @private
          */
-        detachDrag: function (drag) {
-            var tag,
-                self=this,
-                destructors = self[DESTRUCTORS];
-            if (!(tag = stamp(drag, 1, TAG_DRAG)) ||
-                !destructors[tag]) {
-                return self;
-            }
-            destructors[tag].fn();
-            delete destructors[tag];
-            return self;
+        destructor: function (drag) {
+            drag['detach'](SCROLL_EVENT);
         },
 
-        /**
-         * make node not to scroll at all
-         */
+        detachDrag: function (drag) {
+            S.log('dd.scroll.detachDrag is deprecated, call unplug/destroy on drag please', 'warn');
+            this.destructor(drag);
+        },
+
+        attachDrag: function (drag) {
+            S.log('dd.scroll.attachDrag is deprecated, call plug on drag please', 'warn');
+            this.initializer(drag);
+        },
+
         destroy: function () {
-            var self = this,
-                destructors = self[DESTRUCTORS];
-            S.each(destructors, function (v) {
-                self.detachDrag(v.drag);
-            });
+            S.log('dd.scroll.destroy is deprecated, call unplug/destroy on drag please', 'warn');
         },
 
         /**
          * make node to scroll while this drag object is dragging
          * @param {KISSY.DD.Draggable} drag
-         * @chainable
+         * @private
          */
-        attachDrag: function (drag) {
+        initializer: function (drag) {
             var self = this,
-                node = self.get('node'),
-                tag = stamp(drag, 0, TAG_DRAG),
-                destructors = self[DESTRUCTORS];
-
-            if (destructors[tag]) {
-                return self;
-            }
+                node = self.get('node');
 
             var rate = self.get('rate'),
                 diff = self.get('diff'),
                 event,
-            /*
-             目前相对 container 的偏移，container 为 window 时，相对于 viewport
-             */
+            // 目前相对 container 的偏移，container 为 window 时，相对于 viewport
                 dxy,
                 timer = null;
 
@@ -226,21 +208,13 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
                 timer = null;
             }
 
-            drag.on('drag', dragging);
+            drag.on('drag' + SCROLL_EVENT, dragging);
 
-            drag.on('dragstart', function () {
+            drag.on('dragstart' + SCROLL_EVENT, function () {
                 DDM.cacheWH(node);
             });
 
-            drag.on('dragend', dragEnd);
-
-            destructors[tag] = {
-                drag: drag,
-                fn: function () {
-                    drag.detach('drag', dragging);
-                    drag.detach('dragend', dragEnd);
-                }
-            };
+            drag.on('dragend' + SCROLL_EVENT, dragEnd);
 
             function checkAndScroll() {
                 if (checkContainer()) {
@@ -305,8 +279,6 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
                     timer = null;
                 }
             }
-
-            return self;
         }
     });
 

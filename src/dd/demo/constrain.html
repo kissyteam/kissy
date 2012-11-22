@@ -35,7 +35,7 @@
             constrain:"#constrainContainer"
         });
 
-        c.attachDrag(drag);
+        drag.plug(c);
 
         $("#cd").on("click", function () {
             $("#d").css({
@@ -43,7 +43,7 @@
                 top:"10px"
             });
             c.set("constrain", "#constrainContainer");
-            c.attachDrag(drag);
+            drag.plug(c);
         });
 
         $("#cw").on("click", function () {
@@ -52,7 +52,7 @@
                 top:"10px"
             });
             c.set("constrain", true);
-            c.attachDrag(drag);
+            drag.plug(c);
         });
 
         $("#cn").on("click", function () {
@@ -61,7 +61,7 @@
                 top:"10px"
             });
 
-            c.detachDrag(drag);
+            drag.unplug(c);
         });
     });
 </script>

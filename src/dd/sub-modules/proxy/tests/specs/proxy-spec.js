@@ -15,28 +15,28 @@ KISSY.use("ua,node,dd/base,dd/proxy", function (S, UA, Node, DD) {
         drag = new Draggable({
             node: "#drag_proxy"
         });
+
         dragNode = drag.get("dragNode");
-        new Proxy({
+
+        drag.plug(new Proxy({
             node: function (drag) {
                 var n = new Node(drag.get("dragNode").clone(false));
                 n.css("opacity", 0.2);
                 return n;
             }
-        }).attach(drag);
-
+        }));
 
         it("should create proxy properly", function () {
 
-            runs(function () {
 
-                expect(drag.get("node")[0]).toBe(drag.get("dragNode")[0]);
+            expect(drag.get("node")[0]).toBe(drag.get("dragNode")[0]);
 
-                dragXy = dragNode.offset();
-                jasmine.simulate(dragNode[0], "mousedown", {
-                    clientX: dragXy.left + 10 - DOM.scrollLeft(),
-                    clientY: dragXy.top + 10 - DOM.scrollTop()
-                });
+            dragXy = dragNode.offset();
+            jasmine.simulate(dragNode[0], "mousedown", {
+                clientX: dragXy.left + 10 - DOM.scrollLeft(),
+                clientY: dragXy.top + 10 - DOM.scrollTop()
             });
+
 
             waits(100);
 

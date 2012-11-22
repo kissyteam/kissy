@@ -38,8 +38,7 @@ KISSY.use("ua,node,dd/base,dom,dd/proxy,dd/droppable", function (S, UA, Node, DD
                 move:true
             });
 
-            proxy.attach(dragDelegate);
-
+            dragDelegate.plug(proxy);
 
             var dropDelegate = new DroppableDelegate({
                 container:"#container2",
@@ -116,7 +115,6 @@ KISSY.use("ua,node,dd/base,dom,dd/proxy,dd/droppable", function (S, UA, Node, DD
                 $("#container2").append(c1);
                 $("#container2").append(c2);
                 $("#container2").append(c3);
-                proxy.destroy();
                 dragDelegate.destroy();
                 dropDelegate.destroy();
             });
@@ -149,8 +147,7 @@ KISSY.use("ua,node,dd/base,dom,dd/proxy,dd/droppable", function (S, UA, Node, DD
                 disabled:true
             });
 
-            proxy.attach(dragDelegate);
-
+            dragDelegate.plug(proxy);
 
             var dropDelegate = new DroppableDelegate({
                 container:"#container2",
@@ -227,7 +224,6 @@ KISSY.use("ua,node,dd/base,dom,dd/proxy,dd/droppable", function (S, UA, Node, DD
                 $("#container2").append(c1);
                 $("#container2").append(c2);
                 $("#container2").append(c3);
-                proxy.destroy();
                 dragDelegate.destroy();
                 dropDelegate.destroy();
             });

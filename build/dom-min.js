@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 17:43
+build time: Nov 22 19:06
 */
 KISSY.add("dom/attr",function(h,a,e,j){function n(a,g){var g=r[g]||g,o=C[g];return o&&o.get?o.get(a,g):a[g]}var q=h.Env.host.document,l=a.NodeType,s=q&&q.documentElement,e=e.ie&&(q.documentMode||e.ie),u=s&&s.textContent===j?"innerText":"textContent",f=a.nodeName,k=/^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,d=/^(?:button|input|object|select|textarea)$/i,i=/^a(?:rea)?$/i,b=/:|^on/,c=/\r/g,t={},z={val:1,css:1,html:1,text:1,
 data:1,width:1,height:1,offset:1,scrollTop:1,scrollLeft:1},v={tabindex:{get:function(a){var g=a.getAttributeNode("tabindex");return g&&g.specified?parseInt(g.value,10):d.test(a.nodeName)||i.test(a.nodeName)&&a.href?0:j}},style:{get:function(a){return a.style.cssText},set:function(a,g){a.style.cssText=g}}},r={hidefocus:"hideFocus",tabindex:"tabIndex",readonly:"readOnly","for":"htmlFor","class":"className",maxlength:"maxLength",cellspacing:"cellSpacing",cellpadding:"cellPadding",rowspan:"rowSpan",colspan:"colSpan",
