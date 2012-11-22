@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview render aria from menu according to current menuitem
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuRender", function(S, UA, Component) {
+KISSY.add("menu/menu-render", function(S, UA, Component) {
 
     return Component.Render.extend({
 
@@ -22,10 +23,10 @@ KISSY.add("menu/menuRender", function(S, UA, Component) {
                     id = menuItemEl.attr("id");
                 el.attr("aria-activedescendant", id);
                 // 会打印重复 ，每个子菜单都会打印，然后冒泡至父菜单，再打印，和该 menuitem 所处层次有关系
-                //S.log("menuRender :" + el.attr("id") + " _onSetActiveItem : " + v.get("content"));
+                //S.log("menu-render :" + el.attr("id") + " _onSetActiveItem : " + v.get("content"));
             } else {
                 el.attr("aria-activedescendant", "");
-                //S.log("menuRender :" + el.attr("id") + " _onSetActiveItem : " + "");
+                //S.log("menu-render :" + el.attr("id") + " _onSetActiveItem : " + "");
             }
         },
 

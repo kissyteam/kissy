@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview menu item ,child component for menu
  * @author yiminghe@gmail.com
  */
@@ -7,25 +8,18 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
     var $ = S.all;
 
     /**
-     * @class
+     * @class KISSY.Menu.Item
      * A menu item component which menu is consisted of.
      * xclass: 'menuitem'.
-     * @name Item
-     * @memberOf Menu
      * @extends KISSY.Component.Controller
      */
-    var MenuItem = Component.Controller.extend(
-        /**
-         * @lends Menu.Item#
-         */
-        {
+    var MenuItem = Component.Controller.extend({
 
             /**
              * Handle mouseenter event. Make parent menu to highlight itself.
              * Protected, should only be overridden by subclasses.
-             * @param {Event.Object} e Mouseenter event object.
+             * @param {KISSY.Event.DOMEventObject} e Mouseenter event object.
              * @protected
-             *
              */
             handleMouseEnter: function (e) {
                 // 父亲不允许自己处理
@@ -38,7 +32,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
             /**
              * Handle mouseleave event. Make parent menu to unhighlight itself.
              * Protected, should only be overridden by subclasses.
-             * @param {Event.Object} e Mouseleave event object.
+             * @param {KISSY.Event.DOMEventObject} e Mouseleave event object.
              * @protected
              *
              */
@@ -65,7 +59,6 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
              * If checkable, then toggle it.
              * Finally fire click on its parent menu.
              * @protected
-             *
              */
             performActionInternal: function () {
                 var self = this;
@@ -100,16 +93,14 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
             /**
              * Check whether this menu item contains specified element.
              * @param {KISSY.NodeList} element Element to be tested.
+             * @protected
              */
             containsElement: function (element) {
                 return this.get('view') && this.get('view').containsElement(element);
             }
 
         }, {
-            ATTRS: /**
-             * @lends Menu.Item#
-             */
-            {
+            ATTRS: {
 
                 focusable: {
                     value: false
@@ -122,7 +113,10 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 /**
                  * Whether the menu item is selectable or not.
                  * Set to true for option.
-                 * @type {Boolean}
+                 * @cfg {Boolean} selectable
+                 */
+                /**
+                 * @ignore
                  */
                 selectable: {
                     view: 1
@@ -131,7 +125,10 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 /**
                  * Whether the menu item is checkable or not.
                  * Set to true for checkbox option.
-                 * @type {Boolean}
+                 * @cfg {Boolean} checkable
+                 */
+                /**
+                 * @ignore
                  */
                 checkable: {
                     view: 1
@@ -139,12 +136,29 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
 
                 /**
                  * The value associated with the menu item.
+                 * @cfg {*} value
+                 */
+                /**
+                 * The value associated with the menu item.
+                 * @property value
+                 * @type {*}
+                 */
+                /**
+                 * @ignore
                  */
                 value: {},
 
                 /**
                  * Whether the menu item is checked.
                  * @type {Boolean}
+                 * @property checked
+                 */
+                /**
+                 * Whether the menu item is checked.
+                 * @cfg {Boolean} checked
+                 */
+                /**
+                 * @ignore
                  */
                 checked: {
                     view: 1
@@ -153,6 +167,14 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 /**
                  * Whether the menu item is selected.
                  * @type {Boolean}
+                 * @property selected
+                 */
+                /**
+                 * Whether the menu item is selected.
+                 * @cfg {Boolean} selected
+                 */
+                /**
+                 * @ignore
                  */
                 selected: {
                     view: 1
@@ -169,5 +191,5 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
 
     return MenuItem;
 }, {
-    requires: ['component/base', './menuitemRender']
+    requires: ['component/base', './menuitem-render']
 });

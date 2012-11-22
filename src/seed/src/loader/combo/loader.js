@@ -273,7 +273,6 @@
 
     S.augment(ComboLoader, {
 
-
         /**
          * use
          * @param modNames
@@ -284,7 +283,12 @@
                 fn = function () {
                     // KISSY.use in callback will be queued
                     if (callback) {
-                        callback.apply(this, arguments);
+                        // one failure does not interfere with others
+                        try {
+                            callback.apply(this, arguments);
+                        } catch (e) {
+                            S.log(e.stack || e, 'error');
+                        }
                     }
                     self.loading = 0;
                     next(self);

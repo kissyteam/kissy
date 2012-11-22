@@ -1,6 +1,7 @@
 /**
- *  @fileOverview menu where items can be filtered based on user keyboard input
- *  @author yiminghe@gmail.com
+ * @ignore
+ * @fileOverview menu where items can be filtered based on user keyboard input
+ * @author yiminghe@gmail.com
  */
 KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
@@ -13,19 +14,14 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
     }
 
     /**
-     * @class
+     *
      * Filter Menu for KISSY.
      * xclass: 'filter-menu'.
-     * @extends Menu
-     * @memberOf Menu
-     * @name FilterMenu
+     * @extends KISSY.Menu
+     * @class KISSY.Menu.FilterMenu
      */
-    var FilterMenu = Menu.extend(
-        /**
-         * @lends Menu.FilterMenu#
-         */
-        {
-            bindUI:function () {
+    var FilterMenu = Menu.extend({
+            bindUI: function () {
                 var self = this,
                     view = self.get("view"),
                     filterInput = view.get("filterInput");
@@ -33,7 +29,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 filterInput.on("keyup", self.handleFilterEvent, self);
             },
 
-            handleMouseEnter:function () {
+            handleMouseEnter: function () {
                 var self = this;
                 FilterMenu.superclass.handleMouseEnter.apply(self, arguments);
                 // 权益解决,filter input focus 后会滚动到牌聚焦处,select 则不会
@@ -41,7 +37,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 self.getKeyEventTarget()[0].select();
             },
 
-            handleFilterEvent:function () {
+            handleFilterEvent: function () {
                 var self = this,
                     view = self.get("view"),
                     filterInput = view.get("filterInput"),
@@ -57,18 +53,18 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 }
             },
 
-            _onSetFilterStr:function (v) {
+            '_onSetFilterStr': function (v) {
                 // 过滤条件变了立即过滤
                 this.filterItems(v);
             },
 
             /**
-             * For override. Specify how to filter items.
+             * Specify how to filter items.
              * @param {String} str User input.
              */
-            filterItems:function (str) {
+            filterItems: function (str) {
                 var self = this,
-                    prefixCls=self.get('prefixCls'),
+                    prefixCls = self.get('prefixCls'),
                     view = self.get("view"),
                     _labelEl = view.get("labelEl"),
                     filterInput = view.get("filterInput");
@@ -147,7 +143,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                             c.set("visible", true);
                             // 匹配子串着重 wrap
                             c.get("el").html(content.replace(strExp, function (m) {
-                                return "<span class='" + prefixCls+HIT_CLS + "'>" + m + "<" + "/span>";
+                                return "<span class='" + prefixCls + HIT_CLS + "'>" + m + "<" + "/span>";
                             }));
                         } else {
                             // 不符合
@@ -158,18 +154,18 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 });
             },
 
-            decorateInternal:function (el) {
+            decorateInternal: function (el) {
                 var self = this,
-                    prefixCls=self.get('prefixCls');
+                    prefixCls = self.get('prefixCls');
                 self.set("el", el);
-                var menuContent = el.one("." + prefixCls+"menu-content");
+                var menuContent = el.one("." + prefixCls + "menu-content");
                 self.decorateChildren(menuContent);
             },
 
             /**
              * Reset user input.
              */
-            reset:function () {
+            reset: function () {
                 var self = this,
                     view = self.get("view");
                 self.set("filterStr", "");
@@ -178,7 +174,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 filterInput && filterInput.val("");
             },
 
-            destructor:function () {
+            destructor: function () {
                 var view = this.get("view");
                 var filterInput = view && view.get("filterInput");
                 filterInput && filterInput.detach();
@@ -186,56 +182,63 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
         },
         {
-            ATTRS:/**
-             * @lends Menu.FilterMenu#
-             */
-            {
+            ATTRS: {
 
-                allowTextSelection:{
-                    value:true
+                allowTextSelection: {
+                    value: true
                 },
 
                 /**
                  * Hit info string
-                 * @type {String}
+                 * @cfg {String} label
                  */
-                label:{
-                    view:1
+                /**
+                 * @ignore
+                 */
+                label: {
+                    view: 1
                 },
 
                 /**
                  * Filter string
-                 * @type {String}
+                 * @cfg {String} filterStr
                  */
-                filterStr:{
+                /**
+                 * @ignore
+                 */
+                filterStr: {
                 },
 
                 /**
                  * user entered string list when allowMultiple.
                  * @type {String[]}
+                 * @ignore
                  */
-                enteredItems:{
-                    value:[]
+                enteredItems: {
+                    value: []
                 },
 
                 /**
                  * Whether to allow input multiple.
-                 * @type {Boolean}
+                 * @cfg {Boolean} allowMultiple
                  */
-                allowMultiple:{
-                    value:false
+                /**
+                 * @ignore
+                 */
+                allowMultiple: {
+                    value: false
                 },
 
-                xrender:{
-                    value:FilterMenuRender
+                xrender: {
+                    value: FilterMenuRender
                 }
             }
         }, {
-            xclass:'filter-menu',
-            priority:20
+            xclass: 'filter-menu',
+            priority: 20
         });
 
     return FilterMenu;
 }, {
-    requires:['./base', './filtermenuRender']
+    requires: ['./base', './filtermenu-render']
 });

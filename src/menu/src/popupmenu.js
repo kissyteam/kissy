@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
@@ -10,29 +11,23 @@ KISSY.add("menu/popupmenu", function (S,
 
 
     /**
-     * @name PopupMenu
-     * @memberOf Menu
-     * @class
      * Popup Menu.
      * xclass: 'popupmenu'.
-     * @extends Menu
-     * @extends KISSY.Component.Extension.Position
-     * @extends KISSY.Component.Extension.Align
+     * @class KISSY.Menu.PopupMenu
+     * @extends KISSY.Menu
+     * @mixins KISSY.Component.Extension.Position
+     * @mixins KISSY.Component.Extension.Align
      */
     var PopupMenu = Menu.extend([
         extension.ContentBox,
         extension.Position,
         extension.Align
     ],
-        /**
-         * @lends Menu.PopupMenu#
-         */
         {
             /**
              * Handle mouseleave event.Make parent subMenu item unHighlighted.
              * Protected, should only be overridden by subclasses.
              * @protected
-             *
              */
             handleMouseLeave:function () {
                 var self = this;
@@ -47,7 +42,6 @@ KISSY.add("menu/popupmenu", function (S,
              * Suppose it has focus (as a context menu), then it must hide when lose focus.
              * Protected, should only be overridden by subclasses.
              * @protected
-             *
              */
             handleBlur:function () {
                 var self = this;
@@ -55,15 +49,13 @@ KISSY.add("menu/popupmenu", function (S,
                 self.hide();
             }
         }, {
-            ATTRS:/**
-             * @lends Menu.PopupMenu#
-             */
-            {
+            ATTRS: {
                 // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
                 /**
                  * Whether the popup menu is focusable.
-                 * @default false.
+                 * Defaults to: false.
                  * @type {Boolean}
+                 * @ignore
                  */
                 focusable:{
                     value:false
@@ -71,10 +63,14 @@ KISSY.add("menu/popupmenu", function (S,
                 /**
                  * Whether the popup menu hides when mouseleave.
                  * Only valid for submenu.
-                 * @default false.
-                 * @type {Boolean}
+                 * Defaults to: false.
+                 * @cfg {Boolean} autoHideOnMouseLeave
+                 */
+                /**
+                 * @ignore
                  */
                 autoHideOnMouseLeave:{},
+
                 xrender:{
                     value:PopupMenuRender
                 }
@@ -88,5 +84,5 @@ KISSY.add("menu/popupmenu", function (S,
 
 }, {
     requires:['component/extension',
-        './base', './popupmenuRender']
+        './base', './popupmenu-render']
 });

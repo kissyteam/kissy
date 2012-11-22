@@ -1,16 +1,15 @@
 /**
+ * @ignore
  * @fileOverview Local dataSource for ComboBox
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/LocalDataSource", function (S, Component) {
 
     /**
-     * @name LocalDataSource
-     * @memberOf ComboBox
-     * @extends KISSY.Base
-     * @class
      * Local dataSource for comboBox.
      * xclass: 'combobox-LocalDataSource'.
+     * @extends KISSY.Base
+     * @class KISSY.ComboBox.LocalDataSource
      */
     function LocalDataSource() {
         LocalDataSource.superclass.constructor.apply(this, arguments);
@@ -32,40 +31,33 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
         return ret;
     }
 
-    LocalDataSource.ATTRS =
-    /**
-     * @lends ComboBox.LocalDataSource#
-     */
-    {
+    LocalDataSource.ATTRS = {
         /**
          * array of static data for comboBox
-         * @type {Object[]}
+         * @cfg {Object[]} data
+         */
+        /**
+         * @ignore
          */
         data:{
             value:[]
         },
         /**
          * parse data function.
-         * @default index of match.
-         * @type {Function}
+         * Defaults to: index of match.
+         * @cfg {Function} parse
          */
         parse:{
             value:parser
         }
     };
 
-    S.extend(LocalDataSource, S.Base,
+    S.extend(LocalDataSource, S.Base,{
         /**
-         * @lends ComboBox.LocalDataSource#
-         */
-        {
-        /**
-         * Data source interface. How to get data for comboBox
-         * @method
-         * @name ComboBox.LocalDataSource#fetchData
+         * Data source interface. How to get data for comboBox.
          * @param {String} inputVal current active input's value
          * @param {Function} callback callback to notify comboBox when data is ready
-         * @param {Object} context callback's execution context
+         * @param {Object} context callback 's execution context
          */
         fetchData:function (inputVal, callback, context) {
             var parse = this.get("parse"),

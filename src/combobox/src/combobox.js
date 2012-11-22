@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview Export ComboBox.
  * @author yiminghe@gmail.com
  */

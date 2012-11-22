@@ -1,8 +1,9 @@
 /**
+ * @ignore
  * @fileOverview submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
+KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
     var SubMenuRender,
         CONTENT_TMPL = '<span class="{prefixCls}menuitem-content"><' + '/span>',
         ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
@@ -36,5 +37,5 @@ KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
 
     return SubMenuRender;
 }, {
-    requires: ['./menuitemRender']
+    requires: ['./menuitem-render']
 });

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
@@ -17,17 +18,12 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
         SUFFIX = 'suffix';
 
     /**
-     * @name ComboBox
-     * @extends KISSY.Component.Controller
-     * @class
      * KISSY ComboBox.
      * xclass: 'combobox'.
+     * @extends KISSY.Component.Controller
+     * @class KISSY.ComboBox
      */
-    ComboBox = Component.Controller.extend(
-        /**
-         * @lends ComboBox#
-         */
-        {
+    ComboBox = Component.Controller.extend({
 
             // user's input text
             _savedInputValue: null,
@@ -38,7 +34,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
              * normalize returned data
              * @protected
              * @param data
-             * @return
              */
             normalizeData: function (data) {
                 var self = this, contents, v, i, c;
@@ -62,9 +57,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 return contents;
             },
 
-            /**
-             * @protected
-             */
             bindUI: function () {
                 var self = this,
                     input = self.get("input");
@@ -72,18 +64,15 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 input.on("valuechange", onValueChange, self);
 
                 /**
-                 * @name ComboBox#afterCollapsedChange
-                 * @description fired after combobox 's collapsed attribute is changed.
-                 * @event
+                 * fired after combobox 's collapsed attribute is changed.
+                 * @event afterCollapsedChange
                  * @param e
                  * @param e.newVal current value
                  * @param e.prevVal previous value
                  */
 
             },
-            /**
-             * @protected
-             */
+
             handleFocus: function () {
                 var self = this, placeholderEl;
                 setInvalid(self, false);
@@ -91,9 +80,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                     placeholderEl.hide();
                 }
             },
-            /**
-             * @protected
-             */
+
             handleBlur: function () {
                 var self = this;
                 ComboBox.superclass.handleBlur.apply(self, arguments);
@@ -133,9 +120,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 }
             },
 
-            /**
-             * @protected
-             */
             handleKeyEventInternal: function (e) {
                 var self = this,
                     input = self.get("input"),
@@ -202,9 +186,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 }
             },
 
-            /**
-             * @protected
-             */
             syncUI: function () {
                 if (this.get("placeholder")) {
                     var self = this,
@@ -288,9 +269,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 dataSource.fetchData(value, renderData, self);
             },
 
-            /**
-             * @protected
-             */
             _onSetCollapsed: function (v) {
                 if (v) {
                     hideMenu(this);
@@ -299,24 +277,22 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 }
             },
 
-            /**
-             * @protected
-             */
             destructor: function () {
-                var self=this;
+                var self = this;
                 win.detach("resize", self.__repositionBuffer, this);
                 self.__repositionBuffer.stop();
             }
         },
         {
-            ATTRS: /**
-             * @lends ComboBox#
-             */
-            {
+            ATTRS: {
 
                 /**
                  * Input element of current combobox.
                  * @type {KISSY.NodeList}
+                 * @property input
+                 */
+                /**
+                 * @ignore
                  */
                 input: {
                     view: 1
@@ -324,6 +300,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * trigger arrow element
+                 * @ignore
                  */
                 trigger: {
                     view: 1
@@ -331,14 +308,19 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * placeholder
+                 * @cfg {String} placeholder
+                 */
+                /**
+                 * @ignore
                  */
                 placeholder: {
                     view: 1
                 },
 
+
                 /**
                  * label for placeholder in ie
-                 * @private
+                 * @ignore
                  */
                 placeholderEl: {
                     view: 1
@@ -346,6 +328,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * custom validation function
+                 * @type Function
+                 * @property validator
+                 */
+                /**
+                 * @ignore
                  */
                 validator: {
 
@@ -353,30 +340,39 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * invalid tag el
+                 * @ignore
                  */
                 invalidEl: {
                     view: 1
                 },
 
-                /**
-                 * @protected
-                 */
                 allowTextSelection: {
                     value: true
                 },
 
                 /**
                  * Whether show combobox trigger.
-                 * @default true.
-                 * @type {Boolean}
+                 * Defaults to: true.
+                 * @cfg {Boolean} hasTrigger
+                 */
+                /**
+                 * @ignore
                  */
                 hasTrigger: {
                     view: 1
                 },
 
                 /**
-                 * ComboBox dropDown menuList
-                 * @type {Menu.PopupMenu}
+                 * ComboBox dropDown menuList or config
+                 * @cfg {KISSY.Menu.PopupMenu|Object} menu
+                 */
+                /**
+                 * ComboBox dropDown menuList or config
+                 * @property menu
+                 * @type {KISSY.Menu.PopupMenu}
+                 */
+                /**
+                 * @ignore
                  */
                 menu: {
                     value: {
@@ -392,6 +388,10 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Whether combobox menu is hidden.
                  * @type {Boolean}
+                 * @property collapsed
+                 */
+                /**
+                 * @ignore
                  */
                 collapsed: {
                     view: 1
@@ -399,7 +399,10 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * dataSource for comboBox.
-                 * @type {ComboBox.LocalDataSource|ComboBox.RemoteDataSource|Object}
+                 * @cfg {KISSY.ComboBox.LocalDataSource|KISSY.ComboBox.RemoteDataSource|Object} dataSource
+                 */
+                /**
+                 * @ignore
                  */
                 dataSource: {
                     // 和 input 关联起来，input可以有很多，每个数据源可以不一样，但是 menu 共享
@@ -410,7 +413,10 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * maxItemCount max count of data to be shown
-                 * @type {Number}
+                 * @cfg {Number} maxItemCount
+                 */
+                /**
+                 * @ignore
                  */
                 maxItemCount: {
                     value: 99999
@@ -418,8 +424,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Whether drop down menu is same width with input.
-                 * @default true.
-                 * @type {Boolean}
+                 * Defaults to: true.
+                 * @cfg {Boolean} matchElWidth
+                 */
+                /**
+                 * @ignore
                  */
                 matchElWidth: {
                     value: true
@@ -428,23 +437,32 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Format function to return array of
                  * html/text/menu item attributes from array of data.
-                 * @type {Function}
+                 * @cfg {Function} format
+                 */
+                /**
+                 * @ignore
                  */
                 format: {
                 },
 
                 /**
                  * Whether allow multiple input,separated by separator
-                 * @default false
-                 * @type {Boolean}
+                 * Defaults to: false
+                 * @cfg {Boolean} multiple
+                 */
+                /**
+                 * @ignore
                  */
                 multiple: {
                 },
 
                 /**
                  * Separator chars used to separator multiple inputs.
-                 * @default ;,
-                 * @type {String}
+                 * Defaults to: ;,
+                 * @cfg {String} separator
+                 */
+                /**
+                 * @ignore
                  */
                 separator: {
                     value: ",;"
@@ -453,7 +471,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Separator type.
                  * After value( 'suffix' ) or before value( 'prefix' ).
-                 * @type {String}
+                 * Defaults to: 'suffix'
+                 * @cfg {String} separatorType
+                 */
+                /**
+                 * @ignore
                  */
                 separatorType: {
                     value: SUFFIX
@@ -461,9 +483,12 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Whether whitespace is part of toke value.
-                 * Default true
-                 * @type {Boolean}
+                 * Default to: true
+                 * @cfg {Boolean} whitespace
                  * @private
+                 */
+                /**
+                 * @ignore
                  */
                 whitespace: {
                     valueFn: function () {
@@ -473,8 +498,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Whether update input's value at keydown or up when combobox menu shows.
-                 * Default true
-                 * @type {Boolean}
+                 * Default to: true
+                 * @cfg {Boolean} updateInputOnDownUp
+                 */
+                /**
+                 * @ignore
                  */
                 updateInputOnDownUp: {
                     value: true
@@ -482,8 +510,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * If separator wrapped by literal chars,separator become normal chars.
-                 * @default "
-                 * @type {String}
+                 * Defaults to: "
+                 * @cfg {String} literal
+                 */
+                /**
+                 * @ignore
                  */
                 literal: {
                     value: "\""
@@ -491,16 +522,22 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Whether align menu with individual token after separated by separator.
-                 * @default false
-                 * @type {Boolean}
+                 * Defaults to: false
+                 * @cfg {Boolean} alignWithCursor
+                 */
+                /**
+                 * @ignore
                  */
                 alignWithCursor: {
                 },
 
                 /**
                  * Whether or not the first row should be highlighted by default.
-                 * @default false
-                 * @type {Boolean}
+                 * Defaults to: false
+                 * @cfg {Boolean} autoHighlightFirst
+                 */
+                /**
+                 * @ignore
                  */
                 autoHighlightFirst: {
                 },
@@ -526,9 +563,8 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
             setValue(self, textContent + (separatorType == SUFFIX ? "" : " "));
             self._savedInputValue = textContent;
             /**
-             * @name ComboBox#click
-             * @description fired when user select from suggestion list (bubbled from menuItem)
-             * @event
+             * fired when user select from suggestion list (bubbled from menuItem)
+             * @event click
              * @param e
              * @param e.target Selected menuItem
              */
@@ -842,6 +878,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 });
 
 /**
+ * @ignore
  *
  * !TODO
  *  - menubutton combobox 抽象提取 picker (extjs)

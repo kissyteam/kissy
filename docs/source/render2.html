@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview Render aria properties to input element.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;combobox/render&quot;, function (S, Component) {
+
+    var $ = S.all,
+        tpl = '&lt;div class=&quot;{prefixCls}combobox-input-wrap&quot;&gt;' +
+            '&lt;/div&gt;',
+        triggerTpl = '&lt;div class=&quot;{prefixCls}combobox-trigger&quot;&gt;' +
+            '&lt;div class=&quot;{prefixCls}combobox-trigger-inner&quot;&gt;&amp;#x25BC;&lt;/div&gt;' +
+            '&lt;/div&gt;',
+        inputTpl = '&lt;input ' +
+            'aria-haspopup=&quot;true&quot; ' +
+            'aria-autocomplete=&quot;list&quot; ' +
+            'aria-haspopup=&quot;true&quot; ' +
+            'role=&quot;autocomplete&quot; ' +
+            'autocomplete=&quot;off&quot; ' +
+            'class=&quot;{prefixCls}combobox-input&quot; /&gt;';
+
+    var ComboboxRender = Component.Render.extend({
+
+        createDom: function () {
+            var self = this,
+                wrap,
+                input = self.get(&quot;input&quot;),
+                inputId,
+                prefixCls=self.get('prefixCls'),
+                el = self.get(&quot;el&quot;),
+                trigger = self.get(&quot;trigger&quot;);
+
+            if (!self.get(&quot;srcNode&quot;)) {
+                el.append(S.substitute(tpl,{
+                    prefixCls:prefixCls
+                }));
+                wrap = el.one(&quot;.&quot;+prefixCls+&quot;combobox-input-wrap&quot;);
+                input = input || S.all(S.substitute(inputTpl,{
+                    prefixCls:prefixCls
+                }));
+                wrap.append(input);
+                self.setInternal(&quot;input&quot;, input);
+            }
+
+            if (!trigger) {
+                self.setInternal(&quot;trigger&quot;, S.all(S.substitute(triggerTpl,{
+                    prefixCls:prefixCls
+                })));
+            }
+
+            self.get(&quot;trigger&quot;).unselectable();
+
+            var invalidEl = $(&quot;&lt;div &quot; +
+                &quot;class='&quot;+prefixCls+&quot;combobox-invalid-el'&gt;&quot; +
+                &quot;&lt;div class='&quot;+prefixCls+&quot;combobox-invalid-inner'&gt;&lt;/div&gt;&quot; +
+                &quot;&lt;/div&gt;&quot;).insertBefore(input.parent());
+            self.setInternal(&quot;invalidEl&quot;, invalidEl);
+
+            var placeholder;
+
+            if (placeholder = self.get(&quot;placeholder&quot;)) {
+                if (!(inputId = input.attr(&quot;id&quot;))) {
+                    input.attr(&quot;id&quot;, inputId = S.guid(&quot;ks-combobox-input&quot;));
+                }
+                self.setInternal('placeholderEl', $('&lt;label for=&quot;' +
+                    inputId + '&quot; ' +
+                    'class=&quot;'+prefixCls+'combobox-placeholder&quot;&gt;' +
+                    placeholder + '&lt;/label&gt;').appendTo(el));
+            }
+        },
+
+        getKeyEventTarget: function () {
+            return this.get(&quot;input&quot;);
+        },
+
+        _onSetCollapsed: function (v) {
+            this.get(&quot;input&quot;).attr(&quot;aria-expanded&quot;, v);
+        },
+
+        _onSetHasTrigger: function (t) {
+            var trigger = this.get(&quot;trigger&quot;);
+            if (t) {
+                this.get(&quot;el&quot;).prepend(trigger);
+            } else {
+                trigger.remove();
+            }
+        },
+
+        _onSetDisabled: function (v) {
+            ComboboxRender.superclass._onSetDisabled.apply(this, arguments);
+            this.get(&quot;input&quot;).attr(&quot;disabled&quot;, v);
+        }
+
+    }, {
+        ATTRS: {
+            collapsed: {
+                value: true
+            },
+
+            hasTrigger: {
+                value: true
+            },
+
+            input: {
+            },
+
+            trigger: {
+            },
+
+            placeholder: {
+            },
+
+            placeholderEl: {
+
+            },
+
+            invalidEl: {
+            }
+        },
+        HTML_PARSER: {
+            input: function (el) {
+                return el.one(&quot;.&quot;+this.get('prefixCls')+&quot;combobox-input&quot;);
+            },
+            trigger: function (el) {
+                return el.one(&quot;.&quot;+this.get('prefixCls')+&quot;combobox-trigger&quot;);
+            }
+        }
+    });
+
+    return ComboboxRender;
+}, {
+    requires: ['component/base']
+});</pre>
+</body>
+</html>

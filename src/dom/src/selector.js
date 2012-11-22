@@ -417,6 +417,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
         if (tag && tag !== ANY) {
             ret = [];
+            tag = tag.toLowerCase();
             for (; i < len; ++i) {
                 el = els[i];
                 if (getNodeName(el) == tag) {
@@ -531,7 +532,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
                             // 指定 tag 才进行判断
                             if (tag) {
-                                tagRe = getNodeName(elem) == tag;
+                                tagRe = getNodeName(elem) == tag.toLowerCase();
                             }
 
                             // 指定 cls 才进行判断

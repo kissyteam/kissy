@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview filter select from combobox
  * @author yiminghe@gmail.com
  */
@@ -16,10 +17,15 @@ KISSY.add("combobox/filter-select", function (S, Combobox) {
         return valid;
     }
 
+    /**
+     * validate combobox input by dataSource
+     * @class KISSY.ComboBox.FilterSelect
+     * @extends KISSY.ComboBox
+     */
     var FilterSelect = Combobox.extend({
         validate: function (callback) {
             var self = this;
-            FilterSelect.superclass.validate.call(this, function (error, val) {
+            FilterSelect.superclass.validate.call(self, function (error, val) {
                 if (!error) {
                     self.get("dataSource").fetchData(val, function (data) {
                         var d = valInAutoCompleteList(val, self.normalizeData(data));
@@ -33,7 +39,11 @@ KISSY.add("combobox/filter-select", function (S, Combobox) {
     }, {
         ATTRS: {
             /**
-             * when does not match
+             * when does not match show invalidMessage
+             * @cfg {String} invalidMessage
+             */
+            /**
+             * @ignore
              */
             invalidMessage: {
                 value: 'invalid input'

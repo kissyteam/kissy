@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview menu
  * @author yiminghe@gmail.com
  */
@@ -15,13 +16,13 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
 }, {
     requires:[
         'menu/base',
-        'menu/menuRender',
+        'menu/menu-render',
         'menu/menuitem',
-        'menu/menuitemRender',
+        'menu/menuitem-render',
         'menu/submenu',
-        'menu/submenuRender',
+        'menu/submenu-render',
         'menu/popupmenu',
-        'menu/popupmenuRender',
+        'menu/popupmenu-render',
         'menu/filtermenu'
     ]
 });

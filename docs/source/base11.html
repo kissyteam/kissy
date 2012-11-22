@@ -17,284 +17,216 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview controller for overlay
+ * @fileOverview menu controllerler for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;overlay/base&quot;, function (S, Component,
-                                    Extension,
+KISSY.add(&quot;menu/base&quot;, function (S, Event, Component, MenuRender) {
+    var KeyCodes = Event.KeyCodes;
 
-                                    Loading,
-
-                                    Close,
-                                    Resize,
-                                    Mask,
-                                    OverlayRender) {
-
-    var NONE = 'none',
-        DURATION = 0.5,
-        effects = {fade: [&quot;Out&quot;, &quot;In&quot;], slide: [&quot;Up&quot;, &quot;Down&quot;]};
-
-    function getGhost(self) {
-        var el = self.get(&quot;el&quot;), $ = S.all;
-        var ghost = el[0].cloneNode(true);
-        ghost.style.visibility = &quot;&quot;;
-        ghost.style.overflow = &quot;hidden&quot;;
-        ghost.className += &quot; &quot; + self.get(&quot;prefixCls&quot;) + &quot;overlay-ghost&quot;;
-        var body, elBody;
-        if (elBody = self.get(&quot;body&quot;)) {
-            body = $('.' + self.get('prefixCls') + 'stdmod-body', ghost);
-            body.css({
-                height: elBody.height(),
-                width: elBody.width()
-            });
-            body.html('')
-        }
-        return $(ghost);
+    function onMenuHide(e) {
+        this.set(&quot;highlightedItem&quot;, null);
+        e.stopPropagation();
     }
 
-    function processTarget(self, show, callback) {
-
-        if (self.__effectGhost) {
-            self.__effectGhost.stop(1);
-        }
-
-        var el = self.get(&quot;el&quot;),
-            $ = S.all,
-            effectCfg = self.get(&quot;effect&quot;),
-            target = $(effectCfg.target),
-            duration = effectCfg.duration,
-            targetBox = S.mix(target.offset(), {
-                width: target.width(),
-                height: target.height()
-            }),
-            elBox = S.mix(el.offset(), {
-                width: el.width(),
-                height: el.height()
-            }),
-            from, to,
-            ghost = getGhost(self),
-            easing = effectCfg.easing;
-
-
-        ghost.insertAfter(el);
-
-        el.hide();
-
-        if (show) {
-            from = targetBox;
-            to = elBox;
-        } else {
-            from = elBox;
-            to = targetBox;
-        }
-
-        ghost.css(from);
-
-        self.__effectGhost = ghost;
-
-        ghost.animate(to, {
-            duration: duration,
-            easing: easing,
-            complete: function () {
-                self.__effectGhost = null;
-                ghost.remove();
-                el.show();
-                callback();
-            }
-        });
-
-    }
-
-    function processEffect(self, show, callback) {
-        var el = self.get(&quot;el&quot;),
-            effectCfg = self.get(&quot;effect&quot;),
-            effect = effectCfg.effect || NONE,
-            target = effectCfg.target;
-        if (effect == NONE &amp;&amp; !target) {
-            callback();
-            return;
-        }
-        if (target) {
-            processTarget(self, show, callback);
-            return;
-        }
-        var duration = effectCfg.duration,
-            easing = effectCfg.easing,
-        // need to get before stop, in case anim 's complete function change it
-            originalVisibility = el.css('visibility'),
-            index = show ? 1 : 0;
-        // 队列中的也要移去
-        // run complete fn to restore window's original height
-        el.stop(1, 1);
-        el.css({
-            // must show, override box-render _onSetVisible
-            &quot;visibility&quot;: &quot;visible&quot;,
-            // fadeIn need display none, fadeOut need display block
-            &quot;display&quot;: show ? 'none' : 'block'
-        });
-        var m = effect + effects[effect][index];
-        el[m](duration, function () {
-            el.css({
-                // need compute coordinates when show, so do not use display none for hide
-                &quot;display&quot;: 'block',
-                // restore to box-render _onSetVisible
-                &quot;visibility&quot;: originalVisibility
-            });
-            callback();
-        }, easing);
-    }
-
-<span id='KISSY-Overlay'>    /**
-</span>     * KISSY Overlay Component. xclass: 'overlay'.
-     * @class KISSY.Overlay
-     * @extends KISSY.Component.Controller
-     * @mixins KISSY.Component.Extension.ContentBox
-     * @mixins KISSY.Component.Extension.Position
-     * @mixins KISSY.Overlay.Extension.Loading
-     * @mixins KISSY.Component.Extension.Align
-     * @mixins KISSY.Overlay.Extension.Close
-     * @mixins KISSY.Overlay.Extension.Resize
-     * @mixins KISSY.Overlay.Extension.Mask
+<span id='KISSY-Menu'>    /**
+</span>     * KISSY Menu.
+     * xclass: 'menu'.
+     * @class KISSY.Menu
+     * @extends KISSY.Component.Container
      */
-    var Overlay = Component.Controller.extend([
-        Extension.ContentBox,
-        Extension.Position,
-        Loading,
-        Extension.Align,
-        Close,
-        Resize,
-        Mask
-    ],{
-<span id='KISSY-Overlay-method-_onSetVisible'>            /**
-</span>             * For overlay with effect, it should listen show and hide instead of afterVisibleChange.
-             * @protected
-             */
-            _onSetVisible: function (v) {
-                var self = this;
-                if (self.get('rendered')) {
-                    // delay show and hide event after anim
-                    processEffect(self, v, function () {
-                        self.fire(v ? 'show' : 'hide');
-                    });
+    var Menu = Component.Container.extend({
+        _onSetHighlightedItem: function (v, ev) {
+            var pre = ev &amp;&amp; ev.prevVal;
+            if (pre) {
+                pre.set(&quot;highlighted&quot;, false);
+            }
+            v &amp;&amp; v.set(&quot;highlighted&quot;, true);
+            this.set(&quot;activeItem&quot;, v);
+        },
+
+        handleBlur: function (e) {
+            Menu.superclass.handleBlur.call(this, e);
+            this.set(&quot;highlightedItem&quot;, null);
+        },
+
+
+        //dir : -1 ,+1
+        //skip disabled items
+        _getNextEnabledHighlighted: function (index, dir) {
+            var children = this.get(&quot;children&quot;),
+                len = children.length,
+                o = index;
+            do {
+                var c = children[index];
+                if (!c.get(&quot;disabled&quot;) &amp;&amp; (c.get(&quot;visible&quot;) !== false)) {
+                    return children[index];
                 }
+                index = (index + dir + len) % len;
+            } while (index != o);
+            return undefined;
+        },
+
+<span id='KISSY-Menu-method-handleKeyEventInternal'>        /**
+</span>         * Attempts to handle a keyboard event;
+         * returns true if the event was handled,
+         * false otherwise.
+         * If the container is enabled, and a child is highlighted,
+         * calls the child controller's {@code handleKeydown} method to give the control
+         * a chance to handle the event first.
+         * Protected, should only be overridden by subclasses.
+         * @param {KISSY.Event.DOMEventObject} e Key event to handle.
+         * @return {Boolean} Whether the event was handled by the container (or one of
+         *     its children).
+         * @protected
+         *
+         */
+        handleKeyEventInternal: function (e) {
+
+            // Give the highlighted control the chance to handle the key event.
+            var highlightedItem = this.get(&quot;highlightedItem&quot;);
+
+            // 先看当前活跃 menuitem 是否要处理
+            if (highlightedItem &amp;&amp; highlightedItem.handleKeydown(e)) {
+                return true;
             }
 
-        }, {
-            ATTRS: {
+            var children = this.get(&quot;children&quot;), len = children.length;
 
-<span id='KISSY-Overlay-cfg-effect'>                /**
-</span>                 * Set v as overlay 's show effect
-                 *
-                 * - v.effect (String): Default:none.
-                 * can be set as &quot;fade&quot; or &quot;slide&quot;
-                 *
-                 * - v.target (String|KISS.Node):
-                 * The target node from which overlay should animate from while showing.
-                 *
-                 * - v.duration (Number): in seconds.
-                 * Default:0.5.
-                 *
-                 * - v.easing (String|Function):
-                 * for string see {@link KISSY.Anim.Easing} 's method name.
-                 *
-                 * @cfg {Object} effect
-                 */
-<span id='global-property-effect'>                /**
-</span>                 * @ignore
-                 */
-                effect: {
-                    value: {
-                        effect: '',
-                        target: null,
-                        duration: DURATION,
-                        easing: 'easeOut'
-                    },
-                    setter: function (v) {
-                        var effect = v.effect;
-                        if (typeof effect == 'string' &amp;&amp; !effects[effect]) {
-                            v.effect = '';
-                        }
+            if (len === 0) {
+                return undefined;
+            }
+
+            var index, destIndex;
+
+            //自己处理了，不要向上处理，嵌套菜单情况
+            switch (e.keyCode) {
+                // esc
+                case KeyCodes.ESC:
+                    // TODO
+                    // focus 的话手动失去焦点
+                    return undefined;
+                    break;
+
+                // home
+                case KeyCodes.HOME:
+                    this.set(&quot;highlightedItem&quot;,
+                        this._getNextEnabledHighlighted(0, 1));
+                    break;
+                // end
+                case KeyCodes.END:
+                    this.set(&quot;highlightedItem&quot;,
+                        this._getNextEnabledHighlighted(len - 1, -1));
+                    break;
+                // up
+                case KeyCodes.UP:
+                    if (!highlightedItem) {
+                        destIndex = len - 1;
+                    } else {
+                        index = S.indexOf(highlightedItem, children);
+                        destIndex = (index - 1 + len) % len;
                     }
+                    this.set(&quot;highlightedItem&quot;,
+                        this._getNextEnabledHighlighted(destIndex, -1));
+                    break;
+                //down
+                case KeyCodes.DOWN:
+                    if (!highlightedItem) {
+                        destIndex = 0;
+                    } else {
+                        index = S.indexOf(highlightedItem, children);
+                        destIndex = (index + 1 + len) % len;
+                    }
+                    this.set(&quot;highlightedItem&quot;,
+                        this._getNextEnabledHighlighted(destIndex, 1));
+                    break;
+                default:
+                    return undefined;
+            }
+            return true;
+        },
 
-                },
+        bindUI: function () {
+            var self = this;
+            // 隐藏后，去掉高亮与当前
+            self.on(&quot;hide&quot;, onMenuHide, self);
+        },
 
-<span id='KISSY-Overlay-cfg-focusable'>                /**
-</span>                 * overlay can not have focus.
-                 *
-                 * Defaults to: false.
-                 *
-                 * @cfg {boolean} focusable
-                 * @protected
-                 */
-<span id='global-property-focusable'>                /**
-</span>                 * @ignore
-                 */
-                focusable: {
-                    value: false
-                },
+<span id='KISSY-Menu-method-containsElement'>        /**
+</span>         * Whether this menu contains specified html element.
+         * @param {KISSY.NodeList} element html Element to be tested.
+         * @return {Boolean}
+         * @protected
+         */
+        containsElement: function (element) {
+            var self = this;
 
-<span id='KISSY-Overlay-cfg-allowTextSelection'>                /**
-</span>                 * overlay can have text selection.
-                 *
-                 * Defaults to: true.
-                 *
-                 * @cfg {boolean} allowTextSelection
-                 * @protected
-                 */
-<span id='global-property-allowTextSelection'>                /**
-</span>                 * @ignore
-                 */
-                allowTextSelection: {
-                    value: true
-                },
+            // 隐藏当然不包含了
+            // self.get(&quot;visible&quot;) === undefined 相当于 true
+            if (self.get(&quot;visible&quot;) === false || !self.get(&quot;view&quot;)) {
+                return false;
+            }
 
-<span id='KISSY-Overlay-cfg-closable'>                /**
-</span>                 * whether this component can be closed.
-                 *
-                 * Defaults to: false
-                 *
-                 * @cfg {Boolean} closable
-                 */
-<span id='global-property-closable'>                /**
-</span>                 * @ignore
-                 */
-                closable: {
-                    value: false
-                },
+            if (self.get(&quot;view&quot;).containsElement(element)) {
+                return true;
+            }
 
-<span id='KISSY-Overlay-cfg-handleMouseEvents'>                /**
-</span>                 * whether this component can be responsive to mouse.
-                 *
-                 * Defaults to: false
-                 *
-                 * @cfg {Boolean} handleMouseEvents
-                 * @protected
-                 */
-<span id='global-property-handleMouseEvents'>                /**
-</span>                 * @ignore
-                 */
-                handleMouseEvents: {
-                    value: false
-                },
-                xrender: {
-                    value: OverlayRender
+            var children = self.get('children');
+
+            for (var i = 0, count = children.length; i &lt; count; i++) {
+                var child = children[i];
+                if (typeof child.containsElement == 'function' &amp;&amp;
+                    child.containsElement(element)) {
+                    return true;
                 }
             }
-        }, {
-            xclass: 'overlay',
-            priority: 10
-        });
 
-    return Overlay;
+            return false;
+        }
+    }, {
+        ATTRS: {
+<span id='KISSY-Menu-property-highlightedItem'>            /**
+</span>             * Current highlighted child menu item.
+             * @type {KISSY.Menu.Item}
+             * @property highlightedItem
+             */
+<span id='global-property-highlightedItem'>            /**
+</span>             * @ignore
+             */
+            highlightedItem: {},
+<span id='KISSY-Menu-property-activeItem'>            /**
+</span>             * Current active menu item.
+             * Maybe a descendant but not a child of current menu.
+             * @type {KISSY.Menu.Item}
+             * @property activeItem
+             */
+<span id='global-property-activeItem'>            /**
+</span>             * @ignore
+             */
+            activeItem: {
+                view: 1
+            },
+            xrender: {
+                value: MenuRender
+            }
+        }
+    }, {
+        xclass: 'menu',
+        priority: 10
+    });
+
+    return Menu;
+
 }, {
-    requires: [
-        'component/base',
-        'component/extension',
-        &quot;./extension/loading&quot;,
-        &quot;./extension/close&quot;,
-        &quot;./extension/resize&quot;,
-        &quot;./extension/mask&quot;,
-        './overlay-render']
-});</pre>
+    requires: ['event', 'component/base', './menu-render', './submenu']
+});
+
+<span id='global-property-'>/**
+</span> * @ignore
+ * 普通菜单可聚焦
+ * 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
+ *
+ * TODO
+ *  - 去除 activeItem
+ **/</pre>
 </body>
 </html>

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview abstract view for button
  * @author yiminghe@gmail.com
  */
@@ -19,7 +20,7 @@ KISSY.add("button/buttonRender", function (S, Component) {
         _onSetTooltip:function (title) {
             this.get("el").attr("title", title);
         },
-        _onSetDescribedby:function (describedby) {
+        '_onSetDescribedby':function (describedby) {
             this.get("el").attr("aria-describedby", describedby);
         }
     }, {

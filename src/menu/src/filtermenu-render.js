@@ -1,10 +1,11 @@
 /**
+ * @ignore
  * @fileOverview filter menu render
  * 1.create filter input
  * 2.change menu contentelement
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
+KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender) {
     var $ = Node.all,
         MENU_FILTER = "menu-filter",
         MENU_FILTER_LABEL = "menu-filter-label",
@@ -34,7 +35,7 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
                         .appendTo(filterWrap, undefined));
             }
             if (!self.get("filterInput")) {
-                self.set("filterInput", $("<input autocomplete='off'/>")
+                self.set("filterInput", $("<input "+"autocomplete='off'/>")
                     .appendTo(filterWrap, undefined));
             }
             if (!self.get("menuContent")) {
@@ -44,7 +45,7 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
             }
         },
 
-        _onSetLabel:function (v) {
+        '_onSetLabel':function (v) {
             this.get("labelEl").html(v);
         }
     }, {
@@ -73,5 +74,5 @@ KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
     });
 
 }, {
-    requires:['node', './menuRender']
+    requires:['node', './menu-render']
 });

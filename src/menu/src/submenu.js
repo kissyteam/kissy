@@ -1,5 +1,6 @@
 /**
- * @fileOverview submenu controller for kissy , transfer item's keycode to menu
+ * @ignore
+ * @fileOverview submenu controller for kissy, transfer item's keycode to menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender) {
@@ -12,16 +13,10 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
     /**
      * Class representing a submenu that can be added as an item to other menus.
      * xclass: 'submenu'.
-     * @name SubMenu
-     * @constructor
-     * @extends Menu.Item
-     * @memberOf Menu
+     * @extends KISSY.Menu.Item
+     * @class KISSY.Menu.SubMenu
      */
-    var SubMenu = MenuItem.extend([Component.DecorateChild],
-        /**
-         * @lends Menu.SubMenu#
-         */
-        {
+    var SubMenu = MenuItem.extend([Component.DecorateChild], {
 
             /**
              * Bind sub menu events.
@@ -109,6 +104,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
             /**
              * Clears the show and hide timers for the sub menu.
+             * @private
              */
             clearSubMenuTimers: function () {
                 var self = this,
@@ -139,7 +135,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              * and delegates further key events to its menu until it is dismissed OR the
              * left key is pressed.
              * Protected for subclass overridden.
-             * @param e A key event.
+             * @param {KISSY.Event.DOMEventObject} e key event.
              * @protected
              * @return {Boolean} Whether the event was handled.
              */
@@ -253,23 +249,31 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             }
         },
         {
-            ATTRS: /**
-             * @lends Menu.SubMenu#
-             */
-            {
+            ATTRS: {
                 /**
                  * The delay before opening the sub menu in seconds.  (This number is
                  * arbitrary, it would be good to get some user studies or a designer to play
                  * with some numbers).
-                 * @default 0.15
-                 * @type {Number}
+                 * Defaults to: 0.15
+                 * @cfg {Number} menuDelay
+                 */
+                /**
+                 * @ignore
                  */
                 menuDelay: {
                     value: MENU_DELAY
                 },
                 /**
                  * Menu config or instance.
-                 * @type {Menu|Object}
+                 * @cfg {KISSY.Menu|Object} menu
+                 */
+                /**
+                 * Menu config or instance.
+                 * @property menu
+                 * @type {KISSY.Menu|Object}
+                 */
+                /**
+                 * @ignore
                  */
                 menu: {
                     setter: function (m) {
@@ -335,10 +339,10 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             align.points = align.points || ['tr', 'tl'];
             menu.set("align", align);
             menu.show();
-            /**
-             * If activation of your menuitem produces a popup menu,
+            /*
+             If activation of your menuitem produces a popup menu,
              then the menuitem should have aria-haspopup set to the ID of the corresponding menu
-             to allow the assistive technology to follow the menu hierarchy
+             to allow the assist technology to follow the menu hierarchy
              and assist the user in determining context during menu navigation.
              */
             self.get("el").attr("aria-haspopup",
@@ -381,9 +385,5 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
     return SubMenu;
 }, {
-    requires: ['event', 'component/base', './menuitem', './submenuRender']
+    requires: ['event', 'component/base', './menuitem', './submenu-render']
 });
-
-/**
-
- **/

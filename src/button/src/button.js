@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview simulated button for kissy , inspired by goog button
  * @author yiminghe@gmail.com
  */
