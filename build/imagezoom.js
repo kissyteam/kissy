@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 23 16:16
+build time: Nov 23 16:36
 */
 /**
  * @fileOverview 图片放大效果 ImageZoom.
@@ -243,6 +243,17 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
             S.error("bigImageWidth/bigImageHeight in ImageZoom must be set!");
         }
 
+        self._bigImageCopy = new Node(
+            '<img src="' +
+                self.image.attr('src') +
+                '" width="' +
+                self.get('bigImageWidth')
+                + '" ' +
+                'height="' +
+                self.get('bigImageHeight') +
+                '"' +
+                '/>');
+
         // 两种显示效果切换标志
         self._isInner = self.get('type') === INNER;
     }
@@ -308,17 +319,7 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
                 '" />')
                 .appendTo(contentEl, undefined);
 
-            self._bigImageCopy = new Node(
-                '<img src="' +
-                    self.image.attr('src') +
-                    '" width="' +
-                    self.get('bigImageWidth')
-                    + '" ' +
-                    'height="' +
-                    self.get('bigImageHeight') +
-                    '"' +
-                    '/>')
-                .prependTo(contentEl, undefined);
+            self._bigImageCopy.prependTo(contentEl, undefined);
 
             if (self._isInner) {
                 // inner 位置强制修改
