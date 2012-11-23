@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 23 16:36
+build time: Nov 23 16:42
 */
 /**
  * @fileOverview 图片放大效果 ImageZoom.
@@ -245,7 +245,7 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
 
         self._bigImageCopy = new Node(
             '<img src="' +
-                self.image.attr('src') +
+                self.get('imageNode').attr('src') +
                 '" width="' +
                 self.get('bigImageWidth')
                 + '" ' +
