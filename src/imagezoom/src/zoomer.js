@@ -8,18 +8,10 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
         min = Math.min;
 
     function Zoomer() {
-        var self = this,
-            tmp;
+        var self = this;
 
         if (!self.get("bigImageWidth") || !self.get("bigImageHeight")) {
             S.error("bigImageWidth/bigImageHeight in ImageZoom must be set!");
-        }
-
-        // 预加载大图
-        tmp = self.get('bigImageSrc');
-
-        if (tmp && self.get('preload')) {
-            new Image().src = tmp;
         }
 
         // 两种显示效果切换标志
@@ -33,13 +25,6 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
          */
         type: {
             value: STANDARD   // STANDARD  or INNER
-        },
-        /**
-         * 是否预加载大图
-         * @type {Boolean}
-         */
-        preload: {
-            value: true
         },
 
         /**
@@ -283,7 +268,7 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
             }, seconds);
         },
 
-        _onSetCurrentMouse: function (ev) {
+        '_onSetCurrentMouse': function (ev) {
             var self = this,
                 lt;
 
@@ -315,30 +300,30 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
             self.bigImage.css(lt);
         },
 
-        _onSetLensWidth: function (v) {
+        '_onSetLensWidth': function (v) {
             this.lens && this.lens.width(v);
         },
-        _onSetLensHeight: function (v) {
+        '_onSetLensHeight': function (v) {
             this.lens && this.lens.height(v);
         },
-        _onSetLensTop: function (v) {
+        '_onSetLensTop': function (v) {
             this.lens && this.lens.offset({ 'top': v });
         },
-        _onSetLensLeft: function (v) {
+        '_onSetLensLeft': function (v) {
             this.lens && this.lens.offset({ 'left': v });
         },
 
-        _onSetBigImageWidth: function (v) {
+        '_onSetBigImageWidth': function (v) {
             var self = this;
             v && self.bigImage && self.bigImage.width(v);
             v && self._bigImageCopy && self._bigImageCopy.width(v);
         },
-        _onSetBigImageHeight: function (v) {
+        '_onSetBigImageHeight': function (v) {
             var self = this;
             v && self.bigImage && self.bigImage.height(v);
             v && self._bigImageCopy && self._bigImageCopy.height(v);
         },
-        _onSetBigImageSrc: function (v) {
+        '_onSetBigImageSrc': function (v) {
             v && this.bigImage && this.bigImage.attr('src', v);
 
         },
