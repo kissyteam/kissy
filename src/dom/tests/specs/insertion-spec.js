@@ -2,7 +2,8 @@
  * test cases for insertion sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom", function (S, DOM) {
+KISSY.use("dom,core", function (S, DOM) {
+    var $= S.all;
     describe("insertion", function () {
         var body = document.body;
         it("insertBefore should works", function () {

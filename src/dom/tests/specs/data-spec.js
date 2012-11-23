@@ -2,7 +2,8 @@
  * test cases for data sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.use("ua,dom", function (S, UA, DOM) {
+KISSY.use("ua,dom,core", function (S, UA, DOM) {
+    var $= S.all;
     var __EXPANDO = DOM.__EXPANDO;
     describe("DOM.data", function () {
         it("data should works", function () {

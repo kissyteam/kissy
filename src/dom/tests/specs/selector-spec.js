@@ -2,11 +2,31 @@
  * simple selector test
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.use("dom", function (S, DOM) {
-    var $ = jQuery;
-    S.get = DOM.get;
-    S.query = DOM.query;
+KISSY.use("dom,core", function (S, DOM) {
+    var $= S.all;
+
+    var tpl = '<div id="test-selector">\
+        <div class="test-selector" id="test-selector-1">\
+        <div class="test-selector">\
+            <s id="test-selector-tag"></s>\
+        </div>\
+        </div>\
+    <div class="test-selector" id="test-selector-2">\
+        <p class="test-selector">\
+            <s></s>\
+        </p>\
+    </div>\
+    </div>';
+
     describe("selector", function () {
+
+        beforeEach(function () {
+            $('body').append(tpl);
+        });
+
+        afterEach(function () {
+            $('#test-selector').remove();
+        });
 
         it("support #id", function () {
 
@@ -20,9 +40,11 @@ KISSY.use("dom", function (S, DOM) {
 
         });
 
-        it("support tag", function () {
+        it("support tag ignore case", function () {
             expect(S.get("s").id).toBe("test-selector-tag");
             expect(S.query("s").length).toBe(2);
+
+            expect(S.query("S").length).toBe(2);
 
             expect(S.get("sub")).toBe(null);
             expect(S.query("sub").length).toBe(0);
@@ -38,6 +60,7 @@ KISSY.use("dom", function (S, DOM) {
             expect(S.get("#test-selector-2 s").id).toBe("");
 
             expect(S.query("#test-selector s").length).toBe(2);
+            expect(S.query("#test-selector S").length).toBe(2);
             expect(S.query("#test-selector-2 s").length).toBe(1);
         });
 
@@ -57,6 +80,7 @@ KISSY.use("dom", function (S, DOM) {
         it("support tag.cls", function () {
             expect(S.get("div.test-selector").id).toBe("test-selector-1");
             expect(S.query("div.test-selector").length).toBe(3);
+            expect(S.query("DIV.test-selector").length).toBe(3);
             expect(S.get("p.test-selector").tagName.toLowerCase()).toBe("p");
             expect(S.query("p.test-selector").length).toBe(1);
         });
@@ -150,7 +174,7 @@ KISSY.use("dom", function (S, DOM) {
             var c = S.query(".context-test");
             expect(r = c.length).toBe(3);
 
-            var cj = $(".context-test");
+            var cj = jQuery(".context-test");
             expect(r = cj.length).toBe(3);
 
             expect(r = S.query(c3, ".context-test").length).toBe(2);
@@ -159,13 +183,13 @@ KISSY.use("dom", function (S, DOM) {
             expect(r = S.query(".context-test-3", ".context-test").length).toBe(2);
 
             /*jquery contrast test*/
-            var t = $(c3j, ".context-test");
+            var t = jQuery(c3j, ".context-test");
             // 上下文不对第一个参数是节点集合时生效
             expect(t.length).toBe(3);
-            expect(r = $(".context-test-3", cj).length).toBe(2);
+            expect(r = jQuery(".context-test-3", cj).length).toBe(2);
             // 上下文不对第一个参数是节点集合时生效
-            expect(r = $(c3j, cj).length).toBe(3);
-            expect(r = $(".context-test-3", ".context-test").length).toBe(2);
+            expect(r = jQuery(c3j, cj).length).toBe(3);
+            expect(r = jQuery(".context-test-3", ".context-test").length).toBe(2);
 
             expect(r = cj.find(".context-test-3").length).toBe(2);
             expect(r = cj.find(c3j).length).toBe(2);
@@ -214,8 +238,8 @@ KISSY.use("dom", function (S, DOM) {
         it('should get child element by id selector ' +
             'even node is not in the document', function () {
             var t = DOM.create('<div id="tt"><div id="tt2"></div></div>');
-            expect(DOM.query('#tt2',t).length).toBe(1);
-            expect($('#tt2',t).length).toBe(1);
+            expect(DOM.query('#tt2', t).length).toBe(1);
+            expect($('#tt2', t).length).toBe(1);
         });
     });
 

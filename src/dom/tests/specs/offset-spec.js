@@ -3,8 +3,32 @@
  * @author yiminghe@gmail.com
  * @description need to be completed
  */
-KISSY.use("dom", function (S, DOM) {
+KISSY.use("dom,core", function (S, DOM) {
+
+    var $= S.all;
+
     describe("offset", function () {
+
+        var iframeTpl = '<iframe src="../others/test-dom-offset-iframe.html"\
+        id="test-iframe"\
+        style="border:1px solid black; "\
+        width="200"\
+        height="200"\
+        frameborder="0"\
+        scrolling="no"\
+        ></iframe>',
+
+            tpl = '<div id="test-offset" style="width:100px;height:100px;border: 1px solid red;">\
+        offset\
+        </div>';
+
+        beforeEach(function () {
+            $('body').append(tpl);
+        });
+
+        afterEach(function () {
+            $('#test-offset').remove();
+        });
 
         it("should works", function () {
             var test_offset = DOM.get("#test-offset");
@@ -23,7 +47,6 @@ KISSY.use("dom", function (S, DOM) {
             // 但是非 ie 不可能设置窗口边框，body html 也不是窗口 ,ie 可以通过 html,body 设置
             // 标准 ie 下 docElem.clientTop 就是 border-top
             // ie7 html 即窗口边框改变不了。永远为 2
-
 
             //只考虑 ie 标准模式了,ie<9 下设置边框，否则默认 2px
             document.documentElement.style.borderTop = "3px";
@@ -47,18 +70,31 @@ KISSY.use("dom", function (S, DOM) {
 
 
         it("should works for framed element", function () {
+            var div = $('<div>').appendTo('body');
+            div[0].innerHTML = iframeTpl;
+
             var iframe = DOM.get("#test-iframe");
-            waitsFor(function () {
-                return iframe.contentWindow;
-            }, "iframe cano not loaded!");
-            runs(function () {
+
+            var ok = 0;
+
+            $(iframe).on('load',function () {
                 var win = iframe.contentWindow;
                 var inner = DOM.get("#test-inner", win.document);
                 var innerOffsetTop = DOM.offset(inner).top - DOM.scrollTop(win);
                 var iframeTop = DOM.offset(iframe).top;
                 var totalTop = DOM.offset(inner, undefined, window).top;
                 expect(innerOffsetTop + iframeTop).toBe(totalTop);
+
+                setTimeout(function () {
+                    div.remove();
+                    ok = 1;
+                }, 100);
+
             });
+
+            waitsFor(function () {
+                return ok;
+            }, "iframe can not loaded!");
 
         });
 
@@ -68,7 +104,7 @@ KISSY.use("dom", function (S, DOM) {
             var div = DOM.create("<div style='position: absolute;top:200px;'></div>");
             DOM.append(div, document.body);
             var originalOffset = DOM.offset(div);
-            expect(Math.abs(originalOffset.top-200)<5).toBe(true);
+            expect(Math.abs(originalOffset.top - 200) < 5).toBe(true);
             window.scrollTo(0, scrollTop);
         });
 

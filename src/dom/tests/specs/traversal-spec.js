@@ -2,14 +2,39 @@
  * test cases for traversal sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom", function (S, DOM) {
+KISSY.use("dom,core", function (S, DOM) {
+
+    var $= S.all;
+
+    var tpl = '<div id="test-children" class="test-parent">\
+        <p id="test-next"><a>1</a></p>\
+    <p class="test-next-p"><a class="test-a">2</a></p>\
+    <p class="test-next"><a id="test-parent3">3</a></p>\
+    <p class="test-p" id="test-prev"><em class="test-em">\
+        <span><a id="test-parent4">4</a></span></em></p>\
+    <div id="test-contains">text node</div>\
+    <div>\
+    <div id="test-nested">\
+    </div>\
+    </div>\
+    </div>';
+
     describe("traversal", function () {
+
+        beforeEach(function () {
+            $('body').append(tpl);
+        });
+
+        afterEach(function () {
+            $('#test-children').remove();
+        });
 
         it("parent works", function () {
             var t = DOM.get('#test-parent4');
             expect(DOM.parent(t).tagName.toLowerCase()).toBe('span');
             expect(DOM.parent(t, 4).className).toBe('test-parent');
             expect(DOM.parent(t, 'em').className).toBe('test-em');
+            expect(DOM.parent(t, 'EM')).not.toBeNull();
             expect(DOM.parent(t, '.test-p').tagName.toLowerCase()).toBe('p');
             // Unsupported selector: p.test-p em
             expect(
@@ -23,16 +48,15 @@ KISSY.use("dom", function (S, DOM) {
 
             expect(DOM.parent(document.body)).toBe(document.documentElement);
 
-            expect(DOM.parent('#test_cases')).toBe(document.body);
-
             expect(DOM.parent(t, 0)).toBe(t);
 
             expect(DOM.parent()).toBe(null);
 
-            expect(DOM.parent('#test-data', 'p')).toBe(null);
-            expect(DOM.parent('#test-data', ['p']) + "").toBe([] + "");
+            expect(DOM.parent('#test-nested', 'p')).toBe(null);
+            expect(DOM.parent('#test-nested', ['p']) + "").toBe([] + "");
             // support array of filter
-            expect(DOM.parent('#test-selector-tag', ['div']).length).toBe(4);
+            expect(DOM.parent('#test-nested', ['div']).length).toBe(2);
+            expect(DOM.parent('#test-nested', ['DIV']).length).toBe(2);
             expect(DOM.parent('#test-parent4', '.text-next')).toBe(null);
         });
 
@@ -44,7 +68,7 @@ KISSY.use("dom", function (S, DOM) {
             expect(DOM.closest(t, "a")).toBe(t);
 
             // support array of filter
-            expect(DOM.closest('#test-selector-1', ['div']).length).toBe(3);
+            expect(DOM.closest('#test-nested', ['div']).length).toBe(3);
 
             // parent works
             expect(DOM.closest(t, ".test-p")).toBe(DOM.get("#test-prev"));
@@ -171,7 +195,7 @@ KISSY.use("dom", function (S, DOM) {
         it("siblings works", function () {
             var t = DOM.get('#test-prev');
             // not include itself
-            expect(DOM.siblings(t).length).toBe(3);
+            expect(DOM.siblings(t).length).toBe(5);
 
             expect(DOM.siblings(t, '.test-none').length).toBe(0);
 
@@ -184,7 +208,7 @@ KISSY.use("dom", function (S, DOM) {
         it("children works", function () {
             var t = DOM.get('#test-children');
 
-            expect(DOM.children(t).length).toBe(4);
+            expect(DOM.children(t).length).toBe(6);
             //expect(DOM.children(t, '.test-next,.test-next-p').length).toBe(2);
             //expect(DOM.children(t, 'p:first')[0].id).toBe('test-next');
             expect(DOM.children('#test-div').length).toBe(0);

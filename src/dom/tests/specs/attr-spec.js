@@ -2,8 +2,9 @@
  * test cases for attribute sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom", function (S, DOM) {
+KISSY.use("dom,core", function (S, DOM) {
 
+    var $= S.all;
     S.get = DOM.get;
     S.query = DOM.query;
 
@@ -11,15 +12,86 @@ KISSY.use("dom", function (S, DOM) {
         return str.replace(/;|\s/g, "").toLowerCase();
     }
 
+
     describe("attr", function () {
+
+        var tpl = '<div id="test-data">\
+            <input id="hidepass"/>\
+            <p id="foo">' +
+            '<a ' +
+            'style="color:red; border-top:1px solid #333;"\
+             class="link"\
+             title="test" data-test="test">test link</a>\
+             <input type="text" id="test-input" readonly maxlength="20" value="hello"/>\
+             <input type="radio" id="test-radio"/>\
+             <input type="radio" id="test-radio2" checked/>\
+             <label class="test" for="test-input">label</label>\
+             <button type="button" tabindex="3">Submit</button>\
+             <textarea rows="2" cols="2">' +
+            'test' +
+            '</textarea>\
+         </p>\
+         <div id="test-div"></div>\
+         <img id="test-img" alt="kissy"/>\
+         <table id="test-table" cellspacing="10">\
+             <tbody>\
+                 <tr>\
+                     <td rowspan="2" colspan="3">td</td>\
+                 </tr>\
+             </tbody>\
+         </table>\
+         <select id="test-select">\
+             <option id="test-opt" value="1">0</option>\
+             <option>2</option>\
+             <option>3</option>\
+         </select>\
+         <select id="test-select2">\
+             <option>2</option>\
+         </select>\
+         <select id="test-select3" multiple ' + 'autocomplete="off">\
+                <option selected>1</option>\
+                <option selected>2</option>\
+                <option>3</option>\
+            </select>\
+            <br/>\
+            <br/>\
+            <input type="checkbox" id="test-20100728-checkbox"/>test checked\
+            <br/>\
+            <input type="button" id="test-20100728-disabled"/>test disabled\
+        </div>';
+
+        beforeEach(function () {
+            $('body').append(tpl);
+            foo = S.get('#foo');
+            a = S.get('#foo a');
+            img = S.get('#test-img');
+            input = S.get('#foo input');
+            radio = S.get('#test-radio');
+            radio2 = S.get('#test-radio2');
+            button = S.get('#foo button');
+            label = S.get('#foo label');
+            table = S.get('#test-table');
+            td = S.get('#test-table td');
+            select = S.get('#test-select');
+            select2 = S.get('#test-select2');
+            select3 = S.get('#test-select3');
+            opt = S.get('#test-opt');
+            div = S.get('#test-div');
+            opt2 = S.query('#test-select option')[1];
+            area = S.get('#foo textarea');
+            disabledTest = S.get("#test-20100728-disabled");
+        });
+
+        afterEach(function () {
+            $('#test-data').remove();
+        });
+
         beforeEach(function () {
             this.addMatchers({
-                toBeAlmostEqual:function (expected) {
+                toBeAlmostEqual: function (expected) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
                 },
-
-
-                toBeEqual:function (expected) {
+                toBeEqual: function (expected) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
                 }
             });
@@ -28,24 +100,24 @@ KISSY.use("dom", function (S, DOM) {
         S.get = DOM.get;
         S.query = DOM.query;
 
-        var foo = S.get('#foo'),
-            a = S.get('#foo a'),
-            img = S.get('#test-img'),
-            input = S.get('#foo input'),
-            radio = S.get('#test-radio'),
-            radio2 = S.get('#test-radio2'),
-            button = S.get('#foo button'),
-            label = S.get('#foo label'),
-            table = S.get('#test-table'),
-            td = S.get('#test-table td'),
-            select = S.get('#test-select'),
-            select2 = S.get('#test-select2'),
-            select3 = S.get('#test-select3'),
-            opt = S.get('#test-opt'),
-            div = S.get('#test-div'),
-            opt2 = S.query('#test-select option')[1],
-            area = S.get('#foo textarea'),
-            disabledTest = S.get("#test-20100728-disabled");
+        var foo ,
+            a ,
+            img ,
+            input ,
+            radio ,
+            radio2 ,
+            button,
+            label,
+            table,
+            td,
+            select,
+            select2,
+            select3 ,
+            opt,
+            div ,
+            opt2 ,
+            area ,
+            disabledTest;
 
         describe("getter/setter", function () {
 
@@ -58,7 +130,7 @@ KISSY.use("dom", function (S, DOM) {
                 expect(DOM.attr(input, "readonly")).toBe("readonly");
                 // same with jquery , null changed to undefined
                 expect(DOM.attr(radio, 'checked')).toBe(undefined);
-                expect($(radio).attr('checked')).toBe(undefined);
+                expect(jQuery(radio).attr('checked')).toBe(undefined);
                 // standard browser returns null
                 // ie<8 return false , === radio.checked
                 // expect(radio.getAttribute("checked")).toBe(undefined);
@@ -99,9 +171,18 @@ KISSY.use("dom", function (S, DOM) {
 
             it("should get href/src/rowspan correctly", function () {
                 // href - http://www.glennjones.net/Post/809/getAttributehrefbug.htm
-                //alert(a.href); // 在所有浏览器下，a.href 和 a['href'] 都返回绝对地址
-                //alert(a.getAttribute('href')); // ie7- 下，会返回绝对地址
+                // alert(a.href); // 在所有浏览器下，a.href 和 a['href'] 都返回绝对地址
+                // alert(a.getAttribute('href')); // ie7- 下，会返回绝对地址
+
+                DOM.attr(a, 'href', '../kissy/');
+
                 expect(DOM.attr(a, 'href')).toBe('../kissy/');
+
+                DOM.attr(img, 'src', '../others/logo.png');
+
+                expect(DOM.prop(img, 'src'))
+                    .toBe(new S.Uri(location.href).resolve('../others/logo.png').toString());
+
                 expect(DOM.attr(img, 'src')).toBe('../others/logo.png');
 
                 // colspan / rowspan:
@@ -126,7 +207,7 @@ KISSY.use("dom", function (S, DOM) {
 
             it("should batch execute correctly", function () {
                 // batch 测试：
-                expect(DOM.attr('input', 'id')).toBe('hidepass');
+                expect(DOM.attr('#test-data input', 'id')).toBe('hidepass');
                 DOM.attr('#test-data div', 'data-test', 'test');
                 DOM.query("#test-data div").each(function (el) {
                     expect(DOM.attr(el, "data-test")).toBe("test");
@@ -215,7 +296,7 @@ KISSY.use("dom", function (S, DOM) {
 
             it("should works for input", function () {
                 // area
-                expect(DOM.val(area).length).toBe(25);
+                expect(DOM.val(area).length).toBe(4);
             });
 
             it("should works for options", function () {
@@ -335,7 +416,8 @@ KISSY.use("dom", function (S, DOM) {
         // fix #100
         it("option.attr(\"value\")", function () {
 
-            var s = DOM.create("<select><option value='1'>一</option><option value=''>二</option><option>三</option></select>")
+            var s = DOM.create("<select><option value='1'>一</option>" +
+                "<option value=''>二</option><option>三</option></select>");
             DOM.append(s, "body");
             var ret = [];
             S.each(DOM.query('option', s), function (o) {
@@ -349,12 +431,8 @@ KISSY.use("dom", function (S, DOM) {
         it("do not change text when change link", function () {
             var a = DOM.create("<a href='#'>haha@haha</a>");
             DOM.attr(a, "href", "http://www.g.cn");
-            expect(DOM.attr(a,"href")).toBe("http://www.g.cn");
+            expect(DOM.attr(a, "href")).toBe("http://www.g.cn");
             expect(DOM.html(a)).toBe("haha@haha");
-        });
-
-        runs(function () {
-            //S.get('#test-data').innerHTML = '';
         });
     });
 

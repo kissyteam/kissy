@@ -2,7 +2,10 @@
  * test cases for create sub module of dom module
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom", function (S, DOM) {
+KISSY.use("dom,core", function (S, DOM) {
+
+    var $= S.all;
+
     describe("create", function () {
 
         it("create should works", function () {

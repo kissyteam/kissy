@@ -1,5 +1,5 @@
-KISSY.use("dom,event/dom", function (S, DOM, Event) {
-
+KISSY.use("dom,event,core", function (S, DOM, Event) {
+    var $= S.all;
     describe("clone", function () {
 
         it("works for checkbox", function () {
