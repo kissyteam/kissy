@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:05
+build time: Nov 26 19:37
 */
 /* 清除浮动 */
 .ks-clearfix:after {
@@ -302,8 +302,13 @@ head ~ body .ks-cal-call .ks-cal-ft .ct-ok {
 
   background: url("http://img05.taobaocdn.com/tps/i5/T1McxAXXRHXXXXXXXX-29-10.gif") no-repeat;
   cursor: pointer;
-  vertical-align: baseline;
+  vertical-align: middle;
 }
+
+.ks-ie .ks-cal-time button{
+    vertical-align: baseline;
+}
+
 .ks-cal-time button.u {
   background-position: 0 0;
 }
