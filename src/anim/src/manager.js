@@ -7,6 +7,9 @@ KISSY.add('anim/manager', function (S) {
     var stamp = S.stamp;
 
     return {
+        // note in background tab, interval is set to 1s in chrome/firefox
+        // no interval change in ie for 15, if interval is less than 15
+        // then in background tab interval is changed to 15
         interval: 15,
         runnings: {},
         timer: null,
@@ -60,8 +63,9 @@ KISSY.add('anim/manager', function (S) {
         runFrames: function () {
             var self = this,
                 done = 1,
+                r,
                 runnings = self.runnings;
-            for (var r in runnings) {
+            for (r in runnings) {
                 done = 0;
                 runnings[r]._frame();
             }
@@ -69,3 +73,8 @@ KISSY.add('anim/manager', function (S) {
         }
     };
 });
+/**
+ * @ignore
+ *
+ * !TODO: deal with https://developers.google.com/chrome/whitepapers/pagevisibility
+ */
