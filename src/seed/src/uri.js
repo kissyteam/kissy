@@ -135,16 +135,32 @@
         },
 
         /**
+         * judge whether has query parameter
+         * @param {String} key
+         */
+        has: function (key) {
+            var self = this, _queryMap;
+            parseQuery(self);
+            _queryMap = self._queryMap;
+            if (key) {
+                return key in _queryMap;
+            } else {
+                return !S.isEmptyObject(_queryMap);
+            }
+        },
+
+        /**
          * Return parameter value corresponding to current key
          * @param {String} key
          */
         get: function (key) {
-            var self = this;
+            var self = this, _queryMap;
             parseQuery(self);
+            _queryMap = self._queryMap;
             if (key) {
-                return self._queryMap[key];
+                return _queryMap[key];
             } else {
-                return self._queryMap;
+                return _queryMap;
             }
         },
 

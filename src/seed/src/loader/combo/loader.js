@@ -368,22 +368,15 @@
                 combos = {};
 
             S.each(modNames, function (modName) {
-                var mod = getModInfo(self, modName);
-                var packageInfo = mod.getPackage();
-                var packageBase = packageInfo.getBase(),
+                var mod = getModInfo(self, modName),
+                    packageInfo = mod.getPackage(),
                     type = mod.getType(),
                     mods,
                     packageName = packageInfo.getName();
                 combos[packageName] = combos[packageName] || {};
                 if (!(mods = combos[packageName][type])) {
                     mods = combos[packageName][type] = combos[packageName][type] || [];
-                    mods.combine = 1;
-                    if (packageInfo.isCombine() === false) {
-                        mods.combine = 0;
-                    }
-                    mods.tag = packageInfo.getTag();
-                    mods.charset = packageInfo.getCharset();
-                    mods.packageBase = packageBase;
+                    mods.packageInfo=packageInfo;
                 }
                 mods.push(mod);
             });
@@ -407,19 +400,18 @@
                     t = [];
 
                     var jss = combos[packageName][type],
-                        tag = jss.tag,
+                        packageInfo=jss.packageInfo,
+                        tag = packageInfo.getTag(),
                         suffix = (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
                         suffixLength = suffix.length,
-                        packageBase = jss.packageBase,
                         prefix,
                         path,
                         fullpath,
                         l,
-                        packagePath = packageBase +
-                            (packageName ? (packageName + '/') : '');
+                        packagePath = packageInfo.getPrefixUriForCombo();
 
                     res[type][packageName] = [];
-                    res[type][packageName].charset = jss.charset;
+                    res[type][packageName].charset = packageInfo.getCharset();
                     // current package's mods
                     res[type][packageName].mods = [];
                     // add packageName to common prefix
@@ -445,7 +437,8 @@
 
                         res[type][packageName].mods.push(jss[i]);
 
-                        if (!jss.combine || !S.startsWith(fullpath, packagePath)) {
+                        if (!packageInfo.isCombine() ||
+                            !S.startsWith(fullpath, packagePath)) {
                             res[type][packageName].push(fullpath);
                             continue;
                         }

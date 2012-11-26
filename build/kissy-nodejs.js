@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:10
+build time: Nov 26 19:25
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121122191033' will replace with current timestamp when compressing.
+         * NOTICE: '20121126192534' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121122191033',
+        __BUILD_TIME: '20121126192534',
         /**
          * KISSY Environment.
          * @private
@@ -86,6 +86,8 @@ var KISSY = (function (undefined) {
          * @param {String} configName.packages.tag     Timestamp for this package's module file.
          * @param {String} configName.packages.debug     Whether force debug mode for current package.
          * @param {String} configName.packages.combine     Whether allow combine for current package modules.
+         * @param {String} [configName.packages.ignorePackageNameInUri=false] whether remove packageName from module request uri,
+         * can only be used in production mode.
          * @param {Array[]} configName.map file map      File url map configs.
          * @param {Array[]} configName.map.0     A single map rule.
          * @param {RegExp} configName.map.0.0    A regular expression to match url.
@@ -2500,16 +2502,32 @@ var KISSY = (function (undefined) {
         },
 
         /**
+         * judge whether has query parameter
+         * @param {String} key
+         */
+        has: function (key) {
+            var self = this, _queryMap;
+            parseQuery(self);
+            _queryMap = self._queryMap;
+            if (key) {
+                return key in _queryMap;
+            } else {
+                return !S.isEmptyObject(_queryMap);
+            }
+        },
+
+        /**
          * Return parameter value corresponding to current key
          * @param {String} key
          */
         get: function (key) {
-            var self = this;
+            var self = this, _queryMap;
             parseQuery(self);
+            _queryMap = self._queryMap;
             if (key) {
-                return self._queryMap[key];
+                return _queryMap[key];
             } else {
-                return self._queryMap;
+                return _queryMap;
             }
         },
 
@@ -3618,7 +3636,9 @@ var KISSY = (function (undefined) {
  */
 (function (S) {
 
-    var Path = S.Path, Loader = S.Loader, Utils = Loader.Utils;
+    var Path = S.Path, Loader = S.Loader,
+        IGNORE_PACKAGE_NAME_IN_URI = 'ignorePackageNameInUri',
+        Utils = Loader.Utils;
 
     /**
      * @class KISSY.Loader.Package
@@ -3657,6 +3677,16 @@ var KISSY = (function (undefined) {
                 return self.base || self.runtime.Config.base;
             },
 
+            getPrefixUriForCombo: function () {
+                var self = this,
+                    packageName = self.name;
+                return self.base + (
+                    packageName && !self.isignorePackageNameInUri() ?
+                        (packageName + '/') :
+                        ''
+                    );
+            },
+
             /**
              * Get package baseUri
              * @return {KISSY.Uri}
@@ -3673,6 +3703,18 @@ var KISSY = (function (undefined) {
             isDebug: function () {
                 var self = this, debug = self.debug;
                 return debug === undefined ? self.runtime.Config.debug : debug;
+            },
+
+            /**
+             *  whether request mod file without package name
+             *  @return {Boolean}
+             */
+            isignorePackageNameInUri: function () {
+                var self = this,
+                    ignorePackageNameInUri = self[IGNORE_PACKAGE_NAME_IN_URI];
+                return ignorePackageNameInUri === undefined ?
+                    self.runtime.Config[IGNORE_PACKAGE_NAME_IN_URI] :
+                    ignorePackageNameInUri;
             },
 
             /**
@@ -3738,10 +3780,25 @@ var KISSY = (function (undefined) {
              * @return {String}
              */
             getFullPath: function () {
-                var self = this, t, fullpathUri, packageBaseUri;
+                var self = this,
+                    t,
+                    fullpathUri,
+                    packageBaseUri,
+                    packageInfo,
+                    path;
                 if (!self.fullpath) {
-                    packageBaseUri = self.getPackage().getBaseUri();
-                    fullpathUri = packageBaseUri.resolve(self.getPath());
+                    packageInfo = self.getPackage();
+                    packageBaseUri = packageInfo.getBaseUri();
+                    path = self.getPath();
+                    // #262
+                    if (packageInfo.isignorePackageNameInUri() &&
+                        // native mod does not allow ignore package name
+                        packageInfo.getName()) {
+                        path = path.split('/');
+                        path.shift();
+                        path = path.join('/');
+                    }
+                    fullpathUri = packageBaseUri.resolve(path);
                     if (t = self.getTag()) {
                         fullpathUri.query.set('t', t);
                     }
@@ -3809,8 +3866,8 @@ var KISSY = (function (undefined) {
              * Get module objects required by this one
              * @return {KISSY.Loader.Module[]}
              */
-            getRequiredMods: function () {
-                var self=this,mods = self.runtime.Env.mods;
+            'getRequiredMods': function () {
+                var self = this, mods = self.runtime.Env.mods;
                 return S.map(self.getNormalizedRequires(), function (r) {
                     return mods[r];
                 });
@@ -3851,6 +3908,42 @@ var KISSY = (function (undefined) {
 
     Loader.Module = Module;
 
+    // for ie to get module name from request url
+    // called for development, can not set ignorePackageNameInUri
+    Module.getModuleNameByUri = function (runtime, src) {
+        var p,
+            srcStr = src.toString(),
+            packages = runtime.config('packages'),
+            packageBase,
+            finalPackagePath,
+            srcPath = src.getPath(),
+            Config = runtime.Config,
+            finalPackageUri,
+            finalPackageLength = -1;
+
+        // 外部模块去除包路径，得到模块名
+        for (p in packages) {
+            packageBase = packages[p].getBase();
+            if (S.startsWith(srcStr, packageBase)) {
+                // longest match
+                if (packageBase.length > finalPackageLength) {
+                    finalPackageLength = packageBase.length;
+                    finalPackagePath = packageBase;
+                    finalPackageUri = packages[p].getBaseUri();
+                }
+            }
+        }
+
+        // 注意：模块名不包含后缀名以及参数，所以去除
+        // 系统模块去除系统路径
+        // 需要 base norm , 防止 base 被指定为相对路径
+        // configs 统一处理
+        if (finalPackagePath) {
+            return Utils.removeExtname(Path.relative(finalPackageUri.getPath(), srcPath));
+        } else if (S.startsWith(srcStr, Config.base)) {
+            return Utils.removeExtname(Path.relative(Config.baseUri.getPath(), srcPath));
+        }
+    };
 
     function defaultComponentJsName(m) {
         var name = m.name,
@@ -3871,8 +3964,7 @@ var KISSY = (function (undefined) {
 
     function getPackage(self, mod) {
         var modName = mod.name,
-            Config = self.Config,
-            packages = Config.packages || {},
+            packages = self.config('packages'),
             pName = '',
             p;
 
@@ -4092,118 +4184,115 @@ var KISSY = (function (undefined) {
  * @fileOverview add module to kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-(function (S, undefined) {
+(function (S) {
 
     var Loader = S.Loader,
-        Path = S.Path,
         utils = Loader.Utils;
 
 
-    S.augment(Loader,
-        Loader.Target,
-        {
+    S.augment(Loader, Loader.Target, {
 
-            //firefox,ie9,chrome 如果 add 没有模块名，模块定义先暂存这里
-            __currentModule: null,
+        //firefox,ie9,chrome 如果 add 没有模块名，模块定义先暂存这里
+        __currentModule: null,
 
-            //ie6,7,8开始载入脚本的时间
-            __startLoadTime: 0,
+        //ie6,7,8开始载入脚本的时间
+        __startLoadTime: 0,
 
-            //ie6,7,8开始载入脚本对应的模块名
-            __startLoadModuleName: null,
+        //ie6,7,8开始载入脚本对应的模块名
+        __startLoadModuleName: null,
 
-            /**
-             * Registers a module.
-             * @param {String|Object} [name] module name
-             * @param {Function|Object} [fn] entry point into the module that is used to bind module to KISSY
-             * @param {Object} [config] special config for this add
-             * @param {String[]} [config.requires] array of mod's name that current module requires
-             * @member KISSY.Loader
-             *
-             * for example:
-             *      @example
-             *      KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
-             */
-            add: function (name, fn, config) {
-                var self = this,
-                    runtime = self.runtime,
-                    mod,
-                    requires,
-                    mods = runtime.Env.mods;
+        /**
+         * Registers a module.
+         * @param {String|Object} [name] module name
+         * @param {Function|Object} [fn] entry point into the module that is used to bind module to KISSY
+         * @param {Object} [config] special config for this add
+         * @param {String[]} [config.requires] array of mod's name that current module requires
+         * @member KISSY.Loader
+         *
+         * for example:
+         *      @example
+         *      KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
+         */
+        add: function (name, fn, config) {
+            var self = this,
+                runtime = self.runtime,
+                mod,
+                requires,
+                mods = runtime.Env.mods;
 
-                // 兼容
-                if (S.isPlainObject(name)) {
-                    return runtime.config({
-                        modules: name
-                    });
-                }
-
-                // S.add(name[, fn[, config]])
-                if (typeof name == 'string') {
-
-                    utils.registerModule(runtime, name, fn, config);
-
-                    mod = mods[name];
-
-                    // 显示指定 add 不 attach
-                    if (config && config['attach'] === false) {
-                        return;
-                    }
-
-                    if (config) {
-                        requires = mod.getNormalizedRequires();
-                    }
-
-                    if (!requires || utils.isAttached(runtime, requires)) {
-                        utils.attachMod(runtime, mod);
-                    }
-
-                    return;
-                }
-                // S.add(fn,config);
-                else if (S.isFunction(name)) {
-                    config = fn;
-                    fn = name;
-                    if (utils.IE) {
-                        /*
-                         Kris Zyp
-                         2010年10月21日, 上午11时34分
-                         We actually had some discussions off-list, as it turns out the required
-                         technique is a little different than described in this thread. Briefly,
-                         to identify anonymous modules from scripts:
-                         * In non-IE browsers, the onload event is sufficient, it always fires
-                         immediately after the script is executed.
-                         * In IE, if the script is in the cache, it actually executes *during*
-                         the DOM insertion of the script tag, so you can keep track of which
-                         script is being requested in case define() is called during the DOM
-                         insertion.
-                         * In IE, if the script is not in the cache, when define() is called you
-                         can iterate through the script tags and the currently executing one will
-                         have a script.readyState == 'interactive'
-                         See RequireJS source code if you need more hints.
-                         Anyway, the bottom line from a spec perspective is that it is
-                         implemented, it works, and it is possible. Hope that helps.
-                         Kris
-                         */
-                        // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
-                        // use onload to get module name is not right in ie
-                        name = findModuleNameByInteractive(self);
-                        S.log('old_ie get modName by interactive : ' + name);
-                        utils.registerModule(runtime, name, fn, config);
-                        self.__startLoadModuleName = null;
-                        self.__startLoadTime = 0;
-                    } else {
-                        // 其他浏览器 onload 时，关联模块名与模块定义
-                        self.__currentModule = {
-                            fn: fn,
-                            config: config
-                        };
-                    }
-                    return;
-                }
-                S.log('invalid format for KISSY.add !', 'error');
+            // 兼容
+            if (S.isPlainObject(name)) {
+                return runtime.config({
+                    modules: name
+                });
             }
-        });
+
+            // S.add(name[, fn[, config]])
+            if (typeof name == 'string') {
+
+                utils.registerModule(runtime, name, fn, config);
+
+                mod = mods[name];
+
+                // 显示指定 add 不 attach
+                if (config && config['attach'] === false) {
+                    return;
+                }
+
+                if (config) {
+                    requires = mod.getNormalizedRequires();
+                }
+
+                if (!requires || utils.isAttached(runtime, requires)) {
+                    utils.attachMod(runtime, mod);
+                }
+
+                return;
+            }
+            // S.add(fn,config);
+            else if (S.isFunction(name)) {
+                config = fn;
+                fn = name;
+                if (utils.IE) {
+                    /*
+                     Kris Zyp
+                     2010年10月21日, 上午11时34分
+                     We actually had some discussions off-list, as it turns out the required
+                     technique is a little different than described in this thread. Briefly,
+                     to identify anonymous modules from scripts:
+                     * In non-IE browsers, the onload event is sufficient, it always fires
+                     immediately after the script is executed.
+                     * In IE, if the script is in the cache, it actually executes *during*
+                     the DOM insertion of the script tag, so you can keep track of which
+                     script is being requested in case define() is called during the DOM
+                     insertion.
+                     * In IE, if the script is not in the cache, when define() is called you
+                     can iterate through the script tags and the currently executing one will
+                     have a script.readyState == 'interactive'
+                     See RequireJS source code if you need more hints.
+                     Anyway, the bottom line from a spec perspective is that it is
+                     implemented, it works, and it is possible. Hope that helps.
+                     Kris
+                     */
+                    // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
+                    // use onload to get module name is not right in ie
+                    name = findModuleNameByInteractive(self);
+                    S.log('old_ie get modName by interactive : ' + name);
+                    utils.registerModule(runtime, name, fn, config);
+                    self.__startLoadModuleName = null;
+                    self.__startLoadTime = 0;
+                } else {
+                    // 其他浏览器 onload 时，关联模块名与模块定义
+                    self.__currentModule = {
+                        fn: fn,
+                        config: config
+                    };
+                }
+                return;
+            }
+            S.log('invalid format for KISSY.add !', 'error');
+        }
+    });
 
 
     // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
@@ -4239,43 +4328,11 @@ var KISSY = (function (undefined) {
         // ie6-8 => re.src == '/x.js'
         // ie9 or firefox/chrome => re.src == 'http://localhost/x.js'
         var src = utils.resolveByPage(re.src),
-            srcStr = src.toString(),
-            packages = runtime.config('packages'),
-            finalPackagePath,
-            p,
-            packageBase,
-            Config = runtime.Config,
-            finalPackageUri,
-            finalPackageLength = -1;
-
-        // 外部模块去除包路径，得到模块名
-        for (p in packages) {
-
-            packageBase = packages[p].getBase();
-            if (S.startsWith(srcStr, packageBase)) {
-                // longest match
-                if (packageBase.length > finalPackageLength) {
-                    finalPackageLength = packageBase.length;
-                    finalPackagePath = packageBase;
-                    finalPackageUri = packages[p].getBaseUri();
-                }
-            }
-
+            moduleName = Loader.Module.getModuleNameByUri(runtime, src);
+        if (!moduleName) {
+            S.log('interactive script does not have package config ：' + src, 'error');
         }
-        // 注意：模块名不包含后缀名以及参数，所以去除
-        // 系统模块去除系统路径
-        // 需要 base norm , 防止 base 被指定为相对路径
-        // configs 统一处理
-        if (finalPackagePath) {
-            return utils.removeExtname(Path.relative(finalPackageUri.getPath(),
-                src.getPath()));
-        } else if (S.startsWith(srcStr, Config.base)) {
-            return utils.removeExtname(Path.relative(Config.baseUri.getPath(),
-                src.getPath()));
-        }
-
-        S.log('interactive script does not have package config ：' + src, 'error');
-        return undefined;
+        return moduleName;
     }
 
 })(KISSY);
@@ -4755,7 +4812,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121122191033'
+            tag: '20121126192534'
         }, getBaseInfo()));
     }
 
@@ -4834,7 +4891,7 @@ var KISSY = (function (undefined) {
                     xml = new DOMParser().parseFromString(data, 'text/xml');
                 } else { // IE
                     xml = new ActiveXObject('Microsoft.XMLDOM');
-                    xml.async = 'false';
+                    xml.async = false;
                     xml.loadXML(data);
                 }
             } catch (e) {
