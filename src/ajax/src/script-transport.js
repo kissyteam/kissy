@@ -57,7 +57,7 @@ KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
             self.head = head;
             script = doc.createElement('script');
             self.script = script;
-            script.async = 'async';
+            script.async = true;
 
             if (c['scriptCharset']) {
                 script.charset = c['scriptCharset'];

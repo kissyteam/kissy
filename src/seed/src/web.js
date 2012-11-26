@@ -62,7 +62,7 @@
                     xml = new DOMParser().parseFromString(data, 'text/xml');
                 } else { // IE
                     xml = new ActiveXObject('Microsoft.XMLDOM');
-                    xml.async = 'false';
+                    xml.async = false;
                     xml.loadXML(data);
                 }
             } catch (e) {
