@@ -16,7 +16,6 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
     return Overlay.extend([
         Zoomer
     ], {
-
             initializer: function () {
                 var self = this,
                     tmp;

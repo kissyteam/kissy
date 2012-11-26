@@ -5,6 +5,7 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
     var STANDARD = 'standard',
         INNER = 'inner',
         round = Math.round,
+        ABSOLUTE_STYLE = ' style="position:absolute;" ',
         min = Math.min;
 
     function Zoomer() {
@@ -13,17 +14,6 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
         if (!self.get("bigImageWidth") || !self.get("bigImageHeight")) {
             S.error("bigImageWidth/bigImageHeight in ImageZoom must be set!");
         }
-
-        self._bigImageCopy = new Node(
-            '<img src="' +
-                self.get('imageNode').attr('src') +
-                '" width="' +
-                self.get('bigImageWidth')
-                + '" ' +
-                'height="' +
-                self.get('bigImageHeight') +
-                '"' +
-                '/>');
 
         // 两种显示效果切换标志
         self._isInner = self.get('type') === INNER;
@@ -85,10 +75,24 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
                 bigImage;
 
             bigImage = self.bigImage = new Node('<img ' +
-                'src="' +
+                ABSOLUTE_STYLE +
+                ' src="' +
                 self.get("bigImageSrc") +
                 '" />')
                 .appendTo(contentEl, undefined);
+
+            self._bigImageCopy = new Node(
+                '<img ' +
+                    ABSOLUTE_STYLE +
+                    ' src="' +
+                    self.get('imageNode').attr('src') +
+                    '" width="' +
+                    self.get('bigImageWidth')
+                    + '" ' +
+                    'height="' +
+                    self.get('bigImageHeight') +
+                    '"' +
+                    '/>');
 
             self._bigImageCopy.prependTo(contentEl, undefined);
 
@@ -102,7 +106,9 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
             }
             // 标准模式, 添加镜片
             else {
-                self.lens = new Node('<span class="' + self.get("lensClass") + '"></span>')
+                self.lens = new Node('<span ' +
+                    ABSOLUTE_STYLE +
+                    ' class="' + self.get("lensClass") + '"></span>')
                     .appendTo(self.imageWrap, undefined).hide();
             }
 
@@ -336,7 +342,9 @@ KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
         changeImageSrc: function (src) {
             var self = this;
             self.image.attr('src', src);
-            self._bigImageCopy.attr('src', src);
+            if (self._bigImageCopy) {
+                self._bigImageCopy.attr('src', src);
+            }
             self._onSetHasZoom(self.get("hasZoom"));
             self.loading();
         }
