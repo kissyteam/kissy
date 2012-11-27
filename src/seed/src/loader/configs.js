@@ -118,8 +118,6 @@
                 utils.createModuleInfo(self, modName, modCfg);
                 S.mix(Env.mods[modName], modCfg);
             });
-        } else if (modules === false) {
-            Env.mods = {};
         }
     };
 

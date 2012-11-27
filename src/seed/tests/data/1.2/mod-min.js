@@ -1,3 +1,3 @@
 KISSY.add("1.2/mod", function(S, D) {
-    return 999;
+    return 2;
 });

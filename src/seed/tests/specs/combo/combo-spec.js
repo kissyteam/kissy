@@ -7,6 +7,7 @@ describe("KISSY ComboLoader", function () {
     it("should works simply", function () {
 
         KISSY.clearLoader();
+
         var ret = 0;
 
         KISSY.config({
@@ -42,7 +43,7 @@ describe("KISSY ComboLoader", function () {
 
         expect(S.Env._comboLoader.loading).toBe(0);
 
-        S.Env.mods = {};
+        S.clearLoader();
 
         var l = new ComboLoader(S);
 
@@ -147,7 +148,8 @@ describe("KISSY ComboLoader", function () {
 
         expect(S.Env._comboLoader.loading).toBe(0);
 
-        S.Env.mods = {};
+        S.clearLoader();
+
         S.DOM = null;
         S.use("dom", function () {
             expect(S.DOM).not.toBe(undefined);
@@ -160,11 +162,11 @@ describe("KISSY ComboLoader", function () {
 
     it("should works for packages", function () {
 
-        var p = KISSY.clearLoader();
+        KISSY.clearLoader();
 
         expect(S.Env._comboLoader.loading).toBe(0);
 
-        S.Env.mods = {};
+        S.clearLoader();
 
         KISSY.config({
             packages: [
@@ -208,8 +210,6 @@ describe("KISSY ComboLoader", function () {
         S.clearLoader();
 
         expect(S.Env._comboLoader.loading).toBe(0);
-
-        S.Env.mods = {};
 
         KISSY.config({
             packages: [
@@ -301,8 +301,6 @@ describe("KISSY ComboLoader", function () {
 
     it("should load mod not config", function () {
         S.clearLoader();
-
-        S.Env.mods = {};
 
         KISSY.config({
             packages: [

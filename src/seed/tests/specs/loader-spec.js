@@ -147,7 +147,7 @@
 
             S.use("1.2/mod", function (S, Mod) {
                 ok = 1;
-                expect(Mod).toBe(999);
+                expect(Mod).toBe(2);
             });
 
             waitsFor(function () {

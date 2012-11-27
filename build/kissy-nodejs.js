@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 01:53
+build time: Nov 28 02:35
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121128015347' will replace with current timestamp when compressing.
+         * NOTICE: '20121128023541' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121128015347',
+        __BUILD_TIME: '20121128023541',
         /**
          * KISSY Environment.
          * @private
@@ -4481,8 +4481,6 @@ var KISSY = (function (undefined) {
                 utils.createModuleInfo(self, modName, modCfg);
                 S.mix(Env.mods[modName], modCfg);
             });
-        } else if (modules === false) {
-            Env.mods = {};
         }
     };
 
@@ -5035,29 +5033,6 @@ var KISSY = (function (undefined) {
                 }
             },
             /**
-             * @private
-             * @member KISSY
-             */
-            clearLoader: function () {
-                var self = this,
-                    Env = self.Env,
-                    l;
-
-                if ((l = Env._comboLoader) && l.clear) {
-                    l.clear();
-                }
-                if ((l = Env._loader) && l.clear) {
-                    l.clear();
-                }
-
-                self.config({
-                    map: false,
-                    mapCombo: false,
-                    modules: false,
-                    packages: false
-                })
-            },
-            /**
              * get module value defined by define function
              * @param {string} moduleName
              * @member KISSY
@@ -5144,7 +5119,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121128015347'
+            tag: '20121128023541'
         }, getBaseInfo()));
     }
 

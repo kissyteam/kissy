@@ -63,29 +63,6 @@
                 }
             },
             /**
-             * @private
-             * @member KISSY
-             */
-            clearLoader: function () {
-                var self = this,
-                    Env = self.Env,
-                    l;
-
-                if ((l = Env._comboLoader) && l.clear) {
-                    l.clear();
-                }
-                if ((l = Env._loader) && l.clear) {
-                    l.clear();
-                }
-
-                self.config({
-                    map: false,
-                    mapCombo: false,
-                    modules: false,
-                    packages: false
-                })
-            },
-            /**
              * get module value defined by define function
              * @param {string} moduleName
              * @member KISSY

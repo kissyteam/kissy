@@ -85,7 +85,6 @@ describe("loader", function () {
                 }
             });
 
-
             KISSY.config("modules", {
                 'timestamp/x':{
                     tag:'q'

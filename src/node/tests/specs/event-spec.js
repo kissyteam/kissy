@@ -1,6 +1,6 @@
 /**
  * event attached for node
- * @author  gonghao , yiminghe@gmail.com
+ * @author gonghao, yiminghe@gmail.com
  */
 KISSY.use("node", function(S, Node) {
     var $ = Node.all;
