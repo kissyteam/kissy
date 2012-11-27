@@ -46,8 +46,6 @@ tests.push('/src/htmlparser/tests/runner/test.html');
 
 tests.push('/src/imagezoom/tests/runner/test.html');
 
-tests.push('/src/input-selection/tests/runner/test.html');
-
 tests.push('/src/json/tests/runner/test.html');
 
 tests.push('/src/kison/tests/runner/test.html');

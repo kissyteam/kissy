@@ -3,7 +3,9 @@
  * @fileOverview KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay-render", function (S, UA, Component, Extension, Loading, Close, Mask) {
+KISSY.add("overlay/overlay-render", function (S, Component, Extension, Loading, Close, Mask) {
+
+    var UA = S.UA;
 
     return Component.Render.extend([
         Extension.ContentBox.Render,
@@ -15,10 +17,13 @@ KISSY.add("overlay/overlay-render", function (S, UA, Component, Extension, Loadi
     ]);
 
 }, {
-    requires: ["ua", "component/base", 'component/extension',
+    requires: [
+        "component/base",
+        'component/extension',
         './extension/loading-render',
         './extension/close-render',
-        './extension/mask-render']
+        './extension/mask-render'
+    ]
 });
 
 /**

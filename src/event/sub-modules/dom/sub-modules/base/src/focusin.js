@@ -3,19 +3,22 @@
  * @fileOverview event-focusin
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/focusin', function (S, UA, Event, special) {
+KISSY.add('event/dom/base/focusin', function (S, Event, special) {
+
+    var UA = S.UA;
+
     // 让非 IE 浏览器支持 focusin/focusout
     if (!UA['ie']) {
         S.each([
-            { name:'focusin', fix:'focus' },
-            { name:'focusout', fix:'blur' }
+            { name: 'focusin', fix: 'focus' },
+            { name: 'focusout', fix: 'blur' }
         ], function (o) {
             var key = S.guid('attaches_' + S.now() + '_');
             special[o.name] = {
                 // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
                 // 达到和 focusin 一样的效果 focusin -> focus
                 // refer: http://yiminghe.iteye.com/blog/813255
-                setup:function () {
+                setup: function () {
                     // this maybe document
                     var doc = this.ownerDocument || this;
                     if (!(key in doc)) {
@@ -27,7 +30,7 @@ KISSY.add('event/dom/base/focusin', function (S, UA, Event, special) {
                     }
                 },
 
-                tearDown:function () {
+                tearDown: function () {
                     var doc = this.ownerDocument || this;
                     doc[key] -= 1;
                     if (doc[key] === 0) {
@@ -45,19 +48,19 @@ KISSY.add('event/dom/base/focusin', function (S, UA, Event, special) {
     }
 
     special['focus'] = {
-        delegateFix:'focusin'
+        delegateFix: 'focusin'
     };
 
     special['blur'] = {
-        delegateFix:'focusout'
+        delegateFix: 'focusout'
     };
 
     return Event;
 }, {
-    requires:['ua', './api', './special']
+    requires: ['./api', './special']
 });
 
 /*
-  承玉:2011-06-07
-  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
+ 承玉:2011-06-07
+ - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */

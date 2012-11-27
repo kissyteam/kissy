@@ -3,7 +3,8 @@
  * @fileOverview event-mouseenter
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, UA, special) {
+KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
+
     S.each([
         { name: 'mouseenter', fix: 'mouseover' },
         { name: 'mouseleave', fix: 'mouseout' }
@@ -39,7 +40,7 @@ KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, UA, special) {
 
     return Event;
 }, {
-    requires: ['./api', 'dom', 'ua', './special']
+    requires: ['./api', 'dom', './special']
 });
 
 /*

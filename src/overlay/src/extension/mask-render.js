@@ -3,9 +3,10 @@
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/extension/mask-render", function (S, UA, Node) {
+KISSY.add("overlay/extension/mask-render", function (S, Node) {
 
-    var ie6 = (UA['ie'] === 6),
+    var UA = S.UA,
+        ie6 = (UA['ie'] === 6),
         $ = Node.all;
 
     function docWidth() {
@@ -105,5 +106,5 @@ KISSY.add("overlay/extension/mask-render", function (S, UA, Node) {
 
     return Mask;
 }, {
-    requires: ["ua", "node"]
+    requires: ["node"]
 });

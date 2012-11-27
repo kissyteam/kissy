@@ -3,7 +3,7 @@
  * @fileOverview Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu, undefined) {
+KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,Menu, undefined) {
     var ComboBox,
         $ = Node.all,
         KeyCodes = Node.KeyCodes,
@@ -630,7 +630,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
         }
         input.prop("selectionStart", tokenCursorPosition);
         input.prop("selectionEnd", tokenCursorPosition);
-        cursorOffset = input.prop("KsCursorOffset");
+        cursorOffset = cursor(input);
         input.prop("selectionStart", cursorPosition);
         input.prop("selectionEnd", cursorPosition);
         menu.set("xy", [cursorOffset.left, cursorOffset.top]);
@@ -869,10 +869,10 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
     return ComboBox;
 }, {
     requires: [
+        './cursor',
         'node',
         'component/base',
         './render',
-        'input-selection',
         'menu'
     ]
 });

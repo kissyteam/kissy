@@ -2,9 +2,11 @@
  * @fileOverview Flash UA 探测
  * @author kingfo<oicuicu@gmail.com>
  */
-KISSY.add('flash/ua', function (S, UA) {
+KISSY.add('flash/ua', function (S) {
 
-    var fpv, fpvF, firstRun = true, win = S.Env.host;
+    var fpv, fpvF, firstRun = true,
+        UA = S.UA,
+        win = S.Env.host;
 
     /**
      * 获取 Flash 版本号
@@ -95,7 +97,7 @@ KISSY.add('flash/ua', function (S, UA) {
         return !!fpvF && (fpvF >= numerify(ver));
     };
 
-}, { requires: ["ua"] });
+});
 
 /**
  * NOTES:

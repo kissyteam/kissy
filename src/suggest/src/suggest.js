@@ -2,9 +2,10 @@
  * @fileOverview 提示补全组件
  * @author lifesinger@gmail.com
  */
-KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
+KISSY.add('suggest', function (S, DOM, Event, undefined) {
 
-    var win = S.Env.host,
+    var UA= S.UA,
+        win = S.Env.host,
         EventTarget = Event.Target,
         doc = win.document, bd, head = DOM.get('head'),
         ie = UA['ie'],
@@ -1124,7 +1125,7 @@ KISSY.add('suggest', function (S, DOM, Event, UA, undefined) {
     S.Suggest = Suggest;
     return Suggest;
 
-}, { requires:['dom', 'event', 'ua'] });
+}, { requires:['dom', 'event'] });
 
 
 /**

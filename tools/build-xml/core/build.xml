@@ -28,7 +28,8 @@
             <header filtering="no" trimleading="yes">${bom}</header>
             <path path="${kissy.build.dir}/seed.js"/>
             <path path="${kissy.build.dir}/ua.js"/>
-            <path path="${kissy.build.dir}/dom.js"/>
+            <path path="${kissy.build.dir}/dom/base.js"/>
+            <path path="${kissy.build.dir}/dom/ie.js"/>
             <path path="${kissy.build.dir}/event/base.js"/>
             <path path="${kissy.build.dir}/event/custom.js"/>
             <path path="${kissy.build.dir}/event/dom/base.js"/>

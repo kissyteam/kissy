@@ -9,7 +9,6 @@
         Path = S.Path,
         Uri = S.Uri,
         host = S.Env.host,
-        ua = host.navigator && navigator.userAgent || "",
         startsWith = S.startsWith,
         data = Loader.STATUS,
         ATTACHED = data.ATTACHED,
@@ -20,9 +19,7 @@
          * @singleton
          * @private
          */
-            Utils = {},
-
-        isWebKit = !!ua.match(/AppleWebKit/),
+            Utils = S.Loader.Utils = {},
         doc = host.document,
         simulatedLocation = new Uri(host.location && location.href || "");
 
@@ -57,26 +54,6 @@
         docHead: function () {
             return doc.getElementsByTagName('head')[0] || doc.documentElement;
         },
-
-        /**
-         * isWebkit
-         */
-        isWebKit: isWebKit,
-
-        /**
-         * isGecko
-         */
-        isGecko: !isWebKit && !!ua.match(/Gecko/),
-
-        /**
-         * isPresto
-         */
-        isPresto: !!ua.match(/Presto/),
-
-        /**
-         * IE
-         */
-        IE: !!ua.match(/MSIE/),
 
         /**
          * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
@@ -418,7 +395,4 @@
         }
         return true;
     }
-
-    Loader.Utils = Utils;
-
 })(KISSY);

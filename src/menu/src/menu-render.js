@@ -3,7 +3,7 @@
  * @fileOverview render aria from menu according to current menuitem
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menu-render", function(S, UA, Component) {
+KISSY.add("menu/menu-render", function(S, Component) {
 
     return Component.Render.extend({
 
@@ -40,5 +40,5 @@ KISSY.add("menu/menu-render", function(S, UA, Component) {
         }
     });
 }, {
-    requires:['ua','component/base']
+    requires:['component/base']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:08
+build time: Nov 28 00:46
 */
 /**
  * @ignore
@@ -216,8 +216,6 @@ KISSY.add('event/custom', function (S, Event, api, ObservableCustomEvent) {
         }
     });
 
-    S.EventTarget = Target;
-
     var custom = S.mix({
         _ObservableCustomEvent: ObservableCustomEvent,
         Target: Target
@@ -227,6 +225,9 @@ KISSY.add('event/custom', function (S, Event, api, ObservableCustomEvent) {
         Target: Target,
         custom: custom
     });
+
+    // compatibility
+    S.EventTarget = Target;
 
     return custom;
 }, {

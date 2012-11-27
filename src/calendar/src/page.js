@@ -2,7 +2,7 @@
  * @@fileOverview     日历
  * @author  拔赤<lijing00333@163.com>
  */
-KISSY.add('calendar/page', function (S, UA, Node, Calendar) {
+KISSY.add('calendar/page', function (S, Node, Calendar) {
 
     S.augment(Calendar, {
 
@@ -193,7 +193,7 @@ KISSY.add('calendar/page', function (S, UA, Node, Calendar) {
                         tev.target.detach(tev.type, tev.fn);
                     }
                 });
-            }
+            };
 
             /**
              * 创建子日历的事件
@@ -594,7 +594,7 @@ KISSY.add('calendar/page', function (S, UA, Node, Calendar) {
         }//Page constructor over
     });
     return Calendar;
-}, { requires:["ua", "node", "calendar/base"] });
+}, { requires:["node", "calendar/base"] });
 /**
  * 2010-09-14 拔赤
  *        - 仅支持S.Date.format和S.Date.parse，format仅对常用格式进行支持（不超过10个），也可以自定义

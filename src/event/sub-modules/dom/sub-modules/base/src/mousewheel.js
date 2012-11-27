@@ -3,9 +3,9 @@
  * @fileOverview normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/mousewheel', function (S, special,UA) {
+KISSY.add('event/dom/base/mousewheel', function (S, special) {
 
-    var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
+    var UA = S.UA, MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
 
     special['mousewheel'] = {
         onFix: MOUSE_WHEEL,
@@ -13,5 +13,5 @@ KISSY.add('event/dom/base/mousewheel', function (S, special,UA) {
     };
 
 }, {
-    requires: ['./special','ua']
+    requires: ['./special']
 });

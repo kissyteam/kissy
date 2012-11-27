@@ -1,13 +1,14 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:05
+build time: Nov 28 01:53
 */
 /**
+ * @ignore
  * @fileOverview Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu, undefined) {
+KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,Menu, undefined) {
     var ComboBox,
         $ = Node.all,
         KeyCodes = Node.KeyCodes,
@@ -22,17 +23,12 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
         SUFFIX = 'suffix';
 
     /**
-     * @name ComboBox
-     * @extends KISSY.Component.Controller
-     * @class
      * KISSY ComboBox.
      * xclass: 'combobox'.
+     * @extends KISSY.Component.Controller
+     * @class KISSY.ComboBox
      */
-    ComboBox = Component.Controller.extend(
-        /**
-         * @lends ComboBox#
-         */
-        {
+    ComboBox = Component.Controller.extend({
 
             // user's input text
             _savedInputValue: null,
@@ -43,7 +39,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
              * normalize returned data
              * @protected
              * @param data
-             * @return
              */
             normalizeData: function (data) {
                 var self = this, contents, v, i, c;
@@ -67,9 +62,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 return contents;
             },
 
-            /**
-             * @protected
-             */
             bindUI: function () {
                 var self = this,
                     input = self.get("input");
@@ -77,18 +69,15 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 input.on("valuechange", onValueChange, self);
 
                 /**
-                 * @name ComboBox#afterCollapsedChange
-                 * @description fired after combobox 's collapsed attribute is changed.
-                 * @event
+                 * fired after combobox 's collapsed attribute is changed.
+                 * @event afterCollapsedChange
                  * @param e
                  * @param e.newVal current value
                  * @param e.prevVal previous value
                  */
 
             },
-            /**
-             * @protected
-             */
+
             handleFocus: function () {
                 var self = this, placeholderEl;
                 setInvalid(self, false);
@@ -96,9 +85,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                     placeholderEl.hide();
                 }
             },
-            /**
-             * @protected
-             */
+
             handleBlur: function () {
                 var self = this;
                 ComboBox.superclass.handleBlur.apply(self, arguments);
@@ -138,9 +125,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 }
             },
 
-            /**
-             * @protected
-             */
             handleKeyEventInternal: function (e) {
                 var self = this,
                     input = self.get("input"),
@@ -207,9 +191,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 }
             },
 
-            /**
-             * @protected
-             */
             syncUI: function () {
                 if (this.get("placeholder")) {
                     var self = this,
@@ -293,9 +274,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 dataSource.fetchData(value, renderData, self);
             },
 
-            /**
-             * @protected
-             */
             _onSetCollapsed: function (v) {
                 if (v) {
                     hideMenu(this);
@@ -304,24 +282,22 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 }
             },
 
-            /**
-             * @protected
-             */
             destructor: function () {
-                var self=this;
+                var self = this;
                 win.detach("resize", self.__repositionBuffer, this);
                 self.__repositionBuffer.stop();
             }
         },
         {
-            ATTRS: /**
-             * @lends ComboBox#
-             */
-            {
+            ATTRS: {
 
                 /**
                  * Input element of current combobox.
                  * @type {KISSY.NodeList}
+                 * @property input
+                 */
+                /**
+                 * @ignore
                  */
                 input: {
                     view: 1
@@ -329,6 +305,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * trigger arrow element
+                 * @ignore
                  */
                 trigger: {
                     view: 1
@@ -336,14 +313,19 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * placeholder
+                 * @cfg {String} placeholder
+                 */
+                /**
+                 * @ignore
                  */
                 placeholder: {
                     view: 1
                 },
 
+
                 /**
                  * label for placeholder in ie
-                 * @private
+                 * @ignore
                  */
                 placeholderEl: {
                     view: 1
@@ -351,6 +333,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * custom validation function
+                 * @type Function
+                 * @property validator
+                 */
+                /**
+                 * @ignore
                  */
                 validator: {
 
@@ -358,30 +345,39 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * invalid tag el
+                 * @ignore
                  */
                 invalidEl: {
                     view: 1
                 },
 
-                /**
-                 * @protected
-                 */
                 allowTextSelection: {
                     value: true
                 },
 
                 /**
                  * Whether show combobox trigger.
-                 * @default true.
-                 * @type {Boolean}
+                 * Defaults to: true.
+                 * @cfg {Boolean} hasTrigger
+                 */
+                /**
+                 * @ignore
                  */
                 hasTrigger: {
                     view: 1
                 },
 
                 /**
-                 * ComboBox dropDown menuList
-                 * @type {Menu.PopupMenu}
+                 * ComboBox dropDown menuList or config
+                 * @cfg {KISSY.Menu.PopupMenu|Object} menu
+                 */
+                /**
+                 * ComboBox dropDown menuList or config
+                 * @property menu
+                 * @type {KISSY.Menu.PopupMenu}
+                 */
+                /**
+                 * @ignore
                  */
                 menu: {
                     value: {
@@ -397,6 +393,10 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Whether combobox menu is hidden.
                  * @type {Boolean}
+                 * @property collapsed
+                 */
+                /**
+                 * @ignore
                  */
                 collapsed: {
                     view: 1
@@ -404,7 +404,10 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * dataSource for comboBox.
-                 * @type {ComboBox.LocalDataSource|ComboBox.RemoteDataSource|Object}
+                 * @cfg {KISSY.ComboBox.LocalDataSource|KISSY.ComboBox.RemoteDataSource|Object} dataSource
+                 */
+                /**
+                 * @ignore
                  */
                 dataSource: {
                     // 和 input 关联起来，input可以有很多，每个数据源可以不一样，但是 menu 共享
@@ -415,7 +418,10 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * maxItemCount max count of data to be shown
-                 * @type {Number}
+                 * @cfg {Number} maxItemCount
+                 */
+                /**
+                 * @ignore
                  */
                 maxItemCount: {
                     value: 99999
@@ -423,8 +429,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Whether drop down menu is same width with input.
-                 * @default true.
-                 * @type {Boolean}
+                 * Defaults to: true.
+                 * @cfg {Boolean} matchElWidth
+                 */
+                /**
+                 * @ignore
                  */
                 matchElWidth: {
                     value: true
@@ -433,23 +442,32 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Format function to return array of
                  * html/text/menu item attributes from array of data.
-                 * @type {Function}
+                 * @cfg {Function} format
+                 */
+                /**
+                 * @ignore
                  */
                 format: {
                 },
 
                 /**
                  * Whether allow multiple input,separated by separator
-                 * @default false
-                 * @type {Boolean}
+                 * Defaults to: false
+                 * @cfg {Boolean} multiple
+                 */
+                /**
+                 * @ignore
                  */
                 multiple: {
                 },
 
                 /**
                  * Separator chars used to separator multiple inputs.
-                 * @default ;,
-                 * @type {String}
+                 * Defaults to: ;,
+                 * @cfg {String} separator
+                 */
+                /**
+                 * @ignore
                  */
                 separator: {
                     value: ",;"
@@ -458,7 +476,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
                 /**
                  * Separator type.
                  * After value( 'suffix' ) or before value( 'prefix' ).
-                 * @type {String}
+                 * Defaults to: 'suffix'
+                 * @cfg {String} separatorType
+                 */
+                /**
+                 * @ignore
                  */
                 separatorType: {
                     value: SUFFIX
@@ -466,9 +488,12 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Whether whitespace is part of toke value.
-                 * Default true
-                 * @type {Boolean}
+                 * Default to: true
+                 * @cfg {Boolean} whitespace
                  * @private
+                 */
+                /**
+                 * @ignore
                  */
                 whitespace: {
                     valueFn: function () {
@@ -478,8 +503,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Whether update input's value at keydown or up when combobox menu shows.
-                 * Default true
-                 * @type {Boolean}
+                 * Default to: true
+                 * @cfg {Boolean} updateInputOnDownUp
+                 */
+                /**
+                 * @ignore
                  */
                 updateInputOnDownUp: {
                     value: true
@@ -487,8 +515,11 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * If separator wrapped by literal chars,separator become normal chars.
-                 * @default "
-                 * @type {String}
+                 * Defaults to: "
+                 * @cfg {String} literal
+                 */
+                /**
+                 * @ignore
                  */
                 literal: {
                     value: "\""
@@ -496,16 +527,22 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
 
                 /**
                  * Whether align menu with individual token after separated by separator.
-                 * @default false
-                 * @type {Boolean}
+                 * Defaults to: false
+                 * @cfg {Boolean} alignWithCursor
+                 */
+                /**
+                 * @ignore
                  */
                 alignWithCursor: {
                 },
 
                 /**
                  * Whether or not the first row should be highlighted by default.
-                 * @default false
-                 * @type {Boolean}
+                 * Defaults to: false
+                 * @cfg {Boolean} autoHighlightFirst
+                 */
+                /**
+                 * @ignore
                  */
                 autoHighlightFirst: {
                 },
@@ -531,9 +568,8 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
             setValue(self, textContent + (separatorType == SUFFIX ? "" : " "));
             self._savedInputValue = textContent;
             /**
-             * @name ComboBox#click
-             * @description fired when user select from suggestion list (bubbled from menuItem)
-             * @event
+             * fired when user select from suggestion list (bubbled from menuItem)
+             * @event click
              * @param e
              * @param e.target Selected menuItem
              */
@@ -599,7 +635,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
         }
         input.prop("selectionStart", tokenCursorPosition);
         input.prop("selectionEnd", tokenCursorPosition);
-        cursorOffset = input.prop("KsCursorOffset");
+        cursorOffset = cursor(input);
         input.prop("selectionStart", cursorPosition);
         input.prop("selectionEnd", cursorPosition);
         menu.set("xy", [cursorOffset.left, cursorOffset.top]);
@@ -838,15 +874,16 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
     return ComboBox;
 }, {
     requires: [
+        './cursor',
         'node',
         'component/base',
         './render',
-        'input-selection',
         'menu'
     ]
 });
 
 /**
+ * @ignore
  *
  * !TODO
  *  - menubutton combobox 抽象提取 picker (extjs)
@@ -866,6 +903,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, _, Menu
  *    2. 鼠标时不会把高亮项的 textContent 设到 input 上去
  *    1,2 都没问题，关键是键盘结合鼠标时怎么个处理？或者不考虑算了！
  **//**
+ * @ignore
  * @fileOverview Export ComboBox.
  * @author yiminghe@gmail.com
  */
@@ -882,6 +920,155 @@ KISSY.add("combobox", function (S, ComboBox, FilterSelect, LocalDataSource, Remo
         'combobox/RemoteDataSource'
     ]
 });/**
+ * get cursor position of input
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('combobox/cursor', function (S, DOM) {
+
+    var FAKE_DIV_HTML = "<div style='" +
+            "z-index:-9999;" +
+            "overflow:hidden;" +
+            "position: fixed;" +
+            "left:-9999px;" +
+            "top:-9999px;" +
+            "opacity:0;" +
+            // firefox default normal,need to force to use pre-wrap
+            "white-space:pre-wrap;" +
+            "word-wrap:break-word;" +
+            "'></div>",
+        FAKE_DIV,
+        MARKER = "<span>" +
+            // must has content
+            // or else <br/><span></span> can not get right coordinates
+            "x" +
+            "</span>",
+        STYLES = [
+            'paddingLeft',
+            'paddingTop', 'paddingBottom',
+            'paddingRight',
+            'marginLeft',
+            'marginTop',
+            'marginBottom',
+            'marginRight',
+            'borderLeftStyle',
+            'borderTopStyle',
+            'borderBottomStyle',
+            'borderRightStyle',
+            'borderLeftWidth',
+            'borderTopWidth',
+            'borderBottomWidth',
+            'borderRightWidth',
+            'line-height',
+            'outline',
+            'height',
+            'fontFamily',
+            'fontSize',
+            'fontWeight',
+            'fontVariant',
+            'fontStyle'
+        ],
+        supportInputScrollLeft,
+        findSupportInputScrollLeft;
+
+    function getFakeDiv(elem) {
+        var fake = FAKE_DIV, body;
+        if (!fake) {
+            fake = DOM.create(FAKE_DIV_HTML);
+        }
+        if (elem.type == 'textarea') {
+            DOM.css(fake, "width", DOM.css(elem, "width"));
+        } else {
+            // input does not wrap at all
+            DOM.css(fake, "width", 9999);
+        }
+        S.each(STYLES, function (s) {
+            DOM.css(fake, s, DOM.css(elem, s));
+        });
+        if (!FAKE_DIV) {
+            body = elem.ownerDocument.body;
+            body.insertBefore(fake, body.firstChild);
+        }
+        FAKE_DIV = fake;
+        return fake;
+    }
+
+    findSupportInputScrollLeft = function () {
+        var doc = document,
+            input = DOM.create("<input>");
+        DOM.css(input, {
+            width: 1,
+            position: "absolute",
+            left: -9999,
+            top: -9999
+        });
+        input.value = "123456789";
+        doc.body.appendChild(input);
+        input.focus();
+        supportInputScrollLeft = !!(input.scrollLeft > 0);
+        DOM.remove(input);
+        findSupportInputScrollLeft = S.noop;
+    };
+
+    return function (elem) {
+        var doc = elem.ownerDocument, offset,
+            elemScrollTop = elem.scrollTop,
+            elemScrollLeft = elem.scrollLeft;
+        if (doc.selection) {
+            var range = doc.selection.createRange();
+            return {
+                // http://msdn.microsoft.com/en-us/library/ie/ms533540(v=vs.85).aspx
+                // or simple range.offsetLeft for textarea
+                left: range.boundingLeft + elemScrollLeft + DOM.scrollLeft(),
+                top: range.boundingTop + elemScrollTop + range.boundingHeight + DOM.scrollTop()
+            };
+        }
+
+        findSupportInputScrollLeft();
+
+        var elemOffset = DOM.offset(elem);
+
+        // input does not has scrollLeft
+        // so just get the position of the beginning of input
+        if (!supportInputScrollLeft && elem.type != 'textarea') {
+            elemOffset.top += elem.offsetHeight;
+            return elemOffset;
+        }
+
+        var fake = getFakeDiv(elem);
+
+        var selectionStart = elem.selectionStart;
+
+        fake.innerHTML = S.escapeHTML(elem.value.substring(0, selectionStart - 1)) +
+            // marker
+            MARKER;
+
+        // can not set fake to scrollTop，marker is always at bottom of marker
+        // when cursor at the middle of textarea , error occurs
+        // fake.scrollTop = elemScrollTop;
+        // fake.scrollLeft = elemScrollLeft;
+        offset = elemOffset;
+
+        // offset.left += 500;
+        DOM.offset(fake, offset);
+        var marker = fake.lastChild;
+        offset = DOM.offset(marker);
+        offset.top += DOM.height(marker);
+        // at the start of textarea , just fetch marker's left
+        if (selectionStart > 0) {
+            offset.left += DOM.width(marker);
+        }
+
+        // so minus scrollTop/Left
+        offset.top -= elemScrollTop;
+        offset.left -= elemScrollLeft;
+
+        // offset.left -= 500;
+        return offset;
+    };
+}, {
+    requires: ['dom']
+});/**
+ * @ignore
  * @fileOverview filter select from combobox
  * @author yiminghe@gmail.com
  */
@@ -899,10 +1086,15 @@ KISSY.add("combobox/filter-select", function (S, Combobox) {
         return valid;
     }
 
+    /**
+     * validate combobox input by dataSource
+     * @class KISSY.ComboBox.FilterSelect
+     * @extends KISSY.ComboBox
+     */
     var FilterSelect = Combobox.extend({
         validate: function (callback) {
             var self = this;
-            FilterSelect.superclass.validate.call(this, function (error, val) {
+            FilterSelect.superclass.validate.call(self, function (error, val) {
                 if (!error) {
                     self.get("dataSource").fetchData(val, function (data) {
                         var d = valInAutoCompleteList(val, self.normalizeData(data));
@@ -916,7 +1108,11 @@ KISSY.add("combobox/filter-select", function (S, Combobox) {
     }, {
         ATTRS: {
             /**
-             * when does not match
+             * when does not match show invalidMessage
+             * @cfg {String} invalidMessage
+             */
+            /**
+             * @ignore
              */
             invalidMessage: {
                 value: 'invalid input'
@@ -929,18 +1125,17 @@ KISSY.add("combobox/filter-select", function (S, Combobox) {
 }, {
     requires: ['./base']
 });/**
+ * @ignore
  * @fileOverview Local dataSource for ComboBox
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/LocalDataSource", function (S, Component) {
 
     /**
-     * @name LocalDataSource
-     * @memberOf ComboBox
-     * @extends KISSY.Base
-     * @class
      * Local dataSource for comboBox.
      * xclass: 'combobox-LocalDataSource'.
+     * @extends KISSY.Base
+     * @class KISSY.ComboBox.LocalDataSource
      */
     function LocalDataSource() {
         LocalDataSource.superclass.constructor.apply(this, arguments);
@@ -962,40 +1157,33 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
         return ret;
     }
 
-    LocalDataSource.ATTRS =
-    /**
-     * @lends ComboBox.LocalDataSource#
-     */
-    {
+    LocalDataSource.ATTRS = {
         /**
          * array of static data for comboBox
-         * @type {Object[]}
+         * @cfg {Object[]} data
+         */
+        /**
+         * @ignore
          */
         data:{
             value:[]
         },
         /**
          * parse data function.
-         * @default index of match.
-         * @type {Function}
+         * Defaults to: index of match.
+         * @cfg {Function} parse
          */
         parse:{
             value:parser
         }
     };
 
-    S.extend(LocalDataSource, S.Base,
+    S.extend(LocalDataSource, S.Base,{
         /**
-         * @lends ComboBox.LocalDataSource#
-         */
-        {
-        /**
-         * Data source interface. How to get data for comboBox
-         * @method
-         * @name ComboBox.LocalDataSource#fetchData
+         * Data source interface. How to get data for comboBox.
          * @param {String} inputVal current active input's value
          * @param {Function} callback callback to notify comboBox when data is ready
-         * @param {Object} context callback's execution context
+         * @param {Object} context callback 's execution context
          */
         fetchData:function (inputVal, callback, context) {
             var parse = this.get("parse"),
@@ -1011,18 +1199,17 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
 }, {
     requires:['component/base']
 });/**
+ * @ignore
  * @fileOverview Remote datasource for ComboBox
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
 
     /**
-     * @name RemoteDataSource
-     * @class
-     * dataSource which wrap {@link IO} utility.
+     * dataSource which wrap {@link KISSY.IO} utility.
      * xclass: 'combobox-RemoteDataSource'.
+     * @class KISSY.ComboBox.RemoteDataSource
      * @extends KISSY.Base
-     * @memberOf ComboBox
      */
     function RemoteDataSource() {
         var self = this;
@@ -1031,100 +1218,108 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
         self.caches = {};
     }
 
-    RemoteDataSource.ATTRS =
-    /**
-     * @lends ComboBox.RemoteDataSource#
-     */
-    {
+    RemoteDataSource.ATTRS = {
         /**
-         * Used as parameter name to send combobox input's value to server
-         * @type {String}
+         * Used as parameter name to send combobox input's value to server.
+         * Defaults to: 'q'
+         * @cfg  {String} paramName
          */
-        paramName:{
-            value:'q'
+        /**
+         * @ignore
+         */
+        paramName: {
+            value: 'q'
         },
         /**
          * whether send empty to server when input val is empty.
-         * @default false
-         * @type {Boolean}
+         * Defaults to: false
+         * @cfg {Boolean} allowEmpty
          */
-        allowEmpty:{},
+        /**
+         * @ignore
+         */
+        allowEmpty: {},
         /**
          * Whether server response data is cached.
-         * @default false
-         * @type {Boolean}
+         * Defaults to: false
+         * @cfg {Boolean} cache
          */
-        cache:{},
+        /**
+         * @ignore
+         */
+        cache: {},
         /**
          * Serve as a parse function to parse server
          * response to return a valid array of data for comboBox.
-         * @type {Function}
+         * @cfg {Function} parse
          */
-        parse:{},
         /**
-         * IO configuration.same as {@link} IO
-         * @type {Object}
+         * @ignore
          */
-        xhrCfg:{
-            value:{}
+        parse: {},
+        /**
+         * IO configuration.same as {@link KISSY.IO}
+         * @cfg {Object} xhrCfg
+         */
+        /**
+         * @ignore
+         */
+        xhrCfg: {
+            value: {}
         }
     };
 
-    S.extend(RemoteDataSource, S.Base,
+    S.extend(RemoteDataSource, S.Base, {
         /**
-         * @lends ComboBox.RemoteDataSource#
-         */{
-            /**
-             * Data source interface. How to get data for comboBox
-             * @method
-             * @name ComboBox.RemoteDataSource#fetchData
-             * @param {String} inputVal current active input's value
-             * @param {Function} callback callback to notify comboBox when data is ready
-             * @param {Object} context callback 's execution context
-             */
-            fetchData:function (inputVal, callback, context) {
-                var self = this,
-                    v,
-                    paramName = self.get("paramName"),
-                    parse = self.get("parse"),
-                    cache = self.get("cache"),
-                    allowEmpty = self.get("allowEmpty");
-                if (self.io) {
-                    // abort previous request
-                    self.io.abort();
-                    self.io = null;
-                }
-                if (!inputVal && allowEmpty !== true) {
-                    return callback.call(context, []);
-                }
-                if (cache) {
-                    if (v = self.caches[inputVal]) {
-                        return callback.call(context, v);
-                    }
-                }
-                var xhrCfg = self.get("xhrCfg");
-                xhrCfg.data = xhrCfg.data || {};
-                xhrCfg.data[paramName] = inputVal;
-                xhrCfg.success = function (data) {
-                    if (parse) {
-                        data = parse(inputVal, data);
-                    }
-                    self.setInternal("data", data);
-                    if (cache) {
-                        self.caches[inputVal] = data;
-                    }
-                    callback.call(context, data);
-                };
-                self.io = IO(xhrCfg);
+         * Data source interface. How to get data for comboBox
+         * @param {String} inputVal current active input's value
+         * @param {Function} callback callback to notify comboBox when data is ready
+         * @param {Object} context callback 's execution context
+         */
+        fetchData: function (inputVal, callback, context) {
+            var self = this,
+                v,
+                paramName = self.get("paramName"),
+                parse = self.get("parse"),
+                cache = self.get("cache"),
+                allowEmpty = self.get("allowEmpty");
+            if (self.io) {
+                // abort previous request
+                self.io.abort();
+                self.io = null;
             }
-        });
+            if (!inputVal && allowEmpty !== true) {
+                return callback.call(context, []);
+            }
+            if (cache) {
+                if (v = self.caches[inputVal]) {
+                    return callback.call(context, v);
+                }
+            }
+            var xhrCfg = self.get("xhrCfg");
+            xhrCfg.data = xhrCfg.data || {};
+            xhrCfg.data[paramName] = inputVal;
+            xhrCfg.success = function (data) {
+                if (parse) {
+                    data = parse(inputVal, data);
+                }
+                self.setInternal("data", data);
+                if (cache) {
+                    self.caches[inputVal] = data;
+                }
+                callback.call(context, data);
+            };
+            self.io = IO(xhrCfg);
+        }
+    });
 
     Component.Manager.setConstructorByXClass("combobox-RemoteDataSource", RemoteDataSource);
 
     return RemoteDataSource;
 }, {
-    requires:['ajax', 'component/base']
+    requires: ['ajax', 'component/base']
 });/**
+ * @ignore
  * @fileOverview Render aria properties to input element.
  * @author yiminghe@gmail.com
  */

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:05
+build time: Nov 28 00:43
 */
 /**
  * @ignore
@@ -97,9 +97,10 @@ KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
  * @fileOverview animation framework for KISSY
  * @author   yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
+KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q) {
 
-    var camelCase = DOM._camelCase,
+    var UA = S.UA,
+        camelCase = DOM._camelCase,
         NodeType = DOM.NodeType,
         specialVals = ['hide', 'show', 'toggle'],
     // shorthand css properties
@@ -783,7 +784,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
     return Anim;
 }, {
-    requires: ['dom', 'event', './easing', 'ua', './manager', './fx', './queue']
+    requires: ['dom', 'event', './easing', './manager', './fx', './queue']
 });
 
 /*
@@ -1372,6 +1373,9 @@ KISSY.add('anim/manager', function (S) {
     var stamp = S.stamp;
 
     return {
+        // note in background tab, interval is set to 1s in chrome/firefox
+        // no interval change in ie for 15, if interval is less than 15
+        // then in background tab interval is changed to 15
         interval: 15,
         runnings: {},
         timer: null,
@@ -1425,15 +1429,21 @@ KISSY.add('anim/manager', function (S) {
         runFrames: function () {
             var self = this,
                 done = 1,
+                r,
                 runnings = self.runnings;
-            for (var r in runnings) {
+            for (r in runnings) {
                 done = 0;
                 runnings[r]._frame();
             }
             return done;
         }
     };
-});/**
+});
+/**
+ * @ignore
+ *
+ * !TODO: deal with https://developers.google.com/chrome/whitepapers/pagevisibility
+ *//**
  * @ignore
  * @fileOverview queue of anim objects
  * @author yiminghe@gmail.com

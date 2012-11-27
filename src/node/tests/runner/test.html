@@ -14,12 +14,6 @@
     <script src="../../../../tools/jasmine/event-simulate.js"></script>
     <script src="../../../../tools/third-party/jquery.js" charset="utf-8"></script>
     <script src="../../../../build/seed.js" charset="utf-8"></script>
-    <script src="../../../../build/ua.js" charset="utf-8"></script>
-    <script src="../../../../build/dom.js" charset="utf-8"></script>
-    <script src="../../../../build/event/base.js" charset="utf-8"></script>
-    <script src="../../../../build/event/custom.js" charset="utf-8"></script>
-    <script src="../../../../build/event/dom/base.js" charset="utf-8"></script>
-    <script src="../../../../build/anim.js" charset="utf-8"></script>
     <script>
         jQuery.noConflict();
 
@@ -64,12 +58,14 @@
 <script src="../specs/event-spec.js"></script>
 <script src="../specs/anim-spec.js"></script>
 <script>
-    KISSY.use("node", function (S, Node) {
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-        jasmine.getEnv().execute(function () {
-            jasmine.kissyNext(this.results().failedCount);
-        });
+    KISSY.use('core', function () {
+        setTimeout(function () {
+            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+            jasmine.getEnv().execute(function () {
+                jasmine.kissyNext(this.results().failedCount);
+            });
+        }, 100);
     });
 </script>
 </body>

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:08
+build time: Nov 28 00:46
 */
 /**
  * Set up editor constructor
@@ -13914,7 +13914,6 @@ KISSY.add("editor/plugin/local-storage/index", function (S, Editor, Overlay, Fla
     //important
     //不能立即运行，ie6 可能会没有 domready 添加 flash 节点
     //导致：operation aborted
-    attach: false,
     "requires": ["editor", "overlay", "../flash-bridge/"]
 });/**
  * Add maximizeWindow/restoreWindow to Editor.

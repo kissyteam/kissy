@@ -85,5 +85,5 @@ KISSY.add('event/dom/touch/double-tap',
         return DoubleTap;
 
     }, {
-        requires: ['./handle-map', 'event/dom/base', './single-touch']
+            requires: ['./handle-map', 'event/dom/base', './single-touch']
     });

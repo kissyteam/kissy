@@ -1,9 +1,10 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:09
+build time: Nov 28 00:47
 */
 /**
+ * @ignore
  * @fileOverview menu controllerler for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
@@ -16,202 +17,285 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
     }
 
     /**
-     * @name Menu
-     * @class
      * KISSY Menu.
      * xclass: 'menu'.
+     * @class KISSY.Menu
      * @extends KISSY.Component.Container
      */
-    var Menu = Component.Container.extend(
-        /** @lends Menu.prototype*/
-        {
-            _onSetHighlightedItem:function (v, ev) {
-                var pre = ev && ev.prevVal;
-                if (pre) {
-                    pre.set("highlighted", false);
+    var Menu = Component.Container.extend({
+        _onSetHighlightedItem: function (v, ev) {
+            var pre = ev && ev.prevVal;
+            if (pre) {
+                pre.set("highlighted", false);
+            }
+            v && v.set("highlighted", true);
+            this.set("activeItem", v);
+        },
+
+        handleBlur: function (e) {
+            Menu.superclass.handleBlur.call(this, e);
+            this.set("highlightedItem", null);
+        },
+
+
+        //dir : -1 ,+1
+        //skip disabled items
+        _getNextEnabledHighlighted: function (index, dir) {
+            var children = this.get("children"),
+                len = children.length,
+                o = index;
+            do {
+                var c = children[index];
+                if (!c.get("disabled") && (c.get("visible") !== false)) {
+                    return children[index];
                 }
-                v && v.set("highlighted", true);
-                this.set("activeItem", v);
-            },
+                index = (index + dir + len) % len;
+            } while (index != o);
+            return undefined;
+        },
 
-            handleBlur:function (e) {
-                Menu.superclass.handleBlur.call(this, e);
-                this.set("highlightedItem", null);
-            },
+        /**
+         * Attempts to handle a keyboard event;
+         * returns true if the event was handled,
+         * false otherwise.
+         * If the container is enabled, and a child is highlighted,
+         * calls the child controller's {@code handleKeydown} method to give the control
+         * a chance to handle the event first.
+         * Protected, should only be overridden by subclasses.
+         * @param {KISSY.Event.DOMEventObject} e Key event to handle.
+         * @return {Boolean} Whether the event was handled by the container (or one of
+         *     its children).
+         * @protected
+         *
+         */
+        handleKeyEventInternal: function (e) {
 
+            // Give the highlighted control the chance to handle the key event.
+            var highlightedItem = this.get("highlightedItem");
 
-            //dir : -1 ,+1
-            //skip disabled items
-            _getNextEnabledHighlighted:function (index, dir) {
-                var children = this.get("children"),
-                    len = children.length,
-                    o = index;
-                do {
-                    var c = children[index];
-                    if (!c.get("disabled") && (c.get("visible") !== false)) {
-                        return children[index];
-                    }
-                    index = (index + dir + len) % len;
-                } while (index != o);
-                return undefined;
-            },
-
-            /**
-             * Attempts to handle a keyboard event;
-             * returns true if the event was handled,
-             * false otherwise.
-             * If the container is enabled, and a child is highlighted,
-             * calls the child controller's {@code handleKeydown} method to give the control
-             * a chance to handle the event first.
-             * Protected, should only be overridden by subclasses.
-             * @param {Event.Object} e Key event to handle.
-             * @return {Boolean} Whether the event was handled by the container (or one of
-             *     its children).
-             * @protected
-             *
-             */
-            handleKeyEventInternal:function (e) {
-
-                // Give the highlighted control the chance to handle the key event.
-                var highlightedItem = this.get("highlightedItem");
-
-                // 先看当前活跃 menuitem 是否要处理
-                if (highlightedItem && highlightedItem.handleKeydown(e)) {
-                    return true;
-                }
-
-                var children = this.get("children"), len = children.length;
-
-                if (len === 0) {
-                    return undefined;
-                }
-
-                var index, destIndex;
-
-                //自己处理了，不要向上处理，嵌套菜单情况
-                switch (e.keyCode) {
-                    // esc
-                    case KeyCodes.ESC:
-                        // TODO
-                        // focus 的话手动失去焦点
-                        return undefined;
-                        break;
-
-                    // home
-                    case KeyCodes.HOME:
-                        this.set("highlightedItem",
-                            this._getNextEnabledHighlighted(0, 1));
-                        break;
-                    // end
-                    case KeyCodes.END:
-                        this.set("highlightedItem",
-                            this._getNextEnabledHighlighted(len - 1, -1));
-                        break;
-                    // up
-                    case KeyCodes.UP:
-                        if (!highlightedItem) {
-                            destIndex = len - 1;
-                        } else {
-                            index = S.indexOf(highlightedItem, children);
-                            destIndex = (index - 1 + len) % len;
-                        }
-                        this.set("highlightedItem",
-                            this._getNextEnabledHighlighted(destIndex, -1));
-                        break;
-                    //down
-                    case KeyCodes.DOWN:
-                        if (!highlightedItem) {
-                            destIndex = 0;
-                        } else {
-                            index = S.indexOf(highlightedItem, children);
-                            destIndex = (index + 1 + len) % len;
-                        }
-                        this.set("highlightedItem",
-                            this._getNextEnabledHighlighted(destIndex, 1));
-                        break;
-                    default:
-                        return undefined;
-                }
+            // 先看当前活跃 menuitem 是否要处理
+            if (highlightedItem && highlightedItem.handleKeydown(e)) {
                 return true;
-            },
+            }
 
-            bindUI:function () {
-                var self = this;
-                /**
-                 * 隐藏后，去掉高亮与当前
-                 */
-                self.on("hide", onMenuHide, self);
-            },
+            var children = this.get("children"), len = children.length;
 
-            /**
-             * Whether this menu contains specified html element.
-             * @param {KISSY.NodeList} element html Element to be tested.
-             * @return {Boolean}
-             */
-            containsElement:function (element) {
-                var self = this;
+            if (len === 0) {
+                return undefined;
+            }
 
-                // 隐藏当然不包含了
-                // self.get("visible") === undefined 相当于 true
-                if (self.get("visible") === false || !self.get("view")) {
-                    return false;
-                }
+            var index, destIndex;
 
-                if (self.get("view").containsElement(element)) {
-                    return true;
-                }
+            //自己处理了，不要向上处理，嵌套菜单情况
+            switch (e.keyCode) {
+                // esc
+                case KeyCodes.ESC:
+                    // TODO
+                    // focus 的话手动失去焦点
+                    return undefined;
+                    break;
 
-                var children = self.get('children');
-
-                for (var i = 0, count = children.length; i < count; i++) {
-                    var child = children[i];
-                    if (typeof child.containsElement == 'function' &&
-                        child.containsElement(element)) {
-                        return true;
+                // home
+                case KeyCodes.HOME:
+                    this.set("highlightedItem",
+                        this._getNextEnabledHighlighted(0, 1));
+                    break;
+                // end
+                case KeyCodes.END:
+                    this.set("highlightedItem",
+                        this._getNextEnabledHighlighted(len - 1, -1));
+                    break;
+                // up
+                case KeyCodes.UP:
+                    if (!highlightedItem) {
+                        destIndex = len - 1;
+                    } else {
+                        index = S.indexOf(highlightedItem, children);
+                        destIndex = (index - 1 + len) % len;
                     }
-                }
+                    this.set("highlightedItem",
+                        this._getNextEnabledHighlighted(destIndex, -1));
+                    break;
+                //down
+                case KeyCodes.DOWN:
+                    if (!highlightedItem) {
+                        destIndex = 0;
+                    } else {
+                        index = S.indexOf(highlightedItem, children);
+                        destIndex = (index + 1 + len) % len;
+                    }
+                    this.set("highlightedItem",
+                        this._getNextEnabledHighlighted(destIndex, 1));
+                    break;
+                default:
+                    return undefined;
+            }
+            return true;
+        },
 
+        bindUI: function () {
+            var self = this;
+            // 隐藏后，去掉高亮与当前
+            self.on("hide", onMenuHide, self);
+        },
+
+        /**
+         * Whether this menu contains specified html element.
+         * @param {KISSY.NodeList} element html Element to be tested.
+         * @return {Boolean}
+         * @protected
+         */
+        containsElement: function (element) {
+            var self = this;
+
+            // 隐藏当然不包含了
+            // self.get("visible") === undefined 相当于 true
+            if (self.get("visible") === false || !self.get("view")) {
                 return false;
             }
-        }, {
-            ATTRS:/** @lends Menu.prototype*/
-            {
-                /**
-                 * Current highlighted child menu item.
-                 * @type {Menu.Item}
-                 */
-                highlightedItem:{},
-                /**
-                 * Current active menu item. Maybe a descendant but not a child of current menu.
-                 * @type {Menu.Item}
-                 */
-                activeItem:{
-                    view:1
-                },
-                xrender:{
-                    value:MenuRender
+
+            if (self.get("view").containsElement(element)) {
+                return true;
+            }
+
+            var children = self.get('children');
+
+            for (var i = 0, count = children.length; i < count; i++) {
+                var child = children[i];
+                if (typeof child.containsElement == 'function' &&
+                    child.containsElement(element)) {
+                    return true;
                 }
             }
-        }, {
-            xclass:'menu',
-            priority:10
-        });
+
+            return false;
+        }
+    }, {
+        ATTRS: {
+            /**
+             * Current highlighted child menu item.
+             * @type {KISSY.Menu.Item}
+             * @property highlightedItem
+             */
+            /**
+             * @ignore
+             */
+            highlightedItem: {},
+            /**
+             * Current active menu item.
+             * Maybe a descendant but not a child of current menu.
+             * @type {KISSY.Menu.Item}
+             * @property activeItem
+             */
+            /**
+             * @ignore
+             */
+            activeItem: {
+                view: 1
+            },
+            xrender: {
+                value: MenuRender
+            }
+        }
+    }, {
+        xclass: 'menu',
+        priority: 10
+    });
 
     return Menu;
 
 }, {
-    requires:['event', 'component/base', './menuRender', './submenu']
+    requires: ['event', 'component/base', './menu-render', './submenu']
 });
 
 /**
+ * @ignore
  * 普通菜单可聚焦
  * 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
  *
  * TODO
  *  - 去除 activeItem
  **//**
- *  @fileOverview menu where items can be filtered based on user keyboard input
- *  @author yiminghe@gmail.com
+ * @ignore
+ * @fileOverview filter menu render
+ * 1.create filter input
+ * 2.change menu contentelement
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender) {
+    var $ = Node.all,
+        MENU_FILTER = "menu-filter",
+        MENU_FILTER_LABEL = "menu-filter-label",
+        MENU_CONTENT = "menu-content";
+
+    return MenuRender.extend({
+        getContentElement:function () {
+            return this.get("menuContent");
+        },
+
+        getKeyEventTarget:function () {
+            return this.get("filterInput");
+        },
+        createDom:function () {
+            var self = this;
+            var prefixCls=self.get('prefixCls');
+            var contentEl = MenuRender.prototype.getContentElement.call(this);
+            var filterWrap = self.get("filterWrap");
+            if (!filterWrap) {
+                self.set("filterWrap",
+                    filterWrap = $("<div class='" + prefixCls+MENU_FILTER + "'/>")
+                        .appendTo(contentEl, undefined));
+            }
+            if (!this.get("labelEl")) {
+                this.set("labelEl",
+                    $("<div class='" + prefixCls+MENU_FILTER_LABEL + "'/>")
+                        .appendTo(filterWrap, undefined));
+            }
+            if (!self.get("filterInput")) {
+                self.set("filterInput", $("<input "+"autocomplete='off'/>")
+                    .appendTo(filterWrap, undefined));
+            }
+            if (!self.get("menuContent")) {
+                self.set("menuContent",
+                    $("<div class='" + prefixCls+MENU_CONTENT + "'/>")
+                        .appendTo(contentEl, undefined));
+            }
+        },
+
+        '_onSetLabel':function (v) {
+            this.get("labelEl").html(v);
+        }
+    }, {
+
+        ATTRS:{
+            /* 过滤输入框的提示 */
+            label:{}
+        },
+
+        HTML_PARSER:{
+            labelEl:function (el) {
+                return el.one("." + this.get('prefixCls')+MENU_FILTER)
+                    .one("." + this.get('prefixCls')+MENU_FILTER_LABEL)
+            },
+            filterWrap:function (el) {
+                return el.one("." + this.get('prefixCls')+MENU_FILTER);
+            },
+            menuContent:function (el) {
+                return el.one("." + this.get('prefixCls')+MENU_CONTENT);
+            },
+            filterInput:function (el) {
+                return el.one("." + this.get('prefixCls')+MENU_FILTER)
+                    .one("input");
+            }
+        }
+    });
+
+}, {
+    requires:['node', './menu-render']
+});/**
+ * @ignore
+ * @fileOverview menu where items can be filtered based on user keyboard input
+ * @author yiminghe@gmail.com
  */
 KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
@@ -224,19 +308,14 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
     }
 
     /**
-     * @class
+     *
      * Filter Menu for KISSY.
      * xclass: 'filter-menu'.
-     * @extends Menu
-     * @memberOf Menu
-     * @name FilterMenu
+     * @extends KISSY.Menu
+     * @class KISSY.Menu.FilterMenu
      */
-    var FilterMenu = Menu.extend(
-        /**
-         * @lends Menu.FilterMenu#
-         */
-        {
-            bindUI:function () {
+    var FilterMenu = Menu.extend({
+            bindUI: function () {
                 var self = this,
                     view = self.get("view"),
                     filterInput = view.get("filterInput");
@@ -244,7 +323,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 filterInput.on("keyup", self.handleFilterEvent, self);
             },
 
-            handleMouseEnter:function () {
+            handleMouseEnter: function () {
                 var self = this;
                 FilterMenu.superclass.handleMouseEnter.apply(self, arguments);
                 // 权益解决,filter input focus 后会滚动到牌聚焦处,select 则不会
@@ -252,7 +331,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 self.getKeyEventTarget()[0].select();
             },
 
-            handleFilterEvent:function () {
+            handleFilterEvent: function () {
                 var self = this,
                     view = self.get("view"),
                     filterInput = view.get("filterInput"),
@@ -268,18 +347,18 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 }
             },
 
-            _onSetFilterStr:function (v) {
+            '_onSetFilterStr': function (v) {
                 // 过滤条件变了立即过滤
                 this.filterItems(v);
             },
 
             /**
-             * For override. Specify how to filter items.
+             * Specify how to filter items.
              * @param {String} str User input.
              */
-            filterItems:function (str) {
+            filterItems: function (str) {
                 var self = this,
-                    prefixCls=self.get('prefixCls'),
+                    prefixCls = self.get('prefixCls'),
                     view = self.get("view"),
                     _labelEl = view.get("labelEl"),
                     filterInput = view.get("filterInput");
@@ -358,7 +437,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                             c.set("visible", true);
                             // 匹配子串着重 wrap
                             c.get("el").html(content.replace(strExp, function (m) {
-                                return "<span class='" + prefixCls+HIT_CLS + "'>" + m + "<" + "/span>";
+                                return "<span class='" + prefixCls + HIT_CLS + "'>" + m + "<" + "/span>";
                             }));
                         } else {
                             // 不符合
@@ -369,18 +448,18 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 });
             },
 
-            decorateInternal:function (el) {
+            decorateInternal: function (el) {
                 var self = this,
-                    prefixCls=self.get('prefixCls');
+                    prefixCls = self.get('prefixCls');
                 self.set("el", el);
-                var menuContent = el.one("." + prefixCls+"menu-content");
+                var menuContent = el.one("." + prefixCls + "menu-content");
                 self.decorateChildren(menuContent);
             },
 
             /**
              * Reset user input.
              */
-            reset:function () {
+            reset: function () {
                 var self = this,
                     view = self.get("view");
                 self.set("filterStr", "");
@@ -389,7 +468,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 filterInput && filterInput.val("");
             },
 
-            destructor:function () {
+            destructor: function () {
                 var view = this.get("view");
                 var filterInput = view && view.get("filterInput");
                 filterInput && filterInput.detach();
@@ -397,165 +476,71 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
         },
         {
-            ATTRS:/**
-             * @lends Menu.FilterMenu#
-             */
-            {
+            ATTRS: {
 
-                allowTextSelection:{
-                    value:true
+                allowTextSelection: {
+                    value: true
                 },
 
                 /**
                  * Hit info string
-                 * @type {String}
+                 * @cfg {String} label
                  */
-                label:{
-                    view:1
+                /**
+                 * @ignore
+                 */
+                label: {
+                    view: 1
                 },
 
                 /**
                  * Filter string
-                 * @type {String}
+                 * @cfg {String} filterStr
                  */
-                filterStr:{
+                /**
+                 * @ignore
+                 */
+                filterStr: {
                 },
 
                 /**
                  * user entered string list when allowMultiple.
                  * @type {String[]}
+                 * @ignore
                  */
-                enteredItems:{
-                    value:[]
+                enteredItems: {
+                    value: []
                 },
 
                 /**
                  * Whether to allow input multiple.
-                 * @type {Boolean}
+                 * @cfg {Boolean} allowMultiple
                  */
-                allowMultiple:{
-                    value:false
+                /**
+                 * @ignore
+                 */
+                allowMultiple: {
+                    value: false
                 },
 
-                xrender:{
-                    value:FilterMenuRender
+                xrender: {
+                    value: FilterMenuRender
                 }
             }
         }, {
-            xclass:'filter-menu',
-            priority:20
+            xclass: 'filter-menu',
+            priority: 20
         });
 
     return FilterMenu;
 }, {
-    requires:['./base', './filtermenuRender']
+    requires: ['./base', './filtermenu-render']
 });/**
- * @fileOverview filter menu render
- * 1.create filter input
- * 2.change menu contentelement
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/filtermenuRender", function (S, Node, MenuRender) {
-    var $ = Node.all,
-        MENU_FILTER = "menu-filter",
-        MENU_FILTER_LABEL = "menu-filter-label",
-        MENU_CONTENT = "menu-content";
-
-    return MenuRender.extend({
-        getContentElement:function () {
-            return this.get("menuContent");
-        },
-
-        getKeyEventTarget:function () {
-            return this.get("filterInput");
-        },
-        createDom:function () {
-            var self = this;
-            var prefixCls=self.get('prefixCls');
-            var contentEl = MenuRender.prototype.getContentElement.call(this);
-            var filterWrap = self.get("filterWrap");
-            if (!filterWrap) {
-                self.set("filterWrap",
-                    filterWrap = $("<div class='" + prefixCls+MENU_FILTER + "'/>")
-                        .appendTo(contentEl, undefined));
-            }
-            if (!this.get("labelEl")) {
-                this.set("labelEl",
-                    $("<div class='" + prefixCls+MENU_FILTER_LABEL + "'/>")
-                        .appendTo(filterWrap, undefined));
-            }
-            if (!self.get("filterInput")) {
-                self.set("filterInput", $("<input autocomplete='off'/>")
-                    .appendTo(filterWrap, undefined));
-            }
-            if (!self.get("menuContent")) {
-                self.set("menuContent",
-                    $("<div class='" + prefixCls+MENU_CONTENT + "'/>")
-                        .appendTo(contentEl, undefined));
-            }
-        },
-
-        _onSetLabel:function (v) {
-            this.get("labelEl").html(v);
-        }
-    }, {
-
-        ATTRS:{
-            /* 过滤输入框的提示 */
-            label:{}
-        },
-
-        HTML_PARSER:{
-            labelEl:function (el) {
-                return el.one("." + this.get('prefixCls')+MENU_FILTER)
-                    .one("." + this.get('prefixCls')+MENU_FILTER_LABEL)
-            },
-            filterWrap:function (el) {
-                return el.one("." + this.get('prefixCls')+MENU_FILTER);
-            },
-            menuContent:function (el) {
-                return el.one("." + this.get('prefixCls')+MENU_CONTENT);
-            },
-            filterInput:function (el) {
-                return el.one("." + this.get('prefixCls')+MENU_FILTER)
-                    .one("input");
-            }
-        }
-    });
-
-}, {
-    requires:['node', './menuRender']
-});/**
- * @fileOverview menu
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, PopupMenu, PopupMenuRender, FilterMenu) {
-    Menu.Render = Render;
-    Menu.Item = Item;
-    Item.Render = ItemRender;
-    Menu.SubMenu = SubMenu;
-    SubMenu.Render = SubMenuRender;
-    Menu.PopupMenu = PopupMenu;
-    PopupMenu.Render = PopupMenuRender;
-    Menu.FilterMenu = FilterMenu;
-    return Menu;
-}, {
-    requires:[
-        'menu/base',
-        'menu/menuRender',
-        'menu/menuitem',
-        'menu/menuitemRender',
-        'menu/submenu',
-        'menu/submenuRender',
-        'menu/popupmenu',
-        'menu/popupmenuRender',
-        'menu/filtermenu'
-    ]
-});/**
+ * @ignore
  * @fileOverview render aria from menu according to current menuitem
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuRender", function(S, UA, Component) {
+KISSY.add("menu/menu-render", function(S, Component) {
 
     return Component.Render.extend({
 
@@ -575,10 +560,10 @@ KISSY.add("menu/menuRender", function(S, UA, Component) {
                     id = menuItemEl.attr("id");
                 el.attr("aria-activedescendant", id);
                 // 会打印重复 ，每个子菜单都会打印，然后冒泡至父菜单，再打印，和该 menuitem 所处层次有关系
-                //S.log("menuRender :" + el.attr("id") + " _onSetActiveItem : " + v.get("content"));
+                //S.log("menu-render :" + el.attr("id") + " _onSetActiveItem : " + v.get("content"));
             } else {
                 el.attr("aria-activedescendant", "");
-                //S.log("menuRender :" + el.attr("id") + " _onSetActiveItem : " + "");
+                //S.log("menu-render :" + el.attr("id") + " _onSetActiveItem : " + "");
             }
         },
 
@@ -592,184 +577,40 @@ KISSY.add("menu/menuRender", function(S, UA, Component) {
         }
     });
 }, {
-    requires:['ua','component/base']
+    requires:['component/base']
 });/**
- * @fileOverview menu item ,child component for menu
+ * @ignore
+ * @fileOverview menu
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
-
-    var $ = S.all;
-
-    /**
-     * @class
-     * A menu item component which menu is consisted of.
-     * xclass: 'menuitem'.
-     * @name Item
-     * @memberOf Menu
-     * @extends KISSY.Component.Controller
-     */
-    var MenuItem = Component.Controller.extend(
-        /**
-         * @lends Menu.Item#
-         */
-        {
-
-            /**
-             * Handle mouseenter event. Make parent menu to highlight itself.
-             * Protected, should only be overridden by subclasses.
-             * @param {Event.Object} e Mouseenter event object.
-             * @protected
-             *
-             */
-            handleMouseEnter: function (e) {
-                // 父亲不允许自己处理
-                if (MenuItem.superclass.handleMouseEnter.call(this, e)) {
-                    return true;
-                }
-                this.get("parent").set("highlightedItem", this);
-            },
-
-            /**
-             * Handle mouseleave event. Make parent menu to unhighlight itself.
-             * Protected, should only be overridden by subclasses.
-             * @param {Event.Object} e Mouseleave event object.
-             * @protected
-             *
-             */
-            handleMouseLeave: function (e) {
-                // 父亲不允许自己处理
-                if (MenuItem.superclass.handleMouseLeave.call(this, e)) {
-                    return true;
-                }
-                this.get("parent").set("highlightedItem", null);
-            },
-
-            // for ios, ios only has touchdown
-            handleMouseDown: function (e) {
-                // 父亲不允许自己处理
-                if (MenuItem.superclass.handleMouseDown.call(this, e)) {
-                    return true;
-                }
-                this.get("parent").set("highlightedItem", this);
-            },
-
-            /**
-             * Perform default action when click on enter on this menuitem.
-             * If selectable, then make it selected.
-             * If checkable, then toggle it.
-             * Finally fire click on its parent menu.
-             * @protected
-             *
-             */
-            performActionInternal: function () {
-                var self = this;
-                // 可选
-                if (self.get("selectable")) {
-                    self.set("selected", true);
-                }
-                // 可选中，取消选中
-                if (self.get("checkable")) {
-                    self.set("checked", !self.get("checked"));
-                }
-                self.fire("click");
-                return true;
-            },
-
-            _onSetHighlighted: function (v) {
-                // 是否要滚动到当前菜单项(横向，纵向)
-                if (v) {
-                    var el = this.get("el"),
-                    // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
-                    // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
-                        p = el.parent(function (e) {
-                            return $(e).css("overflow") != "visible";
-                        }, this.get("parent").get("el").parent());
-                    if (!p) {
-                        return;
-                    }
-                    el.scrollIntoView(p, undefined, undefined, true);
-                }
-            },
-
-            /**
-             * Check whether this menu item contains specified element.
-             * @param {KISSY.NodeList} element Element to be tested.
-             */
-            containsElement: function (element) {
-                return this.get('view') && this.get('view').containsElement(element);
-            }
-
-        }, {
-            ATTRS: /**
-             * @lends Menu.Item#
-             */
-            {
-
-                focusable: {
-                    value: false
-                },
-
-                handleMouseEvents: {
-                    value: false
-                },
-
-                /**
-                 * Whether the menu item is selectable or not.
-                 * Set to true for option.
-                 * @type {Boolean}
-                 */
-                selectable: {
-                    view: 1
-                },
-
-                /**
-                 * Whether the menu item is checkable or not.
-                 * Set to true for checkbox option.
-                 * @type {Boolean}
-                 */
-                checkable: {
-                    view: 1
-                },
-
-                /**
-                 * The value associated with the menu item.
-                 */
-                value: {},
-
-                /**
-                 * Whether the menu item is checked.
-                 * @type {Boolean}
-                 */
-                checked: {
-                    view: 1
-                },
-
-                /**
-                 * Whether the menu item is selected.
-                 * @type {Boolean}
-                 */
-                selected: {
-                    view: 1
-                },
-
-                xrender: {
-                    value: MenuItemRender
-                }
-            }
-        }, {
-            xclass: "menuitem",
-            priority: 10
-        });
-
-    return MenuItem;
+KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, PopupMenu, PopupMenuRender, FilterMenu) {
+    Menu.Render = Render;
+    Menu.Item = Item;
+    Item.Render = ItemRender;
+    Menu.SubMenu = SubMenu;
+    SubMenu.Render = SubMenuRender;
+    Menu.PopupMenu = PopupMenu;
+    PopupMenu.Render = PopupMenuRender;
+    Menu.FilterMenu = FilterMenu;
+    return Menu;
 }, {
-    requires: ['component/base', './menuitemRender']
+    requires:[
+        'menu/base',
+        'menu/menu-render',
+        'menu/menuitem',
+        'menu/menuitem-render',
+        'menu/submenu',
+        'menu/submenu-render',
+        'menu/popupmenu',
+        'menu/popupmenu-render',
+        'menu/filtermenu'
+    ]
 });/**
+ * @ignore
  * @fileOverview simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitemRender", function (S, Node, Component) {
+KISSY.add("menu/menuitem-render", function (S, Node, Component) {
 
     var CHECK_CLS = "menuitem-checkbox";
 
@@ -848,6 +689,217 @@ KISSY.add("menu/menuitemRender", function (S, Node, Component) {
 }, {
     requires: ['node', 'component/base']
 });/**
+ * @ignore
+ * @fileOverview menu item ,child component for menu
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
+
+    var $ = S.all;
+
+    /**
+     * @class KISSY.Menu.Item
+     * A menu item component which menu is consisted of.
+     * xclass: 'menuitem'.
+     * @extends KISSY.Component.Controller
+     */
+    var MenuItem = Component.Controller.extend({
+
+            /**
+             * Handle mouseenter event. Make parent menu to highlight itself.
+             * Protected, should only be overridden by subclasses.
+             * @param {KISSY.Event.DOMEventObject} e Mouseenter event object.
+             * @protected
+             */
+            handleMouseEnter: function (e) {
+                // 父亲不允许自己处理
+                if (MenuItem.superclass.handleMouseEnter.call(this, e)) {
+                    return true;
+                }
+                this.get("parent").set("highlightedItem", this);
+            },
+
+            /**
+             * Handle mouseleave event. Make parent menu to unhighlight itself.
+             * Protected, should only be overridden by subclasses.
+             * @param {KISSY.Event.DOMEventObject} e Mouseleave event object.
+             * @protected
+             *
+             */
+            handleMouseLeave: function (e) {
+                // 父亲不允许自己处理
+                if (MenuItem.superclass.handleMouseLeave.call(this, e)) {
+                    return true;
+                }
+                this.get("parent").set("highlightedItem", null);
+            },
+
+            // for ios, ios only has touchdown
+            handleMouseDown: function (e) {
+                // 父亲不允许自己处理
+                if (MenuItem.superclass.handleMouseDown.call(this, e)) {
+                    return true;
+                }
+                this.get("parent").set("highlightedItem", this);
+            },
+
+            /**
+             * Perform default action when click on enter on this menuitem.
+             * If selectable, then make it selected.
+             * If checkable, then toggle it.
+             * Finally fire click on its parent menu.
+             * @protected
+             */
+            performActionInternal: function () {
+                var self = this;
+                // 可选
+                if (self.get("selectable")) {
+                    self.set("selected", true);
+                }
+                // 可选中，取消选中
+                if (self.get("checkable")) {
+                    self.set("checked", !self.get("checked"));
+                }
+                self.fire("click");
+                return true;
+            },
+
+            _onSetHighlighted: function (v) {
+                // 是否要滚动到当前菜单项(横向，纵向)
+                if (v) {
+                    var el = this.get("el"),
+                    // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
+                    // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
+                        p = el.parent(function (e) {
+                            return $(e).css("overflow") != "visible";
+                        }, this.get("parent").get("el").parent());
+                    if (!p) {
+                        return;
+                    }
+                    el.scrollIntoView(p, undefined, undefined, true);
+                }
+            },
+
+            /**
+             * Check whether this menu item contains specified element.
+             * @param {KISSY.NodeList} element Element to be tested.
+             * @protected
+             */
+            containsElement: function (element) {
+                return this.get('view') && this.get('view').containsElement(element);
+            }
+
+        }, {
+            ATTRS: {
+
+                focusable: {
+                    value: false
+                },
+
+                handleMouseEvents: {
+                    value: false
+                },
+
+                /**
+                 * Whether the menu item is selectable or not.
+                 * Set to true for option.
+                 * @cfg {Boolean} selectable
+                 */
+                /**
+                 * @ignore
+                 */
+                selectable: {
+                    view: 1
+                },
+
+                /**
+                 * Whether the menu item is checkable or not.
+                 * Set to true for checkbox option.
+                 * @cfg {Boolean} checkable
+                 */
+                /**
+                 * @ignore
+                 */
+                checkable: {
+                    view: 1
+                },
+
+                /**
+                 * The value associated with the menu item.
+                 * @cfg {*} value
+                 */
+                /**
+                 * The value associated with the menu item.
+                 * @property value
+                 * @type {*}
+                 */
+                /**
+                 * @ignore
+                 */
+                value: {},
+
+                /**
+                 * Whether the menu item is checked.
+                 * @type {Boolean}
+                 * @property checked
+                 */
+                /**
+                 * Whether the menu item is checked.
+                 * @cfg {Boolean} checked
+                 */
+                /**
+                 * @ignore
+                 */
+                checked: {
+                    view: 1
+                },
+
+                /**
+                 * Whether the menu item is selected.
+                 * @type {Boolean}
+                 * @property selected
+                 */
+                /**
+                 * Whether the menu item is selected.
+                 * @cfg {Boolean} selected
+                 */
+                /**
+                 * @ignore
+                 */
+                selected: {
+                    view: 1
+                },
+
+                xrender: {
+                    value: MenuItemRender
+                }
+            }
+        }, {
+            xclass: "menuitem",
+            priority: 10
+        });
+
+    return MenuItem;
+}, {
+    requires: ['component/base', './menuitem-render']
+});/**
+ * @ignore
+ * @fileOverview popup menu render
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("menu/popupmenu-render", function (S, extension, MenuRender) {
+
+    var UA= S.UA;
+
+    return MenuRender.extend([
+        extension.ContentBox.Render,
+        extension.Position.Render,
+        UA['ie'] === 6 ? extension.Shim.Render : null
+    ]);
+}, {
+    requires:['component/extension', './menu-render']
+});/**
+ * @ignore
  * @fileOverview positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
@@ -859,29 +911,23 @@ KISSY.add("menu/popupmenu", function (S,
 
 
     /**
-     * @name PopupMenu
-     * @memberOf Menu
-     * @class
      * Popup Menu.
      * xclass: 'popupmenu'.
-     * @extends Menu
-     * @extends KISSY.Component.Extension.Position
-     * @extends KISSY.Component.Extension.Align
+     * @class KISSY.Menu.PopupMenu
+     * @extends KISSY.Menu
+     * @mixins KISSY.Component.Extension.Position
+     * @mixins KISSY.Component.Extension.Align
      */
     var PopupMenu = Menu.extend([
         extension.ContentBox,
         extension.Position,
         extension.Align
     ],
-        /**
-         * @lends Menu.PopupMenu#
-         */
         {
             /**
              * Handle mouseleave event.Make parent subMenu item unHighlighted.
              * Protected, should only be overridden by subclasses.
              * @protected
-             *
              */
             handleMouseLeave:function () {
                 var self = this;
@@ -896,7 +942,6 @@ KISSY.add("menu/popupmenu", function (S,
              * Suppose it has focus (as a context menu), then it must hide when lose focus.
              * Protected, should only be overridden by subclasses.
              * @protected
-             *
              */
             handleBlur:function () {
                 var self = this;
@@ -904,15 +949,13 @@ KISSY.add("menu/popupmenu", function (S,
                 self.hide();
             }
         }, {
-            ATTRS:/**
-             * @lends Menu.PopupMenu#
-             */
-            {
+            ATTRS: {
                 // 弹出菜单一般不可聚焦，焦点在使它弹出的元素上
                 /**
                  * Whether the popup menu is focusable.
-                 * @default false.
+                 * Defaults to: false.
                  * @type {Boolean}
+                 * @ignore
                  */
                 focusable:{
                     value:false
@@ -920,10 +963,14 @@ KISSY.add("menu/popupmenu", function (S,
                 /**
                  * Whether the popup menu hides when mouseleave.
                  * Only valid for submenu.
-                 * @default false.
-                 * @type {Boolean}
+                 * Defaults to: false.
+                 * @cfg {Boolean} autoHideOnMouseLeave
+                 */
+                /**
+                 * @ignore
                  */
                 autoHideOnMouseLeave:{},
+
                 xrender:{
                     value:PopupMenuRender
                 }
@@ -937,22 +984,50 @@ KISSY.add("menu/popupmenu", function (S,
 
 }, {
     requires:['component/extension',
-        './base', './popupmenuRender']
+        './base', './popupmenu-render']
 });/**
- * @fileOverview popup menu render
+ * @ignore
+ * @fileOverview submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenuRender", function (S, UA, extension, MenuRender) {
+KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
+    var SubMenuRender,
+        CONTENT_TMPL = '<span class="{prefixCls}menuitem-content"><' + '/span>',
+        ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
 
-    return MenuRender.extend([
-        extension.ContentBox.Render,
-        extension.Position.Render,
-        UA['ie'] === 6 ? extension.Shim.Render : null
-    ]);
+    SubMenuRender = MenuItemRender.extend({
+        createDom: function () {
+            var self = this,
+                el = self.get("el");
+            el.attr("aria-haspopup", "true")
+                .append(S.substitute(ARROW_TMPL, {
+                prefixCls: self.get('prefixCls')
+            }));
+        }
+    }, {
+        ATTRS: {
+            arrowEl: {},
+            contentEl: {
+                valueFn: function () {
+                    return S.all(S.substitute(CONTENT_TMPL, {
+                        prefixCls: this.get('prefixCls')
+                    }));
+                }
+            }
+        },
+        HTML_PARSER: {
+            contentEl: function (el) {
+                return el.children("." + this.get('prefixCls') + "menuitem-content");
+            }
+        }
+    });
+
+    return SubMenuRender;
 }, {
-    requires:['ua', 'component/extension', './menuRender']
+    requires: ['./menuitem-render']
 });/**
- * @fileOverview submenu controller for kissy , transfer item's keycode to menu
+ * @ignore
+ * @fileOverview submenu controller for kissy, transfer item's keycode to menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender) {
@@ -965,16 +1040,10 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
     /**
      * Class representing a submenu that can be added as an item to other menus.
      * xclass: 'submenu'.
-     * @name SubMenu
-     * @constructor
-     * @extends Menu.Item
-     * @memberOf Menu
+     * @extends KISSY.Menu.Item
+     * @class KISSY.Menu.SubMenu
      */
-    var SubMenu = MenuItem.extend([Component.DecorateChild],
-        /**
-         * @lends Menu.SubMenu#
-         */
-        {
+    var SubMenu = MenuItem.extend([Component.DecorateChild], {
 
             /**
              * Bind sub menu events.
@@ -1062,6 +1131,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
             /**
              * Clears the show and hide timers for the sub menu.
+             * @private
              */
             clearSubMenuTimers: function () {
                 var self = this,
@@ -1092,7 +1162,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              * and delegates further key events to its menu until it is dismissed OR the
              * left key is pressed.
              * Protected for subclass overridden.
-             * @param e A key event.
+             * @param {KISSY.Event.DOMEventObject} e key event.
              * @protected
              * @return {Boolean} Whether the event was handled.
              */
@@ -1206,23 +1276,31 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             }
         },
         {
-            ATTRS: /**
-             * @lends Menu.SubMenu#
-             */
-            {
+            ATTRS: {
                 /**
                  * The delay before opening the sub menu in seconds.  (This number is
                  * arbitrary, it would be good to get some user studies or a designer to play
                  * with some numbers).
-                 * @default 0.15
-                 * @type {Number}
+                 * Defaults to: 0.15
+                 * @cfg {Number} menuDelay
+                 */
+                /**
+                 * @ignore
                  */
                 menuDelay: {
                     value: MENU_DELAY
                 },
                 /**
                  * Menu config or instance.
-                 * @type {Menu|Object}
+                 * @cfg {KISSY.Menu|Object} menu
+                 */
+                /**
+                 * Menu config or instance.
+                 * @property menu
+                 * @type {KISSY.Menu|Object}
+                 */
+                /**
+                 * @ignore
                  */
                 menu: {
                     setter: function (m) {
@@ -1288,10 +1366,10 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             align.points = align.points || ['tr', 'tl'];
             menu.set("align", align);
             menu.show();
-            /**
-             * If activation of your menuitem produces a popup menu,
+            /*
+             If activation of your menuitem produces a popup menu,
              then the menuitem should have aria-haspopup set to the ID of the corresponding menu
-             to allow the assistive technology to follow the menu hierarchy
+             to allow the assist technology to follow the menu hierarchy
              and assist the user in determining context during menu navigation.
              */
             self.get("el").attr("aria-haspopup",
@@ -1334,48 +1412,5 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
     return SubMenu;
 }, {
-    requires: ['event', 'component/base', './menuitem', './submenuRender']
-});
-
-/**
-
- **//**
- * @fileOverview submenu render for kissy ,extend menuitem render with arrow
- * @author yiminghe@gmail.com
- */
-KISSY.add("menu/submenuRender", function (S, MenuItemRender) {
-    var SubMenuRender,
-        CONTENT_TMPL = '<span class="{prefixCls}menuitem-content"><' + '/span>',
-        ARROW_TMPL = '<span class="{prefixCls}submenu-arrow">►<' + '/span>';
-
-    SubMenuRender = MenuItemRender.extend({
-        createDom: function () {
-            var self = this,
-                el = self.get("el");
-            el.attr("aria-haspopup", "true")
-                .append(S.substitute(ARROW_TMPL, {
-                prefixCls: self.get('prefixCls')
-            }));
-        }
-    }, {
-        ATTRS: {
-            arrowEl: {},
-            contentEl: {
-                valueFn: function () {
-                    return S.all(S.substitute(CONTENT_TMPL, {
-                        prefixCls: this.get('prefixCls')
-                    }));
-                }
-            }
-        },
-        HTML_PARSER: {
-            contentEl: function (el) {
-                return el.children("." + this.get('prefixCls') + "menuitem-content");
-            }
-        }
-    });
-
-    return SubMenuRender;
-}, {
-    requires: ['./menuitemRender']
+    requires: ['event', 'component/base', './menuitem', './submenu-render']
 });

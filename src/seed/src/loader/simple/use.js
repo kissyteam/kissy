@@ -8,7 +8,7 @@
     var Loader = S.Loader,
         data = Loader.STATUS,
         utils = Loader.Utils,
-        IE = utils.IE,
+        UA= S.UA,
         remoteModules = {},
         LOADING = data.LOADING,
         LOADED = data.LOADED,
@@ -188,7 +188,7 @@
 
         mod.status = LOADING;
 
-        if (IE && !isCss) {
+        if (UA.ie && !isCss) {
             self.__startLoadModuleName = modName;
             self.__startLoadTime = Number(+new Date());
         }

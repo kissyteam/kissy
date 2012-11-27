@@ -9,13 +9,13 @@
     <target name="merge-dependency">
         <concat destfile="${component.src.dir}/modules.js" encoding="${charset}" outputencoding="${charset}">
             <header filtering="no" trimleading="yes">
-                (function(config,Features){
+                (function(config,Features,UA){
             </header>
             <fileset dir="${kissy.src.dir}" includes="**/meta/modules.js"/>
             <footer>
                 })(function(c){
                     KISSY.config('modules', c);
-                },KISSY.Features);
+                },KISSY.Features,KISSY.UA);
             </footer>
         </concat>
     </target>
@@ -39,6 +39,7 @@
             <path location="${component.src.dir}/path.js"/>
             <path location="${component.src.dir}/uri.js"/>
 
+            <path location="${component.src.dir}/ua.js"/>
             <path location="${component.src.dir}/features.js"/>
 
             <!--kissy loader start-->
@@ -82,6 +83,7 @@
             <path location="${component.src.dir}/path.js"/>
             <path location="${component.src.dir}/uri.js"/>
 
+            <path location="${component.src.dir}/ua.js"/>
             <path location="${component.src.dir}/features.js"/>
 
             <!--kissy loader start-->

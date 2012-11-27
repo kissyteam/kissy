@@ -3,9 +3,10 @@
  * @fileOverview patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/submit', function (S, UA, Event, DOM, special) {
+KISSY.add('event/dom/base/submit', function (S, Event, DOM, special) {
 
-    var doc = S.Env.host.document,
+    var UA= S.UA,
+        doc = S.Env.host.document,
         mode = doc && doc['documentMode'];
 
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
@@ -71,7 +72,7 @@ KISSY.add('event/dom/base/submit', function (S, UA, Event, DOM, special) {
     }
 
 }, {
-    requires: ['ua', './api', 'dom', './special']
+    requires: ['./api', 'dom', './special']
 });
 /*
  modified from jq, fix submit in ie<9

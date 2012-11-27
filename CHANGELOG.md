@@ -70,6 +70,7 @@ History:
  - [+] DOM 增加 contents/wrap/wrapAll/unwrap/wrapInner
  - [+] DOM 增加 nodeName 方法，返回小写的 nodeName
  - [+] DOM 增加 outerHTML 方法，全浏览器兼容
+ - [+] ie 支持 selectionStart/End prop
 
 #### node
  - [x] NodeList.prototype.slice 支持单个负数参数：fix #85
@@ -78,9 +79,6 @@ History:
 #### base
  - [*] KISSY.Base : values should not be set if any validator occurs error
  - [+] KISSY.Base.prototype.set opts 增加 error 属性，配置错误回调
-
-#### input-selection
- - [+] 增加模块 input-selection，兼容 ie 下的 input selection api 为 w3c 标准
 
 #### dd
  - [+] DD.Constrain 方便进行拖放范围限制

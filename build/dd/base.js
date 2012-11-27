@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:06
+build time: Nov 28 00:43
 */
 /**
  * @ignore
@@ -30,9 +30,10 @@ KISSY.add('dd/base', function (S, DDM, Draggable, DraggableDelegate) {
  * @fileOverview dd support for kissy , dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
+KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
 
-    var win = S.Env.host,
+    var UA = S.UA,
+        win = S.Env.host,
         doc = win.document,
         ie6 = UA['ie'] === 6,
 
@@ -48,7 +49,6 @@ KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
 
 
     var TARGET = 'target',
-        BUTTON = 'button',
         Gesture = Event.Gesture,
         CURRENT_TARGET = 'currentTarget',
         DRAG_MOVE_EVENT = Gesture.move,
@@ -544,7 +544,7 @@ KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     return ddm;
 }, {
-    requires: ['ua', 'dom', 'event', 'node', 'base']
+    requires: ['dom', 'event', 'node', 'base']
 });
 /**
  * @ignore
@@ -711,9 +711,10 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
  * @fileOverview dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/base/draggable', function (S, UA, Node, RichBase, DDM, Event) {
+KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
 
-    var each = S.each,
+    var UA = S.UA,
+        each = S.each,
         DRAG_START_EVENT = Event.Gesture.start,
         ie = UA['ie'],
         Features = S.Features,
@@ -913,7 +914,7 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, RichBase, DDM, Event) {
                 .on('dragstart', self._fixDragStart);
         },
 
-        detachDragEvent:function(){
+        detachDragEvent: function () {
             var self = this, node = self.get('node');
             node.detach(DRAG_START_EVENT, handlePreDragStart, self)
                 .detach('dragstart', self._fixDragStart);
@@ -1545,5 +1546,5 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, RichBase, DDM, Event) {
     return Draggable;
 
 }, {
-    requires: ['ua', 'node', 'rich-base', './ddm', 'event']
+    requires: ['node', 'rich-base', './ddm', 'event']
 });

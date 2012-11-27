@@ -7,11 +7,11 @@
 
     var Env = S.Env,
         win = Env.host,
+        UA= S.UA,
     // nodejs
         doc = win.document || {},
-        ua = ((win.navigator || {}).userAgent) || "",
     // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
-        isTouchSupported = ('ontouchstart' in doc) && !(/PhantomJS/.test(ua)),
+        isTouchSupported = ('ontouchstart' in doc) && !(UA.phantomjs),
         documentMode = doc.documentMode,
         isNativeJSONSupported = ((Env.nodejs && typeof global === 'object') ? global : win).JSON;
 

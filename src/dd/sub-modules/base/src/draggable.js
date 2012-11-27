@@ -3,9 +3,10 @@
  * @fileOverview dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/base/draggable', function (S, UA, Node, RichBase, DDM, Event) {
+KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
 
-    var each = S.each,
+    var UA = S.UA,
+        each = S.each,
         DRAG_START_EVENT = Event.Gesture.start,
         ie = UA['ie'],
         Features = S.Features,
@@ -205,7 +206,7 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, RichBase, DDM, Event) {
                 .on('dragstart', self._fixDragStart);
         },
 
-        detachDragEvent:function(){
+        detachDragEvent: function () {
             var self = this, node = self.get('node');
             node.detach(DRAG_START_EVENT, handlePreDragStart, self)
                 .detach('dragstart', self._fixDragStart);
@@ -837,5 +838,5 @@ KISSY.add('dd/base/draggable', function (S, UA, Node, RichBase, DDM, Event) {
     return Draggable;
 
 }, {
-    requires: ['ua', 'node', 'rich-base', './ddm', 'event']
+    requires: ['node', 'rich-base', './ddm', 'event']
 });

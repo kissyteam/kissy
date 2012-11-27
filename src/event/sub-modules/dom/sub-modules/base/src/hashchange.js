@@ -3,9 +3,10 @@
  * @fileOverview event-hashchange
  * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
-KISSY.add('event/dom/base/hashchange', function (S, Event, DOM, UA, special) {
+KISSY.add('event/dom/base/hashchange', function (S, Event, DOM, special) {
 
-    var win = S.Env.host,
+    var UA = S.UA,
+        win = S.Env.host,
         doc = win.document,
         docMode = doc && doc['documentMode'],
         REPLACE_HISTORY = '__replace_history_' + S.now(),
@@ -225,7 +226,7 @@ KISSY.add('event/dom/base/hashchange', function (S, Event, DOM, UA, special) {
         };
     }
 }, {
-    requires: ['./api', 'dom', 'ua', './special']
+    requires: ['./api', 'dom', './special']
 });
 
 /*

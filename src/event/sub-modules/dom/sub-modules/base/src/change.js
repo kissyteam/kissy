@@ -3,8 +3,9 @@
  * @fileOverview  change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/change', function (S, UA, Event, DOM, special) {
-    var doc = S.Env.host.document,
+KISSY.add('event/dom/base/change', function (S, Event, DOM, special) {
+    var UA = S.UA,
+        doc = S.Env.host.document,
         mode = doc && doc['documentMode'];
 
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
@@ -110,5 +111,5 @@ KISSY.add('event/dom/base/change', function (S, UA, Event, DOM, special) {
 
     }
 }, {
-    requires: ['ua', './api', 'dom', './special']
+    requires: ['./api', 'dom', './special']
 });

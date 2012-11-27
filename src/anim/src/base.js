@@ -3,9 +3,10 @@
  * @fileOverview animation framework for KISSY
  * @author   yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
+KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q) {
 
-    var camelCase = DOM._camelCase,
+    var UA = S.UA,
+        camelCase = DOM._camelCase,
         NodeType = DOM.NodeType,
         specialVals = ['hide', 'show', 'toggle'],
     // shorthand css properties
@@ -689,7 +690,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, UA, AM, Fx, Q) {
     }
     return Anim;
 }, {
-    requires: ['dom', 'event', './easing', 'ua', './manager', './fx', './queue']
+    requires: ['dom', 'event', './easing', './manager', './fx', './queue']
 });
 
 /*

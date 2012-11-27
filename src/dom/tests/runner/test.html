@@ -17,18 +17,29 @@
         $.noConflict();
     </script>
     <script src="../../../../build/seed.js" charset="utf-8"></script>
-    <script src="../../src/data.js" charset="utf-8"></script>
-    <script src="../../src/attr.js" charset="utf-8"></script>
-    <script src="../../src/base.js" charset="utf-8"></script>
-    <script src="../../src/class.js" charset="utf-8"></script>
-    <script src="../../src/create.js" charset="utf-8"></script>
-    <script src="../../src/insertion.js" charset="utf-8"></script>
-    <script src="../../src/offset.js" charset="utf-8"></script>
-    <script src="../../src/selector.js" charset="utf-8"></script>
-    <script src="../../src/style-ie.js" charset="utf-8"></script>
-    <script src="../../src/style.js" charset="utf-8"></script>
-    <script src="../../src/traversal.js" charset="utf-8"></script>
-    <script src="../../src/dom.js" charset="utf-8"></script>
+
+    <script src="../../sub-modules/base/src/data.js" charset="utf-8"></script>
+
+    <script src="../../sub-modules/base/src/attr.js" charset="utf-8"></script>
+    <script src="../../sub-modules/base/src/api.js" charset="utf-8"></script>
+    <script src="../../sub-modules/base/src/class.js" charset="utf-8"></script>
+    <script src="../../sub-modules/base/src/create.js" charset="utf-8"></script>
+    <script src="../../sub-modules/base/src/insertion.js" charset="utf-8"></script>
+    <script src="../../sub-modules/base/src/offset.js" charset="utf-8"></script>
+    <script src="../../sub-modules/base/src/selector.js" charset="utf-8"></script>
+    <script src="../../sub-modules/base/src/style.js" charset="utf-8"></script>
+    <script src="../../sub-modules/base/src/traversal.js" charset="utf-8"></script>
+    <script src="../../sub-modules/base/src/base.js" charset="utf-8"></script>
+
+    <script src="../../sub-modules/ie/src/attr.js" charset="utf-8"></script>
+    <script src="../../sub-modules/ie/src/create.js" charset="utf-8"></script>
+    <script src="../../sub-modules/ie/src/insertion.js" charset="utf-8"></script>
+    <script src="../../sub-modules/ie/src/selector.js" charset="utf-8"></script>
+    <script src="../../sub-modules/ie/src/style.js" charset="utf-8"></script>
+    <script src="../../sub-modules/ie/src/traversal.js" charset="utf-8"></script>
+    <script src="../../sub-modules/ie/src/input-selection.js" charset="utf-8"></script>
+    <script src="../../sub-modules/ie/src/ie.js" charset="utf-8"></script>
+
     <style>
         body, html {
             font-size: 16px;
@@ -51,7 +62,7 @@
 <script src="../specs/traversal-spec.js"></script>
 <script src="../specs/clone-spec.js"></script>
 <script src="../specs/script-spec.js"></script>
-
+<script src="../specs/input-selection-spec.js"></script>
 <script>
     window.onload = function () {
         KISSY.use('core', function () {

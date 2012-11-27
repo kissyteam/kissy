@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:09
+build time: Nov 28 00:47
 */
 /*
  @fileOverview  http://www.JSON.org/json2.js
@@ -482,4 +482,4 @@ KISSY.add("json/json2", function () {
     };
 
     return JSON;
-}, {requires: ['ua']});
+});

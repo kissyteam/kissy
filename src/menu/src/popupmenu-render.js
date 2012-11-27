@@ -3,7 +3,9 @@
  * @fileOverview popup menu render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/popupmenu-render", function (S, UA, extension, MenuRender) {
+KISSY.add("menu/popupmenu-render", function (S, extension, MenuRender) {
+
+    var UA= S.UA;
 
     return MenuRender.extend([
         extension.ContentBox.Render,
@@ -11,5 +13,5 @@ KISSY.add("menu/popupmenu-render", function (S, UA, extension, MenuRender) {
         UA['ie'] === 6 ? extension.Shim.Render : null
     ]);
 }, {
-    requires:['ua', 'component/extension', './menu-render']
+    requires:['component/extension', './menu-render']
 });

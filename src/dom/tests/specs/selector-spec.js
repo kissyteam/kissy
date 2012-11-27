@@ -65,7 +65,8 @@ KISSY.use("dom,core", function (S, DOM) {
         });
 
         it("support comma", function () {
-            expect(S.query("#test-selector-1 .test-selector , #test-selector-2 .test-selector").length)
+            expect(S.query("#test-selector-1 .test-selector ," +
+                " #test-selector-2 .test-selector").length)
                 .toBe(2);
         });
 
@@ -204,7 +205,9 @@ KISSY.use("dom,core", function (S, DOM) {
 
             // KISSY NodeList
             o = {
-                getDOMNodes: 1
+                getDOMNodes: function(){
+                    return o;
+                }
             };
             expect(DOM.query(o)).toBe(o);
 

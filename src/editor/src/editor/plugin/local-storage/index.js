@@ -97,6 +97,5 @@ KISSY.add("editor/plugin/local-storage/index", function (S, Editor, Overlay, Fla
     //important
     //不能立即运行，ie6 可能会没有 domready 添加 flash 节点
     //导致：operation aborted
-    attach: false,
     "requires": ["editor", "overlay", "../flash-bridge/"]
 });

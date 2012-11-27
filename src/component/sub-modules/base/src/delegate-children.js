@@ -3,9 +3,10 @@
  * @fileOverview delegate events for children
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/base/delegate-children", function (S, UA, Event) {
+KISSY.add("component/base/delegate-children", function (S, Event) {
 
-    var ie = S.Env.host.document.documentMode || UA.ie,
+    var UA = S.UA,
+        ie = S.Env.host.document.documentMode || UA.ie,
         Features = S.Features,
         Gesture = Event.Gesture,
         isTouchSupported = Features.isTouchSupported();
@@ -97,5 +98,5 @@ KISSY.add("component/base/delegate-children", function (S, UA, Event) {
 
     return DelegateChildren;
 }, {
-    requires: ['ua', 'event']
+    requires: ['event']
 });

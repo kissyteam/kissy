@@ -1,5 +1,5 @@
 KISSY.use("dom,event,core", function (S, DOM, Event) {
-    var $= S.all;
+    var $ = S.all, UA = S.UA;
     describe("clone", function () {
 
         it("works for checkbox", function () {
@@ -10,7 +10,7 @@ KISSY.use("dom,event,core", function (S, DOM, Event) {
             expect(DOM.data(checkbox, "custom")).toBe(1);
             expect(cloned.checked).toBe(true);
             expect(DOM.data(cloned, "custom")).toBe(undefined);
-            expect(cloned.value).toBe("on");
+            expect(DOM.val(cloned)).toBe("on");
         });
 
         //http://msdn.microsoft.com/en-us/library/ms533718%28v=vs.85%29.aspx
@@ -25,7 +25,7 @@ KISSY.use("dom,event,core", function (S, DOM, Event) {
         });
 
         // ie
-        if (window.ActiveXObject) {
+        if (window.ActiveXObject && UA.ie < 9) {
             it("works for classid", function () {
                 var flash = '<object ' +
                     'classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" ' +
@@ -39,6 +39,28 @@ KISSY.use("dom,event,core", function (S, DOM, Event) {
                 expect(DOM.attr(el.firstChild, "value")).toBe("movie_name.swf");
                 var cloned = DOM.clone(el);
                 expect(DOM.attr(cloned.firstChild, "value")).toBe("movie_name.swf");
+                DOM.remove(el);
+            });
+        } else {
+            it("works for flash", function () {
+                var flash = '<object class="holiday-logo"' +
+                    ' data="http://img01.taobaocdn.com/tps/i1/T12MVIXfVNXXXXXXXX.swf" ' +
+                    'height="68" name="holiday-logo" type="application/x-shockwave-flash" ' +
+                    'width="300"><param name="wmode" value="transparent" />' +
+                    '<a href="http://www.taobao.com/" style="height: 43px; margin-left: 56px;"' +
+                    ' target="_top"> 淘宝网 <img alt="淘宝网" height="110" ' +
+                    'src="http://www.taobao.com/" ' +
+                    'title="Taobao.com - 阿里巴巴旗下网站" width="167" /> </a>' +
+                    '</object>';
+                var el = DOM.create(flash);
+                DOM.append(el, "body");
+                expect(DOM.attr(el.firstChild, "value")).toBe("transparent");
+                expect(DOM.attr(el, "data"))
+                    .toBe("http://img01.taobaocdn.com/tps/i1/T12MVIXfVNXXXXXXXX.swf");
+                var cloned = DOM.clone(el, true);
+                expect(DOM.attr(cloned.firstChild, "value")).toBe("transparent");
+                expect(DOM.attr(cloned, "data"))
+                    .toBe("http://img01.taobaocdn.com/tps/i1/T12MVIXfVNXXXXXXXX.swf");
                 DOM.remove(el);
             });
         }
@@ -174,7 +196,8 @@ KISSY.use("dom,event,core", function (S, DOM, Event) {
                 deepWithDataAndEvent: true
             });
 
-            Event.on(span2,'click',function(){});
+            Event.on(span2, 'click', function () {
+            });
 
             span2.id = 't2';
 
@@ -193,7 +216,7 @@ KISSY.use("dom,event,core", function (S, DOM, Event) {
 
             runs(function () {
 
-            jasmine.simulate(span, 'click');
+                jasmine.simulate(span, 'click');
 
             });
 
@@ -234,7 +257,7 @@ KISSY.use("dom,event,core", function (S, DOM, Event) {
 
             DOM.append(span2, "body");
 
-            Event.fire(span2,'click');
+            Event.fire(span2, 'click');
 
             waits(100);
 

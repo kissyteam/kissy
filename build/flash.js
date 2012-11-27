@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:08
+build time: Nov 28 00:46
 */
 /**
  * @fileOverview Flash 全局静态类
@@ -24,9 +24,9 @@ KISSY.add('flash/base', function(S) {
  * @fileOverview 将 swf 嵌入到页面中
  * @author kingfo<oicuicu@gmail.com>, 射雕<lifesinger@gmail.com>
  */
-KISSY.add('flash/embed', function (S, UA, DOM, Flash, JSON) {
+KISSY.add('flash/embed', function (S, DOM, Flash, JSON) {
 
-    var
+    var UA= S.UA,
         SWF_SUCCESS = 1,
         FP_LOW = 0,
         FP_UNINSTALL = -1,
@@ -391,7 +391,7 @@ KISSY.add('flash/embed', function (S, UA, DOM, Flash, JSON) {
     return Flash;
 
 
-}, { requires: ["ua", "dom", "./base", "json", "./ua"] });
+}, { requires: ["dom", "./base", "json", "./ua"] });
 
 /**
  * @fileOverview flash
@@ -405,9 +405,11 @@ KISSY.add("flash", function (S, F) {
  * @fileOverview Flash UA 探测
  * @author kingfo<oicuicu@gmail.com>
  */
-KISSY.add('flash/ua', function (S, UA) {
+KISSY.add('flash/ua', function (S) {
 
-    var fpv, fpvF, firstRun = true, win = S.Env.host;
+    var fpv, fpvF, firstRun = true,
+        UA = S.UA,
+        win = S.Env.host;
 
     /**
      * 获取 Flash 版本号
@@ -498,7 +500,7 @@ KISSY.add('flash/ua', function (S, UA) {
         return !!fpvF && (fpvF >= numerify(ver));
     };
 
-}, { requires: ["ua"] });
+});
 
 /**
  * NOTES:

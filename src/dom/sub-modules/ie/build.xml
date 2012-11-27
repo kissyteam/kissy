@@ -1,0 +1,10 @@
+<project name="dom/ie.build" default="build" basedir=".">
+    <description>dom/ie Build File</description>
+
+    <property name="component.name" value="dom/ie"/>
+
+    <import file="../../../../tools/build-xml/common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

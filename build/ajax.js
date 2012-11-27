@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:05
+build time: Nov 28 00:42
 */
 /**
  * @ignore
@@ -1463,7 +1463,7 @@ KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
             self.head = head;
             script = doc.createElement('script');
             self.script = script;
-            script.async = 'async';
+            script.async = true;
 
             if (c['scriptCharset']) {
                 script.charset = c['scriptCharset'];

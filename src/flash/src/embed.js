@@ -2,9 +2,9 @@
  * @fileOverview 将 swf 嵌入到页面中
  * @author kingfo<oicuicu@gmail.com>, 射雕<lifesinger@gmail.com>
  */
-KISSY.add('flash/embed', function (S, UA, DOM, Flash, JSON) {
+KISSY.add('flash/embed', function (S, DOM, Flash, JSON) {
 
-    var
+    var UA= S.UA,
         SWF_SUCCESS = 1,
         FP_LOW = 0,
         FP_UNINSTALL = -1,
@@ -369,5 +369,5 @@ KISSY.add('flash/embed', function (S, UA, DOM, Flash, JSON) {
     return Flash;
 
 
-}, { requires: ["ua", "dom", "./base", "json", "./ua"] });
+}, { requires: ["dom", "./base", "json", "./ua"] });
 

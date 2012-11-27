@@ -6,6 +6,7 @@
 (function (S) {
 
     var Loader = S.Loader,
+        UA= S.UA,
         utils = Loader.Utils;
 
 
@@ -51,20 +52,20 @@
 
                 utils.registerModule(runtime, name, fn, config);
 
-                mod = mods[name];
-
-                // 显示指定 add 不 attach
-                if (config && config['attach'] === false) {
-                    return;
-                }
-
-                if (config) {
-                    requires = mod.getNormalizedRequires();
-                }
-
-                if (!requires || utils.isAttached(runtime, requires)) {
-                    utils.attachMod(runtime, mod);
-                }
+//                mod = mods[name];
+//
+//                // 显示指定 add 不 attach
+//                if (config && config['attach'] === false) {
+//                    return;
+//                }
+//
+//                if (config) {
+//                    requires = mod.getNormalizedRequires();
+//                }
+//
+//                if (!requires || utils.isAttached(runtime, requires)) {
+//                    utils.attachMod(runtime, mod);
+//                }
 
                 return;
             }
@@ -72,7 +73,7 @@
             else if (S.isFunction(name)) {
                 config = fn;
                 fn = name;
-                if (utils.IE) {
+                if (UA.ie) {
                     /*
                      Kris Zyp
                      2010年10月21日, 上午11时34分

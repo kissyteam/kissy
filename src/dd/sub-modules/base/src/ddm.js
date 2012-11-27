@@ -3,9 +3,10 @@
  * @fileOverview dd support for kissy , dd objects central management module
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
+KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
 
-    var win = S.Env.host,
+    var UA = S.UA,
+        win = S.Env.host,
         doc = win.document,
         ie6 = UA['ie'] === 6,
 
@@ -21,7 +22,6 @@ KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
 
 
     var TARGET = 'target',
-        BUTTON = 'button',
         Gesture = Event.Gesture,
         CURRENT_TARGET = 'currentTarget',
         DRAG_MOVE_EVENT = Gesture.move,
@@ -517,5 +517,5 @@ KISSY.add('dd/base/ddm', function (S, UA, DOM, Event, Node, Base) {
 
     return ddm;
 }, {
-    requires: ['ua', 'dom', 'event', 'node', 'base']
+    requires: ['dom', 'event', 'node', 'base']
 });

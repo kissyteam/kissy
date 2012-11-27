@@ -3,9 +3,10 @@
  * @fileOverview Component.Extension.Align
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
-KISSY.add('component/extension/align', function (S, UA, DOM, Node) {
+KISSY.add('component/extension/align', function (S, DOM, Node) {
 
-    var win = S.Env.host;
+    var win = S.Env.host,
+        UA= S.UA;
 
     // var ieMode = document.documentMode || UA.ie;
 
@@ -437,7 +438,7 @@ KISSY.add('component/extension/align', function (S, UA, DOM, Node) {
 
     return Align;
 }, {
-    requires:["ua", "dom", "node"]
+    requires:["dom", "node"]
 });
 /**
  * @ignore

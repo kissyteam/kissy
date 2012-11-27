@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:11
+build time: Nov 28 00:47
 */
 /**
  * @ignore
@@ -866,9 +866,10 @@ KISSY.add("overlay/extension/loading", function () {
  * @fileOverview mask extension for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/extension/mask-render", function (S, UA, Node) {
+KISSY.add("overlay/extension/mask-render", function (S, Node) {
 
-    var ie6 = (UA['ie'] === 6),
+    var UA = S.UA,
+        ie6 = (UA['ie'] === 6),
         $ = Node.all;
 
     function docWidth() {
@@ -968,7 +969,7 @@ KISSY.add("overlay/extension/mask-render", function (S, UA, Node) {
 
     return Mask;
 }, {
-    requires: ["ua", "node"]
+    requires: ["node"]
 });/**
  * @ignore
  * @fileOverview mask extension for kissy
@@ -1365,7 +1366,9 @@ KISSY.add("overlay/extension/stdmod", function () {
  * @fileOverview KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/overlay-render", function (S, UA, Component, Extension, Loading, Close, Mask) {
+KISSY.add("overlay/overlay-render", function (S, Component, Extension, Loading, Close, Mask) {
+
+    var UA = S.UA;
 
     return Component.Render.extend([
         Extension.ContentBox.Render,
@@ -1377,10 +1380,13 @@ KISSY.add("overlay/overlay-render", function (S, UA, Component, Extension, Loadi
     ]);
 
 }, {
-    requires: ["ua", "component/base", 'component/extension',
+    requires: [
+        "component/base",
+        'component/extension',
         './extension/loading-render',
         './extension/close-render',
-        './extension/mask-render']
+        './extension/mask-render'
+    ]
 });
 
 /**

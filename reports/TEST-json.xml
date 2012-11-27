@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-<testsuite name="json" errors="0" tests="0" failures="0" time="0" timestamp="2012-11-21T02:45:13">
+<testsuite name="json" errors="0" tests="0" failures="0" time="0" timestamp="2012-11-28T00:51:51">
 </testsuite>
-<testsuite name="json.stringify" errors="0" tests="1" failures="0" time="0" timestamp="2012-11-21T02:45:13">
+<testsuite name="json.stringify" errors="0" tests="1" failures="0" time="0.001" timestamp="2012-11-28T00:51:51">
   <testcase classname="json.stringify" name="should convert an arbitrary value to a JSON string representation" time="0"></testcase>
 </testsuite>
-<testsuite name="json.parse" errors="0" tests="1" failures="0" time="0.001" timestamp="2012-11-21T02:45:13">
-  <testcase classname="json.parse" name="should parse a JSON string to the native JavaScript representation" time="0.001"></testcase>
+<testsuite name="json.parse" errors="0" tests="1" failures="0" time="0" timestamp="2012-11-28T00:51:51">
+  <testcase classname="json.parse" name="should parse a JSON string to the native JavaScript representation" time="0"></testcase>
 </testsuite>
 </testsuites>

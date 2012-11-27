@@ -477,4 +477,4 @@ KISSY.add("json/json2", function () {
     };
 
     return JSON;
-}, {requires: ['ua']});
+});

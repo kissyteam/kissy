@@ -21,10 +21,10 @@
              * for example:
              *      @example
              *      // dom module's definition
-             *      KISSY.add('dom', function(S, UA){
+             *      KISSY.add('dom', function(S, xx){
              *          return {css: function(el, name, val){}};
              *      },{
-             *          requires:['ua']
+             *          requires:['xx']
              *      });
              */
             add: function (name, fn, cfg) {

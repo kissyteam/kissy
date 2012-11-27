@@ -8,13 +8,13 @@
 
     var win = S.Env.host,
 
+        UA= S.UA,
+
         doc = win['document'],
 
         docElem = doc && doc.documentElement,
 
         location = win.location,
-
-        navigator = win.navigator,
 
         EMPTY = '',
 
@@ -219,7 +219,7 @@
 //     worst case no callback at all
     _bindReady();
 
-    if (navigator && navigator.userAgent.match(/MSIE/)) {
+    if (UA.ie) {
         try {
             doc.execCommand('BackgroundImageCache', false, true);
         } catch (e) {

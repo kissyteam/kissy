@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:08
+build time: Nov 28 00:46
 */
 /**
  * Add justify command identifier for Editor.

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 22 19:08
+build time: Nov 28 00:46
 */
 /**
  * @ignore
@@ -384,8 +384,9 @@ KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Sp
  * @fileOverview  change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/change', function (S, UA, Event, DOM, special) {
-    var doc = S.Env.host.document,
+KISSY.add('event/dom/base/change', function (S, Event, DOM, special) {
+    var UA = S.UA,
+        doc = S.Env.host.document,
         mode = doc && doc['documentMode'];
 
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
@@ -491,25 +492,28 @@ KISSY.add('event/dom/base/change', function (S, UA, Event, DOM, special) {
 
     }
 }, {
-    requires: ['ua', './api', 'dom', './special']
+    requires: ['./api', 'dom', './special']
 });/**
  * @ignore
  * @fileOverview event-focusin
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/focusin', function (S, UA, Event, special) {
+KISSY.add('event/dom/base/focusin', function (S, Event, special) {
+
+    var UA = S.UA;
+
     // 让非 IE 浏览器支持 focusin/focusout
     if (!UA['ie']) {
         S.each([
-            { name:'focusin', fix:'focus' },
-            { name:'focusout', fix:'blur' }
+            { name: 'focusin', fix: 'focus' },
+            { name: 'focusout', fix: 'blur' }
         ], function (o) {
             var key = S.guid('attaches_' + S.now() + '_');
             special[o.name] = {
                 // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
                 // 达到和 focusin 一样的效果 focusin -> focus
                 // refer: http://yiminghe.iteye.com/blog/813255
-                setup:function () {
+                setup: function () {
                     // this maybe document
                     var doc = this.ownerDocument || this;
                     if (!(key in doc)) {
@@ -521,7 +525,7 @@ KISSY.add('event/dom/base/focusin', function (S, UA, Event, special) {
                     }
                 },
 
-                tearDown:function () {
+                tearDown: function () {
                     var doc = this.ownerDocument || this;
                     doc[key] -= 1;
                     if (doc[key] === 0) {
@@ -539,21 +543,21 @@ KISSY.add('event/dom/base/focusin', function (S, UA, Event, special) {
     }
 
     special['focus'] = {
-        delegateFix:'focusin'
+        delegateFix: 'focusin'
     };
 
     special['blur'] = {
-        delegateFix:'focusout'
+        delegateFix: 'focusout'
     };
 
     return Event;
 }, {
-    requires:['ua', './api', './special']
+    requires: ['./api', './special']
 });
 
 /*
-  承玉:2011-06-07
-  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
+ 承玉:2011-06-07
+ - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */
 /**
  * @ignore
@@ -590,9 +594,10 @@ KISSY.add('event/dom/base/gesture', function (S) {
  * @fileOverview event-hashchange
  * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
-KISSY.add('event/dom/base/hashchange', function (S, Event, DOM, UA, special) {
+KISSY.add('event/dom/base/hashchange', function (S, Event, DOM, special) {
 
-    var win = S.Env.host,
+    var UA = S.UA,
+        win = S.Env.host,
         doc = win.document,
         docMode = doc && doc['documentMode'],
         REPLACE_HISTORY = '__replace_history_' + S.now(),
@@ -812,7 +817,7 @@ KISSY.add('event/dom/base/hashchange', function (S, Event, DOM, UA, special) {
         };
     }
 }, {
-    requires: ['./api', 'dom', 'ua', './special']
+    requires: ['./api', 'dom', './special']
 });
 
 /*
@@ -828,433 +833,434 @@ KISSY.add('event/dom/base/hashchange', function (S, Event, DOM, UA, special) {
  * @fileOverview some key-codes definition and utils from closure-library
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/key-codes', function (S, UA) {
+KISSY.add('event/dom/base/key-codes', function (S) {
     /**
      * @enum {Number} KISSY.Event.KeyCodes
      * All key codes.
      */
-    var KeyCodes = {
-        /**
-         * MAC_ENTER
-         */
-        MAC_ENTER: 3,
-        /**
-         * BACKSPACE
-         */
-        BACKSPACE: 8,
-        /**
-         * TAB
-         */
-        TAB: 9,
-        /**
-         * NUMLOCK on FF/Safari Mac
-         */
-        NUM_CENTER: 12, // NUMLOCK on FF/Safari Mac
-        /**
-         * ENTER
-         */
-        ENTER: 13,
-        /**
-         * SHIFT
-         */
-        SHIFT: 16,
-        /**
-         * CTRL
-         */
-        CTRL: 17,
-        /**
-         * ALT
-         */
-        ALT: 18,
-        /**
-         * PAUSE
-         */
-        PAUSE: 19,
-        /**
-         * CAPS_LOCK
-         */
-        CAPS_LOCK: 20,
-        /**
-         * ESC
-         */
-        ESC: 27,
-        /**
-         * SPACE
-         */
-        SPACE: 32,
-        /**
-         * PAGE_UP
-         */
-        PAGE_UP: 33, // also NUM_NORTH_EAST
-        /**
-         * PAGE_DOWN
-         */
-        PAGE_DOWN: 34, // also NUM_SOUTH_EAST
-        /**
-         * END
-         */
-        END: 35, // also NUM_SOUTH_WEST
-        /**
-         * HOME
-         */
-        HOME: 36, // also NUM_NORTH_WEST
-        /**
-         * LEFT
-         */
-        LEFT: 37, // also NUM_WEST
-        /**
-         * UP
-         */
-        UP: 38, // also NUM_NORTH
-        /**
-         * RIGHT
-         */
-        RIGHT: 39, // also NUM_EAST
-        /**
-         * DOWN
-         */
-        DOWN: 40, // also NUM_SOUTH
-        /**
-         * PRINT_SCREEN
-         */
-        PRINT_SCREEN: 44,
-        /**
-         * INSERT
-         */
-        INSERT: 45, // also NUM_INSERT
-        /**
-         * DELETE
-         */
-        DELETE: 46, // also NUM_DELETE
-        /**
-         * ZERO
-         */
-        ZERO: 48,
-        /**
-         * ONE
-         */
-        ONE: 49,
-        /**
-         * TWO
-         */
-        TWO: 50,
-        /**
-         * THREE
-         */
-        THREE: 51,
-        /**
-         * FOUR
-         */
-        FOUR: 52,
-        /**
-         * FIVE
-         */
-        FIVE: 53,
-        /**
-         * SIX
-         */
-        SIX: 54,
-        /**
-         * SEVEN
-         */
-        SEVEN: 55,
-        /**
-         * EIGHT
-         */
-        EIGHT: 56,
-        /**
-         * NINE
-         */
-        NINE: 57,
-        /**
-         * QUESTION_MARK
-         */
-        QUESTION_MARK: 63, // needs localization
-        /**
-         * A
-         */
-        A: 65,
-        /**
-         * B
-         */
-        B: 66,
-        /**
-         * C
-         */
-        C: 67,
-        /**
-         * D
-         */
-        D: 68,
-        /**
-         * E
-         */
-        E: 69,
-        /**
-         * F
-         */
-        F: 70,
-        /**
-         * G
-         */
-        G: 71,
-        /**
-         * H
-         */
-        H: 72,
-        /**
-         * I
-         */
-        I: 73,
-        /**
-         * J
-         */
-        J: 74,
-        /**
-         * K
-         */
-        K: 75,
-        /**
-         * L
-         */
-        L: 76,
-        /**
-         * M
-         */
-        M: 77,
-        /**
-         * N
-         */
-        N: 78,
-        /**
-         * O
-         */
-        O: 79,
-        /**
-         * P
-         */
-        P: 80,
-        /**
-         * Q
-         */
-        Q: 81,
-        /**
-         * R
-         */
-        R: 82,
-        /**
-         * S
-         */
-        S: 83,
-        /**
-         * T
-         */
-        T: 84,
-        /**
-         * U
-         */
-        U: 85,
-        /**
-         * V
-         */
-        V: 86,
-        /**
-         * W
-         */
-        W: 87,
-        /**
-         * X
-         */
-        X: 88,
-        /**
-         * Y
-         */
-        Y: 89,
-        /**
-         * Z
-         */
-        Z: 90,
-        /**
-         * META
-         */
-        META: 91, // WIN_KEY_LEFT
-        /**
-         * WIN_KEY_RIGHT
-         */
-        WIN_KEY_RIGHT: 92,
-        /**
-         * CONTEXT_MENU
-         */
-        CONTEXT_MENU: 93,
-        /**
-         * NUM_ZERO
-         */
-        NUM_ZERO: 96,
-        /**
-         * NUM_ONE
-         */
-        NUM_ONE: 97,
-        /**
-         * NUM_TWO
-         */
-        NUM_TWO: 98,
-        /**
-         * NUM_THREE
-         */
-        NUM_THREE: 99,
-        /**
-         * NUM_FOUR
-         */
-        NUM_FOUR: 100,
-        /**
-         * NUM_FIVE
-         */
-        NUM_FIVE: 101,
-        /**
-         * NUM_SIX
-         */
-        NUM_SIX: 102,
-        /**
-         * NUM_SEVEN
-         */
-        NUM_SEVEN: 103,
-        /**
-         * NUM_EIGHT
-         */
-        NUM_EIGHT: 104,
-        /**
-         * NUM_NINE
-         */
-        NUM_NINE: 105,
-        /**
-         * NUM_MULTIPLY
-         */
-        NUM_MULTIPLY: 106,
-        /**
-         * NUM_PLUS
-         */
-        NUM_PLUS: 107,
-        /**
-         * NUM_MINUS
-         */
-        NUM_MINUS: 109,
-        /**
-         * NUM_PERIOD
-         */
-        NUM_PERIOD: 110,
-        /**
-         * NUM_DIVISION
-         */
-        NUM_DIVISION: 111,
-        /**
-         * F1
-         */
-        F1: 112,
-        /**
-         * F2
-         */
-        F2: 113,
-        /**
-         * F3
-         */
-        F3: 114,
-        /**
-         * F4
-         */
-        F4: 115,
-        /**
-         * F5
-         */
-        F5: 116,
-        /**
-         * F6
-         */
-        F6: 117,
-        /**
-         * F7
-         */
-        F7: 118,
-        /**
-         * F8
-         */
-        F8: 119,
-        /**
-         * F9
-         */
-        F9: 120,
-        /**
-         * F10
-         */
-        F10: 121,
-        /**
-         * F11
-         */
-        F11: 122,
-        /**
-         * F12
-         */
-        F12: 123,
-        /**
-         * NUMLOCK
-         */
-        NUMLOCK: 144,
-        /**
-         * SEMICOLON
-         */
-        SEMICOLON: 186, // needs localization
-        /**
-         * DASH
-         */
-        DASH: 189, // needs localization
-        /**
-         * EQUALS
-         */
-        EQUALS: 187, // needs localization
-        /**
-         * COMMA
-         */
-        COMMA: 188, // needs localization
-        /**
-         * PERIOD
-         */
-        PERIOD: 190, // needs localization
-        /**
-         * SLASH
-         */
-        SLASH: 191, // needs localization
-        /**
-         * APOSTROPHE
-         */
-        APOSTROPHE: 192, // needs localization
-        /**
-         * SINGLE_QUOTE
-         */
-        SINGLE_QUOTE: 222, // needs localization
-        /**
-         * OPEN_SQUARE_BRACKET
-         */
-        OPEN_SQUARE_BRACKET: 219, // needs localization
-        /**
-         * BACKSLASH
-         */
-        BACKSLASH: 220, // needs localization
-        /**
-         * CLOSE_SQUARE_BRACKET
-         */
-        CLOSE_SQUARE_BRACKET: 221, // needs localization
-        /**
-         * WIN_KEY
-         */
-        WIN_KEY: 224,
-        /**
-         * MAC_FF_META
-         */
-        MAC_FF_META: 224, // Firefox (Gecko) fires this for the meta key instead of 91
-        /**
-         * WIN_IME
-         */
-        WIN_IME: 229
-    };
+    var UA = S.UA,
+        KeyCodes = {
+            /**
+             * MAC_ENTER
+             */
+            MAC_ENTER: 3,
+            /**
+             * BACKSPACE
+             */
+            BACKSPACE: 8,
+            /**
+             * TAB
+             */
+            TAB: 9,
+            /**
+             * NUMLOCK on FF/Safari Mac
+             */
+            NUM_CENTER: 12, // NUMLOCK on FF/Safari Mac
+            /**
+             * ENTER
+             */
+            ENTER: 13,
+            /**
+             * SHIFT
+             */
+            SHIFT: 16,
+            /**
+             * CTRL
+             */
+            CTRL: 17,
+            /**
+             * ALT
+             */
+            ALT: 18,
+            /**
+             * PAUSE
+             */
+            PAUSE: 19,
+            /**
+             * CAPS_LOCK
+             */
+            CAPS_LOCK: 20,
+            /**
+             * ESC
+             */
+            ESC: 27,
+            /**
+             * SPACE
+             */
+            SPACE: 32,
+            /**
+             * PAGE_UP
+             */
+            PAGE_UP: 33, // also NUM_NORTH_EAST
+            /**
+             * PAGE_DOWN
+             */
+            PAGE_DOWN: 34, // also NUM_SOUTH_EAST
+            /**
+             * END
+             */
+            END: 35, // also NUM_SOUTH_WEST
+            /**
+             * HOME
+             */
+            HOME: 36, // also NUM_NORTH_WEST
+            /**
+             * LEFT
+             */
+            LEFT: 37, // also NUM_WEST
+            /**
+             * UP
+             */
+            UP: 38, // also NUM_NORTH
+            /**
+             * RIGHT
+             */
+            RIGHT: 39, // also NUM_EAST
+            /**
+             * DOWN
+             */
+            DOWN: 40, // also NUM_SOUTH
+            /**
+             * PRINT_SCREEN
+             */
+            PRINT_SCREEN: 44,
+            /**
+             * INSERT
+             */
+            INSERT: 45, // also NUM_INSERT
+            /**
+             * DELETE
+             */
+            DELETE: 46, // also NUM_DELETE
+            /**
+             * ZERO
+             */
+            ZERO: 48,
+            /**
+             * ONE
+             */
+            ONE: 49,
+            /**
+             * TWO
+             */
+            TWO: 50,
+            /**
+             * THREE
+             */
+            THREE: 51,
+            /**
+             * FOUR
+             */
+            FOUR: 52,
+            /**
+             * FIVE
+             */
+            FIVE: 53,
+            /**
+             * SIX
+             */
+            SIX: 54,
+            /**
+             * SEVEN
+             */
+            SEVEN: 55,
+            /**
+             * EIGHT
+             */
+            EIGHT: 56,
+            /**
+             * NINE
+             */
+            NINE: 57,
+            /**
+             * QUESTION_MARK
+             */
+            QUESTION_MARK: 63, // needs localization
+            /**
+             * A
+             */
+            A: 65,
+            /**
+             * B
+             */
+            B: 66,
+            /**
+             * C
+             */
+            C: 67,
+            /**
+             * D
+             */
+            D: 68,
+            /**
+             * E
+             */
+            E: 69,
+            /**
+             * F
+             */
+            F: 70,
+            /**
+             * G
+             */
+            G: 71,
+            /**
+             * H
+             */
+            H: 72,
+            /**
+             * I
+             */
+            I: 73,
+            /**
+             * J
+             */
+            J: 74,
+            /**
+             * K
+             */
+            K: 75,
+            /**
+             * L
+             */
+            L: 76,
+            /**
+             * M
+             */
+            M: 77,
+            /**
+             * N
+             */
+            N: 78,
+            /**
+             * O
+             */
+            O: 79,
+            /**
+             * P
+             */
+            P: 80,
+            /**
+             * Q
+             */
+            Q: 81,
+            /**
+             * R
+             */
+            R: 82,
+            /**
+             * S
+             */
+            S: 83,
+            /**
+             * T
+             */
+            T: 84,
+            /**
+             * U
+             */
+            U: 85,
+            /**
+             * V
+             */
+            V: 86,
+            /**
+             * W
+             */
+            W: 87,
+            /**
+             * X
+             */
+            X: 88,
+            /**
+             * Y
+             */
+            Y: 89,
+            /**
+             * Z
+             */
+            Z: 90,
+            /**
+             * META
+             */
+            META: 91, // WIN_KEY_LEFT
+            /**
+             * WIN_KEY_RIGHT
+             */
+            WIN_KEY_RIGHT: 92,
+            /**
+             * CONTEXT_MENU
+             */
+            CONTEXT_MENU: 93,
+            /**
+             * NUM_ZERO
+             */
+            NUM_ZERO: 96,
+            /**
+             * NUM_ONE
+             */
+            NUM_ONE: 97,
+            /**
+             * NUM_TWO
+             */
+            NUM_TWO: 98,
+            /**
+             * NUM_THREE
+             */
+            NUM_THREE: 99,
+            /**
+             * NUM_FOUR
+             */
+            NUM_FOUR: 100,
+            /**
+             * NUM_FIVE
+             */
+            NUM_FIVE: 101,
+            /**
+             * NUM_SIX
+             */
+            NUM_SIX: 102,
+            /**
+             * NUM_SEVEN
+             */
+            NUM_SEVEN: 103,
+            /**
+             * NUM_EIGHT
+             */
+            NUM_EIGHT: 104,
+            /**
+             * NUM_NINE
+             */
+            NUM_NINE: 105,
+            /**
+             * NUM_MULTIPLY
+             */
+            NUM_MULTIPLY: 106,
+            /**
+             * NUM_PLUS
+             */
+            NUM_PLUS: 107,
+            /**
+             * NUM_MINUS
+             */
+            NUM_MINUS: 109,
+            /**
+             * NUM_PERIOD
+             */
+            NUM_PERIOD: 110,
+            /**
+             * NUM_DIVISION
+             */
+            NUM_DIVISION: 111,
+            /**
+             * F1
+             */
+            F1: 112,
+            /**
+             * F2
+             */
+            F2: 113,
+            /**
+             * F3
+             */
+            F3: 114,
+            /**
+             * F4
+             */
+            F4: 115,
+            /**
+             * F5
+             */
+            F5: 116,
+            /**
+             * F6
+             */
+            F6: 117,
+            /**
+             * F7
+             */
+            F7: 118,
+            /**
+             * F8
+             */
+            F8: 119,
+            /**
+             * F9
+             */
+            F9: 120,
+            /**
+             * F10
+             */
+            F10: 121,
+            /**
+             * F11
+             */
+            F11: 122,
+            /**
+             * F12
+             */
+            F12: 123,
+            /**
+             * NUMLOCK
+             */
+            NUMLOCK: 144,
+            /**
+             * SEMICOLON
+             */
+            SEMICOLON: 186, // needs localization
+            /**
+             * DASH
+             */
+            DASH: 189, // needs localization
+            /**
+             * EQUALS
+             */
+            EQUALS: 187, // needs localization
+            /**
+             * COMMA
+             */
+            COMMA: 188, // needs localization
+            /**
+             * PERIOD
+             */
+            PERIOD: 190, // needs localization
+            /**
+             * SLASH
+             */
+            SLASH: 191, // needs localization
+            /**
+             * APOSTROPHE
+             */
+            APOSTROPHE: 192, // needs localization
+            /**
+             * SINGLE_QUOTE
+             */
+            SINGLE_QUOTE: 222, // needs localization
+            /**
+             * OPEN_SQUARE_BRACKET
+             */
+            OPEN_SQUARE_BRACKET: 219, // needs localization
+            /**
+             * BACKSLASH
+             */
+            BACKSLASH: 220, // needs localization
+            /**
+             * CLOSE_SQUARE_BRACKET
+             */
+            CLOSE_SQUARE_BRACKET: 221, // needs localization
+            /**
+             * WIN_KEY
+             */
+            WIN_KEY: 224,
+            /**
+             * MAC_FF_META
+             */
+            MAC_FF_META: 224, // Firefox (Gecko) fires this for the meta key instead of 91
+            /**
+             * WIN_IME
+             */
+            WIN_IME: 229
+        };
 
     /**
      * whether text and modified key is entered at the same time.
@@ -1354,14 +1360,13 @@ KISSY.add('event/dom/base/key-codes', function (S, UA) {
 
     return KeyCodes;
 
-}, {
-    requires: ['ua']
 });/**
  * @ignore
  * @fileOverview event-mouseenter
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, UA, special) {
+KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
+
     S.each([
         { name: 'mouseenter', fix: 'mouseover' },
         { name: 'mouseleave', fix: 'mouseout' }
@@ -1397,7 +1402,7 @@ KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, UA, special) {
 
     return Event;
 }, {
-    requires: ['./api', 'dom', 'ua', './special']
+    requires: ['./api', 'dom', './special']
 });
 
 /*
@@ -1413,9 +1418,9 @@ KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, UA, special) {
  * @fileOverview normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/mousewheel', function (S, special,UA) {
+KISSY.add('event/dom/base/mousewheel', function (S, special) {
 
-    var MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
+    var UA = S.UA, MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
 
     special['mousewheel'] = {
         onFix: MOUSE_WHEEL,
@@ -1423,7 +1428,7 @@ KISSY.add('event/dom/base/mousewheel', function (S, special,UA) {
     };
 
 }, {
-    requires: ['./special','ua']
+    requires: ['./special']
 });/**
  * @ignore
  * @fileOverview event object for dom
@@ -2382,9 +2387,10 @@ KISSY.add('event/dom/base/special', function () {
  * @fileOverview patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/submit', function (S, UA, Event, DOM, special) {
+KISSY.add('event/dom/base/submit', function (S, Event, DOM, special) {
 
-    var doc = S.Env.host.document,
+    var UA= S.UA,
+        doc = S.Env.host.document,
         mode = doc && doc['documentMode'];
 
     if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
@@ -2450,7 +2456,7 @@ KISSY.add('event/dom/base/submit', function (S, UA, Event, DOM, special) {
     }
 
 }, {
-    requires: ['ua', './api', 'dom', './special']
+    requires: ['./api', 'dom', './special']
 });
 /*
  modified from jq, fix submit in ie<9

@@ -24,9 +24,6 @@ describe("KISSY ComboLoader", function () {
             },
             "tests3/b": {
                 requires: ["./c", "dom"]
-            },
-            dom: {
-                requires: ['ua']
             }
         });
 
@@ -152,9 +149,6 @@ describe("KISSY ComboLoader", function () {
 
         S.Env.mods = {};
         S.DOM = null;
-        S.add({
-            dom: {requires: ['ua']}
-        });
         S.use("dom", function () {
             expect(S.DOM).not.toBe(undefined);
         });
@@ -186,9 +180,6 @@ describe("KISSY ComboLoader", function () {
             },
             "tests/b": {
                 requires: ['./c', 'dom']
-            },
-            dom: {
-                requires: ['ua']
             }
         });
 
@@ -234,9 +225,6 @@ describe("KISSY ComboLoader", function () {
             },
             "tests2/b": {
                 requires: ['./c', 'dom']
-            },
-            dom: {
-                requires: ['ua']
             },
             x: {}
         });
