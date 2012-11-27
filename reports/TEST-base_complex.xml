@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-<testsuite name="base_complex" errors="0" tests="8" failures="0" time="0.006" timestamp="2012-11-28T00:51:51">
+<testsuite name="base_complex" errors="0" tests="8" failures="0" time="0.006" timestamp="2012-11-28T02:38:16">
   <testcase classname="base_complex" name="can merge property value object from parent class" time="0"></testcase>
   <testcase classname="base_complex" name="support validator" time="0"></testcase>
   <testcase classname="base_complex" name="support validators" time="0.001"></testcase>
   <testcase classname="base_complex" name="support sub attribute name" time="0"></testcase>
-  <testcase classname="base_complex" name="set sub attr even if not exist attr" time="0"></testcase>
+  <testcase classname="base_complex" name="set sub attr even if not exist attr" time="0.001"></testcase>
   <testcase classname="base_complex" name="set sub attr differently if declared previously" time="0"></testcase>
   <testcase classname="base_complex" name="validator works for subAttrs" time="0.001"></testcase>
-  <testcase classname="base_complex" name="should fire *Change once for set({})" time="0.001"></testcase>
+  <testcase classname="base_complex" name="should fire *Change once for set({})" time="0.002"></testcase>
 </testsuite>
 </testsuites>

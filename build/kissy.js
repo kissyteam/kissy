@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 02:35
+build time: Nov 28 02:51
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121128023541' will replace with current timestamp when compressing.
+         * NOTICE: '20121128025150' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121128023541',
+        __BUILD_TIME: '20121128025150',
         /**
          * KISSY Environment.
          * @private
@@ -5841,7 +5841,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121128023541'
+            tag: '20121128025150'
         }, getBaseInfo()));
     }
 
@@ -6304,7 +6304,7 @@ config({
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 00:48
+build time: Nov 28 02:51
 */
 /**
  * @ignore
@@ -6396,7 +6396,7 @@ KISSY.add('ua', function (S, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 01:53
+build time: Nov 28 02:47
 */
 /**
  * @ignore
@@ -10402,7 +10402,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 01:53
+build time: Nov 28 02:47
 */
 /**
  * attr ie hack
@@ -11095,7 +11095,7 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 00:46
+build time: Nov 28 02:49
 */
 /**
  * @ignore
@@ -11509,7 +11509,7 @@ KISSY.add('event/base/utils', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 00:46
+build time: Nov 28 02:49
 */
 /**
  * @ignore
@@ -12063,7 +12063,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 00:46
+build time: Nov 28 02:49
 */
 /**
  * @ignore
@@ -14688,7 +14688,7 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 00:46
+build time: Nov 28 02:50
 */
 /**
  * @ignore
@@ -15534,7 +15534,7 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 00:47
+build time: Nov 28 02:50
 */
 /*
  @fileOverview  http://www.JSON.org/json2.js
@@ -16019,7 +16019,7 @@ KISSY.add("json/json2", function () {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 00:47
+build time: Nov 28 02:50
 */
 /**
  * @ignore
@@ -16066,7 +16066,7 @@ KISSY.add('json', function (S, J) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 00:42
+build time: Nov 28 02:45
 */
 /**
  * @ignore
@@ -18145,7 +18145,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 00:43
+build time: Nov 28 02:46
 */
 /**
  * @ignore
@@ -18255,7 +18255,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 00:43
+build time: Nov 28 02:46
 */
 /**
  * @ignore
@@ -18894,7 +18894,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 00:43
+build time: Nov 28 02:46
 */
 /**
  * @ignore
@@ -20441,7 +20441,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 00:47
+build time: Nov 28 02:50
 */
 /**
  * @ignore

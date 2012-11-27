@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 00:47
+build time: Nov 28 02:50
 */
 KISSY.add("rich-base",function(e,m){function j(){var b,a;m.apply(this,arguments);a=this.get("listeners");for(b in a)this.on(b,a[b]);this.callMethodByHierarchy("initializer","constructor");this.bindInternal();this.syncInternal();this.constructPlugins();this.callPluginsMethod("initializer")}function o(b){if(b.target==this)this[k+b.type.slice(5).slice(0,-6)](b.newVal,b)}var l=e.ucfirst,k="_onSet",n=e.noop;e.extend(j,m,{collectConstructorChains:function(){for(var b=[],a=this.constructor;a;)b.push(a),
 a=a.superclass&&a.superclass.constructor;return b},callMethodByHierarchy:function(b,a){for(var c=this.constructor,d=[],f,e,g,h,i;c;){i=[];if(h=c.__ks_exts)for(g=0;g<h.length;g++)if(f=h[g])"constructor"!=a&&(f=f.prototype.hasOwnProperty(a)?f.prototype[a]:null),f&&i.push(f);c.prototype.hasOwnProperty(b)&&(e=c.prototype[b])&&i.push(e);i.length&&d.push.apply(d,i.reverse());c=c.superclass&&c.superclass.constructor}for(g=d.length-1;0<=g;g--)d[g]&&d[g].call(this)},callPluginsMethod:function(b){var a=this;

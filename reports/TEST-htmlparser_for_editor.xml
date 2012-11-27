@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-<testsuite name="htmlparser_for_editor" errors="0" tests="7" failures="0" time="0.03" timestamp="2012-11-28T00:51:51">
-  <testcase classname="htmlparser_for_editor" name="can filter elementNames" time="0.001"></testcase>
-  <testcase classname="htmlparser_for_editor" name="can filter imagedata in vml@ie" time="0.025"></testcase>
+<testsuite name="htmlparser_for_editor" errors="0" tests="7" failures="0" time="0.013" timestamp="2012-11-28T02:38:16">
+  <testcase classname="htmlparser_for_editor" name="can filter elementNames" time="0"></testcase>
+  <testcase classname="htmlparser_for_editor" name="can filter imagedata in vml@ie" time="0.011"></testcase>
   <testcase classname="htmlparser_for_editor" name="can filter attribute" time="0"></testcase>
   <testcase classname="htmlparser_for_editor" name="can modify html structure on fly" time="0.001"></testcase>
   <testcase classname="htmlparser_for_editor" name="filter children works while modify html" time="0"></testcase>
   <testcase classname="htmlparser_for_editor" name="filter will run only once" time="0"></testcase>
-  <testcase classname="htmlparser_for_editor" name="can filter attributeNames" time="0"></testcase>
+  <testcase classname="htmlparser_for_editor" name="can filter attributeNames" time="0.001"></testcase>
 </testsuite>
 </testsuites>

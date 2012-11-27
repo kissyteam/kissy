@@ -48,7 +48,7 @@
                 encoding="${charset}" outputencoding="${charset}">
             <fileset dir="${component.src.dir}" includes="**/*.js"/>
             <filterchain>
-                <deletecharacters chars="${bom}" />
+                <deletecharacters chars="${bom}"/>
             </filterchain>
         </concat>
         <copy todir="${component.src.dir.tmp}">
@@ -264,7 +264,7 @@
 
         <!-- 1.2 不需要 pkg ,pkg 移到外围 -->
         <move encoding="${charset}" todir="${kissy.build.dir}/">
-            <fileset dir="${component.build.dir}" includes="**/*-pkg*"/>
+            <fileset dir="${component.build.dir}" includes="**/*-pkg.js,**/*-pkg-min.js"/>
             <mapper type="regexp" from="(.*)-pkg(.*)" to="\1\2"/>
         </move>
 
