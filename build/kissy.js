@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 02:51
+build time: Nov 28 16:50
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121128025150' will replace with current timestamp when compressing.
+         * NOTICE: '20121128165042' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121128025150',
+        __BUILD_TIME: '20121128165042',
         /**
          * KISSY Environment.
          * @private
@@ -3586,7 +3586,7 @@ var KISSY = (function (undefined) {
          */
             Utils = S.Loader.Utils = {},
         doc = host.document,
-        simulatedLocation = new Uri(host.location && location.href || "");
+        simulatedLocation = new Uri(host.location && host.location.href || "");
 
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -5841,7 +5841,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121128025150'
+            tag: '20121128165042'
         }, getBaseInfo()));
     }
 
@@ -16066,7 +16066,7 @@ KISSY.add('json', function (S, J) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 02:45
+build time: Nov 28 16:50
 */
 /**
  * @ignore
@@ -17035,6 +17035,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
 
     function IframeTransport(io) {
         this.io = io;
+        S.log('use IframeTransport for: ' + io.config.url);
     }
 
     S.augment(IframeTransport, {
@@ -17075,10 +17076,18 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
 
             self.fields = fields;
 
-            // can not setTimeout or else chrome will submit to top window
-            Event.on(iframe, 'load error', self._callback, self);
-            form.submit();
+            function go() {
+                Event.on(iframe, 'load error', self._callback, self);
+                form.submit();
+            }
 
+            // ie6 need a breath
+            if (S.UA.ie == 6) {
+                setTimeout(go, 0);
+            } else {
+                // can not setTimeout or else chrome will submit to top window
+                go();
+            }
         },
 
         _callback: function (event/*, abort*/) {
@@ -17507,11 +17516,13 @@ KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
     });
 
     function ScriptTransport(io) {
+        var config = io.config;
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
-        if (!io.config.crossDomain) {
+        if (!config.crossDomain) {
             return new (IO.getTransport('*'))(io);
         }
         this.io = io;
+        S.log('use ScriptTransport for: ' + config.url);
         return 0;
     }
 
@@ -17618,6 +17629,7 @@ KISSY.add('ajax/sub-domain-transport', function (S, XhrTransportBase, Event, DOM
             c = io.config;
         self.io = io;
         c.crossDomain = false;
+        S.log('use SubDomainTransport for: ' + c.url);
     }
 
 
@@ -17727,7 +17739,7 @@ KISSY.add('ajax/xdr-flash-transport', function (S, io, DOM) {
     }
 
     function XdrFlashTransport(io) {
-        S.log('use flash xdr');
+        S.log('use XdrFlashTransport for: ' + io.config.url);
         this.io = io;
     }
 
@@ -17834,7 +17846,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
     var OK_CODE = 200,
         win = S.Env.host,
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
-        _XDomainRequest = win['XDomainRequest'],
+        _XDomainRequest = S.UA.ie > 7 && win['XDomainRequest'],
         NO_CONTENT_CODE = 204,
         NOT_FOUND_CODE = 404,
         NO_CONTENT_CODE2 = 1223,
@@ -17869,8 +17881,11 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
             return new _XDomainRequest();
         }
         // ie7 XMLHttpRequest 不能访问本地文件
-        return !io.isLocal && createStandardXHR(crossDomain, refWin) || createActiveXHR(crossDomain, refWin);
+        return !io.isLocal && createStandardXHR(crossDomain, refWin) ||
+            createActiveXHR(crossDomain, refWin);
     } : createStandardXHR;
+
+    XhrTransportBase._XDomainRequest = _XDomainRequest;
 
     function isInstanceOfXDomainRequest(xhr) {
         return _XDomainRequest && (xhr instanceof _XDomainRequest);
@@ -17878,7 +17893,6 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
 
     S.mix(XhrTransportBase.proto, {
         sendInternal: function () {
-
             var self = this,
                 io = self.io,
                 c = io.config,
@@ -17978,11 +17992,16 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
             // Firefox throws exceptions when accessing properties
             // of an xhr when a network error occurred
             // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
+            var self = this,
+                nativeXhr = self.nativeXhr,
+                io = self.io,
+                ifModifiedKey,
+                lastModified,
+                eTag,
+                statusText,
+                xml,
+                c = io.config;
             try {
-                var self = this,
-                    nativeXhr = self.nativeXhr,
-                    io = self.io,
-                    c = io.config;
                 //abort or complete
                 if (abort || nativeXhr.readyState == 4) {
                     // ie6 ActiveObject 设置不恰当属性导致出错
@@ -18000,8 +18019,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                             nativeXhr.abort();
                         }
                     } else {
-                        var ifModifiedKey =
-                            c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString();
+                        ifModifiedKey = c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString();
 
                         var status = nativeXhr.status;
 
@@ -18011,8 +18029,8 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                         }
 
                         if (ifModifiedKey) {
-                            var lastModified = nativeXhr.getResponseHeader('Last-Modified'),
-                                eTag = nativeXhr.getResponseHeader('ETag');
+                            lastModified = nativeXhr.getResponseHeader('Last-Modified');
+                            eTag = nativeXhr.getResponseHeader('ETag');
                             // if u want to set if-modified-since manually
                             // u need to save last-modified after the first request
                             if (lastModified) {
@@ -18023,7 +18041,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                             }
                         }
 
-                        var xml = nativeXhr.responseXML;
+                        xml = nativeXhr.responseXML;
 
                         // Construct response list
                         if (xml && xml.documentElement /* #4958 */) {
@@ -18034,7 +18052,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                         // Firefox throws an exception when accessing
                         // statusText for faulty cross-domain requests
                         try {
-                            var statusText = nativeXhr.statusText;
+                            statusText = nativeXhr.statusText;
                         } catch (e) {
                             S.log('xhr statusText error: ');
                             S.log(e);
@@ -18076,7 +18094,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
 KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
 
     var win = S.Env.host,
-        _XDomainRequest = win['XDomainRequest'],
+        _XDomainRequest = XhrTransportBase._XDomainRequest,
         detectXhr = XhrTransportBase.nativeXhr();
 
     if (detectXhr) {
@@ -18084,7 +18102,9 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
         // xx.taobao.com => taobao.com
         // xx.sina.com.cn => sina.com.cn
         function getMainDomain(host) {
-            var t = host.split('.'), len = t.length, limit = len > 3 ? 3 : 2;
+            var t = host.split('.'),
+                len = t.length,
+                limit = len > 3 ? 3 : 2;
             if (len < limit) {
                 return t.join('.');
             } else {
@@ -18092,18 +18112,27 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
             }
         }
 
-
+        /**
+         * @class
+         * @ignore
+         */
         function XhrTransport(io) {
             var c = io.config,
+                url = c.url,
                 crossDomain = c.crossDomain,
                 self = this,
-                xdrCfg = c['xdr'] || {};
+                xdrCfg = c['xdr'] || {},
+                subDomain = xdrCfg.subDomain = xdrCfg.subDomain || {};
+
+            self.io = io;
 
             if (crossDomain) {
-
                 // 跨子域
                 if (getMainDomain(location.hostname) == getMainDomain(c.uri.getHostname())) {
-                    return new SubDomainTransport(io);
+                    // force to not use sub domain transport
+                    if (subDomain.proxy !== false) {
+                        return new SubDomainTransport(io);
+                    }
                 }
 
                 /*
@@ -18117,7 +18146,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
                 }
             }
 
-            self.io = io;
+            S.log('crossDomain: ' + crossDomain + ', use XhrTransport for: ' + url);
             self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
             return undefined;
         }
@@ -18139,7 +18168,11 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 });
 
 /*
- 借鉴 jquery，优化使用原型替代闭包
+ 2012-11-28 note ie port problem:
+ - ie 的 xhr 可以跨端口发请求，例如 localhost:8888 发请求到 localhost:9999
+ - ie iframe 间访问不设置 document.domain 完全不考虑 port！
+ - localhost:8888 访问 iframe 内的 localhost:9999
+
  CORS : http://www.nczonline.net/blog/2010/05/25/cross-domain-ajax-with-cross-origin-resource-sharing/
  */
 /*

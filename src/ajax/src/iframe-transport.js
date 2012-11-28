@@ -75,6 +75,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
 
     function IframeTransport(io) {
         this.io = io;
+        S.log('use IframeTransport for: ' + io.config.url);
     }
 
     S.augment(IframeTransport, {
@@ -115,10 +116,18 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
 
             self.fields = fields;
 
-            // can not setTimeout or else chrome will submit to top window
-            Event.on(iframe, 'load error', self._callback, self);
-            form.submit();
+            function go() {
+                Event.on(iframe, 'load error', self._callback, self);
+                form.submit();
+            }
 
+            // ie6 need a breath
+            if (S.UA.ie == 6) {
+                setTimeout(go, 0);
+            } else {
+                // can not setTimeout or else chrome will submit to top window
+                go();
+            }
         },
 
         _callback: function (event/*, abort*/) {

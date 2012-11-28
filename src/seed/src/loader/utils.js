@@ -21,7 +21,7 @@
          */
             Utils = S.Loader.Utils = {},
         doc = host.document,
-        simulatedLocation = new Uri(host.location && location.href || "");
+        simulatedLocation = new Uri(host.location && host.location.href || "");
 
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A

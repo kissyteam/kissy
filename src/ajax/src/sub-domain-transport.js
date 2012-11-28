@@ -16,6 +16,7 @@ KISSY.add('ajax/sub-domain-transport', function (S, XhrTransportBase, Event, DOM
             c = io.config;
         self.io = io;
         c.crossDomain = false;
+        S.log('use SubDomainTransport for: ' + c.url);
     }
 
 

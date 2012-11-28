@@ -7,7 +7,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
     var OK_CODE = 200,
         win = S.Env.host,
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
-        _XDomainRequest = win['XDomainRequest'],
+        _XDomainRequest = S.UA.ie > 7 && win['XDomainRequest'],
         NO_CONTENT_CODE = 204,
         NOT_FOUND_CODE = 404,
         NO_CONTENT_CODE2 = 1223,
@@ -42,8 +42,11 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
             return new _XDomainRequest();
         }
         // ie7 XMLHttpRequest 不能访问本地文件
-        return !io.isLocal && createStandardXHR(crossDomain, refWin) || createActiveXHR(crossDomain, refWin);
+        return !io.isLocal && createStandardXHR(crossDomain, refWin) ||
+            createActiveXHR(crossDomain, refWin);
     } : createStandardXHR;
+
+    XhrTransportBase._XDomainRequest = _XDomainRequest;
 
     function isInstanceOfXDomainRequest(xhr) {
         return _XDomainRequest && (xhr instanceof _XDomainRequest);
@@ -51,7 +54,6 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
 
     S.mix(XhrTransportBase.proto, {
         sendInternal: function () {
-
             var self = this,
                 io = self.io,
                 c = io.config,
@@ -151,11 +153,16 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
             // Firefox throws exceptions when accessing properties
             // of an xhr when a network error occurred
             // http://helpful.knobs-dials.com/index.php/Component_returned_failure_code:_0x80040111_(NS_ERROR_NOT_AVAILABLE)
+            var self = this,
+                nativeXhr = self.nativeXhr,
+                io = self.io,
+                ifModifiedKey,
+                lastModified,
+                eTag,
+                statusText,
+                xml,
+                c = io.config;
             try {
-                var self = this,
-                    nativeXhr = self.nativeXhr,
-                    io = self.io,
-                    c = io.config;
                 //abort or complete
                 if (abort || nativeXhr.readyState == 4) {
                     // ie6 ActiveObject 设置不恰当属性导致出错
@@ -173,8 +180,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                             nativeXhr.abort();
                         }
                     } else {
-                        var ifModifiedKey =
-                            c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString();
+                        ifModifiedKey = c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString();
 
                         var status = nativeXhr.status;
 
@@ -184,8 +190,8 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                         }
 
                         if (ifModifiedKey) {
-                            var lastModified = nativeXhr.getResponseHeader('Last-Modified'),
-                                eTag = nativeXhr.getResponseHeader('ETag');
+                            lastModified = nativeXhr.getResponseHeader('Last-Modified');
+                            eTag = nativeXhr.getResponseHeader('ETag');
                             // if u want to set if-modified-since manually
                             // u need to save last-modified after the first request
                             if (lastModified) {
@@ -196,7 +202,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                             }
                         }
 
-                        var xml = nativeXhr.responseXML;
+                        xml = nativeXhr.responseXML;
 
                         // Construct response list
                         if (xml && xml.documentElement /* #4958 */) {
@@ -207,7 +213,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                         // Firefox throws an exception when accessing
                         // statusText for faulty cross-domain requests
                         try {
-                            var statusText = nativeXhr.statusText;
+                            statusText = nativeXhr.statusText;
                         } catch (e) {
                             S.log('xhr statusText error: ');
                             S.log(e);

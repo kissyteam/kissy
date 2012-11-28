@@ -18,7 +18,7 @@ module.exports = function (req, res) {
             t.test5 = query.test5;
         }
         var data = '<!doctype html><html><head>' +
-            '<script>document.domain=\'localhost\';</script>' +
+            '<script>document.domain=window.location.hostname.split(".").slice(-3).join(".");</script>' +
             '</head><body>';
         data += JSON.stringify(t);
         data += '</body></html>';

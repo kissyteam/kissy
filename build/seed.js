@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 02:51
+build time: Nov 28 16:50
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121128025150' will replace with current timestamp when compressing.
+         * NOTICE: '20121128165042' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121128025150',
+        __BUILD_TIME: '20121128165042',
         /**
          * KISSY Environment.
          * @private
@@ -3586,7 +3586,7 @@ var KISSY = (function (undefined) {
          */
             Utils = S.Loader.Utils = {},
         doc = host.document,
-        simulatedLocation = new Uri(host.location && location.href || "");
+        simulatedLocation = new Uri(host.location && host.location.href || "");
 
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -5841,7 +5841,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121128025150'
+            tag: '20121128165042'
         }, getBaseInfo()));
     }
 

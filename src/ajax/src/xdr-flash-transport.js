@@ -37,7 +37,7 @@ KISSY.add('ajax/xdr-flash-transport', function (S, io, DOM) {
     }
 
     function XdrFlashTransport(io) {
-        S.log('use flash xdr');
+        S.log('use XdrFlashTransport for: ' + io.config.url);
         this.io = io;
     }
 

@@ -10,19 +10,16 @@
                             forceScript:true,
                             success:function() {
                                 var args = S.makeArray(arguments);
-                                debugger
                                 console.log(1);
                             },
                             // ie : parseerror ，成功 load，但是没有执行 callback ,script -> json 出错
                             // firefox : scripterror , 没有成功 load，直接错了
                             error:function() {
                                 var args = S.makeArray(arguments);
-                                debugger
                                 console.log(2);
                             },
                             complete:function() {
                                 var args = S.makeArray(arguments);
-                                debugger
                                 console.log(3);
                             }
                         });
