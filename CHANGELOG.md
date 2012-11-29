@@ -33,6 +33,7 @@ History:
  - [+] S.config 增加 combine 配置，支持自动 combo
  - [+] 支持 <script src='seed|kissy.js' data-config="json"></script> data-config parse 为 json 传入 config
  - [x] KISSY.add(fn) fn 中 this 为模块对象
+ - [!] KISSY.add(name,fn); fn 不会立即执行，只有 name 被 use 或 require 时才会执行
  - [*] Support tag for individual module : #110
  - [!] 删除 KISSY.app 方法
  - [+] package 增加 debug 配置，可以对包级别设置 debug
