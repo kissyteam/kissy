@@ -69,11 +69,11 @@ describe('kissy.js', function () {
                 }
             };
 
-            r2.y.w=r2;
+            r2.y.w = r2;
 
             S.mix(r, r2, {
                 deep: true,
-                whitelist: ['x', 'y', 'z','w']
+                whitelist: ['x', 'y', 'z', 'w']
             });
 
             expect(r).toEqual({
@@ -184,18 +184,38 @@ describe('kissy.js', function () {
         });
 
         it('solve JsEnumBug', function () {
+            function x(){return 1;}
             var v = {
-                toString: function () {
-                    return 1;
-                }
+                toString: x,
+                hasOwnProperty: x,
+                isPrototypeOf: x,
+                propertyIsEnumerable: x,
+                toLocaleString: x,
+                valueOf:x,
+                constructor: x
             };
             var z = {};
             S.mix(z, v);
-            expect(z.toString()).toBe(1);
+            expect(z.toString).toBe(x);
+            var fs = [], vs = [];
+            S.each(v, function (v, k) {
+                fs.push(k);
+                if(S.isFunction(v)){
+                    v=v();
+                }
+                vs.push(v);
+            });
+            fs.sort();
+            expect(fs).toEqual(['toString',
+                'hasOwnProperty', 'isPrototypeOf',
+                'propertyIsEnumerable',
+                'toLocaleString',
+                'valueOf',
+                'constructor'].sort());
+            expect(vs).toEqual([1, 1, 1, 1, 1, 1, 1]);
         });
 
     });
-
 
     it('S.merge', function () {
         var a = {

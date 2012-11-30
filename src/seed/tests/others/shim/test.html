@@ -1,0 +1,46 @@
+<script src="es5-shim-fix.js"></script>
+<script>
+
+    function Parent() {
+    }
+
+    function Child() {
+    }
+
+    var p = Object.create(Parent.prototype, {
+        constructor: {
+            value: Child
+        }
+    }), i;
+
+    Child.prototype = p;
+
+    alert(new Child() instanceof  Parent);
+
+    // es5-shim bug
+    alert(new Child().constructor == Child);
+    alert(Child.prototype.constructor == Child);
+
+    // cause:
+    var properties = {
+        constructor: {
+            value: Child
+        }
+    };
+
+    for (i in properties) {
+        if (i == 'constructor') {
+            alert('catch constructor');
+        }
+    }
+
+    properties = {};
+    properties.constructor = Parent;
+
+    for (i in properties) {
+        if (i == 'constructor') {
+            alert('catch constructor2');
+        }
+    }
+
+</script>

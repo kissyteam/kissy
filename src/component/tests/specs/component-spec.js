@@ -10,6 +10,8 @@ KISSY.use("component/base", function (S, Component) {
 
     describe("component", function () {
 
+
+
         describe("container", function () {
 
 

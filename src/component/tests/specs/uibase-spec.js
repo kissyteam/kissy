@@ -7,6 +7,15 @@ KISSY.use("component/base,component/extension", function (S, Component, extensio
     var UIBase = Component.UIBase, $ = S.all;
 
     describe('uibase', function () {
+
+
+        it('override rich-base constructor', function () {
+
+            expect(UIBase.prototype.constructor.toString().indexOf('decorateInternal'))
+                .toBeGreaterThan(-1);
+
+        });
+
         it(" will works as multi-inheritance", function () {
 
             var x = 0, y = 0, z = 0;

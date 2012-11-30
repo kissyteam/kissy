@@ -11,8 +11,10 @@
         host = this,
         TRUE = true,
         EMPTY = '',
+    // error in native ie678, not in simulated ie9
         hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
         enumProperties = [
+            'constructor',
             'hasOwnProperty',
             'isPrototypeOf',
             'propertyIsEnumerable',

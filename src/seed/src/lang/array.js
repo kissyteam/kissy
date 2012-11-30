@@ -5,8 +5,8 @@
  *
  */
 (function (S, undefined) {
-    
-    var TRUE=true,
+
+    var TRUE = true,
         AP = Array.prototype,
         indexOf = AP.indexOf,
         lastIndexOf = AP.lastIndexOf,
@@ -14,9 +14,9 @@
         every = AP.every,
         some = AP.some,
         map = AP.map,
-        FALSE=false;
+        FALSE = false;
 
-    S.mix(S,{
+    S.mix(S, {
         /**
          * Executes the supplied function on each item in the array.
          * @param object {Object} the object to iterate
@@ -29,6 +29,7 @@
             if (object) {
                 var key,
                     val,
+                    keys,
                     i = 0,
                     length = object && object.length,
                     isObj = length === undefined || S.type(object) === 'function';
@@ -36,7 +37,9 @@
                 context = context || null;
 
                 if (isObj) {
-                    for (key in object) {
+                    keys = S.keys(object);
+                    for (; i < keys.length; i++) {
+                        key = keys[i];
                         // can not use hasOwnProperty
                         if (fn.call(context, object[key], key, object) === FALSE) {
                             break;
