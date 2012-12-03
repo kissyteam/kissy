@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 30 17:31
+build time: Dec 3 11:38
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121130173121' will replace with current timestamp when compressing.
+         * NOTICE: '20121203113834' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121130173121',
+        __BUILD_TIME: '20121203113834',
         /**
          * KISSY Environment.
          * @private
@@ -205,6 +205,7 @@ var KISSY = (function (undefined) {
         host = this,
         TRUE = true,
         EMPTY = '',
+        ObjectCreate = Object.create,
     // error in native ie678, not in simulated ie9
         hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
         enumProperties = [
@@ -216,12 +217,6 @@ var KISSY = (function (undefined) {
             'toLocaleString',
             'valueOf'
         ];
-
-    function mix(r, s) {
-        for (var i in s) {
-            r[i] = s[i];
-        }
-    }
 
     mix(S, {
         /**
@@ -379,31 +374,13 @@ var KISSY = (function (undefined) {
                 return r;
             }
 
-            var create = Object.create ?
-                    function (proto, c) {
-                        return Object.create(proto, {
-                            constructor: {
-                                value: c
-                            }
-                        });
-                    } :
-                    function (proto, c) {
-                        function F() {
-                        }
-
-                        F.prototype = proto;
-
-                        var o = new F();
-                        o.constructor = c;
-                        return o;
-                    },
-                sp = s.prototype,
+            var sp = s.prototype,
                 rp;
 
             // add prototype chain
-            rp = create(sp, r);
+            rp = createObject(sp, r);
             r.prototype = S.mix(rp, r.prototype);
-            r.superclass = create(sp, s);
+            r.superclass = createObject(sp, s);
 
             // add prototype overrides
             if (px) {
@@ -450,6 +427,26 @@ var KISSY = (function (undefined) {
 
     });
 
+    function Empty() {
+    }
+
+    function createObject(proto, constructor) {
+        var newProto;
+        if (ObjectCreate) {
+            newProto = ObjectCreate(proto);
+        } else {
+            Empty.prototype = proto;
+            newProto = new Empty();
+        }
+        newProto.constructor = constructor;
+        return newProto;
+    }
+
+    function mix(r, s) {
+        for (var i in s) {
+            r[i] = s[i];
+        }
+    }
 
     function mixInternal(r, s, ov, wl, deep, cache) {
         if (!s || !r) {
@@ -5124,7 +5121,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121130173121'
+            tag: '20121203113834'
         }, getBaseInfo()));
     }
 
