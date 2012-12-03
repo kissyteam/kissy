@@ -68,17 +68,16 @@ KISSY.use("kison", function (S, Kison) {
             var itemSets = grammar.get("itemSets");
 
             S.each(itemSets, function (itemSet, i) {
-                // S.log("************************* " + i);
-                // S.log(itemSet.toString());
+                 S.log("************************* " + i);
+                 S.log(itemSet.toString());
             });
 
             expect(itemSets.length).toBe(8);
 
-            // S.log(itemSets);
-
             var i1gotos = itemSets[1].get("gotos");
 
-            expect(itemSets[0].get("gotos")['c']).toBe(itemSets[1]);
+            var cItem = itemSets[0].get("gotos")['c'];
+            expect(cItem === itemSets[1]).toBe(true);
 
             // S.log("!!!!!!!!!!!!!!!");
             // // S.log(itemSets[4].get("gotos")['c'].toString());
@@ -92,7 +91,7 @@ KISSY.use("kison", function (S, Kison) {
                 // S.log("************************* " + symbol);
                 // S.log(itemSet.toString());
                 if (symbol == "c") {
-                    expect(itemSet).toBe(itemSets[1]);
+                    expect(itemSet === itemSets[1]).toBe(true);
                 }
                 num++;
             });
@@ -100,7 +99,6 @@ KISSY.use("kison", function (S, Kison) {
             expect(num).toBe(3);
 
         });
-
 
         it("generate table ok", function () {
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 3 15:43
+build time: Dec 3 17:13
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121203154312' will replace with current timestamp when compressing.
+         * NOTICE: '20121203171350' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121203154312',
+        __BUILD_TIME: '20121203171350',
         /**
          * KISSY Environment.
          * @private
@@ -462,7 +462,7 @@ var KISSY = (function (undefined) {
             ov = TRUE;
         }
 
-        var i = 0, p, keys;
+        var i = 0, p, keys, len;
 
         // 记录循环标志
         s[MIX_CIRCULAR_DETECTION] = r;
@@ -471,7 +471,8 @@ var KISSY = (function (undefined) {
         cache.push(s);
 
         if (wl) {
-            for (i = wl.length - 1; i >= 0; i--) {
+            len = wl.length;
+            for (i = 0; i < len; i++) {
                 p = wl[i];
                 if (p in s) {
                     _mix(p, r, s, ov, wl, deep, cache);
@@ -480,7 +481,8 @@ var KISSY = (function (undefined) {
         } else {
             // mix all properties
             keys = S.keys(s);
-            for (i = keys.length - 1; i >= 0; i--) {
+            len = keys.length;
+            for (i = 0; i < len; i++) {
                 p = keys[i];
                 if (p != MIX_CIRCULAR_DETECTION) {
                     // no hasOwnProperty judge!
@@ -5848,7 +5850,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121203154312'
+            tag: '20121203171350'
         }, getBaseInfo()));
     }
 

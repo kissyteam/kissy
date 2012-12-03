@@ -268,7 +268,7 @@
             ov = TRUE;
         }
 
-        var i = 0, p, keys;
+        var i = 0, p, keys, len;
 
         // 记录循环标志
         s[MIX_CIRCULAR_DETECTION] = r;
@@ -277,7 +277,8 @@
         cache.push(s);
 
         if (wl) {
-            for (i = wl.length - 1; i >= 0; i--) {
+            len = wl.length;
+            for (i = 0; i < len; i++) {
                 p = wl[i];
                 if (p in s) {
                     _mix(p, r, s, ov, wl, deep, cache);
@@ -286,7 +287,8 @@
         } else {
             // mix all properties
             keys = S.keys(s);
-            for (i = keys.length - 1; i >= 0; i--) {
+            len = keys.length;
+            for (i = 0; i < len; i++) {
                 p = keys[i];
                 if (p != MIX_CIRCULAR_DETECTION) {
                     // no hasOwnProperty judge!
