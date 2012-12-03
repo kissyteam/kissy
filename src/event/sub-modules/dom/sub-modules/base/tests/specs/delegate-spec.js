@@ -6,12 +6,42 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
 
     S.get = DOM.get;
     S.query = DOM.query;
-    var simulate = function (target, type, relatedTarget) {
-        if (typeof target === 'string') {
-            target = DOM.get(target);
-        }
-        jasmine.simulate(target, type, { relatedTarget: relatedTarget });
-    };
+
+    var tpl = '<div \
+    id="event-test-data" \
+    style="border: 1px solid #ccc;\
+     height: 50px;\
+     overflow-y: auto; \
+     padding: 5px; \
+     margin-bottom: 20px">\
+        <div id="test-focusin">\
+        test focusin: <input type="text" value="点击我"/>\
+        </div>\
+        <input id="test-focusin-input" type="text" value="另一个输入框"/>\
+        <div style="margin-top: 10px; padding: 30px; background-color: #e3e4e5">\
+            <div id="outer" style="padding: 20px; background-color: #D6EDFC">\
+                <div id="inner" style="padding: 20px; background-color: #FFCC00"></div>\
+            </div>\
+        </div>\
+        <div id="test-delegate">\
+            <div id="test-delegate-outer" class="xx">\
+                <div style="padding:50px;border:1px solid red;width:100px;height:100px;"\
+                class="xx" id="test-delegate-inner">\
+                    <a href="javascript:void(\"#xx\")" id="test-delegate-a">click</a>\
+                    <button id="test-delegate-b">click</button>\
+                </div>\
+            </div>\
+        </div>\
+    </div>';
+
+    beforeEach(function () {
+        DOM.prepend(DOM.create(tpl), 'body');
+    });
+
+    afterEach(function () {
+        DOM.remove('#event-test-data');
+    });
+
     describe('delegate', function () {
 
         it("should invoke correctly", function () {
@@ -28,30 +58,30 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             var b = S.get('#test-delegate-b');
             // support native dom event
             jasmine.simulate(a, "click");
-            waits(100);
+            waits(10);
             runs(function () {
-                expect(ret + "").toBe([a.id,
+                expect(ret).toEqual([a.id,
                     'test-delegate-inner',
                     'test-delegate',
                     a.id,
                     'test-delegate-outer',
                     'test-delegate'
-                ] + "");
+                ]);
             });
             runs(function () {
                 ret = [];
                 // support simulated event
                 Event.fire(b, "click");
             });
-            waits(100);
+            waits(10);
             runs(function () {
-                expect(ret + "").toBe([b.id,
+                expect(ret).toEqual([b.id,
                     'test-delegate-inner',
                     'test-delegate',
                     b.id,
                     'test-delegate-outer',
                     'test-delegate'
-                ] + "");
+                ]);
             });
 
             runs(function () {
@@ -60,16 +90,15 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 // support simulated event
                 Event.fire(b, "click");
             });
-            waits(100);
+            waits(10);
             runs(function () {
-                expect(ret + "").toBe([] + "");
+                expect(ret).toEqual([]);
                 var eventDesc = Event._DOMUtils.data(S.get('#test-delegate'), undefined, false);
                 expect(eventDesc).toBe(undefined);
             });
         });
 
         it("should stop propagation correctly", function () {
-
             var ret = [];
 
             function test(e) {
@@ -83,7 +112,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             var a = S.get('#test-delegate-b');
             // support native dom event
             jasmine.simulate(a, "click");
-            waits(100);
+            waits(10);
             runs(function () {
                 expect(ret + "").toBe([a.id,
                     'test-delegate-inner',
@@ -95,7 +124,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 // support simulated event
                 Event.fire(a, "click");
             });
-            waits(100);
+            waits(10);
             runs(function () {
                 expect(ret + "").toBe([a.id,
                     'test-delegate-inner',
@@ -109,7 +138,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 // support simulated event
                 Event.fire(a, "click");
             });
-            waits(100);
+            waits(10);
             runs(function () {
                 expect(ret + "").toBe([] + "");
                 var eventDesc = Event._DOMUtils.data(S.get('#test-delegate'), undefined, false);
@@ -118,7 +147,6 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
         });
 
         it("should prevent default correctly", function () {
-
             var ret = [];
 
             function test(e) {
@@ -132,7 +160,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             // support native dom event
 
             Event.fire(a, "focus");
-            waits(100);
+            waits(10);
 
 
             runs(function () {
@@ -164,10 +192,10 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
 
             jasmine.simulate(s, "click");
 
-            waits(100);
+            waits(10);
 
             runs(function () {
-                expect(ret + "").toBe([1, 9] + "");
+                expect(ret).toEqual([1,9]);
                 ret = [];
             });
 
@@ -177,21 +205,21 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             });
 
 
-            waits(100);
+            waits(10);
 
             runs(function () {
-                expect(ret + "").toBe([9] + "");
+                expect(ret).toEqual([9]);
             });
 
             runs(function () {
                 ret = [];
                 Event.delegate(d, "click", "button", t);
-
                 Event.undelegate(d, "click", "button");
                 jasmine.simulate(s, 'click');
             });
+            waits(10);
             runs(function () {
-                expect(ret + "").toBe([9] + "");
+                expect(ret).toEqual([9]);
             });
 
             runs(function () {
@@ -200,15 +228,13 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 Event.undelegate(d, "click");
                 jasmine.simulate(s, 'click');
             });
-            waits(100);
+            waits(10);
             runs(function () {
-                expect(ret + "").toBe([9] + "");
+                expect(ret).toEqual([9]);
                 DOM.remove(d);
             });
-
         });
         it("should delegate focus/blur properly", function () {
-
             var container = DOM.get('#test-focusin'),
                 input = DOM.get('input', container),
                 result = [];
@@ -233,7 +259,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             waits(10);
             runs(function () {
                 // guarantee bubble
-                expect(result.join("")).toBe("1");
+                expect(result).toEqual([1]);
             });
 
             // blur the input element
@@ -243,7 +269,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             });
             waits(10);
             runs(function () {
-                expect(result.join("")).toBe("2");
+                expect(result).toEqual([2]);
             });
 
             runs(function () {
@@ -254,62 +280,8 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             waits(10);
 
             runs(function () {
-                expect(result.join("")).toBe("");
+                expect(result).toEqual([]);
             });
-
         });
-        it("should delegate mouseenter/leave properly", function () {
-            var t = S.now();
-            var code = "<div id='d1" + t + "' style='width:500px;height:500px;border:1px solid red;'>" +
-                "<div id='d2" + t + "' class='t' style='width:300px;height:300px;margin:150px;border:1px solid green;'>" +
-                "<div id='d3" + t + "' style='width:100px;height:100px;margin:150px;border:1px solid black;'>" +
-                "</div>" +
-                "</div>" +
-                "</div>";
-            DOM.append(DOM.create(code), document.body);
-            var d1 = DOM.get("#d1" + t),
-                d2 = DOM.get("#d2" + t),
-                d3 = DOM.get("#d3" + t);
-
-            t = "";
-            var type = "";
-            Event.delegate(d1, 'mouseenter', '.t', function (e) {
-                type = e.type;
-                t = e.target.id;
-            });
-
-            simulate(d1, "mouseover", document);
-
-            waits(100);
-
-            runs(function () {
-                expect(t).toBe("");
-                expect(type).toBe("");
-                t = "";
-                type = "";
-                simulate(d2, "mouseover", d1);
-            });
-
-
-            waits(100);
-
-            runs(function () {
-                expect(t).toBe(d2.id);
-                expect(type).toBe("mouseenter");
-                t = "";
-                type = "";
-                simulate(d3, "mouseover", d2);
-            });
-
-            waits(100);
-
-            runs(function () {
-                expect(t).toBe("");
-                expect(type).toBe("");
-                DOM.remove(d1);
-            });
-
-        });
-
     });
 });

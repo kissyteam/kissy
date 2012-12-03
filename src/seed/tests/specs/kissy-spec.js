@@ -48,9 +48,7 @@ describe('kissy.js', function () {
             expect(r.q + "").toBe([6] + "");
         });
 
-
         it('works for deep mix', function () {
-
             var r, r2;
 
             r = {
@@ -64,8 +62,7 @@ describe('kissy.js', function () {
             r2 = {
                 x: 2,
                 y: {
-                    z: 3,
-                    w: r2
+                    z: 3
                 }
             };
 
@@ -157,7 +154,6 @@ describe('kissy.js', function () {
             expect(r.q + "").toBe([2, 5] + "");
         });
 
-
         it("can mix circular reference object", function () {
             var o = {};
 
@@ -184,14 +180,17 @@ describe('kissy.js', function () {
         });
 
         it('solve JsEnumBug', function () {
-            function x(){return 1;}
+            function x() {
+                return 1;
+            }
+
             var v = {
                 toString: x,
                 hasOwnProperty: x,
                 isPrototypeOf: x,
                 propertyIsEnumerable: x,
                 toLocaleString: x,
-                valueOf:x,
+                valueOf: x,
                 constructor: x
             };
             var z = {};
@@ -200,8 +199,8 @@ describe('kissy.js', function () {
             var fs = [], vs = [];
             S.each(v, function (v, k) {
                 fs.push(k);
-                if(S.isFunction(v)){
-                    v=v();
+                if (S.isFunction(v)) {
+                    v = v();
                 }
                 vs.push(v);
             });
@@ -213,6 +212,19 @@ describe('kissy.js', function () {
                 'valueOf',
                 'constructor'].sort());
             expect(vs).toEqual([1, 1, 1, 1, 1, 1, 1]);
+        });
+
+        it('does not ignore undefined value', function () {
+
+            var x = {
+                y: undefined
+            };
+
+            var z = S.mix({}, x);
+
+            expect(z.y).toBeUndefined();
+            expect('y' in z).toBe(true);
+
         });
 
     });

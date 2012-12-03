@@ -60,18 +60,19 @@
          * @member KISSY
          */
         keys: function (o) {
-            var result = [], p;
+            var result = [], p, i;
 
             for (p in o) {
                 result.push(p);
             }
 
             if (hasEnumBug) {
-                S.each(enumProperties, function (name) {
-                    if (o.hasOwnProperty(name)) {
-                        result.push(name);
+                for (i = enumProperties.length - 1; i >= 0; i--) {
+                    p = enumProperties[i];
+                    if (o.hasOwnProperty(p)) {
+                        result.push(p);
                     }
-                });
+                }
             }
 
             return result;
@@ -105,7 +106,9 @@
                 deep = ov['deep'];
                 ov = ov['overwrite'];
             }
-            var cache = [], c, i = 0;
+            var cache = [],
+                c,
+                i = 0;
             mixInternal(r, s, ov, wl, deep, cache);
             while (c = cache[i++]) {
                 delete c[MIX_CIRCULAR_DETECTION];
@@ -124,7 +127,9 @@
          */
         merge: function (var_args) {
             var_args = S.makeArray(arguments);
-            var o = {}, i, l = var_args.length;
+            var o = {},
+                i,
+                l = var_args.length;
             for (i = 0; i < l; i++) {
                 S.mix(o, var_args[i]);
             }
@@ -263,7 +268,7 @@
             ov = TRUE;
         }
 
-        var i = 0, p, len;
+        var i = 0, p, keys;
 
         // 记录循环标志
         s[MIX_CIRCULAR_DETECTION] = r;
@@ -271,29 +276,25 @@
         // 记录被记录了循环标志的对像
         cache.push(s);
 
-        if (wl && (len = wl.length)) {
-            for (; i < len; i++) {
+        if (wl) {
+            for (i = wl.length - 1; i >= 0; i--) {
                 p = wl[i];
                 if (p in s) {
                     _mix(p, r, s, ov, wl, deep, cache);
                 }
             }
         } else {
-            for (p in s) {
+            // mix all properties
+            keys = S.keys(s);
+            for (i = keys.length - 1; i >= 0; i--) {
+                p = keys[i];
                 if (p != MIX_CIRCULAR_DETECTION) {
+                    // no hasOwnProperty judge!
                     _mix(p, r, s, ov, wl, deep, cache);
                 }
             }
-
-            // fix #101
-            if (hasEnumBug) {
-                for (; p = enumProperties[i++];) {
-                    if (s.hasOwnProperty(p)) {
-                        _mix(p, r, s, ov, wl, deep, cache);
-                    }
-                }
-            }
         }
+
         return r;
     }
 
@@ -306,6 +307,10 @@
                 src = s[p];
             // prevent never-end loop
             if (target === src) {
+                // S.mix({},{x:undefined})
+                if (target === undefined) {
+                    r[p] = target;
+                }
                 return;
             }
             // 来源是数组和对象，并且要求深度 mix

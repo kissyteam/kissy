@@ -8,7 +8,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 
     function fixType(cfg, type) {
         var s = special[type] || {};
-        // in case overwrite by delegateFix/onFix in special events
+        // in case overwritten by delegateFix/onFix in special events
         // (mouseenter/leave,focusin/out)
 
         if (!cfg.originalType) {
@@ -18,7 +18,8 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                     type = s['delegateFix'];
                 }
             } else {
-                // when on mouseenter , it's actually on mouseover , and observers is saved with mouseover!
+                // when on mouseenter, it's actually on mouseover,
+                // and observers is saved with mouseover!
                 // TODO need evaluate!
                 if (s['onFix']) {
                     cfg.originalType = type;
@@ -36,6 +37,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
             events,
             handle;
 
+        cfg = S.merge(cfg);
         type = fixType(cfg, type);
 
         // 获取事件描述
@@ -86,7 +88,8 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
     }
 
     function removeInternal(currentTarget, type, cfg) {
-        cfg = cfg || {};
+        // copy
+        cfg = S.merge(cfg);
 
         var customEvent;
 
@@ -313,7 +316,9 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
             events = eventDesc.events;
             S.each(events, function (customEvent, type) {
                 S.each(customEvent.observers, function (observer) {
-                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
+                    // scope undefined
+                    // 不能 this 写死在 handlers 中
+                    // 否则不能保证 clone 时的 this
                     addInternal(dest, type, observer);
                 });
             });

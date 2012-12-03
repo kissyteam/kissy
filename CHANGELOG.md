@@ -17,7 +17,7 @@ History:
 ### v1.3.0 -> v1.4.0
 
 #### event
- - [+] Event.on(target,name,opts), opts.once/selector
+ - [+] Event.on(target,name,opts)/target.on, opts.once/selector
 
 ### Happy 3nd Anniversary (2012/10/26)
  - [!] Still Alive
@@ -42,6 +42,7 @@ History:
  - [+] 增加 KISSY.keys， #101
  - [+] 支持 KISSY.config({packages:{},modules:{}}); modules,packages 均可配置时间戳
  - [*] KISSY.ready try catch 达到互不影响的效果
+ - [*] S.ready 多次调用间独立，不会因为某个异常导致全部中断
 
 
 #### ua

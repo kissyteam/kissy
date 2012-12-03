@@ -1,0 +1,24 @@
+<script type="text/javascript">
+    'use strict';
+
+    function my() {
+
+    }
+
+    var o = {};
+
+    var ObjectCreate=Object.create;
+
+    var o2 = ObjectCreate(o, {
+        constructor: {
+            value: my
+        }
+    });
+
+    o2 = ObjectCreate(o);
+
+    o2.constructor = my;
+
+    console.log(o2.hasOwnProperty('constructor'));
+    console.log(Object.getOwnPropertyDescriptor(o2, 'constructor'))
+</script>

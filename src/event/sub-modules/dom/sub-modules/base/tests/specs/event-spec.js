@@ -4,6 +4,31 @@
  */
 KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
 
+    var tpl = '<div id="event-test-data" \
+    style="border: 1px solid #ccc; height: 50px; overflow-y: \
+    auto; padding: 5px; margin-bottom: 20px">\
+        <div id="foo">\
+            <ul id="bar">\
+                <li><a id="link-a" href="#">link a</a></li>\
+                <li><input type="checkbox" id="checkbox-1"/><input type="checkbox" id="checkbox-2"/></li>\
+                <li id="li-c"><a id="link-c1" href="#">link c1</a> | <a id="link-c2" href="#">link c2</a></li>\
+                <li id="li-d"><a id="link-d1" href="#">link d1</a> | <a id="link-d2" href="#">link d2</a></li>\
+                <li id="li-e"><a id="link-e1" href="#">link e1</a> | <a id="link-e2" href="#">link e2</a></li>\
+                <li><a id="link-f" href="#">link f</a></li>\
+                <li><a id="link-g" href="#">link g</a></li>\
+                <li><a id="link-h" href="#">link h</a></li>\
+                <li><a id="link-s" href="#">link s</a></li>\
+                <li><a id="link-test-this" href="#">link for test this</a></li>\
+                <li><a id="link-test-this-dom" href="#">link for test this</a></li>\
+                <li id="link-test-this-all"><span id="link-test-this-all-span">link for test this</span><span></span></li>\
+            </ul>\
+        </div>\
+        <div id="test-focusin">\
+        test focusin: <input type="text" value="点击我"/>\
+        </div>\
+        <input id="test-focusin-input" type="text" value="另一个输入框"/>\
+    </div>';
+
     describe('event', function () {
 
         var doc = document,
@@ -19,6 +44,14 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
                 }
                 jasmine.simulate(target, type, { relatedTarget: relatedTarget });
             };
+
+        beforeEach(function () {
+            DOM.prepend(DOM.create(tpl), 'body');
+        });
+
+        afterEach(function () {
+            DOM.remove('#event-test-data');
+        });
 
         describe('add event', function () {
 
@@ -326,67 +359,6 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             });
         });
 
-        describe('mouseenter and mouseleave', function () {
-            var ie = UA.ie, outer = DOM.get('#outer'), inner = DOM.get('#inner'),
-                container = outer.parentNode;
-
-            it('should trigger the mouseenter event on the proper element.', function () {
-                var outerCount = 0, innerCount = 0, type = ie ? 'mouseenter' : 'mouseover';
-
-
-                Event.on(outer, 'mouseenter', function () {
-                    outerCount++;
-                });
-
-                Event.on(inner, 'mouseenter', function () {
-                    innerCount++;
-                });
-
-                // move mouse from the container element to the outer element once
-                simulate(outer, type, container);
-
-                // move mouse from the outer element to the inner element twice
-                simulate(inner, type, outer);
-                simulate(inner, type, outer);
-
-                waits(100);
-
-                runs(function () {
-                    if (!ie) {
-                        expect(outerCount).toEqual(1);
-                        expect(innerCount).toEqual(2);
-                    }
-                });
-            });
-
-            it('should trigger the mouseleave event on the proper element.', function () {
-                var outerCount = 0, innerCount = 0, type = ie ? 'mouseleave' : 'mouseout';
-
-                Event.on(outer, 'mouseleave', function () {
-                    outerCount++;
-                });
-                Event.on(inner, 'mouseleave', function () {
-                    innerCount++;
-                });
-
-                // move mouse from the inner element to the outer element once
-                simulate(inner, type, outer);
-
-                // move mouse from the outer element to the container element
-                simulate(outer, type, container);
-                simulate(outer, type, outer.parentNode);
-
-                waits(0);
-
-                runs(function () {
-                    if (!ie) {
-                        expect(outerCount).toEqual(2);
-                        expect(innerCount).toEqual(1);
-                    }
-                });
-            });
-        });
-
         describe('focusin and focusout', function () {
 
             it('should trigger the focusin/focusout event on the proper element, ' +
@@ -484,6 +456,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
         describe('event handler scope', function () {
 
             it('should treat the element itself as the scope.', function () {
+
                 var foo = DOM.get('#foo');
 
                 Event.on(foo, 'click', function () {
@@ -495,6 +468,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             });
 
             it('should support using custom object as the scope.', function () {
+
                 var bar = DOM.get('#bar'),
                     TEST = {
                         foo: 'only for tesing'

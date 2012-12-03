@@ -26,6 +26,9 @@ KISSY.add('event/base/utils', function (S) {
                     fn: fn,
                     context: context
                 };
+            } else {
+                // copy
+                cfg = S.merge(cfg);
             }
 
             var typedGroups = getTypedGroups(type);

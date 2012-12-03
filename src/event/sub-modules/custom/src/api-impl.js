@@ -60,7 +60,6 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
 
                     r2 = customEvent.fire(eventData);
 
-
                     if (ret !== false) {
                         ret = r2;
                     }
@@ -148,7 +147,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
             },
 
             /**
-             * Detach one or more listeners the from the specified event
+             * Detach one or more listeners from the specified event
              * @method
              * @param {String} type The name of the event
              * @param {Function} [fn] The subscribed function to un-subscribe. if not supplied, all observers will be removed.
@@ -159,18 +158,19 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                 type = trim(type);
                 _Utils.batchForType(function (type, fn, context) {
                     var cfg = _Utils.normalizeParam(type, fn, context),
+                        customEvents,
                         customEvent;
                     type = cfg.type;
-                    if (!type) {
-                        var customEvents = ObservableCustomEvent.getCustomEvents(target);
-                        S.each(customEvents, function (customEvent) {
-                            customEvent.detach(cfg);
-                        });
-                    } else {
+                    if (type) {
                         customEvent = ObservableCustomEvent.getCustomEvent(target, type, 1);
                         if (customEvent) {
                             customEvent.detach(cfg);
                         }
+                    } else {
+                        customEvents = ObservableCustomEvent.getCustomEvents(target);
+                        S.each(customEvents, function (customEvent) {
+                            customEvent.detach(cfg);
+                        });
                     }
                 }, 0, type, fn, context);
 

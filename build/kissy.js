@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 3 11:38
+build time: Dec 3 15:43
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121203113834' will replace with current timestamp when compressing.
+         * NOTICE: '20121203154312' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121203113834',
+        __BUILD_TIME: '20121203154312',
         /**
          * KISSY Environment.
          * @private
@@ -254,18 +254,19 @@ var KISSY = (function (undefined) {
          * @member KISSY
          */
         keys: function (o) {
-            var result = [], p;
+            var result = [], p, i;
 
             for (p in o) {
                 result.push(p);
             }
 
             if (hasEnumBug) {
-                S.each(enumProperties, function (name) {
-                    if (o.hasOwnProperty(name)) {
-                        result.push(name);
+                for (i = enumProperties.length - 1; i >= 0; i--) {
+                    p = enumProperties[i];
+                    if (o.hasOwnProperty(p)) {
+                        result.push(p);
                     }
-                });
+                }
             }
 
             return result;
@@ -299,7 +300,9 @@ var KISSY = (function (undefined) {
                 deep = ov['deep'];
                 ov = ov['overwrite'];
             }
-            var cache = [], c, i = 0;
+            var cache = [],
+                c,
+                i = 0;
             mixInternal(r, s, ov, wl, deep, cache);
             while (c = cache[i++]) {
                 delete c[MIX_CIRCULAR_DETECTION];
@@ -318,7 +321,9 @@ var KISSY = (function (undefined) {
          */
         merge: function (var_args) {
             var_args = S.makeArray(arguments);
-            var o = {}, i, l = var_args.length;
+            var o = {},
+                i,
+                l = var_args.length;
             for (i = 0; i < l; i++) {
                 S.mix(o, var_args[i]);
             }
@@ -457,7 +462,7 @@ var KISSY = (function (undefined) {
             ov = TRUE;
         }
 
-        var i = 0, p, len;
+        var i = 0, p, keys;
 
         // 记录循环标志
         s[MIX_CIRCULAR_DETECTION] = r;
@@ -465,29 +470,25 @@ var KISSY = (function (undefined) {
         // 记录被记录了循环标志的对像
         cache.push(s);
 
-        if (wl && (len = wl.length)) {
-            for (; i < len; i++) {
+        if (wl) {
+            for (i = wl.length - 1; i >= 0; i--) {
                 p = wl[i];
                 if (p in s) {
                     _mix(p, r, s, ov, wl, deep, cache);
                 }
             }
         } else {
-            for (p in s) {
+            // mix all properties
+            keys = S.keys(s);
+            for (i = keys.length - 1; i >= 0; i--) {
+                p = keys[i];
                 if (p != MIX_CIRCULAR_DETECTION) {
+                    // no hasOwnProperty judge!
                     _mix(p, r, s, ov, wl, deep, cache);
                 }
             }
-
-            // fix #101
-            if (hasEnumBug) {
-                for (; p = enumProperties[i++];) {
-                    if (s.hasOwnProperty(p)) {
-                        _mix(p, r, s, ov, wl, deep, cache);
-                    }
-                }
-            }
         }
+
         return r;
     }
 
@@ -500,6 +501,10 @@ var KISSY = (function (undefined) {
                 src = s[p];
             // prevent never-end loop
             if (target === src) {
+                // S.mix({},{x:undefined})
+                if (target === undefined) {
+                    r[p] = target;
+                }
                 return;
             }
             // 来源是数组和对象，并且要求深度 mix
@@ -5843,7 +5848,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121203113834'
+            tag: '20121203154312'
         }, getBaseInfo()));
     }
 
@@ -12065,7 +12070,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 02:49
+build time: Dec 3 15:43
 */
 /**
  * @ignore
@@ -12077,7 +12082,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 
     function fixType(cfg, type) {
         var s = special[type] || {};
-        // in case overwrite by delegateFix/onFix in special events
+        // in case overwritten by delegateFix/onFix in special events
         // (mouseenter/leave,focusin/out)
 
         if (!cfg.originalType) {
@@ -12087,7 +12092,8 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                     type = s['delegateFix'];
                 }
             } else {
-                // when on mouseenter , it's actually on mouseover , and observers is saved with mouseover!
+                // when on mouseenter, it's actually on mouseover,
+                // and observers is saved with mouseover!
                 // TODO need evaluate!
                 if (s['onFix']) {
                     cfg.originalType = type;
@@ -12105,6 +12111,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
             events,
             handle;
 
+        cfg = S.merge(cfg);
         type = fixType(cfg, type);
 
         // 获取事件描述
@@ -12155,7 +12162,8 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
     }
 
     function removeInternal(currentTarget, type, cfg) {
-        cfg = cfg || {};
+        // copy
+        cfg = S.merge(cfg);
 
         var customEvent;
 
@@ -12382,7 +12390,9 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
             events = eventDesc.events;
             S.each(events, function (customEvent, type) {
                 S.each(customEvent.observers, function (observer) {
-                    // scope undefined 时不能写死在 handlers 中，否则不能保证 clone 时的 this
+                    // scope undefined
+                    // 不能 this 写死在 handlers 中
+                    // 否则不能保证 clone 时的 this
                     addInternal(dest, type, observer);
                 });
             });
