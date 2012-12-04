@@ -23,10 +23,6 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
                 <li id="link-test-this-all"><span id="link-test-this-all-span">link for test this</span><span></span></li>\
             </ul>\
         </div>\
-        <div id="test-focusin">\
-        test focusin: <input type="text" value="点击我"/>\
-        </div>\
-        <input id="test-focusin-input" type="text" value="另一个输入框"/>\
     </div>';
 
     describe('event', function () {
@@ -359,99 +355,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             });
         });
 
-        describe('focusin and focusout', function () {
 
-            it('should trigger the focusin/focusout event on the proper element, ' +
-                'and support bubbling with correct order.', function () {
-
-                var container = DOM.get('#test-focusin'),
-                    input = DOM.get('input', container),
-                    result = [];
-
-                // In non-IE, the simulation of focusin/focusout behavior do not correspond with IE exactly,
-                // so we should ignore the orders of the event
-                Event.on(container, 'focusin focusout', function () {
-                    result.push(HAPPENED);
-                });
-                Event.on(input, 'focusin focusout', function () {
-                    result.push(HAPPENED + "_inner");
-                });
-
-                // focus the input element
-                runs(function () {
-                    result = [];
-                    input.focus();
-                });
-                waits(10);
-                runs(function () {
-                    // guarantee bubble
-                    expect(result.join(SEP)).toEqual([HAPPENED + "_inner", HAPPENED].join(SEP));
-                });
-
-                // blur the input element
-                runs(function () {
-                    result = [];
-                    input.blur();
-                });
-                waits(10);
-                runs(function () {
-                    expect(result.join(SEP)).toEqual([HAPPENED + "_inner", HAPPENED].join(SEP));
-                });
-
-                runs(function () {
-                    Event.remove(container);
-                    result = [];
-                    input.focus();
-                });
-                waits(10);
-
-                runs(function () {
-                    expect(result.join(SEP)).toEqual([HAPPENED + "_inner"].join(SEP));
-                });
-
-                runs(function () {
-                    Event.remove(input);
-                });
-            });
-
-            it('should trigger the focusin/focusout event and focus event in order.', function () {
-                var ie = UA.ie,
-                    input = DOM.get('#test-focusin-input');
-                var result = [];
-
-                Event.on(input, 'focusin focusout', function () {
-                    result.push(FIRST);
-                });
-
-                Event.on(input, 'focus blur', function () {
-                    result.push(SECOND);
-                });
-
-                // focus the input element
-                runs(function () {
-                    result = [];
-                    input.focus();
-                });
-                waits(0);
-                runs(function () {
-                    if (!ie) {
-                        expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
-                    }
-                });
-
-                // blur the input element
-                runs(function () {
-                    result = [];
-                    input.blur();
-                });
-                waits(0);
-                runs(function () {
-                    if (!ie) {
-                        expect(result.join(SEP)).toEqual([FIRST, SECOND].join(SEP));
-                    }
-                });
-            });
-        });
 
         describe('event handler scope', function () {
 

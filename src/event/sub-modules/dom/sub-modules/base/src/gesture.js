@@ -25,7 +25,11 @@ KISSY.add('event/dom/base/gesture', function (S) {
         /**
          * tap gesture
          */
-        tap: 'click'
+        tap: 'click',
+        /**
+         * doubleTap gesture, it is not same with dblclick
+         */
+        doubleTap:'dblclick'
     };
 
 });

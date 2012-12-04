@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 02:49
+build time: Dec 5 02:26
 */
 /**
  * custom overlay  for kissy editor

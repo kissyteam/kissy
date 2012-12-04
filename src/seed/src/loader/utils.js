@@ -260,12 +260,18 @@
                 m,
                 alias,
                 ok = 0,
+                j,
                 mods = runtime['Env'].mods;
             while (!ok) {
                 ok = 1;
                 for (i = ret.length - 1; i >= 0; i--) {
                     if ((m = mods[ret[i]]) && (alias = m.alias)) {
                         ok = 0;
+                        for (j = alias.length - 1; j >= 0; j--) {
+                            if (!alias[j]) {
+                                alias.splice(j, 1);
+                            }
+                        }
                         ret.splice.apply(ret, [i, 1].concat(indexMap(alias)));
                     }
                 }

@@ -90,8 +90,8 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
                 form = DOM.get(c.form);
 
             self.attrs = {
-                target: DOM.attr(form, 'target') || '',
-                action: DOM.attr(form, 'action') || '',
+                target: DOM.attr(form, 'target')||'',
+                action: DOM.attr(form, 'action')||'',
                 // enctype 区分 iframe 与 serialize
                 //encoding:DOM.attr(form, 'encoding'),
                 //enctype:DOM.attr(form, 'enctype'),
@@ -143,7 +143,14 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
                 return;
             }
 
-            DOM.attr(form, self.attrs);
+            // ie6 立即设置 action 设置为空导致白屏
+            if (eventType == 'abort' && S.UA.ie == 6) {
+                setTimeout(function () {
+                    DOM.attr(form, self.attrs);
+                }, 0);
+            } else {
+                DOM.attr(form, self.attrs);
+            }
 
             removeFieldsFromData(this.fields);
 
@@ -205,7 +212,9 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
         },
 
         abort: function () {
-            this._callback({});
+            this._callback({
+                type: 'abort'
+            });
         }
     });
 

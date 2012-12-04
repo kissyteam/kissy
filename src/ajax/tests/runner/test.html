@@ -7,14 +7,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>IO Test Runner</title>
-    <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
-    <script src="../../../../tools/jasmine/jasmine.js"></script>
-    <script src="../../../../tools/jasmine/jasmine-html.js"></script>
-    <script src="../../../../tools/jasmine/jasmine.console_reporter.js"></script>
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
 
-    <script src="../../../../tools/third-party/jquery.js"></script>
+    <script src="/kissy/tools/third-party/jquery.js"></script>
 
-    <script src="../../../../build/seed.js"></script>
+    <script src="/kissy/build/seed.js"></script>
     <script src="../../src/base.js"></script>
     <script src="../../src/methods.js"></script>
     <script src="../../src/iframe-transport.js"></script>
@@ -35,12 +35,14 @@
 <body>
 <h1>KISSY IO Advanced Test Cases</h1>
 <script>
-    KISSY.use('core', function () {
+    KISSY.use('core', function (S) {
         setTimeout(function () {
-            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-            jasmine.getEnv().execute(function () {
-                jasmine.kissyNext(this.results().failedCount);
+            S.ready(function () {
+                jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+                jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+                jasmine.getEnv().execute(function () {
+                    jasmine.kissyNext(this.results().failedCount);
+                });
             });
         }, 100);
     });

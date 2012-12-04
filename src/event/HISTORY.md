@@ -1,5 +1,9 @@
 # Event Infrastructure
 
+## 2012-12-04
+
+ - allow valuechange bubble(delegation allowed)
+ - support shake gesture
 
 ## yiminghe@gmail.com 2012-11-10
 

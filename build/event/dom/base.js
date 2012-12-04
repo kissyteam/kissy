@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 3 15:43
+build time: Dec 5 02:26
 */
 /**
  * @ignore
@@ -375,195 +375,11 @@ KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Sp
         './base/gesture',
         './base/special',
         './base/api',
-        './base/change',
-        './base/submit',
-        './base/focusin',
-        './base/hashchange',
         './base/mouseenter',
         './base/mousewheel',
         './base/valuechange']
 });
 
-/**
- * @ignore
- * @fileOverview  change bubble and checkbox/radio fix patch for ie<9
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/base/change', function (S, Event, DOM, special) {
-    var UA = S.UA,
-        doc = S.Env.host.document,
-        mode = doc && doc['documentMode'];
-
-    if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
-
-        var R_FORM_EL = /^(?:textarea|input|select)$/i;
-
-        function isFormElement(n) {
-            return R_FORM_EL.test(n.nodeName);
-        }
-
-        function isCheckBoxOrRadio(el) {
-            var type = el.type;
-            return type == 'checkbox' || type == 'radio';
-        }
-
-        special['change'] = {
-            setup: function () {
-                var el = this;
-                if (isFormElement(el)) {
-                    // checkbox/radio only fires change when blur in ie<9
-                    // so use another technique from jquery
-                    if (isCheckBoxOrRadio(el)) {
-                        // change in ie<9
-                        // change = propertychange -> click
-                        Event.on(el, 'propertychange', propertyChange);
-                        Event.on(el, 'click', onClick);
-                    } else {
-                        // other form elements use native , do not bubble
-                        return false;
-                    }
-                } else {
-                    // if bind on parentNode ,lazy bind change event to its form elements
-                    // note event order : beforeactivate -> change
-                    // note 2: checkbox/radio is exceptional
-                    Event.on(el, 'beforeactivate', beforeActivate);
-                }
-            },
-            tearDown: function () {
-                var el = this;
-                if (isFormElement(el)) {
-                    if (isCheckBoxOrRadio(el)) {
-                        Event.remove(el, 'propertychange', propertyChange);
-                        Event.remove(el, 'click', onClick);
-                    } else {
-                        return false;
-                    }
-                } else {
-                    Event.remove(el, 'beforeactivate', beforeActivate);
-                    S.each(DOM.query('textarea,input,select', el), function (fel) {
-                        if (fel.__changeHandler) {
-                            fel.__changeHandler = 0;
-                            Event.remove(fel, 'change', {fn: changeHandler, last: 1});
-                        }
-                    });
-                }
-            }
-        };
-
-        function propertyChange(e) {
-            // if only checked property 's value is changed
-            if (e.originalEvent.propertyName == 'checked') {
-                this.__changed = 1;
-            }
-        }
-
-        function onClick(e) {
-            // only fire change after click and checked is changed
-            // (only fire change after click on previous unchecked radio)
-            if (this.__changed) {
-                this.__changed = 0;
-                // fire from itself
-                Event.fire(this, 'change', e);
-            }
-        }
-
-        function beforeActivate(e) {
-            var t = e.target;
-            if (isFormElement(t) && !t.__changeHandler) {
-                t.__changeHandler = 1;
-                // lazy bind change , always as last handler among user's handlers
-                Event.on(t, 'change', {fn: changeHandler, last: 1});
-            }
-        }
-
-        function changeHandler(e) {
-            var fel = this;
-
-            if (
-            // in case stopped by user's callback,same with submit
-            // http://bugs.jquery.com/ticket/11049
-            // see : test/change/bubble.html
-                e.isPropagationStopped() ||
-                    // checkbox/radio already bubble using another technique
-                    isCheckBoxOrRadio(fel)) {
-                return;
-            }
-            var p;
-            if (p = fel.parentNode) {
-                // fire from parent , itself is handled natively
-                Event.fire(p, 'change', e);
-            }
-        }
-
-    }
-}, {
-    requires: ['./api', 'dom', './special']
-});/**
- * @ignore
- * @fileOverview event-focusin
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/base/focusin', function (S, Event, special) {
-
-    var UA = S.UA;
-
-    // 让非 IE 浏览器支持 focusin/focusout
-    if (!UA['ie']) {
-        S.each([
-            { name: 'focusin', fix: 'focus' },
-            { name: 'focusout', fix: 'blur' }
-        ], function (o) {
-            var key = S.guid('attaches_' + S.now() + '_');
-            special[o.name] = {
-                // 统一在 document 上 capture focus/blur 事件，然后模拟冒泡 fire 出来
-                // 达到和 focusin 一样的效果 focusin -> focus
-                // refer: http://yiminghe.iteye.com/blog/813255
-                setup: function () {
-                    // this maybe document
-                    var doc = this.ownerDocument || this;
-                    if (!(key in doc)) {
-                        doc[key] = 0;
-                    }
-                    doc[key] += 1;
-                    if (doc[key] === 1) {
-                        doc.addEventListener(o.fix, handler, true);
-                    }
-                },
-
-                tearDown: function () {
-                    var doc = this.ownerDocument || this;
-                    doc[key] -= 1;
-                    if (doc[key] === 0) {
-                        doc.removeEventListener(o.fix, handler, true);
-                    }
-                }
-            };
-
-            function handler(event) {
-                var target = event.target;
-                return Event.fire(target, o.name);
-            }
-
-        });
-    }
-
-    special['focus'] = {
-        delegateFix: 'focusin'
-    };
-
-    special['blur'] = {
-        delegateFix: 'focusout'
-    };
-
-    return Event;
-}, {
-    requires: ['./api', './special']
-});
-
-/*
- 承玉:2011-06-07
- - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
- */
 /**
  * @ignore
  * gesture normalization for pc and touch.
@@ -591,249 +407,14 @@ KISSY.add('event/dom/base/gesture', function (S) {
         /**
          * tap gesture
          */
-        tap: 'click'
+        tap: 'click',
+        /**
+         * doubleTap gesture, it is not same with dblclick
+         */
+        doubleTap:'dblclick'
     };
 
 });/**
- * @ignore
- * @fileOverview event-hashchange
- * @author yiminghe@gmail.com, xiaomacji@gmail.com
- */
-KISSY.add('event/dom/base/hashchange', function (S, Event, DOM, special) {
-
-    var UA = S.UA,
-        win = S.Env.host,
-        doc = win.document,
-        docMode = doc && doc['documentMode'],
-        REPLACE_HISTORY = '__replace_history_' + S.now(),
-        ie = docMode || UA['ie'],
-        HASH_CHANGE = 'hashchange';
-
-    Event.REPLACE_HISTORY = REPLACE_HISTORY;
-
-    // ie8 支持 hashchange
-    // 但IE8以上切换浏览器模式到IE7（兼容模式），
-    // 会导致 'onhashchange' in window === true，但是不触发事件
-
-    // 1. 不支持 hashchange 事件，支持 hash 历史导航(opera??)：定时器监控
-    // 2. 不支持 hashchange 事件，不支持 hash 历史导航(ie67) : iframe + 定时器
-    if ((!( 'on' + HASH_CHANGE in win)) || ie && ie < 8) {
-
-        function getIframeDoc(iframe) {
-            return iframe.contentWindow.document;
-        }
-
-        var POLL_INTERVAL = 50,
-            IFRAME_TEMPLATE = '<html><head><title>' + (doc && doc.title || '') +
-                ' - {hash}</title>{head}</head><body>{hash}</body></html>',
-
-            getHash = function () {
-                // 不能 location.hash
-                // 1.
-                // http://xx.com/#yy?z=1
-                // ie6 => location.hash = #yy
-                // 其他浏览器 => location.hash = #yy?z=1
-                // 2.
-                // #!/home/q={%22thedate%22:%2220121010~20121010%22}
-                // firefox 15 => #!/home/q={"thedate":"20121010~20121010"}
-                // !! :(
-                var uri = new S.Uri(location.href);
-                return '#' + uri.getFragment();
-            },
-
-            timer,
-
-        // 用于定时器检测，上次定时器记录的 hash 值
-            lastHash,
-
-            poll = function () {
-                var hash = getHash(), replaceHistory;
-                if (replaceHistory = S.endsWith(hash, REPLACE_HISTORY)) {
-                    hash = hash.slice(0, -REPLACE_HISTORY.length);
-                    // 去除 ie67 hack 标记
-                    location.hash = hash;
-                }
-                if (hash !== lastHash) {
-                    // S.log('poll success :' + hash + ' :' + lastHash);
-                    // 通知完调用者 hashchange 事件前设置 lastHash
-                    lastHash = hash;
-                    // ie<8 同步 : hashChange -> onIframeLoad
-                    hashChange(hash, replaceHistory);
-                }
-                timer = setTimeout(poll, POLL_INTERVAL);
-            },
-
-            hashChange = ie && ie < 8 ? function (hash, replaceHistory) {
-                // S.log('set iframe html :' + hash);
-                var html = S.substitute(IFRAME_TEMPLATE, {
-                        // 防止 hash 里有代码造成 xss
-                        // 后面通过 innerText，相当于 unEscapeHTML
-                        hash: S.escapeHTML(hash),
-                        // 一定要加哦
-                        head: DOM.isCustomDomain() ? ("<script>" +
-                            "document." +
-                            "domain = '" +
-                            doc.domain
-                            + "';</script>") : ''
-                    }),
-                    iframeDoc = getIframeDoc(iframe);
-                try {
-                    // ie 下不留历史记录！
-                    if (replaceHistory) {
-                        iframeDoc.open("text/html", "replace");
-                    } else {
-                        // 写入历史 hash
-                        iframeDoc.open();
-                    }
-                    // 取时要用 innerText !!
-                    // 否则取 innerHtml 会因为 escapeHtml 导置 body.innerHTMl != hash
-                    iframeDoc.write(html);
-                    iframeDoc.close();
-                    // 立刻同步调用 onIframeLoad !!!!
-                } catch (e) {
-                    // S.log('doc write error : ', 'error');
-                    // S.log(e, 'error');
-                }
-            } : function () {
-                notifyHashChange();
-            },
-
-            notifyHashChange = function () {
-                // S.log('hash changed : ' + getHash());
-                Event.fire(win, HASH_CHANGE);
-            },
-            setup = function () {
-                if (!timer) {
-                    poll();
-                }
-            },
-            tearDown = function () {
-                timer && clearTimeout(timer);
-                timer = 0;
-            },
-            iframe;
-
-        // ie6, 7, 覆盖一些function
-        if (ie < 8) {
-
-            /*
-             前进后退 : start -> notifyHashChange
-             直接输入 : poll -> hashChange -> start
-             iframe 内容和 url 同步
-             */
-            setup = function () {
-                if (!iframe) {
-                    var iframeSrc = DOM.getEmptyIframeSrc();
-                    //http://www.paciellogroup.com/blog/?p=604
-                    iframe = DOM.create('<iframe ' +
-                        (iframeSrc ? 'src="' + iframeSrc + '"' : '') +
-                        ' style="display: none" ' +
-                        'height="0" ' +
-                        'width="0" ' +
-                        'tabindex="-1" ' +
-                        'title="empty"/>');
-                    // Append the iframe to the documentElement rather than the body.
-                    // Keeping it outside the body prevents scrolling on the initial
-                    // page load
-                    DOM.prepend(iframe, doc.documentElement);
-
-                    // init，第一次触发，以后都是 onIframeLoad
-                    Event.add(iframe, 'load', function () {
-                        Event.remove(iframe, 'load');
-                        // Update the iframe with the initial location hash, if any. This
-                        // will create an initial history entry that the user can return to
-                        // after the state has changed.
-                        hashChange(getHash());
-                        Event.add(iframe, 'load', onIframeLoad);
-                        poll();
-                    });
-
-                    // Whenever `document.title` changes, update the Iframe's title to
-                    // prettify the back/next history menu entries. Since IE sometimes
-                    // errors with 'Unspecified error' the very first time this is set
-                    // (yes, very useful) wrap this with a try/catch block.
-                    doc.onpropertychange = function () {
-                        try {
-                            if (event.propertyName === 'title') {
-                                getIframeDoc(iframe).title =
-                                    doc.title + ' - ' + getHash();
-                            }
-                        } catch (e) {
-                        }
-                    };
-
-                    /*
-                     前进后退 ： onIframeLoad -> 触发
-                     直接输入 : timer -> hashChange -> onIframeLoad -> 触发
-                     触发统一在 start(load)
-                     iframe 内容和 url 同步
-                     */
-                    function onIframeLoad() {
-                        // S.log('iframe start load..');
-
-                        // 2011.11.02 note: 不能用 innerHtml 会自动转义！！
-                        // #/x?z=1&y=2 => #/x?z=1&amp;y=2
-                        var c = S.trim(getIframeDoc(iframe).body.innerText),
-                            ch = getHash();
-
-                        // 后退时不等
-                        // 定时器调用 hashChange() 修改 iframe 同步调用过来的(手动改变 location)则相等
-                        if (c != ch) {
-                            S.log('set loc hash :' + c);
-                            location.hash = c;
-                            // 使 last hash 为 iframe 历史， 不然重新写iframe，
-                            // 会导致最新状态（丢失前进状态）
-
-                            // 后退则立即触发 hashchange，
-                            // 并更新定时器记录的上个 hash 值
-                            lastHash = c;
-                        }
-                        notifyHashChange();
-                    }
-                }
-            };
-
-            tearDown = function () {
-                timer && clearTimeout(timer);
-                timer = 0;
-                Event.detach(iframe);
-                DOM.remove(iframe);
-                iframe = 0;
-            };
-        }
-
-        special[HASH_CHANGE] = {
-            setup: function () {
-                if (this !== win) {
-                    return;
-                }
-                // 第一次启动 hashchange 时取一下，不能类库载入后立即取
-                // 防止类库嵌入后，手动修改过 hash，
-                lastHash = getHash();
-                // 不用注册 dom 事件
-                setup();
-            },
-            tearDown: function () {
-                if (this !== win) {
-                    return;
-                }
-                tearDown();
-            }
-        };
-    }
-}, {
-    requires: ['./api', 'dom', './special']
-});
-
-/*
- 已知 bug :
- - ie67 有时后退后取得的 location.hash 不和地址栏一致，导致必须后退两次才能触发 hashchange
-
- v1 : 2010-12-29
- v1.1: 支持非IE，但不支持onhashchange事件的浏览器(例如低版本的firefox、safari)
- refer : http://yiminghe.javaeye.com/blog/377867
- https://github.com/cowboy/jquery-hashchange
- *//**
  * @ignore
  * @fileOverview some key-codes definition and utils from closure-library
  * @author yiminghe@gmail.com
@@ -1747,9 +1328,12 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
             delta,
             detail = e.detail;
 
+        // ie/webkit
         if (e.wheelDelta) {
             delta = e.wheelDelta / 120;
         }
+
+        // gecko
         if (e.detail) {
             // press control e.detail == 1 else e.detail == 3
             delta = -(detail % 3 == 0 ? detail / 3 : detail);
@@ -1774,10 +1358,11 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
             deltaX = -1 * e['wheelDeltaX'] / 120;
         }
 
-        // 默认 deltaY ( ie )
+        // 默认 deltaY (ie)
         if (!deltaX && !deltaY) {
             deltaY = delta;
         }
+
         if (deltaX !== undefined ||
             deltaY !== undefined ||
             delta !== undefined) {
@@ -2389,85 +1974,6 @@ KISSY.add('event/dom/base/special', function () {
     return {};
 });/**
  * @ignore
- * @fileOverview patch for ie<9 submit: does not bubble !
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/base/submit', function (S, Event, DOM, special) {
-
-    var UA= S.UA,
-        doc = S.Env.host.document,
-        mode = doc && doc['documentMode'];
-
-    if (UA['ie'] && (UA['ie'] < 9 || (mode && mode < 9))) {
-        var getNodeName = DOM.nodeName;
-        special['submit'] = {
-            setup: function () {
-                var el = this;
-                // form use native
-                if (getNodeName(el) == 'form') {
-                    return false;
-                }
-                // lazy add submit for inside forms
-                // note event order : click/keypress -> submit
-                // key point : find the forms
-                Event.on(el, 'click keypress', detector);
-            },
-            tearDown: function () {
-                var el = this;
-                // form use native
-                if (getNodeName(el) == 'form') {
-                    return false;
-                }
-                Event.remove(el, 'click keypress', detector);
-                S.each(DOM.query('form', el), function (form) {
-                    if (form.__submit__fix) {
-                        form.__submit__fix = 0;
-                        Event.remove(form, 'submit', {
-                            fn: submitBubble,
-                            last: 1
-                        });
-                    }
-                });
-            }
-        };
-
-
-        function detector(e) {
-            var t = e.target,
-                nodeName = getNodeName(t),
-                form = (nodeName == 'input' || nodeName == 'button') ? t.form : null;
-
-            if (form && !form.__submit__fix) {
-                form.__submit__fix = 1;
-                Event.on(form, 'submit', {
-                    fn: submitBubble,
-                    last: 1
-                });
-            }
-        }
-
-        function submitBubble(e) {
-            var form = this;
-            if (form.parentNode &&
-                // it is stopped by user callback
-                !e.isPropagationStopped() &&
-                // it is not fired manually
-                !e.synthetic) {
-                // simulated bubble for submit
-                // fire from parentNode. if form.on('submit') , this logic is never run!
-                Event.fire(form.parentNode, 'submit', e);
-            }
-        }
-    }
-
-}, {
-    requires: ['./api', 'dom', './special']
-});
-/*
- modified from jq, fix submit in ie<9
- - http://bugs.jquery.com/ticket/11049
- *//**
- * @ignore
  * @fileOverview utils for event
  * @author yiminghe@gmail.com
  */
@@ -2556,8 +2062,8 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
         var v = target.value,
             h = DOM.data(target, HISTORY_KEY);
         if (v !== h) {
-            // 只触发自己绑定的 handler
-            Event.fireHandler(target, VALUE_CHANGE, {
+            // allow delegate
+            Event.fire(target, VALUE_CHANGE, {
                 prevVal: h,
                 newVal: v
             });

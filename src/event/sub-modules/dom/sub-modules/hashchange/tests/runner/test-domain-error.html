@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test Runner</title>
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/tools/jasmine/event-simulate.js"></script>
+
+    <script src="/kissy/build/seed.js"></script>
+    <script src="../../src/hashchange.js"></script>
+</head>
+<body>
+<h1>KISSY hashchange Event Domain error Test Cases</h1>
+<script src="../specs/domain-error-spec.js"></script>
+<script>
+    KISSY.use('core', function () {
+        setTimeout(function () {
+            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+            jasmine.getEnv().execute(function () {
+                jasmine.kissyNext(this.results().failedCount);
+            });
+        }, 100);
+    });
+</script>
+
+</body>
+</html>

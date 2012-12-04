@@ -1,0 +1,18 @@
+<script type="text/javascript" src="/kissy/build/seed.js"></script>
+<script src="../../src/shake.js"></script>
+<h1>open in ios and shake your phone</h1>
+<script type="text/javascript">
+
+    var S = KISSY;
+
+    S.use('event', function (S, Event) {
+        Event.on(window, 'shake', function (e) {
+            alert('i know u shake !');
+            var accelerationIncludingGravity = e.accelerationIncludingGravity;
+            S.log(accelerationIncludingGravity.x + ', ' +
+                    accelerationIncludingGravity.y + ', ' +
+                    accelerationIncludingGravity.z);
+        });
+    });
+
+</script>

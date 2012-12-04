@@ -1,34 +1,21 @@
 <html>
 <head>
-    <script src="build/kissy.js"></script>
+    <script src="/kissy/build/kissy.js"></script>
 </head>
 <body>
 <h1>KISSY 集成化测试</h1>
-<button id='retry'>retry</button>
+<div id="iframe">
+
+</div>
+
+<script src="/kissy/tools/test/test.js"></script>
 
 <script>
     <!--
-    {{{code}}}
-    -->
-</script>
-
-<iframe id="test" src=''
-        style="width:100%;height:600px;border:1px solid red;"></iframe>
-
-<script>
-    <!--
-    testIframe = document.getElementById('test');
-
-    var test=[];
-
     {{#each tests}}
-        {{{this}}}
+        tests.push('{{{this}}}');
     {{/each}}
-
-    window.onload = function() {
-        if(1){kissyNext();}
-    };
-    document.writeln(tests.join("<br>"));
+    document.write(tests.join("<br>"));
     -->
 </script>
 

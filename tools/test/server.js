@@ -18,35 +18,36 @@ S.use('xtemplate', function (S, XTemplate) {
         var app = express();
 
         var testTpl = new XTemplate(fs.readFileSync(currentDir + '/test-xtpl.html', 'utf-8'));
-        var testCode = fs.readFileSync(currentDir + '/test.js');
         var listTpl = new XTemplate(fs.readFileSync(currentDir + '/list-xtpl.html', 'utf-8'));
 
         // app.use(express.compress());
         app.use(express.bodyParser());
 
         // combo
-        app.use(function (req, res, next) {
+        app.use('/kissy', function (req, res, next) {
 
             var query = req.query, k,
+                combo = "",
                 path = cwd + req.path;
 
             for (k in query) {
-
+                if (S.startsWith(k, '?')) {
+                    combo = k;
+                    break;
+                }
             }
-
-            k = k || "";
 
             var codes = [];
 
-            if (S.startsWith(k, '?')) {
-                var nextQ = k.slice(1).indexOf('?');
+            if (S.startsWith(combo, '?')) {
+                var nextQ = combo.slice(1).indexOf('?');
                 if (nextQ == -1) {
-                    nextQ = k.length;
+                    nextQ = combo.length;
                 } else {
                     nextQ++;
                 }
-                k = k.slice(1, nextQ);
-                var files = k.split(',');
+                combo = combo.slice(1, nextQ);
+                var files = combo.split(',');
                 var f = files[0];
                 S.each(files, function (f) {
                     codes.push(fs.readFileSync(path + f));
@@ -63,7 +64,7 @@ S.use('xtemplate', function (S, XTemplate) {
 
         });
 
-        app.use(function (req, res, next) {
+        app.use('/kissy', function (req, res, next) {
             var path = req.path;
             if (S.endsWith(path, ".jss")) {
                 require(cwd + path)(req, res);
@@ -72,10 +73,10 @@ S.use('xtemplate', function (S, XTemplate) {
             }
         });
 
-        //app.use(express.directory(cwd))
-        app.use(express.static(cwd));
+        //app.use('/kissy', express.directory(cwd))
+        app.use('/kissy', express.static(cwd));
 
-        app.use(function (req, res, next) {
+        app.use('/kissy', function (req, res, next) {
 
             var cur = cwd + req.path,
                 index = cur + '/index.jss';
@@ -99,9 +100,8 @@ S.use('xtemplate', function (S, XTemplate) {
 
         var codes = require('./tc.js')();
 
-        app.get('/test', function (req, res) {
+        app.get('/kissy/test', function (req, res) {
             res.send(testTpl.render({
-                code: testCode,
                 tests: codes
             }));
         });

@@ -3,14 +3,10 @@
  * @author yiminghe@gmail.com
  */
 KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
+
     S.get = DOM.get;
     S.query = DOM.query;
-    var simulate = function (target, type, relatedTarget) {
-        if (typeof target === 'string') {
-            target = DOM.get(target);
-        }
-        jasmine.simulate(target, type, { relatedTarget:relatedTarget });
-    };
+
     describe('delegate-advanced', function () {
 
         beforeEach(function () {
@@ -219,7 +215,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             Event.delegate("#delegateAdvanced", "click", ".c", function () {
                 ret.push(2);
             });
-            Event.delegate("#delegateAdvanced", "focus", ".c", function () {
+            Event.delegate("#delegateAdvanced", "focusin", ".c", function () {
                 ret.push(4);
             });
             Event.on("#delegateAdvanced", "click", function () {

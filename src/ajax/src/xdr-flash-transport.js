@@ -79,10 +79,14 @@ KISSY.add('ajax/xdr-flash-transport', function (S, io, DOM) {
             var self = this,
                 ret,
                 id = o.id,
+                responseText,
+                c = o.c,
                 io = self.io;
 
             // need decodeURI to get real value from flash returned value
-            io.responseText = decodeURI(o.c.responseText);
+            if (c && (responseText = c.responseText)) {
+                io.responseText = decodeURI(responseText);
+            }
 
             switch (e) {
                 case 'success':
@@ -96,7 +100,10 @@ KISSY.add('ajax/xdr-flash-transport', function (S, io, DOM) {
                 case 'transport error':
                 case 'failure':
                     delete maps[id];
-                    ret = { status: 500, statusText: e };
+                    ret = {
+                        status: 'status' in c ? c.status : 500,
+                        statusText: c.statusText || e
+                    };
                     break;
             }
             if (ret) {

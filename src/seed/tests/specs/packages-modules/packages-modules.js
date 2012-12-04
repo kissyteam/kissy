@@ -5,7 +5,7 @@ describe("modules and packages", function () {
     it("can get base correctly", function () {
         expect(KISSY.config("base"))
             .toBe(new S.Uri(location.href)
-            .resolve("../../../../build/").toString());
+            .resolve("/kissy/build/").toString());
     });
 
     it("does not depend on order", function () {

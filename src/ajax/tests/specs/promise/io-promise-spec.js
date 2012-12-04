@@ -2,7 +2,7 @@ KISSY.use("ajax", function (S, io) {
 
     var Promise = S.Promise;
 
-    var URL = '/src/ajax/tests/specs/promise/gen-json.jss';
+    var URL = '/kissy/src/ajax/tests/specs/promise/gen-json.jss';
 
     describe("S.io as a promise", function () {
 

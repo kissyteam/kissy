@@ -7,11 +7,11 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>Seed Test Runner</title>
-    <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
-    <script src="../../../../tools/jasmine/jasmine.js"></script>
-    <script src="../../../../tools/jasmine/jasmine-html.js"></script>
-    <script src="../../../../tools/jasmine/jasmine.console_reporter.js"></script>
-    <script src="../../../../build/seed.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/build/seed.js"></script>
     <script src="../data/clear.js"></script>
     <script>
         KISSY.config("combine", true);
@@ -22,7 +22,7 @@
 <script src="../specs/combo/combo-spec.js"></script>
 <script>
     jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+    jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
     jasmine.getEnv().execute(function () {
         jasmine.kissyNext(this.results().failedCount);
     });

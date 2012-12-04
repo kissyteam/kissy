@@ -8,8 +8,8 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="viewport" content="width = device-width,initial-scale = 1.0">
     <title>KISSY Editor Test</title>
-    <link href="../../../../../build/css/dpl/base.css" rel="stylesheet"/>
-    <link href="../../../../../build/editor/theme/cool/editor.css" rel="stylesheet"/>
+    <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
+    <link href="/kissy/build/editor/theme/cool/editor.css" rel="stylesheet"/>
     <link href="http://ata.alacner.com/css/shCoreDefault.css" rel="stylesheet"/>
 </head>
 <body>

@@ -7,12 +7,13 @@
 
     var Env = S.Env,
         win = Env.host,
-        UA= S.UA,
+        UA = S.UA,
     // nodejs
         doc = win.document || {},
     // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
         isTouchSupported = ('ontouchstart' in doc) && !(UA.phantomjs),
         documentMode = doc.documentMode,
+        ie = documentMode || UA.ie,
         isNativeJSONSupported = ((Env.nodejs && typeof global === 'object') ? global : win).JSON;
 
     // ie 8.0.7600.16315@win7 json bug!
@@ -41,6 +42,17 @@
          */
         isTouchSupported: function () {
             return isTouchSupported;
+        },
+
+        isDeviceMotionSupported: function () {
+            return !!win['DeviceMotionEvent'];
+        },
+
+        'isHashChangeSupported': function () {
+            // ie8 支持 hashchange
+            // 但 ie8 以上切换浏览器模式到 ie7（兼容模式），
+            // 会导致 'onhashchange' in window === true，但是不触发事件
+            return ( 'onhashchange' in win) && (!ie || ie > 7);
         },
 
         /**

@@ -1,0 +1,10 @@
+<project name="event/dom/hashchange.build" default="build">
+    <description>event/dom/hashchange Build File</description>
+
+    <property name="component.name" value="event/dom/hashchange"/>
+
+    <import file="../../../../../../tools/build-xml/common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

@@ -1,46 +1,56 @@
 /**
- * unit test framework for KISSY
+ * unit test framework for S
  * @author yiminghe@gmail.com
  */
 
-// document.domain='ali.com';
 var index = -1;
-var $ = KISSY.all;
+var S = KISSY;
+var $ = S.all;
 var tests = [];
-var loc = window.location.href.replace(/test.php/, "");
-var testIframe = document.getElementById("test");
-location.hash = '';
+var testIframe;
 
-$('#retry').on('click', function () {
-    if (tests[index]) {
-        testIframe.src = tests[index] + "?" + (+new Date());
-    }
-});
 
 if ('onmessage' in window) {
-    KISSY.log('using onmessage');
-    KISSY.Event.on(window, "message", function (e) {
+    S.log('using onmessage');
+    S.Event.on(window, "message", function (e) {
         if (e.originalEvent.data == "next") {
-            kissyNext();
+            SNext();
         }
     });
 } else {
-    KISSY.log('window.name');
+    S.log('window.name');
     setInterval(function () {
         if (window.name == 'next') {
-            kissyNext();
+            SNext();
             window.name = '';
         }
     }, 1000);
 }
-function kissyNext() {
+function SNext() {
     // event hash change ,ie error
     index++;
     if (tests[index]) {
-        KISSY.log('run: ' + tests[index]);
+        S.log('run: ' + tests[index]);
         window.scrollTo(0, 0);
+        location.hash = tests[index];
         setTimeout(function () {
             testIframe.src = tests[index] + "?" + (+new Date());
         }, 50);
     }
 }
+
+window.onload = function () {
+    testIframe = document.createElement('iframe');
+    testIframe.style.cssText = 'width:100%;height:600px;border:1px solid red;';
+    document.getElementById('iframe').appendChild(testIframe);
+    var hash = location.hash.replace(/^#/, '');
+    if (hash) {
+        index = S.indexOf(hash, tests);
+        if (index > 0) {
+            index--;
+        }
+    }
+    if (1) {
+        SNext();
+    }
+};

@@ -14,10 +14,6 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
      overflow-y: auto; \
      padding: 5px; \
      margin-bottom: 20px">\
-        <div id="test-focusin">\
-        test focusin: <input type="text" value="点击我"/>\
-        </div>\
-        <input id="test-focusin-input" type="text" value="另一个输入框"/>\
         <div style="margin-top: 10px; padding: 30px; background-color: #e3e4e5">\
             <div id="outer" style="padding: 20px; background-color: #D6EDFC">\
                 <div id="inner" style="padding: 20px; background-color: #FFCC00"></div>\
@@ -195,7 +191,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             waits(10);
 
             runs(function () {
-                expect(ret).toEqual([1,9]);
+                expect(ret).toEqual([1, 9]);
                 ret = [];
             });
 
@@ -232,55 +228,6 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             runs(function () {
                 expect(ret).toEqual([9]);
                 DOM.remove(d);
-            });
-        });
-        it("should delegate focus/blur properly", function () {
-            var container = DOM.get('#test-focusin'),
-                input = DOM.get('input', container),
-                result = [];
-
-            // In non-IE, the simulation of focusin/focusout behavior do not correspond with IE exactly,
-            // so we should ignore the orders of the event
-            Event.delegate(container, 'focus', 'input', function (e) {
-                expect(e.type).toBe("focus");
-                result.push(1);
-            });
-
-            Event.delegate(container, 'blur', 'input', function (e) {
-                expect(e.type).toBe("blur");
-                result.push(2);
-            });
-
-            // focus the input element
-            runs(function () {
-                result = [];
-                input.focus();
-            });
-            waits(10);
-            runs(function () {
-                // guarantee bubble
-                expect(result).toEqual([1]);
-            });
-
-            // blur the input element
-            runs(function () {
-                result = [];
-                input.blur();
-            });
-            waits(10);
-            runs(function () {
-                expect(result).toEqual([2]);
-            });
-
-            runs(function () {
-                Event.remove(container);
-                result = [];
-                input.focus();
-            });
-            waits(10);
-
-            runs(function () {
-                expect(result).toEqual([]);
             });
         });
     });

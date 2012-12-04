@@ -39,7 +39,7 @@ KISSY.use("anim,node", function(S, Anim, Node) {
 
     describe("anim on node", function() {
 
-        it("should attach node with slideup/down well", function() {
+        it("should attach node with slideUp/down well", function() {
             var test1 = Node.one("#test6");
 
             test1.css({

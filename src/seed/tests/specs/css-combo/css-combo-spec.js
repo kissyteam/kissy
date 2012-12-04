@@ -5,9 +5,9 @@ describe("css-combo", function () {
 
         var S = KISSY;
 
-        S.use("node", function () {
 
-            S.all("<div>" +
+
+            $("<div>" +
                 "<div class='test2'></div>" +
                 "<div class='test1'></div>" +
                 "</div>").appendTo("body");
@@ -33,15 +33,14 @@ describe("css-combo", function () {
 
             KISSY.use("x/x1", function (S, X1) {
                 expect(X1).toBe(2);
-                expect(S.all(".test1").css("font-size")).toBe("20px");
-                expect(S.all(".test2").css("font-size")).toBe("30px");
+                expect($(".test1").css("font-size")).toBe("20px");
+                expect($(".test2").css("font-size")).toBe("30px");
                 ret = 1;
             });
 
             waitsFor(function () {
                 return ret;
             });
-        });
 
     });
 

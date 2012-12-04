@@ -8,12 +8,12 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <title>Component Test Runner</title>
 
-    <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
 
-    <script src="../../../../tools/jasmine/jasmine.js"></script>
-    <script src="../../../../tools/jasmine/jasmine-html.js"></script>
-    <script src="../../../../tools/jasmine/jasmine.console_reporter.js"></script>
-    <script src="../../../../tools/jasmine/event-simulate.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/tools/jasmine/event-simulate.js"></script>
     <style>
         html, body {
             padding: 0;
@@ -24,8 +24,7 @@
 <body>
 <h1>KISSY Component Test Cases</h1>
 
-<script src="../../../../build/kissy.js"></script>
-<script src="../../../../build/rich-base.js"></script>
+<script src="/kissy/build/seed.js"></script>
 <script src="../../sub-modules/base/src/controller.js"></script>
 <script src="../../sub-modules/base/src/container.js"></script>
 <script src="../../sub-modules/base/src/decorate-child.js"></script>
@@ -52,11 +51,16 @@
 <script src="../specs/align-spec.js"></script>
 <script src="../specs/component-spec.js"></script>
 <script>
+    KISSY.use('component/base,component/extension', function () {
 
-    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-    jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-    jasmine.getEnv().execute(function () {
-        jasmine.kissyNext(this.results().failedCount);
+        setTimeout(function () {
+            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+            jasmine.getEnv().execute(function () {
+                jasmine.kissyNext(this.results().failedCount);
+            });
+        }, 200);
+
     });
 
 </script>

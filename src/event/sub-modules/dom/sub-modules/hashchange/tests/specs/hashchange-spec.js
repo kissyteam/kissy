@@ -2,7 +2,7 @@
  * hashchange spec
  * @author yiminghe@gmail.com
  */
-KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
+KISSY.use("dom,event/dom", function (S, DOM, Event) {
     describe("hashchange event", function () {
 
         function getHash() {

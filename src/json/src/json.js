@@ -37,6 +37,6 @@ KISSY.add('json', function (S, J) {
     };
 }, {
     requires: [
-        KISSY.Features.isNativeJSONSupported() ? "empty" : "json/json2"
+        KISSY.Features.isNativeJSONSupported() ? "" : "json/json2"
     ]
 });

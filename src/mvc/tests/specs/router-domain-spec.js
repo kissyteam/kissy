@@ -8,7 +8,11 @@ KISSY.use('dom,mvc', function (S, DOM, MVC) {
 
     describe("domain in router", function () {
 
-        it("change domain works", function () {
+        it("change domain works for router", function () {
+
+            if (S.UA.ie == 6) {
+                return;
+            }
 
             var ok = 0;
 
@@ -23,7 +27,7 @@ KISSY.use('dom,mvc', function (S, DOM, MVC) {
                 }
             });
 
-            document.domain = 'localhost';
+            document.domain = location.hostname;
             DOM.isCustomDomain = function () {
                 return true;
             };

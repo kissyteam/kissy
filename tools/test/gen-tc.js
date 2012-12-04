@@ -6,7 +6,7 @@ var path = require('path');
 var fs = require('fs');
 var cwd = process.cwd();
 var srcDir = path.resolve(cwd, 'src');
-var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
+var S = global.KISSY = global.S = require(cwd + '/kissy/build/kissy-nodejs.js');
 
 function collectTc(baseDir, codes) {
     var files = fs.readdirSync(baseDir);
@@ -17,7 +17,7 @@ function collectTc(baseDir, codes) {
             if (S.endsWith(f, ts)) {
                 var runners = fs.readdirSync(f);
                 S.each(runners, function (r) {
-                    r = (f + '/' + r).replace(cwd, '').replace(/\\/g, '/');
+                    r = '/kissy'+(f + '/' + r).replace(cwd, '').replace(/\\/g, '/');
                     codes.push("tests.push('" + r + "');\n");
                 });
             } else {

@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
 <head>
-<script src='../../../build/kissy.js'></script>
-<script src='../../../tools/third-party/raphael.js'></script>
+<script src="/kissy/build/seed.js"></script>
+<script src="/kissy/tools/third-party/raphael.js"></script>
 <style>
     body {
         background: #000;
@@ -38,7 +38,7 @@
 </div>
 
 <script>
-    (function (S) {
+    KISSY.use('core',function (S) {
         var $ = S.all;
         var easings = [
             [
@@ -140,7 +140,7 @@
 
             $(container).prev("h2").html(easingHtml.join(" / "));
         }
-    })(KISSY);
+    });
 </script>
 
 </body>

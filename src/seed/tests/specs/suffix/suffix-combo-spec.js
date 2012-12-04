@@ -17,11 +17,11 @@ describe("mod with suffix", function () {
             }
         });
 
-        S.all("<div id='suffix-test'></div>").appendTo("body");
+        $("<div id='suffix-test'></div>").appendTo("body");
 
         S.use("suffix/a.tpl", function (S, A) {
             expect(A).toBe(1);
-            expect(S.all("#suffix-test").css("font-size")).toBe("77px");
+            expect($("#suffix-test").css("font-size")).toBe("77px");
             ret = 1;
         });
 

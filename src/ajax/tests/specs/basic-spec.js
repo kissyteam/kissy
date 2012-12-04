@@ -1,57 +1,191 @@
 /**
  * basic test cases for kissy ajax
- * @author  lijing00333@163.com
+ * @author lijing00333@163.com, yiminghe@gmail.com
  */
 KISSY.use("json,ajax", function (S, JSON, IO) {
 
     describe('IO', function () {
 
 
-        describe('404s/301s', function () {
+        describe('404/301', function () {
 
-            it('当请求为 404/301 时，get不触发回调', function () {
+            it('404 get error', function () {
+                var ret404, o404 = 0;
 
-                //如果不带随机数，ie下会从缓存中取，会认为链接状态为200，从而执行回调
-                IO.get('../data/404?t=' + S.now(), function () {
-                    expect('此处').toBe('不运行');
+                IO({
+                    url: '../data/404',
+                    cache: false,
+                    success: function () {
+                        //var args = S.makeArray(arguments);
+                        ret404 = 1;
+                    },
+                    error: function () {
+                        //var args = S.makeArray(arguments);
+                        ret404 = 0;
+                    },
+                    complete: function () {
+                        o404 = 1;
+                    }
                 });
 
-                IO.get('../data/301.jss', function () {
-                    expect('301 runs').toBe('301 runs');
+                waitsFor(function () {
+                    return o404 == 1;
                 });
 
-                waits(300);
+                runs(function () {
+                    expect(ret404).toBe(0);
+                });
             });
 
-            it('当请求为404/301时，post不触发回调', function () {
 
-                IO.post('../data/404?t=' + S.now(), function () {
-                    expect('此处').toBe('不运行');
+            it('301 get success', function () {
+
+                var ret301, o301;
+
+                IO({
+                    url: '../data/301.jss',
+                    cache: false,
+                    success: function (p) {
+                        //var args = S.makeArray(arguments);
+                        expect(p.name).toBe('kissy');
+                        ret301 = 1;
+                    },
+                    error: function (_, s, io) {
+                        expect(io.status).toBe(0);
+                        //var args = S.makeArray(arguments);
+                        ret301 = 0;
+                    },
+                    complete: function () {
+                        o301 = 1;
+                    }
                 });
 
-                IO.post('../data/301.jss', function () {
-                    expect('301 runs').toBe('301 runs');
+                waitsFor(function () {
+                    // 301 浏览器自动跳转
+                    return o301 == 1;
                 });
 
-                waits(300);
-
+                runs(function () {
+                    expect(ret301).toBe(1);
+                });
             });
 
-            it('404/301时，jsonp不触发回调', function () {
+            it('404 post error', function () {
+                var ret404, o404 = 0;
 
-                IO.jsonp('../data/404?t=' + S.now(), function () {
-                    expect('此处').toBe('不运行');
+                IO({
+                    url: '../data/404',
+                    type: 'post',
+                    cache: false,
+                    success: function () {
+                        //var args = S.makeArray(arguments);
+                        ret404 = 1;
+                    },
+                    error: function () {
+                        //var args = S.makeArray(arguments);
+                        ret404 = 0;
+                    },
+                    complete: function () {
+                        o404 = 1;
+                    }
                 });
 
-                waits(300);
+                waitsFor(function () {
+                    return o404 == 1;
+                });
+
+                runs(function () {
+                    expect(ret404).toBe(0);
+                });
             });
 
+
+            it('301 post success', function () {
+
+
+                var ret301, o301;
+
+                IO({
+                    url: '../data/301.jss',
+                    cache: false,
+                    type: 'post',
+                    success: function (p) {
+                        //var args = S.makeArray(arguments);
+                        expect(p.name).toBe('kissy');
+                        ret301 = 1;
+                    },
+                    error: function (_, s, io) {
+                        expect(io.status).toBe(0);
+                        //var args = S.makeArray(arguments);
+                        ret301 = 0;
+                    },
+                    complete: function () {
+                        o301 = 1;
+                    }
+                });
+
+                waitsFor(function () {
+                    // 301 浏览器自动跳转
+                    return o301 == 1;
+                });
+
+                runs(function () {
+                    expect(ret301).toBe(1);
+                });
+            });
+
+            it('404时，jsonp不触发回调', function () {
+                var ret404;
+                IO({
+                    url: '../data/404',
+                    dataType: 'jsonp',
+                    success: function () {
+                        //var args = S.makeArray(arguments);
+                        ret404 = 1;
+                    },
+                    error: function () {
+                        var args = S.makeArray(arguments);
+                        expect(args[1]).toBe("Not Found");
+                        ret404 = 0;
+                    }
+                });
+
+                waitsFor(function () {
+                    return ret404 == 0;
+                });
+            });
+
+            it('404时，cross domain jsonp不触发回调', function () {
+                var ret404;
+                IO({
+                    url: '../data/404',
+                    dataType: 'jsonp',
+                    crossDomain: true,
+                    success: function () {
+                        //var args = S.makeArray(arguments);
+                        ret404 = 1;
+                    },
+                    error: function () {
+                        var args = S.makeArray(arguments);
+                        expect(S.inArray(args[1], [
+                            "script error",
+                            "parser error"
+                        ]))
+                            .toBe(true);
+                        ret404 = 0;
+                    }
+                });
+
+                waitsFor(function () {
+                    return ret404 == 0;
+                });
+            });
 
         });
 
         describe('jsonp', function () {
 
-            it('请求错误的jsonp,不触发回调', function () {
+            it('容错', function () {
                 IO.jsonp('');
                 IO.jsonp();
                 IO.jsonp(null);
@@ -72,6 +206,14 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                 waitsFor(function () {
                     return ok;
                 });
+
+                runs(function () {
+                    try {
+                        delete window['customCallback'];
+                    } catch (e) {
+                        window['customCallback'] = undefined;
+                    }
+                })
 
             });
 
@@ -97,7 +239,9 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
             });
 
             it('不带参数请求jsonp', function () {
-                var ok = false;
+
+                var ok = 0;
+
                 runs(function () {
                     IO.jsonp('../data/interface.jss', function (data) {
                         ok = true;
@@ -115,11 +259,11 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
             it('带参数提交jsonp，获取回调参数', function () {
                 var ok = 0;
                 IO.jsonp('../data/interface.jss?sleep=0', {
-                    myparam: 'taobao'
+                    my_param: 'taobao'
                 }, function (data) {
                     expect(typeof data).toBe('object');
                     expect(data).not.toBe(undefined);
-                    expect(data['myparam']).toBe('taobao');
+                    expect(data['my_param']).toBe('taobao');
                     ok = 1;
                 });
                 waitsFor(function () {
@@ -130,12 +274,12 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
             // https://github.com/kissyteam/kissy/issues/187
             it("can ignore protocol", function () {
                 var ok = 0;
-                IO.jsonp('//localhost:9999/src/ajax/tests/data/interface.jss', {
-                    myparam: 'taobao'
+                IO.jsonp('//' + location.hostname + ':9999/kissy/src/ajax/tests/data/interface.jss', {
+                    my_param: 'taobao'
                 }, function (data) {
                     expect(typeof data).toBe('object');
                     expect(data).not.toBe(undefined);
-                    expect(data['myparam']).toBe('taobao');
+                    expect(data['my_param']).toBe('taobao');
                     ok = 1;
                 });
                 waitsFor(function () {
@@ -148,11 +292,11 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
         describe('同步请求的test case', function () {
 
             it('get 同步加载,等待2秒钟继续执行', function () {
-                var d;
+                var d = 0;
                 IO({
                     type: 'get',
                     // 根据 content-type 自动 parse
-                    url: '../data/interface.jss?sleep=1&contype=text/json',
+                    url: '../data/interface.jss?sleep=1&contentType=text/json',
                     async: false,
                     success: function (o) {
                         d = o;
@@ -163,10 +307,10 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
 
             it('post 同步加载,等待2秒钟继续执行', function () {
                 runs(function () {
-                    var d;
+                    var d = 0;
                     IO({
                         type: 'post',
-                        url: '../data/interface.jss?sleep=1&contype=text/json',
+                        url: '../data/interface.jss?sleep=1&contentType=text/json',
                         async: false,
                         success: function (o) {
                             d = o;
@@ -183,8 +327,9 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
         describe('post', function () {
 
             it('能正确发起post 请求，无参数,正确获取回调参数，类型是text/json', function () {
+
                 var ok = false;
-                IO.post('../data/interface.jss?t=post&contype=text/json', function (data) {
+                IO.post('../data/interface.jss?t=post&contentType=text/json', function (data) {
                     ok = true;
                     expect(typeof data).toBe('object');
                     expect(data).not.toBe(undefined);
@@ -198,9 +343,11 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
             });
 
             it('能正确发起 post 请求，无参数,正确获取回调参数', function () {
+
                 var ok = false;
                 IO.post('../data/interface.jss?t=post', function (data, status, xhr) {
                     ok = true;
+                    expect(typeof data).toBe('string');
                     var o = JSON.parse(data);
                     expect(o).not.toBe(undefined);
                     expect(o['name']).toBe('test');
@@ -210,10 +357,12 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                 waitsFor(function () {
                     return ok;
                 });
+
             });
 
 
             it('能正确发起 post 请求, 参数为json，并正确获取参数', function () {
+
                 var ok = false;
                 IO.post('../data/interface.jss?t=post', {
                     type: 'post',
@@ -234,13 +383,14 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                     return ok;
                 });
 
-
             });
 
             it('能正确发起 post 请求 参数为string，并正确获取参数', function () {
+
                 var ok = false;
                 IO.post('../data/interface.jss?t=post',
-                    'name=test&company=www.taobao.com&exp=' + encodeURIComponent('>,?/\%."`~'),
+                    'name=test&company=www.taobao.com&exp=' +
+                        encodeURIComponent('>,?/\\%."`~'),
                     function (data, textStatus, xhr) {
                         ok = true;
 
@@ -259,13 +409,15 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
             });
 
             it('正确处理 dataType 为 json 的情况', function () {
+
                 var ok, o;
 
                 runs(function () {
-                    IO.post('../data/interface.jss?contype=text/json', function (data) {
-                        ok = true;
-                        o = data;
-                    }, 'json');
+                    IO.post('../data/interface.jss?contentType=text/json',
+                        function (data) {
+                            ok = true;
+                            o = data;
+                        }, 'json');
                 });
 
                 waitsFor(function () {
@@ -318,15 +470,18 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
 
 
             });
+
             it('正确处理 dataType 为 script 的情况', function () {
+
                 var ok = false;
 
                 runs(function () {
                     // 这里和get的处理一致
-                    IO.post('../data/interface.jss?type=post&dataType=script', function (data) {
-                        ok = true;
-                        expect(data).toBe("var global_script_test = 500;");
-                    }, 'script');
+                    IO.post('../data/interface.jss?type=post&dataType=script',
+                        function (data) {
+                            ok = true;
+                            expect(data).toBe("var global_script_test = 500;");
+                        }, 'script');
                 });
 
                 waitsFor(function () {
@@ -335,8 +490,42 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
 
                 runs(function () {
                     expect(window['global_script_test']).toBe(500);
+                    try {
+                        delete window['global_script_test'];
+                    } catch (e) {
+                        window['global_script_test'] = undefined;
+                    }
                 });
 
+            });
+
+            it('正确处理 dataType 为 script 的情况，并且 contentType 设置正确', function () {
+
+                var ok = false;
+
+                runs(function () {
+                    // 这里和get的处理一致
+                    IO.post('../data/interface.jss?type=post' +
+                        '&dataType=script' +
+                        '&contentType=text/javascript',
+                        function (data) {
+                            ok = true;
+                            expect(data).toBe("var global_script_test = 500;");
+                        });
+                });
+
+                waitsFor(function () {
+                    return ok;
+                });
+
+                runs(function () {
+                    expect(window['global_script_test']).toBe(500);
+                    try {
+                        delete window['global_script_test'];
+                    } catch (e) {
+                        window['global_script_test'] = undefined;
+                    }
+                });
 
             });
 
@@ -369,8 +558,8 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                 runs(function () {
 
                     // 可以么？ content-type 为 xml
-                    // 但 实际内容也为 json ，需要自动转换成 json
-                    IO.get('../data/xml-json.jss', function (data) {
+                    // 但实际内容也为 json ，需要自动转换成 json
+                    IO.post('../data/xml-json.jss', function (data) {
                         ok = true;
                         o = data;
                     }, 'json');
@@ -386,50 +575,31 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
 
             });
 
-
-            it('能正确处理 dataType 为 html 和 text 的情况', function () {
-                var ok, o;
-
-                runs(function () {
-                    ok = false;
-                    IO.get('test.html', function (data) {
-                        ok = true;
-                        o = data;
-                    });
+            it('当 dataType 不为 jsonp, url 参数跨域时，不触发回调', function () {
+                var ret = 0;
+                IO({
+                    url: 'http://www.g.cn/',
+                    type: 'post',
+                    error: function () {
+                        var args = S.makeArray(arguments);
+                        // security error
+                        expect(args[2].status).toBe(0);
+                        expect(S.inArray(args[1], ['', 'Security Violation.'])).toBe(true);
+                        ret = 1;
+                    }
                 });
 
                 waitsFor(function () {
-                    return ok;
+                    return ret;
                 });
-
-                runs(function () {
-                    expect(o.indexOf('<!doctype')).toBe(0);
-                });
-
             });
 
-            it('当 dataType 不为 jsonp, url 参数跨域时，不触发回调', function () {
-                try {
-                    IO.post('http://www.g.cn/', function () {
-                        expect('此处').toBe('不运行');
-                    });
-                } catch (e) {
-                    // IE 会抛 Access is denied 错误，是正确的。
-                }
-
-                waits(300);
-            });
             it('当 url 参数非法时，忽略请求，不抛异常', function () {
                 // 这里的处理和get一致
-                try {
-                    IO.post('');
-                    IO.post();
-                    IO.post(null);
-                    expect('此处会运行').toBe('此处会运行');
-                } catch (ex) {
-                    expect('此处').toBe('不会运行');
-                }
-
+                IO.post('');
+                IO.post();
+                IO.post(null);
+                expect('此处会运行').toBe('此处会运行');
             });
 
             it('xhr 方式时，能正确设置 callback 里的 this', function () {
@@ -438,6 +608,7 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
 
                 IO.post('../data/interface.jss', function () {
                     ok = true;
+                    // this === config
                     expect(this.type).toBe('POST');
                 });
 
@@ -468,11 +639,32 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                 expect('abort' in xhr).toBe(true);
             });
 
-
         });
 
 
         describe('get', function () {
+
+            it('能正确处理 dataType 为 html 和 text 的情况', function () {
+
+                var ok, o;
+
+                runs(function () {
+                    ok = false;
+                    IO.get('test.html', function (data) {
+                        ok = true;
+                        o = data;
+                    });
+                });
+
+                waitsFor(function () {
+                    return ok;
+                });
+
+                runs(function () {
+                    expect(o.indexOf('<!doctype')).toBe(0);
+                });
+
+            });
 
             it('能正确获取 callback 参数', function () {
                 var ok = false;
@@ -482,6 +674,7 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
 
                     var o = JSON.parse(data);
                     expect(o).not.toBe(undefined);
+                    expect(o['t']).toBe('get');
                     expect(o['name']).toBe('test');
                     expect(o['birth']).toBe('2010/11/23');
 
@@ -567,19 +760,14 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
             it('能正确处理 dataType 为 script 的情况', function () {
                 var ok;
 
+                window['global_script_test'] = 0;
+
                 runs(function () {
                     ok = false;
 
-                    // 当不跨域时，jQuery 会调用 xhr + globalEval 来处理
-                    // 跨域时，jQuery 会调用 getScript 方式处理
-                    // KISSY 里，都用 getScript 方式处理
-                    // 1.2 使用 xhr
-                    //$.get('http://test.com/kissy/src/ajax/tests/interface.jss?t=get&dataType=script', function(data) {
-                    IO.get('../data/interface.jss?t=get&dataType=script', function () {
+                    IO.get('../data/interface.jss?t=get&dataType=script', function (d) {
                         ok = true;
-                        // 在 jQuery 里，此处 data 返回 script.innerHTML
-                        // KISSY 里，无参数返回
-                        // 注意 this 也不同
+                        expect(d).toBe("var global_script_test = 200;");
                     }, 'script');
                 });
 
@@ -613,51 +801,35 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                 });
             });
 
-            it('能正确处理 dataType 为 html 和 text 的情况', function () {
-                var ok, o;
+            it('当 dataType 不为 jsonp, url 参数跨域时，不触发回调', function () {
 
-                runs(function () {
-                    ok = false;
+                var ret = 0;
 
-                    IO.get('test.html', function (data) {
-                        ok = true;
-                        o = data;
-                    });
+                IO({
+                    url: 'http://www.g.cn/',
+                    type: 'get',
+                    error: function () {
+                        var args = S.makeArray(arguments);
+                        // security error
+                        expect(args[2].status).toBe(0);
+                        expect(S.inArray(args[1], ['', 'Security Violation.'])).toBe(true);
+                        ret = 1;
+                    }
                 });
 
                 waitsFor(function () {
-                    return ok;
-                }, 'success', 500);
-
-                runs(function () {
-                    expect(o.indexOf('<!doctype')).toBe(0);
+                    return ret;
                 });
-            });
 
-
-            it('当 dataType 不为 jsonp, url 参数跨域时，不触发回调', function () {
-
-                try {
-                    IO.get('http://www.google.com/', function () {
-                        expect('此处').toBe('不运行');
-                    });
-                } catch (e) {
-                    // IE 会抛 Access is denied 错误，是正确的。
-                }
-
-                waits(300);
             });
 
             it('当 url 参数非法时，忽略请求，不抛异常', function () {
                 // 注意：jQuery 没有考虑 url 参数非法的情况，由浏览器处理，有些抛异常，有些不抛
                 // KISSY 统一做 silent 处理
-                try {
-                    IO.get('');
-                    IO.get();
-                    IO.get(null);
-                    expect('此处会运行').toBe('此处会运行');
-                } catch (ex) {
-                }
+                IO.get('');
+                IO.get();
+                IO.get(null);
+                expect('此处会运行').toBe('此处会运行');
             });
 
             it('xhr 方式时，能正确设置 callback 里的 this', function () {
@@ -686,21 +858,17 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                 });
             });
 
-            it('能正确获取返回值', function () {
-                //如果不加时间戳，ie下会从缓存中取数据，得不到预期的xhr
-                var xhr = IO.get('../data/interface.jss?t=' + S.now());
-                expect('responseText' in xhr).toBe(true);
-            });
         });
 
         describe('events', function () {
 
             it('能正确触发 start/send/success/complete/end 事件，并获取到参数数据', function () {
-                var ok = false;
+                var ok = false, called = [];
 
                 runs(function () {
-                    S.each(['start', 'send', 'success', 'complete', 'end'], function (type) {
+                    S.each(['start', 'send', 'success', 'complete'], function (type) {
                         IO.on(type, function (ev) {
+                            called.push(ev.type);
                             expect(ev.ajaxConfig).not.toBe(undefined);
                             expect(ev.type).toBe(type);
                         });
@@ -713,13 +881,16 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                 waitsFor(function () {
                     return ok;
                 });
+
+                runs(function () {
+                    expect(called).toEqual(['start', 'send', 'success', 'complete']);
+                });
             });
 
             it('能正确触发 stop/error 事件，并获取到参数数据', function () {
                 var ok = false;
 
                 // 注：stop 需要 timeout 时触发，未模拟，没测试
-
                 runs(function () {
                     IO.on('error', function (ev) {
                         ok = true;

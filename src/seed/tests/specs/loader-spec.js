@@ -5,25 +5,17 @@
 (function (S) {
     var d = window.location.href.replace(/[^/]*$/, "") + "../data/";
 
-    function getStyle(elem, name) {
-        if (document.defaultView) {
-            return  document.defaultView.getComputedStyle(elem, null)[name];
-        } else {
-            return elem.currentStyle[name];
-        }
-    }
-
     describe("getStyle", function () {
 
         it("should callback after css onload", function () {
 
             var state = 0;
 
-            expect(getStyle(document.getElementById("special"), "fontSize")).not.toBe("33px");
+            expect($('#special').css("fontSize")).not.toBe("33px");
 
             S.getScript(d + "getStyle/fp2011.css", function () {
                 setTimeout(function () {
-                    expect(getStyle(document.getElementById("special"), "fontSize")).toBe("33px");
+                    expect($('#special').css("fontSize")).toBe("33px");
                     state++;
                     // breath
                 }, 100);
@@ -34,7 +26,7 @@
             var d2 = d.replace(":8888", ":9999");
             S.getScript(d2 + "getStyle/fp2011b.css", function () {
                 setTimeout(function () {
-                    expect(getStyle(document.getElementById("special2"), "fontSize")).toBe("44px");
+                    expect($('#special2').css("fontSize")).toBe("44px");
                     state++;
                     // breath
                 }, 100);
@@ -61,8 +53,8 @@
                 ]
             });
 
-            new S.Node(document.body).append("<div id='k11x'/>");
-            new S.Node(document.body).append("<div id='k12'/>");
+            $(document.body).append("<div id='k11x'/>");
+            $(document.body).append("<div id='k12'/>");
 
             var ok = false;
 
@@ -81,7 +73,7 @@
 
                 expect(mod12.async).toBe(true);
                 expect(mod12.charset).toBe("utf-8");
-                expect(S.one("#k12").css("width")).toBe('111px');
+                expect($("#k12").css("width")).toBe('111px');
 
             });
 
@@ -93,7 +85,12 @@
         });
 
         it("detect cyclic dependency", function () {
-            //return;
+
+            // 弹框！
+            if (S.UA.ie == 6) {
+                return;
+            }
+
             var old = KISSY.Config.base;
             KISSY.config({
                 packages: [

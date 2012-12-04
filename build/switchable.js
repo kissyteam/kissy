@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 29 16:31
+build time: Dec 5 02:27
 */
 /**
  * @fileOverview accordion aria support
@@ -3234,7 +3234,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
 }, {
     requires: [
         'dom', 'event', './base',
-        KISSY.Features.isTouchSupported() ? 'dd/base' : 'empty'
+        KISSY.Features.isTouchSupported() ? 'dd/base' : ''
     ]
 });
 

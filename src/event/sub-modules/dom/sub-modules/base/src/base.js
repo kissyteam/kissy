@@ -19,10 +19,6 @@ KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Sp
         './base/gesture',
         './base/special',
         './base/api',
-        './base/change',
-        './base/submit',
-        './base/focusin',
-        './base/hashchange',
         './base/mouseenter',
         './base/mousewheel',
         './base/valuechange']

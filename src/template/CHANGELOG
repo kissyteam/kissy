@@ -32,4 +32,8 @@ KISSY.Template Changelog:
    * code style change
    * remove reg cache , ugly to see
    * fix escape by escape
-   * * expect(T('{{#if a=="a"}}{{b}}\\"{{/if}}').render({a:"a",b:"b"})).toBe('b\\"');
+   * expect(T('{{#if a=="a"}}{{b}}\\"{{/if}}').render({a:"a",b:"b"})).toBe('b\\"');
+
+2012-11-01 yiminghe@gmail.com
+
+   * 去除附加在 KISSY Node 上的 render 方法

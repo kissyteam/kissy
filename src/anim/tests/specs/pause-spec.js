@@ -4,7 +4,9 @@ KISSY.use("node,anim", function (S, _, Anim) {
 
         it("pause/resume works", function () {
 
-            var div = $("<div style='width:100px;height: 100px;'></div>").appendTo("body");
+            var div = $("<div style='width:100px;height: 100px;" +
+                "overflow:hidden;'></div>")
+                .appendTo("body");
 
             var anim = Anim(div[0], {
                 width:10,
@@ -55,7 +57,10 @@ KISSY.use("node,anim", function (S, _, Anim) {
 
         it("works on node", function () {
 
-            var div = $("<div style='width:100px;height: 100px;'></div>").appendTo("body");
+            var div = $("<div style='width:100px;" +
+                // ie6 撑破
+                "overflow:hidden;" +
+                "height: 100px;'></div>").appendTo("body");
 
             div.animate({
                 width:10,

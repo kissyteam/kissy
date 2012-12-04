@@ -158,8 +158,6 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         IO.fire(eventType, {
             // 兼容
             ajaxConfig: self.config,
-            // 兼容
-            xhr: self,
             io: self
         });
     }

@@ -14,7 +14,7 @@ describe("KISSY ComboLoader", function () {
             packages: [
                 {
                     name: 'tests3',
-                    path: '/src/seed/tests/specs/combo/'
+                    path: '/kissy/src/seed/tests/specs/combo/'
                 }
             ]
         });
@@ -172,7 +172,7 @@ describe("KISSY ComboLoader", function () {
             packages: [
                 {
                     name: 'tests',
-                    path: '/src/seed/tests/specs/combo/'
+                    path: '/kissy/src/seed/tests/specs/combo/'
                 }
             ]
         });
@@ -191,7 +191,7 @@ describe("KISSY ComboLoader", function () {
         var host = location.host;
 
         expect(urls['js']['tests'][0])
-            .toBe("http://" + host + "/src/seed/tests/specs/combo/" +
+            .toBe("http://" + host + "/kissy/src/seed/tests/specs/combo/" +
             "tests/??a.js,b.js,c.js?t=" + S.Config.tag);
 
         S.DOM = null;
@@ -215,7 +215,7 @@ describe("KISSY ComboLoader", function () {
             packages: [
                 {
                     name: 'tests2',
-                    path: '/src/seed/tests/specs/combo/'
+                    path: '/kissy/src/seed/tests/specs/combo/'
                 }
             ]
         });
@@ -266,7 +266,7 @@ describe("KISSY ComboLoader", function () {
             packages: {
                 'timestamp': {
                     combine: false,
-                    base: '/src/seed/tests/specs/'
+                    base: '/kissy/src/seed/tests/specs/'
                 }
             },
             modules: {
@@ -291,9 +291,9 @@ describe("KISSY ComboLoader", function () {
 
             var jss = comboUrls.js[key];
 
-            expect(jss[0]).toBe("http://" + host + "/src/seed/tests/specs/timestamp/y.js");
-            expect(jss[1]).toBe("http://" + host + "/src/seed/tests/specs/timestamp/x.js");
-            expect(jss[2]).toBe("http://" + host + "/src/seed/tests/specs/timestamp/z.js");
+            expect(jss[0]).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/y.js");
+            expect(jss[1]).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/x.js");
+            expect(jss[2]).toBe("http://" + host + "/kissy/src/seed/tests/specs/timestamp/z.js");
 
         });
     });
@@ -306,7 +306,7 @@ describe("KISSY ComboLoader", function () {
             packages: [
                 {
                     name: 'tests4',
-                    path: '/src/seed/tests/specs/combo/'
+                    path: '/kissy/src/seed/tests/specs/combo/'
                 }
             ]
         });
@@ -330,7 +330,7 @@ describe("KISSY ComboLoader", function () {
             packages: [
                 {
                     name: 'test5',
-                    path: '/src/seed/tests/specs/combo/'
+                    path: '/kissy/src/seed/tests/specs/combo/'
                 }
             ]
         });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Nov 28 16:50
+build time: Dec 5 02:22
 */
 /**
  * @ignore
@@ -332,8 +332,6 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         IO.fire(eventType, {
             // 兼容
             ajaxConfig: self.config,
-            // 兼容
-            xhr: self,
             io: self
         });
     }
@@ -985,8 +983,8 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
                 form = DOM.get(c.form);
 
             self.attrs = {
-                target: DOM.attr(form, 'target') || '',
-                action: DOM.attr(form, 'action') || '',
+                target: DOM.attr(form, 'target')||'',
+                action: DOM.attr(form, 'action')||'',
                 // enctype 区分 iframe 与 serialize
                 //encoding:DOM.attr(form, 'encoding'),
                 //enctype:DOM.attr(form, 'enctype'),
@@ -1038,7 +1036,14 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
                 return;
             }
 
-            DOM.attr(form, self.attrs);
+            // ie6 立即设置 action 设置为空导致白屏
+            if (eventType == 'abort' && S.UA.ie == 6) {
+                setTimeout(function () {
+                    DOM.attr(form, self.attrs);
+                }, 0);
+            } else {
+                DOM.attr(form, self.attrs);
+            }
 
             removeFieldsFromData(this.fields);
 
@@ -1100,7 +1105,9 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
         },
 
         abort: function () {
-            this._callback({});
+            this._callback({
+                type: 'abort'
+            });
         }
     });
 
@@ -1716,10 +1723,14 @@ KISSY.add('ajax/xdr-flash-transport', function (S, io, DOM) {
             var self = this,
                 ret,
                 id = o.id,
+                responseText,
+                c = o.c,
                 io = self.io;
 
             // need decodeURI to get real value from flash returned value
-            io.responseText = decodeURI(o.c.responseText);
+            if (c && (responseText = c.responseText)) {
+                io.responseText = decodeURI(responseText);
+            }
 
             switch (e) {
                 case 'success':
@@ -1733,7 +1744,10 @@ KISSY.add('ajax/xdr-flash-transport', function (S, io, DOM) {
                 case 'transport error':
                 case 'failure':
                     delete maps[id];
-                    ret = { status: 500, statusText: e };
+                    ret = {
+                        status: 'status' in c ? c.status : 500,
+                        statusText: c.statusText || e
+                    };
                     break;
             }
             if (ret) {

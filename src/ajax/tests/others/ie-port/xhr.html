@@ -1,4 +1,4 @@
-<iframe src="http://localhost:9999/src/ajax/tests/others/ie-port/9999.html" id="iframe"></iframe>
+<iframe src="http://localhost:9999/kissy/src/ajax/tests/others/ie-port/9999.html" id="iframe"></iframe>
 <script type="text/javascript">
 
     window.onload = function () {
@@ -8,7 +8,7 @@
 
     // ie 可以跨越端口发送
 
-    // location.href='http://localhost:8888/src/ajax/tests/others/ie-port/xhr.html';
+    // location.href='http://localhost:8888/kissy/src/ajax/tests/others/ie-port/xhr.html';
 
     var win = window, _XDomainRequest = win['XDomainRequest'] || Object;
 
@@ -16,8 +16,8 @@
     var crossDomain = true;
 
     var url = crossDomain ?
-            'http://localhost:9999/src/ajax/tests/others/ie-port/xdr.jss' :
-            'http://localhost:9999/src/ajax/tests/others/ie-port/t.json';
+            'http://'+location.hostname+':9999/kissy/src/ajax/tests/others/ie-port/xdr.jss' :
+            'http://'+location.hostname+':9999/kissy/src/ajax/tests/others/ie-port/t.json';
 
     function createStandardXHR(_, refWin) {
         try {

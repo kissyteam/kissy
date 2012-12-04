@@ -41,8 +41,8 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
         var v = target.value,
             h = DOM.data(target, HISTORY_KEY);
         if (v !== h) {
-            // 只触发自己绑定的 handler
-            Event.fireHandler(target, VALUE_CHANGE, {
+            // allow delegate
+            Event.fire(target, VALUE_CHANGE, {
                 prevVal: h,
                 newVal: v
             });

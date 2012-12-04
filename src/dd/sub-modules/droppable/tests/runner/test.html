@@ -4,16 +4,16 @@
     <meta charset="utf-8">
     <title>DD Test Runner</title>
 
-    <link rel="stylesheet" href="../../../../../../tools/jasmine/jasmine.css">
-    <script src="../../../../../../tools/jasmine/jasmine.js"></script>
-    <script src="../../../../../../tools/jasmine/jasmine-html.js"></script>
-    <script src="../../../../../../tools/jasmine/jasmine.console_reporter.js"></script>
-    <script src="../../../../../../tools/jasmine/event-simulate.js"></script>
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/tools/jasmine/event-simulate.js"></script>
 
-    <script src="../../../../../../build/kissy.js"></script>
-    <script src="../../../../../../build/rich-base.js"></script>
-    <script src="../../../../../../build/dd/base.js"></script>
-    <script src="../../../../../../build/dd/proxy.js"></script>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/build/rich-base.js"></script>
+    <script src="/kissy/build/dd/base.js"></script>
+    <script src="/kissy/build/dd/proxy.js"></script>
     <script src="../../src/delegate.js"></script>
     <script src="../../src/droppable.js"></script>
     <script src="../../src/base.js"></script>
@@ -79,6 +79,7 @@ for droppable-spec.js
 
     <div id="drag_mode" style="position:absolute;
 left:400px;top:400px;
+overflow: hidden;
 width:100px;height:100px;
 border:1px solid red;">
         drag
@@ -130,7 +131,8 @@ for delegate-spec.js
 <script src="../specs/delegate-spec.js"></script>
 
 <script>
-    (function (S, UA) {
+    KISSY.use('core,dd/droppable,dd/proxy', function (S) {
+        var UA = S.UA;
         if (UA.ie == 9) {
             jasmine.kissyNext(0);
 
@@ -139,14 +141,17 @@ for delegate-spec.js
             return;
         }
 
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-        jasmine.getEnv().execute(function () {
-            jasmine.kissyNext(this.results().failedCount);
+        setTimeout(function () {
 
-            S.all('#wrap').hide();
-        });
-    })(KISSY, KISSY.UA);
+            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+            jasmine.getEnv().execute(function () {
+                jasmine.kissyNext(this.results().failedCount);
+
+                S.all('#wrap').hide();
+            });
+        }, 200);
+    });
 </script>
 
 </body>

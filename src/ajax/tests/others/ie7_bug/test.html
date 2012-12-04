@@ -1,8 +1,8 @@
-<script src="../../../../../build/seed.js"></script>
+<script src="/kissy/build/seed.js"></script>
 <script >
     KISSY.use("ajax,json", function (S, io, JSON) {
         io({
-            url:'//localhost:8888/src/ajax/tests/ajax-json.jss',
+            url:'//'+location.hostname+':8888/kissy/src/ajax/tests/ajax-json.jss',
             dataType:'json',
             success:function (d) {
                 alert(JSON.stringify(d));

@@ -12,9 +12,9 @@
     <input name="test" value='1'/>
     <input name="test2" value='2'/>
 </form>
-<script src="../../../../build/kissy.js"></script>
+<script src="/kissy/build/seed.js"></script>
 <script>
-    document.domain = 'localhost';
+    document.domain = location.hostname;
     KISSY.ready(function (S) {
         S.use("core", function (S) {
 
@@ -150,7 +150,7 @@
                     }, {
                         s: 1
                     },
-                    'http://localhost:9999/' +
+                    'http://'+location.hostname+':9999/' +
                             'src/ajax/tests/subdomain/upload.jss');
         });
     });

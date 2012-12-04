@@ -1,12 +1,28 @@
-KISSY.use("stylesheet", function (S, StyleSheet) {
+KISSY.use("stylesheet,core", function (S, StyleSheet) {
 
     var $ = S.all;
 
     function filter(str) {
-        return (str || "").toLowerCase()
-            .replace(/[\s;]/g, "")
+
+        var left = str.indexOf('{'), right = str.indexOf('}'),
+            remain;
+
+        if (left != -1) {
+            remain = str.slice(left + 1, right);
+        } else {
+            remain = str;
+        }
+
+        remain = remain.toLowerCase().replace(/\s/g, '')
+            .split(/;/).sort().join(";")
             .replace(/rgb\(255,0,0\)/, "#ff0000")
             .replace(/rgb\(0,0,0\)/, "#000000");
+
+        if (left != -1) {
+            remain = str.slice(0, left + 1) + remain + str.slice(right);
+        }
+
+        return remain;
     }
 
     describe("stylesheet", function () {
@@ -25,21 +41,24 @@ KISSY.use("stylesheet", function (S, StyleSheet) {
 
                 var styleSheet = new StyleSheet(style);
 
-                expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000; font-size: 12px;}"));
-                expect(filter(styleSheet.get(".test1"))).toBe(filter("color: #ff0000; font-size: 12px;"));
+                expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000; " +
+                    "font-size: 12px;}"));
+                expect(filter(styleSheet.get(".test1"))).toBe(filter("color: #ff0000; " +
+                    "font-size: 12px;"));
 
                 // set
                 styleSheet.set(".test1", {
-                    fontSize:"20px"
+                    fontSize: "20px"
                 });
 
-                expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000; font-size: 20px;}"));
+                expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000;" +
+                    " font-size: 20px;}"));
 
                 expect(n.css("font-size")).toBe("20px");
 
                 // unset
                 styleSheet.set(".test1", {
-                    fontSize:""
+                    fontSize: ""
                 });
 
                 expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000;}"));
@@ -50,7 +69,7 @@ KISSY.use("stylesheet", function (S, StyleSheet) {
 
                 // unset all
                 styleSheet.set(".test1", {
-                    color:""
+                    color: ""
                 });
 
                 expect(filter(styleSheet.get())).toBe(filter(""));
@@ -58,7 +77,7 @@ KISSY.use("stylesheet", function (S, StyleSheet) {
 
                 // add
                 styleSheet.set(".test2", {
-                    fontSize:"12px"
+                    fontSize: "12px"
                 });
 
                 expect(filter(styleSheet.get())).toBe(filter(".test2 {font-size: 12px;}"));
@@ -113,7 +132,7 @@ KISSY.use("stylesheet", function (S, StyleSheet) {
 
                 // set
                 styleSheet.set(".test1", {
-                    fontSize:"20px"
+                    fontSize: "20px"
                 });
 
                 expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000; font-size: 20px;}"));
@@ -122,7 +141,7 @@ KISSY.use("stylesheet", function (S, StyleSheet) {
 
                 // unset
                 styleSheet.set(".test1", {
-                    fontSize:""
+                    fontSize: ""
                 });
 
                 expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000;}"));
@@ -133,7 +152,7 @@ KISSY.use("stylesheet", function (S, StyleSheet) {
 
                 // unset all
                 styleSheet.set(".test1", {
-                    color:""
+                    color: ""
                 });
 
                 expect(filter(styleSheet.get())).toBe(filter(""));
@@ -141,7 +160,7 @@ KISSY.use("stylesheet", function (S, StyleSheet) {
 
                 // add
                 styleSheet.set(".test2", {
-                    fontSize:"12px"
+                    fontSize: "12px"
                 });
 
                 expect(filter(styleSheet.get())).toBe(filter(".test2 {font-size: 12px;}"));

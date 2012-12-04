@@ -311,9 +311,12 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
             delta,
             detail = e.detail;
 
+        // ie/webkit
         if (e.wheelDelta) {
             delta = e.wheelDelta / 120;
         }
+
+        // gecko
         if (e.detail) {
             // press control e.detail == 1 else e.detail == 3
             delta = -(detail % 3 == 0 ? detail / 3 : detail);
@@ -338,10 +341,11 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
             deltaX = -1 * e['wheelDeltaX'] / 120;
         }
 
-        // 默认 deltaY ( ie )
+        // 默认 deltaY (ie)
         if (!deltaX && !deltaY) {
             deltaY = delta;
         }
+
         if (deltaX !== undefined ||
             deltaY !== undefined ||
             delta !== undefined) {

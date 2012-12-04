@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>S.Calendar Demo</title>
 
-    <script src="../../build/kissy.js"></script>
+    <script src="/kissy/build/seed.js"></script>
 
     <script src="src/base.js"></script>
     <script src="src/date.js"></script>
@@ -119,201 +119,201 @@ custom自定义格式 <input type=text value="yyyy/mm/dd HH:MM:ss" id="J_CustomT
 <hr size=1/>
 <script>
 
-    var S = KISSY;
-    //    S.log(S.Calendar);
-    //    S.log(S.Date);
+    KISSY.use('calendar', function (S) {
 
-    var c = {};
-    var showdate = function (n, d) {//计算d天的前几天或者后几天，返回date,注：chrome下不支持date构造时的天溢出
-        var uom = new Date(d - 0 + n * 86400000);
-        uom = uom.getFullYear() + "/" + (uom.getMonth() + 1) + "/" + uom.getDate();
-        return new Date(uom);
-    };
+        var c = {};
+        var showdate = function (n, d) {//计算d天的前几天或者后几天，返回date,注：chrome下不支持date构造时的天溢出
+            var uom = new Date(d - 0 + n * 86400000);
+            uom = uom.getFullYear() + "/" + (uom.getMonth() + 1) + "/" + uom.getDate();
+            return new Date(uom);
+        };
 
-    KISSY.ready(function (S) {
-        KISSY.use('node,calendar', function (S, Node, Calendar) {
-            var S_Date = S.Date;
-            var i = 0;
-            //静态日历,单击回调
-            var cr = new Calendar('#J_Calendar').on('select', function (e) {
-                alert(e.date);
-            }, {
-                popup: false
-            });
-            S.one('#J_CalendarRemove').on('click', function () {
-                cr.destroy();
-            });
-            // S.log(++i);
-            //静态双月日历,默认选中某日
-            c = new Calendar('#J_MultiPage_1', {
-                pages: 2,
-                selected: showdate(-2, new Date()),
-                popup: false
-            });
+        S.ready(function (S) {
+            KISSY.use('node,calendar', function (S, Node, Calendar) {
+                var S_Date = S.Date;
+                var i = 0;
+                //静态日历,单击回调
+                var cr = new Calendar('#J_Calendar').on('select', function (e) {
+                    alert(e.date);
+                }, {
+                    popup: false
+                });
+                S.one('#J_CalendarRemove').on('click', function () {
+                    cr.destroy();
+                });
+                // S.log(++i);
+                //静态双月日历,默认选中某日
+                c = new Calendar('#J_MultiPage_1', {
+                    pages: 2,
+                    selected: showdate(-2, new Date()),
+                    popup: false
+                });
 
-            // S.log(++i);
-            //静态三月日历
-            new Calendar('#J_MultiPage_2', {
-                pages: 3,
-                popup: false
-            });
-            // S.log(++i);
-            //选择范围,并绑定范围回调
-            new Calendar('#J_Range', {
-                pages: 2,
-                rangeSelect: true,
-                popup: false
-            }).on('rangeSelect', function (e) {
-                        alert(e.start + ' ' + e.end);
-                    });
-            // S.log(++i);
-            //选择范围,指定默认范围
-            new Calendar('#J_DefaultRange', {
-                pages: 2,
-                rangeSelect: true,
-                popup: false,
-                range: {
-                    start: showdate(-3, new Date()),
-                    end: showdate(5, new Date())
-                }
-            });
-            // S.log(++i);
-            //月份切换事件
-            new Calendar('#J_AllEvents', {
-                popup: false
-            }).on('monthChange', function (e) {
-                        alert('切换事件,月份切换到' + (e.date.getMonth() + 1));
-                    });
-            // S.log(++i);
-            //Popup日历,默认点击触发
-            new Calendar('#J_Popup', {
-                popup: true,
-                triggerType: ['click'],
-                closable: true
-            }).on('select', function (e) {
-                        Node.one('#J_Popup').val(S_Date.format(e.date, 'localFullDate'));
-                    });
-            // S.log(++i);
-            //Popup日历,默认点击触发,选择范围
-            var k3 = new Calendar('#J_Popup2', {
-                popup: true,
-                triggerType: ['click'],
-                closable: false,
-                pages: 2,
-                rangeSelect: true,
-                showTime: true
-            }).on('rangeSelect', function (e) {
-                        alert(e.start + ' ' + e.end);
-                        k3.hide();
-                        //Node.one('#J_Popup').val(S_Date.format(e.date,'localFullDate'));
-                    });
-            // S.log(++i);
+                // S.log(++i);
+                //静态三月日历
+                new Calendar('#J_MultiPage_2', {
+                    pages: 3,
+                    popup: false
+                });
+                // S.log(++i);
+                //选择范围,并绑定范围回调
+                new Calendar('#J_Range', {
+                    pages: 2,
+                    rangeSelect: true,
+                    popup: false
+                }).on('rangeSelect', function (e) {
+                            alert(e.start + ' ' + e.end);
+                        });
+                // S.log(++i);
+                //选择范围,指定默认范围
+                new Calendar('#J_DefaultRange', {
+                    pages: 2,
+                    rangeSelect: true,
+                    popup: false,
+                    range: {
+                        start: showdate(-3, new Date()),
+                        end: showdate(5, new Date())
+                    }
+                });
+                // S.log(++i);
+                //月份切换事件
+                new Calendar('#J_AllEvents', {
+                    popup: false
+                }).on('monthChange', function (e) {
+                            alert('切换事件,月份切换到' + (e.date.getMonth() + 1));
+                        });
+                // S.log(++i);
+                //Popup日历,默认点击触发
+                new Calendar('#J_Popup', {
+                    popup: true,
+                    triggerType: ['click'],
+                    closable: true
+                }).on('select', function (e) {
+                            Node.one('#J_Popup').val(S_Date.format(e.date, 'localFullDate'));
+                        });
+                // S.log(++i);
+                //Popup日历,默认点击触发,选择范围
+                var k3 = new Calendar('#J_Popup2', {
+                    popup: true,
+                    triggerType: ['click'],
+                    closable: false,
+                    pages: 2,
+                    rangeSelect: true,
+                    showTime: true
+                }).on('rangeSelect', function (e) {
+                            alert(e.start + ' ' + e.end);
+                            k3.hide();
+                            //Node.one('#J_Popup').val(S_Date.format(e.date,'localFullDate'));
+                        });
+                // S.log(++i);
 
-            //Popup日历,默认点击触发,选择范围,日历不联动
-            var k2 = new Calendar('#J_Popup22', {
-                popup: true,
-                triggerType: ['click'],
-                closable: false,
-                pages: 2,
-                rangeSelect: true,
-                rangeLinkage: false
-            }).on('rangeSelect', function (e) {
-                        alert(e.start + ' ' + e.end);
-                        k2.hide();
-                        //Node.one('#J_Popup').val(S_Date.format(e.date,'localFullDate'));
-                    });
-            // S.log(++i);
-            //Popup日历,默认点击触发,选择范围
-            var k = new Calendar('#J_Popup23', {
-                popup: true,
-                triggerType: ['click'],
-                closable: false,
-                pages: 2,
-                multiSelect: true,
-                rangeLinkage: false
-            }).on('multiSelect', function (e) {
-                        alert(e.multi);
-                        k.hide();
-                        //Node.one('#J_Popup').val(S_Date.format(e.date,'localFullDate'));
-                    });
-            // S.log(++i);
+                //Popup日历,默认点击触发,选择范围,日历不联动
+                var k2 = new Calendar('#J_Popup22', {
+                    popup: true,
+                    triggerType: ['click'],
+                    closable: false,
+                    pages: 2,
+                    rangeSelect: true,
+                    rangeLinkage: false
+                }).on('rangeSelect', function (e) {
+                            alert(e.start + ' ' + e.end);
+                            k2.hide();
+                            //Node.one('#J_Popup').val(S_Date.format(e.date,'localFullDate'));
+                        });
+                // S.log(++i);
+                //Popup日历,默认点击触发,选择范围
+                var k = new Calendar('#J_Popup23', {
+                    popup: true,
+                    triggerType: ['click'],
+                    closable: false,
+                    pages: 2,
+                    multiSelect: true,
+                    rangeLinkage: false
+                }).on('multiSelect', function (e) {
+                            alert(e.multi);
+                            k.hide();
+                            //Node.one('#J_Popup').val(S_Date.format(e.date,'localFullDate'));
+                        });
+                // S.log(++i);
 
-            //Popup日历,单选关闭
-            new Calendar('#J_PopupClosable', {
-                popup: true,
-                closable: true,
-                triggerType: ['focus']
-            }).on('select', function (e) {
-                        alert(e.date);
-                    });
-            // S.log(++i);
-            //Popup日历,默认点击触发
-            new Calendar('#J_PopupAlign', {
-                align: {
-                    points: ['br', 'tr'],
-                    offset: [0, 0]
-                },
-                popup: true,
-                triggerType: ['click'],
-                closable: true
-            }).on('select', function (e) {
-                        Node.one('#J_Popup').val(S_Date.format(e.date, 'localFullDate'));
-                    });
-            // S.log(++i);
-            //日历可操作范围
-            c = new Calendar('#J_MinDateMaxDate', {
-                minDate: new Date(),
-                maxDate: showdate(10, new Date()),
-                popup: false
-            });
-            // S.log(++i);
-            //某些天禁止操作
-            c = new Calendar('#J_DisabledDate', {
-                disabled: [showdate(1, new Date()), showdate(-1, new Date()), showdate(3, new Date()), showdate(5, new Date())],
-                popup: false
-            });
-            // S.log(++i);
-            //日历可选择time
-            c = new Calendar('#J_WithTime', {
-                showTime: true,
-                popup: false
-            }).on('timeSelect', function (e) {
-                        alert(e.date);
-                    });
-            // S.log(++i);
-            //日历可选择不限
-            c = new Calendar('#J_NotLimited', {
-                notLimited: true,
-                popup: false
-            }).on('select', function (e) {
-                        alert(e.date);
-                    });
-            // S.log(++i);
-            //可以自定义起始日期
-            c = new Calendar('#J_CustomDay', {
-                startDay: 1,
-                popup: false
-            });
-            // S.log(++i);
+                //Popup日历,单选关闭
+                new Calendar('#J_PopupClosable', {
+                    popup: true,
+                    closable: true,
+                    triggerType: ['focus']
+                }).on('select', function (e) {
+                            alert(e.date);
+                        });
+                // S.log(++i);
+                //Popup日历,默认点击触发
+                new Calendar('#J_PopupAlign', {
+                    align: {
+                        points: ['br', 'tr'],
+                        offset: [0, 0]
+                    },
+                    popup: true,
+                    triggerType: ['click'],
+                    closable: true
+                }).on('select', function (e) {
+                            Node.one('#J_Popup').val(S_Date.format(e.date, 'localFullDate'));
+                        });
+                // S.log(++i);
+                //日历可操作范围
+                c = new Calendar('#J_MinDateMaxDate', {
+                    minDate: new Date(),
+                    maxDate: showdate(10, new Date()),
+                    popup: false
+                });
+                // S.log(++i);
+                //某些天禁止操作
+                c = new Calendar('#J_DisabledDate', {
+                    disabled: [showdate(1, new Date()), showdate(-1, new Date()), showdate(3, new Date()), showdate(5, new Date())],
+                    popup: false
+                });
+                // S.log(++i);
+                //日历可选择time
+                c = new Calendar('#J_WithTime', {
+                    showTime: true,
+                    popup: false
+                }).on('timeSelect', function (e) {
+                            alert(e.date);
+                        });
+                // S.log(++i);
+                //日历可选择不限
+                c = new Calendar('#J_NotLimited', {
+                    notLimited: true,
+                    popup: false
+                }).on('select', function (e) {
+                            alert(e.date);
+                        });
+                // S.log(++i);
+                //可以自定义起始日期
+                c = new Calendar('#J_CustomDay', {
+                    startDay: 1,
+                    popup: false
+                });
+                // S.log(++i);
 
-            //更多定制
-            c = new Calendar('#J_SelectResult', {
-                popup: true
+                //更多定制
+                c = new Calendar('#J_SelectResult', {
+                    popup: true
+                });
+                // S.log(++i);
+                //格式化时间类型
+                c = new Calendar('#J_DateFormat', {
+                    showTime: true,
+                    popup: false
+                }).on('timeSelect', function (e) {
+                            var type = Node.one('#J_DateType').val();
+                            if (type == 'custom') {
+                                type = Node.one('#J_CustomType').val();
+                            }
+                            alert(S_Date.format(e.date, type));
+                        });
+                // S.log(++i);
             });
-            // S.log(++i);
-            //格式化时间类型
-            c = new Calendar('#J_DateFormat', {
-                showTime: true,
-                popup: false
-            }).on('timeSelect', function (e) {
-                        var type = Node.one('#J_DateType').val();
-                        if (type == 'custom') {
-                            type = Node.one('#J_CustomType').val();
-                        }
-                        alert(S_Date.format(e.date, type));
-                    });
-            // S.log(++i);
         });
+
     });
 </script>
 </div>

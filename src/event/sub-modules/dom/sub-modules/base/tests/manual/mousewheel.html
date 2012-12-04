@@ -1,0 +1,27 @@
+<div id="t" style="height: 300px;border:1px solid red;">
+
+</div>
+<script type="text/javascript">
+
+    window.onload = function () {
+        var b = document.getElementById('t');
+        if (b.addEventListener) {
+            b.addEventListener('mousewheel', function (e) {
+                console.log('mousewheel');
+                console.log(e);
+            });
+            b.addEventListener('DOMMouseScroll', function (e) {
+                console.log('DOMMouseScroll');
+                console.log(e);
+            });
+        }
+
+        if (b.attachEvent) {
+            b.attachEvent('on'+'mousewheel', function (e) {
+                console.log('mousewheel ie');
+                console.log(e);
+            });
+        }
+    };
+
+</script>

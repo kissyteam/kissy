@@ -38,14 +38,19 @@
         var ax = 0;
         var ay = 0;
         var az = 0;
+        var alpha2, beta2, gamma2;
 
         var delay = 10;
         var vMultiplier = 0.01;
 
+        var alpha = 0,
+                beta = 0,
+                gamma = 0;
+
         var img = document.getElementById('img');
 
         if (window.DeviceMotionEvent == undefined) {
-            alert('不支持');
+            document.write('does not support devicemotion');
             return;
         }
 
@@ -54,18 +59,40 @@
             ay = event.accelerationIncludingGravity.y;
             az = event.accelerationIncludingGravity.z;
 
+            var rotationRate= event.rotationRate;
+
+            alpha2=rotationRate.alpha;
+            beta2=rotationRate.beta;
+            gamma2=rotationRate.gamma;
+
             motion.textContent = ("Accelerometer data - x: " +
-                    event.accelerationIncludingGravity.x +
-                    " y: " + event.accelerationIncludingGravity.y +
-                    " z: " + event.accelerationIncludingGravity.z);
+                    ax +
+                    " y: " + ay +
+                    " z: " + az+
+                    " alpha2: " + alpha2 +
+                    " beta2: " + beta2 +
+                    " gamma2: " + gamma2);
         };
 
         window.ondeviceorientation = function (event) {
+            alpha = event.alpha;
+            beta = event.beta;
+            gamma = event.gamma;
             rotation.textContent = ("ondeviceorientation data - alpha: " +
-                    event.alpha +
-                    " beta: " + event.beta +
-                    " gamma: " + event.gamma);
+                    alpha +
+                    " beta: " + beta +
+                    " gamma: " + gamma+
+                    " absolute: "+event.absolute);
         };
+
+        var useMotion = 0;
+        if (location.href.indexOf('use-motion') > 0) {
+            alert('use motion');
+            useMotion = 1;
+        } else {
+            alert('use orientation');
+            useMotion = 0;
+        }
 
         setInterval(function () {
             vy = vy + -(ay);
@@ -102,15 +129,32 @@
                 facingUp = +1;
             }
 
-            // 根据重力通过 acceleration.x|y 转换得到加速值,
-            // 运用重力加速度9.81来计算得到一个百分比然后乘以转换角度90
-            var tiltLR = Math.round(((ax) / 9.81) * -90);
-            var tiltFB = Math.round(((ay + 9.81) / 9.81) * 90 * facingUp);
+            var rotation, tiltLR, tiltFB;
 
-            degree.textContent = tiltLR + 'deg, ' + tiltFB + 'deg';
+            if (useMotion) {
+
+                // 根据重力通过 acceleration.x|y 转换得到加速值,
+                // 运用重力加速度9.81来计算得到一个百分比然后乘以转换角度90
+                tiltLR = Math.round(((ax) / 9.81) * -90);
+                tiltFB = Math.round(((ay + 9.81) / 9.81) * 90 * facingUp);
+
+
+            } else {
+                tiltLR = alpha;
+
+                tiltFB = 90 - beta;
+
+                // faceUp 变换瞬间，alpha 变化异常！
+                if (false && facingUp > 0) {
+                    tiltFB = -tiltFB;
+                    tiltLR += 90;
+                }
+            }
 
             // 将2D和3D的转换应用到图片上
-            var rotation = "rotate(" + tiltLR + "deg) rotate3d(1,0,0, " + (tiltFB) + "deg)";
+            rotation = "rotate(" + tiltLR + "deg)" +
+                    " rotate3d(1,0,0, " + (tiltFB) + "deg)";
+            degree.textContent = tiltLR + 'deg, ' + tiltFB + 'deg';
             img.style.webkitTransform = rotation;
 
 

@@ -13,15 +13,15 @@
     <input name="test2" value='2'/>
 </form>
 
-<script src="../../../../../build/seed.js"></script>
+<script src="/kissy/build/seed.js"></script>
 <script >
-    document.domain = 'localhost';
+    document.domain = location.hostname;
     KISSY.ready(function (S) {
         S.use("ajax,dom,json", function (S, io) {
             io({
                 form:S.get('#t'),
                 dataType:'json',
-                url:'http://localhost:9999/src/ajax/tests/subdomain/upload.jss',
+                url:'http://'+location.hostname+':9999/kissy/src/ajax/tests/subdomain/upload.jss',
                 success:function (data) {
                     alert(data);
                     alert(S.JSON.stringify(data));

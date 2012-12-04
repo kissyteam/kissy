@@ -8,8 +8,8 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="viewport" content="width = device-width,initial-scale = 1.0">
     <title>KISSY Editor Test</title>
-    <link href="../../../../../build/css/dpl/base.css" rel="stylesheet"/>
-    <link href="../../../../../build/editor/theme/cool/editor.css" rel="stylesheet"/>
+    <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
+    <link href="/kissy/build/editor/theme/cool/editor.css" rel="stylesheet"/>
 </head>
 <body>
 <h1 style="font-size: 2em;text-align: center;margin: 2em;">KISSY Editor For ATA</h1>
@@ -34,7 +34,7 @@
 
 </form>
 
-<script src="../../../../../build/kissy.js" data-config="{combine:true}"></script>
+<script src="/kissy/build/seed.js" data-config="{combine:true}"></script>
 <script>
     (function () {
         KISSY.use("editor", function (S, Editor) {

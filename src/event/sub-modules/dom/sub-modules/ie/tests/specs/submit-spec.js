@@ -4,18 +4,29 @@
  */
 KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
     describe("submit event", function () {
-        var div = DOM.create("<div>" +
-            "<form action='http://www.g.cn' onsubmit='return false'>" +
-            "<input type='submit' id='s'>" +
-            "</form>" +
-            "</div>");
-        DOM.append(div, document.body);
-        var form = DOM.get("form", div);
-        var inp = DOM.get("input", div);
-        afterEach(function () {
-            Event.remove(div);
-            Event.remove(form);
+
+        var div,
+            form,
+            inp = DOM.get("input", div);
+
+        beforeEach(function(){
+             div = DOM.create("<div>" +
+                "<form action='http://www.g.cn' onsubmit='return false'>" +
+                "<input type='submit' id='s'>" +
+                "</form>" +
+                "</div>");
+
+            DOM.append(div, document.body);
+
+             form = DOM.get("form", div);
+             inp = DOM.get("input", div);
         });
+
+        afterEach(function () {
+            DOM.remove(div);
+            DOM.remove(form);
+        });
+
         it("should works and target is right", function () {
             var t = 0;
             Event.on(div, "submit", function (e) {
@@ -89,9 +100,6 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             });
             inp.click();
             waits(100);
-            runs(function () {
-                DOM.remove(div);
-            });
         });
     });
 });

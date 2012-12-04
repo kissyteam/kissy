@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <title>DD Test Runner</title>
 
-    <link rel="stylesheet" href="../../../../../../tools/jasmine/jasmine.css">
-    <script src="../../../../../../tools/jasmine/jasmine.js"></script>
-    <script src="../../../../../../tools/jasmine/jasmine-html.js"></script>
-    <script src="../../../../../../tools/jasmine/jasmine.console_reporter.js"></script>
-    <script src="../../../../../../tools/jasmine/event-simulate.js"></script>
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/tools/jasmine/event-simulate.js"></script>
 
-    <script src="../../../../../../build/kissy.js"></script>
-    <script src="../../../../../../build/rich-base.js"></script>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/build/rich-base.js"></script>
     <script src="../../src/ddm.js"></script>
     <script src="../../src/draggable-delegate.js"></script>
     <script src="../../src/draggable.js"></script>
@@ -85,7 +85,8 @@ for draggable-spec.js
 <script src="../specs/draggable-spec.js"></script>
 
 <script>
-    (function (S, UA) {
+    KISSY.use('core,dd/base', function (S) {
+        var UA = S.UA;
         if (UA.ie == 9) {
             jasmine.kissyNext(0);
 
@@ -94,14 +95,17 @@ for draggable-spec.js
             return;
         }
 
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-        jasmine.getEnv().execute(function () {
-            jasmine.kissyNext(this.results().failedCount);
+        setTimeout(function () {
 
-            S.all('#wrap').hide();
-        });
-    })(KISSY, KISSY.UA);
+            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+            jasmine.getEnv().execute(function () {
+                jasmine.kissyNext(this.results().failedCount);
+
+                S.all('#wrap').hide();
+            });
+        }, 200);
+    });
 </script>
 
 </body>

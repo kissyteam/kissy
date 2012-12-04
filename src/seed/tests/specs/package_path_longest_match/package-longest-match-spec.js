@@ -10,11 +10,11 @@ describe("loader package", function () {
             packages:[
                 {
                     name:"test",
-                    path:"/src/seed/tests/specs/package_path_longest_match/"
+                    path:"/kissy/src/seed/tests/specs/package_path_longest_match/"
                 },
                 {
                     name:"test2",
-                    path:"/src/seed/tests/specs/package_path_longest_match/test/"
+                    path:"/kissy/src/seed/tests/specs/package_path_longest_match/test/"
                 }
             ]
         });

@@ -1,50 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Editor Test Runner</title>
+    <meta charset="utf-8">
+    <title>Editor Test Runner</title>
 
-<link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
-<script src="../../../../tools/jasmine/jasmine.js"></script>
-<script src="../../../../tools/jasmine/jasmine-html.js"></script>
-    <script src="../../../../tools/jasmine/jasmine.console_reporter.js"></script>
-<script src="../../../../tools/jasmine/event-simulate.js"></script>
-<script src="../../../../build/kissy.js"></script>
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/tools/jasmine/event-simulate.js"></script>
 
-<style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        border: 0;
-    }
-</style>
-<script src="../../../../build/kissy.js"></script>
-<script src="../../../../build/htmlparser.js"></script>
-<script src="../../../../build/??component/base.js,component/extension.js,rich-base.js"></script>
-<!--
-core
--->
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+    </style>
+    <script src="/kissy/build/seed.js"></script>
+    <!--
+    core
+    -->
 
-<script src="../../src/editor/core/base.js"></script>
-<script src="../../src/editor/core/dom.js"></script>
-<script src="../../src/editor/core/domIterator.js"></script>
+    <script src="../../src/editor/core/base.js"></script>
+    <script src="../../src/editor/core/dom.js"></script>
+    <script src="../../src/editor/core/domIterator.js"></script>
 
-<script src="../../src/editor/core/elementPath.js"></script>
-<script src="../../src/editor/core/focusManager.js"></script>
-<script src="../../src/editor/core/range.js"></script>
-<script src="../../src/editor/core/selection.js"></script>
-<script src="../../src/editor/core/styles.js"></script>
-<script src="../../src/editor/core/utils.js"></script>
-<script src="../../src/editor/core/walker.js"></script>
-<script src="../../src/editor/core/zIndexManager.js"></script>
-<script src="../../src/editor/core/editor.js"></script>
-<!--
-core plugins
--->
-<script src="../../src/editor/core/clipboard.js"></script>
-<script src="../../src/editor/core/enterKey.js"></script>
-<script src="../../src/editor/core/htmlDataProcessor.js"></script>
-<script src="../../src/editor/core/selectionFix.js"></script>
+    <script src="../../src/editor/core/elementPath.js"></script>
+    <script src="../../src/editor/core/focusManager.js"></script>
+    <script src="../../src/editor/core/range.js"></script>
+    <script src="../../src/editor/core/selection.js"></script>
+    <script src="../../src/editor/core/styles.js"></script>
+    <script src="../../src/editor/core/utils.js"></script>
+    <script src="../../src/editor/core/walker.js"></script>
+    <script src="../../src/editor/core/zIndexManager.js"></script>
+    <script src="../../src/editor/core/editor.js"></script>
+    <!--
+    core plugins
+    -->
+    <script src="../../src/editor/core/clipboard.js"></script>
+    <script src="../../src/editor/core/enterKey.js"></script>
+    <script src="../../src/editor/core/htmlDataProcessor.js"></script>
+    <script src="../../src/editor/core/selectionFix.js"></script>
 
 </head>
 <body contenteditable="true">
@@ -57,11 +54,15 @@ core plugins
 <script>
     window.onload = function () {
         KISSY.use("editor", function () {
-            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-            jasmine.getEnv().execute(function () {
-                jasmine.kissyNext(this.results().failedCount);
-            });
+
+            setTimeout(function () {
+                jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+                jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+                jasmine.getEnv().execute(function () {
+                    jasmine.kissyNext(this.results().failedCount);
+                });
+            }, 200);
+
         });
     };
 </script>

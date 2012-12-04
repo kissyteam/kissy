@@ -14,13 +14,17 @@ KISSY.use('mvc,event,ua', function (S, MVC, Event, UA) {
 
         it("change domain in middle of code does not work for ie<8", function () {
 
+            if (ie == 6) {
+                return;
+            }
+
             var ok = 0;
 
             location.hash = '';
 
             var r = new Router({
-                routes:{
-                    "/*path":function (paths) {
+                routes: {
+                    "/*path": function (paths) {
                         expect(paths.path).toBe("haha/hah2/hah3");
                         ok = 1;
                     }
@@ -32,7 +36,7 @@ KISSY.use('mvc,event,ua', function (S, MVC, Event, UA) {
             waits(500);
 
             runs(function () {
-                document.domain = 'localhost';
+                document.domain = location.hostname;
                 Router.navigate("/haha/hah2/hah3");
             });
 

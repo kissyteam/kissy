@@ -11,12 +11,6 @@ KISSY.use("dom,node", function (S, DOM, Node) {
     //DOM 已经测试通过，通过 DOM 测 Node
     describe("node", function () {
 
-        it("setup", function () {
-            var textarea = $("textarea");
-            $("body").append(textarea.val());
-            textarea.hide();
-        });
-
         it("add works", function () {
             var x = $();
             var y = x.add("<div></div><p></p>");

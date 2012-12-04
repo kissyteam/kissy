@@ -323,13 +323,17 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
             it("align node works", function () {
 
                 var node = $("<div style='position: absolute;left:0;top:0;width:600px;" +
-                    "height: 200px;overflow: auto;'>" +
+                    "height: 200px;overflow: hidden;'>" +
                     "<div style='height: 1000px'></div>" +
                     "</div>").appendTo('body');
 
                 var o = new Overlay.Dialog({
                     headerContent: "哈哈",
                     bodyContent: "嘿嘿",
+                    elStyle:{
+                        // ie6...
+                      overflow:'hidden'
+                    },
                     render: node,
                     width: 300,
                     height: 18

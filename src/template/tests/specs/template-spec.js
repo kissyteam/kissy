@@ -115,31 +115,6 @@ KISSY.use("template", function (S, T) {
                 // T.log('{{}}');
             });
         });
-        if (!S.Env.nodejs) {
-            describe('node', function () {
-                it('have chain support for KISSY.Node', function () {
-                    S.one(S.DOM.create([
-                        '<script type="text/x-kissy-template" id="template">',
-                        '<div id="render">{{#each a}}{{_ks_value.a}}{{/each}}</div>',
-                        '</script><div id="container"></div>'
-                    ].join(''))).appendTo(document.body);
-                    S.one(T(S.one('#template').html()).render({
-                        a: [
-                            {a: 1},
-                            {a: 2},
-                            {a: 3}
-                        ],
-                        b: [
-                            {a: 4},
-                            {a: 5},
-                            {a: 6}
-                        ]
-                    })).appendTo('#container');
-                    expect(S.one('#render').html()).toEqual('123');
-                    S.one('#container').html('');
-                });
-            });
-        }
         describe('comments', function () {
             it('supports comments', function () {
                 expect(T('{{#! here is a comment tag}}').render()).toEqual('');

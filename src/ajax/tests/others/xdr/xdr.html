@@ -1,4 +1,4 @@
-<script src="../../../../../build/seed.js"></script>
+<script src="/kissy/build/seed.js"></script>
 <script>
     KISSY.use("ajax", function (S, io) {
         S.ready(function (S) {
@@ -12,8 +12,8 @@
                 // force to use native xhr no sub domain proxy
                 crossDomain: false,
                 dataType: 'json',
-                url: 'http://localhost:9999/' +
-                        'src/ajax/tests/others/xdr/xdr.jss',
+                url: 'http://'+location.hostname+':9999/kissy/src/' +
+                        'ajax/tests/others/xdr/xdr.jss',
                 xhrFields: {
                     // Cannot use wildcard in Access-Control-Allow-Origin
                     // when credentials flag is true.
@@ -46,8 +46,8 @@
                     // yiminghe:1
                 },
                 dataType: 'json',
-                url: 'http://localhost:9999/' +
-                        'src/ajax/tests/others/xdr/xdr.jss',
+                url: 'http://'+location.hostname+':9999/kissy/src/' +
+                        'ajax/tests/others/xdr/xdr.jss',
                 xhrFields: {
                     // Cannot use wildcard in Access-Control-Allow-Origin
                     // when credentials flag is true.

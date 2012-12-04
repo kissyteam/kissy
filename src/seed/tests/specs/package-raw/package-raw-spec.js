@@ -9,7 +9,7 @@ describe("simple loader", function () {
                     {
                         debug:true,
                         name:'t',
-                        path:'/src/seed/tests/specs/package-raw/'
+                        path:'/kissy/src/seed/tests/specs/package-raw/'
                     }
                 ]
             });

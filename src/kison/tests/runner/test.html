@@ -7,12 +7,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>Kison Test Runner</title>
-    <link rel="stylesheet" href="../../../../tools/jasmine/jasmine.css">
-    <script src="../../../../tools/jasmine/jasmine.js"></script>
-    <script src="../../../../tools/jasmine/event-simulate.js"></script>
-    <script src="../../../../tools/jasmine/jasmine-html.js"></script>
-    <script src="../../../../tools/jasmine/jasmine.console_reporter.js"></script>
-    <script src="../../../../build/kissy.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/event-simulate.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/build/seed.js"></script>
     <script src="../../src/grammar.js" charset="utf-8"></script>
     <script src="../../src/lexer.js" charset="utf-8"></script>
     <script src="../../src/item.js" charset="utf-8"></script>
@@ -31,15 +31,17 @@
 <h1>Kison Test Cases</h1>
 <script src="../specs/grammar-spec.js"></script>
 <script>
-    window.onload = function () {
+    KISSY.use('kison', function () {
 
-        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-        jasmine.getEnv().execute(function () {
-            jasmine.kissyNext(this.results().failedCount);
-        });
+        setTimeout(function () {
+            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+            jasmine.getEnv().execute(function () {
+                jasmine.kissyNext(this.results().failedCount);
+            });
+        }, 200);
 
-    };
+    });
 </script>
 </body>
 </html>

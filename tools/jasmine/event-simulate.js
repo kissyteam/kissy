@@ -183,7 +183,6 @@
             });
             target.dispatchEvent(customEvent);
         }
-
         // check for DOM-compliant browsers first
         else if (isFunction(doc.createEvent)) {
 
@@ -244,7 +243,6 @@
 
             // fire the event
             target.dispatchEvent(customEvent);
-
         } else if (isObject(doc.createEventObject)) { //IE
 
             // create an IE event object
@@ -460,9 +458,7 @@
 
             // fire the event
             target.dispatchEvent(customEvent);
-
-        }
-        else if (doc.createEventObject) { // IE
+        } else if (doc.createEventObject) { // IE
 
             // create an IE event object
             customEvent = doc.createEventObject();

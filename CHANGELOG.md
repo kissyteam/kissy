@@ -139,6 +139,7 @@ History:
 
 #### template
  - [+] template 支持 {{@if t}} t {{/if}}, 等价于 {{#if t}} t {{/if}}
+ - [!] 去除附加在 KISSY Node 上的 render 方法
 
 #### xtemplate
  - [+] 增加 xtemplate 组件，富逻辑模板引擎

@@ -1,6 +1,6 @@
 module.exports = function (req, res) {
     var contentType, sleep, query = req.query;
-    if (contentType = query.contype) {
+    if (contentType = query['contentType']) {
         res.set('Content-Type', contentType);
     }
 

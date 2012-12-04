@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title>clone script in ie</title>
-<script src='../../../../build/kissy.js'></script>
-<script src='../../../../tools/third-party/jquery.js'></script>
+<script src="/kissy/build/seed.js"></script>
+<script src='/kissy/tools/third-party/jquery.js'></script>
 </head>
 <body>
 <h1>clone script test in ie</h1>
@@ -42,7 +42,7 @@
 
 
 <script>
-    KISSY.ready(function(S) {
+    KISSY.use('core',function(S) {
 
         // S.one('#haha').text('alert(2)');
         S.one('<div>3<script>alert("bug inline")<' + '/script>3</div>').clone(true).prependTo('body');

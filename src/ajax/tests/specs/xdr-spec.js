@@ -31,8 +31,8 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                     }
                 },
                 dataType: 'json',
-                url: 'http://' + host + ':9999/' +
-                    'src/ajax/tests/others/xdr/xdr.jss',
+                url: 'http://' + host + ':9999/kissy/src/' +
+                    'ajax/tests/others/xdr/xdr.jss',
                 xhrFields: {
                     // Cannot use wildcard in Access-Control-Allow-Origin
                     // when credentials flag is true.
@@ -58,10 +58,10 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
                 ret = [];
 
             io({
-                url: 'http://' + host + ':9999/src/ajax/tests/data/ajax.jss',
+                url: 'http://' + host + ':9999/kissy/src/ajax/tests/data/ajax.jss',
                 xdr: {
                     subDomain: {
-                        proxy: "/src/ajax/tests/others/subdomain/proxy.html"
+                        proxy: "/kissy/src/ajax/tests/others/subdomain/proxy.html"
                     }
                 },
                 success: function () {
@@ -101,7 +101,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             io({
                 form: form[0],
                 dataType: 'json',
-                url: 'http://' + host + ':9999/src/ajax/' +
+                url: 'http://' + host + ':9999/kissy/src/ajax/' +
                     'tests/others/subdomain/upload.jss',
                 success: function (data) {
                     expect(data.test).toBe('1');

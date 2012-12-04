@@ -32,6 +32,7 @@ KISSY.use("dom,ua,node,dd/base,dd/scroll", function (S, DOM, UA, Node, DD, Scrol
         scrollTop = dragContainer[0].scrollTop;
 
         it("should make container auto scroll properly", function () {
+
             runs(function () {
                 jasmine.simulate(dragNode[0], "mousedown", {
                     clientX: dragOffset.left + 20 - DOM.scrollLeft(),

@@ -13,10 +13,10 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
     describe("io upload", function () {
 
         it("should abort for form file upload", function () {
+            S.log("should abort for form file upload");
 
-            console.log("should abort for form file upload");
-
-            var f = $('<form id="f' + S.guid(S.now()) + '" method="post" enctype="multipart/form-data">' +
+            var f = $('<form id="f' + S.guid(S.now()) +
+                '" method="post" enctype="multipart/form-data">' +
                 //php need []
                 '<select name="test[]" multiple>' +
                 '<option value="t1" selected>v</option>' +
@@ -60,14 +60,13 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             });
         });
 
-
         it("nothing happens if abort after form file upload", function () {
-
-            console.log("nothing happens if abort after form file upload");
+            S.log("nothing happens if abort after form file upload");
 
             // error !
             var f = $('<form id="f' + S.guid(S.now()) + '" method="post" ' +
-                'enctype="multipart/form-data">' +
+                'enctype="multipart/form-data" ' +
+                'action="http://www.g.cn">' +
                 //php need []
                 '<select name="test[]" multiple>' +
                 '<option value="t1" selected>v</option>' +
@@ -112,7 +111,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("fileupload support xml return data", function () {
 
-            console.log("fileupload support xml return data");
+            S.log("fileupload support xml return data");
 
             var form = $('<form enctype="multipart/form-data">' +
                 '<input name="test" value=\'1\'/>' +
@@ -143,7 +142,8 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it('should error when upload to a cross domain page', function () {
 
-            console.log("should error when upload to a cross domain page");
+
+            S.log("should error when upload to a cross domain page");
 
             var form = $('<form enctype="multipart/form-data">' +
                 '<input name="test" value=\'1\'/>' +
@@ -154,7 +154,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
             // ie upload-domain.jss 必须设置 domain
             // 否则 localhost:8888 和 localhost:9999 默认可以通信...
-            var uploadRc = 'http://localhost:9999/' +
+            var uploadRc = 'http://'+location.hostname+':9999/' +
                 'src/ajax/tests/others/form/upload-domain.jss';
 
             io({
