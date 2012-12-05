@@ -1,5 +1,5 @@
 /**
- * @ingore
+ * @ignore
  * simulate shake gesture by listening devicemotion event
  * @author yiminghe@gmail.com
  */

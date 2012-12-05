@@ -42,7 +42,7 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
             h = DOM.data(target, HISTORY_KEY);
         if (v !== h) {
             // allow delegate
-            Event.fire(target, VALUE_CHANGE, {
+            Event.fireHandler(target, VALUE_CHANGE, {
                 prevVal: h,
                 newVal: v
             });
