@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
     }
 
     S.augment(HeadingPlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             headingCmd.init(editor);
 
             var FORMAT_SELECTION_ITEMS = [],

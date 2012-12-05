@@ -83,9 +83,10 @@ History:
  - [+] KISSY.Base.prototype.set opts 增加 error 属性，配置错误回调
 
 #### dd
- - [+] DD.Constrain 方便进行拖放范围限制
+ - [+] Constrain 方便进行拖放范围限制
  - [+] DD groups 支持拖放分组
- - [*] proxy/scroll.attach changed to proxy/scroll.attachDrag,proxy/scroll.unAttach changed to proxy/scroll.detachDrag
+ - [!] scroll/proxy/constrain 变为 dd/plugin/(scroll/proxy/constrain) 模块，需要显示动态加载
+ - [!] scroll/proxy/constrain api 变为插件 api： new Draggable().plug(new ScrollPlugin())
 
 #### component
  - [!] 删除 uibase 模块，合并 uibase 到 component 模块
@@ -94,6 +95,7 @@ History:
  - [+] Component 可配置 listeners，直接绑定事件
  - [+] 组件根节点添加 {prefix}{component}-shown/{prefix}{component}-hidden
  - [+] mask 节点添加 {prefix}{component}-mask-shown/{prefix}{component}-mask-hidden
+ - [+] 增加 drag/resize 插件模块： component/plugin/drag(resize)
 
 #### calendar
  - [+] 左莫增强 calendar：新的 ui,增加 destroy 方法
@@ -103,6 +105,7 @@ History:
  - [!] popup 构造器参数和 overlay 一致，第一个参数为 object!
  - [+] Dialog draggable 扩展配置支持 dd proxy 以及 dd scroll.
  - [+] Overlay 增加 maskShared 配置以及 maskNode 属性，可以控制是否共享以及操纵 mask 层.
+ - [!] drag/resize api 变更为插件方式 new O({plugins:[new DragPlugin()]})
 
 #### menu
  - [*] SubMenu 支持 click 事件

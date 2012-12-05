@@ -500,7 +500,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
  - 给 S.query 的结果 attach each 方法
 
  2011.05
- - 承玉：恢复对简单分组支持
+ - yiminghe@gmail.com：恢复对简单分组支持
 
  Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
  考虑 2/8 原则，仅支持以下选择器：

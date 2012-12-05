@@ -8,7 +8,7 @@ KISSY.add("editor/plugin/ordered-list/index", function (S, Editor, ListButton, L
     }
 
     S.augment(orderedList, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             ListCmd.init(editor);
 
             ListButton.init(editor, {

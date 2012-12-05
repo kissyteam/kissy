@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:27
+build time: Dec 6 01:34
 */
 /* Modules:= 简单提示 {{{ */
 	.vailInvalid{
@@ -115,12 +115,6 @@ build time: Dec 5 02:27
 		display:none;
 	}
 /* }}} */
-
-
-
-
-
-
 /* Modules:= side {{{ */
 	.valid-sidebd{
 		display:inline-block;

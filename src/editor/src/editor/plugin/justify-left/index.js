@@ -13,7 +13,7 @@ KISSY.add("editor/plugin/justify-left/index", function (S, Editor, justifyCenter
     }
 
     S.augment(justifyLeft, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             justifyCenterCmd.init(editor);
 
             editor.addButton("justifyLeft", {

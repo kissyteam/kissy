@@ -8,7 +8,7 @@ KISSY.add("editor/plugin/underline/index", function (S, Editor, ui, cmd) {
     }
 
     S.augment(Underline, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             cmd.init(editor);
 
             editor.addButton("underline", {

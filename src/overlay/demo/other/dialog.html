@@ -7,18 +7,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <title>KISSY Dialog</title>
-    <link rel="shortcut icon" href="../../../../../kissy-dpl/base/assets/favicon.ico"/>
-    <link rel="stylesheet" href="../../../../../kissy-dpl/base/assets/reset.css"/>
-    <link rel="stylesheet" href="../../../../../kissy-dpl/base/assets/kissy-docs.css"/>
-
-    <link rel="stylesheet" href="../../../../../kissy-dpl/base/build/css/form.css"/>
-
+    <script src="/kissy/build/css/dpl/base.css"></script>
     <script src="/kissy/build/seed.js"></script>
 </head>
 <body>
 <div id="header">
-    <h1 class="logo"><a alt="KISSY" href="http://docs.kissyui.com/"><img
-            src="../../../../../kissy-dpl/base/assets/logo.png"/></a></h1>
+    <h1 class="logo"><a alt="KISSY" href="http://docs.kissyui.com/"></a></h1>
 
     <div class="sub-title">Overlay</div>
     <ul class="navigation">
@@ -56,9 +50,7 @@
                     mask: true,
                     align: {
                         points: ['cc', 'cc']
-                    },
-                    draggable: false,
-                    aria: true
+                    }
                 });
                 Node.one('#btn4').on('click', function () {
                     dialog.show();
@@ -79,6 +71,15 @@
 <div class="s-section" id="detail">
     <div class="s-demo">
         <style>
+            .ks-overlay p{
+                margin: 0;
+                padding: 0;
+            }
+            .ks-overlay ul,.ks-overlay li{
+                margin: 0;
+                padding: 0;
+                list-style-type: none;
+            }
             #detail .tb-attention {
                 position: absolute;
                 left: -9999px;
@@ -210,13 +211,11 @@
             </div>
         </div>
         <script>
-            KISSY.use("node,overlay,dd", function (S, Node, O) {
+            KISSY.use("node,overlay,component/plugin/drag," +
+                    "dd/plugin/constrain", function (S, Node, O, DragPlugin, ConstrainPlugin) {
                 var d = new O.Dialog({
                     srcNode: "#choose",
                     width: 480,
-                    draggable:{
-                      constrain:window
-                    },
                     mask: true,
                     closable: true,
                     align: {
@@ -228,6 +227,11 @@
                         duration: 0.5
                     }
                 });
+                d.plug(new DragPlugin({
+                    handlers: ['.ks-stdmod-header']
+                }).plug(new ConstrainPlugin({
+                    node: window
+                })));
                 Node.one('#btn3').on('click', function () {
                     d.show();
                 });
@@ -259,7 +263,10 @@
         <button id="btn8" class="button">限制</button>
         <!--<button id="btnHA" class="button">隐藏页面上所有的对话框</button>-->
         <script>
-            KISSY.use("node,overlay,dd,resizable", function (S, Node, O, DD, R) {
+            KISSY.use("node,overlay," +
+                    "component/plugin/drag," +
+                    "component/plugin/resize," +
+                    "dd/plugin/constrain", function (S, Node, O, DragPlugin, ResizePlugin, ConstrainPlugin) {
                 var stat = true,
                         sh = false;
 
@@ -276,16 +283,18 @@
                         node: '#c1',
                         points: ['cc', 'cc']
                     },
-                    draggable: {
-                        constrain: '#c1'
-                    },
-                    closable: false,
-                    resize: {
-                        minWidth: 150,
-                        minHeight: 70,
-                        handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"]
-                    }
+                    closable: false
                 });
+
+                dialog.plug(new DragPlugin({
+                    handlers: ['.ks-stdmod-header']
+                }).plug(new ConstrainPlugin({
+                    constrain: '#c1'
+                }))).plug(new ResizePlugin({
+                    minWidth: 150,
+                    minHeight: 70,
+                    handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"]
+                }));
 
                 dialog.on('show', function () {
                     if (stat) {
@@ -315,17 +324,17 @@
 
 
                 Node.one('#btn7').on('click', function () {
-                    dialog.set('draggable', {
-                        constrain: false
-                    });
+                    dialog.getPlugin('component/plugin/drag')
+                            .getPlugin('dd/plugin/constrain')
+                            .set('constrain', false);
                     stat = false;
                     dialog.set('bodyContent', '我自由啦');
                 });
 
                 Node.one('#btn8').on('click', function () {
-                    dialog.set('draggable', {
-                        'constrain': "#c1"
-                    });
+                    dialog.getPlugin('component/plugin/drag')
+                            .getPlugin('dd/plugin/constrain')
+                            .set('constrain','#c1');
                     dialog.set("align", {
                         node: '#c1',
                         points: ['cc', 'cc']
@@ -368,7 +377,6 @@
                             + 'height="282" '
                             + 'src="http://img02.taobaocdn.com/tps/i2/T10J9bXnlgXXXXXXXX-424-282.jpg?noq=y" />',
                     mask: true,
-                    draggable: false,
                     align: {
                         points: ['cc', 'cc']
                     },
@@ -463,11 +471,11 @@
 
 </div>
 
-<h3 class="s-title">代理 + 滚动监控</h3>
+<h3 class="s-title">代理, 滚动监控 插件使用</h3>
 
 <div class="s-section">
     <h4 class="s-api-title">
-        <a href="proxy-scroll.html">代理 + 滚动监控</a>
+        <a href="plugin.html">代理 + 滚动监控</a>
     </h4>
 </div>
 

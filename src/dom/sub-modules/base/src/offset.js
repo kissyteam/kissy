@@ -440,7 +440,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
  - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
 
  2011-05-24
- - 承玉：
+ - yiminghe@gmail.com：
  - 调整 docWidth , docHeight ,
  viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
  便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node

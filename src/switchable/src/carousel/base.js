@@ -114,12 +114,12 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
 /**
  * NOTES:
  *
- * 承玉：2012.03.08
+ * yiminghe@gmail.com：2012.03.08
  *  - 修复快速点击上页/下页，动画没完时 disabled class 没设导致的翻页超出
  *
- * 承玉：2011.06.02 review switchable
+ * yiminghe@gmail.com：2011.06.02 review switchable
  *
- * 承玉：2011.05
+ * yiminghe@gmail.com：2011.05
  *  - 内部组件 init 覆盖父类而不是监听事件
  *
  * 2010.07

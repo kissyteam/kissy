@@ -1,9 +1,0 @@
-/*
-Copyright 2012, KISSY UI Library v1.40dev
-MIT Licensed
-build time: Dec 5 02:23
-*/
-KISSY.add("dd/scroll",function(d,r,e,s,f){function i(){i.superclass.constructor.apply(this,arguments)}var m=r.DDM,t=d.Env.host,n=".-ks-dd-scroll"+d.now(),u=100;i.ATTRS={node:{valueFn:function(){return s.one(t)},setter:function(a){return s.one(a)}},rate:{value:[10,10]},diff:{value:[20,20]}};var p=d.isWindow;d.extend(i,e,{getRegion:function(a){return p(a[0])?{width:f.viewportWidth(),height:f.viewportHeight()}:{width:a.outerWidth(),height:a.outerHeight()}},getOffset:function(a){return p(a[0])?{left:f.scrollLeft(),
-top:f.scrollTop()}:a.offset()},getScroll:function(a){return{left:a.scrollLeft(),top:a.scrollTop()}},setScroll:function(a,d){a.scrollLeft(d.left);a.scrollTop(d.top)},destructor:function(a){a.detach(n)},detachDrag:function(a){this.destructor(a)},attachDrag:function(a){this.initializer(a)},destroy:function(){},initializer:function(a){function e(){if(p(g[0]))return 0;var c=a.mousePos,d=m.region(g);return!m.inRegion(d,c)?(clearTimeout(l),l=0,1):0}function i(){if(!e()){var c=j.getRegion(g),n=c.width,c=
-c.height,b=j.getScroll(g),m=d.clone(b),o=!1;h.top-c>=-q[1]&&(b.top+=f[1],o=!0);h.top<=q[1]&&(b.top-=f[1],o=!0);h.left-n>=-q[0]&&(b.left+=f[0],o=!0);h.left<=q[0]&&(b.left-=f[0],o=!0);o?(j.setScroll(g,b),l=setTimeout(i,u),k.fake=!0,p(g[0])&&(b=j.getScroll(g),k.left+=b.left-m.left,k.top+=b.top-m.top),a.get("move")&&a.get("node").offset(k),a.fire("drag",k)):l=null}}var j=this,g=j.get("node"),f=j.get("rate"),q=j.get("diff"),k,h,l=null;a.on("drag"+n,function(c){!c.fake&&!e()&&(k=c,h=d.clone(a.mousePos),
-c=j.getOffset(g),h.left-=c.left,h.top-=c.top,l||i())});a.on("dragstart"+n,function(){m.cacheWH(g)});a.on("dragend"+n,function(){clearTimeout(l);l=null})}});e=i.prototype;e.attach=e.attachDrag;e.unAttach=e.detachDrag;return r.Scroll=i},{requires:["dd/base","base","node","dom"]});

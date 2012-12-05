@@ -71,9 +71,9 @@ KISSY.add('switchable/accordion/base', function (S, DOM, Switchable) {
  * TODO:
  *  - 支持动画
  *
- *  承玉：2011.06.02 review switchable
+ *  yiminghe@gmail.com：2011.06.02 review switchable
  *
- *  承玉：2011.05.10
+ *  yiminghe@gmail.com：2011.05.10
  *   - review ,prepare for aria
  *
  *

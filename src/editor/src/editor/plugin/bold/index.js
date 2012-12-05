@@ -8,7 +8,7 @@ KISSY.add("editor/plugin/bold/index", function (S, Editor, ui, cmd) {
     }
 
     S.augment(bold, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             cmd.init(editor);
             editor.addButton("bold", {
                 cmdType:'bold',

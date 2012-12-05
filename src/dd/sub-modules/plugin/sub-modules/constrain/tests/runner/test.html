@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>DD Constrain Test Runner</title>
+
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/tools/jasmine/event-simulate.js"></script>
+
+    <script src="/kissy/build/seed.js"></script>
+    <script src="../../src/constrain.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        .dh {
+            border-bottom: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+
+<h1>KISSY dd/constrain Test Cases</h1>
+
+<script src="../specs/constrain-spec.js"></script>
+
+<script>
+    KISSY.use('core,dd/plugin/constrain', function (S) {
+        var UA = S.UA;
+        if (UA.ie == 9) {
+            jasmine.kissyNext(0);
+            return;
+        }
+
+        setTimeout(function () {
+
+            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+            jasmine.getEnv().execute(function () {
+                jasmine.kissyNext(this.results().failedCount);
+            });
+        }, 200);
+    });
+</script>
+
+</body>
+</html>

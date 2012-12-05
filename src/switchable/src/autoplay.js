@@ -106,8 +106,8 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
     return Switchable;
 }, { requires:["dom", "event", "./base"]});
 /**
- * - 乔花 承玉：2012.02.08 support pauseOnScroll
+ * - 乔花 yiminghe@gmail.com：2012.02.08 support pauseOnScroll
  *  当 Switchable 对象不在可视区域中时停止动画切换
  *
- * - 承玉：2011.06.02 review switchable
+ * - yiminghe@gmail.com：2011.06.02 review switchable
  */

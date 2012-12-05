@@ -20,13 +20,13 @@ tests.push('/kissy/src/cookie/tests/runner/test.html');
 
 tests.push('/kissy/src/dd/sub-modules/base/tests/runner/test.html');
 
-tests.push('/kissy/src/dd/sub-modules/constrain/tests/runner/test.html');
-
 tests.push('/kissy/src/dd/sub-modules/droppable/tests/runner/test.html');
 
-tests.push('/kissy/src/dd/sub-modules/proxy/tests/runner/test.html');
+tests.push('/kissy/src/dd/sub-modules/plugin/sub-modules/constrain/tests/runner/test.html');
 
-tests.push('/kissy/src/dd/sub-modules/scroll/tests/runner/test.html');
+tests.push('/kissy/src/dd/sub-modules/plugin/sub-modules/proxy/tests/runner/test.html');
+
+tests.push('/kissy/src/dd/sub-modules/plugin/sub-modules/scroll/tests/runner/test.html');
 
 tests.push('/kissy/src/dom/tests/runner/test.html');
 

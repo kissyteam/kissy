@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/preview/index", function (S) {
     }
 
     S.augment(Preview, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             editor.addButton("preview", {
                 tooltip:"预览",
                 listeners:{

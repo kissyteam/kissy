@@ -56,7 +56,7 @@ KISSY.add("editor/plugin/checkbox-source-area/index", function (S, Editor) {
     }
 
     S.augment(CheckboxSourceAreaPlugin,{
-        renderUI:function(editor){
+        pluginRenderUI:function(editor){
 
             var c = new CheckboxSourceArea(editor);
             editor.on("destroy", function () {

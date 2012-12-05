@@ -73,8 +73,3 @@ KISSY.add("validation/rule/remote", function(S, DOM, Event, Util) {
 
 
 }, { requires: ['dom',"event","../utils"] });
-
-
-
-
-

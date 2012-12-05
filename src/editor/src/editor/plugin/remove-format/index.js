@@ -8,7 +8,7 @@ KISSY.add("editor/plugin/remove-format/index", function (S, Editor, formatCmd) {
     }
 
     S.augment(removeFormat, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             formatCmd.init(editor);
             editor.addButton("removeFormat", {
                 tooltip:"清除格式",

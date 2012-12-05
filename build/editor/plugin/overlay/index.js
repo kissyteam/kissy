@@ -1,33 +1,33 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * custom overlay  for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix) {
+KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix, ConstrainPlugin, DragPlugin) {
     var Overlay4E = Overlay.extend({
-        bindUI:function () {
+        bindUI: function () {
             focusFix.init(this);
         }
     }, {
-        ATTRS:{
-            prefixCls:{
-                value:"ks-editor-"
+        ATTRS: {
+            prefixCls: {
+                value: "ks-editor-"
             },
-            "zIndex":{
-                value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
+            "zIndex": {
+                value: Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
             }
         }
     });
 
     Overlay4E.Dialog = Overlay.Dialog.extend({
-        bindUI:function () {
+        bindUI: function () {
             focusFix.init(this);
         },
-        show:function () {
+        show: function () {
             var self = this;
             //在 show 之前调用
             self.center();
@@ -40,22 +40,29 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix)
             Overlay4E.prototype.show.call(self);
         }
     }, {
-        ATTRS:{
-            prefixCls:{
-                value:"ks-editor-"
+        ATTRS: {
+            prefixCls: {
+                value: "ks-editor-"
             },
-            "zIndex":{
-                value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
+            "zIndex": {
+                value: Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
             },
-            draggable:{
-                value:{
-                    constrain:true
-                }
+            plugins: {
+                value: [
+                    new DragPlugin({
+                        handlers: ['.ks-editor-stdmod-header'],
+                        plugins: [
+                            new ConstrainPlugin({
+                                constrain: window
+                            })
+                        ]
+                    })
+                ]
             }
         }
     });
 
     return Overlay4E
 }, {
-    requires:["editor", 'overlay', '../focus-fix/', 'dd/base','dd/constrain']
+    requires: ["editor", 'overlay', '../focus-fix/', 'dd/plugin/constrain', 'component/plugin/drag']
 });

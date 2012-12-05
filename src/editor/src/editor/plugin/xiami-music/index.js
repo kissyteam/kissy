@@ -28,7 +28,7 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
     }
 
     S.augment(XiamiMusicPlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             fakeObjects.init(editor);
 

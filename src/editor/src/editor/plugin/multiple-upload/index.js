@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/multiple-upload/index", function (S, Editor, DialogLoad
     }
 
     S.augment(multipleUpload, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             var self = this;
             editor.addButton("multipleUpload", {
                 tooltip:"批量插图",

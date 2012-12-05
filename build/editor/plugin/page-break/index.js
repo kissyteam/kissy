@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * pagebreak functionality
@@ -21,7 +21,7 @@ KISSY.add("editor/plugin/page-break/index", function (S, Editor, fakeObjects) {
     }
 
     S.augment(pageBreak, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             fakeObjects.init(editor);
 

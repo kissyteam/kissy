@@ -2,7 +2,7 @@
  * testcases for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
+KISSY.use("ua,node,overlay,component/plugin/resize", function (S, UA, Node, Overlay, ResizePlugin) {
     var DOM = S.DOM, $ = Node.all;
 
     beforeEach(function () {
@@ -104,16 +104,16 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
 
         describe("完全由 javascript 渲染弹层", function () {
 
-
             var o = new Overlay({
                 width: 400,
                 elCls: "popup",
-                resize: {
-                    handlers: ["t"]
-                },
+                plugins: [
+                    new ResizePlugin({
+                        handlers: ["t"]
+                    })
+                ],
                 content: "render by javascript"
             });
-
 
             it("渲染前取不到 el 元素", function () {
                 expect(o.get("el")).toBeUndefined();
@@ -330,9 +330,9 @@ KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
                 var o = new Overlay.Dialog({
                     headerContent: "哈哈",
                     bodyContent: "嘿嘿",
-                    elStyle:{
+                    elStyle: {
                         // ie6...
-                      overflow:'hidden'
+                        overflow: 'hidden'
                     },
                     render: node,
                     width: 300,

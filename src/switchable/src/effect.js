@@ -272,5 +272,5 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
 
 }, { requires: ["dom", "event", "anim", "./base"]});
 /**
- * 承玉：2011.06.02 review switchable
+ * yiminghe@gmail.com：2011.06.02 review switchable
  */

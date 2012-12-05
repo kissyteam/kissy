@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * @ignore
@@ -995,7 +995,7 @@ KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
  yiminghe@gmail.com:2011-12-15
  - 借鉴 jq 1.7 新的架构
 
- 承玉：2011-06-07
+ yiminghe@gmail.com：2011-06-07
  - 根据新结构，调整 mouseenter 兼容处理
  - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
  */
@@ -2063,7 +2063,7 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
             h = DOM.data(target, HISTORY_KEY);
         if (v !== h) {
             // allow delegate
-            Event.fire(target, VALUE_CHANGE, {
+            Event.fireHandler(target, VALUE_CHANGE, {
                 prevVal: h,
                 newVal: v
             });

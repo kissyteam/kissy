@@ -322,9 +322,9 @@ KISSY.add('switchable/accordion/aria', function (S, DOM, Event, Aria, Accordion,
 
 /**
 
- 承玉：2011.06.02 review switchable
+ yiminghe@gmail.com：2011.06.02 review switchable
 
- 2011-05-08 承玉：add support for aria & keydown
+ 2011-05-08 yiminghe@gmail.com：add support for aria & keydown
 
  <h2>键盘快捷键</h2>
  <ul class="list">

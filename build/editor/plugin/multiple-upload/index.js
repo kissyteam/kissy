@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * multipleUpload button
@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/multiple-upload/index", function (S, Editor, DialogLoad
     }
 
     S.augment(multipleUpload, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             var self = this;
             editor.addButton("multipleUpload", {
                 tooltip:"批量插图",

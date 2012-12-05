@@ -202,5 +202,5 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 /**
  * @ignore
  * 2011-05-17
- *  - 承玉：利用 initializer , destructor ,ATTRS
+ *  - yiminghe@gmail.com：利用 initializer , destructor ,ATTRS
  **/

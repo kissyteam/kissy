@@ -86,30 +86,6 @@ KISSY.add("validation/warn/float", function (S, DOM, Event, Util, Define) {
     return Float;
 
 }, { requires:['dom', "event", "../utils", "../define"] });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 	
 	

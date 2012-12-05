@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * justifyRight button.
@@ -19,7 +19,7 @@ KISSY.add("editor/plugin/justify-right/index", function (S, Editor, justifyCente
     }
 
     S.augment(justifyRight, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             justifyCenterCmd.init(editor);
 

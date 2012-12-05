@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * drag file support for html5 file&dd
@@ -20,7 +20,7 @@ KISSY.add("editor/plugin/drag-upload/index", function (S, Editor) {
     }
 
     S.augment(dragUpload, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             var cfg = this.config,
                 fileInput = cfg['fileInput'] || "Filedata",
                 sizeLimit = cfg['sizeLimit'] || Number.MAX_VALUE,

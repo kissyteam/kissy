@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>KISSY Dialog</title>
+    <script src="/kissy/build/seed.js"></script>
+
+    <script src="/kissy/build/css/dpl/base.css"></script>
+    <style>
+        .ks-overlay-proxy {
+            border: 1px solid red;
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+            z-index: 10000;
+        }
+    </style>
+</head>
+<body>
+<div id="header">
+    <h1 class="logo"><a alt="KISSY" href="http://docs.kissyui.com/"></a></h1>
+
+    <div class="sub-title">Overlay</div>
+    <ul class="navigation">
+        <li><a href="https://groups.google.com/group/kissy-ui">讨论组</a></li>
+        <li><a href="http://github.com/kissyteam">源码</a></li>
+    </ul>
+
+</div>
+<div id="content" class="form">
+    <div class="s-crumbs">
+        <span>当前位置：</span>
+        <a href="http://docs.kissyui.com/">KISSY</a>
+        <a href="http://docs.kissyui.com/docs/html/api/component/overlay/">Overlay</a>
+        <span>Dialog</span>
+    </div>
+        <pre class="s-section">
+
+            功能：对话框
+
+        </pre>
+
+    <link rel="stylesheet" href="assets/cool.css"/>
+
+    <h3 class="s-title">Dialog Plugin Test - 代理，窗口自动滚动，可缩放</h3>
+
+    <div class="s-section">
+        <div class="s-demo">
+            <button id="btn4" class="button">弹出</button>
+            <script>
+                KISSY.use("node,overlay," +
+                        "component/plugin/drag," +
+                        "component/plugin/resize," +
+                        "dd/plugin/scroll," +
+                        "dd/plugin/proxy",
+                        function (S, Node, O, DragPlugin, ResizePlugin, ScrollPlugin, ProxyPlugin) {
+                            var $ = Node.all,
+                                    dialog = new O.Dialog({
+                                        width: 400,
+                                        headerContent: '收藏',
+                                        bodyContent: '<iframe scrolling="no" height="200" width="398" frameborder="0" name="popupIframe" src="http://favorite.taobao.com/popup/add_collection.htm?id=10166801469&amp;itemtype=1&amp;scjjc=1&amp;_tb_token_=3b38ed73a7775&amp;t=1305543755536"></iframe>',
+                                        mask: true,
+                                        align: {
+                                            points: ['cc', 'cc']
+                                        },
+                                        plugins: [
+                                            new ResizePlugin({
+                                                handlers: ['t', 'l', 'r', 'b']
+                                            }),
+
+                                            new DragPlugin({
+                                                handlers: [function () {
+                                                    return dialog.get('header');
+                                                }],
+                                                plugins: [
+                                                    new ProxyPlugin({
+                                                        hideNodeOnDrag: 1,
+                                                        node: function () {
+                                                            var el = dialog.get("el");
+                                                            var node = $("<div class='ks-overlay-proxy'></div>");
+                                                            node.height(el.height());
+                                                            node.width(el.width());
+                                                            return node;
+                                                        },
+                                                        destroyOnEnd: true
+                                                    }),
+
+                                                    new ScrollPlugin({
+                                                        node: window
+                                                    })
+                                                ]
+                                            })
+                                        ]
+                                    });
+                            Node.one('#btn4').on('click', function () {
+                                dialog.show();
+                            });
+
+                            window.dialog = dialog;
+                        });
+            </script>
+        </div>
+
+    </div>
+    <div style="height: 800px"></div>
+</div>
+<div id="footer">
+    &copy; Copyright 2010~2012, KISSY Team.
+</div>
+</body>
+</html>

@@ -30,7 +30,7 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
     }
 
     S.augment(LinkPlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
 
             var prefixCls = editor.get('prefixCls');
             editor.addButton("link", {

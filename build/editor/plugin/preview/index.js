@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * preview for kissy editor
@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/preview/index", function (S) {
     }
 
     S.augment(Preview, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             editor.addButton("preview", {
                 tooltip:"预览",
                 listeners:{

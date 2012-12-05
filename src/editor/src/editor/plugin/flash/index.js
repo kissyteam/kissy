@@ -12,7 +12,7 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
     }
 
     S.augment(FlashPlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             fakeObjects.init(editor);
 

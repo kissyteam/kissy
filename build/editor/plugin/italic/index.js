@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * italic button.
@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/italic/index", function (S, Editor, ui, cmd) {
     }
 
     S.augment(italic, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             cmd.init(editor);
 
             editor.addButton("italic", {

@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/italic/index", function (S, Editor, ui, cmd) {
     }
 
     S.augment(italic, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             cmd.init(editor);
 
             editor.addButton("italic", {

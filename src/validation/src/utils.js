@@ -139,15 +139,3 @@ KISSY.add("validation/utils", function(S, undefined) {
     return utils;
 
 });
-
-
-
-
-
-
-
-
-
-
-
-

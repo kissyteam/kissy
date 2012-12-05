@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:23
+build time: Dec 6 01:08
 */
 /**
  * @ignore
@@ -1760,8 +1760,8 @@ KISSY.add('dom/base/data', function (S, DOM, undefined) {
     requires: ['./api']
 });
 /*
- 承玉：2011-05-31
- - 分层 ，节点和普通对象分开处理
+ yiminghe@gmail.com：2011-05-31
+ - 分层，节点和普通对象分开处理
  *//**
  * @ignore
  * @fileOverview dom-insertion
@@ -2039,7 +2039,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
  - 增加 replaceWith/wrap/wrapAll/wrapInner/unwrap
 
  2011-05-25
- - 承玉：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
+ - yiminghe@gmail.com：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
  DOM.append('.multi1','.multi2');
 
  */
@@ -2485,7 +2485,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
  - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
 
  2011-05-24
- - 承玉：
+ - yiminghe@gmail.com：
  - 调整 docWidth , docHeight ,
  viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
  便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node
@@ -2997,7 +2997,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
  - 给 S.query 的结果 attach each 方法
 
  2011.05
- - 承玉：恢复对简单分组支持
+ - yiminghe@gmail.com：恢复对简单分组支持
 
  Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
  考虑 2/8 原则，仅支持以下选择器：

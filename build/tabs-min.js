@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:27
+build time: Dec 6 01:12
 */
 KISSY.add("tabs/bar",function(c,a){var b=a.extend({createDom:function(){this.get("el").attr("role","tablist")},handleKeyEventInternal:function(b){var a=this.get("selectedTab"),b=this.getNextItemByKeyEventInternal(b,a);if(c.isBoolean(b))return b;b.set("selected",!0);return!0},renderUI:function(){var b=this,a=b.get("children");c.each(a,function(a){a.get("selected")&&b.set("selectedTab",a)})},_onSetSelectedTab:function(b,a){var c;b&&(a&&(c=a.prevVal)&&c.set("selected",!1),b.set("selected",!0))},_onSetHighlightedItem:function(){b.superclass._onSetHighlightedItem.apply(this,
 arguments);"mouse"==this.get("changeType")&&this._onSetSelectedTab.apply(this,arguments)},bindUI:function(){var b=this;b.on("afterSelectedChange",function(a){a.newVal&&a.target.isTabsTab&&b.set("selectedTab",a.target)})}},{ATTRS:{selectedTab:{},changeType:{value:"click"}}},{xclass:"tabs-bar",priority:30});b.changeType={CLICK:"click",MOUSE:"mouse"};return b},{requires:["toolbar"]});

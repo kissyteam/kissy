@@ -11,7 +11,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     }
 
     S.augment(video, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             fakeObjects.init(editor);
 

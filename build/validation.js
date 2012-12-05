@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:27
+build time: Dec 6 01:34
 */
 /**
  * @fileOverview validation
@@ -847,13 +847,7 @@ KISSY.add("validation/rule/normal", function(S, DOM, Event, Util, Rule) {
 
 
 
-}, { requires: ['dom',"event","../utils","./base"] });
-
-
-
-
-
-/**
+}, { requires: ['dom',"event","../utils","./base"] });/**
  * @fileOverview 远程校验
  * @author 常胤 <lzlu.com>
  */
@@ -927,13 +921,7 @@ KISSY.add("validation/rule/remote", function(S, DOM, Event, Util) {
     return Remote;
 
 
-}, { requires: ['dom',"event","../utils"] });
-
-
-
-
-
-/**
+}, { requires: ['dom',"event","../utils"] });/**
  * @fileOverview 工具类
  * @author 常胤 <lzlu.com>
  */
@@ -1074,18 +1062,6 @@ KISSY.add("validation/utils", function(S, undefined) {
     return utils;
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
 /**
  * @fileOverview 表单验证组件
  * @author changyin@taobao.com (lzlu.com)
@@ -1152,30 +1128,6 @@ KISSY.add("validation/warn/alert", function(S, DOM, Event, Util, Define) {
 	return Alert;
 
 }, { requires: ['dom',"event","../utils","../define"] });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 	
 	
@@ -1241,30 +1193,6 @@ KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
 
 
 }, { requires: ['dom',"event","../utils","./baseclass"] });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 	
 	
@@ -1436,30 +1364,6 @@ KISSY.add("validation/warn/float", function (S, DOM, Event, Util, Define) {
     return Float;
 
 }, { requires:['dom', "event", "../utils", "../define"] });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 	
 	

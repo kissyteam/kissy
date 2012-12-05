@@ -318,9 +318,9 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, S
 });
 
 /**
- 承玉：2011.06.02 review switchable
+ yiminghe@gmail.com：2011.06.02 review switchable
 
- 承玉:2011.05.12
+ yiminghe@gmail.com:2011.05.12
 
  <h2>键盘快捷键</h2>
  <ul class="list">

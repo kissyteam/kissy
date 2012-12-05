@@ -2,7 +2,7 @@
  * @module  delegate-spec
  * @author yiminghe@gmail.com
  */
-KISSY.use("ua,node,dd/base,dom,dd/proxy,dd/droppable", function (S, UA, Node, DD, DOM,Proxy) {
+KISSY.use("ua,node,dd/base,dom,dd/plugin/proxy,dd/droppable", function (S, UA, Node, DD, DOM,Proxy) {
     var $ = Node.all,
         DraggableDelegate = DD.DraggableDelegate,
         DroppableDelegate = DD.DroppableDelegate;
@@ -51,7 +51,8 @@ KISSY.use("ua,node,dd/base,dom,dd/proxy,dd/droppable", function (S, UA, Node, DD
                 var drop = ev.drop;
                 var dragNode = drag.get("dragNode"),
                     dropNode = drop.get("node");
-                var middleDropX = (dropNode.offset().left * 2 + dropNode.width()) / 2;
+                var middleDropX = (dropNode.offset().left * 2 +
+                    dropNode.width()) / 2;
                 if (ev.pageX > middleDropX) {
                     var next = dropNode.next();
                     if (next && next[0] == dragNode) {

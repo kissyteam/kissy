@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:27
+build time: Dec 6 01:11
 */
 /**
  * @ignore
@@ -35,12 +35,12 @@ KISSY.add('rich-base', function (S, Base) {
         // initialize main class and extension
         self.callMethodByHierarchy("initializer", "constructor");
 
-        self.bindInternal();
-        self.syncInternal();
-
         // initialize plugins
         self.constructPlugins();
         self.callPluginsMethod("initializer");
+
+        self.bindInternal();
+        self.syncInternal();
     }
 
     S.extend(RichBase, Base, {
@@ -127,6 +127,7 @@ KISSY.add('rich-base', function (S, Base) {
          */
         callPluginsMethod: function (method) {
             var self = this;
+            method = 'plugin' + ucfirst(method);
             S.each(self.get('plugins'), function (plugin) {
                 if (plugin[method]) {
                     plugin[method](self);
@@ -239,8 +240,8 @@ KISSY.add('rich-base', function (S, Base) {
                 plugin = new plugin();
             }
             // initialize plugin
-            if (plugin['initializer']) {
-                plugin['initializer'](self);
+            if (plugin['pluginInitializer']) {
+                plugin['pluginInitializer'](self);
             }
             self.get('plugins').push(plugin);
             return self;
@@ -261,7 +262,8 @@ KISSY.add('rich-base', function (S, Base) {
                 var keep = 0, pluginId;
                 if (plugin) {
                     if (isString) {
-                        pluginId = p.pluginId || p.get && p.get('pluginId');
+                        // user defined takes priority
+                        pluginId = p.get && p.get('pluginId') || p.pluginId;
                         if (pluginId != plugin) {
                             plugins.push(p);
                             keep = 1;
@@ -275,12 +277,29 @@ KISSY.add('rich-base', function (S, Base) {
                 }
 
                 if (!keep) {
-                    p.destructor(self);
+                    p.pluginDestructor(self);
                 }
             });
 
             self.setInternal('plugins', plugins);
             return self;
+        },
+
+        /**
+         * get specified plugin instance by id
+         * @param {String} id pluginId of plugin instance
+         */
+        'getPlugin': function (id) {
+            var plugin = null;
+            S.each(this.get('plugins'), function (p) {
+                // user defined takes priority
+                var pluginId = p.get && p.get('pluginId') || p.pluginId;
+                if (pluginId == id) {
+                    plugin = p;
+                    return false;
+                }
+            });
+            return plugin;
         }
 
     }, {

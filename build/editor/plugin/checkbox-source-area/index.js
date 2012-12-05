@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * checkbox source editor for kissy editor
@@ -61,7 +61,7 @@ KISSY.add("editor/plugin/checkbox-source-area/index", function (S, Editor) {
     }
 
     S.augment(CheckboxSourceAreaPlugin,{
-        renderUI:function(editor){
+        pluginRenderUI:function(editor){
 
             var c = new CheckboxSourceArea(editor);
             editor.on("destroy", function () {

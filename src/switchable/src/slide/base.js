@@ -33,5 +33,5 @@ KISSY.add('switchable/slide/base', function (S, Switchable) {
 }, { requires:["../base"]});
 
 /**
- * 承玉：2011.06.02 review switchable
+ * yiminghe@gmail.com：2011.06.02 review switchable
  */

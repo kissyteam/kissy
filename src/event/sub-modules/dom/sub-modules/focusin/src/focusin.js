@@ -52,6 +52,6 @@ KISSY.add('event/dom/focusin', function (S, Event) {
 });
 
 /*
- 承玉:2011-06-07
+ yiminghe@gmail.com:2011-06-07
  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */

@@ -15,7 +15,7 @@ KISSY.add("editor/plugin/drag-upload/index", function (S, Editor) {
     }
 
     S.augment(dragUpload, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             var cfg = this.config,
                 fileInput = cfg['fileInput'] || "Filedata",
                 sizeLimit = cfg['sizeLimit'] || Number.MAX_VALUE,

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:27
+build time: Dec 6 01:11
 */
 /**
  * @ignore
@@ -10,11 +10,8 @@ build time: Dec 5 02:27
  */
 KISSY.add("overlay/base", function (S, Component,
                                     Extension,
-
                                     Loading,
-
                                     Close,
-                                    Resize,
                                     Mask,
                                     OverlayRender) {
 
@@ -150,7 +147,6 @@ KISSY.add("overlay/base", function (S, Component,
         Loading,
         Extension.Align,
         Close,
-        Resize,
         Mask
     ],{
             /**
@@ -280,7 +276,6 @@ KISSY.add("overlay/base", function (S, Component,
         'component/extension',
         "./extension/loading",
         "./extension/close",
-        "./extension/resize",
         "./extension/mask",
         './overlay-render']
 });/**
@@ -317,7 +312,7 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender,StdMod) {
  * @fileOverview KISSY.Dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Drag) {
+KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod) {
 
     var $ = Node.all;
 
@@ -329,21 +324,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Dr
      * @mixins KISSY.Overlay.Extension.Drag
      */
     var Dialog = Overlay.extend([
-        StdMod,
-        Drag
+        StdMod
     ], {
-            initializer: function () {
-                var self = this, draggable;
-                if (draggable = self.get("draggable")) {
-                    if (!draggable.handlers) {
-                        // default to drag header
-                        draggable.handlers = [function () {
-                            return self.get('header');
-                        }];
-                    }
-                }
-            },
-
             handleKeyEventInternal: function (e) {
                 if (this.get('escapeToClose') &&
                     e.keyCode === Node.KeyCodes.ESC) {
@@ -483,9 +465,12 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Dr
     return Dialog;
 
 }, {
-    requires: [ "./base", './dialog-render',
-        'node', './extension/stdmod',
-        './extension/drag']
+    requires: [
+        "./base",
+        './dialog-render',
+        'node',
+        './extension/stdmod'
+    ]
 });
 
 /**
@@ -653,136 +638,6 @@ KISSY.add("overlay/extension/close", function () {
         }
     };
     return Close;
-
-});/**
- * @ignore
- * @fileOverview drag extension for position
- * @author yiminghe@gmail.com
- */
-KISSY.add("overlay/extension/drag", function (S) {
-
-    /**
-     * @class KISSY.Overlay.Extension.Drag
-     * Drag extension class. Make element draggable.
-     */
-    function Drag() {
-    }
-
-    Drag.ATTRS = {
-        /**
-         * Whether current element is draggable and draggable config.
-         * @cfg {Boolean|Object} draggable
-         *
-         * for example:
-         *      @example
-         *      {
-         *          proxy:{
-         *              // see {@link KISSY.DD.Proxy} config
-         *          },
-         *          scroll:{
-         *              // see {@link KISSY.DD.Scroll} config
-         *          },
-         *          constrain:{
-         *              // see {@link KISSY.DD.Constrain} config
-         *          },
-         *      }
-         */
-        /**
-         * @ignore
-         */
-        draggable: {
-            setter: function (v) {
-                if (v === true) {
-                    return {};
-                }
-            },
-            value: {}
-        }
-    };
-
-    Drag.prototype = {
-
-        _onSetDraggable: function (dragCfg) {
-            var self = this,
-                handlers,
-                DD = S.require("dd/base"),
-                Proxy,
-                Scroll,
-                Constrain,
-                Draggable,
-                scrollCfg,
-                constrainCfg,
-                p,
-                d = self.__drag,
-                c = self.__constrain,
-                el = self.get("el");
-
-            if (dragCfg && !d && DD) {
-
-                Draggable = DD.Draggable;
-
-                d = self.__drag = new Draggable({
-                    node: el,
-                    move: 1
-                });
-
-                if (dragCfg.proxy && (Proxy = S.require('dd/proxy'))) {
-                    dragCfg.proxy.moveOnEnd = true;
-
-                    d.plug(new Proxy(dragCfg.proxy));
-                }
-
-                d.on("dragend", function () {
-                    var proxyOffset;
-                    proxyOffset = el.offset();
-                    self.set("x", proxyOffset.left);
-                    self.set("y", proxyOffset.top);
-                    // 存在代理时
-                    if (p) {
-                        el.css("visibility", "visible");
-                    }
-                });
-
-                if ((scrollCfg = dragCfg.scroll) &&
-                    (Scroll = S.require('dd/scroll'))) {
-                    d.plug(new Scroll(scrollCfg));
-                }
-
-            }
-
-            if (d) {
-                d.set("disabled", !dragCfg);
-            }
-
-            if (dragCfg && d) {
-                handlers = dragCfg.handlers;
-                if (Constrain = S.require('dd/constrain')) {
-                    if (constrainCfg = dragCfg.constrain) {
-                        if (!c) {
-                            c = self.__constrain = new Constrain();
-                            d.plug(c);
-                        }
-                        c.set("constrain", constrainCfg);
-                    } else {
-                        if (c) {
-                            c.set("constrain", false);
-                        }
-                    }
-                }
-                if (handlers && handlers.length > 0) {
-                    d.set("handlers", handlers);
-                }
-            }
-        },
-
-        __destructor: function () {
-            var d = this.__drag;
-            d && d.destroy();
-        }
-
-    };
-
-    return Drag;
 
 });/**
  * @ignore
@@ -1080,65 +935,6 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
 
     return Mask;
 }, {requires: ["event"]});/**
- * @ignore
- * @fileOverview resize extension using resizable
- * @author yiminghe@gmail.com
- */
-KISSY.add("overlay/extension/resize", function (S) {
-
-    /**
-     * @class KISSY.Overlay.Extension.Resize
-     * Resizable extension class. Make component resizable
-     */
-    function Resize() {
-    }
-
-    Resize.ATTRS = {
-        /**
-         * Resizable configuration. See {@link KISSY.Resizable}
-         * @type {Object}
-         * @property resize
-         *
-         * for example:
-         *      @example
-         *      {
-         *          minWidth:100,
-         *          maxWidth:1000,
-         *          minHeight:100,
-         *          maxHeight:1000,
-         *          handlers:["b","t","r","l","tr","tl","br","bl"]
-         *      }
-         *
-         *
-         */
-        /**
-         * @ignore
-         */
-        resize:{
-            value:{
-            }
-        }
-    };
-
-    Resize.prototype = {
-        __destructor:function () {
-            var r = this.resizer;
-            r && r.destroy();
-        },
-        _onSetResize:function (v) {
-            var Resizable = S.require("resizable"),
-                self = this;
-            self.resizer && self.resizer.destroy();
-            if (Resizable && v) {
-                v.node = self.get("el");
-                self.resizer = new Resizable(v);
-            }
-        }
-    };
-
-
-    return Resize;
-});/**
  * @ignore
  * @fileOverview support standard mod for component
  * @author yiminghe@gmail.com
@@ -1618,5 +1414,5 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 /**
  * @ignore
  * 2011-05-17
- *  - 承玉：利用 initializer , destructor ,ATTRS
+ *  - yiminghe@gmail.com：利用 initializer , destructor ,ATTRS
  **/

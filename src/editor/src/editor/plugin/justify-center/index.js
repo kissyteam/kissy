@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/justify-center/index", function (S, Editor, justifyCent
     }
 
     S.augment(justifyCenter, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton("justifyCenter", {
                 tooltip:"居中对齐",

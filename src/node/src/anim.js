@@ -248,7 +248,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
  - 重写，逻辑放到 Anim 模块，这边只进行转发
 
  2011-05-17
- - 承玉：添加 stop ，随时停止动画
+ - yiminghe@gmail.com：添加 stop ，随时停止动画
 
  TODO
  - anim needs queue mechanism ?

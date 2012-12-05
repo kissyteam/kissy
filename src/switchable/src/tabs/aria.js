@@ -237,7 +237,7 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
 });
 
 /**
- * 2011-05-08 承玉：add support for aria & keydown
+ * 2011-05-08 yiminghe@gmail.com：add support for aria & keydown
  * <h2>键盘快捷键</h2>
 
  <ul class="list">

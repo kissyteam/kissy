@@ -6,7 +6,7 @@ var path = require('path');
 var fs = require('fs');
 var cwd = process.cwd();
 var srcDir = path.resolve(cwd, 'src');
-var S = global.KISSY = global.S = require(cwd + '/kissy/build/kissy-nodejs.js');
+var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
 
 function collectTc(baseDir, codes) {
     var files = fs.readdirSync(baseDir);

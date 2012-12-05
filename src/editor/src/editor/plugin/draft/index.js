@@ -359,7 +359,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
     }
 
     S.augment(DraftPlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             var config = this.config;
             if (localStorage.ready) {
                 localStorage.ready(function () {

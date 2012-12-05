@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * ElementPath for debug.
@@ -83,7 +83,7 @@ KISSY.add("editor/plugin/element-path/index", function (S, Editor) {
     }
 
     S.augment(ElementPathPlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             var elemPath = new ElementPaths({
                 editor:editor
             });

@@ -1,4 +1,4 @@
-KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
+KISSY.use("ua,node,overlay", function (S, UA, Node, Overlay) {
     describe("view", function () {
         it("should reflect after create", function () {
             var overlay = new Overlay({

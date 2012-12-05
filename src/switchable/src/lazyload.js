@@ -105,5 +105,5 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
  *  - 初始 lazyload activeIndex
  *  - consider steps == 1 for carousel
  *
- * 承玉：2011.06.02 review switchable
+ * yiminghe@gmail.com：2011.06.02 review switchable
  */

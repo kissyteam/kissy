@@ -29,7 +29,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
     }
 
     S.augment(ImagePlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
 
             var self = this;
 

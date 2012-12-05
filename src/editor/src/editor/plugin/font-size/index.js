@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/font-size/index", function (S, Editor, ui, cmd) {
     }
 
     S.augment(FontSizePlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             cmd.init(editor);
 

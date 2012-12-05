@@ -102,7 +102,7 @@ KISSY.add("switchable-ext/slide/aria", function (S, DOM, Event, Switchable) {
     requires:["dom", "event", 'switchable']
 });
 /**
- 2011-05-12 承玉：add support for aria & keydown
+ 2011-05-12 yiminghe@gmail.com：add support for aria & keydown
 
  <h2>键盘操作</h2>
  <ul class="list">

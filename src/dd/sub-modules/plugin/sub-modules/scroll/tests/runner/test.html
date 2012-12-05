@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>DD Test Runner</title>
+
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/tools/jasmine/event-simulate.js"></script>
+
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/build/rich-base.js"></script>
+    <script src="/kissy/build/dd/base.js"></script>
+    <script src="../../src/scroll.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        .dh {
+            border-bottom: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+
+<div id="wrap">
+
+
+    <!--
+
+    for scroll-spec.js
+
+    -->
+
+    <div id="drag_scroll_container" style="position:relative;
+border:1px solid green;
+width:200px;
+overflow:auto;
+height:200px;
+">
+        <div id="drag-scroll" style="width:50px;height:50px;border:1px solid red;
+    position:absolute;
+    left:50px;top:50px;">
+            drag
+        </div>
+        <div style="width:250px">
+            1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 <br/>
+            2 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0<br/>
+            3 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0<br/>
+            4 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0<br/>
+            5 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0<br/>
+            6 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0<br/>
+            7 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0<br/>
+            8<br/>
+            9<br/>
+            10<br/>
+            1<br/>
+            2<br/>
+            3<br/>
+            4<br/>
+            5<br/>
+            6<br/>
+            7<br/>
+            8<br/>
+            9<br/>
+            10<br/>
+        </div>
+    </div>
+</div>
+
+<h1>KISSY dd/scroll Test Cases</h1>
+
+<script src="../specs/scroll-spec.js"></script>
+
+<script>
+    KISSY.use('core,dd/plugin/scroll', function (S) {
+        var UA = S.UA;
+        if (UA.ie == 9) {
+            jasmine.kissyNext(0);
+
+            // ie9 模拟鼠标拖放有问题
+            S.all('#wrap').hide();
+            return;
+        }
+
+        setTimeout(function () {
+
+            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+            jasmine.getEnv().execute(function () {
+                jasmine.kissyNext(this.results().failedCount);
+
+                S.all('#wrap').hide();
+            });
+        }, 200);
+    });
+</script>
+
+</body>
+</html>

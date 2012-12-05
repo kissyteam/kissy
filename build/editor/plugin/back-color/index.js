@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * backColor button.
@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/back-color/index", function (S, Editor, Button, cmd) {
     }
 
     S.augment(backColor, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             cmd.init(editor);
             Button.init(editor, {
                 defaultColor: 'rgb(255, 217, 102)',

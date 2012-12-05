@@ -9,7 +9,7 @@ KISSY.add('editor/plugin/code/index', function (S, Editor,DialogLoader) {
     }
 
     S.augment(CodePlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             editor.addButton('code', {
                 tooltip: "插入代码",
                 listeners: {

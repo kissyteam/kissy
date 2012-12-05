@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/indent/index", function (S, Editor, indexCmd) {
     }
 
     S.augment(Indent, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             indexCmd.init(editor);
             editor.addButton("indent", {
                 tooltip:"增加缩进量 ",

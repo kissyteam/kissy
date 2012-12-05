@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * justifyLeft button.
@@ -18,7 +18,7 @@ KISSY.add("editor/plugin/justify-left/index", function (S, Editor, justifyCenter
     }
 
     S.augment(justifyLeft, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             justifyCenterCmd.init(editor);
 
             editor.addButton("justifyLeft", {

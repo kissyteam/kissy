@@ -8,7 +8,7 @@ KISSY.add("editor/plugin/unordered-list/index", function (S, Editor, ListButton,
     }
 
     S.augment(unorderedList, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             ListCmd.init(editor);
 
             ListButton.init(editor, {

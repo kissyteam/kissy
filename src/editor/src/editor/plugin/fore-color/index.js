@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/fore-color/index", function (S, Editor, Button, cmd) {
     }
 
     S.augment(ForeColorPlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             cmd.init(editor);
             Button.init(editor, {
                 cmdType: 'foreColor',

@@ -8,7 +8,7 @@ KISSY.add("editor/plugin/separator/index", function (S) {
     }
 
     S.augment(Separator, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             S.all('<span ' +
                 'class="'+editor.get('prefixCls')+'editor-toolbar-separator">&nbsp;' +
                 '</span>')

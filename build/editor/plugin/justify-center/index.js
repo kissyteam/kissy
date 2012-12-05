@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * justifyCenter button.
@@ -19,7 +19,7 @@ KISSY.add("editor/plugin/justify-center/index", function (S, Editor, justifyCent
     }
 
     S.augment(justifyCenter, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton("justifyCenter", {
                 tooltip:"居中对齐",

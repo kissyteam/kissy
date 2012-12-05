@@ -78,7 +78,7 @@ KISSY.add("editor/plugin/element-path/index", function (S, Editor) {
     }
 
     S.augment(ElementPathPlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             var elemPath = new ElementPaths({
                 editor:editor
             });

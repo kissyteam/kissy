@@ -392,7 +392,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader) {
     }
 
     S.augment(TablePlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             /**
              * 动态加入显表格 border css，便于编辑
              */

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * smiley button
@@ -21,7 +21,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
     }
 
     S.augment(Smiley, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
 
             var prefixCls = editor.get('prefixCls');
 

@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/maximize/index", function (S, Editor, maximizeCmd) {
     }
 
     S.augment(maximizePlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             maximizeCmd.init(editor);
             editor.addButton("maximize", {
                 tooltip:MAXIMIZE_TIP,

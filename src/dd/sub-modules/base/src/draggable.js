@@ -194,9 +194,12 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              * @param {KISSY.Event.CustomEventObject} e
              * @param e.drag current draggable object
              */
+        },
 
-                // dragNode is equal to node in single mode
-            self.setInternal('dragNode', self.get('node'));
+        '_onSetNode': function (n) {
+            var self=this;
+            // dragNode is equal to node in single mode
+            self.setInternal('dragNode', n);
             self.bindDragEvent();
         },
 
@@ -566,7 +569,11 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                         if (S.isFunction(v)) {
                             v = v.call(self);
                         }
-                        if ((typeof v == 'string') || v.nodeType) {
+                        // search inside node
+                        if (typeof v == 'string') {
+                            v = self.get('node').one(v);
+                        }
+                        if (v.nodeType) {
                             v = Node.one(v);
                         }
                         vs[i] = v;

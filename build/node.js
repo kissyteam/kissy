@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:27
+build time: Dec 6 01:11
 */
 /**
  * @ignore
@@ -253,7 +253,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
  - 重写，逻辑放到 Anim 模块，这边只进行转发
 
  2011-05-17
- - 承玉：添加 stop ，随时停止动画
+ - yiminghe@gmail.com：添加 stop ，随时停止动画
 
  TODO
  - anim needs queue mechanism ?
@@ -428,7 +428,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
 
 /*
  2011-05-24
- - 承玉：
+ - yiminghe@gmail.com：
  - 将 DOM 中的方法包装成 NodeList 方法
  - Node 方法调用参数中的 KISSY NodeList 要转换成第一个 HTML Node
  - 要注意链式调用，如果 DOM 方法返回 undefined （无返回值），则 NodeList 对应方法返回 this
@@ -704,7 +704,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
 /*
  Notes:
  2011-05-25
- - 承玉：参考 jquery，只有一个 NodeList 对象，Node 就是 NodeList 的别名
+ - yiminghe@gmail.com：参考 jquery，只有一个 NodeList 对象，Node 就是 NodeList 的别名
 
  2010.04
  - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。
@@ -797,7 +797,7 @@ KISSY.add('node/override', function (S, DOM,NodeList) {
  - 增加 wrap/wrapAll/replaceWith/wrapInner/unwrap/contents
 
  2011-05-24
- - 承玉：
+ - yiminghe@gmail.com：
  - 重写 NodeList 的某些方法
  - 添加 one ,all ，从当前 NodeList 往下开始选择节点
  - 处理 append ,prepend 和 DOM 的参数实际上是反过来的

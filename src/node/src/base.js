@@ -267,7 +267,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
 /*
  Notes:
  2011-05-25
- - 承玉：参考 jquery，只有一个 NodeList 对象，Node 就是 NodeList 的别名
+ - yiminghe@gmail.com：参考 jquery，只有一个 NodeList 对象，Node 就是 NodeList 的别名
 
  2010.04
  - each 方法传给 fn 的 this, 在 jQuery 里指向原生对象，这样可以避免性能问题。

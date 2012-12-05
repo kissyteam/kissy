@@ -5,11 +5,8 @@
  */
 KISSY.add("overlay/base", function (S, Component,
                                     Extension,
-
                                     Loading,
-
                                     Close,
-                                    Resize,
                                     Mask,
                                     OverlayRender) {
 
@@ -145,7 +142,6 @@ KISSY.add("overlay/base", function (S, Component,
         Loading,
         Extension.Align,
         Close,
-        Resize,
         Mask
     ],{
             /**
@@ -275,7 +271,6 @@ KISSY.add("overlay/base", function (S, Component,
         'component/extension',
         "./extension/loading",
         "./extension/close",
-        "./extension/resize",
         "./extension/mask",
         './overlay-render']
 });

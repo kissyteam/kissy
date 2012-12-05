@@ -10,7 +10,7 @@ this.config=config||{};
     }
 
     S.augment(Resize, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             var Draggable = DD['Draggable'],
                 statusBarEl = editor.get("statusBarEl"),
                 textarea = editor.get("textarea"),

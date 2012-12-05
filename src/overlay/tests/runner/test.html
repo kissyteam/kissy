@@ -20,12 +20,10 @@
 
     <script src="../../src/extension/close-render.js"></script>
     <script src="../../src/extension/close.js"></script>
-    <script src="../../src/extension/drag.js"></script>
     <script src="../../src/extension/loading-render.js"></script>
     <script src="../../src/extension/loading.js"></script>
     <script src="../../src/extension/mask-render.js"></script>
     <script src="../../src/extension/mask.js"></script>
-    <script src="../../src/extension/resize.js"></script>
     <script src="../../src/extension/stdmod-render.js"></script>
     <script src="../../src/extension/stdmod.js"></script>
 
@@ -60,7 +58,7 @@
 <script src="../specs/visible-spec.js"></script>
 <script src="../specs/view-spec.js"></script>
 <script>
-    KISSY.use("overlay,resizable,dd", function () {
+    KISSY.use("overlay,resizable,dd,component/plugin/drag,component/plugin/resize", function () {
 
         setTimeout(function () {
             jasmine.getEnv().addReporter(new jasmine.TrivialReporter());

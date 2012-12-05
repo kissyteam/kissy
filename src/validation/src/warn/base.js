@@ -59,30 +59,6 @@ KISSY.add("validation/warn/base", function(S, DOM, Event, Util, BaseClass) {
 
 
 }, { requires: ['dom',"event","../utils","./baseclass"] });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 	
 	

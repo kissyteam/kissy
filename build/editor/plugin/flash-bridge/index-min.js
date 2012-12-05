@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 KISSY.add("editor/plugin/flash-bridge/index",function(d,n,o){function e(a){this._init(a)}function l(a){var b="string"==typeof a?a.match(/(\d)+/g):a;d.isArray(b)&&(a=parseFloat(b[0]+"."+m(b[1],3)+m(b[2],5)));return a||0}function m(a,b){for(var c=(a+"").length;c++<b;)a="0"+a;return a}var g={};d.augment(e,d.EventTarget,{_init:function(a){var b=d.guid("flashbridge-");a.flashVars=a.flashVars||{};a.attrs=a.attrs||{};a.params=a.params||{};var c=a.flashVars,f=a.params;d.mix(a.attrs,{id:b,width:"100%",height:"100%"},
 !1);d.mix(f,{allowScriptAccess:"always",allowNetworking:"all",scale:"noScale"},!1);d.mix(c,{shareData:!1,useCompression:!1},!1);f={YUISwfId:b,YUIBridgeCallback:"KISSY.Editor.FlashBridge.EventHandler"};a.ajbridge&&(f={swfID:b,jsEntry:"KISSY.Editor.FlashBridge.EventHandler"});d.mix(c,f);g[b]=this;this.id=b;this.swf=o.createSWFRuntime(a.movie,a);this._expose(a.methods)},_expose:function(a){for(var b=this,c=0;c<a.length;c++)(function(a){b[a]=function(){return b._callSWF(a,d.makeArray(arguments))}})(a[c])},

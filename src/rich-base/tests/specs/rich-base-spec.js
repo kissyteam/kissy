@@ -87,11 +87,11 @@ KISSY.use('rich-base', function (S, RichBase) {
 
                 constructor: Plugin1,
 
-                initializer: function () {
+                pluginInitializer: function () {
                     initializer.push(1);
                 },
 
-                destructor: function () {
+                pluginDestructor: function () {
                     destructor.push(1);
                 }
 
@@ -106,11 +106,11 @@ KISSY.use('rich-base', function (S, RichBase) {
 
                 constructor: Plugin2,
 
-                initializer: function () {
+                pluginInitializer: function () {
                     initializer.push(2);
                 },
 
-                destructor: function () {
+                pluginDestructor: function () {
                     destructor.push(2);
                 }
 
@@ -155,12 +155,12 @@ KISSY.use('rich-base', function (S, RichBase) {
 
                 constructor: Plugin1,
 
-                initializer: function (tt) {
+                pluginInitializer: function (tt) {
                     expect(tt.isT).toBe(1);
                     initializer.push(1);
                 },
 
-                destructor: function (tt) {
+                pluginDestructor: function (tt) {
                     expect(tt.isT).toBe(1);
                     destructor.push(1);
                 }
@@ -176,12 +176,12 @@ KISSY.use('rich-base', function (S, RichBase) {
 
                 constructor: Plugin2,
 
-                initializer: function (tt) {
+                pluginInitializer: function (tt) {
                     expect(tt.isT).toBe(1);
                     initializer.push(2);
                 },
 
-                destructor: function (tt) {
+                pluginDestructor: function (tt) {
                     expect(tt.isT).toBe(1);
                     destructor.push(2);
                 }
@@ -250,11 +250,11 @@ KISSY.use('rich-base', function (S, RichBase) {
 
                 constructor: Plugin1,
 
-                initializer: function () {
+                pluginInitializer: function () {
                     initializer.push(1);
                 },
 
-                destructor: function () {
+                pluginDestructor: function () {
                     destructor.push(1);
                 }
 
@@ -269,11 +269,11 @@ KISSY.use('rich-base', function (S, RichBase) {
 
                 constructor: Plugin2,
 
-                initializer: function () {
+                pluginInitializer: function () {
                     initializer.push(2);
                 },
 
-                destructor: function () {
+                pluginDestructor: function () {
                     destructor.push(2);
                 }
 

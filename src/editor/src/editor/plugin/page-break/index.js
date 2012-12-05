@@ -16,7 +16,7 @@ KISSY.add("editor/plugin/page-break/index", function (S, Editor, fakeObjects) {
     }
 
     S.augment(pageBreak, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             fakeObjects.init(editor);
 

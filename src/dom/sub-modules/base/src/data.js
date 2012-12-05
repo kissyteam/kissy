@@ -262,6 +262,6 @@ KISSY.add('dom/base/data', function (S, DOM, undefined) {
     requires: ['./api']
 });
 /*
- 承玉：2011-05-31
- - 分层 ，节点和普通对象分开处理
+ yiminghe@gmail.com：2011-05-31
+ - 分层，节点和普通对象分开处理
  */

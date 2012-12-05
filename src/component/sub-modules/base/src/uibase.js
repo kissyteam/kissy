@@ -237,13 +237,14 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
             UIBase.superclass.plug.apply(self, arguments);
             p = plugins[plugins.length - 1];
             if (self.get('rendered')) {
-                p.createDom(self);
-                p.renderUI(self);
-                p.bindUI(self);
-                p.syncUI(self);
+                p.pluginCreateDom(self);
+                p.pluginRenderUI(self);
+                p.pluginBindUI(self);
+                p.pluginSyncUI(self);
             } else if (self.get('created')) {
-                p.createDom(self);
+                p.pluginCreateDom(self);
             }
+            return self;
         },
 
 

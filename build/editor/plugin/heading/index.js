@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * Heading plugin for KISSY.
@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
     }
 
     S.augment(HeadingPlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             headingCmd.init(editor);
 
             var FORMAT_SELECTION_ITEMS = [],

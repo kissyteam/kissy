@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/font-family/index", function (S, Editor, ui, cmd) {
     }
 
     S.augment(FontFamilyPlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             cmd.init(editor);
 

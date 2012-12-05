@@ -1,4 +1,4 @@
-KISSY.use("ua,node,overlay,dd,resizable", function (S, UA, Node, Overlay) {
+KISSY.use("ua,node,overlay", function (S, UA, Node, Overlay) {
     describe("visible", function () {
         it("should not fire hide on show", function () {
             var overlay = new Overlay({

@@ -8,7 +8,7 @@ KISSY.add("editor/plugin/strike-through/index", function (S, Editor, ui, cmd) {
     }
 
     S.augment(StrikeThrough, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             cmd.init(editor);
             editor.addButton("strikeThrough", {
                 cmdType:"strikeThrough",

@@ -1,14 +1,14 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:27
+build time: Dec 6 01:11
 */
 /**
  * @ignore
  * @fileOverview resizable support for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add("resizable", function (S, Node, Base, DD, undefined) {
+KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
 
     var $ = Node.all,
         i,
@@ -62,16 +62,14 @@ KISSY.add("resizable", function (S, Node, Base, DD, undefined) {
         return Math.min(Math.max(min, v), max);
     }
 
-    function _onSetHandlers(e) {
-        var self = this,
-            v = e.newVal,
-            dds = self.dds,
+    function createDD(self) {
+        var dds = self['dds'],
+            node = self.get('node'),
+            handlers = self.get('handlers'),
             prefixCls = self.get('prefixCls'),
-            prefix = prefixCls + CLS_PREFIX,
-            node = self.get("node");
-        self.destroy();
-        for (i = 0; i < v.length; i++) {
-            var hc = v[i],
+            prefix = prefixCls + CLS_PREFIX;
+        for (i = 0; i < handlers.length; i++) {
+            var hc = handlers[i],
                 el = $("<div class='" +
                     prefix +
                     " " + prefix +
@@ -84,7 +82,8 @@ KISSY.add("resizable", function (S, Node, Base, DD, undefined) {
                 });
             (function (hc, dd) {
                 dd.on("drag", function (ev) {
-                    var dd = ev.target,
+                    var node = self.get('node'),
+                        dd = ev.target,
                         ow = self._width,
                         oh = self._height,
                         minW = self.get("minWidth"),
@@ -123,16 +122,7 @@ KISSY.add("resizable", function (S, Node, Base, DD, undefined) {
                     });
                 });
             })(hc, dd);
-
         }
-    }
-
-    function _onSetDisabled(e) {
-        var v = e.newVal,
-            dds = this.dds;
-        S.each(dds, function (d) {
-            d.set('disabled', v);
-        });
     }
 
     /**
@@ -140,43 +130,34 @@ KISSY.add("resizable", function (S, Node, Base, DD, undefined) {
      * @class KISSY.Resizable
      * @extends KISSY.Base
      */
-    function Resizable(cfg) {
-        var self = this,
-            disabled,
-            node;
-        Resizable.superclass.constructor.apply(self, arguments);
-        self.on("afterHandlersChange", _onSetHandlers, self);
-        self.on("afterDisabledChange", _onSetDisabled, self);
-        node = self.get("node");
-        self.dds = {};
-        if (node.css("position") == "static") {
-            node.css("position", "relative");
-        }
-        _onSetHandlers.call(self, {
-            newVal: self.get("handlers")
-        });
-        if (disabled = self.get('disabled')) {
-            _onSetDisabled.call(self, {
-                newVal: disabled
+    var Resizable = RichBase.extend({
+
+        initializer: function () {
+            this['dds'] = {};
+        },
+
+        _onSetNode: function () {
+            createDD(this);
+        },
+
+        _onSetDisabled: function (v) {
+            var dds = this['dds'];
+            S.each(dds, function (d) {
+                d.set('disabled', v);
             });
-        }
-    }
+        },
 
-    S.extend(Resizable, Base, {
-        /**
-         * make current resizable 's node not resizable.
-         */
-        destroy: function () {
+        destructor: function () {
             var self = this,
-                dds = self.dds;
-            for (var d in dds) {
-
+                d,
+                dds = self['dds'];
+            for (d in dds) {
                 dds[d].destroy();
                 dds[d].get("node").remove();
                 delete dds[d];
-
             }
         }
+
     }, {
         ATTRS: {
             /**
@@ -335,4 +316,4 @@ KISSY.add("resizable", function (S, Node, Base, DD, undefined) {
 
     return Resizable;
 
-}, { requires: ["node", "base", "dd/base"] });
+}, { requires: ["node", "rich-base", "dd/base"] });

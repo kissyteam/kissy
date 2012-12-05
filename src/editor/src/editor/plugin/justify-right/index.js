@@ -14,7 +14,7 @@ KISSY.add("editor/plugin/justify-right/index", function (S, Editor, justifyCente
     }
 
     S.augment(justifyRight, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             justifyCenterCmd.init(editor);
 

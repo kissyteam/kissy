@@ -894,10 +894,10 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
  * 董晓庆/yiminghe@gmail.com ：2012.03
  *   - 增加 添加、删除一项的功能 => 工程浩大
  *
- * 承玉：2011.06.02
+ * yiminghe@gmail.com：2011.06.02
  *   - review switchable
  *
- * 承玉：2011.05.10
+ * yiminghe@gmail.com：2011.05.10
  *   - 抽象 init plugins by Hierarchy
  *   - 抽象 init config by hierarchy
  *   - switchTo 处理，外部设置，初始展开面板

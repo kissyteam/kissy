@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/undo/index", function (S, Editor, Btn, cmd) {
 
 
     S.augment(undo, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             cmd.init(editor);
 
             editor.addButton("undo", {

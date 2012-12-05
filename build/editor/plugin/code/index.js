@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * insert program code
@@ -14,7 +14,7 @@ KISSY.add('editor/plugin/code/index', function (S, Editor,DialogLoader) {
     }
 
     S.augment(CodePlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             editor.addButton('code', {
                 tooltip: "插入代码",
                 listeners: {

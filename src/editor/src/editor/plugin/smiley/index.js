@@ -16,7 +16,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
     }
 
     S.augment(Smiley, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
 
             var prefixCls = editor.get('prefixCls');
 

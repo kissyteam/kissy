@@ -1,0 +1,11 @@
+<project name="component/plugin/drag.build" default="build" basedir=".">
+    <description>component/plugin/drag Build File</description>
+
+    <property name="component.name" value="component/plugin/drag"/>
+
+    <import file="../../../../../../tools/build-xml/common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>
+

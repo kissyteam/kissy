@@ -64,6 +64,15 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
      */
     return Draggable.extend({
 
+            // override Draggable
+            _onSetNode: function () {
+
+            },
+
+            _onSetContainer: function () {
+                this.bindDragEvent();
+            },
+
             _onSetDisabledChange: function (d) {
                 this.get('container')[d ? 'addClass' :
                     'removeClass'](PREFIX_CLS + '-disabled');

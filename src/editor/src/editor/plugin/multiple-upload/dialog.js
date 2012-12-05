@@ -2,7 +2,9 @@
  * multiple-upload dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressBar, Overlay4E, FlashBridge, localStorage, undefined) {
+KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
+                                                            DragPlugin,
+                                                            ProgressBar, Overlay4E, FlashBridge, localStorage, undefined) {
 
     var UA = S.UA,
         DOM = S.DOM,
@@ -66,9 +68,11 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
             self.dialog = new Dialog({
                 headerContent: "批量上传",
                 mask: false,
-                draggable: {
-                    constrain: false
-                },
+                plugins:[
+                new DragPlugin({
+                    handlers:['.ks-editor-stdmod-header']
+                })
+                ],
                 focus4e: false,
                 width: "600px"
             }).render();
@@ -804,6 +808,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, ProgressB
     return MultiUploadDialog;
 }, {
     requires: ['editor',
+        'component/plugin/drag',
         '../progressbar/',
         '../overlay/',
         '../flash-bridge/',

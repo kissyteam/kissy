@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * link editor support for kissy editor ,innovation from google doc and ckeditor
@@ -35,7 +35,7 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
     }
 
     S.augment(LinkPlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
 
             var prefixCls = editor.get('prefixCls');
             editor.addButton("link", {

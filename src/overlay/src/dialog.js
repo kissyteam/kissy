@@ -3,7 +3,7 @@
  * @fileOverview KISSY.Dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Drag) {
+KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod) {
 
     var $ = Node.all;
 
@@ -15,21 +15,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Dr
      * @mixins KISSY.Overlay.Extension.Drag
      */
     var Dialog = Overlay.extend([
-        StdMod,
-        Drag
+        StdMod
     ], {
-            initializer: function () {
-                var self = this, draggable;
-                if (draggable = self.get("draggable")) {
-                    if (!draggable.handlers) {
-                        // default to drag header
-                        draggable.handlers = [function () {
-                            return self.get('header');
-                        }];
-                    }
-                }
-            },
-
             handleKeyEventInternal: function (e) {
                 if (this.get('escapeToClose') &&
                     e.keyCode === Node.KeyCodes.ESC) {
@@ -169,9 +156,12 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Dr
     return Dialog;
 
 }, {
-    requires: [ "./base", './dialog-render',
-        'node', './extension/stdmod',
-        './extension/drag']
+    requires: [
+        "./base",
+        './dialog-render',
+        'node',
+        './extension/stdmod'
+    ]
 });
 
 /**

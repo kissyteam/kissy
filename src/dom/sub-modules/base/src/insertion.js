@@ -275,7 +275,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
  - 增加 replaceWith/wrap/wrapAll/wrapInner/unwrap
 
  2011-05-25
- - 承玉：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
+ - yiminghe@gmail.com：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
  DOM.append('.multi1','.multi2');
 
  */

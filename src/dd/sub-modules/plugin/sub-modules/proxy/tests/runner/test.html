@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>DD Test Runner</title>
+
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/tools/jasmine/event-simulate.js"></script>
+
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/build/rich-base.js"></script>
+    <script src="/kissy/build/dd/base.js"></script>
+    <script src="../../src/proxy.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        .dh {
+            border-bottom: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+
+<div id="wrap">
+
+    <!--
+
+for proxy-spec.js
+
+-->
+
+    <div id="drag_proxy" style="position:absolute;
+left:400px;top:400px;
+width:100px;height:100px;
+border:1px solid red;">
+        drag
+    </div>
+
+</div>
+
+<h1>KISSY dd/plugin/proxy Test Cases</h1>
+
+<script src="../specs/proxy-spec.js"></script>
+
+<script>
+    KISSY.use('core,dd/plugin/proxy', function (S) {
+        var UA = S.UA;
+        if (UA.ie == 9) {
+            jasmine.kissyNext(0);
+
+            // ie9 模拟鼠标拖放有问题
+            S.all('#wrap').hide();
+            return;
+        }
+
+        setTimeout(function () {
+
+            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+            jasmine.getEnv().execute(function () {
+                jasmine.kissyNext(this.results().failedCount);
+
+                S.all('#wrap').hide();
+            });
+        }, 200);
+    });
+</script>
+</body>
+</html>

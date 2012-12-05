@@ -9,7 +9,7 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
     }
 
     S.augment(outdent, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             indexCmd.init(editor);
 

@@ -130,5 +130,5 @@ KISSY.add('switchable-ext/countdown', function (S, DOM, Event, Anim, Switchable,
 
 }, { requires:["dom", "event", "anim", "switchable"]});
 /**
- * 承玉：2011.06.02 review switchable
+ * yiminghe@gmail.com：2011.06.02 review switchable
  */

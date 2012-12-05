@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:26
+build time: Dec 6 01:10
 */
 /**
  * Set up editor constructor
@@ -3799,7 +3799,7 @@ KISSY.config('modules', {
 'editor/plugin/undo/btn': {requires: ['editor','editor/plugin/button/']},
 'editor/plugin/menubutton/index': {requires: ['editor','menubutton']},
 'editor/plugin/flash/index': {requires: ['editor','editor/plugin/flash-common/baseClass','editor/plugin/flash-common/utils','editor/plugin/fake-objects/']},
-'editor/plugin/overlay/index': {requires: ['editor','overlay','editor/plugin/focus-fix/','dd/base','dd/constrain']},
+'editor/plugin/overlay/index': {requires: ['editor','overlay','editor/plugin/focus-fix/','dd/plugin/constrain','component/plugin/drag']},
 'editor/plugin/link/utils': {requires: ['editor']},
 'editor/plugin/xiami-music/dialog': {requires: ['editor','editor/plugin/flash/dialog','editor/plugin/menubutton/']},
 'editor/plugin/list-utils/cmd': {requires: ['editor','editor/plugin/list-utils/']},
@@ -3844,7 +3844,7 @@ KISSY.config('modules', {
 'editor/plugin/link/dialog': {requires: ['editor','editor/plugin/overlay/','editor/plugin/link/utils']},
 'editor/plugin/font-family/cmd': {requires: ['editor','editor/plugin/font/cmd']},
 'editor/plugin/back-color/cmd': {requires: ['editor/plugin/color/cmd']},
-'editor/plugin/multiple-upload/dialog': {requires: ['editor','editor/plugin/progressbar/','editor/plugin/overlay/','editor/plugin/flash-bridge/','editor/plugin/local-storage/']},
+'editor/plugin/multiple-upload/dialog': {requires: ['editor','component/plugin/drag','editor/plugin/progressbar/','editor/plugin/overlay/','editor/plugin/flash-bridge/','editor/plugin/local-storage/']},
 'editor/plugin/code/dialog': {requires: ['editor','editor/plugin/overlay/','menubutton']},
 'editor/plugin/justify-center/cmd': {requires: ['editor/plugin/justify-utils/cmd']},
 'editor/plugin/flash-common/baseClass': {requires: ['editor','editor/plugin/contextmenu/','editor/plugin/bubble/','editor/plugin/dialog-loader/','editor/plugin/flash-common/utils']},
@@ -9118,7 +9118,7 @@ KISSY.add("editor/plugin/back-color/index", function (S, Editor, Button, cmd) {
     }
 
     S.augment(backColor, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             cmd.init(editor);
             Button.init(editor, {
                 defaultColor: 'rgb(255, 217, 102)',
@@ -9168,7 +9168,7 @@ KISSY.add("editor/plugin/bold/index", function (S, Editor, ui, cmd) {
     }
 
     S.augment(bold, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             cmd.init(editor);
             editor.addButton("bold", {
                 cmdType:'bold',
@@ -9525,7 +9525,7 @@ KISSY.add("editor/plugin/checkbox-source-area/index", function (S, Editor) {
     }
 
     S.augment(CheckboxSourceAreaPlugin,{
-        renderUI:function(editor){
+        pluginRenderUI:function(editor){
 
             var c = new CheckboxSourceArea(editor);
             editor.on("destroy", function () {
@@ -9549,7 +9549,7 @@ KISSY.add('editor/plugin/code/index', function (S, Editor,DialogLoader) {
     }
 
     S.augment(CodePlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             editor.addButton('code', {
                 tooltip: "插入代码",
                 listeners: {
@@ -10577,7 +10577,7 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
     }
 
     S.augment(DraftPlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             var config = this.config;
             if (localStorage.ready) {
                 localStorage.ready(function () {
@@ -10610,7 +10610,7 @@ KISSY.add("editor/plugin/drag-upload/index", function (S, Editor) {
     }
 
     S.augment(dragUpload, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             var cfg = this.config,
                 fileInput = cfg['fileInput'] || "Filedata",
                 sizeLimit = cfg['sizeLimit'] || Number.MAX_VALUE,
@@ -10856,7 +10856,7 @@ KISSY.add("editor/plugin/element-path/index", function (S, Editor) {
     }
 
     S.augment(ElementPathPlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             var elemPath = new ElementPaths({
                 editor:editor
             });
@@ -11665,7 +11665,7 @@ KISSY.add("editor/plugin/flash/index", function (S, Editor, FlashBaseClass, flas
     }
 
     S.augment(FlashPlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             fakeObjects.init(editor);
 
@@ -11858,7 +11858,7 @@ KISSY.add("editor/plugin/font-family/index", function (S, Editor, ui, cmd) {
     }
 
     S.augment(FontFamilyPlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             cmd.init(editor);
 
@@ -11984,7 +11984,7 @@ KISSY.add("editor/plugin/font-size/index", function (S, Editor, ui, cmd) {
     }
 
     S.augment(FontSizePlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             cmd.init(editor);
 
@@ -12285,7 +12285,7 @@ KISSY.add("editor/plugin/fore-color/index", function (S, Editor, Button, cmd) {
     }
 
     S.augment(ForeColorPlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             cmd.init(editor);
             Button.init(editor, {
                 cmdType: 'foreColor',
@@ -12357,7 +12357,7 @@ KISSY.add("editor/plugin/heading/index", function (S, Editor, headingCmd) {
     }
 
     S.augment(HeadingPlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             headingCmd.init(editor);
 
             var FORMAT_SELECTION_ITEMS = [],
@@ -12463,7 +12463,7 @@ KISSY.add("editor/plugin/image/index", function (S, Editor, Button, Bubble, Cont
     }
 
     S.augment(ImagePlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
 
             var self = this;
 
@@ -12626,7 +12626,7 @@ KISSY.add("editor/plugin/indent/index", function (S, Editor, indexCmd) {
     }
 
     S.augment(Indent, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             indexCmd.init(editor);
             editor.addButton("indent", {
                 tooltip:"增加缩进量 ",
@@ -12683,7 +12683,7 @@ KISSY.add("editor/plugin/italic/index", function (S, Editor, ui, cmd) {
     }
 
     S.augment(italic, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             cmd.init(editor);
 
             editor.addButton("italic", {
@@ -12735,7 +12735,7 @@ KISSY.add("editor/plugin/justify-center/index", function (S, Editor, justifyCent
     }
 
     S.augment(justifyCenter, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             justifyCenterCmd.init(editor);
             editor.addButton("justifyCenter", {
                 tooltip:"居中对齐",
@@ -12803,7 +12803,7 @@ KISSY.add("editor/plugin/justify-left/index", function (S, Editor, justifyCenter
     }
 
     S.augment(justifyLeft, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             justifyCenterCmd.init(editor);
 
             editor.addButton("justifyLeft", {
@@ -12872,7 +12872,7 @@ KISSY.add("editor/plugin/justify-right/index", function (S, Editor, justifyCente
     }
 
     S.augment(justifyRight, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             justifyCenterCmd.init(editor);
 
@@ -13016,7 +13016,7 @@ KISSY.add("editor/plugin/link/index", function (S, Editor, Bubble, Utils, Dialog
     }
 
     S.augment(LinkPlugin, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
 
             var prefixCls = editor.get('prefixCls');
             editor.addButton("link", {
@@ -14259,7 +14259,7 @@ KISSY.add("editor/plugin/maximize/index", function (S, Editor, maximizeCmd) {
     }
 
     S.augment(maximizePlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             maximizeCmd.init(editor);
             editor.addButton("maximize", {
                 tooltip:MAXIMIZE_TIP,
@@ -14353,7 +14353,7 @@ KISSY.add("editor/plugin/multiple-upload/index", function (S, Editor, DialogLoad
     }
 
     S.augment(multipleUpload, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             var self = this;
             editor.addButton("multipleUpload", {
                 tooltip:"批量插图",
@@ -14423,7 +14423,7 @@ KISSY.add("editor/plugin/ordered-list/index", function (S, Editor, ListButton, L
     }
 
     S.augment(orderedList, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             ListCmd.init(editor);
 
             ListButton.init(editor, {
@@ -14513,7 +14513,7 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
     }
 
     S.augment(outdent, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             indexCmd.init(editor);
 
@@ -14553,27 +14553,27 @@ KISSY.add("editor/plugin/outdent/index", function (S, Editor, indexCmd) {
  * custom overlay  for kissy editor
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix) {
+KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix, ConstrainPlugin, DragPlugin) {
     var Overlay4E = Overlay.extend({
-        bindUI:function () {
+        bindUI: function () {
             focusFix.init(this);
         }
     }, {
-        ATTRS:{
-            prefixCls:{
-                value:"ks-editor-"
+        ATTRS: {
+            prefixCls: {
+                value: "ks-editor-"
             },
-            "zIndex":{
-                value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
+            "zIndex": {
+                value: Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
             }
         }
     });
 
     Overlay4E.Dialog = Overlay.Dialog.extend({
-        bindUI:function () {
+        bindUI: function () {
             focusFix.init(this);
         },
-        show:function () {
+        show: function () {
             var self = this;
             //在 show 之前调用
             self.center();
@@ -14586,24 +14586,31 @@ KISSY.add("editor/plugin/overlay/index", function (S, Editor, Overlay, focusFix)
             Overlay4E.prototype.show.call(self);
         }
     }, {
-        ATTRS:{
-            prefixCls:{
-                value:"ks-editor-"
+        ATTRS: {
+            prefixCls: {
+                value: "ks-editor-"
             },
-            "zIndex":{
-                value:Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
+            "zIndex": {
+                value: Editor.baseZIndex(Editor.zIndexManager.OVERLAY)
             },
-            draggable:{
-                value:{
-                    constrain:true
-                }
+            plugins: {
+                value: [
+                    new DragPlugin({
+                        handlers: ['.ks-editor-stdmod-header'],
+                        plugins: [
+                            new ConstrainPlugin({
+                                constrain: window
+                            })
+                        ]
+                    })
+                ]
             }
         }
     });
 
     return Overlay4E
 }, {
-    requires:["editor", 'overlay', '../focus-fix/', 'dd/base','dd/constrain']
+    requires: ["editor", 'overlay', '../focus-fix/', 'dd/plugin/constrain', 'component/plugin/drag']
 });/**
  * pagebreak functionality
  * @author yiminghe@gmail.com
@@ -14622,7 +14629,7 @@ KISSY.add("editor/plugin/page-break/index", function (S, Editor, fakeObjects) {
     }
 
     S.augment(pageBreak, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             fakeObjects.init(editor);
 
@@ -14715,7 +14722,7 @@ KISSY.add("editor/plugin/preview/index", function (S) {
     }
 
     S.augment(Preview, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             editor.addButton("preview", {
                 tooltip:"预览",
                 listeners:{
@@ -14988,7 +14995,7 @@ KISSY.add("editor/plugin/remove-format/index", function (S, Editor, formatCmd) {
     }
 
     S.augment(removeFormat, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             formatCmd.init(editor);
             editor.addButton("removeFormat", {
                 tooltip:"清除格式",
@@ -15017,7 +15024,7 @@ this.config=config||{};
     }
 
     S.augment(Resize, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             var Draggable = DD['Draggable'],
                 statusBarEl = editor.get("statusBarEl"),
                 textarea = editor.get("textarea"),
@@ -15095,7 +15102,7 @@ KISSY.add("editor/plugin/separator/index", function (S) {
     }
 
     S.augment(Separator, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             S.all('<span ' +
                 'class="'+editor.get('prefixCls')+'editor-toolbar-separator">&nbsp;' +
                 '</span>')
@@ -15124,7 +15131,7 @@ KISSY.add("editor/plugin/smiley/index", function (S, Editor, Overlay4E) {
     }
 
     S.augment(Smiley, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
 
             var prefixCls = editor.get('prefixCls');
 
@@ -15213,7 +15220,7 @@ KISSY.add("editor/plugin/source-area/index", function (S, Editor) {
     }
 
     S.augment(sourceArea, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             editor.addButton("sourceArea", {
                 tooltip:"源码",
                 listeners:{
@@ -15286,7 +15293,7 @@ KISSY.add("editor/plugin/strike-through/index", function (S, Editor, ui, cmd) {
     }
 
     S.augment(StrikeThrough, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             cmd.init(editor);
             editor.addButton("strikeThrough", {
                 cmdType:"strikeThrough",
@@ -15692,7 +15699,7 @@ KISSY.add("editor/plugin/table/index", function (S, Editor, DialogLoader) {
     }
 
     S.augment(TablePlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             /**
              * 动态加入显表格 border css，便于编辑
              */
@@ -15898,7 +15905,7 @@ KISSY.add("editor/plugin/underline/index", function (S, Editor, ui, cmd) {
     }
 
     S.augment(Underline, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             cmd.init(editor);
 
             editor.addButton("underline", {
@@ -16265,7 +16272,7 @@ KISSY.add("editor/plugin/undo/index", function (S, Editor, Btn, cmd) {
 
 
     S.augment(undo, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
             cmd.init(editor);
 
             editor.addButton("undo", {
@@ -16336,7 +16343,7 @@ KISSY.add("editor/plugin/unordered-list/index", function (S, Editor, ListButton,
     }
 
     S.augment(unorderedList, {
-        renderUI: function (editor) {
+        pluginRenderUI: function (editor) {
             ListCmd.init(editor);
 
             ListButton.init(editor, {
@@ -16380,7 +16387,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     }
 
     S.augment(video, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             fakeObjects.init(editor);
 
@@ -16521,7 +16528,7 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
     }
 
     S.augment(XiamiMusicPlugin, {
-        renderUI:function (editor) {
+        pluginRenderUI:function (editor) {
 
             fakeObjects.init(editor);
 

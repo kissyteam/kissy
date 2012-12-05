@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 5 02:27
+build time: Dec 6 01:12
 */
 /**
  * @fileOverview accordion aria support
@@ -327,9 +327,9 @@ KISSY.add('switchable/accordion/aria', function (S, DOM, Event, Aria, Accordion,
 
 /**
 
- 承玉：2011.06.02 review switchable
+ yiminghe@gmail.com：2011.06.02 review switchable
 
- 2011-05-08 承玉：add support for aria & keydown
+ 2011-05-08 yiminghe@gmail.com：add support for aria & keydown
 
  <h2>键盘快捷键</h2>
  <ul class="list">
@@ -414,9 +414,9 @@ KISSY.add('switchable/accordion/base', function (S, DOM, Switchable) {
  * TODO:
  *  - 支持动画
  *
- *  承玉：2011.06.02 review switchable
+ *  yiminghe@gmail.com：2011.06.02 review switchable
  *
- *  承玉：2011.05.10
+ *  yiminghe@gmail.com：2011.05.10
  *   - review ,prepare for aria
  *
  *
@@ -588,10 +588,10 @@ KISSY.add('switchable/autoplay', function (S, DOM, Event, Switchable, undefined)
     return Switchable;
 }, { requires:["dom", "event", "./base"]});
 /**
- * - 乔花 承玉：2012.02.08 support pauseOnScroll
+ * - 乔花 yiminghe@gmail.com：2012.02.08 support pauseOnScroll
  *  当 Switchable 对象不在可视区域中时停止动画切换
  *
- * - 承玉：2011.06.02 review switchable
+ * - yiminghe@gmail.com：2011.06.02 review switchable
  */
 /**
  * @fileOverview Switchable
@@ -1489,10 +1489,10 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
  * 董晓庆/yiminghe@gmail.com ：2012.03
  *   - 增加 添加、删除一项的功能 => 工程浩大
  *
- * 承玉：2011.06.02
+ * yiminghe@gmail.com：2011.06.02
  *   - review switchable
  *
- * 承玉：2011.05.10
+ * yiminghe@gmail.com：2011.05.10
  *   - 抽象 init plugins by Hierarchy
  *   - 抽象 init config by hierarchy
  *   - switchTo 处理，外部设置，初始展开面板
@@ -1835,9 +1835,9 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, S
 });
 
 /**
- 承玉：2011.06.02 review switchable
+ yiminghe@gmail.com：2011.06.02 review switchable
 
- 承玉:2011.05.12
+ yiminghe@gmail.com:2011.05.12
 
  <h2>键盘快捷键</h2>
  <ul class="list">
@@ -1997,12 +1997,12 @@ KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {
 /**
  * NOTES:
  *
- * 承玉：2012.03.08
+ * yiminghe@gmail.com：2012.03.08
  *  - 修复快速点击上页/下页，动画没完时 disabled class 没设导致的翻页超出
  *
- * 承玉：2011.06.02 review switchable
+ * yiminghe@gmail.com：2011.06.02 review switchable
  *
- * 承玉：2011.05
+ * yiminghe@gmail.com：2011.05
  *  - 内部组件 init 覆盖父类而不是监听事件
  *
  * 2010.07
@@ -2565,7 +2565,7 @@ KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefi
 
 }, { requires: ["dom", "event", "anim", "./base"]});
 /**
- * 承玉：2011.06.02 review switchable
+ * yiminghe@gmail.com：2011.06.02 review switchable
  */
 /**
  * @fileOverview Switchable Lazyload Plugin
@@ -2674,7 +2674,7 @@ KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
  *  - 初始 lazyload activeIndex
  *  - consider steps == 1 for carousel
  *
- * 承玉：2011.06.02 review switchable
+ * yiminghe@gmail.com：2011.06.02 review switchable
  */
 /**
  * @fileOverview Tabs Widget
@@ -2711,7 +2711,7 @@ KISSY.add('switchable/slide/base', function (S, Switchable) {
 }, { requires:["../base"]});
 
 /**
- * 承玉：2011.06.02 review switchable
+ * yiminghe@gmail.com：2011.06.02 review switchable
  */
 /**
  * @fileOverview switchable
@@ -2985,7 +2985,7 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
 });
 
 /**
- * 2011-05-08 承玉：add support for aria & keydown
+ * 2011-05-08 yiminghe@gmail.com：add support for aria & keydown
  * <h2>键盘快捷键</h2>
 
  <ul class="list">
