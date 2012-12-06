@@ -20,7 +20,7 @@
  * @fileOverview resizable support for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;resizable&quot;, function (S, Node, Base, DD, undefined) {
+KISSY.add(&quot;resizable&quot;, function (S, Node, RichBase, DD, undefined) {
 
     var $ = Node.all,
         i,
@@ -74,16 +74,14 @@ KISSY.add(&quot;resizable&quot;, function (S, Node, Base, DD, undefined) {
         return Math.min(Math.max(min, v), max);
     }
 
-    function _onSetHandlers(e) {
-        var self = this,
-            v = e.newVal,
-            dds = self.dds,
+    function createDD(self) {
+        var dds = self['dds'],
+            node = self.get('node'),
+            handlers = self.get('handlers'),
             prefixCls = self.get('prefixCls'),
-            prefix = prefixCls + CLS_PREFIX,
-            node = self.get(&quot;node&quot;);
-        self.destroy();
-        for (i = 0; i &lt; v.length; i++) {
-            var hc = v[i],
+            prefix = prefixCls + CLS_PREFIX;
+        for (i = 0; i &lt; handlers.length; i++) {
+            var hc = handlers[i],
                 el = $(&quot;&lt;div class='&quot; +
                     prefix +
                     &quot; &quot; + prefix +
@@ -96,7 +94,8 @@ KISSY.add(&quot;resizable&quot;, function (S, Node, Base, DD, undefined) {
                 });
             (function (hc, dd) {
                 dd.on(&quot;drag&quot;, function (ev) {
-                    var dd = ev.target,
+                    var node = self.get('node'),
+                        dd = ev.target,
                         ow = self._width,
                         oh = self._height,
                         minW = self.get(&quot;minWidth&quot;),
@@ -135,16 +134,7 @@ KISSY.add(&quot;resizable&quot;, function (S, Node, Base, DD, undefined) {
                     });
                 });
             })(hc, dd);
-
         }
-    }
-
-    function _onSetDisabled(e) {
-        var v = e.newVal,
-            dds = this.dds;
-        S.each(dds, function (d) {
-            d.set('disabled', v);
-        });
     }
 
 <span id='KISSY-Resizable'>    /**
@@ -152,43 +142,34 @@ KISSY.add(&quot;resizable&quot;, function (S, Node, Base, DD, undefined) {
      * @class KISSY.Resizable
      * @extends KISSY.Base
      */
-    function Resizable(cfg) {
-        var self = this,
-            disabled,
-            node;
-        Resizable.superclass.constructor.apply(self, arguments);
-        self.on(&quot;afterHandlersChange&quot;, _onSetHandlers, self);
-        self.on(&quot;afterDisabledChange&quot;, _onSetDisabled, self);
-        node = self.get(&quot;node&quot;);
-        self.dds = {};
-        if (node.css(&quot;position&quot;) == &quot;static&quot;) {
-            node.css(&quot;position&quot;, &quot;relative&quot;);
-        }
-        _onSetHandlers.call(self, {
-            newVal: self.get(&quot;handlers&quot;)
-        });
-        if (disabled = self.get('disabled')) {
-            _onSetDisabled.call(self, {
-                newVal: disabled
+    var Resizable = RichBase.extend({
+
+        initializer: function () {
+            this['dds'] = {};
+        },
+
+        _onSetNode: function () {
+            createDD(this);
+        },
+
+        _onSetDisabled: function (v) {
+            var dds = this['dds'];
+            S.each(dds, function (d) {
+                d.set('disabled', v);
             });
-        }
-    }
+        },
 
-    S.extend(Resizable, Base, {
-<span id='KISSY-Resizable-method-destroy'>        /**
-</span>         * make current resizable 's node not resizable.
-         */
-        destroy: function () {
+        destructor: function () {
             var self = this,
-                dds = self.dds;
-            for (var d in dds) {
-
+                d,
+                dds = self['dds'];
+            for (d in dds) {
                 dds[d].destroy();
                 dds[d].get(&quot;node&quot;).remove();
                 delete dds[d];
-
             }
         }
+
     }, {
         ATTRS: {
 <span id='KISSY-Resizable-cfg-node'>            /**
@@ -294,7 +275,7 @@ KISSY.add(&quot;resizable&quot;, function (S, Node, Base, DD, undefined) {
             },
 <span id='KISSY-Resizable-cfg-handlers'>            /**
 </span>             * directions can current node resize to.
-             * @cfg {KISSY.Resizable.HANDLER} handlers
+             * @cfg {KISSY.Resizable.Handler} handlers
              */
 <span id='global-property-handlers'>            /**
 </span>             * @ignore
@@ -306,40 +287,40 @@ KISSY.add(&quot;resizable&quot;, function (S, Node, Base, DD, undefined) {
         }
     });
 
-<span id='KISSY-Resizable-HANDLER'>    /**
+<span id='KISSY-Resizable-Handler'>    /**
 </span>     * Resizable handlers type.
-     * @enum {String} KISSY.Resizable.HANDLER
+     * @enum {String} KISSY.Resizable.Handler
      */
-    Resizable.HANDLER = {
-<span id='KISSY-Resizable-HANDLER-property-B'>        /**
+    Resizable.Handler = {
+<span id='KISSY-Resizable-Handler-property-B'>        /**
 </span>         * bottom
          */
         B: 'b',
-<span id='KISSY-Resizable-HANDLER-property-T'>        /**
+<span id='KISSY-Resizable-Handler-property-T'>        /**
 </span>         * top
          */
         T: 't',
-<span id='KISSY-Resizable-HANDLER-property-L'>        /**
+<span id='KISSY-Resizable-Handler-property-L'>        /**
 </span>         * left
          */
         L: 'l',
-<span id='KISSY-Resizable-HANDLER-property-R'>        /**
+<span id='KISSY-Resizable-Handler-property-R'>        /**
 </span>         * right
          */
         R: 'r',
-<span id='KISSY-Resizable-HANDLER-property-BL'>        /**
+<span id='KISSY-Resizable-Handler-property-BL'>        /**
 </span>         * bottom-left
          */
         BL: 'bl',
-<span id='KISSY-Resizable-HANDLER-property-TL'>        /**
+<span id='KISSY-Resizable-Handler-property-TL'>        /**
 </span>         * top-left
          */
         TL: 'tl',
-<span id='KISSY-Resizable-HANDLER-property-BR'>        /**
+<span id='KISSY-Resizable-Handler-property-BR'>        /**
 </span>         * bottom-right
          */
         BR: 'br',
-<span id='KISSY-Resizable-HANDLER-property-TR'>        /**
+<span id='KISSY-Resizable-Handler-property-TR'>        /**
 </span>         * top-right
          */
         TR: 'tr'
@@ -347,7 +328,7 @@ KISSY.add(&quot;resizable&quot;, function (S, Node, Base, DD, undefined) {
 
     return Resizable;
 
-}, { requires: [&quot;node&quot;, &quot;base&quot;, &quot;dd/base&quot;] });
+}, { requires: [&quot;node&quot;, &quot;rich-base&quot;, &quot;dd/base&quot;] });
 </pre>
 </body>
 </html>

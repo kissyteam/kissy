@@ -282,7 +282,7 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel,Overlay){
             S.each(columns,function(column){
                 var editor = column.get('editor');
                 if(editor){
-                    if(!(editor instanceof Component.Controller)){
+                    if(!(editor.isController)){
                         editor.field = column.get('dataIndex');
                         if(editor.type){
                             editor.xclass = 'grid-' + editor.type + '-editor';
@@ -358,7 +358,7 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel,Overlay){
             S.each(columns,function(column){
                 var editor = column.get('editor');
                 if(editor){
-                    if(!(editor instanceof Component.Controller)){
+                    if(!(editor.isController)){
                         editor.field = column.get('dataIndex');
                     }
                     editors.push(panel);

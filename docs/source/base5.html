@@ -17,31 +17,25 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview mvc based component framework for kissy
+ * @fileOverview dd support for kissy
  * @author yiminghe@gmail.com
  */
-KISSY.add('component/base', function (S, Component, Controller, Render, Container, DelegateChildren, DecorateChildren, DecorateChild) {
+KISSY.add('dd/base', function (S, DDM, Draggable, DraggableDelegate) {
 
-    S.mix(Component, {
-        Controller: Controller,
-        'Render': Render,
-        'Container': Container,
-        'DelegateChildren': DelegateChildren,
-        'DecorateChild': DecorateChild,
-        'DecorateChildren': DecorateChildren
-    });
+    var DD = {
+        Draggable: Draggable,
+        DDM: DDM,
+        DraggableDelegate: DraggableDelegate
+    };
 
-    return Component;
+    KISSY.DD = DD;
 
+    return DD;
 }, {
     requires: [
-        './base/impl',
-        './base/controller',
-        './base/render',
-        './base/container',
-        './base/delegate-children',
-        './base/decorate-children',
-        './base/decorate-child'
+        './base/ddm',
+        './base/draggable',
+        './base/draggable-delegate'
     ]
 });</pre>
 </body>

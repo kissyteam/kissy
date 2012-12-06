@@ -9,16 +9,19 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             var self = this,
                 selected,
                 items,
+                prefixCls=self.get('prefixCls'),
                 tabSelectedCls = self.get("tabSelectedCls"),
                 panelSelectedCls = self.get("panelSelectedCls"),
                 tabItem,
                 panelItem,
                 bar = {
+                    prefixCls:prefixCls,
                     xclass: 'tabs-bar',
                     changeType: self.get("changeType"),
                     children: []
                 },
                 body = {
+                    prefixCls:prefixCls,
                     xclass: 'tabs-body',
                     children: []
                 },
@@ -29,12 +32,10 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
                 S.each(items, function (item) {
                     selected = selected || item.selected;
                     barChildren.push(tabItem = {
-                        xclass: 'tabs-tab',
                         content: item.title,
                         selected: item.selected
                     });
                     panels.push(panelItem = {
-                        xclass: 'tabs-panel',
                         content: item.content,
                         selected: item.selected
                     });
@@ -69,12 +70,10 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
                 body = self.get("body");
 
             tabItem = {
-                xclass: 'tabs-tab',
                 content: item.title
             };
 
             panelItem = {
-                xclass: 'tabs-panel',
                 content: item.content
             };
 
@@ -265,7 +264,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             },
             bar: {
                 setter: function (v) {
-                    if (!(v instanceof Component.Controller)) {
+                    if (v&&!v.isController) {
                         return Component.create(v);
                     }
                 },
@@ -278,7 +277,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             },
             body: {
                 setter: function (v) {
-                    if (!(v instanceof Component.Controller)) {
+                    if (v&&!v.isController) {
                         return Component.create(v);
                     }
                 },

@@ -10,27 +10,27 @@ KISSY.add("kison/lexer", function (S, Utils) {
 
             var self = this;
 
-            /**
-             * lex rules.
-             * @type {Object[]}
-             * @example
-             * [
-             *  {
-             *   regexp:'\\w+',
-             *   state:['xx'],
-             *   token:'c',
-             *   // this => lex
-             *   action:function(){}
-             *  }
-             * ]
+            /*
+              lex rules.
+              @type {Object[]}
+              @example
+              [
+               {
+                regexp:'\\w+',
+                state:['xx'],
+                token:'c',
+                // this => lex
+                action:function(){}
+               }
+              ]
              */
             self.rules = [];
 
             S.mix(self, cfg);
 
-            /**
-             * Input languages
-             * @type {String}
+            /*
+              Input languages
+              @type {String}
              */
 
             self.resetInput(self.input);

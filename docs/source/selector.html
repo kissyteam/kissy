@@ -20,7 +20,7 @@
  * @fileOverview selector
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/selector', function (S, DOM, undefined) {
+KISSY.add('dom/base/selector', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
         NodeType = DOM.NodeType,
@@ -41,7 +41,8 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         RE_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
     function query_each(f) {
-        var self = this, el, i;
+        var self = this,
+            el, i;
         for (i = 0; i &lt; self.length; i++) {
             el = self[i];
             if (f(el, i) === false) {
@@ -50,15 +51,6 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         }
     }
 
-    /*
-     Accepts a string containing a CSS selector which is then used to match a set of elements.
-     @param {String|HTMLElement[]} selector
-     A string containing a selector expression.
-     or
-     array of HTMLElements.
-     @param {String|HTMLElement[]|HTMLDocument} [context] context under which to find elements matching selector.
-     @return {HTMLElement[]} The array of found HTMLElements
-     */
     function query(selector, context) {
         var ret,
             i,
@@ -68,7 +60,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         // consider context == null
             contexts = (context == undefined &amp;&amp; (simpleContext = 1)) ?
                 [doc] :
-                tuneContext(context);
+                query(context);
         // 常见的空
         if (!selector) {
             ret = [];
@@ -93,7 +85,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             }
             // 2.KISSY NodeList 特殊点直接返回，提高性能
             else if (selector['getDOMNodes']) {
-                return selector;
+                ret = selector['getDOMNodes']();
             }
             // 3.常见的数组
             // var x=DOM.query('.l');
@@ -126,7 +118,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                         (isSelectorString &amp;&amp;
                             // multiple selector
                             selector.indexOf(COMMA) &gt; -1))) {
-                    unique(ret);
+                    DOM.unique(ret);
                 }
             }
         }
@@ -191,12 +183,8 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         // selector 为 #id 是最常见的情况，特殊优化处理
         if (RE_ID.test(selector)) {
             t = getElementById(selector.slice(1), context);
-            if (t) {
-                // #id 无效时，返回空数组
-                ret = [t];
-            } else {
-                ret = [];
-            }
+            // #id 无效时，返回空数组
+            ret = t ? [t] : [];
         }
         // selector 为支持列表中的其它 6 种
         else {
@@ -212,21 +200,22 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
                     // #id .cls | #id tag.cls | .cls | tag.cls | #id.cls
                     if (cls) {
                         if (!id || selector.indexOf(SPACE) != -1) { // 排除 #id.cls
-                            ret = [].concat(getElementsByClassName(cls, tag, context));
+                            ret = [].concat(DOM._getElementsByClassName(cls, tag, context));
                         }
                         // 处理 #id.cls
                         else {
                             t = getElementById(id, context);
-                            if (t &amp;&amp; hasClass(t, cls)) {
+                            if (t &amp;&amp; DOM.hasClass(t, cls)) {
                                 ret = [t];
                             }
                         }
                     }
                     // #id tag | tag
                     else if (tag) { // 排除空白字符串
-                        ret = getElementsByTagName(tag, context);
+                        ret = makeArray(DOM._getElementsByTagName(tag, context));
                     }
                 }
+
                 ret = ret || [];
             }
         }
@@ -270,210 +259,27 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
         return DOM.contains(context, element);
     }
 
-    var unique = S.noop;
-    (function () {
-        var sortOrder,
-            hasDuplicate,
-            baseHasDuplicate = true;
-
-        // Here we check if the JavaScript engine is using some sort of
-        // optimization where it does not always call our comparision
-        // function. If that is the case, discard the hasDuplicate value.
-        // Thus far that includes Google Chrome.
-        [0, 0].sort(function () {
-            baseHasDuplicate = false;
-            return 0;
-        });
-
-        // 排序去重
-        unique = function (elements) {
-            if (sortOrder) {
-                hasDuplicate = baseHasDuplicate;
-                elements.sort(sortOrder);
-
-                if (hasDuplicate) {
-                    var i = 1, len = elements.length;
-                    while (i &lt; len) {
-                        if (elements[i] === elements[ i - 1 ]) {
-                            elements.splice(i, 1);
-                        } else {
-                            i++;
-                        }
-                    }
-                }
-            }
-            return elements;
-        };
-
-        // 貌似除了 ie 都有了...
-        if (doc &amp;&amp; doc.documentElement.compareDocumentPosition) {
-            sortOrder = function (a, b) {
-                if (a == b) {
-                    hasDuplicate = true;
-                    return 0;
-                }
-
-                if (!a.compareDocumentPosition || !b.compareDocumentPosition) {
-                    return a.compareDocumentPosition ? -1 : 1;
-                }
-
-                return a.compareDocumentPosition(b) &amp; 4 ? -1 : 1;
-            };
-
-        } else {
-            sortOrder = function (a, b) {
-                // The nodes are identical, we can exit early
-                if (a == b) {
-                    hasDuplicate = true;
-                    return 0;
-                    // Fallback to using sourceIndex (in IE) if it's available on both nodes
-                } else if (a.sourceIndex &amp;&amp; b.sourceIndex) {
-                    return a.sourceIndex - b.sourceIndex;
-                }
-            };
-        }
-    })();
-
-
-    // 调整 context 为合理值
-    function tuneContext(context) {
-        return query(context);
+    // throw exception
+    function error(msg) {
+        S.error('Unsupported selector: ' + msg);
     }
 
     // query #id
     function getElementById(id, context) {
         var contextIsDocument = context.nodeType == NodeType.DOCUMENT_NODE,
             doc = contextIsDocument ? context : context.ownerDocument,
-            shouldTestAndIgnoreByContext,
-            shouldFilterAndGetBelowContext,
-            el;
+            el = DOM._getElementById(id, doc);
 
-        el = doc.getElementById(id);
-
-        if (el) {
-            // ie opera confuse name with id
-            // https://github.com/kissyteam/kissy/issues/67
-            // 不能直接 el.id ，否则 input shadow form attribute
-            if (idEq(el, id)) {
-                // 成功了就不用从 context 中找了
-                shouldFilterAndGetBelowContext = 0;
-                // 如果 context 不是document 还需要过滤
-                shouldTestAndIgnoreByContext = contextIsDocument ? 0 : 1;
-            } else {
-                // id 错了，无论如何都要从 context 的所有节点中找
-                shouldFilterAndGetBelowContext = 1;
-                // 但是不用测试了
-                shouldTestAndIgnoreByContext = 0;
-            }
-        } else {
-            // 没这个 id，如果 context 不是 document，需要从 context 所有节点中找下
-            // DOM.get('#id',DOM.create('&lt;div&gt;&lt;div id=&quot;id&quot;&gt;&lt;/div&gt;&lt;/div&gt;'));
-            shouldFilterAndGetBelowContext = contextIsDocument ? 0 : 1;
-            // 不用测试了
-            shouldTestAndIgnoreByContext = 0;
+        if (el &amp;&amp; !contextIsDocument) {
+            return DOM.contains(context, el) ? el : null;
         }
 
-        if (shouldFilterAndGetBelowContext) {
+        // DOM.query('#x',DOM.create('&lt;div&gt;&lt;span id=&quot;x&quot;&gt;'))
+        if (!el &amp;&amp; !contextIsDocument &amp;&amp; !DOM.contains(context, doc)) {
             el = DOM.filter(ANY, '#' + id, context)[0] || null;
         }
 
-        // ie 特殊情况下以及指明在 context 下找了，不需要再判断
-        // 如果指定了 context node , 还要判断 id 是否处于 context 内
-        else if (shouldTestAndIgnoreByContext &amp;&amp; !testByContext(el, context)) {
-            el = null;
-        }
         return el;
-    }
-
-    // query tag
-    function getElementsByTagName(tag, context) {
-        return context &amp;&amp; makeArray(context.getElementsByTagName(tag)) || [];
-    }
-
-    if (doc) {
-        (function () {
-            // Check to see if the browser returns only elements
-            // when doing getElementsByTagName('*')
-
-            // Create a fake element
-            var div = doc.createElement('div');
-            div.appendChild(doc.createComment(''));
-
-            // Make sure no comments are found
-            if (div.getElementsByTagName(ANY).length &gt; 0) {
-                getElementsByTagName = function (tag, context) {
-                    var ret = makeArray(context.getElementsByTagName(tag));
-                    if (tag === ANY) {
-                        var t = [], i = 0, node;
-                        while ((node = ret[i++])) {
-                            // Filter out possible comments
-                            if (node.nodeType === 1) {
-                                t.push(node);
-                            }
-                        }
-                        ret = t;
-                    }
-                    return ret;
-                };
-            }
-        })();
-    }
-
-    // query .cls
-    var getElementsByClassName = doc &amp;&amp; doc.getElementsByClassName ? function (cls, tag, context) {
-        // query('#id1 xx','#id2')
-        // #id2 内没有 #id1 , context 为 null , 这里防御下
-        if (!context) {
-            return [];
-        }
-        var els = context.getElementsByClassName(cls),
-            ret,
-            i = 0,
-            len = els.length,
-            el;
-
-        if (tag &amp;&amp; tag !== ANY) {
-            ret = [];
-            tag = tag.toLowerCase();
-            for (; i &lt; len; ++i) {
-                el = els[i];
-                if (getNodeName(el) == tag) {
-                    ret.push(el);
-                }
-            }
-        } else {
-            ret = makeArray(els);
-        }
-        return ret;
-    } : ( doc &amp;&amp; doc.querySelectorAll ? function (cls, tag, context) {
-        // ie8 return staticNodeList 对象,[].concat 会形成 [ staticNodeList ] ，手动转化为普通数组
-        return context &amp;&amp; makeArray(context.querySelectorAll((tag ? tag : '') + '.' + cls)) || [];
-    } : function (cls, tag, context) {
-        if (!context) {
-            return [];
-        }
-        var els = context.getElementsByTagName(tag || ANY),
-            ret = [],
-            i = 0,
-            len = els.length,
-            el;
-        for (; i &lt; len; ++i) {
-            el = els[i];
-            if (hasClass(el, cls)) {
-                ret.push(el);
-            }
-        }
-        return ret;
-    });
-
-    function hasClass(el, cls) {
-        var className;
-        return (className = el.className) &amp;&amp; (' ' + className + ' ').indexOf(' ' + cls + ' ') !== -1;
-    }
-
-    // throw exception
-    function error(msg) {
-        S.error('Unsupported selector: ' + msg);
     }
 
     S.mix(DOM,
@@ -483,6 +289,27 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
          * @singleton
          */
         {
+            _getElementById: function (id, doc) {
+                return doc.getElementById(id);
+            },
+
+            _getElementsByTagName: function (tag, context) {
+                return context.getElementsByTagName(tag);
+            },
+
+            _getElementsByClassName: function (cls, tag, context) {
+                // ie8 return staticNodeList 对象,[].concat 会形成 [ staticNodeList ] ，手动转化为普通数组
+                return  makeArray(context.querySelectorAll((tag || '') + '.' + cls));
+            },
+
+            // 貌似除了 ie 都有了...
+            _compareNodeOrder: function (a, b) {
+                if (!a.compareDocumentPosition || !b.compareDocumentPosition) {
+                    return a.compareDocumentPosition ? -1 : 1;
+                }
+
+                return a.compareDocumentPosition(b) &amp; 4 ? -1 : 1;
+            },
 
 <span id='KISSY-DOM-method-query'>            /**
 </span>             * Accepts a string containing a CSS selector which is then used to match a set of elements.
@@ -517,7 +344,48 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
              * @return {HTMLElement[]}
              * @member KISSY.DOM
              */
-            unique: unique,
+            unique: (function () {
+                var hasDuplicate,
+                    baseHasDuplicate = true;
+
+                // Here we check if the JavaScript engine is using some sort of
+                // optimization where it does not always call our comparison
+                // function. If that is the case, discard the hasDuplicate value.
+                // Thus far that includes Google Chrome.
+                [0, 0].sort(function () {
+                    baseHasDuplicate = false;
+                    return 0;
+                });
+
+                function sortOrder(a, b) {
+                    if (a == b) {
+                        hasDuplicate = true;
+                        return 0;
+                    }
+
+                    return DOM._compareNodeOrder(a, b);
+                }
+
+                // 排序去重
+                return function (elements) {
+
+                    hasDuplicate = baseHasDuplicate;
+                    elements.sort(sortOrder);
+
+                    if (hasDuplicate) {
+                        var i = 1, len = elements.length;
+                        while (i &lt; len) {
+                            if (elements[i] === elements[ i - 1 ]) {
+                                elements.splice(i, 1);
+                            } else {
+                                i++;
+                            }
+                        }
+                    }
+
+                    return elements;
+                };
+            })(),
 
 <span id='KISSY-DOM-method-filter'>            /**
 </span>             * Reduce the set of matched elements to those that match the selector or pass the function's test.
@@ -554,14 +422,14 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
 
                             // 指定 cls 才进行判断
                             if (cls) {
-                                clsRe = hasClass(elem, cls);
+                                clsRe = DOM.hasClass(elem, cls);
                             }
 
                             return clsRe &amp;&amp; tagRe;
                         }
                     } else if (id &amp;&amp; !tag &amp;&amp; !cls) {
                         filter = function (elem) {
-                            return idEq(elem, id);
+                            return DOM.attr(elem, 'id') == id;
                         };
                     }
                 }
@@ -594,16 +462,9 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
             }
         });
 
-
-    function idEq(elem, id) {
-        // form !
-        var idNode = elem.getAttributeNode('id');
-        return idNode &amp;&amp; idNode.nodeValue === id;
-    }
-
     return DOM;
 }, {
-    requires: ['./base']
+    requires: ['./api']
 });
 
 /*
@@ -656,7 +517,7 @@ KISSY.add('dom/selector', function (S, DOM, undefined) {
  - 给 S.query 的结果 attach each 方法
 
  2011.05
- - 承玉：恢复对简单分组支持
+ - yiminghe@gmail.com：恢复对简单分组支持
 
  Ref: http://ejohn.org/blog/selectors-that-people-actually-use/
  考虑 2/8 原则，仅支持以下选择器：

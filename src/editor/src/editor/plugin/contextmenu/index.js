@@ -15,12 +15,6 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
         cfg.focusable = 1;
         cfg.zIndex = Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU);
 
-        if (cfg.children) {
-            S.each(cfg.children, function (c) {
-                c.xclass = 'menuitem';
-            });
-        }
-
         var menu = new Menu.PopupMenu(cfg);
 
         focusFix.init(menu);

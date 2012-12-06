@@ -22,7 +22,9 @@
  */
 (function (S) {
 
-    var Path = S.Path, Loader = S.Loader, Utils = Loader.Utils;
+    var Path = S.Path, Loader = S.Loader,
+        IGNORE_PACKAGE_NAME_IN_URI = 'ignorePackageNameInUri',
+        Utils = Loader.Utils;
 
 <span id='KISSY-Loader-Package'>    /**
 </span>     * @class KISSY.Loader.Package
@@ -61,6 +63,16 @@
                 return self.base || self.runtime.Config.base;
             },
 
+            getPrefixUriForCombo: function () {
+                var self = this,
+                    packageName = self.name;
+                return self.base + (
+                    packageName &amp;&amp; !self.isignorePackageNameInUri() ?
+                        (packageName + '/') :
+                        ''
+                    );
+            },
+
 <span id='KISSY-Loader-Package-method-getBaseUri'>            /**
 </span>             * Get package baseUri
              * @return {KISSY.Uri}
@@ -77,6 +89,18 @@
             isDebug: function () {
                 var self = this, debug = self.debug;
                 return debug === undefined ? self.runtime.Config.debug : debug;
+            },
+
+<span id='KISSY-Loader-Package-method-isignorePackageNameInUri'>            /**
+</span>             *  whether request mod file without package name
+             *  @return {Boolean}
+             */
+            isignorePackageNameInUri: function () {
+                var self = this,
+                    ignorePackageNameInUri = self[IGNORE_PACKAGE_NAME_IN_URI];
+                return ignorePackageNameInUri === undefined ?
+                    self.runtime.Config[IGNORE_PACKAGE_NAME_IN_URI] :
+                    ignorePackageNameInUri;
             },
 
 <span id='KISSY-Loader-Package-method-getCharset'>            /**
@@ -142,10 +166,25 @@
              * @return {String}
              */
             getFullPath: function () {
-                var self = this, t, fullpathUri, packageBaseUri;
+                var self = this,
+                    t,
+                    fullpathUri,
+                    packageBaseUri,
+                    packageInfo,
+                    path;
                 if (!self.fullpath) {
-                    packageBaseUri = self.getPackage().getBaseUri();
-                    fullpathUri = packageBaseUri.resolve(self.getPath());
+                    packageInfo = self.getPackage();
+                    packageBaseUri = packageInfo.getBaseUri();
+                    path = self.getPath();
+                    // #262
+                    if (packageInfo.isignorePackageNameInUri() &amp;&amp;
+                        // native mod does not allow ignore package name
+                        packageInfo.getName()) {
+                        path = path.split('/');
+                        path.shift();
+                        path = path.join('/');
+                    }
+                    fullpathUri = packageBaseUri.resolve(path);
                     if (t = self.getTag()) {
                         fullpathUri.query.set('t', t);
                     }
@@ -213,8 +252,8 @@
 </span>             * Get module objects required by this one
              * @return {KISSY.Loader.Module[]}
              */
-            getRequiredMods: function () {
-                var self=this,mods = self.runtime.Env.mods;
+            'getRequiredMods': function () {
+                var self = this, mods = self.runtime.Env.mods;
                 return S.map(self.getNormalizedRequires(), function (r) {
                     return mods[r];
                 });
@@ -255,6 +294,42 @@
 
     Loader.Module = Module;
 
+    // for ie to get module name from request url
+    // called for development, can not set ignorePackageNameInUri
+    Module.getModuleNameByUri = function (runtime, src) {
+        var p,
+            srcStr = src.toString(),
+            packages = runtime.config('packages'),
+            packageBase,
+            finalPackagePath,
+            srcPath = src.getPath(),
+            Config = runtime.Config,
+            finalPackageUri,
+            finalPackageLength = -1;
+
+        // 外部模块去除包路径，得到模块名
+        for (p in packages) {
+            packageBase = packages[p].getBase();
+            if (S.startsWith(srcStr, packageBase)) {
+                // longest match
+                if (packageBase.length &gt; finalPackageLength) {
+                    finalPackageLength = packageBase.length;
+                    finalPackagePath = packageBase;
+                    finalPackageUri = packages[p].getBaseUri();
+                }
+            }
+        }
+
+        // 注意：模块名不包含后缀名以及参数，所以去除
+        // 系统模块去除系统路径
+        // 需要 base norm , 防止 base 被指定为相对路径
+        // configs 统一处理
+        if (finalPackagePath) {
+            return Utils.removeExtname(Path.relative(finalPackageUri.getPath(), srcPath));
+        } else if (S.startsWith(srcStr, Config.base)) {
+            return Utils.removeExtname(Path.relative(Config.baseUri.getPath(), srcPath));
+        }
+    };
 
     function defaultComponentJsName(m) {
         var name = m.name,
@@ -275,8 +350,7 @@
 
     function getPackage(self, mod) {
         var modName = mod.name,
-            Config = self.Config,
-            packages = Config.packages || {},
+            packages = self.config('packages'),
             pName = '',
             p;
 

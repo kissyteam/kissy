@@ -20,7 +20,7 @@
  * @fileOverview dom-insertion
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/insertion', function (S, UA, DOM) {
+KISSY.add('dom/base/insertion', function (S, DOM) {
 
     var PARENT_NODE = 'parentNode',
         NodeType = DOM.NodeType,
@@ -28,40 +28,8 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
         getNodeName = DOM.nodeName,
         makeArray = S.makeArray,
         splice = [].splice,
-        NEXT_SIBLING = 'nextSibling';
-
-    /*
-     ie 6,7 lose checked status when append to dom
-     var c=S.all('&lt;input /&gt;');
-     c.attr('type','radio');
-     c.attr('checked',true);
-     S.all('#t').append(c);
-     alert(c[0].checked);
-     */
-    function fixChecked(ret) {
-        for (var i = 0; i &lt; ret.length; i++) {
-            var el = ret[i];
-            if (el.nodeType == NodeType.DOCUMENT_FRAGMENT_NODE) {
-                fixChecked(el.childNodes);
-            } else if (getNodeName(el) == 'input') {
-                fixCheckedInternal(el);
-            } else if (el.nodeType == NodeType.ELEMENT_NODE) {
-                var cs = el.getElementsByTagName('input');
-                for (var j = 0; j &lt; cs.length; j++) {
-                    fixChecked(cs[j]);
-                }
-            }
-        }
-    }
-
-    function fixCheckedInternal(el) {
-        if (el.type === 'checkbox' || el.type === 'radio') {
-            // after insert , in ie6/7 checked is decided by defaultChecked !
-            el.defaultChecked = el.checked;
-        }
-    }
-
-    var R_SCRIPT_TYPE = /\/(java|ecma)script/i;
+        NEXT_SIBLING = 'nextSibling',
+        R_SCRIPT_TYPE = /\/(java|ecma)script/i;
 
     function isJs(el) {
         return !el.type || R_SCRIPT_TYPE.test(el.type);
@@ -130,30 +98,39 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
 
         // Resets defaultChecked for any radios and checkboxes
         // about to be appended to the DOM in IE 6/7
-        if (UA['ie'] &lt; 8) {
-            fixChecked(newNodes);
+        if (DOM._fixInsertionChecked) {
+            DOM._fixInsertionChecked(newNodes);
         }
+
         refNodes = DOM.query(refNodes);
+
         var newNodesLength = newNodes.length,
+            newNode,
+            i,
+            refNode,
+            node,
+            clonedNode,
             refNodesLength = refNodes.length;
+
         if ((!newNodesLength &amp;&amp; (!scripts || !scripts.length)) || !refNodesLength) {
             return;
         }
+
         // fragment 插入速度快点
         // 而且能够一个操作达到批量插入
         // refer: http://www.w3.org/TR/REC-DOM-Level-1/level-one-core.html#ID-B63ED1A3
-        var newNode = DOM.nodeListToFragment(newNodes),
-            clonedNode;
+        newNode = DOM._nodeListToFragment(newNodes);
         //fragment 一旦插入里面就空了，先复制下
         if (refNodesLength &gt; 1) {
             clonedNode = DOM.clone(newNode, true);
             refNodes = S.makeArray(refNodes)
         }
-        for (var i = 0; i &lt; refNodesLength; i++) {
-            var refNode = refNodes[i];
+
+        for (i = 0; i &lt; refNodesLength; i++) {
+            refNode = refNodes[i];
             if (newNode) {
                 //refNodes 超过一个，clone
-                var node = i &gt; 0 ? DOM.clone(clonedNode, true) : newNode;
+                node = i &gt; 0 ? DOM.clone(clonedNode, true) : newNode;
                 fn(node, refNode);
             }
             if (scripts &amp;&amp; scripts.length) {
@@ -170,6 +147,8 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
          * @singleton
          */
         {
+
+            _fixInsertionChecked: null,
 
 <span id='KISSY-DOM-method-insertBefore'>            /**
 </span>             * Insert every element in the set of newNodes before every element in the set of refNodes.
@@ -305,7 +284,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
     });
     return DOM;
 }, {
-    requires: ['ua', './create']
+    requires: ['./api']
 });
 
 /*
@@ -313,7 +292,7 @@ KISSY.add('dom/insertion', function (S, UA, DOM) {
  - 增加 replaceWith/wrap/wrapAll/wrapInner/unwrap
 
  2011-05-25
- - 承玉：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
+ - yiminghe@gmail.com：参考 jquery 处理多对多的情形 :http://api.jquery.com/append/
  DOM.append('.multi1','.multi2');
 
  */

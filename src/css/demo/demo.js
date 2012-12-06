@@ -21,29 +21,24 @@ KISSY.use("menu", function (S, Menu) {
                 content: "base",
                 xclass: 'submenu',
                 menu: {
-                    xclass: 'popupmenu',
                     children: [
                         {
                             content: "css reset",
-                            href: 'demo/dpl/reset.html',
-                            xclass: 'menuitem'
+                            href: 'demo/dpl/reset.html'
                         },
                         {
                             content: "grids system",
                             href: 'demo/dpl/grids.html',
                             xclass: 'submenu',
                             menu: {
-                                xclass: 'popupmenu',
                                 children: [
                                     {
                                         content: '固定布局',
-                                        href: 'demo/dpl/grids/fixed.html',
-                                        xclass: 'menuitem'
+                                        href: 'demo/dpl/grids/fixed.html'
                                     },
                                     {
                                         content: '流式布局',
-                                        href: 'demo/dpl/grids/fluid.html',
-                                        xclass: 'menuitem'
+                                        href: 'demo/dpl/grids/fluid.html'
                                     }
                                 ]
                             }
@@ -52,17 +47,14 @@ KISSY.use("menu", function (S, Menu) {
                             content: 'fly-swing',
                             xclass: 'submenu',
                             menu: {
-                                xclass: 'popupmenu',
                                 children: [
                                     {
                                         content: 'fly-swing demo',
-                                        href: 'demo/dpl/fly-swing/demo.html',
-                                        xclass: 'menuitem'
+                                        href: 'demo/dpl/fly-swing/demo.html'
                                     },
                                     {
                                         content: 'layout generator',
-                                        href: 'demo/dpl/fly-swing/css-generator.html',
-                                        xclass: 'menuitem'
+                                        href: 'demo/dpl/fly-swing/css-generator.html'
                                     }
                                 ]
                             }
@@ -71,19 +63,15 @@ KISSY.use("menu", function (S, Menu) {
                             content: "common",
                             xclass: 'submenu',
                             menu: {
-                                xclass: 'popupmenu',
                                 children: [
                                     {
-                                        content: 'ks-inline-block',
-                                        xclass: 'menuitem'
+                                        content: 'ks-inline-block'
                                     },
                                     {
-                                        content: 'ks-shown',
-                                        xclass: 'menuitem'
+                                        content: 'ks-shown'
                                     },
                                     {
-                                        content: '...',
-                                        xclass: 'menuitem'
+                                        content: '...'
                                     }
                                 ]
                             }
@@ -95,32 +83,26 @@ KISSY.use("menu", function (S, Menu) {
                 content: 'simple ui',
                 xclass: 'submenu',
                 menu: {
-                    xclass: 'popupmenu',
                     children: [
                         {
                             content: 'badges',
-                            href: 'demo/dpl/badges.html',
-                            xclass: 'menuitem'
+                            href: 'demo/dpl/badges.html'
                         },
                         {
                             content: 'forms',
-                            href: 'demo/dpl/forms.html',
-                            xclass: 'menuitem'
+                            href: 'demo/dpl/forms.html'
                         },
                         {
                             content: 'icons',
-                            href: 'demo/dpl/icons.html',
-                            xclass: 'menuitem'
+                            href: 'demo/dpl/icons.html'
                         },
                         {
                             content: 'labels',
-                            href: 'demo/dpl/labels.html',
-                            xclass: 'menuitem'
+                            href: 'demo/dpl/labels.html'
                         },
                         {
                             content: 'tables',
-                            href: 'demo/dpl/tables.html',
-                            xclass: 'menuitem'
+                            href: 'demo/dpl/tables.html'
                         }
                     ]
                 }
@@ -129,66 +111,53 @@ KISSY.use("menu", function (S, Menu) {
                 content: 'complex ui',
                 xclass: 'submenu',
                 menu: {
-                    xclass: 'popupmenu',
                     children: [
                         {
                             content: 'button',
-                            href: '../button/demo.html',
-                            xclass: 'menuitem'
+                            href: '../button/demo.html'
                         },
                         {
                             content: 'calendar',
-                            href: '../calendar/demo.html',
-                            xclass: 'menuitem'
+                            href: '../calendar/demo.html'
                         },
                         {
                             content: 'combobox',
-                            href: '../combobox/demo.html',
-                            xclass: 'menuitem'
+                            href: '../combobox/demo.html'
                         },
                         {
                             content: 'editor',
-                            href: '../editor/demo/build/full.html',
-                            xclass: 'menuitem'
+                            href: '../editor/demo/build/full.html'
                         },
                         {
                             content: 'menu',
-                            href: '../menu/demo.html',
-                            xclass: 'menuitem'
+                            href: '../menu/demo.html'
                         },
                         {
                             content: 'menubutton',
-                            href: '../menubutton/demo.html',
-                            xclass: 'menuitem'
+                            href: '../menubutton/demo.html'
                         },
                         {
                             content: 'overlay',
-                            href: '../overlay/demo.html',
-                            xclass: 'menuitem'
+                            href: '../overlay/demo.html'
                         },
                         {
                             content: 'split-button',
-                            href: '../split-button/demo.html',
-                            xclass: 'menuitem'
+                            href: '../split-button/demo.html'
                         },
 
                         {
                             content: 'tabs',
-                            href: '../tabs/demo.html',
-                            xclass: 'menuitem'
+                            href: '../tabs/demo.html'
                         },
-
 
                         {
                             content: 'toolbar',
-                            href: '../toolbar/demo.html',
-                            xclass: 'menuitem'
+                            href: '../toolbar/demo.html'
                         },
 
                         {
                             content: 'tree',
-                            href: '../tree/demo.html',
-                            xclass: 'menuitem'
+                            href: '../tree/demo.html'
                         }
 
                     ]

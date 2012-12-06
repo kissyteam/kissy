@@ -20,7 +20,7 @@
  * @fileOverview dom-offset
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
+KISSY.add('dom/base/offset', function (S, DOM, undefined) {
 
     var win = S.Env.host,
         doc = win.document,
@@ -273,14 +273,16 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
             }
             elem = DOM.get(elem);
             var ret,
+                left,
+                top,
                 w = getWin(elem),
                 d;
             if (w) {
                 if (v !== undefined) {
                     v = parseFloat(v);
                     // 注意多 window 情况，不能简单取 win
-                    var left = name == 'Left' ? v : DOM.scrollLeft(w),
-                        top = name == 'Top' ? v : DOM.scrollTop(w);
+                    left = name == 'Left' ? v : DOM.scrollLeft(w);
+                    top = name == 'Top' ? v : DOM.scrollTop(w);
                     w['scrollTo'](left, top);
                 } else {
                     //标准
@@ -389,8 +391,8 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
 
     function getPageOffset(el) {
-        var pos = getClientPosition(el);
-        var w = getWin(el[OWNER_DOCUMENT]);
+        var pos = getClientPosition(el),
+            w = getWin(el[OWNER_DOCUMENT]);
         pos.left += DOM[SCROLL_LEFT](w);
         pos.top += DOM[SCROLL_TOP](w);
         return pos;
@@ -398,24 +400,27 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     // 获取 elem 相对 elem.ownerDocument 的坐标
     function getOffset(el, relativeWin) {
-        var position = {left: 0, top: 0};
+        var position = {left: 0, top: 0},
 
         // Iterate up the ancestor frame chain, keeping track of the current window
         // and the current element in that window.
-        var currentWin = getWin(el[OWNER_DOCUMENT]);
-        var currentEl = el;
+            currentWin = getWin(el[OWNER_DOCUMENT]),
+            offset,
+            currentEl = el;
         relativeWin = relativeWin || currentWin;
+
         do {
             // if we're at the top window, we want to get the page offset.
             // if we're at an inner frame, we only want to get the window position
             // so that we can determine the actual page offset in the context of
             // the outer window.
-            var offset = currentWin == relativeWin ?
+            offset = currentWin == relativeWin ?
                 getPageOffset(currentEl) :
                 getClientPosition(currentEl);
             position.left += offset.left;
             position.top += offset.top;
-        } while (currentWin &amp;&amp; currentWin != relativeWin &amp;&amp;
+        } while (currentWin &amp;&amp;
+            currentWin != relativeWin &amp;&amp;
             (currentEl = currentWin['frameElement']) &amp;&amp;
             (currentWin = currentWin.parent));
 
@@ -428,7 +433,10 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
         if (DOM.css(elem, POSITION) === 'static') {
             elem.style[POSITION] = RELATIVE;
         }
-        var old = getOffset(elem), ret = { }, current, key;
+
+        var old = getOffset(elem),
+            ret = { },
+            current, key;
 
         for (key in offset) {
             current = myParseInt(DOM.css(elem, key), 10) || 0;
@@ -439,7 +447,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-    requires: ['./base', 'ua']
+    requires: ['./api']
 });
 
 /*
@@ -449,7 +457,7 @@ KISSY.add('dom/offset', function (S, DOM, UA, undefined) {
  - http://www.boutell.com/newfaq/creating/sizeofclientarea.html
 
  2011-05-24
- - 承玉：
+ - yiminghe@gmail.com：
  - 调整 docWidth , docHeight ,
  viewportHeight , viewportWidth ,scrollLeft,scrollTop 参数，
  便于放置到 Node 中去，可以完全摆脱 DOM，完全使用 Node

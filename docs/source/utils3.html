@@ -26,7 +26,6 @@
         Path = S.Path,
         Uri = S.Uri,
         host = S.Env.host,
-        ua = host.navigator &amp;&amp; navigator.userAgent || &quot;&quot;,
         startsWith = S.startsWith,
         data = Loader.STATUS,
         ATTACHED = data.ATTACHED,
@@ -37,11 +36,9 @@
          * @singleton
          * @private
          */
-            Utils = {},
-
-        isWebKit = !!ua.match(/AppleWebKit/),
+            Utils = S.Loader.Utils = {},
         doc = host.document,
-        simulatedLocation = new Uri(host.location &amp;&amp; location.href || &quot;&quot;);
+        simulatedLocation = new Uri(host.location &amp;&amp; host.location.href || &quot;&quot;);
 
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
@@ -74,26 +71,6 @@
         docHead: function () {
             return doc.getElementsByTagName('head')[0] || doc.documentElement;
         },
-
-<span id='KISSY-Loader-Utils-property-isWebKit'>        /**
-</span>         * isWebkit
-         */
-        isWebKit: isWebKit,
-
-<span id='KISSY-Loader-Utils-property-isGecko'>        /**
-</span>         * isGecko
-         */
-        isGecko: !isWebKit &amp;&amp; !!ua.match(/Gecko/),
-
-<span id='KISSY-Loader-Utils-property-isPresto'>        /**
-</span>         * isPresto
-         */
-        isPresto: !!ua.match(/Presto/),
-
-<span id='KISSY-Loader-Utils-property-IE'>        /**
-</span>         * IE
-         */
-        IE: !!ua.match(/MSIE/),
 
 <span id='KISSY-Loader-Utils-method-normalDepModuleName'>        /**
 </span>         * Get absolute path of dep module.similar to {@link KISSY.Path#resolve}
@@ -300,12 +277,18 @@
                 m,
                 alias,
                 ok = 0,
+                j,
                 mods = runtime['Env'].mods;
             while (!ok) {
                 ok = 1;
                 for (i = ret.length - 1; i &gt;= 0; i--) {
                     if ((m = mods[ret[i]]) &amp;&amp; (alias = m.alias)) {
                         ok = 0;
+                        for (j = alias.length - 1; j &gt;= 0; j--) {
+                            if (!alias[j]) {
+                                alias.splice(j, 1);
+                            }
+                        }
                         ret.splice.apply(ret, [i, 1].concat(indexMap(alias)));
                     }
                 }
@@ -435,9 +418,6 @@
         }
         return true;
     }
-
-    Loader.Utils = Utils;
-
 })(KISSY);</pre>
 </body>
 </html>

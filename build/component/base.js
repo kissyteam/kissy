@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:07
+build time: Dec 7 00:42
 */
 /**
  * @ignore
@@ -1164,6 +1164,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * This component's parent component.
                  * @type {KISSY.Component.Controller}
                  * @property parent
+                 * @readonly
                  */
                 /**
                  * This component's parent component.
@@ -1205,7 +1206,17 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 xrender: {
                     value: Render
-                }
+                },
+
+                /**
+                 * default child xclass
+                 * @protected
+                 * @cfg {String} defaultChildXClass
+                 */
+                /**
+                 * @ignore
+                 */
+                defaultChildXClass: {}
             }
         }, {
             xclass: 'controller'
@@ -1486,8 +1497,8 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
      * Component infrastructure.
      */
     var Component = {
-        Manager:Manager,
-        UIBase:UIBase
+        Manager: Manager,
+        UIBase: UIBase
     };
 
     /**
@@ -1508,11 +1519,14 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
      *          }]
      *      })
      */
-    Component.create = function (component, self) {
+    Component.create = function (component, parent) {
         var childConstructor, xclass;
+        if (component && !component.isController && !component.xclass) {
+            component.xclass = parent.get('defaultChildXClass');
+        }
         if (component && (xclass = component.xclass)) {
-            if (self && !component.prefixCls) {
-                component.prefixCls = self.get("prefixCls");
+            if (parent && !component.prefixCls) {
+                component.prefixCls = parent.get("prefixCls");
             }
             childConstructor = Manager.getConstructorByXClass(xclass);
             if (!childConstructor) {
@@ -1525,7 +1539,7 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
 
     return Component;
 }, {
-    requires:['./uibase', './manager']
+    requires: ['./uibase', './manager']
 });/**
  * @ignore
  * @fileOverview storage for component

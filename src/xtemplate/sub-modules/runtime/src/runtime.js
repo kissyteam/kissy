@@ -1,13 +1,29 @@
 /**
  * xtemplate runtime
  * @author yiminghe@gmail.com
+ * @ignore
  */
 KISSY.add('xtemplate/runtime', function (S, XTemplateRuntime, commands, includeCommand) {
 
+    /**
+     * add command to all template
+     * @method
+     * @static
+     * @param {String} commandName
+     * @param {Function} fn
+     * @member KISSY.XTemplate.Runtime
+     */
     XTemplateRuntime.addCommand = function (commandName, fn) {
         commands[commandName] = fn;
     };
 
+    /**
+     * remove command from all template by name
+     * @method
+     * @static
+     * @param {String} commandName
+     * @member KISSY.XTemplate.Runtime
+     */
     XTemplateRuntime.removeCommand = function (commandName) {
         delete commands[commandName];
     };
@@ -20,10 +36,25 @@ KISSY.add('xtemplate/runtime', function (S, XTemplateRuntime, commands, includeC
 
     XTemplateRuntime.subTpls = subTpls;
 
+    /**
+     * add sub template definition to all template
+     * @method
+     * @static
+     * @param {String} tplName
+     * @param {Function|String} def
+     * @member KISSY.XTemplate.Runtime
+     */
     XTemplateRuntime.addSubTpl = function (tplName, def) {
         subTpls[tplName] = def;
     };
 
+    /**
+     * remove sub template definition from all template by name
+     * @method
+     * @static
+     * @param {String} tplName
+     * @member KISSY.XTemplate.Runtime
+     */
     XTemplateRuntime.removeSubTpl = function (tplName) {
         delete  subTpls[tplName];
     };
@@ -37,6 +68,8 @@ KISSY.add('xtemplate/runtime', function (S, XTemplateRuntime, commands, includeC
 });
 
 /**
+ * @ignore
+ *
  * 2012-09-12 yiminghe@gmail.com
  *  - 参考 velocity, 扩充 ast
  *          - Expression/ConditionalOrExpression

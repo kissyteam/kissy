@@ -1,6 +1,7 @@
 /**
  * Ast node class for xtemplate
  * @author yiminghe@gmail.com
+ * @ignore
  */
 KISSY.add("xtemplate/compiler/ast", function (S) {
 

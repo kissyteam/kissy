@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 /**
  * @ignore
@@ -120,8 +120,9 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
             },
 
             /**
+             * all targets where current target's events bubble to
              * @private
-             * @return {*}
+             * @return {Array}
              */
             getTargets: function (target) {
                 target[KS_BUBBLE_TARGETS] = target[KS_BUBBLE_TARGETS] || [];

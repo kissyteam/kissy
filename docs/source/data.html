@@ -20,7 +20,7 @@
  * @fileOverview dom-data
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/data', function (S, DOM, undefined) {
+KISSY.add('dom/base/data', function (S, DOM, undefined) {
 
     var win = S.Env.host,
         EXPANDO = '__ks_data_' + S.now(), // 让每一份 kissy 的 expando 都不同
@@ -276,11 +276,11 @@ KISSY.add('dom/data', function (S, DOM, undefined) {
     return DOM;
 
 }, {
-    requires: ['./base']
+    requires: ['./api']
 });
 /*
- 承玉：2011-05-31
- - 分层 ，节点和普通对象分开处理
+ yiminghe@gmail.com：2011-05-31
+ - 分层，节点和普通对象分开处理
  */</pre>
 </body>
 </html>

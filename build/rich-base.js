@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:11
+build time: Dec 7 00:26
 */
 /**
  * @ignore
@@ -288,6 +288,7 @@ KISSY.add('rich-base', function (S, Base) {
         /**
          * get specified plugin instance by id
          * @param {String} id pluginId of plugin instance
+         * @return {Object}
          */
         'getPlugin': function (id) {
             var plugin = null;

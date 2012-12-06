@@ -77,7 +77,6 @@
             var sb = {
                 // boolean，是否鼠标脱离菜单后自动隐藏
                 autoHideOnMouseLeave:true,
-                xclass:'popupmenu',
                 children:[]
             };
             S.mix(sb, cfg);
@@ -111,7 +110,6 @@
                         });
                     } else {
                         sb.children.push({
-                            xclass:'menuitem',
                             content:item.content
                         });
                     }

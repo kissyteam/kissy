@@ -42,6 +42,9 @@ KISSY.add("tabs/body", function (S, Component) {
             },
             delegateChildren: {
                 value: false
+            },
+            defaultChildXClass: {
+                value: 'tabs-panel'
             }
         }
     }, {

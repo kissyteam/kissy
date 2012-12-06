@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:11
+build time: Dec 7 00:26
 */
 /**
  * LALR grammar parser
@@ -963,27 +963,27 @@ KISSY.add("kison/lexer", function (S, Utils) {
 
             var self = this;
 
-            /**
-             * lex rules.
-             * @type {Object[]}
-             * @example
-             * [
-             *  {
-             *   regexp:'\\w+',
-             *   state:['xx'],
-             *   token:'c',
-             *   // this => lex
-             *   action:function(){}
-             *  }
-             * ]
+            /*
+              lex rules.
+              @type {Object[]}
+              @example
+              [
+               {
+                regexp:'\\w+',
+                state:['xx'],
+                token:'c',
+                // this => lex
+                action:function(){}
+               }
+              ]
              */
             self.rules = [];
 
             S.mix(self, cfg);
 
-            /**
-             * Input languages
-             * @type {String}
+            /*
+              Input languages
+              @type {String}
              */
 
             self.resetInput(self.input);

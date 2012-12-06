@@ -17,245 +17,43 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview droppable for kissy
+ * scalable event framework for kissy (refer DOM3 Events)
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/droppable/base', function (S, Node, RichBase, DD) {
-
-        var DDM = DD.DDM,
-            PREFIX_CLS = DDM.PREFIX_CLS;
-
-        function validDrop(dropGroups, dragGroups) {
-            if (dropGroups === true) {
-                return 1;
-            }
-            for (var d in dropGroups) {
-                if (dragGroups[d]) {
-                    return 1;
-                }
-            }
-            return 0;
-        }
-
-<span id='KISSY-DD-Droppable'>        /**
-</span>         * @class KISSY.DD.Droppable
-         * @extends KISSY.RichBase
-         * Make a node droppable.
-         */
-        return RichBase.extend({
-
-            initializer: function () {
-                var self = this;
-                self.addTarget(DDM);
-
-<span id='KISSY-DD-DDM-event-dropexit'>                /**
-</span>                 * fired after a draggable leaves a droppable
-                 * @event dropexit
-                 * @member KISSY.DD.DDM
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
-
-<span id='KISSY-DD-Droppable-event-dropexit'>                /**
-</span>                 *
-                 * fired after a draggable leaves a droppable
-                 * @event dropexit
-                 * @member KISSY.DD.Droppable
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
+KISSY.add('event/base', function (S, Utils, Object, Observer, ObservableEvent) {
+<span id='KISSY-Event'>    /**
+</span>     * The event utility provides functions to add and remove event listeners.
+     * @class KISSY.Event
+     * @singleton
+     */
+    return S.Event = {
+        _Utils: Utils,
+        _Object: Object,
+        _Observer: Observer,
+        _ObservableEvent: ObservableEvent
+    };
+}, {
+    requires: ['./base/utils', './base/object', './base/observer', './base/observable']
+});
 
 
-<span id='KISSY-DD-DDM-event-dropenter'>                /**
-</span>                 * fired after a draggable object mouseenter a droppable object
-                 * @event dropenter
-                 * @member KISSY.DD.DDM
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
+/*
+ yiminghe@gmail.com: 2012-10-24
+ - 重构，新架构，自定义事件，DOM 事件分离
 
-<span id='KISSY-DD-Droppable-event-dropenter'>                /**
-</span>                 * fired after a draggable object mouseenter a droppable object
-                 * @event dropenter
-                 * @member KISSY.DD.Droppable
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
+ yiminghe@gmail.com: 2011-12-15
+ - 重构，粒度更细，新的架构
 
+ 2011-11-24
+ - 自定义事件和 dom 事件操作彻底分离
+ - TODO: group event from DOM3 Event
 
-<span id='KISSY-DD-DDM-event-dropover'>                /**
-</span>                 *
-                 * fired after a draggable object mouseover a droppable object
-                 * @event dropover
-                 * @member KISSY.DD.DDM
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
-
-<span id='KISSY-DD-Droppable-event-dropover'>                /**
-</span>                 *
-                 * fired after a draggable object mouseover a droppable object
-                 * @event dropover
-                 * @member KISSY.DD.Droppable
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
-
-
-<span id='KISSY-DD-DDM-event-drophit'>                /**
-</span>                 *
-                 * fired after drop a draggable onto a droppable object
-                 * @event drophit
-                 * @member KISSY.DD.DDM
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
-
-<span id='KISSY-DD-Droppable-event-drophit'>                /**
-</span>                 *
-                 * fired after drop a draggable onto a droppable object
-                 * @event drophit
-                 * @member KISSY.DD.Droppable
-                 * @param e
-                 * @param e.drag current draggable object
-                 * @param e.drop current droppable object
-                 */
-
-                DDM._regDrop(this);
-            },
-<span id='KISSY-DD-Droppable-method-getNodeFromTarget'>            /**
-</span>             * Get drop node from target
-             * @protected
-             */
-            getNodeFromTarget: function (ev, dragNode, proxyNode) {
-                var node = this.get('node'),
-                    domNode = node[0];
-                // 排除当前拖放和代理节点
-                return domNode == dragNode ||
-                    domNode == proxyNode
-                    ? null : node;
-            },
-
-            _active: function () {
-                var self = this,
-                    drag = DDM.get('activeDrag'),
-                    node = self.get('node'),
-                    dropGroups = self.get('groups'),
-                    dragGroups = drag.get('groups');
-                if (validDrop(dropGroups, dragGroups)) {
-                    DDM._addValidDrop(self);
-                    // 委托时取不到节点
-                    if (node) {
-                        node.addClass(PREFIX_CLS + 'drop-active-valid');
-                        DDM.cacheWH(node);
-                    }
-                } else if (node) {
-                    node.addClass(PREFIX_CLS + 'drop-active-invalid');
-                }
-            },
-
-            _deActive: function () {
-                var node = this.get('node');
-                if (node) {
-                    node.removeClass(PREFIX_CLS + 'drop-active-valid')
-                        .removeClass(PREFIX_CLS + 'drop-active-invalid');
-                }
-            },
-
-            __getCustomEvt: function (ev) {
-                return S.mix({
-                    drag: DDM.get('activeDrag'),
-                    drop: this
-                }, ev);
-            },
-
-            _handleOut: function () {
-                var self = this,
-                    ret = self.__getCustomEvt();
-                self.get('node').removeClass(PREFIX_CLS + 'drop-over');
-
-                // html5 =&gt; dragleave
-                self.fire('dropexit', ret);
-            },
-
-            _handleEnter: function (ev) {
-                var self = this,
-                    e = self.__getCustomEvt(ev);
-                e.drag._handleEnter(e);
-                self.get('node').addClass(PREFIX_CLS + 'drop-over');
-                self.fire('dropenter', e);
-            },
-
-
-            _handleOver: function (ev) {
-                var self = this,
-                    e = self.__getCustomEvt(ev);
-                e.drag._handleOver(e);
-                self.fire('dropover', e);
-            },
-
-            _end: function () {
-                var self = this,
-                    ret = self.__getCustomEvt();
-                self.get('node').removeClass(PREFIX_CLS + 'drop-over');
-                self.fire('drophit', ret);
-            },
-
-<span id='KISSY-DD-Droppable-method-destructor'>            /**
-</span>             * make this droppable' element undroppable
-             * @private
-             */
-            destructor: function () {
-                DDM._unRegDrop(this);
-            }
-        }, {
-            ATTRS: {
-<span id='KISSY-DD-Droppable-cfg-node'>                /**
-</span>                 * droppable element
-                 * @cfg {String|HTMLElement|KISSY.NodeList} node
-                 * @member KISSY.DD.Droppable
-                 */
-<span id='KISSY-DD-Droppable-property-node'>                /**
-</span>                 * droppable element
-                 * @type {KISSY.NodeList}
-                 * @property node
-                 * @member KISSY.DD.Droppable
-                 */
-<span id='global-property-node'>                /**
-</span>                 * @ignore
-                 */
-                node: {
-                    setter: function (v) {
-                        if (v) {
-                            return Node.one(v);
-                        }
-                    }
-                },
-
-<span id='KISSY-DD-Droppable-cfg-groups'>                /**
-</span>                 * groups this droppable object belongs to. true to match any group.
-                 * default  true
-                 * @cfg {Object|Boolean} groups
-                 * @member KISSY.DD.Droppable
-                 */
-<span id='global-property-groups'>                /**
-</span>                 * @ignore
-                 */
-                groups: {
-                    value: true
-                }
-
-            }
-        });
-
-    },
-    { requires: ['node', 'rich-base', 'dd/base'] });</pre>
+ 2011-06-07
+ - refer : http://www.w3.org/TR/2001/WD-DOM-Level-3-Events-20010823/events.html
+ - 重构
+ - eventHandler 一个元素一个而不是一个元素一个事件一个，节省内存
+ - 减少闭包使用，prevent ie 内存泄露？
+ - 增加 fire ，模拟冒泡处理 dom 事件
+ */</pre>
 </body>
 </html>

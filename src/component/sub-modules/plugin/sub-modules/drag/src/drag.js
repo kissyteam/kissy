@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * drag plugin for kissy component
  * @author yiminghe@gmail.com
  */

@@ -412,6 +412,7 @@ KISSY.add('base/attribute', function (S, undefined) {
         /**
          * Gets the current value of the attribute.
          * @param {String} name attribute 's name
+         * @return {*}
          */
         get: function (name) {
             var self = this,

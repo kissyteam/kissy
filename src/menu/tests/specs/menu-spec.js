@@ -13,12 +13,10 @@ KISSY.use("menu", function (S, Menu) {
             width: 150,
             children: [
                 {
-                    content: "item1",
-                    xclass: 'menuitem'
+                    content: "item1"
                 },
                 {
-                    content: 'item2',
-                    xclass: 'menuitem'
+                    content: 'item2'
                 }
             ]
 

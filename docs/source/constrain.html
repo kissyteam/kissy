@@ -20,14 +20,14 @@
  * @fileOverview plugin constrain region for drag and drop
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/constrain', function (S, Base, Node, DD) {
+KISSY.add('dd/plugin/constrain', function (S, Base, Node) {
 
     var $ = Node.all,
         CONSTRAIN_EVENT = '.-ks-constrain' + S.now(),
         WIN = S.Env.host;
 
-<span id='KISSY-DD-Constrain'>    /**
-</span>     * @class KISSY.DD.Constrain
+<span id='KISSY-DD-Plugin-Constrain'>    /**
+</span>     * @class KISSY.DD.Plugin.Constrain
      * @extends KISSY.Base
      * Constrain plugin to provide ability to constrain draggable to specified region
      */
@@ -42,24 +42,15 @@ KISSY.add('dd/constrain', function (S, Base, Node, DD) {
             dragNode = drag.get('dragNode'),
             constrain = self.get('constrain');
         if (constrain) {
-            if (constrain === true || constrain.setTimeout) {
-                var win;
-                if (constrain === true) {
-                    win = $(WIN);
-                } else {
-                    win = $(constrain);
-                }
+            if (S.isWindow(constrain[0])) {
                 self.__constrainRegion = {
-                    left: l = win.scrollLeft(),
-                    top: t = win.scrollTop(),
-                    right: l + win.width(),
-                    bottom: t + win.height()
+                    left: l = constrain.scrollLeft(),
+                    top: t = constrain.scrollTop(),
+                    right: l + constrain.width(),
+                    bottom: t + constrain.height()
                 };
             }
-            if (constrain.nodeType || typeof constrain == 'string') {
-                constrain = $(constrain);
-            }
-            if (constrain.getDOMNode) {
+            else if (constrain.getDOMNode) {
                 lt = constrain.offset();
                 self.__constrainRegion = {
                     left: lt.left,
@@ -96,56 +87,41 @@ KISSY.add('dd/constrain', function (S, Base, Node, DD) {
 
     S.extend(Constrain, Base, {
 
-        pluginId: 'dd/constrain',
+        pluginId: 'dd/plugin/constrain',
 
         __constrainRegion: null,
 
-<span id='KISSY-DD-Constrain-method-initializer'>        /**
+<span id='KISSY-DD-Plugin-Constrain-method-pluginInitializer'>        /**
 </span>         * start monitoring drag
          * @param {KISSY.DD.Draggable} drag
          * @private
          */
-        initializer: function (drag) {
-            var self=this;
+        pluginInitializer: function (drag) {
+            var self = this;
             drag['on']('dragstart' + CONSTRAIN_EVENT, onDragStart, self)
                 .on('dragend' + CONSTRAIN_EVENT, onDragEnd, self)
                 .on('dragalign' + CONSTRAIN_EVENT, onDragAlign, self);
         },
 
-        attachDrag: function (drag) {
-            S.log('dd.constrain.attachDrag is deprecated, call plug on drag please', 'warn');
-            this.initializer(drag);
-        },
-
-        detachDrag: function (drag) {
-            S.log('dd.constrain.detachDrag is deprecated, call unplug/destroy on drag please', 'warn');
-            this.destructor(drag);
-        },
-
-
-<span id='KISSY-DD-Constrain-method-destructor'>        /**
+<span id='KISSY-DD-Plugin-Constrain-method-pluginDestructor'>        /**
 </span>         * stop monitoring drag
          * @param {KISSY.DD.Draggable} drag
          * @private
          */
-        destructor: function (drag) {
-            drag['detach'](CONSTRAIN_EVENT,{
-                context:this
+        pluginDestructor: function (drag) {
+            drag['detach'](CONSTRAIN_EVENT, {
+                context: this
             });
-        },
-
-        destroy: function () {
-            S.log('dd.constrain.destroy is deprecated, call unplug/destroy on drag please', 'warn');
         }
     }, {
         ATTRS: {
-<span id='KISSY-DD-Constrain-property-constrain'>            /**
+<span id='KISSY-DD-Plugin-Constrain-property-constrain'>            /**
 </span>             * constrained container.
              * @type {Boolean|HTMLElement|String}
              * @property constrain
              */
 
-<span id='KISSY-DD-Constrain-cfg-constrain'>            /**
+<span id='KISSY-DD-Plugin-Constrain-cfg-constrain'>            /**
 </span>             * constrained container. true stands for viewport.
              * Defaults: true.
              * @cfg {Boolean|HTMLElement|String} constrain
@@ -155,16 +131,23 @@ KISSY.add('dd/constrain', function (S, Base, Node, DD) {
 </span>             * @ignore
              */
             constrain: {
-                value: true
+                value: WIN,
+                setter: function (v) {
+                    if (v) {
+                        if (v === true) {
+                            return $(WIN);
+                        } else if (v.nodeType || S.isWindow(v) || typeof v == 'string') {
+                            return $(v);
+                        }
+                    }
+                }
             }
         }
     });
 
-    DD.Constrain = Constrain;
-
     return Constrain;
 }, {
-    requires: ['base', 'node', 'dd/base']
+    requires: ['base', 'node']
 });</pre>
 </body>
 </html>

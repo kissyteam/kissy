@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * simple facade for runtime and compiler
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('xtemplate/facade', function (S, XTemplateRuntime, compiler) {
+
+    var cache = XTemplate.cache = {};
+
+    function compile(tpl, option) {
+        var fn;
+
+        if (option.cache &amp;&amp; (fn = cache[tpl])) {
+            return fn;
+        }
+
+        fn = compiler.compileToFn(tpl, option);
+
+        if (option.cache) {
+            cache[tpl] = fn;
+        }
+
+        return fn;
+    }
+
+    // allow str sub template
+    XTemplateRuntime.includeCommand.invokeEngine = function (tpl, scopes, option) {
+        return new XTemplate(tpl, S.merge(option)).render(scopes);
+    };
+
+    var defaultCfg = {
+        cache: true
+    };
+
+<span id='KISSY-XTemplate'>    /**
+</span>     * xtemplate engine for KISSY.
+     *
+     *      @example
+     *      new XTemplate(tplString, config);
+     *      // or
+     *      new XTemplate(tplFunction, config);
+     *
+     * @class KISSY.XTemplate
+     */
+    function XTemplate(tpl, option) {
+<span id='KISSY-XTemplate-cfg-cache'>        /**
+</span>         * whether cache template string
+         * @cfg {Boolean} cache
+         */
+        var self = this;
+        option = S.merge(defaultCfg, option);
+        if (typeof tpl == 'string') {
+            // prevent messing up with velocity
+            tpl = tpl.replace(/\{\{@/g, '{{#');
+            tpl = compile(tpl, option);
+        }
+        self.option = option;
+        self.tpl = tpl;
+        self.runtime = new XTemplateRuntime(tpl, option);
+    }
+
+    S.augment(XTemplate, {
+<span id='KISSY-XTemplate-method-removeSubTpl'>        /**
+</span>         * remove sub template by name
+         * @param subTplName
+         */
+        'removeSubTpl': function (subTplName) {
+            this.runtime.removeSubTpl(subTplName);
+        },
+<span id='KISSY-XTemplate-method-removeCommand'>        /**
+</span>         * remove command by name
+         * @param commandName
+         */
+        'removeCommand': function (commandName) {
+            this.runtime.removeCommand(commandName);
+        },
+<span id='KISSY-XTemplate-method-addSubTpl'>        /**
+</span>         * add sub template definition to current template
+         * @param subTplName
+         * @param {String|Function}def
+         */
+        addSubTpl: function (subTplName, def) {
+            this.runtime.addSubTpl(subTplName, def);
+        },
+<span id='KISSY-XTemplate-method-addCommand'>        /**
+</span>         * add command definition to current template
+         * @param commandName
+         * @param {Function} fn command definition
+         */
+        addCommand: function (commandName, fn) {
+            this.runtime.addCommand(commandName, fn);
+        },
+<span id='KISSY-XTemplate-method-render'>        /**
+</span>         * get result by merge data with template
+         * @param data
+         * @return {String}
+         */
+        render: function (data) {
+            return this.runtime.render(data);
+        }
+    });
+
+    XTemplate.compiler = compiler;
+
+    XTemplate.RunTime = XTemplateRuntime;
+
+<span id='KISSY-XTemplate-static-method-addCommand'>    /**
+</span>     * add command to all template
+     * @method
+     * @static
+     * @param {String} commandName
+     * @param {Function} fn
+     */
+    XTemplate.addCommand = XTemplateRuntime.addCommand;
+
+<span id='KISSY-XTemplate-static-method-addSubTpl'>    /**
+</span>     * add sub template definition to all template
+     * @method
+     * @static
+     * @param {String} subName
+     * @param {Function|String} def
+     */
+    XTemplate.addSubTpl = XTemplateRuntime.addSubTpl;
+
+<span id='KISSY-XTemplate-static-method-removeCommand'>    /**
+</span>     * remove command from all template by name
+     * @method
+     * @static
+     * @param {String} commandName
+     */
+    XTemplate.removeCommand = XTemplateRuntime.removeCommand;
+
+<span id='KISSY-XTemplate-static-method-removeSubTpl'>    /**
+</span>     * remove sub template definition from all template by name
+     * @method
+     * @static
+     * @param {String} subName
+     */
+    XTemplate.removeSubTpl = XTemplateRuntime.removeSubTpl;
+
+    return XTemplate;
+
+}, {
+    requires: ['./runtime', './compiler']
+});</pre>
+</body>
+</html>

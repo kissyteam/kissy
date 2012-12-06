@@ -38,10 +38,10 @@
              * for example:
              *      @example
              *      // dom module's definition
-             *      KISSY.add('dom', function(S, UA){
+             *      KISSY.add('dom', function(S, xx){
              *          return {css: function(el, name, val){}};
              *      },{
-             *          requires:['ua']
+             *          requires:['xx']
              *      });
              */
             add: function (name, fn, cfg) {
@@ -78,29 +78,6 @@
                 } else {
                     return Env._loader;
                 }
-            },
-<span id='KISSY-method-clearLoader'>            /**
-</span>             * @private
-             * @member KISSY
-             */
-            clearLoader: function () {
-                var self = this,
-                    Env = self.Env,
-                    l;
-
-                if ((l = Env._comboLoader) &amp;&amp; l.clear) {
-                    l.clear();
-                }
-                if ((l = Env._loader) &amp;&amp; l.clear) {
-                    l.clear();
-                }
-
-                self.config({
-                    map: false,
-                    mapCombo: false,
-                    modules: false,
-                    packages: false
-                })
             },
 <span id='KISSY-method-require'>            /**
 </span>             * get module value defined by define function

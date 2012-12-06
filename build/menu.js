@@ -1,11 +1,11 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:11
+build time: Dec 7 00:26
 */
 /**
  * @ignore
- * @fileOverview menu controllerler for kissy,accommodate menu items
+ * @fileOverview menu controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
@@ -195,6 +195,10 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
             },
             xrender: {
                 value: MenuRender
+            },
+
+            defaultChildXClass: {
+                value: 'menuitem'
             }
         }
     }, {
@@ -1309,6 +1313,11 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                         }
                     }
                 },
+
+                defaultChildXClass: {
+                    value: 'popupmenu'
+                },
+
                 decorateChildCls: {
                     valueFn: function () {
                         return this.get("prefixCls") + "popupmenu"
@@ -1327,7 +1336,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
     function getMenu(self, init) {
         var m = self.get("menu");
-        if (m && m.xclass) {
+        if (m && !m.isController) {
             if (init) {
                 m = Component.create(m, self);
                 self.setInternal("menu", m);

@@ -20,38 +20,10 @@
  * @fileOverview dom-traversal
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/traversal', function (S, DOM, undefined) {
+KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
 
-    var doc = S.Env.host.document,
-        NodeType = DOM.NodeType,
-        documentElement = doc &amp;&amp; doc.documentElement,
-        CONTAIN_MASK = 16,
-        __contains =
-            documentElement &amp;&amp; documentElement.compareDocumentPosition ?
-                function (a, b) {
-                    return !!(a.compareDocumentPosition(b) &amp; CONTAIN_MASK);
-                } :
-                documentElement &amp;&amp; documentElement.contains ?
-                    function (a, b) {
-                        if (a.nodeType == NodeType.DOCUMENT_NODE) {
-                            a = a.documentElement;
-                        }
-                        // !a.contains =&gt; a===document || text
-                        // 注意原生 contains 判断时 a===b 也返回 true
-                        b = b.parentNode;
-
-                        if (a == b) {
-                            return true;
-                        }
-
-                        // when b is document, a.contains(b) 不支持的接口 in ie
-                        if (b &amp;&amp; b.nodeType == NodeType.ELEMENT_NODE) {
-                            return a.contains &amp;&amp; a.contains(b);
-                        } else {
-                            return false;
-                        }
-                    } : 0;
-
+    var NodeType = DOM.NodeType,
+        CONTAIN_MASK = 16;
 
     S.mix(DOM,
 <span id=''>        /**
@@ -60,6 +32,10 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
          * @singleton
          */
         {
+
+            _contains: function (a, b) {
+                return !!(a.compareDocumentPosition(b) &amp; CONTAIN_MASK);
+            },
 
 <span id='KISSY-DOM-method-closest'>            /**
 </span>             * Get the first element that matches the filter,
@@ -183,7 +159,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
                 container = DOM.get(container);
                 contained = DOM.get(contained);
                 if (container &amp;&amp; contained) {
-                    return __contains(container, contained);
+                    return DOM._contains(container, contained);
                 }
                 return false;
             },
@@ -271,13 +247,13 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
         var ret = [],
             isArray = S.isArray(filter),
             fi,
-            flen;
+            filterLength;
 
         if (S.isNumber(filter)) {
             fi = 0;
-            flen = filter;
+            filterLength = filter;
             filter = function () {
-                return ++fi === flen;
+                return ++fi === filterLength;
             };
         }
 
@@ -355,7 +331,7 @@ KISSY.add('dom/traversal', function (S, DOM, undefined) {
 
     return DOM;
 }, {
-    requires: ['./base']
+    requires: ['./api']
 });
 
 /*

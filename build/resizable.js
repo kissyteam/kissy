@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:11
+build time: Dec 7 00:26
 */
 /**
  * @ignore
@@ -263,7 +263,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
             },
             /**
              * directions can current node resize to.
-             * @cfg {KISSY.Resizable.HANDLER} handlers
+             * @cfg {KISSY.Resizable.Handler} handlers
              */
             /**
              * @ignore
@@ -277,9 +277,9 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
 
     /**
      * Resizable handlers type.
-     * @enum {String} KISSY.Resizable.HANDLER
+     * @enum {String} KISSY.Resizable.Handler
      */
-    Resizable.HANDLER = {
+    Resizable.Handler = {
         /**
          * bottom
          */

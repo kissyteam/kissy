@@ -29,6 +29,7 @@
 .c2c-menu-button {
     position: relative;
     line-height: 20px;
+    padding-right: 20px;
 }
 
 .c2c-button-disabled {

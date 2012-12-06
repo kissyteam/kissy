@@ -3,7 +3,7 @@
  * @fileOverview Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,Menu, undefined) {
+KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender, Menu, undefined) {
     var ComboBox,
         $ = Node.all,
         KeyCodes = Node.KeyCodes,
@@ -375,14 +375,16 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                  * @ignore
                  */
                 menu: {
-                    value: {
-                        xclass: 'popupmenu'
-                    },
+                    value: {},
                     setter: function (m) {
-                        if (m instanceof Component.Controller) {
+                        if (m&& m.isController) {
                             m.setInternal("parent", this);
                         }
                     }
+                },
+
+                defaultChildXClass: {
+                    value: 'popupmenu'
                 },
 
                 /**
@@ -588,7 +590,7 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
 
     function getMenu(self, init) {
         var m = self.get("menu");
-        if (m && m.xclass) {
+        if (m && !m.isController) {
             if (init) {
                 m = Component.create(m, self);
                 self.setInternal("menu", m);
@@ -783,9 +785,7 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
         if (data && data.length) {
             for (i = 0; i < data.length; i++) {
                 v = data[i];
-                children.push(menu.addChild(S.mix({
-                    xclass: 'menuitem'
-                }, v)));
+                children.push(menu.addChild(v));
             }
 
             // make menu item (which textContent is same as input) active

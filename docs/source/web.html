@@ -25,13 +25,13 @@
 
     var win = S.Env.host,
 
+        UA= S.UA,
+
         doc = win['document'],
 
         docElem = doc &amp;&amp; doc.documentElement,
 
         location = win.location,
-
-        navigator = win.navigator,
 
         EMPTY = '',
 
@@ -79,7 +79,7 @@
                     xml = new DOMParser().parseFromString(data, 'text/xml');
                 } else { // IE
                     xml = new ActiveXObject('Microsoft.XMLDOM');
-                    xml.async = 'false';
+                    xml.async = false;
                     xml.loadXML(data);
                 }
             } catch (e) {
@@ -236,7 +236,7 @@
 //     worst case no callback at all
     _bindReady();
 
-    if (navigator &amp;&amp; navigator.userAgent.match(/MSIE/)) {
+    if (UA.ie) {
         try {
             doc.execCommand('BackgroundImageCache', false, true);
         } catch (e) {

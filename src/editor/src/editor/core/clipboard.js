@@ -279,7 +279,6 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
 
                 for (var i in pastes) {
                     contextmenu.addChild({
-                        xclass: 'menuitem',
                         content: lang[i],
                         value: i
                     });

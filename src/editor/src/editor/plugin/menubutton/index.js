@@ -17,12 +17,7 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
             cfg.editor = self;
             if (cfg.menu) {
                 cfg.menu.zIndex = Editor.baseZIndex(Editor.zIndexManager.SELECT);
-                cfg.menu.xclass = 'popupmenu';
-                S.each(cfg.menu.children, function (child) {
-                    child.xclass = 'option';
-                });
             }
-
             if (cfg.elCls) {
                 cfg.elCls = prefixCls + cfg.elCls;
             }

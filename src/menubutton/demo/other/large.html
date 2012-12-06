@@ -66,9 +66,9 @@
 
     <script>
         KISSY.ready(function (S) {
-            var $ = S.all;
-            var holder = $("#holder");
             KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
+                var $ = S.all;
+                var holder = $("#holder");
                 var start = S.now();
 
                 for (var i = 0; i < 50; i++) {
@@ -88,7 +88,6 @@
 
                         function constructMenu(menuConfig) {
                             return S.mix({
-                                xclass:'popupmenu',
                                 children:[]
                             }, menuConfig);
                         }

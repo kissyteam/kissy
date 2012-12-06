@@ -17,63 +17,51 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview resize extension using resizable
+ * resize plugin for kissy component
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;overlay/extension/resize&quot;, function (S) {
+KISSY.add('component/plugin/resize', function (S, Resize) {
 
-<span id='KISSY-Overlay-Extension-Resize'>    /**
-</span>     * @class KISSY.Overlay.Extension.Resize
-     * Resizable extension class. Make component resizable
+<span id='KISSY-Component-Plugin-Resize'>    /**
+</span>     * resize plugin for kissy component
+     *
+     *      @example
+     *      var o =new Overlay.Dialog({
+     *          plugins:[
+     *              new ResizePlugin({
+     *                  handles: ['t','tr']
+     *              })
+     *          ]
+     *      })
+     *      // or
+     *      o.plug(new ResizePlugin({
+     *          handles: ['t','tr']
+     *      });
+     *
+     *
+     * @class KISSY.Component.Plugin.Resize
+     * @extends KISSY.Resizable
      */
-    function Resize() {
-    }
-
-    Resize.ATTRS = {
-<span id='KISSY-Overlay-Extension-Resize-property-resize'>        /**
-</span>         * Resizable configuration. See {@link KISSY.Resizable}
-         * @type {Object}
-         * @property resize
-         *
-         * for example:
-         *      @example
-         *      {
-         *          minWidth:100,
-         *          maxWidth:1000,
-         *          minHeight:100,
-         *          maxHeight:1000,
-         *          handlers:[&quot;b&quot;,&quot;t&quot;,&quot;r&quot;,&quot;l&quot;,&quot;tr&quot;,&quot;tl&quot;,&quot;br&quot;,&quot;bl&quot;]
-         *      }
-         *
-         *
-         */
-<span id='global-property-resize'>        /**
-</span>         * @ignore
-         */
-        resize:{
-            value:{
-            }
-        }
-    };
-
-    Resize.prototype = {
-        __destructor:function () {
-            var r = this.resizer;
-            r &amp;&amp; r.destroy();
-        },
-        _onSetResize:function (v) {
-            var Resizable = S.require(&quot;resizable&quot;),
+    return Resize.extend({
+        pluginBindUI: function (component) {
+            var el = component.get('el'),
                 self = this;
-            self.resizer &amp;&amp; self.resizer.destroy();
-            if (Resizable &amp;&amp; v) {
-                v.node = self.get(&quot;el&quot;);
-                self.resizer = new Resizable(v);
-            }
+            self.set('node', el);
+            // sync
+            self.on('resizeEnd', function () {
+                var offset = el.offset();
+                component.setInternal('xy', [offset.left, offset.top]);
+                component.setInternal('width', el.width());
+                component.setInternal('height', el.height());
+            });
+        },
+        pluginDestructor: function () {
+            this.destroy();
         }
-    };
+    });
 
-
-    return Resize;
+}, {
+    requires: ['resizable']
 });</pre>
 </body>
 </html>

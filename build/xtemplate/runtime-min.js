@@ -1,9 +1,9 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 20:34
+build time: Dec 7 00:27
 */
-KISSY.add("xtemplate/runtime/base",function(f){function a(c,d){this.tpl=c;d=f.merge(g,d);d.subTpls=f.merge(d.subTpls,a.subTpls);d.commands=f.merge(d.commands,a.commands);this.option=d}var g={silent:!0,utils:{getProperty:function(c,d){if(!d)return!1;var c=c.split("."),e=c.length,b,a=d;for(b=0;b<e;b++){if(!(c[b]in a))return!1;a=a[c[b]]}return[a]}}};a.prototype={constructor:a,removeSubTpl:function(c){delete this.option.subTpls[c]},removeCommand:function(c){delete this.option.commands[c]},addSubTpl:function(c,
+KISSY.add("xtemplate/runtime/base",function(f){function a(c,d){this.tpl=c;d=f.merge(g,d);d.subTpls=f.merge(d.subTpls,a.subTpls);d.commands=f.merge(d.commands,a.commands);this.option=d}var g={silent:!0,name:"",utils:{getProperty:function(c,d){if(!d)return!1;var c=c.split("."),e=c.length,b,a=d;for(b=0;b<e;b++){if(!(c[b]in a))return!1;a=a[c[b]]}return[a]}}};a.prototype={constructor:a,removeSubTpl:function(c){delete this.option.subTpls[c]},removeCommand:function(c){delete this.option.commands[c]},addSubTpl:function(c,
 d){this.option.subTpls[c]=d},addCommand:function(c,d){this.option.commands[c]=d},render:function(c){f.isArray(c)||(c=[c]);return this.tpl(c,this.option)}};return a});
 KISSY.add("xtemplate/runtime/commands",function(f,a,g){var c=f.error;return{each:function(d,e){var b=e.params;(!b||1!=b.length)&&c("each must has one param");var b=b[0],a="",h,j;if(b!==g)if(f.isArray(b)){var l=[0].concat(d);h=b.length;for(var k=0;k<h;k++){var i={};j=b[k];i["this"]=j;i.xcount=h;i.xindex=k;f.isObject(j)&&f.mix(i,j);l[0]=i;a+=e.fn(l)}}else c("each can only apply to array");return a},"with":function(d,e){var b=e.params;(!b||1!=b.length)&&c("with must has one param");var b=b[0],a=[0].concat(d),
 h="";b!==g&&(f.isObject(b)?(a[0]=b,h=e.fn(a)):c("with can only apply to object"));return h},"if":function(d,e){var b=e.params;(!b||1!=b.length)&&c("if must has one param");var a="";b[0]?a=e.fn(d):e.inverse&&(a=e.inverse(d));return a},set:function(a,c){f.mix(a[0],c.hash);return""},include:a.include}},{requires:["./include-command"]});

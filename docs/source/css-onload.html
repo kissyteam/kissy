@@ -23,6 +23,7 @@
 (function (S) {
 
     var CSS_POLL_INTERVAL = 30,
+        UA= S.UA,
         utils = S.Loader.Utils,
     // central poll for link node
         timer = 0,
@@ -69,7 +70,7 @@
                 node = callbackObj.node,
                 exName,
                 loaded = 0;
-            if (utils.isWebKit) {
+            if (UA.webkit) {
                 // http://www.w3.org/TR/DOM-Level-2-Style/stylesheets.html
                 if (node['sheet']) {
                     S.log('webkit loaded : ' + url);

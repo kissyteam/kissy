@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview menu controllerler for kissy,accommodate menu items
+ * @fileOverview menu controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
@@ -190,6 +190,10 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
             },
             xrender: {
                 value: MenuRender
+            },
+
+            defaultChildXClass: {
+                value: 'menuitem'
             }
         }
     }, {

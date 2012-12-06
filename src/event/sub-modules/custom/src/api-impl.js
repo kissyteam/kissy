@@ -115,8 +115,9 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
             },
 
             /**
+             * all targets where current target's events bubble to
              * @private
-             * @return {*}
+             * @return {Array}
              */
             getTargets: function (target) {
                 target[KS_BUBBLE_TARGETS] = target[KS_BUBBLE_TARGETS] || [];

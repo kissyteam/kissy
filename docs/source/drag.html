@@ -17,134 +17,64 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview drag extension for position
+ * drag plugin for kissy component
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;overlay/extension/drag&quot;, function (S) {
+KISSY.add('component/plugin/drag', function (S, RichBase, DD) {
 
-<span id='KISSY-Overlay-Extension-Drag'>    /**
-</span>     * @class KISSY.Overlay.Extension.Drag
-     * Drag extension class. Make element draggable.
+<span id='KISSY-Component-Plugin-Drag'>    /**
+</span>     * drag plugin for kissy component
+     *
+     *      @example
+     *      KISY.use('overlay,component/plugin/drag,dd/plugin/proxy',
+     *      function(S,Overlay,DragPlugin,ProxyPlugin){
+     *        var o =new Overlay.Dialog({
+     *          plugins:[
+     *              new DragPlugin({
+     *                  handles: [function(){ return o.get('header'); }],
+     *                  plugins: [ProxyPlugin]
+     *              })
+     *          ]
+     *        })
+     *        // or
+     *        o.plug(new DragPlugin({
+     *          handles:[function(){ return o.get('header'); }]
+     *        });
+     *      });
+     *
+     *
+     * @class KISSY.Component.Plugin.Drag
+     * @extends KISSY.DD.Draggable
      */
-    function Drag() {
-    }
+    return DD.Draggable.extend({
 
-    Drag.ATTRS = {
-<span id='KISSY-Overlay-Extension-Drag-cfg-draggable'>        /**
-</span>         * Whether current element is draggable and draggable config.
-         * @cfg {Boolean|Object} draggable
-         *
-         * for example:
-         *      @example
-         *      {
-         *          proxy:{
-         *              // see {@link KISSY.DD.Proxy} config
-         *          },
-         *          scroll:{
-         *              // see {@link KISSY.DD.Scroll} config
-         *          },
-         *          constrain:{
-         *              // see {@link KISSY.DD.Constrain} config
-         *          },
-         *      }
-         */
-<span id='global-property-draggable'>        /**
-</span>         * @ignore
-         */
-        draggable: {
-            setter: function (v) {
-                if (v === true) {
-                    return {};
-                }
-            },
-            value: {}
-        }
-    };
+        pluginId: 'component/plugin/drag',
 
-    Drag.prototype = {
-
-        _onSetDraggable: function (dragCfg) {
-            var self = this,
-                handlers,
-                DD = S.require(&quot;dd/base&quot;),
-                Proxy,
-                Scroll,
-                Constrain,
-                Draggable,
-                scrollCfg,
-                constrainCfg,
-                p,
-                d = self.__drag,
-                c = self.__constrain,
-                el = self.get(&quot;el&quot;);
-
-            if (dragCfg &amp;&amp; !d &amp;&amp; DD) {
-
-                Draggable = DD.Draggable;
-
-                d = self.__drag = new Draggable({
-                    node: el,
-                    move: 1
-                });
-
-                if (dragCfg.proxy &amp;&amp; (Proxy = S.require('dd/proxy'))) {
-                    dragCfg.proxy.moveOnEnd = true;
-
-                    d.plug(new Proxy(dragCfg.proxy));
-                }
-
-                d.on(&quot;dragend&quot;, function () {
-                    var proxyOffset;
-                    proxyOffset = el.offset();
-                    self.set(&quot;x&quot;, proxyOffset.left);
-                    self.set(&quot;y&quot;, proxyOffset.top);
-                    // 存在代理时
-                    if (p) {
-                        el.css(&quot;visibility&quot;, &quot;visible&quot;);
-                    }
-                });
-
-                if ((scrollCfg = dragCfg.scroll) &amp;&amp;
-                    (Scroll = S.require('dd/scroll'))) {
-                    d.plug(new Scroll(scrollCfg));
-                }
-
-            }
-
-            if (d) {
-                d.set(&quot;disabled&quot;, !dragCfg);
-            }
-
-            if (dragCfg &amp;&amp; d) {
-                handlers = dragCfg.handlers;
-                if (Constrain = S.require('dd/constrain')) {
-                    if (constrainCfg = dragCfg.constrain) {
-                        if (!c) {
-                            c = self.__constrain = new Constrain();
-                            d.plug(c);
-                        }
-                        c.set(&quot;constrain&quot;, constrainCfg);
-                    } else {
-                        if (c) {
-                            c.set(&quot;constrain&quot;, false);
-                        }
-                    }
-                }
-                if (handlers &amp;&amp; handlers.length &gt; 0) {
-                    d.set(&quot;handlers&quot;, handlers);
-                }
-            }
+        pluginBindUI: function (component) {
+            var el = component.get('el'),
+                self = this;
+            self.set('node', el);
+            // sync
+            self.on(&quot;dragend&quot;, function () {
+                var offset = el.offset();
+                component.setInternal('xy', [offset.left, offset.top]);
+            });
         },
 
-        __destructor: function () {
-            var d = this.__drag;
-            d &amp;&amp; d.destroy();
+        pluginDestructor: function () {
+            this.destroy();
         }
 
-    };
+    }, {
+        ATTRS: {
+            move: {
+                value: 1
+            }
+        }
+    });
 
-    return Drag;
-
+}, {
+    requires: ['rich-base', 'dd/base']
 });</pre>
 </body>
 </html>

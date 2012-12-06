@@ -133,7 +133,6 @@ KISSY.add("overlay/base", function (S, Component,
      * @mixins KISSY.Overlay.Extension.Loading
      * @mixins KISSY.Component.Extension.Align
      * @mixins KISSY.Overlay.Extension.Close
-     * @mixins KISSY.Overlay.Extension.Resize
      * @mixins KISSY.Overlay.Extension.Mask
      */
     var Overlay = Component.Controller.extend([

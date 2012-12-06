@@ -1,6 +1,7 @@
 /**
  * translate ast to js function code
  * @author yiminghe@gmail.com
+ * @ignore
  */
 KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
@@ -444,22 +445,48 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
     var compiler;
 
+    /**
+     * compiler for xtemplate
+     * @class KISSY.XTemplate.compiler
+     * @singleton
+     */
     return compiler = {
+        /**
+         * get ast of template
+         * @param {String} tpl
+         * @return {Object}
+         */
         parse: function (tpl) {
             return parser.parse(tpl);
         },
+        /**
+         * get template function string
+         * @param {String} tpl
+         * @return {String}
+         */
         compileToStr: function (tpl) {
             var func = this.compile(tpl);
             return 'function(' + func.params.join(',') + '){\n' +
                 func.source.join('\n') +
                 '}';
         },
+        /**
+         * get template function json format
+         * @param {String} tpl
+         * @return {Object}
+         */
         compile: function (tpl) {
             var root = this.parse(tpl);
             variableId = 0;
             return gen.genFunction(root.statements, true);
         },
-
+        /**
+         * get template function
+         * @param {String} tpl
+         * @param {Object} option
+         * @param {String} option.name template file name
+         * @return {Function}
+         */
         compileToFn: function (tpl, option) {
             var code = compiler.compile(tpl);
             option = option || {};

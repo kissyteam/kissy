@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:12
+build time: Dec 7 00:40
 */
 /**
  * @fileOverview TabBar for KISSY.
@@ -41,7 +41,7 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
         _onSetSelectedTab: function (v, e) {
             var prev;
             if (v) {
-                if (e&&(prev = e.prevVal)) {
+                if (e && (prev = e.prevVal)) {
                     prev.set("selected", false);
                 }
                 v.set("selected", true);
@@ -71,6 +71,9 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
             },
             changeType: {
                 value: "click"
+            },
+            defaultChildXClass: {
+                value: 'tabs-tab'
             }
         }
     }, {
@@ -135,6 +138,9 @@ KISSY.add("tabs/body", function (S, Component) {
             },
             delegateChildren: {
                 value: false
+            },
+            defaultChildXClass: {
+                value: 'tabs-panel'
             }
         }
     }, {
@@ -326,16 +332,19 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             var self = this,
                 selected,
                 items,
+                prefixCls=self.get('prefixCls'),
                 tabSelectedCls = self.get("tabSelectedCls"),
                 panelSelectedCls = self.get("panelSelectedCls"),
                 tabItem,
                 panelItem,
                 bar = {
+                    prefixCls:prefixCls,
                     xclass: 'tabs-bar',
                     changeType: self.get("changeType"),
                     children: []
                 },
                 body = {
+                    prefixCls:prefixCls,
                     xclass: 'tabs-body',
                     children: []
                 },
@@ -346,12 +355,10 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
                 S.each(items, function (item) {
                     selected = selected || item.selected;
                     barChildren.push(tabItem = {
-                        xclass: 'tabs-tab',
                         content: item.title,
                         selected: item.selected
                     });
                     panels.push(panelItem = {
-                        xclass: 'tabs-panel',
                         content: item.content,
                         selected: item.selected
                     });
@@ -386,12 +393,10 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
                 body = self.get("body");
 
             tabItem = {
-                xclass: 'tabs-tab',
                 content: item.title
             };
 
             panelItem = {
-                xclass: 'tabs-panel',
                 content: item.content
             };
 
@@ -582,7 +587,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             },
             bar: {
                 setter: function (v) {
-                    if (!(v instanceof Component.Controller)) {
+                    if (v&&!v.isController) {
                         return Component.create(v);
                     }
                 },
@@ -595,7 +600,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
             },
             body: {
                 setter: function (v) {
-                    if (!(v instanceof Component.Controller)) {
+                    if (v&&!v.isController) {
                         return Component.create(v);
                     }
                 },

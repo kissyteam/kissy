@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:11
+build time: Dec 7 00:26
 */
 /**
  * @ignore
@@ -34,17 +34,12 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         return obj;
     }
 
-    S.augment(Node,
-        /**
-         * @class
-         * @singleton
-         * @override KISSY.NodeList
-         */
-        {
+    S.augment(Node,{
             /**
              * animate for current node list.
              * @param var_args see {@link KISSY.Anim}
              * @chainable
+             * @member KISSY.NodeList
              */
             animate: function (var_args) {
                 var self = this,
@@ -67,6 +62,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
              * @param [clearQueue]
              * @param [queue]
              * @chainable
+             * @member KISSY.NodeList
              */
             stop: function (end, clearQueue, queue) {
                 var self = this;
@@ -80,6 +76,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
              * @param {Boolean} end see {@link KISSY.Anim#static-method-pause}
              * @param queue
              * @chainable
+             * @member KISSY.NodeList
              */
             pause: function (end, queue) {
                 var self = this;
@@ -93,6 +90,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
              * @param {Boolean} end see {@link KISSY.Anim#static-method-resume}
              * @param queue
              * @chainable
+             * @member KISSY.NodeList
              */
             resume: function (end, queue) {
                 var self = this;
@@ -104,6 +102,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
             /**
              * whether one of current node list is animating.
              * @return {Boolean}
+             * @member KISSY.NodeList
              */
             isRunning: function () {
                 var self = this;
@@ -117,6 +116,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
             /**
              * whether one of current node list 's animation is paused.
              * @return {Boolean}
+             * @member KISSY.NodeList
              */
             isPaused: function () {
                 var self = this;

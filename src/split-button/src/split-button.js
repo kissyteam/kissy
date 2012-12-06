@@ -15,7 +15,7 @@ KISSY.add("split-button", function (S, Component, Button, MenuButton) {
             var menuButton = children[1],
                 menu = menuButton.get("menu");
             if (alignWithEl) {
-                if (menu instanceof Component.Controller) {
+                if (menu.isController) {
                     menu.get("align").node = self.get("el");
                 } else {
                     menu.align = menu.align || {};

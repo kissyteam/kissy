@@ -20,16 +20,14 @@
  * @fileOverview dom/style
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('dom/style', function (S, DOM, UA, undefined) {
+KISSY.add('dom/base/style', function (S, DOM, undefined) {
     var WINDOW = S.Env.host,
+        UA = S.UA,
+        getNodeName = DOM.nodeName,
         doc = WINDOW.document,
-        docElem = doc &amp;&amp; doc.documentElement,
-        isIE = UA['ie'],
         STYLE = 'style',
         FLOAT = 'float',
         RE_MARGIN = /^margin/,
-        CSS_FLOAT = 'cssFloat',
-        STYLE_FLOAT = 'styleFloat',
         WIDTH = 'width',
         HEIGHT = 'height',
         AUTO = 'auto',
@@ -60,95 +58,28 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
         cssProps = {},
         defaultDisplay = {};
 
-    if (docElem) {
-        // normalize reserved word float alternatives ('cssFloat' or 'styleFloat')
-        if (docElem[STYLE][CSS_FLOAT] !== undefined) {
-            cssProps[FLOAT] = CSS_FLOAT;
-        }
-        else if (docElem[STYLE][STYLE_FLOAT] !== undefined) {
-            cssProps[FLOAT] = STYLE_FLOAT;
-        }
-    }
+    cssProps[FLOAT] = 'cssFloat';
 
     function camelCase(name) {
         // fix #92, ms!
         return name.replace(rmsPrefix, 'ms-').replace(RE_DASH, CAMEL_CASE_FN);
     }
 
-    var defaultDisplayDetectIframe,
-        defaultDisplayDetectIframeDoc;
-
-    // modified from jquery : bullet-proof method of getting default display
-    // fix domain problem in ie&gt;6, ie6 still access denied
     function getDefaultDisplay(tagName) {
         var body,
+            oldDisplay = defaultDisplay[ tagName ],
             elem;
         if (!defaultDisplay[ tagName ]) {
             body = doc.body || doc.documentElement;
             elem = doc.createElement(tagName);
+            // note: do not change default tag display!
             DOM.prepend(elem, body);
-            var oldDisplay = DOM.css(elem, 'display');
+            oldDisplay = DOM.css(elem, 'display');
             body.removeChild(elem);
-            // If the simple way fails,
-            // get element's real default display by attaching it to a temp iframe
-            if (oldDisplay == 'none' || oldDisplay == '') {
-                // No iframe to use yet, so create it
-                if (!defaultDisplayDetectIframe) {
-                    defaultDisplayDetectIframe = doc.createElement('iframe');
-
-                    defaultDisplayDetectIframe.frameBorder =
-                        defaultDisplayDetectIframe.width =
-                            defaultDisplayDetectIframe.height = 0;
-
-                    DOM.prepend(defaultDisplayDetectIframe, body);
-                    var iframeSrc;
-                    if (iframeSrc = DOM.getEmptyIframeSrc()) {
-                        defaultDisplayDetectIframe.src = iframeSrc;
-                    }
-                } else {
-                    DOM.prepend(defaultDisplayDetectIframe, body);
-                }
-
-                // Create a cacheable copy of the iframe document on first call.
-                // IE and Opera will allow us to reuse the iframeDoc without re-writing the fake HTML
-                // document to it; WebKit &amp; Firefox won't allow reusing the iframe document.
-                if (!defaultDisplayDetectIframeDoc || !defaultDisplayDetectIframe.createElement) {
-
-                    try {
-                        defaultDisplayDetectIframeDoc = defaultDisplayDetectIframe.contentWindow.document;
-                        defaultDisplayDetectIframeDoc.write(( doc.compatMode === 'CSS1Compat' ? '&lt;!doctype html&gt;' : '' )
-                            + '&lt;html&gt;&lt;head&gt;' +
-                            (UA['ie'] &amp;&amp; DOM.isCustomDomain() ?
-                                '&lt;script&gt;' +
-                                    'document.' +
-                                    'domain' +
-                                    &quot;= '&quot; +
-                                    doc.domain
-                                    + &quot;';&lt;/script&gt;&quot; : '')
-                            +
-                            '&lt;/head&gt;&lt;body&gt;');
-                        defaultDisplayDetectIframeDoc.close();
-                    } catch (e) {
-                        // ie6 need a breath , such as alert(8) or setTimeout;
-                        // 同时需要同步，所以无解，勉强返回
-                        return 'block';
-                    }
-                }
-
-                elem = defaultDisplayDetectIframeDoc.createElement(tagName);
-
-                defaultDisplayDetectIframeDoc.body.appendChild(elem);
-
-                oldDisplay = DOM.css(elem, 'display');
-
-                body.removeChild(defaultDisplayDetectIframe);
-            }
-
             // Store the correct default display
             defaultDisplay[ tagName ] = oldDisplay;
         }
-
-        return defaultDisplay[ tagName ];
+        return oldDisplay;
     }
 
     S.mix(DOM,
@@ -159,9 +90,11 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
          */
         {
             _camelCase: camelCase,
-            // _cssNumber:cssNumber,
+
             _CUSTOM_STYLES: CUSTOM_STYLES,
+
             _cssProps: cssProps,
+
             _getComputedStyle: function (elem, name) {
                 var val = '',
                     computedStyle,
@@ -212,10 +145,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              *  @return {undefined|String}
              */
             style: function (selector, name, val) {
-                var els = DOM.query(selector), elem = els[0], i;
+                var els = DOM.query(selector),
+                    k,
+                    ret,
+                    elem = els[0], i;
                 // supports hash
                 if (S.isPlainObject(name)) {
-                    for (var k in name) {
+                    for (k in name) {
                         for (i = els.length - 1; i &gt;= 0; i--) {
                             style(els[i], k, name[k]);
                         }
@@ -223,7 +159,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                     return undefined;
                 }
                 if (val === undefined) {
-                    var ret = '';
+                    ret = '';
                     if (elem) {
                         ret = style(elem, name, val);
                     }
@@ -249,6 +185,8 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 var els = DOM.query(selector),
                     elem = els[0],
                     k,
+                    hook,
+                    ret,
                     i;
                 // supports hash
                 if (S.isPlainObject(name)) {
@@ -261,11 +199,11 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                 }
 
                 name = camelCase(name);
-                var hook = CUSTOM_STYLES[name];
+                hook = CUSTOM_STYLES[name];
                 // getter
                 if (val === undefined) {
                     // supports css selector/Node/NodeList
-                    var ret = '';
+                    ret = '';
                     if (elem) {
                         // If a hook was provided get the computed value from there
                         if (hook &amp;&amp; 'get' in hook &amp;&amp; (ret = hook.get(elem, true)) !== undefined) {
@@ -289,15 +227,17 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
             show: function (selector) {
-                var els = DOM.query(selector), elem, i;
+                var els = DOM.query(selector),
+                    tagName,
+                    old,
+                    elem, i;
                 for (i = els.length - 1; i &gt;= 0; i--) {
                     elem = els[i];
                     elem[STYLE][DISPLAY] = DOM.data(elem, OLD_DISPLAY) || EMPTY;
-
                     // 可能元素还处于隐藏状态，比如 css 里设置了 display: none
                     if (DOM.css(elem, DISPLAY) === NONE) {
-                        var tagName = elem.tagName.toLowerCase(),
-                            old = getDefaultDisplay(tagName);
+                        tagName = elem.tagName.toLowerCase();
+                        old = getDefaultDisplay(tagName);
                         DOM.data(elem, OLD_DISPLAY, old);
                         elem[STYLE][DISPLAY] = old;
                     }
@@ -309,10 +249,12 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
             hide: function (selector) {
-                var els = DOM.query(selector), elem, i;
+                var els = DOM.query(selector),
+                    elem, i;
                 for (i = els.length - 1; i &gt;= 0; i--) {
                     elem = els[i];
-                    var style = elem[STYLE], old = style[DISPLAY];
+                    var style = elem[STYLE],
+                        old = style[DISPLAY];
                     if (old !== NONE) {
                         if (old) {
                             DOM.data(elem, OLD_DISPLAY, old);
@@ -327,7 +269,8 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
              */
             toggle: function (selector) {
-                var els = DOM.query(selector), elem, i;
+                var els = DOM.query(selector),
+                    elem, i;
                 for (i = els.length - 1; i &gt;= 0; i--) {
                     elem = els[i];
                     if (DOM.css(elem, DISPLAY) === NONE) {
@@ -379,33 +322,28 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector  Matched elements.
              */
             unselectable: function (selector) {
-                var _els = DOM.query(selector), elem, j;
+                var _els = DOM.query(selector), elem, j,
+                    e,
+                    i = 0,
+                    excludes,
+                    els;
                 for (j = _els.length - 1; j &gt;= 0; j--) {
                     elem = _els[j];
                     if (UA['gecko']) {
                         elem[STYLE]['MozUserSelect'] = 'none';
-                    }
-                    else if (UA['webkit']) {
+                    } else if (UA['webkit']) {
                         elem[STYLE]['KhtmlUserSelect'] = 'none';
-                    } else {
-                        if (UA['ie'] || UA['opera']) {
-                            var e, i = 0,
-                                els = elem.getElementsByTagName('*');
-                            elem.setAttribute('unselectable', 'on');
-                            while (( e = els[ i++ ] )) {
-                                switch (e.tagName.toLowerCase()) {
-                                    case 'iframe' :
-                                    case 'textarea' :
-                                    case 'input' :
-                                    case 'select' :
-                                        /* Ignore the above tags */
-                                        break;
-                                    default :
-                                        e.setAttribute('unselectable', 'on');
-                                }
+                    } else if (UA['ie'] || UA['opera']) {
+                        els = elem.getElementsByTagName('*');
+                        elem.setAttribute('unselectable', 'on');
+                        excludes = ['iframe', 'textarea', 'input', 'select'];
+                        while (e = els[i++]) {
+                            if (!S.inArray(getNodeName(e), excludes)) {
+                                e.setAttribute('unselectable', 'on');
                             }
                         }
                     }
+
                 }
             },
 
@@ -463,17 +401,13 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             height: 0
         });
 
-    function capital(str) {
-        return str.charAt(0).toUpperCase() + str.substring(1);
-    }
-
     S.each([WIDTH, HEIGHT], function (name) {
-        DOM['inner' + capital(name)] = function (selector) {
+        DOM['inner' + S.ucfirst(name)] = function (selector) {
             var el = DOM.get(selector);
             return el &amp;&amp; getWHIgnoreDisplay(el, name, 'padding');
         };
 
-        DOM['outer' + capital(name)] = function (selector, includeMargin) {
+        DOM['outer' + S.ucfirst(name)] = function (selector, includeMargin) {
             var el = DOM.get(selector);
             return el &amp;&amp; getWHIgnoreDisplay(el, name, includeMargin ? 'margin' : 'border');
         };
@@ -526,7 +460,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
                             offset = elem[name === 'left' ? 'offsetLeft' : 'offsetTop'];
 
                             // old-ie 下，elem.offsetLeft 包含 offsetParent 的 border 宽度，需要减掉
-                            if (isIE &amp;&amp; doc['documentMode'] != 9 || UA['opera']) {
+                            if (UA.ie &amp;&amp; (doc['documentMode'] || 0) &lt; 9 || UA['opera']) {
                                 // 类似 offset ie 下的边框处理
                                 // 如果 offsetParent 为 html ，需要减去默认 2 px == documentElement.clientTop
                                 // 否则减去 borderTop 其实也是 clientTop
@@ -564,12 +498,14 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     }
 
     function style(elem, name, val) {
-        var style;
+        var style,
+            ret,
+            hook;
         if (elem.nodeType === 3 || elem.nodeType === 8 || !(style = elem[STYLE])) {
             return undefined;
         }
         name = camelCase(name);
-        var ret, hook = CUSTOM_STYLES[name];
+        hook = CUSTOM_STYLES[name];
         name = cssProps[name] || name;
         // setter
         if (val !== undefined) {
@@ -621,7 +557,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
     // fix #119 : https://github.com/kissyteam/kissy/issues/119
     function getWHIgnoreDisplay(elem) {
         var val, args = arguments;
-        // incase elem is window
+        // in case elem is window
         // elem.offsetWidth === undefined
         if (elem.offsetWidth !== 0) {
             val = getWH.apply(undefined, args);
@@ -668,7 +604,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
             return val;
         }
 
-        // Fall back to computed then uncomputed css if necessary
+        // Fall back to computed then un computed css if necessary
         val = DOM._getComputedStyle(elem, name);
         if (val == null || (Number(val)) &lt; 0) {
             val = elem.style[ name ] || 0;
@@ -694,7 +630,7 @@ KISSY.add('dom/style', function (S, DOM, UA, undefined) {
 
     return DOM;
 }, {
-    requires: ['dom/base', 'ua']
+    requires: ['./api']
 });
 
 /*

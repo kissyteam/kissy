@@ -670,6 +670,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * This component's parent component.
                  * @type {KISSY.Component.Controller}
                  * @property parent
+                 * @readonly
                  */
                 /**
                  * This component's parent component.
@@ -711,7 +712,17 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 xrender: {
                     value: Render
-                }
+                },
+
+                /**
+                 * default child xclass
+                 * @protected
+                 * @cfg {String} defaultChildXClass
+                 */
+                /**
+                 * @ignore
+                 */
+                defaultChildXClass: {}
             }
         }, {
             xclass: 'controller'

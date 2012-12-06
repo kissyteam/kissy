@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 /**
  * select component for kissy editor.
@@ -22,12 +22,7 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
             cfg.editor = self;
             if (cfg.menu) {
                 cfg.menu.zIndex = Editor.baseZIndex(Editor.zIndexManager.SELECT);
-                cfg.menu.xclass = 'popupmenu';
-                S.each(cfg.menu.children, function (child) {
-                    child.xclass = 'option';
-                });
             }
-
             if (cfg.elCls) {
                 cfg.elCls = prefixCls + cfg.elCls;
             }

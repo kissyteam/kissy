@@ -339,6 +339,10 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                     valueFn:function(){
                         return this.get('prefixCls')+'tree-children';
                     }
+                },
+
+                defaultChildXClass: {
+                    value: 'tree-node'
                 }
             }
         }, {

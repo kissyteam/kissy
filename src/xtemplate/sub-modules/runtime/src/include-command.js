@@ -1,6 +1,7 @@
 /**
  * include command
  * @author yiminghe@gmail.com
+ * @ignore
  */
 KISSY.add('xtemplate/runtime/include-command', function (S, XTemplateRuntime) {
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 20:45
+build time: Dec 7 00:27
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121206204542' will replace with current timestamp when compressing.
+         * NOTICE: '20121207002731' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121206204542',
+        __BUILD_TIME: '20121207002731',
         /**
          * KISSY Environment.
          * @private
@@ -5868,7 +5868,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121206204542'
+            tag: '20121207002731'
         }, getBaseInfo()));
     }
 
@@ -6355,7 +6355,7 @@ config({
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:12
+build time: Dec 7 00:27
 */
 /**
  * @ignore
@@ -6447,7 +6447,7 @@ KISSY.add('ua', function (S, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:08
+build time: Dec 7 00:22
 */
 /**
  * @ignore
@@ -10453,7 +10453,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:08
+build time: Dec 7 00:22
 */
 /**
  * attr ie hack
@@ -11146,7 +11146,7 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 /**
  * @ignore
@@ -11563,7 +11563,7 @@ KISSY.add('event/base/utils', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 /**
  * @ignore
@@ -11682,8 +11682,9 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
             },
 
             /**
+             * all targets where current target's events bubble to
              * @private
-             * @return {*}
+             * @return {Array}
              */
             getTargets: function (target) {
                 target[KS_BUBBLE_TARGETS] = target[KS_BUBBLE_TARGETS] || [];
@@ -12117,7 +12118,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 /**
  * @ignore
@@ -14253,7 +14254,7 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 /**
  * @ignore
@@ -14315,7 +14316,7 @@ KISSY.add('event/dom/focusin', function (S, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 /**
  * @ignore
@@ -14556,7 +14557,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 /**
  * @ignore
@@ -14752,7 +14753,7 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 /**
  * @ignore
@@ -14846,7 +14847,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 /**
  * @ignore
@@ -15693,7 +15694,7 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:11
+build time: Dec 7 00:25
 */
 /*
  @fileOverview  http://www.JSON.org/json2.js
@@ -16178,7 +16179,7 @@ KISSY.add("json/json2", function () {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:11
+build time: Dec 7 00:25
 */
 /**
  * @ignore
@@ -16225,7 +16226,7 @@ KISSY.add('json', function (S, J) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:06
+build time: Dec 7 00:20
 */
 /**
  * @ignore
@@ -18351,7 +18352,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:07
+build time: Dec 7 00:21
 */
 /**
  * @ignore
@@ -19100,7 +19101,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:06
+build time: Dec 7 00:21
 */
 /**
  * @ignore
@@ -20647,7 +20648,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:11
+build time: Dec 7 00:26
 */
 /**
  * @ignore
@@ -20680,17 +20681,12 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         return obj;
     }
 
-    S.augment(Node,
-        /**
-         * @class
-         * @singleton
-         * @override KISSY.NodeList
-         */
-        {
+    S.augment(Node,{
             /**
              * animate for current node list.
              * @param var_args see {@link KISSY.Anim}
              * @chainable
+             * @member KISSY.NodeList
              */
             animate: function (var_args) {
                 var self = this,
@@ -20713,6 +20709,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
              * @param [clearQueue]
              * @param [queue]
              * @chainable
+             * @member KISSY.NodeList
              */
             stop: function (end, clearQueue, queue) {
                 var self = this;
@@ -20726,6 +20723,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
              * @param {Boolean} end see {@link KISSY.Anim#static-method-pause}
              * @param queue
              * @chainable
+             * @member KISSY.NodeList
              */
             pause: function (end, queue) {
                 var self = this;
@@ -20739,6 +20737,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
              * @param {Boolean} end see {@link KISSY.Anim#static-method-resume}
              * @param queue
              * @chainable
+             * @member KISSY.NodeList
              */
             resume: function (end, queue) {
                 var self = this;
@@ -20750,6 +20749,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
             /**
              * whether one of current node list is animating.
              * @return {Boolean}
+             * @member KISSY.NodeList
              */
             isRunning: function () {
                 var self = this;
@@ -20763,6 +20763,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
             /**
              * whether one of current node list 's animation is paused.
              * @return {Boolean}
+             * @member KISSY.NodeList
              */
             isPaused: function () {
                 var self = this;

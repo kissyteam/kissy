@@ -1,6 +1,6 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 KISSY.add("editor/plugin/unordered-list/index",function(b,e,c,d){function a(){}b.augment(a,{pluginRenderUI:function(a){d.init(a);c.init(a,{cmdType:"insertUnorderedList",buttonId:"unorderedList",menu:{width:75,children:[{content:"● 圆点",value:"disc"},{content:"○ 圆圈",value:"circle"},{content:"■ 方块",value:"square"}]},tooltip:"无序列表"})}});return a},{requires:["editor","../list-utils/btn","./cmd"]});

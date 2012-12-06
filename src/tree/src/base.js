@@ -21,6 +21,10 @@ KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager
         ATTRS: {
             xrender: {
                 value: TreeRender
+            },
+
+            defaultChildXClass: {
+                value: 'tree-node'
             }
         }
     }, {

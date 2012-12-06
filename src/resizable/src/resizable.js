@@ -258,7 +258,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
             },
             /**
              * directions can current node resize to.
-             * @cfg {KISSY.Resizable.HANDLER} handlers
+             * @cfg {KISSY.Resizable.Handler} handlers
              */
             /**
              * @ignore
@@ -272,9 +272,9 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
 
     /**
      * Resizable handlers type.
-     * @enum {String} KISSY.Resizable.HANDLER
+     * @enum {String} KISSY.Resizable.Handler
      */
-    Resizable.HANDLER = {
+    Resizable.Handler = {
         /**
          * bottom
          */

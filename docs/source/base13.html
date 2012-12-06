@@ -16,285 +16,131 @@
 </head>
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
-</span> * @ignore
- * @fileOverview controller for overlay
+</span> * xtemplate base
  * @author yiminghe@gmail.com
+ * @ignore
  */
-KISSY.add(&quot;overlay/base&quot;, function (S, Component,
-                                    Extension,
+KISSY.add('xtemplate/runtime/base', function (S) {
 
-                                    Loading,
+    var defaultConfig = {
 
-                                    Close,
-                                    Resize,
-                                    Mask,
-                                    OverlayRender) {
+<span id='KISSY-XTemplate-cfg-silent'>        /**
+</span>         * whether throw exception when template variable is not found in data
+         *
+         *      @example
+         *      '{{title}}'.render({t2:0})
+         *
+         *
+         * @cfg {Boolean} silent
+         * @member KISSY.XTemplate
+         */
 
-    var NONE = 'none',
-        DURATION = 0.5,
-        effects = {fade: [&quot;Out&quot;, &quot;In&quot;], slide: [&quot;Up&quot;, &quot;Down&quot;]};
-
-    function getGhost(self) {
-        var el = self.get(&quot;el&quot;), $ = S.all;
-        var ghost = el[0].cloneNode(true);
-        ghost.style.visibility = &quot;&quot;;
-        ghost.style.overflow = &quot;hidden&quot;;
-        ghost.className += &quot; &quot; + self.get(&quot;prefixCls&quot;) + &quot;overlay-ghost&quot;;
-        var body, elBody;
-        if (elBody = self.get(&quot;body&quot;)) {
-            body = $('.' + self.get('prefixCls') + 'stdmod-body', ghost);
-            body.css({
-                height: elBody.height(),
-                width: elBody.width()
-            });
-            body.html('')
-        }
-        return $(ghost);
-    }
-
-    function processTarget(self, show, callback) {
-
-        if (self.__effectGhost) {
-            self.__effectGhost.stop(1);
-        }
-
-        var el = self.get(&quot;el&quot;),
-            $ = S.all,
-            effectCfg = self.get(&quot;effect&quot;),
-            target = $(effectCfg.target),
-            duration = effectCfg.duration,
-            targetBox = S.mix(target.offset(), {
-                width: target.width(),
-                height: target.height()
-            }),
-            elBox = S.mix(el.offset(), {
-                width: el.width(),
-                height: el.height()
-            }),
-            from, to,
-            ghost = getGhost(self),
-            easing = effectCfg.easing;
-
-
-        ghost.insertAfter(el);
-
-        el.hide();
-
-        if (show) {
-            from = targetBox;
-            to = elBox;
-        } else {
-            from = elBox;
-            to = targetBox;
-        }
-
-        ghost.css(from);
-
-        self.__effectGhost = ghost;
-
-        ghost.animate(to, {
-            duration: duration,
-            easing: easing,
-            complete: function () {
-                self.__effectGhost = null;
-                ghost.remove();
-                el.show();
-                callback();
-            }
-        });
-
-    }
-
-    function processEffect(self, show, callback) {
-        var el = self.get(&quot;el&quot;),
-            effectCfg = self.get(&quot;effect&quot;),
-            effect = effectCfg.effect || NONE,
-            target = effectCfg.target;
-        if (effect == NONE &amp;&amp; !target) {
-            callback();
-            return;
-        }
-        if (target) {
-            processTarget(self, show, callback);
-            return;
-        }
-        var duration = effectCfg.duration,
-            easing = effectCfg.easing,
-        // need to get before stop, in case anim 's complete function change it
-            originalVisibility = el.css('visibility'),
-            index = show ? 1 : 0;
-        // 队列中的也要移去
-        // run complete fn to restore window's original height
-        el.stop(1, 1);
-        el.css({
-            // must show, override box-render _onSetVisible
-            &quot;visibility&quot;: &quot;visible&quot;,
-            // fadeIn need display none, fadeOut need display block
-            &quot;display&quot;: show ? 'none' : 'block'
-        });
-        var m = effect + effects[effect][index];
-        el[m](duration, function () {
-            el.css({
-                // need compute coordinates when show, so do not use display none for hide
-                &quot;display&quot;: 'block',
-                // restore to box-render _onSetVisible
-                &quot;visibility&quot;: originalVisibility
-            });
-            callback();
-        }, easing);
-    }
-
-<span id='KISSY-Overlay'>    /**
-</span>     * KISSY Overlay Component. xclass: 'overlay'.
-     * @class KISSY.Overlay
-     * @extends KISSY.Component.Controller
-     * @mixins KISSY.Component.Extension.ContentBox
-     * @mixins KISSY.Component.Extension.Position
-     * @mixins KISSY.Overlay.Extension.Loading
-     * @mixins KISSY.Component.Extension.Align
-     * @mixins KISSY.Overlay.Extension.Close
-     * @mixins KISSY.Overlay.Extension.Resize
-     * @mixins KISSY.Overlay.Extension.Mask
-     */
-    var Overlay = Component.Controller.extend([
-        Extension.ContentBox,
-        Extension.Position,
-        Loading,
-        Extension.Align,
-        Close,
-        Resize,
-        Mask
-    ],{
-<span id='KISSY-Overlay-method-_onSetVisible'>            /**
-</span>             * For overlay with effect, it should listen show and hide instead of afterVisibleChange.
-             * @protected
-             */
-            _onSetVisible: function (v) {
-                var self = this;
-                if (self.get('rendered')) {
-                    // delay show and hide event after anim
-                    processEffect(self, v, function () {
-                        self.fire(v ? 'show' : 'hide');
-                    });
+<span id='KISSY-XTemplate-Runtime-cfg-silent'>        /**
+</span>         * whether throw exception when template variable is not found in data
+         *
+         *      @example
+         *      '{{title}}'.render({t2:0})
+         *
+         *
+         * @cfg {Boolean} silent
+         * @member KISSY.XTemplate.Runtime
+         */
+        silent: true,
+<span id='KISSY-XTemplate-cfg-name'>        /**
+</span>         * template file name for chrome debug
+         *
+         * @cfg {String} name
+         * @member KISSY.XTemplate
+         */
+<span id='KISSY-XTemplate-Runtime-cfg-name'>        /**
+</span>         * template file name for chrome debug
+         *
+         * @cfg {Boolean} name
+         * @member KISSY.XTemplate.Runtime
+         */
+        name: '',
+        utils: {
+            'getProperty': function (parts, from) {
+                if (!from) {
+                    return false;
                 }
-            }
-
-        }, {
-            ATTRS: {
-
-<span id='KISSY-Overlay-cfg-effect'>                /**
-</span>                 * Set v as overlay 's show effect
-                 *
-                 * - v.effect (String): Default:none.
-                 * can be set as &quot;fade&quot; or &quot;slide&quot;
-                 *
-                 * - v.target (String|KISS.Node):
-                 * The target node from which overlay should animate from while showing.
-                 *
-                 * - v.duration (Number): in seconds.
-                 * Default:0.5.
-                 *
-                 * - v.easing (String|Function):
-                 * for string see {@link KISSY.Anim.Easing} 's method name.
-                 *
-                 * @cfg {Object} effect
-                 */
-<span id='global-property-effect'>                /**
-</span>                 * @ignore
-                 */
-                effect: {
-                    value: {
-                        effect: '',
-                        target: null,
-                        duration: DURATION,
-                        easing: 'easeOut'
-                    },
-                    setter: function (v) {
-                        var effect = v.effect;
-                        if (typeof effect == 'string' &amp;&amp; !effects[effect]) {
-                            v.effect = '';
-                        }
+                parts = parts.split('.');
+                var len = parts.length, i, v = from;
+                for (i = 0; i &lt; len; i++) {
+                    if (!(parts[i] in v)) {
+                        return false;
                     }
-
-                },
-
-<span id='KISSY-Overlay-cfg-focusable'>                /**
-</span>                 * overlay can not have focus.
-                 *
-                 * Defaults to: false.
-                 *
-                 * @cfg {boolean} focusable
-                 * @protected
-                 */
-<span id='global-property-focusable'>                /**
-</span>                 * @ignore
-                 */
-                focusable: {
-                    value: false
-                },
-
-<span id='KISSY-Overlay-cfg-allowTextSelection'>                /**
-</span>                 * overlay can have text selection.
-                 *
-                 * Defaults to: true.
-                 *
-                 * @cfg {boolean} allowTextSelection
-                 * @protected
-                 */
-<span id='global-property-allowTextSelection'>                /**
-</span>                 * @ignore
-                 */
-                allowTextSelection: {
-                    value: true
-                },
-
-<span id='KISSY-Overlay-cfg-closable'>                /**
-</span>                 * whether this component can be closed.
-                 *
-                 * Defaults to: false
-                 *
-                 * @cfg {Boolean} closable
-                 */
-<span id='global-property-closable'>                /**
-</span>                 * @ignore
-                 */
-                closable: {
-                    value: false
-                },
-
-<span id='KISSY-Overlay-cfg-handleMouseEvents'>                /**
-</span>                 * whether this component can be responsive to mouse.
-                 *
-                 * Defaults to: false
-                 *
-                 * @cfg {Boolean} handleMouseEvents
-                 * @protected
-                 */
-<span id='global-property-handleMouseEvents'>                /**
-</span>                 * @ignore
-                 */
-                handleMouseEvents: {
-                    value: false
-                },
-                xrender: {
-                    value: OverlayRender
+                    v = v[parts[i]];
                 }
+                return [v];
             }
-        }, {
-            xclass: 'overlay',
-            priority: 10
-        });
+        }
+    };
 
-    return Overlay;
-}, {
-    requires: [
-        'component/base',
-        'component/extension',
-        &quot;./extension/loading&quot;,
-        &quot;./extension/close&quot;,
-        &quot;./extension/resize&quot;,
-        &quot;./extension/mask&quot;,
-        './overlay-render']
+<span id='KISSY-XTemplate-Runtime'>    /**
+</span>     * XTemplate runtime. only accept tpl as function.
+     *
+     *      @example
+     *      new XTemplateRuntime(tplFunction, config);
+     *
+     * @class KISSY.XTemplate.Runtime
+     */
+    function XTemplateRuntime(tpl, option) {
+        var self = this;
+        self.tpl = tpl;
+        option = S.merge(defaultConfig, option);
+        option.subTpls = S.merge(option.subTpls, XTemplateRuntime.subTpls);
+        option.commands = S.merge(option.commands, XTemplateRuntime.commands);
+        this.option = option;
+    }
+
+    XTemplateRuntime.prototype = {
+        constructor: XTemplateRuntime,
+<span id='KISSY-XTemplate-Runtime-method-removeSubTpl'>        /**
+</span>         * remove sub template by name
+         * @param subTplName
+         */
+        'removeSubTpl': function (subTplName) {
+            delete this.option.subTpls[subTplName];
+        },
+<span id='KISSY-XTemplate-Runtime-method-removeCommand'>        /**
+</span>         * remove command by name
+         * @param commandName
+         */
+        'removeCommand': function (commandName) {
+            delete this.option.commands[commandName];
+        },
+<span id='KISSY-XTemplate-Runtime-method-addSubTpl'>        /**
+</span>         * add sub template definition to current template
+         * @param subTplName
+         * @param {String|Function}def
+         */
+        addSubTpl: function (subTplName, def) {
+            this.option.subTpls[subTplName] = def;
+        },
+<span id='KISSY-XTemplate-Runtime-method-addCommand'>        /**
+</span>         * add command definition to current template
+         * @param commandName
+         * @param {Function} fn command definition
+         */
+        addCommand: function (commandName, fn) {
+            this.option.commands[commandName] = fn;
+        },
+<span id='KISSY-XTemplate-Runtime-method-render'>        /**
+</span>         * get result by merge data with template
+         * @param data
+         * @return {String}
+         */
+        render: function (data) {
+            var self = this;
+            if (!S.isArray(data)) {
+                data = [data];
+            }
+            return self.tpl(data, self.option);
+        }
+    };
+
+    return XTemplateRuntime;
 });</pre>
 </body>
 </html>

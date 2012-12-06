@@ -282,6 +282,11 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                         }
                     }
                 },
+
+                defaultChildXClass: {
+                    value: 'popupmenu'
+                },
+
                 decorateChildCls: {
                     valueFn: function () {
                         return this.get("prefixCls") + "popupmenu"
@@ -300,7 +305,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
     function getMenu(self, init) {
         var m = self.get("menu");
-        if (m && m.xclass) {
+        if (m && !m.isController) {
             if (init) {
                 m = Component.create(m, self);
                 self.setInternal("menu", m);

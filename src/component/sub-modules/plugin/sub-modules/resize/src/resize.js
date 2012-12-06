@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * resize plugin for kissy component
  * @author yiminghe@gmail.com
  */

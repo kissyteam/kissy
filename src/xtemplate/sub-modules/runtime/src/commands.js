@@ -1,6 +1,7 @@
 /**
  * native commands for xtemplate.
  * @author yiminghe@gmail.com
+ * @ignore
  */
 KISSY.add("xtemplate/runtime/commands", function (S, includeCommand, undefined) {
     var error = S.error;

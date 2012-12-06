@@ -20,7 +20,7 @@
  * @fileOverview auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
-KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
+KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node, DOM) {
 
     var DDM = DD.DDM,
         win = S.Env.host,
@@ -29,8 +29,8 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
         ADJUST_DELAY = 100,
         DIFF = [20, 20];
 
-<span id='KISSY-DD-Scroll'>    /**
-</span>     * @class KISSY.DD.Scroll
+<span id='KISSY-DD-Plugin-Scroll'>    /**
+</span>     * @class KISSY.DD.Plugin.Scroll
      * Scroll plugin to make parent node scroll while dragging.
      */
     function Scroll() {
@@ -38,7 +38,7 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
     }
 
     Scroll.ATTRS = {
-<span id='KISSY-DD-Scroll-cfg-node'>        /**
+<span id='KISSY-DD-Plugin-Scroll-cfg-node'>        /**
 </span>         * node to be scrolled while dragging
          * @cfg {window|String|HTMLElement} node
          */
@@ -54,7 +54,7 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
                 return Node.one(v);
             }
         },
-<span id='KISSY-DD-Scroll-cfg-rate'>        /**
+<span id='KISSY-DD-Plugin-Scroll-cfg-rate'>        /**
 </span>         * adjust velocity, larger faster
          * default [10,10]
          * @cfg {Number[]} rate
@@ -65,7 +65,7 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
         rate: {
             value: RATE
         },
-<span id='KISSY-DD-Scroll-cfg-diff'>        /**
+<span id='KISSY-DD-Plugin-Scroll-cfg-diff'>        /**
 </span>         * the margin to make node scroll, easier to scroll for node if larger.
          * default  [20,20]
          * @cfg {number[]} diff
@@ -82,7 +82,10 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
     var isWin = S.isWindow;
 
     S.extend(Scroll, Base, {
-<span id='KISSY-DD-Scroll-method-getRegion'>        /**
+
+        pluginId: 'dd/plugin/scroll',
+
+<span id='KISSY-DD-Plugin-Scroll-method-getRegion'>        /**
 </span>         * Get container node region.
          * @private
          */
@@ -100,7 +103,7 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
             }
         },
 
-<span id='KISSY-DD-Scroll-method-getOffset'>        /**
+<span id='KISSY-DD-Plugin-Scroll-method-getOffset'>        /**
 </span>         * Get container node offset.
          * @private
          */
@@ -115,7 +118,7 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
             }
         },
 
-<span id='KISSY-DD-Scroll-method-getScroll'>        /**
+<span id='KISSY-DD-Plugin-Scroll-method-getScroll'>        /**
 </span>         * Get container node scroll.
          * @private
          */
@@ -126,7 +129,7 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
             };
         },
 
-<span id='KISSY-DD-Scroll-method-setScroll'>        /**
+<span id='KISSY-DD-Plugin-Scroll-method-setScroll'>        /**
 </span>         * scroll container node.
          * @private
          */
@@ -135,35 +138,21 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
             node.scrollTop(r.top);
         },
 
-<span id='KISSY-DD-Scroll-method-destructor'>        /**
+<span id='KISSY-DD-Plugin-Scroll-method-pluginDestructor'>        /**
 </span>         * make node not to scroll while this drag object is dragging
          * @param {KISSY.DD.Draggable} drag
          * @private
          */
-        destructor: function (drag) {
+        pluginDestructor: function (drag) {
             drag['detach'](SCROLL_EVENT);
         },
 
-        detachDrag: function (drag) {
-            S.log('dd.scroll.detachDrag is deprecated, call unplug/destroy on drag please', 'warn');
-            this.destructor(drag);
-        },
-
-        attachDrag: function (drag) {
-            S.log('dd.scroll.attachDrag is deprecated, call plug on drag please', 'warn');
-            this.initializer(drag);
-        },
-
-        destroy: function () {
-            S.log('dd.scroll.destroy is deprecated, call unplug/destroy on drag please', 'warn');
-        },
-
-<span id='KISSY-DD-Scroll-method-initializer'>        /**
+<span id='KISSY-DD-Plugin-Scroll-method-pluginInitializer'>        /**
 </span>         * make node to scroll while this drag object is dragging
          * @param {KISSY.DD.Draggable} drag
          * @private
          */
-        initializer: function (drag) {
+        pluginInitializer: function (drag) {
             var self = this,
                 node = self.get('node');
 
@@ -293,13 +282,6 @@ KISSY.add('dd/scroll', function (S, DD, Base, Node, DOM) {
             }
         }
     });
-
-    // for compatibility
-    var ScrollPrototype = Scroll.prototype;
-    ScrollPrototype.attach = ScrollPrototype.attachDrag;
-    ScrollPrototype.unAttach = ScrollPrototype.detachDrag;
-
-    DD.Scroll = Scroll;
 
     return Scroll;
 }, {

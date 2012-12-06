@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 /**
  * contextmenu for kissy editor
@@ -19,12 +19,6 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
         cfg.editor = self;
         cfg.focusable = 1;
         cfg.zIndex = Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU);
-
-        if (cfg.children) {
-            S.each(cfg.children, function (c) {
-                c.xclass = 'menuitem';
-            });
-        }
 
         var menu = new Menu.PopupMenu(cfg);
 

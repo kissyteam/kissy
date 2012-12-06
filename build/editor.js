@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 /**
  * Set up editor constructor
@@ -427,7 +427,6 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
 
                 for (var i in pastes) {
                     contextmenu.addChild({
-                        xclass: 'menuitem',
                         content: lang[i],
                         value: i
                     });

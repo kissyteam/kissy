@@ -10,8 +10,8 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
      * Component infrastructure.
      */
     var Component = {
-        Manager:Manager,
-        UIBase:UIBase
+        Manager: Manager,
+        UIBase: UIBase
     };
 
     /**
@@ -32,11 +32,14 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
      *          }]
      *      })
      */
-    Component.create = function (component, self) {
+    Component.create = function (component, parent) {
         var childConstructor, xclass;
+        if (component && !component.isController && !component.xclass) {
+            component.xclass = parent.get('defaultChildXClass');
+        }
         if (component && (xclass = component.xclass)) {
-            if (self && !component.prefixCls) {
-                component.prefixCls = self.get("prefixCls");
+            if (parent && !component.prefixCls) {
+                component.prefixCls = parent.get("prefixCls");
             }
             childConstructor = Manager.getConstructorByXClass(xclass);
             if (!childConstructor) {
@@ -49,5 +52,5 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
 
     return Component;
 }, {
-    requires:['./uibase', './manager']
+    requires: ['./uibase', './manager']
 });

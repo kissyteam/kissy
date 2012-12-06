@@ -8,7 +8,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
     function getMenu(self, init) {
         var m = self.get("menu");
-        if (m && m.xclass) {
+        if (m && !m.isController) {
             if (init) {
                 m = Component.create(m, self);
                 self.setInternal("menu", m);
@@ -64,10 +64,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
     var $ = Node.all,
         KeyCodes = Node.KeyCodes,
         ALIGN = {
-            points:["bl", "tl"],
-            overflow:{
-                adjustX:1,
-                adjustY:1
+            points: ["bl", "tl"],
+            overflow: {
+                adjustX: 1,
+                adjustY: 1
             }
         };
     /**
@@ -82,7 +82,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
          * @lends MenuButton.prototype
          */
         {
-            _onSetCollapsed:function (v) {
+            _onSetCollapsed: function (v) {
                 if (v) {
                     hideMenu(this);
                 } else {
@@ -95,7 +95,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * Protected, should only be overridden by subclasses.
              * @protected
              */
-            bindMenu:function () {
+            bindMenu: function () {
                 var self = this,
                     menu = self.get("menu");
 
@@ -130,7 +130,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @protected
              *
              */
-            handleKeyEventInternal:function (e) {
+            handleKeyEventInternal: function (e) {
                 var self = this,
                     menu = getMenu(self);
 
@@ -172,7 +172,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @protected
              *
              */
-            performActionInternal:function () {
+            performActionInternal: function () {
                 var self = this;
                 self.set("collapsed", !self.get("collapsed"));
             },
@@ -185,7 +185,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @protected
              *
              */
-            handleBlur:function (e) {
+            handleBlur: function (e) {
                 var self = this;
                 MenuButton.superclass.handleBlur.call(self, e);
                 // such as : click the document
@@ -197,7 +197,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * Adds a new menu item at the end of the menu.
              * @param {Menu.Item} item Menu item to add to the menu.
              */
-            addItem:function (item, index) {
+            addItem: function (item, index) {
                 var menu = getMenu(this, 1);
                 menu.addChild(item, index);
             },
@@ -207,7 +207,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @param c {Menu.Item} Existing menu item.
              * @param [destroy] {Boolean} Whether destroy removed menu item.
              */
-            removeItem:function (c, destroy) {
+            removeItem: function (c, destroy) {
                 /**
                  * @type {Controller}
                  */
@@ -221,7 +221,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * Remove all menu items from drop down menu.
              * @param [destroy] {Boolean} Whether destroy removed menu items.
              */
-            removeItems:function (destroy) {
+            removeItems: function (destroy) {
                 var menu = this.get("menu");
                 if (menu) {
                     if (menu.removeChildren) {
@@ -236,13 +236,13 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * Returns the child menu item of drop down menu at the given index, or null if the index is out of bounds.
              * @param {Number} index 0-based index.
              */
-            getItemAt:function (index) {
+            getItemAt: function (index) {
                 var menu = getMenu(this);
                 return menu && menu.getChildAt(index);
             },
 
             // 禁用时关闭已显示菜单
-            _onSetDisabled:function (v) {
+            _onSetDisabled: function (v) {
                 var self = this;
                 !v && self.set("collapsed", true);
             },
@@ -254,7 +254,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @protected
              *
              */
-            decorateChildrenInternal:function (UI, el) {
+            decorateChildrenInternal: function (UI, el) {
                 // 不能用 display:none , menu 的隐藏是靠 visibility
                 // eg: menu.show(); menu.hide();
                 var self = this,
@@ -264,13 +264,13 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                     docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
                 menu = new UI(S.mix({
-                    srcNode:el,
-                    prefixCls:self.get("prefixCls")
+                    srcNode: el,
+                    prefixCls: self.get("prefixCls")
                 }, menuCfg));
                 self.setInternal("menu", menu);
             },
 
-            destructor:function () {
+            destructor: function () {
                 var self = this;
                 $(win).detach("resize", self.__repositionBuffer, self);
                 self.__repositionBuffer.stop();
@@ -283,7 +283,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         },
 
         {
-            ATTRS:/**
+            ATTRS: /**
              * @lends MenuButton.prototype
              */
             {
@@ -291,8 +291,8 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                  * Current active menu item.
                  * @type {Menu.Item}
                  */
-                activeItem:{
-                    view:1
+                activeItem: {
+                    view: 1
                 },
 
                 /**
@@ -300,8 +300,8 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                  * @default true.
                  * @type {Boolean}
                  */
-                matchElWidth:{
-                    value:true
+                matchElWidth: {
+                    value: true
                 },
 
                 /**
@@ -310,15 +310,15 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                  * @default false
                  * @type {Boolean}
                  */
-                collapseOnClick:{
-                    value:false
+                collapseOnClick: {
+                    value: false
                 },
 
                 /**
                  * @private
                  */
-                decorateChildCls:{
-                    valueFn:function () {
+                decorateChildCls: {
+                    valueFn: function () {
                         return this.get("prefixCls") + "popupmenu"
                     }
                 },
@@ -326,33 +326,36 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                  * Drop down menu associated with this menubutton.
                  * @type {Menu}
                  */
-                menu:{
-                    value:{
-                        xclass:'popupmenu'
-                    },
-                    setter:function (v) {
+                menu: {
+                    value: {},
+                    setter: function (v) {
                         if (v instanceof Menu) {
                             v.setInternal("parent", this);
                         }
                     }
                 },
+
+                defaultChildXClass: {
+                    value: 'popupmenu'
+                },
+
                 /**
                  * Whether drop menu is shown.
                  * @type {Boolean}
                  */
-                collapsed:{
-                    view:1
+                collapsed: {
+                    view: 1
                 },
-                xrender:{
-                    value:MenuButtonRender
+                xrender: {
+                    value: MenuButtonRender
                 }
             }
         }, {
-            xclass:'menu-button',
-            priority:20
+            xclass: 'menu-button',
+            priority: 20
         });
 
     return MenuButton;
 }, {
-    requires:[ "node", "button", "./baseRender", "menu", "component/base"]
+    requires: [ "node", "button", "./baseRender", "menu", "component/base"]
 });

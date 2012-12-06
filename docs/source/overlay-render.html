@@ -20,7 +20,9 @@
  * @fileOverview KISSY Overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;overlay/overlay-render&quot;, function (S, UA, Component, Extension, Loading, Close, Mask) {
+KISSY.add(&quot;overlay/overlay-render&quot;, function (S, Component, Extension, Loading, Close, Mask) {
+
+    var UA = S.UA;
 
     return Component.Render.extend([
         Extension.ContentBox.Render,
@@ -32,10 +34,13 @@ KISSY.add(&quot;overlay/overlay-render&quot;, function (S, UA, Component, Extens
     ]);
 
 }, {
-    requires: [&quot;ua&quot;, &quot;component/base&quot;, 'component/extension',
+    requires: [
+        &quot;component/base&quot;,
+        'component/extension',
         './extension/loading-render',
         './extension/close-render',
-        './extension/mask-render']
+        './extension/mask-render'
+    ]
 });
 
 <span id='global-property-'>/**

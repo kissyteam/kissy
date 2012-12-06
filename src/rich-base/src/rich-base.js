@@ -283,6 +283,7 @@ KISSY.add('rich-base', function (S, Base) {
         /**
          * get specified plugin instance by id
          * @param {String} id pluginId of plugin instance
+         * @return {Object}
          */
         'getPlugin': function (id) {
             var plugin = null;

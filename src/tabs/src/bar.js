@@ -36,7 +36,7 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
         _onSetSelectedTab: function (v, e) {
             var prev;
             if (v) {
-                if (e&&(prev = e.prevVal)) {
+                if (e && (prev = e.prevVal)) {
                     prev.set("selected", false);
                 }
                 v.set("selected", true);
@@ -66,6 +66,9 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
             },
             changeType: {
                 value: "click"
+            },
+            defaultChildXClass: {
+                value: 'tabs-tab'
             }
         }
     }, {

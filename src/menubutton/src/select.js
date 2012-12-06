@@ -92,8 +92,8 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
             self.set("value", getItemValue(target));
             if (newValue != oldValue) {
                 self.fire("change", {
-                    prevVal:oldValue,
-                    newVal:newValue
+                    prevVal: oldValue,
+                    newVal: newValue
                 });
             }
         }
@@ -114,7 +114,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
          * @lends MenuButton.Select.prototype
          */
         {
-            bindUI:function () {
+            bindUI: function () {
                 this.on("click", handleMenuClick, this);
             },
 
@@ -122,7 +122,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              * Bind menu to current Select. When menu shows, set highlightedItem to current selectedItem.
              * @protected
              */
-            bindMenu:function () {
+            bindMenu: function () {
                 var self = this;
                 Select.superclass.bindMenu.call(self);
                 self.get("menu").on("show", _handleMenuShow, self);
@@ -132,7 +132,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              * Removes all menu items from current select, and set selectedItem to null.
              *
              */
-            removeItems:function () {
+            removeItems: function () {
                 var self = this;
                 Select.superclass.removeItems.apply(self, arguments);
                 self.set("value", null);
@@ -143,7 +143,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              * If specified item is selectedItem, then set selectedItem to null.
              *
              */
-            removeItem:function (c) {
+            removeItem: function (c) {
                 var self = this;
                 Select.superclass.removeItem.apply(self, arguments);
                 if (c.get("value") == self.get("value")) {
@@ -151,18 +151,18 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 }
             },
 
-            _onSetValue:function () {
+            _onSetValue: function () {
                 var self = this;
                 deSelectAllExcept(self);
                 _updateCaption(self);
             },
 
-            _onSetDefaultCaption:function () {
+            _onSetDefaultCaption: function () {
                 _updateCaption(this);
             }
         },
         {
-            ATTRS:/**
+            ATTRS: /**
              * @lends MenuButton.Select.prototype
              */
             {
@@ -170,19 +170,19 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 /**
                  * Get current select 's value.
                  */
-                value:{
+                value: {
                 },
 
                 /**
                  * Default caption to be shown when no option is selected.
                  * @type {String}
                  */
-                defaultCaption:{
-                    value:""
+                defaultCaption: {
+                    value: ""
                 },
 
-                collapseOnClick:{
-                    value:true
+                collapseOnClick: {
+                    value: true
                 }
             },
 
@@ -192,7 +192,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              * @param {Object} cfg Extra configuration for current select component.
              * @memberOf MenuButton.Select
              */
-            decorate:function (element, cfg) {
+            decorate: function (element, cfg) {
                 element = S.one(element);
                 cfg = cfg || {};
                 cfg.elBefore = element;
@@ -206,24 +206,23 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
                 options.each(function (option) {
                     var item = {
-                        content:option.text(),
-                        elCls:option.attr("class"),
-                        value:option.val(),
-                        xclass:'option'
+                        xclass:'option',
+                        content: option.text(),
+                        elCls: option.attr("class"),
+                        value: option.val()
                     };
                     if (curValue == option.val()) {
                         selectedItem = {
-                            content:item.content,
-                            value:item.value
+                            content: item.content,
+                            value: item.value
                         };
                     }
                     allItems.push(item);
                 });
 
                 S.mix(cfg, {
-                    menu:S.mix({
-                        xclass:'popupmenu',
-                        children:allItems
+                    menu: S.mix({
+                        children: allItems
                     }, cfg.menuCfg)
                 });
 
@@ -248,14 +247,14 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
             }
 
         }, {
-            xclass:'select',
-            priority:30
+            xclass: 'select',
+            priority: 30
         });
 
     return Select;
 
 }, {
-    requires:['node', './base', 'menu', './option']
+    requires: ['node', './base', 'menu', './option']
 });
 
 /**

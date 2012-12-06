@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:10
+build time: Dec 7 00:25
 */
 /**
  * Set up editor constructor
@@ -427,7 +427,6 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
 
                 for (var i in pastes) {
                     contextmenu.addChild({
-                        xclass: 'menuitem',
                         content: lang[i],
                         value: i
                     });
@@ -9817,12 +9816,6 @@ KISSY.add("editor/plugin/contextmenu/index", function (S, Editor, Menu, focusFix
         cfg.focusable = 1;
         cfg.zIndex = Editor.baseZIndex(Editor.zIndexManager.POPUP_MENU);
 
-        if (cfg.children) {
-            S.each(cfg.children, function (c) {
-                c.xclass = 'menuitem';
-            });
-        }
-
         var menu = new Menu.PopupMenu(cfg);
 
         focusFix.init(menu);
@@ -10339,7 +10332,6 @@ KISSY.add("editor/plugin/draft/index", function (S, Editor, localStorage, Overla
                     width: "100px",
                     prefixCls: prefixCls + "editor-",
                     menu: {
-                        xclass: 'popupmenu',
                         width: "225px",
                         align: {
                             points: ['tr', 'br']
@@ -14308,12 +14300,7 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
             cfg.editor = self;
             if (cfg.menu) {
                 cfg.menu.zIndex = Editor.baseZIndex(Editor.zIndexManager.SELECT);
-                cfg.menu.xclass = 'popupmenu';
-                S.each(cfg.menu.children, function (child) {
-                    child.xclass = 'option';
-                });
             }
-
             if (cfg.elCls) {
                 cfg.elCls = prefixCls + cfg.elCls;
             }

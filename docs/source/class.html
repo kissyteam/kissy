@@ -20,10 +20,10 @@
  * @fileOverview dom-class
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
-KISSY.add('dom/class', function (S, DOM, undefined) {
+KISSY.add('dom/base/class', function (S, DOM, undefined) {
 
     var SPACE = ' ',
-        NodeType=DOM.NodeType,
+        NodeType = DOM.NodeType,
         RE_SPLIT = /[\.\s]\s*\.?/,
         RE_CLASS = /[\n\t]/g;
 
@@ -46,13 +46,16 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
              * multiple class names is separated by space
              * @return {Boolean}
              */
-            hasClass:function (selector, className) {
+            hasClass: function (selector, className) {
                 return batch(selector, className, function (elem, classNames, cl) {
-                    var elemClass = elem.className;
+                    var elemClass = elem.className,
+                        className,
+                        j,
+                        ret;
                     if (elemClass) {
-                        var className = norm(elemClass),
-                            j = 0,
-                            ret = true;
+                        className = norm(elemClass);
+                        j = 0;
+                        ret = true;
                         for (; j &lt; cl; j++) {
                             if (className.indexOf(SPACE + classNames[j] + SPACE) &lt; 0) {
                                 ret = false;
@@ -72,15 +75,18 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
              * @param {String} className One or more class names to be added to the class attribute of each matched element.
              * multiple class names is separated by space
              */
-            addClass:function (selector, className) {
+            addClass: function (selector, className) {
                 batch(selector, className, function (elem, classNames, cl) {
-                    var elemClass = elem.className;
+                    var elemClass = elem.className,
+                        normClassName,
+                        setClass,
+                        j;
                     if (!elemClass) {
                         elem.className = className;
                     } else {
-                        var normClassName = norm(elemClass),
-                            setClass = elemClass,
-                            j = 0;
+                        normClassName = norm(elemClass);
+                        setClass = elemClass;
+                        j = 0;
                         for (; j &lt; cl; j++) {
                             if (normClassName.indexOf(SPACE + classNames[j] + SPACE) &lt; 0) {
                                 setClass += SPACE + classNames[j];
@@ -97,16 +103,18 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
              * @param {String} className One or more class names to be removed from the class attribute of each matched element.
              * multiple class names is separated by space
              */
-            removeClass:function (selector, className) {
+            removeClass: function (selector, className) {
                 batch(selector, className, function (elem, classNames, cl) {
-                    var elemClass = elem.className;
+                    var elemClass = elem.className,
+                        className,
+                        j,
+                        needle;
                     if (elemClass) {
                         if (!cl) {
                             elem.className = '';
                         } else {
-                            var className = norm(elemClass),
-                                j = 0,
-                                needle;
+                            className = norm(elemClass);
+                            j = 0;
                             for (; j &lt; cl; j++) {
                                 needle = SPACE + classNames[j] + SPACE;
                                 // 一个 cls 有可能多次出现：'link link2 link link3 link'
@@ -129,7 +137,7 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
              * @param {String} newClassName One or more class names to be added to the class attribute of each matched element.
              * multiple class names is separated by space
              */
-            replaceClass:function (selector, oldClassName, newClassName) {
+            replaceClass: function (selector, oldClassName, newClassName) {
                 DOM.removeClass(selector, oldClassName);
                 DOM.addClass(selector, newClassName);
             },
@@ -144,12 +152,10 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
              * @param [state] {Boolean} optional boolean to indicate whether class
              *        should be added or removed regardless of current state.
              */
-            toggleClass:function (selector, className, state) {
-                var isBool = S.isBoolean(state), has;
-
+            toggleClass: function (selector, className, state) {
+                var isBool = S.isBoolean(state), has, j;
                 batch(selector, className, function (elem, classNames, cl) {
-                    var j = 0, className;
-                    for (; j &lt; cl; j++) {
+                    for (j=0; j &lt; cl; j++) {
                         className = classNames[j];
                         has = isBool ? !state : DOM.hasClass(elem, className);
                         DOM[has ? 'removeClass' : 'addClass'](elem, className);
@@ -167,18 +173,19 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
             len = elems.length,
             tmp = value.split(RE_SPLIT),
             elem,
-            ret;
-
-        var classNames = [];
-        for (var i = 0; i &lt; tmp.length; i++) {
-            var t = S.trim(tmp[i]);
+            ret,
+            classNames = [],
+            t,
+            i;
+        for (i = 0; i &lt; tmp.length; i++) {
+            t = S.trim(tmp[i]);
             if (t) {
                 classNames.push(t);
             }
         }
         for (i = 0; i &lt; len; i++) {
             elem = elems[i];
-            if (elem.nodeType==NodeType.ELEMENT_NODE) {
+            if (elem.nodeType == NodeType.ELEMENT_NODE) {
                 ret = fn(elem, classNames, classNames.length);
                 if (ret !== undefined) {
                     return ret;
@@ -194,13 +201,13 @@ KISSY.add('dom/class', function (S, DOM, undefined) {
 
     return DOM;
 }, {
-    requires:['dom/base']
+    requires: ['./api']
 });
 
 /*
-  NOTES:
-    - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
-    - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
+ NOTES:
+ - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
+ - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
  */
 </pre>
 </body>
