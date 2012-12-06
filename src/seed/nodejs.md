@@ -35,7 +35,7 @@ nodejs-kissy 实现了将 kissy 移植到 nodeJS 上运行
 "KISSY-Calendar Demo"://gist.github.com/662117
 -->
 
-[KISSY-Overlay Demo](http//gist.github.com/1703698)
+[KISSY-Overlay Demo](http://gist.github.com/1703698)
 
 ##  License
 

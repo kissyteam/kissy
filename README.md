@@ -1,7 +1,7 @@
 # KISSY - An Enjoyable JavaScript Library [![Build Status](https://secure.travis-ci.org/kissyteam/kissy.png?branch=master)](https://travis-ci.org/kissyteam/kissy)
 
  * Source: <http://github.com/kissyteam/kissy>
- * Docs: <http://http://docs.kissyui.com/>
+ * Docs: <http://docs.kissyui.com/>
  * Changelog: <http://github.com/kissyteam/kissy/blob/master/CHANGELOG.md>
  * License: <http://github.com/kissyteam/kissy/blob/master/LICENSE.md>
  * Nodejs README: <https://github.com/kissyteam/kissy/blob/master/src/seed/nodejs.md>
