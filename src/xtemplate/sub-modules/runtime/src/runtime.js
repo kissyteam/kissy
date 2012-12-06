@@ -2,25 +2,38 @@
  * xtemplate runtime
  * @author yiminghe@gmail.com
  */
-KISSY.add('xtemplate/runtime', function (S, XTemplate, commands) {
+KISSY.add('xtemplate/runtime', function (S, XTemplateRuntime, commands, includeCommand) {
 
-    XTemplate.addCommand = function (commandName, fn) {
+    XTemplateRuntime.addCommand = function (commandName, fn) {
         commands[commandName] = fn;
     };
 
-    XTemplate.commands = commands;
+    XTemplateRuntime.removeCommand = function (commandName) {
+        delete commands[commandName];
+    };
+
+    XTemplateRuntime.commands = commands;
+
+    XTemplateRuntime.includeCommand = includeCommand;
 
     var subTpls = {};
 
-    XTemplate.subTpls = subTpls;
+    XTemplateRuntime.subTpls = subTpls;
 
-    XTemplate.addSubTpl = function (tplName, def) {
+    XTemplateRuntime.addSubTpl = function (tplName, def) {
         subTpls[tplName] = def;
     };
 
-    return XTemplate;
+    XTemplateRuntime.removeSubTpl = function (tplName) {
+        delete  subTpls[tplName];
+    };
+
+    // can only include compiled sub template
+    XTemplateRuntime.IncludeEngine = XTemplateRuntime;
+
+    return XTemplateRuntime;
 }, {
-    requires: ['./runtime/base', './runtime/commands']
+    requires: ['./runtime/base', './runtime/commands', './runtime/include-command']
 });
 
 /**

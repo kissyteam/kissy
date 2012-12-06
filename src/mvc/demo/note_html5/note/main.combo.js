@@ -12,8 +12,8 @@
  note/main
 */
 
-KISSY.add("note/mods/NoteView", function(S, Node, mvc, Template) {
-  var noteTpl = Template(Node.all("#noteTpl").html());
+KISSY.add("note/mods/NoteView", function(S, Node, mvc, XTemplate) {
+  var noteTpl = new XTemplate(Node.all("#noteTpl").html());
   function NoteView() {
     var self = this;
     NoteView.superclass.constructor.apply(self, arguments);
@@ -29,9 +29,9 @@ KISSY.add("note/mods/NoteView", function(S, Node, mvc, Template) {
     this.get("el").remove()
   }});
   return NoteView
-}, {requires:["node", "mvc", "template"]});
-KISSY.add("note/mods/NotesView", function(S, Node, mvc, Template, NoteView) {
-  var $ = Node.all, tmpl = Template($("#listTpl").html());
+}, {requires:["node", "mvc", "xtemplate"]});
+KISSY.add("note/mods/NotesView", function(S, Node, mvc, XTemplate, NoteView) {
+  var $ = Node.all, tmpl = new XTemplate($("#listTpl").html());
   function NotesView() {
     NotesView.superclass.constructor.apply(this, arguments);
     var self = this, statistic, dataList, el = self.get("el");
@@ -79,9 +79,9 @@ KISSY.add("note/mods/NotesView", function(S, Node, mvc, Template, NoteView) {
     }
   }}, {ATTRS:{el:{value:"#list"}, events:{value:{".edit":{click:"editNote"}, ".newNote":{click:"newNote"}, ".delete":{click:"deleteNode"}, ".refreshNote":{click:"refreshNote"}, ".searchNote":{click:"search"}, ".searchInput":{keyup:"keyup"}}}}});
   return NotesView
-}, {requires:["node", "mvc", "template", "./NoteView"]});
-KISSY.add("note/mods/EditView", function(S, Node, mvc, Template) {
-  var detailTpl = Template(Node.all("#detailTpl").html());
+}, {requires:["node", "mvc", "xtemplate", "./NoteView"]});
+KISSY.add("note/mods/EditView", function(S, Node, mvc, XTemplate) {
+  var detailTpl = new XTemplate(Node.all("#detailTpl").html());
   function EditView() {
     EditView.superclass.constructor.apply(this, arguments)
   }
@@ -95,7 +95,7 @@ KISSY.add("note/mods/EditView", function(S, Node, mvc, Template) {
     return self
   }}, {ATTRS:{el:{value:"#edit"}, events:{value:{".submit":{click:"submit"}}}}});
   return EditView
-}, {requires:["node", "mvc", "template"]});
+}, {requires:["node", "mvc", "xtemplate"]});
 KISSY.add("note/mods/NoteModel", function(S, mvc) {
   function NoteModel() {
     NoteModel.superclass.constructor.apply(this, arguments)
@@ -110,8 +110,8 @@ KISSY.add("note/mods/NotesCollection", function(S, mvc, NoteModel) {
   S.extend(NotesModel, mvc.Collection, {ATTRS:{model:{value:NoteModel}}});
   return NotesModel
 }, {requires:["mvc", "./NoteModel"]});
-KISSY.add("note/mods/SearchView", function(S, Node, mvc, Template) {
-  var $ = Node.all, tmpl = Template($("#searchTpl").html());
+KISSY.add("note/mods/SearchView", function(S, Node, mvc, XTemplate) {
+  var $ = Node.all, tmpl = new XTemplate($("#searchTpl").html());
   function SearchView() {
     var self = this;
     SearchView.superclass.constructor.apply(this, arguments);
@@ -136,7 +136,7 @@ KISSY.add("note/mods/SearchView", function(S, Node, mvc, Template) {
     mvc.Router.navigate("/")
   }}, {ATTRS:{el:{value:"#search"}, events:{value:{".searchBtn":{click:"search"}, ".backBtn":{click:"back"}, ".searchInput":{keyup:"keyup"}}}}});
   return SearchView
-}, {requires:["node", "mvc", "template"]});
+}, {requires:["node", "mvc", "xtemplate"]});
 KISSY.add("note/mods/router", function(S, Node, mvc, NotesView, EditView, NotesCollection, NoteModel, SearchView) {
   var $ = S.Node.all;
   function NoteRouter() {

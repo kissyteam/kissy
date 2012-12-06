@@ -1,0 +1,10 @@
+<project name="xtemplate/facade.build" default="build" basedir=".">
+    <description>xtemplate/facade Build File</description>
+
+    <property name="component.name" value="xtemplate/facade"/>
+
+    <import file="../../../../tools/build-xml/common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

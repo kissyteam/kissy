@@ -10,7 +10,7 @@ var S = global.KISSY = global.S = require(cwd + '/build/kissy-nodejs.js');
 
 function collectTc(baseDir, codes) {
     var files = fs.readdirSync(baseDir);
-    var ts = "tests/runner";
+    var ts = "/tests/runner";
     S.each(files, function (f) {
         f = baseDir + '/' + f;
         if (fs.statSync(f).isDirectory()) {

@@ -1,5 +1,5 @@
 config({
-    "xtemplate": {
-        "alias": ["xtemplate/runtime", "xtemplate/compiler"]
+    xtemplate: {
+        alias: ['xtemplate/facade']
     }
 });

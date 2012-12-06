@@ -13,7 +13,7 @@
 
             expect($('#special').css("fontSize")).not.toBe("33px");
 
-            S.getScript(d + "getStyle/fp2011.css", function () {
+            S.getScript(d + "getStyle/font-size.css", function () {
                 setTimeout(function () {
                     expect($('#special').css("fontSize")).toBe("33px");
                     state++;
@@ -24,7 +24,7 @@
 
             // cross domain
             var d2 = d.replace(":8888", ":9999");
-            S.getScript(d2 + "getStyle/fp2011b.css", function () {
+            S.getScript(d2 + "getStyle/font-size2.css", function () {
                 setTimeout(function () {
                     expect($('#special2').css("fontSize")).toBe("44px");
                     state++;

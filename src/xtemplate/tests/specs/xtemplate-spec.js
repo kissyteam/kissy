@@ -45,7 +45,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 var tpl = '{{title}}';
 
-                expect(new XTemplate(tpl).compile()).toBe(new XTemplate(tpl).compile());
+                expect(new XTemplate(tpl).tpl).toBe(new XTemplate(tpl).tpl);
 
             });
 
@@ -66,6 +66,24 @@ KISSY.use('xtemplate', function (S, XTemplate) {
             });
 
             describe('each', function () {
+
+                it('ignore if not found', function () {
+
+                    var tpl = '{{#each l}}{{title}}{{/each}}';
+
+                    var data = {
+                        x: [
+                            {
+                                title: 5
+                            }
+                        ]
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('');
+                });
+
                 it('support object', function () {
 
                     var tpl = '{{#each data}}{{name}}-{{xindex}}/{{xcount}}|{{/each}}';
@@ -414,6 +432,18 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 });
 
+                it('support expression for variable even undefined', function () {
+
+                    var tpl = '{{n+3*4/2}}';
+
+                    var data = {
+                        n2: 1
+                    };
+
+                    expect(new XTemplate(tpl).render(data)).toBe('NaN');
+
+                });
+
 
                 it('support expression for variable in string', function () {
 
@@ -619,7 +649,35 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                 S.log = log;
             });
 
+            it('throw error if missing property', function () {
+                if (!KISSY.config('debug')) {
+                    return
+                }
+
+                var tpl = 'this is \n' +
+                    '{{title}}';
+
+                var data = {
+                    title2: 1
+                };
+
+                var msg;
+
+                try {
+                    new XTemplate(tpl, {
+                        silent: 0
+                    }).render(data);
+                } catch (e) {
+                    msg = e.message;
+                }
+
+                expect(msg).toBe("can not find property: 'title' at line 2");
+            });
+
             it('detect unmatched', function () {
+                if (!KISSY.config('debug')) {
+                    return
+                }
                 var tpl = '{{#if n === n1}}\n' +
                     'n eq n1\n' +
                     '{{/with}}';

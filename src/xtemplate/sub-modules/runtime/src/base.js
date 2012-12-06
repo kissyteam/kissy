@@ -4,12 +4,9 @@
  */
 KISSY.add('xtemplate/runtime/base', function (S) {
 
-    var guid = 0;
-
-    var cache = {};
-
     var defaultConfig = {
-        cache: true,
+        // whether throw exception => '{{title}}'.render({t2:0})
+        silent: true,
         utils: {
             'getProperty': function (parts, from) {
                 if (!from) {
@@ -28,21 +25,17 @@ KISSY.add('xtemplate/runtime/base', function (S) {
         }
     };
 
-    function XTemplate(tpl, option) {
+    function XTemplateRuntime(tpl, option) {
         var self = this;
-        // prevent messing up with velocity
-        if (typeof tpl == 'string') {
-            tpl = tpl.replace(/\{\{@/g, '{{#');
-        }
         self.tpl = tpl;
         option = S.merge(defaultConfig, option);
-        option.subTpls = S.merge(option.subTpls, XTemplate.subTpls);
-        option.commands = S.merge(option.commands, XTemplate.commands);
+        option.subTpls = S.merge(option.subTpls, XTemplateRuntime.subTpls);
+        option.commands = S.merge(option.commands, XTemplateRuntime.commands);
         this.option = option;
     }
 
-    XTemplate.prototype = {
-        constructor: XTemplate,
+    XTemplateRuntime.prototype = {
+        constructor: XTemplateRuntime,
         'removeSubTpl': function (subTplName) {
             delete this.option.subTpls[subTplName];
         },
@@ -55,42 +48,8 @@ KISSY.add('xtemplate/runtime/base', function (S) {
         addCommand: function (commandName, fn) {
             this.option.commands[commandName] = fn;
         },
-        __compile: function () {
-            var self = this,
-                option = self.option,
-                compiler = S.require('xtemplate/compiler'),
-                tpl = self.tpl;
-
-            if (!compiler) {
-                S.error('you have to use/require xtemplate/compiler first!');
-                return null;
-            }
-
-            var code = compiler.compile(tpl);
-            // eval is not ok for eval("(function(){})") ie
-            return (Function.apply(null, []
-                .concat(code.params)
-                .concat(code.source.join('\n') + '//@ sourceURL=' +
-                (option.name ? option.name : ('xtemplate' + (guid++))) + '.js')));
-        },
-        compile: function () {
-            var self = this,
-                tpl = self.tpl,
-                option = self.option;
-            if (!self.compiled) {
-                if (S.isFunction(tpl)) {
-                } else if (option.cache) {
-                    self.tpl = cache[tpl] || (cache[tpl] = self.__compile());
-                } else {
-                    self.tpl = self.__compile();
-                }
-                self.compiled = !!self.tpl;
-            }
-            return self.tpl;
-        },
         render: function (data) {
             var self = this;
-            self.compile();
             if (!S.isArray(data)) {
                 data = [data];
             }
@@ -98,5 +57,5 @@ KISSY.add('xtemplate/runtime/base', function (S) {
         }
     };
 
-    return XTemplate;
+    return XTemplateRuntime;
 });

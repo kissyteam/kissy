@@ -186,7 +186,6 @@ KISSY.add("xtemplate/compiler/parser", function () {
                     }
                 }
             }
-
             S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
         }
     };

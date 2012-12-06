@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:12
+build time: Dec 6 20:34
 */
 /**
  * xtemplate base
@@ -9,12 +9,9 @@ build time: Dec 6 01:12
  */
 KISSY.add('xtemplate/runtime/base', function (S) {
 
-    var guid = 0;
-
-    var cache = {};
-
     var defaultConfig = {
-        cache: true,
+        // whether throw exception => '{{title}}'.render({t2:0})
+        silent: true,
         utils: {
             'getProperty': function (parts, from) {
                 if (!from) {
@@ -33,21 +30,17 @@ KISSY.add('xtemplate/runtime/base', function (S) {
         }
     };
 
-    function XTemplate(tpl, option) {
+    function XTemplateRuntime(tpl, option) {
         var self = this;
-        // prevent messing up with velocity
-        if (typeof tpl == 'string') {
-            tpl = tpl.replace(/\{\{@/g, '{{#');
-        }
         self.tpl = tpl;
         option = S.merge(defaultConfig, option);
-        option.subTpls = S.merge(option.subTpls, XTemplate.subTpls);
-        option.commands = S.merge(option.commands, XTemplate.commands);
+        option.subTpls = S.merge(option.subTpls, XTemplateRuntime.subTpls);
+        option.commands = S.merge(option.commands, XTemplateRuntime.commands);
         this.option = option;
     }
 
-    XTemplate.prototype = {
-        constructor: XTemplate,
+    XTemplateRuntime.prototype = {
+        constructor: XTemplateRuntime,
         'removeSubTpl': function (subTplName) {
             delete this.option.subTpls[subTplName];
         },
@@ -60,42 +53,8 @@ KISSY.add('xtemplate/runtime/base', function (S) {
         addCommand: function (commandName, fn) {
             this.option.commands[commandName] = fn;
         },
-        __compile: function () {
-            var self = this,
-                option = self.option,
-                compiler = S.require('xtemplate/compiler'),
-                tpl = self.tpl;
-
-            if (!compiler) {
-                S.error('you have to use/require xtemplate/compiler first!');
-                return null;
-            }
-
-            var code = compiler.compile(tpl);
-            // eval is not ok for eval("(function(){})") ie
-            return (Function.apply(null, []
-                .concat(code.params)
-                .concat(code.source.join('\n') + '//@ sourceURL=' +
-                (option.name ? option.name : ('xtemplate' + (guid++))) + '.js')));
-        },
-        compile: function () {
-            var self = this,
-                tpl = self.tpl,
-                option = self.option;
-            if (!self.compiled) {
-                if (S.isFunction(tpl)) {
-                } else if (option.cache) {
-                    self.tpl = cache[tpl] || (cache[tpl] = self.__compile());
-                } else {
-                    self.tpl = self.__compile();
-                }
-                self.compiled = !!self.tpl;
-            }
-            return self.tpl;
-        },
         render: function (data) {
             var self = this;
-            self.compile();
             if (!S.isArray(data)) {
                 data = [data];
             }
@@ -103,41 +62,43 @@ KISSY.add('xtemplate/runtime/base', function (S) {
         }
     };
 
-    return XTemplate;
+    return XTemplateRuntime;
 });/**
  * native commands for xtemplate.
  * @author yiminghe@gmail.com
  */
-KISSY.add("xtemplate/runtime/commands", function (S, XTemplate) {
-
+KISSY.add("xtemplate/runtime/commands", function (S, includeCommand, undefined) {
+    var error = S.error;
     return {
         'each': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 1) {
-                throw new Error('each must has one param');
+                error('each must has one param');
             }
             var param0 = params[0];
             var buffer = '';
             var xcount;
             var single;
-            if (S.isArray(param0)) {
-                var opScopes = [0].concat(scopes);
-                xcount = param0.length;
-                for (var xindex = 0; xindex < xcount; xindex++) {
-                    var holder = {};
-                    single = param0[xindex];
-                    holder['this'] = single;
-                    holder.xcount = xcount;
-                    holder.xindex = xindex;
-                    if (S.isObject(single)) {
-                        S.mix(holder, single);
+            if (param0 !== undefined) {
+                if (S.isArray(param0)) {
+                    var opScopes = [0].concat(scopes);
+                    xcount = param0.length;
+                    for (var xindex = 0; xindex < xcount; xindex++) {
+                        var holder = {};
+                        single = param0[xindex];
+                        holder['this'] = single;
+                        holder.xcount = xcount;
+                        holder.xindex = xindex;
+                        if (S.isObject(single)) {
+                            S.mix(holder, single);
+                        }
+                        opScopes[0] = holder;
+                        buffer += option.fn(opScopes);
                     }
-                    opScopes[0] = holder;
-                    buffer += option.fn(opScopes);
+                } else {
+                    S.log(param0, 'error');
+                    error('each can only apply to array');
                 }
-            } else {
-                S.log(param0, 'error');
-                throw new Error('each can only apply to array');
             }
             return buffer;
         },
@@ -145,17 +106,19 @@ KISSY.add("xtemplate/runtime/commands", function (S, XTemplate) {
         'with': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 1) {
-                throw new Error('with must has one param');
+                error('with must has one param');
             }
             var param0 = params[0];
             var opScopes = [0].concat(scopes);
             var buffer = '';
-            if (S.isObject(param0)) {
-                opScopes[0] = param0;
-                buffer = option.fn(opScopes);
-            } else {
-                S.log(param0, 'error');
-                throw new Error('with can only apply to object');
+            if (param0 !== undefined) {
+                if (S.isObject(param0)) {
+                    opScopes[0] = param0;
+                    buffer = option.fn(opScopes);
+                } else {
+                    S.log(param0, 'error');
+                    error('with can only apply to object');
+                }
             }
             return buffer;
         },
@@ -163,7 +126,7 @@ KISSY.add("xtemplate/runtime/commands", function (S, XTemplate) {
         'if': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 1) {
-                throw new Error('if must has one param');
+                error('if must has one param');
             }
             var param0 = params[0];
             var buffer = '';
@@ -180,23 +143,41 @@ KISSY.add("xtemplate/runtime/commands", function (S, XTemplate) {
             return '';
         },
 
-        'include': function (scopes, option) {
+        'include': includeCommand.include
+    };
+
+}, {
+    requires: ['./include-command']
+});/**
+ * include command
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('xtemplate/runtime/include-command', function (S, XTemplateRuntime) {
+
+    var include = {
+
+        invokeEngine: function (tpl, scopes, option) {
+            return new XTemplateRuntime(tpl, S.merge(option)).render(scopes);
+        },
+
+        include: function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 1) {
-                throw new Error('include must has one param');
+                error('include must has one param');
             }
             var param0 = params[0], tpl;
             var subTpls = option.subTpls;
             if (!(tpl = subTpls[param0])) {
-                throw new Error('does not include sub template "' + param0 + '"');
+                error('does not include sub template "' + param0 + '"');
             }
-            return new XTemplate(tpl, {
-                cache: option.cache,
-                commands: option.commands,
-                subTpls: option.subTpls
-            }).render(scopes);
+            // template file name
+            option.name = param0;
+            return include.invokeEngine(tpl, scopes, option)
         }
+
     };
+
+    return include;
 
 }, {
     requires: ['./base']
@@ -204,25 +185,38 @@ KISSY.add("xtemplate/runtime/commands", function (S, XTemplate) {
  * xtemplate runtime
  * @author yiminghe@gmail.com
  */
-KISSY.add('xtemplate/runtime', function (S, XTemplate, commands) {
+KISSY.add('xtemplate/runtime', function (S, XTemplateRuntime, commands, includeCommand) {
 
-    XTemplate.addCommand = function (commandName, fn) {
+    XTemplateRuntime.addCommand = function (commandName, fn) {
         commands[commandName] = fn;
     };
 
-    XTemplate.commands = commands;
+    XTemplateRuntime.removeCommand = function (commandName) {
+        delete commands[commandName];
+    };
+
+    XTemplateRuntime.commands = commands;
+
+    XTemplateRuntime.includeCommand = includeCommand;
 
     var subTpls = {};
 
-    XTemplate.subTpls = subTpls;
+    XTemplateRuntime.subTpls = subTpls;
 
-    XTemplate.addSubTpl = function (tplName, def) {
+    XTemplateRuntime.addSubTpl = function (tplName, def) {
         subTpls[tplName] = def;
     };
 
-    return XTemplate;
+    XTemplateRuntime.removeSubTpl = function (tplName) {
+        delete  subTpls[tplName];
+    };
+
+    // can only include compiled sub template
+    XTemplateRuntime.IncludeEngine = XTemplateRuntime;
+
+    return XTemplateRuntime;
 }, {
-    requires: ['./runtime/base', './runtime/commands']
+    requires: ['./runtime/base', './runtime/commands', './runtime/include-command']
 });
 
 /**

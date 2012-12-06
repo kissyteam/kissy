@@ -94,8 +94,6 @@ tests.push('/kissy/src/stylesheet/tests/runner/test.html');
 
 tests.push('/kissy/src/tabs/tests/runner/test.html');
 
-tests.push('/kissy/src/template/tests/runner/test.html');
-
 tests.push('/kissy/src/xtemplate/tests/runner/test-min.html');
 
 tests.push('/kissy/src/xtemplate/tests/runner/test.html');

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:12
+build time: Dec 6 20:34
 */
 /**
  * Ast node class for xtemplate
@@ -28,15 +28,16 @@ KISSY.add("xtemplate/compiler/ast", function (S) {
     ast.ProgramNode.prototype.type = 'program';
 
     ast.BlockNode = function (lineNumber, tpl, program, close) {
-        var closeParts = close['parts'], self = this;
+        var closeParts = close['parts'], self = this, e;
         // 开始没有结束
         if (!S.equals(tpl.path['parts'], closeParts)) {
-            throw new Error("parse error at line " +
+            e = ("parse error at line " +
                 lineNumber +
                 ":\n" + "expect {{/" +
                 tpl.path['parts'] +
                 "}} not {{/" +
                 closeParts + "}}");
+            S.error(e);
         }
         self.lineNumber = lineNumber;
         self.tpl = tpl;
@@ -197,15 +198,29 @@ KISSY.add("xtemplate/compiler/ast", function (S) {
  * translate ast to js function code
  * @author yiminghe@gmail.com
  */
-KISSY.add("xtemplate/compiler", function (S, parser, ast) {
+KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
+
+    'use strict';
 
     parser.yy = ast;
 
-    // native commands should be same with runtime/commands
-    var commands = {'each': 1, 'with': 1, 'if': 1, 'set': 1, 'include': 1};
     var utils = {'getProperty': 1};
     var doubleReg = /"/g, single = /'/g, escapeString;
     var arrayPush = [].push;
+    var variableId = 0;
+    var xtemplateId = 0;
+
+    function guid(str) {
+        return str + (variableId++);
+    }
+
+    // consider str compiler
+    XTemplateRuntime.includeCommand.invokeEngine = function (tpl, scopes, option) {
+        if (typeof tpl == 'string') {
+            tpl = compiler.compileToFn(tpl, option);
+        }
+        return new XTemplateRuntime(tpl, S.merge(option)).render(scopes);
+    };
 
     /**
      * @ignore
@@ -244,15 +259,20 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
             if (!global) {
                 source.push('function(scopes) {');
             }
+            source.push('"use strict";');
             source.push('var buffer = ""' + (global ? ',' : ';'));
             if (global) {
                 source.push('S = KISSY,' +
                     'escapeHTML = S.escapeHTML,' +
                     'log = S.log,' +
-                    'error = S.error,');
+                    'commands = option.commands,' +
+                    'utils = option.utils,' +
+                    'error = S.error;');
 
                 var natives = '', c;
 
+                // shortcut for global commands
+                var commands = XTemplateRuntime.commands;
                 for (c in commands) {
                     natives += c + 'Command = commands["' + c + '"],';
                 }
@@ -261,11 +281,9 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
                     natives += c + ' = utils["' + c + '"],';
                 }
 
-                source.push('commands = option.commands,' +
-                    'utils = option.utils,' +
-                    'cache=option.cache,' +
-                    natives +
-                    'subTpls = option.subTpls;');
+                if (natives) {
+                    source.push('var ' + natives.slice(0, natives.length - 1));
+                }
             }
             if (statements) {
                 for (var i = 0, len = statements.length; i < len; i++) {
@@ -278,7 +296,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
                 return source;
             } else {
                 return {
-                    params: ['scopes', 'option'],
+                    params: ['scopes', 'option', 'undefined'],
                     source: source
                 };
             }
@@ -288,27 +306,27 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
             var source = [],
                 depth = idNode.depth,
                 scope = 'scopes[' + depth + ']',
-                idString = idNode.string;
-
-            var idName = S.guid('id'),
+                idString = idNode.string,
+                idName = guid('id'),
                 self = this,
-                escapePropertyResolve = 0,
-                tmpNameCommand;
-
+                foundNativeRuntimeCommand = 0,
+                tmpNameCommand,
+                commands = XTemplateRuntime.commands;
 
             source.push('var ' + idName + ';');
 
+            // {{each variable}} {{variable}}
             if (tplNode && depth == 0) {
                 var optionNameCode = self.genOption(tplNode);
                 pushToArray(source, optionNameCode[1]);
-                if (!commands[idString]) {
-                    tmpNameCommand = S.guid('command');
+                // skip if for global commands before current template's render
+                if (foundNativeRuntimeCommand = commands[idString]) {
+                    tmpNameCommand = idString + 'Command';
+                } else {
+                    tmpNameCommand = guid('command');
                     source.push('var ' + tmpNameCommand + ';');
                     source.push(tmpNameCommand + ' = commands["' + idString + '"];');
                     source.push('if( ' + tmpNameCommand + ' ){');
-                } else {
-                    tmpNameCommand = idString + 'Command';
-                    escapePropertyResolve = 1;
                 }
                 source.push('try{');
                 source.push(idName + ' = ' + tmpNameCommand +
@@ -317,24 +335,25 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
                 source.push('error(e.message+": \'' +
                     idString + '\' at line ' + idNode.lineNumber + '");');
                 source.push('}');
-                if (!commands[idString]) {
+
+                if (!foundNativeRuntimeCommand) {
                     source.push('}');
+                    source.push('else {');
                 }
             }
 
-            if (!escapePropertyResolve) {
-                if (tplNode && depth == 0) {
-                    source.push('else {');
-                }
+            // variable {{variable.subVariable}}
+            if (!foundNativeRuntimeCommand) {
 
-                var tmp = S.guid('tmp');
+                var tmp = guid('tmp');
 
                 source.push('var ' + tmp + '=getProperty("' + idString + '",' + scope + ');');
 
                 source.push('if(' + tmp + '===false){');
-                source.push('log("can not find property: \'' +
+                source.push('S[option.silent?"log":"error"]("can not find property: \'' +
                     idString + '\' at line ' + idNode.lineNumber + '", "warn");');
-                source.push(idName + ' = "";');
+                // only normalize when render
+                // source.push(idName + ' = "";');
                 source.push('} else {');
                 source.push(idName + ' = ' + tmp + '[0];');
                 source.push('}');
@@ -397,21 +416,16 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
 
         genOption: function (tplNode) {
             var source = [],
-                optionName = S.guid('option'),
+                optionName = guid('option'),
                 self = this;
 
-            source.push('var ' + optionName + ' = {' +
-                'commands: commands,' +
-                'utils: utils,' +
-                'cache: cache,' +
-                'subTpls: subTpls' +
-                '};');
+            source.push('var ' + optionName + ' = S.merge(option);');
 
             if (tplNode) {
 
                 var params, hash;
                 if (params = tplNode.params) {
-                    var paramsName = S.guid('params');
+                    var paramsName = guid('params');
                     source.push('var ' + paramsName + ' = [];');
 
                     S.each(params, function (param) {
@@ -429,7 +443,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
                 }
 
                 if (hash = tplNode.hash) {
-                    var hashName = S.guid('hash');
+                    var hashName = guid('hash');
                     source.push('var ' + hashName + ' = {};');
 
                     S.each(hash.value, function (v, key) {
@@ -517,6 +531,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
                 tplNode = block.tpl,
                 optionNameCode = this.genOption(tplNode),
                 optionName = optionNameCode[0],
+                commands = XTemplateRuntime.commands,
                 string = tplNode.path.string;
 
             pushToArray(source, optionNameCode[1]);
@@ -530,7 +545,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
             }
 
             if (!commands[string]) {
-                tmpNameCommand = S.guid('command');
+                tmpNameCommand = guid('command');
                 source.push('var ' + tmpNameCommand +
                     ' = commands["' + string + '"];');
                 source.push('if( ' + tmpNameCommand + ' ){');
@@ -545,7 +560,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
             source.push('}');
             if (!commands[string]) {
                 source.push('}');
-                var tmp = S.guid('tmp');
+                var tmp = guid('tmp');
                 source.push('else {');
                 source.push('var ' + tmp + ';');
                 source.push(tmp + ' = getProperty("' + string + '",scopes[0]);');
@@ -585,11 +600,9 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
                 escaped = tplNode.escaped,
                 genIdCode = this.genId(tplNode.path, tplNode);
             pushToArray(source, genIdCode[1]);
-            source.push('buffer+=' +
-                (escaped ? 'escapeHTML(' : '') +
-                genIdCode[0] + '+""' +
-                (escaped ? ')' : '') +
-                ';');
+
+            outputVariable(genIdCode[0], escaped, source);
+
             return source;
         },
 
@@ -605,17 +618,29 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
                 pushToArray(source, code[1].slice(0, -1));
                 expressionOrVariable = lastOfArray(code[1]);
             }
-            source.push('buffer+=' +
-                (escaped ? 'escapeHTML(' : '') +
-                expressionOrVariable +
-                (escaped ? ')' : '') +
-                ';');
+
+            outputVariable(expressionOrVariable, escaped, source);
+
             return source;
         }
 
     };
 
-    return {
+    function outputVariable(expressionOrVariable, escaped, source) {
+        var tmp = guid('tmp');
+        // in case it is expression, avoid duplicate computation
+        source.push('var ' + tmp + ' = ' + expressionOrVariable + ';');
+        source.push('buffer+=' +
+            (escaped ? 'escapeHTML(' : '') +
+            // when render undefined => ''
+            '(' + tmp + '===undefined?"":' + tmp + ')' + '+""' +
+            (escaped ? ')' : '') +
+            ';');
+    }
+
+    var compiler;
+
+    return compiler = {
         parse: function (tpl) {
             return parser.parse(tpl);
         },
@@ -627,12 +652,23 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast) {
         },
         compile: function (tpl) {
             var root = this.parse(tpl);
+            variableId = 0;
             return gen.genFunction(root.statements, true);
+        },
+
+        compileToFn: function (tpl, option) {
+            var code = compiler.compile(tpl);
+            option = option || {};
+            // eval is not ok for eval("(function(){})") ie
+            return (Function.apply(null, []
+                .concat(code.params)
+                .concat(code.source.join('\n') + '//@ sourceURL=' +
+                (option.name ? option.name : ('xtemplate' + (xtemplateId++))) + '.js')));
         }
     };
 
 }, {
-    requires: ['./compiler/parser', './compiler/ast']
+    requires: ['./compiler/parser', './compiler/ast', 'xtemplate/runtime']
 });/*
   Generated by kissy-kison.*/
 KISSY.add("xtemplate/compiler/parser", function () {
@@ -821,7 +857,6 @@ KISSY.add("xtemplate/compiler/parser", function () {
                     }
                 }
             }
-
             S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
         }
     };

@@ -1,7 +1,7 @@
-﻿KISSY.use("waterfall,ajax,template,node,button", function (S, Waterfall, io, Template, Node, Button) {
+﻿KISSY.use("waterfall,ajax,node", function (S, Waterfall, io,  Node) {
     var $ = Node.all;
 
-    var tpl = Template($('#tpl').html()),
+    var tpl = $('#tpl').html(),
         nextPage = 1,
         waterfall = new Waterfall.Loader({
             container:"#ColumnContainer",
@@ -37,7 +37,7 @@
                         var items = [];
                         S.each(photos.photo, function (item) {
                             item.height = Math.round(Math.random() * (300 - 180) + 180); // fake height
-                            items.push(new S.Node(tpl.render(item)));
+                            items.push(S.substitute(tpl,item));
                         });
 
                         var right = new S.Node('<div class="pin ks-waterfall ks-waterfall-fixed-right">' +

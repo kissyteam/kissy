@@ -1,1 +1,3 @@
-phantomjs jasmine-phantomjs.js
+call phantomjs jasmine-phantomjs.js
+
+pause
