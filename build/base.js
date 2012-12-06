@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:07
+build time: Dec 7 02:50
 */
 /**
  * @ignore
@@ -417,6 +417,7 @@ KISSY.add('base/attribute', function (S, undefined) {
         /**
          * Gets the current value of the attribute.
          * @param {String} name attribute 's name
+         * @return {*}
          */
         get: function (name) {
             var self = this,

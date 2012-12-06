@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 6 01:11
+build time: Dec 7 02:50
 */
 /**
  * @ignore
@@ -138,7 +138,6 @@ KISSY.add("overlay/base", function (S, Component,
      * @mixins KISSY.Overlay.Extension.Loading
      * @mixins KISSY.Component.Extension.Align
      * @mixins KISSY.Overlay.Extension.Close
-     * @mixins KISSY.Overlay.Extension.Resize
      * @mixins KISSY.Overlay.Extension.Mask
      */
     var Overlay = Component.Controller.extend([
@@ -321,7 +320,6 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod) {
      * KISSY Dialog Component. xclass: 'dialog'.
      * @extends KISSY.Overlay
      * @mixins KISSY.Overlay.Extension.StdMod
-     * @mixins KISSY.Overlay.Extension.Drag
      */
     var Dialog = Overlay.extend([
         StdMod
