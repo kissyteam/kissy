@@ -2,8 +2,6 @@
 <html>
 <head>
 <script src="/kissy/build/seed.js"></script>
-<script src="/kissy/build/htmlparser.js"></script>
-<script src="/kissy/build/??component/base.js,component/extension.js"></script>
 <!--
 core
 -->
@@ -36,8 +34,7 @@ other plugins
     24px
 </span>
 <script>
-    KISSY.ready(function (S) {
-        var Editor = S.Editor;
+    KISSY.use('editor',function (S,Editor) {
         var fontSize_style = {
             element:'span',
             styles:{ 'font-size':'#(size)' },

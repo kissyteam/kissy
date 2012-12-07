@@ -21,7 +21,7 @@
 <script src="/kissy/build/seed.js"></script>
 <script>
 
-    KISSY.ready(function (S) {
+    KISSY.use('core',function (S) {
         var $ = S.all, ret = [];
         ret.push("margin-left : " + $("#t").css("margin-left"));
         ret.push("margin-right : " + $("#t").css("margin-right"));

@@ -18,7 +18,7 @@
 
 <script src="/kissy/build/seed.js"></script>
 <script>
-    KISSY.ready(function (S) {
+    KISSY.use('core',function (S) {
         var $ = S.all;
         $("#t").attr("href", "#" + S.guid("ha"+ S.now()));
     });

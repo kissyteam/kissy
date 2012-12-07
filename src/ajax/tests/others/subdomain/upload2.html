@@ -15,145 +15,145 @@
 <script src="/kissy/build/seed.js"></script>
 <script>
     document.domain = location.hostname;
-    KISSY.ready(function (S) {
-        S.use("core", function (S) {
 
-            var DOM = S.DOM, Event = S.Event, UA = S.UA;
+    S.use("core", function (S) {
 
-            function isCustomDomain() {
-                var win = window;
-                var domain = win.document.domain,
-                        hostname = win.location.hostname;
-                return domain != hostname &&
-                        domain != ( '[' + hostname + ']' );	// IPv6 IP support
+        var DOM = S.DOM, Event = S.Event, UA = S.UA;
+
+        function isCustomDomain() {
+            var win = window;
+            var domain = win.document.domain,
+                    hostname = win.location.hostname;
+            return domain != hostname &&
+                    domain != ( '[' + hostname + ']' );	// IPv6 IP support
+        }
+
+        var doFormUpload = function (o, ps, url) {
+            var id = S.guid("form-upload-");
+            var frame = document.createElement('iframe');
+            frame.id = id;
+            frame.name = id;
+            frame.className = 'ke-hidden';
+
+            var srcScript = 'document.open();' +
+                // The document domain must be set any time we
+                // call document.open().
+                    ( isCustomDomain() ? ( 'document.domain="' + document.domain + '";' ) : '' ) +
+                    'document.close();';
+            if (UA['ie']) {
+                frame.src = UA['ie'] ? 'javascript:void(function(){' + encodeURIComponent(srcScript) + '}())' : '';
+            }
+            S.log("doFormUpload : " + frame.src);
+            document.body.appendChild(frame);
+
+            if (UA['ie']) {
+                document['frames'][id].name = id;
             }
 
-            var doFormUpload = function (o, ps, url) {
-                var id = S.guid("form-upload-");
-                var frame = document.createElement('iframe');
-                frame.id = id;
-                frame.name = id;
-                frame.className = 'ke-hidden';
-
-                var srcScript = 'document.open();' +
-                    // The document domain must be set any time we
-                    // call document.open().
-                        ( isCustomDomain() ? ( 'document.domain="' + document.domain + '";' ) : '' ) +
-                        'document.close();';
-                if (UA['ie']) {
-                    frame.src = UA['ie'] ? 'javascript:void(function(){' + encodeURIComponent(srcScript) + '}())' : '';
-                }
-                S.log("doFormUpload : " + frame.src);
-                document.body.appendChild(frame);
-
-                if (UA['ie']) {
-                    document['frames'][id].name = id;
-                }
-
-                var form = o.form,
-                        buf = {
-                            target: DOM.attr(form, "target"),
-                            method: DOM.attr(form, "method"),
-                            encoding: DOM.attr(form, "encoding"),
-                            enctype: DOM.attr(form, "enctype"),
-                            "action": DOM.attr(form, "action")
-                        };
-                DOM.attr(form, {
-                    target: id,
-                    "method": "post",
-                    enctype: 'multipart/form-data',
-                    encoding: 'multipart/form-data'
-                });
-                if (url) {
-                    DOM.attr(form, "action", url);
-                }
-                var hiddens, hd;
-                if (ps) { // add dynamic params
-                    hiddens = [];
-                    for (var k in ps) {
-                        hd = document.createElement('input');
-                        hd.type = 'hidden';
-                        hd.name = k;
-                        hd.value = ps[k];
-                        form.appendChild(hd);
-                        hiddens.push(hd);
-                    }
-                }
-
-                function cb(e) {
-                    var r = {  // bogus response object
-                        responseText: '',
-                        responseXML: null
+            var form = o.form,
+                    buf = {
+                        target: DOM.attr(form, "target"),
+                        method: DOM.attr(form, "method"),
+                        encoding: DOM.attr(form, "encoding"),
+                        enctype: DOM.attr(form, "enctype"),
+                        "action": DOM.attr(form, "action")
                     };
+            DOM.attr(form, {
+                target: id,
+                "method": "post",
+                enctype: 'multipart/form-data',
+                encoding: 'multipart/form-data'
+            });
+            if (url) {
+                DOM.attr(form, "action", url);
+            }
+            var hiddens, hd;
+            if (ps) { // add dynamic params
+                hiddens = [];
+                for (var k in ps) {
+                    hd = document.createElement('input');
+                    hd.type = 'hidden';
+                    hd.name = k;
+                    hd.value = ps[k];
+                    form.appendChild(hd);
+                    hiddens.push(hd);
+                }
+            }
 
-                    r.argument = o ? o.argument : null;
+            function cb(e) {
+                var r = {  // bogus response object
+                    responseText: '',
+                    responseXML: null
+                };
 
-                    try { //
-                        var doc;
+                r.argument = o ? o.argument : null;
 
-                        if (UA['ie']) {
-                            doc = frame.contentWindow.document;
-                        } else {
-                            doc = (frame.contentDocument || window.frames[id].document);
-                        }
+                try { //
+                    var doc;
 
-                        if (doc && doc.body) {
-                            r.responseText = S.trim(DOM.text(doc.body));
-                        }
-                        if (doc && doc['XMLDocument']) {
-                            r.responseXML = doc['XMLDocument'];
-                        } else {
-                            r.responseXML = doc;
-                        }
-
+                    if (UA['ie']) {
+                        doc = frame.contentWindow.document;
+                    } else {
+                        doc = (frame.contentDocument || window.frames[id].document);
                     }
-                    catch (e) {
-                        // ignore
-                        // 2010-11-15 由于外边设置了document.domain导致读不到数据抛异常
-                        S.log("after data returns error ,maybe domain problem:");
-                        S.log(e, "error");
+
+                    if (doc && doc.body) {
+                        r.responseText = S.trim(DOM.text(doc.body));
                     }
-
-                    Event.remove(frame, 'load', cb);
-                    o.callback && o.callback(r);
-
-                    setTimeout(function () {
-                        DOM.remove(frame);
-                    }, 100);
+                    if (doc && doc['XMLDocument']) {
+                        r.responseXML = doc['XMLDocument'];
+                    } else {
+                        r.responseXML = doc;
+                    }
 
                 }
+                catch (e) {
+                    // ignore
+                    // 2010-11-15 由于外边设置了document.domain导致读不到数据抛异常
+                    S.log("after data returns error ,maybe domain problem:");
+                    S.log(e, "error");
+                }
 
+                Event.remove(frame, 'load', cb);
+                o.callback && o.callback(r);
 
                 setTimeout(function () {
+                    DOM.remove(frame);
+                }, 100);
 
-                    Event.on(frame, 'load', cb);
+            }
 
-                    form.submit();
 
-                    DOM.attr(form, buf);
+            setTimeout(function () {
 
-                    if (hiddens) { // remove dynamic params
-                        for (var i = 0, len = hiddens.length; i < len; i++) {
-                            DOM.remove(hiddens[i]);
-                        }
+                Event.on(frame, 'load', cb);
+
+                form.submit();
+
+                DOM.attr(form, buf);
+
+                if (hiddens) { // remove dynamic params
+                    for (var i = 0, len = hiddens.length; i < len; i++) {
+                        DOM.remove(hiddens[i]);
                     }
-                }, 10);
+                }
+            }, 10);
 
-                return frame;
-            };
+            return frame;
+        };
 
-            doFormUpload({
-                        form: S.get('#t'),
-                        callback: function (data) {
-                            alert(data.responseText);
-                        }
-                    }, {
-                        s: 1
-                    },
-                    'http://'+location.hostname+':9999/' +
-                            'src/ajax/tests/subdomain/upload.jss');
-        });
+        doFormUpload({
+                    form: S.get('#t'),
+                    callback: function (data) {
+                        alert(data.responseText);
+                    }
+                }, {
+                    s: 1
+                },
+                'http://' + location.hostname + ':9999/' +
+                        'src/ajax/tests/subdomain/upload.jss');
     });
+
 </script>
 </body>
 </html>

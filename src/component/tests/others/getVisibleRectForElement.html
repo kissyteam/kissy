@@ -80,13 +80,13 @@ overflow: auto;">
 <script src="/kissy/build/seed.js"></script>
 <script src="../../src/uibase/align.js"></script>
 <script>
-    KISSY.ready(function (S) {
-        var DOM = S.DOM,
-                UA = S.UA,
-                Event = S.Event,
-                Node = S.Node;
 
-        S.use("component/uibase/align", function (S, Align) {
+        S.use("component/uibase/align,core", function (S, Align) {
+
+            var DOM = S.DOM,
+                    UA = S.UA,
+                    Event = S.Event,
+                    Node = S.Node;
 
             var getVisibleRectForElement = Align.__getVisibleRectForElement;
 
@@ -121,9 +121,6 @@ overflow: auto;">
                 }
             });
         });
-
-
-    });
 
 </script>
 </body>

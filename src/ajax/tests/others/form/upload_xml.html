@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,20 +14,20 @@
 </form>
 
 <script src="/kissy/build/seed.js"></script>
-<script >
-    KISSY.ready(function (S) {
-        S.use("ajax,dom,json", function (S, io) {
-            io({
-                form:S.get('#t'),
-                dataType:'xml',
-                url:'../../tests/data/xml.jss',
-                success:function (data) {
-                    alert(data.nodeType);
-                    alert(data.documentElement.nodeType);
-                }
-            });
+<script>
+
+    S.use("ajax,dom,json", function (S, io) {
+        io({
+            form: S.get('#t'),
+            dataType: 'xml',
+            url: '../../tests/data/xml.jss',
+            success: function (data) {
+                alert(data.nodeType);
+                alert(data.documentElement.nodeType);
+            }
         });
     });
+
 </script>
 </body>
 </html>

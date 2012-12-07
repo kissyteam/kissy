@@ -30,7 +30,7 @@
 <script src="/kissy/build/seed.js"></script>
 <script>
 
-    KISSY.ready(function (S) {
+    KISSY.use('core',function (S) {
         var $ = S.all, ret = [];
 
         S.one("#holder").children().each(function (h) {

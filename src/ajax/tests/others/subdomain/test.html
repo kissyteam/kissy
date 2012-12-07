@@ -1,33 +1,13 @@
 <script src="/kissy/build/seed.js"></script>
 <script>
-    KISSY.ready(function (S) {
-        S.use("ajax", function (S, io) {
-            document.domain = location.hostname;
 
-            if (0) {
-                io({
-                    url: 'http://'+location.hostname+':9999/kissy/src/ajax/tests/data/ajax.jss',
-                    cache: false,
-                    success: function () {
-                        S.log("success");
-                    },
-                    error: function (d, s) {
-                        S.log(s || "error");
-                    },
-                    complete: function () {
-                        S.log("complete");
-                    }
-                });
-            }
+    S.use("ajax", function (S, io) {
+        document.domain = location.hostname;
 
+        if (0) {
             io({
-                url: 'http://'+location.hostname+':9999/kissy/src/ajax/tests/data/ajax.jss',
+                url: 'http://' + location.hostname + ':9999/kissy/src/ajax/tests/data/ajax.jss',
                 cache: false,
-                xdr: {
-                    subDomain: {
-                        proxy: "/kissy/src/ajax/tests/others/subdomain/proxy.html"
-                    }
-                },
                 success: function () {
                     S.log("success");
                 },
@@ -38,8 +18,28 @@
                     S.log("complete");
                 }
             });
+        }
 
-
+        io({
+            url: 'http://' + location.hostname + ':9999/kissy/src/ajax/tests/data/ajax.jss',
+            cache: false,
+            xdr: {
+                subDomain: {
+                    proxy: "/kissy/src/ajax/tests/others/subdomain/proxy.html"
+                }
+            },
+            success: function () {
+                S.log("success");
+            },
+            error: function (d, s) {
+                S.log(s || "error");
+            },
+            complete: function () {
+                S.log("complete");
+            }
         });
+
+
     });
+
 </script>

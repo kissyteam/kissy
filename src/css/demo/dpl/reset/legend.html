@@ -31,7 +31,7 @@
 <script src="/kissy/build/seed.js"></script>
 <script>
 
-    KISSY.ready(function (S) {
+    KISSY.use('core',function (S) {
         var $ = S.all, ret = [];
         ret.push("border-left-width : " + $("#t").css("border-left-width"));
         ret.push("border-left-style : " + $("#t").css("border-left-style"));

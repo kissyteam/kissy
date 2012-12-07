@@ -1,32 +1,32 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>simple-select</title>
-<link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
-<link href="../assets/pix.css" rel="stylesheet"/>
-<style>
-    h1 {
-        font-size: 2em;
-        margin: 10px;
-        text-align: center;
-    }
+    <title>simple-select</title>
+    <link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../assets/pix.css" rel="stylesheet"/>
+    <style>
+        h1 {
+            font-size: 2em;
+            margin: 10px;
+            text-align: center;
+        }
 
-    h2 {
-        font-size: 1.5em;
-        margin: 10px;
-        text-align: center;
-    }
+        h2 {
+            font-size: 1.5em;
+            margin: 10px;
+            text-align: center;
+        }
 
-    #wrap {
-        width: 90%;
-        margin: 0 auto;
-    }
-</style>
+        #wrap {
+            width: 90%;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
 <div id="wrap">
@@ -55,34 +55,34 @@
     <script src="/kissy/build/seed.js"></script>
 
     <script>
-        KISSY.ready(function (S) {
+        KISSY.use('menubutton,core', function (S, menubutton) {
             var $ = S.all;
             var s = S.one("#decorateSelect");
             for (var i = 0; i < 20; i++) {
                 s.append("<option value='" + i + "'  " + (i % 2 == 1 ? "class='ks-option-even'" : "") + "  >项目" + i + "</option>")
             }
-            KISSY.use("menubutton", function (S, MenuButton) {
-                var select = MenuButton.Select.decorate('#decorateSelect', {
-                    defaultCaption:"请选择",
-                    prefixCls:"pix-",
-                    width:280,
-                    menu:{
-                        align:{
-                            points:['tl', 'tl'],
-                            offset:[0, -1]
-                        },
-                        width:278,
-                        elStyle:{
-                            "max-height":"200px",
-                            overflow:"auto",
-                            overflowX:"hidden"
-                        }
+
+            var select = MenuButton.Select.decorate('#decorateSelect', {
+                defaultCaption: "请选择",
+                prefixCls: "pix-",
+                width: 280,
+                menu: {
+                    align: {
+                        points: ['tl', 'tl'],
+                        offset: [0, -1]
+                    },
+                    width: 278,
+                    elStyle: {
+                        "max-height": "200px",
+                        overflow: "auto",
+                        overflowX: "hidden"
                     }
-                });
-                select.on("click", function (e) {
-                    S.log(e.target.get("value"));
-                });
+                }
             });
+            select.on("click", function (e) {
+                S.log(e.target.get("value"));
+            });
+
         });
     </script>
 </div>

@@ -1,63 +1,64 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>simple-select</title>
-<link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
-<link href="../../../button/demo/assets/custombutton.css" rel="stylesheet"/>
-<link href="../assets/menubutton.css" rel="stylesheet"/>
+    <title>simple-select</title>
+    <link href="../../../css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="../../../button/demo/assets/custombutton.css" rel="stylesheet"/>
+    <link href="../assets/menubutton.css" rel="stylesheet"/>
 
-<link href="../../../menu/demo/assets/menu.css" rel="stylesheet"/>
-<link href="../../../menu/demo/assets/menuitem.css" rel="stylesheet"/>
-<link href="../../../menu/demo/assets/submenu.css" rel="stylesheet"/>
-<link href="../../../menu/demo/assets/c2c-ui.css" rel="stylesheet"/>
-<style>
-    .ks-menu {
-        background: white;
-        border: 1px solid red;
-    }
+    <link href="../../../menu/demo/assets/menu.css" rel="stylesheet"/>
+    <link href="../../../menu/demo/assets/menuitem.css" rel="stylesheet"/>
+    <link href="../../../menu/demo/assets/submenu.css" rel="stylesheet"/>
+    <link href="../../../menu/demo/assets/c2c-ui.css" rel="stylesheet"/>
+    <style>
+        .ks-menu {
+            background: white;
+            border: 1px solid red;
+        }
 
-    li {
-        padding: 5px;
-        border: 1px solid white;
-    }
+        li {
+            padding: 5px;
+            border: 1px solid white;
+        }
 
-    .c2c-menuitem-delete {
-        padding-left: 20px;
-        cursor: pointer;
-    }
+        .c2c-menuitem-delete {
+            padding-left: 20px;
+            cursor: pointer;
+        }
 
-        /*.ks-option-even {*/
-        /*background:#d3d3d3;*/
-        /*}*/
-</style>
-<style>
-    h1 {
-        font-size: 2em;
-        margin: 10px;
-        text-align: center;
-    }
+            /*.ks-option-even {*/
+            /*background:#d3d3d3;*/
+            /*}*/
+    </style>
+    <style>
+        h1 {
+            font-size: 2em;
+            margin: 10px;
+            text-align: center;
+        }
 
-    h2 {
-        font-size: 1.5em;
-        margin: 10px;
-        text-align: center;
-    }
+        h2 {
+            font-size: 1.5em;
+            margin: 10px;
+            text-align: center;
+        }
 
-    #wrap {
-        width: 90%;
-        margin: 0 auto;
-    }
-</style>
+        #wrap {
+            width: 90%;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
 <div id="wrap">
 
     <h1 id="describe">菜单按钮演示</h1>
+
     <div style="height:200px;overflow: auto;border:1px solid red;">
         <h2>设计说明</h2>
         <ol>
@@ -144,61 +145,61 @@
 -->
 
     <script>
-        KISSY.ready(function (S) {
+        KISSY.use('menubutton,menu,core', function (S, MenuButton, Menu) {
             var $ = S.all;
             var s = S.one("#decorateSelect");
             for (var i = 0; i < 20; i++) {
                 s.append("<option value='" + i + "'  " + (i % 2 == 1 ? "class='ks-option-even'" : "") + "  >项目" + i + "</option>")
             }
-            KISSY.use("menubutton,menu", function (S, MenuButton, Menu) {
-                var select = MenuButton.Select.decorate('#decorateSelect', {
-                    defaultCaption:"请选择",
-                    prefixCls:"c2c-",
-                    elCls:"custom-xx",
-                    menuCfg:{
-                        align:{
-                            offset:[0, -1]
-                        },
-                        height:150,
-                        elStyle:{
-                            overflow:"auto",
-                            overflowX:"hidden"
-                        }
-                    }
-                });
 
-                select.set("value",15);
-
-                select.on("click", function (e) {
-                    S.log(e.target.get("value"));
-                });
-
-                $("#delAll").on("click", function () {
-                    select.removeItems(true);
-                    S.log(select.get("value")||"empty");
-                });
-
-                var newSelect = new MenuButton.Select({
-                    render:"#selectDel",
-                    prefixCls:"c2c-",
-                    menu:{
-                        align:{
-                            offset:[0, -1]
-                        },
-                        children:[
-                            {
-                                xclass:'option',
-                                textContent:'xuan-wo',
-                                content:"漩涡"
-                            }
-                        ]
+            var select = MenuButton.Select.decorate('#decorateSelect', {
+                defaultCaption: "请选择",
+                prefixCls: "c2c-",
+                elCls: "custom-xx",
+                menuCfg: {
+                    align: {
+                        offset: [0, -1]
                     },
-                    defaultCaption:"常用项"
-                });
-
-                newSelect.render();
-
+                    height: 150,
+                    elStyle: {
+                        overflow: "auto",
+                        overflowX: "hidden"
+                    }
+                }
             });
+
+            select.set("value", 15);
+
+            select.on("click", function (e) {
+                S.log(e.target.get("value"));
+            });
+
+            $("#delAll").on("click", function () {
+                select.removeItems(true);
+                S.log(select.get("value") || "empty");
+            });
+
+            var newSelect = new MenuButton.Select({
+                render: "#selectDel",
+                prefixCls: "c2c-",
+                menu: {
+                    align: {
+                        offset: [0, -1]
+                    },
+                    children: [
+                        {
+                            xclass: 'option',
+                            textContent: 'xuan-wo',
+                            content: "漩涡"
+                        }
+                    ]
+                },
+                defaultCaption: "常用项"
+            });
+
+            newSelect.render();
+
+
         });
     </script>
 </div>

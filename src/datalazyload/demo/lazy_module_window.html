@@ -106,12 +106,12 @@ position: fixed;height: 240px;overflow: hidden;left:0;top:0;background-color: #f
 <script src="../src/datalazyload.js"></script>
 <script>
 
-    KISSY.ready(function (S) {
+    KISSY.use('datalazyload,core',function (S,DataLazyload) {
         var $ = S.all,
                 top = $("#top"),
                 container = $("#container");
 
-        S.use("datalazyload", function (S, DataLazyload) {
+
             var DOM = S.DOM;
 
             var d = new DataLazyload(
@@ -140,7 +140,7 @@ position: fixed;height: 240px;overflow: hidden;left:0;top:0;background-color: #f
                 });
             });
 
-        });
+
     });
 
 
