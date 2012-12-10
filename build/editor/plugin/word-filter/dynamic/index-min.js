@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:25
+build time: Dec 10 21:55
 */
 KISSY.add("editor/plugin/word-filter/dynamic/index",function(r,s){function I(c){for(var c=c.toUpperCase(),d=J.length,b=0,f=0;f<d;++f)for(var e=J[f],g=e[1].length;c.substr(0,g)==e[1];c=c.substr(g))b+=e[0];return b}function K(c){for(var c=c.toUpperCase(),d=L.length,b=1,f=1;0<c.length;f*=d)b+=L.indexOf(c.charAt(c.length-1))*f,c=c.substr(0,c.length-1);return b}function z(c,d){d?c.setAttribute("style",d):c.removeAttribute("style")}function C(c){c=c.childNodes||[];return 1==c.length&&c[0]||null}function M(c,
 d){for(var b=c.childNodes||[],f=[],e,g=0;g<b.length;g++)e=b[g],e.nodeName&&(e.nodeName==d&&(f.push(e),b.splice(g--,1)),f=f.concat(M(e,d)));return f}function D(c,d){for(var b=c.parentNode;b&&(!b.nodeName||!b.nodeName.match(d));)b=b.parentNode;return b}function E(c,d){var b,f,e=c.childNodes||[];for(f=0;f<e.length;f++)if(b=e[f],d(b)||b.nodeName&&(b=E(b,d)))return b;return null}function t(c,d,b,f){var e="",g;if("string"==typeof b)e+=d+":"+b+";";else{if("object"==typeof d)for(g in d)e+=g+":"+d[g]+";";

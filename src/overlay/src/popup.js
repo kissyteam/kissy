@@ -7,10 +7,10 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
     /**
      * @class KISSY.Overlay.Popup
-     * KISSY Popup Component. xclass: 'popup'.
+     * KISSY Popup Component. xclass: 'overlay/popup'.
      * @extends KISSY.Overlay
      */
-    var Popup = Overlay.extend({
+    return Overlay.extend({
 
         initializer: function () {
             var self = this,
@@ -188,13 +188,9 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             }
         }
     }, {
-        // TODO either change to overlay-popup
-        // or move popup to outer module
         xclass: 'popup',
         priority: 20
     });
-
-    return Popup;
 }, {
     requires: ["./base"]
 });

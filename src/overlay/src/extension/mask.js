@@ -71,7 +71,7 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
         // run complete fn to restore window's original height
         el.stop(1, 1);
 
-        el.css('display', show ? 'none' : 'block');
+        el.css('display', show ? NONE: 'block');
 
         m = effect + effects[effect][index];
 
@@ -88,7 +88,7 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
                 view = self.get("view");
             if (mask = self.get("mask")) {
                 maskNode = self.get('maskNode');
-                if (mask.closeOnClick) {
+                if (mask['closeOnClick']) {
                     maskNode.on(Event.Gesture.tap, self.close, self);
                 }
                 self.on('afterVisibleChange', function (e) {

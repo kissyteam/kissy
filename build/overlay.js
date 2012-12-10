@@ -1,136 +1,18 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 02:50
+build time: Dec 10 21:55
 */
 /**
  * @ignore
  * @fileOverview controller for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.add("overlay/base", function (S, Component,
-                                    Extension,
-                                    Loading,
-                                    Close,
-                                    Mask,
-                                    OverlayRender) {
-
-    var NONE = 'none',
-        DURATION = 0.5,
-        effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
-
-    function getGhost(self) {
-        var el = self.get("el"), $ = S.all;
-        var ghost = el[0].cloneNode(true);
-        ghost.style.visibility = "";
-        ghost.style.overflow = "hidden";
-        ghost.className += " " + self.get("prefixCls") + "overlay-ghost";
-        var body, elBody;
-        if (elBody = self.get("body")) {
-            body = $('.' + self.get('prefixCls') + 'stdmod-body', ghost);
-            body.css({
-                height: elBody.height(),
-                width: elBody.width()
-            });
-            body.html('')
-        }
-        return $(ghost);
-    }
-
-    function processTarget(self, show, callback) {
-
-        if (self.__effectGhost) {
-            self.__effectGhost.stop(1);
-        }
-
-        var el = self.get("el"),
-            $ = S.all,
-            effectCfg = self.get("effect"),
-            target = $(effectCfg.target),
-            duration = effectCfg.duration,
-            targetBox = S.mix(target.offset(), {
-                width: target.width(),
-                height: target.height()
-            }),
-            elBox = S.mix(el.offset(), {
-                width: el.width(),
-                height: el.height()
-            }),
-            from, to,
-            ghost = getGhost(self),
-            easing = effectCfg.easing;
-
-
-        ghost.insertAfter(el);
-
-        el.hide();
-
-        if (show) {
-            from = targetBox;
-            to = elBox;
-        } else {
-            from = elBox;
-            to = targetBox;
-        }
-
-        ghost.css(from);
-
-        self.__effectGhost = ghost;
-
-        ghost.animate(to, {
-            duration: duration,
-            easing: easing,
-            complete: function () {
-                self.__effectGhost = null;
-                ghost.remove();
-                el.show();
-                callback();
-            }
-        });
-
-    }
-
-    function processEffect(self, show, callback) {
-        var el = self.get("el"),
-            effectCfg = self.get("effect"),
-            effect = effectCfg.effect || NONE,
-            target = effectCfg.target;
-        if (effect == NONE && !target) {
-            callback();
-            return;
-        }
-        if (target) {
-            processTarget(self, show, callback);
-            return;
-        }
-        var duration = effectCfg.duration,
-            easing = effectCfg.easing,
-        // need to get before stop, in case anim 's complete function change it
-            originalVisibility = el.css('visibility'),
-            index = show ? 1 : 0;
-        // 队列中的也要移去
-        // run complete fn to restore window's original height
-        el.stop(1, 1);
-        el.css({
-            // must show, override box-render _onSetVisible
-            "visibility": "visible",
-            // fadeIn need display none, fadeOut need display block
-            "display": show ? 'none' : 'block'
-        });
-        var m = effect + effects[effect][index];
-        el[m](duration, function () {
-            el.css({
-                // need compute coordinates when show, so do not use display none for hide
-                "display": 'block',
-                // restore to box-render _onSetVisible
-                "visibility": originalVisibility
-            });
-            callback();
-        }, easing);
-    }
+KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mask, OverlayRender, OverlayEffect) {
 
     /**
-     * KISSY Overlay Component. xclass: 'overlay'.
+     * KISSY Overlay Component.
+     * xclass: 'overlay'.
      * @class KISSY.Overlay
      * @extends KISSY.Component.Controller
      * @mixins KISSY.Component.Extension.ContentBox
@@ -140,135 +22,83 @@ KISSY.add("overlay/base", function (S, Component,
      * @mixins KISSY.Overlay.Extension.Close
      * @mixins KISSY.Overlay.Extension.Mask
      */
-    var Overlay = Component.Controller.extend([
+    return Component.Controller.extend([
         Extension.ContentBox,
         Extension.Position,
         Loading,
         Extension.Align,
         Close,
-        Mask
-    ],{
+        Mask,
+        OverlayEffect
+    ], {}, {
+        ATTRS: {
+
             /**
-             * For overlay with effect, it should listen show and hide instead of afterVisibleChange.
+             * overlay can not have focus.
+             *
+             * Defaults to: false.
+             *
+             * @cfg {boolean} focusable
              * @protected
              */
-            _onSetVisible: function (v) {
-                var self = this;
-                if (self.get('rendered')) {
-                    // delay show and hide event after anim
-                    processEffect(self, v, function () {
-                        self.fire(v ? 'show' : 'hide');
-                    });
-                }
+            /**
+             * @ignore
+             */
+            focusable: {
+                value: false
+            },
+
+            /**
+             * overlay can have text selection.
+             *
+             * Defaults to: true.
+             *
+             * @cfg {boolean} allowTextSelection
+             * @protected
+             */
+            /**
+             * @ignore
+             */
+            allowTextSelection: {
+                value: true
+            },
+
+            /**
+             * whether this component can be closed.
+             *
+             * Defaults to: false
+             *
+             * @cfg {Boolean} closable
+             */
+            /**
+             * @ignore
+             */
+            closable: {
+                value: false
+            },
+
+            /**
+             * whether this component can be responsive to mouse.
+             *
+             * Defaults to: false
+             *
+             * @cfg {Boolean} handleMouseEvents
+             * @protected
+             */
+            /**
+             * @ignore
+             */
+            handleMouseEvents: {
+                value: false
+            },
+            xrender: {
+                value: OverlayRender
             }
-
-        }, {
-            ATTRS: {
-
-                /**
-                 * Set v as overlay 's show effect
-                 *
-                 * - v.effect (String): Default:none.
-                 * can be set as "fade" or "slide"
-                 *
-                 * - v.target (String|KISS.Node):
-                 * The target node from which overlay should animate from while showing.
-                 *
-                 * - v.duration (Number): in seconds.
-                 * Default:0.5.
-                 *
-                 * - v.easing (String|Function):
-                 * for string see {@link KISSY.Anim.Easing} 's method name.
-                 *
-                 * @cfg {Object} effect
-                 */
-                /**
-                 * @ignore
-                 */
-                effect: {
-                    value: {
-                        effect: '',
-                        target: null,
-                        duration: DURATION,
-                        easing: 'easeOut'
-                    },
-                    setter: function (v) {
-                        var effect = v.effect;
-                        if (typeof effect == 'string' && !effects[effect]) {
-                            v.effect = '';
-                        }
-                    }
-
-                },
-
-                /**
-                 * overlay can not have focus.
-                 *
-                 * Defaults to: false.
-                 *
-                 * @cfg {boolean} focusable
-                 * @protected
-                 */
-                /**
-                 * @ignore
-                 */
-                focusable: {
-                    value: false
-                },
-
-                /**
-                 * overlay can have text selection.
-                 *
-                 * Defaults to: true.
-                 *
-                 * @cfg {boolean} allowTextSelection
-                 * @protected
-                 */
-                /**
-                 * @ignore
-                 */
-                allowTextSelection: {
-                    value: true
-                },
-
-                /**
-                 * whether this component can be closed.
-                 *
-                 * Defaults to: false
-                 *
-                 * @cfg {Boolean} closable
-                 */
-                /**
-                 * @ignore
-                 */
-                closable: {
-                    value: false
-                },
-
-                /**
-                 * whether this component can be responsive to mouse.
-                 *
-                 * Defaults to: false
-                 *
-                 * @cfg {Boolean} handleMouseEvents
-                 * @protected
-                 */
-                /**
-                 * @ignore
-                 */
-                handleMouseEvents: {
-                    value: false
-                },
-                xrender: {
-                    value: OverlayRender
-                }
-            }
-        }, {
-            xclass: 'overlay',
-            priority: 10
-        });
-
-    return Overlay;
+        }
+    }, {
+        xclass: 'overlay',
+        priority: 10
+    });
 }, {
     requires: [
         'component/base',
@@ -276,7 +106,9 @@ KISSY.add("overlay/base", function (S, Component,
         "./extension/loading",
         "./extension/close",
         "./extension/mask",
-        './overlay-render']
+        './overlay-render',
+        './extension/overlay-effect'
+    ]
 });/**
  * @ignore
  * @fileOverview render for dialog
@@ -311,24 +143,22 @@ KISSY.add("overlay/dialog-render", function (S, OverlayRender,StdMod) {
  * @fileOverview KISSY.Dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod) {
-
-    var $ = Node.all;
+KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, DialogEffect) {
 
     /**
      * @class KISSY.Overlay.Dialog
-     * KISSY Dialog Component. xclass: 'dialog'.
+     * KISSY Dialog Component. xclass: 'overlay/dialog'.
      * @extends KISSY.Overlay
      * @mixins KISSY.Overlay.Extension.StdMod
      */
     var Dialog = Overlay.extend([
-        StdMod
+        StdMod,
+        DialogEffect
     ], {
             handleKeyEventInternal: function (e) {
                 if (this.get('escapeToClose') &&
                     e.keyCode === Node.KeyCodes.ESC) {
-                    if (e.target.nodeName.toLowerCase() == 'select' &&
-                        !e.target.disabled) {
+                    if (e.target.nodeName.toLowerCase() == 'select' && !e.target.disabled) {
                         // escape at select
                     } else {
                         this.close();
@@ -408,9 +238,6 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod) {
                 }
             }
         }, {
-
-            // TODO either change to overlay-dialog
-            // or move dialog to outer module
             xclass: 'dialog',
             priority: 20
         });
@@ -431,7 +258,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod) {
         // summary:
         // Handles the keyboard events for accessibility reasons
 
-        var node = $(e.target); // get the target node of the keypress event
+        var node = Node.all(e.target); // get the target node of the keypress event
 
         // find the first and last tab focusable items in the hierarchy of the dialog container node
         // do this every time if the items may be added / removed from the the dialog may change visibility or state
@@ -467,7 +294,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod) {
         "./base",
         './dialog-render',
         'node',
-        './extension/stdmod'
+        './extension/stdmod',
+        './extension/dialog-effect'
     ]
 });
 
@@ -638,6 +466,38 @@ KISSY.add("overlay/extension/close", function () {
     return Close;
 
 });/**
+ * effect for dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('overlay/extension/dialog-effect', function (S) {
+
+    function DialogEffect() {
+
+    }
+
+    DialogEffect.prototype = {
+
+        // also simplify body
+        __afterCreateEffectGhost: function (ghost) {
+            var self = this,
+                body,
+                elBody = self.get("body");
+
+            ghost.all('.' + self.get('prefixCls') + 'stdmod-body')
+                .css({
+                    height: elBody.height(),
+                    width: elBody.width()
+                })
+                .html('');
+
+            return ghost;
+        }
+
+    };
+
+    return DialogEffect;
+
+});/**
  * @ignore
  * @fileOverview loading mask support for overlay
  * @author yiminghe@gmail.com
@@ -758,7 +618,7 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
         /*
          点 mask 焦点不转移
          */
-        mask.unselectable();
+        mask['unselectable']();
         mask.on("mousedown", function (e) {
             e.preventDefault();
         });
@@ -845,7 +705,7 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
          *
          *      {
          *          // whether hide current component when click on mask
-         *          hideOnClick: false,
+         *          closeOnClick: false,
          *          effect: 'fade', // slide
          *          duration: 0.5,
          *          easing: 'easingNone'
@@ -896,7 +756,7 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
         // run complete fn to restore window's original height
         el.stop(1, 1);
 
-        el.css('display', show ? 'none' : 'block');
+        el.css('display', show ? NONE: 'block');
 
         m = effect + effects[effect][index];
 
@@ -913,10 +773,8 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
                 view = self.get("view");
             if (mask = self.get("mask")) {
                 maskNode = self.get('maskNode');
-                if (mask.hideOnClick) {
-                    maskNode.on(Event.Gesture.tap, function () {
-                        self.hide();
-                    });
+                if (mask['closeOnClick']) {
+                    maskNode.on(Event.Gesture.tap, self.close, self);
                 }
                 self.on('afterVisibleChange', function (e) {
                     var v;
@@ -933,6 +791,192 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
 
     return Mask;
 }, {requires: ["event"]});/**
+ * effect for overlay
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('overlay/extension/overlay-effect', function (S) {
+
+    var NONE = 'none',
+        BLOCK='block',
+        HIDDEN='hidden',
+        VISIBLE='visible',
+        DURATION = 0.5,
+        effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
+
+    function getGhost(self) {
+        var el = self.get("el"),
+            ghost = el.clone(true);
+
+        ghost.css({
+            visibility:'',
+            overflow:HIDDEN
+        }).addClass(self.get('prefixCls') + 'overlay-ghost');
+
+        return self.__afterCreateEffectGhost(ghost);
+    }
+
+    function processTarget(self, show, callback) {
+
+        if (self.__effectGhost) {
+            self.__effectGhost.stop(1);
+        }
+
+        var el = self.get("el"),
+            $ = S.all,
+            effectCfg = self.get("effect"),
+            target = $(effectCfg.target),
+            duration = effectCfg.duration,
+            targetBox = S.mix(target.offset(), {
+                width: target.width(),
+                height: target.height()
+            }),
+            elBox = S.mix(el.offset(), {
+                width: el.width(),
+                height: el.height()
+            }),
+            from, to,
+            ghost = getGhost(self),
+            easing = effectCfg.easing;
+
+
+        ghost.insertAfter(el);
+
+        el.hide();
+
+        if (show) {
+            from = targetBox;
+            to = elBox;
+        } else {
+            from = elBox;
+            to = targetBox;
+        }
+
+        ghost.css(from);
+
+        self.__effectGhost = ghost;
+
+        ghost.animate(to, {
+            duration: duration,
+            easing: easing,
+            complete: function () {
+                self.__effectGhost = null;
+                ghost.remove();
+                el.show();
+                callback();
+            }
+        });
+
+    }
+
+    function processEffect(self, show, callback) {
+        var el = self.get("el"),
+            effectCfg = self.get("effect"),
+            effect = effectCfg.effect || NONE,
+            target = effectCfg.target;
+        if (effect == NONE && !target) {
+            callback();
+            return;
+        }
+        if (target) {
+            processTarget(self, show, callback);
+            return;
+        }
+        var duration = effectCfg.duration,
+            easing = effectCfg.easing,
+        // need to get before stop, in case anim 's complete function change it
+            originalVisibility = el.css('visibility'),
+            index = show ? 1 : 0;
+        // 队列中的也要移去
+        // run complete fn to restore window's original height
+        el.stop(1, 1);
+        el.css({
+            // must show, override box-render _onSetVisible
+            "visibility": VISIBLE,
+            // fadeIn need display none, fadeOut need display block
+            "display": show ? NONE : BLOCK
+        });
+        var m = effect + effects[effect][index];
+        el[m](duration, function () {
+            el.css({
+                // need compute coordinates when show, so do not use display none for hide
+                "display": BLOCK,
+                // restore to box-render _onSetVisible
+                "visibility": originalVisibility
+            });
+            callback();
+        }, easing);
+    }
+
+    function OverlayEffect() {
+
+    }
+
+    OverlayEffect.ATTRS = {
+        /**
+         * Set v as overlay 's show effect
+         *
+         * - v.effect (String): Default:none.
+         * can be set as "fade" or "slide"
+         *
+         * - v.target (String|KISS.Node):
+         * The target node from which overlay should animate from while showing.
+         *
+         * - v.duration (Number): in seconds.
+         * Default:0.5.
+         *
+         * - v.easing (String|Function):
+         * for string see {@link KISSY.Anim.Easing} 's method name.
+         *
+         * @cfg {Object} effect
+         * @member KISSY.Overlay
+         */
+        /**
+         * @ignore
+         */
+        effect: {
+            value: {
+                effect: '',
+                target: null,
+                duration: DURATION,
+                easing: 'easeOut'
+            },
+            setter: function (v) {
+                var effect = v.effect;
+                if (typeof effect == 'string' && !effects[effect]) {
+                    v.effect = '';
+                }
+            }
+
+        }
+    };
+
+    OverlayEffect.prototype = {
+
+        __afterCreateEffectGhost:function(ghost){
+            return ghost;
+        },
+
+
+        /**
+         * For overlay with effect, it should listen show and hide instead of afterVisibleChange.
+         * @protected
+         * @member KISSY.Overlay
+         */
+        _onSetVisible: function (v) {
+            var self = this;
+            if (self.get('rendered')) {
+                // delay show and hide event after anim
+                processEffect(self, v, function () {
+                    self.fire(v ? 'show' : 'hide');
+                });
+            }
+        }
+
+    };
+
+    return OverlayEffect;
+
+});/**
  * @ignore
  * @fileOverview support standard mod for component
  * @author yiminghe@gmail.com
@@ -1011,26 +1055,26 @@ KISSY.add("overlay/extension/stdmod-render", function (S, Node) {
             createUI(this, "footer");
         },
 
-        _onSetBodyStyle: function (v) {
+        '_onSetBodyStyle': function (v) {
             this.get("body").css(v);
         },
 
-        _onSetHeaderStyle: function (v) {
+        '_onSetHeaderStyle': function (v) {
             this.get("header").css(v);
         },
-        _onSetFooterStyle: function (v) {
+        '_onSetFooterStyle': function (v) {
             this.get("footer").css(v);
         },
 
-        _onSetBodyContent: function (v) {
+        '_onSetBodyContent': function (v) {
             _setStdModRenderContent(this, "body", v);
         },
 
-        _onSetHeaderContent: function (v) {
+        '_onSetHeaderContent': function (v) {
             _setStdModRenderContent(this, "header", v);
         },
 
-        _onSetFooterContent: function (v) {
+        '_onSetFooterContent': function (v) {
             _setStdModRenderContent(this, "footer", v);
         }
     };
@@ -1217,10 +1261,10 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
     /**
      * @class KISSY.Overlay.Popup
-     * KISSY Popup Component. xclass: 'popup'.
+     * KISSY Popup Component. xclass: 'overlay/popup'.
      * @extends KISSY.Overlay
      */
-    var Popup = Overlay.extend({
+    return Overlay.extend({
 
         initializer: function () {
             var self = this,
@@ -1398,13 +1442,9 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
             }
         }
     }, {
-        // TODO either change to overlay-popup
-        // or move popup to outer module
         xclass: 'popup',
         priority: 20
     });
-
-    return Popup;
 }, {
     requires: ["./base"]
 });

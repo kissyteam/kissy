@@ -3,24 +3,22 @@
  * @fileOverview KISSY.Dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod) {
-
-    var $ = Node.all;
+KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, DialogEffect) {
 
     /**
      * @class KISSY.Overlay.Dialog
-     * KISSY Dialog Component. xclass: 'dialog'.
+     * KISSY Dialog Component. xclass: 'overlay/dialog'.
      * @extends KISSY.Overlay
      * @mixins KISSY.Overlay.Extension.StdMod
      */
     var Dialog = Overlay.extend([
-        StdMod
+        StdMod,
+        DialogEffect
     ], {
             handleKeyEventInternal: function (e) {
                 if (this.get('escapeToClose') &&
                     e.keyCode === Node.KeyCodes.ESC) {
-                    if (e.target.nodeName.toLowerCase() == 'select' &&
-                        !e.target.disabled) {
+                    if (e.target.nodeName.toLowerCase() == 'select' && !e.target.disabled) {
                         // escape at select
                     } else {
                         this.close();
@@ -100,9 +98,6 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod) {
                 }
             }
         }, {
-
-            // TODO either change to overlay-dialog
-            // or move dialog to outer module
             xclass: 'dialog',
             priority: 20
         });
@@ -123,7 +118,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod) {
         // summary:
         // Handles the keyboard events for accessibility reasons
 
-        var node = $(e.target); // get the target node of the keypress event
+        var node = Node.all(e.target); // get the target node of the keypress event
 
         // find the first and last tab focusable items in the hierarchy of the dialog container node
         // do this every time if the items may be added / removed from the the dialog may change visibility or state
@@ -159,7 +154,8 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod) {
         "./base",
         './dialog-render',
         'node',
-        './extension/stdmod'
+        './extension/stdmod',
+        './extension/dialog-effect'
     ]
 });
 

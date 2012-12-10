@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:26
+build time: Dec 10 21:48
 */
 /**
  * @ignore
@@ -392,7 +392,7 @@ KISSY.add('rich-base', function (S, Base) {
                 // debug mode, give the right name for constructor
                 // refer : http://limu.iteye.com/blog/1136712
                 if (S.Config.debug) {
-                    eval("C=function " + name.replace(/[-.]/g, "_") +
+                    eval("C=function " + name.replace(/[-./]/g, "_") +
                         "(){ C.superclass.constructor.apply(this, arguments);}");
                 }
             }

@@ -42,7 +42,7 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
         /*
          点 mask 焦点不转移
          */
-        mask.unselectable();
+        mask['unselectable']();
         mask.on("mousedown", function (e) {
             e.preventDefault();
         });

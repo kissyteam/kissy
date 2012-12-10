@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:25
+build time: Dec 10 21:55
 */
 /**
  * Set up editor constructor
@@ -2032,6 +2032,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     return cmd.exec.apply(cmd, args);
                 } else {
                     S.log(name + ": command not found");
+                    return undefined;
                 }
             },
 
@@ -2155,14 +2156,18 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
             /**
              * Add style text to current editor
-             * @param cssText {string}
+             * @param {String} cssText
+             * @param {String} id
              */
             addCustomStyle: function (cssText, id) {
                 var self = this,
+                    win = self.get("window"),
                     customStyle = self.get("customStyle") || "";
                 customStyle += "\n" + cssText;
                 self.set("customStyle", customStyle);
-                DOM.addStyleSheet(self.get("window"), customStyle, id);
+                if (win) {
+                    DOM.addStyleSheet(win, cssText, id);
+                }
             },
 
             /**
@@ -2236,8 +2241,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     if (selection && !selection.isInvalid) {
                         var startElement = selection.getStartElement(),
                             currentPath = new Editor.ElementPath(startElement);
-                        if (!self.__previousPath ||
-                            !self.__previousPath.compare(currentPath)) {
+                        if (!self.__previousPath || !self.__previousPath.compare(currentPath)) {
                             self.__previousPath = currentPath;
                             self.fire("selectionChange",
                                 {
@@ -2268,7 +2272,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 var self = this;
 
                 if (self.get("mode") !== WYSIWYG_MODE) {
-                    return;
+                    return undefined;
                 }
 
                 self.focus();
@@ -2288,7 +2292,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     lastElement;
 
                 if (!ranges || ranges.length == 0) {
-                    return;
+                    return undefined;
                 }
 
                 self.execCommand("save");
@@ -2307,7 +2311,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 }
 
                 if (!lastElement) {
-                    return;
+                    return undefined;
                 }
 
                 range.moveToPosition(lastElement, KER.POSITION_AFTER_END);
@@ -2338,7 +2342,8 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
 
             /**
              * Insert html string into current editor.
-             * @param data {string}
+             * @param {String} data
+             * @param [dataFilter]
              */
             insertHtml: function (data, dataFilter) {
                 var self = this,
