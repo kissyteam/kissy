@@ -20,7 +20,7 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
          *
          *      {
          *          // whether hide current component when click on mask
-         *          hideOnClick: false,
+         *          closeOnClick: false,
          *          effect: 'fade', // slide
          *          duration: 0.5,
          *          easing: 'easingNone'
@@ -88,10 +88,8 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
                 view = self.get("view");
             if (mask = self.get("mask")) {
                 maskNode = self.get('maskNode');
-                if (mask.hideOnClick) {
-                    maskNode.on(Event.Gesture.tap, function () {
-                        self.hide();
-                    });
+                if (mask.closeOnClick) {
+                    maskNode.on(Event.Gesture.tap, self.close, self);
                 }
                 self.on('afterVisibleChange', function (e) {
                     var v;

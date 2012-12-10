@@ -436,6 +436,13 @@ describe('lang.js', function () {
         expect(S.substitute()).toBe(undefined);
         expect(S.substitute('a', fn)).toBe('a');
         expect(S.substitute(fn)).toBe(fn);
+
+        function T() {
+            this.x = 1;
+        }
+
+        expect(S.substitute("{x}", new T())).toBe('1');
+
     });
 
     it('S.each', function () {

@@ -11,6 +11,7 @@
     // include it in the regexp to enforce consistent cross-browser behavior.
     var RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
         trim = String.prototype.trim,
+        SUBSTITUTE_REG = /\\?\{([^{}]+)\}/g,
         EMPTY = '';
 
     S.mix(S, {
@@ -36,12 +37,11 @@
          * @param {RegExp} [regexp] to match a piece of template string
          */
         substitute: function (str, o, regexp) {
-            if (typeof str != 'string'
-                || !S.isPlainObject(o)) {
+            if (typeof str != 'string' || !o) {
                 return str;
             }
 
-            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function (match, name) {
+            return str.replace(regexp || SUBSTITUTE_REG, function (match, name) {
                 if (match.charAt(0) === '\\') {
                     return match.slice(1);
                 }

@@ -6,7 +6,7 @@
 
 ## yiminghe@gmail.com 2012-11-21
 
- - add hideOnClick for mask configuration
+ - add closeOnClick for mask configuration
 
 ## yiminghe@gmail.com 2012-11-18
 

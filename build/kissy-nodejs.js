@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:27
+build time: Dec 10 13:50
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121207002731' will replace with current timestamp when compressing.
+         * NOTICE: '20121210134958' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121207002731',
+        __BUILD_TIME: '20121210134958',
         /**
          * KISSY Environment.
          * @private
@@ -1520,6 +1520,7 @@ var KISSY = (function (undefined) {
     // include it in the regexp to enforce consistent cross-browser behavior.
     var RE_TRIM = /^[\s\xa0]+|[\s\xa0]+$/g,
         trim = String.prototype.trim,
+        SUBSTITUTE_REG = /\\?\{([^{}]+)\}/g,
         EMPTY = '';
 
     S.mix(S, {
@@ -1545,12 +1546,11 @@ var KISSY = (function (undefined) {
          * @param {RegExp} [regexp] to match a piece of template string
          */
         substitute: function (str, o, regexp) {
-            if (typeof str != 'string'
-                || !S.isPlainObject(o)) {
+            if (typeof str != 'string' || !o) {
                 return str;
             }
 
-            return str.replace(regexp || /\\?\{([^{}]+)\}/g, function (match, name) {
+            return str.replace(regexp || SUBSTITUTE_REG, function (match, name) {
                 if (match.charAt(0) === '\\') {
                     return match.slice(1);
                 }
@@ -5146,7 +5146,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121207002731'
+            tag: '20121210134958'
         }, getBaseInfo()));
     }
 
