@@ -66,7 +66,7 @@ KISSY.add('ajax/xdr-flash-transport', function (S, io, DOM) {
                 id: self._uid,
                 uid: self._uid,
                 method: c.type,
-                data: c.hasContent && c.query.toString(c.serializeArray) || {}
+                data: c.hasContent && c.data || {}
             });
         },
 

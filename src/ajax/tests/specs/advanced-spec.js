@@ -11,6 +11,35 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         console.log("Advanced IO");
 
+        it('support custom contentType', function () {
+            var done = 0, ok = 0;
+            io({
+                url: '../data/receive-json.jss',
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data: S.JSON.stringify({
+                    x: 1
+                }),
+                success: function (t) {
+                    expect(t.x).toBe(1);
+                    ok = 1;
+                },
+                complete: function () {
+                    done = 1;
+                }
+            });
+
+            waitsFor(function () {
+                return done;
+            });
+
+            runs(function () {
+                expect(ok).toBe(1);
+            });
+
+        });
+
         it("should support last-modified from server", function () {
 
             console.log("should support last-modified from server");

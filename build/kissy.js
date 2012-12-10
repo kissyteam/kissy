@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 10 13:50
+build time: Dec 10 18:09
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121210134958' will replace with current timestamp when compressing.
+         * NOTICE: '20121210180857' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121210134958',
+        __BUILD_TIME: '20121210180857',
         /**
          * KISSY Environment.
          * @private
@@ -5868,7 +5868,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121210134958'
+            tag: '20121210180857'
         }, getBaseInfo()));
     }
 
@@ -16226,7 +16226,7 @@ KISSY.add('json', function (S, J) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:20
+build time: Dec 10 18:08
 */
 /**
  * @ignore
@@ -16466,20 +16466,16 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
     defaultConfig.converters.html = defaultConfig.converters.text;
 
     function setUpConfig(c) {
+
         // deep mix,exclude context!
-
-        var context = c.context,
-            ifModified = c['ifModified'];
-
+        var context = c.context;
         delete c.context;
         c = S.mix(S.clone(defaultConfig), c, {
             deep: true
         });
         c.context = context || c;
 
-        var data, uri, type = c.type, dataType = c.dataType, query;
-
-        query = c.query = new S.Uri.Query();
+        var data, uri, type = c.type, dataType = c.dataType;
 
         uri = c.uri = simulatedLocation.resolve(c.url);
 
@@ -16487,17 +16483,13 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
             c.crossDomain = !c.uri.hasSameDomainAs(simulatedLocation);
         }
 
-        if (c.processData && (data = c.data)) {
-            // 必须 encodeURIComponent 编码 utf-8
-            if (S.isObject(data)) {
-                query.add(data);
-            } else {
-                query.reset(data);
-            }
-        }
-
         type = c.type = type.toUpperCase();
         c.hasContent = !rnoContent.test(type);
+
+        if (c.processData && (data = c.data) && typeof data != 'string') {
+            // normalize to string
+            c.data = S.param(data, undefined, undefined, c.serializeArray);
+        }
 
         // 数据类型处理链，一步步将前面的数据类型转化成最后一个
         dataType = c.dataType = S.trim(dataType || '*').split(rspace);
@@ -16506,23 +16498,13 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
             c.cache = false;
         }
 
-        var ifModifiedKeyUri;
-
         if (!c.hasContent) {
-            if (query.count()) {
-                uri.query.add(query);
-            }
-            if (ifModified) {
-                // isModifiedKey should ignore random timestamp
-                ifModifiedKeyUri = uri.clone();
+            if (c.data) {
+                uri.query.add(S.unparam(c.data));
             }
             if (c.cache === false) {
                 uri.query.set('_ksTS', (S.now() + '_' + S.guid()));
             }
-        }
-        // TODO: consider form ?
-        if (ifModified) {
-            c.ifModifiedKeyUri = ifModifiedKeyUri || uri.clone();
         }
         return c;
     }
@@ -17079,25 +17061,28 @@ KISSY.add('ajax/form', function (S, io, DOM, FormSerializer) {
             enctype,
             dataType,
             formParam,
+            data,
             tmpForm,
             c = io.config;
         // serialize form if needed
         if (tmpForm = c.form) {
             form = DOM.get(tmpForm);
             enctype = form['encoding'] || form.enctype;
+            data = c.data;
             // 上传有其他方法
             if (enctype.toLowerCase() != 'multipart/form-data') {
                 // when get need encode
                 formParam = FormSerializer.getFormData(form);
                 if (c.hasContent) {
-                    c.query.add(formParam);
+                    formParam = S.param(formParam, undefined, undefined, c.serializeArray);
+                    if (data) {
+                        c.data += '&' + formParam;
+                    } else {
+                        c.data = formParam;
+                    }
                 } else {
                     // get 直接加到 url
                     c.uri.query.add(formParam);
-                    // update ifModifiedKey if necessary
-                    if (c.ifModifiedKeyUri) {
-                        c.ifModifiedKeyUri.query.add(formParam);
-                    }
                 }
             } else {
                 dataType = c.dataType;
@@ -17169,9 +17154,8 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
     }
 
     function addDataToForm(query, form, serializeArray) {
-        var ret = [], isArray, vs, i, e, keys = query.keys();
-        S.each(keys, function (k) {
-            var data = query.get(k);
+        var ret = [], isArray, vs, i, e;
+        S.each(query, function (data, k) {
             isArray = S.isArray(data);
             vs = S.makeArray(data);
             // 数组和原生一样对待，创建多个同名输入域
@@ -17204,12 +17188,13 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
                 c = io.config,
                 fields,
                 iframe,
-                query = c.query,
+                query,
+                data = c.data,
                 form = DOM.get(c.form);
 
             self.attrs = {
-                target: DOM.attr(form, 'target')||'',
-                action: DOM.attr(form, 'action')||'',
+                target: DOM.attr(form, 'target') || '',
+                action: DOM.attr(form, 'action') || '',
                 // enctype 区分 iframe 与 serialize
                 //encoding:DOM.attr(form, 'encoding'),
                 //enctype:DOM.attr(form, 'enctype'),
@@ -17228,7 +17213,12 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
                 //encoding:'multipart/form-data'
             });
 
-            if (query.count()) {
+            // unparam to kv map
+            if (data) {
+                query = S.unparam(data);
+            }
+
+            if (query) {
                 fields = addDataToForm(query, form, c.serializeArray);
             }
 
@@ -17935,7 +17925,7 @@ KISSY.add('ajax/xdr-flash-transport', function (S, io, DOM) {
                 id: self._uid,
                 uid: self._uid,
                 method: c.type,
-                data: c.hasContent && c.query.toString(c.serializeArray) || {}
+                data: c.hasContent && c.data || {}
             });
         },
 
@@ -18065,6 +18055,22 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
         return _XDomainRequest && (xhr instanceof _XDomainRequest);
     }
 
+    function getIfModifiedKey(c) {
+        var ifModified = c.ifModified,
+            ifModifiedKey;
+        if (ifModified) {
+            ifModifiedKey = c.uri;
+            if (c.cache === false) {
+                ifModifiedKey = ifModifiedKey.clone();
+                // remove random timestamp
+                // random timestamp is forced to fetch code file from server
+                ifModifiedKey.query.remove('_ksTS');
+            }
+            ifModifiedKey = ifModifiedKey.toString();
+        }
+        return ifModifiedKey;
+    }
+
     S.mix(XhrTransportBase.proto, {
         sendInternal: function () {
             var self = this,
@@ -18080,12 +18086,11 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                 serializeArray = c.serializeArray,
                 url = c.uri.toString(serializeArray),
                 xhrFields,
-                ifModifiedKey,
+                ifModifiedKey = getIfModifiedKey(c),
                 cacheValue,
                 i;
 
-            if (ifModifiedKey =
-                (c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString())) {
+            if (ifModifiedKey) {
                 // if ajax want a conditional load
                 // (response status is 304 and responseText is null)
                 // u need to set if-modified-since manually!
@@ -18133,7 +18138,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                 S.log(e);
             }
 
-            nativeXhr.send(c.hasContent && c.query.toString(serializeArray) || null);
+            nativeXhr.send(c.hasContent && c.data || null);
 
             if (!async || nativeXhr.readyState == 4) {
                 self._callback();
@@ -18193,7 +18198,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                             nativeXhr.abort();
                         }
                     } else {
-                        ifModifiedKey = c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString();
+                        ifModifiedKey = getIfModifiedKey(c);
 
                         var status = nativeXhr.status;
 

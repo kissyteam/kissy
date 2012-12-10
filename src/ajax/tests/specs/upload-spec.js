@@ -155,7 +155,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             // ie upload-domain.jss 必须设置 domain
             // 否则 localhost:8888 和 localhost:9999 默认可以通信...
             var uploadRc = 'http://'+location.hostname+':9999/' +
-                'src/ajax/tests/others/form/upload-domain.jss';
+                'kissy/src/ajax/tests/others/form/upload-domain.jss';
 
             io({
                 form: form[0],

@@ -52,6 +52,22 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
         return _XDomainRequest && (xhr instanceof _XDomainRequest);
     }
 
+    function getIfModifiedKey(c) {
+        var ifModified = c.ifModified,
+            ifModifiedKey;
+        if (ifModified) {
+            ifModifiedKey = c.uri;
+            if (c.cache === false) {
+                ifModifiedKey = ifModifiedKey.clone();
+                // remove random timestamp
+                // random timestamp is forced to fetch code file from server
+                ifModifiedKey.query.remove('_ksTS');
+            }
+            ifModifiedKey = ifModifiedKey.toString();
+        }
+        return ifModifiedKey;
+    }
+
     S.mix(XhrTransportBase.proto, {
         sendInternal: function () {
             var self = this,
@@ -67,12 +83,11 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                 serializeArray = c.serializeArray,
                 url = c.uri.toString(serializeArray),
                 xhrFields,
-                ifModifiedKey,
+                ifModifiedKey = getIfModifiedKey(c),
                 cacheValue,
                 i;
 
-            if (ifModifiedKey =
-                (c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString())) {
+            if (ifModifiedKey) {
                 // if ajax want a conditional load
                 // (response status is 304 and responseText is null)
                 // u need to set if-modified-since manually!
@@ -120,7 +135,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                 S.log(e);
             }
 
-            nativeXhr.send(c.hasContent && c.query.toString(serializeArray) || null);
+            nativeXhr.send(c.hasContent && c.data || null);
 
             if (!async || nativeXhr.readyState == 4) {
                 self._callback();
@@ -180,7 +195,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                             nativeXhr.abort();
                         }
                     } else {
-                        ifModifiedKey = c.ifModifiedKeyUri && c.ifModifiedKeyUri.toString();
+                        ifModifiedKey = getIfModifiedKey(c);
 
                         var status = nativeXhr.status;
 

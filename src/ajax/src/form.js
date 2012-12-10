@@ -12,25 +12,28 @@ KISSY.add('ajax/form', function (S, io, DOM, FormSerializer) {
             enctype,
             dataType,
             formParam,
+            data,
             tmpForm,
             c = io.config;
         // serialize form if needed
         if (tmpForm = c.form) {
             form = DOM.get(tmpForm);
             enctype = form['encoding'] || form.enctype;
+            data = c.data;
             // 上传有其他方法
             if (enctype.toLowerCase() != 'multipart/form-data') {
                 // when get need encode
                 formParam = FormSerializer.getFormData(form);
                 if (c.hasContent) {
-                    c.query.add(formParam);
+                    formParam = S.param(formParam, undefined, undefined, c.serializeArray);
+                    if (data) {
+                        c.data += '&' + formParam;
+                    } else {
+                        c.data = formParam;
+                    }
                 } else {
                     // get 直接加到 url
                     c.uri.query.add(formParam);
-                    // update ifModifiedKey if necessary
-                    if (c.ifModifiedKeyUri) {
-                        c.ifModifiedKeyUri.query.add(formParam);
-                    }
                 }
             } else {
                 dataType = c.dataType;
