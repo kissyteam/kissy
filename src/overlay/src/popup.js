@@ -7,7 +7,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
     /**
      * @class KISSY.Overlay.Popup
-     * KISSY Popup Component. xclass: 'overlay/popup'.
+     * KISSY Popup Component. xclass: 'popup'.
      * @extends KISSY.Overlay
      */
     return Overlay.extend({
