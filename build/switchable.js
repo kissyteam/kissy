@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 01:41
+build time: Dec 11 01:43
 */
 /**
  * @fileOverview accordion aria support
@@ -973,9 +973,10 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
                         var trigger = e.currentTarget,
                             index = self._getTriggerIndex(trigger);
                         self._onMouseEnterTrigger(index, e);
-                    }).delegate('mouseleave', '.' + _triggerInternalCls, function () {
-                        self._onMouseLeaveTrigger();
                     });
+                Event.delegate(navEl, 'mouseleave', '.' + _triggerInternalCls, function () {
+                    self._onMouseLeaveTrigger();
+                });
             }
         },
         // 初始化 Trigger，添加样式
