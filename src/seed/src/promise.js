@@ -280,6 +280,7 @@
 
     KISSY.Defer = Defer;
     KISSY.Promise = Promise;
+    Promise.Defer = Defer;
 
     S.mix(Promise,
         /**
