@@ -1,0 +1,21 @@
+<script src="/kissy/build/seed.js"></script>
+<script>
+    KISSY.use("ajax", function (S, io) {
+        S.ready(function (S) {
+            io({
+                url: '../../data/receive-json.jss',
+                type: 'post',
+                data: S.JSON.stringify({
+                    x: 1
+                }),
+                dataType: 'json',
+                contentType: 'application/json',
+                complete: function (d, s) {
+                    S.log('complete ....');
+                    S.log(s);
+                    S.log(d);
+                }
+            });
+        });
+    });
+</script>
