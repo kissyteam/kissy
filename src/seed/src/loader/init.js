@@ -161,7 +161,4 @@
         Env._comboLoader = new ComboLoader(S);
     }
 
-    // empty mod for conditional loading
-    S.add('empty', S.noop);
-
 })(KISSY);

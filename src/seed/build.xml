@@ -14,7 +14,7 @@
             <fileset dir="${kissy.src.dir}" includes="**/meta/modules.js"/>
             <footer>
                 })(function(c){
-                    KISSY.config('modules', c);
+                KISSY.config('modules', c);
                 },KISSY.Features,KISSY.UA);
             </footer>
         </concat>
@@ -59,6 +59,7 @@
             <path location="${component.src.dir}/web.js"/>
             <path location="${component.src.dir}/meta.js"/>
             <path location="${component.src.dir}/modules.js"/>
+            <path location="${component.src.dir}/exports.js"/>
             <filterchain>
                 <deletecharacters chars="${bom}"/>
             </filterchain>
@@ -100,6 +101,7 @@
 
             <path location="${component.src.dir}/web.js"/>
             <path location="${component.src.dir}/modules.js"/>
+            <path location="${component.src.dir}/exports.js"/>
             <filterchain>
                 <deletecharacters chars="${bom}"/>
             </filterchain>

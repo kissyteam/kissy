@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 10 18:09
+build time: Dec 11 00:01
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121210180857' will replace with current timestamp when compressing.
+         * NOTICE: '20121211000137' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121210180857',
+        __BUILD_TIME: '20121211000137',
         /**
          * KISSY Environment.
          * @private
@@ -5868,7 +5868,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121210180857'
+            tag: '20121211000137'
         }, getBaseInfo()));
     }
 
@@ -5879,9 +5879,6 @@ var KISSY = (function (undefined) {
     if (ComboLoader) {
         Env._comboLoader = new ComboLoader(S);
     }
-
-    // empty mod for conditional loading
-    S.add('empty', S.noop);
 
 })(KISSY);/**
  * @ignore
@@ -6349,9 +6346,29 @@ config({
 });
 
                 })(function(c){
-                    KISSY.config('modules', c);
+                KISSY.config('modules', c);
                 },KISSY.Features,KISSY.UA);
-            
+            /**
+ * export KISSY 's functionality to module system
+ */
+(function (S) {
+
+    // empty mod for conditional loading
+    S.add('empty', S.noop);
+
+    S.add('promise', function () {
+        return S.Promise;
+    });
+
+    S.add('uri', function () {
+        return S.Uri;
+    });
+
+    S.add('path', function () {
+        return S.Path
+    });
+
+})(KISSY);
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
