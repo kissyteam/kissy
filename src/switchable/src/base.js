@@ -359,21 +359,21 @@ KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
             var self = this,
                 cfg = self.config,
                 _triggerInternalCls = self._triggerInternalCls,
-                navEl = S.one(self.nav),
+                navEl = self.nav,
                 triggers = self.triggers;
             // 给 trigger 添加class，使用委托
             S.each(triggers, function (trigger) {
                 self._initTrigger(trigger);
             });
 
-            navEl.delegate('click', '.' + _triggerInternalCls, function (e) {
+            Event.delegate(navEl, 'click', '.' + _triggerInternalCls, function (e) {
                 var trigger = e.currentTarget,
                     index = self._getTriggerIndex(trigger);
                 self._onFocusTrigger(index, e);
             });
 
             if (cfg.triggerType === 'mouse') {
-                navEl.delegate('mouseenter', '.' + _triggerInternalCls,
+                Event.delegate(navEl, 'mouseenter', '.' + _triggerInternalCls,
                     function (e) {
                         var trigger = e.currentTarget,
                             index = self._getTriggerIndex(trigger);
