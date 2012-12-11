@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 19:27
+build time: Dec 12 00:19
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121211192731' will replace with current timestamp when compressing.
+         * NOTICE: '20121212001937' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121211192731',
+        __BUILD_TIME: '20121212001937',
         /**
          * KISSY Environment.
          * @private
@@ -5802,7 +5802,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121211192731'
+            tag: '20121212001937'
         }, getBaseInfo()));
     }
 
@@ -14798,34 +14798,9 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:56
+build time: Dec 12 00:19
 */
 /**
- * @ignore
- * touch count guard
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/touch/single-touch', function (S) {
-
-    function SingleTouch() {
-    }
-
-    SingleTouch.prototype = {
-        requiredTouchCount: 1,
-        onTouchStart: function (e) {
-            var self = this;
-            if (e.touches.length != self.requiredTouchCount) {
-                return false;
-            }
-            self.lastTouches = e.touches;
-        },
-        onTouchMove: S.noop,
-        onTouchEnd: S.noop
-    };
-
-    return SingleTouch;
-
-});/**
  * @ignore
  * gesture single tap double tap
  * @author yiminghe@gmail.com
@@ -14834,9 +14809,9 @@ KISSY.add('event/dom/touch/double-tap',
     function (S, eventHandleMap, Event, SingleTouch) {
 
         var SINGLE_TAP = 'singleTap',
-            DOUBLE_TAP = 'doubleTap';
-
-        var MAX_DURATION = 300;
+            DOUBLE_TAP = 'doubleTap',
+        // same with native click delay
+            MAX_DURATION = 300;
 
         function DoubleTap() {
         }
@@ -14878,7 +14853,7 @@ KISSY.add('event/dom/touch/double-tap',
 
                         Event.fire(target, DOUBLE_TAP, {
                             touch: touch,
-                            duration: duration
+                            duration: duration/1000
                         });
                         return;
                     }
@@ -14891,7 +14866,7 @@ KISSY.add('event/dom/touch/double-tap',
                 if (duration > MAX_DURATION) {
                     Event.fire(target, SINGLE_TAP, {
                         touch: touch,
-                        duration: duration
+                        duration: duration/1000
                     })
                 } else {
                     // buffer singleTap
@@ -14899,7 +14874,7 @@ KISSY.add('event/dom/touch/double-tap',
                     self.singleTapTimer = setTimeout(function () {
                         Event.fire(target, SINGLE_TAP, {
                             touch: touch,
-                            duration: duration
+                            duration: duration/1000
                         });
                     }, MAX_DURATION);
                 }
@@ -14912,7 +14887,7 @@ KISSY.add('event/dom/touch/double-tap',
         return DoubleTap;
 
     }, {
-            requires: ['./handle-map', 'event/dom/base', './single-touch']
+        requires: ['./handle-map', 'event/dom/base', './single-touch']
     });/**
  * @ignore
  * patch gesture for touch
@@ -15381,6 +15356,31 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
     requires: ['./handle-map', './multi-touch', 'event/dom/base']
 });/**
  * @ignore
+ * touch count guard
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/touch/single-touch', function (S) {
+
+    function SingleTouch() {
+    }
+
+    SingleTouch.prototype = {
+        requiredTouchCount: 1,
+        onTouchStart: function (e) {
+            var self = this;
+            if (e.touches.length != self.requiredTouchCount) {
+                return false;
+            }
+            self.lastTouches = e.touches;
+        },
+        onTouchMove: S.noop,
+        onTouchEnd: S.noop
+    };
+
+    return SingleTouch;
+
+});/**
+ * @ignore
  * gesture swipe inspired by sencha touch
  * @author yiminghe@gmail.com
  */
@@ -15452,8 +15452,8 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
                 touch = touches[0],
                 x = touch.pageX,
                 y = touch.pageY,
-                deltaX = x - this.startX,
-                deltaY = y - this.startY,
+                deltaX = x - self.startX,
+                deltaY = y - self.startY,
                 absDeltaX = Math.abs(deltaX),
                 absDeltaY = Math.abs(deltaY),
                 distance,
@@ -15512,7 +15512,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
                  * @property {Number} duration
                  * @member KISSY.Event.DOMEventObject
                  */
-                duration: e.timeStamp - this.startTime
+                duration: (e.timeStamp - self.startTime)/1000
             });
         }
 
@@ -15546,7 +15546,7 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
             self.timer = setTimeout(function () {
                 Event.fire(e.target, event, {
                     touch: e.touches[0],
-                    duration: (S.now() - e.timeStamp)
+                    duration: (S.now() - e.timeStamp)/1000
                 });
             }, duration);
         },

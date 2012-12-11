@@ -71,8 +71,8 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
                 touch = touches[0],
                 x = touch.pageX,
                 y = touch.pageY,
-                deltaX = x - this.startX,
-                deltaY = y - this.startY,
+                deltaX = x - self.startX,
+                deltaY = y - self.startY,
                 absDeltaX = Math.abs(deltaX),
                 absDeltaY = Math.abs(deltaY),
                 distance,
@@ -131,7 +131,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
                  * @property {Number} duration
                  * @member KISSY.Event.DOMEventObject
                  */
-                duration: e.timeStamp - this.startTime
+                duration: (e.timeStamp - self.startTime)/1000
             });
         }
 

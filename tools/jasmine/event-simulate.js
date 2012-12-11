@@ -1,7 +1,6 @@
 /**
  * Synthetic DOM events for Jasmine
- * @creator lifesinger@gmail.com
- * @origin https://github.com/yui/yui3/raw/master/src/event-simulate/js/event-simulate.js
+ * @refer https://github.com/yui/yui3/raw/master/src/event-simulate/js/event-simulate.js
  */
 (function () {
 
@@ -62,6 +61,14 @@
             select: 1
         },
 
+    //touch events supported
+        touchEvents = {
+            touchstart: 1,
+            touchmove: 1,
+            touchend: 1,
+            touchcancel: 1
+        },
+
     // events that bubble by default
         bubbleEvents = {
             scroll: 1,
@@ -77,6 +84,7 @@
     // all key and mouse events bubble
     mix(bubbleEvents, mouseEvents);
     mix(bubbleEvents, keyEvents);
+    mix(bubbleEvents, touchEvents);
 
     /*
      * Simulates a key event using the given event information to populate
@@ -609,6 +617,345 @@
         }
     }
 
+
+    /*
+     * @method simulateTouchEvent
+     * @private
+     * @param {HTMLElement} target The target of the given event.
+     * @param {String} type The type of event to fire. This can be any one of
+     *      the following: touchstart, touchmove, touchend, touchcancel.
+     * @param {Boolean} bubbles (Optional) Indicates if the event can be
+     *      bubbled up. DOM Level 2 specifies that all mouse events bubble by
+     *      default. The default is true.
+     * @param {Boolean} cancelable (Optional) Indicates if the event can be
+     *      canceled using preventDefault(). DOM Level 2 specifies that all
+     *      touch events except touchcancel can be cancelled. The default
+     *      is true for all events except touchcancel, for which the default
+     *      is false.
+     * @param {Window} view (Optional) The view containing the target. This is
+     *      typically the window object. The default is window.
+     * @param {int} detail (Optional) Specifies some detail information about
+     *      the event depending on the type of event.
+     * @param {int} screenX (Optional) The x-coordinate on the screen at which
+     *      point the event occured. The default is 0.
+     * @param {int} screenY (Optional) The y-coordinate on the screen at which
+     *      point the event occured. The default is 0.
+     * @param {int} clientX (Optional) The x-coordinate on the client at which
+     *      point the event occured. The default is 0.
+     * @param {int} clientY (Optional) The y-coordinate on the client at which
+     *      point the event occured. The default is 0.
+     * @param {Boolean} ctrlKey (Optional) Indicates if one of the CTRL keys
+     *      is pressed while the event is firing. The default is false.
+     * @param {Boolean} altKey (Optional) Indicates if one of the ALT keys
+     *      is pressed while the event is firing. The default is false.
+     * @param {Boolean} shiftKey (Optional) Indicates if one of the SHIFT keys
+     *      is pressed while the event is firing. The default is false.
+     * @param {Boolean} metaKey (Optional) Indicates if one of the META keys
+     *      is pressed while the event is firing. The default is false.
+     * @param {TouchList} touches A collection of Touch objects representing
+     *      all touches associated with this event.
+     * @param {TouchList} targetTouches A collection of Touch objects
+     *      representing all touches associated with this target.
+     * @param {TouchList} changedTouches A collection of Touch objects
+     *      representing all touches that changed in this event.
+     * @param {float} scale (iOS v2+ only) The distance between two fingers
+     *      since the start of an event as a multiplier of the initial distance.
+     *      The default value is 1.0.
+     * @param {float} rotation (iOS v2+ only) The delta rotation since the start
+     *      of an event, in degrees, where clockwise is positive and
+     *      counter-clockwise is negative. The default value is 0.0.
+     */
+    function simulateTouchEvent(target, type, bubbles,            // boolean
+                                cancelable,         // boolean
+                                view,               // DOMWindow
+                                detail,             // long
+                                screenX, screenY,   // long
+                                clientX, clientY,   // long
+                                ctrlKey, altKey, shiftKey, metaKey, // boolean
+                                touches,            // TouchList
+                                targetTouches,      // TouchList
+                                changedTouches,     // TouchList
+                                scale,              // float
+                                rotation            // float
+        ) {
+
+        if (touches) {
+            touches = createTouchList(target, touches);
+        }
+
+        if (changedTouches) {
+            changedTouches = createTouchList(target, changedTouches);
+        }
+
+        if (targetTouches) {
+            targetTouches = createTouchList(target, targetTouches);
+        }
+
+        var UA = KISSY.UA, S = KISSY;
+
+        var customEvent;
+
+        // check taget
+        if (!target) {
+            throw new Error("simulateTouchEvent(): Invalid target.");
+        }
+
+        //check event type
+        if (typeof type == 'string') {
+            type = type.toLowerCase();
+
+            //make sure it's a supported touch event
+            if (!touchEvents[type]) {
+                throw new Error("simulateTouchEvent(): Event type '" + type + "' not supported.");
+            }
+        } else {
+            throw new Error("simulateTouchEvent(): Event type must be a string.");
+        }
+
+        // note that the caller is responsible to pass appropriate touch objects.
+        // check touch objects
+        // Android(even 4.0) doesn't define TouchList yet
+        /*if(type === 'touchstart' || type === 'touchmove') {
+         if(!touches instanceof TouchList) {
+         S.error('simulateTouchEvent(): Invalid touches. It must be a TouchList');
+         } else {
+         if(touches.length === 0) {
+         S.error('simulateTouchEvent(): No touch object found.');
+         }
+         }
+         } else if(type === 'touchend') {
+         if(!changedTouches instanceof TouchList) {
+         S.error('simulateTouchEvent(): Invalid touches. It must be a TouchList');
+         } else {
+         if(changedTouches.length === 0) {
+         S.error('simulateTouchEvent(): No touch object found.');
+         }
+         }
+         }*/
+
+        if (type === 'touchstart' || type === 'touchmove') {
+            if (touches.length === 0) {
+                throw new Error('simulateTouchEvent(): No touch object in touches');
+            }
+        } else if (type === 'touchend') {
+            if (changedTouches.length === 0) {
+                throw new Error('simulateTouchEvent(): No touch object in changedTouches');
+            }
+        }
+
+        // setup default values
+        if (!isBoolean(bubbles)) {
+            bubbles = true;
+        } // bubble by default.
+        if (!isBoolean(cancelable)) {
+            cancelable = (type !== "touchcancel"); // touchcancel is not cancelled
+        }
+        if (!isObject(view)) {
+            view = window;
+        }
+        if (!isNumber(detail)) {
+            detail = 1;
+        } // usually not used. defaulted to # of touch objects.
+        if (!isNumber(screenX)) {
+            screenX = 0;
+        }
+        if (!isNumber(screenY)) {
+            screenY = 0;
+        }
+        if (!isNumber(clientX)) {
+            clientX = 0;
+        }
+        if (!isNumber(clientY)) {
+            clientY = 0;
+        }
+        if (!isBoolean(ctrlKey)) {
+            ctrlKey = false;
+        }
+        if (!isBoolean(altKey)) {
+            altKey = false;
+        }
+        if (!isBoolean(shiftKey)) {
+            shiftKey = false;
+        }
+        if (!isBoolean(metaKey)) {
+            metaKey = false;
+        }
+        if (!isNumber(scale)) {
+            scale = 1.0;
+        }
+        if (!isNumber(rotation)) {
+            rotation = 0.0;
+        }
+
+
+        //check for DOM-compliant browsers first
+        if (isFunction(document.createEvent)) {
+            if (UA.android) {
+                /**
+                 * Couldn't find android start version that supports touch event.
+                 * Assumed supported(btw APIs broken till icecream sandwitch)
+                 * from the beginning.
+                 */
+                if (UA.android < 4.0) {
+                    /**
+                     * Touch APIs are broken in androids older than 4.0. We will use
+                     * simulated touch apis for these versions.
+                     * App developer still can listen for touch events. This events
+                     * will be dispatched with touch event types.
+                     *
+                     * (Note) Used target for the relatedTarget. Need to verify if
+                     * it has a side effect.
+                     */
+                    customEvent = document.createEvent("MouseEvents");
+                    customEvent.initMouseEvent(type, bubbles, cancelable, view, detail,
+                        screenX, screenY, clientX, clientY,
+                        ctrlKey, altKey, shiftKey, metaKey,
+                        0, target);
+
+                    customEvent.touches = touches;
+                    customEvent.targetTouches = targetTouches;
+                    customEvent.changedTouches = changedTouches;
+                } else {
+                    customEvent = document.createEvent("TouchEvent");
+
+                    // Andoroid isn't compliant W3C initTouchEvent method signature.
+                    customEvent.initTouchEvent(touches, targetTouches, changedTouches,
+                        type, view,
+                        screenX, screenY, clientX, clientY,
+                        ctrlKey, altKey, shiftKey, metaKey);
+                }
+            } else if (UA.ios) {
+                if (UA.ios >= 2.0) {
+                    customEvent = document.createEvent("TouchEvent");
+
+                    // Available iOS 2.0 and later
+                    customEvent.initTouchEvent(type, bubbles, cancelable, view, detail,
+                        screenX, screenY, clientX, clientY,
+                        ctrlKey, altKey, shiftKey, metaKey,
+                        touches, targetTouches, changedTouches,
+                        scale, rotation);
+                } else {
+                    throw new Error('simulateTouchEvent(): No touch event simulation framework present for iOS, ' + UA.ios + '.');
+                }
+            } else {
+                throw new Error('simulateTouchEvent(): Not supported agent yet, ' + navigator.userAgent);
+            }
+
+            //fire the event
+            target.dispatchEvent(customEvent);
+            //} else if (S.isObject(doc.createEventObject)){ // Windows Mobile/IE, support later
+        } else {
+            throw new Error('simulateTouchEvent(): No event simulation framework present.');
+        }
+    }
+
+
+    /**
+     * Helper method to convert an array with touch points to TouchList object as
+     * defined in http://www.w3.org/TR/touch-events/
+     * @param {Array} touchPoints
+     * @return {TouchList | Array} If underlying platform support creating touch list
+     *      a TouchList object will be returned otherwise a fake Array object
+     *      will be returned.
+     */
+    function createTouchList(target, touchPoints) {
+        /*
+         * Android 4.0.3 emulator:
+         * Native touch api supported starting in version 4.0 (Ice Cream Sandwich).
+         * However the support seems limited. In Android 4.0.3 emulator, I got
+         * "TouchList is not defined".
+         */
+        var touches = [],
+            S = KISSY,
+            UA = S.UA,
+            touchList,
+            self = this;
+
+        if (!!touchPoints && S.isArray(touchPoints)) {
+            if (UA.android && UA.android >= 4.0 || UA.ios && UA.ios >= 2.0) {
+                S.each(touchPoints, function (point) {
+                    if (!point.identifier) {
+                        point.identifier = 0;
+                    }
+                    if (!point.pageX) {
+                        point.pageX = 0;
+                    }
+                    if (!point.pageY) {
+                        point.pageY = 0;
+                    }
+                    if (!point.screenX) {
+                        point.screenX = 0;
+                    }
+                    if (!point.screenY) {
+                        point.screenY = 0;
+                    }
+
+                    touches.push(document.createTouch(window,
+                        point.target || target,
+                        point.identifier,
+                        point.pageX, point.pageY,
+                        point.screenX, point.screenY));
+                });
+
+                touchList = document.createTouchList.apply(document, touches);
+            } else if (UA.ios && UA.ios < 2.0) {
+                S.error(': No touch event simulation framework present.');
+            } else {
+                // this will include android(UA.android && UA.android < 4.0)
+                // and desktops among all others.
+
+                /**
+                 * Touch APIs are broken in androids older than 4.0. We will use
+                 * simulated touch apis for these versions.
+                 */
+                touchList = [];
+                S.each(touchPoints, function (point) {
+                    if (!point.identifier) {
+                        point.identifier = 0;
+                    }
+                    if (!point.clientX) {
+                        point.clientX = 0;
+                    }
+                    if (!point.clientY) {
+                        point.clientY = 0;
+                    }
+                    if (!point.pageX) {
+                        point.pageX = 0;
+                    }
+                    if (!point.pageY) {
+                        point.pageY = 0;
+                    }
+                    if (!point.screenX) {
+                        point.screenX = 0;
+                    }
+                    if (!point.screenY) {
+                        point.screenY = 0;
+                    }
+
+                    touchList.push({
+                        target: point.target || target,
+                        identifier: point.identifier,
+                        clientX: point.clientX,
+                        clientY: point.clientY,
+                        pageX: point.pageX,
+                        pageY: point.pageY,
+                        screenX: point.screenX,
+                        screenY: point.screenY
+                    });
+                });
+
+                touchList.item = function (i) {
+                    return touchList[i];
+                };
+            }
+        } else {
+            S.error('Invalid touchPoints passed');
+        }
+
+        return touchList;
+    }
+
+
     /**
      * Simulates the event with the given name on a target.
      * @param {HTMLElement} target The DOM element that's the target of the event.
@@ -620,6 +967,8 @@
      * @static
      */
     jasmine.simulate = function (target, type, options) {
+
+        var UA = window.KISSY && window.KISSY.UA || {};
 
         options = options || {};
 
@@ -637,7 +986,21 @@
         } else if (uiEvents[type]) {
             simulateUIEvent(target, type, options.bubbles,
                 options.cancelable, options.view, options.detail);
-        } else {
+        } else if (touchEvents[type]) {
+            if ((window && ("ontouchstart" in window)) && !(UA.phantomjs) && !(UA.chrome && UA.chrome < 6)) {
+                simulateTouchEvent(target, type,
+                    options.bubbles, options.cancelable, options.view, options.detail,
+                    options.screenX, options.screenY, options.clientX, options.clientY,
+                    options.ctrlKey, options.altKey, options.shiftKey, options.metaKey,
+                    options.touches, options.targetTouches, options.changedTouches,
+                    options.scale, options.rotation);
+            } else {
+                S.error("simulate(): Event '" + type + "' can't be simulated. Use gesture-simulate module instead.");
+            }
+
+            // ios gesture low-level event simulation (iOS v2+ only)
+        }
+        else {
             throw "simulate(): Event '" + type + "' can't be simulated.";
         }
     };

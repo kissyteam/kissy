@@ -20,7 +20,7 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
             self.timer = setTimeout(function () {
                 Event.fire(e.target, event, {
                     touch: e.touches[0],
-                    duration: (S.now() - e.timeStamp)
+                    duration: (S.now() - e.timeStamp)/1000
                 });
             }, duration);
         },

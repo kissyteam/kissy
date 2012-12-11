@@ -7,9 +7,9 @@ KISSY.add('event/dom/touch/double-tap',
     function (S, eventHandleMap, Event, SingleTouch) {
 
         var SINGLE_TAP = 'singleTap',
-            DOUBLE_TAP = 'doubleTap';
-
-        var MAX_DURATION = 300;
+            DOUBLE_TAP = 'doubleTap',
+        // same with native click delay
+            MAX_DURATION = 300;
 
         function DoubleTap() {
         }
@@ -51,7 +51,7 @@ KISSY.add('event/dom/touch/double-tap',
 
                         Event.fire(target, DOUBLE_TAP, {
                             touch: touch,
-                            duration: duration
+                            duration: duration/1000
                         });
                         return;
                     }
@@ -64,7 +64,7 @@ KISSY.add('event/dom/touch/double-tap',
                 if (duration > MAX_DURATION) {
                     Event.fire(target, SINGLE_TAP, {
                         touch: touch,
-                        duration: duration
+                        duration: duration/1000
                     })
                 } else {
                     // buffer singleTap
@@ -72,7 +72,7 @@ KISSY.add('event/dom/touch/double-tap',
                     self.singleTapTimer = setTimeout(function () {
                         Event.fire(target, SINGLE_TAP, {
                             touch: touch,
-                            duration: duration
+                            duration: duration/1000
                         });
                     }, MAX_DURATION);
                 }
@@ -85,5 +85,5 @@ KISSY.add('event/dom/touch/double-tap',
         return DoubleTap;
 
     }, {
-            requires: ['./handle-map', 'event/dom/base', './single-touch']
+        requires: ['./handle-map', 'event/dom/base', './single-touch']
     });
