@@ -3,18 +3,19 @@
  * @fileOverview use and attach mod for kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
 
-    var Loader = S.Loader,
-        data = Loader.STATUS,
-        utils = Loader.Utils,
-        UA= S.UA,
-        remoteModules = {},
-        LOADING = data.LOADING,
-        LOADED = data.LOADED,
-        ERROR = data.ERROR,
-        CURRENT_MODULE = '__currentModule',
-        ATTACHED = data.ATTACHED;
+    var Loader, data, utils, UA, remoteModules, LOADING, LOADED, ERROR, ATTACHED;
+
+    Loader = S.Loader;
+    data = Loader.STATUS;
+    utils = Loader.Utils;
+    UA = S.UA;
+    remoteModules = {};
+    LOADING = data.LOADING;
+    LOADED = data.LOADED;
+    ERROR = data.ERROR;
+    ATTACHED = data.ATTACHED;
 
     function LoadChecker(fn) {
         this.fn = fn;
@@ -184,16 +185,20 @@
             modName = mod.getName(),
             charset = mod.getCharset(),
             url = mod.getFullPath(),
+            ie = UA.ie,
             isCss = mod.getType() == 'css';
 
         mod.status = LOADING;
 
-        if (UA.ie && !isCss) {
-            self.__startLoadModuleName = modName;
+        if (ie && !isCss) {
+            self.__startLoadModName = modName;
             self.__startLoadTime = Number(+new Date());
         }
 
         S.getScript(url, {
+            attrs: ie ? {
+                'data-mod-name': modName
+            } : undefined,
             // syntaxError in all browser will trigger this
             // same as #111 : https://github.com/kissyteam/kissy/issues/111
             success: function () {
@@ -211,12 +216,12 @@
                         var currentModule;
                         // does not need this step for css
                         // standard browser(except ie9) fire load after KISSY.add immediately
-                        if (currentModule = self[CURRENT_MODULE]) {
+                        if (currentModule = self.__currentMod) {
                             S.log('standard browser get mod name after load : ' + modName);
                             utils.registerModule(runtime,
                                 modName, currentModule.fn,
                                 currentModule.config);
-                            self[CURRENT_MODULE] = null;
+                            self.__currentMod = null;
                         }
                     }
                 }

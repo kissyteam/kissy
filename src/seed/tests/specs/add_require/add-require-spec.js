@@ -16,7 +16,7 @@ describe("KISSY.config('modules', {x:{requires:[]}}) ", function () {
         expect(KISSY.Env.mods["add_require/x/index"].requires)
             .toEqual(['add_require/y/']);
 
-        KISSY.add({
+        KISSY.config('modules',{
             "add_require/a/":{
                 requires:['add_require/b/']
             }

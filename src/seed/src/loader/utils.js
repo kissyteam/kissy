@@ -84,17 +84,8 @@
         },
 
         /**
-         * remove ext name
-         * @param path
-         * @return {String}
-         */
-        removeExtname: function (path) {
-            return path.replace(/(-min)?\.js$/i, '');
-        },
-
-        /**
          * resolve according to current page location.
-         * @return {String}
+         * @return {KISSY.Uri}
          */
         resolveByPage: function (path) {
             return simulatedLocation.resolve(path);
@@ -241,7 +232,8 @@
          * 3. relative to absolute : ./x => y/x
          * @param {KISSY} runtime Global KISSY instance
          * @param {String|String[]} modNames Array of module names
-         * or module names string separated by comma
+         *  or module names string separated by comma
+         * @param {String} [refModName]
          * @return {String[]}
          */
         normalizeModNames: function (runtime, modNames, refModName) {
@@ -341,6 +333,7 @@
          * Get mapped path.
          * @param runtime
          * @param path
+         * @param [rules]
          * @return {String}
          */
         getMappedPath: function (runtime, path, rules) {

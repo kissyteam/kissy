@@ -70,7 +70,6 @@
          * Fire specified event.
          * @param eventName
          * @param obj
-         * @private
          */
         fire: function (eventName, obj) {
             var fns = getEventHolder(this, eventName);

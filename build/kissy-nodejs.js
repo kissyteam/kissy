@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:57
+build time: Dec 11 15:22
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121211125731' will replace with current timestamp when compressing.
+         * NOTICE: '20121211152219' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121211125731',
+        __BUILD_TIME: '20121211152219',
         /**
          * KISSY Environment.
          * @private
@@ -3483,7 +3483,6 @@ var KISSY = (function (undefined) {
 
     /**
      * Loader Status Enum
-     * @private
      * @enum {Number} KISSY.Loader.STATUS
      */
     Loader.STATUS = {
@@ -3499,7 +3498,9 @@ var KISSY = (function (undefined) {
         'ATTACHED': 4
     };
 
-    KISSY.Loader = Loader;
+    S.Loader = Loader;
+
+    S.Loader.STATUS = Loader.STATUS;
 
 })(KISSY);
 /*
@@ -3576,7 +3577,6 @@ var KISSY = (function (undefined) {
          * Fire specified event.
          * @param eventName
          * @param obj
-         * @private
          */
         fire: function (eventName, obj) {
             var fns = getEventHolder(this, eventName);
@@ -3671,17 +3671,8 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * remove ext name
-         * @param path
-         * @return {String}
-         */
-        removeExtname: function (path) {
-            return path.replace(/(-min)?\.js$/i, '');
-        },
-
-        /**
          * resolve according to current page location.
-         * @return {String}
+         * @return {KISSY.Uri}
          */
         resolveByPage: function (path) {
             return simulatedLocation.resolve(path);
@@ -3828,7 +3819,8 @@ var KISSY = (function (undefined) {
          * 3. relative to absolute : ./x => y/x
          * @param {KISSY} runtime Global KISSY instance
          * @param {String|String[]} modNames Array of module names
-         * or module names string separated by comma
+         *  or module names string separated by comma
+         * @param {String} [refModName]
          * @return {String[]}
          */
         normalizeModNames: function (runtime, modNames, refModName) {
@@ -3928,6 +3920,7 @@ var KISSY = (function (undefined) {
          * Get mapped path.
          * @param runtime
          * @param path
+         * @param [rules]
          * @return {String}
          */
         getMappedPath: function (runtime, path, rules) {
@@ -4031,7 +4024,7 @@ var KISSY = (function (undefined) {
              * Get package base.
              * @return {String}
              */
-            getBase: function () {
+            'getBase': function () {
                 var self = this;
                 return self.base || self.runtime.Config.base;
             },
@@ -4267,43 +4260,6 @@ var KISSY = (function (undefined) {
 
     Loader.Module = Module;
 
-    // for ie to get module name from request url
-    // called for development, can not set ignorePackageNameInUri
-    Module.getModuleNameByUri = function (runtime, src) {
-        var p,
-            srcStr = src.toString(),
-            packages = runtime.config('packages'),
-            packageBase,
-            finalPackagePath,
-            srcPath = src.getPath(),
-            Config = runtime.Config,
-            finalPackageUri,
-            finalPackageLength = -1;
-
-        // 外部模块去除包路径，得到模块名
-        for (p in packages) {
-            packageBase = packages[p].getBase();
-            if (S.startsWith(srcStr, packageBase)) {
-                // longest match
-                if (packageBase.length > finalPackageLength) {
-                    finalPackageLength = packageBase.length;
-                    finalPackagePath = packageBase;
-                    finalPackageUri = packages[p].getBaseUri();
-                }
-            }
-        }
-
-        // 注意：模块名不包含后缀名以及参数，所以去除
-        // 系统模块去除系统路径
-        // 需要 base norm , 防止 base 被指定为相对路径
-        // configs 统一处理
-        if (finalPackagePath) {
-            return Utils.removeExtname(Path.relative(finalPackageUri.getPath(), srcPath));
-        } else if (S.startsWith(srcStr, Config.base)) {
-            return Utils.removeExtname(Path.relative(Config.baseUri.getPath(), srcPath));
-        }
-    };
-
     function defaultComponentJsName(m) {
         var name = m.name,
             extname = (Path.extname(name) || '').toLowerCase(),
@@ -4369,7 +4325,8 @@ var KISSY = (function (undefined) {
 
             if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
                 S.log('node js can not load css: ' + url, 'warn');
-                return success && success();
+                success && success();
+                return;
             }
 
             var uri = new S.Uri(url);
@@ -4394,7 +4351,7 @@ var KISSY = (function (undefined) {
  * @fileOverview Declare config info for KISSY.
  * @author yiminghe@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
 
     var Loader = S.Loader,
         utils = Loader.Utils,
@@ -4466,10 +4423,12 @@ var KISSY = (function (undefined) {
 
                 ps[ name ] = new Loader.Package(cfg);
             });
+            return undefined;
         } else if (cfgs === false) {
             Config.packages = {
                 '': Config.packages['']
             };
+            return undefined;
         } else {
             return ps;
         }
@@ -4535,6 +4494,7 @@ var KISSY = (function (undefined) {
                 base: S.config('base')
             }
         });
+        return undefined;
     };
 })(KISSY);/**
  * @ignore
@@ -4544,20 +4504,20 @@ var KISSY = (function (undefined) {
 (function (S) {
 
     var Loader = S.Loader,
-        UA= S.UA,
+        UA = S.UA,
         utils = Loader.Utils;
 
 
     S.augment(Loader, Loader.Target, {
 
         //firefox,ie9,chrome 如果 add 没有模块名，模块定义先暂存这里
-        __currentModule: null,
+        __currentMod: null,
 
         //ie6,7,8开始载入脚本的时间
         __startLoadTime: 0,
 
         //ie6,7,8开始载入脚本对应的模块名
-        __startLoadModuleName: null,
+        __startLoadModName: null,
 
         /**
          * Registers a module.
@@ -4573,38 +4533,11 @@ var KISSY = (function (undefined) {
          */
         add: function (name, fn, config) {
             var self = this,
-                runtime = self.runtime,
-                mod,
-                requires,
-                mods = runtime.Env.mods;
-
-            // 兼容
-            if (S.isPlainObject(name)) {
-                return runtime.config({
-                    modules: name
-                });
-            }
+                runtime = self.runtime;
 
             // S.add(name[, fn[, config]])
             if (typeof name == 'string') {
-
                 utils.registerModule(runtime, name, fn, config);
-
-//                mod = mods[name];
-//
-//                // 显示指定 add 不 attach
-//                if (config && config['attach'] === false) {
-//                    return;
-//                }
-//
-//                if (config) {
-//                    requires = mod.getNormalizedRequires();
-//                }
-//
-//                if (!requires || utils.isAttached(runtime, requires)) {
-//                    utils.attachMod(runtime, mod);
-//                }
-
                 return;
             }
             // S.add(fn,config);
@@ -4635,13 +4568,13 @@ var KISSY = (function (undefined) {
                     // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                     // use onload to get module name is not right in ie
                     name = findModuleNameByInteractive(self);
-                    S.log('old_ie get modName by interactive : ' + name);
+                    S.log('ie get modName by interactive: ' + name);
                     utils.registerModule(runtime, name, fn, config);
-                    self.__startLoadModuleName = null;
+                    self.__startLoadModName = null;
                     self.__startLoadTime = 0;
                 } else {
                     // 其他浏览器 onload 时，关联模块名与模块定义
-                    self.__currentModule = {
+                    self.__currentMod = {
                         fn: fn,
                         config: config
                     };
@@ -4656,41 +4589,33 @@ var KISSY = (function (undefined) {
     // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
     // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive(self) {
-        var runtime = self.runtime,
-            scripts = S.Env.host.document.getElementsByTagName('script'),
+        var scripts = S.Env.host.document.getElementsByTagName('script'),
             re,
             i,
+            name,
             script;
 
-        for (i = 0; i < scripts.length; i++) {
+        for (i = scripts.length - 1; i >= 0; i--) {
             script = scripts[i];
             if (script.readyState == 'interactive') {
                 re = script;
                 break;
             }
         }
-        if (!re) {
+        if (re) {
+            name = re.getAttribute('data-mod-name');
+        } else {
             // sometimes when read module file from cache , interactive status is not triggered
             // module code is executed right after inserting into dom
             // i has to preserve module name before insert module script into dom , then get it back here
             S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
-            S.log('old_ie get mod name from cache : ' + self.__startLoadModuleName);
-            return self.__startLoadModuleName;
+            S.log('old_ie get mod name from cache : ' + self.__startLoadModName);
+            name = self.__startLoadModName;
         }
-
-        // src 必定是绝对路径
-        // or re.hasAttribute ? re.src :  re.getAttribute('src', 4);
-        // http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
-        // note:
-        // <script src='/x.js'></script>
-        // ie6-8 => re.src == '/x.js'
-        // ie9 or firefox/chrome => re.src == 'http://localhost/x.js'
-        var src = utils.resolveByPage(re.src),
-            moduleName = Loader.Module.getModuleNameByUri(runtime, src);
-        if (!moduleName) {
-            S.log('interactive script does not have package config ：' + src, 'error');
+        if (!name && re) {
+            S.log('interactive script does not have package config ：' + re.src, 'error');
         }
-        return moduleName;
+        return name;
     }
 
 })(KISSY);
@@ -4738,18 +4663,19 @@ var KISSY = (function (undefined) {
  * @fileOverview use and attach mod for kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
 
-    var Loader = S.Loader,
-        data = Loader.STATUS,
-        utils = Loader.Utils,
-        UA= S.UA,
-        remoteModules = {},
-        LOADING = data.LOADING,
-        LOADED = data.LOADED,
-        ERROR = data.ERROR,
-        CURRENT_MODULE = '__currentModule',
-        ATTACHED = data.ATTACHED;
+    var Loader, data, utils, UA, remoteModules, LOADING, LOADED, ERROR, ATTACHED;
+
+    Loader = S.Loader;
+    data = Loader.STATUS;
+    utils = Loader.Utils;
+    UA = S.UA;
+    remoteModules = {};
+    LOADING = data.LOADING;
+    LOADED = data.LOADED;
+    ERROR = data.ERROR;
+    ATTACHED = data.ATTACHED;
 
     function LoadChecker(fn) {
         this.fn = fn;
@@ -4919,16 +4845,20 @@ var KISSY = (function (undefined) {
             modName = mod.getName(),
             charset = mod.getCharset(),
             url = mod.getFullPath(),
+            ie = UA.ie,
             isCss = mod.getType() == 'css';
 
         mod.status = LOADING;
 
-        if (UA.ie && !isCss) {
-            self.__startLoadModuleName = modName;
+        if (ie && !isCss) {
+            self.__startLoadModName = modName;
             self.__startLoadTime = Number(+new Date());
         }
 
         S.getScript(url, {
+            attrs: ie ? {
+                'data-mod-name': modName
+            } : undefined,
             // syntaxError in all browser will trigger this
             // same as #111 : https://github.com/kissyteam/kissy/issues/111
             success: function () {
@@ -4946,12 +4876,12 @@ var KISSY = (function (undefined) {
                         var currentModule;
                         // does not need this step for css
                         // standard browser(except ie9) fire load after KISSY.add immediately
-                        if (currentModule = self[CURRENT_MODULE]) {
+                        if (currentModule = self.__currentMod) {
                             S.log('standard browser get mod name after load : ' + modName);
                             utils.registerModule(runtime,
                                 modName, currentModule.fn,
                                 currentModule.config);
-                            self[CURRENT_MODULE] = null;
+                            self.__currentMod = null;
                         }
                     }
                 }
@@ -5001,7 +4931,7 @@ var KISSY = (function (undefined) {
  * @fileOverview mix loader into S and infer KISSy baseUrl if not set
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
 
     S.mix(S,
         {
@@ -5080,13 +5010,13 @@ var KISSY = (function (undefined) {
     }
 
     /**
-     * get base from seed/kissy.js
-     * @return base for kissy
+     * get base from seed.js
+     * @return {Object} base for kissy
      * @ignore
      *
      * for example:
      *      @example
-     *      http://a.tbcdn.cn/??s/kissy/1.4.0/seed-min.js,p/global/global.js
+     *      http://a.tbcdn.cn/??s/kissy/x.y.z/seed-min.js,p/global/global.js
      *      note about custom combo rules, such as yui3:
      *      combo-prefix='combo?' combo-sep='&'
      */
@@ -5131,6 +5061,7 @@ var KISSY = (function (undefined) {
                     base += part.replace(baseReg, '$1');
                     return false;
                 }
+                return undefined;
             });
         }
         return S.mix({
@@ -5147,7 +5078,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121211125731'
+            tag: '20121211152219'
         }, getBaseInfo()));
     }
 

@@ -54,6 +54,8 @@
                 css = 0,
                 error,
                 timeout,
+                attrs,
+                callbacks,
                 timer;
 
             if (S.startsWith(Path.extname(url).toLowerCase(), '.css')) {
@@ -61,13 +63,14 @@
             }
 
             if (S.isPlainObject(config)) {
-                success = config.success;
-                error = config.error;
-                timeout = config.timeout;
-                charset = config.charset;
+                success = config['success'];
+                error = config['error'];
+                timeout = config['timeout'];
+                charset = config['charset'];
+                attrs = config['attrs'];
             }
 
-            var callbacks = jsCssCallbacks[src] = jsCssCallbacks[src] || [];
+            callbacks = jsCssCallbacks[src] = jsCssCallbacks[src] || [];
 
             callbacks.push([success, error]);
 
@@ -86,6 +89,12 @@
                         timer = undefined;
                     }
                 };
+
+            if (attrs) {
+                S.each(attrs, function (v, n) {
+                    node.setAttribute(n, v);
+                });
+            }
 
             if (css) {
                 // can not use src.toString
@@ -113,9 +122,8 @@
                     }
                 });
                 delete jsCssCallbacks[src];
-            };
-
-            var useNative = !css;
+            },
+                useNative = !css;
 
             if (css) {
                 if (isOldWebKit) {

@@ -2,13 +2,16 @@ describe('ignore-package-name-in-uri', function () {
     var S = KISSY;
     it('works', function () {
 
+        var combine = S.config('combine');
+
         S.config({
 
             'packages': {
                 'ignore-package-name-in-uri': {
-                base: window['specsPath'] || '../specs/ignore-package-name-in-uri/',
-                ignorePackageNameInUri: 1
-            }
+                    base: window['specsPath'] ||
+                        '../specs/ignore-package-name-in-uri/'+(combine?'combo/':'simple/'),
+                    ignorePackageNameInUri: 1
+                }
             },
             modules: {
                 'ignore-package-name-in-uri/a': {

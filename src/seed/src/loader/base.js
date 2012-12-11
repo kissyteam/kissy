@@ -23,7 +23,6 @@
 
     /**
      * Loader Status Enum
-     * @private
      * @enum {Number} KISSY.Loader.STATUS
      */
     Loader.STATUS = {
@@ -39,7 +38,9 @@
         'ATTACHED': 4
     };
 
-    KISSY.Loader = Loader;
+    S.Loader = Loader;
+
+    S.Loader.STATUS = Loader.STATUS;
 
 })(KISSY);
 /*

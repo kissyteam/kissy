@@ -3,7 +3,7 @@
  * @fileOverview mix loader into S and infer KISSy baseUrl if not set
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
 
     S.mix(S,
         {
@@ -82,13 +82,13 @@
     }
 
     /**
-     * get base from seed/kissy.js
-     * @return base for kissy
+     * get base from seed.js
+     * @return {Object} base for kissy
      * @ignore
      *
      * for example:
      *      @example
-     *      http://a.tbcdn.cn/??s/kissy/1.4.0/seed-min.js,p/global/global.js
+     *      http://a.tbcdn.cn/??s/kissy/x.y.z/seed-min.js,p/global/global.js
      *      note about custom combo rules, such as yui3:
      *      combo-prefix='combo?' combo-sep='&'
      */
@@ -133,6 +133,7 @@
                     base += part.replace(baseReg, '$1');
                     return false;
                 }
+                return undefined;
             });
         }
         return S.mix({

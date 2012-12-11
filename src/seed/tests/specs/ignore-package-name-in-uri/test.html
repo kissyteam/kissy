@@ -16,8 +16,9 @@
 <body>
 <h1>KISSY ComboLoader Test Cases</h1>
 <script>
-    window.specsPath = './';
-    KISSY.config('combine', new KISSY.Uri(location.href).query.get('combine') == '1');
+    var combine = new KISSY.Uri(location.href).query.get('combine') == '1';
+    window.specsPath = './' + (combine ? 'combo/' : 'simple/');
+    KISSY.config('combine', combine);
 </script>
 <script src="test-spec.js"></script>
 <script>

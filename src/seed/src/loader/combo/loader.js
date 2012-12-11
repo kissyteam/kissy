@@ -77,11 +77,11 @@
 
         unaliasModNames = utils.unalias(runtime, modNames);
 
-        allModNames = self.calculate(unaliasModNames);
+        allModNames = self['calculate'](unaliasModNames);
 
         utils.createModulesInfo(runtime, allModNames);
 
-        comboUrls = self.getComboUrls(allModNames);
+        comboUrls = self['getComboUrls'](allModNames);
 
         // load css first to avoid page blink
         css = comboUrls.css;
@@ -310,12 +310,6 @@
         add: function (name, fn, config) {
             var self = this,
                 runtime = self.runtime;
-            // 兼容
-            if (S.isPlainObject(name)) {
-                return runtime.config({
-                    modules: name
-                });
-            }
             utils.registerModule(runtime, name, fn, config);
         },
 
@@ -325,7 +319,7 @@
          * @private
          * @return {Array}
          */
-        calculate: function (modNames) {
+        'calculate': function (modNames) {
             var ret = {},
                 i,
                 m,
@@ -360,7 +354,7 @@
          * @private
          * @return {Object}
          */
-        getComboUrls: function (modNames) {
+        'getComboUrls': function (modNames) {
             var self = this,
                 i,
                 runtime = self.runtime,
@@ -376,7 +370,7 @@
                 combos[packageName] = combos[packageName] || {};
                 if (!(mods = combos[packageName][type])) {
                     mods = combos[packageName][type] = combos[packageName][type] || [];
-                    mods.packageInfo=packageInfo;
+                    mods.packageInfo = packageInfo;
                 }
                 mods.push(mod);
             });
@@ -400,7 +394,7 @@
                     t = [];
 
                     var jss = combos[packageName][type],
-                        packageInfo=jss.packageInfo,
+                        packageInfo = jss.packageInfo,
                         tag = packageInfo.getTag(),
                         suffix = (tag ? ('?t=' + encodeURIComponent(tag)) : ''),
                         suffixLength = suffix.length,
@@ -437,8 +431,7 @@
 
                         res[type][packageName].mods.push(jss[i]);
 
-                        if (!packageInfo.isCombine() ||
-                            !S.startsWith(fullpath, packagePath)) {
+                        if (!packageInfo.isCombine() || !S.startsWith(fullpath, packagePath)) {
                             res[type][packageName].push(fullpath);
                             continue;
                         }

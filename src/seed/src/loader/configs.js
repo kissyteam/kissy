@@ -3,7 +3,7 @@
  * @fileOverview Declare config info for KISSY.
  * @author yiminghe@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
 
     var Loader = S.Loader,
         utils = Loader.Utils,
@@ -75,10 +75,12 @@
 
                 ps[ name ] = new Loader.Package(cfg);
             });
+            return undefined;
         } else if (cfgs === false) {
             Config.packages = {
                 '': Config.packages['']
             };
+            return undefined;
         } else {
             return ps;
         }
@@ -144,5 +146,6 @@
                 base: S.config('base')
             }
         });
+        return undefined;
     };
 })(KISSY);
