@@ -659,4 +659,5 @@
  - http://en.wikipedia.org/wiki/URI_scheme
  - http://unixpapa.com/js/querystring.html
  - http://code.stephenmorley.org/javascript/parsing-query-strings-for-get-data/
+ - same origin: http://tools.ietf.org/html/rfc6454
  */
