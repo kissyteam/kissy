@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:21
+build time: Dec 11 12:53
 */
 /**
  * @ignore
@@ -1499,9 +1499,6 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
          */
         STRICT: 'strict'
     };
-
-    S.mix(Draggable, Draggable.DropMode);
-
 
     var _ieSelectBack;
 

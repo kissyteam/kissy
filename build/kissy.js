@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 00:46
+build time: Dec 11 12:57
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121211004640' will replace with current timestamp when compressing.
+         * NOTICE: '20121211125731' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121211004640',
+        __BUILD_TIME: '20121211125731',
         /**
          * KISSY Environment.
          * @private
@@ -5869,7 +5869,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121211004640'
+            tag: '20121211125731'
         }, getBaseInfo()));
     }
 
@@ -6373,7 +6373,7 @@ config({
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:27
+build time: Dec 11 12:57
 */
 /**
  * @ignore
@@ -6465,7 +6465,7 @@ KISSY.add('ua', function (S, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:22
+build time: Dec 11 12:53
 */
 /**
  * @ignore
@@ -6475,7 +6475,7 @@ build time: Dec 7 00:22
 KISSY.add('dom/base/api', function (S) {
 
     var WINDOW = S.Env.host,
-        UA= S.UA,
+        UA = S.UA,
         RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source,
         /**
          * DOM Element node type.
@@ -6569,20 +6569,20 @@ KISSY.add('dom/base/api', function (S) {
                             + "';" +
                             'document.close();') + '}())';
                 }
-                return undefined;
+                return '';
             },
 
             NodeType: NodeType,
 
             /**
-             * Return corresponding window if elem is document or window or undefined.
+             * Return corresponding window if elem is document or window.
+             * Return global window if elem is undefined
              * Else return false.
-             * @private
              * @param {undefined|window|HTMLDocument} elem
              * @return {window|Boolean}
              */
-            _getWin: function (elem) {
-                if (elem == null) {
+            getWindow: function (elem) {
+                if (!elem) {
                     return WINDOW;
                 }
                 return ('scrollTo' in elem && elem['document']) ?
@@ -8518,7 +8518,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
         doc = win.document,
         NodeType = DOM.NodeType,
         docElem = doc && doc.documentElement,
-        getWin = DOM._getWin,
+        getWin = DOM.getWindow,
         CSS1Compat = 'CSS1Compat',
         compatMode = 'compatMode',
         MAX = Math.max,
@@ -9779,7 +9779,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
 
                 refWin = DOM.get(refWin);
 
-                var win = DOM._getWin(refWin),
+                var win = DOM.getWindow(refWin),
                     doc = win.document,
                     elem;
 
@@ -10471,7 +10471,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:22
+build time: Dec 11 12:53
 */
 /**
  * attr ie hack
@@ -11164,7 +11164,7 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:25
+build time: Dec 11 12:55
 */
 /**
  * @ignore
@@ -11581,7 +11581,7 @@ KISSY.add('event/base/utils', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:25
+build time: Dec 11 12:55
 */
 /**
  * @ignore
@@ -12136,7 +12136,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:25
+build time: Dec 11 12:55
 */
 /**
  * @ignore
@@ -13773,7 +13773,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             // because handle will check event.isPropagationStopped
             var cur = currentTarget,
                 t,
-                win = DOM._getWin(cur.ownerDocument || cur),
+                win = DOM.getWindow(cur.ownerDocument || cur),
                 curDocument = win.document,
                 eventPath = [],
                 eventPathIndex = 0,
@@ -14272,7 +14272,7 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:25
+build time: Dec 11 12:55
 */
 /**
  * @ignore
@@ -14334,7 +14334,7 @@ KISSY.add('event/dom/focusin', function (S, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:25
+build time: Dec 11 12:55
 */
 /**
  * @ignore
@@ -14575,7 +14575,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:25
+build time: Dec 11 12:55
 */
 /**
  * @ignore
@@ -14771,7 +14771,7 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:25
+build time: Dec 11 12:56
 */
 /**
  * @ignore
@@ -14865,7 +14865,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:25
+build time: Dec 11 12:56
 */
 /**
  * @ignore
@@ -15168,7 +15168,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
     return {
 
         addDocumentHandle: function (el, event) {
-            var win = DOM._getWin(el.ownerDocument || el),
+            var win = DOM.getWindow(el.ownerDocument || el),
                 doc = win.document,
                 handle = DOM.data(doc, key);
             if (!handle) {
@@ -15178,7 +15178,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         },
 
         removeDocumentHandle: function (el, event) {
-            var win = DOM._getWin(el.ownerDocument || el),
+            var win = DOM.getWindow(el.ownerDocument || el),
                 doc = win.document,
                 handle = DOM.data(doc, key);
             if (handle) {
@@ -15684,6 +15684,8 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch
  *      可以选择阻止 document 的 touchstart 来阻止整个程序的文字选择功能:
  *      同时阻止了touch 的 mouse/click 相关事件触发
  * 2.   反应更灵敏
+ *
+ * https://developers.google.com/mobile/articles/fast_buttons
  *//**
  * @ignore
  * touch event logic module
@@ -15712,7 +15714,7 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:25
+build time: Dec 11 12:56
 */
 /*
  @fileOverview  http://www.JSON.org/json2.js
@@ -16197,7 +16199,7 @@ KISSY.add("json/json2", function () {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:25
+build time: Dec 11 12:56
 */
 /**
  * @ignore
@@ -16244,7 +16246,7 @@ KISSY.add('json', function (S, J) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 10 18:08
+build time: Dec 11 12:52
 */
 /**
  * @ignore
@@ -18375,7 +18377,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:21
+build time: Dec 11 12:52
 */
 /**
  * @ignore
@@ -18485,7 +18487,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 02:50
+build time: Dec 11 12:52
 */
 /**
  * @ignore
@@ -19125,7 +19127,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:21
+build time: Dec 11 12:52
 */
 /**
  * @ignore
@@ -20672,7 +20674,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:26
+build time: Dec 11 12:56
 */
 /**
  * @ignore

@@ -282,7 +282,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
 
                 refWin = DOM.get(refWin);
 
-                var win = DOM._getWin(refWin),
+                var win = DOM.getWindow(refWin),
                     doc = win.document,
                     elem;
 

@@ -9,7 +9,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
         doc = win.document,
         NodeType = DOM.NodeType,
         docElem = doc && doc.documentElement,
-        getWin = DOM._getWin,
+        getWin = DOM.getWindow,
         CSS1Compat = 'CSS1Compat',
         compatMode = 'compatMode',
         MAX = Math.max,

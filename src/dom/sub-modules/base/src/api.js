@@ -6,7 +6,7 @@
 KISSY.add('dom/base/api', function (S) {
 
     var WINDOW = S.Env.host,
-        UA= S.UA,
+        UA = S.UA,
         RE_NUM = /[\-+]?(?:\d*\.|)\d+(?:[eE][\-+]?\d+|)/.source,
         /**
          * DOM Element node type.
@@ -100,20 +100,20 @@ KISSY.add('dom/base/api', function (S) {
                             + "';" +
                             'document.close();') + '}())';
                 }
-                return undefined;
+                return '';
             },
 
             NodeType: NodeType,
 
             /**
-             * Return corresponding window if elem is document or window or undefined.
+             * Return corresponding window if elem is document or window.
+             * Return global window if elem is undefined
              * Else return false.
-             * @private
              * @param {undefined|window|HTMLDocument} elem
              * @return {window|Boolean}
              */
-            _getWin: function (elem) {
-                if (elem == null) {
+            getWindow: function (elem) {
+                if (!elem) {
                     return WINDOW;
                 }
                 return ('scrollTo' in elem && elem['document']) ?

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:26
+build time: Dec 11 12:56
 */
 /**
  * SplitButton for KISSY. Combination of button and menubutton.
@@ -20,7 +20,7 @@ KISSY.add("split-button", function (S, Component, Button, MenuButton) {
             var menuButton = children[1],
                 menu = menuButton.get("menu");
             if (alignWithEl) {
-                if (menu instanceof Component.Controller) {
+                if (menu.isController) {
                     menu.get("align").node = self.get("el");
                 } else {
                     menu.align = menu.align || {};

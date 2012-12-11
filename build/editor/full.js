@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 10 21:55
+build time: Dec 11 12:55
 */
 /**
  * Set up editor constructor
@@ -51,7 +51,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                  */
                 window:{
                     // ie6 一旦中途设置了 domain
-                    // 那么就不能从 document _getWin 获取对应的 window
+                    // 那么就不能从 document getWindow 获取对应的 window
                     // 所以一开始设置下，和 document 有一定的信息冗余
 
                 },
@@ -5713,7 +5713,7 @@ KISSY.add("editor/core/selection", function (S) {
             function () {
                 var self = this,
                     cache = self._.cache;
-                return cache.nativeSel || ( cache.nativeSel = DOM._getWin(self.document).getSelection() );
+                return cache.nativeSel || ( cache.nativeSel = DOM.getWindow(self.document).getSelection() );
             }
             :
             function () {

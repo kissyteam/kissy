@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 7 00:25
+build time: Dec 11 12:56
 */
 /**
  * @ignore
@@ -304,7 +304,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
     return {
 
         addDocumentHandle: function (el, event) {
-            var win = DOM._getWin(el.ownerDocument || el),
+            var win = DOM.getWindow(el.ownerDocument || el),
                 doc = win.document,
                 handle = DOM.data(doc, key);
             if (!handle) {
@@ -314,7 +314,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         },
 
         removeDocumentHandle: function (el, event) {
-            var win = DOM._getWin(el.ownerDocument || el),
+            var win = DOM.getWindow(el.ownerDocument || el),
                 doc = win.document,
                 handle = DOM.data(doc, key);
             if (handle) {
@@ -820,6 +820,8 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch
  *      可以选择阻止 document 的 touchstart 来阻止整个程序的文字选择功能:
  *      同时阻止了touch 的 mouse/click 相关事件触发
  * 2.   反应更灵敏
+ *
+ * https://developers.google.com/mobile/articles/fast_buttons
  *//**
  * @ignore
  * touch event logic module

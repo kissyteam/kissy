@@ -184,7 +184,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             // because handle will check event.isPropagationStopped
             var cur = currentTarget,
                 t,
-                win = DOM._getWin(cur.ownerDocument || cur),
+                win = DOM.getWindow(cur.ownerDocument || cur),
                 curDocument = win.document,
                 eventPath = [],
                 eventPathIndex = 0,

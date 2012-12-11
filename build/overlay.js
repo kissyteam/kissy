@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 10 21:55
+build time: Dec 11 12:56
 */
 /**
  * @ignore
@@ -147,7 +147,7 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Di
 
     /**
      * @class KISSY.Overlay.Dialog
-     * KISSY Dialog Component. xclass: 'overlay/dialog'.
+     * KISSY Dialog Component. xclass: 'dialog'.
      * @extends KISSY.Overlay
      * @mixins KISSY.Overlay.Extension.StdMod
      */
@@ -1261,7 +1261,7 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
 
     /**
      * @class KISSY.Overlay.Popup
-     * KISSY Popup Component. xclass: 'overlay/popup'.
+     * KISSY Popup Component. xclass: 'popup'.
      * @extends KISSY.Overlay
      */
     return Overlay.extend({

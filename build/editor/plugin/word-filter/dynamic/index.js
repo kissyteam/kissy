@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 10 21:55
+build time: Dec 11 12:55
 */
 /**
  * clean html pasted from word. modified from ckeditor.

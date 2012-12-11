@@ -136,7 +136,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
     return {
 
         addDocumentHandle: function (el, event) {
-            var win = DOM._getWin(el.ownerDocument || el),
+            var win = DOM.getWindow(el.ownerDocument || el),
                 doc = win.document,
                 handle = DOM.data(doc, key);
             if (!handle) {
@@ -146,7 +146,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         },
 
         removeDocumentHandle: function (el, event) {
-            var win = DOM._getWin(el.ownerDocument || el),
+            var win = DOM.getWindow(el.ownerDocument || el),
                 doc = win.document,
                 handle = DOM.data(doc, key);
             if (handle) {

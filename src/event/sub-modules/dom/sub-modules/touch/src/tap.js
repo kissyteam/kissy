@@ -48,4 +48,6 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch
  *      可以选择阻止 document 的 touchstart 来阻止整个程序的文字选择功能:
  *      同时阻止了touch 的 mouse/click 相关事件触发
  * 2.   反应更灵敏
+ *
+ * https://developers.google.com/mobile/articles/fast_buttons
  */
