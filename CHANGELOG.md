@@ -43,6 +43,7 @@ History:
  - [+] 支持 KISSY.config({packages:{},modules:{}}); modules,packages 均可配置时间戳
  - [*] KISSY.ready try catch 达到互不影响的效果
  - [*] S.ready 多次调用间独立，不会因为某个异常导致全部中断
+ - [+] 单个包配置增加 ignorePackageNameInUri ，可以在实际模块存储文件路径中省去 package name.
 
 
 #### ua
