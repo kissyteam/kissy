@@ -19,7 +19,7 @@ describe("KISSY ComboLoader", function () {
             ]
         });
 
-        S.add({
+        S.config('modules',{
             "tests3/a": {
                 requires: ["./b"]
             },
@@ -176,7 +176,7 @@ describe("KISSY ComboLoader", function () {
                 }
             ]
         });
-        S.add({
+        S.config('modules',{
             "tests/a": {
                 requires: ['./b']
             },
@@ -219,7 +219,7 @@ describe("KISSY ComboLoader", function () {
                 }
             ]
         });
-        S.add({
+        S.config('modules',{
             "tests2/a": {
                 requires: ['./b']
             },
@@ -335,7 +335,7 @@ describe("KISSY ComboLoader", function () {
             ]
         });
 
-        S.add({
+        S.config('modules',{
             "test5/a": {
                 requires: ["test5/b"]
             }
