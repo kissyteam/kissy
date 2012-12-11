@@ -19,7 +19,7 @@ describe("KISSY ComboLoader", function () {
             ]
         });
 
-        S.config('modules',{
+        S.config('modules', {
             "tests3/a": {
                 requires: ["./b"]
             },
@@ -47,7 +47,7 @@ describe("KISSY ComboLoader", function () {
 
         var l = new ComboLoader(S);
 
-        l.add({
+        S.config('modules', {
             a: {
                 requires: ["b", "c"]
             },
@@ -82,7 +82,7 @@ describe("KISSY ComboLoader", function () {
 
         var l = new ComboLoader(S);
 
-        l.add({
+        S.config('modules', {
             a: {
                 requires: ["b", "c"]
             },
@@ -126,7 +126,7 @@ describe("KISSY ComboLoader", function () {
 
         var l = new ComboLoader(S);
 
-        l.add(x);
+        S.config('modules', x);
 
         var ret = [];
         for (i = 0; i < 100; i++) {
@@ -176,7 +176,7 @@ describe("KISSY ComboLoader", function () {
                 }
             ]
         });
-        S.config('modules',{
+        S.config('modules', {
             "tests/a": {
                 requires: ['./b']
             },
@@ -192,7 +192,7 @@ describe("KISSY ComboLoader", function () {
 
         expect(urls['js']['tests'][0])
             .toBe("http://" + host + "/kissy/src/seed/tests/specs/combo/" +
-            "tests/??a.js,b.js,c.js?t=" + S.Config.tag);
+                "tests/??a.js,b.js,c.js?t=" + S.Config.tag);
 
         S.DOM = null;
 
@@ -219,7 +219,7 @@ describe("KISSY ComboLoader", function () {
                 }
             ]
         });
-        S.config('modules',{
+        S.config('modules', {
             "tests2/a": {
                 requires: ['./b']
             },
@@ -335,7 +335,7 @@ describe("KISSY ComboLoader", function () {
             ]
         });
 
-        S.config('modules',{
+        S.config('modules', {
             "test5/a": {
                 requires: ["test5/b"]
             }
