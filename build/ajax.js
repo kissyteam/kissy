@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:52
+build time: Dec 11 16:05
 */
 /**
  * @ignore
@@ -255,7 +255,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         uri = c.uri = simulatedLocation.resolve(c.url);
 
         if (!('crossDomain' in c)) {
-            c.crossDomain = !c.uri.hasSameDomainAs(simulatedLocation);
+            c.crossDomain = !c.uri.isSameOriginAs(simulatedLocation);
         }
 
         type = c.type = type.toUpperCase();

@@ -106,11 +106,13 @@
         /**
          * reset to a new query string
          * @param {String} query
+         * @chainable
          */
         reset: function (query) {
             var self = this;
             self._query = query || '';
-            self._queryMap = 0;
+            self._queryMap = null;
+            return self;
         },
 
         /**
@@ -136,7 +138,7 @@
 
         /**
          * judge whether has query parameter
-         * @param {String} key
+         * @param {String} [key]
          */
         has: function (key) {
             var self = this, _queryMap;
@@ -151,7 +153,7 @@
 
         /**
          * Return parameter value corresponding to current key
-         * @param {String} key
+         * @param {String} [key]
          */
         get: function (key) {
             var self = this, _queryMap;
@@ -345,7 +347,7 @@
             }
         });
 
-        return undefined;
+        return self;
     }
 
     Uri.prototype =
@@ -564,8 +566,8 @@
          * @chainable
          */
         'setFragment': function (fragment) {
-            if (!S.startsWith(fragment, '#')) {
-                fragment = '#' + fragment;
+            if (S.startsWith(fragment, '#')) {
+                fragment = fragment.slice(1);
             }
             this.fragment = fragment;
             return this;
@@ -576,7 +578,7 @@
          * @param {KISSY.Uri} other
          * @return {Boolean}
          */
-        hasSameDomainAs: function (other) {
+        isSameOriginAs: function (other) {
             var self = this;
             // port and hostname has to be same
             return equalsIgnoreCase(self.hostname, other['hostname']) &&

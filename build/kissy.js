@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 15:22
+build time: Dec 11 19:27
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121211152219' will replace with current timestamp when compressing.
+         * NOTICE: '20121211192731' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121211152219',
+        __BUILD_TIME: '20121211192731',
         /**
          * KISSY Environment.
          * @private
@@ -1021,7 +1021,7 @@ var KISSY = (function (undefined) {
          * @param {Object} o json data
          * @param {String} [sep='&'] separator between each pair of data
          * @param {String} [eq='='] separator between key and value of data
-         * @param {Boolean} [serializeArray =TRUE] whether add '[]' to array key of data
+         * @param {Boolean} [serializeArray=true] whether add '[]' to array key of data
          * @return {String}
          * @member KISSY
          */
@@ -2483,11 +2483,13 @@ var KISSY = (function (undefined) {
         /**
          * reset to a new query string
          * @param {String} query
+         * @chainable
          */
         reset: function (query) {
             var self = this;
             self._query = query || '';
-            self._queryMap = 0;
+            self._queryMap = null;
+            return self;
         },
 
         /**
@@ -2513,7 +2515,7 @@ var KISSY = (function (undefined) {
 
         /**
          * judge whether has query parameter
-         * @param {String} key
+         * @param {String} [key]
          */
         has: function (key) {
             var self = this, _queryMap;
@@ -2528,7 +2530,7 @@ var KISSY = (function (undefined) {
 
         /**
          * Return parameter value corresponding to current key
-         * @param {String} key
+         * @param {String} [key]
          */
         get: function (key) {
             var self = this, _queryMap;
@@ -2722,7 +2724,7 @@ var KISSY = (function (undefined) {
             }
         });
 
-        return undefined;
+        return self;
     }
 
     Uri.prototype =
@@ -2941,8 +2943,8 @@ var KISSY = (function (undefined) {
          * @chainable
          */
         'setFragment': function (fragment) {
-            if (!S.startsWith(fragment, '#')) {
-                fragment = '#' + fragment;
+            if (S.startsWith(fragment, '#')) {
+                fragment = fragment.slice(1);
             }
             this.fragment = fragment;
             return this;
@@ -2953,7 +2955,7 @@ var KISSY = (function (undefined) {
          * @param {KISSY.Uri} other
          * @return {Boolean}
          */
-        hasSameDomainAs: function (other) {
+        isSameOriginAs: function (other) {
             var self = this;
             // port and hostname has to be same
             return equalsIgnoreCase(self.hostname, other['hostname']) &&
@@ -5800,7 +5802,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121211152219'
+            tag: '20121211192731'
         }, getBaseInfo()));
     }
 
@@ -16177,7 +16179,7 @@ KISSY.add('json', function (S, J) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:52
+build time: Dec 11 16:05
 */
 /**
  * @ignore
@@ -16431,7 +16433,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         uri = c.uri = simulatedLocation.resolve(c.url);
 
         if (!('crossDomain' in c)) {
-            c.crossDomain = !c.uri.hasSameDomainAs(simulatedLocation);
+            c.crossDomain = !c.uri.isSameOriginAs(simulatedLocation);
         }
 
         type = c.type = type.toUpperCase();

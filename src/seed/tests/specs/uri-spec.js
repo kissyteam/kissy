@@ -16,6 +16,31 @@ describe("uri", function () {
         expect(base.getFragment()).toBe("w");
     });
 
+    it('setFragment works', function () {
+        var u = new Uri('http://www.g.cn#heihei');
+
+        expect(u.getFragment()).toBe('heihei');
+
+        u.setFragment('haha');
+
+        expect(u.toString()).toBe('http://www.g.cn#haha');
+
+        expect(u.getFragment()).toBe('haha');
+    });
+
+    it('setFragment works -2', function () {
+        var u = new Uri('http://www.g.cn/#heihei');
+
+        expect(u.getFragment()).toBe('heihei');
+
+        u.setFragment('haha');
+
+        expect(u.toString()).toBe('http://www.g.cn/#haha');
+
+        expect(u.getFragment()).toBe('haha');
+    });
+
+
 
     describe('query', function () {
 

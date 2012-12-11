@@ -81,7 +81,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         uri = c.uri = simulatedLocation.resolve(c.url);
 
         if (!('crossDomain' in c)) {
-            c.crossDomain = !c.uri.hasSameDomainAs(simulatedLocation);
+            c.crossDomain = !c.uri.isSameOriginAs(simulatedLocation);
         }
 
         type = c.type = type.toUpperCase();

@@ -154,7 +154,7 @@
          * @param {Object} o json data
          * @param {String} [sep='&'] separator between each pair of data
          * @param {String} [eq='='] separator between key and value of data
-         * @param {Boolean} [serializeArray =TRUE] whether add '[]' to array key of data
+         * @param {Boolean} [serializeArray=true] whether add '[]' to array key of data
          * @return {String}
          * @member KISSY
          */
