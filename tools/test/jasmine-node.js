@@ -38,7 +38,6 @@ var mods = [
     'json',
     'base',
     'htmlparser',
-    'template',
     'event/custom'
 ];
 
