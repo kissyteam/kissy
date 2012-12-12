@@ -2,7 +2,7 @@
  * testcases for anim on node
  * @author yiminghe@gmail.com
  */
-KISSY.use("anim,node", function(S, Anim, Node) {
+KISSY.use("anim,node", function (S, Anim, Node) {
     var $ = Node.all;
 
     function padding(s) {
@@ -14,32 +14,21 @@ KISSY.use("anim,node", function(S, Anim, Node) {
     function normalizeColor(c) {
         if (c.toLowerCase().lastIndexOf("rgb(") == 0) {
             var x = [];
-            c.replace(/\d+/g, function(m) {
+            c.replace(/\d+/g, function (m) {
                 x.push(padding(Number(m).toString(16)));
             });
             c = "#" + x.join("");
         } else if (c.length == 4) {
-            c = c.replace(/[^#]/g, function(c) {
+            c = c.replace(/[^#]/g, function (c) {
                 return c + c;
             });
         }
         return c;
     }
 
-    /**
-     * test for css anim native support
-     */
-    var transitionName;
-    if (transitionName) {
-        transitionName += "Property";
-    }
+    describe("anim on node", function () {
 
-    // node 上的动画都是用 js 模拟，比较稳定
-    transitionName="";
-
-    describe("anim on node", function() {
-
-        it("should attach node with slideUp/down well", function() {
+        it("should attach node with slideUp/down well", function () {
             var test1 = Node.one("#test6");
 
             test1.css({
@@ -48,33 +37,21 @@ KISSY.use("anim,node", function(S, Anim, Node) {
                 'background-color': '#ccc'
             });
 
-            test1.slideUp(0.2);
+            test1.slideUp(0.4);
 
             waits(100);
 
-            runs(function() {
-                if (transitionName) {
-                    expect(test1.css(transitionName)).toBe("all");
-                    expect(test1.css("width")).toBe("100px");
-                    expect(test1.css("display")).toBe("block");
-                    expect(parseInt(test1.css("height"))).toBe(0);
-                    expect(normalizeColor(test1.css("background-color")))
-                        .toBe("#cccccc");
-                } else {
-                    expect(test1.css("width")).toBe("100px");
-                    expect(test1.css("display")).toBe("block");
-                    expect(test1.css("height")).not.toBe("100px");
-                    expect(normalizeColor(test1.css("background-color")))
-                        .toBe("#cccccc");
-                }
+            runs(function () {
+                expect(test1.css("width")).toBe("100px");
+                expect(test1.css("display")).toBe("block");
+                expect(test1.css("height")).not.toBe("100px");
+                expect(normalizeColor(test1.css("background-color")))
+                    .toBe("#cccccc");
             });
 
-            waits(200);
+            waits(800);
 
-            runs(function() {
-                if (transitionName) {
-                    expect(test1.css(transitionName)).toBe("none");
-                }
+            runs(function () {
                 expect(test1.css("width")).toBe("100px");
                 expect(test1.css("display")).toBe("none");
                 expect(test1.css("height")).toBe("100px");
@@ -83,35 +60,23 @@ KISSY.use("anim,node", function(S, Anim, Node) {
             });
 
 
-            runs(function() {
-                test1.slideDown(0.2);
+            runs(function () {
+                test1.slideDown(0.4);
             });
 
             waits(100);
 
-            runs(function() {
-                if (transitionName) {
-                    expect(test1.css(transitionName)).toBe("all");
-                    expect(test1.css("width")).toBe("100px");
-                    expect(test1.css("display")).toBe("block");
-                    expect(test1.css("height")).toBe("100px");
-                    expect(normalizeColor(test1.css("background-color")))
-                        .toBe("#cccccc");
-                } else {
-                    expect(test1.css("width")).toBe("100px");
-                    expect(test1.css("display")).toBe("block");
-                    expect(test1.css("height")).not.toBe("100px");
-                    expect(normalizeColor(test1.css("background-color")))
-                        .toBe("#cccccc");
-                }
+            runs(function () {
+                expect(test1.css("width")).toBe("100px");
+                expect(test1.css("display")).toBe("block");
+                expect(test1.css("height")).not.toBe("100px");
+                expect(normalizeColor(test1.css("background-color")))
+                    .toBe("#cccccc");
             });
 
-            waits(200);
+            waits(800);
 
-            runs(function() {
-                if (transitionName) {
-                    expect(test1.css(transitionName)).toBe("none");
-                }
+            runs(function () {
                 expect(test1.css("width")).toBe("100px");
                 expect(test1.css("display")).toBe("block");
                 expect(test1.css("height")).toBe("100px");
@@ -120,7 +85,7 @@ KISSY.use("anim,node", function(S, Anim, Node) {
             });
         });
 
-        it("should attach node with show/hide well", function() {
+        it("should attach node with show/hide well", function () {
             var test2 = Node.one("#test2");
 
             test2.css({
@@ -132,62 +97,41 @@ KISSY.use("anim,node", function(S, Anim, Node) {
 
             waits(100);
 
-            runs(function() {
-                if (transitionName) {
-                    expect(test2.css(transitionName)).toBe("all");
-                    expect(parseInt(test2.css("width"))).toBe(0);
-                    expect(test2.css("display")).toBe("block");
-                    expect(parseInt(test2.css("height"))).toBe(0);
-                    expect(parseInt(test2.css("opacity") + "")).toBe(0);
-                } else {
-                    expect(test2.css("width")).not.toBe("100px");
-                    expect(test2.css("display")).toBe("block");
-                    expect(test2.css("height")).not.toBe("100px");
-                    expect(test2.css("opacity") + "").not.toBe('1');
-                }
+            runs(function () {
+                expect(test2.css("width")).not.toBe("100px");
+                expect(test2.css("display")).toBe("block");
+                expect(test2.css("height")).not.toBe("100px");
+                expect(test2.css("opacity") + "").not.toBe('1');
             });
 
             waits(200);
 
-            runs(function() {
-                if (transitionName) {
-                    expect(test2.css(transitionName)).toBe("none");
-                }
+            runs(function () {
                 expect(test2.css("width")).toBe("100px");
                 expect(test2.css("display")).toBe("none");
                 expect(test2.css("height")).toBe("100px");
                 expect(test2.css("opacity") + "").toBe('1');
             });
 
-            runs(function() {
+            runs(function () {
                 test2.show(0.2);
             });
 
 
             waits(100);
 
-            runs(function() {
-                if (transitionName) {
-                    expect(test2.css(transitionName)).toBe("all");
-                    expect(test2.css("width")).toBe("100px");
-                    expect(test2.css("display")).toBe("block");
-                    expect(test2.css("height")).toBe("100px");
-                    expect(test2.css("opacity") + "").toBe('1');
-                } else {
-                    expect(test2.css("width")).not.toBe("100px");
-                    expect(test2.css("display")).toBe("block");
-                    expect(test2.css("height")).not.toBe("100px");
-                    expect(test2.css("opacity") + "").not.toBe('1');
-                }
+            runs(function () {
+                expect(test2.css("width")).not.toBe("100px");
+                expect(test2.css("display")).toBe("block");
+                expect(test2.css("height")).not.toBe("100px");
+                expect(test2.css("opacity") + "").not.toBe('1');
+
             });
 
 
             waits(200);
 
-            runs(function() {
-                if (transitionName) {
-                    expect(test2.css(transitionName)).toBe("none");
-                }
+            runs(function () {
                 expect(test2.css("width")).toBe("100px");
                 expect(test2.css("display")).toBe("block");
                 expect(test2.css("height")).toBe("100px");

@@ -10,12 +10,12 @@ KISSY.use("component/extension", function (S, extension) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
                 },
 
-                toBeEqualRect:function(expect){
-                    var actual=this.actual;
-                    for(var i in actual){
-                        if(actual[i]-expect[i]<5){
+                toBeEqualRect: function (expect) {
+                    var actual = this.actual;
+                    for (var i in actual) {
+                        if (actual[i] - expect[i] < 5) {
 
-                        }else{
+                        } else {
                             return false;
                         }
                     }
@@ -65,123 +65,127 @@ KISSY.use("component/extension", function (S, extension) {
             }
         });
 
-        it("getVisibleRectForElement works", function () {
+        if (S.UA.ios && window.frameElement) {
+
+        } else {
+            it("getVisibleRectForElement works", function () {
 
 
-            var gap = DOM.create("<div style='height: 1500px;width: 100000px;'></div>");
-            DOM.append(gap, "body");
+                var gap = DOM.create("<div style='height: 1500px;width: 100000px;'></div>");
+                DOM.append(gap, "body");
 
-            var getVisibleRectForElement = Align.__getVisibleRectForElement,
-                test = [];
+                var getVisibleRectForElement = Align.__getVisibleRectForElement,
+                    test = [];
 
-            test[0] = "<div><div></div></div>";
+                test[0] = "<div><div></div></div>";
 
-            test[1] = "<div style='width: 100px;height: 100px;overflow: hidden;'>" +
-                "<div style='position: relative;'></div></div>";
+                test[1] = "<div style='width: 100px;height: 100px;overflow: hidden;'>" +
+                    "<div style='position: relative;'></div></div>";
 
-            test[2] = "<div style='width: 100px;height: 100px;overflow: hidden;'>" +
-                "<div>" +
-                "<div style='position: absolute;'></div>" +
-                "</div>" +
-                "</div>";
+                test[2] = "<div style='width: 100px;height: 100px;overflow: hidden;'>" +
+                    "<div>" +
+                    "<div style='position: absolute;'></div>" +
+                    "</div>" +
+                    "</div>";
 
-            test[3] = "<div style='position: relative;width: 100px;" +
-                "height: 100px;overflow: hidden;'>" +
-                "<div>" +
-                "<div style='position: absolute;'></div>" +
-                "</div>" +
-                "</div>";
+                test[3] = "<div style='position: relative;width: 100px;" +
+                    "height: 100px;overflow: hidden;'>" +
+                    "<div>" +
+                    "<div style='position: absolute;'></div>" +
+                    "</div>" +
+                    "</div>";
 
-            var dom = [];
+                var dom = [];
 
-            for (var i = 3; i >= 0; i--) {
-                dom[i] = DOM.create(test[i]);
-                DOM.prepend(dom[i], "body");
-            }
+                for (var i = 3; i >= 0; i--) {
+                    dom[i] = DOM.create(test[i]);
+                    DOM.prepend(dom[i], "body");
+                }
 
-            // 1
-            window.scrollTo(10, 10);
-
-
-            var right = 10 + DOM.viewportWidth(),
-                rect,
-                bottom = 10 + DOM.viewportHeight();
-
-            rect = getVisibleRectForElement(dom[0].firstChild);
-
-            expect(rect.left).toBeEqual(10);
-            expect(rect.top).toBeEqual(10);
-            expect(rect.right).toBeEqual(right);
-            expect(rect.bottom).toBeEqual(bottom);
-
-            window.scrollTo(200, 200);
-            rect = getVisibleRectForElement(dom[0].firstChild);
-
-            expect(rect.left).toEqual(200);
-            expect(rect.bottom).toEqual(200 + DOM.viewportHeight());
-            expect(rect.top).toEqual(200);
-            expect(rect.right).toEqual(200 + DOM.viewportWidth());
-
-            DOM.remove(dom[0]);
+                // 1
+                window.scrollTo(10, 10);
 
 
-            // 2
-            window.scrollTo(10, 10);
-            rect = getVisibleRectForElement(dom[1].firstChild);
-            expect(rect).toBeEqualRect({
-                left: 10,
-                top: 10,
-                right: 100,
-                bottom: 100
+                var right = 10 + DOM.viewportWidth(),
+                    rect,
+                    bottom = 10 + DOM.viewportHeight();
+
+                rect = getVisibleRectForElement(dom[0].firstChild);
+
+                expect(rect.left).toBeEqual(10);
+                expect(rect.top).toBeEqual(10);
+                expect(rect.right).toBeEqual(right);
+                expect(rect.bottom).toBeEqual(bottom);
+
+                window.scrollTo(200, 200);
+                rect = getVisibleRectForElement(dom[0].firstChild);
+
+                expect(rect.left).toEqual(200);
+                expect(rect.bottom).toEqual(200 + DOM.viewportHeight());
+                expect(rect.top).toEqual(200);
+                expect(rect.right).toEqual(200 + DOM.viewportWidth());
+
+                DOM.remove(dom[0]);
+
+
+                // 2
+                window.scrollTo(10, 10);
+                rect = getVisibleRectForElement(dom[1].firstChild);
+                expect(rect).toBeEqualRect({
+                    left: 10,
+                    top: 10,
+                    right: 100,
+                    bottom: 100
+                });
+
+                window.scrollTo(200, 200);
+                rect = getVisibleRectForElement(dom[1].firstChild);
+                expect(rect).toBe(null);
+                DOM.remove(dom[1]);
+
+
+                // 3
+                window.scrollTo(10, 10);
+                rect = getVisibleRectForElement(dom[2].firstChild);
+                expect(rect).toBeEqualRect({
+                    left: 10,
+                    top: 10,
+                    right: 100,
+                    bottom: 100
+                });
+
+                window.scrollTo(200, 200);
+                rect = getVisibleRectForElement(dom[2].firstChild);
+                expect(rect).toBe(null);
+                DOM.remove(dom[2]);
+
+
+                // 4
+                window.scrollTo(10, 10);
+                rect = getVisibleRectForElement(dom[3].firstChild);
+                expect(rect).toBeEqualRect({
+                    left: 10,
+                    top: 10,
+                    right: 100,
+                    bottom: 100
+                });
+
+                window.scrollTo(200, 200);
+                rect = getVisibleRectForElement(dom[3].firstChild);
+                expect(rect).toBe(null);
+                DOM.remove(dom[3]);
+
+
+                DOM.remove(gap);
+
+
+                waits(200);
+                runs(function () {
+                    window.scrollTo(0, 0);
+                });
+
             });
-
-            window.scrollTo(200, 200);
-            rect = getVisibleRectForElement(dom[1].firstChild);
-            expect(rect).toBe(null);
-            DOM.remove(dom[1]);
-
-
-            // 3
-            window.scrollTo(10, 10);
-            rect = getVisibleRectForElement(dom[2].firstChild);
-            expect(rect).toBeEqualRect({
-                left: 10,
-                top: 10,
-                right: 100,
-                bottom: 100
-            });
-
-            window.scrollTo(200, 200);
-            rect = getVisibleRectForElement(dom[2].firstChild);
-            expect(rect).toBe(null);
-            DOM.remove(dom[2]);
-
-
-            // 4
-            window.scrollTo(10, 10);
-            rect = getVisibleRectForElement(dom[3].firstChild);
-            expect(rect).toBeEqualRect({
-                left: 10,
-                top: 10,
-                right: 100,
-                bottom: 100
-            });
-
-            window.scrollTo(200, 200);
-            rect = getVisibleRectForElement(dom[3].firstChild);
-            expect(rect).toBe(null);
-            DOM.remove(dom[3]);
-
-
-            DOM.remove(gap);
-
-
-            waits(200);
-            runs(function () {
-                window.scrollTo(0, 0);
-            });
-
-        });
+        }
 
         describe("auto align", function () {
             it("should not auto adjust if current position is right", function () {
@@ -203,7 +207,7 @@ KISSY.use("component/extension", function (S, extension) {
                         "</div>").appendTo("body");
 
                     var target = node.first(),
-                        //upper = node.children().item(1),
+                    //upper = node.children().item(1),
                         lower = node.children().item(2);
 
                     var obj = {
@@ -296,7 +300,7 @@ KISSY.use("component/extension", function (S, extension) {
                         "</div>").appendTo("body");
 
                     var target = node.first(),
-                        //upper = node.children().item(1),
+                    //upper = node.children().item(1),
                         lower = node.children().item(2);
 
                     var obj = {

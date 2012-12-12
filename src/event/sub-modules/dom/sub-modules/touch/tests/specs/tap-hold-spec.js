@@ -6,7 +6,7 @@ if (!phantomjs && document.createTouch) {
 
     KISSY.use('core', function (S) {
 
-        var $ = S.all;
+        var $ = S.all,step=10;
 
 
         describe('tapHold', function () {
@@ -61,7 +61,7 @@ if (!phantomjs && document.createTouch) {
 
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     expect(called).toBe(1);
@@ -94,7 +94,7 @@ if (!phantomjs && document.createTouch) {
                     targetTouches: touches
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
 
@@ -106,7 +106,7 @@ if (!phantomjs && document.createTouch) {
 
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     expect(called).toBe(0);
@@ -136,9 +136,9 @@ if (!phantomjs && document.createTouch) {
                     targetTouches: touches
                 });
 
-                for (var i = 0; i < 20; i++) {
+                for (var i = 0; i < step; i++) {
 
-                    waits(10);
+                    waits(30);
 
                     runs(function () {
                         touches[0].pageX = touches[0].pageY = 10 + (Math.random() * 20);
@@ -152,7 +152,7 @@ if (!phantomjs && document.createTouch) {
                 }
 
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
 
@@ -164,7 +164,7 @@ if (!phantomjs && document.createTouch) {
 
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     expect(called).toBe(0);
@@ -194,7 +194,7 @@ if (!phantomjs && document.createTouch) {
                     targetTouches: touches
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
 
@@ -206,7 +206,7 @@ if (!phantomjs && document.createTouch) {
 
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     expect(called).toBe(0);

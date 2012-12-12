@@ -4,6 +4,7 @@
  */
 KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
     var Draggable = DD.Draggable,
+        Gesture= S.Event.Gesture,
         $ = S.all;
 
     window.scrollTo(0, 0);
@@ -42,7 +43,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
 
             constrain.set("constrain", container);
 
-            jasmine.simulate(node[0], "mousedown", {
+            jasmine.simulateForDrag(node[0], Gesture.start, {
                 clientX: 10,
                 clientY: 10
             });
@@ -50,7 +51,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
+                jasmine.simulateForDrag(document, Gesture.move, {
                     clientX: 30,
                     clientY: 30
                 });
@@ -59,7 +60,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
+                jasmine.simulateForDrag(document, Gesture.move, {
                     clientX: 500,
                     clientY: 500
                 });
@@ -68,7 +69,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mouseup");
+                jasmine.simulateForDrag(document, Gesture.end);
             });
 
             waits(100);
@@ -93,7 +94,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
 
             var win = $(window);
 
-            jasmine.simulate(node[0], "mousedown", {
+            jasmine.simulateForDrag(node[0], Gesture.start, {
                 clientX: 10,
                 clientY: 10
             });
@@ -101,7 +102,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
+                jasmine.simulateForDrag(document, Gesture.move, {
                     clientX: 30,
                     clientY: 30
                 });
@@ -110,7 +111,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
+                jasmine.simulateForDrag(document, Gesture.move, {
                     clientX: 5500,
                     clientY: 5500
                 });
@@ -119,7 +120,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mouseup");
+                jasmine.simulateForDrag(document, Gesture.end);
             });
 
             waits(100);
@@ -144,7 +145,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
 
             var win = $(window);
 
-            jasmine.simulate(node[0], "mousedown", {
+            jasmine.simulateForDrag(node[0], Gesture.start, {
                 clientX: 10,
                 clientY: 10
             });
@@ -152,7 +153,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
+                jasmine.simulateForDrag(document, Gesture.move, {
                     clientX: 30,
                     clientY: 30
                 });
@@ -161,7 +162,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
+                jasmine.simulateForDrag(document, Gesture.move, {
                     clientX: 5500,
                     clientY: 5500
                 });
@@ -170,7 +171,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mouseup");
+                jasmine.simulateForDrag(document, Gesture.end);
             });
 
             waits(100);
@@ -193,7 +194,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
 
             constrain.set("constrain", false);
 
-            jasmine.simulate(node[0], "mousedown", {
+            jasmine.simulateForDrag(node[0], Gesture.start, {
                 clientX: 10,
                 clientY: 10
             });
@@ -201,7 +202,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
+                jasmine.simulateForDrag(document, Gesture.move, {
                     clientX: 30,
                     clientY: 30
                 });
@@ -210,7 +211,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
+                jasmine.simulateForDrag(document, Gesture.move, {
                     clientX: 5500,
                     clientY: 5500
                 });
@@ -219,7 +220,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mouseup");
+                jasmine.simulateForDrag(document, Gesture.end);
             });
 
             waits(100);
@@ -244,7 +245,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
 
             draggable.unplug(constrain);
 
-            jasmine.simulate(node[0], "mousedown", {
+            jasmine.simulateForDrag(node[0], Gesture.start, {
                 clientX: 10,
                 clientY: 10
             });
@@ -252,7 +253,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
+                jasmine.simulateForDrag(document, Gesture.move, {
                     clientX: 30,
                     clientY: 30
                 });
@@ -261,7 +262,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
+                jasmine.simulateForDrag(document, Gesture.move, {
                     clientX: 5500,
                     clientY: 5500
                 });
@@ -270,7 +271,7 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulate(document, "mouseup");
+                jasmine.simulateForDrag(document, Gesture.end);
             });
 
             waits(100);

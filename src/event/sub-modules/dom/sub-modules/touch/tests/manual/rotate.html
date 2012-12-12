@@ -18,8 +18,10 @@
 <div id='t' tabindex='0'
      style='border:1px solid green;
      width:200px;height:200px;margin:10px'>
-    tttt ttttt ttttt tttttt tttttt
+    rotate me
 </div>
+
+<a href="http://www.g.cn">google</a>
 
 <script>
 
@@ -45,6 +47,17 @@
                     e.originalEvent.touches.length + ' : ' +
                     e.rotation + ' : ' + e.angle);
             //S.log(e.type + ' : ' + e.rotation);
+        });
+        var t = document.getElementById('t');
+        var o;
+        Event.on('#t', 'rotateStart', function (e) {
+            o = 0;
+            if (t.style.WebkitTransform) {
+                o = parseInt(t.style.WebkitTransform.replace(/rotate\(/, ''));
+            }
+        });
+        Event.on('#t', 'rotate', function (e) {
+            t.style.WebkitTransform = 'rotate(' + (o + parseInt(e.rotation))%360 + 'deg)';
         });
 
 

@@ -6,7 +6,7 @@ if (!phantomjs && document.createTouch) {
 
     KISSY.use('core', function (S) {
 
-        var $ = S.all;
+        var $ = S.all,step=10;
 
 
         describe('doubleTap/singleTap', function () {
@@ -55,7 +55,7 @@ if (!phantomjs && document.createTouch) {
                     });
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
 
@@ -67,7 +67,7 @@ if (!phantomjs && document.createTouch) {
 
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     touches[0].pageX = touches[0].pageY = 20;
@@ -78,7 +78,7 @@ if (!phantomjs && document.createTouch) {
                     });
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
 
@@ -134,7 +134,7 @@ if (!phantomjs && document.createTouch) {
                     });
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     jasmine.simulate(t[0], 'touchend', {
@@ -155,7 +155,7 @@ if (!phantomjs && document.createTouch) {
                     });
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
 
@@ -201,7 +201,7 @@ if (!phantomjs && document.createTouch) {
                     targetTouches: touches
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
 
@@ -243,23 +243,26 @@ if (!phantomjs && document.createTouch) {
                     targetTouches: touches
                 });
 
-                for (var i = 0; i < 20; i++) {
+                for (var i = 0; i < step; i++) {
 
-                    waits(10);
+                    waits(30);
 
-                    runs(function () {
-                        touches[0].pageX = touches[0].pageY = 10 + (Math.random() * 20);
-                        jasmine.simulate(t[0], 'touchmove', {
-                            touches: touches,
-                            changedTouches: touches,
-                            targetTouches: touches
+                    (function (i) {
+
+                        runs(function () {
+                            touches[0].pageX = touches[0].pageY = 10 + (Math.random() * 20);
+                            jasmine.simulate(t[0], 'touchmove', {
+                                touches: touches,
+                                changedTouches: touches,
+                                targetTouches: touches
+                            });
                         });
-                    });
 
+                    })(i);
                 }
 
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
 

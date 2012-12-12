@@ -31,6 +31,8 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
             var touches = e.touches,
                 distance = getDistance(touches[0], touches[1]);
 
+            self.lastTouches = touches;
+
             if (!self.isStarted) {
                 self.isStarted = true;
                 self.startDistance = distance;
@@ -49,8 +51,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
                         scale: distance / self.startDistance
                     });
             }
-
-            self.lastTouches = touches;
         },
 
         fireEnd: function () {

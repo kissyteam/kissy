@@ -46,6 +46,10 @@ tests.push('/kissy/src/event/sub-modules/dom/sub-modules/hashchange/tests/runner
 
 tests.push('/kissy/src/event/sub-modules/dom/sub-modules/ie/tests/runner/test.html');
 
+tests.push('/kissy/src/event/sub-modules/dom/sub-modules/shake/tests/runner/test.html');
+
+tests.push('/kissy/src/event/sub-modules/dom/sub-modules/touch/tests/runner/test.html');
+
 tests.push('/kissy/src/flash/tests/runner/test.html');
 
 tests.push('/kissy/src/htmlparser/tests/runner/test.html');

@@ -4,6 +4,7 @@
  */
 KISSY.use("ua,node,dd/base,dd/plugin/proxy", function (S, UA, Node, DD,Proxy) {
     var Draggable = DD.Draggable,
+        Gesture= S.Event.Gesture,
         DOM = S.DOM;
     var ie = document['documentMode'] || UA['ie'];
 
@@ -31,7 +32,7 @@ KISSY.use("ua,node,dd/base,dd/plugin/proxy", function (S, UA, Node, DD,Proxy) {
             expect(drag.get("node")[0]).toBe(drag.get("dragNode")[0]);
 
             dragXy = dragNode.offset();
-            jasmine.simulate(dragNode[0], "mousedown", {
+            jasmine.simulateForDrag(dragNode[0], Gesture.start, {
                 clientX: dragXy.left + 10 - DOM.scrollLeft(),
                 clientY: dragXy.top + 10 - DOM.scrollTop()
             });
@@ -41,7 +42,7 @@ KISSY.use("ua,node,dd/base,dd/plugin/proxy", function (S, UA, Node, DD,Proxy) {
 
             // 10px move to start
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
+                jasmine.simulateForDrag(document, Gesture.move, {
                     clientX: dragXy.left + 15 - DOM.scrollLeft(),
                     clientY: dragXy.top + 15 - DOM.scrollTop()
                 });
@@ -54,7 +55,7 @@ KISSY.use("ua,node,dd/base,dd/plugin/proxy", function (S, UA, Node, DD,Proxy) {
             });
 
             runs(function () {
-                jasmine.simulate(document, "mouseup");
+                jasmine.simulateForDrag(document, Gesture.end);
             });
 
 

@@ -1,3 +1,8 @@
+/**
+ * test stylesheet
+ * note: font-size ios bug
+ * @author yiminghe@gmail.com
+ */
 KISSY.use("stylesheet,core", function (S, StyleSheet) {
 
     var $ = S.all;
@@ -35,35 +40,35 @@ KISSY.use("stylesheet,core", function (S, StyleSheet) {
 
             var ret = 0;
 
-            var style = S.getScript("../../demo/test.css", function () {
+            var style = S.getScript("../data/test.css", function () {
 
-                expect(n.css("font-size")).toBe("12px");
+                expect(n.css("height")).toBe("120px");
 
                 var styleSheet = new StyleSheet(style);
 
                 expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000; " +
-                    "font-size: 12px;}"));
+                    "height: 120px;}"));
                 expect(filter(styleSheet.get(".test1"))).toBe(filter("color: #ff0000; " +
-                    "font-size: 12px;"));
+                    "height: 120px;"));
 
                 // set
                 styleSheet.set(".test1", {
-                    fontSize: "20px"
+                    height: "200px"
                 });
 
                 expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000;" +
-                    " font-size: 20px;}"));
+                    " height: 200px;}"));
 
-                expect(n.css("font-size")).toBe("20px");
+                expect(n.css("height")).toBe("200px");
 
                 // unset
                 styleSheet.set(".test1", {
-                    fontSize: ""
+                    height: ""
                 });
 
                 expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000;}"));
 
-                expect(n.css("font-size")).toBe("14px");
+                expect(n.css("height")).not.toBe("200px");
 
                 expect(filter(n.css("color"))).toBe("#ff0000");
 
@@ -77,20 +82,20 @@ KISSY.use("stylesheet,core", function (S, StyleSheet) {
 
                 // add
                 styleSheet.set(".test2", {
-                    fontSize: "12px"
+                    height: "120px"
                 });
 
-                expect(filter(styleSheet.get())).toBe(filter(".test2 {font-size: 12px;}"));
+                expect(filter(styleSheet.get())).toBe(filter(".test2 {height: 120px;}"));
 
-                expect(n2.css("font-size")).toBe("12px");
+                expect(n2.css("height")).toBe("120px");
 
                 // disable
                 styleSheet.disable();
-                expect(n2.css("font-size")).toBe("14px");
+                expect(n2.css("height")).not.toBe("120px");
 
                 // enable
                 styleSheet.enable();
-                expect(n2.css("font-size")).toBe("12px");
+                expect(n2.css("height")).toBe("120px");
 
                 ret = 1;
             });
@@ -118,35 +123,38 @@ KISSY.use("stylesheet,core", function (S, StyleSheet) {
 
             var style = S.all("<style>.test1 {" +
                 "color:#ff0000;" +
-                "font-size: 12px;" +
+                "height: 120px;" +
                 "}</style>").appendTo("body")[0];
 
             (function () {
 
-                expect(n.css("font-size")).toBe("12px");
+                expect(n.css("height")).toBe("120px");
 
                 var styleSheet = new StyleSheet(style);
 
-                expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000; font-size: 12px;}"));
-                expect(filter(styleSheet.get(".test1"))).toBe(filter("color: #ff0000; font-size: 12px;"));
+                expect(filter(styleSheet.get()))
+                    .toBe(filter(".test1 {color: #ff0000; height: 120px;}"));
+                expect(filter(styleSheet.get(".test1")))
+                    .toBe(filter("color: #ff0000; height: 120px;"));
 
                 // set
                 styleSheet.set(".test1", {
-                    fontSize: "20px"
+                    height: "200px"
                 });
 
-                expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000; font-size: 20px;}"));
+                expect(filter(styleSheet.get()))
+                    .toBe(filter(".test1 {color: #ff0000; height: 200px;}"));
 
-                expect(n.css("font-size")).toBe("20px");
+                expect(n.css("height")).toBe("200px");
 
                 // unset
                 styleSheet.set(".test1", {
-                    fontSize: ""
+                    height: ""
                 });
 
                 expect(filter(styleSheet.get())).toBe(filter(".test1 {color: #ff0000;}"));
 
-                expect(n.css("font-size")).toBe("14px");
+                expect(n.css("height")).not.toBe("200px");
 
                 expect(filter(n.css("color"))).toBe("#ff0000");
 
@@ -160,20 +168,20 @@ KISSY.use("stylesheet,core", function (S, StyleSheet) {
 
                 // add
                 styleSheet.set(".test2", {
-                    fontSize: "12px"
+                    height: "120px"
                 });
 
-                expect(filter(styleSheet.get())).toBe(filter(".test2 {font-size: 12px;}"));
+                expect(filter(styleSheet.get())).toBe(filter(".test2 {height: 120px;}"));
 
-                expect(n2.css("font-size")).toBe("12px");
+                expect(n2.css("height")).toBe("120px");
 
                 // disable
                 styleSheet.disable();
-                expect(n2.css("font-size")).toBe("14px");
+                expect(n2.css("height")).not.toBe("120px");
 
                 // enable
                 styleSheet.enable();
-                expect(n2.css("font-size")).toBe("12px");
+                expect(n2.css("height")).toBe("120px");
 
                 ret = 1;
             })();

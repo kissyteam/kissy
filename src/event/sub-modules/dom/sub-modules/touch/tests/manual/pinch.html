@@ -14,13 +14,14 @@
 <h1>open in ios safari test pinch event</h1>
 
 <a href="http://www.g.cn">google</a>
-
+<button onclick="alert(KISSY.DOM.offset('#t').top);alert(KISSY.DOM.width('#t'));">get top/width</button>
 <div id='t' tabindex='0'
      style='border:1px solid green;
-     width:200px;height:200px;margin:10px'>
-    tttt ttttt ttttt tttttt tttttt
+     width:200px;height:200px;margin:100px'>
+    pinch me
 </div>
 
+<a href="http://www.g.cn">google</a>
 <script>
 
     KISSY.use('event', function (S, Event) {
@@ -38,6 +39,20 @@
             S.log(e.type + ' : ' + e.scale);
         });
 
+        var o;
+
+        var t = document.getElementById('t');
+
+        Event.on('#t', 'pinchStart', function () {
+            o = 1;
+            if (t.style.webkitTransform) {
+                o = parseFloat(t.style.webkitTransform.replace(/scale\(/, ''));
+            }
+        });
+
+        Event.on('#t', 'pinch', function (e) {
+            t.style.webkitTransform = 'scale(' + (o * e.scale) + ')';
+        });
 
     });
 

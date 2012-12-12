@@ -53,6 +53,7 @@ KISSY.use("combobox", function (S, ComboBox) {
 
             t.focus();
 
+            // ios can simulate keydown??
             jasmine.simulate(t, "keydown");
             waits(100);
             runs(function () {
@@ -249,46 +250,48 @@ KISSY.use("combobox", function (S, ComboBox) {
         });
 
 
-        it("should response to mouse", function () {
+        if (!S.UA.ios && !S.UA.android) {
+            it("should response to mouse", function () {
 
-            t.value = "";
+                t.value = "";
 
-            t.focus();
+                t.focus();
 
-            jasmine.simulate(t, "keydown");
-            waits(100);
-            runs(function () {
-                t.value = "1";
-            });
-            waits(100);
+                jasmine.simulate(t, "keydown");
+                waits(100);
+                runs(function () {
+                    t.value = "1";
+                });
+                waits(100);
 
-            runs(function () {
-                jasmine.simulate(t, "keyup");
-            });
-
-            waits(100);
-
-            runs(function () {
-                var menu = comboBox.get("menu");
-                var children = menu.get("children");
-                // 第一个高亮
-                expect(S.indexOf(menu.get("activeItem"), children)).toBe(0);
-
-                jasmine.simulate(children[1].get("el")[0], "mouseover", {
-                    relatedTarget: children[0].get("el")[0]
+                runs(function () {
+                    jasmine.simulate(t, "keyup");
                 });
 
+                waits(100);
+
+                runs(function () {
+                    var menu = comboBox.get("menu");
+                    var children = menu.get("children");
+                    // 第一个高亮
+                    expect(S.indexOf(menu.get("activeItem"), children)).toBe(0);
+
+                    jasmine.simulate(children[1].get("el")[0], "mouseover", {
+                        relatedTarget: children[0].get("el")[0]
+                    });
+
+                });
+                waits(100);
+                runs(function () {
+                    var menu = comboBox.get("menu");
+                    var children = menu.get("children");
+                    // 第二个高亮
+                    expect(S.indexOf(menu.get("activeItem"), children)).toBe(1);
+                    t.blur();
+                });
+                waits(100);
             });
-            waits(100);
-            runs(function () {
-                var menu = comboBox.get("menu");
-                var children = menu.get("children");
-                // 第二个高亮
-                expect(S.indexOf(menu.get("activeItem"), children)).toBe(1);
-                t.blur();
-            });
-            waits(100);
-        });
+        }
 
 
         it("should update selectedItem and hide menu", function () {

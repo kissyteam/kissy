@@ -49,6 +49,7 @@
 
         var img = document.getElementById('img');
 
+
         if (window.DeviceMotionEvent == undefined) {
             document.write('does not support devicemotion');
             return;
@@ -59,16 +60,16 @@
             ay = event.accelerationIncludingGravity.y;
             az = event.accelerationIncludingGravity.z;
 
-            var rotationRate= event.rotationRate;
+            var rotationRate = event.rotationRate;
 
-            alpha2=rotationRate.alpha;
-            beta2=rotationRate.beta;
-            gamma2=rotationRate.gamma;
+            alpha2 = rotationRate.alpha;
+            beta2 = rotationRate.beta;
+            gamma2 = rotationRate.gamma;
 
             motion.textContent = ("Accelerometer data - x: " +
                     ax +
                     " y: " + ay +
-                    " z: " + az+
+                    " z: " + az +
                     " alpha2: " + alpha2 +
                     " beta2: " + beta2 +
                     " gamma2: " + gamma2);
@@ -81,8 +82,8 @@
             rotation.textContent = ("ondeviceorientation data - alpha: " +
                     alpha +
                     " beta: " + beta +
-                    " gamma: " + gamma+
-                    " absolute: "+event.absolute);
+                    " gamma: " + gamma +
+                    " absolute: " + event.absolute);
         };
 
         var useMotion = 0;

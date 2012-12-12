@@ -63,11 +63,12 @@ KISSY.use("dom,node", function (S, DOM, Node) {
             var nl = S.all(".test-div");
 
             //chain
-            expect(nl.css("font-size", "20px")).toBe(nl);
+            expect(nl.css("height", "200px")).toBe(nl);
 
             nl.each(function (n) {
-                expect(n.css("font-size")).toBe("20px");
+                expect(n.css("height")).toBe("200px");
             });
+
 
         });
 
@@ -149,7 +150,7 @@ KISSY.use("dom,node", function (S, DOM, Node) {
 
             (function () {
                 S.all("<div class='test-insertafter'>insertafter1</div>" +
-                    "<div class='test-insertafter2'>insertafter2</div>")
+                        "<div class='test-insertafter2'>insertafter2</div>")
                     .insertAfter(testDivs);
 
                 var pres = S.all(".test-insertafter"),
@@ -164,7 +165,7 @@ KISSY.use("dom,node", function (S, DOM, Node) {
 
             (function () {
                 S.all("<div class='test-insertbefore'>insertbefore1</div>" +
-                    "<div class='test-insertbefore2'>insertbefore2</div>")
+                        "<div class='test-insertbefore2'>insertbefore2</div>")
                     .insertBefore(testDivs);
 
                 var pres = S.all(".test-insertbefore"),

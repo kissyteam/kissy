@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 12 00:19
+build time: Dec 12 22:46
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121212001937' will replace with current timestamp when compressing.
+         * NOTICE: '20121212224621' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121212001937',
+        __BUILD_TIME: '20121212224621',
         /**
          * KISSY Environment.
          * @private
@@ -3036,6 +3036,7 @@ var KISSY = (function (undefined) {
  - http://en.wikipedia.org/wiki/URI_scheme
  - http://unixpapa.com/js/querystring.html
  - http://code.stephenmorley.org/javascript/parsing-query-strings-for-get-data/
+ - same origin: http://tools.ietf.org/html/rfc6454
  *//**
  * @ignore
  * @fileOverview ua
@@ -5802,7 +5803,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121212001937'
+            tag: '20121212224621'
         }, getBaseInfo()));
     }
 
@@ -14798,7 +14799,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 12 00:19
+build time: Dec 12 22:45
 */
 /**
  * @ignore
@@ -15227,6 +15228,8 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
             var touches = e.touches,
                 distance = getDistance(touches[0], touches[1]);
 
+            self.lastTouches = touches;
+
             if (!self.isStarted) {
                 self.isStarted = true;
                 self.startDistance = distance;
@@ -15245,8 +15248,6 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
                         scale: distance / self.startDistance
                     });
             }
-
-            self.lastTouches = touches;
         },
 
         fireEnd: function () {
@@ -15271,7 +15272,7 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
  * fired when rotate using two fingers
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Event) {
+KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Event, undefined) {
     var ROTATE_START = 'rotateStart',
         ROTATE = 'rotate',
         RAD_2_DEG = 180 / Math.PI,
@@ -15296,10 +15297,13 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
                 angle = Math.atan2(two.pageY - one.pageY,
                     two.pageX - one.pageX) * RAD_2_DEG;
 
-            if (lastAngle) {
+            if (lastAngle !== undefined) {
+                // more smooth
+                // 5 4 3 2 1 -1 -2 -3 -4
+                // 170 180 190 200
                 var diff = Math.abs(angle - lastAngle);
-                var positiveAngle = angle + 360;
-                var negativeAngle = angle - 360;
+                var positiveAngle = (angle + 360) % 360;
+                var negativeAngle = (angle - 360) % 360;
 
                 // process '>' scenario: top -> bottom
                 if (Math.abs(positiveAngle - lastAngle) < diff) {
@@ -15311,6 +15315,7 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
                 }
             }
 
+            self.lastTouches = touches;
             self.lastAngle = angle;
 
             if (!self.isStarted) {
@@ -15335,6 +15340,12 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
                     rotation: angle - self.startAngle
                 });
             }
+        },
+
+        end: function () {
+            var self = this;
+            self.lastAngle = undefined;
+            Rotate.superclass.end.apply(self, arguments);
         },
 
         fireEnd: function (e) {
@@ -20607,7 +20618,7 @@ KISSY.add('anim/queue', function (S, DOM) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:56
+build time: Dec 12 22:45
 */
 /**
  * @ignore
@@ -21079,7 +21090,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
 
         // handle NodeList(''), NodeList(null), or NodeList(undefined)
         if (!html) {
-            return undefined;
+            return self;
         }
 
         else if (typeof html == 'string') {
@@ -21088,13 +21099,13 @@ KISSY.add('node/base', function (S, DOM, undefined) {
             // ('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) { // fragment
                 push.apply(this, makeArray(domNode.childNodes));
-                return undefined;
+                return self;
             }
         }
 
         else if (S.isArray(html) || isNodeList(html)) {
             push.apply(self, makeArray(html));
-            return undefined;
+            return self;
         }
 
         else {
@@ -21104,7 +21115,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
 
         self[0] = domNode;
         self.length = 1;
-        return undefined;
+        return self;
     }
 
     NodeList.prototype = {
@@ -21135,11 +21146,11 @@ KISSY.add('node/base', function (S, DOM, undefined) {
         },
 
         /**
-         * Add existing node list.
+         * return a new NodeList object which consists of current node list and parameter node list.
          * @param {KISSY.NodeList} selector Selector string or html string or common dom node.
-         * @param {KISSY.NodeList} [context] Search context for selector
+         * @param {KISSY.NodeList|Number} [context] Search context for selector
          * @param {Number} [index] Insert position.
-         * @return {KISSY.NodeList}
+         * @return {KISSY.NodeList} a new nodelist
          */
         add: function (selector, context, index) {
             if (S.isNumber(context)) {
@@ -21269,9 +21280,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
                     if (context['getDOMNode']) {
                         context = context[0];
                     }
-                    if (context.ownerDocument) {
-                        context = context.ownerDocument;
-                    }
+                    context = context['ownerDocument'] || context;
                 }
                 return new NodeList(selector, undefined, context);
             }

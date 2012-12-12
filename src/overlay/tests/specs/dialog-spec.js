@@ -5,7 +5,7 @@
 KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
     function (S, UA, Node, Overlay, ConstrainPlugin, DragPlugin) {
         var DOM = S.DOM, $ = Node.all;
-
+        var Gesture = S.Event.Gesture;
         var Dialog = Overlay.Dialog;
 
         describe("dialog", function () {
@@ -28,8 +28,8 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                 d.plug(new DragPlugin({
                     handlers: ['.ks-stdmod-header']
                 }).plug(new ConstrainPlugin({
-                    constrain: window
-                })));
+                        constrain: window
+                    })));
 
                 d.render();
                 d.center();
@@ -92,7 +92,7 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                         waits(100);
 
                         runs(function () {
-                            jasmine.simulate(d.get("header")[0], "mousedown", {
+                            jasmine.simulateForDrag(d.get("header")[0], Gesture.start, {
 
                                 clientX: xy[0] + 10,
                                 clientY: xy[1] + 10
@@ -101,7 +101,7 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
 
                         waits(100);
                         runs(function () {
-                            jasmine.simulate(document, "mousemove", {
+                            jasmine.simulateForDrag(document, Gesture.move, {
 
                                 clientX: xy[0] + 150,
                                 clientY: xy[1] + 150
@@ -110,7 +110,7 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                         waits(100);
                         runs(function () {
 
-                            jasmine.simulate(document, "mousemove", {
+                            jasmine.simulateForDrag(document, Gesture.move, {
 
                                 clientX: xy[0] + 100,
                                 clientY: xy[1] + 100
@@ -121,7 +121,7 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                         waits(100);
 
                         runs(function () {
-                            jasmine.simulate(document, "mouseup");
+                            jasmine.simulateForDrag(document, Gesture.end);
                         });
 
                         runs(function () {
@@ -145,7 +145,7 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
 
                     var xy = d.get("xy");
 
-                    jasmine.simulate(d.get("header")[0], "mousedown", {
+                    jasmine.simulateForDrag(d.get("header")[0], Gesture.start, {
                         clientX: xy[0] + 10,
                         clientY: xy[1] + 10
                     });
@@ -153,7 +153,7 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                     waits(100);
                     runs(function () {
 
-                        jasmine.simulate(document, "mousemove", {
+                        jasmine.simulateForDrag(document, Gesture.move, {
                             clientX: xy[0] + 15,
                             clientY: xy[1] + 15
                         });
@@ -162,7 +162,7 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                     waits(100);
                     runs(function () {
 
-                        jasmine.simulate(document, "mousemove", {
+                        jasmine.simulateForDrag(document, Gesture.move, {
 
                             clientX: xy[0] + DOM.viewportWidth(),
                             clientY: xy[1] + DOM.viewportHeight()
@@ -173,7 +173,7 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                     waits(100);
 
                     runs(function () {
-                        jasmine.simulate(document, "mouseup");
+                        jasmine.simulateForDrag(document, Gesture.end);
                     });
                     waits(100);
 

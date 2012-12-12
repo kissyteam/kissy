@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:56
+build time: Dec 12 22:45
 */
 /**
  * @ignore
@@ -473,7 +473,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
 
         // handle NodeList(''), NodeList(null), or NodeList(undefined)
         if (!html) {
-            return undefined;
+            return self;
         }
 
         else if (typeof html == 'string') {
@@ -482,13 +482,13 @@ KISSY.add('node/base', function (S, DOM, undefined) {
             // ('<p>1</p><p>2</p>') 转换为 NodeList
             if (domNode.nodeType === NodeType.DOCUMENT_FRAGMENT_NODE) { // fragment
                 push.apply(this, makeArray(domNode.childNodes));
-                return undefined;
+                return self;
             }
         }
 
         else if (S.isArray(html) || isNodeList(html)) {
             push.apply(self, makeArray(html));
-            return undefined;
+            return self;
         }
 
         else {
@@ -498,7 +498,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
 
         self[0] = domNode;
         self.length = 1;
-        return undefined;
+        return self;
     }
 
     NodeList.prototype = {
@@ -529,11 +529,11 @@ KISSY.add('node/base', function (S, DOM, undefined) {
         },
 
         /**
-         * Add existing node list.
+         * return a new NodeList object which consists of current node list and parameter node list.
          * @param {KISSY.NodeList} selector Selector string or html string or common dom node.
-         * @param {KISSY.NodeList} [context] Search context for selector
+         * @param {KISSY.NodeList|Number} [context] Search context for selector
          * @param {Number} [index] Insert position.
-         * @return {KISSY.NodeList}
+         * @return {KISSY.NodeList} a new nodelist
          */
         add: function (selector, context, index) {
             if (S.isNumber(context)) {
@@ -663,9 +663,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
                     if (context['getDOMNode']) {
                         context = context[0];
                     }
-                    if (context.ownerDocument) {
-                        context = context.ownerDocument;
-                    }
+                    context = context['ownerDocument'] || context;
                 }
                 return new NodeList(selector, undefined, context);
             }

@@ -131,15 +131,18 @@ KISSY.use("dom,core", function (S, DOM) {
             });
         });
 
-        it("scroll node to bottom of window", function () {
-            DOM.scrollIntoView(container);
-            var ct = Math.round(DOM.offset(container).top);
-            expect(ct)
-                .toBeEqual(DOM.scrollTop() +
-                document.body.clientTop +
-                document.documentElement.clientTop);
-        });
+        if (S.UA.ios && window.frameElement) {
 
+        } else {
+            it("scroll node to bottom of window", function () {
+                DOM.scrollIntoView(container);
+                var ct = Math.round(DOM.offset(container).top);
+                expect(ct)
+                    .toBeEqual(DOM.scrollTop() +
+                        document.body.clientTop +
+                        document.documentElement.clientTop);
+            });
+        }
 
     });
 });

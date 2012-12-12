@@ -2,8 +2,9 @@
  * @module  delegate-spec
  * @author yiminghe@gmail.com
  */
-KISSY.use("ua,node,dd/base,dom,dd/plugin/proxy,dd/droppable", function (S, UA, Node, DD, DOM,Proxy) {
+KISSY.use("ua,node,dd/base,dom,dd/plugin/proxy,dd/droppable", function (S, UA, Node, DD, DOM, Proxy) {
     var $ = Node.all,
+        Gesture = S.Event.Gesture,
         DraggableDelegate = DD.DraggableDelegate,
         DroppableDelegate = DD.DroppableDelegate;
 
@@ -21,28 +22,28 @@ KISSY.use("ua,node,dd/base,dom,dd/plugin/proxy,dd/droppable", function (S, UA, N
                  * 如何产生替代节点
                  * @param drag 当前拖对象
                  */
-                node:function (drag) {
+                node: function (drag) {
                     var n = $(drag.get("dragNode").clone(true));
                     n.attr("id", S.guid("ks-dd-proxy"));
                     n.css("opacity", 0.2);
                     return n;
                 },
-                destroyOnEnd:true,
-                moveOnEnd:false
+                destroyOnEnd: true,
+                moveOnEnd: false
             });
 
             var dragDelegate = new DraggableDelegate({
-                container:"#container2",
-                handlers:['.cheader'],
-                selector:'.component',
-                move:true
+                container: "#container2",
+                handlers: ['.cheader'],
+                selector: '.component',
+                move: true
             });
 
             dragDelegate.plug(proxy);
 
             var dropDelegate = new DroppableDelegate({
-                container:"#container2",
-                selector:'.component'
+                container: "#container2",
+                selector: '.component'
             });
 
 
@@ -70,9 +71,9 @@ KISSY.use("ua,node,dd/base,dom,dd/plugin/proxy,dd/droppable", function (S, UA, N
             });
 
             runs(function () {
-                jasmine.simulate(c2.one(".cheader")[0], "mousedown", {
-                    clientX:c2.offset().left + 5 - DOM.scrollLeft(),
-                    clientY:c2.offset().top + 5 - DOM.scrollTop()
+                jasmine.simulateForDrag(c2.one(".cheader")[0], Gesture.start, {
+                    clientX: c2.offset().left + 5 - DOM.scrollLeft(),
+                    clientY: c2.offset().top + 5 - DOM.scrollTop()
                 });
             });
 
@@ -80,33 +81,33 @@ KISSY.use("ua,node,dd/base,dom,dd/plugin/proxy,dd/droppable", function (S, UA, N
 
             // 10px move to start
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
-                    clientX:c2.offset().left + 15 - DOM.scrollLeft(),
-                    clientY:c2.offset().top + 15 - DOM.scrollTop()
+                jasmine.simulateForDrag(document, Gesture.move, {
+                    clientX: c2.offset().left + 15 - DOM.scrollLeft(),
+                    clientY: c2.offset().top + 15 - DOM.scrollTop()
                 });
             });
 
             waits(100);
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
-                    clientX:c1.offset().left + 5 - DOM.scrollLeft(),
-                    clientY:c1.offset().top + 5 - DOM.scrollTop()
-                });
-            });
-
-
-            waits(100);
-            runs(function () {
-                jasmine.simulate(document, "mousemove", {
-                    clientX:c1.offset().left + 6 - DOM.scrollLeft(),
-                    clientY:c1.offset().top + 6 - DOM.scrollTop()
+                jasmine.simulateForDrag(document, Gesture.move, {
+                    clientX: c1.offset().left + 5 - DOM.scrollLeft(),
+                    clientY: c1.offset().top + 5 - DOM.scrollTop()
                 });
             });
 
 
             waits(100);
             runs(function () {
-                jasmine.simulate(document, "mouseup");
+                jasmine.simulateForDrag(document, Gesture.move, {
+                    clientX: c1.offset().left + 6 - DOM.scrollLeft(),
+                    clientY: c1.offset().top + 6 - DOM.scrollTop()
+                });
+            });
+
+
+            waits(100);
+            runs(function () {
+                jasmine.simulateForDrag(document, Gesture.end);
             });
 
             waits(100);
@@ -130,29 +131,29 @@ KISSY.use("ua,node,dd/base,dom,dd/plugin/proxy,dd/droppable", function (S, UA, N
                  * 如何产生替代节点
                  * @param drag 当前拖对象
                  */
-                node:function (drag) {
+                node: function (drag) {
                     var n = $(drag.get("dragNode").clone(true));
                     n.attr("id", S.guid("ks-dd-proxy"));
                     n.css("opacity", 0.2);
                     return n;
                 },
-                destroyOnEnd:true,
-                moveOnEnd:false
+                destroyOnEnd: true,
+                moveOnEnd: false
             });
 
             var dragDelegate = new DraggableDelegate({
-                container:"#container2",
-                handlers:['.cheader'],
-                selector:'.component',
-                move:true,
-                disabled:true
+                container: "#container2",
+                handlers: ['.cheader'],
+                selector: '.component',
+                move: true,
+                disabled: true
             });
 
             dragDelegate.plug(proxy);
 
             var dropDelegate = new DroppableDelegate({
-                container:"#container2",
-                selector:'.component'
+                container: "#container2",
+                selector: '.component'
             });
 
 
@@ -179,9 +180,9 @@ KISSY.use("ua,node,dd/base,dom,dd/plugin/proxy,dd/droppable", function (S, UA, N
             });
 
             runs(function () {
-                jasmine.simulate(c2.one(".cheader")[0], "mousedown", {
-                    clientX:c2.offset().left + 5 - DOM.scrollLeft(),
-                    clientY:c2.offset().top + 5 - DOM.scrollTop()
+                jasmine.simulateForDrag(c2.one(".cheader")[0], Gesture.start, {
+                    clientX: c2.offset().left + 5 - DOM.scrollLeft(),
+                    clientY: c2.offset().top + 5 - DOM.scrollTop()
                 });
             });
 
@@ -189,33 +190,33 @@ KISSY.use("ua,node,dd/base,dom,dd/plugin/proxy,dd/droppable", function (S, UA, N
 
             // 10px move to start
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
-                    clientX:c2.offset().left + 15 - DOM.scrollLeft(),
-                    clientY:c2.offset().top + 15 - DOM.scrollTop()
+                jasmine.simulateForDrag(document, Gesture.move, {
+                    clientX: c2.offset().left + 15 - DOM.scrollLeft(),
+                    clientY: c2.offset().top + 15 - DOM.scrollTop()
                 });
             });
 
             waits(100);
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
-                    clientX:c1.offset().left + 5 - DOM.scrollLeft(),
-                    clientY:c1.offset().top + 5 - DOM.scrollTop()
-                });
-            });
-
-
-            waits(100);
-            runs(function () {
-                jasmine.simulate(document, "mousemove", {
-                    clientX:c1.offset().left + 6 - DOM.scrollLeft(),
-                    clientY:c1.offset().top + 6 - DOM.scrollTop()
+                jasmine.simulateForDrag(document, Gesture.move, {
+                    clientX: c1.offset().left + 5 - DOM.scrollLeft(),
+                    clientY: c1.offset().top + 5 - DOM.scrollTop()
                 });
             });
 
 
             waits(100);
             runs(function () {
-                jasmine.simulate(document, "mouseup");
+                jasmine.simulateForDrag(document, Gesture.move, {
+                    clientX: c1.offset().left + 6 - DOM.scrollLeft(),
+                    clientY: c1.offset().top + 6 - DOM.scrollTop()
+                });
+            });
+
+
+            waits(100);
+            runs(function () {
+                jasmine.simulateForDrag(document, Gesture.end);
             });
 
             waits(100);

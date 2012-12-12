@@ -11,13 +11,12 @@ KISSY.use("component/base", function (S, Component) {
     describe("component", function () {
 
 
-
         describe("container", function () {
 
 
             it("should attach its methods", function () {
                 var c = new Component.Container({
-                    html:"xx"
+                    html: "xx"
                 });
                 c.render();
                 expect(c.getOwnerControl).not.toBeUndefined();
@@ -26,72 +25,75 @@ KISSY.use("component/base", function (S, Component) {
                 expect(invalidNode(c.get("el")[0].parentNode)).toBe(true);
             });
 
-            it("should delegate events", function () {
-                var c = new Component.Container({
-                    html:"xx"
-                });
+            if (S.UA.ios || S.UA.android) {
 
-                var child1 = new Component.Controller({
-                    html:"yy",
-                    handleMouseEvents:false,
-                    focusable:false
-                });
+            } else {
+                it("should delegate events", function () {
+                    var c = new Component.Container({
+                        html: "xx"
+                    });
 
-                c.addChild(child1);
+                    var child1 = new Component.Controller({
+                        html: "yy",
+                        handleMouseEvents: false,
+                        focusable: false
+                    });
 
-                var child2 = new Component.Controller({
-                    html:"yy",
-                    handleMouseEvents:false,
-                    focusable:false
-                });
+                    c.addChild(child1);
 
-                c.addChild(child2);
+                    var child2 = new Component.Controller({
+                        html: "yy",
+                        handleMouseEvents: false,
+                        focusable: false
+                    });
 
-                c.render();
+                    c.addChild(child2);
 
-                runs(function () {
-                    jasmine.simulate(c.get("el")[0], "mousedown");
-                });
-                waits(10);
-                runs(function () {
-                    expect(c.get('active')).toBe(true);
-                });
-                runs(function () {
-                    jasmine.simulate(c.get("el")[0], "mouseup");
-                });
-                waits(10);
-                runs(function () {
-                    expect(c.get('active')).toBe(false);
-                });
+                    c.render();
 
-
-                runs(function () {
-                    jasmine.simulate(child1.get("el")[0], "mousedown");
-                });
-                waits(10);
-                runs(function () {
-                    expect(c.get('active')).toBe(true);
-                    expect(child1.get('active')).toBe(true);
-                    expect(child2.get('active')).toBeFalsy();
-                });
-                runs(function () {
-                    jasmine.simulate(child1.get("el")[0], "mouseup");
-                });
-                waits(10);
-                runs(function () {
-                    expect(c.get('active')).toBeFalsy();
-                    expect(child1.get('active')).toBeFalsy();
-                    expect(child2.get('active')).toBeFalsy();
-                });
+                    runs(function () {
+                        jasmine.simulate(c.get("el")[0], "mousedown");
+                    });
+                    waits(10);
+                    runs(function () {
+                        expect(c.get('active')).toBe(true);
+                    });
+                    runs(function () {
+                        jasmine.simulate(c.get("el")[0], "mouseup");
+                    });
+                    waits(10);
+                    runs(function () {
+                        expect(c.get('active')).toBe(false);
+                    });
 
 
-                runs(function () {
-                    c.destroy();
+                    runs(function () {
+                        jasmine.simulate(child1.get("el")[0], "mousedown");
+                    });
+                    waits(10);
+                    runs(function () {
+                        expect(c.get('active')).toBe(true);
+                        expect(child1.get('active')).toBe(true);
+                        expect(child2.get('active')).toBeFalsy();
+                    });
+                    runs(function () {
+                        jasmine.simulate(child1.get("el")[0], "mouseup");
+                    });
+                    waits(10);
+                    runs(function () {
+                        expect(c.get('active')).toBeFalsy();
+                        expect(child1.get('active')).toBeFalsy();
+                        expect(child2.get('active')).toBeFalsy();
+                    });
 
-                    expect(invalidNode(child1.get("el")[0].parentNode)).toBe(true);
+
+                    runs(function () {
+                        c.destroy();
+
+                        expect(invalidNode(child1.get("el")[0].parentNode)).toBe(true);
+                    });
                 });
-            });
-
+            }
 
         });
     });

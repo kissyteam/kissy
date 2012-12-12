@@ -53,6 +53,7 @@
 
     // HTML events supported
         uiEvents = {
+            submit: 1,
             blur: 1,
             change: 1,
             focus: 1,
@@ -73,12 +74,12 @@
         bubbleEvents = {
             scroll: 1,
             resize: 1,
-            reset: 1,
+            //reset: 1,
             submit: 1,
             change: 1,
-            select: 1,
-            error: 1,
-            abort: 1
+            select: 1
+            //error: 1,
+            //abort: 1
         };
 
     // all key and mouse events bubble
@@ -176,27 +177,11 @@
         // try to create a key event
         var customEvent /*:KeyEvent*/ = null;
 
-        // key event not ok!
-        if (0 && window.CustomEvent) {
-            customEvent = new CustomEvent(type, {
-                bubbles: bubbles,
-                cancelable: cancelable,
-                view: view,
-                ctrlKey: ctrlKey,
-                altKey: altKey,
-                shiftKey: shiftKey,
-                metaKey: metaKey,
-                keyCode: keyCode,
-                charCode: charCode
-            });
-            target.dispatchEvent(customEvent);
-        }
-        // check for DOM-compliant browsers first
-        else if (isFunction(doc.createEvent)) {
+        if (isFunction(doc.createEvent)) {
 
             try {
 
-                // try to create key event
+                //try to create key event
                 customEvent = doc.createEvent("KeyEvents");
 
                 /*
@@ -224,19 +209,19 @@
                  */
                 try {
 
-                    // try to create generic event - will fail in Safari 2.x
+                    //try to create generic event - will fail in Safari 2.x
                     customEvent = doc.createEvent("Events");
 
                 } catch (uierror /*:Error*/) {
 
-                    // the above failed, so create a UIEvent for Safari 2.x
+                    //the above failed, so create a UIEvent for Safari 2.x
                     customEvent = doc.createEvent("UIEvents");
 
                 } finally {
 
                     customEvent.initEvent(type, bubbles, cancelable);
 
-                    // initialize
+                    //initialize
                     customEvent.view = view;
                     customEvent.altKey = altKey;
                     customEvent.ctrlKey = ctrlKey;
@@ -249,8 +234,9 @@
 
             }
 
-            // fire the event
+            //fire the event
             target.dispatchEvent(customEvent);
+
         } else if (isObject(doc.createEventObject)) { //IE
 
             // create an IE event object
@@ -395,57 +381,14 @@
         // try to create a mouse event
         var customEvent /*:MouseEvent*/ = null;
 
+        if (isFunction(doc.createEvent)) {
 
-        // dom level4 for non-ie
-        if (0 && window.CustomEvent && !document.documentMode) {
-            // use  CustomEvent is stable in phantomjs ??
-            customEvent = new CustomEvent(type, {
-                bubbles: bubbles,
-                cancelable: cancelable,
-                detail: detail,
-                screenX: screenX,
-                screenY: screenY,
-                clientX: clientX,
-                clientY: clientY,
-                view: view,
-                ctrlKey: ctrlKey,
-                altKey: altKey,
-                shiftKey: shiftKey,
-                metaKey: metaKey,
-                button: button,
-                relatedTarget: relatedTarget
-            });
-            target.dispatchEvent(customEvent);
-        }
-        // check for DOM-compliant browsers first
-        else if (isFunction(doc.createEvent)) {
+            customEvent = doc.createEvent("MouseEvent");
 
-            customEvent = doc.createEvent("MouseEvents");
-
-            // Safari 2.x (WebKit 418) still doesn't implement initMouseEvent()
-            if (customEvent.initMouseEvent) {
-                customEvent.initMouseEvent(type, bubbles, cancelable, view, detail,
-                    screenX, screenY, clientX, clientY,
-                    ctrlKey, altKey, shiftKey, metaKey,
-                    button, relatedTarget);
-            } else { // Safari
-
-                // the closest thing available in Safari 2.x is UIEvents
-                customEvent = doc.createEvent("UIEvents");
-                customEvent.initEvent(type, bubbles, cancelable);
-                customEvent.view = view;
-                customEvent.detail = detail;
-                customEvent.screenX = screenX;
-                customEvent.screenY = screenY;
-                customEvent.clientX = clientX;
-                customEvent.clientY = clientY;
-                customEvent.ctrlKey = ctrlKey;
-                customEvent.altKey = altKey;
-                customEvent.metaKey = metaKey;
-                customEvent.shiftKey = shiftKey;
-                customEvent.button = button;
-                customEvent.relatedTarget = relatedTarget;
-            }
+            customEvent.initMouseEvent(type, bubbles, cancelable, view, detail,
+                screenX, screenY, clientX, clientY,
+                ctrlKey, altKey, shiftKey, metaKey,
+                button, relatedTarget);
 
             /*
              * Check to see if relatedTarget has been assigned. Firefox
@@ -577,22 +520,10 @@
             detail = 1;  // usually not used but defaulted to this
         }
 
-        if (0 && window.UIEvent) {
-            customEvent = new UIEvent(type, {
-                bubbles: bubbles,
-                cancelable: cancelable,
-                view: view,
-                detail: detail
-            });
-            // fire the event
-            target.dispatchEvent(customEvent);
-        }
-
-        // check for DOM-compliant browsers first
-        else if (isFunction(doc.createEvent)) {
+        if (isFunction(doc.createEvent)) {
 
             // just a generic UI Event object is needed
-            customEvent = doc.createEvent("UIEvents");
+            customEvent = doc.createEvent("UIEvent");
             customEvent.initUIEvent(type, bubbles, cancelable, view, detail);
 
             // fire the event
@@ -806,7 +737,7 @@
                      * (Note) Used target for the relatedTarget. Need to verify if
                      * it has a side effect.
                      */
-                    customEvent = document.createEvent("MouseEvents");
+                    customEvent = document.createEvent("MouseEvent");
                     customEvent.initMouseEvent(type, bubbles, cancelable, view, detail,
                         screenX, screenY, clientX, clientY,
                         ctrlKey, altKey, shiftKey, metaKey,
@@ -850,6 +781,7 @@
     }
 
 
+    // http://developer.apple.com/library/safari/#documentation/UserExperience/Reference/DocumentAdditionsReference/DocumentAdditions/DocumentAdditions.html
     /**
      * Helper method to convert an array with touch points to TouchList object as
      * defined in http://www.w3.org/TR/touch-events/
@@ -868,6 +800,7 @@
         var touches = [],
             S = KISSY,
             UA = S.UA,
+            DOM = S.DOM,
             touchList,
             self = this;
 
@@ -880,8 +813,14 @@
                     if (!point.pageX) {
                         point.pageX = 0;
                     }
+                    if (!point.pageX && point.clientX) {
+                        point.pageX = point.clientX + DOM.scrollLeft();
+                    }
                     if (!point.pageY) {
                         point.pageY = 0;
+                    }
+                    if (!point.pageY && point.clientY) {
+                        point.pageY = point.clientY + DOM.scrollTop();
                     }
                     if (!point.screenX) {
                         point.screenX = 0;
@@ -922,8 +861,14 @@
                     if (!point.pageX) {
                         point.pageX = 0;
                     }
+                    if (!point.pageX && point.clientX) {
+                        point.pageX = point.clientX + DOM.scrollLeft();
+                    }
                     if (!point.pageY) {
                         point.pageY = 0;
+                    }
+                    if (!point.pageY && point.clientY) {
+                        point.pageY = point.clientY + DOM.scrollTop();
                     }
                     if (!point.screenX) {
                         point.screenX = 0;
@@ -953,6 +898,24 @@
         }
 
         return touchList;
+    }
+
+    function simulateDeviceMotionEvent(target, option) {
+        if (document.createEvent && window.DeviceMotionEvent) {
+            var customEvent = document.createEvent('DeviceMotionEvent');
+
+            customEvent.initDeviceMotionEvent('devicemotion',
+                false, false,
+                option.acceleration,
+                option.accelerationIncludingGravity || option.acceleration,
+                option.rotationRate || {
+                    alpha: 0,
+                    beta: 0,
+                    gamma: 0
+                }, option.interval || 100);
+
+            window.dispatchEvent(customEvent);
+        }
     }
 
 
@@ -997,11 +960,36 @@
             } else {
                 S.error("simulate(): Event '" + type + "' can't be simulated. Use gesture-simulate module instead.");
             }
-
-            // ios gesture low-level event simulation (iOS v2+ only)
-        }
-        else {
+        } else if (type == 'devicemotion') {
+            simulateDeviceMotionEvent(target, options);
+        } else {
             throw "simulate(): Event '" + type + "' can't be simulated.";
         }
     };
+
+    jasmine.simulateForDrag = function (target, type, option) {
+        if (type.indexOf('mouse') != -1) {
+            jasmine.simulate(target, type, option);
+        } else if (type.indexOf('touch') != -1) {
+            option = option || {};
+            var touches = [option];
+            var changedTouches = touches;
+            var targetTouches = touches;
+            if (type == 'touchend') {
+                touches = targetTouches = [];
+            }
+            jasmine.simulate(target, type, {
+                touches: touches,
+                targetTouches: targetTouches,
+                changedTouches: changedTouches
+            });
+        }
+    };
 })();
+
+/**
+ * 2012-12-12 yiminghe@gmail.com
+ *  - simplify from yui3
+ *  - we only support latest browsers
+ *  - normalize drag
+ */

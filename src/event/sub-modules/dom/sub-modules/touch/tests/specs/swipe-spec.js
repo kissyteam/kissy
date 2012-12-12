@@ -6,11 +6,7 @@ if (!phantomjs && document.createTouch) {
 
     KISSY.use('core', function (S) {
 
-        var $ = S.all;
-
-        var MAX_DURATION = 1000,
-            MAX_OFFSET = 35,
-            MIN_DISTANCE = 50;
+        var $ = S.all, step = 10;
 
         describe('swipe', function () {
 
@@ -36,7 +32,7 @@ if (!phantomjs && document.createTouch) {
                     expect(touch.pageY).toBe(end);
                     expect(e.direction).toBe('up');
                     expect(e.distance).toBe(start - end);
-                    expect(Math.abs(e.duration * 1000 - 210)).toBeLessThan(200);
+                    expect(Math.abs(e.duration * 1000 - 30 * (step + 2))).toBeLessThan(200);
                     called = 1;
                 });
 
@@ -53,10 +49,25 @@ if (!phantomjs && document.createTouch) {
                     targetTouches: touches
                 });
 
-                for (var i = 0; i < 20; i++) {
-                    waits(10);
+                for (var i = 0; i < step; i++) {
+                    waits(30);
+                    (function (i) {
+                        runs(function () {
+                            touches[0].pageY = start - (start - end) / step * i;
+                            jasmine.simulate(t[0], 'touchmove', {
+                                touches: touches,
+                                changedTouches: touches,
+                                targetTouches: touches
+                            });
+
+                        });
+                    })(i);
+                }
+
+                waits(30);
+                (function (i) {
                     runs(function () {
-                        touches[0].pageY = start - (start - end) / 20 * i;
+                        touches[0].pageY = end;
                         jasmine.simulate(t[0], 'touchmove', {
                             touches: touches,
                             changedTouches: touches,
@@ -64,9 +75,9 @@ if (!phantomjs && document.createTouch) {
                         });
 
                     });
-                }
+                })(i);
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     jasmine.simulate(t[0], 'touchend', {
@@ -76,7 +87,7 @@ if (!phantomjs && document.createTouch) {
                     });
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     expect(called).toBe(1);
@@ -94,7 +105,6 @@ if (!phantomjs && document.createTouch) {
                     expect(touch.pageY).toBe(start);
                     expect(e.direction).toBe('left');
                     expect(e.distance).toBe(start - end);
-                    expect(Math.abs(e.duration * 1000 - 210)).toBeLessThan(200);
                     called = 1;
                 });
 
@@ -111,10 +121,25 @@ if (!phantomjs && document.createTouch) {
                     targetTouches: touches
                 });
 
-                for (var i = 0; i < 20; i++) {
-                    waits(10);
+                for (var i = 0; i < step; i++) {
+                    waits(30);
+                    (function (i) {
+                        runs(function () {
+                            touches[0].pageX = start - (start - end) / step * i;
+                            jasmine.simulate(t[0], 'touchmove', {
+                                touches: touches,
+                                changedTouches: touches,
+                                targetTouches: touches
+                            });
+
+                        });
+                    })(i);
+                }
+
+                waits(30);
+                (function (i) {
                     runs(function () {
-                        touches[0].pageX = start - (start - end) / 20 * i;
+                        touches[0].pageX = end;
                         jasmine.simulate(t[0], 'touchmove', {
                             touches: touches,
                             changedTouches: touches,
@@ -122,9 +147,9 @@ if (!phantomjs && document.createTouch) {
                         });
 
                     });
-                }
+                })(i);
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     jasmine.simulate(t[0], 'touchend', {
@@ -134,7 +159,7 @@ if (!phantomjs && document.createTouch) {
                     });
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     expect(called).toBe(1);
@@ -163,10 +188,25 @@ if (!phantomjs && document.createTouch) {
                     targetTouches: touches
                 });
 
-                for (var i = 0; i < 20; i++) {
-                    waits(10);
+                for (var i = 0; i < step; i++) {
+                    waits(30);
+                    (function (i) {
+                        runs(function () {
+                            touches[0].pageX = touches[0].pageY = start - (start - end) / step * i;
+                            jasmine.simulate(t[0], 'touchmove', {
+                                touches: touches,
+                                changedTouches: touches,
+                                targetTouches: touches
+                            });
+
+                        });
+                    })(i);
+                }
+
+                waits(30);
+                (function (i) {
                     runs(function () {
-                        touches[0].pageX = touches[0].pageY = start - (start - end) / 20 * i;
+                        touches[0].pageX = end;
                         jasmine.simulate(t[0], 'touchmove', {
                             touches: touches,
                             changedTouches: touches,
@@ -174,9 +214,9 @@ if (!phantomjs && document.createTouch) {
                         });
 
                     });
-                }
+                })(i);
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     jasmine.simulate(t[0], 'touchend', {
@@ -186,7 +226,7 @@ if (!phantomjs && document.createTouch) {
                     });
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     expect(called).toBe(0);
@@ -216,10 +256,25 @@ if (!phantomjs && document.createTouch) {
                     targetTouches: touches
                 });
 
-                for (var i = 0; i < 20; i++) {
-                    waits(10);
+                for (var i = 0; i < step; i++) {
+                    waits(30);
+                    (function (i) {
+                        runs(function () {
+                            touches[0].pageX = touches[0].pageY = start - (start - end) / step * i;
+                            jasmine.simulate(t[0], 'touchmove', {
+                                touches: touches,
+                                changedTouches: touches,
+                                targetTouches: touches
+                            });
+
+                        });
+                    })(i);
+                }
+
+                waits(30);
+                (function (i) {
                     runs(function () {
-                        touches[0].pageX = touches[0].pageY = start - (start - end) / 20 * i;
+                        touches[0].pageX = end;
                         jasmine.simulate(t[0], 'touchmove', {
                             touches: touches,
                             changedTouches: touches,
@@ -227,9 +282,9 @@ if (!phantomjs && document.createTouch) {
                         });
 
                     });
-                }
+                })(i);
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     jasmine.simulate(t[0], 'touchend', {
@@ -239,7 +294,7 @@ if (!phantomjs && document.createTouch) {
                     });
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     expect(called).toBe(0);
@@ -269,10 +324,25 @@ if (!phantomjs && document.createTouch) {
                     targetTouches: touches
                 });
 
-                for (var i = 0; i < 20; i++) {
-                    waits(100);
+                for (var i = 0; i < step; i++) {
+                    waits(30);
+                    (function (i) {
+                        runs(function () {
+                            touches[0].pageY = start - (start - end) / step * i;
+                            jasmine.simulate(t[0], 'touchmove', {
+                                touches: touches,
+                                changedTouches: touches,
+                                targetTouches: touches
+                            });
+
+                        });
+                    })(i);
+                }
+
+                waits(30);
+                (function (i) {
                     runs(function () {
-                        touches[0].pageY = start - (start - end) / 20 * i;
+                        touches[0].pageY = end;
                         jasmine.simulate(t[0], 'touchmove', {
                             touches: touches,
                             changedTouches: touches,
@@ -280,9 +350,9 @@ if (!phantomjs && document.createTouch) {
                         });
 
                     });
-                }
+                })(i);
 
-                waits(10);
+                waits(1000);
 
                 runs(function () {
                     jasmine.simulate(t[0], 'touchend', {
@@ -292,7 +362,7 @@ if (!phantomjs && document.createTouch) {
                     });
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     expect(called).toBe(0);
@@ -325,10 +395,25 @@ if (!phantomjs && document.createTouch) {
                     targetTouches: touches
                 });
 
-                for (var i = 0; i < 20; i++) {
-                    waits(10);
+                for (var i = 0; i < step; i++) {
+                    waits(30);
+                    (function (i) {
+                        runs(function () {
+                            touches[0].pageY = start - (start - end) / step * i;
+                            jasmine.simulate(t[0], 'touchmove', {
+                                touches: touches,
+                                changedTouches: touches,
+                                targetTouches: touches
+                            });
+
+                        });
+                    })(i);
+                }
+
+                waits(30);
+                (function (i) {
                     runs(function () {
-                        touches[0].pageY = start - (start - end) / 20 * i;
+                        touches[0].pageY = end;
                         jasmine.simulate(t[0], 'touchmove', {
                             touches: touches,
                             changedTouches: touches,
@@ -336,9 +421,9 @@ if (!phantomjs && document.createTouch) {
                         });
 
                     });
-                }
+                })(i);
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     jasmine.simulate(t[0], 'touchend', {
@@ -348,7 +433,7 @@ if (!phantomjs && document.createTouch) {
                     });
                 });
 
-                waits(10);
+                waits(30);
 
                 runs(function () {
                     expect(called).toBe(0);

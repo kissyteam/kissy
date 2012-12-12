@@ -59,13 +59,13 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             var anim1 = Anim(dtest, {
                 width:200
             }, {
-                duration:0.1
+                duration:0.3
             }).run();
 
             test.animate({
                 height:200
             }, {
-                duration:0.1
+                duration:0.3
             });
 
             waits(100);
@@ -76,7 +76,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 anim1.stop();
             });
 
-            waits(300);
+            waits(600);
 
             runs(function () {
                 expect(test.isRunning()).toBeFalsy();
@@ -210,12 +210,12 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             test.animate({
                 width:200
             }, {
-                duration:0.1,
+                duration:0.3,
                 queue:"now"
             }).animate({
                     height:200
                 }, {
-                    duration:0.1,
+                    duration:0.3,
                     queue:"before"
                 });
 
@@ -243,7 +243,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 expect(test.height()).not.toBe(height);
             });
 
-            waits(500);
+            waits(600);
 
             runs(function () {
                 expect(test.isRunning()).toBeFalsy();
@@ -263,12 +263,12 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             test.animate({
                 width:200
             }, {
-                duration:0.1,
+                duration:0.3,
                 queue:"now"
             }).animate({
                     height:200
                 }, {
-                    duration:0.1,
+                    duration:0.3,
                     queue:"before"
                 }).animate({
                     width:300
@@ -290,7 +290,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 expect(test.height()).not.toBe(height);
             });
 
-            waits(300);
+            waits(600);
             runs(function () {
                 expect(test.isRunning()).toBeFalsy();
                 expect(test.width()).not.toBe(width);

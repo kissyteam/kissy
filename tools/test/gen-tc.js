@@ -17,7 +17,7 @@ function collectTc(baseDir, codes) {
             if (S.endsWith(f, ts)) {
                 var runners = fs.readdirSync(f);
                 S.each(runners, function (r) {
-                    r = '/kissy'+(f + '/' + r).replace(cwd, '').replace(/\\/g, '/');
+                    r = '/kissy' + (f + '/' + r).replace(cwd, '').replace(/\\/g, '/');
                     codes.push("tests.push('" + r + "');\n");
                 });
             } else {
@@ -37,3 +37,5 @@ var finalCode = '/**\n' +
     '{ var tests=[];\n' + codes.join('\n') + '\n return tests; \n  };';
 
 fs.writeFileSync('./tools/test/tc.js', finalCode, 'utf-8');
+
+console.log('ok with gen-tc to tc.js!');

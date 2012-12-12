@@ -6,6 +6,8 @@ KISSY.use("tabs", function (S, Tabs) {
 
     var $ = S.all;
 
+    var Gesture = S.Event.Gesture;
+
     describe("tabs", function () {
 
         it("simple works", function () {
@@ -59,7 +61,12 @@ KISSY.use("tabs", function (S, Tabs) {
 
                 var tabB = $(".ks-tabs-tab").item(1);
 
-                jasmine.simulate(tabB[0], "click");
+                if ('ontouchstart' in document) {
+                    jasmine.simulateForDrag(tabB[0], "touchstart");
+                    jasmine.simulateForDrag(tabB[0], "touchend");
+                } else {
+                    jasmine.simulate(tabB[0], "click");
+                }
 
                 runs(function () {
                     expect(tabs.getSelectedTab().get("content")).toBe("tab-2");
@@ -73,41 +80,41 @@ KISSY.use("tabs", function (S, Tabs) {
 
             });
 
+            if (!S.UA.mobile) {
+                it("respond to mouse", function () {
 
-            it("respond to mouse", function () {
+                    var tabs = new Tabs({
+                        changeType: 'mouse',
+                        items: [
+                            {
+                                title: 'tab-1',
+                                selected: true,
+                                content: '<p>panel-1</p>'
+                            },
+                            {
+                                title: 'tab-2',
+                                content: '<p>panel-2</p>'
+                            }
+                        ]
+                    }).render();
 
-                var tabs = new Tabs({
-                    changeType: 'mouse',
-                    items: [
-                        {
-                            title: 'tab-1',
-                            selected: true,
-                            content: '<p>panel-1</p>'
-                        },
-                        {
-                            title: 'tab-2',
-                            content: '<p>panel-2</p>'
-                        }
-                    ]
-                }).render();
+                    var tabB = $(".ks-tabs-tab").item(1);
 
-                var tabB = $(".ks-tabs-tab").item(1);
+                    jasmine.simulate(tabB[0], "mouseover");
 
-                jasmine.simulate(tabB[0], "mouseover");
+                    waits(10);
+                    runs(function () {
+                        expect(tabs.getSelectedTab().get("content")).toBe("tab-2");
+                        expect(tabs.getSelectedPanel()
+                            .get("content").toLowerCase()).toBe("<p>panel-2</p>");
+                    });
 
-                waits(10);
-                runs(function () {
-                    expect(tabs.getSelectedTab().get("content")).toBe("tab-2");
-                    expect(tabs.getSelectedPanel()
-                        .get("content").toLowerCase()).toBe("<p>panel-2</p>");
+                    runs(function () {
+                        tabs.destroy();
+                    });
+
                 });
-
-                runs(function () {
-                    tabs.destroy();
-                });
-
-            });
-
+            }
         });
 
 

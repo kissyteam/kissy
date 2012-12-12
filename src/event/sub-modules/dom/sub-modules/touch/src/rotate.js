@@ -3,7 +3,7 @@
  * fired when rotate using two fingers
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Event) {
+KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Event, undefined) {
     var ROTATE_START = 'rotateStart',
         ROTATE = 'rotate',
         RAD_2_DEG = 180 / Math.PI,
@@ -28,10 +28,13 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
                 angle = Math.atan2(two.pageY - one.pageY,
                     two.pageX - one.pageX) * RAD_2_DEG;
 
-            if (lastAngle) {
+            if (lastAngle !== undefined) {
+                // more smooth
+                // 5 4 3 2 1 -1 -2 -3 -4
+                // 170 180 190 200
                 var diff = Math.abs(angle - lastAngle);
-                var positiveAngle = angle + 360;
-                var negativeAngle = angle - 360;
+                var positiveAngle = (angle + 360) % 360;
+                var negativeAngle = (angle - 360) % 360;
 
                 // process '>' scenario: top -> bottom
                 if (Math.abs(positiveAngle - lastAngle) < diff) {
@@ -43,6 +46,7 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
                 }
             }
 
+            self.lastTouches = touches;
             self.lastAngle = angle;
 
             if (!self.isStarted) {
@@ -67,6 +71,12 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
                     rotation: angle - self.startAngle
                 });
             }
+        },
+
+        end: function () {
+            var self = this;
+            self.lastAngle = undefined;
+            Rotate.superclass.end.apply(self, arguments);
         },
 
         fireEnd: function (e) {

@@ -4,6 +4,7 @@
  */
 KISSY.use("dom,ua,node,dd/base,dd/plugin/scroll", function (S, DOM, UA, Node, DD, Scroll) {
     var Draggable = DD.Draggable,
+        Gesture= S.Event.Gesture,
         $ = Node.all;
     var ie = document['documentMode'] || UA['ie'];
 
@@ -34,7 +35,7 @@ KISSY.use("dom,ua,node,dd/base,dd/plugin/scroll", function (S, DOM, UA, Node, DD
         it("should make container auto scroll properly", function () {
 
             runs(function () {
-                jasmine.simulate(dragNode[0], "mousedown", {
+                jasmine.simulateForDrag(dragNode[0], Gesture.start, {
                     clientX: dragOffset.left + 20 - DOM.scrollLeft(),
                     clientY: dragOffset.top + 20 - DOM.scrollTop()
                 });
@@ -44,7 +45,7 @@ KISSY.use("dom,ua,node,dd/base,dd/plugin/scroll", function (S, DOM, UA, Node, DD
 
             // 10px move to start
             runs(function () {
-                jasmine.simulate(document, "mousemove", {
+                jasmine.simulateForDrag(document, Gesture.move, {
                     clientX: dragOffset.left + 25 - DOM.scrollLeft(),
                     clientY: dragOffset.top + 25 - DOM.scrollTop()
                 });
@@ -54,7 +55,7 @@ KISSY.use("dom,ua,node,dd/base,dd/plugin/scroll", function (S, DOM, UA, Node, DD
 
             runs(function () {
 
-                jasmine.simulate(document, "mousemove", {
+                jasmine.simulateForDrag(document, Gesture.move, {
                     clientX: containerOffset.left + 50 - DOM.scrollLeft(),
                     clientY: containerOffset.top + dragContainer[0].offsetHeight - 10
                         + 2 - DOM.scrollTop()
@@ -66,7 +67,7 @@ KISSY.use("dom,ua,node,dd/base,dd/plugin/scroll", function (S, DOM, UA, Node, DD
 
             waits(300);
             runs(function () {
-                jasmine.simulate(document, "mouseup");
+                jasmine.simulateForDrag(document, Gesture.end);
             });
 
             waits(300);

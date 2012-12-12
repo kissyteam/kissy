@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.use("ua,node,overlay,component/plugin/resize", function (S, UA, Node, Overlay, ResizePlugin) {
-    var DOM = S.DOM, $ = Node.all;
+    var DOM = S.DOM, $ = Node.all,Gesture= S.Event.Gesture;
 
     beforeEach(function () {
         this.addMatchers({
@@ -172,14 +172,14 @@ KISSY.use("ua,node,overlay,component/plugin/resize", function (S, UA, Node, Over
 
             it("应该能够调节大小", function () {
                 // ie9 测试不了
-                if (UA.ie == 9 || UA.chrome) {
+                if (UA.ie == 9) {
                     return;
                 }
                 var h = o.get("el").one(".ks-resizable-handler-t"),
                     height = o.get("el").outerHeight(),
                     hxy = h.offset();
 
-                jasmine.simulate(h[0], "mousedown", {
+                jasmine.simulateForDrag(h[0],Gesture.start, {
                     clientX: hxy.left - 2,
                     clientY: hxy.top - 2
                 });
@@ -187,7 +187,7 @@ KISSY.use("ua,node,overlay,component/plugin/resize", function (S, UA, Node, Over
                 waits(100);
                 runs(function () {
 
-                    jasmine.simulate(document, "mousemove", {
+                    jasmine.simulateForDrag(document, Gesture.move, {
                         clientX: hxy.left - 5,
                         clientY: hxy.top - 5
                     });
@@ -196,7 +196,7 @@ KISSY.use("ua,node,overlay,component/plugin/resize", function (S, UA, Node, Over
                 waits(100);
                 runs(function () {
 
-                    jasmine.simulate(document, "mousemove", {
+                    jasmine.simulateForDrag(document, Gesture.move, {
                         clientX: hxy.left - 100,
                         clientY: hxy.top - 100
                     });
@@ -206,7 +206,7 @@ KISSY.use("ua,node,overlay,component/plugin/resize", function (S, UA, Node, Over
                 waits(100);
 
                 runs(function () {
-                    jasmine.simulate(document, "mouseup");
+                    jasmine.simulateForDrag(document, Gesture.end);
                 });
 
                 waits(100);
