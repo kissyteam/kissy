@@ -838,7 +838,7 @@
 
                 touchList = document.createTouchList.apply(document, touches);
             } else if (UA.ios && UA.ios < 2.0) {
-                S.error(': No touch event simulation framework present.');
+                throw new Error(': No touch event simulation framework present.');
             } else {
                 // this will include android(UA.android && UA.android < 4.0)
                 // and desktops among all others.
@@ -894,7 +894,7 @@
                 };
             }
         } else {
-            S.error('Invalid touchPoints passed');
+            throw new Error('Invalid touchPoints passed');
         }
 
         return touchList;
@@ -958,7 +958,7 @@
                     options.touches, options.targetTouches, options.changedTouches,
                     options.scale, options.rotation);
             } else {
-                S.error("simulate(): Event '" + type + "' can't be simulated. Use gesture-simulate module instead.");
+                throw new Error("simulate(): Event '" + type + "' can't be simulated. Use gesture-simulate module instead.");
             }
         } else if (type == 'devicemotion') {
             simulateDeviceMotionEvent(target, options);
