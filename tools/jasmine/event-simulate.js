@@ -958,7 +958,7 @@
                     options.touches, options.targetTouches, options.changedTouches,
                     options.scale, options.rotation);
             } else {
-                throw new Error("simulate(): Event '" + type + "' can't be simulated. Use gesture-simulate module instead.");
+                throw new Error("simulate(): Event '" + type + "' can't be simulated.");
             }
         } else if (type == 'devicemotion') {
             simulateDeviceMotionEvent(target, options);

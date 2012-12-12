@@ -61,7 +61,7 @@ KISSY.use("tabs", function (S, Tabs) {
 
                 var tabB = $(".ks-tabs-tab").item(1);
 
-                if ('ontouchstart' in document) {
+                if (S.Features.isTouchSupported()) {
                     jasmine.simulateForDrag(tabB[0], "touchstart");
                     jasmine.simulateForDrag(tabB[0], "touchend");
                 } else {
