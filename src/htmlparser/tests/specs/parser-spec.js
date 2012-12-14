@@ -214,6 +214,22 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
                 expect(minifyWriter.getHtml()).toBe('<img alt="" />');
             });
 
+            it("does not lower case", function () {
+                // valid html is fine
+                var html = '<param NAME="1" VALUE="2" />',
+                    parser = new Parser(html),
+                    node = parser.parse(),
+                    writer = new HtmlParser.BasicWriter();
+
+                node.writeHtml(writer);
+
+                expect(writer.getHtml()).toBe(html);
+
+                var beatifyWriter = new HtmlParser.BeautifyWriter();
+                node.writeHtml(beatifyWriter);
+                expect(beatifyWriter.getHtml()).toBe(html);
+            });
+
 
         });
 

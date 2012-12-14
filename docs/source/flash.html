@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview 将 swf 嵌入到页面中
+ */
+KISSY.add('flash', function (S, DOM, JSON, FlashUA) {
+
+    var UA = S.UA,
+        SWF_SUCCESS = 1,
+        FP_LOW = 0,
+        FP_UNINSTALL = -1,
+        RE_FLASH_TAGS = /^(?:object|embed)/i,
+        TYPE = 'application/x-shockwave-flash',
+        FLASHVARS = 'flashvars',
+        EMPTY = '',
+        SPACE = ' ',
+        PREFIX = 'ks-flash-',
+        ID_PRE = '#',
+        EQUAL = '=',
+        DOUBLE_QUOTE = '&quot;',
+        LT = '&lt;',
+        GT = '&gt;',
+        fpv = FlashUA.fpv,
+        fpvGEQ = FlashUA.fpvGEQ,
+        EMBED_TAG = 'embed',
+        OBJECT_TAG = 'object',
+        encode = encodeURIComponent,
+
+    // flash player 的参数范围
+        PARAMS = {
+            // flashvars: EMPTY,     // swf 传入的第三方数据。支持复杂的 Object / XML 数据 / JSON 字符串
+            wmode: EMPTY,
+            allowscriptaccess: EMPTY,
+            allownetworking: EMPTY,
+            allowfullscreen: EMPTY,
+
+            // 显示 控制 删除
+            play: 'false',
+            loop: EMPTY,
+            menu: EMPTY,
+            quality: EMPTY,
+            scale: EMPTY,
+            salign: EMPTY,
+            bgcolor: EMPTY,
+            devicefont: EMPTY,
+            hasPriority: EMPTY,
+
+            //	其他控制参数
+            base: EMPTY,
+            swliveconnect: EMPTY,
+            seamlesstabbing: EMPTY
+        },
+
+        defaultConfig = {
+            //	快速安装地址。全称 express install
+            xi: S.config('base') + 'flash/assets/expressInstall.swf',
+            version: 9       //	要求的 Flash Player 最低版本
+        };
+
+<span id='KISSY-Flash'>    /**
+</span>     * Utils for add flash to document
+     *
+     * for example:
+     *
+     *      KISSY.use('flash', function(S, Flash){
+     *
+     *          Flash.add({
+     *              id:'testSwf',
+     *              src:'xx.swf',
+     *              attrs:{
+     *                  width:100,
+     *                  height:100
+     *              },
+     *              params:{
+     *                  allowscriptaccess:'always'
+     *              }
+     *          });
+     *
+     *      });
+     * @singleton
+     * @class KISSY.Flash
+     */
+    var Flash = {
+
+<span id='KISSY-Flash-property-swfs'>        /**
+</span>         * key/value map of existing registered swf element and config id
+         * @private
+         */
+        swfs: { },
+
+<span id='KISSY-Flash-property-length'>        /**
+</span>         * number of registered swf
+         * @private
+         */
+        length: 0,
+
+<span id='KISSY-Flash-method-add'>        /**
+</span>         * register or create a new swf
+         * @param {String|HTMLElement} [target] existing container selector string
+         * or container dom element
+         * or swf dom element
+         * @param {Object} [config] flash config used for create new swf element
+         * @param {String} [config.xi] express install swf url.
+         * Defaults to: swfobject 's express install
+         * @param {String} config.src new swf 's url
+         * @param {String} [config.version] minimum flash version required
+         * @param {Object} [config.params] params for swf element
+         * @param {Object} [config.attrs] attrs for swf element
+         * @param {String} [config.id] registered id for get
+         * @param {Function} [callback]
+         */
+        add: function (target, config, callback) {
+
+            // 2. flash 插件没有安装
+            if (!fpv()) {
+                _callback(callback, FP_UNINSTALL);
+                return;
+            }
+
+            // 3. 已安装，但当前客户端版本低于指定版本时
+            if (!fpvGEQ(config['version'])) {
+                _callback(callback, FP_LOW);
+
+                callback = null;
+
+                // 有 xi 时，将 src 替换为快速安装
+                if (!(xi = config['xi'])) {
+                    return;
+                }
+
+                config.src = xi;
+            }
+
+            if (S.isPlainObject(target)) {
+<span id='global-property-'>                callback = /**
+</span>                 @ignore
+                 @type Function
+                 */config;
+<span id='global-property-'>                config = /**
+</span>                 @ignore
+                 @type {Object}
+                 */target;
+                target = '';
+            }
+
+            var xi, nodeName;
+
+            // 标准化配置信息
+            // 合并配置信息
+            config = S.merge(defaultConfig, _normalize(config));
+
+            // 保存 Flash id , 没有则自动生成
+            // 用于后面的 get
+            config.id = config['id'] || S.guid(PREFIX);
+
+            // 1. target 元素未找到 则自行创建一个容器
+            if (!target || !(target = DOM.get(target))) {
+                target = DOM.create('&lt;div&gt;');
+                // 在可视区域 才能有激活 flash 默认行为更改至直接激活
+                DOM.prepend(target, S.Env.host.document.body);
+                // 删除时需要同时删除容器
+                config['_ks_is_new'] = 1;
+            }
+
+            nodeName = DOM.nodeName(target);
+
+            if (RE_FLASH_TAGS.test(nodeName)) {
+                // 注册已有 flash 元素
+                _decorate(target, config, callback);
+            } else {
+                // 嵌入 swf 到 target
+                _embed(target, config, callback);
+            }
+        },
+
+<span id='KISSY-Flash-method-get'>        /**
+</span>         * get registered swf by id
+         * @param {String} id
+         * @return {HTMLElement}
+         */
+        get: function (id) {
+            id = pureId(id);
+            return Flash.swfs[id];
+        },
+
+<span id='KISSY-Flash-method-remove'>        /**
+</span>         * remove registered swf from dom by id
+         * @param {String} id
+         */
+        remove: function (id) {
+            var swf = Flash.get(id);
+            if (swf) {
+                if (swf._ks_is_new) {
+                    DOM.remove(swf.parentNode);
+                } else {
+                    DOM.remove(swf);
+                }
+                delete Flash.swfs[swf.id];
+                Flash.length -= 1;
+            }
+        },
+
+<span id='KISSY-Flash-method-contains'>        /**
+</span>         * check whether target is registered by id or dom element
+         * @param {String|HTMLElement} target
+         * @return {Boolean}
+         */
+        contains: function (target) {
+            var swfs = Flash.swfs,
+                id,
+                ret = false;
+
+            if (typeof target == 'string') {
+                ret = (target in swfs);
+            } else {
+                for (id in swfs) {
+                    if (swfs[id] === target) {
+                        ret = true;
+                        break;
+                    }
+                }
+            }
+            return ret;
+        }
+
+    };
+
+
+    function _register(swf, config, callback, isDynamic) {
+        var id = config.id,
+            _ks_is_new;
+        _addSWF(id, swf);
+        if (_ks_is_new = config._ks_is_new) {
+            swf._ks_is_new = _ks_is_new;
+        }
+        _callback(callback, SWF_SUCCESS, id, swf, isDynamic);
+    }
+
+    function _embed(target, config, callback) {
+        target.innerHTML = _stringSWF(config);
+        // bug fix: 重新获取对象,否则还是老对象.
+        // 如 入口为 div 如果不重新获取则仍然是 div	longzang | 2010/8/9
+        target = DOM.get(EMBED_TAG);
+        _register(target, config, callback, true);
+    }
+
+    function _callback(callback, type, id, swf, isDynamic) {
+        if (type &amp;&amp; S.isFunction(callback)) {
+            callback({
+                status: type,
+                id: id,
+                swf: swf,
+                dynamic: isDynamic
+            });
+        }
+    }
+
+    function _addSWF(id, swf) {
+        if (id &amp;&amp; swf) {
+            Flash.swfs[id] = swf;
+            Flash.length += 1;
+        }
+    }
+
+    function _stringSWF(config) {
+        var res,
+            attr = EMPTY,
+            par = EMPTY,
+            src = config.src,
+            attrs = config.attrs,
+            params = config.params,
+            tag;
+
+        // 创建 embed, 全浏览器兼容
+        tag = EMBED_TAG;
+
+        // 源
+        attr += stringAttr('src', src);
+
+        // 普通属性
+        S.each(attrs, function (v, k) {
+            attr += stringAttr(k, v);
+        });
+
+        // 特殊属性
+        attr += stringAttr('type', TYPE);
+
+        // 特殊参数
+        if (params[FLASHVARS]) {
+            par += stringAttr(FLASHVARS, toFlashVars(params[FLASHVARS]));
+        }
+
+        S.each(params, function (v, k) {
+            if (k in PARAMS) {
+                par += stringAttr(k, v);
+            }
+        });
+
+        res = LT + tag + attr + par + '/' + GT;
+
+        return res
+    }
+
+    /*
+      将对象的 key 全部转为小写
+      一般用于配置选项 key 的标准化
+     */
+    function _normalize(obj) {
+        var key, val, prop,
+            ret = { };
+
+        for (prop in obj) {
+            key = prop.toLowerCase();
+            val = obj[prop];
+            // 忽略自定义传参内容标准化
+            if (key !== FLASHVARS) {
+                val = _normalize(val);
+            }
+            ret[key] = val;
+        }
+
+        return ret;
+    }
+
+
+    /*
+      将普通对象转换为 flashvars
+      eg: {a: 1, b: { x: 2, z: 's=1&amp;c=2' }} =&gt; a=1&amp;b=encode({&quot;x&quot;:2,&quot;z&quot;:&quot;s%3D1%26c%3D2&quot;})
+     */
+    function toFlashVars(obj) {
+        var arr = [],
+            ret;
+
+        S.each(obj, function (data, prop) {
+            if (data) {
+                if (typeof data != 'string') {
+                    data = JSON.stringify(data);
+                }
+                arr.push(prop + '=' + encode(data));
+            }
+        });
+        ret = arr.join('&amp;');
+        return ret;
+    }
+
+    /*
+      register existing object/embed flash element
+      @param target {HTMLElement} embed or object element
+      @param config
+      @param callback
+      @private
+     */
+    function _decorate(target, config, callback) {
+
+        var nodeName = DOM.nodeName(target);
+
+        // bug fix: 静态双 object 获取问题。双 Object 外层有 id 但内部才有效。  longzang 2010/8/9
+        if (nodeName == OBJECT_TAG) {
+            // bug fix: 静态双 object 在 chrome 7以下存在问题，如使用 chrome 内胆的 sogou。2010/12/23
+            if (!UA.ie) {
+                target = DOM.get(OBJECT_TAG, target) || target;
+            }
+        }
+
+        _register(target, config, callback, false);
+    }
+
+    function stringAttr(key, value) {
+        return SPACE + key + EQUAL + DOUBLE_QUOTE + value + DOUBLE_QUOTE;
+    }
+
+    function pureId(o) {
+        return (typeof o == 'string') ? o.replace(ID_PRE, '') : o;
+    }
+
+    S.mix(Flash, FlashUA);
+
+    S.Flash = Flash;
+
+    return Flash;
+
+
+}, { requires: [&quot;dom&quot;, &quot;json&quot;, './ua'] });
+<span id='global-property-'>/**
+</span> * @ignore
+ *
+ * 2012-12-13 yiminghe@gmail.com
+ * - refactor
+ *
+ * 2010
+ * - creator: oicuicu@gmail.com lifesinger@gmail.com
+ */
+
+</pre>
+</body>
+</html>

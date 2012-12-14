@@ -2,9 +2,7 @@
  * multiple-upload dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
-                                                            DragPlugin,
-                                                            ProgressBar, Overlay4E, FlashBridge, localStorage, undefined) {
+KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugin, ProgressBar, Overlay4E, FlashBridge, localStorage, Flash, undefined) {
 
     var UA = S.UA,
         DOM = S.DOM,
@@ -16,7 +14,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
         PIC_SIZE_LIMIT_WARNING = "图片太大，请压缩至 n M以下",
         Dialog = Overlay4E.Dialog,
         KEY = "Multiple-Upload-Save",
-        movie = Editor.Utils.debugUrl("plugin/uploader/uploader.longzang.swf"),
+        swfSrc = Editor.Utils.debugUrl("plugin/uploader/uploader.longzang.swf"),
         name = "ks-editor-multipleUpload",
         FLASH_VERSION_REQUIRED = "10.0.0";
 
@@ -68,10 +66,10 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
             self.dialog = new Dialog({
                 headerContent: "批量上传",
                 mask: false,
-                plugins:[
-                new DragPlugin({
-                    handlers:['.ks-editor-stdmod-header']
-                })
+                plugins: [
+                    new DragPlugin({
+                        handlers: ['.ks-editor-stdmod-header']
+                    })
                 ],
                 focus4e: false,
                 width: "600px"
@@ -165,7 +163,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                 self._sizeLimit / 1000
                 + "M";
 
-            if (!UA.fpvGEQ(FLASH_VERSION_REQUIRED)) {
+            if (!Flash.fpvGEQ(FLASH_VERSION_REQUIRED)) {
                 TIP = "您的flash插件版本过低，该功能不可用，" +
                     "请<a href='http://get.adobe.com/cn/flashplayer/'" +
                     " target='_blank'>点此升级</a>";
@@ -174,7 +172,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
             btn.addClass(replacePrefix("{prefixCls}editor-button-disabled", prefixCls), undefined);
             self.tipSpan = btnHolder.one("span");
             self.tipSpan.html(TIP);
-            if (!UA.fpvGEQ(FLASH_VERSION_REQUIRED)) {
+            if (!Flash.fpvGEQ(FLASH_VERSION_REQUIRED)) {
                 return;
             }
             if (uploadCfg['extraHtml']) {
@@ -207,7 +205,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
             flashPos.offset(boffset);
             self.flashPos = flashPos;
             var uploader = new FlashBridge({
-                movie: movie,
+                src: swfSrc,
                 ajbridge: true,
                 methods: [
                     "getReady",
@@ -218,18 +216,18 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
                     "setAllowMultipleFiles",
                     "setFileFilters",
                     "uploadAll"],
-                holder: flashPos,
+                render: flashPos,
                 attrs: {
                     width: fwidth,
                     height: fheight
                 },
                 params: {
-                    wmode: "transparent"
-                },
-                flashVars: {
-                    "allowedDomain": location.hostname,
-                    btn: true,
-                    "hand": true
+                    wmode: "transparent",
+                    flashVars: {
+                        "allowedDomain": location.hostname,
+                        btn: true,
+                        "hand": true
+                    }
                 }
             });
 
@@ -812,5 +810,6 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor,
         '../progressbar/',
         '../overlay/',
         '../flash-bridge/',
-        '../local-storage/']
+        '../local-storage/',
+        'flash']
 });

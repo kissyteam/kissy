@@ -40,7 +40,8 @@
 
             if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
                 S.log('node js can not load css: ' + url, 'warn');
-                return success &amp;&amp; success();
+                success &amp;&amp; success();
+                return;
             }
 
             var uri = new S.Uri(url);

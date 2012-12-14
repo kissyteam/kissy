@@ -84,38 +84,30 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
     defaultConfig.converters.html = defaultConfig.converters.text;
 
     function setUpConfig(c) {
+
         // deep mix,exclude context!
-
-        var context = c.context,
-            ifModified = c['ifModified'];
-
+        var context = c.context;
         delete c.context;
         c = S.mix(S.clone(defaultConfig), c, {
             deep: true
         });
         c.context = context || c;
 
-        var data, uri, type = c.type, dataType = c.dataType, query;
-
-        query = c.query = new S.Uri.Query();
+        var data, uri, type = c.type, dataType = c.dataType;
 
         uri = c.uri = simulatedLocation.resolve(c.url);
 
         if (!('crossDomain' in c)) {
-            c.crossDomain = !c.uri.hasSameDomainAs(simulatedLocation);
-        }
-
-        if (c.processData &amp;&amp; (data = c.data)) {
-            // 必须 encodeURIComponent 编码 utf-8
-            if (S.isObject(data)) {
-                query.add(data);
-            } else {
-                query.reset(data);
-            }
+            c.crossDomain = !c.uri.isSameOriginAs(simulatedLocation);
         }
 
         type = c.type = type.toUpperCase();
         c.hasContent = !rnoContent.test(type);
+
+        if (c.processData &amp;&amp; (data = c.data) &amp;&amp; typeof data != 'string') {
+            // normalize to string
+            c.data = S.param(data, undefined, undefined, c.serializeArray);
+        }
 
         // 数据类型处理链，一步步将前面的数据类型转化成最后一个
         dataType = c.dataType = S.trim(dataType || '*').split(rspace);
@@ -124,23 +116,13 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
             c.cache = false;
         }
 
-        var ifModifiedKeyUri;
-
         if (!c.hasContent) {
-            if (query.count()) {
-                uri.query.add(query);
-            }
-            if (ifModified) {
-                // isModifiedKey should ignore random timestamp
-                ifModifiedKeyUri = uri.clone();
+            if (c.data) {
+                uri.query.add(S.unparam(c.data));
             }
             if (c.cache === false) {
                 uri.query.set('_ksTS', (S.now() + '_' + S.guid()));
             }
-        }
-        // TODO: consider form ?
-        if (ifModified) {
-            c.ifModifiedKeyUri = ifModifiedKeyUri || uri.clone();
         }
         return c;
     }

@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * export KISSY 's functionality to module system
  */
 (function (S) {

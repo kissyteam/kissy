@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * effect for overlay
  * @author yiminghe@gmail.com
  */

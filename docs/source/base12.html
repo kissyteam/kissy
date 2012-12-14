@@ -40,7 +40,6 @@
 
 <span id='KISSY-Loader-STATUS'>    /**
 </span>     * Loader Status Enum
-     * @private
      * @enum {Number} KISSY.Loader.STATUS
      */
     Loader.STATUS = {
@@ -56,7 +55,9 @@
 </span>        'ATTACHED': 4
     };
 
-    KISSY.Loader = Loader;
+    S.Loader = Loader;
+
+    S.Loader.STATUS = Loader.STATUS;
 
 })(KISSY);
 /*

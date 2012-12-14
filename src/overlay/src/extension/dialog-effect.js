@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * effect for dialog
  * @author yiminghe@gmail.com
  */

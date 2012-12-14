@@ -27,8 +27,8 @@ KISSY.add(&quot;component/base/impl&quot;, function (S, UIBase, Manager) {
      * Component infrastructure.
      */
     var Component = {
-        Manager:Manager,
-        UIBase:UIBase
+        Manager: Manager,
+        UIBase: UIBase
     };
 
 <span id='KISSY-Component-method-create'>    /**
@@ -49,11 +49,14 @@ KISSY.add(&quot;component/base/impl&quot;, function (S, UIBase, Manager) {
      *          }]
      *      })
      */
-    Component.create = function (component, self) {
+    Component.create = function (component, parent) {
         var childConstructor, xclass;
+        if (component &amp;&amp; !component.isController &amp;&amp; !component.xclass) {
+            component.xclass = parent.get('defaultChildXClass');
+        }
         if (component &amp;&amp; (xclass = component.xclass)) {
-            if (self &amp;&amp; !component.prefixCls) {
-                component.prefixCls = self.get(&quot;prefixCls&quot;);
+            if (parent &amp;&amp; !component.prefixCls) {
+                component.prefixCls = parent.get(&quot;prefixCls&quot;);
             }
             childConstructor = Manager.getConstructorByXClass(xclass);
             if (!childConstructor) {
@@ -66,7 +69,7 @@ KISSY.add(&quot;component/base/impl&quot;, function (S, UIBase, Manager) {
 
     return Component;
 }, {
-    requires:['./uibase', './manager']
+    requires: ['./uibase', './manager']
 });</pre>
 </body>
 </html>

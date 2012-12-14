@@ -2,7 +2,7 @@
  * simplified flash bridge for yui swf
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
+KISSY.add("editor/plugin/flash-bridge/index", function (S, SWF, Editor) {
 
     var instances = {};
 
@@ -15,19 +15,20 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
             var self = this,
                 id = S.guid("flashbridge-"),
                 callback = "KISSY.Editor.FlashBridge.EventHandler";
-            cfg.flashVars = cfg.flashVars || {};
+            cfg.id = id;
             cfg.attrs = cfg.attrs || {};
             cfg.params = cfg.params || {};
-            var flashVars = cfg.flashVars,
+            var
                 attrs = cfg.attrs,
-                params = cfg.params;
+                params = cfg.params,
+                flashVars = params.flashVars = params.flashVars || {};
+
             S.mix(attrs, {
-                id: id,
                 //http://yiminghe.javaeye.com/blog/764872
                 //firefox 必须使创建的flash以及容器可见，才会触发contentReady
                 //默认给flash自身很大的宽高，容器小点就可以了，
-                width: '100%',
-                height: '100%'
+                width: 1,
+                height: 1
             }, false);
             //这几个要放在 param 里面，主要是允许 flash js沟通
             S.mix(params, {
@@ -52,7 +53,7 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
             S.mix(flashVars, swfCore);
             instances[id] = self;
             self.id = id;
-            self.swf = flashUtils.createSWFRuntime(cfg.movie, cfg);
+            self.swf = new SWF(cfg);
             self._expose(cfg.methods);
         },
         _expose: function (methods) {
@@ -72,22 +73,7 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
          * @param args {Array} the set of arguments to pass to the function.
          */
         _callSWF: function (func, args) {
-            var self = this;
-            args = args || [];
-            try {
-                if (self.swf[func]) {
-                    return self.swf[func].apply(self.swf, args);
-                }
-            }
-                // some version flash function is odd in ie: property or method not supported by object
-            catch (e) {
-                var params = "";
-                if (args.length !== 0) {
-                    params = "'" + args.join("', '") + "'";
-                }
-                //avoid eval for compressiong
-                return (new Function('self', 'return self.swf.' + func + '(' + params + ');'))(self);
-            }
+            return this.swf.callSWF(func,args);
         },
         _eventHandler: function (event) {
             var self = this,
@@ -108,6 +94,7 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
             }
         },
         destroy: function () {
+            this.swf.destroy();
             delete instances[this.id];
         }
     });
@@ -126,99 +113,8 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
 
     Editor.FlashBridge = FlashBridge;
 
-    var UA = S.UA, fpv, fpvF, firstRun = true;
-
-    /*
-     获取 Flash 版本号
-     返回数据 [M, S, R] 若未安装，则返回 undefined
-     */
-    function getFlashVersion() {
-        var ver, SF = 'ShockwaveFlash';
-
-        // for NPAPI see: http://en.wikipedia.org/wiki/NPAPI
-        if (navigator.plugins && navigator.mimeTypes.length) {
-            ver = (navigator.plugins['Shockwave Flash'] || {})['description'];
-        }
-        // for ActiveX see:	http://en.wikipedia.org/wiki/ActiveX
-        else if (window.ActiveXObject) {
-            try {
-                ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
-            } catch (ex) {
-                //S.log('getFlashVersion failed via ActiveXObject');
-                // nothing to do, just return undefined
-            }
-        }
-
-        // 插件没安装或有问题时，ver 为 undefined
-        if (!ver) return undefined;
-
-        // 插件安装正常时，ver 为 "Shockwave Flash 10.1 r53" or "WIN 10,1,53,64"
-        return arrify(ver);
-    }
-
-    /*
-     arrify("10.1.r53") => ["10", "1", "53"]
-     */
-    function arrify(ver) {
-        return ver.match(/(\d)+/g);
-    }
-
-    /*
-     格式：主版本号Major.次版本号Minor(小数点后3位，占3位)修正版本号Revision(小数点后第4至第8位，占5位)
-     ver 参数不符合预期时，返回 0
-     numerify("10.1 r53") => 10.00100053
-     numerify(["10", "1", "53"]) => 10.00100053
-     numerify(12.2) => 12.2
-     */
-    function numerify(ver) {
-        var arr = (typeof ver == 'string') ? arrify(ver) : ver, ret = ver;
-        if (S.isArray(arr)) {
-            ret = parseFloat(arr[0] + '.' + pad(arr[1], 3) + pad(arr[2], 5));
-        }
-        return ret || 0;
-    }
-
-    /*
-     pad(12, 5) => "00012"
-     ref: http://lifesinger.org/blog/2009/08/the-harm-of-tricky-code/
-     */
-    function pad(num, n) {
-        var len = (num + '').length;
-        while (len++ < n) {
-            num = '0' + num;
-        }
-        return num;
-    }
-
-    /*
-     返回数据 [M, S, R] 若未安装，则返回 undefined
-     fpv 全称是 flash player version
-     */
-    UA.fpv = function (force) {
-        // 考虑 new ActiveX 和 try catch 的 性能损耗，延迟初始化到第一次调用时
-        if (force || firstRun) {
-            firstRun = false;
-            fpv = getFlashVersion();
-            fpvF = numerify(fpv);
-        }
-        return fpv;
-    };
-
-    /*
-     Checks fpv is greater than or equal the specific version.
-     普通的 flash 版本检测推荐使用该方法
-     @param ver eg. "10.1.53"
-     <code>
-     if(S.UA.fpvGEQ('9.9.2')) { ... }
-     </code>
-     */
-    UA.fpvGEQ = function (ver, force) {
-        if (firstRun) UA.fpv(force);
-        return !!fpvF && (fpvF >= numerify(ver));
-    };
-
     return FlashBridge;
 
 }, {
-    requires: ['editor', '../flash-common/utils']
+    requires: ['swf', 'editor']
 });

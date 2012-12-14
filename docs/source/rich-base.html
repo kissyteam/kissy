@@ -300,6 +300,7 @@ KISSY.add('rich-base', function (S, Base) {
 <span id='KISSY-RichBase-method-getPlugin'>        /**
 </span>         * get specified plugin instance by id
          * @param {String} id pluginId of plugin instance
+         * @return {Object}
          */
         'getPlugin': function (id) {
             var plugin = null;
@@ -403,7 +404,7 @@ KISSY.add('rich-base', function (S, Base) {
                 // debug mode, give the right name for constructor
                 // refer : http://limu.iteye.com/blog/1136712
                 if (S.Config.debug) {
-                    eval(&quot;C=function &quot; + name.replace(/[-.]/g, &quot;_&quot;) +
+                    eval(&quot;C=function &quot; + name.replace(/[-./]/g, &quot;_&quot;) +
                         &quot;(){ C.superclass.constructor.apply(this, arguments);}&quot;);
                 }
             }

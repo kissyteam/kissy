@@ -52,7 +52,7 @@
             </filterchain>
         </concat>
         <copy todir="${component.src.dir.tmp}">
-            <fileset dir="./" includes="assets/**/*.css"/>
+            <fileset dir="./" includes="assets/**/*.css,assets/**/*.swf"/>
         </copy>
     </target>
 

@@ -37,7 +37,7 @@ KISSY.add(&quot;overlay/extension/mask&quot;, function (S, Event) {
          *
          *      {
          *          // whether hide current component when click on mask
-         *          hideOnClick: false,
+         *          closeOnClick: false,
          *          effect: 'fade', // slide
          *          duration: 0.5,
          *          easing: 'easingNone'
@@ -88,7 +88,7 @@ KISSY.add(&quot;overlay/extension/mask&quot;, function (S, Event) {
         // run complete fn to restore window's original height
         el.stop(1, 1);
 
-        el.css('display', show ? 'none' : 'block');
+        el.css('display', show ? NONE: 'block');
 
         m = effect + effects[effect][index];
 
@@ -105,10 +105,8 @@ KISSY.add(&quot;overlay/extension/mask&quot;, function (S, Event) {
                 view = self.get(&quot;view&quot;);
             if (mask = self.get(&quot;mask&quot;)) {
                 maskNode = self.get('maskNode');
-                if (mask.hideOnClick) {
-                    maskNode.on(Event.Gesture.tap, function () {
-                        self.hide();
-                    });
+                if (mask['closeOnClick']) {
+                    maskNode.on(Event.Gesture.tap, self.close, self);
                 }
                 self.on('afterVisibleChange', function (e) {
                     var v;

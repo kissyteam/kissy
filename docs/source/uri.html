@@ -123,11 +123,13 @@
 <span id='KISSY-Uri-Query-method-reset'>        /**
 </span>         * reset to a new query string
          * @param {String} query
+         * @chainable
          */
         reset: function (query) {
             var self = this;
             self._query = query || '';
-            self._queryMap = 0;
+            self._queryMap = null;
+            return self;
         },
 
 <span id='KISSY-Uri-Query-method-count'>        /**
@@ -153,7 +155,7 @@
 
 <span id='KISSY-Uri-Query-method-has'>        /**
 </span>         * judge whether has query parameter
-         * @param {String} key
+         * @param {String} [key]
          */
         has: function (key) {
             var self = this, _queryMap;
@@ -168,7 +170,7 @@
 
 <span id='KISSY-Uri-Query-method-get'>        /**
 </span>         * Return parameter value corresponding to current key
-         * @param {String} key
+         * @param {String} [key]
          */
         get: function (key) {
             var self = this, _queryMap;
@@ -362,7 +364,7 @@
             }
         });
 
-        return undefined;
+        return self;
     }
 
     Uri.prototype =
@@ -581,19 +583,19 @@
          * @chainable
          */
         'setFragment': function (fragment) {
-            if (!S.startsWith(fragment, '#')) {
-                fragment = '#' + fragment;
+            if (S.startsWith(fragment, '#')) {
+                fragment = fragment.slice(1);
             }
             this.fragment = fragment;
             return this;
         },
 
-<span id='KISSY-Uri-method-hasSameDomainAs'>        /**
+<span id='KISSY-Uri-method-isSameOriginAs'>        /**
 </span>         * Judge whether two uri has same domain.
          * @param {KISSY.Uri} other
          * @return {Boolean}
          */
-        hasSameDomainAs: function (other) {
+        isSameOriginAs: function (other) {
             var self = this;
             // port and hostname has to be same
             return equalsIgnoreCase(self.hostname, other['hostname']) &amp;&amp;
@@ -674,6 +676,7 @@
  - http://en.wikipedia.org/wiki/URI_scheme
  - http://unixpapa.com/js/querystring.html
  - http://code.stephenmorley.org/javascript/parsing-query-strings-for-get-data/
+ - same origin: http://tools.ietf.org/html/rfc6454
  */</pre>
 </body>
 </html>

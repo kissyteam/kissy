@@ -51,11 +51,11 @@ KISSY.add(&quot;component/extension/position-render&quot;, function () {
             this.get(&quot;el&quot;).addClass(this.get('prefixCls') + &quot;ext-position&quot;);
         },
 
-        _onSetZIndex: function (x) {
+        '_onSetZIndex': function (x) {
             this.get(&quot;el&quot;).css(&quot;z-index&quot;, x);
         },
 
-        _onSetX: function (x) {
+        '_onSetX': function (x) {
             if (x != null) {
                 this.get(&quot;el&quot;).offset({
                     left: x
@@ -63,7 +63,7 @@ KISSY.add(&quot;component/extension/position-render&quot;, function () {
             }
         },
 
-        _onSetY: function (y) {
+        '_onSetY': function (y) {
             if (y != null) {
                 this.get(&quot;el&quot;).offset({
                     top: y

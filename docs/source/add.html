@@ -23,20 +23,20 @@
 (function (S) {
 
     var Loader = S.Loader,
-        UA= S.UA,
+        UA = S.UA,
         utils = Loader.Utils;
 
 
     S.augment(Loader, Loader.Target, {
 
         //firefox,ie9,chrome 如果 add 没有模块名，模块定义先暂存这里
-        __currentModule: null,
+        __currentMod: null,
 
         //ie6,7,8开始载入脚本的时间
         __startLoadTime: 0,
 
         //ie6,7,8开始载入脚本对应的模块名
-        __startLoadModuleName: null,
+        __startLoadModName: null,
 
 <span id='KISSY-Loader-method-add'>        /**
 </span>         * Registers a module.
@@ -52,38 +52,11 @@
          */
         add: function (name, fn, config) {
             var self = this,
-                runtime = self.runtime,
-                mod,
-                requires,
-                mods = runtime.Env.mods;
-
-            // 兼容
-            if (S.isPlainObject(name)) {
-                return runtime.config({
-                    modules: name
-                });
-            }
+                runtime = self.runtime;
 
             // S.add(name[, fn[, config]])
             if (typeof name == 'string') {
-
                 utils.registerModule(runtime, name, fn, config);
-
-//                mod = mods[name];
-//
-//                // 显示指定 add 不 attach
-//                if (config &amp;&amp; config['attach'] === false) {
-//                    return;
-//                }
-//
-//                if (config) {
-//                    requires = mod.getNormalizedRequires();
-//                }
-//
-//                if (!requires || utils.isAttached(runtime, requires)) {
-//                    utils.attachMod(runtime, mod);
-//                }
-
                 return;
             }
             // S.add(fn,config);
@@ -114,13 +87,13 @@
                     // http://groups.google.com/group/commonjs/browse_thread/thread/5a3358ece35e688e/43145ceccfb1dc02#43145ceccfb1dc02
                     // use onload to get module name is not right in ie
                     name = findModuleNameByInteractive(self);
-                    S.log('old_ie get modName by interactive : ' + name);
+                    S.log('ie get modName by interactive: ' + name);
                     utils.registerModule(runtime, name, fn, config);
-                    self.__startLoadModuleName = null;
+                    self.__startLoadModName = null;
                     self.__startLoadTime = 0;
                 } else {
                     // 其他浏览器 onload 时，关联模块名与模块定义
-                    self.__currentModule = {
+                    self.__currentMod = {
                         fn: fn,
                         config: config
                     };
@@ -135,41 +108,33 @@
     // ie 特有，找到当前正在交互的脚本，根据脚本名确定模块名
     // 如果找不到，返回发送前那个脚本
     function findModuleNameByInteractive(self) {
-        var runtime = self.runtime,
-            scripts = S.Env.host.document.getElementsByTagName('script'),
+        var scripts = S.Env.host.document.getElementsByTagName('script'),
             re,
             i,
+            name,
             script;
 
-        for (i = 0; i &lt; scripts.length; i++) {
+        for (i = scripts.length - 1; i &gt;= 0; i--) {
             script = scripts[i];
             if (script.readyState == 'interactive') {
                 re = script;
                 break;
             }
         }
-        if (!re) {
+        if (re) {
+            name = re.getAttribute('data-mod-name');
+        } else {
             // sometimes when read module file from cache , interactive status is not triggered
             // module code is executed right after inserting into dom
             // i has to preserve module name before insert module script into dom , then get it back here
             S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
-            S.log('old_ie get mod name from cache : ' + self.__startLoadModuleName);
-            return self.__startLoadModuleName;
+            S.log('old_ie get mod name from cache : ' + self.__startLoadModName);
+            name = self.__startLoadModName;
         }
-
-        // src 必定是绝对路径
-        // or re.hasAttribute ? re.src :  re.getAttribute('src', 4);
-        // http://msdn.microsoft.com/en-us/library/ms536429(VS.85).aspx
-        // note:
-        // &lt;script src='/x.js'&gt;&lt;/script&gt;
-        // ie6-8 =&gt; re.src == '/x.js'
-        // ie9 or firefox/chrome =&gt; re.src == 'http://localhost/x.js'
-        var src = utils.resolveByPage(re.src),
-            moduleName = Loader.Module.getModuleNameByUri(runtime, src);
-        if (!moduleName) {
-            S.log('interactive script does not have package config ：' + src, 'error');
+        if (!name &amp;&amp; re) {
+            S.log('interactive script does not have package config ：' + re.src, 'error');
         }
-        return moduleName;
+        return name;
     }
 
 })(KISSY);

@@ -11,7 +11,7 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
     }
 
     S.extend(XiamiMusic, FlashBaseClass, {
-        _updateTip:function (tipUrlEl, selectedFlash) {
+        _updateTip: function (tipUrlEl, selectedFlash) {
             var self = this,
                 editor = self.get("editor"),
                 r = editor.restoreRealElement(selectedFlash);
@@ -28,7 +28,7 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
     }
 
     S.augment(XiamiMusicPlugin, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
 
             fakeObjects.init(editor);
 
@@ -40,8 +40,8 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
             }
 
             dataFilter && dataFilter.addRules({
-                tags:{
-                    'object':function (element) {
+                tags: {
+                    'object': function (element) {
                         var //增加音乐名字提示
                             title = element.getAttribute("title"),
                             i,
@@ -58,7 +58,7 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
                                     }
                                     if (checkXiami(c.attributes.src)) {
                                         return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {
-                                            title:title
+                                            title: title
                                         });
                                     }
                                 }
@@ -69,24 +69,27 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
                             c = childNodes[ i ];
                             //innerHTML 会莫名首字母大写，还会加入一些属性
                             //Movie
-                            if (c.nodeName == 'param'
-                                && c.getAttribute("name") == "movie") {
-                                if (checkXiami(c.getAttribute("value"))) {
+                            if (c.nodeName == 'param' &&
+                                // ie 自动属性名大写
+                                c.getAttribute("name").toLowerCase() == "movie") {
+
+                                if (checkXiami(c.getAttribute("value") ||
+                                    c.getAttribute("VALUE"))) {
                                     return dataProcessor.createFakeParserElement(element,
                                         CLS_XIAMI, TYPE_XIAMI, true, {
-                                            title:title
+                                            title: title
                                         });
                                 }
                             }
                         }
                     },
 
-                    'embed':function (element) {
+                    'embed': function (element) {
                         if (flashUtils.isFlashEmbed(element) &&
                             checkXiami(element.getAttribute("src"))) {
                             return dataProcessor.createFakeParserElement(element,
                                 CLS_XIAMI, TYPE_XIAMI, true, {
-                                    title:element.getAttribute("title")
+                                    title: element.getAttribute("title")
                                 });
                         }
                     }
@@ -94,14 +97,14 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
                 }}, 4);
 
             var xiamiMusic = new XiamiMusic({
-                editor:editor,
-                cls:CLS_XIAMI,
-                type:TYPE_XIAMI,
-                bubbleId:"xiami",
-                pluginConfig:this.config,
-                contextMenuId:"xiami",
-                contextMenuHandlers:{
-                    "虾米属性":function () {
+                editor: editor,
+                cls: CLS_XIAMI,
+                type: TYPE_XIAMI,
+                bubbleId: "xiami",
+                pluginConfig: this.config,
+                contextMenuId: "xiami",
+                contextMenuHandlers: {
+                    "虾米属性": function () {
                         var selectedEl = this.get("editorSelectedEl");
                         if (selectedEl) {
                             xiamiMusic.show(selectedEl);
@@ -111,13 +114,13 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
             });
 
             editor.addButton("xiamiMusic", {
-                tooltip:"插入虾米音乐",
-                listeners:{
-                    click:function () {
+                tooltip: "插入虾米音乐",
+                listeners: {
+                    click: function () {
                         xiamiMusic.show();
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode: Editor.WYSIWYG_MODE
             });
 
         }
@@ -126,5 +129,5 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
 
     return XiamiMusicPlugin;
 }, {
-    requires:['editor', '../flash-common/baseClass', '../flash-common/utils', '../fake-objects/']
+    requires: ['editor', '../flash-common/baseClass', '../flash-common/utils', '../fake-objects/']
 });

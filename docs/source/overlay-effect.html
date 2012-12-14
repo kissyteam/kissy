@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * effect for overlay
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('overlay/extension/overlay-effect', function (S) {
+
+    var NONE = 'none',
+        BLOCK='block',
+        HIDDEN='hidden',
+        VISIBLE='visible',
+        DURATION = 0.5,
+        effects = {fade: [&quot;Out&quot;, &quot;In&quot;], slide: [&quot;Up&quot;, &quot;Down&quot;]};
+
+    function getGhost(self) {
+        var el = self.get(&quot;el&quot;),
+            ghost = el.clone(true);
+
+        ghost.css({
+            visibility:'',
+            overflow:HIDDEN
+        }).addClass(self.get('prefixCls') + 'overlay-ghost');
+
+        return self.__afterCreateEffectGhost(ghost);
+    }
+
+    function processTarget(self, show, callback) {
+
+        if (self.__effectGhost) {
+            self.__effectGhost.stop(1);
+        }
+
+        var el = self.get(&quot;el&quot;),
+            $ = S.all,
+            effectCfg = self.get(&quot;effect&quot;),
+            target = $(effectCfg.target),
+            duration = effectCfg.duration,
+            targetBox = S.mix(target.offset(), {
+                width: target.width(),
+                height: target.height()
+            }),
+            elBox = S.mix(el.offset(), {
+                width: el.width(),
+                height: el.height()
+            }),
+            from, to,
+            ghost = getGhost(self),
+            easing = effectCfg.easing;
+
+
+        ghost.insertAfter(el);
+
+        el.hide();
+
+        if (show) {
+            from = targetBox;
+            to = elBox;
+        } else {
+            from = elBox;
+            to = targetBox;
+        }
+
+        ghost.css(from);
+
+        self.__effectGhost = ghost;
+
+        ghost.animate(to, {
+            duration: duration,
+            easing: easing,
+            complete: function () {
+                self.__effectGhost = null;
+                ghost.remove();
+                el.show();
+                callback();
+            }
+        });
+
+    }
+
+    function processEffect(self, show, callback) {
+        var el = self.get(&quot;el&quot;),
+            effectCfg = self.get(&quot;effect&quot;),
+            effect = effectCfg.effect || NONE,
+            target = effectCfg.target;
+        if (effect == NONE &amp;&amp; !target) {
+            callback();
+            return;
+        }
+        if (target) {
+            processTarget(self, show, callback);
+            return;
+        }
+        var duration = effectCfg.duration,
+            easing = effectCfg.easing,
+        // need to get before stop, in case anim 's complete function change it
+            originalVisibility = el.css('visibility'),
+            index = show ? 1 : 0;
+        // 队列中的也要移去
+        // run complete fn to restore window's original height
+        el.stop(1, 1);
+        el.css({
+            // must show, override box-render _onSetVisible
+            &quot;visibility&quot;: VISIBLE,
+            // fadeIn need display none, fadeOut need display block
+            &quot;display&quot;: show ? NONE : BLOCK
+        });
+        var m = effect + effects[effect][index];
+        el[m](duration, function () {
+            el.css({
+                // need compute coordinates when show, so do not use display none for hide
+                &quot;display&quot;: BLOCK,
+                // restore to box-render _onSetVisible
+                &quot;visibility&quot;: originalVisibility
+            });
+            callback();
+        }, easing);
+    }
+
+    function OverlayEffect() {
+
+    }
+
+    OverlayEffect.ATTRS = {
+<span id='KISSY-Overlay-cfg-effect'>        /**
+</span>         * Set v as overlay 's show effect
+         *
+         * - v.effect (String): Default:none.
+         * can be set as &quot;fade&quot; or &quot;slide&quot;
+         *
+         * - v.target (String|KISS.Node):
+         * The target node from which overlay should animate from while showing.
+         *
+         * - v.duration (Number): in seconds.
+         * Default:0.5.
+         *
+         * - v.easing (String|Function):
+         * for string see {@link KISSY.Anim.Easing} 's method name.
+         *
+         * @cfg {Object} effect
+         * @member KISSY.Overlay
+         */
+<span id='global-property-effect'>        /**
+</span>         * @ignore
+         */
+        effect: {
+            value: {
+                effect: '',
+                target: null,
+                duration: DURATION,
+                easing: 'easeOut'
+            },
+            setter: function (v) {
+                var effect = v.effect;
+                if (typeof effect == 'string' &amp;&amp; !effects[effect]) {
+                    v.effect = '';
+                }
+            }
+
+        }
+    };
+
+    OverlayEffect.prototype = {
+
+        __afterCreateEffectGhost:function(ghost){
+            return ghost;
+        },
+
+
+<span id='KISSY-Overlay-method-_onSetVisible'>        /**
+</span>         * For overlay with effect, it should listen show and hide instead of afterVisibleChange.
+         * @protected
+         * @member KISSY.Overlay
+         */
+        _onSetVisible: function (v) {
+            var self = this;
+            if (self.get('rendered')) {
+                // delay show and hide event after anim
+                processEffect(self, v, function () {
+                    self.fire(v ? 'show' : 'hide');
+                });
+            }
+        }
+
+    };
+
+    return OverlayEffect;
+
+});</pre>
+</body>
+</html>

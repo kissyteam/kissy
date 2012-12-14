@@ -687,6 +687,7 @@ KISSY.add(&quot;component/base/controller&quot;, function (S, Box, Event, Compon
 </span>                 * This component's parent component.
                  * @type {KISSY.Component.Controller}
                  * @property parent
+                 * @readonly
                  */
 <span id='KISSY-Component-Controller-cfg-parent'>                /**
 </span>                 * This component's parent component.
@@ -728,7 +729,17 @@ KISSY.add(&quot;component/base/controller&quot;, function (S, Box, Event, Compon
                  */
                 xrender: {
                     value: Render
-                }
+                },
+
+<span id='KISSY-Component-Controller-cfg-defaultChildXClass'>                /**
+</span>                 * default child xclass
+                 * @protected
+                 * @cfg {String} defaultChildXClass
+                 */
+<span id='global-property-defaultChildXClass'>                /**
+</span>                 * @ignore
+                 */
+                defaultChildXClass: {}
             }
         }, {
             xclass: 'controller'

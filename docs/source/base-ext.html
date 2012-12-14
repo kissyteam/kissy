@@ -58,7 +58,7 @@
 </span>             * Get package base.
              * @return {String}
              */
-            getBase: function () {
+            'getBase': function () {
                 var self = this;
                 return self.base || self.runtime.Config.base;
             },
@@ -293,43 +293,6 @@
         });
 
     Loader.Module = Module;
-
-    // for ie to get module name from request url
-    // called for development, can not set ignorePackageNameInUri
-    Module.getModuleNameByUri = function (runtime, src) {
-        var p,
-            srcStr = src.toString(),
-            packages = runtime.config('packages'),
-            packageBase,
-            finalPackagePath,
-            srcPath = src.getPath(),
-            Config = runtime.Config,
-            finalPackageUri,
-            finalPackageLength = -1;
-
-        // 外部模块去除包路径，得到模块名
-        for (p in packages) {
-            packageBase = packages[p].getBase();
-            if (S.startsWith(srcStr, packageBase)) {
-                // longest match
-                if (packageBase.length &gt; finalPackageLength) {
-                    finalPackageLength = packageBase.length;
-                    finalPackagePath = packageBase;
-                    finalPackageUri = packages[p].getBaseUri();
-                }
-            }
-        }
-
-        // 注意：模块名不包含后缀名以及参数，所以去除
-        // 系统模块去除系统路径
-        // 需要 base norm , 防止 base 被指定为相对路径
-        // configs 统一处理
-        if (finalPackagePath) {
-            return Utils.removeExtname(Path.relative(finalPackageUri.getPath(), srcPath));
-        } else if (S.startsWith(srcStr, Config.base)) {
-            return Utils.removeExtname(Path.relative(Config.baseUri.getPath(), srcPath));
-        }
-    };
 
     function defaultComponentJsName(m) {
         var name = m.name,

@@ -68,9 +68,8 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
     }
 
     function addDataToForm(query, form, serializeArray) {
-        var ret = [], isArray, vs, i, e, keys = query.keys();
-        S.each(keys, function (k) {
-            var data = query.get(k);
+        var ret = [], isArray, vs, i, e;
+        S.each(query, function (data, k) {
             isArray = S.isArray(data);
             vs = S.makeArray(data);
             // 数组和原生一样对待，创建多个同名输入域
@@ -103,12 +102,13 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
                 c = io.config,
                 fields,
                 iframe,
-                query = c.query,
+                query,
+                data = c.data,
                 form = DOM.get(c.form);
 
             self.attrs = {
-                target: DOM.attr(form, 'target')||'',
-                action: DOM.attr(form, 'action')||'',
+                target: DOM.attr(form, 'target') || '',
+                action: DOM.attr(form, 'action') || '',
                 // enctype 区分 iframe 与 serialize
                 //encoding:DOM.attr(form, 'encoding'),
                 //enctype:DOM.attr(form, 'enctype'),
@@ -127,7 +127,12 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
                 //encoding:'multipart/form-data'
             });
 
-            if (query.count()) {
+            // unparam to kv map
+            if (data) {
+                query = S.unparam(data);
+            }
+
+            if (query) {
                 fields = addDataToForm(query, form, c.serializeArray);
             }
 
