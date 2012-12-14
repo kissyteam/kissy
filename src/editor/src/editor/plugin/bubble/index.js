@@ -134,7 +134,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
             prefixCls: prefixCls
         });
 
-        bubble = new Overlay(cfg).render();
+        bubble = new Overlay(cfg);
 
         editor.addControl(id + "/bubble", bubble);
 

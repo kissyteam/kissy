@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:55
+build time: Dec 14 17:35
 */
 /**
  * video button.
@@ -16,7 +16,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     }
 
     S.augment(video, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
 
             fakeObjects.init(editor);
 
@@ -46,8 +46,8 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
             videoCfg.getProvider = getProvider;
 
             dataFilter && dataFilter.addRules({
-                tags:{
-                    'object':function (element) {
+                tags: {
+                    'object': function (element) {
                         var classId = element.getAttribute("classid"), i;
                         var childNodes = element.childNodes;
                         if (!classId) {
@@ -70,7 +70,8 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                             var c = childNodes[ i ];
                             if (c.nodeName == 'param' &&
                                 c.getAttribute("name").toLowerCase() == "movie") {
-                                if (getProvider(c.getAttribute("value"))) {
+                                if (getProvider(c.getAttribute("value") ||
+                                    c.getAttribute("VALUE"))) {
                                     return dataProcessor.createFakeParserElement(element,
                                         CLS_VIDEO, TYPE_VIDEO, true);
                                 }
@@ -79,7 +80,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
 
                     },
 
-                    'embed':function (element) {
+                    'embed': function (element) {
                         if (!flashUtils.isFlashEmbed(element))
                             return null;
                         if (getProvider(element.getAttribute("src"))) {
@@ -93,14 +94,14 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
 
 
             var flashControl = new FlashBaseClass({
-                editor:editor,
-                cls:CLS_VIDEO,
-                type:TYPE_VIDEO,
-                pluginConfig:this.config,
-                bubbleId:"video",
-                contextMenuId:"video",
-                contextMenuHandlers:{
-                    "视频属性":function () {
+                editor: editor,
+                cls: CLS_VIDEO,
+                type: TYPE_VIDEO,
+                pluginConfig: this.config,
+                bubbleId: "video",
+                contextMenuId: "video",
+                contextMenuHandlers: {
+                    "视频属性": function () {
                         var selectedEl = this.get("editorSelectedEl");
                         if (selectedEl) {
                             flashControl.show(selectedEl);
@@ -110,14 +111,14 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
             });
 
             editor.addButton("video", {
-                tooltip:"插入视频",
-                listeners:{
-                    click:function () {
+                tooltip: "插入视频",
+                listeners: {
+                    click: function () {
                         flashControl.show();
 
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode: Editor.WYSIWYG_MODE
             });
         }
     });
@@ -126,5 +127,5 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     return video;
 
 }, {
-    requires:['editor', '../flash-common/utils', '../flash-common/baseClass', '../fake-objects/']
+    requires: ['editor', '../flash-common/utils', '../flash-common/baseClass', '../fake-objects/']
 });

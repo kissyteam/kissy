@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 14 16:55
+build time: Dec 14 17:33
 */
 /**
  * insert swf into document in an easy way
@@ -22,7 +22,6 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         doc = S.Env.host.document,
         fpv = FlashUA.fpv,
         fpvGEQ = FlashUA.fpvGEQ,
-        EMBED_TAG = 'embed',
         OBJECT_TAG = 'object',
         encode = encodeURIComponent,
 
@@ -63,6 +62,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
             swf,
             html,
             id,
+            htmlMode = self.get('htmlMode'),
             flashVars,
             params = self.get('params'),
             attrs = self.get('attrs'),
@@ -105,8 +105,14 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
             }
         }
 
+        if (htmlMode == 'full') {
+            html = _stringSWFFull(installedSrc, attrs, params)
+        } else {
+            html = _stringSWFDefault(installedSrc, attrs, params)
+        }
+
         // ie 再取  target.innerHTML 属性大写，很多多与属性，等
-        self.set('html', html = _stringSWF(installedSrc, attrs, params));
+        self.set('html', html);
 
         if (elBefore) {
             DOM.insertBefore(placeHolder, elBefore);
@@ -124,10 +130,12 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
 
         self.set('swfObject', swf);
 
-        if (UA.ie) {
-            self.set('swfObject', swf);
-        } else {
-            self.set('swfObject', swf.parentNode);
+        if (htmlMode == 'full') {
+            if (UA.ie) {
+                self.set('swfObject', swf);
+            } else {
+                self.set('swfObject', swf.parentNode);
+            }
         }
 
         // bug fix: 重新获取对象,否则还是老对象.
@@ -342,6 +350,14 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
              */
             html: {
 
+            },
+
+            /**
+             *  full or default(depends on browser object)
+             *  !TODO
+             */
+            htmlMode: {
+
             }
         },
 
@@ -410,69 +426,72 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         return null;
     };
 
-    // oe 结构
-    function _stringSWF(src, attrs, params) {
-        var res,
-            attr,
-            par = EMPTY,
-            ObjPar = EMPTY,
-            ObjAttr,
-            inner,
-            commonAttr = EMPTY,
-            commonAttrNoId = EMPTY;
-
-        // 普通属性
-        S.each(attrs, function (v, k) {
-            var s = stringAttr(k, v);
-            commonAttr += s;
-            // two tag!
-            if (k != 'id' && k != 'style') {
-                commonAttrNoId += s;
-            }
-        });
-
-        if (UA.ie) {
-            attr = commonAttrNoId;
-            ObjAttr = commonAttr;
-        } else {
-            ObjAttr = commonAttrNoId;
-            attr = commonAttr;
-        }
-
-        // 源
-        attr += stringAttr('src', src);
-
-
-        // 特殊属性
-        attr += stringAttr('type', TYPE);
-
+    function collectionParams(params) {
+        var par = EMPTY;
         S.each(params, function (v, k) {
             k = k.toLowerCase();
             if (k in PARAMS) {
-                par += stringAttr(k, v);
-                ObjPar += stringParam(k, v);
+                par += stringParam(k, v);
             }
             // 特殊参数
             else if (k == FLASHVARS) {
-                par += stringAttr(k, toFlashVars(v));
-                ObjPar += stringParam(k, toFlashVars(v));
+                par += stringParam(k, toFlashVars(v));
             }
         });
-
-        inner = LT + EMBED_TAG + attr + par + '/' + GT;
-
-        // 2012-12-14
-        // ie embed 会报 security error 以及不能正常回调 js！
+        return par;
+    }
 
 
-        // 特殊属性
-        ObjAttr += stringAttr('classid', CID);
+    function _stringSWFDefault(src, attrs, params) {
+        return _stringSWF(src, attrs, params, UA.ie) + LT + '/' + OBJECT_TAG + GT;
+    }
 
-        ObjPar += stringParam('movie', src);
+    function _stringSWF(src, attrs, params, ie) {
+        var res,
+            attr = EMPTY,
+            par = EMPTY;
 
-        res = LT + OBJECT_TAG + ObjAttr + GT + ObjPar + inner + LT + '/' + OBJECT_TAG + GT;
+        if (ie == undefined) {
+            ie = UA.ie;
+        }
+
+        // 普通属性
+        S.each(attrs, function (v, k) {
+            attr += stringAttr(k, v);
+        });
+
+        if (ie) {
+            attr += stringAttr('classid', CID);
+            par += stringParam('movie', src);
+        } else {
+            // 源
+            attr += stringAttr('data', src);
+            // 特殊属性
+            attr += stringAttr('type', TYPE);
+        }
+
+        par += collectionParams(params);
+
+        res = LT + OBJECT_TAG + attr + GT + par;
 
         return res
+    }
+
+    // full oo 结构
+    function _stringSWFFull(src, attrs, params) {
+        var outside, inside;
+        if (UA.ie) {
+            outside = _stringSWF(src, attrs, params, 1);
+            delete attrs.id;
+            delete attrs.style;
+            inside = _stringSWF(src, attrs, params, 0);
+        } else {
+            inside = _stringSWF(src, attrs, params, 0);
+            delete attrs.id;
+            delete attrs.style;
+            outside = _stringSWF(src, attrs, params, 1);
+        }
+        return outside + inside + LT + '/' + OBJECT_TAG + GT + LT + '/' + OBJECT_TAG + GT;
     }
 
     /*

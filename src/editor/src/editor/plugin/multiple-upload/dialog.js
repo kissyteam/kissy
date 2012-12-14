@@ -2,7 +2,10 @@
  * multiple-upload dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugin, ProgressBar, Overlay4E, FlashBridge, localStorage, Flash, undefined) {
+KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugin,
+                                                            ProgressBar, Overlay4E,
+                                                            FlashBridge, localStorage,
+                                                            SWF, undefined) {
 
     var UA = S.UA,
         DOM = S.DOM,
@@ -163,7 +166,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 self._sizeLimit / 1000
                 + "M";
 
-            if (!Flash.fpvGEQ(FLASH_VERSION_REQUIRED)) {
+            if (!SWF.fpvGEQ(FLASH_VERSION_REQUIRED)) {
                 TIP = "您的flash插件版本过低，该功能不可用，" +
                     "请<a href='http://get.adobe.com/cn/flashplayer/'" +
                     " target='_blank'>点此升级</a>";
@@ -172,7 +175,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
             btn.addClass(replacePrefix("{prefixCls}editor-button-disabled", prefixCls), undefined);
             self.tipSpan = btnHolder.one("span");
             self.tipSpan.html(TIP);
-            if (!Flash.fpvGEQ(FLASH_VERSION_REQUIRED)) {
+            if (!SWF.fpvGEQ(FLASH_VERSION_REQUIRED)) {
                 return;
             }
             if (uploadCfg['extraHtml']) {
@@ -811,5 +814,5 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
         '../overlay/',
         '../flash-bridge/',
         '../local-storage/',
-        'flash']
+        'swf']
 });

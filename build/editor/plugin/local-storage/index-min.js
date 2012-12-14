@@ -1,8 +1,8 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:55
+build time: Dec 14 17:35
 */
-KISSY.add("editor/plugin/local-storage/index",function(d,c,e,f){if(!d.UA.ie&&window.localStorage)return window.localStorage;var g=c.Utils.debugUrl("plugin/local-storage/swfstore.swf?t="+ +new Date),a=new f({movie:g,flashVars:{useCompression:!0},methods:["setItem","removeItem","getItem","setMinDiskSpace","getValueOf"]});a.swf.height=138;var h={width:215,border:"1px solid red"},i={width:0,border:"none"},b=new e({prefixCls:"ks-editor-",elStyle:{background:"white"},width:"0px",content:"<h1 style='text-align:center;'>请点击允许</h1>",
-zIndex:c.baseZIndex(c.zIndexManager.STORE_FLASH_SHOW)});b.render();b.get("contentEl").append(a.swf);b.center();b.show();a.on("pending",function(){b.get("el").css(h);b.center();b.show();setTimeout(function(){a.retrySave()},1E3)});a.on("save",function(){b.get("el").css(i)});var j=a.setItem;d.mix(a,{_ke:1,getItem:function(a){return this.getValueOf(a)},retrySave:function(){this.setItem(this.lastSave.k,this.lastSave.v)},setItem:function(a,b){this.lastSave={k:a,v:b};j.call(this,a,b)}});a.on("contentReady",
-function(){a._ready=1});return a},{requires:["editor","overlay","../flash-bridge/"]});
+KISSY.add("editor/plugin/local-storage/index",function(c,d,e,f){if(!c.UA.ie&&window.localStorage)return window.localStorage;var g=d.Utils.debugUrl("plugin/local-storage/swfstore.swf?t="+ +new Date),h={width:215,border:"1px solid red"},i={width:0,border:"none"},a=new e({prefixCls:"ks-editor-",elStyle:{background:"white"},width:"0px",content:"<h1 style='text-align:center;'>请点击允许</h1><div class='storage-container'></div>",zIndex:d.baseZIndex(d.zIndexManager.STORE_FLASH_SHOW)});a.render();a.show();var b=
+new f({src:g,render:a.get("contentEl").one(".storage-container"),params:{flashVars:{useCompression:!0}},attrs:{height:138,width:"100%"},methods:["setItem","removeItem","getItem","setMinDiskSpace","getValueOf"]});c.ready(function(){setTimeout(function(){a.center()},0)});b.on("pending",function(){a.get("el").css(h);a.center();a.show();setTimeout(function(){b.retrySave()},1E3)});b.on("save",function(){a.get("el").css(i)});var j=b.setItem;c.mix(b,{_ke:1,getItem:function(a){return this.getValueOf(a)},
+retrySave:function(){this.setItem(this.lastSave.k,this.lastSave.v)},setItem:function(a,b){this.lastSave={k:a,v:b};j.call(this,a,b)}});b.on("contentReady",function(){b._ready=1});return b},{requires:["editor","overlay","../flash-bridge/"]});

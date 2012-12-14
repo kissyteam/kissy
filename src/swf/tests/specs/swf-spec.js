@@ -17,7 +17,7 @@ if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
                 for (i = 0; i < params.length; i++) {
                     var param = params[i];
                     if (param.nodeType == 1) {
-                        if (DOM.attr(params[i], 'name') == "flashvars") {
+                        if (DOM.attr(params[i], 'name').toLowerCase() == "flashvars") {
                             return S.unparam(DOM.attr(param, "value"));
                         }
                     }

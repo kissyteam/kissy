@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:55
+build time: Dec 14 17:35
 */
 /**
  * Set up editor constructor
@@ -3811,7 +3811,7 @@ KISSY.config('modules', {
 'editor/plugin/checkbox-source-area/index': {requires: ['editor']},
 'editor/plugin/strike-through/index': {requires: ['editor','editor/plugin/font/ui','editor/plugin/strike-through/cmd']},
 'editor/plugin/fore-color/index': {requires: ['editor','editor/plugin/color/btn','editor/plugin/fore-color/cmd']},
-'editor/plugin/flash-bridge/index': {requires: ['editor','editor/plugin/flash-common/utils']},
+'editor/plugin/flash-bridge/index': {requires: ['swf','editor']},
 'editor/plugin/fore-color/cmd': {requires: ['editor/plugin/color/cmd']},
 'editor/plugin/table/dialog': {requires: ['editor','editor/plugin/overlay/','editor/plugin/menubutton/']},
 'editor/plugin/justify-utils/cmd': {requires: ['editor']},
@@ -3822,6 +3822,7 @@ KISSY.config('modules', {
 'editor/plugin/ordered-list/cmd': {requires: ['editor','editor/plugin/list-utils/cmd']},
 'editor/plugin/list-utils/index': {requires: ['editor']},
 'editor/plugin/dialog-loader/index': {requires: ['overlay','editor']},
+'editor/plugin/flash-common/utils': {requires: ['swf']},
 'editor/plugin/font-family/index': {requires: ['editor','editor/plugin/font/ui','editor/plugin/font-family/cmd']},
 'editor/plugin/undo/cmd': {requires: ['editor']},
 'editor/plugin/indent/index': {requires: ['editor','editor/plugin/indent/cmd']},
@@ -3848,7 +3849,7 @@ KISSY.config('modules', {
 'editor/plugin/link/dialog': {requires: ['editor','editor/plugin/overlay/','editor/plugin/link/utils']},
 'editor/plugin/font-family/cmd': {requires: ['editor','editor/plugin/font/cmd']},
 'editor/plugin/back-color/cmd': {requires: ['editor/plugin/color/cmd']},
-'editor/plugin/multiple-upload/dialog': {requires: ['editor','component/plugin/drag','editor/plugin/progressbar/','editor/plugin/overlay/','editor/plugin/flash-bridge/','editor/plugin/local-storage/']},
+'editor/plugin/multiple-upload/dialog': {requires: ['editor','component/plugin/drag','editor/plugin/progressbar/','editor/plugin/overlay/','editor/plugin/flash-bridge/','editor/plugin/local-storage/','swf']},
 'editor/plugin/code/dialog': {requires: ['editor','editor/plugin/overlay/','menubutton']},
 'editor/plugin/justify-center/cmd': {requires: ['editor/plugin/justify-utils/cmd']},
 'editor/plugin/flash-common/baseClass': {requires: ['editor','editor/plugin/contextmenu/','editor/plugin/bubble/','editor/plugin/dialog-loader/','editor/plugin/flash-common/utils']},
@@ -9329,7 +9330,7 @@ KISSY.add("editor/plugin/bubble/index", function (S, Overlay, Editor) {
             prefixCls: prefixCls
         });
 
-        bubble = new Overlay(cfg).render();
+        bubble = new Overlay(cfg);
 
         editor.addControl(id + "/bubble", bubble);
 
@@ -11053,7 +11054,7 @@ KISSY.add("editor/plugin/fake-objects/index", function (S, Editor) {
  * simplified flash bridge for yui swf
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
+KISSY.add("editor/plugin/flash-bridge/index", function (S, SWF, Editor) {
 
     var instances = {};
 
@@ -11066,19 +11067,20 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
             var self = this,
                 id = S.guid("flashbridge-"),
                 callback = "KISSY.Editor.FlashBridge.EventHandler";
-            cfg.flashVars = cfg.flashVars || {};
+            cfg.id = id;
             cfg.attrs = cfg.attrs || {};
             cfg.params = cfg.params || {};
-            var flashVars = cfg.flashVars,
+            var
                 attrs = cfg.attrs,
-                params = cfg.params;
+                params = cfg.params,
+                flashVars = params.flashVars = params.flashVars || {};
+
             S.mix(attrs, {
-                id: id,
                 //http://yiminghe.javaeye.com/blog/764872
                 //firefox 必须使创建的flash以及容器可见，才会触发contentReady
                 //默认给flash自身很大的宽高，容器小点就可以了，
-                width: '100%',
-                height: '100%'
+                width: 1,
+                height: 1
             }, false);
             //这几个要放在 param 里面，主要是允许 flash js沟通
             S.mix(params, {
@@ -11103,7 +11105,7 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
             S.mix(flashVars, swfCore);
             instances[id] = self;
             self.id = id;
-            self.swf = flashUtils.createSWFRuntime(cfg.movie, cfg);
+            self.swf = new SWF(cfg);
             self._expose(cfg.methods);
         },
         _expose: function (methods) {
@@ -11123,22 +11125,7 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
          * @param args {Array} the set of arguments to pass to the function.
          */
         _callSWF: function (func, args) {
-            var self = this;
-            args = args || [];
-            try {
-                if (self.swf[func]) {
-                    return self.swf[func].apply(self.swf, args);
-                }
-            }
-                // some version flash function is odd in ie: property or method not supported by object
-            catch (e) {
-                var params = "";
-                if (args.length !== 0) {
-                    params = "'" + args.join("', '") + "'";
-                }
-                //avoid eval for compressiong
-                return (new Function('self', 'return self.swf.' + func + '(' + params + ');'))(self);
-            }
+            return this.swf.callSWF(func,args);
         },
         _eventHandler: function (event) {
             var self = this,
@@ -11159,6 +11146,7 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
             }
         },
         destroy: function () {
+            this.swf.destroy();
             delete instances[this.id];
         }
     });
@@ -11177,101 +11165,10 @@ KISSY.add("editor/plugin/flash-bridge/index", function (S, Editor, flashUtils) {
 
     Editor.FlashBridge = FlashBridge;
 
-    var UA = S.UA, fpv, fpvF, firstRun = true;
-
-    /*
-     获取 Flash 版本号
-     返回数据 [M, S, R] 若未安装，则返回 undefined
-     */
-    function getFlashVersion() {
-        var ver, SF = 'ShockwaveFlash';
-
-        // for NPAPI see: http://en.wikipedia.org/wiki/NPAPI
-        if (navigator.plugins && navigator.mimeTypes.length) {
-            ver = (navigator.plugins['Shockwave Flash'] || {})['description'];
-        }
-        // for ActiveX see:	http://en.wikipedia.org/wiki/ActiveX
-        else if (window.ActiveXObject) {
-            try {
-                ver = new ActiveXObject(SF + '.' + SF)['GetVariable']('$version');
-            } catch (ex) {
-                //S.log('getFlashVersion failed via ActiveXObject');
-                // nothing to do, just return undefined
-            }
-        }
-
-        // 插件没安装或有问题时，ver 为 undefined
-        if (!ver) return undefined;
-
-        // 插件安装正常时，ver 为 "Shockwave Flash 10.1 r53" or "WIN 10,1,53,64"
-        return arrify(ver);
-    }
-
-    /*
-     arrify("10.1.r53") => ["10", "1", "53"]
-     */
-    function arrify(ver) {
-        return ver.match(/(\d)+/g);
-    }
-
-    /*
-     格式：主版本号Major.次版本号Minor(小数点后3位，占3位)修正版本号Revision(小数点后第4至第8位，占5位)
-     ver 参数不符合预期时，返回 0
-     numerify("10.1 r53") => 10.00100053
-     numerify(["10", "1", "53"]) => 10.00100053
-     numerify(12.2) => 12.2
-     */
-    function numerify(ver) {
-        var arr = (typeof ver == 'string') ? arrify(ver) : ver, ret = ver;
-        if (S.isArray(arr)) {
-            ret = parseFloat(arr[0] + '.' + pad(arr[1], 3) + pad(arr[2], 5));
-        }
-        return ret || 0;
-    }
-
-    /*
-     pad(12, 5) => "00012"
-     ref: http://lifesinger.org/blog/2009/08/the-harm-of-tricky-code/
-     */
-    function pad(num, n) {
-        var len = (num + '').length;
-        while (len++ < n) {
-            num = '0' + num;
-        }
-        return num;
-    }
-
-    /*
-     返回数据 [M, S, R] 若未安装，则返回 undefined
-     fpv 全称是 flash player version
-     */
-    UA.fpv = function (force) {
-        // 考虑 new ActiveX 和 try catch 的 性能损耗，延迟初始化到第一次调用时
-        if (force || firstRun) {
-            firstRun = false;
-            fpv = getFlashVersion();
-            fpvF = numerify(fpv);
-        }
-        return fpv;
-    };
-
-    /*
-     Checks fpv is greater than or equal the specific version.
-     普通的 flash 版本检测推荐使用该方法
-     @param ver eg. "10.1.53"
-     <code>
-     if(S.UA.fpvGEQ('9.9.2')) { ... }
-     </code>
-     */
-    UA.fpvGEQ = function (ver, force) {
-        if (firstRun) UA.fpv(force);
-        return !!fpvF && (fpvF >= numerify(ver));
-    };
-
     return FlashBridge;
 
 }, {
-    requires: ['editor', '../flash-common/utils']
+    requires: ['swf', 'editor']
 });/**
  *  BaseClass for Flash Based plugin.
  *  @author yiminghe@gmail.com
@@ -11450,204 +11347,58 @@ KISSY.add("editor/plugin/flash-common/baseClass", function (S, Editor, ContextMe
  * flash utilities
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash-common/utils", function (S) {
-    var DOM = S.DOM, Node = S.Node, UA = S.UA;
-    var flashUtils = {
+KISSY.add("editor/plugin/flash-common/utils", function (S, SWF) {
+    var DOM = S.DOM,
 
-        insertFlash: function (editor, src, attrs, _cls, _type) {
-            var nodeInfo = flashUtils.createSWF(src, { attrs: attrs }, editor.get("document")[0]),
-                real = nodeInfo.el,
-                substitute = editor.createFakeElement(real,
-                    _cls || 'ke_flash',
-                    _type || 'flash',
-                    true,
-                    nodeInfo.html,
-                    attrs);
-            editor.insertElement(substitute);
-            return substitute;
-        },
+        flashUtils = {
 
-        isFlashEmbed: function (element) {
-            return (
-                element.getAttribute("type") == 'application/x-shockwave-flash' ||
-                    /\.swf(?:$|\?)/i.test(element.getAttribute("src") || '')
-                );
-        },
+            insertFlash: function (editor, src, attrs, _cls, _type) {
+                var nodeInfo = flashUtils.createSWF({
+                        src: src,
+                        attrs: attrs,
+                        document: editor.get("document")[0]
+                    }),
+                    real = nodeInfo.el,
+                    substitute = editor.createFakeElement(real,
+                        _cls || 'ke_flash',
+                        _type || 'flash',
+                        true,
+                        nodeInfo.html,
+                        attrs);
+                editor.insertElement(substitute);
+                return substitute;
+            },
 
-        getUrl: function (r) {
-            var url = "";
-            if (r.nodeName() == "object") {
-                var params = r[0].childNodes;
-                for (var i = 0; i < params.length; i++) {
-                    if (params[i].nodeType != 1)continue;
-                    if ((DOM.attr(params[i], "name") || "").toLowerCase() == "movie") {
-                        url = DOM.attr(params[i], "value");
-                    } else if (DOM.nodeName(params[i]) == "embed") {
-                        url = DOM.attr(params[i], "src");
-                    } else if (DOM.nodeName(params[i]) == "object") {
-                        url = DOM.attr(params[i], "data");
-                    }
-                }
-            } else if (r.nodeName() == "embed") {
-                url = r.attr("src");
+            isFlashEmbed: function (element) {
+                return (
+                    DOM.attr(element, "type") == 'application/x-shockwave-flash' ||
+                        /\.swf(?:$|\?)/i.test(DOM.attr(element, "src") || '')
+                    );
+            },
+
+            getUrl: function (r) {
+                return SWF.getSrc(r);
+            },
+
+            createSWF: function (cfg) {
+                var render = DOM.create('<div style="' +
+                    "position:absolute;left:-9999px;top:-9999px;" +
+                    '"></div>', undefined, cfg.document);
+                cfg.htmlMode = 'full';
+                DOM.append(render, cfg.document.body);
+                cfg.render = render;
+                var swf = new SWF(cfg);
+                DOM.remove(render);
+                return {
+                    el: S.all(swf.get('el')),
+                    html: swf.get('html')
+                };
             }
-            return url;
-        },
-        createSWF: function (movie, cfg, doc) {
-            var attrs = cfg.attrs || {},
-                flashVars = cfg.flashVars,
-                attrs_str = "",
-                params_str = "",
-                params = cfg.params || {},
-                vars_str = "";
-            doc = doc || document;
-            S.mix(attrs, {
-                wmode: "transparent"
-            });
-            for (var a in attrs) {
-                attrs_str += a + "='" + attrs[a] + "' ";
-            }
-
-            S.mix(params, {
-                quality: "high",
-                movie: movie,
-                wmode: "transparent"
-            });
-            for (var p in params) {
-
-                params_str += "<param name='" + p + "' value='" + params[p] + "'/>";
-            }
-
-
-            if (flashVars) {
-                for (var f in flashVars) {
-
-                    vars_str += "&" + f + "=" + encodeURIComponent(flashVars[f]);
-                }
-                vars_str = vars_str.substring(1);
-            }
-
-            var outerHTML = '<object ' +
-                attrs_str +
-                ' classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" >' +
-                params_str +
-                (vars_str ? '<param name="flashVars" value="' + vars_str + '"/>' : '') +
-                /*
-                 "<object type='application/x-shockwave-flash'" +
-                 " data='" + movie + "'" +
-                 " " + attrs_str +
-                 ">"
-                 +
-                 (vars_str ? '<param name="flashVars" value="' + vars_str + '"/>' : '') +
-                 */
-                '<embed ' +
-                attrs_str +
-                " " +
-                (vars_str ? ( 'FlashVars="' + vars_str + '"') : "") +
-                ' pluginspage="http://www.macromedia.com/go/getflashplayer" ' +
-                ' quality="high" ' +
-                ' src="' + movie + '" ' +
-                ' type="application/x-shockwave-flash"/>' +
-                // + '</object>' +
-                '</object>';
-            return {
-                el: new Node(outerHTML, null, doc),
-                html: outerHTML
-            };
-        },
-        createSWFRuntime2: function (movie, cfg, doc) {
-            doc = doc || document;
-            var holder = new Node(
-                    "<div " +
-                        "style='" +
-                        "width:0;" +
-                        "height:0;" +
-                        "overflow:hidden;" +
-                        "'>", null, doc).appendTo(doc.body)
-                , el = flashUtils.createSWF.apply(this, arguments).el.appendTo(holder);
-            if (!UA['ie'])
-                el = el.one("object");
-            return el[0];
-
-        },
-        createSWFRuntime: function (movie, cfg, doc) {
-            var attrs = cfg.attrs || {},
-                flashVars = cfg.flashVars || {},
-                params = cfg.params || {},
-                attrs_str = "",
-                params_str = "",
-                vars_str = "";
-            doc = doc || document;
-            attrs.id = attrs.id || S.guid("ks-editor-runtimeflash-");
-            for (var a in attrs) {
-
-                attrs_str += a + "='" + attrs[a] + "' ";
-            }
-            for (var p in params) {
-
-                params_str += "<param name='" + p + "' value='" + params[p] + "'/>";
-            }
-            for (var f in flashVars) {
-
-                vars_str += "&" + f + "=" + encodeURIComponent(flashVars[f]);
-            }
-            vars_str = vars_str.substring(1);
-
-            if (UA['ie']) {
-                var outerHTML = '<object ' +
-                    attrs_str +
-                    ' classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" >' +
-                    params_str +
-                    '<param name="movie" value="' + movie + '" />' +
-                    (vars_str ? '<param name="flashVars" value="' + vars_str + '" />' : '') +
-                    '</object>';
-            }
-            else {
-                /*!TODO 截止 firefix3.6 ，会发生 flash 请求两次问题，
-                 想改成 embed， 再等等吧
-                 */
-                outerHTML = "<object " +
-                    "type='application/x-shockwave-flash'" +
-                    " data='" + movie + "'" +
-                    " " + attrs_str +
-                    ">" +
-                    params_str +
-                    (vars_str ? '<param name="flashVars" value="' + vars_str + '"/>' : '')
-                    + '</object>';
-            }
-
-
-            var holder = cfg.holder;
-            if (!holder) {
-                holder = new Node(
-                    "<div " +
-                        "style='" + (
-                        cfg.style ? cfg.style : (
-                            //http://yiminghe.javaeye.com/blog/764872
-                            //firefox 必须使创建的flash以及容器可见，才会触发contentReady
-                            "width:1px;" +
-                                "height:1px;" +
-                                "position:absolute;" +
-                                //"left:" + DOM.scrollLeft() + "px;" +
-                                //"top:" + DOM.scrollTop() + "px;"
-                                +"overflow:hidden;"
-                            ))
-                        +
-                        "'>", null, doc
-                ).
-                    appendTo(doc.body);
-                //不能初始化时设置，防止刷新,scrollLeft 一开始为0，等会,wait is virtue
-                setTimeout(function () {
-                    holder.offset({left: DOM.scrollLeft(), top: DOM.scrollTop()})
-                }, 100);
-            }
-            holder.html(outerHTML);
-            return doc.getElementById(attrs.id);
-        }
-
-    };
+        };
 
     return flashUtils;
+}, {
+    requires: ['swf']
 });/**
  * Add flash plugin.
  * @author yiminghe@gmail.com
@@ -13826,17 +13577,7 @@ KISSY.add("editor/plugin/local-storage/index", function (S, Editor, Overlay, Fla
     }
 
     // 国产浏览器用随机数/时间戳试试 ! 是可以的
-    var movie = Editor.Utils.debugUrl("plugin/local-storage/swfstore.swf?t=" + (+new Date()));
-
-    var store = new FlashBridge({
-        movie: movie,
-        flashVars: {
-            useCompression: true
-        },
-        methods: ["setItem", "removeItem", "getItem", "setMinDiskSpace", "getValueOf"]
-    });
-
-    store.swf.height = 138;
+    var swfSrc = Editor.Utils.debugUrl("plugin/local-storage/swfstore.swf?t=" + (+new Date()));
 
     var css = {
         width: 215,
@@ -13853,14 +13594,34 @@ KISSY.add("editor/plugin/local-storage/index", function (S, Editor, Overlay, Fla
             background: 'white'
         },
         width: "0px",
-        content: "<h1 style='" + "text-align:center;'>请点击允许</h1>",
+        content: "<h1 style='" + "text-align:center;'>请点击允许</h1>" +
+            "<div class='storage-container'></div>",
         zIndex: Editor.baseZIndex(Editor.zIndexManager.STORE_FLASH_SHOW)
     });
     o.render();
-    o.get("contentEl").append(store.swf);
-    // 必须在视窗范围内才可以初始化，触发 contentReady 事件
-    o.center();
     o.show();
+
+    var store = new FlashBridge({
+        src: swfSrc,
+        render: o.get("contentEl").one('.storage-container'),
+        params: {
+            flashVars: {
+                useCompression: true
+            }
+        },
+        attrs: {
+            height: 138,
+            width:'100%'
+        },
+        methods: ["setItem", "removeItem", "getItem", "setMinDiskSpace", "getValueOf"]
+    });
+
+    // 必须在视窗范围内才可以初始化，触发 contentReady 事件
+    S.ready(function () {
+        setTimeout(function () {
+            o.center();
+        }, 0);
+    });
 
     store.on("pending", function () {
         o.get('el').css(css);
@@ -16379,7 +16140,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     }
 
     S.augment(video, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
 
             fakeObjects.init(editor);
 
@@ -16409,8 +16170,8 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
             videoCfg.getProvider = getProvider;
 
             dataFilter && dataFilter.addRules({
-                tags:{
-                    'object':function (element) {
+                tags: {
+                    'object': function (element) {
                         var classId = element.getAttribute("classid"), i;
                         var childNodes = element.childNodes;
                         if (!classId) {
@@ -16433,7 +16194,8 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
                             var c = childNodes[ i ];
                             if (c.nodeName == 'param' &&
                                 c.getAttribute("name").toLowerCase() == "movie") {
-                                if (getProvider(c.getAttribute("value"))) {
+                                if (getProvider(c.getAttribute("value") ||
+                                    c.getAttribute("VALUE"))) {
                                     return dataProcessor.createFakeParserElement(element,
                                         CLS_VIDEO, TYPE_VIDEO, true);
                                 }
@@ -16442,7 +16204,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
 
                     },
 
-                    'embed':function (element) {
+                    'embed': function (element) {
                         if (!flashUtils.isFlashEmbed(element))
                             return null;
                         if (getProvider(element.getAttribute("src"))) {
@@ -16456,14 +16218,14 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
 
 
             var flashControl = new FlashBaseClass({
-                editor:editor,
-                cls:CLS_VIDEO,
-                type:TYPE_VIDEO,
-                pluginConfig:this.config,
-                bubbleId:"video",
-                contextMenuId:"video",
-                contextMenuHandlers:{
-                    "视频属性":function () {
+                editor: editor,
+                cls: CLS_VIDEO,
+                type: TYPE_VIDEO,
+                pluginConfig: this.config,
+                bubbleId: "video",
+                contextMenuId: "video",
+                contextMenuHandlers: {
+                    "视频属性": function () {
                         var selectedEl = this.get("editorSelectedEl");
                         if (selectedEl) {
                             flashControl.show(selectedEl);
@@ -16473,14 +16235,14 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
             });
 
             editor.addButton("video", {
-                tooltip:"插入视频",
-                listeners:{
-                    click:function () {
+                tooltip: "插入视频",
+                listeners: {
+                    click: function () {
                         flashControl.show();
 
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode: Editor.WYSIWYG_MODE
             });
         }
     });
@@ -16489,7 +16251,7 @@ KISSY.add("editor/plugin/video/index", function (S, Editor, flashUtils, FlashBas
     return video;
 
 }, {
-    requires:['editor', '../flash-common/utils', '../flash-common/baseClass', '../fake-objects/']
+    requires: ['editor', '../flash-common/utils', '../flash-common/baseClass', '../fake-objects/']
 });/**
  * xiami-music button
  * @author yiminghe@gmail.com
@@ -16503,7 +16265,7 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
     }
 
     S.extend(XiamiMusic, FlashBaseClass, {
-        _updateTip:function (tipUrlEl, selectedFlash) {
+        _updateTip: function (tipUrlEl, selectedFlash) {
             var self = this,
                 editor = self.get("editor"),
                 r = editor.restoreRealElement(selectedFlash);
@@ -16520,7 +16282,7 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
     }
 
     S.augment(XiamiMusicPlugin, {
-        pluginRenderUI:function (editor) {
+        pluginRenderUI: function (editor) {
 
             fakeObjects.init(editor);
 
@@ -16532,8 +16294,8 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
             }
 
             dataFilter && dataFilter.addRules({
-                tags:{
-                    'object':function (element) {
+                tags: {
+                    'object': function (element) {
                         var //增加音乐名字提示
                             title = element.getAttribute("title"),
                             i,
@@ -16550,7 +16312,7 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
                                     }
                                     if (checkXiami(c.attributes.src)) {
                                         return dataProcessor.createFakeParserElement(element, CLS_XIAMI, TYPE_XIAMI, true, {
-                                            title:title
+                                            title: title
                                         });
                                     }
                                 }
@@ -16561,24 +16323,27 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
                             c = childNodes[ i ];
                             //innerHTML 会莫名首字母大写，还会加入一些属性
                             //Movie
-                            if (c.nodeName == 'param'
-                                && c.getAttribute("name") == "movie") {
-                                if (checkXiami(c.getAttribute("value"))) {
+                            if (c.nodeName == 'param' &&
+                                // ie 自动属性名大写
+                                c.getAttribute("name").toLowerCase() == "movie") {
+
+                                if (checkXiami(c.getAttribute("value") ||
+                                    c.getAttribute("VALUE"))) {
                                     return dataProcessor.createFakeParserElement(element,
                                         CLS_XIAMI, TYPE_XIAMI, true, {
-                                            title:title
+                                            title: title
                                         });
                                 }
                             }
                         }
                     },
 
-                    'embed':function (element) {
+                    'embed': function (element) {
                         if (flashUtils.isFlashEmbed(element) &&
                             checkXiami(element.getAttribute("src"))) {
                             return dataProcessor.createFakeParserElement(element,
                                 CLS_XIAMI, TYPE_XIAMI, true, {
-                                    title:element.getAttribute("title")
+                                    title: element.getAttribute("title")
                                 });
                         }
                     }
@@ -16586,14 +16351,14 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
                 }}, 4);
 
             var xiamiMusic = new XiamiMusic({
-                editor:editor,
-                cls:CLS_XIAMI,
-                type:TYPE_XIAMI,
-                bubbleId:"xiami",
-                pluginConfig:this.config,
-                contextMenuId:"xiami",
-                contextMenuHandlers:{
-                    "虾米属性":function () {
+                editor: editor,
+                cls: CLS_XIAMI,
+                type: TYPE_XIAMI,
+                bubbleId: "xiami",
+                pluginConfig: this.config,
+                contextMenuId: "xiami",
+                contextMenuHandlers: {
+                    "虾米属性": function () {
                         var selectedEl = this.get("editorSelectedEl");
                         if (selectedEl) {
                             xiamiMusic.show(selectedEl);
@@ -16603,13 +16368,13 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
             });
 
             editor.addButton("xiamiMusic", {
-                tooltip:"插入虾米音乐",
-                listeners:{
-                    click:function () {
+                tooltip: "插入虾米音乐",
+                listeners: {
+                    click: function () {
                         xiamiMusic.show();
                     }
                 },
-                mode:Editor.WYSIWYG_MODE
+                mode: Editor.WYSIWYG_MODE
             });
 
         }
@@ -16618,7 +16383,7 @@ KISSY.add("editor/plugin/xiami-music/index", function (S, Editor, FlashBaseClass
 
     return XiamiMusicPlugin;
 }, {
-    requires:['editor', '../flash-common/baseClass', '../flash-common/utils', '../fake-objects/']
+    requires: ['editor', '../flash-common/baseClass', '../flash-common/utils', '../fake-objects/']
 });/**
  * For package Editor full.
  * @author yiminghe@gmail.com

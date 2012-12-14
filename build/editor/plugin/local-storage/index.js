@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:55
+build time: Dec 14 17:35
 */
 /**
  * localStorage support for ie<8
@@ -17,17 +17,7 @@ KISSY.add("editor/plugin/local-storage/index", function (S, Editor, Overlay, Fla
     }
 
     // 国产浏览器用随机数/时间戳试试 ! 是可以的
-    var movie = Editor.Utils.debugUrl("plugin/local-storage/swfstore.swf?t=" + (+new Date()));
-
-    var store = new FlashBridge({
-        movie: movie,
-        flashVars: {
-            useCompression: true
-        },
-        methods: ["setItem", "removeItem", "getItem", "setMinDiskSpace", "getValueOf"]
-    });
-
-    store.swf.height = 138;
+    var swfSrc = Editor.Utils.debugUrl("plugin/local-storage/swfstore.swf?t=" + (+new Date()));
 
     var css = {
         width: 215,
@@ -44,14 +34,34 @@ KISSY.add("editor/plugin/local-storage/index", function (S, Editor, Overlay, Fla
             background: 'white'
         },
         width: "0px",
-        content: "<h1 style='" + "text-align:center;'>请点击允许</h1>",
+        content: "<h1 style='" + "text-align:center;'>请点击允许</h1>" +
+            "<div class='storage-container'></div>",
         zIndex: Editor.baseZIndex(Editor.zIndexManager.STORE_FLASH_SHOW)
     });
     o.render();
-    o.get("contentEl").append(store.swf);
-    // 必须在视窗范围内才可以初始化，触发 contentReady 事件
-    o.center();
     o.show();
+
+    var store = new FlashBridge({
+        src: swfSrc,
+        render: o.get("contentEl").one('.storage-container'),
+        params: {
+            flashVars: {
+                useCompression: true
+            }
+        },
+        attrs: {
+            height: 138,
+            width:'100%'
+        },
+        methods: ["setItem", "removeItem", "getItem", "setMinDiskSpace", "getValueOf"]
+    });
+
+    // 必须在视窗范围内才可以初始化，触发 contentReady 事件
+    S.ready(function () {
+        setTimeout(function () {
+            o.center();
+        }, 0);
+    });
 
     store.on("pending", function () {
         o.get('el').css(css);

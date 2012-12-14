@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:55
+build time: Dec 14 17:35
 */
 /**
  * Set up editor constructor
@@ -3811,7 +3811,7 @@ KISSY.config('modules', {
 'editor/plugin/checkbox-source-area/index': {requires: ['editor']},
 'editor/plugin/strike-through/index': {requires: ['editor','editor/plugin/font/ui','editor/plugin/strike-through/cmd']},
 'editor/plugin/fore-color/index': {requires: ['editor','editor/plugin/color/btn','editor/plugin/fore-color/cmd']},
-'editor/plugin/flash-bridge/index': {requires: ['editor','editor/plugin/flash-common/utils']},
+'editor/plugin/flash-bridge/index': {requires: ['swf','editor']},
 'editor/plugin/fore-color/cmd': {requires: ['editor/plugin/color/cmd']},
 'editor/plugin/table/dialog': {requires: ['editor','editor/plugin/overlay/','editor/plugin/menubutton/']},
 'editor/plugin/justify-utils/cmd': {requires: ['editor']},
@@ -3822,6 +3822,7 @@ KISSY.config('modules', {
 'editor/plugin/ordered-list/cmd': {requires: ['editor','editor/plugin/list-utils/cmd']},
 'editor/plugin/list-utils/index': {requires: ['editor']},
 'editor/plugin/dialog-loader/index': {requires: ['overlay','editor']},
+'editor/plugin/flash-common/utils': {requires: ['swf']},
 'editor/plugin/font-family/index': {requires: ['editor','editor/plugin/font/ui','editor/plugin/font-family/cmd']},
 'editor/plugin/undo/cmd': {requires: ['editor']},
 'editor/plugin/indent/index': {requires: ['editor','editor/plugin/indent/cmd']},
@@ -3848,7 +3849,7 @@ KISSY.config('modules', {
 'editor/plugin/link/dialog': {requires: ['editor','editor/plugin/overlay/','editor/plugin/link/utils']},
 'editor/plugin/font-family/cmd': {requires: ['editor','editor/plugin/font/cmd']},
 'editor/plugin/back-color/cmd': {requires: ['editor/plugin/color/cmd']},
-'editor/plugin/multiple-upload/dialog': {requires: ['editor','component/plugin/drag','editor/plugin/progressbar/','editor/plugin/overlay/','editor/plugin/flash-bridge/','editor/plugin/local-storage/']},
+'editor/plugin/multiple-upload/dialog': {requires: ['editor','component/plugin/drag','editor/plugin/progressbar/','editor/plugin/overlay/','editor/plugin/flash-bridge/','editor/plugin/local-storage/','swf']},
 'editor/plugin/code/dialog': {requires: ['editor','editor/plugin/overlay/','menubutton']},
 'editor/plugin/justify-center/cmd': {requires: ['editor/plugin/justify-utils/cmd']},
 'editor/plugin/flash-common/baseClass': {requires: ['editor','editor/plugin/contextmenu/','editor/plugin/bubble/','editor/plugin/dialog-loader/','editor/plugin/flash-common/utils']},

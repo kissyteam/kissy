@@ -39,6 +39,7 @@ KISSY.add("editor/plugin/flash-common/utils", function (S, SWF) {
                 var render = DOM.create('<div style="' +
                     "position:absolute;left:-9999px;top:-9999px;" +
                     '"></div>', undefined, cfg.document);
+                cfg.htmlMode = 'full';
                 DOM.append(render, cfg.document.body);
                 cfg.render = render;
                 var swf = new SWF(cfg);
