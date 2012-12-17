@@ -1,176 +1,211 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:56
+build time: Dec 18 02:34
 */
 /**
- * @fileOverview 图片放大效果 ImageZoom.
+ * @ignore
+ * @fileOverview ImageZoom.
+ * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
-KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
-    var IMAGEZOOM_ICON_TMPL = "<span class='{iconClass}'></span>",
-        IMAGEZOOM_WRAP_TMPL = "<span class='{wrapClass}'></span>";
+KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
+    var $ = Node.all,
+        doc = $(S.Env.host.document),
+        IMAGEZOOM_ICON_TMPL = "<span class='{iconClass}'></span>",
+        undefinedNode = /**
+         @ignore
+         @type Node
+         */undefined,
+        IMAGEZOOM_WRAP_TMPL = "<span class='{wrapClass}'></span>",
+        STANDARD = 'standard',
+        groupEventForInnerAnim = '.ks-imagezoom-img-mouse',
+        INNER = 'inner',
+        ABSOLUTE_STYLE = ' style="position:absolute;top:-9999px;left:-9999px;" ',
+        BIG_IMG_TPL = '<img src=' + '{src} {style}" />';
 
-    function show(obj) {
-        obj && obj.show();
+    function constrain(v, l, r) {
+        return Math.min(Math.max(v, l), r);
     }
 
-    function hide(obj) {
-        obj && obj.hide();
-    }
+    /**
+     * image zoomer for kissy
+     * @class KISSY.ImageZoom
+     * @extends KISSY.Overlay
+     */
+    var ImageZoom = Overlay.extend({
 
-    return Overlay.extend([
-        Zoomer
-    ], {
             initializer: function () {
+                var self = this;
+
+                if (!self.get("bigImageWidth") || !self.get("bigImageHeight")) {
+                    S.error("bigImageWidth/bigImageHeight in ImageZoom must be set!");
+                }
+
+                imageZoomRenderUI(self);
+                imageZoomBindUI(self);
+            },
+
+            renderUI: function () {
                 var self = this,
-                    tmp;
+                    image = self.get('imageNode'),
+                    contentEl = self.get("contentEl");
 
-                tmp = self.image = self.get('imageNode');
+                self.bigImage = $(S.substitute(BIG_IMG_TPL, {
+                    src: self.get("bigImageSrc"),
+                    style: ABSOLUTE_STYLE
+                })).appendTo(contentEl, undefined);
 
-                // 在小图加载完毕时初始化
-                tmp && Zoomer.__imgOnLoad(tmp, function () {
-                    if (!self.imageWrap) {
-                        self._render();
-                        self._bind();
-                    }
-                });
+                self.bigImageCopy = $(S.substitute(BIG_IMG_TPL, {
+                    src: image.attr('src'),
+                    style: ABSOLUTE_STYLE
+                })).prependTo(contentEl, undefined);
+
+                if (self.get('type') != INNER) {
+                    self.lens = $('<span ' +
+                        ABSOLUTE_STYLE +
+                        ' class="' + self.get('prefixCls') + 'imagezoom-lens' + '"></span>')
+                        .appendTo(self.imageWrap, undefined);
+                }
+            },
+
+            bindUI: function () {
+                var self = this;
+                self.on('hide', onZoomerHide, self);
             },
 
             destructor: function () {
+                var self = this,
+                    img = self.get('imageNode'),
+                    imageWrap;
+
+                onZoomerHide.call(self);
+
+                if (imageWrap = self.imageWrap) {
+                    img.insertBefore(imageWrap, undefinedNode);
+                    imageWrap.remove();
+                }
+
+                img.detach('mouseenter', self.__onImgEnter);
+            },
+
+            '_onSetBigImageWidth': function (v) {
                 var self = this;
-                if (self.imageWrap) {
-                    self.image.insertBefore(self.imageWrap, undefined);
-                    self.imageWrap.remove();
-                }
+                self.bigImage.width(v);
+                self.bigImageCopy.width(v);
             },
 
-            _render: function () {
-                var self = this,
-                    image = self.image;
-
-                self.imageWrap = new Node(S.substitute(IMAGEZOOM_WRAP_TMPL, {
-                    wrapClass: self.get('wrapClass')
-                })).insertBefore(image, undefined);
-
-                self.imageWrap.prepend(image);
-
-                if (self.get('showIcon')) {
-                    self.icon = new Node(S.substitute(IMAGEZOOM_ICON_TMPL, {
-                        iconClass: self.get("iconClass")
-                    }));
-                    self.imageWrap.append(self.icon);
-                }
+            '_onSetBigImageHeight': function (v) {
+                var self = this;
+                self.bigImage.height(v);
+                self.bigImageCopy.height(v);
             },
 
-            /**
-             * 绑定鼠标进入/离开/移动事件, 只有进入, 才响应鼠标移动事件
-             * @private
-             */
-            _bind: function () {
+            '_onSetBigImageSrc': function (v) {
+                this.bigImage.attr('src', v);
+            },
+
+            '_onSetCurrentMouse': function (currentMouse) {
                 var self = this,
-                    timer;
-                self.image.on('mouseenter',
-                    function (ev) {
+                    lensLeft,
+                    lensTop,
+                    pageX = currentMouse.pageX,
+                    pageY = currentMouse.pageY,
+                    lens = self.lens,
+                    bigImageOffset;
 
-                        if (!self.get('hasZoom')) {
-                            return;
-                        }
+                // inner 动画中
+                if (self.bigImage.isRunning()) {
+                    return;
+                }
 
-                        var imageOffset = self.image.offset();
-
-                        self.set("imageLeft", imageOffset.left);
-                        self.set("imageTop", imageOffset.top);
-
-                        timer = S.later(function () {
-                            self.set('currentMouse', ev);
-                            self.show();
-                            var align = self.get("align");
-                            if (!align.node) {
-                                align.node = self.image;
-                            }
-                            self.setInternal("align", undefined);
-                            self.set("align", align);
-                            timer = undefined;
-                        }, 50);
-                    }).on('mouseleave', function () {
-                        if (timer) {
-                            timer.cancel();
-                            timer = undefined;
-                        }
+                // 更新 lens 位置
+                if (lens) {
+                    lensLeft = pageX - self.lensWidth / 2;
+                    lensTop = pageY - self.lensHeight / 2;
+                    lens.offset({
+                        left: self.lensLeft = constrain(lensLeft, self.minLensLeft, self.maxLensLeft),
+                        top: self.lensTop = constrain(lensTop, self.minLensTop, self.maxLensTop)
                     });
-
-                self.on('afterVisibleChange', function (ev) {
-                    var isVisible = ev.newVal;
-                    if (isVisible) {
-                        hide(self.icon);
-                    } else {
-                        show(self.icon);
-                    }
-                });
-            },
-
-            _onSetHasZoom: function (v) {
-                if (v) {
-                    show(this.icon);
-                } else {
-                    hide(this.icon);
                 }
+
+                // note: 鼠标点对应放大点在中心位置
+                bigImageOffset = getBigImageOffsetFromMouse(self, currentMouse);
+
+                self.bigImageCopy.css(bigImageOffset);
+                self.bigImage.css(bigImageOffset);
             },
 
-            '_onSetImageWidth': function (v) {
-                this.image.width(v);
-            },
-
-            '_onSetImageHeight': function (v) {
-                this.image.height(v);
+            'changeImageSrc': function (src) {
+                S.log('changeImageSrc deprecated,use set("imageSrc",src) instead', 'warn');
+                this.set('imageSrc', src);
             }
         },
         {
             ATTRS: {
+                /**
+                 * existing image node needed to be zoomed.
+                 * @cfg {HTMLElement|String} imageNode
+                 */
+                /**
+                 * @ignore
+                 */
                 imageNode: {
                     setter: function (el) {
                         return Node.one(el);
                     }
                 },
 
-                wrapClass: {
+                /**
+                 * existing image node's src.
+                 * @type {String}
+                 * @property imageSrc
+                 */
+                /**
+                 * @ignore
+                 */
+                imageSrc: {
                     valueFn: function () {
-                        return this.get('prefixCls') + 'imagezoom-wrap';
+                        return this.get('imageNode').attr('src');
                     }
                 },
 
-                // width/height 默认和原小图大小保持一致
-                // 小图和大图同比例情况下，len 为正方形
+                /**
+                 * zoomed overlay width
+                 * Defaults to imageNode's width.
+                 * @cfg {Number} width
+                 */
+                /**
+                 * @ignore
+                 */
                 width: {
                     valueFn: function () {
-                        return this.get("imageWidth");
+                        return this.get("imageNode").width();
                     }
                 },
+                /**
+                 * zoomed overlay height
+                 * Defaults to imageNode's height.
+                 * @cfg {Number} height
+                 */
+                /**
+                 * @ignore
+                 */
                 height: {
                     valueFn: function () {
-                        return this.get("imageHeight");
+                        return this.get("imageNode").height();
                     }
                 },
-
-                imageWidth: {
-                    valueFn: function () {
-                        var img = this.get('imageNode');
-                        img = img && img.width();
-                        return img || 400;
-                    }
-                },
-                imageHeight: {
-                    valueFn: function () {
-                        var img = this.get('imageNode');
-                        img = img && img.height();
-                        return img || 400;
-                    }
-                },
-                imageLeft: {},
-                imageTop: {},
                 /**
-                 * 显示放大区域标志
+                 * whether to allow imageNode zoom
+                 * @cfg {Boolean} hasZoom
+                 */
+                /**
+                 * whether to allow imageNode zoom
                  * @type {Boolean}
+                 * @property hasZoom
+                 */
+                /**
+                 * @ignore
                  */
                 hasZoom: {
                     value: true,
@@ -179,434 +214,342 @@ KISSY.add('imagezoom/base', function (S, Node, Overlay, Zoomer, undefined) {
                     }
                 },
 
+
                 /**
-                 * 是否显示放大镜提示图标
-                 * @type {Boolean}
+                 * type of zooming effect
+                 * @cfg {KISSY.ImageZoom.ZoomType} type
                  */
-                showIcon: {
-                    value: true
+                /**
+                 * @ignore
+                 */
+                type: {
+                    value: STANDARD   // STANDARD  or INNER
                 },
-                iconClass: {
+
+
+                /**
+                 * big image src.
+                 * Default to: value of imageNode's **data-ks-imagezoom** attribute value
+                 * @cfg {string} bigImageSrc
+                 */
+                /**
+                 * big image src.
+                 * @type {string}
+                 * @property bigImageSrc
+                 */
+                /**
+                 * @ignore
+                 */
+                bigImageSrc: {
                     valueFn: function () {
-                        return this.get('prefixCls') + 'imagezoom-icon';
+                        return  this.get('imageNode').attr('data-ks-imagezoom');
                     }
-                }
+                },
+
+
+                /**
+                 * width of big image
+                 * @cfg {Number} bigImageWidth
+                 */
+                /**
+                 * width of big image
+                 * @type {Number}
+                 * @property bigImageWidth
+                 */
+                /**
+                 * @ignore
+                 */
+                bigImageWidth: {},
+
+
+                /**
+                 * height of big image
+                 * @cfg {Number} bigImageHeight
+                 */
+                /**
+                 * height of big image
+                 * @type {Number}
+                 * @property bigImageHeight
+                 */
+                /**
+                 * @ignore
+                 */
+                bigImageHeight: {},
+
+                /**
+                 * current mouse position
+                 * @private
+                 * @property currentMouse
+                 */
+                /**
+                 * @ignore
+                 */
+                currentMouse: {}
             }
         }, {
             xclass: 'imagezoom-viewer'
         });
-}, {
-    requires: ['node', 'overlay', './zoomer']
-});
 
 
-/**
- * NOTES:
- *  20120504 by yiminghe@gmail.com
- *      - refactor
- *      - fix bug: show 前 hasZoom 设了无效
- *
- *  201101 by qiaohua@taobao.com
- *      - 重构代码, 基于 UIBase
- */
+    // # -------------------------- private start
 
-/**
- * @fileOverview imagezoom
- * @author qiaohua@taobao.com
- */
-KISSY.add("imagezoom", function (S, ImageZoom) {
-    return ImageZoom;
-}, {requires:[
-    "imagezoom/base"
-]});
+    function setZoomerPreShowSession(self) {
+        var img = self.get('imageNode'),
+            imageOffset = img.offset(),
+            imageLeft,
+            imageWidth,
+            imageHeight,
+            zoomMultipleH,
+            zoomMultipleW,
+            lensWidth,
+            lensHeight,
+            bigImageWidth = self.get('bigImageWidth'),
+            bigImageHeight = self.get('bigImageHeight'),
+            width = self.get('width'),
+            height = self.get('height'),
+            align,
+            originNode,
+            imageTop;
 
-/**
- * yiminghe@gmail.com - 2012.05.04
- *  - simple refactor
- *
- * TODO:
- *  - component refactor
- *//**
- * @fileOverview 图像放大区域
- */
-KISSY.add("imagezoom/zoomer", function (S, Node, undefined) {
-    var STANDARD = 'standard',
-        INNER = 'inner',
-        round = Math.round,
-        ABSOLUTE_STYLE = ' style="position:absolute;" ',
-        min = Math.min;
+        imageLeft = self.imageLeft = imageOffset.left;
+        imageTop = self.imageTop = imageOffset.top;
+        imageWidth = self.imageWidth = img.width();
+        imageHeight = self.imageHeight = img.height();
+        zoomMultipleH = self.zoomMultipleH = bigImageHeight / imageHeight;
+        zoomMultipleW = self.zoomMultipleW = bigImageWidth / imageWidth;
+        // 考虑放大可视区域，大图，与实际小图
+        // 镜片大小和小图的关系相当于放大可视区域与大图的关系
+        // 计算镜片宽高, vH / bigImageH = lensH / imageH
+        lensWidth = self.lensWidth = width / zoomMultipleW;
+        lensHeight = self.lensHeight = height / zoomMultipleH;
+        self.minLensLeft = imageLeft;
+        self.minLensTop = imageTop;
+        self.maxLensTop = imageTop + imageHeight - lensHeight;
+        self.maxLensLeft = imageLeft + imageWidth - lensWidth;
+        self.maxBigImageLeft = 0;
+        self.maxBigImageTop = 0;
+        self.minBigImageLeft = -(bigImageWidth - width);
+        self.minBigImageTop = -(bigImageHeight - height);
 
-    function Zoomer() {
-        var self = this;
-
-        if (!self.get("bigImageWidth") || !self.get("bigImageHeight")) {
-            S.error("bigImageWidth/bigImageHeight in ImageZoom must be set!");
+        if (self.get('type') === INNER) {
+            // inner 位置强制修改
+            self.set('align', {
+                node: img,
+                points: ['cc', 'cc']
+            });
+        } else {
+            align = self.get("align") || {};
+            originNode = align.node;
+            delete align.node;
+            align = S.clone(align);
+            align.node = originNode || img;
+            self.set("align", align);
         }
-
-        // 两种显示效果切换标志
-        self._isInner = self.get('type') === INNER;
+        self.icon.hide();
+        doc.on('mousemove mouseleave', onMouseMove, self);
     }
 
-    Zoomer.ATTRS = {
-        /**
-         * 显示类型
-         * @type {string}
-         */
-        type: {
-            value: STANDARD   // STANDARD  or INNER
-        },
+    function onZoomerHide() {
+        var self = this,
+            lens = self.lens;
+        doc.detach('mousemove mouseleave', onMouseMove, self);
+        self.icon.show();
+        if (lens) {
+            lens.hide();
+        }
+    }
 
-        /**
-         * 大图路径, 默认取触点上的 data-ks-imagezoom 属性值
-         * @type {string}
-         */
-        bigImageSrc: {
-            valueFn: function () {
-                var img = this.get('imageNode');
+    function imageZoomRenderUI(self) {
+        var imageWrap,
+            icon,
+            image = self.get('imageNode');
 
-                if (img) {
-                    return img.attr('data-ks-imagezoom');
-                }
-            }
-        },
+        imageWrap = self.imageWrap = $(S.substitute(IMAGEZOOM_WRAP_TMPL, {
+            wrapClass: self.get('prefixCls') + 'imagezoom-wrap'
+        })).insertBefore(image, undefinedNode);
 
-        /**
-         * 大图高宽
-         * @type {Number}
-         */
-        bigImageWidth: {},
+        imageWrap.prepend(image);
+        icon = self.icon = $(S.substitute(IMAGEZOOM_ICON_TMPL, {
+            iconClass: self.get('prefixCls') + 'imagezoom-icon'
+        }));
+        imageWrap.append(icon);
+    }
 
-        bigImageHeight: {},
 
-        /**
-         * 保存当前鼠标位置
-         */
-        currentMouse: {},
+    function imageZoomBindUI(self) {
+        var img = self.get('imageNode'),
+            currentMouse,
+            type = self.get('type'),
+            commonFn = (function () {
+                var buffer;
 
-        lensClass: {
-            valueFn: function () {
-                return this.get('prefixCls') + 'imagezoom-lens';
-            }
-        },
-
-        // 设为属性，缓存结果
-        lensHeight: {},
-        lensWidth: {},
-        lensTop: {},
-        lensLeft: {}
-    };
-
-    S.augment(Zoomer, {
-        __renderUI: function () {
-            var self = this,
-                contentEl = self.get("contentEl"),
-                bigImage;
-
-            bigImage = self.bigImage = new Node('<img ' +
-                ABSOLUTE_STYLE +
-                ' src="' +
-                self.get("bigImageSrc") +
-                '" />')
-                .appendTo(contentEl, undefined);
-
-            self._bigImageCopy = new Node(
-                '<img ' +
-                    ABSOLUTE_STYLE +
-                    ' src="' +
-                    self.get('imageNode').attr('src') +
-                    '" width="' +
-                    self.get('bigImageWidth')
-                    + '" ' +
-                    'height="' +
-                    self.get('bigImageHeight') +
-                    '"' +
-                    '/>');
-
-            self._bigImageCopy.prependTo(contentEl, undefined);
-
-            if (self._isInner) {
-                // inner 位置强制修改
-                self.set('align', {
-                    node: self.image,
-                    points: ['cc', 'cc']
-                });
-
-            }
-            // 标准模式, 添加镜片
-            else {
-                self.lens = new Node('<span ' +
-                    ABSOLUTE_STYLE +
-                    ' class="' + self.get("lensClass") + '"></span>')
-                    .appendTo(self.imageWrap, undefined).hide();
-            }
-
-            self.loading();
-
-            // 大图加载完毕后更新显示区域
-            imgOnLoad(bigImage, function () {
-                self.unloading();
-            });
-        },
-
-        __bindUI: function () {
-            var self = this,
-                body = S.one("body");
-            self.on('afterVisibleChange', function (ev) {
-                var isVisible = ev.newVal;
-                if (isVisible) {
-                    if (self._isInner) {
-                        self._anim(0.4);
+                function t() {
+                    if (buffer) {
+                        return;
                     }
-                    body.on('mousemove', self._mouseMove, self);
-                    body.on('mouseleave', self._mouseMove, self);
-                } else {
-                    hide(self.lens);
-                    body.detach('mousemove', self._mouseMove, self);
-                    body.detach('mouseleave', self._mouseMove, self);
+                    buffer = S.later(function () {
+                        buffer = 0;
+                        detachImg(img);
+                        setZoomerPreShowSession(self);
+                        self.show();
+                        // after create lens
+                        self.lens.show()
+                            .css({
+                                width: self.lensWidth,
+                                height: self.lensHeight
+                            });
+                        self.set('currentMouse', currentMouse);
+                    }, 50);
                 }
-            });
-        },
 
-        __destructor: function () {
-            var self = this, body = S.one("body");
-            body.detach('mousemove', self._mouseMove, self);
-            body.detach('mouseleave', self._mouseMove, self);
-        },
+                t.stop = function () {
+                    buffer.cancel();
+                    buffer = 0;
+                };
 
-        /**
-         * 设置镜片大小
-         */
-        _setLensSize: function () {
-            var self = this,
-                rw = self.get('width'),
-                rh = self.get('height'),
-                bw = self.get('bigImageWidth'),
-                bh = self.get('bigImageHeight'),
-                w = self.get('imageWidth'),
-                h = self.get('imageHeight');
+                return t;
+            })(),
+        // prevent flash of content for inner anim
+            innerFn = S.buffer(function () {
+                detachImg(img);
+                setZoomerPreShowSession(self);
+                self.show();
+                animForInner(self, 0.4, currentMouse);
+            }, 50),
+            fn = type == 'inner' ? innerFn : commonFn;
 
-            // 考虑放大可视区域，大图，与实际小图
-            // 镜片大小和小图的关系相当于放大可视区域与大图的关系
-            // 计算镜片宽高, vH / bigImageH = lensH / imageH
-            self.set('lensWidth', min(round(w * rw / bw), w));
-            self.set('lensHeight', min(round(h * rh / bh), h));
-        },
-        /**
-         * 随着鼠标移动, 设置镜片位置
-         * @private
-         */
-        _setLensOffset: function (ev) {
-            var self = this;
-
-            self._setLensSize();
-
-            ev = ev || self.get('currentMouse');
-
-            if (!ev) {
-                return;
+        img.on('mouseenter', self.__onImgEnter = function (ev) {
+            if (self.get('hasZoom')) {
+                currentMouse = ev;
+                img.on('mousemove' + groupEventForInnerAnim,function (ev) {
+                    currentMouse = ev;
+                    fn();
+                }).on('mouseleave' + groupEventForInnerAnim, function () {
+                        fn.stop();
+                        detachImg(img);
+                    });
+                fn();
             }
+        });
 
-            var rl = self.get('imageLeft'), rt = self.get('imageTop'),
-                rw = self.get('imageWidth'), rh = self.get('imageHeight'),
-                lensWidth = self.get('lensWidth'),
-                lensHeight = self.get('lensHeight'),
-            // 保证鼠标在镜片中央
-                lensLeft = ev.pageX - lensWidth / 2,
-                lensTop = ev.pageY - lensHeight / 2;
+        self.on('afterImageSrcChange', onImageZoomSetImageSrc, self);
+        self.on('afterHasZoomChange', onImageZoomSetHasZoom, self);
 
-            if (lensLeft <= rl) {
-                lensLeft = rl;
-            } else if (lensLeft >= rw + rl - lensWidth) {
-                lensLeft = rw + rl - lensWidth;
-            }
-
-            if (lensTop <= rt) {
-                lensTop = rt;
-            } else if (lensTop >= rh + rt - lensHeight) {
-                lensTop = rh + rt - lensHeight;
-            }
-            self.set('lensLeft', lensLeft);
-            self.set('lensTop', lensTop);
-        },
-
-        _mouseMove: function (ev) {
-            if (ev.type == 'mouseleave') {
-                // 移出 body, mousemove 没有及时响应
-                this.hide();
-                return;
-            }
-            var self = this,
-                rl = self.get('imageLeft'), rt = self.get('imageTop'),
-                rw = self.get('imageWidth'), rh = self.get('imageHeight');
-            //S.log(ev.type+' : '+ev.pageY + " : " + rt);
-            if (ev.pageX > rl &&
-                ev.pageX < rl + rw &&
-                ev.pageY > rt &&
-                ev.pageY < rt + rh) {
-                self.set('currentMouse', ev);
-            } else {
-                // 移出
-                self.hide();
-            }
-        },
-
-        /**
-         * Inner 效果中的放大动画
-         * @param {number} seconds
-         * @private
-         */
-        _anim: function (seconds) {
-            var self = this,
-                rl = self.get('imageLeft'), rt = self.get('imageTop'),
-                rw = self.get('imageWidth'), rh = self.get('imageHeight'),
-                bw = self.get('bigImageWidth'), bh = self.get('bigImageHeight'),
-                max_left = -round((self.get('lensLeft') - rl) * bw / rw),
-                max_top = -round((self.get('lensTop') - rt) * bh / rh),
-                tmpWidth, tmpHeight;
-
-            self.bigImage.stop();
-
-            // set min width and height
-            self.bigImage.css({
-                width: rw,
-                height: rh,
-                left: 0,
-                top: 0
-            });
-
-
-            self._bigImageCopy.css({
-                width: rw,
-                height: rh,
-                left: 0,
-                top: 0
-            });
-
-
-            tmpWidth = rw + ( bw - rw);
-            tmpHeight = rh + (bh - rh);
-
-
-            self.bigImage.animate({
-                width: tmpWidth,
-                height: tmpHeight,
-                left: max_left,
-                top: max_top
-            }, seconds);
-
-
-            self._bigImageCopy.animate({
-                width: tmpWidth,
-                height: tmpHeight,
-                left: max_left,
-                top: max_top
-            }, seconds);
-        },
-
-        '_onSetCurrentMouse': function (ev) {
-            var self = this,
-                lt;
-
-            if (!ev ||
-                !("pageX" in ev) ||
-                !self.bigImage ||
-                self.bigImage.isRunning() ||
-                !self.get("hasZoom")) {
-                return;
-            }
-
-            // 更新 lens 位置
-            show(self.lens);
-            self._setLensOffset(ev);
-
-            // 镜片相对于小图的偏移相当于放大可视区域相对于大图的偏移（即 -(大图相对于放大可视区域的偏移)）
-            lt = {
-
-                left: -round((self.get('lensLeft') - self.get('imageLeft')) *
-                    self.get('bigImageWidth') / self.get('imageWidth')),
-
-
-                top: -round((self.get('lensTop') - self.get('imageTop'))
-                    * self.get('bigImageHeight') / self.get('imageHeight'))
-
-            };
-
-            self._bigImageCopy.css(lt);
-            self.bigImage.css(lt);
-        },
-
-        '_onSetLensWidth': function (v) {
-            this.lens && this.lens.width(v);
-        },
-        '_onSetLensHeight': function (v) {
-            this.lens && this.lens.height(v);
-        },
-        '_onSetLensTop': function (v) {
-            this.lens && this.lens.offset({ 'top': v });
-        },
-        '_onSetLensLeft': function (v) {
-            this.lens && this.lens.offset({ 'left': v });
-        },
-
-        '_onSetBigImageWidth': function (v) {
-            var self = this;
-            v && self.bigImage && self.bigImage.width(v);
-            v && self._bigImageCopy && self._bigImageCopy.width(v);
-        },
-        '_onSetBigImageHeight': function (v) {
-            var self = this;
-            v && self.bigImage && self.bigImage.height(v);
-            v && self._bigImageCopy && self._bigImageCopy.height(v);
-        },
-        '_onSetBigImageSrc': function (v) {
-            v && this.bigImage && this.bigImage.attr('src', v);
-
-        },
-
-        /**
-         * 改变小图元素的 src
-         * @param {String} src
-         */
-        changeImageSrc: function (src) {
-            var self = this;
-            self.image.attr('src', src);
-            if (self._bigImageCopy) {
-                self._bigImageCopy.attr('src', src);
-            }
-            self._onSetHasZoom(self.get("hasZoom"));
-            self.loading();
-        }
-    });
-
-    function show(obj) {
-        obj && obj.show();
+        onImageZoomSetHasZoom.call(self, {newVal: self.get('hasZoom')});
     }
 
-    function hide(obj) {
-        obj && obj.hide();
+    function detachImg(img) {
+        img.detach('mouseleave' + groupEventForInnerAnim);
+        img.detach('mousemove' + groupEventForInnerAnim);
     }
 
-    function imgOnLoad(img, callback) {
-        var imgElem = img[0];
-        // 浏览器缓存时, complete 为 true
-        if ((imgElem && imgElem.complete && imgElem.clientWidth)) {
-            callback();
+    function onMouseMove(ev) {
+        var self = this,
+            rl = self.imageLeft,
+            rt = self.imageTop,
+            rw = self.imageWidth,
+            pageX = ev.pageX,
+            pageY = ev.pageY,
+            rh = self.imageHeight;
+        if (String(ev.type) == 'mouseleave') {
+            self.hide();
             return;
         }
-        // 1) 图尚未加载完毕，等待 onload 时再初始化 2) 多图切换时需要绑定load事件来更新相关信息
-
-        imgElem.onload = function () {
-            setTimeout(callback, 100);
+        if (pageX > rl && pageX < rl + rw &&
+            pageY > rt && pageY < rt + rh) {
+            self.set('currentMouse', {
+                pageX: pageX,
+                pageY: pageY
+            });
+        } else {
+            self.hide();
         }
     }
 
-    Zoomer.__imgOnLoad = imgOnLoad;
-    return Zoomer;
+    // Inner 效果中的放大动画
+    function animForInner(self, seconds, currentMouse) {
+        var bigImages = self.bigImage;
+
+        bigImages.add(self.bigImageCopy);
+
+        bigImages.stop();
+
+        // set min width and height
+        bigImages.css({
+            width: self.imageWidth,
+            height: self.imageHeight,
+            left: 0,
+            top: 0
+        });
+
+        bigImages.animate(S.mix({
+            width: self.get('bigImageWidth'),
+            height: self.get('bigImageHeight')
+        }, getBigImageOffsetFromMouse(self, currentMouse)), seconds);
+    }
+
+    function onImageZoomSetHasZoom(e) {
+        this.icon[e.newVal ? 'show' : 'hide']();
+    }
+
+    function onImageZoomSetImageSrc(e) {
+        var src = e.newVal,
+            self = this,
+            bigImageCopy;
+        self.get('imageNode').attr('src', src);
+        if (bigImageCopy = self.bigImageCopy) {
+            bigImageCopy.attr('src', src);
+        }
+    }
+
+    function getBigImageOffsetFromMouse(self, currentMouse) {
+        var width = self.get('width'),
+            height = self.get('height');
+        return {
+            left: constrain(-(currentMouse.pageX - self.imageLeft)
+                * self.zoomMultipleW + width / 2, self.minBigImageLeft, self.maxBigImageLeft),
+            top: constrain(-(currentMouse.pageY - self.imageTop)
+                * self.zoomMultipleH + height / 2, self.minBigImageTop, self.maxBigImageTop)
+        };
+    }
+
+
+    // # -------------------------- private end
+
+    /**
+     * zoom mode for imagezoom
+     * @enum {String} KISSY.ImageZoom.ZoomType
+     */
+    ImageZoom.ZoomType = {
+        /**
+         * zoom overlay is beside imageNode
+         */
+        STANDARD: 'standard',
+        /**
+         * zoom overlay covers imageNode
+         */
+        INNER: 'inner'
+    };
+
+    return ImageZoom;
+
 }, {
-    requires: ["node"]
+    requires: ['node', 'overlay']
 });
 
+
 /**
- * yiminghe@gmail.com - 2012.05.04
- *  - bigImageWidth/Height must be set!
+ * @ignore
+ * NOTES:
+ * 2012-12-17 yiminghe@gmail.com
+ *  - refactor and document
+ *  - TODO extend overlay ?? confused
+ *
+ * 20120504 by yiminghe@gmail.com
+ *  - refactor
+ *  - fix bug: show 前 hasZoom 设了无效
+ *
+ * 201101 by qiaohua@taobao.com
+ *  - 重构代码, 基于 UIBase
  */
+

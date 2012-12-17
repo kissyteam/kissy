@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Normalize operation about stylesheet
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;stylesheet&quot;, function (S, DOM) {
+
+<span id='KISSY-StyleSheet'>    /**
+</span>     * Normalize operation about stylesheet
+     * @class KISSY.StyleSheet
+     * @param el {HTMLElement} style/link element
+     */
+    function StyleSheet(el) {
+
+<span id='KISSY-StyleSheet-cfg-el'>        /**
+</span>         * style/link element or selector
+         * @cfg {HTMLElement|String} el
+         */
+
+<span id='KISSY-StyleSheet-property-el'>        /**
+</span>         * style/link element
+         * @type {HTMLElement}
+         * @property el
+         */
+        
+
+        if (el.el) {
+            el = el.el;
+        }
+
+        this['el'] = DOM.get(el);
+        // http://msdn.microsoft.com/en-us/library/ie/ms535871(v=vs.85).aspx
+        // firefox 跨域时抛出异常
+        var sheet = el.sheet || el.styleSheet;
+
+        this.sheet = sheet;
+
+        var cssRules = {};
+
+        this.cssRules = cssRules;
+
+        var rulesName = sheet &amp;&amp; ('cssRules' in sheet) ? 'cssRules' : 'rules';
+
+        this.rulesName = rulesName;
+
+        var domCssRules = sheet[rulesName];
+
+        var i, rule, selectorText, styleDeclaration;
+
+        for (i = domCssRules.length - 1; i &gt;= 0; i--) {
+            rule = domCssRules[i];
+            selectorText = rule.selectorText;
+            // 去重
+            if (styleDeclaration = cssRules[selectorText]) {
+                styleDeclaration.style.cssText += &quot;;&quot; + styleDeclaration.style.cssText;
+                deleteRule(sheet, i);
+            } else {
+                cssRules[selectorText] = rule;
+            }
+        }
+    }
+
+    StyleSheet.prototype = {
+
+        constructor: StyleSheet,
+
+<span id='KISSY-StyleSheet-method-enable'>        /**
+</span>         * Make current stylesheet enabled.
+         * @chainable
+         */
+        enable: function () {
+            this.sheet.disabled = false;
+            return this;
+        },
+
+<span id='KISSY-StyleSheet-method-disable'>        /**
+</span>         * Make current stylesheet disabled.
+         * @chainable
+         */
+        disable: function () {
+            this.sheet.disabled = true;
+            return this;
+        },
+
+<span id='KISSY-StyleSheet-method-isEnabled'>        /**
+</span>         * Whether current stylesheet is enabled.
+         * @return {Boolean}
+         */
+        'isEnabled': function () {
+            return !this.sheet.disabled;
+        },
+
+<span id='KISSY-StyleSheet-method-set'>        /**
+</span>         * Set sheet's rule by selectorText and css.
+         * @param {String} selectorText selector text separated by ,
+         * @param {Object} css style declaration object. set value to &quot;&quot; to unset
+         *
+         * for example:
+         * &lt;code&gt;
+         *      // set
+         *      set(&quot;p&quot;,{color:'red'})
+         *      // unset
+         *      set(&quot;p&quot;,{color:''})
+         * &lt;/code&gt;
+         * @chainable
+         */
+        set: function (selectorText, css) {
+            var sheet = this.sheet;
+            var rulesName = this.rulesName;
+            var cssRules = this.cssRules;
+            var rule = cssRules[selectorText];
+            var multiSelector = selectorText.split(/\s*,\s*/);
+            var i;
+
+            if (multiSelector.length &gt; 1) {
+                for (i = 0; i &lt; multiSelector.length - 1; i++) {
+                    this.set(multiSelector[i], css);
+                }
+                return this;
+            }
+
+            if (rule) {
+                css = toCssText(css, rule.style.cssText);
+                if (css) {
+                    rule.style.cssText = css;
+                } else {
+                    // unset remove this rule
+                    delete cssRules[selectorText];
+                    for (i = sheet[rulesName].length - 1; i &gt;= 0; i--) {
+                        if (sheet[rulesName][i] == rule) {
+                            deleteRule(sheet, i);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                var len = sheet[rulesName].length;
+                css = toCssText(css);
+                if (css) {
+                    insertRule(sheet, selectorText, css, len);
+                    cssRules[selectorText] = sheet[rulesName][len];
+                }
+            }
+
+            return this;
+        },
+
+<span id='KISSY-StyleSheet-method-get'>        /**
+</span>         * Get cssText corresponding to specified selectorText
+         * @param {String} selectorText specified selector as string
+         * @return {String} CssText corresponding to specified selectorText
+         */
+        get: function (selectorText) {
+            var rule, css, selector, cssRules = this.cssRules;
+
+            if (selectorText) {
+                rule = cssRules[selectorText];
+
+                return rule ? rule.style.cssText : null;
+            } else {
+                css = [];
+                for (selector in cssRules) {
+
+                    rule = cssRules[selector];
+                    css.push(rule.selectorText + &quot; {&quot; + rule.style.cssText + &quot;}&quot;);
+
+                }
+                return css.join(&quot;\n&quot;);
+            }
+        }
+
+    };
+
+
+    // # ------------------ private start
+
+    var workerElement = document.createElement(&quot;p&quot;);
+
+    function toCssText(css, base) {
+        workerElement.style.cssText = base || &quot;&quot;;
+        DOM.css(workerElement, css);
+        return workerElement.style.cssText;
+    }
+
+    function deleteRule(sheet, i) {
+        if (sheet.deleteRule) {
+            sheet.deleteRule(i);
+        } else if (sheet.removeRule) {
+            sheet.removeRule(i);
+        }
+    }
+
+    function insertRule(sheet, sel, css, i) {
+        if (sheet.insertRule) {
+            sheet.insertRule(sel + ' {' + css + '}', i);
+        } else if (sheet.addRule) {
+            sheet.addRule(sel, css, i);
+        }
+    }
+
+    // # ------------------ private end
+
+    return StyleSheet;
+
+}, {
+    requires: ['dom']
+});
+<span id='global-property-'>/**
+</span> * @ignore
+ * Refer
+ *  - http://www.w3.org/TR/DOM-Level-2-Style/css.html
+ *  - rule.style 和 el.style 效果一样，同属于 CSSStyleDeclare
+ **/</pre>
+</body>
+</html>

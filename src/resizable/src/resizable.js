@@ -239,7 +239,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
              * @ignore
              */
             maxWidth: {
-                value: Number.MAX_VALUE
+                value: Number['MAX_VALUE']
             },
             /**
              * Maximum height can current node resize to.
@@ -254,7 +254,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
              * @ignore
              */
             maxHeight: {
-                value: Number.MAX_VALUE
+                value: Number['MAX_VALUE']
             },
             /**
              * directions can current node resize to.

@@ -20,7 +20,7 @@
  * @fileOverview Flash UA 探测
  * @author oicuicu@gmail.com
  */
-KISSY.add('flash/ua', function (S, undefined) {
+KISSY.add('swf/ua', function (S, undefined) {
 
     var fpvCached,
         firstRun = true,
@@ -92,11 +92,12 @@ KISSY.add('flash/ua', function (S, undefined) {
         return new Array(padding &gt; 0 ? padding : 0).join('0') + num;
     }
 
-<span id='KISSY-Flash-method-fpv'>    /**
+<span id='KISSY-SWF-static-method-fpv'>    /**
 </span>     * Get flash version
-     * @param {String} [force] whether to avoid getting from cache
+     * @param {Boolean} [force] whether to avoid getting from cache
      * @returns {String[]} eg: [&quot;11&quot;,&quot;0&quot;,&quot;53&quot;]
-     * @member KISSY.Flash
+     * @member KISSY.SWF
+     * @static
      */
     function fpv(force) {
         // 考虑 new ActiveX 和 try catch 的 性能损耗，延迟初始化到第一次调用时
@@ -107,12 +108,13 @@ KISSY.add('flash/ua', function (S, undefined) {
         return fpvCached;
     }
 
-<span id='KISSY-Flash-method-fpvGEQ'>    /**
+<span id='KISSY-SWF-static-method-fpvGEQ'>    /**
 </span>     * Checks whether current version is greater than or equal the specific version.
      * @param {String} ver eg. &quot;10.1.53&quot;
-     * @param {Boolean} force whether get current version from cache
+     * @param {Boolean} force whether to avoid get current version from cache
      * @returns {Boolean}
-     * @member KISSY.Flash
+     * @member KISSY.SWF
+     * @static
      */
     function fpvGEQ(ver, force) {
         return getNumberVersion(fpv(force)) &gt;= getNumberVersion(ver);

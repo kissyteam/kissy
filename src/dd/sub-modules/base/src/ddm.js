@@ -84,6 +84,10 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
          * currently active draggable object
          * @type {KISSY.DD.Draggable}
          * @readonly
+         * @property activeDrag
+         */
+        /**
+         * @ignore
          */
         activeDrag: {},
 
@@ -91,6 +95,10 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
          * currently active droppable object
          * @type {KISSY.DD.Droppable}
          * @readonly
+         * @property activeDrop
+         */
+        /**
+         * @ignore
          */
         activeDrop: {},
 

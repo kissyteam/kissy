@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * insert swf into document in an easy way
  * @author yiminghe@gmail.com, oicuicu@gmail.com
  */
@@ -257,7 +258,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
             /**
              * container where flash will be appended.
              * Defaults to: body
-             * @cfg {HTMLElement}
+             * @cfg {HTMLElement} render
              */
             /**
              * @ignore
@@ -275,7 +276,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
             },
             /**
              * element where flash will be inserted before.
-             * @cfg {HTMLElement}
+             * @cfg {HTMLElement} elBefore
              */
             /**
              * @ignore
@@ -292,7 +293,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
             /**
              * html document current swf belongs.
              * Defaults to: current document
-             * @cfg {HTMLElement}
+             * @cfg {HTMLElement} document
              */
             /**
              * @ignore
@@ -303,7 +304,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
 
             /**
              * status of current swf
-             * @property {String}
+             * @property status
              * @type {KISSY.SWF.STATUS}
              * @readonly
              */
@@ -316,8 +317,9 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
 
             /**
              * swf element
-             * @property swf
+             * @readonly
              * @type {HTMLElement}
+             * @property el
              */
             /**
              * @ignore
@@ -344,15 +346,17 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
              * @ignore
              */
             html: {
-
             },
 
             /**
              *  full or default(depends on browser object)
-             *  !TODO
+             *  @cfg {KISSY.SWF.HtmlMode} htmlMode
+             */
+            /**
+             * @ignore
              */
             htmlMode: {
-
+                value: 'default'
             }
         },
 
@@ -404,7 +408,6 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
      * @param {HTMLElement} swf
      * @returns {String}
      * @static
-     * @method KISSY.SWF.getSrc
      */
     SWF.getSrc = function (swf) {
         swf = DOM.get(swf);
@@ -534,6 +537,22 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
          * success
          */
         SUCCESS: 'success'
+    };
+
+
+    /**
+     * swf htmlMode
+     * @enum {String} KISSY.SWF.HtmlMode
+     */
+    SWF.HtmlMode = {
+        /**
+         * generate object structure depending on browser
+         */
+        DEFAULT: 'default',
+        /**
+         * generate object/object structure
+         */
+        FULL: 'full'
     };
 
     return SWF;

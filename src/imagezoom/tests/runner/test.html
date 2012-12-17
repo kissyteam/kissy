@@ -10,8 +10,6 @@
     <script src="/kissy/tools/jasmine/event-simulate.js"></script>
 
     <script src="/kissy/build/seed.js"></script>
-    <script src="../../src/zoomer.js"></script>
-    <script src="../../src/base.js"></script>
     <script src="../../src/imagezoom.js"></script>
     <style>
 
@@ -48,6 +46,7 @@
             left: -9999px;
             top: -9999px;
             overflow: hidden;
+            z-index: 9999;
         }
 
         .ks-imagezoom-viewer img {
@@ -91,20 +90,21 @@
 <script src="../specs/imagezoom-spec.js"></script>
 
 <script>
+    // wait img onload
+    window.onload = function () {
+        KISSY.use('imagezoom', function () {
 
-    KISSY.use('imagezoom', function () {
+            setTimeout(function () {
 
-        setTimeout(function () {
-            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-            jasmine.getEnv().execute(function () {
-                jasmine.kissyNext(this.results().failedCount);
-                KISSY.all('#wrap').hide();
-            });
-        }, 200);
-
-    });
-
+                jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+                jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+                jasmine.getEnv().execute(function () {
+                    jasmine.kissyNext(this.results().failedCount);
+                    KISSY.all('#wrap').appendTo('body');
+                });
+            }, 200);
+        });
+    };
 </script>
 </body>
 </html>

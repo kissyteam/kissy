@@ -17,30 +17,30 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview dom event facade
+ * @fileOverview dom
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Special) {
-    S.mix(Event, {
-        KeyCodes: KeyCodes,
-        _DOMUtils: _DOMUtils,
-        Gesture: Gesture,
-        _Special: Special
+KISSY.add('dom/base', function (S, DOM) {
+    S.mix(S, {
+        DOM: DOM,
+        get: DOM.get,
+        query: DOM.query
     });
 
-    return Event;
+    return DOM;
 }, {
-    requires: ['event/base',
-        './base/key-codes',
-        './base/utils',
-        './base/gesture',
-        './base/special',
+    requires: [
         './base/api',
-        './base/mouseenter',
-        './base/mousewheel',
-        './base/valuechange']
-});
-
-</pre>
+        './base/attr',
+        './base/class',
+        './base/create',
+        './base/data',
+        './base/insertion',
+        './base/offset',
+        './base/style',
+        './base/selector',
+        './base/traversal'
+    ]
+});</pre>
 </body>
 </html>

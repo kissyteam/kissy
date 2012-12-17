@@ -10,9 +10,6 @@
     <link href="../../build/css/dpl/base.css" rel="stylesheet"/>
 
     <script src="/kissy/build/seed.js"></script>
-
-    <script src="./src/base.js"></script>
-    <script src="./src/zoomer.js"></script>
     <script src="./src/imagezoom.js"></script>
     <style>
         body {
@@ -192,8 +189,8 @@
         Event.on("#imgList img", 'click', function () {
             var data = DOM.attr(this, 'data-ks-imagezoom');
             m.set('hasZoom', DOM.attr(this, 'data-has-zoom'));
-            m.changeImageSrc(data + '_310x310.jpg');
-            if (data) {
+            m.set('imageSrc', data + '_310x310.jpg');
+            if (data && m.get('hasZoom')) {
                 m.set('bigImageSrc', data);
                 m.set("bigImageWidth",
                         parseInt(DOM.attr(this, 'data-bigImageWidth')));

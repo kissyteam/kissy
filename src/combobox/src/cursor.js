@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * get cursor position of input
  * @author yiminghe@gmail.com
  */

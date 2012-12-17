@@ -4,6 +4,12 @@
  */
 KISSY.use("imagezoom", function (S, ImageZoom) {
 
+    var imageWidth = 310;
+    var imageHeight = 310;
+    var testWidth = 400;
+    var testHeight = imageHeight;
+    var bigImageWidth = 600;
+    var bigImageHeight = 900;
     // simulate mouse event on any element
     var simulate = function (target, type, relatedTarget) {
         jasmine.simulate(target[0], type, { relatedTarget: relatedTarget });
@@ -14,12 +20,6 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
     }
 
     beforeEach(function () {
-        this.addMatchers({
-            toBeHidden: function () {
-                var obj = this.actual;
-                return obj.css('display') === 'none' || obj.css('visibility') === 'hidden';
-            }
-        });
         this.addMatchers({
             toBeAlmostEqual: function (expected) {
                 return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
@@ -35,24 +35,19 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
 
             var a = new ImageZoom({
                 imageNode: "#standard",
+                width: testWidth,
                 align: {
                     points: ["tr", "tl"],
                     offset: [0, 0]
                 },
                 bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
-                bigImageWidth: 900,
-                bigImageHeight: 900
+                bigImageWidth: bigImageWidth,
+                bigImageHeight: bigImageHeight
             });
 
             it('初始化后, 小图 DOM 结构正确', function () {
-                waitsFor(function () {
-                    return a.imageWrap;
-                });
-                runs(function () {
-                    expect(a.image).toBeDefined();
                     expect(a.imageWrap).toBeDefined();
                     expect(a.imageWrap.hasClass('ks-imagezoom-wrap')).toEqual(true);
-                });
             });
 
             it('显示放大镜图标', function () {
@@ -63,11 +58,11 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
             });
 
             it('能够正确显示大图', function () {
-                var offset = a.image.offset();
+                var offset = a.get('imageNode').offset();
 
-                simulate(a.image, "mouseover", document.body);
+                simulate(a.get('imageNode'), "mouseover", document.body);
 
-                waits(500);
+                waits(100);
 
                 runs(function () {
                     a.set('currentMouse', {
@@ -76,30 +71,28 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
                     });
                 });
 
-                waits(500);
+                waits(100);
                 runs(function () {
                     expect(isHidden(a.icon)).toEqual(true);
                     expect(a.get("el")).toBeDefined();
                     expect(a.bigImage).toBeDefined();
                     expect(isHidden(a.get("el"))).toEqual(false);
-                    expect(a.bigImage.width()).toEqual(900);
-                    expect(a.bigImage.height()).toEqual(900);
-                    expect(a.get("el").width()).toEqual(310);
-                    //expect(a.get("el").height()).toEqual(310);
-                    //expect(a.get("el").css('height')).toEqual('310px');
+                    expect(a.bigImage.width()).toEqual(bigImageWidth);
+                    expect(a.bigImage.height()).toEqual(bigImageHeight);
+                    expect(a.get("el").width()).toEqual(testWidth);
                     expect(a.lens).toBeDefined();
                     expect(isHidden(a.lens)).toEqual(false);
-                    expect(a.lens.width()).toEqual(107);
-                    expect(Math.abs(a.lens.height() - 107)).toBeLessThan(5);
+                    expect(a.lens.width()).toBeEqual(testWidth * imageWidth / bigImageWidth);
+                    expect(a.lens.height()).toBeEqual(testHeight * imageHeight / bigImageHeight);
                 });
             });
 
             it('移动鼠标时, 设置坐标正确', function () {
-                var oft = a.image.offset();
+                var oft = a.get('imageNode').offset();
 
-                simulate(a.image, "mouseover", document.body);
+                simulate(a.get('imageNode'), "mouseover", document.body);
 
-                waits(500);
+                waits(100);
 
                 runs(function () {
 
@@ -109,52 +102,75 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
                     });
                 });
 
-                waits(500);
+                waits(100);
                 runs(function () {
-                    var lenOffset = {
-                        left: a.get("lensLeft"),
-                        top: a.get("lensTop")
-                    };
+                    expect(a.lensLeft).toBeEqual(oft.left + 200 -
+                        (testWidth * imageWidth / bigImageWidth) / 2);
                     expect(a.bigImage.css('left'))
-                        .toBeEqual(-Math.round((lenOffset.left - oft.left) * 900 / 310) + 'px');
+                        .toBeEqual(-Math.round((a.lensLeft - oft.left) * bigImageWidth / imageWidth)
+                            + 'px');
                     expect(a.bigImage.css('top'))
-                        .toBeEqual(-Math.round((lenOffset.top - oft.top) * 900 / 310) + 'px');
+                        .toBeEqual(-Math.round((a.lensTop - oft.top) * bigImageHeight / imageHeight)
+                            + 'px');
+                });
+            });
+
+            it('移动鼠标时, 边界正确', function () {
+                a.hide();
+
+                var oft = a.get('imageNode').offset();
+
+                simulate(a.get('imageNode'), "mouseover", document.body);
+
+                waits(100);
+
+                runs(function () {
+
+                    a.set('currentMouse', {
+                        pageX: oft.left + testWidth - 10,
+                        pageY: oft.top + 300
+                    });
+                });
+
+                waits(100);
+                runs(function () {
+                    expect(a.lensLeft).toBeEqual(oft.left + imageWidth -
+                        (testWidth * imageWidth / bigImageWidth));
+                    expect(a.bigImage.css('left'))
+                        .toBeEqual(testWidth - a.bigImage.width());
+                    expect(a.bigImage.css('top'))
+                        .toBeEqual(testHeight - a.bigImage.height());
                 });
             });
 
             it('能够正确隐藏大图', function () {
                 a.hide();
-
-                waits(500);
-
-                runs(function () {
-                    expect(isHidden(a.icon)).toEqual(false);
-                    expect(isHidden(a.get("el"))).toEqual(true);
-                    expect(isHidden(a.lens)).toEqual(true);
-                });
+                expect(isHidden(a.icon)).toEqual(false);
+                expect(isHidden(a.get("el"))).toEqual(true);
+                expect(isHidden(a.lens)).toEqual(true);
             });
         });
 
         describe('内嵌模式下,', function () {
+
+
             var a = new ImageZoom({
                 imageNode: "#inner",
                 type: 'inner',
+                width: testWidth,
                 bigImageSrc: "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg",
-                bigImageWidth: 900,
-                bigImageHeight: 900
+                bigImageWidth: bigImageWidth,
+                bigImageHeight: bigImageHeight
             });
 
             it('不会显示镜片且大图位置是在小图上', function () {
 
-                waitsFor(function () {
-                    return a.imageWrap;
-                });
+                var offset = a.get('imageNode').offset();
 
-                var offset = a.image.offset();
+                simulate(a.get('imageNode'), "mouseover", document.body);
 
-                simulate(a.image, "mouseover", document.body);
-
-                waits(500);
+                // wait inner anim
+                waits(600);
 
                 runs(function () {
                     a.set('currentMouse', {
@@ -163,10 +179,20 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
                     });
                 });
 
-                waits(500);
+                waits(100);
                 runs(function () {
-                    expect(a.get("el").offset().left).toBeEqual(a.image.offset().left);
+                    expect(a.get("el").offset().left)
+                        .toBeEqual(a.get('imageNode').offset().left - (testWidth - imageWidth) / 2);
+
+                    // 越界
+                    expect(a.bigImage.css('left'))
+                        .toBeEqual(Math.min((-100) * bigImageWidth / testWidth + testWidth / 2,0));
+
+                    expect(a.get("el").offset().top).toBeEqual(a.get('imageNode').offset().top);
+                    expect(a.bigImage.css('top'))
+                        .toBeEqual(-100 * bigImageHeight / imageHeight + testHeight / 2);
                     expect(a.lens).toBeUndefined();
+                    a.hide();
                 });
             });
         });
@@ -174,26 +200,23 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
         describe('多图模式下,', function () {
             var a = new ImageZoom({
                 imageNode: "#multi",
+                width: testWidth,
                 align: {
                     node: "#multi",
                     points: ["tr", "tl"],
                     offset: [0, 0]
                 },
-                bigImageWidth: 900,
-                bigImageHeight: 900
+                bigImageWidth: bigImageWidth,
+                bigImageHeight: bigImageHeight
             });
 
             it('初始小图显示正常', function () {
 
-                waitsFor(function () {
-                    return a.imageWrap;
-                });
+                var offset = a.get('imageNode').offset();
 
-                var offset = a.image.offset();
+                simulate(a.get('imageNode'), "mouseover", document.body);
 
-                simulate(a.image, "mouseover", document.body);
-
-                waits(500);
+                waits(100);
 
                 runs(function () {
                     a.set('currentMouse', {
@@ -202,7 +225,7 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
                     });
                 });
 
-                waits(500);
+                waits(100);
 
                 runs(function () {
                     expect(isHidden(a.get("el"))).toEqual(false);
@@ -211,21 +234,21 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
 
             it('改变小图src', function () {
                 a.hide();
-                a.changeImageSrc('http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg_310x310.jpg');
+                a.set('imageSrc', 'http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg_310x310.jpg');
                 a.set('bigImageSrc', 'http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg');
                 a.set("bigImageWidth", 700);
                 a.set("bigImageHeight", 700);
-                simulate(a.image, "mouseover", document.body);
+                simulate(a.get('imageNode'), "mouseover", document.body);
 
-                waits(500);
-                var offset = a.image.offset();
+                waits(100);
+                var offset = a.get('imageNode').offset();
                 runs(function () {
                     a.set('currentMouse', {
                         pageX: offset.left + 100,
                         pageY: offset.top + 100
                     });
                 });
-                waits(500);
+                waits(100);
                 runs(function () {
                     expect(isHidden(a.get("el"))).toEqual(false);
                     expect(a.bigImage.attr("src")).toEqual('http://img05.taobaocdn.com/imgextra/i5/T1DERIXmXsXXa26X.Z_031259.jpg');
@@ -235,22 +258,21 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
                 a.hide();
                 a.set('hasZoom', false);
 
-                simulate(a.image, "mouseover", document.body);
+                simulate(a.get('imageNode'), "mouseover", document.body);
 
-                waits(500);
-                var offset = a.image.offset();
+                waits(100);
+                var offset = a.get('imageNode').offset();
                 runs(function () {
                     a.set('currentMouse', {
                         pageX: offset.left + 100,
                         pageY: offset.top + 100
                     });
                 });
-                waits(500);
+                waits(100);
                 runs(function () {
                     expect(isHidden(a.get("el"))).toEqual(true);
                     expect(isHidden(a.icon)).toEqual(true);
-
-                    a.set('hasZoom', true);
+                    a.hide();
                 });
             });
         });
