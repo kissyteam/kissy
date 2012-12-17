@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 18 02:34
+build time: Dec 18 02:46
 */
 /**
  * @ignore
@@ -133,11 +133,6 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
 
                 self.bigImageCopy.css(bigImageOffset);
                 self.bigImage.css(bigImageOffset);
-            },
-
-            'changeImageSrc': function (src) {
-                S.log('changeImageSrc deprecated,use set("imageSrc",src) instead', 'warn');
-                this.set('imageSrc', src);
             }
         },
         {

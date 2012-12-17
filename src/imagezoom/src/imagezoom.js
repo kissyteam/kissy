@@ -128,11 +128,6 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
 
                 self.bigImageCopy.css(bigImageOffset);
                 self.bigImage.css(bigImageOffset);
-            },
-
-            'changeImageSrc': function (src) {
-                S.log('changeImageSrc deprecated,use set("imageSrc",src) instead', 'warn');
-                this.set('imageSrc', src);
             }
         },
         {

@@ -509,7 +509,6 @@ Method:
     set(name, val)      // 重新设置某些值
         - bigImageSrc   // 重设大图 url
         - hasZoom       // 重设 hasZoom 标志
-    changeImageSrc // 设置小图 src
     refreshRegion  // 调整放大区域位置
 Event:
     show        // 放大区域显示之后
@@ -527,12 +526,12 @@ Event:
         var a = new S.ImageZoom("#standard");
         a.set('bigImageSrc', "http://img03.taobaocdn.com/bao/uploaded/i3/T1fftwXf8jXXX7ps79_073021.jpg");
 
-2) 多图切换时, 大图 src 的更改通过 m.set('bigImageSrc', data); 小图 src 通过 changeImageSrc ,
+2) 多图切换时, 大图 src 的更改通过 m.set('bigImageSrc', data); 小图 src 通过 set('imageSrc') ,
    也可直接在外部更改小图 src 值, 两者区别仅在是否处理 ks-imagezoom-loading 状态.
         var m = new S.ImageZoom("#multi");
         S.Event.on("#imgList img", 'click', function() {
             var data = S.DOM.attr(this, 'data-ks-imagezoom');
-            m.changeImageSrc(data+'_310x310.jpg');
+            m.set('imageSrc',data+'_310x310.jpg');
             //S.DOM.attr('#multi', 'src', data+'_310x310.jpg');
             m.set('bigImageSrc', data);
         });
