@@ -20,7 +20,7 @@
  * @fileOverview Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, ComboBoxRender, Menu, undefined) {
+KISSY.add(&quot;combobox/base&quot;, function (S, Node, Component, ComboBoxRender, Menu, undefined) {
     var ComboBox,
         $ = Node.all,
         KeyCodes = Node.KeyCodes,
@@ -31,8 +31,7 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
                 adjustY: 1
             }
         },
-        win = $(S.Env.host),
-        SUFFIX = 'suffix';
+        win = $(S.Env.host);
 
 <span id='KISSY-ComboBox'>    /**
 </span>     * KISSY ComboBox.
@@ -52,12 +51,13 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
              * @protected
              * @param data
              */
-            normalizeData: function (data) {
-                var self = this, contents, v, i, c;
+            'normalizeData': function (data) {
+                var self = this,
+                    contents, v, i, c;
                 if (data &amp;&amp; data.length) {
                     data = data.slice(0, self.get(&quot;maxItemCount&quot;));
                     if (self.get(&quot;format&quot;)) {
-                        contents = self.get(&quot;format&quot;).call(self, getValue(self), data);
+                        contents = self.get(&quot;format&quot;).call(self, self['getValueInternal'](), data);
                     } else {
                         contents = [];
                     }
@@ -90,8 +90,40 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
 
             },
 
+<span id='KISSY-ComboBox-method-getValueInternal'>            /**
+</span>             * get value
+             * @protected
+             */
+            getValueInternal: function () {
+                return this.get('input').val();
+            },
+
+<span id='KISSY-ComboBox-method-setValueInternal'>            /**
+</span>             * set value
+             * @protected
+             * @method
+             * @member KISSY.ComboBox
+             */
+            setValueInternal: function (value) {
+                this.get('input').val(value);
+            },
+
+<span id='KISSY-ComboBox-method-alignInternal'>            /**
+</span>             * align menu
+             * @protected
+             */
+            'alignInternal': function () {
+                var self = this,
+                    menu = self.get(&quot;menu&quot;),
+                    align = S.clone(menu.get(&quot;align&quot;));
+                align.node = self.get(&quot;el&quot;);
+                S.mix(align, ALIGN, false);
+                menu.set(&quot;align&quot;, align);
+            },
+
             handleFocus: function () {
-                var self = this, placeholderEl;
+                var self = this,
+                    placeholderEl;
                 setInvalid(self, false);
                 if (placeholderEl = self.get(&quot;placeholderEl&quot;)) {
                     placeholderEl.hide();
@@ -99,11 +131,12 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
             },
 
             handleBlur: function () {
-                var self = this;
+                var self = this,
+                    placeholderEl = self.get(&quot;placeholderEl&quot;),
+                    input;
                 ComboBox.superclass.handleBlur.apply(self, arguments);
                 delayHide.call(self);
-                var placeholderEl,
-                    input = self.get(&quot;input&quot;);
+                input = self.get(&quot;input&quot;);
                 self.validate(function (error, val) {
                     if (error) {
                         if (!self.get(&quot;focused&quot;) &amp;&amp; val == input.val()) {
@@ -113,25 +146,30 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
                         setInvalid(self, false);
                     }
                 });
-                if ((placeholderEl = self.get(&quot;placeholderEl&quot;)) &amp;&amp; !input.val()) {
+                if (placeholderEl &amp;&amp; !input.val()) {
                     placeholderEl.show();
                 }
             },
 
             handleMouseDown: function (e) {
-                ComboBox.superclass.handleMouseDown.apply(this, arguments);
                 var self = this,
                     input,
-                    target = e.target,
-                    trigger = self.get(&quot;trigger&quot;),
-                    hasTrigger = self.get('hasTrigger');
+                    target,
+                    trigger ,
+                    hasTrigger;
+                ComboBox.superclass.handleMouseDown.apply(self, arguments);
+                target = e.target;
+                trigger = self.get(&quot;trigger&quot;);
+                hasTrigger = self.get('hasTrigger');
                 if (hasTrigger &amp;&amp; (trigger[0] == target || trigger.contains(target))) {
                     input = self.get(&quot;input&quot;);
-                    if (!self.get('collapsed')) {
-                        self.set('collapsed', true);
-                    } else {
+                    if (self.get('collapsed')) {
+                        // fetch data
                         input[0].focus();
                         self.sendRequest('');
+                    } else {
+                        // switch from open to collapse
+                        self.set('collapsed', true);
                     }
                     e.preventDefault();
                 }
@@ -139,14 +177,18 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
 
             handleKeyEventInternal: function (e) {
                 var self = this,
-                    input = self.get(&quot;input&quot;),
+                    updateInputOnDownUp,
+                    input,
+                    activeItem,
+                    handledByMenu,
                     menu = getMenu(self);
 
                 if (!menu) {
-                    return;
+                    return undefined;
                 }
 
-                var updateInputOnDownUp = self.get(&quot;updateInputOnDownUp&quot;);
+                input = self.get(&quot;input&quot;);
+                updateInputOnDownUp = self.get(&quot;updateInputOnDownUp&quot;);
 
                 if (updateInputOnDownUp) {
                     // combobox will change input value
@@ -162,57 +204,58 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
                     }
                 }
 
-                var activeItem;
-
                 if (menu.get(&quot;visible&quot;)) {
-                    var handledByMenu = menu.handleKeydown(e);
+                    handledByMenu = menu['handleKeydown'](e);
 
-                    if (updateInputOnDownUp) {
-                        if (S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
-                            // update menu's active value to input just for show
-                            setValue(self, menu.get(&quot;activeItem&quot;).get(&quot;textContent&quot;));
-                        }
-                    }
                     // esc
                     if (e.keyCode == KeyCodes.ESC) {
                         self.set(&quot;collapsed&quot;, true);
                         if (updateInputOnDownUp) {
                             // restore original user's input text
-                            setValue(self, self._savedInputValue);
+                            self['setValueInternal'](self._savedInputValue);
                         }
                         return true;
                     }
 
+                    activeItem = menu.get(&quot;activeItem&quot;);
+
+                    if (updateInputOnDownUp &amp;&amp;
+                        S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
+                        // update menu's active value to input just for show
+                        this.setValueInternal(activeItem.get(&quot;textContent&quot;));
+                    }
+
                     // tab
                     // if menu is open and an menuitem is highlighted, see as click/enter
-                    if (e.keyCode == KeyCodes.TAB) {
-                        if (activeItem = menu.get(&quot;activeItem&quot;)) {
-                            activeItem.performActionInternal();
-                            // only prevent focus change in multiple mode
-                            if (self.get(&quot;multiple&quot;)) {
-                                return true;
-                            }
+                    if (e.keyCode == KeyCodes.TAB &amp;&amp; activeItem) {
+                        // click activeItem
+                        activeItem.performActionInternal();
+                        // only prevent focus change in multiple mode
+                        if (self.get(&quot;multiple&quot;)) {
+                            return true;
                         }
                     }
+
                     return handledByMenu;
-                } else if ((e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP)) {
-                    // re-fetch , consider multiple input
-                    S.log(&quot;refetch : &quot; + getValue(self));
-                    self.sendRequest(getValue(self));
+                } else if (e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP) {
+                    // re-fetch, consider multiple input
+                    // S.log(&quot;refetch : &quot; + getValue(self));
+                    self.sendRequest(this.getValueInternal());
                     return true;
                 }
+                return  undefined;
             },
 
             syncUI: function () {
-                if (this.get(&quot;placeholder&quot;)) {
-                    var self = this,
-                        input = self.get(&quot;input&quot;),
-                        inputValue = self.get(&quot;inputValue&quot;);
-
+                var self = this,
+                    input ,
+                    inputValue;
+                if (self.get(&quot;placeholder&quot;)) {
+                    input = self.get(&quot;input&quot;);
+                    inputValue = self.get(&quot;inputValue&quot;);
                     if (inputValue != undefined) {
                         input.val(inputValue);
                     }
-
                     if (!input.val()) {
                         self.get(&quot;placeholderEl&quot;).show();
                     }
@@ -231,7 +274,6 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
                 } else {
                     callback(false, val);
                 }
-
             },
 
             bindMenu: function () {
@@ -241,37 +283,32 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
                     menu = self.get(&quot;menu&quot;);
 
                 menu.on(&quot;click&quot;, function (e) {
-                    var item = e.target;
+                    var item = e.target,
+                        textContent = item.get('textContent');
                     // stop valuechange event
                     self._stopNotify = 1;
-                    selectItem(self, item);
+                    self['setValueInternal'](textContent);
+                    self._savedInputValue = textContent;
                     self.set(&quot;collapsed&quot;, true);
                     setTimeout(
                         function () {
                             self._stopNotify = 0;
                         },
-                        // valuechange interval
+                        // valuechange interval, hack
                         50
                     );
                 });
 
-                self.__repositionBuffer = S.buffer(reposition, 50);
-
-                win.on(&quot;resize&quot;, self.__repositionBuffer, self);
+                win.on(&quot;resize&quot;, self.__repositionBuffer = S.buffer(reposition, 50), self);
 
                 el = menu.get(&quot;el&quot;);
                 contentEl = menu.get(&quot;contentEl&quot;);
 
+                // menu has input!
                 el.on(&quot;focusout&quot;, delayHide, self);
                 el.on(&quot;focusin&quot;, clearDismissTimer, self);
 
-                contentEl.on(&quot;mouseover&quot;, function () {
-                    // trigger el focus
-                    self.get(&quot;input&quot;)[0].focus();
-                    // prevent menu from hiding
-                    clearDismissTimer.call(self);
-                });
-
+                contentEl.on(&quot;mouseover&quot;, onMenuMouseOver, self);
 
                 self.bindMenu = S.noop;
             },
@@ -287,17 +324,19 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
             },
 
             _onSetCollapsed: function (v) {
+                var self = this;
                 if (v) {
-                    hideMenu(this);
+                    hideMenu(self);
                 } else {
-                    showMenu(this);
+                    showMenu(self);
                 }
             },
 
             destructor: function () {
-                var self = this;
-                win.detach(&quot;resize&quot;, self.__repositionBuffer, this);
-                self.__repositionBuffer.stop();
+                var self = this,
+                    repositionBuffer = self.__repositionBuffer;
+                win.detach(&quot;resize&quot;, repositionBuffer, self);
+                repositionBuffer.stop();
             }
         },
         {
@@ -312,6 +351,17 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
 </span>                 * @ignore
                  */
                 input: {
+                    view: 1
+                },
+
+<span id='KISSY-ComboBox-cfg-inputValue'>                /**
+</span>                 * initial value for input
+                 * @cfg {String} inputValue
+                 */
+<span id='global-property-inputValue'>                /**
+</span>                 * @ignore
+                 */
+                inputValue: {
                     view: 1
                 },
 
@@ -394,7 +444,7 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
                 menu: {
                     value: {},
                     setter: function (m) {
-                        if (m&amp;&amp; m.isController) {
+                        if (m &amp;&amp; m['isController']) {
                             m.setInternal(&quot;parent&quot;, this);
                         }
                     }
@@ -425,9 +475,6 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
                  */
                 dataSource: {
                     // 和 input 关联起来，input可以有很多，每个数据源可以不一样，但是 menu 共享
-                    setter: function (c) {
-                        return Component.create(c);
-                    }
                 },
 
 <span id='KISSY-ComboBox-cfg-maxItemCount'>                /**
@@ -464,57 +511,6 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
                 format: {
                 },
 
-<span id='KISSY-ComboBox-cfg-multiple'>                /**
-</span>                 * Whether allow multiple input,separated by separator
-                 * Defaults to: false
-                 * @cfg {Boolean} multiple
-                 */
-<span id='global-property-multiple'>                /**
-</span>                 * @ignore
-                 */
-                multiple: {
-                },
-
-<span id='KISSY-ComboBox-cfg-separator'>                /**
-</span>                 * Separator chars used to separator multiple inputs.
-                 * Defaults to: ;,
-                 * @cfg {String} separator
-                 */
-<span id='global-property-separator'>                /**
-</span>                 * @ignore
-                 */
-                separator: {
-                    value: &quot;,;&quot;
-                },
-
-<span id='KISSY-ComboBox-cfg-separatorType'>                /**
-</span>                 * Separator type.
-                 * After value( 'suffix' ) or before value( 'prefix' ).
-                 * Defaults to: 'suffix'
-                 * @cfg {String} separatorType
-                 */
-<span id='global-property-separatorType'>                /**
-</span>                 * @ignore
-                 */
-                separatorType: {
-                    value: SUFFIX
-                },
-
-<span id='KISSY-ComboBox-cfg-whitespace'>                /**
-</span>                 * Whether whitespace is part of toke value.
-                 * Default to: true
-                 * @cfg {Boolean} whitespace
-                 * @private
-                 */
-<span id='global-property-whitespace'>                /**
-</span>                 * @ignore
-                 */
-                whitespace: {
-                    valueFn: function () {
-                        return this.get(&quot;separatorType&quot;) == SUFFIX;
-                    }
-                },
-
 <span id='KISSY-ComboBox-cfg-updateInputOnDownUp'>                /**
 </span>                 * Whether update input's value at keydown or up when combobox menu shows.
                  * Default to: true
@@ -525,29 +521,6 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
                  */
                 updateInputOnDownUp: {
                     value: true
-                },
-
-<span id='KISSY-ComboBox-cfg-literal'>                /**
-</span>                 * If separator wrapped by literal chars,separator become normal chars.
-                 * Defaults to: &quot;
-                 * @cfg {String} literal
-                 */
-<span id='global-property-literal'>                /**
-</span>                 * @ignore
-                 */
-                literal: {
-                    value: &quot;\&quot;&quot;
-                },
-
-<span id='KISSY-ComboBox-cfg-alignWithCursor'>                /**
-</span>                 * Whether align menu with individual token after separated by separator.
-                 * Defaults to: false
-                 * @cfg {Boolean} alignWithCursor
-                 */
-<span id='global-property-alignWithCursor'>                /**
-</span>                 * @ignore
-                 */
-                alignWithCursor: {
                 },
 
 <span id='KISSY-ComboBox-cfg-autoHighlightFirst'>                /**
@@ -575,19 +548,12 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
 
     // #----------------------- private start
 
-    function selectItem(self, item) {
-        if (item) {
-            var textContent = item.get(&quot;textContent&quot;),
-                separatorType = self.get(&quot;separatorType&quot;);
-            setValue(self, textContent + (separatorType == SUFFIX ? &quot;&quot; : &quot; &quot;));
-            self._savedInputValue = textContent;
-<span id='KISSY-ComboBox-event-click'>            /**
-</span>             * fired when user select from suggestion list (bubbled from menuItem)
-             * @event click
-             * @param e
-             * @param e.target Selected menuItem
-             */
-        }
+    function onMenuMouseOver() {
+        var self = this;
+        // trigger el focus
+        self.get(&quot;input&quot;)[0].focus();
+        // prevent menu from hiding
+        clearDismissTimer.call(self);
     }
 
     function setInvalid(self, error) {
@@ -604,10 +570,9 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
         }
     }
 
-
     function getMenu(self, init) {
         var m = self.get(&quot;menu&quot;);
-        if (m &amp;&amp; !m.isController) {
+        if (m &amp;&amp; !m['isController']) {
             if (init) {
                 m = Component.create(m, self);
                 self.setInternal(&quot;menu&quot;, m);
@@ -625,45 +590,11 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
         }
     }
 
-    function alignMenuImmediately(self) {
-        var menu = self.get(&quot;menu&quot;),
-            align = S.clone(menu.get(&quot;align&quot;));
-        align.node = self.get(&quot;el&quot;);
-        S.mix(align, ALIGN, false);
-        menu.set(&quot;align&quot;, align);
-    }
-
-    function alignWithTokenImmediately(self) {
-        var inputDesc = getInputDesc(self),
-            tokens = inputDesc.tokens,
-            menu = self.get(&quot;menu&quot;),
-            cursorPosition = inputDesc.cursorPosition,
-            tokenIndex = inputDesc.tokenIndex,
-            tokenCursorPosition,
-            cursorOffset,
-            input = self.get(&quot;input&quot;);
-        tokenCursorPosition = tokens.slice(0, tokenIndex).join(&quot;&quot;).length;
-        if (tokenCursorPosition &gt; 0) {
-            // behind separator
-            ++tokenCursorPosition;
-        }
-        input.prop(&quot;selectionStart&quot;, tokenCursorPosition);
-        input.prop(&quot;selectionEnd&quot;, tokenCursorPosition);
-        cursorOffset = cursor(input);
-        input.prop(&quot;selectionStart&quot;, cursorPosition);
-        input.prop(&quot;selectionEnd&quot;, cursorPosition);
-        menu.set(&quot;xy&quot;, [cursorOffset.left, cursorOffset.top]);
-    }
-
     function reposition() {
         var self = this,
             menu = getMenu(self);
         if (menu &amp;&amp; menu.get(&quot;visible&quot;)) {
-            if (self.get(&quot;multiple&quot;) &amp;&amp; self.get(&quot;alignWithCursor&quot;)) {
-                alignWithTokenImmediately(self);
-            } else {
-                alignMenuImmediately(self);
-            }
+            self['alignInternal']();
         }
     }
 
@@ -699,84 +630,17 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
             }
             menu.show();
             reposition.call(self);
-            self.get(&quot;input&quot;).attr(&quot;aria-owns&quot;, menu.get(&quot;el&quot;)[0].id);
+            self.get(&quot;input&quot;).attr(&quot;aria-owns&quot;, menu.get(&quot;el&quot;).attr('id'));
         }
     }
-
-    function setValue(self, value) {
-        var input = self.get(&quot;input&quot;);
-        if (self.get(&quot;multiple&quot;)) {
-            var inputDesc = getInputDesc(self),
-                tokens = inputDesc.tokens,
-                tokenIndex = Math.max(0, inputDesc.tokenIndex),
-                separator = self.get(&quot;separator&quot;),
-                cursorPosition,
-                separatorType = self.get(&quot;separatorType&quot;),
-                token = tokens[tokenIndex];
-
-            if (token &amp;&amp; separator.indexOf(token.charAt(0)) != -1) {
-                tokens[tokenIndex] = token.charAt(0);
-            } else {
-                tokens[tokenIndex] = &quot;&quot;;
-            }
-
-            tokens[tokenIndex] += value;
-
-            var nextToken = tokens[tokenIndex + 1];
-
-            // appendSeparatorOnComplete if next token does not start with separator
-            if (separatorType == SUFFIX &amp;&amp; (!nextToken || separator.indexOf(nextToken.charAt(0)) == -1 )) {
-                tokens[tokenIndex] += separator.charAt(0);
-            }
-
-            cursorPosition = tokens.slice(0, tokenIndex + 1).join(&quot;&quot;).length;
-
-            input.val(tokens.join(&quot;&quot;));
-
-            input.prop(&quot;selectionStart&quot;, cursorPosition);
-            input.prop(&quot;selectionEnd&quot;, cursorPosition);
-        } else {
-            input.val(value);
-        }
-    }
-
-
-<span id='KISSY-ComboBox-method-getValue'>    /**
-</span>     * Consider multiple mode , get token at current cursor position
-     */
-    function getValue(self) {
-        var input = self.get(&quot;input&quot;),
-            inputVal = input.val();
-        if (self.get(&quot;multiple&quot;)) {
-            var inputDesc = getInputDesc(self);
-            var tokens = inputDesc.tokens,
-                tokenIndex = inputDesc.tokenIndex;
-            var separator = self.get(&quot;separator&quot;);
-            var separatorType = self.get(&quot;separatorType&quot;);
-            var token = tokens[tokenIndex] || &quot;&quot;;
-            // only if token starts with separator , then token has meaning!
-            // token can not be empty
-            if (token &amp;&amp; separator.indexOf(token.charAt(0)) != -1) {
-                // remove separator
-                return token.substring(1);
-            }
-            // cursor is at the beginning of textarea
-            if (separatorType == SUFFIX &amp;&amp; (tokenIndex == 0 || tokenIndex == -1)) {
-                return token;
-            }
-            return undefined;
-        } else {
-            return inputVal;
-        }
-    }
-
 
     function onValueChange() {
-        var self = this;
+        var self = this,
+            value;
         if (self._stopNotify) {
             return;
         }
-        var value = getValue(self);
+        value = self['getValueInternal']();
         if (value === undefined) {
             self.set(&quot;collapsed&quot;, true);
             return;
@@ -795,9 +659,11 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
             i,
             menu = getMenu(self, 1);
 
-        data = self.normalizeData(data);
+        data = self['normalizeData'](data);
 
         menu.removeChildren(true);
+
+        menu.set(&quot;highlightedItem&quot;, null);
 
         if (data &amp;&amp; data.length) {
             for (i = 0; i &lt; data.length; i++) {
@@ -806,7 +672,7 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
             }
 
             // make menu item (which textContent is same as input) active
-            val = getValue(self);
+            val = self['getValueInternal']();
             for (i = 0; i &lt; children.length; i++) {
                 if (children[i].get(&quot;textContent&quot;) == val) {
                     menu.set(&quot;highlightedItem&quot;, children[i]);
@@ -829,64 +695,11 @@ KISSY.add(&quot;combobox/base&quot;, function (S, cursor, Node, Component, Combo
         }
     }
 
-    function getInputDesc(self) {
-        var input = self.get(&quot;input&quot;),
-            inputVal = input.val(),
-            tokens = [],
-            cache = [],
-            literal = self.get(&quot;literal&quot;),
-            separator = self.get(&quot;separator&quot;),
-            inLiteral = false,
-            whitespace = self.get(&quot;whitespace&quot;),
-            cursorPosition = input.prop('selectionStart'),
-            tokenIndex = -1;
-
-        for (var i = 0; i &lt; inputVal.length; i++) {
-            var c = inputVal.charAt(i);
-            if (i == cursorPosition) {
-                // current token index
-                tokenIndex = tokens.length;
-            }
-            if (!inLiteral) {
-                // whitespace is not part of token value
-                // then separate
-                if (!whitespace &amp;&amp; /\s|\xa0/.test(c)) {
-                    tokens.push(cache.join(&quot;&quot;));
-                    cache = [];
-                }
-
-                if (separator.indexOf(c) != -1) {
-                    tokens.push(cache.join(&quot;&quot;));
-                    cache = [];
-                }
-            }
-            if (literal) {
-                if (c == literal) {
-                    inLiteral = !inLiteral;
-                }
-            }
-            cache.push(c);
-        }
-
-        if (cache.length) {
-            tokens.push(cache.join(&quot;&quot;));
-        }
-        if (tokenIndex == -1) {
-            tokenIndex = tokens.length - 1;
-        }
-        return {
-            tokens: tokens,
-            cursorPosition: cursorPosition,
-            tokenIndex: tokenIndex
-        };
-    }
-
     // #------------------------private end
 
     return ComboBox;
 }, {
     requires: [
-        './cursor',
         'node',
         'component/base',
         './render',

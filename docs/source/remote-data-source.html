@@ -20,7 +20,7 @@
  * @fileOverview Remote datasource for ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;combobox/RemoteDataSource&quot;, function (S, IO, Component) {
+KISSY.add(&quot;combobox/RemoteDataSource&quot;, function (S, IO) {
 
 <span id='KISSY-ComboBox-RemoteDataSource'>    /**
 </span>     * dataSource which wrap {@link KISSY.IO} utility.
@@ -129,12 +129,9 @@ KISSY.add(&quot;combobox/RemoteDataSource&quot;, function (S, IO, Component) {
             self.io = IO(xhrCfg);
         }
     });
-
-    Component.Manager.setConstructorByXClass(&quot;combobox-RemoteDataSource&quot;, RemoteDataSource);
-
     return RemoteDataSource;
 }, {
-    requires: ['ajax', 'component/base']
+    requires: ['ajax']
 });</pre>
 </body>
 </html>

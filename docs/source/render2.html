@@ -20,7 +20,7 @@
  * @fileOverview Render aria properties to input element.
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;combobox/render&quot;, function (S, Component) {
+KISSY.add(&quot;combobox/render&quot;, function (S, Component, undefined) {
 
     var $ = S.all,
         tpl = '&lt;div class=&quot;{prefixCls}combobox-input-wrap&quot;&gt;' +
@@ -43,34 +43,43 @@ KISSY.add(&quot;combobox/render&quot;, function (S, Component) {
                 wrap,
                 input = self.get(&quot;input&quot;),
                 inputId,
-                prefixCls=self.get('prefixCls'),
+                prefixCls = self.get('prefixCls'),
                 el = self.get(&quot;el&quot;),
                 trigger = self.get(&quot;trigger&quot;);
 
             if (!self.get(&quot;srcNode&quot;)) {
-                el.append(S.substitute(tpl,{
-                    prefixCls:prefixCls
+                el.append(S.substitute(tpl, {
+                    prefixCls: prefixCls
                 }));
-                wrap = el.one(&quot;.&quot;+prefixCls+&quot;combobox-input-wrap&quot;);
-                input = input || S.all(S.substitute(inputTpl,{
-                    prefixCls:prefixCls
+                wrap = el.one(&quot;.&quot; + prefixCls + &quot;combobox-input-wrap&quot;);
+                input = input || S.all(S.substitute(inputTpl, {
+                    prefixCls: prefixCls
                 }));
                 wrap.append(input);
                 self.setInternal(&quot;input&quot;, input);
             }
 
             if (!trigger) {
-                self.setInternal(&quot;trigger&quot;, S.all(S.substitute(triggerTpl,{
-                    prefixCls:prefixCls
+                self.setInternal(&quot;trigger&quot;, S.all(S.substitute(triggerTpl, {
+                    prefixCls: prefixCls
                 })));
             }
 
-            self.get(&quot;trigger&quot;).unselectable();
+<span id='global-property-'>            self.get(&quot;trigger&quot;).unselectable(/**
+</span>             @type {HTMLElement}
+             @ignore
+             */undefined);
 
             var invalidEl = $(&quot;&lt;div &quot; +
-                &quot;class='&quot;+prefixCls+&quot;combobox-invalid-el'&gt;&quot; +
-                &quot;&lt;div class='&quot;+prefixCls+&quot;combobox-invalid-inner'&gt;&lt;/div&gt;&quot; +
-                &quot;&lt;/div&gt;&quot;).insertBefore(input.parent());
+                &quot;class='&quot; + prefixCls + &quot;combobox-invalid-el'&gt;&quot; +
+                &quot;&lt;div class='&quot; + prefixCls + &quot;combobox-invalid-inner'&gt;&lt;/div&gt;&quot; +
+<span id='global-property-'>                &quot;&lt;/div&gt;&quot;).insertBefore(input.parent(/**
+</span>                 @type {HTMLElement}
+                 @ignore
+<span id='global-property-'>                 */undefined, undefined), /**
+</span>                 @type {HTMLElement}
+                 @ignore
+                 */undefined);
             self.setInternal(&quot;invalidEl&quot;, invalidEl);
 
             var placeholder;
@@ -81,7 +90,7 @@ KISSY.add(&quot;combobox/render&quot;, function (S, Component) {
                 }
                 self.setInternal('placeholderEl', $('&lt;label for=&quot;' +
                     inputId + '&quot; ' +
-                    'class=&quot;'+prefixCls+'combobox-placeholder&quot;&gt;' +
+                    'class=&quot;' + prefixCls + 'combobox-placeholder&quot;&gt;' +
                     placeholder + '&lt;/label&gt;').appendTo(el));
             }
         },
@@ -94,7 +103,7 @@ KISSY.add(&quot;combobox/render&quot;, function (S, Component) {
             this.get(&quot;input&quot;).attr(&quot;aria-expanded&quot;, v);
         },
 
-        _onSetHasTrigger: function (t) {
+        '_onSetHasTrigger': function (t) {
             var trigger = this.get(&quot;trigger&quot;);
             if (t) {
                 this.get(&quot;el&quot;).prepend(trigger);
@@ -136,10 +145,10 @@ KISSY.add(&quot;combobox/render&quot;, function (S, Component) {
         },
         HTML_PARSER: {
             input: function (el) {
-                return el.one(&quot;.&quot;+this.get('prefixCls')+&quot;combobox-input&quot;);
+                return el.one(&quot;.&quot; + this.get('prefixCls') + &quot;combobox-input&quot;);
             },
             trigger: function (el) {
-                return el.one(&quot;.&quot;+this.get('prefixCls')+&quot;combobox-trigger&quot;);
+                return el.one(&quot;.&quot; + this.get('prefixCls') + &quot;combobox-trigger&quot;);
             }
         }
     });
