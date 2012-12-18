@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 18 02:34
+build time: Dec 18 14:34
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121218023443' will replace with current timestamp when compressing.
+         * NOTICE: '20121218143449' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121218023443',
+        __BUILD_TIME: '20121218143449',
         /**
          * KISSY Environment.
          * @private
@@ -4529,16 +4529,16 @@ var KISSY = (function (undefined) {
             }
 
             var end = function (error) {
-                var index = error ? 1 : 0;
-                clearTimer();
-                var callbacks = jsCssCallbacks[src];
-                S.each(callbacks, function (callback) {
-                    if (callback[index]) {
-                        callback[index].call(node);
-                    }
-                });
-                delete jsCssCallbacks[src];
-            },
+                    var index = error,
+                        fn;
+                    clearTimer();
+                    S.each(jsCssCallbacks[src], function (callback) {
+                        if (fn = callback[index]) {
+                            fn.call(node);
+                        }
+                    });
+                    delete jsCssCallbacks[src];
+                },
                 useNative = !css;
 
             if (css) {
@@ -4562,7 +4562,7 @@ var KISSY = (function (undefined) {
                 };
                 node.onerror = function () {
                     node.onerror = null;
-                    error(1);
+                    end(1);
                 };
             }
             // old chrome/firefox for css
@@ -5803,7 +5803,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121218023443'
+            tag: '20121218143449'
         }, getBaseInfo()));
     }
 
@@ -5900,6 +5900,7 @@ var KISSY = (function (undefined) {
         globalEval: function (data) {
             if (data && RE_NOT_WHITE.test(data)) {
                 // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
+                // http://msdn.microsoft.com/en-us/library/ie/ms536420(v=vs.85).aspx always return null
                 ( win.execScript || function (data) {
                     win[ 'eval' ].call(win, data);
                 } )(data);

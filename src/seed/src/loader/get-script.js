@@ -113,16 +113,16 @@
             }
 
             var end = function (error) {
-                var index = error ? 1 : 0;
-                clearTimer();
-                var callbacks = jsCssCallbacks[src];
-                S.each(callbacks, function (callback) {
-                    if (callback[index]) {
-                        callback[index].call(node);
-                    }
-                });
-                delete jsCssCallbacks[src];
-            },
+                    var index = error,
+                        fn;
+                    clearTimer();
+                    S.each(jsCssCallbacks[src], function (callback) {
+                        if (fn = callback[index]) {
+                            fn.call(node);
+                        }
+                    });
+                    delete jsCssCallbacks[src];
+                },
                 useNative = !css;
 
             if (css) {
@@ -146,7 +146,7 @@
                 };
                 node.onerror = function () {
                     node.onerror = null;
-                    error(1);
+                    end(1);
                 };
             }
             // old chrome/firefox for css
