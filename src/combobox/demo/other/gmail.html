@@ -15,7 +15,7 @@
 <h1 style="text-align: center">gmail 多选模式</h1>
 <div style="margin:10px auto; width:80%;text-align: center" id="container">
     <h2>
-        static : input a or b or c or d or 3
+        static : input a or b or c or d or 3，逗号分隔
     </h2>
 </div>
 
@@ -27,6 +27,7 @@
 <script src="../../src/cursor.js"></script>
 <script src="../../src/local-data-source.js"></script>
 <script src="../../src/remote-data-source.js"></script>
+<script src="../../src/multi-value-combobox.js"></script>
 <script>
     KISSY.use("combobox", function (S, ComboBox) {
 
@@ -38,9 +39,8 @@
             '"d23434" <d23434@gmail.com>'
         ];
 
-        var basicComboBox = new ComboBox({
+        var basicComboBox = new ComboBox.MultiValueComboBox({
             render:'#container',
-            multiple:true,
             width:500,
             hasTrigger:false,
             input:S.all('<textarea ' +
@@ -48,6 +48,7 @@
                     'class="ks-combobox-input">' +
                     '</textarea>'),
             updateInputOnDownUp:false,
+            separator:',',
             format:function (query, data) {
                 var ret = [];
                 for (var i = 0; i < data.length; i++) {
@@ -66,8 +67,7 @@
                 }
                 return ret;
             },
-            dataSource:{
-                xclass:'combobox-LocalDataSource',
+            dataSource:new ComboBox.LocalDataSource({
                 data:data,
                 parse:function (query, data) {
                     var ret = [];
@@ -78,8 +78,7 @@
                     });
                     return ret;
                 }
-            }
-
+            })
         });
 
         basicComboBox.render();

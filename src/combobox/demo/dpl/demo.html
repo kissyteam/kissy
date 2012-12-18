@@ -147,10 +147,9 @@
             // 初始就聚焦
             // focused:true,
             hasTrigger: false,
-            dataSource: {
-                data: data,
-                xclass: 'combobox-LocalDataSource'
-            }
+            dataSource: new ComboBox.LocalDataSource({
+                data: data
+            })
         });
         basicComboBox.render();
 
@@ -167,10 +166,9 @@
         var basicComboBox = new ComboBox({
             render: "#inp_container",
             width: 200,
-            dataSource: {
-                xclass: 'combobox-LocalDataSource',
+            dataSource: new ComboBox.LocalDataSource({
                 data: data
-            },
+            }),
             hasTrigger: false,
             maxItemCount: 2,
             format: function (query, data) {
@@ -201,10 +199,9 @@
         var basicComboBox = new ComboBox({
             srcNode: S.one("#J_Combox"),
             width: 200,
-            dataSource: {
-                data: data,
-                xclass: 'combobox-LocalDataSource'
-            }
+            dataSource: new ComboBox.LocalDataSource({
+                data: data
+            })
         });
         basicComboBox.render();
     });
@@ -215,10 +212,9 @@
         var basicComboBox = new ComboBox({
             render: "#inp-combobox-container",
             autoHighlightFirst: true,
-            dataSource: {
-                xclass: 'combobox-LocalDataSource',
+            dataSource: new ComboBox.LocalDataSource({
                 data: data
-            },
+            }),
             width: 200,
             maxItemCount: 5,
             format: function (query, data) {
@@ -250,10 +246,9 @@
             placeholder: "请输入",
             invalidMessage: "请选择提示框内容",
             //inputValue: "c3464356",
-            dataSource: {
-                xclass: 'combobox-LocalDataSource',
+            dataSource: new ComboBox.LocalDataSource({
                 data: data
-            },
+            }),
             width: 200,
             maxItemCount: 5,
             format: function (query, data) {
@@ -289,10 +284,9 @@
             placeholder: "请输入",
             invalidMessage: "请选择提示框内容",
             // inputValue: "c3464356",
-            dataSource: {
-                xclass: 'combobox-LocalDataSource',
+            dataSource: new ComboBox.LocalDataSource({
                 data: data
-            },
+            }),
             width: 200,
             maxItemCount: 5
         });

@@ -55,7 +55,7 @@ KISSY.add('combobox/cursor', function (S, DOM) {
         if (!fake) {
             fake = DOM.create(FAKE_DIV_HTML);
         }
-        if (elem.type == 'textarea') {
+        if (String(elem.type) == 'textarea') {
             DOM.css(fake, "width", DOM.css(elem, "width"));
         } else {
             // input does not wrap at all
@@ -87,14 +87,25 @@ KISSY.add('combobox/cursor', function (S, DOM) {
         supportInputScrollLeft = !!(input.scrollLeft > 0);
         DOM.remove(input);
         findSupportInputScrollLeft = S.noop;
+        alert(supportInputScrollLeft);
     };
 
+    // firefox not support, chrome support
+    supportInputScrollLeft = false;
+
     return function (elem) {
-        var doc = elem.ownerDocument, offset,
+        elem = DOM.get(elem);
+        var doc = elem.ownerDocument,
+            elemOffset,
+            range,
+            fake,
+            selectionStart,
+            offset,
+            marker,
             elemScrollTop = elem.scrollTop,
             elemScrollLeft = elem.scrollLeft;
         if (doc.selection) {
-            var range = doc.selection.createRange();
+            range = doc.selection.createRange();
             return {
                 // http://msdn.microsoft.com/en-us/library/ie/ms533540(v=vs.85).aspx
                 // or simple range.offsetLeft for textarea
@@ -103,9 +114,7 @@ KISSY.add('combobox/cursor', function (S, DOM) {
             };
         }
 
-        findSupportInputScrollLeft();
-
-        var elemOffset = DOM.offset(elem);
+        elemOffset = DOM.offset(elem);
 
         // input does not has scrollLeft
         // so just get the position of the beginning of input
@@ -114,9 +123,9 @@ KISSY.add('combobox/cursor', function (S, DOM) {
             return elemOffset;
         }
 
-        var fake = getFakeDiv(elem);
+        fake = getFakeDiv(elem);
 
-        var selectionStart = elem.selectionStart;
+        selectionStart = elem.selectionStart;
 
         fake.innerHTML = S.escapeHTML(elem.value.substring(0, selectionStart - 1)) +
             // marker
@@ -130,7 +139,7 @@ KISSY.add('combobox/cursor', function (S, DOM) {
 
         // offset.left += 500;
         DOM.offset(fake, offset);
-        var marker = fake.lastChild;
+        marker = fake.lastChild;
         offset = DOM.offset(marker);
         offset.top += DOM.height(marker);
         // at the start of textarea , just fetch marker's left

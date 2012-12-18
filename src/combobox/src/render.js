@@ -3,7 +3,7 @@
  * @fileOverview Render aria properties to input element.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/render", function (S, Component) {
+KISSY.add("combobox/render", function (S, Component, undefined) {
 
     var $ = S.all,
         tpl = '<div class="{prefixCls}combobox-input-wrap">' +
@@ -26,34 +26,43 @@ KISSY.add("combobox/render", function (S, Component) {
                 wrap,
                 input = self.get("input"),
                 inputId,
-                prefixCls=self.get('prefixCls'),
+                prefixCls = self.get('prefixCls'),
                 el = self.get("el"),
                 trigger = self.get("trigger");
 
             if (!self.get("srcNode")) {
-                el.append(S.substitute(tpl,{
-                    prefixCls:prefixCls
+                el.append(S.substitute(tpl, {
+                    prefixCls: prefixCls
                 }));
-                wrap = el.one("."+prefixCls+"combobox-input-wrap");
-                input = input || S.all(S.substitute(inputTpl,{
-                    prefixCls:prefixCls
+                wrap = el.one("." + prefixCls + "combobox-input-wrap");
+                input = input || S.all(S.substitute(inputTpl, {
+                    prefixCls: prefixCls
                 }));
                 wrap.append(input);
                 self.setInternal("input", input);
             }
 
             if (!trigger) {
-                self.setInternal("trigger", S.all(S.substitute(triggerTpl,{
-                    prefixCls:prefixCls
+                self.setInternal("trigger", S.all(S.substitute(triggerTpl, {
+                    prefixCls: prefixCls
                 })));
             }
 
-            self.get("trigger").unselectable();
+            self.get("trigger").unselectable(/**
+             @type {HTMLElement}
+             @ignore
+             */undefined);
 
             var invalidEl = $("<div " +
-                "class='"+prefixCls+"combobox-invalid-el'>" +
-                "<div class='"+prefixCls+"combobox-invalid-inner'></div>" +
-                "</div>").insertBefore(input.parent());
+                "class='" + prefixCls + "combobox-invalid-el'>" +
+                "<div class='" + prefixCls + "combobox-invalid-inner'></div>" +
+                "</div>").insertBefore(input.parent(/**
+                 @type {HTMLElement}
+                 @ignore
+                 */undefined, undefined), /**
+                 @type {HTMLElement}
+                 @ignore
+                 */undefined);
             self.setInternal("invalidEl", invalidEl);
 
             var placeholder;
@@ -64,7 +73,7 @@ KISSY.add("combobox/render", function (S, Component) {
                 }
                 self.setInternal('placeholderEl', $('<label for="' +
                     inputId + '" ' +
-                    'class="'+prefixCls+'combobox-placeholder">' +
+                    'class="' + prefixCls + 'combobox-placeholder">' +
                     placeholder + '</label>').appendTo(el));
             }
         },
@@ -77,7 +86,7 @@ KISSY.add("combobox/render", function (S, Component) {
             this.get("input").attr("aria-expanded", v);
         },
 
-        _onSetHasTrigger: function (t) {
+        '_onSetHasTrigger': function (t) {
             var trigger = this.get("trigger");
             if (t) {
                 this.get("el").prepend(trigger);
@@ -119,10 +128,10 @@ KISSY.add("combobox/render", function (S, Component) {
         },
         HTML_PARSER: {
             input: function (el) {
-                return el.one("."+this.get('prefixCls')+"combobox-input");
+                return el.one("." + this.get('prefixCls') + "combobox-input");
             },
             trigger: function (el) {
-                return el.one("."+this.get('prefixCls')+"combobox-trigger");
+                return el.one("." + this.get('prefixCls') + "combobox-trigger");
             }
         }
     });

@@ -26,6 +26,7 @@
 <script src="../../src/filter-select.js"></script>
 <script src="../../src/local-data-source.js"></script>
 <script src="../../src/remote-data-source.js"></script>
+<script src="../../src/multi-value-combobox.js"></script>
 <script>
     KISSY.use("combobox", function (S, ComboBox) {
 
@@ -37,8 +38,7 @@
             var basicComboBox = new ComboBox({
                 render:"#newNew",
                 hasTrigger:false,
-                dataSource:{
-                    xclass:'combobox-RemoteDataSource',
+                dataSource:new ComboBox.RemoteDataSource({
                     xhrCfg:{
                         url:'./interface2.jss',
                         dataType:'json'
@@ -47,7 +47,7 @@
                     parse:function (inputVal, d) {
                         return d.result;
                     }
-                },
+                }),
                 maxItemCount:5,
                 format:function (query, data) {
                     var ret = [];

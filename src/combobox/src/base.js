@@ -3,7 +3,7 @@
  * @fileOverview Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender, Menu, undefined) {
+KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, undefined) {
     var ComboBox,
         $ = Node.all,
         KeyCodes = Node.KeyCodes,
@@ -14,8 +14,7 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                 adjustY: 1
             }
         },
-        win = $(S.Env.host),
-        SUFFIX = 'suffix';
+        win = $(S.Env.host);
 
     /**
      * KISSY ComboBox.
@@ -35,12 +34,13 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
              * @protected
              * @param data
              */
-            normalizeData: function (data) {
-                var self = this, contents, v, i, c;
+            'normalizeData': function (data) {
+                var self = this,
+                    contents, v, i, c;
                 if (data && data.length) {
                     data = data.slice(0, self.get("maxItemCount"));
                     if (self.get("format")) {
-                        contents = self.get("format").call(self, getValue(self), data);
+                        contents = self.get("format").call(self, self['getValueInternal'](), data);
                     } else {
                         contents = [];
                     }
@@ -73,8 +73,40 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
 
             },
 
+            /**
+             * get value
+             * @protected
+             */
+            getValueInternal: function () {
+                return this.get('input').val();
+            },
+
+            /**
+             * set value
+             * @protected
+             * @method
+             * @member KISSY.ComboBox
+             */
+            setValueInternal: function (value) {
+                this.get('input').val(value);
+            },
+
+            /**
+             * align menu
+             * @protected
+             */
+            'alignInternal': function () {
+                var self = this,
+                    menu = self.get("menu"),
+                    align = S.clone(menu.get("align"));
+                align.node = self.get("el");
+                S.mix(align, ALIGN, false);
+                menu.set("align", align);
+            },
+
             handleFocus: function () {
-                var self = this, placeholderEl;
+                var self = this,
+                    placeholderEl;
                 setInvalid(self, false);
                 if (placeholderEl = self.get("placeholderEl")) {
                     placeholderEl.hide();
@@ -82,11 +114,12 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
             },
 
             handleBlur: function () {
-                var self = this;
+                var self = this,
+                    placeholderEl = self.get("placeholderEl"),
+                    input;
                 ComboBox.superclass.handleBlur.apply(self, arguments);
                 delayHide.call(self);
-                var placeholderEl,
-                    input = self.get("input");
+                input = self.get("input");
                 self.validate(function (error, val) {
                     if (error) {
                         if (!self.get("focused") && val == input.val()) {
@@ -96,25 +129,30 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                         setInvalid(self, false);
                     }
                 });
-                if ((placeholderEl = self.get("placeholderEl")) && !input.val()) {
+                if (placeholderEl && !input.val()) {
                     placeholderEl.show();
                 }
             },
 
             handleMouseDown: function (e) {
-                ComboBox.superclass.handleMouseDown.apply(this, arguments);
                 var self = this,
                     input,
-                    target = e.target,
-                    trigger = self.get("trigger"),
-                    hasTrigger = self.get('hasTrigger');
+                    target,
+                    trigger ,
+                    hasTrigger;
+                ComboBox.superclass.handleMouseDown.apply(self, arguments);
+                target = e.target;
+                trigger = self.get("trigger");
+                hasTrigger = self.get('hasTrigger');
                 if (hasTrigger && (trigger[0] == target || trigger.contains(target))) {
                     input = self.get("input");
-                    if (!self.get('collapsed')) {
-                        self.set('collapsed', true);
-                    } else {
+                    if (self.get('collapsed')) {
+                        // fetch data
                         input[0].focus();
                         self.sendRequest('');
+                    } else {
+                        // switch from open to collapse
+                        self.set('collapsed', true);
                     }
                     e.preventDefault();
                 }
@@ -122,14 +160,18 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
 
             handleKeyEventInternal: function (e) {
                 var self = this,
-                    input = self.get("input"),
+                    updateInputOnDownUp,
+                    input,
+                    activeItem,
+                    handledByMenu,
                     menu = getMenu(self);
 
                 if (!menu) {
-                    return;
+                    return undefined;
                 }
 
-                var updateInputOnDownUp = self.get("updateInputOnDownUp");
+                input = self.get("input");
+                updateInputOnDownUp = self.get("updateInputOnDownUp");
 
                 if (updateInputOnDownUp) {
                     // combobox will change input value
@@ -145,57 +187,58 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                     }
                 }
 
-                var activeItem;
-
                 if (menu.get("visible")) {
-                    var handledByMenu = menu.handleKeydown(e);
+                    handledByMenu = menu['handleKeydown'](e);
 
-                    if (updateInputOnDownUp) {
-                        if (S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
-                            // update menu's active value to input just for show
-                            setValue(self, menu.get("activeItem").get("textContent"));
-                        }
-                    }
                     // esc
                     if (e.keyCode == KeyCodes.ESC) {
                         self.set("collapsed", true);
                         if (updateInputOnDownUp) {
                             // restore original user's input text
-                            setValue(self, self._savedInputValue);
+                            self['setValueInternal'](self._savedInputValue);
                         }
                         return true;
                     }
 
+                    activeItem = menu.get("activeItem");
+
+                    if (updateInputOnDownUp &&
+                        S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
+                        // update menu's active value to input just for show
+                        this.setValueInternal(activeItem.get("textContent"));
+                    }
+
                     // tab
                     // if menu is open and an menuitem is highlighted, see as click/enter
-                    if (e.keyCode == KeyCodes.TAB) {
-                        if (activeItem = menu.get("activeItem")) {
-                            activeItem.performActionInternal();
-                            // only prevent focus change in multiple mode
-                            if (self.get("multiple")) {
-                                return true;
-                            }
+                    if (e.keyCode == KeyCodes.TAB && activeItem) {
+                        // click activeItem
+                        activeItem.performActionInternal();
+                        // only prevent focus change in multiple mode
+                        if (self.get("multiple")) {
+                            return true;
                         }
                     }
+
                     return handledByMenu;
-                } else if ((e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP)) {
-                    // re-fetch , consider multiple input
-                    S.log("refetch : " + getValue(self));
-                    self.sendRequest(getValue(self));
+                } else if (e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP) {
+                    // re-fetch, consider multiple input
+                    // S.log("refetch : " + getValue(self));
+                    self.sendRequest(this.getValueInternal());
                     return true;
                 }
+                return  undefined;
             },
 
             syncUI: function () {
-                if (this.get("placeholder")) {
-                    var self = this,
-                        input = self.get("input"),
-                        inputValue = self.get("inputValue");
-
+                var self = this,
+                    input ,
+                    inputValue;
+                if (self.get("placeholder")) {
+                    input = self.get("input");
+                    inputValue = self.get("inputValue");
                     if (inputValue != undefined) {
                         input.val(inputValue);
                     }
-
                     if (!input.val()) {
                         self.get("placeholderEl").show();
                     }
@@ -214,7 +257,6 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                 } else {
                     callback(false, val);
                 }
-
             },
 
             bindMenu: function () {
@@ -224,37 +266,32 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                     menu = self.get("menu");
 
                 menu.on("click", function (e) {
-                    var item = e.target;
+                    var item = e.target,
+                        textContent = item.get('textContent');
                     // stop valuechange event
                     self._stopNotify = 1;
-                    selectItem(self, item);
+                    self['setValueInternal'](textContent);
+                    self._savedInputValue = textContent;
                     self.set("collapsed", true);
                     setTimeout(
                         function () {
                             self._stopNotify = 0;
                         },
-                        // valuechange interval
+                        // valuechange interval, hack
                         50
                     );
                 });
 
-                self.__repositionBuffer = S.buffer(reposition, 50);
-
-                win.on("resize", self.__repositionBuffer, self);
+                win.on("resize", self.__repositionBuffer = S.buffer(reposition, 50), self);
 
                 el = menu.get("el");
                 contentEl = menu.get("contentEl");
 
+                // menu has input!
                 el.on("focusout", delayHide, self);
                 el.on("focusin", clearDismissTimer, self);
 
-                contentEl.on("mouseover", function () {
-                    // trigger el focus
-                    self.get("input")[0].focus();
-                    // prevent menu from hiding
-                    clearDismissTimer.call(self);
-                });
-
+                contentEl.on("mouseover", onMenuMouseOver, self);
 
                 self.bindMenu = S.noop;
             },
@@ -270,17 +307,19 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
             },
 
             _onSetCollapsed: function (v) {
+                var self = this;
                 if (v) {
-                    hideMenu(this);
+                    hideMenu(self);
                 } else {
-                    showMenu(this);
+                    showMenu(self);
                 }
             },
 
             destructor: function () {
-                var self = this;
-                win.detach("resize", self.__repositionBuffer, this);
-                self.__repositionBuffer.stop();
+                var self = this,
+                    repositionBuffer = self.__repositionBuffer;
+                win.detach("resize", repositionBuffer, self);
+                repositionBuffer.stop();
             }
         },
         {
@@ -295,6 +334,17 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                  * @ignore
                  */
                 input: {
+                    view: 1
+                },
+
+                /**
+                 * initial value for input
+                 * @cfg {String} inputValue
+                 */
+                /**
+                 * @ignore
+                 */
+                inputValue: {
                     view: 1
                 },
 
@@ -377,7 +427,7 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                 menu: {
                     value: {},
                     setter: function (m) {
-                        if (m && m.isController) {
+                        if (m && m['isController']) {
                             m.setInternal("parent", this);
                         }
                     }
@@ -445,57 +495,6 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                 },
 
                 /**
-                 * Whether allow multiple input,separated by separator
-                 * Defaults to: false
-                 * @cfg {Boolean} multiple
-                 */
-                /**
-                 * @ignore
-                 */
-                multiple: {
-                },
-
-                /**
-                 * Separator chars used to separator multiple inputs.
-                 * Defaults to: ;,
-                 * @cfg {String} separator
-                 */
-                /**
-                 * @ignore
-                 */
-                separator: {
-                    value: ",;"
-                },
-
-                /**
-                 * Separator type.
-                 * After value( 'suffix' ) or before value( 'prefix' ).
-                 * Defaults to: 'suffix'
-                 * @cfg {String} separatorType
-                 */
-                /**
-                 * @ignore
-                 */
-                separatorType: {
-                    value: SUFFIX
-                },
-
-                /**
-                 * Whether whitespace is part of toke value.
-                 * Default to: true
-                 * @cfg {Boolean} whitespace
-                 * @private
-                 */
-                /**
-                 * @ignore
-                 */
-                whitespace: {
-                    valueFn: function () {
-                        return this.get("separatorType") == SUFFIX;
-                    }
-                },
-
-                /**
                  * Whether update input's value at keydown or up when combobox menu shows.
                  * Default to: true
                  * @cfg {Boolean} updateInputOnDownUp
@@ -505,29 +504,6 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                  */
                 updateInputOnDownUp: {
                     value: true
-                },
-
-                /**
-                 * If separator wrapped by literal chars,separator become normal chars.
-                 * Defaults to: "
-                 * @cfg {String} literal
-                 */
-                /**
-                 * @ignore
-                 */
-                literal: {
-                    value: "\""
-                },
-
-                /**
-                 * Whether align menu with individual token after separated by separator.
-                 * Defaults to: false
-                 * @cfg {Boolean} alignWithCursor
-                 */
-                /**
-                 * @ignore
-                 */
-                alignWithCursor: {
                 },
 
                 /**
@@ -555,19 +531,12 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
 
     // #----------------------- private start
 
-    function selectItem(self, item) {
-        if (item) {
-            var textContent = item.get("textContent"),
-                separatorType = self.get("separatorType");
-            setValue(self, textContent + (separatorType == SUFFIX ? "" : " "));
-            self._savedInputValue = textContent;
-            /**
-             * fired when user select from suggestion list (bubbled from menuItem)
-             * @event click
-             * @param e
-             * @param e.target Selected menuItem
-             */
-        }
+    function onMenuMouseOver() {
+        var self = this;
+        // trigger el focus
+        self.get("input")[0].focus();
+        // prevent menu from hiding
+        clearDismissTimer.call(self);
     }
 
     function setInvalid(self, error) {
@@ -584,10 +553,9 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
         }
     }
 
-
     function getMenu(self, init) {
         var m = self.get("menu");
-        if (m && !m.isController) {
+        if (m && !m['isController']) {
             if (init) {
                 m = Component.create(m, self);
                 self.setInternal("menu", m);
@@ -605,45 +573,11 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
         }
     }
 
-    function alignMenuImmediately(self) {
-        var menu = self.get("menu"),
-            align = S.clone(menu.get("align"));
-        align.node = self.get("el");
-        S.mix(align, ALIGN, false);
-        menu.set("align", align);
-    }
-
-    function alignWithTokenImmediately(self) {
-        var inputDesc = getInputDesc(self),
-            tokens = inputDesc.tokens,
-            menu = self.get("menu"),
-            cursorPosition = inputDesc.cursorPosition,
-            tokenIndex = inputDesc.tokenIndex,
-            tokenCursorPosition,
-            cursorOffset,
-            input = self.get("input");
-        tokenCursorPosition = tokens.slice(0, tokenIndex).join("").length;
-        if (tokenCursorPosition > 0) {
-            // behind separator
-            ++tokenCursorPosition;
-        }
-        input.prop("selectionStart", tokenCursorPosition);
-        input.prop("selectionEnd", tokenCursorPosition);
-        cursorOffset = cursor(input);
-        input.prop("selectionStart", cursorPosition);
-        input.prop("selectionEnd", cursorPosition);
-        menu.set("xy", [cursorOffset.left, cursorOffset.top]);
-    }
-
     function reposition() {
         var self = this,
             menu = getMenu(self);
         if (menu && menu.get("visible")) {
-            if (self.get("multiple") && self.get("alignWithCursor")) {
-                alignWithTokenImmediately(self);
-            } else {
-                alignMenuImmediately(self);
-            }
+            self['alignInternal']();
         }
     }
 
@@ -679,84 +613,17 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
             }
             menu.show();
             reposition.call(self);
-            self.get("input").attr("aria-owns", menu.get("el")[0].id);
+            self.get("input").attr("aria-owns", menu.get("el").attr('id'));
         }
     }
-
-    function setValue(self, value) {
-        var input = self.get("input");
-        if (self.get("multiple")) {
-            var inputDesc = getInputDesc(self),
-                tokens = inputDesc.tokens,
-                tokenIndex = Math.max(0, inputDesc.tokenIndex),
-                separator = self.get("separator"),
-                cursorPosition,
-                separatorType = self.get("separatorType"),
-                token = tokens[tokenIndex];
-
-            if (token && separator.indexOf(token.charAt(0)) != -1) {
-                tokens[tokenIndex] = token.charAt(0);
-            } else {
-                tokens[tokenIndex] = "";
-            }
-
-            tokens[tokenIndex] += value;
-
-            var nextToken = tokens[tokenIndex + 1];
-
-            // appendSeparatorOnComplete if next token does not start with separator
-            if (separatorType == SUFFIX && (!nextToken || separator.indexOf(nextToken.charAt(0)) == -1 )) {
-                tokens[tokenIndex] += separator.charAt(0);
-            }
-
-            cursorPosition = tokens.slice(0, tokenIndex + 1).join("").length;
-
-            input.val(tokens.join(""));
-
-            input.prop("selectionStart", cursorPosition);
-            input.prop("selectionEnd", cursorPosition);
-        } else {
-            input.val(value);
-        }
-    }
-
-
-    /**
-     * Consider multiple mode , get token at current cursor position
-     */
-    function getValue(self) {
-        var input = self.get("input"),
-            inputVal = input.val();
-        if (self.get("multiple")) {
-            var inputDesc = getInputDesc(self);
-            var tokens = inputDesc.tokens,
-                tokenIndex = inputDesc.tokenIndex;
-            var separator = self.get("separator");
-            var separatorType = self.get("separatorType");
-            var token = tokens[tokenIndex] || "";
-            // only if token starts with separator , then token has meaning!
-            // token can not be empty
-            if (token && separator.indexOf(token.charAt(0)) != -1) {
-                // remove separator
-                return token.substring(1);
-            }
-            // cursor is at the beginning of textarea
-            if (separatorType == SUFFIX && (tokenIndex == 0 || tokenIndex == -1)) {
-                return token;
-            }
-            return undefined;
-        } else {
-            return inputVal;
-        }
-    }
-
 
     function onValueChange() {
-        var self = this;
+        var self = this,
+            value;
         if (self._stopNotify) {
             return;
         }
-        var value = getValue(self);
+        value = self['getValueInternal']();
         if (value === undefined) {
             self.set("collapsed", true);
             return;
@@ -775,9 +642,11 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
             i,
             menu = getMenu(self, 1);
 
-        data = self.normalizeData(data);
+        data = self['normalizeData'](data);
 
         menu.removeChildren(true);
+
+        menu.set("highlightedItem", null);
 
         if (data && data.length) {
             for (i = 0; i < data.length; i++) {
@@ -786,7 +655,7 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
             }
 
             // make menu item (which textContent is same as input) active
-            val = getValue(self);
+            val = self['getValueInternal']();
             for (i = 0; i < children.length; i++) {
                 if (children[i].get("textContent") == val) {
                     menu.set("highlightedItem", children[i]);
@@ -809,64 +678,11 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
         }
     }
 
-    function getInputDesc(self) {
-        var input = self.get("input"),
-            inputVal = input.val(),
-            tokens = [],
-            cache = [],
-            literal = self.get("literal"),
-            separator = self.get("separator"),
-            inLiteral = false,
-            whitespace = self.get("whitespace"),
-            cursorPosition = input.prop('selectionStart'),
-            tokenIndex = -1;
-
-        for (var i = 0; i < inputVal.length; i++) {
-            var c = inputVal.charAt(i);
-            if (i == cursorPosition) {
-                // current token index
-                tokenIndex = tokens.length;
-            }
-            if (!inLiteral) {
-                // whitespace is not part of token value
-                // then separate
-                if (!whitespace && /\s|\xa0/.test(c)) {
-                    tokens.push(cache.join(""));
-                    cache = [];
-                }
-
-                if (separator.indexOf(c) != -1) {
-                    tokens.push(cache.join(""));
-                    cache = [];
-                }
-            }
-            if (literal) {
-                if (c == literal) {
-                    inLiteral = !inLiteral;
-                }
-            }
-            cache.push(c);
-        }
-
-        if (cache.length) {
-            tokens.push(cache.join(""));
-        }
-        if (tokenIndex == -1) {
-            tokenIndex = tokens.length - 1;
-        }
-        return {
-            tokens: tokens,
-            cursorPosition: cursorPosition,
-            tokenIndex: tokenIndex
-        };
-    }
-
     // #------------------------private end
 
     return ComboBox;
 }, {
     requires: [
-        './cursor',
         'node',
         'component/base',
         './render',

@@ -139,7 +139,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              *
              * @type {boolean}
              * @member KISSY.Component.Controller
-             * @protected
              */
             isController: true,
 

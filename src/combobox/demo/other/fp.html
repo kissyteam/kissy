@@ -54,6 +54,7 @@
 <script src="../../src/cursor.js"></script>
 <script src="../../src/local-data-source.js"></script>
 <script src="../../src/remote-data-source.js"></script>
+<script src="../../src/multi-value-combobox.js"></script>
 <script>
     KISSY.use("event,combobox", function (S, Event, ComboBox) {
 
@@ -71,8 +72,7 @@
                 render:S.one("#container"),
                 hasTrigger:false,
                 width:500,
-                dataSource:{
-                    xclass:'combobox-RemoteDataSource',
+                dataSource:new ComboBox.RemoteDataSource({
                     xhrCfg:{
                         url:'http://suggest.taobao.com/sug',
                         dataType:'jsonp',
@@ -86,7 +86,7 @@
                         return results.result;
                     },
                     cache:true
-                },
+                }),
                 format:function (query, results) {
                     var ret = [];
                     S.each(results, function (r) {
