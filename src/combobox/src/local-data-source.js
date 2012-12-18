@@ -3,7 +3,7 @@
  * @fileOverview Local dataSource for ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/LocalDataSource", function (S, Component) {
+KISSY.add("combobox/LocalDataSource", function (S) {
 
     /**
      * Local dataSource for comboBox.
@@ -66,8 +66,6 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
             callback.call(context, data);
         }
     });
-
-    Component.Manager.setConstructorByXClass("combobox-LocalDataSource", LocalDataSource);
 
     return LocalDataSource;
 }, {

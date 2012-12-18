@@ -377,7 +377,7 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                 menu: {
                     value: {},
                     setter: function (m) {
-                        if (m&& m.isController) {
+                        if (m && m.isController) {
                             m.setInternal("parent", this);
                         }
                     }
@@ -408,9 +408,6 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                  */
                 dataSource: {
                     // 和 input 关联起来，input可以有很多，每个数据源可以不一样，但是 menu 共享
-                    setter: function (c) {
-                        return Component.create(c);
-                    }
                 },
 
                 /**

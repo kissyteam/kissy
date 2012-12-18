@@ -27,10 +27,9 @@ KISSY.use("combobox", function (S, ComboBox) {
         var comboBox = new ComboBox({
             width: 200,
             render: '#container',
-            dataSource: {
-                xclass: 'combobox-LocalDataSource',
+            dataSource: new ComboBox.LocalDataSource({
                 data: data
-            },
+            }),
             format: function (q, data) {
                 var ret = [];
                 S.each(data, function (d) {

@@ -32,10 +32,9 @@ KISSY.use("combobox", function (S, ComboBox) {
                     complete(parseInt(v) > 10 ? ERROR : "");
                 },
                 render: '#container',
-                dataSource: {
-                    xclass: 'combobox-LocalDataSource',
+                dataSource: new ComboBox.LocalDataSource({
                     data: data
-                },
+                }),
                 format: function (q, data) {
                     var ret = [];
                     S.each(data, function (d) {
@@ -142,10 +141,9 @@ KISSY.use("combobox", function (S, ComboBox) {
                 width: 200,
                 invalidMessage:ERROR,
                 render: '#container',
-                dataSource: {
-                    xclass: 'combobox-LocalDataSource',
+                dataSource: new ComboBox.LocalDataSource({
                     data: data
-                },
+                }),
                 format: function (q, data) {
                     var ret = [];
                     S.each(data, function (d) {

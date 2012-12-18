@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:52
+build time: Dec 18 20:39
 */
 /**
  * @ignore
@@ -382,7 +382,7 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                 menu: {
                     value: {},
                     setter: function (m) {
-                        if (m&& m.isController) {
+                        if (m && m.isController) {
                             m.setInternal("parent", this);
                         }
                     }
@@ -413,9 +413,6 @@ KISSY.add("combobox/base", function (S, cursor, Node, Component, ComboBoxRender,
                  */
                 dataSource: {
                     // 和 input 关联起来，input可以有很多，每个数据源可以不一样，但是 menu 共享
-                    setter: function (c) {
-                        return Component.create(c);
-                    }
                 },
 
                 /**
@@ -920,6 +917,7 @@ KISSY.add("combobox", function (S, ComboBox, FilterSelect, LocalDataSource, Remo
         'combobox/RemoteDataSource'
     ]
 });/**
+ * @ignore
  * get cursor position of input
  * @author yiminghe@gmail.com
  */
@@ -1129,7 +1127,7 @@ KISSY.add("combobox/filter-select", function (S, Combobox) {
  * @fileOverview Local dataSource for ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/LocalDataSource", function (S, Component) {
+KISSY.add("combobox/LocalDataSource", function (S) {
 
     /**
      * Local dataSource for comboBox.
@@ -1193,8 +1191,6 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
         }
     });
 
-    Component.Manager.setConstructorByXClass("combobox-LocalDataSource", LocalDataSource);
-
     return LocalDataSource;
 }, {
     requires:['component/base']
@@ -1203,7 +1199,7 @@ KISSY.add("combobox/LocalDataSource", function (S, Component) {
  * @fileOverview Remote datasource for ComboBox
  * @author yiminghe@gmail.com
  */
-KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
+KISSY.add("combobox/RemoteDataSource", function (S, IO) {
 
     /**
      * dataSource which wrap {@link KISSY.IO} utility.
@@ -1312,12 +1308,9 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO, Component) {
             self.io = IO(xhrCfg);
         }
     });
-
-    Component.Manager.setConstructorByXClass("combobox-RemoteDataSource", RemoteDataSource);
-
     return RemoteDataSource;
 }, {
-    requires: ['ajax', 'component/base']
+    requires: ['ajax']
 });/**
  * @ignore
  * @fileOverview Render aria properties to input element.
