@@ -23,12 +23,12 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
 //    var KEY_ESCAPE = 27;
 
     S.mix(Tabs.Config, {
-        aria:true
+        aria: true
     });
 
     Switchable.addPlugin({
-        name:"aria",
-        init:function (self) {
+        name: "aria",
+        init: function (self) {
             if (!self.config.aria) return;
             var triggers = self.triggers,
                 activeIndex = self.activeIndex,
@@ -201,7 +201,7 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
     }
 
     function _tabSwitch(ev) {
-        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
+        var domEvent = ev.originalEvent && !!(ev.originalEvent.target || ev.originalEvent.srcElement);
 
         var self = this;
         // 上一个激活 tab
@@ -233,7 +233,7 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
 
 
 }, {
-    requires:["dom", "event", "../base", "../aria", "./base"]
+    requires: ["dom", "event", "../base", "../aria", "./base"]
 });
 
 /**

@@ -22,7 +22,7 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, S
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
     var setTabIndex = Aria.setTabIndex,
-        DOM_EVENT = {originalEvent:{target:1}},
+        DOM_EVENT = {originalEvent: {target: 1}},
         FORWARD = 'forward',
         BACKWARD = 'backward';
 
@@ -35,7 +35,7 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, S
             panel = panels[index * steps],
             triggers = self.triggers,
             trigger = triggers[index],
-            domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
+            domEvent = ev.originalEvent && !!(ev.originalEvent.target || ev.originalEvent.srcElement);
 
         // dom 事件触发
         if (domEvent ||
@@ -236,7 +236,7 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, S
 
                 c = findPanel.call(self, t);
                 if (c) {
-                    self.fire('itemSelected', { item:c });
+                    self.fire('itemSelected', { item: c });
                     e.halt();
                 }
                 break;
@@ -244,12 +244,12 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, S
     }
 
     S.mix(Carousel.Config, {
-        aria:false
+        aria: false
     });
 
     Switchable.addPlugin({
-        name:"aria",
-        init:function (self) {
+        name: "aria",
+        init: function (self) {
             if (!self.config.aria) {
                 return;
             }
@@ -314,7 +314,7 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, S
     }, Carousel);
 
 }, {
-    requires:["dom", "event", "../aria", "./base", '../base']
+    requires: ["dom", "event", "../aria", "./base", '../base']
 });
 
 /**

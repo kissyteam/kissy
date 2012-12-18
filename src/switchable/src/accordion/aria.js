@@ -25,12 +25,12 @@ KISSY.add('switchable/accordion/aria', function (S, DOM, Event, Aria, Accordion,
 //    var KEY_ESCAPE = 27;
 
     S.mix(Accordion.Config, {
-        aria:true
+        aria: true
     });
 
     Switchable.addPlugin({
-        name:"aria",
-        init:function (self) {
+        name: "aria",
+        init: function (self) {
             if (!self.config.aria) return;
             var container = self.container,
                 activeIndex = self.activeIndex;
@@ -289,7 +289,7 @@ KISSY.add('switchable/accordion/aria', function (S, DOM, Event, Aria, Accordion,
     // 显示 tabpanel
     function _tabSwitch(ev) {
 
-        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement),
+        var domEvent = ev.originalEvent && !!(ev.originalEvent.target || ev.originalEvent.srcElement),
             self = this,
             multiple = self.config.multiple,
             activeIndex = ev.currentIndex,
@@ -317,7 +317,7 @@ KISSY.add('switchable/accordion/aria', function (S, DOM, Event, Aria, Accordion,
         focusTo.call(self, activeIndex, domEvent);
     }
 }, {
-    requires:["dom", "event", "../aria", "./base", "../base"]
+    requires: ["dom", "event", "../aria", "./base", "../base"]
 });
 
 /**

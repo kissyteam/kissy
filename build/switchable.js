@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:57
+build time: Dec 18 16:02
 */
 /**
  * @fileOverview accordion aria support
@@ -30,12 +30,12 @@ KISSY.add('switchable/accordion/aria', function (S, DOM, Event, Aria, Accordion,
 //    var KEY_ESCAPE = 27;
 
     S.mix(Accordion.Config, {
-        aria:true
+        aria: true
     });
 
     Switchable.addPlugin({
-        name:"aria",
-        init:function (self) {
+        name: "aria",
+        init: function (self) {
             if (!self.config.aria) return;
             var container = self.container,
                 activeIndex = self.activeIndex;
@@ -294,7 +294,7 @@ KISSY.add('switchable/accordion/aria', function (S, DOM, Event, Aria, Accordion,
     // 显示 tabpanel
     function _tabSwitch(ev) {
 
-        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement),
+        var domEvent = ev.originalEvent && !!(ev.originalEvent.target || ev.originalEvent.srcElement),
             self = this,
             multiple = self.config.multiple,
             activeIndex = ev.currentIndex,
@@ -322,7 +322,7 @@ KISSY.add('switchable/accordion/aria', function (S, DOM, Event, Aria, Accordion,
         focusTo.call(self, activeIndex, domEvent);
     }
 }, {
-    requires:["dom", "event", "../aria", "./base", "../base"]
+    requires: ["dom", "event", "../aria", "./base", "../base"]
 });
 
 /**
@@ -1540,7 +1540,7 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, S
 //    var KEY_INSERT = 45;
 //    var KEY_ESCAPE = 27;
     var setTabIndex = Aria.setTabIndex,
-        DOM_EVENT = {originalEvent:{target:1}},
+        DOM_EVENT = {originalEvent: {target: 1}},
         FORWARD = 'forward',
         BACKWARD = 'backward';
 
@@ -1553,7 +1553,7 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, S
             panel = panels[index * steps],
             triggers = self.triggers,
             trigger = triggers[index],
-            domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
+            domEvent = ev.originalEvent && !!(ev.originalEvent.target || ev.originalEvent.srcElement);
 
         // dom 事件触发
         if (domEvent ||
@@ -1754,7 +1754,7 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, S
 
                 c = findPanel.call(self, t);
                 if (c) {
-                    self.fire('itemSelected', { item:c });
+                    self.fire('itemSelected', { item: c });
                     e.halt();
                 }
                 break;
@@ -1762,12 +1762,12 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, S
     }
 
     S.mix(Carousel.Config, {
-        aria:false
+        aria: false
     });
 
     Switchable.addPlugin({
-        name:"aria",
-        init:function (self) {
+        name: "aria",
+        init: function (self) {
             if (!self.config.aria) {
                 return;
             }
@@ -1832,7 +1832,7 @@ KISSY.add("switchable/carousel/aria", function (S, DOM, Event, Aria, Carousel, S
     }, Carousel);
 
 }, {
-    requires:["dom", "event", "../aria", "./base", '../base']
+    requires: ["dom", "event", "../aria", "./base", '../base']
 });
 
 /**
@@ -2772,12 +2772,12 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
 //    var KEY_ESCAPE = 27;
 
     S.mix(Tabs.Config, {
-        aria:true
+        aria: true
     });
 
     Switchable.addPlugin({
-        name:"aria",
-        init:function (self) {
+        name: "aria",
+        init: function (self) {
             if (!self.config.aria) return;
             var triggers = self.triggers,
                 activeIndex = self.activeIndex,
@@ -2950,7 +2950,7 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
     }
 
     function _tabSwitch(ev) {
-        var domEvent = !!(ev.originalEvent.target || ev.originalEvent.srcElement);
+        var domEvent = ev.originalEvent && !!(ev.originalEvent.target || ev.originalEvent.srcElement);
 
         var self = this;
         // 上一个激活 tab
@@ -2982,7 +2982,7 @@ KISSY.add('switchable/tabs/aria', function (S, DOM, Event, Switchable, Aria, Tab
 
 
 }, {
-    requires:["dom", "event", "../base", "../aria", "./base"]
+    requires: ["dom", "event", "../base", "../aria", "./base"]
 });
 
 /**
