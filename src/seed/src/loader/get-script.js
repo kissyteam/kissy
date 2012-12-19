@@ -49,8 +49,16 @@
          */
         getScript: function (url, success, charset) {
 
-            var src = utils.resolveByPage(url).toString(),
-                config = success,
+            var src;
+
+            try {
+                src = utils.resolveByPage(url).toString();
+            } catch (e) {
+                S.log('invalid url: ' + url, 'warn');
+                src = url;
+            }
+
+            var config = success,
                 css = 0,
                 error,
                 timeout,
