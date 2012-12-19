@@ -80,6 +80,7 @@
 
     <!-- 压缩代码 -->
     <target name="compress" depends="compress-css">
+        <!-- remove console.log to prevent memory leak in chrome! -->
         <replaceregexp match="^\s*(S|KISSY)\.(log|error)\s*\(.+$"
                        replace=""
                        flags="g"
