@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 00:59
+build time: Dec 20 01:26
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121220005938' will replace with current timestamp when compressing.
+         * NOTICE: '20121220012654' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121220005938',
+        __BUILD_TIME: '20121220012654',
         /**
          * KISSY Environment.
          * @private
@@ -4912,7 +4912,9 @@ var KISSY = (function (undefined) {
  */
 (function (S, undefined) {
 
-    var Loader, data, utils, UA, LOADING, LOADED, ERROR, ATTACHED;
+    var Loader, data, utils, UA,
+        remoteLoads = {},
+        LOADING, LOADED, ERROR, ATTACHED;
 
     Loader = S.Loader;
     data = Loader.STATUS;
@@ -5106,8 +5108,6 @@ var KISSY = (function (undefined) {
                             self.__currentMod = null;
                         }
                     }
-
-                    S.log('load remote module: ' + modName, 'info');
                 }
 
                 // nodejs is synchronous,
@@ -5124,6 +5124,10 @@ var KISSY = (function (undefined) {
 
         function checkHandler() {
             if (mod.fn) {
+                if (!remoteLoads[modName]) {
+                    S.log('load remote module: ' + modName, 'info');
+                    remoteLoads[modName] = 1;
+                }
                 // 只在 LOADED 后加载依赖项一次
                 // 防止 config('modules') requires 和模块中 requires 不一致
                 loadChecker.loadModRequires(self, mod);
@@ -5732,7 +5736,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121220005938'
+            tag: '20121220012654'
         }, getBaseInfo()));
     }
 

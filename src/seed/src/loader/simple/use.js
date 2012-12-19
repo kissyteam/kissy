@@ -5,7 +5,9 @@
  */
 (function (S, undefined) {
 
-    var Loader, data, utils, UA, LOADING, LOADED, ERROR, ATTACHED;
+    var Loader, data, utils, UA,
+        remoteLoads = {},
+        LOADING, LOADED, ERROR, ATTACHED;
 
     Loader = S.Loader;
     data = Loader.STATUS;
@@ -199,8 +201,6 @@
                             self.__currentMod = null;
                         }
                     }
-
-                    S.log('load remote module: ' + modName, 'info');
                 }
 
                 // nodejs is synchronous,
@@ -217,6 +217,10 @@
 
         function checkHandler() {
             if (mod.fn) {
+                if (!remoteLoads[modName]) {
+                    S.log('load remote module: ' + modName, 'info');
+                    remoteLoads[modName] = 1;
+                }
                 // 只在 LOADED 后加载依赖项一次
                 // 防止 config('modules') requires 和模块中 requires 不一致
                 loadChecker.loadModRequires(self, mod);
