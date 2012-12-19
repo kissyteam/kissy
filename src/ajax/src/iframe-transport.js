@@ -104,7 +104,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
             // set target to iframe to avoid main page refresh
             DOM.attr(form, {
                 target: iframe.id,
-                action: c.uri.toString(c.serializeArray),
+                action: io._getUrlForSend(),
                 method: 'post'
                 //enctype:'multipart/form-data',
                 //encoding:'multipart/form-data'
@@ -139,7 +139,9 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
             var self = this,
                 form = self.form,
                 io = self.io,
-                eventType = event.type,
+                eventType = /**
+                 @type String
+                 @ignore*/event.type,
                 iframeDoc,
                 iframe = io.iframe;
 
@@ -223,7 +225,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
         }
     });
 
-    io.setupTransport('iframe', IframeTransport);
+    io['setupTransport']('iframe', IframeTransport);
 
     return io;
 

@@ -1,0 +1,42 @@
+<html>
+<head>
+    <script type="text/javascript" src="/kissy/build/seed.js"></script>
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+</head>
+<body>
+<h1>KISSY IO Advanced Test Cases</h1>
+<script type="text/javascript">
+    window.UnEncodePath = 't.jss';
+</script>
+<script src="../../../src/base.js"></script>
+<script src="../../../src/methods.js"></script>
+<script src="../../../src/iframe-transport.js"></script>
+<script src="../../../src/form-serializer.js"></script>
+<script src="../../../src/form.js"></script>
+<script src="../../../src/jsonp.js"></script>
+<script src="../../../src/script-transport.js"></script>
+<script src="../../../src/xhr-transport-base.js"></script>
+<script src="../../../src/xhr-transport.js"></script>
+<script src="../../../src/xdr-flash-transport.js"></script>
+<script src="../../../src/sub-domain-transport.js"></script>
+<script src="../../../src/ajax.js"></script>
+<script src="un-encode-spec.js"></script>
+<script>
+
+    KISSY.use('core', function (S) {
+        setTimeout(function () {
+            S.ready(function () {
+                jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+                jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+                jasmine.getEnv().execute(function () {
+                    jasmine.kissyNext(this.results().failedCount);
+                });
+            });
+        }, 100);
+    });
+</script>
+</body>
+</html>

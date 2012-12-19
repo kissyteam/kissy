@@ -5,31 +5,31 @@
  */
 (function (S, undefined) {
 
-    var Loader, data, utils, UA, remoteModules, LOADING, LOADED, ERROR, ATTACHED;
+    var Loader, data, utils, UA, LOADING, LOADED, ERROR, ATTACHED;
 
     Loader = S.Loader;
     data = Loader.STATUS;
     utils = Loader.Utils;
     UA = S.UA;
-    remoteModules = {};
     LOADING = data.LOADING;
     LOADED = data.LOADED;
     ERROR = data.ERROR;
     ATTACHED = data.ATTACHED;
 
     function LoadChecker(fn) {
-        this.fn = fn;
-        this.waitMods = {};
-        this.requireLoadedMods = {};
+        S.mix(this, {
+            fn: fn,
+            waitMods: {},
+            requireLoadedMods: {}
+        });
     }
 
     LoadChecker.prototype = {
 
         check: function () {
             var self = this,
-                waitMods = self.waitMods,
                 fn = self.fn;
-            if (fn && S.isEmptyObject(waitMods)) {
+            if (fn && S.isEmptyObject(self.waitMods)) {
                 fn();
                 self.fn = null;
             }
@@ -51,13 +51,14 @@
         // prevent looping dependency sub tree more than once for one use()
         loadModRequires: function (loader, mod) {
             // 根据每次 use 缓存子树
-            var requireLoadedMods = this.requireLoadedMods,
+            var self = this,
+                requireLoadedMods = self.requireLoadedMods,
                 modName = mod.name,
                 requires;
             if (!requireLoadedMods[modName]) {
                 requireLoadedMods[modName] = 1;
                 requires = mod.getNormalizedRequires();
-                loadModules(loader, requires, this);
+                loadModules(loader, requires, self);
             }
         }
 
@@ -91,7 +92,7 @@
             normalizedModNames = utils.unalias(runtime, modNames);
 
             function loadReady() {
-                attachMods(normalizedModNames, runtime, []);
+                utils.attachModsRecursively(normalizedModNames, runtime);
                 callback && callback.apply(runtime, utils.getModules(runtime, modNames));
             }
 
@@ -102,41 +103,12 @@
             loadChecker.check();
 
             return self;
-        },
-
-        clear: function () {
         }
     });
 
-    function attachMods(modNames, runtime, stack) {
-        var i,
-            l = modNames.length,
-            stackDepth = stack.length;
-
-        for (i = 0; i < l; i++) {
-            attachMod(modNames[i], runtime, stack);
-            stack.length = stackDepth;
-        }
-    }
-
-    function attachMod(modName, runtime, stack) {
-        var mods = runtime.Env.mods,
-            m = mods[modName];
-        if (m.status == ATTACHED) {
-            return;
-        }
-        if (S.inArray(modName, stack)) {
-            stack.push(modName);
-            S.error('find cyclic dependency between mods: ' + stack);
-            return;
-        }
-        stack.push(modName);
-        attachMods(m.getNormalizedRequires(), runtime, stack);
-        utils.attachMod(runtime, m);
-    }
-
     function loadModules(self, modNames, loadChecker) {
-        var i, l = modNames.length;
+        var i,
+            l = modNames.length;
         for (i = 0; i < l; i++) {
             loadModule(self, modNames[i], loadChecker);
         }
@@ -145,6 +117,7 @@
     function loadModule(self, modName, loadChecker) {
         var runtime = self.runtime,
             status,
+            isWait,
             mods = runtime.Env.mods,
             mod = mods[modName];
 
@@ -159,18 +132,24 @@
             return;
         }
 
-        // 只在 LOADED 后加载一次依赖项一次
+        // 已经静态存在在页面上
+        // 或者该模块不是根据自身模块名动态加载来的(ajax.js包含 ajax/base,ajax/form)
         if (status === LOADED) {
             loadChecker.loadModRequires(self, mod);
         } else {
-            var isWait = loadChecker.isModWait(modName);
+            isWait = loadChecker.isModWait(modName);
+            // prevent duplicate listen for this use
+            //  use('a,a') or
+            //  user('a,c') a require b, c require b
+            // listen b only once
+            // already waiting, will notify loadReady in the future
+            if (isWait) {
+                return;
+            }
             // error or init or loading
             loadChecker.addWaitMod(modName);
-            // parallel use
-            if (status <= LOADING &&
-                // prevent duplicate listen for one use
-                // prevent duplicate getScript for the same url for one use
-                !isWait) {
+            // in case parallel use (more than one use)
+            if (status <= LOADING) {
                 // load and attach this module
                 fetchModule(self, mod, loadChecker);
             }
@@ -185,6 +164,7 @@
             modName = mod.getName(),
             charset = mod.getCharset(),
             url = mod.getFullPath(),
+            currentModule = 0,
             ie = UA.ie,
             isCss = mod.getType() == 'css';
 
@@ -202,10 +182,6 @@
             // syntaxError in all browser will trigger this
             // same as #111 : https://github.com/kissyteam/kissy/issues/111
             success: function () {
-                if (!remoteModules[modName]) {
-                    S.log('load remote module: ' + modName, 'info');
-                    remoteModules[modName] = 1;
-                }
                 // parallel use
                 // 只设置第一个 use 处
                 if (mod.status == LOADING) {
@@ -213,7 +189,6 @@
                         // css does not set LOADED because no add for css! must be set manually
                         utils.registerModule(runtime, modName, S.noop);
                     } else {
-                        var currentModule;
                         // does not need this step for css
                         // standard browser(except ie9) fire load after KISSY.add immediately
                         if (currentModule = self.__currentMod) {
@@ -224,10 +199,15 @@
                             self.__currentMod = null;
                         }
                     }
+
+                    S.log('load remote module: ' + modName, 'info');
                 }
 
-                // force to asynchronously, need waitMods filled for loadChecker
-                // in case getScript is synchronous (cache in ie6? nodejs!)
+                // nodejs is synchronous,
+                // use('x,y')
+                // need x,y filled into waitingMods first
+                // x,y waiting -> x -> load -> y -> load -> check
+
                 S.later(checkHandler);
             },
             error: checkHandler,
@@ -237,6 +217,8 @@
 
         function checkHandler() {
             if (mod.fn) {
+                // 只在 LOADED 后加载依赖项一次
+                // 防止 config('modules') requires 和模块中 requires 不一致
                 loadChecker.loadModRequires(self, mod);
                 loadChecker.removeWaitMod(modName);
                 // a mod is loaded, need to check globally
@@ -261,9 +243,4 @@
 
  2012-09-20 yiminghe@gmail.com refactor
  - 参考 async 重构，去除递归回调
-
- TODO： 1.4 不兼容修改
- - 分离下载与 attach(执行) 过程
- - 下载阶段构建依赖树
- - use callback 统一 attach
  */

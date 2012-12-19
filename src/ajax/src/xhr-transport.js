@@ -21,7 +21,6 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
          */
         function XhrTransport(io) {
             var c = io.config,
-                url = c.url,
                 crossDomain = c.crossDomain,
                 self = this,
                 xdrCfg = c['xdr'] || {},
@@ -49,7 +48,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
                 }
             }
 
-            S.log('crossDomain: ' + crossDomain + ', use XhrTransport for: ' + url);
+            S.log('crossDomain: ' + crossDomain + ', use XhrTransport for: ' + c.url);
             self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
             return self;
         }
@@ -62,7 +61,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 
         });
 
-        io.setupTransport('*', XhrTransport);
+        io['setupTransport']('*', XhrTransport);
     }
 
     return io;

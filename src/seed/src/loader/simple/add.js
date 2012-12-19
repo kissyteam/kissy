@@ -9,16 +9,15 @@
         UA = S.UA,
         utils = Loader.Utils;
 
-
     S.augment(Loader, Loader.Target, {
 
-        //firefox,ie9,chrome 如果 add 没有模块名，模块定义先暂存这里
+        // standard browser 如果 add 没有模块名，模块定义先暂存这里
         __currentMod: null,
 
-        //ie6,7,8开始载入脚本的时间
+        // ie 开始载入脚本的时间
         __startLoadTime: 0,
 
-        //ie6,7,8开始载入脚本对应的模块名
+        // ie6,7,8开始载入脚本对应的模块名
         __startLoadModName: null,
 
         /**
@@ -26,12 +25,12 @@
          * @param {String|Object} [name] module name
          * @param {Function|Object} [fn] entry point into the module that is used to bind module to KISSY
          * @param {Object} [config] special config for this add
-         * @param {String[]} [config.requires] array of mod's name that current module requires
+         * @param {String[]} [config.requires] array of mod 's name that current module requires
          * @member KISSY.Loader
          *
          * for example:
          *      @example
-         *      KISSY.add('module-name', function(S){ }, {requires: ['mod1']});
+         *      KISSY.add('package-name/module-name', function(S){ }, {requires: ['mod1']});
          */
         add: function (name, fn, config) {
             var self = this,

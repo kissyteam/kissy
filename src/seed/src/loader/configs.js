@@ -7,6 +7,9 @@
 
     var Loader = S.Loader,
         utils = Loader.Utils,
+        host = S.Env.host,
+        location = host.location || { href: '' },
+        simulatedLocation = new S.Uri(location.href),
         configFns = S.Config.fns;
     /*
      modify current module path
@@ -45,40 +48,33 @@
     configFns.packages = function (cfgs) {
         var name,
             base,
+            baseUri,
             Config = this.Config,
             ps = Config.packages = Config.packages || {};
         if (cfgs) {
             S.each(cfgs, function (cfg, key) {
                 // 兼容数组方式
                 name = cfg.name || key;
-                // 兼容 path
-                base = cfg.base || cfg.path;
 
-                // nodejs must be absolute local file path
-                if (S.Env.nodejs && !S.startsWith(base, 'file:')) {
-                    // specify scheme for KISSY.Uri
-                    base = 'file:' + base;
-                }
+                // 兼容 path
+                base = normPathForNode(cfg.base || cfg.path);
 
                 // must be folder
                 if (!S.endsWith(base, '/')) {
                     base += '/';
                 }
-
                 // 注意正则化
+                baseUri = simulatedLocation.resolve(base);
                 cfg.name = name;
-                var baseUri = utils.resolveByPage(base);
                 cfg.base = baseUri.toString();
                 cfg.baseUri = baseUri;
                 cfg.runtime = S;
                 delete cfg.path;
-
-                ps[ name ] = new Loader.Package(cfg);
+                ps[name] = new Loader.Package(cfg);
             });
             return undefined;
         } else if (cfgs === false) {
             Config.packages = {
-                '': Config.packages['']
             };
             return undefined;
         } else {
@@ -114,7 +110,8 @@
      });
      */
     configFns.modules = function (modules) {
-        var self = this, Env = self.Env;
+        var self = this,
+            Env = self.Env;
         if (modules) {
             S.each(modules, function (modCfg, modName) {
                 utils.createModuleInfo(self, modName, modCfg);
@@ -132,20 +129,21 @@
         if (!base) {
             return Config.base;
         }
+
+        base = normPathForNode(base);
+
+        baseUri = simulatedLocation.resolve(base);
+        Config.base = baseUri.toString();
+        Config.baseUri = baseUri;
+        return undefined;
+    };
+
+    function normPathForNode(base) {
         // nodejs must be absolute local file path
         if (S.Env.nodejs && !S.startsWith(base, 'file:')) {
             // specify scheme for KISSY.Uri
             base = 'file:' + base;
         }
-        baseUri = utils.resolveByPage(base);
-        Config.base = baseUri.toString();
-        Config.baseUri = baseUri;
-
-        self.config('packages', {
-            '': {
-                base: S.config('base')
-            }
-        });
-        return undefined;
-    };
+        return base;
+    }
 })(KISSY);

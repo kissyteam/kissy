@@ -62,7 +62,9 @@ KISSY.add('ajax', function (S, serializer, IO) {
              */
             post: function (url, data, callback, dataType) {
                 if (S.isFunction(data)) {
-                    dataType = callback;
+                    dataType = /**
+                     @type String
+                     @ignore*/callback;
                     callback = data;
                     data = undef;
                 }
@@ -133,7 +135,10 @@ KISSY.add('ajax', function (S, serializer, IO) {
              */
             upload: function (url, form, data, callback, dataType) {
                 if (S.isFunction(data)) {
-                    dataType = callback;
+                    dataType = /**
+                     @type String
+                     @ignore
+                     */callback;
                     callback = data;
                     data = undef;
                 }

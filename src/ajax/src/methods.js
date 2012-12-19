@@ -70,6 +70,7 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
                         responseData = prevType == 'text' ? text : xml;
                         return false;
                     }
+                    return undefined;
                 });
             }
         }
@@ -167,6 +168,7 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
                 if (transport = this.transport) {
                     return transport.nativeXhr;
                 }
+                return null;
             },
 
             _ioReady: function (status, statusText) {
@@ -211,6 +213,24 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
 
                 var defer = self._defer;
                 defer[isSuccess ? 'resolve' : 'reject']([self.responseData, statusText, self]);
+            },
+
+            _getUrlForSend: function () {
+                // for compatible, some server does not decode query
+                // uri will encode query
+                // x.html?t=1,2
+                // =>
+                // x.html?t=1%3c2
+                // so trim original query when process other query
+                // and append when send
+                var c = this.config,
+                    uri = c.uri,
+                    originalQuery = S.Uri.getComponents(c.url).query || "",
+                    url = uri.toString(c.serializeArray);
+
+                return url + (originalQuery ?
+                    ((uri.query.has() ? '&' : '?') + originalQuery) :
+                    originalQuery);
             }
         }
     );

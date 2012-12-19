@@ -62,7 +62,7 @@ KISSY.add('ajax/xdr-flash-transport', function (S, io, DOM) {
             maps[self._uid] = self;
 
             // ie67 send 出错？
-            flash.send(c.uri.toString(c.serializeArray), {
+            flash.send(io._getUrlForSend(), {
                 id: self._uid,
                 uid: self._uid,
                 method: c.type,

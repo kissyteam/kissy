@@ -9,6 +9,16 @@
 
         it("should callback after css onload", function () {
 
+            var html = "\
+                <div id='special'>\
+                33px\
+            </div>\
+            <div id='special2'>\
+            44px\
+            </div>";
+
+            $(html).appendTo('body');
+
             var state = 0;
 
             expect($('#special').css("height")).not.toBe("330px");
@@ -67,15 +77,15 @@
                 ok = true;
                 expect(Mod).toBe(2);
                 var mod12;
+                var flag = S.config('combine') ? "1.2/??mod.js" : "1.2/mod.js";
                 var scripts = document.getElementsByTagName("script");
                 for (var i = 0; i < scripts.length; i++) {
                     var script = scripts[i];
-                    if (script.src.indexOf("1.2/mod.js") > -1) {
+                    if (script.src.indexOf(flag) > -1) {
                         mod12 = script;
                         break;
                     }
                 }
-
                 expect(mod12.async).toBe(true);
                 expect(mod12.charset).toBe("utf-8");
                 expect($("#k12").css("width")).toBe('111px');

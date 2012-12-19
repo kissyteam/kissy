@@ -16,7 +16,7 @@
                 if (!(--count)) {
                     callback();
                 }
-            }, charset || 'utf-8');
+            }, charset);
         });
     }
 
@@ -65,6 +65,8 @@
             allModNames,
             comboUrls,
             css,
+            jsOk,
+            cssOk,
             countCss,
             p,
             runtime = self.runtime;
@@ -91,7 +93,8 @@
             countCss++;
         }
 
-        var jsOk = 0, cssOk = !countCss;
+        jsOk = 0;
+        cssOk = !countCss;
 
         for (p in css) {
 
@@ -106,17 +109,15 @@
 
                     }
                     cssOk = 1;
-                    check(jsOk);
+                    check();
                 }
             }, css[p].charset);
 
         }
 
-        function check(paramJsOk) {
-            jsOk = paramJsOk;
+        function check() {
             if (cssOk && jsOk) {
-                attachMods(self, unaliasModNames);
-                if (utils.isAttached(runtime, unaliasModNames)) {
+                if (utils.attachModsRecursively(unaliasModNames, runtime)) {
                     fn.apply(null, utils.getModules(runtime, modNames))
                 } else {
                     // new require is introduced by KISSY.add
@@ -127,7 +128,10 @@
         }
 
         // jss css download in parallel
-        _useJs(comboUrls, check);
+        _useJs(comboUrls, function (ok) {
+            jsOk = ok;
+            check();
+        });
     }
 
     // use js
@@ -152,7 +156,9 @@
 
             (function (p) {
                 loadScripts(jss[p], function () {
-                    var mods = jss[p].mods, mod, i;
+                    var mods = jss[p].mods,
+                        mod,
+                        i;
                     for (i = 0; i < mods.length; i++) {
                         mod = mods[i];
                         // fix #111
@@ -173,39 +179,6 @@
         }
     }
 
-    // attach mods
-    function attachMods(self, modNames) {
-        S.each(modNames, function (modName) {
-            attachMod(self, modName);
-        });
-    }
-
-    // attach one mod
-    function attachMod(self, modName) {
-        var runtime = self.runtime,
-            i,
-            len,
-            requires,
-            r,
-            mod = getModInfo(self, modName);
-        // new require after add
-        // not register yet!
-        if (!mod || utils.isAttached(runtime, modName)) {
-            return undefined;
-        }
-        requires = mod.getNormalizedRequires();
-        len = requires.length;
-        for (i = 0; i < len; i++) {
-            r = requires[i];
-            attachMod(self, r);
-            if (!utils.isAttached(runtime, r)) {
-                return false;
-            }
-        }
-        utils.attachMod(runtime, mod);
-        return undefined;
-    }
-
     // get mod info.
     function getModInfo(self, modName) {
         return self.runtime.Env.mods[modName];
@@ -213,16 +186,15 @@
 
     // get requires mods need to be loaded dynamically
     function getRequires(self, modName, cache) {
+
         var runtime = self.runtime,
             requires,
             i,
-            rMod,
             r,
-            allRequires,
-            debugMode = S.Config.debug,
             ret2,
             mod = getModInfo(self, modName),
         // 做个缓存，该模块的待加载子模块都知道咯，不用再次递归查找啦！
+        // also prevent circular require
             ret = cache[modName];
 
         if (ret) {
@@ -234,27 +206,8 @@
         // if this mod is attached then its require is attached too!
         if (mod && !utils.isAttached(runtime, modName)) {
             requires = mod.getNormalizedRequires();
-            // circular dependency check
-            if (debugMode) {
-                allRequires = mod.__allRequires || (mod.__allRequires = {});
-                if (allRequires[modName]) {
-                    S.error('detect circular dependency among : ');
-                    S.error(allRequires);
-                    return ret;
-                }
-            }
             for (i = 0; i < requires.length; i++) {
                 r = requires[i];
-                if (debugMode) {
-                    // circular dependency check
-                    rMod = getModInfo(self, r);
-                    allRequires[r] = 1;
-                    if (rMod && rMod.__allRequires) {
-                        S.each(rMod.__allRequires, function (_, r2) {
-                            allRequires[r2] = 1;
-                        });
-                    }
-                }
                 // if not load into page yet
                 if (!utils.isLoaded(runtime, r) &&
                     // and not attached
@@ -272,6 +225,10 @@
     // ----------------------- private end
 
     S.augment(ComboLoader, {
+
+        clear: function () {
+            this.loading = 0;
+        },
 
         /**
          * use
@@ -341,9 +298,7 @@
             }
             ret2 = [];
             for (r in ret) {
-
                 ret2.push(r);
-
             }
             return ret2;
         },
@@ -420,7 +375,7 @@
                             prefix +
                                 t.join(comboSep) +
                                 suffix,
-                            Config.mappedComboRules || []
+                            Config.mappedComboRules
                         ));
                     }
 
@@ -441,9 +396,8 @@
 
                         t.push(path);
 
-                        if (
-                            (t.length > maxFileNum) ||
-                                (l + t.join(comboSep).length + suffixLength > maxUrlLength)) {
+                        if ((t.length > maxFileNum) ||
+                            (l + t.join(comboSep).length + suffixLength > maxUrlLength)) {
                             t.pop();
                             pushComboUrl();
                             t = [];

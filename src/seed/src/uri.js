@@ -293,7 +293,7 @@
             return uriStr['clone']();
         }
 
-        var m, self = this;
+        var components, self = this;
 
         S.mix(self,
             {
@@ -333,17 +333,16 @@
                 fragment: ''
             });
 
-        uriStr = uriStr || '';
-        m = uriStr.match(URI_SPLIT_REG) || [];
+        components = Uri.getComponents(uriStr);
 
-        S.each(REG_INFO, function (index, key) {
-            var match = m[index] || '';
+        S.each(components, function (v, key) {
+            v = v || '';
             if (key == 'query') {
                 // need encoded content
-                self.query = new Query(match);
+                self.query = new Query(v);
             } else {
                 // need to decode to get data structure in memory
-                self[key] = S.urlDecode(match);
+                self[key] = S.urlDecode(v);
             }
         });
 
@@ -566,11 +565,12 @@
          * @chainable
          */
         'setFragment': function (fragment) {
+            var self = this;
             if (S.startsWith(fragment, '#')) {
                 fragment = fragment.slice(1);
             }
-            this.fragment = fragment;
-            return this;
+            self.fragment = fragment;
+            return self;
         },
 
         /**
@@ -596,7 +596,8 @@
          */
         toString: function (serializeArray) {
 
-            var out = [], self = this,
+            var out = [],
+                self = this,
                 scheme,
                 hostname,
                 path,
@@ -648,6 +649,16 @@
     };
 
     Uri.Query = Query;
+
+    Uri.getComponents = function (url) {
+        url = url || "";
+        var m = url.match(URI_SPLIT_REG) || [],
+            ret = {};
+        S.each(REG_INFO, function (index, key) {
+            ret[key] = m[index];
+        });
+        return ret;
+    };
 
     S.Uri = Uri;
 

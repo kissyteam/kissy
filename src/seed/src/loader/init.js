@@ -101,7 +101,9 @@
             comboSep,
             scripts = Env.host.document.getElementsByTagName('script'),
             script = scripts[scripts.length - 1],
-            src = utils.resolveByPage(script.src).toString(),
+        // can not use KISSY.Uri
+        // /??x.js,dom.js for tbcdn
+            src = script.src,
             baseInfo = script.getAttribute('data-config');
 
         if (baseInfo) {
@@ -109,11 +111,6 @@
         } else {
             baseInfo = {};
         }
-
-        // taobao combo syntax
-        // /??seed.js,dom.js
-        // /?%3fseed.js%2cdom.js
-        src = src.replace(/%3f/gi, '?').replace(/%2c/gi, ',');
 
         comboPrefix = baseInfo.comboPrefix = baseInfo.comboPrefix || '??';
         comboSep = baseInfo.comboSep = baseInfo.comboSep || ',';
@@ -127,6 +124,11 @@
             base = src.replace(baseReg, '$1');
         } else {
             base = src.substring(0, index);
+            // a.tbcdn.cn??y.js, ie does not insert / after host
+            // a.tbcdn.cn/combo? comboPrefix=/combo?
+            if (!S.endsWith(base, "/")) {
+                base += '/';
+            }
             parts = src.substring(index + comboPrefix.length).split(comboSep);
             S.each(parts, function (part) {
                 if (part.match(baseTestReg)) {
@@ -144,6 +146,7 @@
     if (S.Env.nodejs) {
         S.config('base', __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/');
     } else {
+        // will transform base to absolute path
         S.config(S.mix({
             // 2k(2048) url length
             comboMaxUrlLength: 2000,
@@ -153,6 +156,11 @@
             tag: '@TIMESTAMP@'
         }, getBaseInfo()));
     }
+
+    S.config('systemPackage', new Loader.Package({
+        name:'',
+        runtime: S
+    }));
 
     // Initializes loader.
     Env.mods = {}; // all added mods

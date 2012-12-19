@@ -39,11 +39,11 @@ KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
         var config = io.config;
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
         if (!config.crossDomain) {
-            return new (IO.getTransport('*'))(io);
+            return new (IO['getTransport']('*'))(io);
         }
         this.io = io;
         S.log('use ScriptTransport for: ' + config.url);
-        return 0;
+        return this;
     }
 
     S.augment(ScriptTransport, {
@@ -65,7 +65,7 @@ KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
                 script.charset = c['scriptCharset'];
             }
 
-            script.src = c.uri.toString(c.serializeArray);
+            script.src = io._getUrlForSend();
 
             script.onerror =
                 script.onload =
@@ -125,7 +125,7 @@ KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
         }
     });
 
-    IO.setupTransport('script', ScriptTransport);
+    IO['setupTransport']('script', ScriptTransport);
 
     return IO;
 

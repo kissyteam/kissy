@@ -48,16 +48,8 @@
          * @member KISSY
          */
         getScript: function (url, success, charset) {
-
-            var src;
-
-            try {
-                src = utils.resolveByPage(url).toString();
-            } catch (e) {
-                S.log('invalid url: ' + url, 'warn');
-                src = url;
-            }
-
+            // can not use KISSY.Uri, url can not be encoded for some url
+            // eg: /??dom.js,event.js , ? , should not be encoded
             var config = success,
                 css = 0,
                 error,
@@ -78,7 +70,7 @@
                 attrs = config['attrs'];
             }
 
-            callbacks = jsCssCallbacks[src] = jsCssCallbacks[src] || [];
+            callbacks = jsCssCallbacks[url] = jsCssCallbacks[url] || [];
 
             callbacks.push([success, error]);
 
@@ -105,8 +97,6 @@
             }
 
             if (css) {
-                // can not use src.toString
-                // ? is escaped when combo in KISSY.Uri
                 node.href = url;
                 node.rel = 'stylesheet';
             } else {
@@ -124,12 +114,12 @@
                     var index = error,
                         fn;
                     clearTimer();
-                    S.each(jsCssCallbacks[src], function (callback) {
+                    S.each(jsCssCallbacks[url], function (callback) {
                         if (fn = callback[index]) {
                             fn.call(node);
                         }
                     });
-                    delete jsCssCallbacks[src];
+                    delete jsCssCallbacks[url];
                 },
                 useNative = !css;
 

@@ -23,7 +23,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
         try {
             return new (refWin || win)['XMLHttpRequest']();
         } catch (e) {
-            //S.log('createStandardXHR error');
+            S.log('createStandardXHR error: ' + _);
         }
         return undefined;
     }
@@ -32,7 +32,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
         try {
             return new (refWin || win)['ActiveXObject']('Microsoft.XMLHTTP');
         } catch (e) {
-            S.log('createActiveXHR error');
+            S.log('createActiveXHR error: ' + _);
         }
         return undefined;
     }
@@ -80,8 +80,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                 crossDomain = c.crossDomain,
                 mimeType = io.mimeType,
                 requestHeaders = io.requestHeaders || {},
-                serializeArray = c.serializeArray,
-                url = c.uri.toString(serializeArray),
+                url = io._getUrlForSend(),
                 xhrFields,
                 ifModifiedKey = getIfModifiedKey(c),
                 cacheValue,

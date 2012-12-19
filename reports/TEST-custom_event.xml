@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-<testsuite name="custom_event" errors="0" tests="12" failures="0" time="0.03" timestamp="2012-12-12T23:20:07">
+<testsuite name="custom_event" errors="0" tests="12" failures="0" time="0.03" timestamp="2012-12-19T20:59:18">
   <testcase classname="custom_event" name="works for any object" time="0"></testcase>
-  <testcase classname="custom_event" name="fire does not depend on custom event&apos;s type" time="0.001"></testcase>
+  <testcase classname="custom_event" name="fire does not depend on custom event&apos;s type" time="0"></testcase>
   <testcase classname="custom_event" name="can fire more than one" time="0"></testcase>
-  <testcase classname="custom_event" name="can bubble" time="0"></testcase>
-  <testcase classname="custom_event" name="can bubble default" time="0.001"></testcase>
+  <testcase classname="custom_event" name="can bubble" time="0.001"></testcase>
+  <testcase classname="custom_event" name="can bubble default" time="0"></testcase>
   <testcase classname="custom_event" name="can stop bubble by stopPropagation()" time="0"></testcase>
   <testcase classname="custom_event" name="can bubble more than one level" time="0"></testcase>
   <testcase classname="custom_event" name="can not bubble if middle level does not allow" time="0"></testcase>
   <testcase classname="custom_event" name="should no memory leak for custom event" time="0.001"></testcase>
-  <testcase classname="custom_event" name="should support custom event target." time="0.015"></testcase>
+  <testcase classname="custom_event" name="should support custom event target." time="0.02"></testcase>
   <testcase classname="custom_event" name="support defaultFn" time="0"></testcase>
   <testcase classname="custom_event" name="support once" time="0"></testcase>
 </testsuite>
-<testsuite name="custom_event.fire manually for event groups" errors="0" tests="10" failures="0" time="0.01" timestamp="2012-12-12T23:20:07">
-  <testcase classname="custom_event.fire manually for event groups" name="should works with one group simply" time="0.001"></testcase>
+<testsuite name="custom_event.fire manually for event groups" errors="0" tests="10" failures="0" time="0.004" timestamp="2012-12-19T20:59:18">
+  <testcase classname="custom_event.fire manually for event groups" name="should works with one group simply" time="0"></testcase>
   <testcase classname="custom_event.fire manually for event groups" name="should fire" time="0"></testcase>
-  <testcase classname="custom_event.fire manually for event groups" name="should fire at specified groups 1" time="0"></testcase>
-  <testcase classname="custom_event.fire manually for event groups" name="should fire at specified groups 2" time="0.001"></testcase>
+  <testcase classname="custom_event.fire manually for event groups" name="should fire at specified groups 1" time="0.001"></testcase>
+  <testcase classname="custom_event.fire manually for event groups" name="should fire at specified groups 2" time="0"></testcase>
   <testcase classname="custom_event.fire manually for event groups" name="should fire at specified groups 3" time="0"></testcase>
   <testcase classname="custom_event.fire manually for event groups" name="should works with multiple events" time="0"></testcase>
   <testcase classname="custom_event.fire manually for event groups" name="should works with multiple events when remove" time="0.001"></testcase>
   <testcase classname="custom_event.fire manually for event groups" name="should works with multiple events and no type when remove" time="0"></testcase>
-  <testcase classname="custom_event.fire manually for event groups" name="should works with multiple events and groups" time="0.001"></testcase>
-  <testcase classname="custom_event.fire manually for event groups" name="should works multiple groups" time="0"></testcase>
+  <testcase classname="custom_event.fire manually for event groups" name="should works with multiple events and groups" time="0"></testcase>
+  <testcase classname="custom_event.fire manually for event groups" name="should works multiple groups" time="0.001"></testcase>
 </testsuite>
 </testsuites>

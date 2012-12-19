@@ -12,29 +12,12 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         },
         Promise = S.Promise,
         rnoContent = /^(?:GET|HEAD)$/,
-        curLocation,
-        Uri = S.Uri,
         win = S.Env.host,
-        doc = win.document,
-        location = win.location,
-        simulatedLocation;
-    if (location) {
-        try {
-            curLocation = location.href;
-        } catch (e) {
-            S.log('ajax/base get curLocation error: ');
-            S.log(e);
-            // Use the href attribute of an A element
-            // since IE will modify it given document.location
-            curLocation = doc.createElement('a');
-            curLocation.href = '';
-            curLocation = curLocation.href;
-        }
-
-        simulatedLocation = new Uri(curLocation);
-    }
-
-    var isLocal = simulatedLocation && rlocalProtocol.test(simulatedLocation.getScheme()),
+        location = win.location || {},
+        simulatedLocation = /**
+         @type KISSY.Uri
+         @ignore*/new S.Uri(location.href),
+        isLocal = simulatedLocation && rlocalProtocol.test(simulatedLocation.getScheme()),
         transports = {},
         defaultConfig = {
             type: 'GET',
@@ -76,9 +59,14 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         });
         c.context = context || c;
 
-        var data, uri, type = c.type, dataType = c.dataType;
+        var data, uri,
+            type = c.type,
+            dataType = c.dataType;
 
         uri = c.uri = simulatedLocation.resolve(c.url);
+
+        // see method _getUrlForSend
+        c.uri.setQuery('');
 
         if (!('crossDomain' in c)) {
             c.crossDomain = !c.uri.isSameOriginAs(simulatedLocation);
@@ -318,14 +306,9 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
 
         var self = this;
 
-        if (!c.url) {
-            return undefined;
-        }
-
         if (!(self instanceof IO)) {
             return new IO(c);
         }
-
 
         Promise.call(self);
 
@@ -432,7 +415,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         // allow setup native listener
         // such as xhr.upload.addEventListener('progress', function (ev) {})
         if (c.beforeSend && ( c.beforeSend.call(context, self, c) === false)) {
-            return undefined;
+            return self;
         }
 
         function genHandler(handleStr) {
@@ -478,6 +461,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         } catch (e) {
             // Propagate exception as error if not done
             if (self.state < 2) {
+                S.log(e.stack||e, 'error');
                 self._ioReady(-1, e);
                 // Simply rethrow otherwise
             } else {
@@ -485,7 +469,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
             }
         }
 
-        return undefined;
+        return self;
     }
 
     S.mix(IO, Event.Target);
@@ -516,7 +500,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
              * @member KISSY.IO
              * @static
              */
-            setupTransport: function (name, fn) {
+            'setupTransport': function (name, fn) {
                 transports[name] = fn;
             },
             /**
@@ -524,7 +508,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
              * @member KISSY.IO
              * @static
              */
-            getTransport: function (name) {
+            'getTransport': function (name) {
                 return transports[name];
             },
             /**

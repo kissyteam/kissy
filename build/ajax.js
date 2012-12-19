@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 19 15:51
+build time: Dec 20 00:59
 */
 /**
  * @ignore
@@ -67,7 +67,9 @@ KISSY.add('ajax', function (S, serializer, IO) {
              */
             post: function (url, data, callback, dataType) {
                 if (S.isFunction(data)) {
-                    dataType = callback;
+                    dataType = /**
+                     @type String
+                     @ignore*/callback;
                     callback = data;
                     data = undef;
                 }
@@ -138,7 +140,10 @@ KISSY.add('ajax', function (S, serializer, IO) {
              */
             upload: function (url, form, data, callback, dataType) {
                 if (S.isFunction(data)) {
-                    dataType = callback;
+                    dataType = /**
+                     @type String
+                     @ignore
+                     */callback;
                     callback = data;
                     data = undef;
                 }
@@ -186,29 +191,12 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         },
         Promise = S.Promise,
         rnoContent = /^(?:GET|HEAD)$/,
-        curLocation,
-        Uri = S.Uri,
         win = S.Env.host,
-        doc = win.document,
-        location = win.location,
-        simulatedLocation;
-    if (location) {
-        try {
-            curLocation = location.href;
-        } catch (e) {
-            S.log('ajax/base get curLocation error: ');
-            S.log(e);
-            // Use the href attribute of an A element
-            // since IE will modify it given document.location
-            curLocation = doc.createElement('a');
-            curLocation.href = '';
-            curLocation = curLocation.href;
-        }
-
-        simulatedLocation = new Uri(curLocation);
-    }
-
-    var isLocal = simulatedLocation && rlocalProtocol.test(simulatedLocation.getScheme()),
+        location = win.location || {},
+        simulatedLocation = /**
+         @type KISSY.Uri
+         @ignore*/new S.Uri(location.href),
+        isLocal = simulatedLocation && rlocalProtocol.test(simulatedLocation.getScheme()),
         transports = {},
         defaultConfig = {
             type: 'GET',
@@ -250,9 +238,14 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         });
         c.context = context || c;
 
-        var data, uri, type = c.type, dataType = c.dataType;
+        var data, uri,
+            type = c.type,
+            dataType = c.dataType;
 
         uri = c.uri = simulatedLocation.resolve(c.url);
+
+        // see method _getUrlForSend
+        c.uri.setQuery('');
 
         if (!('crossDomain' in c)) {
             c.crossDomain = !c.uri.isSameOriginAs(simulatedLocation);
@@ -492,14 +485,9 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
 
         var self = this;
 
-        if (!c.url) {
-            return undefined;
-        }
-
         if (!(self instanceof IO)) {
             return new IO(c);
         }
-
 
         Promise.call(self);
 
@@ -606,7 +594,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         // allow setup native listener
         // such as xhr.upload.addEventListener('progress', function (ev) {})
         if (c.beforeSend && ( c.beforeSend.call(context, self, c) === false)) {
-            return undefined;
+            return self;
         }
 
         function genHandler(handleStr) {
@@ -652,6 +640,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         } catch (e) {
             // Propagate exception as error if not done
             if (self.state < 2) {
+                S.log(e.stack||e, 'error');
                 self._ioReady(-1, e);
                 // Simply rethrow otherwise
             } else {
@@ -659,7 +648,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
             }
         }
 
-        return undefined;
+        return self;
     }
 
     S.mix(IO, Event.Target);
@@ -690,7 +679,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
              * @member KISSY.IO
              * @static
              */
-            setupTransport: function (name, fn) {
+            'setupTransport': function (name, fn) {
                 transports[name] = fn;
             },
             /**
@@ -698,7 +687,7 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
              * @member KISSY.IO
              * @static
              */
-            getTransport: function (name) {
+            'getTransport': function (name) {
                 return transports[name];
             },
             /**
@@ -982,7 +971,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
             // set target to iframe to avoid main page refresh
             DOM.attr(form, {
                 target: iframe.id,
-                action: c.uri.toString(c.serializeArray),
+                action: io._getUrlForSend(),
                 method: 'post'
                 //enctype:'multipart/form-data',
                 //encoding:'multipart/form-data'
@@ -1017,7 +1006,9 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
             var self = this,
                 form = self.form,
                 io = self.io,
-                eventType = event.type,
+                eventType = /**
+                 @type String
+                 @ignore*/event.type,
                 iframeDoc,
                 iframe = io.iframe;
 
@@ -1101,7 +1092,7 @@ KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {
         }
     });
 
-    io.setupTransport('iframe', IframeTransport);
+    io['setupTransport']('iframe', IframeTransport);
 
     return io;
 
@@ -1264,6 +1255,7 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
                         responseData = prevType == 'text' ? text : xml;
                         return false;
                     }
+                    return undefined;
                 });
             }
         }
@@ -1361,6 +1353,7 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
                 if (transport = this.transport) {
                     return transport.nativeXhr;
                 }
+                return null;
             },
 
             _ioReady: function (status, statusText) {
@@ -1405,6 +1398,24 @@ KISSY.add('ajax/methods', function (S, IO, undefined) {
 
                 var defer = self._defer;
                 defer[isSuccess ? 'resolve' : 'reject']([self.responseData, statusText, self]);
+            },
+
+            _getUrlForSend: function () {
+                // for compatible, some server does not decode query
+                // uri will encode query
+                // x.html?t=1,2
+                // =>
+                // x.html?t=1%3c2
+                // so trim original query when process other query
+                // and append when send
+                var c = this.config,
+                    uri = c.uri,
+                    originalQuery = S.Uri.getComponents(c.url).query || "",
+                    url = uri.toString(c.serializeArray);
+
+                return url + (originalQuery ?
+                    ((uri.query.has() ? '&' : '?') + originalQuery) :
+                    originalQuery);
             }
         }
     );
@@ -1451,11 +1462,11 @@ KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
         var config = io.config;
         // 优先使用 xhr+eval 来执行脚本, ie 下可以探测到（更多）失败状态
         if (!config.crossDomain) {
-            return new (IO.getTransport('*'))(io);
+            return new (IO['getTransport']('*'))(io);
         }
         this.io = io;
         S.log('use ScriptTransport for: ' + config.url);
-        return 0;
+        return this;
     }
 
     S.augment(ScriptTransport, {
@@ -1477,7 +1488,7 @@ KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
                 script.charset = c['scriptCharset'];
             }
 
-            script.src = c.uri.toString(c.serializeArray);
+            script.src = io._getUrlForSend();
 
             script.onerror =
                 script.onload =
@@ -1537,7 +1548,7 @@ KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {
         }
     });
 
-    IO.setupTransport('script', ScriptTransport);
+    IO['setupTransport']('script', ScriptTransport);
 
     return IO;
 
@@ -1696,7 +1707,7 @@ KISSY.add('ajax/xdr-flash-transport', function (S, io, DOM) {
             maps[self._uid] = self;
 
             // ie67 send 出错？
-            flash.send(c.uri.toString(c.serializeArray), {
+            flash.send(io._getUrlForSend(), {
                 id: self._uid,
                 uid: self._uid,
                 method: c.type,
@@ -1801,7 +1812,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
         try {
             return new (refWin || win)['XMLHttpRequest']();
         } catch (e) {
-            //S.log('createStandardXHR error');
+            S.log('createStandardXHR error: ' + _);
         }
         return undefined;
     }
@@ -1810,7 +1821,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
         try {
             return new (refWin || win)['ActiveXObject']('Microsoft.XMLHTTP');
         } catch (e) {
-            S.log('createActiveXHR error');
+            S.log('createActiveXHR error: ' + _);
         }
         return undefined;
     }
@@ -1858,8 +1869,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
                 crossDomain = c.crossDomain,
                 mimeType = io.mimeType,
                 requestHeaders = io.requestHeaders || {},
-                serializeArray = c.serializeArray,
-                url = c.uri.toString(serializeArray),
+                url = io._getUrlForSend(),
                 xhrFields,
                 ifModifiedKey = getIfModifiedKey(c),
                 cacheValue,
@@ -2063,7 +2073,6 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
          */
         function XhrTransport(io) {
             var c = io.config,
-                url = c.url,
                 crossDomain = c.crossDomain,
                 self = this,
                 xdrCfg = c['xdr'] || {},
@@ -2091,7 +2100,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
                 }
             }
 
-            S.log('crossDomain: ' + crossDomain + ', use XhrTransport for: ' + url);
+            S.log('crossDomain: ' + crossDomain + ', use XhrTransport for: ' + c.url);
             self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
             return self;
         }
@@ -2104,7 +2113,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 
         });
 
-        io.setupTransport('*', XhrTransport);
+        io['setupTransport']('*', XhrTransport);
     }
 
     return io;

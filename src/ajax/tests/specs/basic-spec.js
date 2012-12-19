@@ -185,13 +185,6 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
 
         describe('jsonp', function () {
 
-            it('容错', function () {
-                IO.jsonp('');
-                IO.jsonp();
-                IO.jsonp(null);
-                expect('此处会运行').toBe('此处会运行');
-            });
-
             it('自定义callback', function () {
                 var ok = false;
                 runs(function () {
@@ -594,14 +587,6 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                 });
             });
 
-            it('当 url 参数非法时，忽略请求，不抛异常', function () {
-                // 这里的处理和get一致
-                IO.post('');
-                IO.post();
-                IO.post(null);
-                expect('此处会运行').toBe('此处会运行');
-            });
-
             it('xhr 方式时，能正确设置 callback 里的 this', function () {
 
                 var ok = false;
@@ -821,15 +806,6 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                     return ret;
                 });
 
-            });
-
-            it('当 url 参数非法时，忽略请求，不抛异常', function () {
-                // 注意：jQuery 没有考虑 url 参数非法的情况，由浏览器处理，有些抛异常，有些不抛
-                // KISSY 统一做 silent 处理
-                IO.get('');
-                IO.get();
-                IO.get(null);
-                expect('此处会运行').toBe('此处会运行');
             });
 
             it('xhr 方式时，能正确设置 callback 里的 this', function () {

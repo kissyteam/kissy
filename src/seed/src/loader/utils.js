@@ -7,7 +7,6 @@
 
     var Loader = S.Loader,
         Path = S.Path,
-        Uri = S.Uri,
         host = S.Env.host,
         startsWith = S.startsWith,
         data = Loader.STATUS,
@@ -20,9 +19,7 @@
          * @private
          */
             Utils = S.Loader.Utils = {},
-        doc = host.document,
-        simulatedLocation = new Uri(host.location && host.location.href || "");
-
+        doc = host.document;
 
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
@@ -81,14 +78,6 @@
             }
 
             return Path.normalize(depName);
-        },
-
-        /**
-         * resolve according to current page location.
-         * @return {KISSY.Uri}
-         */
-        resolveByPage: function (path) {
-            return simulatedLocation.resolve(path);
         },
 
         /**
@@ -180,6 +169,46 @@
             return mods;
         },
 
+        attachModsRecursively: function (modNames, runtime, stack) {
+            stack = stack || [];
+            var i,
+                s = 1,
+                l = modNames.length,
+                stackDepth = stack.length;
+            for (i = 0; i < l; i++) {
+                s = Utils.attachModRecursively(modNames[i], runtime, stack) && s;
+                stack.length = stackDepth;
+            }
+            return s;
+        },
+
+        attachModRecursively: function (modName, runtime, stack) {
+            var mods = runtime.Env.mods,
+                status,
+                m = mods[modName];
+            if (!m) {
+                return 0;
+            }
+            status = m.status;
+            if (status == ATTACHED) {
+                return 1;
+            }
+            if (status != LOADED) {
+                return 0;
+            }
+            if (S.inArray(modName, stack)) {
+                stack.push(modName);
+                S.error('find cyclic dependency between mods: ' + stack);
+                return 0;
+            }
+            stack.push(modName);
+            if (Utils.attachModsRecursively(m.getNormalizedRequires(), runtime, stack)) {
+                Utils.attachMod(runtime, m);
+                return 1;
+            }
+            return 0;
+        },
+
         /**
          * Attach specified mod.
          * @param runtime
@@ -190,20 +219,12 @@
                 return;
             }
 
-            var fn = mod.fn,
-                value;
+            var fn = mod.fn;
 
             if (fn) {
-                if (S.isFunction(fn)) {
-                    // context is mod info
-                    value = fn.apply(mod, Utils.getModules(runtime,
-                        // 需要解开 index，相对路径，去除 tag，
-                        // 但是需要保留 alias，防止值不对应
-                        mod.getRequiresWithAlias()));
-                } else {
-                    value = fn;
-                }
-                mod.value = value;
+                // 需要解开 index，相对路径
+                // 但是需要保留 alias，防止值不对应
+                mod.value = fn.apply(mod, Utils.getModules(runtime, mod.getRequiresWithAlias()));
             }
 
             mod.status = ATTACHED;
@@ -237,7 +258,8 @@
          * @return {String[]}
          */
         normalizeModNames: function (runtime, modNames, refModName) {
-            return Utils.unalias(runtime, Utils.normalizeModNamesWithAlias(runtime, modNames, refModName));
+            return Utils.unalias(runtime,
+                Utils.normalizeModNamesWithAlias(runtime, modNames, refModName));
         },
 
         /**
@@ -290,7 +312,7 @@
                     }
                 }
             }
-            // 3. relative to absolute (optional)
+            // 2. relative to absolute (optional)
             if (refModName) {
                 ret = Utils.normalDepModuleName(refModName, ret);
             }
@@ -320,12 +342,13 @@
 
             // 注意：通过 S.add(name[, fn[, config]]) 注册的代码，无论是页面中的代码，
             // 还是 js 文件里的代码，add 执行时，都意味着该模块已经 LOADED
-            S.mix(mod, { name: name, status: LOADED });
+            S.mix(mod, {
+                name: name,
+                status: LOADED,
+                fn: fn
+            });
 
-            mod.fn = fn;
-
-            S.mix((mods[name] = mod), config);
-
+            S.mix(mod, config);
             // S.log(name + ' is loaded', 'info');
         },
 
@@ -337,61 +360,33 @@
          * @return {String}
          */
         getMappedPath: function (runtime, path, rules) {
-            var __mappedRules = rules || runtime.Config.mappedRules || [],
+            var mappedRules = rules ||
+                    runtime.Config.mappedRules ||
+                    [],
                 i,
                 m,
                 rule;
-            for (i = 0; i < __mappedRules.length; i++) {
-                rule = __mappedRules[i];
+            for (i = 0; i < mappedRules.length; i++) {
+                rule = mappedRules[i];
                 if (m = path.match(rule[0])) {
                     return path.replace(rule[0], rule[1]);
                 }
             }
             return path;
         }
-        /*
-         ,memoize: function (fn, hasher) {
-         hasher = hasher || function (x) {
-         return x;
-         };
-         var memo = {},
-         queues = {},
-         memoized = function () {
-         var args = S.makeArray(arguments),
-         callback = args.pop(),
-         key = hasher.apply(null, args);
-         if (key in memo) {
-         callback.apply(null, memo[key]);
-         } else if (key in queues) {
-         queues[key].push(callback);
-         } else {
-         queues[key] = [callback];
-         fn.apply(null, args.concat([function () {
-         memo[key] = arguments;
-         var q = queues[key];
-         delete queues[key];
-         for (var i = 0, l = q.length; i < l; i++) {
-         q[i].apply(null, arguments);
-         }
-         }]));
-         }
-         };
-         memoized.unmemoized = fn;
-         return memoized;
-         }
-         */
     });
 
     function isStatus(runtime, modNames, status) {
         var mods = runtime.Env.mods,
+            mod,
             i;
         modNames = S.makeArray(modNames);
         for (i = 0; i < modNames.length; i++) {
-            var mod = mods[modNames[i]];
+            mod = mods[modNames[i]];
             if (!mod || mod.status !== status) {
-                return false;
+                return 0;
             }
         }
-        return true;
+        return 1;
     }
 })(KISSY);

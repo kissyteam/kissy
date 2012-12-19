@@ -30,7 +30,7 @@
             var uri = new S.Uri(url);
 
             try {
-                var mod = fs.readFileSync(uri.getPath(), charset || 'utf-8');
+                var mod = fs.readFileSync(uri.getPath(), charset);
                 var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
                 fn(S);
                 success && success();
