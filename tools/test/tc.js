@@ -50,8 +50,6 @@ tests.push('/kissy/src/event/sub-modules/dom/sub-modules/shake/tests/runner/test
 
 tests.push('/kissy/src/event/sub-modules/dom/sub-modules/touch/tests/runner/test.html');
 
-tests.push('/kissy/src/flash/tests/runner/test.html');
-
 tests.push('/kissy/src/htmlparser/tests/runner/test.html');
 
 tests.push('/kissy/src/imagezoom/tests/runner/test.html');
@@ -95,6 +93,8 @@ tests.push('/kissy/src/seed/tests/runner/simple-loader.html');
 tests.push('/kissy/src/sizzle/tests/runner/test.html');
 
 tests.push('/kissy/src/stylesheet/tests/runner/test.html');
+
+tests.push('/kissy/src/swf/tests/runner/test.html');
 
 tests.push('/kissy/src/tabs/tests/runner/test.html');
 
