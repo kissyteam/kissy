@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 18 14:34
+build time: Dec 19 15:51
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121218143449' will replace with current timestamp when compressing.
+         * NOTICE: '20121219155133' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121218143449',
+        __BUILD_TIME: '20121219155133',
         /**
          * KISSY Environment.
          * @private
@@ -5803,7 +5803,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121218143449'
+            tag: '20121219155133'
         }, getBaseInfo()));
     }
 
@@ -16192,7 +16192,7 @@ KISSY.add('json', function (S, J) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 14 16:17
+build time: Dec 19 15:51
 */
 /**
  * @ignore
@@ -18236,7 +18236,7 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
  * @fileOverview ajax xhr transport class, route subdomain, xdr
  * @author yiminghe@gmail.com
  */
-KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport, undefined) {
+KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
 
     var win = S.Env.host,
         _XDomainRequest = XhrTransportBase._XDomainRequest,
@@ -18244,17 +18244,8 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 
     if (detectXhr) {
 
-        // xx.taobao.com => taobao.com
-        // xx.sina.com.cn => sina.com.cn
-        function getMainDomain(host) {
-            var t = host.split('.'),
-                len = t.length,
-                limit = len > 3 ? 3 : 2;
-            if (len < limit) {
-                return t.join('.');
-            } else {
-                return t.reverse().slice(0, limit).reverse().join('.');
-            }
+        function isSubDomain(hostname) {
+            return S.endsWith(hostname, win.document.domain);
         }
 
         /**
@@ -18273,7 +18264,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 
             if (crossDomain) {
                 // 跨子域
-                if (getMainDomain(location.hostname) == getMainDomain(c.uri.getHostname())) {
+                if (isSubDomain(c.uri.getHostname())) {
                     // force to not use sub domain transport
                     if (subDomain.proxy !== false) {
                         return new SubDomainTransport(io);
@@ -18293,7 +18284,7 @@ KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTran
 
             S.log('crossDomain: ' + crossDomain + ', use XhrTransport for: ' + url);
             self.nativeXhr = XhrTransportBase.nativeXhr(crossDomain);
-            return undefined;
+            return self;
         }
 
         S.augment(XhrTransport, XhrTransportBase.proto, {
