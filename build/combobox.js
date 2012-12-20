@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 19 01:12
+build time: Dec 20 22:23
 */
 /**
  * @ignore
@@ -1039,7 +1039,7 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
      * KISSY MultiValueComboBox.
      * xclass: 'multi-value-combobox'.
      * @extends KISSY.ComboBox
-     * @class KISSY.MultiValueComboBox
+     * @class KISSY.ComboBox.MultiValueComboBox
      */
     return ComboBox.extend({
 
@@ -1112,7 +1112,8 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
 
             'alignInternal': function () {
                 if (!this.get('alignWithCursor')) {
-                    return ComboBox.prototype.alignInternal.apply(this, arguments);
+                    ComboBox.prototype.alignInternal.apply(this, arguments);
+                    return;
                 }
                 var self = this,
                     inputDesc = getInputDesc(self),

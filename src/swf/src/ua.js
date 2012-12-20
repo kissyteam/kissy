@@ -99,13 +99,13 @@ KISSY.add('swf/ua', function (S, undefined) {
      * @member KISSY.SWF
      * @static
      */
-    function fpvGEQ(ver, force) {
+    function fpvGTE(ver, force) {
         return getNumberVersion(fpv(force)) >= getNumberVersion(ver);
     }
 
     return {
         fpv: fpv,
-        fpvGEQ: fpvGEQ
+        fpvGTE: fpvGTE
     };
 
 });

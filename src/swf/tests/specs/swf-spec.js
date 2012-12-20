@@ -44,12 +44,12 @@ if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
 
                     expect(SWF.fpv()).toBeDefined();
                     expect(SWF.fpv().length).toEqual(3);
-                    expect(SWF.fpvGEQ(9)).toBeTruthy();
-                    expect(SWF.fpvGEQ(9.0)).toBeTruthy();
-                    expect(SWF.fpvGEQ('9')).toBeTruthy();
-                    expect(SWF.fpvGEQ('9.0.16')).toBeTruthy();
-                    expect(SWF.fpvGEQ('9.0 r16')).toBeTruthy();
-                    expect(SWF.fpvGEQ(["9", "0", "16"])).toBeTruthy();
+                    expect(SWF.fpvGTE(9)).toBeTruthy();
+                    expect(SWF.fpvGTE(9.0)).toBeTruthy();
+                    expect(SWF.fpvGTE('9')).toBeTruthy();
+                    expect(SWF.fpvGTE('9.0.16')).toBeTruthy();
+                    expect(SWF.fpvGTE('9.0 r16')).toBeTruthy();
+                    expect(SWF.fpvGTE(["9", "0", "16"])).toBeTruthy();
                 });
             });
 

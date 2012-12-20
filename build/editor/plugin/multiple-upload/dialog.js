@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 14 17:35
+build time: Dec 20 22:27
 */
 /**
  * multiple-upload dialog
@@ -171,7 +171,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 self._sizeLimit / 1000
                 + "M";
 
-            if (!SWF.fpvGEQ(FLASH_VERSION_REQUIRED)) {
+            if (!SWF.fpvGTE(FLASH_VERSION_REQUIRED)) {
                 TIP = "您的flash插件版本过低，该功能不可用，" +
                     "请<a href='http://get.adobe.com/cn/flashplayer/'" +
                     " target='_blank'>点此升级</a>";
@@ -180,7 +180,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
             btn.addClass(replacePrefix("{prefixCls}editor-button-disabled", prefixCls), undefined);
             self.tipSpan = btnHolder.one("span");
             self.tipSpan.html(TIP);
-            if (!SWF.fpvGEQ(FLASH_VERSION_REQUIRED)) {
+            if (!SWF.fpvGTE(FLASH_VERSION_REQUIRED)) {
                 return;
             }
             if (uploadCfg['extraHtml']) {

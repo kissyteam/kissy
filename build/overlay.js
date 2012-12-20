@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:56
+build time: Dec 20 22:28
 */
 /**
  * @ignore
@@ -466,6 +466,7 @@ KISSY.add("overlay/extension/close", function () {
     return Close;
 
 });/**
+ * @ignore
  * effect for dialog
  * @author yiminghe@gmail.com
  */
@@ -791,6 +792,7 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
 
     return Mask;
 }, {requires: ["event"]});/**
+ * @ignore
  * effect for overlay
  * @author yiminghe@gmail.com
  */

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:52
+build time: Dec 20 22:23
 */
 /**
  * @ignore
@@ -633,7 +633,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              *
              * @type {boolean}
              * @member KISSY.Component.Controller
-             * @protected
              */
             isController: true,
 

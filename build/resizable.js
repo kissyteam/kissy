@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:56
+build time: Dec 20 22:28
 */
 /**
  * @ignore
@@ -244,7 +244,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
              * @ignore
              */
             maxWidth: {
-                value: Number.MAX_VALUE
+                value: Number['MAX_VALUE']
             },
             /**
              * Maximum height can current node resize to.
@@ -259,7 +259,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
              * @ignore
              */
             maxHeight: {
-                value: Number.MAX_VALUE
+                value: Number['MAX_VALUE']
             },
             /**
              * directions can current node resize to.

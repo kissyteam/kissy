@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 13:13
+build time: Dec 20 22:28
 */
 /**
  * @ignore
@@ -22,7 +22,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         GT = '>',
         doc = S.Env.host.document,
         fpv = FlashUA.fpv,
-        fpvGEQ = FlashUA.fpvGEQ,
+        fpvGTE = FlashUA.fpvGTE,
         OBJECT_TAG = 'object',
         encode = encodeURIComponent,
 
@@ -83,7 +83,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         }
 
         // 3. 已安装，但当前客户端版本低于指定版本时
-        if (version && !fpvGEQ(version)) {
+        if (version && !fpvGTE(version)) {
             self.set('status', SWF.STATUS.TOO_LOW);
 
             // 有 expressInstall 时，将 src 替换为快速安装
@@ -102,6 +102,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
                 }
 
                 flashVars = params.flashVars = params.flashVars || {};
+                // location.toString() crash ie6
                 S.mix(flashVars, {
                     MMredirectURL: location.href,
                     MMplayerType: UA.ie ? "ActiveX" : "PlugIn",
@@ -369,8 +370,11 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         },
 
         fpv: fpv,
-        fpvGEQ: fpvGEQ
+        fpvGTE: fpvGTE
     });
+
+    // compatible
+    SWF.fpvGEQ = fpvGTE;
 
     function removeObjectInIE(obj) {
         for (var i in obj) {
@@ -667,13 +671,13 @@ KISSY.add('swf/ua', function (S, undefined) {
      * @member KISSY.SWF
      * @static
      */
-    function fpvGEQ(ver, force) {
+    function fpvGTE(ver, force) {
         return getNumberVersion(fpv(force)) >= getNumberVersion(ver);
     }
 
     return {
         fpv: fpv,
-        fpvGEQ: fpvGEQ
+        fpvGTE: fpvGTE
     };
 
 });

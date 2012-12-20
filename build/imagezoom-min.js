@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 12:37
+build time: Dec 20 22:27
 */
 KISSY.add("imagezoom",function(i,p,k,A,d){function q(a){var b=a.get("imageNode"),e=b.offset(),c,n,f,g,l=a.get("bigImageWidth"),h=a.get("bigImageHeight"),r=a.get("width"),j=a.get("height"),d;c=a.imageLeft=e.left;d=a.imageTop=e.top;e=a.imageWidth=b.width();n=a.imageHeight=b.height();f=a.zoomMultipleH=h/n;g=a.zoomMultipleW=l/e;g=a.lensWidth=r/g;f=a.lensHeight=j/f;a.minLensLeft=c;a.minLensTop=d;a.maxLensTop=d+n-f;a.maxLensLeft=c+e-g;a.maxBigImageLeft=0;a.maxBigImageTop=0;a.minBigImageLeft=-(l-r);a.minBigImageTop=
 -(h-j);a.get("type")===s?a.set("align",{node:b,points:["cc","cc"]}):(c=a.get("align")||{},l=c.node,delete c.node,c=i.clone(c),c.node=l||b,a.set("align",c));a.icon.hide();t.on("mousemove mouseleave",u,a)}function v(){var a=this.lens;t.detach("mousemove mouseleave",u,this);this.icon.show();a&&a.hide()}function y(a){var b=a.get("imageNode"),e,c=a.get("type"),d=function(){function c(){h||(h=i.later(function(){h=0;o(b);q(a);a.show();a.lens.show().css({width:a.lensWidth,height:a.lensHeight});a.set("currentMouse",

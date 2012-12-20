@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 11 12:52
+build time: Dec 20 22:23
 */
 /**
  * Color For KISSY.
@@ -122,7 +122,7 @@ KISSY.add("color", function (S, Base) {
          * To hsla string format
          * @return {String}
          */
-        toHSLA: function () {
+        'toHSLA': function () {
             var hsl = this.getHSL();
             return "hsla(" + (Math.round(hsl.h || 0)) + "," + percentage(hsl.s) + "," + percentage(hsl.l) + "," + this.a + ")";
         },
@@ -216,8 +216,7 @@ KISSY.add("color", function (S, Base) {
          */
         setHSV: function (cfg) {
             var self = this,
-                current,
-                rgb;
+                current;
             if ("h" in cfg && "s" in cfg && "v" in cfg) {
             } else {
                 current = self.getHSV();
@@ -239,7 +238,7 @@ KISSY.add("color", function (S, Base) {
          * @param cfg.s
          * @param cfg.l
          */
-        setHSL: function (cfg) {
+        'setHSL': function (cfg) {
             var self = this,
                 current;
             if ("h" in cfg && "s" in cfg && "l" in cfg) {
@@ -311,7 +310,7 @@ KISSY.add("color", function (S, Base) {
          * @param {Number} cfg.l lightness
          * @param {Number} cfg.a alpha
          */
-        fromHSL: function (cfg) {
+        'fromHSL': function (cfg) {
             var rgb = hsl2rgb(cfg);
             rgb.a = cfg.a;
             return new Color(rgb);
@@ -441,8 +440,7 @@ KISSY.add("color", function (S, Base) {
         if (s == 0 || h == null) {
             // achromatic
             rgb = [l, l, l];
-        }
-        else {
+        } else {
             // http://en.wikipedia.org/wiki/HSL_and_HSV#From_HSL
             // C is the chroma
             // X is the second largest component

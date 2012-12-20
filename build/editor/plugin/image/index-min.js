@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 14 17:35
+build time: Dec 20 22:27
 */
 KISSY.add("editor/plugin/image/index",function(e,j,q,r,s,n){function c(b){this.config=b||{}}var k=e.UA,o=KISSY.NodeList,g=e.all,p=e.Event,f=function(b){b=g(b);if("img"===b.nodeName()&&!/(^|\s+)ke_/.test(b[0].className))return b};e.augment(c,{pluginRenderUI:function(b){function h(a){n.useDialog(b,"image",c.config,a)}var c=this,i=b.get("prefixCls");b.addButton("image",{tooltip:"插入图片",listeners:{click:function(){h(null)}},mode:j.WYSIWYG_MODE});var l=[{content:"图片属性",fn:function(){var a=f(this.get("editorSelectedEl"));
 a&&(this.hide(),h(g(a)))}},{content:"插入新行",fn:function(){this.hide();var a=b.get("document")[0],d=new o(a.createElement("p"));k.ie||d._4e_appendBogus(void 0);a=new j.Range(a);a.setStartAfter(this.get("editorSelectedEl"));a.select();b.insertElement(d);a.moveToElementEditablePosition(d,1);a.select()}}],m=[];e.each(l,function(a){m.push({content:a.content})});b.addContextMenu("image",f,{width:120,children:m,listeners:{click:function(a){var b=this,c=a.target.get("content");e.each(l,function(a){a.content==
