@@ -16,26 +16,22 @@
 
     <script src="../../src/ua.js"></script>
     <script src="../../src/swf.js"></script>
-
-    <script src="../specs/swf-spec.js"></script>
-
-    <style>
-
-    </style>
-
 </head>
 <body>
 <h1>KISSY SWF Test Cases</h1>
+<script src="../specs/swf-spec.js"></script>
 <script>
-    KISSY.use('core,swf', function () {
-        setTimeout(function () {
-            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
-            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
-            jasmine.getEnv().execute(function () {
-                jasmine.kissyNext(this.results().failedCount);
-            });
-        }, 100);
-    });
+    window.onload = function () {
+        KISSY.use('core,swf', function () {
+            setTimeout(function () {
+                jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+                jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+                jasmine.getEnv().execute(function () {
+                    jasmine.kissyNext(this.results().failedCount);
+                });
+            }, 100);
+        });
+    };
 </script>
 </body>
 </html>

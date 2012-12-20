@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body>
+<div class="container">
+    <h1>KISSY SWF</h1>
+</div>
+<div id="container">
+
+</div>
+<script src="/kissy/build/seed.js"></script>
+<script src="../../src/swf.js"></script>
+<script src="../../src/ua.js"></script>
+<script>
+    KISSY.use('swf', function (S, SWF) {
+
+        var swf2 = new SWF({
+            container: '#container',
+            src: '../assets/test.swf',
+            attrs: {
+                id: 'test',
+                width: 300,
+                height: 300
+            },
+            params: {
+                // only allow hex
+                bgcolor: '#d55867'
+            },
+            version: "12"
+        });
+
+    });
+</script>
+</body>
+</html>

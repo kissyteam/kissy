@@ -50,6 +50,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
     /**
      * insert a new swf into container
      * @class KISSY.SWF
+     * @extends KISSY.Base
      */
     function SWF(config) {
         var self = this;
@@ -83,18 +84,22 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
             // 有 expressInstall 时，将 src 替换为快速安装
             if (expressInstall) {
                 installedSrc = expressInstall;
+
                 // from swfobject
                 if (!('width' in attrs) ||
                     (!/%$/.test(attrs.width) && parseInt(attrs.width, 10) < 310)) {
                     attrs.width = "310";
                 }
+
                 if (!('height' in attrs) ||
                     (!/%$/.test(attrs.height) && parseInt(attrs.height, 10) < 137)) {
                     attrs.height = "137";
                 }
+
                 flashVars = params.flashVars = params.flashVars || {};
+                // location.toString() crash ie6
                 S.mix(flashVars, {
-                    MMredirectURL: location.toString,
+                    MMredirectURL: location.href,
                     MMplayerType: UA.ie ? "ActiveX" : "PlugIn",
                     MMdoctitle: doc.title.slice(0, 47) + " - Flash Player Installation"
                 });
@@ -182,7 +187,6 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
             if (UA.ie) {
                 swfObject.style.display = 'none';
                 // from swfobject
-                //
                 (function () {
                     if (swfObject.readyState == 4) {
                         removeObjectInIE(swfObject);

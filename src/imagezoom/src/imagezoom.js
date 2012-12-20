@@ -16,7 +16,7 @@ KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {
         groupEventForInnerAnim = '.ks-imagezoom-img-mouse',
         INNER = 'inner',
         ABSOLUTE_STYLE = ' style="position:absolute;top:-9999px;left:-9999px;" ',
-        BIG_IMG_TPL = '<img src=' + '{src} {style}" />';
+        BIG_IMG_TPL = '<img src=' + '{src} {style} />';
 
     function constrain(v, l, r) {
         return Math.min(Math.max(v, l), r);

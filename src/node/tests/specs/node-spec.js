@@ -63,7 +63,10 @@ KISSY.use("dom,node", function (S, DOM, Node) {
             var nl = S.all(".test-div");
 
             //chain
-            expect(nl.css("height", "200px")).toBe(nl);
+            expect(nl.css({
+                "height": "200px",
+                'overflow': 'hidden'
+            })).toBe(nl);
 
             nl.each(function (n) {
                 expect(n.css("height")).toBe("200px");

@@ -79,7 +79,9 @@ KISSY.add('ajax', function (S, serializer, IO) {
              */
             post: function (url, data, callback, dataType) {
                 if (S.isFunction(data)) {
-                    dataType = callback;
+<span id='global-property-'>                    dataType = /**
+</span>                     @type String
+                     @ignore*/callback;
                     callback = data;
                     data = undef;
                 }
@@ -150,7 +152,10 @@ KISSY.add('ajax', function (S, serializer, IO) {
              */
             upload: function (url, form, data, callback, dataType) {
                 if (S.isFunction(data)) {
-                    dataType = callback;
+<span id='global-property-'>                    dataType = /**
+</span>                     @type String
+                     @ignore
+                     */callback;
                     callback = data;
                     data = undef;
                 }

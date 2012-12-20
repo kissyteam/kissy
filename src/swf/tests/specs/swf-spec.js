@@ -76,7 +76,6 @@ if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
                     swf1.destroy();
                     waits(300);
                     runs(function () {
-
                         expect(DOM.contains(document, swf1.get('swfObject'))).toBe(false);
                     });
 
@@ -146,9 +145,12 @@ if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
                     expect(swf.get('el').id).toEqual('test-flash-vars');
 
                     swf.destroy();
+
+                    waits(1000);
                 });
 
                 it('will handle low version', function () {
+
                     var swf1 = new SWF({
                         src: '../assets/test.swf',
                         attrs: {

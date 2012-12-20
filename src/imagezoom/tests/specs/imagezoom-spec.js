@@ -46,8 +46,8 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
             });
 
             it('初始化后, 小图 DOM 结构正确', function () {
-                    expect(a.imageWrap).toBeDefined();
-                    expect(a.imageWrap.hasClass('ks-imagezoom-wrap')).toEqual(true);
+                expect(a.imageWrap).toBeDefined();
+                expect(a.imageWrap.hasClass('ks-imagezoom-wrap')).toEqual(true);
             });
 
             it('显示放大镜图标', function () {
@@ -169,8 +169,8 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
 
                 simulate(a.get('imageNode'), "mouseover", document.body);
 
-                // wait inner anim
-                waits(600);
+                // wait inner anim , 500ms +50 buffer
+                waits(1000);
 
                 runs(function () {
                     a.set('currentMouse', {
@@ -181,16 +181,21 @@ KISSY.use("imagezoom", function (S, ImageZoom) {
 
                 waits(100);
                 runs(function () {
-                    expect(a.get("el").offset().left)
-                        .toBeEqual(a.get('imageNode').offset().left - (testWidth - imageWidth) / 2);
+
+                    var elOffset = a.get("el").offset();
+
+                    expect(elOffset.left)
+                        .toBeEqual(offset.left - (testWidth - imageWidth) / 2);
 
                     // 越界
                     expect(a.bigImage.css('left'))
-                        .toBeEqual(Math.min((-100) * bigImageWidth / testWidth + testWidth / 2,0));
+                        .toBeEqual(Math.min((-100) * bigImageWidth / testWidth + testWidth / 2, 0));
 
-                    expect(a.get("el").offset().top).toBeEqual(a.get('imageNode').offset().top);
+                    expect(elOffset.top).toBeEqual(offset.top);
+
                     expect(a.bigImage.css('top'))
-                        .toBeEqual(-100 * bigImageHeight / imageHeight + testHeight / 2);
+                        .toBeEqual(Math.min(-100 * bigImageHeight / imageHeight +
+                            testHeight / 2, 0));
                     expect(a.lens).toBeUndefined();
                     a.hide();
                 });
