@@ -8,9 +8,15 @@
     var Loader = S.Loader,
         utils = Loader.Utils,
         host = S.Env.host,
-        location = host.location || { href: '' },
-        simulatedLocation = new S.Uri(location.href),
+        location = host.location,
+        simulatedLocation,
+        locationHref,
         configFns = S.Config.fns;
+
+    if (!S.Env.nodejs && location && (locationHref = location.href)) {
+        simulatedLocation = new S.Uri(locationHref)
+    }
+
     /*
      modify current module path
 
@@ -47,8 +53,6 @@
      */
     configFns.packages = function (cfgs) {
         var name,
-            base,
-            baseUri,
             Config = this.Config,
             ps = Config.packages = Config.packages || {};
         if (cfgs) {
@@ -57,14 +61,8 @@
                 name = cfg.name || key;
 
                 // 兼容 path
-                base = normPathForNode(cfg.base || cfg.path);
+                var baseUri = normalizeBase(cfg.base || cfg.path);
 
-                // must be folder
-                if (!S.endsWith(base, '/')) {
-                    base += '/';
-                }
-                // 注意正则化
-                baseUri = simulatedLocation.resolve(base);
                 cfg.name = name;
                 cfg.base = baseUri.toString();
                 cfg.baseUri = baseUri;
@@ -125,25 +123,34 @@
      */
     configFns.base = function (base) {
         var self = this,
-            Config = self.Config, baseUri;
+            Config = self.Config,
+            baseUri;
         if (!base) {
             return Config.base;
         }
-
-        base = normPathForNode(base);
-
-        baseUri = simulatedLocation.resolve(base);
+        baseUri = normalizeBase(base);
         Config.base = baseUri.toString();
         Config.baseUri = baseUri;
         return undefined;
     };
 
-    function normPathForNode(base) {
-        // nodejs must be absolute local file path
-        if (S.Env.nodejs && !S.startsWith(base, 'file:')) {
-            // specify scheme for KISSY.Uri
-            base = 'file:' + base;
+
+    function normalizeBase(base) {
+        var baseUri;
+        if (!S.endsWith(base, '/')) {
+            base += '/';
         }
-        return base;
+        if (simulatedLocation) {
+            baseUri = simulatedLocation.resolve(base);
+        } else {
+            // add scheme for S.Uri
+            // currently only for nodejs
+            if (!S.startsWith(base, 'file:')) {
+                base = 'file:' + base;
+            }
+            baseUri = new S.Uri(base);
+        }
+        return baseUri;
     }
+
 })(KISSY);

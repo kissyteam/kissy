@@ -10,6 +10,9 @@ KISSY.config({
 
 });
 
+KISSY.log(KISSY.UA.os);
+KISSY.log(KISSY.UA.nodejs);
+
 KISSY.use("mods/start", function (S, r) {
     console.log(r);
 });

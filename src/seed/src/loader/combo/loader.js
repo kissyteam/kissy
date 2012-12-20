@@ -3,7 +3,7 @@
  * @fileOverview using combo to load module files
  * @author yiminghe@gmail.com
  */
-(function (S) {
+(function (S, undefined) {
 
     function loadScripts(urls, callback, charset) {
         var count = urls && urls.length;
@@ -65,6 +65,7 @@
             allModNames,
             comboUrls,
             css,
+            jss,
             jsOk,
             cssOk,
             countCss,
@@ -101,13 +102,12 @@
             loadScripts(css[p], function () {
                 if (!(--countCss)) {
                     // mark all css mods to be loaded
-                    for (var p in css) {
-
+                    for (p in css) {
                         S.each(css[p].mods, function (m) {
                             utils.registerModule(runtime, m.name, S.noop);
                         });
-
                     }
+                    debugRemoteModules(css);
                     cssOk = 1;
                     check();
                 }
@@ -117,7 +117,7 @@
 
         function check() {
             if (cssOk && jsOk) {
-                if (utils.attachModsRecursively(unaliasModNames, runtime)) {
+                if (utils['attachModsRecursively'](unaliasModNames, runtime)) {
                     fn.apply(null, utils.getModules(runtime, modNames))
                 } else {
                     // new require is introduced by KISSY.add
@@ -127,20 +127,41 @@
             }
         }
 
+        jss = comboUrls.js;
+
         // jss css download in parallel
-        _useJs(comboUrls, function (ok) {
+        _useJs(jss, function (ok) {
             jsOk = ok;
+            if (ok) {
+                debugRemoteModules(jss);
+            }
             check();
         });
     }
 
+
+    function debugRemoteModules(rss) {
+        if (S.Config.debug) {
+            var ms = [],
+                p,
+                ps = [];
+            for (p in rss) {
+                ps.push.apply(ps, rss[p]);
+                S.each(rss[p].mods, function (m) {
+                    ms.push(m.name);
+                });
+            }
+            if (ms.length) {
+                S.log('load remote modules: "' + ms.join(', ') + '" from: "' + ps.join(', ')+'"');
+            }
+        }
+    }
+
     // use js
-    function _useJs(comboUrls, check) {
+    function _useJs(jss, check) {
         var p,
             success,
-            jss = comboUrls.js,
             countJss = 0;
-
 
         for (p in jss) {
             countJss++;
@@ -156,20 +177,17 @@
 
             (function (p) {
                 loadScripts(jss[p], function () {
-                    var mods = jss[p].mods,
-                        mod,
-                        i;
-                    for (i = 0; i < mods.length; i++) {
-                        mod = mods[i];
+                    S.each(jss[p].mods, function (mod) {
                         // fix #111
                         // https://github.com/kissyteam/kissy/issues/111
                         if (!mod.fn) {
                             S.log(mod.name + ' is not loaded! can not find module in path : ' + jss[p], 'error');
                             mod.status = data.ERROR;
                             success = 0;
-                            return;
+                            return false;
                         }
-                    }
+                        return undefined;
+                    });
                     if (success && !(--countJss)) {
                         check(1);
                     }

@@ -27,10 +27,13 @@
                 return;
             }
 
-            var uri = new S.Uri(url);
+            var uri = new S.Uri(url),
+                path = uri.getPath();
+
+            // S.log('nodejs get file from : '+path);
 
             try {
-                var mod = fs.readFileSync(uri.getPath(), charset);
+                var mod = fs.readFileSync(path, charset);
                 var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
                 fn(S);
                 success && success();

@@ -150,6 +150,7 @@
                 fullpathUri,
                 packageBaseUri,
                 packageInfo,
+                packageName,
                 path;
             if (!self.fullpath) {
                 packageInfo = self.getPackage();
@@ -158,10 +159,8 @@
                 // #262
                 if (packageInfo.isIgnorePackageNameInUri() &&
                     // native mod does not allow ignore package name
-                    packageInfo.getName()) {
-                    path = path.split('/');
-                    path.shift();
-                    path = path.join('/');
+                    (packageName = packageInfo.getName())) {
+                    path = Path.relative(packageName, path);
                 }
                 fullpathUri = packageBaseUri.resolve(path);
                 if (t = self.getTag()) {

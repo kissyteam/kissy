@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 12:14
+build time: Dec 20 22:14
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121220121436' will replace with current timestamp when compressing.
+         * NOTICE: '20121220221408' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121220121436',
+        __BUILD_TIME: '20121220221408',
         /**
          * KISSY Environment.
          * @private
@@ -3194,7 +3194,14 @@ var KISSY = (function (undefined) {
              * @type Number
              * @member KISSY.UA
              */
-            android: undefined
+            android: undefined,
+
+            /**
+             * nodejs version
+             * @type Number
+             * @member KISSY.UA
+             */
+            nodejs: undefined
         },
         numberify = function (s) {
             var c = 0;
@@ -3349,6 +3356,15 @@ var KISSY = (function (undefined) {
             os = 'linux';
         } else if ((/rhino/i).test(ua)) {
             os = 'rhino';
+        }
+    }
+
+    // nodejs
+    if (typeof process === 'object') {
+        var versions, nodeVersion;
+        if ((versions = process.versions) && (nodeVersion = versions.node)) {
+            os = process.platform;
+            UA.nodejs = numberify(nodeVersion);
         }
     }
 
@@ -4142,6 +4158,7 @@ var KISSY = (function (undefined) {
                 fullpathUri,
                 packageBaseUri,
                 packageInfo,
+                packageName,
                 path;
             if (!self.fullpath) {
                 packageInfo = self.getPackage();
@@ -4150,10 +4167,8 @@ var KISSY = (function (undefined) {
                 // #262
                 if (packageInfo.isIgnorePackageNameInUri() &&
                     // native mod does not allow ignore package name
-                    packageInfo.getName()) {
-                    path = path.split('/');
-                    path.shift();
-                    path = path.join('/');
+                    (packageName = packageInfo.getName())) {
+                    path = Path.relative(packageName, path);
                 }
                 fullpathUri = packageBaseUri.resolve(path);
                 if (t = self.getTag()) {
@@ -4332,10 +4347,13 @@ var KISSY = (function (undefined) {
                 return;
             }
 
-            var uri = new S.Uri(url);
+            var uri = new S.Uri(url),
+                path = uri.getPath();
+
+            // S.log('nodejs get file from : '+path);
 
             try {
-                var mod = fs.readFileSync(uri.getPath(), charset);
+                var mod = fs.readFileSync(path, charset);
                 var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
                 fn(S);
                 success && success();
@@ -4359,9 +4377,15 @@ var KISSY = (function (undefined) {
     var Loader = S.Loader,
         utils = Loader.Utils,
         host = S.Env.host,
-        location = host.location || { href: '' },
-        simulatedLocation = new S.Uri(location.href),
+        location = host.location,
+        simulatedLocation,
+        locationHref,
         configFns = S.Config.fns;
+
+    if (!S.Env.nodejs && location && (locationHref = location.href)) {
+        simulatedLocation = new S.Uri(locationHref)
+    }
+
     /*
      modify current module path
 
@@ -4398,8 +4422,6 @@ var KISSY = (function (undefined) {
      */
     configFns.packages = function (cfgs) {
         var name,
-            base,
-            baseUri,
             Config = this.Config,
             ps = Config.packages = Config.packages || {};
         if (cfgs) {
@@ -4408,14 +4430,8 @@ var KISSY = (function (undefined) {
                 name = cfg.name || key;
 
                 // 兼容 path
-                base = normPathForNode(cfg.base || cfg.path);
+                var baseUri = normalizeBase(cfg.base || cfg.path);
 
-                // must be folder
-                if (!S.endsWith(base, '/')) {
-                    base += '/';
-                }
-                // 注意正则化
-                baseUri = simulatedLocation.resolve(base);
                 cfg.name = name;
                 cfg.base = baseUri.toString();
                 cfg.baseUri = baseUri;
@@ -4476,27 +4492,36 @@ var KISSY = (function (undefined) {
      */
     configFns.base = function (base) {
         var self = this,
-            Config = self.Config, baseUri;
+            Config = self.Config,
+            baseUri;
         if (!base) {
             return Config.base;
         }
-
-        base = normPathForNode(base);
-
-        baseUri = simulatedLocation.resolve(base);
+        baseUri = normalizeBase(base);
         Config.base = baseUri.toString();
         Config.baseUri = baseUri;
         return undefined;
     };
 
-    function normPathForNode(base) {
-        // nodejs must be absolute local file path
-        if (S.Env.nodejs && !S.startsWith(base, 'file:')) {
-            // specify scheme for KISSY.Uri
-            base = 'file:' + base;
+
+    function normalizeBase(base) {
+        var baseUri;
+        if (!S.endsWith(base, '/')) {
+            base += '/';
         }
-        return base;
+        if (simulatedLocation) {
+            baseUri = simulatedLocation.resolve(base);
+        } else {
+            // add scheme for S.Uri
+            // currently for nodejs
+            if (!S.startsWith(base, 'file:')) {
+                base = 'file:' + base;
+            }
+            baseUri = new S.Uri(base);
+        }
+        return baseUri;
     }
+
 })(KISSY);/**
  * @ignore
  * @fileOverview add module to kissy simple loader
@@ -4605,15 +4630,14 @@ var KISSY = (function (undefined) {
         if (re) {
             name = re.getAttribute('data-mod-name');
         } else {
-            // sometimes when read module file from cache , interactive status is not triggered
+            // sometimes when read module file from cache,
+            // interactive status is not triggered
             // module code is executed right after inserting into dom
-            // i has to preserve module name before insert module script into dom , then get it back here
-            S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
-            S.log('old_ie get mod name from cache : ' + self.__startLoadModName);
+            // i has to preserve module name before insert module script into dom,
+            // then get it back here
+            // S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
+            // S.log('old_ie get mod name from cache : ' + self.__startLoadModName);
             name = self.__startLoadModName;
-        }
-        if (!name && re) {
-            S.log('interactive script does not have package config ：' + re.src, 'error');
         }
         return name;
     }
@@ -4854,7 +4878,7 @@ var KISSY = (function (undefined) {
                         // does not need this step for css
                         // standard browser(except ie9) fire load after KISSY.add immediately
                         if (currentModule = self.__currentMod) {
-                            S.log('standard browser get mod name after load : ' + modName);
+                            // S.log('standard browser get mod name after load : ' + modName);
                             utils.registerModule(runtime,
                                 modName, currentModule.fn,
                                 currentModule.config);
@@ -4878,7 +4902,7 @@ var KISSY = (function (undefined) {
         function checkHandler() {
             if (mod.fn) {
                 if (!remoteLoads[modName]) {
-                    S.log('load remote module: ' + modName, 'info');
+                    S.log('load remote module: "' + modName + '" from: "' + url + '"', 'info');
                     remoteLoads[modName] = 1;
                 }
                 // 只在 LOADED 后加载依赖项一次
@@ -5053,7 +5077,11 @@ var KISSY = (function (undefined) {
     }
 
     if (S.Env.nodejs) {
-        S.config('base', __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/');
+        // nodejs: no tag
+        S.config({
+            charset: 'utf-8',
+            base: __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/'
+        });
     } else {
         // will transform base to absolute path
         S.config(S.mix({
@@ -5062,12 +5090,12 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121220121436'
+            tag: '20121220221408'
         }, getBaseInfo()));
     }
 
     S.config('systemPackage', new Loader.Package({
-        name:'',
+        name: '',
         runtime: S
     }));
 

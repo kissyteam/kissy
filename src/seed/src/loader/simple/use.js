@@ -194,7 +194,7 @@
                         // does not need this step for css
                         // standard browser(except ie9) fire load after KISSY.add immediately
                         if (currentModule = self.__currentMod) {
-                            S.log('standard browser get mod name after load : ' + modName);
+                            // S.log('standard browser get mod name after load : ' + modName);
                             utils.registerModule(runtime,
                                 modName, currentModule.fn,
                                 currentModule.config);
@@ -218,7 +218,7 @@
         function checkHandler() {
             if (mod.fn) {
                 if (!remoteLoads[modName]) {
-                    S.log('load remote module: ' + modName, 'info');
+                    S.log('load remote module: "' + modName + '" from: "' + url + '"', 'info');
                     remoteLoads[modName] = 1;
                 }
                 // 只在 LOADED 后加载依赖项一次

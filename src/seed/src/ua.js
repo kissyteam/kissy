@@ -144,7 +144,14 @@
              * @type Number
              * @member KISSY.UA
              */
-            android: undefined
+            android: undefined,
+
+            /**
+             * nodejs version
+             * @type Number
+             * @member KISSY.UA
+             */
+            nodejs: undefined
         },
         numberify = function (s) {
             var c = 0;
@@ -299,6 +306,15 @@
             os = 'linux';
         } else if ((/rhino/i).test(ua)) {
             os = 'rhino';
+        }
+    }
+
+    // nodejs
+    if (typeof process === 'object') {
+        var versions, nodeVersion;
+        if ((versions = process.versions) && (nodeVersion = versions.node)) {
+            os = process.platform;
+            UA.nodejs = numberify(nodeVersion);
         }
     }
 
