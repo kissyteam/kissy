@@ -257,7 +257,29 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                     var render = new XTemplate(tpl).render(data);
 
-                    expect(render).toBe(tpl);
+                    expect(render).toBe('"haha "');
+                });
+
+
+                it('support escape escape',function(){
+                    var tpl='haha \\\\{{title}}';
+                    var data = {
+                        title: 'a'
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('haha \\a');
+
+
+                     tpl='haha \\\\\\{{title}}';
+                     data = {
+                        title: 'a'
+                    };
+
+                    render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('haha \\{{title}}');
                 });
 
             });

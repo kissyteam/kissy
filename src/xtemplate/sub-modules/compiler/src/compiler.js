@@ -40,7 +40,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         } else {
             quote = "'";
         }
-        return str.replace(/\\/g, '\\\\')
+        return str//.replace(/\\/g, '\\\\')
             .replace(/\r/g, '\\r')
             .replace(/\n/g, '\\n')
             .replace(/\t/g, '\\t')

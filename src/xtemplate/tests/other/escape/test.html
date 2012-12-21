@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>KISSY XTemplate Escape Test</title>
+    <script src="/kissy/build/seed.js"></script>
+
+    <script src="../../../sub-modules/compiler/src/ast.js"></script>
+    <script src="../../../sub-modules/runtime/src/base.js"></script>
+    <script src="../../../sub-modules/runtime/src/commands.js"></script>
+    <script src="../../../sub-modules/compiler/src/compiler.js"></script>
+    <script src="../../../sub-modules/compiler/src/parser.js"></script>
+    <script src="../../../sub-modules/runtime/src/runtime.js"></script>
+    <script src="../../../sub-modules/runtime/src/include-command.js"></script>
+    <script src="../../../sub-modules/facade/src/xtemplate.js"></script>
+</head>
+
+<body>
+<h1>KISSY XTemplate Test Cases</h1>
+<script>
+    KISSY.use('xtemplate', function (S,XTemplate) {
+        setTimeout(function () {
+            var data = { arr: [1, 2, 3] };
+
+            function test(s) {
+                return new XTemplate(s).render(data);
+            }
+
+            console.log(test('{{#arr}}{{this}}{{/arr}}'));
+            console.log(test('{{#arr}}\\{{this}}{{/arr}}'));
+            var str=test('{{#arr}}\\\\{{this}}{{/arr}}');
+            console.log(str);
+            console.log(test('{{#arr}}\\\\\\{{this}}{{/arr}}'));
+        }, 100);
+    });
+</script>
+</body>
+</html>
+

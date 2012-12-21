@@ -397,16 +397,27 @@
             rules: [
                 {
                     // "\n".match(/./)
-                    regexp: /^[\s\S]*?(?={{)/,
+                    regexp: /^(\\[\s\S]|[\s\S])*?(?={{)/,
                     action: function () {
-                        if (this.text.slice(-1) !== '\\') {
-                            this.pushState('t');
-                        } else {
-                            this.text = this.text.slice(0, -1);
+                        var text = this.text,
+                            l, n;
+                        // '\\\\{{test}}'
+                        l = text.length - 1;
+                        n = 0;
+                        while (text.charAt(l) == '\\') {
+                            n++;
+                            l--;
+                        }
+                        if (n % 2) {
+                            text = text.slice(0, -1);
+                        }
+                        if (n % 2) {
                             this.pushState('et');
+                        } else {
+                            this.pushState('t');
                         }
                         // only return when has content
-                        if (this.text) {
+                        if (this.text = text) {
                             return 'CONTENT';
                         }
                     }
