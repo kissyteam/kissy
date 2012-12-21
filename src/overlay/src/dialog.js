@@ -37,7 +37,11 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Di
                     el.attr("aria-hidden", "false");
                 } else {
                     el.attr("aria-hidden", "true");
-                    self.__lastActive && self.__lastActive.focus();
+                    try {
+                        self.__lastActive && self.__lastActive.focus();
+                    } catch (e) {
+                        // ie can not be focused if lastActive is invisible
+                    }
                 }
                 // prevent display none for effect
                 Dialog.superclass._onSetVisible.apply(self, arguments);
