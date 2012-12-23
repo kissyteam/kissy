@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:29
+build time: Dec 23 19:05
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121220222856' will replace with current timestamp when compressing.
+         * NOTICE: '20121223190506' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121220222856',
+        __BUILD_TIME: '20121223190506',
         /**
          * KISSY Environment.
          * @private
@@ -5779,7 +5779,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121220222856'
+            tag: '20121223190506'
         }, getBaseInfo()));
     }
 
@@ -16173,7 +16173,7 @@ KISSY.add('json', function (S, J) {
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:23
+build time: Dec 23 19:04
 */
 /**
  * @ignore
@@ -18230,13 +18230,15 @@ KISSY.add('ajax/xhr-transport-base', function (S, io) {
 KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
 
     var win = S.Env.host,
+        doc = win.document,
         _XDomainRequest = XhrTransportBase._XDomainRequest,
         detectXhr = XhrTransportBase.nativeXhr();
 
     if (detectXhr) {
 
         function isSubDomain(hostname) {
-            return S.endsWith(hostname, win.document.domain);
+            // phonegap does not have doc.domain
+            return doc.domain && S.endsWith(hostname, doc.domain);
         }
 
         /**
