@@ -326,7 +326,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              * @public
              */
             refresh: function () {
-                this._loadItems();
+                this._loadFn();
             },
 
             /**
@@ -399,8 +399,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     els = callbacks.els,
                     fns = callbacks.fns,
                     remove = 0,
-                    i, el, fn, remainEls = [],
-                    remainFns = [];
+                    i,j, el, fn;
 
                 for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
                     remove = false;
@@ -409,13 +408,19 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     } else if (self._checkElemInViewport(el)) {
                         remove = fn.call(el);
                     }
-                    if (remove === false) {
-                        remainEls.push(el);
-                        remainFns.push(fn);
+                    if (remove !== false) {
+						//the els may changed by fn.call 
+                        for(j=i;j>=0;j--)
+						{
+							if(els[j]==el && fns[j]==fn)
+							{
+								els.splice(j,1);
+								fns.splice(j,1);
+								break;
+							}
+						}
                     }
                 }
-                callbacks.els = remainEls;
-                callbacks.fns = remainFns;
             },
 
             /**
@@ -436,7 +441,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 }
 
                 // add 立即检测，防止首屏元素问题
-                self._fireCallbacks();
+                self._loadFn();
             },
 
             /**
@@ -447,25 +452,18 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              */
             'removeCallback': function (el, fn) {
                 var callbacks = this._callbacks,
-                    els = [],
-                    fns = [],
-                    curFns = callbacks.fns;
+                    els = callbacks.els,
+                    fns = callbacks.fns;
 
                 el = DOM.get(el);
-
-                S.each(callbacks.els, function (curEl, index) {
-                    if (curEl == el) {
-                        if (fn === undefined || fn == curFns[index]) {
-                            return;
-                        }
-                    }
-
-                    els.push(curEl);
-                    fns.push(curFns[index]);
-                });
-
-                callbacks.fns = fns;
-                callbacks.els = els;
+				for(var i=els.length-1;i>=0;i--)
+				{
+					if(els[i]==el && fns[i]==fn)
+					{
+						els.splice(i,1);
+						fns.splice(i,1);
+					}
+				}
             },
 
             /**
