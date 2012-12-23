@@ -470,9 +470,12 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
             /**
              * Add a array of imgs or textareas to be lazy loaded to monitor list.
-             * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
+             * @param {HTMLElement[]|selector} els Array of imgs or textareas to be lazy loaded
              */
             'addElements': function (els) {
+				if (S.isString(els)) {
+					els=DOM.query(els);
+				}
                 if (!S.isArray(els)) {
                     els = [els];
                 }
@@ -497,9 +500,12 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
             /**
              * Remove a array of element from monitor list. See {@link KISSY.DataLazyload#addElements}.
-             * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
+             * @param {HTMLElement[]|selector} els Array of imgs or textareas to be lazy loaded
              */
             'removeElements': function (els) {
+				if (S.isString(els)) {
+					els=DOM.query(els);
+				}
                 if (!S.isArray(els)) {
                     els = [els];
                 }
