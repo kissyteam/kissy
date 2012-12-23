@@ -6,13 +6,15 @@
 KISSY.add('ajax/xhr-transport', function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
 
     var win = S.Env.host,
+        doc = win.document,
         _XDomainRequest = XhrTransportBase._XDomainRequest,
         detectXhr = XhrTransportBase.nativeXhr();
 
     if (detectXhr) {
 
         function isSubDomain(hostname) {
-            return S.endsWith(hostname, win.document.domain);
+            // phonegap does not have doc.domain
+            return doc.domain && S.endsWith(hostname, doc.domain);
         }
 
         /**

@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:23
+build time: Dec 23 19:04
 */
 KISSY.add("ajax",function(f,g,j){function i(d,b,a,h,m){f.isFunction(b)&&(h=a,a=b,b=k);return j({type:m||"get",url:d,data:b,success:a,dataType:h})}var k=void 0;f.mix(j,{serialize:g.serialize,get:i,post:function(d,b,a,h){f.isFunction(b)&&(h=a,a=b,b=k);return i(d,b,a,h,"post")},jsonp:function(d,b,a){f.isFunction(b)&&(a=b,b=k);return i(d,b,a,"jsonp")},getScript:f.getScript,getJSON:function(d,b,a){f.isFunction(b)&&(a=b,b=k);return i(d,b,a,"json")},upload:function(d,b,a,h,m){f.isFunction(a)&&(m=h,h=a,a=
 k);return j({url:d,type:"post",dataType:m,form:b,data:a,success:h})}});f.mix(f,{Ajax:j,IO:j,ajax:j,io:j,jsonp:j.jsonp});return j},{requires:"ajax/form-serializer,ajax/base,ajax/xhr-transport,ajax/script-transport,ajax/jsonp,ajax/form,ajax/iframe-transport,ajax/methods".split(",")});
@@ -37,5 +37,5 @@ void 0}return c}:j;b._XDomainRequest=d;f.mix(b.proto,{sendInternal:function(){va
 try{if(!o)for(r in p)f.setRequestHeader(r,p[r])}catch(z){}f.send(c.hasContent&&c.data||null);!j||4==f.readyState?b._callback():d&&f instanceof d?(f.onload=function(){f.readyState=4;f.status=200;b._callback()},f.onerror=function(){f.readyState=4;f.status=500;b._callback()}):f.onreadystatechange=function(){b._callback()}},abort:function(){this._callback(0,1)},_callback:function(b,e){var c=this.nativeXhr,g=this.io,j,k,s,o,t,p=g.config;try{if(e||4==c.readyState)if(d&&c instanceof d?(c.onerror=f.noop,
 c.onload=f.noop):c.onreadystatechange=f.noop,e)4!==c.readyState&&c.abort();else{j=i(p);var q=c.status;d&&c instanceof d||(g.responseHeadersString=c.getAllResponseHeaders());j&&(k=c.getResponseHeader("Last-Modified"),s=c.getResponseHeader("ETag"),k&&(a[j]=k),s&&(h[s]=s));if((t=c.responseXML)&&t.documentElement)g.responseXML=t;g.responseText=c.responseText;try{o=c.statusText}catch(v){o=""}!q&&g.isLocal&&!p.crossDomain?q=g.responseText?200:404:1223===q&&(q=204);g._ioReady(q,o)}}catch(r){c.onreadystatechange=
 f.noop,e||g._ioReady(-1,r)}}});return b},{requires:["./base"]});
-KISSY.add("ajax/xhr-transport",function(f,g,j,i,k){var d=f.Env.host,b=j._XDomainRequest,a=j.nativeXhr();if(a){var h=function(g){var e=g.config,c=e.crossDomain,h=e.xdr||{},u=h.subDomain=h.subDomain||{};this.io=g;if(c){e=e.uri.getHostname();if(f.endsWith(e,d.document.domain)&&!1!==u.proxy)return new i(g);if(!("withCredentials"in a)&&("flash"===""+h.use||!b))return new k(g)}this.nativeXhr=j.nativeXhr(c);return this};f.augment(h,j.proto,{send:function(){this.sendInternal()}});g.setupTransport("*",h)}return g},
-{requires:["./base","./xhr-transport-base","./sub-domain-transport","./xdr-flash-transport"]});
+KISSY.add("ajax/xhr-transport",function(f,g,j,i,k){var d=f.Env.host.document,b=j._XDomainRequest,a=j.nativeXhr();if(a){var h=function(g){var e=g.config,c=e.crossDomain,h=e.xdr||{},u=h.subDomain=h.subDomain||{};this.io=g;if(c){e=e.uri.getHostname();if(d.domain&&f.endsWith(e,d.domain)&&!1!==u.proxy)return new i(g);if(!("withCredentials"in a)&&("flash"===""+h.use||!b))return new k(g)}this.nativeXhr=j.nativeXhr(c);return this};f.augment(h,j.proto,{send:function(){this.sendInternal()}});g.setupTransport("*",
+h)}return g},{requires:["./base","./xhr-transport-base","./sub-domain-transport","./xdr-flash-transport"]});
