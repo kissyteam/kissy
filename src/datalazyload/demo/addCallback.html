@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+<title>KISSY DataLazyload addCallback</title>
+</head>
+<body>
+
+<div style="height: 1000px;">
+
+</div>
+
+<div id="div1" style="height: 300px;background-color:#FFCCCC;">
+	<div id="div2" style="height: 100px;background-color:#CCCCFF;margin:10px;">
+		BB
+	</div>
+</div>
+<div id="div4" style="height: 300px;background-color:#CCFFCC;"></div>
+
+<script src="../../../build/seed.js"></script>
+<script src="../src/datalazyload.js"></script>
+<script>
+    KISSY.use("datalazyload", function (S, DataLazyload) {
+        var DOM = S.DOM;
+        S.ready(function (S) {
+			var datalazyload=new DataLazyload();
+			datalazyload.addCallback(DOM.get("#div1"),function(){
+				DOM.prepend(DOM.create("u see me 1,add as DOM"),this);
+				datalazyload.addCallback("#div2",function(){
+					DOM.prepend(DOM.create("u see me 2,add in callback"),this);
+				});
+				var div3=DOM.create('<div id="div3">',{css:{height:'100px',backgroundColor:'#CCCCFF',margin:'10px'}});
+				DOM.append(div3,this);
+				datalazyload.addCallback(div3,function(){
+					DOM.prepend(DOM.create("u see me 3,add in dynamic"),this);
+				});
+			});
+			datalazyload.addCallback("#div4",function(){
+				DOM.prepend(DOM.create("u see me 4,add as selector"),this);
+			});
+        });
+    });
+</script>
+</body>
+</html>
