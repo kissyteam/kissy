@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<testsuites>
-<testsuite name="htmlparser_lexer" errors="0" tests="4" failures="0" time="0.002" timestamp="2012-12-19T20:59:18">
-  <testcase classname="htmlparser_lexer" name="works" time="0.001"></testcase>
-  <testcase classname="htmlparser_lexer" name="works for isSelfClosed" time="0"></testcase>
-  <testcase classname="htmlparser_lexer" name="works for &lt;br/&gt;" time="0"></testcase>
-  <testcase classname="htmlparser_lexer" name="works when encounter invalid attribute value" time="0"></testcase>
-</testsuite>
-</testsuites>

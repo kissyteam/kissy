@@ -19,9 +19,9 @@
 ## Structure
 
  - bin:           kissy-nodejs 命令行执行文件
- - reports:       nodejs 下的单元测试报告
  - build:         构建好的发布文件
- - docs:          API 文档
+ - docs/api:          API 文档
+ - docs/release-note:          发布文档
  - src:           源码、测试等开发资源
  - tools:         打包压缩等自动化工具
 

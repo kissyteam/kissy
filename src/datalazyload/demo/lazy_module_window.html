@@ -1,25 +1,25 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>KISSY DataLazyload Module lazy load demo</title>
-<style>
-    .mod {
-        height: 400px;
-        border: 1px solid red;
-        margin: 20px;
-    }
+    <title>KISSY DataLazyload Module lazy load demo</title>
+    <style>
+        .mod {
+            height: 400px;
+            border: 1px solid red;
+            margin: 20px;
+        }
 
-    html, body {
-        margin: 0;
-        padding: 0;
-        border: none;
-    }
-</style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            border: none;
+        }
+    </style>
 </head>
 <body>
 <div id="top" style="padding: 1px;padding-left: 20px;
@@ -27,6 +27,9 @@ width: 100%;
 border: 1px solid green;
 position: fixed;height: 240px;overflow: hidden;left:0;top:0;background-color: #ffffff;">
     <h1>module lazy load</h1>
+
+    <button id="pause">pause</button>
+    <button id="resume">resume</button>
 
     <p>
         lazy load module when scoll to it or jump to it
@@ -106,39 +109,47 @@ position: fixed;height: 240px;overflow: hidden;left:0;top:0;background-color: #f
 <script src="../src/datalazyload.js"></script>
 <script>
 
-    KISSY.use('datalazyload,core',function (S,DataLazyload) {
+    KISSY.use('datalazyload,core', function (S, DataLazyload) {
         var $ = S.all,
                 top = $("#top"),
                 container = $("#container");
 
 
-            var DOM = S.DOM;
+        var DOM = S.DOM;
 
-            var d = new DataLazyload(
-                    [
-                        DOM.get("#container")
-                    ],
-                    {
-                        diff:{
-                            bottom:150,
-                            top:-250
-                        },
-                        mod:'manual'
-                    }
-            );
+        var d = new DataLazyload(
+                [
+                    DOM.get("#container")
+                ],
+                {
+                    diff: {
+                        bottom: 150,
+                        top: -250
+                    },
+                    mod: 'manual'
+                }
+        );
 
-            d.on("destroy", function () {
-                $("#gap").remove();
+        $('#pause').on('click', function () {
+            d.pause();
+        });
+
+        $('#resume').on('click', function () {
+            d.resume();
+        });
+
+        d.on("destroy", function () {
+            $("#gap").remove();
+        });
+
+        var mods = $(".mod");
+        S.all("#top a").each(function (a, index) {
+            a.on("click", function (e) {
+                e.halt();
+                mods.item(index)[0].scrollIntoView();
+                $(window).scrollTop($(window).scrollTop() - 240);
             });
-
-            var mods = $(".mod");
-            S.all("#top a").each(function (a, index) {
-                a.on("click", function (e) {
-                    e.halt();
-                    mods.item(index)[0].scrollIntoView();
-                    $(window).scrollTop($(window).scrollTop() - 240);
-                });
-            });
+        });
 
 
     });

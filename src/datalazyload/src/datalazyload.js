@@ -298,23 +298,12 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                             self._getItemsLength() === 0) {
                             self.destroy();
                         }
-                    },
+                    };
+
                 // 加载函数
-                    load = S.buffer(loadItems, DURATION, this);
+                self._loadFn = S.buffer(loadItems, DURATION, this);
 
-                // scroll 和 resize 时，加载图片
-                Event.on(win, SCROLL, load);
-                Event.on(win, TOUCH_MOVE, load);
-                Event.on(win, RESIZE, load);
-
-                S.each(self.get("containers"), function (c) {
-                    if (isValidContainer(c)) {
-                        Event.on(c, SCROLL, load);
-                        Event.on(c, TOUCH_MOVE, load);
-                    }
-                });
-
-                self._loadFn = load;
+                self.resume();
 
                 // 需要立即加载一次，以保证第一屏的延迟项可见
                 if (self._getItemsLength()) {
@@ -461,6 +450,17 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                         callbacks.splice(i, 1);
                     }
                 }
+            },
+
+            /**
+             * get to be lazy loaded elements
+             * @return {Object} eg: {images:,textareas:}
+             */
+            'getElements': function () {
+                return {
+                    images: this._images,
+                    textareas: this._areaes
+                };
             },
 
             /**
@@ -619,10 +619,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             },
 
             /**
-             * Destroy this component.Will fire destroy event.
+             * pause lazyload
              */
-            destroy: function () {
-                var self = this, load = self._loadFn;
+            pause: function () {
+                var self = this,
+                    load = self._loadFn;
                 Event.remove(win, SCROLL, load);
                 Event.remove(win, TOUCH_MOVE, load);
                 Event.remove(win, RESIZE, load);
@@ -633,6 +634,33 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                         Event.remove(c, TOUCH_MOVE, load);
                     }
                 });
+            },
+
+            /**
+             * resume lazyload
+             */
+            resume: function () {
+                var self = this,
+                    load = self._loadFn;
+                // scroll 和 resize 时，加载图片
+                Event.on(win, SCROLL, load);
+                Event.on(win, TOUCH_MOVE, load);
+                Event.on(win, RESIZE, load);
+
+                S.each(self.get("containers"), function (c) {
+                    if (isValidContainer(c)) {
+                        Event.on(c, SCROLL, load);
+                        Event.on(c, TOUCH_MOVE, load);
+                    }
+                });
+            },
+
+            /**
+             * Destroy this component.Will fire destroy event.
+             */
+            destroy: function () {
+                var self = this;
+                self.pause();
                 self._callbacks = [];
                 self._images = [];
                 self._areaes = [];
