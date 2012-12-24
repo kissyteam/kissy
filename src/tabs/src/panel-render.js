@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview single tab panel render.
  * @author yiminghe@gmail.com
  */

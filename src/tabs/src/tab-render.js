@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview Single tab render in tab bar.
  * @author yiminghe@gmail.com
  */

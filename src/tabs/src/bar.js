@@ -1,9 +1,13 @@
 /**
+ * @ignore
  * @fileOverview TabBar for KISSY.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/bar", function (S, Toolbar) {
 
+    /**
+     * @ignore
+     */
     var TabBar = Toolbar.extend({
 
         createDom: function () {
@@ -77,11 +81,17 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
     });
 
     /**
-     * Tab change type.
-     * @enum {String}
+     * tabs change type
+     * @enum {String}  KISSY.Tabs.ChangeType
      */
-    TabBar.changeType = {
+    TabBar.ChangeType = {
+        /**
+         * click
+         */
         CLICK: "click",
+        /**
+         * mouse
+         */
         MOUSE: "mouse"
     };
 

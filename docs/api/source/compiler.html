@@ -57,7 +57,7 @@ KISSY.add(&quot;xtemplate/compiler&quot;, function (S, parser, ast, XTemplateRun
         } else {
             quote = &quot;'&quot;;
         }
-        return str.replace(/\\/g, '\\\\')
+        return str//.replace(/\\/g, '\\\\')
             .replace(/\r/g, '\\r')
             .replace(/\n/g, '\\n')
             .replace(/\t/g, '\\t')

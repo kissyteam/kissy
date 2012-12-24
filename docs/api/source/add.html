@@ -123,15 +123,14 @@
         if (re) {
             name = re.getAttribute('data-mod-name');
         } else {
-            // sometimes when read module file from cache , interactive status is not triggered
+            // sometimes when read module file from cache,
+            // interactive status is not triggered
             // module code is executed right after inserting into dom
-            // i has to preserve module name before insert module script into dom , then get it back here
-            S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
-            S.log('old_ie get mod name from cache : ' + self.__startLoadModName);
+            // i has to preserve module name before insert module script into dom,
+            // then get it back here
+            // S.log('can not find interactive script,time diff : ' + (+new Date() - self.__startLoadTime), 'error');
+            // S.log('old_ie get mod name from cache : ' + self.__startLoadModName);
             name = self.__startLoadModName;
-        }
-        if (!name &amp;&amp; re) {
-            S.log('interactive script does not have package config ：' + re.src, 'error');
         }
         return name;
     }

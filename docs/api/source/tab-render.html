@@ -17,33 +17,40 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview Tabs render.
+ * @fileOverview Single tab render in tab bar.
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;tabs/render&quot;, function (S, Component) {
-    var CLS = &quot;tabs-top tabs-bottom tabs-left tabs-right&quot;;
-    return Component.Render.extend({
-        _onSetBarOrientation: function (v) {
-            var self = this,
-                el = self.get(&quot;el&quot;);
-            el.removeClass(self.getCssClassWithPrefix(CLS))
-                .addClass(self.getCssClassWithPrefix(&quot;tabs-&quot; + v));
+KISSY.add(&quot;tabs/tab-render&quot;, function (S, Button) {
+
+    return Button.Render.extend({
+        createDom: function () {
+            this.get(&quot;el&quot;).attr(&quot;role&quot;, &quot;tab&quot;);
+        },
+        _onSetSelected: function (v) {
+            var el = this.get(&quot;el&quot;);
+            el[v ? 'addClass' : 'removeClass'](this.get(&quot;selectedCls&quot;));
+            el.attr('aria-selected', !!v);
         }
     }, {
         ATTRS: {
-            barOrientation: {
-                value: 'top'
+            selected: {
+                value: false
+            },
+            selectedCls: {
+                valueFn:function(){
+                    return this.get('prefixCls')+'tabs-tab-selected';
+                }
             }
         },
         HTML_PARSER: {
-            barOrientation: function (el) {
-                var orientation = el[0].className.match(/tabs-(top|bottom|left|right)\b/);
-                return orientation &amp;&amp; orientation[1] || &quot;top&quot;;
+            selected: function (el) {
+                return el.hasClass(this.get(&quot;selectedCls&quot;));
             }
         }
     });
+
 }, {
-    requires: ['component/base']
+    requires: ['button']
 });</pre>
 </body>
 </html>

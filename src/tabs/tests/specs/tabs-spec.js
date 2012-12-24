@@ -60,6 +60,11 @@ KISSY.use("tabs", function (S, Tabs) {
                 }).render();
 
                 var tabB = $(".ks-tabs-tab").item(1);
+                var run_ed = 0;
+                tabs.on('afterSelectedTabChange', function (e) {
+                    expect(e.newVal).toBe(tabs.getSelectedTab());
+                    run_ed = 1;
+                });
 
                 if (S.Features.isTouchSupported()) {
                     jasmine.simulateForDrag(tabB[0], "touchstart");
@@ -69,6 +74,7 @@ KISSY.use("tabs", function (S, Tabs) {
                 }
 
                 runs(function () {
+                    expect(run_ed).toBe(1);
                     expect(tabs.getSelectedTab().get("content")).toBe("tab-2");
                     expect(tabs.getSelectedPanel()
                         .get("content").toLowerCase()).toBe("<p>panel-2</p>");
