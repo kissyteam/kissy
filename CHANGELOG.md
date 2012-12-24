@@ -24,14 +24,30 @@ History:
 
 ### v1.2.0 -> v1.3.0
 
+#### template
+ - [!] 移到 gallery: http://docs.kissyui.com/kissy-gallery/gallery/template/docs/1.0/build/html/index.html
+ - 推荐用 xtemplate 模块替代
+
+#### suggest
+ - [!] 移到 gallery: http://docs.kissyui.com/kissy-gallery/gallery/suggest/docs/1.0/build/html/index.html
+ - 推荐用 combobox 模块替代
+
+#### flash
+ - [!] 移到 gallery: http://docs.kissyui.com/kissy-gallery/gallery/flash/docs/1.0/build/html/index.html
+ - 推荐用 swf 模块替代
+
 #### structure
  - [*] 调整源码目录结构
  - [!] 删除 kissy-aio
 
 #### seed
- - [+] 增加 S.Defer/Promise ，支持 Promise 规范
  - [+] S.config 增加 combine 配置，支持自动 combo
- - [+] 支持 <script src='seed|kissy.js' data-config="json"></script> data-config parse 为 json 传入 config
+ - [+] 支持
+
+        <script src='seed|kissy.js' data-config="json"></script>
+
+    data-config parse 为 json 传入 config
+
  - [x] KISSY.add(fn) fn 中 this 为模块对象
  - [!] KISSY.add(name,fn); fn 不会立即执行，只有 name 被 use 或 require 时才会执行
  - [*] Support tag for individual module : #110
@@ -45,6 +61,11 @@ History:
  - [*] S.ready 多次调用间独立，不会因为某个异常导致全部中断
  - [+] 单个包配置增加 ignorePackageNameInUri ，可以在实际模块存储文件路径中省去 package name.
 
+#### promise
+ - [+] 增加 promise 模块，支持 Promise 规范
+
+#### uri
+ - [+] 增加 uri 模块，方便对 url 结构化操作
 
 #### ua
  - [+] html 标签键入 ua 标志，例如 "ks-ie ke-ie6"
@@ -91,7 +112,6 @@ History:
 
 #### component
  - [!] 删除 uibase 模块，合并 uibase 到 component 模块
- - [!] 所有组件设置 prefixCls 只作用于组件最外层根节点 class
  - [+] Component children 可配置带有 xclass 的组件描述 json 对象
  - [+] Component 可配置 listeners，直接绑定事件
  - [+] 组件根节点添加 {prefix}{component}-shown/{prefix}{component}-hidden
@@ -118,7 +138,7 @@ History:
 #### datalazyload
  - [+] datalazyload 增加 autoDestroy 配置
  - [+] datalazyload 增加 removeElements/addElements/removeCallback 与 destroy 接口
-    addElements 可用于将动态产生的内容加入到监控滚动处理中.
+   addElements 可用于将动态产生的内容加入到监控滚动处理中.
  - [+] datalazyload 改进, 缓冲检测 scroll 和 resize, 并只加载显示在当前屏幕中的懒加载元素
  - [+] datalazyload 可以监控 div 容器滚动，以及横轴滚动
  - [+] diff 参数可扩充到四个维度
@@ -131,6 +151,9 @@ History:
  - [+] switchable 增加 add/remove/destroy
  - [!] switchable _switchView 参数变化，覆盖注意（不推荐覆盖）
 
+#### imagezoom
+ - [!] api 调整，请重新查看文档与 demo 页面
+
 #### waterfall
  - [+] waterfall 增加方法 adjustItem/removeItem/start 以及配置 adjustEffect。支持调整时的动画。
  - [+] waterfall item class 支持配置 ks-waterfall-item-fixed-right/left 固定列。
@@ -139,11 +162,7 @@ History:
  - [!] tree label(css/js)出现处改成 content
 
 #### combobox
- - [+] 增加 autocomplete/combobox 组件
-
-#### template
- - [+] template 支持 {{@if t}} t {{/if}}, 等价于 {{#if t}} t {{/if}}
- - [!] 去除附加在 KISSY Node 上的 render 方法
+ - [+] 增加 combobox(autocomplete) 组件
 
 #### xtemplate
  - [+] 增加 xtemplate 组件，富逻辑模板引擎
@@ -164,6 +183,9 @@ History:
 
 #### split-button
  - [+] 增加 split-button， button 和 menubutton 的组合
+
+#### swf
+ - [+] 增加 swf 模块，方便在各个浏览器快速插入 flash 节点.
 
 #### dpl
  - [+] 增加 kissy dpl
@@ -192,7 +214,10 @@ History:
  - [+] 增加 DOM.inner/outerWidth
  - [x] checkbox/radio append/insert 状态保持
  - [x] html(" <span></span>") 前缀空白保留
- - [!] html()参数中的脚本会在调用后立即执行，请避免在脚本内部引用尚没添加到dom的根节点：DOM.html(DOM.create("<div>"),"<div id='t'><script>alert(document.getElementById('t'));</script></div>",true);
+ - [!] html()参数中的脚本会在调用后立即执行，请避免在脚本内部引用尚没添加到dom的根节点：
+
+        DOM.html(DOM.create("<div>"),"<div id='t'><script>alert(document.getElementById('t'));</script></div>",true);
+
  - [+] append/insert 都可以指定是否执行脚本节点的代码
 
 
