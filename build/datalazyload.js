@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:24
+build time: Dec 24 12:48
 */
 /**
  * @ignore
@@ -118,7 +118,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
 
         // 和延迟项绑定的回调函数
-        self._callbacks = {els: [], fns: []};
+        self._callbacks = [];
 
         self._init();
     }
@@ -285,6 +285,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                         return true;
                     }
                 }
+                return undefined;
             },
 
 
@@ -331,7 +332,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              * @public
              */
             refresh: function () {
-                this._loadItems();
+                this._loadFn();
             },
 
             /**
@@ -361,12 +362,12 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             _loadImg: function (img) {
                 var self = this;
                 if (!inDocument(img)) {
-
                 } else if (self._checkElemInViewport(img)) {
                     loadImgSrc(img);
                 } else {
                     return true;
                 }
+                return undefined;
             },
 
 
@@ -392,6 +393,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 } else {
                     return true;
                 }
+                return undefined;
             },
 
             /**
@@ -401,26 +403,29 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             _fireCallbacks: function () {
                 var self = this,
                     callbacks = self._callbacks,
-                    els = callbacks.els,
-                    fns = callbacks.fns,
-                    remove = 0,
-                    i, el, fn, remainEls = [],
-                    remainFns = [];
+                    newCallbacks = [],
+                    remove = 0;
 
-                for (i = 0; (el = els[i]) && (fn = fns[i++]);) {
-                    remove = false;
+                // may be changed by callback
+                self._callbacks = [];
+
+                S.each(callbacks, function (callback) {
+                    var el = callback.el,
+                        fn = callback.fn;
                     if (!inDocument(el)) {
                         remove = true;
                     } else if (self._checkElemInViewport(el)) {
                         remove = fn.call(el);
                     }
-                    if (remove === false) {
-                        remainEls.push(el);
-                        remainFns.push(fn);
+                    if (remove !== false) {
+                        newCallbacks.push({
+                            el: el,
+                            fn: fn
+                        });
                     }
-                }
-                callbacks.els = remainEls;
-                callbacks.fns = remainFns;
+                });
+
+                self._callbacks = self._callbacks.concat(newCallbacks);
             },
 
             /**
@@ -433,15 +438,14 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             'addCallback': function (el, fn) {
                 var self = this,
                     callbacks = self._callbacks;
-                el = DOM.get(el);
 
-                if (el && S.isFunction(fn)) {
-                    callbacks.els.push(el);
-                    callbacks.fns.push(fn);
-                }
+                callbacks.push({
+                    el: DOM.get(el),
+                    fn: fn
+                });
 
                 // add 立即检测，防止首屏元素问题
-                self._fireCallbacks();
+                self._loadFn();
             },
 
             /**
@@ -452,33 +456,26 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              */
             'removeCallback': function (el, fn) {
                 var callbacks = this._callbacks,
-                    els = [],
-                    fns = [],
-                    curFns = callbacks.fns;
+                    i, callback;
 
                 el = DOM.get(el);
 
-                S.each(callbacks.els, function (curEl, index) {
-                    if (curEl == el) {
-                        if (fn === undefined || fn == curFns[index]) {
-                            return;
-                        }
+                for (i = callbacks.length - 1; i >= 0; i--) {
+                    callback = callbacks[i];
+                    if (callback.el == el && callback.fn == fn) {
+                        callbacks.splice(i, 1);
                     }
-
-                    els.push(curEl);
-                    fns.push(curFns[index]);
-                });
-
-                callbacks.fns = fns;
-                callbacks.els = els;
+                }
             },
 
             /**
              * Add a array of imgs or textareas to be lazy loaded to monitor list.
-             * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
+             * @param {HTMLElement[]|String} els Array of imgs or textareas to be lazy loaded or selector
              */
             'addElements': function (els) {
-                if (!S.isArray(els)) {
+                if (typeof els == 'string') {
+                    els = DOM.query(els);
+                } else if (!S.isArray(els)) {
                     els = [els];
                 }
                 var self = this,
@@ -502,10 +499,12 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
             /**
              * Remove a array of element from monitor list. See {@link KISSY.DataLazyload#addElements}.
-             * @param {HTMLElement[]} els Array of imgs or textareas to be lazy loaded
+             * @param {HTMLElement[]|String} els Array of imgs or textareas to be lazy loaded
              */
             'removeElements': function (els) {
-                if (!S.isArray(els)) {
+                if (typeof els == 'string') {
+                    els = DOM.query(els);
+                } else if (!S.isArray(els)) {
                     els = [els];
                 }
                 var self = this,
@@ -532,9 +531,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             _getBoundingRect: function (c) {
                 var vh, vw, left, top;
 
-                if (c !== undefined &&
-                    !S.isWindow(c) &&
-                    c.nodeType != 9) {
+                if (c !== undefined && !S.isWindow(c) && c.nodeType != 9) {
                     vh = DOM.outerHeight(c);
                     vw = DOM.outerWidth(c);
                     var offset = DOM.offset(c);
@@ -584,7 +581,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
              */
             _getItemsLength: function () {
                 var self = this;
-                return self._images.length + self._areaes.length + self._callbacks.els.length;
+                return self._images.length + self._areaes.length + self._callbacks.length;
             },
 
             /**
@@ -641,8 +638,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                         Event.remove(c, TOUCH_MOVE, load);
                     }
                 });
-                self._callbacks.els = [];
-                self._callbacks.fns = [];
+                self._callbacks = [];
                 self._images = [];
                 self._areaes = [];
                 S.log("datalazyload is destroyed!");
