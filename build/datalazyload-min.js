@@ -1,7 +1,7 @@
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 24 12:48
+build time: Dec 24 12:56
 */
 KISSY.add("datalazyload",function(e,f,h,s,m){function n(a,b){for(var d=[],c=0;c<a.length;c++)e.inArray(a[c],b)||d.push(a[c]);return d}function o(a,b){a.style.display=t;a.className="";var d=f.create("<div>");a.parentNode.insertBefore(d,a);f.html(d,a.value,b)}function u(a){return f.hasClass(a,p)}function i(a,b){if(!(this instanceof i))return new i(a,b);b===m&&(b=a,a=[j]);e.isArray(a)||(a=[f.get(a)||j]);b=b||{};b.containers=a;i.superclass.constructor.call(this,b);this._callbacks=[];this._init()}function q(a,
 b){var d,c,g,f;d=Math.max(a.top,b.top);c=Math.min(a.bottom,b.bottom);g=Math.max(a.left,b.left);f=Math.min(a.right,b.right);return c>=d&&f>=g}var l=e.Env.host,j=l.document,p="ks-datalazyload",t="none",r=function(a,b){var b=b||"data-ks-lazyload",d=a.getAttribute(b);d&&a.src!=d&&(a.src=d,a.removeAttribute(b))};i.ATTRS={mod:{value:"manual"},diff:{value:"default"},placeholder:{},execScript:{value:!0},containers:{valueFn:function(){return[j]}},autoDestroy:{value:!0}};e.extend(i,s,{_init:function(){this._filterItems();
