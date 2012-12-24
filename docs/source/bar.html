@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * @fileOverview TabBar for KISSY.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;tabs/bar&quot;, function (S, Toolbar) {
+
+<span id='TabBar'>    /**
+</span>     * @ignore
+     */
+    var TabBar = Toolbar.extend({
+
+        createDom: function () {
+            this.get(&quot;el&quot;).attr(&quot;role&quot;, &quot;tablist&quot;);
+        },
+
+        handleKeyEventInternal: function (e) {
+            var self = this;
+            var current = self.get('selectedTab');
+            var next = self.getNextItemByKeyEventInternal(e, current);
+            if (S.isBoolean(next)) {
+                return next;
+            } else {
+                next.set('selected', true);
+                return true;
+            }
+        },
+
+
+        renderUI: function () {
+            var bar = this,
+                children = bar.get(&quot;children&quot;);
+            S.each(children, function (c) {
+                if (c.get(&quot;selected&quot;)) {
+                    bar.set(&quot;selectedTab&quot;, c);
+                }
+            });
+        },
+
+        _onSetSelectedTab: function (v, e) {
+            var prev;
+            if (v) {
+                if (e &amp;&amp; (prev = e.prevVal)) {
+                    prev.set(&quot;selected&quot;, false);
+                }
+                v.set(&quot;selected&quot;, true);
+            }
+        },
+
+        _onSetHighlightedItem: function () {
+            var self = this;
+            TabBar.superclass._onSetHighlightedItem.apply(self, arguments);
+            if (self.get('changeType') == 'mouse') {
+                self._onSetSelectedTab.apply(self, arguments);
+            }
+        },
+
+        bindUI: function () {
+            var self = this;
+            self.on(&quot;afterSelectedChange&quot;, function (e) {
+                if (e.newVal &amp;&amp; e.target.isTabsTab) {
+                    self.set(&quot;selectedTab&quot;, e.target);
+                }
+            });
+        }
+
+    }, {
+        ATTRS: {
+            selectedTab: {
+            },
+            changeType: {
+                value: &quot;click&quot;
+            },
+            defaultChildXClass: {
+                value: 'tabs-tab'
+            }
+        }
+    }, {
+        xclass: 'tabs-bar',
+        priority: 30
+    });
+
+<span id='KISSY-Tabs-ChangeType'>    /**
+</span>     * tabs change type
+     * @enum {String}  KISSY.Tabs.ChangeType
+     */
+    TabBar.ChangeType = {
+<span id='KISSY-Tabs-ChangeType-property-CLICK'>        /**
+</span>         * click
+         */
+        CLICK: &quot;click&quot;,
+<span id='KISSY-Tabs-ChangeType-property-MOUSE'>        /**
+</span>         * mouse
+         */
+        MOUSE: &quot;mouse&quot;
+    };
+
+    return TabBar;
+
+}, {
+    requires: ['toolbar']
+});</pre>
+</body>
+</html>

@@ -1,9 +1,15 @@
 /**
+ * @ignore
  * @fileOverview Single tab in tab bar.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/tab", function (S, Button, TabRender) {
 
+    /**
+     * KISSY.Tabs.Tab
+     * @class KISSY.Tabs.Tab
+     * @extends KISSY.Button
+     */
     return Button.extend({
         isTabsTab: true,
         bindUI: function () {
@@ -19,6 +25,13 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
             focusable: {
                 value: false
             },
+            /**
+             * whether selected
+             * @cfg {Boolean} selected
+             */
+            /**
+             * @ignore
+             */
             selected: {
                 view: 1
             },

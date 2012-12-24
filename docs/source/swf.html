@@ -34,7 +34,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         GT = '&gt;',
         doc = S.Env.host.document,
         fpv = FlashUA.fpv,
-        fpvGEQ = FlashUA.fpvGEQ,
+        fpvGTE = FlashUA.fpvGTE,
         OBJECT_TAG = 'object',
         encode = encodeURIComponent,
 
@@ -95,24 +95,28 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         }
 
         // 3. 已安装，但当前客户端版本低于指定版本时
-        if (version &amp;&amp; !fpvGEQ(version)) {
+        if (version &amp;&amp; !fpvGTE(version)) {
             self.set('status', SWF.STATUS.TOO_LOW);
 
             // 有 expressInstall 时，将 src 替换为快速安装
             if (expressInstall) {
                 installedSrc = expressInstall;
+
                 // from swfobject
                 if (!('width' in attrs) ||
                     (!/%$/.test(attrs.width) &amp;&amp; parseInt(attrs.width, 10) &lt; 310)) {
                     attrs.width = &quot;310&quot;;
                 }
+
                 if (!('height' in attrs) ||
                     (!/%$/.test(attrs.height) &amp;&amp; parseInt(attrs.height, 10) &lt; 137)) {
                     attrs.height = &quot;137&quot;;
                 }
+
                 flashVars = params.flashVars = params.flashVars || {};
+                // location.toString() crash ie6
                 S.mix(flashVars, {
-                    MMredirectURL: location.toString,
+                    MMredirectURL: location.href,
                     MMplayerType: UA.ie ? &quot;ActiveX&quot; : &quot;PlugIn&quot;,
                     MMdoctitle: doc.title.slice(0, 47) + &quot; - Flash Player Installation&quot;
                 });
@@ -200,7 +204,6 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
             if (UA.ie) {
                 swfObject.style.display = 'none';
                 // from swfobject
-                //
                 (function () {
                     if (swfObject.readyState == 4) {
                         removeObjectInIE(swfObject);
@@ -379,8 +382,11 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         },
 
         fpv: fpv,
-        fpvGEQ: fpvGEQ
+        fpvGTE: fpvGTE
     });
+
+    // compatible
+    SWF.fpvGEQ = fpvGTE;
 
     function removeObjectInIE(obj) {
         for (var i in obj) {

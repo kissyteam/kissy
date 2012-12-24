@@ -161,7 +161,11 @@
     }
 
     if (S.Env.nodejs) {
-        S.config('base', __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/');
+        // nodejs: no tag
+        S.config({
+            charset: 'utf-8',
+            base: __dirname.replace(/\\/g, '/').replace(/\/$/, '') + '/'
+        });
     } else {
         // will transform base to absolute path
         S.config(S.mix({
@@ -175,7 +179,7 @@
     }
 
     S.config('systemPackage', new Loader.Package({
-        name:'',
+        name: '',
         runtime: S
     }));
 

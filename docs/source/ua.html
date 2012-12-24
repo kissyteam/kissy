@@ -108,7 +108,7 @@ KISSY.add('swf/ua', function (S, undefined) {
         return fpvCached;
     }
 
-<span id='KISSY-SWF-static-method-fpvGEQ'>    /**
+<span id='KISSY-SWF-static-method-fpvGTE'>    /**
 </span>     * Checks whether current version is greater than or equal the specific version.
      * @param {String} ver eg. &quot;10.1.53&quot;
      * @param {Boolean} force whether to avoid get current version from cache
@@ -116,13 +116,13 @@ KISSY.add('swf/ua', function (S, undefined) {
      * @member KISSY.SWF
      * @static
      */
-    function fpvGEQ(ver, force) {
+    function fpvGTE(ver, force) {
         return getNumberVersion(fpv(force)) &gt;= getNumberVersion(ver);
     }
 
     return {
         fpv: fpv,
-        fpvGEQ: fpvGEQ
+        fpvGTE: fpvGTE
     };
 
 });

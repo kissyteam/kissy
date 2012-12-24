@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * @fileOverview Body for tab panels.
  * @author yiminghe@gmail.com
  */
