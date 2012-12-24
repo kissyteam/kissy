@@ -1,5 +1,5 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2012, KISSY UI Library v1.30
 MIT Licensed
 build time: Dec 23 19:05
 */
@@ -69,10 +69,10 @@ var KISSY = (function (undefined) {
 
         /**
          * The version of the library.
-         * NOTICE: '1.40dev' will replace with current version when compressing.
+         * NOTICE: '1.30' will replace with current version when compressing.
          * @type {String}
          */
-        version: '1.40dev',
+        version: '1.30',
 
         /**
          * set KISSY configuration

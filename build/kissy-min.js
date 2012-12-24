@@ -1,9 +1,9 @@
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2012, KISSY UI Library v1.30
 MIT Licensed
 build time: Dec 23 19:05
 */
-var KISSY=function(b){var c=this,e,j=0;e={__BUILD_TIME:"20121223190506",Env:{host:c,nodejs:"function"==typeof require&&"object"==typeof exports},Config:{debug:"",fns:{}},version:"1.40dev",config:function(c,g){var k,a,l=this,h,i=e.Config,f=i.fns;e.isObject(c)?e.each(c,function(b,n){(h=f[n])?h.call(l,b):i[n]=b}):(k=f[c],g===b?a=k?k.call(l):i[c]:k?a=k.call(l,g):i[c]=g);return a},log:function(d,g,k){if(e.Config.debug&&(k&&(d=k+": "+d),c.console!==b&&console.log))console[g&&console[g]?g:"log"](d)},
+var KISSY=function(b){var c=this,e,j=0;e={__BUILD_TIME:"20121223190506",Env:{host:c,nodejs:"function"==typeof require&&"object"==typeof exports},Config:{debug:"",fns:{}},version:"1.30",config:function(c,g){var k,a,l=this,h,i=e.Config,f=i.fns;e.isObject(c)?e.each(c,function(b,n){(h=f[n])?h.call(l,b):i[n]=b}):(k=f[c],g===b?a=k?k.call(l):i[c]:k?a=k.call(l,g):i[c]=g);return a},log:function(d,g,k){if(e.Config.debug&&(k&&(d=k+": "+d),c.console!==b&&console.log))console[g&&console[g]?g:"log"](d)},
 error:function(b){if(e.Config.debug)throw b instanceof Error?b:Error(b);},guid:function(b){return(b||"")+j++}};e.Env.nodejs&&(e.KISSY=e,module.exports=e);return e}();
 (function(b,c){function e(){}function j(f,b){var a;h?a=h(f):(e.prototype=f,a=new e);a.constructor=b;return a}function d(f,h,a,i,d,e){if(!h||!f)return f;a===c&&(a=l);var j=0,s,u,v;h[k]=f;e.push(h);if(i){v=i.length;for(j=0;j<v;j++)s=i[j],s in h&&g(s,f,h,a,i,d,e)}else{u=b.keys(h);v=u.length;for(j=0;j<v;j++)s=u[j],s!=k&&g(s,f,h,a,i,d,e)}return f}function g(f,h,a,i,g,e,j){if(i||!(f in h)||e){var s=h[f],a=a[f];if(s===a)s===c&&(h[f]=s);else if(e&&a&&(b.isArray(a)||b.isPlainObject(a)))a[k]?h[f]=a[k]:(e=s&&
 (b.isArray(s)||b.isPlainObject(s))?s:b.isArray(a)?[]:{},h[f]=e,d(e,a,i,g,l,j));else if(a!==c&&(i||!(f in h)))h[f]=a}}var k="__MIX_CIRCULAR",a=this,l=!0,h=Object.create,i=!{toString:1}.propertyIsEnumerable("toString"),f="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toString,toLocaleString,valueOf".split(",");(function(f,b){for(var h in b)f[h]=b[h]})(b,{stamp:function(f,h,a){if(!f)return f;var a=a||"__~ks_stamped",i=f[a];if(!i&&!h)try{i=f[a]=b.guid(a)}catch(d){i=c}return i},keys:function(b){var h=
