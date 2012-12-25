@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:28
+build time: Dec 25 23:19
 */
 /**
  * Toolbar for KISSY.
@@ -52,15 +52,28 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
 
     function afterHighlightedChange(e) {
         var self = this,
+            el = self.get('el')[0],
             expandedItem,
+            highlightedItem,
             t = e.target;
-        if (
-        // 不是自己本身的事件！
-            t != self) {
 
-            // S.log(t.get('content') + ' : ' + e.newVal);
+        // child events but not grandchild
+        if (S.inArray(t, self.get('children'))) {
 
+            // S.log(t);
+            // S.log(e.newVal);
+
+            // only process highlighted
+            // in case menubutton=>false, menu=>true
             if (e.newVal) {
+                if (t.get('el')[0].ownerDocument.activeElement != el) {
+                    el.focus();
+                }
+                highlightedItem = self.get('highlightedItem');
+                // clear for last status
+                if (highlightedItem && highlightedItem != t) {
+                    highlightedItem.set('highlighted', false);
+                }
                 self.set("highlightedItem", t);
                 // 保持扩展状态，只不过扩展的 item 变了
                 if ((expandedItem = self.get("expandedItem")) &&
@@ -69,8 +82,6 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                     expandedItem.set("collapsed", true);
                     t.set("collapsed", false);
                 }
-            } else {
-                self.set("highlightedItem", null);
             }
 
         }
@@ -135,8 +146,10 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                 if (expandedItem = self.get("expandedItem")) {
                     expandedItem.set("collapsed", true);
                 }
+                // clear for afterHighlightedChange
                 if (highlightedItem = self.get("highlightedItem")) {
-                    highlightedItem.set("highlighted", false);
+                    highlightedItem.set('highlighted',false);
+                    self.set("highlightedItem", null);
                 }
             },
 
@@ -201,10 +214,6 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
 
                 if (S.isBoolean(nextHighlightedItem)) {
                     return nextHighlightedItem;
-                }
-
-                if (current) {
-                    current.set("highlighted", false);
                 }
 
                 if (nextHighlightedItem) {
