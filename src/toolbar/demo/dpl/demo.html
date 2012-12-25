@@ -85,10 +85,16 @@
             ]
         }).render();
 
+        window.ksToolBar=t;
+
         t.on("click", function (e) {
             S.log("click : " + e.target.get("content"));
         });
 
+
+        setInterval(function(){
+            S.log(t.get('highlightedItem'));
+        },2000);
     });
 </script>
 </body>
