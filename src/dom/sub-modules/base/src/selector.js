@@ -269,17 +269,30 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
          * @singleton
          */
         {
-            _getAttr: getAttr,
             _hasSingleClass: hasSingleClass,
 
             _getElementById: function (id, context, doc, contextIsDocument) {
-                var el = doc.getElementById(id);
+                var el = doc.getElementById(id),
                 // ie confuse name with id
                 // https://github.com/kissyteam/kissy/issues/67
                 // 不能直接 el.id ，否则 input shadow form attribute
-                var elId = DOM._getAttr(el, 'id');
-                if (!el && !contextIsDocument && !DOM._contains(doc, context)
-                    || el && elId != id) {
+                    elId = getAttr(el, 'id');
+
+                // 1. context is not document and context is not in document,
+                // so el is null and context must not be document
+                // so filter inside context
+
+                // 2. ie confuse name with id, so if el 's id is not with parameter
+                // filter inside context
+
+                // 3. context is document, return getElementById directly
+
+                // 4. context is not document and context contains document.getElementById
+                // return getElementById
+
+                // return null
+                if (!el && !contextIsDocument && !DOM._contains(doc, context) ||
+                    el && elId != id) {
                     return DOM.filter('*', '#' + id, context)[0] || null;
                 } else if (contextIsDocument || el && DOM._contains(context, el)) {
                     return el;
