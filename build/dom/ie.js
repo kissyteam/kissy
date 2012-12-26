@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:24
+build time: Dec 26 18:09
 */
 /**
  * attr ie hack
@@ -421,12 +421,13 @@ KISSY.add('dom/ie/selector', function (S, DOM) {
             var els = context.getElementsByTagName(tag || '*'),
                 ret = [],
                 i = 0,
+                j = 0,
                 len = els.length,
                 el;
             for (; i < len; ++i) {
                 el = els[i];
-                if (DOM.hasClass(el, cls)) {
-                    ret.push(el);
+                if (DOM._hasSingleClass(el, cls)) {
+                    ret[j++] = el;
                 }
             }
             return ret;
@@ -439,14 +440,15 @@ KISSY.add('dom/ie/selector', function (S, DOM) {
     // when doing getElementsByTagName('*')
     DOM._getElementsByTagName = function (tag, context) {
         var ret = S.makeArray(context.getElementsByTagName(tag)),
-            t, i, node;
+            t, i, j, node;
         if (tag === '*') {
             t = [];
             i = 0;
+            j = 0;
             while ((node = ret[i++])) {
                 // Filter out possible comments
                 if (node.nodeType === 1) {
-                    t.push(node);
+                    t[j++] = node;
                 }
             }
             ret = t;
@@ -454,22 +456,17 @@ KISSY.add('dom/ie/selector', function (S, DOM) {
         return ret;
     };
 
-
-    DOM._getElementById = function (id, doc) {
-        var el = doc.getElementById(id);
-        if (el && DOM.attr(el, 'id') != id) {
-            // ie opera confuse name with id
-            // https://github.com/kissyteam/kissy/issues/67
-            // 不能直接 el.id ，否则 input shadow form attribute
-            el = DOM.filter('*', '#' + id, doc)[0] || null;
-        }
-        return el;
-    };
-
-
 }, {
     requires: ['dom/base']
-});/**
+});
+
+/**
+ * @ignore
+ *
+ * 2012.12.26
+ * - 尽量用原生方法提高性能
+ *
+ *//**
  * style hack for ie
  * @author yiminghe@gmail.com
  */
