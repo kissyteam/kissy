@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 23 19:05
+build time: Dec 27 19:43
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121223190506' will replace with current timestamp when compressing.
+         * NOTICE: '20121227194332' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121223190506',
+        __BUILD_TIME: '20121227194332',
         /**
          * KISSY Environment.
          * @private
@@ -5779,7 +5779,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121223190506'
+            tag: '20121227194332'
         }, getBaseInfo()));
     }
 
@@ -6382,7 +6382,7 @@ KISSY.add('ua', function (S, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:24
+build time: Dec 26 18:09
 */
 /**
  * @ignore
@@ -8897,7 +8897,6 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
         SPACE = ' ',
         COMMA = ',',
         trim = S.trim,
-        ANY = '*',
         RE_ID = /^#[\w-]+$/,
         RE_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
@@ -8993,8 +8992,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
     function queryByContexts(selector, context) {
         var ret = [],
             isSelectorString = typeof selector == 'string';
-        if (isSelectorString && selector.match(RE_QUERY) ||
-            !isSelectorString) {
+        if (isSelectorString && selector.match(RE_QUERY) || !isSelectorString) {
             // 简单选择器自己处理
             ret = queryBySimple(selector, context);
         }
@@ -9066,7 +9064,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
                         // 处理 #id.cls
                         else {
                             t = getElementById(id, context);
-                            if (t && DOM.hasClass(t, cls)) {
+                            if (hasSingleClass(t, cls)) {
                                 ret = [t];
                             }
                         }
@@ -9117,7 +9115,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
             return true;
         }
         // 节点受上下文约束
-        return DOM.contains(context, element);
+        return DOM._contains(context, element);
     }
 
     // throw exception
@@ -9128,19 +9126,18 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
     // query #id
     function getElementById(id, context) {
         var contextIsDocument = context.nodeType == NodeType.DOCUMENT_NODE,
-            doc = contextIsDocument ? context : context.ownerDocument,
-            el = DOM._getElementById(id, doc);
+            doc = contextIsDocument ? context : context.ownerDocument;
+        return DOM._getElementById(id, context, doc, contextIsDocument);
+    }
 
-        if (el && !contextIsDocument) {
-            return DOM.contains(context, el) ? el : null;
-        }
+    function hasSingleClass(el, cls) {
+        var className = el && el.className;
+        return className && (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1;
+    }
 
-        // DOM.query('#x',DOM.create('<div><span id="x">'))
-        if (!el && !contextIsDocument && !DOM.contains(context, doc)) {
-            el = DOM.filter(ANY, '#' + id, context)[0] || null;
-        }
-
-        return el;
+    function getAttr(el, name) {
+        var ret = el && el.getAttributeNode(name);
+        return ret && ret.nodeValue;
     }
 
     S.mix(DOM,
@@ -9150,8 +9147,22 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
          * @singleton
          */
         {
-            _getElementById: function (id, doc) {
-                return doc.getElementById(id);
+            _getAttr: getAttr,
+            _hasSingleClass: hasSingleClass,
+
+            _getElementById: function (id, context, doc, contextIsDocument) {
+                var el = doc.getElementById(id);
+                // ie confuse name with id
+                // https://github.com/kissyteam/kissy/issues/67
+                // 不能直接 el.id ，否则 input shadow form attribute
+                var elId = DOM._getAttr(el, 'id');
+                if (!el && !contextIsDocument && !DOM._contains(doc, context)
+                    || el && elId != id) {
+                    return DOM.filter('*', '#' + id, context)[0] || null;
+                } else if (contextIsDocument || el && DOM._contains(context, el)) {
+                    return el;
+                }
+                return null;
             },
 
             _getElementsByTagName: function (tag, context) {
@@ -9254,7 +9265,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {HTMLElement[]}
-             * @memeber DOM
+             * @member DOM
              */
             filter: function (selector, filter, context) {
                 var elems = query(selector, context),
@@ -9283,14 +9294,14 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
 
                             // 指定 cls 才进行判断
                             if (cls) {
-                                clsRe = DOM.hasClass(elem, cls);
+                                clsRe = hasSingleClass(elem, cls);
                             }
 
                             return clsRe && tagRe;
                         }
                     } else if (id && !tag && !cls) {
                         filter = function (elem) {
-                            return DOM.attr(elem, 'id') == id;
+                            return getAttr(elem, 'id') == id;
                         };
                     }
                 }
@@ -9330,6 +9341,9 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
 
 /*
  NOTES:
+
+ 2012.12.26
+ - 尽量用原生方法提高性能
 
  2011.08.02
  - 利用 sizzle 重构选择器
@@ -10388,7 +10402,7 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
 /*
 Copyright 2012, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:24
+build time: Dec 26 18:09
 */
 /**
  * attr ie hack
@@ -10808,12 +10822,13 @@ KISSY.add('dom/ie/selector', function (S, DOM) {
             var els = context.getElementsByTagName(tag || '*'),
                 ret = [],
                 i = 0,
+                j = 0,
                 len = els.length,
                 el;
             for (; i < len; ++i) {
                 el = els[i];
-                if (DOM.hasClass(el, cls)) {
-                    ret.push(el);
+                if (DOM._hasSingleClass(el, cls)) {
+                    ret[j++] = el;
                 }
             }
             return ret;
@@ -10826,14 +10841,15 @@ KISSY.add('dom/ie/selector', function (S, DOM) {
     // when doing getElementsByTagName('*')
     DOM._getElementsByTagName = function (tag, context) {
         var ret = S.makeArray(context.getElementsByTagName(tag)),
-            t, i, node;
+            t, i, j, node;
         if (tag === '*') {
             t = [];
             i = 0;
+            j = 0;
             while ((node = ret[i++])) {
                 // Filter out possible comments
                 if (node.nodeType === 1) {
-                    t.push(node);
+                    t[j++] = node;
                 }
             }
             ret = t;
@@ -10841,22 +10857,17 @@ KISSY.add('dom/ie/selector', function (S, DOM) {
         return ret;
     };
 
-
-    DOM._getElementById = function (id, doc) {
-        var el = doc.getElementById(id);
-        if (el && DOM.attr(el, 'id') != id) {
-            // ie opera confuse name with id
-            // https://github.com/kissyteam/kissy/issues/67
-            // 不能直接 el.id ，否则 input shadow form attribute
-            el = DOM.filter('*', '#' + id, doc)[0] || null;
-        }
-        return el;
-    };
-
-
 }, {
     requires: ['dom/base']
-});/**
+});
+
+/**
+ * @ignore
+ *
+ * 2012.12.26
+ * - 尽量用原生方法提高性能
+ *
+ *//**
  * style hack for ie
  * @author yiminghe@gmail.com
  */
