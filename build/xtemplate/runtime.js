@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:28
+build time: Dec 27 23:54
 */
 /**
  * xtemplate base
@@ -48,19 +48,35 @@ KISSY.add('xtemplate/runtime/base', function (S) {
          */
         name: '',
         utils: {
-            'getProperty': function (parts, from) {
-                if (!from) {
-                    return false;
-                }
+            'getProperty': function (parts, scopes) {
                 parts = parts.split('.');
-                var len = parts.length, i, v = from;
-                for (i = 0; i < len; i++) {
-                    if (!(parts[i] in v)) {
-                        return false;
+                var len = parts.length,
+                    i,
+                    j,
+                    v,
+                    p,
+                    valid,
+                    sl = scopes.length;
+                for (j = 0; j < sl; j++) {
+                    v = scopes[j];
+                    valid = 1;
+                    for (i = 0; i < len; i++) {
+                        p = parts[i];
+                        if (!(p in v)) {
+                            valid = 0;
+                            break;
+                        }
+                        v = v[p];
                     }
-                    v = v[parts[i]];
+                    if (valid) {
+                        // support property function return value as property value
+                        if (typeof v == 'function') {
+                            v = v.call(scopes[sl - 1]);
+                        }
+                        return [v];
+                    }
                 }
-                return [v];
+                return false;
             }
         }
     };
