@@ -2,7 +2,8 @@
  * testcases for overlay
  * @author yiminghe@gmail.com
  */
-KISSY.use("ua,node,overlay,component/plugin/resize", function (S, UA, Node, Overlay, ResizePlugin) {
+KISSY.use("u" +
+    "a,node,overlay,component/plugin/resize", function (S, UA, Node, Overlay, ResizePlugin) {
     var DOM = S.DOM, $ = Node.all,Gesture= S.Event.Gesture;
 
     beforeEach(function () {
@@ -175,6 +176,7 @@ KISSY.use("ua,node,overlay,component/plugin/resize", function (S, UA, Node, Over
                 if (UA.ie == 9) {
                     return;
                 }
+
                 var h = o.get("el").one(".ks-resizable-handler-t"),
                     height = o.get("el").outerHeight(),
                     hxy = h.offset();
@@ -184,18 +186,17 @@ KISSY.use("ua,node,overlay,component/plugin/resize", function (S, UA, Node, Over
                     clientY: hxy.top - 2
                 });
 
-                waits(100);
                 runs(function () {
-
                     jasmine.simulateForDrag(document, Gesture.move, {
-                        clientX: hxy.left - 5,
-                        clientY: hxy.top - 5
+                        clientX: hxy.left - 25,
+                        clientY: hxy.top - 25
                     });
 
                 });
-                waits(100);
-                runs(function () {
 
+                waits(300);
+
+                runs(function () {
                     jasmine.simulateForDrag(document, Gesture.move, {
                         clientX: hxy.left - 100,
                         clientY: hxy.top - 100
@@ -209,11 +210,10 @@ KISSY.use("ua,node,overlay,component/plugin/resize", function (S, UA, Node, Over
                     jasmine.simulateForDrag(document, Gesture.end);
                 });
 
-                waits(100);
+                waits(300);
 
                 runs(function () {
                     var elHeight = o.get("el").outerHeight();
-
                     // phantomjs emulation not accurate！
                     if (!S.UA.phantomjs) {
                         expect(elHeight - height).toBeEqual(98);
