@@ -5,7 +5,6 @@
  */
 KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
     var SUFFIX = 'suffix',
-
         rWhitespace = /\s|\xa0/;
 
     function strContainsChar(str, c) {
