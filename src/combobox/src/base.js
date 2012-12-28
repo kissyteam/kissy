@@ -612,7 +612,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 menu.set("width", el.innerWidth());
             }
             menu.show();
-            reposition.call(self);
             self.get("input").attr("aria-owns", menu.get("el").attr('id'));
         }
     }
@@ -673,6 +672,8 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 }
             }
             self.set("collapsed", false);
+            // 2012-12-28: in case autocomplete list becomes shorted or longer
+            reposition.call(self);
         } else {
             self.set("collapsed", true);
         }

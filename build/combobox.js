@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2012, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:23
+build time: Dec 28 15:36
 */
 /**
  * @ignore
@@ -617,7 +617,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 menu.set("width", el.innerWidth());
             }
             menu.show();
-            reposition.call(self);
             self.get("input").attr("aria-owns", menu.get("el").attr('id'));
         }
     }
@@ -678,6 +677,8 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 }
             }
             self.set("collapsed", false);
+            // 2012-12-28: in case autocomplete list becomes shorted or longer
+            reposition.call(self);
         } else {
             self.set("collapsed", true);
         }
@@ -1028,7 +1029,6 @@ KISSY.add("combobox/LocalDataSource", function (S) {
  */
 KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
     var SUFFIX = 'suffix',
-
         rWhitespace = /\s|\xa0/;
 
     function strContainsChar(str, c) {
