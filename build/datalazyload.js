@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 24 19:59
+build time: Jan 4 16:50
 */
 /**
  * @ignore
@@ -402,11 +402,10 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     var el = callback.el,
                         fn = callback.fn;
                     if (!inDocument(el)) {
-                        remove = true;
                     } else if (self._checkElemInViewport(el)) {
                         remove = fn.call(el);
                     }
-                    if (remove !== false) {
+                    if (remove === false) {
                         newCallbacks.push({
                             el: el,
                             fn: fn
