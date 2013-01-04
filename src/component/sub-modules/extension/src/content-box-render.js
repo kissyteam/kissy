@@ -21,14 +21,18 @@ KISSY.add("component/extension/content-box-render", function (S, Node, DOM) {
         __createDom: function () {
             var self = this,
                 contentEl,
-                el = self.get("el");
-
-            var childNodes = el[0].childNodes,
+                el = self.get("el"),
+                childNodes = el[0].childNodes,
                 c = childNodes.length && DOM._nodeListToFragment(childNodes);
 
             // 产生新的 contentEl
-            contentEl = Node.all("<div class='" + self.get('prefixCls') + "contentbox'>" +
-                "</div>").append(c);
+            contentEl = Node.all("<div class='" +
+                self.get('prefixCls') + "contentbox'>" +
+                "</div>");
+
+            if (c) {
+                contentEl.append(c);
+            }
 
             el.append(contentEl);
 
