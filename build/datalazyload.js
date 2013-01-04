@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 4 16:50
+build time: Jan 4 19:43
 */
 /**
  * @ignore
@@ -392,14 +392,14 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             _fireCallbacks: function () {
                 var self = this,
                     callbacks = self._callbacks,
-                    newCallbacks = [],
-                    remove = 0;
+                    newCallbacks = [];
 
                 // may be changed by callback
                 self._callbacks = [];
 
                 S.each(callbacks, function (callback) {
                     var el = callback.el,
+                        remove = false,
                         fn = callback.fn;
                     if (!inDocument(el)) {
                     } else if (self._checkElemInViewport(el)) {
