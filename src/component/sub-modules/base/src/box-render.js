@@ -147,12 +147,11 @@ KISSY.add('component/base/box-render', function (S) {
 
         '_onSetContent': function (c) {
             var self = this,
-                el;
+                el= self.get("contentEl");
             // srcNode 时不重新渲染 content
             // 防止内部有改变，而 content 则是老的 html 内容
             if (self.get("srcNode") && !self.get("rendered")) {
             } else {
-                el = self.get("contentEl");
                 if (typeof c == "string") {
                     el.html(c);
                 } else if (c) {
