@@ -158,13 +158,13 @@ KISSY.add('component/base/box-render', function (S) {
                 } else if (c) {
                     el.empty().append(c);
                 }
-                // ie needs to set unselectable attribute recursively
-                if (UA.ie < 9 && !self.get('allowTextSelection')) {
-                    el.unselectable(/**
-                     @type HTMLElement
-                     @ignore
-                     */undefined);
-                }
+            }
+            // ie needs to set unselectable attribute recursively
+            if (UA.ie < 9 && !self.get('allowTextSelection')) {
+                el.unselectable(/**
+                 @type HTMLElement
+                 @ignore
+                 */undefined);
             }
         },
 
