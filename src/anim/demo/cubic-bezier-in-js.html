@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="../src/easing.js"></script>
+    <script src="../src/base.js"></script>
+    <script src="../src/manager.js"></script>
+    <script src="../src/color.js"></script>
+    <script src="../src/fx.js"></script>
+    <script src="../src/queue.js"></script>
+    <script src="../src/background-position.js"></script>
+    <script src="../src/anim.js"></script>
+    <style>
+        body {
+            background: #000;
+            color: white;
+        }
+
+        .demo {
+            border: 1px solid red;
+            width: 150px;
+            height: 50px;
+            position: absolute;
+            left: 10px;
+            top: 150px;
+        }
+
+        .run {
+            -webkit-transition: left 2s ease-out;
+            -moz-transition: left 2s ease-out;
+            -o-transition: left 2s ease-out;
+            -ms-transition: left 2s ease-out;
+            transition: left 2s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+<h1>cubic-bezier in js</h1>
+<button id="run">run</button>
+<div class="demo" id="demo1">css3 ease-out in js</div>
+<div class="demo" style="top:250px;" id="demoCss">css3 ease-out</div>
+<div class="demo" style="top:400px;" id="demo2">js easeOut</div>
+<div class="demo" style="top:550px;" id="demo3">js linear/easeNone</div>
+
+<script>
+
+    KISSY.use('core', function (S) {
+//debugger
+//        alert(S.Easing.toFn('cubic-bezier(0,0,0.58,1)')(0.5));
+
+        S.all('#run').on('click', function () {
+            S.all('.demo').removeClass('run').css('left', 10);
+
+            new S.Anim('#demo1', {
+                left: 500
+            }, {
+                duration: 2,
+                easing: 'ease-out'
+            }).run();
+            S.all('#demoCss').addClass('run').css('left', 500);
+
+            new S.Anim('#demo2', {
+                left: 500
+            }, {
+                duration: 2,
+                easing: 'easeOut'
+            }).run();
+
+            if (0) {
+                return;
+            }
+
+
+            new S.Anim('#demo3', {
+                left: 500
+            }, {
+                duration: 2,
+                easing: 'linear' // easeNone
+            }).run();
+
+
+
+        });
+    });
+</script>
+
+</body>
+</html>

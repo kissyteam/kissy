@@ -3,7 +3,7 @@
  * @fileOverview animation framework for KISSY
  * @author   yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q) {
+KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
 
     var UA = S.UA,
         camelCase = DOM._camelCase,
@@ -228,9 +228,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q) {
                 easing = specialEasing[prop] = (specialEasing[prop] || config.easing);
             }
             if (typeof easing == 'string') {
-                easing = specialEasing[prop] = Easing[easing];
+                specialEasing[prop] = Easing.toFn(easing);
             }
-            specialEasing[prop] = easing || Easing['easeNone'];
         });
 
 
@@ -440,7 +439,10 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q) {
 
             if ((self.fire('step') === false) || end) {
                 // complete 事件只在动画到达最后一帧时才触发
-                self.stop(end);
+                self.stop(/**
+                 @type Boolean
+                 @ignore
+                 */end);
             }
         },
 
@@ -588,6 +590,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q) {
         S.each(anims, function (anim) {
             anim.stop(end);
         });
+        return undefined;
     };
 
 
@@ -622,6 +625,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q) {
                 return pauseResumeQueue(el, queueName, action);
             }
             pauseResumeQueue(el, undefined, action);
+            return undefined;
         };
     });
 

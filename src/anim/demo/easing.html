@@ -1,33 +1,41 @@
 <!doctype html>
 <html>
 <head>
-<script src="/kissy/build/seed.js"></script>
-<script src="/kissy/tools/third-party/raphael.js"></script>
-<style>
-    body {
-        background: #000;
-    }
+    <script src="/kissy/build/seed.js"></script>
+    <script src="../src/easing.js"></script>
+    <script src="../src/base.js"></script>
+    <script src="../src/manager.js"></script>
+    <script src="../src/color.js"></script>
+    <script src="../src/fx.js"></script>
+    <script src="../src/queue.js"></script>
+    <script src="../src/background-position.js"></script>
+    <script src="../src/anim.js"></script>
+    <script src="/kissy/tools/third-party/raphael.js"></script>
+    <style>
+        body {
+            background: #000;
+        }
 
-    h1, h2, a {
-        color: white;
-    }
+        h1, h2, a {
+            color: white;
+        }
 
-    #wrap {
-        width: 600px;
-        margin: 0 auto;
-        zoom:1;
-    }
+        #wrap {
+            width: 600px;
+            margin: 0 auto;
+            zoom: 1;
+        }
 
-    .container {
-        border: 1px solid #555;
-        margin-top: -1px;
-        zoom:1;
-    }
+        .container {
+            border: 1px solid #555;
+            margin-top: -1px;
+            zoom: 1;
+        }
 
-    .svgContainer {
-        margin-left: -1px;
-    }
-</style>
+        .svgContainer {
+            margin-left: -1px;
+        }
+    </style>
 </head>
 <body>
 
@@ -38,16 +46,24 @@
 </div>
 
 <script>
-    KISSY.use('core',function (S) {
+    KISSY.use('core', function (S) {
         var $ = S.all;
         var easings = [
             [
                 "swing"
             ],
+
             [
-                "easeNone",
-                "easeIn",
+                "ease-out",
                 "easeOut",
+
+                "easeIn",
+                "ease",
+                "ease-in",
+                "easeNone",
+                "ease-in-out",
+                "ease-out-in",
+
                 "easeBoth",
                 "easeInStrong",
                 "easeOutStrong",
@@ -80,8 +96,8 @@
             var container = $("<div class='container'></div>").appendTo("#wrap");
             var h2 = $("<h2></h2>").appendTo(container);
             var div = $("<div class='svgContainer'></div>").appendTo(container).css({
-                width:width,
-                height:height + gap[i] * 2
+                width: width,
+                height: height + gap[i] * 2
             });
 
             drawEasing(div[0], width, height, single, gap[i]);
@@ -103,10 +119,9 @@
             }
 
             paper.path(pathGrid).attr({
-                stroke:'#555'
+                stroke: '#555'
             });
 
-            var stepX2 = w / steps2;
             var hue = (Math.random() * 360);
 
             function nextColour() {
@@ -119,14 +134,18 @@
 
             for (var j = 0; j < easings.length; j++) {
                 var color = nextColour(),
+                        easing=easings[j],
                         path = "";
                 easingHtml.push(S.substitute("<span style='color:{color}'>{easing}</span>", {
-                    color:Raphael.getRGB(color).hex,
-                    easing:easings[j]
+                    color: Raphael.getRGB(color).hex,
+                    easing: easings[j]
                 }));
+
                 for (i = 0; i < steps2; i++) {
-                    var sx = (stepX2 * i);
-                    var sy = (y + easingFns[easings[j]](i / steps2) * h);
+                    var ratio=i/steps2,
+                            ratioY=easingFns.toFn(easing)(ratio);
+                    var sx = ratio*w;
+                    var sy = (y +  ratioY* h);
                     // if (sy > 1e10) {
                     // backBoth bug
                     // }
@@ -134,7 +153,7 @@
                             "l" + "-1,0" + "l" + "0,-1z";
                 }
                 paper.path(path).attr({
-                    stroke:color
+                    stroke: color
                 });
             }
 

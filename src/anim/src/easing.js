@@ -1,6 +1,7 @@
 /**
  * @ignore
- * @fileOverview Easing equation from yui3
+ * @fileOverview Easing equation from yui3 and css3
+ * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('anim/easing', function () {
 
@@ -8,25 +9,29 @@ KISSY.add('anim/easing', function () {
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
     // Preview: http://www.robertpenner.com/Easing/easing_demo.html
 
-
-// 和 YUI 的 Easing 相比，S.Easing 进行了归一化处理，参数调整为：
+// 和 YUI 的 Easing 相比，Easing 进行了归一化处理，参数调整为：
 // @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
 // @param {Number} b Starting value  b = 0
 // @param {Number} c Delta between start and end values  c = 1
 // @param {Number} d Total length of animation d = 1
 
-
     var PI = Math.PI,
         pow = Math.pow,
         sin = Math.sin,
+        parseNumber = parseFloat,
+        CUBIC_BEZIER_REG = /^cubic-bezier\(([^,]+),([^,]+),([^,]+),([^,]+)\)$/i,
         BACK_CONST = 1.70158;
+
+    function easeNone(t) {
+        return t;
+    }
+
     /**
      * Provides methods for customizing how an animation behaves during each run.
      * @class KISSY.Anim.Easing
      * @singleton
      */
     var Easing = {
-
         /**
          * swing effect.
          */
@@ -37,15 +42,38 @@ KISSY.add('anim/easing', function () {
         /**
          * Uniform speed between points.
          */
-        'easeNone': function (t) {
-            return t;
-        },
+        'easeNone': easeNone,
+
+        'linear': easeNone,
 
         /**
          * Begins slowly and accelerates towards end. (quadratic)
          */
         'easeIn': function (t) {
             return t * t;
+        },
+
+        'ease': makeBezier(0.25, 0.1, 0.25, 1.0),
+
+        'ease-in': makeBezier(0.42, 0, 1.0, 1.0),
+
+        'ease-out': makeBezier(0, 0, 0.58, 1.0),
+
+        'ease-in-out': makeBezier(0.42, 0, 0.58, 1.0),
+
+        'ease-out-in': makeBezier(0, 0.42, 1.0, 0.58),
+
+        toFn: function (easingStr) {
+            var m;
+            if (m = easingStr.match(CUBIC_BEZIER_REG)) {
+                return makeBezier(
+                    parseNumber(m[1]),
+                    parseNumber(m[2]),
+                    parseNumber(m[3]),
+                    parseNumber(m[4])
+                );
+            }
+            return Easing[easingStr] || easeNone;
         },
 
         /**
@@ -161,7 +189,7 @@ KISSY.add('anim/easing', function () {
         /**
          * Bounces off end.
          */
-        bounceOut: function (t) {
+        'bounceOut': function (t) {
             var s = 7.5625, r;
 
             if (t < (1 / 2.75)) {
@@ -191,100 +219,92 @@ KISSY.add('anim/easing', function () {
         }
     };
 
+    var ZERO_LIMIT = 1e-6,
+        abs = Math.abs;
 
+    // x = (3*p1x-3*p2x+1)*t^3 + (3*p2x-6*p1x)*t^2 + 3*p1x*t
+    // http://en.wikipedia.org/wiki/B%C3%A9zier_curve
+    function makeBezier(p1x, p1y, p2x, p2y) {
+        var ax1 = 3 * p1x - 3 * p2x + 1,
+            ax2 = 3 * p2x - 6 * p1x,
+            ax3 = 3 * p1x;
 
-    function CubicBezierAtTime(t, p1x, p1y, p2x, p2y, duration) {
-        var ax = 0,bx = 0,cx = 0,ay = 0,by = 0,cy = 0;
+        var ay1 = 3 * p1y - 3 * p2y + 1,
+            ay2 = 3 * p2y - 6 * p1y,
+            ay3 = 3 * p1y;
 
-        // `ax t^3 + bx t^2 + cx t' expanded using Horner 's rule.
-        function sampleCurveX(t) {
-            return ((ax * t + bx) * t + cx) * t;
+        function derivativeX(t) {
+            return (3 * ax1 * t + 2 * ax2) * t + ax3;
         }
 
-        function sampleCurveY(t) {
-            return ((ay * t + by) * t + cy) * t;
+        function getXByT(t) {
+            return ((ax1 * t + ax2) * t + ax3 ) * t;
         }
 
-        function sampleCurveDerivativeX(t) {
-            return (3.0 * ax * t + 2.0 * bx) * t + cx;
+        function getYByT(t) {
+            return ((ay1 * t + ay2) * t + ay3 ) * t;
         }
 
-        // The epsilon value to pass given that the animation is going to run over |dur| seconds. The longer the
-        // animation, the more precision is needed in the timing function result to avoid ugly discontinuities.
-        function solveEpsilon(duration) {
-            return 1.0 / (200.0 * duration);
-        }
+        function getTByX(x) {
+            var iterationT = x,
+                derivative,
+                xRet;
 
-        function solve(x, epsilon) {
-            return sampleCurveY(solveCurveX(x, epsilon));
-        }
-
-        // Given an x value, find a parametric value it came from.
-        function solveCurveX(x, epsilon) {
-            var t0,t1,t2,x2,d2,i;
-
-            function fabs(n) {
-                if (n >= 0) {
-                    return n;
-                } else {
-                    return 0 - n;
+            // https://trac.webkit.org/browser/trunk/Source/WebCore/platform/animation
+            // newton method
+            // http://en.wikipedia.org/wiki/Newton's_method
+            for (var i = 0; i < 9; i++) {
+                // f(t)-x=0
+                xRet = getXByT(iterationT) - x;
+                if (abs(xRet) < ZERO_LIMIT) {
+                    return iterationT;
                 }
-            }
-
-            // First try a few iterations of Newton's method -- normally very fast.
-            for (t2 = x,i = 0; i < 8; i++) {
-                x2 = sampleCurveX(t2) - x;
-                if (fabs(x2) < epsilon) {
-                    return t2;
-                }
-                d2 = sampleCurveDerivativeX(t2);
-                if (fabs(d2) < 1e-6) {
+                derivative = derivativeX(iterationT);
+                // == 0, failure
+                if (abs(derivative) < ZERO_LIMIT) {
                     break;
                 }
-                t2 = t2 - x2 / d2;
+                iterationT -= xRet / derivative;
             }
-            // Fall back to the bisection method for reliability.
-            t0 = 0.0;
-            t1 = 1.0;
-            t2 = x;
-            if (t2 < t0) {
-                return t0;
-            }
-            if (t2 > t1) {
-                return t1;
-            }
-            while (t0 < t1) {
-                x2 = sampleCurveX(t2);
-                if (fabs(x2 - x) < epsilon) {
-                    return t2;
+
+            // bisection
+            // http://en.wikipedia.org/wiki/Bisection_method
+            var maxT = 1,
+                minT = 0;
+            iterationT = x;
+            while (maxT > minT) {
+                xRet = getXByT(iterationT) - x;
+                if (abs(xRet) < ZERO_LIMIT) {
+                    return iterationT;
                 }
-                if (x > x2) {
-                    t0 = t2;
+                if (xRet > 0) {
+                    maxT = iterationT;
                 } else {
-                    t1 = t2;
+                    minT = iterationT;
                 }
-                t2 = (t1 - t0) * .5 + t0;
+                iterationT = (maxT + minT) / 2;
             }
-            return t2; // Failure.
+
+            // fail
+            return iterationT;
         }
 
-        // Calculate the polynomial coefficients, implicit first and last control points are (0,0) and (1,1).
-        cx = 3.0 * p1x;
-        bx = 3.0 * (p2x - p1x) - cx;
-        ax = 1.0 - cx - bx;
-        cy = 3.0 * p1y;
-        by = 3.0 * (p2y - p1y) - cy;
-        ay = 1.0 - cy - by;
-        // Convert from input time to parametric value in curve, then from that to output time.
-        return solve(t, solveEpsilon(duration));
-    }
+        function getYByX(x) {
+            var t = getTByX(x);
+            return getYByT(t);
+        }
 
+        return getYByX;
+    }
 
     return Easing;
 });
 
 /*
- 2012-06-04
+ 2013-01-04 yiminghe@gmail.com
+ - js 模拟 cubic-bezier
+
+ 2012-06-04 yiminghe@gmail.com
  - easing.html 曲线可视化
 
  NOTES:
