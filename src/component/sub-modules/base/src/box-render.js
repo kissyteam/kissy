@@ -5,7 +5,9 @@
  */
 KISSY.add('component/base/box-render', function (S) {
 
-    var $ = S.all, doc = S.Env.host.document;
+    var $ = S.all,
+        UA = S.UA,
+        doc = S.Env.host.document;
 
     function BoxRender() {
     }
@@ -56,6 +58,7 @@ KISSY.add('component/base/box-render', function (S) {
             value: "display"
         },
         // content 设置的内容节点,默认根节点
+        // 防止 content 节点和根节点不是同一个节点，例如 submenu
         contentEl: {
             valueFn: function () {
                 return this.get("el");
@@ -81,7 +84,8 @@ KISSY.add('component/base/box-render', function (S) {
          * 通过 render 来重建原有的内容
          */
         __createDom: function () {
-            var self = this, el, contentEl;
+            var self = this,
+                el, contentEl;
             if (!self.get("srcNode")) {
                 contentEl = self.get("contentEl");
 
@@ -108,7 +112,10 @@ KISSY.add('component/base/box-render', function (S) {
                     el = self.get("el"),
                     renderBefore = self.get("elBefore");
                 if (renderBefore) {
-                    el.insertBefore(renderBefore, undefined);
+                    el.insertBefore(renderBefore, /**
+                     @type Node
+                     @ignore
+                     */undefined);
                 } else if (render) {
                     el.appendTo(render, undefined);
                 } else {
@@ -129,7 +136,7 @@ KISSY.add('component/base/box-render', function (S) {
             this.get("el").css(style);
         },
 
-        _onSetWidth: function (w) {
+        '_onSetWidth': function (w) {
             this.get("el").width(w);
         },
 
@@ -138,8 +145,9 @@ KISSY.add('component/base/box-render', function (S) {
             self.get("el").height(h);
         },
 
-        _onSetContent: function (c) {
-            var self = this, el;
+        '_onSetContent': function (c) {
+            var self = this,
+                el;
             // srcNode 时不重新渲染 content
             // 防止内部有改变，而 content 则是老的 html 内容
             if (self.get("srcNode") && !self.get("rendered")) {
@@ -150,6 +158,13 @@ KISSY.add('component/base/box-render', function (S) {
                 } else if (c) {
                     el.empty().append(c);
                 }
+            }
+            // ie needs to set unselectable attribute recursively
+            if (UA.ie < 9 && !self.get('allowTextSelection')) {
+                el.unselectable(/**
+                 @type HTMLElement
+                 @ignore
+                 */undefined);
             }
         },
 
