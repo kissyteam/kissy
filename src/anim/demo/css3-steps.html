@@ -52,7 +52,8 @@
 <button id="run">run</button>
 
 <div class="demo" id="start"></div>
-<div class="demo" style="top:300px;" id="end"></div>
+<div class="demo" id="start2" style="top:300px; -webkit-transition-delay:-0.5s; "></div>
+<div class="demo" style="top:450px;" id="end"></div>
 
 <script>
 
@@ -63,7 +64,7 @@
         var $ = S.all;
         $('#run').on('click', function () {
             $('.demo').removeClass('run-start run-end').css('left', 10);
-            $('#start').addClass('run-start').css('left', 500);
+            $('#start,#start2').addClass('run-start').css('left', 500);
             $('#end').addClass('run-end').css('left', 500);
         });
     });
