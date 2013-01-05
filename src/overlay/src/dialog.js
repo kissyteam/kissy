@@ -30,10 +30,15 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Di
             },
 
             _onSetVisible: function (v) {
-                var self = this, el = self.get('el');
+                var self = this,
+                    el = self.get('el');
                 if (v) {
                     self.__lastActive = el[0].ownerDocument.activeElement;
-                    el[0].focus && el[0].focus();
+                    self.set('focused', true);
+                    // if d.show(); d.hide();
+                    // async -> focus event -> handleFocus
+                    // -> set('focused') -> el.focus() -> ie error
+                    // el[0].focus && el[0].focus();
                     el.attr("aria-hidden", "false");
                 } else {
                     el.attr("aria-hidden", "true");
