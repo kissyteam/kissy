@@ -9,11 +9,11 @@ KISSY.add('anim/easing', function () {
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
     // Preview: http://www.robertpenner.com/Easing/easing_demo.html
 
-// 和 YUI 的 Easing 相比，Easing 进行了归一化处理，参数调整为：
-// @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
-// @param {Number} b Starting value  b = 0
-// @param {Number} c Delta between start and end values  c = 1
-// @param {Number} d Total length of animation d = 1
+    // 和 YUI 的 Easing 相比，Easing 进行了归一化处理，参数调整为：
+    // @param {Number} t Time value used to compute current value  保留 0 =< t <= 1
+    // @param {Number} b Starting value  b = 0
+    // @param {Number} c Delta between start and end values  c = 1
+    // @param {Number} d Total length of animation d = 1
 
     var PI = Math.PI,
         pow = Math.pow,
@@ -53,20 +53,20 @@ KISSY.add('anim/easing', function () {
             return t * t;
         },
 
-        'ease': makeBezier(0.25, 0.1, 0.25, 1.0),
+        'ease': cubicBezierFunction(0.25, 0.1, 0.25, 1.0),
 
-        'ease-in': makeBezier(0.42, 0, 1.0, 1.0),
+        'ease-in': cubicBezierFunction(0.42, 0, 1.0, 1.0),
 
-        'ease-out': makeBezier(0, 0, 0.58, 1.0),
+        'ease-out': cubicBezierFunction(0, 0, 0.58, 1.0),
 
-        'ease-in-out': makeBezier(0.42, 0, 0.58, 1.0),
+        'ease-in-out': cubicBezierFunction(0.42, 0, 0.58, 1.0),
 
-        'ease-out-in': makeBezier(0, 0.42, 1.0, 0.58),
+        'ease-out-in': cubicBezierFunction(0, 0.42, 1.0, 0.58),
 
         toFn: function (easingStr) {
             var m;
             if (m = easingStr.match(CUBIC_BEZIER_REG)) {
-                return makeBezier(
+                return cubicBezierFunction(
                     parseNumber(m[1]),
                     parseNumber(m[2]),
                     parseNumber(m[3]),
@@ -219,82 +219,93 @@ KISSY.add('anim/easing', function () {
         }
     };
 
+    // The epsilon value we pass to UnitBezier::solve given that the animation is going to run over |dur| seconds.
+    // The longer the animation,
+    // the more precision we need in the timing function result to avoid ugly discontinuities.
+    // ignore for KISSY easing
     var ZERO_LIMIT = 1e-6,
         abs = Math.abs;
 
     // x = (3*p1x-3*p2x+1)*t^3 + (3*p2x-6*p1x)*t^2 + 3*p1x*t
     // http://en.wikipedia.org/wiki/B%C3%A9zier_curve
-    function makeBezier(p1x, p1y, p2x, p2y) {
-        var ax1 = 3 * p1x - 3 * p2x + 1,
-            ax2 = 3 * p2x - 6 * p1x,
-            ax3 = 3 * p1x;
+    // https://trac.webkit.org/browser/trunk/Source/WebCore/platform/graphics/UnitBezier.h
+    // http://svn.webkit.org/repository/webkit/trunk/Source/WebCore/page/animation/AnimationBase.cpp
+    function cubicBezierFunction(p1x, p1y, p2x, p2y) {
 
-        var ay1 = 3 * p1y - 3 * p2y + 1,
-            ay2 = 3 * p2y - 6 * p1y,
-            ay3 = 3 * p1y;
+        // Calculate the polynomial coefficients,
+        // implicit first and last control points are (0,0) and (1,1).
+        var ax = 3 * p1x - 3 * p2x + 1,
+            bx = 3 * p2x - 6 * p1x,
+            cx = 3 * p1x;
 
-        function derivativeX(t) {
-            return (3 * ax1 * t + 2 * ax2) * t + ax3;
+        var ay = 3 * p1y - 3 * p2y + 1,
+            by = 3 * p2y - 6 * p1y,
+            cy = 3 * p1y;
+
+        function sampleCurveDerivativeX(t) {
+            // `ax t^3 + bx t^2 + cx t' expanded using Horner 's rule.
+            return (3 * ax * t + 2 * bx) * t + cx;
         }
 
-        function getXByT(t) {
-            return ((ax1 * t + ax2) * t + ax3 ) * t;
+        function sampleCurveX(t) {
+            return ((ax * t + bx) * t + cx ) * t;
         }
 
-        function getYByT(t) {
-            return ((ay1 * t + ay2) * t + ay3 ) * t;
+        function sampleCurveY(t) {
+            return ((ay * t + by) * t + cy ) * t;
         }
 
-        function getTByX(x) {
-            var iterationT = x,
+        // Given an x value, find a parametric value it came from.
+        function solveCurveX(x) {
+            var t2 = x,
                 derivative,
-                xRet;
+                x2;
 
             // https://trac.webkit.org/browser/trunk/Source/WebCore/platform/animation
-            // newton method
+            // First try a few iterations of Newton's method -- normally very fast.
             // http://en.wikipedia.org/wiki/Newton's_method
-            for (var i = 0; i < 9; i++) {
+            for (var i = 0; i < 8; i++) {
                 // f(t)-x=0
-                xRet = getXByT(iterationT) - x;
-                if (abs(xRet) < ZERO_LIMIT) {
-                    return iterationT;
+                x2 = sampleCurveX(t2) - x;
+                if (abs(x2) < ZERO_LIMIT) {
+                    return t2;
                 }
-                derivative = derivativeX(iterationT);
+                derivative = sampleCurveDerivativeX(t2);
                 // == 0, failure
                 if (abs(derivative) < ZERO_LIMIT) {
                     break;
                 }
-                iterationT -= xRet / derivative;
+                t2 -= x2 / derivative;
             }
 
+            // Fall back to the bisection method for reliability.
             // bisection
             // http://en.wikipedia.org/wiki/Bisection_method
-            var maxT = 1,
-                minT = 0;
-            iterationT = x;
-            while (maxT > minT) {
-                xRet = getXByT(iterationT) - x;
-                if (abs(xRet) < ZERO_LIMIT) {
-                    return iterationT;
+            var t1 = 1,
+                t0 = 0;
+            t2 = x;
+            while (t1 > t0) {
+                x2 = sampleCurveX(t2) - x;
+                if (abs(x2) < ZERO_LIMIT) {
+                    return t2;
                 }
-                if (xRet > 0) {
-                    maxT = iterationT;
+                if (x2 > 0) {
+                    t1 = t2;
                 } else {
-                    minT = iterationT;
+                    t0 = t2;
                 }
-                iterationT = (maxT + minT) / 2;
+                t2 = (t1 + t0) / 2;
             }
 
-            // fail
-            return iterationT;
+            // Failure
+            return t2;
         }
 
-        function getYByX(x) {
-            var t = getTByX(x);
-            return getYByT(t);
+        function solve(x) {
+            return sampleCurveY(solveCurveX(x));
         }
 
-        return getYByX;
+        return solve;
     }
 
     return Easing;

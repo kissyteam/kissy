@@ -32,6 +32,14 @@
             -ms-transition: left 2s ease-out;
             transition: left 2s ease-out;
         }
+
+        .cubic {
+            -webkit-transition: left 2s cubic-bezier(1, 0.22, 0, 0.84);
+            -moz-transition: left 2s cubic-bezier(1, 0.22, 0, 0.84);
+            -o-transition: left 2s cubic-bezier(1, 0.22, 0, 0.84);
+            -ms-transition: left 2s cubic-bezier(1, 0.22, 0, 0.84);
+            transition: left 2s cubic-bezier(1, 0.22, 0, 0.84);
+        }
     </style>
 </head>
 <body>
@@ -41,7 +49,8 @@
 <div class="demo" id="demo1">css3 ease-out in js</div>
 <div class="demo" style="top:250px;" id="demoCss">css3 ease-out</div>
 <div class="demo" style="top:400px;" id="demo2">js easeOut</div>
-<div class="demo" style="top:550px;" id="demo3">js linear/easeNone</div>
+<div class="demo" style="top:550px;" id="demo3">js cubic-bezier(1,0.22,0,0.84)</div>
+<div class="demo" style="top:650px;" id="demoCubic">css3 cubic-bezier(1,0.22,0,0.84)</div>
 
 <script>
 
@@ -50,13 +59,16 @@
 //        alert(S.Easing.toFn('cubic-bezier(0,0,0.58,1)')(0.5));
 
         S.all('#run').on('click', function () {
-            S.all('.demo').removeClass('run').css('left', 10);
-
+            S.all('.demo').removeClass('run cubic').css('left', 10);
+            S.all('#run').attr('disabled', true);
             new S.Anim('#demo1', {
                 left: 500
             }, {
                 duration: 2,
-                easing: 'ease-out'
+                easing: 'ease-out',
+                complete: function () {
+                    S.all('#run').attr('disabled', false);
+                }
             }).run();
             S.all('#demoCss').addClass('run').css('left', 500);
 
@@ -76,10 +88,11 @@
                 left: 500
             }, {
                 duration: 2,
-                easing: 'linear' // easeNone
+                easing: 'cubic-bezier(1,0.22,0,0.84)'
             }).run();
 
 
+            S.all('#demoCubic').addClass('cubic').css('left', 500);
 
         });
     });

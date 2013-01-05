@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="../src/easing.js"></script>
+    <script src="../src/base.js"></script>
+    <script src="../src/manager.js"></script>
+    <script src="../src/color.js"></script>
+    <script src="../src/fx.js"></script>
+    <script src="../src/queue.js"></script>
+    <script src="../src/background-position.js"></script>
+    <script src="../src/anim.js"></script>
+    <style>
+        body {
+            background: #000;
+            color: white;
+        }
+
+        .demo {
+            border: 1px solid red;
+            width: 150px;
+            height: 50px;
+            position: absolute;
+            left: 10px;
+            top: 150px;
+        }
+
+        .run-start {
+            -webkit-transition: left 2s;
+            -moz-transition: left 2s;
+            -o-transition: left 2s;
+            -ms-transition: left 2s;
+            transition: left 2s;
+
+            -webkit-transition-timing-function: steps(2, start);
+        }
+
+        .run-end {
+            -webkit-transition: left 2s;
+            -moz-transition: left 2s;
+            -o-transition: left 2s;
+            -ms-transition: left 2s;
+            transition: left 2s;
+
+            -webkit-transition-timing-function: steps(2, end);
+        }
+    </style>
+</head>
+<body>
+
+<h1>css3 steps anim</h1>
+<button id="run">run</button>
+
+<div class="demo" id="start"></div>
+<div class="demo" style="top:300px;" id="end"></div>
+
+<script>
+
+    KISSY.use('core', function (S) {
+//debugger
+//        alert(S.Easing.toFn('cubic-bezier(0,0,0.58,1)')(0.5));
+
+        var $ = S.all;
+        $('#run').on('click', function () {
+            $('.demo').removeClass('run-start run-end').css('left', 10);
+            $('#start').addClass('run-start').css('left', 500);
+            $('#end').addClass('run-end').css('left', 500);
+        });
+    });
+</script>
+
+</body>
+</html>
