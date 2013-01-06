@@ -209,7 +209,7 @@
                 symbol: 'RelationalExpression',
                 rhs: ['RelationalExpression', 'LT', 'AdditiveExpression'],
                 action: function () {
-                    return new this.yy.RelationalExpression(this.$1, '<=', this.$3);
+                    return new this.yy.RelationalExpression(this.$1, '<', this.$3);
                 }
             },
             {

@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 21 18:16
+build time: Jan 6 19:09
 */
 /**
  * Ast node class for xtemplate
@@ -1117,7 +1117,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
         }],
         [49, [50]],
         [49, [49, 17, 50], function () {
-            return new this.yy.RelationalExpression(this.$1, '<=', this.$3);
+            return new this.yy.RelationalExpression(this.$1, '<', this.$3);
         }],
         [49, [49, 15, 50], function () {
             return new this.yy.RelationalExpression(this.$1, '>', this.$3);
