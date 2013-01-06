@@ -9,11 +9,14 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
     parser.yy = ast;
 
-    var utils = {'getProperty': 1};
-    var doubleReg = /"/g, single = /'/g, escapeString;
-    var arrayPush = [].push;
-    var variableId = 0;
-    var xtemplateId = 0;
+    var utils = {
+            'getProperty': 1
+        },
+        doubleReg = /"/g,
+        single = /'/g, escapeString,
+        arrayPush = [].push,
+        variableId = 0,
+        xtemplateId = 0;
 
     function guid(str) {
         return str + (variableId++);
@@ -69,15 +72,18 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             if (global) {
                 source.push('S = KISSY,' +
                     'escapeHTML = S.escapeHTML,' +
+                    'isArray = S.isArray,' +
+                    'isObject = S.isObject,' +
                     'log = S.log,' +
                     'commands = option.commands,' +
                     'utils = option.utils,' +
                     'error = S.error;');
 
-                var natives = '', c;
-
+                var natives = '',
+                    c,
                 // shortcut for global commands
-                var commands = XTemplateRuntime.commands;
+                    commands = XTemplateRuntime.commands;
+
                 for (c in commands) {
                     natives += c + 'Command = commands["' + c + '"],';
                 }
@@ -110,7 +116,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         genId: function (idNode, tplNode) {
             var source = [],
                 depth = idNode.depth,
-                scope = 'scopes[' + depth + ']',
                 idString = idNode.string,
                 idName = guid('id'),
                 self = this,
@@ -120,7 +125,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
             source.push('var ' + idName + ';');
 
-            // {{each variable}} {{variable}}
+            // {{#each variable}} {{variable}}
             if (tplNode && depth == 0) {
                 var optionNameCode = self.genOption(tplNode);
                 pushToArray(source, optionNameCode[1]);
@@ -152,7 +157,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
                 var tmp = guid('tmp');
 
-                source.push('var ' + tmp + '=getProperty("' + idString + '",' + scope + ');');
+                source.push('var ' + tmp + '=getProperty("' + idString + '",scopes);');
 
                 source.push('if(' + tmp + '===false){');
                 source.push('S[option.silent?"log":"error"]("can not find property: \'' +
@@ -172,11 +177,12 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         },
 
         genOpExpression: function (e, type) {
-            var source = [];
-            var name1;
-            var name2;
-            var code1 = this[e.op1.type](e.op1);
-            var code2 = this[e.op2.type](e.op2);
+            var source = [],
+                name1,
+                name2,
+                code1 = this[e.op1.type](e.op1),
+                code2 = this[e.op2.type](e.op2);
+
             name1 = code1[0];
             name2 = code2[0];
 
@@ -222,13 +228,12 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         genOption: function (tplNode) {
             var source = [],
                 optionName = guid('option'),
+                params, hash,
                 self = this;
 
             source.push('var ' + optionName + ' = S.merge(option);');
 
             if (tplNode) {
-
-                var params, hash;
                 if (params = tplNode.params) {
                     var paramsName = guid('params');
                     source.push('var ' + paramsName + ' = [];');
@@ -243,14 +248,12 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                             source.push(paramsName + '.push(' + lastOfArray(nextIdNameCode[1]) + ');')
                         }
                     });
-
                     source.push(optionName + '.params=' + paramsName + ';');
                 }
 
                 if (hash = tplNode.hash) {
                     var hashName = guid('hash');
                     source.push('var ' + hashName + ' = {};');
-
                     S.each(hash.value, function (v, key) {
                         var nextIdNameCode = self[v.type](v);
                         if (nextIdNameCode[0]) {
@@ -261,10 +264,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                             source.push(hashName + '["' + key + '"] = ' + lastOfArray(nextIdNameCode[1]) + ';')
                         }
                     });
-
                     source.push(optionName + '.hash=' + hashName + ';');
                 }
-
             }
 
             return [optionName, source];
@@ -297,9 +298,9 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         },
 
         unaryExpression: function (e) {
-            var source = [];
-            var name;
-            var code = this[e.value.type](e.value);
+            var source = [],
+                name,
+                code = this[e.value.type](e.value);
             arrayPush.apply(source, code[1]);
             if (name = code[0]) {
                 source.push(name + '=!' + name + ';');
@@ -332,65 +333,74 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         'block': function (block) {
             var programNode = block.program,
                 source = [],
+                self = this,
                 tmpNameCommand,
                 tplNode = block.tpl,
-                optionNameCode = this.genOption(tplNode),
+                optionNameCode = self.genOption(tplNode),
                 optionName = optionNameCode[0],
                 commands = XTemplateRuntime.commands,
-                string = tplNode.path.string;
+                string = tplNode.path.string,
+                inverseFn,
+                tmp,
+                existsNativeCommand,
+                variableName;
 
             pushToArray(source, optionNameCode[1]);
 
-
-            source.push(optionName + '.fn=' + this.genFunction(programNode.statements).join('\n') + ';');
+            source.push(optionName + '.fn=' +
+                self.genFunction(programNode.statements).join('\n') + ';');
 
             if (programNode.inverse) {
-                var inverseFn = this.genFunction(programNode.inverse).join('\n');
+                inverseFn = self.genFunction(programNode.inverse).join('\n');
                 source.push(optionName + '.inverse=' + inverseFn + ';');
             }
 
-            if (!commands[string]) {
+            // reduce generated code size
+            if (existsNativeCommand = commands[string]) {
+                tmpNameCommand = string + 'Command';
+            } else {
                 tmpNameCommand = guid('command');
                 source.push('var ' + tmpNameCommand +
                     ' = commands["' + string + '"];');
+                // {{#xx}}1{#xx} => xx is not command =>
+                // if xx => array => {{#each xx}}1{/each}}
+                // if xx => object => {{#with xx}}1{/with}}
+                // else => {{#if xx}}1{/if}}
+                if (!tplNode.hash && !tplNode.params) {
+                    source.push('if(!' + tmpNameCommand + '){');
+                    tmp = guid('tmp');
+                    source.push('var ' + tmp + ' = getProperty("' + string + '",scopes);');
+                    source.push('if(' + tmp + ' !== false){');
+                    variableName = guid('tmp');
+                    source.push('var ' + variableName + '=' + tmp + '[0];');
+                    source.push(optionName + '.params=[' + variableName + '];');
+                    source.push('if(isArray(' + variableName + ')){');
+                    source.push(tmpNameCommand + '=commands["each"];');
+                    source.push('}');
+                    source.push('else if(isObject(' + variableName + ')){');
+                    source.push(tmpNameCommand + '=commands["with"];');
+                    source.push('}');
+                    source.push('else {');
+                    source.push(tmpNameCommand + '=commands["if"];');
+                    source.push('}');
+                    source.push('}');
+                    source.push('}');
+                }
                 source.push('if( ' + tmpNameCommand + ' ){');
-            } else {
-                tmpNameCommand = string + 'Command';
             }
+
             source.push('try{');
             source.push('buffer += ' + tmpNameCommand + '(scopes,' + optionName + ');');
             source.push('}catch(e){');
-            source.push('error(e.message+": \'' +
-                string + '\' at line ' + tplNode.path.lineNumber + '");');
+            source.push('error(e.message+": \'' + string +
+                '\' at line ' + tplNode.path.lineNumber + '");');
             source.push('}');
-            if (!commands[string]) {
-                source.push('}');
-                var tmp = guid('tmp');
-                source.push('else {');
-                source.push('var ' + tmp + ';');
-                source.push(tmp + ' = getProperty("' + string + '",scopes[0]);');
-                source.push('if(' + tmp + '!==false&&S.isArray(' + tmp + '[0])) {');
-                source.push('try{');
-                source.push(optionName + '.params=' + tmp + ';');
-                source.push('buffer += eachCommand(scopes,' + optionName + ');');
-                source.push('}catch(e){');
-                source.push('error(e.message+": \' each ' +
-                    string + '\' at line ' + tplNode.path.lineNumber + '");');
-                source.push('}');
-                source.push('}');
-                source.push('else if(' + tmp + '!==false&&S.isObject(' + tmp + '[0])) {');
-                source.push('try{');
-                source.push(optionName + '.params=' + tmp + ';');
-                source.push('buffer += withCommand(scopes,' + optionName + ');');
-                source.push('}catch(e){');
-                source.push('error(e.message+": \' with ' +
-                    string + '\' at line ' + tplNode.path.lineNumber + '");');
-                source.push('}');
+
+            if (!existsNativeCommand) {
                 source.push('}');
                 source.push('else {');
                 source.push('error("can not find command: \'' +
                     string + '\' at line ' + tplNode.path.lineNumber + '");');
-                source.push('}');
                 source.push('}');
             }
             return source;
@@ -405,9 +415,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 escaped = tplNode.escaped,
                 genIdCode = this.genId(tplNode.path, tplNode);
             pushToArray(source, genIdCode[1]);
-
             outputVariable(genIdCode[0], escaped, source);
-
             return source;
         },
 
@@ -423,9 +431,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 pushToArray(source, code[1].slice(0, -1));
                 expressionOrVariable = lastOfArray(code[1]);
             }
-
             outputVariable(expressionOrVariable, escaped, source);
-
             return source;
         }
 
@@ -435,8 +441,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         var tmp = guid('tmp');
         // in case it is expression, avoid duplicate computation
         source.push('var ' + tmp + ' = ' + expressionOrVariable + ';');
-        source.push('buffer+=' +
-            (escaped ? 'escapeHTML(' : '') +
+        source.push('buffer+=' + (escaped ? 'escapeHTML(' : '') +
             // when render undefined => ''
             '(' + tmp + '===undefined?"":' + tmp + ')' + '+""' +
             (escaped ? ')' : '') +
@@ -494,7 +499,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             return (Function.apply(null, []
                 .concat(code.params)
                 .concat(code.source.join('\n') + '//@ sourceURL=' +
-                (option.name ? option.name : ('xtemplate' + (xtemplateId++))) + '.js')));
+                    (option.name ? option.name : ('xtemplate' + (xtemplateId++))) + '.js')));
         }
     };
 

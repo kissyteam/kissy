@@ -261,8 +261,8 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                 });
 
 
-                it('support escape escape',function(){
-                    var tpl='haha \\\\{{title}}';
+                it('support escape escape', function () {
+                    var tpl = 'haha \\\\{{title}}';
                     var data = {
                         title: 'a'
                     };
@@ -272,8 +272,8 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     expect(render).toBe('haha \\a');
 
 
-                     tpl='haha \\\\\\{{title}}';
-                     data = {
+                    tpl = 'haha \\\\\\{{title}}';
+                    data = {
                         title: 'a'
                     };
 
@@ -500,6 +500,8 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                         '{{n2+1}}' +
                         '{{/if}}';
 
+                    var tpl5='{{#if n<5}}0{{else}}1{{/if}}';
+
 
                     var data = {
                             n: 5,
@@ -520,6 +522,8 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     expect(new XTemplate(tpl3).render(data3)).toBe('5');
 
                     expect(new XTemplate(tpl4).render(data3)).toBe('3');
+
+                    expect(new XTemplate(tpl5).render({n:5})).toBe('1');
                 });
 
 
@@ -590,7 +594,9 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                         }
                     };
 
-                    var render = new XTemplate(tpl).render(data);
+                    var renderFn = new XTemplate(tpl);
+
+                    var render = renderFn.render(data);
 
                     expect(render).toBe('h-2');
                 });
@@ -613,6 +619,67 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     var render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('1-0/2|2-1/2|');
+                });
+
+                it('support simple # as if', function () {
+                    var tpl = '{{#data}}1{{/data}}';
+
+                    var data = {
+                        data: true
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('1');
+                });
+
+
+                it('support function as property value', function () {
+                    var tpl = '{{data.d}}';
+
+                    var data = {
+                        z: '0',
+                        data: {
+                            d: function () {
+                                return this.z + '1';
+                            }
+                        }
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('01');
+                });
+
+                // no no
+//                it('support . as array element', function () {
+//                    var tpl = '{{#data}}{{.}}{{/data}}';
+//
+//                    var data = {
+//                        data: ['1']
+//                    };
+//
+//                    var render = new XTemplate(tpl).render(data);
+//
+//                    expect(render).toBe('1');
+//                });
+
+                it('support property lookup', function () {
+
+                    var tpl = '{{#data}}{{#data}}{{b}}{{/data}}{{/data}}';
+
+                    var data = {
+                        b: '2',
+                        data: {
+                            b: '1',
+                            data: {}
+                        }
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('1');
+
                 });
 
             });
@@ -717,7 +784,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                         throw e;
                     }
                 }).toThrow('parse error at line 3:\n' +
-                    'expect {{/if}} not {{/with}}');
+                        'expect {{/if}} not {{/with}}');
 
             });
 
