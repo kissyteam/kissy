@@ -35,7 +35,6 @@ border-radius: 100px;
 <script src=".././src/color.js"></script>
 <script src=".././src/fx.js"></script>
 <script src=".././src/queue.js"></script>
-<script src=".././src/background-position.js"></script>
 <script src=".././src/anim.js"></script>
 
 <script>
@@ -73,15 +72,18 @@ border-radius: 100px;
 
         function run() {
             S.all('#t').animate({
-                zoom2: 1
+                zoom2: {
+                    fx:{
+                        frame: function (anim,fx) {
+
+                            t.css('top', translate(filter(Math.sin(fx.pos * 2 * Math.PI)) * R2));
+                            t.css('left', translate(filter(Math.cos(fx.pos * 2 * Math.PI)) * R2))
+                        }
+                    }
+                }
             }, {
                 easing: "easingNone",
                 duration: 5,
-                frame: function (fx, stop) {
-                    var n = Math.sin(fx.pos * 2 * Math.PI);
-                    t.css('top', translate(filter(n) * R2));
-                    t.css('left', translate(filter(Math.cos(fx.pos * 2 * Math.PI)) * R2))
-                },
                 complete: run
             });
         }

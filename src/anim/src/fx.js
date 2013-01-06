@@ -16,6 +16,9 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
 
     Fx.prototype = {
 
+        // implemented by KISSY
+        isNative: 1,
+
         constructor: Fx,
 
         /**
@@ -31,31 +34,13 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
 
         /**
          * process current anim frame.
-         * @param {Boolean} end whether this anim is ended
-         * @return {Number}
-         *
+         * @param {Number} pos
          */
-        frame: function (end) {
-            var self = this,
-                anim = self.anim,
-                endFlag = 0,
-                elapsedTime;
-            if (self.finished) {
-                return 1;
-            }
-            var t = S.now(),
-                _startTime = anim._startTime,
-                duration = anim._duration;
-            if (end || t >= duration + _startTime) {
-                self.pos = 1;
-                endFlag = 1;
-            } else {
-                elapsedTime = t - _startTime;
-                self.pos = self.easing(elapsedTime / duration);
-            }
+        frame: function (pos) {
+            var self = this;
+            self.pos = pos;
             self.update();
-            self.finished = self.finished || endFlag;
-            return endFlag;
+            self.finished = self.finished || pos == 1;
         },
 
         /**
@@ -68,11 +53,10 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
          */
         interpolate: function (from, to, pos) {
             // 默认只对数字进行 easing
-            if (S.isNumber(from) &&
-                S.isNumber(to)) {
-                return (from + (to - from) * pos).toFixed(3);
+            if (S.isNumber(from) && S.isNumber(to)) {
+                return /**@type Number @ignore*/(from + (to - from) * pos).toFixed(3);
             } else {
-                return undefined;
+                return /**@type Number @ignore*/undefined;
             }
         },
 
@@ -89,7 +73,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
 
-            if (val === undefined) {
+            if (val === /**@type Number @ignore*/undefined) {
                 // 插值出错，直接设置为最终值
                 if (!self.finished) {
                     self.finished = 1;
@@ -138,7 +122,22 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
         return 0;
     }
 
+    function getPos(anim, easing) {
+        var t = S.now(),
+            elapsedTime,
+            _startTime = anim._startTime,
+            duration = anim._duration;
+        if (t >= duration + _startTime) {
+            return 1;
+        } else {
+            elapsedTime = t - _startTime;
+            return easing(elapsedTime / duration);
+        }
+    }
+
     Fx.Factories = {};
+
+    Fx.getPos = getPos;
 
     Fx.getFx = function (cfg) {
         var Constructor = Fx.Factories[cfg.prop] || Fx;

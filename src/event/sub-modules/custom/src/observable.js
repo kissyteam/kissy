@@ -209,7 +209,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
     /**
      * Get custom event for specified event
      * @static
-     * @private
+     * @protected
      * @member KISSY.Event.ObservableCustomEvent
      * @param {HTMLElement} target
      * @param {String} type event type
@@ -217,8 +217,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
      * @return {KISSY.Event.ObservableCustomEvent}
      */
     ObservableCustomEvent.getCustomEvent = function (target, type, create) {
-        var self = this,
-            customEvent,
+        var customEvent,
             customEvents = ObservableCustomEvent.getCustomEvents(target, create);
         customEvent = customEvents && customEvents[type];
         if (!customEvent && create) {
@@ -232,7 +231,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
 
     /**
      * Get custom events holder
-     * @private
+     * @protected
      * @static
      * @param {HTMLElement} target
      * @param {Boolean} [create] whether create custom event container on fly

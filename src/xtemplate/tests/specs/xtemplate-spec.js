@@ -500,6 +500,8 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                         '{{n2+1}}' +
                         '{{/if}}';
 
+                    var tpl5='{{#if n<5}}0{{else}}1{{/if}}';
+
 
                     var data = {
                             n: 5,
@@ -520,6 +522,8 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     expect(new XTemplate(tpl3).render(data3)).toBe('5');
 
                     expect(new XTemplate(tpl4).render(data3)).toBe('3');
+
+                    expect(new XTemplate(tpl5).render({n:5})).toBe('1');
                 });
 
 

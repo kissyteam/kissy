@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 5 15:42
+build time: Jan 7 01:55
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130105154209' will replace with current timestamp when compressing.
+         * NOTICE: '20130107015454' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130105154209',
+        __BUILD_TIME: '20130107015454',
         /**
          * KISSY Environment.
          * @private
@@ -1534,7 +1534,7 @@ var KISSY = (function (undefined) {
                 return str == null ? EMPTY : trim.call(str);
             } :
             function (str) {
-                return str == null ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+                return str == null ? EMPTY : (str + '').replace(RE_TRIM, EMPTY);
             },
 
         /**
@@ -5779,7 +5779,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130105154209'
+            tag: '20130107015454'
         }, getBaseInfo()));
     }
 
@@ -19067,7 +19067,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 5 15:42
+build time: Jan 7 01:53
 */
 /**
  * @ignore
@@ -19081,83 +19081,7 @@ KISSY.add('anim', function (S, Anim, Easing) {
     });
     return Anim;
 }, {
-    requires:['anim/base', 'anim/easing', 'anim/color', 'anim/background-position']
-});/**
- * @ignore
- * @fileOverview special patch for anim backgroundPosition
- * @author yiminghe@gmail.com
- */
-KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
-
-    function numeric(bp) {
-        bp = bp.replace(/left|top/g, '0px')
-            .replace(/right|bottom/g, '100%')
-            .replace(/([0-9\.]+)(\s|\)|$)/g, '$1px$2');
-        var res = bp.match(/(-?[0-9\.]+)(px|%|em|pt)\s(-?[0-9\.]+)(px|%|em|pt)/);
-        return [parseFloat(res[1]), res[2], parseFloat(res[3]), res[4]];
-    }
-
-    function BackgroundPositionFx() {
-        BackgroundPositionFx.superclass.constructor.apply(this, arguments);
-    }
-
-    S.extend(BackgroundPositionFx, Fx, {
-
-        load:function () {
-            var self = this, fromUnit;
-            BackgroundPositionFx.superclass.load.apply(self, arguments);
-            fromUnit = self.unit = ['px', 'px'];
-            if (self.from) {
-                var from = numeric(self.from);
-                self.from = [from[0], from[2]];
-                fromUnit = [from[1], from[3]];
-            } else {
-                self.from = [0, 0];
-            }
-            if (self.to) {
-                var to = numeric(self.to);
-                self.to = [to[0], to[2]];
-                self.unit = [to[1], to[3]];
-            } else {
-                self.to = [0, 0];
-            }
-            if (fromUnit) {
-                if (fromUnit[0] !== self.unit[0] || fromUnit[1] !== self.unit[1]) {
-                    S.log('BackgroundPosition x y unit is not same :', 'warn');
-                    S.log(fromUnit, 'warn');
-                    S.log(self.unit, 'warn');
-                }
-            }
-        },
-
-        interpolate:function (from, to, pos) {
-            var unit = this.unit, interpolate = BackgroundPositionFx.superclass.interpolate;
-            return interpolate(from[0], to[0], pos) + unit[0] + ' ' +
-                interpolate(from[1], to[1], pos) + unit[1];
-        },
-
-        cur:function () {
-            return DOM.css(this.anim.config.el, 'backgroundPosition');
-        },
-
-        update:function () {
-            var self = this,
-                prop = self.prop,
-                el = self.anim.config.el,
-                from = self.from,
-                to = self.to,
-                val = self.interpolate(from, to, self.pos);
-            DOM.css(el, prop, val);
-        }
-
-    });
-
-    Fx.Factories['backgroundPosition'] = BackgroundPositionFx;
-
-    return BackgroundPositionFx;
-
-}, {
-    requires:['dom', './base', './fx']
+    requires:['anim/base', 'anim/easing', 'anim/color']
 });/**
  * @ignore
  * @fileOverview animation framework for KISSY
@@ -19166,6 +19090,8 @@ KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {
 KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
 
     var UA = S.UA,
+        OPT_FRAME_PREVENT_DEFAULT = 1,
+        OPT_FRAME_GOTO_END = 2,
         camelCase = DOM._camelCase,
         NodeType = DOM.NodeType,
         specialVals = ['hide', 'show', 'toggle'],
@@ -19175,7 +19101,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
             // http://snook.ca/archives/html_and_css/background-position-x-y
             // backgroundPositionX  backgroundPositionY does not support
             background: [
-                'backgroundPosition'
+                'backgroundPosition',
+                'backgroundColor'
             ],
             border: [
                 'borderBottomWidth',
@@ -19235,7 +19162,8 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
             return new Anim(realEl, props, el);
         }
 
-        var self = this, config;
+        var self = this,
+            config;
 
         // ignore non-exist element
         if (!(el = DOM.get(el))) {
@@ -19294,8 +19222,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
 
         // 实例属性
         self._backupProps = {};
-        self._fxs = {};
-
+        self._propsData = {};
         // register complete
         self.on('complete', onComplete);
     }
@@ -19326,8 +19253,7 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
             hidden,
             val,
             prop,
-            specialEasing = (config['specialEasing'] || {}),
-            fxs = self._fxs,
+            _propsData = self._propsData,
             props = config.props;
 
         // 进入该函数即代表执行（q[0] 已经是 ...）
@@ -19380,15 +19306,19 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
 
         // 分离 easing
         S.each(props, function (val, prop) {
-            var easing;
-            if (S.isArray(val)) {
-                easing = specialEasing[prop] = val[1];
-                props[prop] = val[0];
-            } else {
-                easing = specialEasing[prop] = (specialEasing[prop] || config.easing);
+            var easing, _propData;
+            if (!S.isPlainObject(val)) {
+                val = {
+                    value: val
+                };
             }
+            _propData = _propsData[prop] = S.mix({
+                easing: config.easing,
+                frame: config.frame
+            }, val);
+            easing = _propData.easing;
             if (typeof easing == 'string') {
-                specialEasing[prop] = Easing.toFn(easing);
+                _propData.easing = Easing.toFn(easing);
             }
         });
 
@@ -19396,37 +19326,46 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
         // 扩展分属性
         S.each(SHORT_HANDS, function (shortHands, p) {
             var origin,
+                _propData = _propsData[p],
                 val;
-            if (val = props[p]) {
+            // 自定义了 fx 就忽略
+            if (_propData && !_propData.fx) {
+                val = _propData.value;
                 origin = {};
                 S.each(shortHands, function (sh) {
                     // 得到原始分属性之前值
                     origin[sh] = DOM.css(el, sh);
-                    specialEasing[sh] = specialEasing[p];
                 });
                 DOM.css(el, p, val);
                 S.each(origin, function (val, sh) {
-                    // 得到期待的分属性最后值
-                    props[sh] = DOM.css(el, sh);
+                    // 如果分属性没有显式设置过，得到期待的分属性最后值
+                    if (!(sh in _propsData)) {
+                        _propsData[sh] = S.merge(_propData, {
+                            value: DOM.css(el, sh)
+                        });
+                    }
                     // 还原
                     DOM.css(el, sh, val);
                 });
                 // 删除复合属性
-                delete props[p];
+                delete _propsData[p];
             }
         });
 
         // 取得单位，并对单个属性构建 Fx 对象
-        for (prop in props) {
-
-            val = S.trim(props[prop]);
-
+        for (prop in _propsData) {
+            var _propData = _propsData[prop];
+            // 自定义
+            if (_propData.fx) {
+                continue;
+            }
+            val = S.trim(_propData.value);
             var to,
                 from,
                 propCfg = {
                     prop: prop,
                     anim: self,
-                    easing: specialEasing[prop]
+                    easing: _propData.easing
                 },
                 fx = Fx.getFx(propCfg);
 
@@ -19477,11 +19416,17 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
                 }
             }
 
+            // equal from and to is not necessary to run
+            if (from == to) {
+                delete _propsData[prop];
+                continue;
+            }
+
             propCfg.from = from;
             propCfg.to = to;
             propCfg.unit = unit;
             fx.load(propCfg);
-            fxs[prop] = fx;
+            _propData.fx = fx;
         }
 
         self._startTime = S.now();
@@ -19568,32 +19513,52 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
         _frame: function () {
             var self = this,
                 prop,
-                config = self.config,
                 end = 1,
                 c,
                 fx,
-                fxs = self._fxs;
+                pos,
+                _propData,
+                _propsData = self._propsData;
 
-            for (prop in fxs) {
+            for (prop in _propsData) {
+                _propData = _propsData[prop];
+                fx = _propData.fx;
                 // 当前属性没有结束
-                if (!((fx = fxs[prop]).finished)) {
-                    // 非短路
-                    if (config.frame) {
-                        c = config.frame(fx);
-                    }
-                    // 结束
-                    if (c == 1 ||
-                        // 不执行自带
-                        c == 0) {
-                        fx.finished = c;
-                        end &= c;
+                if (!(fx.finished)) {
+                    pos = Fx.getPos(self, _propData.easing);
+                    if (fx.isNative) {
+                        if (_propData.frame) {
+                            c = _propData.frame(self, {
+                                prop: prop,
+                                from: fx.from,
+                                to: fx.to,
+                                pos: pos
+                            });
+                            // in case frame call stop
+                            if (!self.isRunning()) {
+                                return;
+                            }
+                        }
+                        // to be removed, do not use this feature
+                        if (c & OPT_FRAME_GOTO_END) {
+                            fx.finished = 1;
+                        }
+                        if (c & OPT_FRAME_PREVENT_DEFAULT) {
+                        } else {
+                            fx.frame(fx.finished || pos);
+                        }
                     } else {
-                        end &= fx.frame();
-                        // 最后通知下
-                        if (end && config.frame) {
-                            config.frame(fx);
+                        fx.finished = fx.finished || pos == 1;
+                        fx.frame(self, {
+                            prop: prop,
+                            pos: pos
+                        });
+                        // in case frame call stop
+                        if (!self.isRunning()) {
+                            return;
                         }
                     }
+                    end &= fx.finished;
                 }
             }
 
@@ -19617,41 +19582,58 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
                 queueName = config.queue,
                 prop,
                 fx,
-                fxs = self._fxs;
+                c,
+                _propData,
+                _propsData = self._propsData;
+
 
             // already stopped
-            if (!self.isRunning()) {
-                // 从自己的队列中移除
-                if (queueName !== false) {
-                    Q.remove(self);
-                }
+            if (!self.isRunning() && !self.isPaused()) {
                 return self;
             }
 
+            removeRunning(self);
+            removePaused(self);
+            AM.stop(self);
+
             if (finish) {
-                for (prop in fxs) {
+                for (prop in _propsData) {
+                    _propData = _propsData[prop];
+                    fx = _propData.fx;
                     // 当前属性没有结束
-                    if (!((fx = fxs[prop]).finished)) {
-                        // 非短路
-                        if (config.frame) {
-                            config.frame(fx, 1);
+                    if (!(fx.finished)) {
+                        if (fx.isNative) {
+                            if (_propData.frame) {
+                                c = _propData.frame(self, {
+                                    prop: prop,
+                                    from: fx.from,
+                                    to: fx.to,
+                                    pos: 1
+                                });
+                            }
+                            // to be removed, do not use this feature
+                            if (c & OPT_FRAME_PREVENT_DEFAULT) {
+                            } else {
+                                fx.frame(1);
+                            }
                         } else {
-                            fx.frame(1);
+                            fx.frame(self, {
+                                prop:prop,
+                                pos:1
+                            });
                         }
+                        fx.finished = 1;
                     }
                 }
                 self.fire('complete');
             }
-
-            AM.stop(self);
-
-            removeRunning(self);
 
             if (queueName !== false) {
                 // notify next anim to run in the same queue
                 Q.dequeue(self);
             }
 
+            self.fire('end');
             return self;
         }
     };
@@ -19852,22 +19834,27 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
 
     if (SHORT_HANDS) {
     }
+
+    Anim.PreventDefaultUpdate = OPT_FRAME_PREVENT_DEFAULT;
+    Anim.StopToEnd = OPT_FRAME_GOTO_END;
     return Anim;
 }, {
     requires: ['dom', 'event', './easing', './manager', './fx', './queue']
 });
 
 /*
- 2011-11
+ 2013-01 yiminghe@gmail.com
+ - 分属性细粒度控制 {'width':{value:,easing:,fx: }}
+ - TODO: 内部数据结构需整理，围绕属性展开
+
+ 2011-11 yiminghe@gmail.com
  - 重构，抛弃 emile，优化性能，只对需要的属性进行动画
  - 添加 stop/stopQueue/isRunning，支持队列管理
 
- 2011-04
+ 2011-04 yiminghe@gmail.com
  - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
  - 支持配置 scrollTop/scrollLeft
 
-
- TODO:
  - 效率需要提升，当使用 nativeSupport 时仍做了过多动作
  - opera nativeSupport 存在 bug ，浏览器自身 bug ?
  - 实现 jQuery Effects 的 queue / specialEasing / += / 等特性
@@ -20411,6 +20398,9 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
 
     Fx.prototype = {
 
+        // implemented by KISSY
+        isNative: 1,
+
         constructor: Fx,
 
         /**
@@ -20426,31 +20416,13 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
 
         /**
          * process current anim frame.
-         * @param {Boolean} end whether this anim is ended
-         * @return {Number}
-         *
+         * @param {Number} pos
          */
-        frame: function (end) {
-            var self = this,
-                anim = self.anim,
-                endFlag = 0,
-                elapsedTime;
-            if (self.finished) {
-                return 1;
-            }
-            var t = S.now(),
-                _startTime = anim._startTime,
-                duration = anim._duration;
-            if (end || t >= duration + _startTime) {
-                self.pos = 1;
-                endFlag = 1;
-            } else {
-                elapsedTime = t - _startTime;
-                self.pos = self.easing(elapsedTime / duration);
-            }
+        frame: function (pos) {
+            var self = this;
+            self.pos = pos;
             self.update();
-            self.finished = self.finished || endFlag;
-            return endFlag;
+            self.finished = self.finished || pos == 1;
         },
 
         /**
@@ -20463,11 +20435,10 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
          */
         interpolate: function (from, to, pos) {
             // 默认只对数字进行 easing
-            if (S.isNumber(from) &&
-                S.isNumber(to)) {
-                return (from + (to - from) * pos).toFixed(3);
+            if (S.isNumber(from) && S.isNumber(to)) {
+                return /**@type Number @ignore*/(from + (to - from) * pos).toFixed(3);
             } else {
-                return undefined;
+                return /**@type Number @ignore*/undefined;
             }
         },
 
@@ -20484,7 +20455,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
 
-            if (val === undefined) {
+            if (val === /**@type Number @ignore*/undefined) {
                 // 插值出错，直接设置为最终值
                 if (!self.finished) {
                     self.finished = 1;
@@ -20533,7 +20504,22 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
         return 0;
     }
 
+    function getPos(anim, easing) {
+        var t = S.now(),
+            elapsedTime,
+            _startTime = anim._startTime,
+            duration = anim._duration;
+        if (t >= duration + _startTime) {
+            return 1;
+        } else {
+            elapsedTime = t - _startTime;
+            return easing(elapsedTime / duration);
+        }
+    }
+
     Fx.Factories = {};
+
+    Fx.getPos = getPos;
 
     Fx.getFx = function (cfg) {
         var Constructor = Fx.Factories[cfg.prop] || Fx;

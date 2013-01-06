@@ -16,6 +16,10 @@ History:
 
 ### v1.3.0 -> v1.4.0
 
+#### anim
+ - [+] anim 增加自定义机制 {transform:{easing:,fx:{frame:function(){}}}} or {transform:{easing:,frame:function(){}}}
+ - [+] anim 支持 cubic-bezier easing
+
 #### event
  - [+] Event.on(target,name,opts)/target.on, opts.once/selector
 
@@ -84,7 +88,6 @@ History:
  - [+] io 增加配置 beforeSend ，可用于发送前监听 nativeXhr 事件，例如 upload progress
 
 #### anim
- - [*] anim 支持 backgroundPosition
  - [+] anim 支持 pause/resume
 
 #### dom

@@ -25,7 +25,7 @@
                 return str == null ? EMPTY : trim.call(str);
             } :
             function (str) {
-                return str == null ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+                return str == null ? EMPTY : (str + '').replace(RE_TRIM, EMPTY);
             },
 
         /**

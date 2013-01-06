@@ -1,5 +1,5 @@
 /**
- * testcase for kissy.anim
+ * test case for kissy.anim
  * @author yiminghe@gmail.com
  */
 KISSY.use("dom,anim", function (S, DOM, Anim) {
@@ -66,12 +66,12 @@ KISSY.use("dom,anim", function (S, DOM, Anim) {
                 color: "#000"
             });
             var initColor = normalizeColor(DOM.css(test1, "border-color"));
-            var anim = Anim(
+            var anim = new Anim(
                 '#test1',
                 {
                     'background-color': '#fcc',
                     //'border': '5px dashed #999',
-                    'border-wdith': '5px',
+                    'border-width': '5px',
                     'border-color': "#999999",
                     'border-style': "dashed",
                     'width': '100px',
@@ -115,13 +115,13 @@ KISSY.use("dom,anim", function (S, DOM, Anim) {
                 if (transitionName) {
                     expect(DOM.css(test1, transitionName)).toBe("none");
                 }
-
                 expect(normalizeColor(DOM.style(test1, "border-color")))
                     .toBe("#999999");
                 expect(parseInt(DOM.css(test1, "width"))).toBeEqual(100);
                 expect(parseInt(DOM.css(test1, "height"))).toBeEqual(50);
                 expect(DOM.css(test1, "left")).toBe("900px");
                 expect(DOM.css(test1, "top")).toBe("285px");
+                DOM.remove(test1);
             });
 
         });

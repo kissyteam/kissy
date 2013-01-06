@@ -10,5 +10,5 @@ KISSY.add('anim', function (S, Anim, Easing) {
     });
     return Anim;
 }, {
-    requires:['anim/base', 'anim/easing', 'anim/color', 'anim/background-position']
+    requires:['anim/base', 'anim/easing', 'anim/color']
 });

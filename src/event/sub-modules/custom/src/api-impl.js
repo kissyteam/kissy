@@ -24,14 +24,6 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
          */
         {
 
-            /**
-             * Fire a custom event by name.
-             * The callback functions will be executed from the context specified when the event was created,
-             * and the {@link KISSY.Event.CustomEventObject} created will be mixed with eventData
-             * @param {String} type The type of the event
-             * @param {Object} [eventData] The data will be mixed with {@link KISSY.Event.CustomEventObject} created
-             * @return {*} If any listen returns false, then the returned value is false. else return the last listener's returned value
-             */
             fire: function (target, type, eventData) {
                 var self = target, ret = undefined;
 
@@ -68,14 +60,6 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                 return ret;
             },
 
-            /**
-             * Creates a new custom event of the specified type
-             * @param {String} type The type of the event
-             * @param {Object} cfg Config params
-             * @param {Boolean} [cfg.bubbles=true] whether or not this event bubbles
-             * @param {Function} [cfg.defaultFn] this event's default action
-             * @chainable
-             */
             publish: function (target, type, cfg) {
                 var customEvent;
 
@@ -87,11 +71,6 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                 return target;
             },
 
-            /**
-             * Registers another EventTarget as a bubble target.
-             * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to add
-             * @chainable
-             */
             addTarget: function (target, anotherTarget) {
                 var targets = api.getTargets(target);
                 if (!S.inArray(anotherTarget, targets)) {
@@ -100,11 +79,6 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                 return target;
             },
 
-            /**
-             * Removes a bubble target
-             * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to remove
-             * @chainable
-             */
             removeTarget: function (target, anotherTarget) {
                 var targets = api.getTargets(target),
                     index = S.indexOf(anotherTarget, targets);
@@ -114,25 +88,12 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                 return target;
             },
 
-            /**
-             * all targets where current target's events bubble to
-             * @private
-             * @return {Array}
-             */
             getTargets: function (target) {
                 target[KS_BUBBLE_TARGETS] = target[KS_BUBBLE_TARGETS] || [];
                 return target[KS_BUBBLE_TARGETS];
             },
 
-            /**
-             * Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
-             * @method
-             * @param {String} type The name of the event
-             * @param {Function} fn The callback to execute in response to the event
-             * @param {Object} [context] this object in callback
-             * @chainable
-             */
-            on: function (target, type, fn, context) {
+                       on: function (target, type, fn, context) {
                 type = trim(type);
                 _Utils.batchForType(function (type, fn, context) {
                     var cfg = _Utils.normalizeParam(type, fn, context),
@@ -143,18 +104,9 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                         customEvent.on(cfg);
                     }
                 }, 0, type, fn, context);
-
                 return target; // chain
             },
 
-            /**
-             * Detach one or more listeners from the specified event
-             * @method
-             * @param {String} type The name of the event
-             * @param {Function} [fn] The subscribed function to un-subscribe. if not supplied, all observers will be removed.
-             * @param {Object} [context] The custom object passed to subscribe.
-             * @chainable
-             */
             detach: function (target, type, fn, context) {
                 type = trim(type);
                 _Utils.batchForType(function (type, fn, context) {
@@ -178,6 +130,60 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                 return target; // chain
             }
         });
+
+    /**
+     * Fire a custom event by name.
+     * The callback functions will be executed from the context specified when the event was created,
+     * and the {@link KISSY.Event.CustomEventObject} created will be mixed with eventData
+     * @param {String} type The type of the event
+     * @param {Object} [eventData] The data will be mixed with {@link KISSY.Event.CustomEventObject} created
+     * @return {*} If any listen returns false, then the returned value is false. else return the last listener's returned value
+     */
+
+    /**
+     * Creates a new custom event of the specified type
+     * @param {String} type The type of the event
+     * @param {Object} cfg Config params
+     * @param {Boolean} [cfg.bubbles=true] whether or not this event bubbles
+     * @param {Function} [cfg.defaultFn] this event's default action
+     * @chainable
+     */
+
+    /**
+     * Registers another EventTarget as a bubble target.
+     * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to add
+     * @chainable
+     */
+
+    /**
+     * Removes a bubble target
+     * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to remove
+     * @chainable
+     */
+
+    /**
+     * all targets where current target's events bubble to
+     * @private
+     * @return {Array}
+     */
+
+    /**
+     * Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
+     * @method
+     * @param {String} type The name of the event
+     * @param {Function} fn The callback to execute in response to the event
+     * @param {Object} [context] this object in callback
+     * @chainable
+     */
+
+    /**
+     * Detach one or more listeners from the specified event
+     * @method
+     * @param {String} type The name of the event
+     * @param {Function} [fn] The subscribed function to un-subscribe. if not supplied, all observers will be removed.
+     * @param {Object} [context] The custom object passed to subscribe.
+     * @chainable
+     */
 }, {
     requires: ['./api', 'event/base', './observable']
 });

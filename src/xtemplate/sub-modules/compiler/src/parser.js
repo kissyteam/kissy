@@ -418,7 +418,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
         }],
         [49, [50]],
         [49, [49, 17, 50], function () {
-            return new this.yy.RelationalExpression(this.$1, '<=', this.$3);
+            return new this.yy.RelationalExpression(this.$1, '<', this.$3);
         }],
         [49, [49, 15, 50], function () {
             return new this.yy.RelationalExpression(this.$1, '>', this.$3);

@@ -1,5 +1,5 @@
 /**
- * anim advanced usage tc ( queue management)
+ * anim advanced usage tc
  * @author yiminghe@gmail.com
  */
 KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
@@ -14,22 +14,57 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             test = $("<div id='test2'></div>").appendTo("body");
         });
 
+        it('support different easing for different property', function () {
+            var div = $('<div style="position:absolute;left:0;top:0;"></div>').prependTo('body');
+            div.animate({
+                left: {
+                    value: 100,
+                    easing: function () {
+                        return 0.5;
+                    }
+                },
+                top: {
+                    value: 100,
+                    easing: function () {
+                        return 0.2;
+                    }
+                }
+            }, {
+                duration: 2
+            });
+
+            waits(1000);
+
+            runs(function () {
+                expect(parseInt(div.css('top'))).toBe(20);
+                expect(parseInt(div.css('left'))).toBe(50);
+            });
+
+            waits(1500);
+
+            runs(function () {
+                expect(parseInt(div.css('top'))).toBe(100);
+                expect(parseInt(div.css('left'))).toBe(100);
+                div.remove();
+            });
+        });
+
         /**
          *  default : all anims are in the default queue (one for each element)
          */
         it("should support queue", function () {
 
-
             var width = test.width(),
                 height = test.height();
+
             test.animate({
-                width:200
+                width: 200
             }, {
-                duration:0.1
+                duration: 0.1
             }).animate({
-                    height:200
+                    height: 200
                 }, {
-                    duration:0.1
+                    duration: 0.1
                 });
 
             waits(100);
@@ -57,15 +92,15 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 height = test.height();
 
             var anim1 = Anim(dtest, {
-                width:200
+                width: 200
             }, {
-                duration:0.3
+                duration: 0.3
             }).run();
 
             test.animate({
-                height:200
+                height: 200
             }, {
-                duration:0.3
+                duration: 0.3
             });
 
             waits(100);
@@ -94,15 +129,15 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             var width = test.width(),
                 height = test.height();
             test.animate({
-                width:200
+                width: 200
             }, {
-                duration:0.1,
-                queue:false
+                duration: 0.1,
+                queue: false
             }).animate({
-                    height:200
+                    height: 200
                 }, {
-                    duration:0.1,
-                    queue:false
+                    duration: 0.1,
+                    queue: false
                 });
 
             waits(100);
@@ -127,15 +162,15 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 width = test.width(),
                 height = test.height();
             test.animate({
-                width:200
+                width: 200
             }, {
-                duration:0.1,
-                queue:"now"
+                duration: 0.1,
+                queue: "now"
             }).animate({
-                    height:200
+                    height: 200
                 }, {
-                    duration:0.1,
-                    queue:"before"
+                    duration: 0.1,
+                    queue: "before"
                 });
 
             waits(100);
@@ -161,25 +196,25 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 width = test.width(),
                 height = test.height();
             test.animate({
-                width:200
+                width: 200
             }, {
-                duration:0.1,
-                queue:"now"
+                duration: 0.1,
+                queue: "now"
             }).animate({
-                    height:200
+                    height: 200
                 }, {
-                    duration:0.1,
-                    queue:"before"
+                    duration: 0.1,
+                    queue: "before"
                 }).animate({
-                    width:300
+                    width: 300
                 }, {
-                    duration:0.1,
-                    queue:"now"
+                    duration: 0.1,
+                    queue: "now"
                 }).animate({
-                    height:300
+                    height: 300
                 }, {
-                    duration:0.1,
-                    queue:"before"
+                    duration: 0.1,
+                    queue: "before"
                 });
 
             waits(100);
@@ -208,31 +243,31 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 width = test.width(),
                 height = test.height();
             test.animate({
-                width:200
+                width: 200
             }, {
-                duration:0.3,
-                queue:"now"
+                duration: 0.3,
+                queue: "now"
             }).animate({
-                    height:200
+                    height: 200
                 }, {
-                    duration:0.3,
-                    queue:"before"
+                    duration: 0.3,
+                    queue: "before"
                 });
 
             test.animate({
-                width:300
+                width: 300
             }, {
-                callback:function () {
+                callback: function () {
                 },
-                duration:0.1,
-                queue:"now"
+                duration: 0.1,
+                queue: "now"
             });
 
             test.animate({
-                height:300
+                height: 300
             }, {
-                duration:0.1,
-                queue:"before"
+                duration: 0.1,
+                queue: "before"
             });
 
             waits(100);
@@ -261,25 +296,25 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 width = test.width(),
                 height = test.height();
             test.animate({
-                width:200
+                width: 200
             }, {
-                duration:0.3,
-                queue:"now"
+                duration: 0.3,
+                queue: "now"
             }).animate({
-                    height:200
+                    height: 200
                 }, {
-                    duration:0.3,
-                    queue:"before"
+                    duration: 0.3,
+                    queue: "before"
                 }).animate({
-                    width:300
+                    width: 300
                 }, {
-                    duration:0.1,
-                    queue:"now"
+                    duration: 0.1,
+                    queue: "now"
                 }).animate({
-                    height:300
+                    height: 300
                 }, {
-                    duration:0.1,
-                    queue:"before"
+                    duration: 0.1,
+                    queue: "before"
                 });
 
             waits(150);
@@ -309,30 +344,30 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
         it("should support stopping any queue and set value to end right away", function () {
 
             test.css({
-                width:10,
-                height:10
+                width: 10,
+                height: 10
             });
 
             test.animate({
-                width:200
+                width: 200
             }, {
-                duration:0.2,
-                queue:"now"
+                duration: 0.2,
+                queue: "now"
             }).animate({
-                    height:200
+                    height: 200
                 }, {
-                    duration:0.2,
-                    queue:"before"
+                    duration: 0.2,
+                    queue: "before"
                 }).animate({
-                    width:300
+                    width: 300
                 }, {
-                    duration:0.2,
-                    queue:"now"
+                    duration: 0.2,
+                    queue: "now"
                 }).animate({
-                    height:300
+                    height: 300
                 }, {
-                    duration:0.2,
-                    queue:"before"
+                    duration: 0.2,
+                    queue: "before"
                 });
 
             waits(120);
@@ -404,38 +439,235 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             });
         });
 
-        it("should call frame", function () {
-            var stoppedCalled = 0,
-                t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
-            var anim = new Anim(t, {
-                width:10
-            }, {
-                duration:1,
-                frame:function (fx, stop) {
-                    var end = fx.frame(stop);
-                    if (stop) {
-                        stoppedCalled = 1;
+        describe('frame config', function () {
+            it("should call frame", function () {
+                var stoppedCalled = 0,
+                    t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
+                var anim = new Anim(t, {
+                    width: 10
+                }, {
+                    duration: 1,
+                    frame: function (_,fx) {
+                        if (fx.pos == 1) {
+                            stoppedCalled = 1;
+                        }
+                        t.css("height", fx.from + fx.pos * (fx.to - fx.from));
                     }
-                    t.css("height", fx.cur());
-                    return end;
+                });
+
+                anim.run();
+                waits(100);
+                runs(function () {
+                    expect(t.css("width")).not.toBe("100px");
+                    expect(t.css("height")).not.toBe("100px");
+                    anim.stop(1);
+                });
+                waits(100);
+                runs(function () {
+                    expect(stoppedCalled).toBe(1);
+                    expect(t.css("width")).toBe("10px");
+                    expect(t.css("height")).toBe("10px");
+                    t.remove();
+                });
+            });
+
+            it("frame can call stop", function () {
+                var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
+                var start = S.now();
+                var called = 0;
+                var anim = new Anim(t, {
+                    width: 10,
+                    height: 10
+                }, {
+                    duration: 0.5,
+                    frame: function (_,fx) {
+                        if (fx.pos > 0.5) {
+                            anim.stop(1);
+                        }
+                    },
+                    complete: function () {
+                        called++;
+                        expect(S.now() - start).toBeLessThan(1000);
+                    }
+                });
+
+                anim.run();
+                waits(325);
+                runs(function () {
+                    expect(t.css("width")).toBe("10px");
+                    t.remove();
+                });
+                waits(300);
+                runs(function () {
+                    expect(called).toBe(1);
+                    expect(t.css("width")).toBe("10px");
+                    t.remove();
+                });
+            });
+
+            it("frame can call stop", function () {
+                var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
+                var called = 0;
+                var calledComplete=0;
+                var anim = new Anim(t, {
+                    width: 10,
+                    height: 10
+                }, {
+                    duration: 0.5,
+                    frame: function (_,fx) {
+                        if (fx.pos > 0.5) {
+                            called++;
+                            anim.stop();
+                        }
+                    },
+                    complete:function(){
+                        calledComplete++;
+                    }
+                });
+                anim.run();
+                waits(325);
+                runs(function () {
+                    expect(called).toBe(1);
+                    expect(t.css("width")).not.toBe("10px");
+                });
+                waits(300);
+                runs(function () {
+                    expect(calledComplete).toBe(0);
+                    expect(t.css("width")).not.toBe("10px");
+                    t.remove();
+                });
+            });
+
+
+// to be removed, do not use this feature
+            it("frame can ignore native update", function () {
+                var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
+                var anim = new Anim(t, {
+                    width: 10
+                }, {
+                    duration: 1,
+                    frame: function () {
+                        return Anim.PreventDefaultUpdate;
+                    }
+                });
+
+                anim.run();
+                waits(100);
+                runs(function () {
+                    expect(t.css("width")).toBe("100px");
+                    anim.stop(1);
+                });
+                waits(100);
+                runs(function () {
+                    expect(t.css("width")).toBe("100px");
+                    t.remove();
+                });
+            });
+
+// to be removed, do not use this feature
+            it("frame can stop early and ignore native update", function () {
+                var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
+                var start = S.now();
+                var called = 0;
+                var anim = new Anim(t, {
+                    width: 10
+                }, {
+                    duration: 1,
+                    frame: function () {
+                        return Anim.StopToEnd | Anim.PreventDefaultUpdate;
+                    },
+                    complete: function () {
+                        called = 1;
+                        expect(S.now() - start).toBeLessThan(100);
+                    }
+                });
+
+                anim.run();
+                waits(500);
+                runs(function () {
+                    expect(called).toBe(1);
+                    expect(t.css("width")).toBe("100px");
+                    anim.stop(1);
+                });
+                waits(500);
+                runs(function () {
+                    expect(t.css("width")).toBe("100px");
+                    t.remove();
+                });
+            });
+
+// to be removed, do not use this feature
+            it("frame can stop early and perform native update", function () {
+                var t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
+                var start = S.now();
+                var called = 0;
+                var anim = new Anim(t, {
+                    width: 10
+                }, {
+                    duration: 1,
+                    frame: function () {
+                        return Anim.StopToEnd;
+                    },
+                    complete: function () {
+                        called = 1;
+                        expect(S.now() - start).toBeLessThan(100);
+                    }
+                });
+
+                anim.run();
+                waits(500);
+                runs(function () {
+                    expect(called).toBe(1);
+                    expect(t.css("width")).toBe("10px");
+                    anim.stop(1);
+                });
+                waits(500);
+                runs(function () {
+                    expect(t.css("width")).toBe("10px");
+                    t.remove();
+                });
+            });
+        });
+
+
+        it('support fx extension', function () {
+
+            if (!S.UA.webkit) {
+                return;
+            }
+
+            var div = $('<div></div>')
+                .prependTo('body');
+
+            div.animate({
+                '-webkit-transform': {
+                    easing: 'linear',
+                    fx: {
+                        frame: function (anim, fx) {
+                            div.css(fx.prop, 'translate(' +
+                                (100 * fx.pos) + 'px,' +
+                                (100 * fx.pos) + 'px' + ')');
+                        }
+                    }
                 }
+            }, {
+                duration: 2
             });
 
-            anim.run();
-            waits(100);
+            waits(1000);
+
             runs(function () {
-                expect(t.css("width")).not.toBe("100px");
-                expect(t.css("height")).not.toBe("100px");
-                anim.stop(1);
-            });
-            waits(100);
-            runs(function () {
-                expect(stoppedCalled).toBe(1);
-                expect(t.css("width")).toBe("10px");
-                expect(t.css("height")).toBe("10px");
-                t.remove();
+                var m = div.style('-webkit-transform')
+                    .match(/translate\(([\d.]+)px\s*,\s*([\d.]+)px\)/);
+                expect(Math.abs(50 - parseFloat(m[1]))).toBeLessThan(2);
+                expect(Math.abs(50 - parseFloat(m[2]))).toBeLessThan(2);
             });
 
+            waits(1500);
+
+            runs(function () {
+                div.remove();
+            });
 
         });
     });

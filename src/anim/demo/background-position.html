@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="../src/easing.js"></script>
+    <script src="../src/base.js"></script>
+    <script src="../src/manager.js"></script>
+    <script src="../src/color.js"></script>
+    <script src="../src/fx.js"></script>
+    <script src="../src/queue.js"></script>
+    <script src="../src/anim.js"></script>
+</head>
+<body>
+
+<h1>frame and fx for anim extension</h1>
+
+<div id="t"
+     style='width:500px;height:50px;
+position: absolute;top:200px;left:100px;
+background-image: url("http://img03.taobaocdn.com/tps/i3/T1UfsTXotcXXb6hPny-500-190.png");'></div>
+
+<button id="run">run</button>
+
+<script>
+
+    KISSY.use('core', function (S) {
+//debugger
+//        alert(S.Easing.toFn('cubic-bezier(0,0,0.58,1)')(0.5));
+
+        S.all('#run').on('click', function () {
+            this.disabled = true;
+            var start = S.now();
+            var t = S.all('#t');
+            t.animate({
+                height:190,
+                left: {
+                    easing: 'easeOut',
+                    value: 500,
+                    frame: function (anim,fx) {
+                        S.log(S.JSON.stringify(fx));
+                    }
+                },
+                backgroundPosition: {
+                    easing: 'easeInStrong',
+                    fx: {
+                        frame: function (anim, fx) {
+                            var pos=fx.pos;
+                            var top = -140 * pos;
+                            var left = -450 * pos;
+                            t[0].style.backgroundPosition = left + 'px ' + top + 'px';
+                        }
+                    }
+                }
+            }, {
+                duration: 5,
+                easing: 'easeIn',
+                complete: function () {
+                    S.log('ok: ' + (S.now() - start));
+                }
+            })
+        });
+    });
+</script>
+
+</body>
+</html>
