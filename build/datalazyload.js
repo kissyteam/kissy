@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 7 17:08
+build time: Jan 7 17:34
 */
 /**
  * @ignore
@@ -613,47 +613,31 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
      * @name loadCustomLazyData
      * @method
      * @memberOf DataLazyload
-     * @param {HTMLElement[]} containers Containers with in which lazy loaded elements are loaded.
+     * @param {HTMLElement} container Containers with in which lazy loaded elements are loaded.
      * @param {String} type Type of lazy loaded element. "img" or "textarea"
      * @param {String} [flag] flag which will be searched to find lazy loaded elements from containers.
      * Default "data-ks-lazyload-custom" for img attribute and "ks-lazyload-custom" for textarea css class.
      */
-    function loadCustomLazyData(containers, type, flag) {
-        var imgs;
-
+    function loadCustomLazyData(container, type, flag) {
         if (type === 'img-src') {
             type = 'img';
         }
 
-        // 支持数组
-        if (!S.isArray(containers)) {
-            containers = [DOM.get(containers)];
-        }
+        container = DOM.get(container);
 
         var imgFlag = flag || (IMG_SRC_DATA + CUSTOM),
             areaFlag = flag || (AREA_DATA_CLS + CUSTOM);
 
         // 遍历处理
-        S.each(containers, function (container) {
-            switch (type) {
-                case 'img':
-                    if (container.nodeName === 'IMG') { // 本身就是图片
-                        imgs = [container];
-                    } else {
-                        imgs = DOM.query('img', container);
-                    }
-
-                    S.each(imgs, function (img) {
-                        loadImgSrc(img, imgFlag);
-                    });
-                    break;
-
-                default:
-                    DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
-                        loadAreaData(textarea, true);
-                    });
-            }
-        });
+        if (type == 'img') {
+            DOM.query('img', container).each(function (img) {
+                loadImgSrc(img, imgFlag);
+            });
+        } else {
+            DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
+                loadAreaData(textarea, true);
+            });
+        }
     }
 
 
@@ -718,7 +702,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  *
  * UPDATE LOG:
- *   - 2012-01-07 yiminghe@gmail.com 图片必须写 src 占位符，否则会导致性能问题
+ *   - 2012-01-07 yiminghe@gmail.com optimize for performance
  *   - 2012-04-27 yiminghe@gmail.com refactor to extend base, add removeCallback/addElements ...
  *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textarea 可设置高度，宽度
  *   - 2012-04-25 yiminghe@gmail.com refactor, 监控容器内滚动，包括横轴滚动

@@ -608,47 +608,31 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
      * @name loadCustomLazyData
      * @method
      * @memberOf DataLazyload
-     * @param {HTMLElement[]} containers Containers with in which lazy loaded elements are loaded.
+     * @param {HTMLElement} container Containers with in which lazy loaded elements are loaded.
      * @param {String} type Type of lazy loaded element. "img" or "textarea"
      * @param {String} [flag] flag which will be searched to find lazy loaded elements from containers.
      * Default "data-ks-lazyload-custom" for img attribute and "ks-lazyload-custom" for textarea css class.
      */
-    function loadCustomLazyData(containers, type, flag) {
-        var imgs;
-
+    function loadCustomLazyData(container, type, flag) {
         if (type === 'img-src') {
             type = 'img';
         }
 
-        // 支持数组
-        if (!S.isArray(containers)) {
-            containers = [DOM.get(containers)];
-        }
+        container = DOM.get(container);
 
         var imgFlag = flag || (IMG_SRC_DATA + CUSTOM),
             areaFlag = flag || (AREA_DATA_CLS + CUSTOM);
 
         // 遍历处理
-        S.each(containers, function (container) {
-            switch (type) {
-                case 'img':
-                    if (container.nodeName === 'IMG') { // 本身就是图片
-                        imgs = [container];
-                    } else {
-                        imgs = DOM.query('img', container);
-                    }
-
-                    S.each(imgs, function (img) {
-                        loadImgSrc(img, imgFlag);
-                    });
-                    break;
-
-                default:
-                    DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
-                        loadAreaData(textarea, true);
-                    });
-            }
-        });
+        if (type == 'img') {
+            DOM.query('img', container).each(function (img) {
+                loadImgSrc(img, imgFlag);
+            });
+        } else {
+            DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
+                loadAreaData(textarea, true);
+            });
+        }
     }
 
 
