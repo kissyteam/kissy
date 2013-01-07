@@ -9,7 +9,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
     describe("Advanced IO", function () {
 
-        console.log("Advanced IO");
+        S.log("Advanced IO");
 
         it('support custom contentType', function () {
             var done = 0, ok = 0;
@@ -42,7 +42,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("should support last-modified from server", function () {
 
-            console.log("should support last-modified from server");
+            S.log("should support last-modified from server");
 
             var ok = 0;
 
@@ -81,7 +81,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("should support ifModified config", function () {
 
-            console.log("should support ifModified config");
+            S.log("should support ifModified config");
 
             var ok = 0;
 
@@ -124,7 +124,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("should support ifModified config for form", function () {
 
-            console.log("should support ifModified config for form");
+            S.log("should support ifModified config for form");
 
             var ok = 0;
 
@@ -176,7 +176,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("should jsonp with array arguments", function () {
 
-            console.log("should jsonp with array arguments");
+            S.log("should jsonp with array arguments");
 
             var re = false, data;
 
@@ -197,7 +197,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("should abort for xhr", function () {
 
-            console.log("should abort for xhr");
+            S.log("should abort for xhr");
 
             var re = [];
             var xhr = io({
@@ -229,7 +229,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("nothing happens if abort xhr after complete", function () {
 
-            console.log("nothing happens if abort xhr after complete");
+            S.log("nothing happens if abort xhr after complete");
 
             var re = [], ok = false;
 
@@ -267,7 +267,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("should abort for jsonp", function () {
 
-            console.log("should abort for jsonp");
+            S.log("should abort for jsonp");
 
             var re = [];
 
@@ -302,7 +302,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("nothing happens if abort jsonp after complete", function () {
 
-            console.log("nothing happens if abort jsonp after complete");
+            S.log("nothing happens if abort jsonp after complete");
 
             var re = [], ok;
 
@@ -340,7 +340,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("timeout should work for xhr", function () {
 
-            console.log("timeout should work for xhr");
+            S.log("timeout should work for xhr");
 
             var re = [], ok;
             var xhr = io({
@@ -377,7 +377,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("should works for form file upload", function () {
 
-            console.log("should works for form file upload");
+            S.log("should works for form file upload");
 
             var f = $('<form id="f' + S.guid(S.now()) + '" method="post" enctype="multipart/form-data">' +
                 //php need []
@@ -429,7 +429,7 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
 
         it("should works for common form", function () {
 
-            console.log("should works for common form");
+            S.log("should works for common form");
 
             var f = $('<form id="f' + S.guid(S.now()) + '">' +
                 '<input name="test4[]" value="t6"/>' +
