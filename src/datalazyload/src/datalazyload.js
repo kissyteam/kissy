@@ -16,10 +16,6 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         RESIZE = 'resize',
         DURATION = 100;
 
-    function inDocument(el) {
-        return DOM.contains(doc, el);
-    }
-
     // 加载图片 src
     var loadImgSrc = function (img, flag) {
         flag = flag || IMG_SRC_DATA;
@@ -203,9 +199,26 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
          */
         '_filterItems': function () {
             var self = this,
-                container = self.get("container");
-            self._images = S.filter(DOM.query('img', container), self['_filterImg'], self);
-            self._textareas = DOM.query('textarea.' + AREA_DATA_CLS, container)
+                userConfig = self.userConfig,
+                container = self.get("container"),
+                _images = [],
+                _textareas = [],
+                containers = [container];
+
+            // 兼容 1.2 传入数组，进入兼容模式，不检测 container 区域
+            if (S.isArray(userConfig.container)) {
+                self._backCompact = 1;
+                containers = userConfig.container;
+            }
+
+            S.each(containers, function (container) {
+                _images = _images.concat(S.filter(DOM.query('img', container), self['_filterImg'], self));
+                _textareas = _textareas.concat(DOM.query('textarea.' + AREA_DATA_CLS, container));
+            });
+
+            self._images = _images;
+            self._textareas = _textareas;
+
         },
 
         /**
@@ -511,10 +524,12 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
          * @param {HTMLElement} elem
          */
         '_elementInViewport': function (elem) {
-            // it's better to removeElements, but if user want to append it later?
-            if (!inDocument(elem)) {
-                return false;
-            }
+            // it's better to removeElements,
+            // but if user want to append it later?
+            // use addElements instead
+            // if (!inDocument(elem)) {
+            //    return false;
+            // }
             // display none or inside display none
             if (!elem.offsetWidth) {
                 return false;
@@ -537,7 +552,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
             inWin = isCross(windowRegion, elemRegion);
 
-            if (inWin && self._containerIsNotDocument) {
+            // 兼容，不检测 container
+            if (!self._backCompact && inWin && self._containerIsNotDocument) {
                 containerRegion = self['_getBoundingRect'](container);
                 inContainer = isCross(containerRegion, elemRegion);
             }
@@ -608,33 +624,37 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
      * @name loadCustomLazyData
      * @method
      * @memberOf DataLazyload
-     * @param {HTMLElement} container Containers with in which lazy loaded elements are loaded.
+     * @param {HTMLElement[]} containers Containers with in which lazy loaded elements are loaded.
      * @param {String} type Type of lazy loaded element. "img" or "textarea"
      * @param {String} [flag] flag which will be searched to find lazy loaded elements from containers.
      * Default "data-ks-lazyload-custom" for img attribute and "ks-lazyload-custom" for textarea css class.
      */
-    function loadCustomLazyData(container, type, flag) {
+    function loadCustomLazyData(containers, type, flag) {
         if (type === 'img-src') {
             type = 'img';
         }
 
-        container = DOM.get(container);
+        // 支持数组
+        if (!S.isArray(containers)) {
+            containers = [DOM.get(containers)];
+        }
 
         var imgFlag = flag || (IMG_SRC_DATA + CUSTOM),
             areaFlag = flag || (AREA_DATA_CLS + CUSTOM);
 
-        // 遍历处理
-        if (type == 'img') {
-            DOM.query('img', container).each(function (img) {
-                loadImgSrc(img, imgFlag);
-            });
-        } else {
-            DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
-                loadAreaData(textarea, true);
-            });
-        }
+        S.each(containers, function (container) {
+            // 遍历处理
+            if (type == 'img') {
+                DOM.query('img', container).each(function (img) {
+                    loadImgSrc(img, imgFlag);
+                });
+            } else {
+                DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
+                    loadAreaData(textarea, true);
+                });
+            }
+        });
     }
-
 
     DataLazyload.loadCustomLazyData = loadCustomLazyData;
 
