@@ -1,12 +1,12 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>KISSY DataLazyload 容器模式</title>
+    <title>KISSY DataLazyload 容器模式</title>
 </head>
 <body>
 
@@ -46,15 +46,8 @@
     KISSY.use("datalazyload", function (S, DataLazyload) {
         var DOM = S.DOM;
         S.ready(function (S) {
-            DataLazyload(
-                    [
-                        DOM.get("#container1"),
-                        DOM.get("#container2"),
-                        document
-                    ],
-
-                    {  mod:'manual' }
-            );
+            DataLazyload("#container1");
+            DataLazyload("#container2");
         });
     });
 </script>

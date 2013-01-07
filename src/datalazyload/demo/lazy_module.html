@@ -99,6 +99,10 @@
 
 
 </div>
+
+<div style="height: 900px;">
+
+</div>
 <script src="/kissy/build/seed.js"></script>
 <script src="../src/datalazyload.js"></script>
 <script>
@@ -121,12 +125,9 @@
             var DOM = S.DOM;
 
             var d = new DataLazyload(
-                    [
-                        DOM.get("#container")
-                    ],
+                        DOM.get("#container"),
                     {
-                        diff:150,
-                        mod:'manual'
+                        diff:150
                     }
             );
 

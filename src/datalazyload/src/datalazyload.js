@@ -9,7 +9,6 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         IMG_SRC_DATA = 'data-ks-lazyload',
         AREA_DATA_CLS = 'ks-datalazyload',
         CUSTOM = '-custom',
-        MANUAL = 'manual',
         DEFAULT = 'default',
         NONE = 'none',
         SCROLL = 'scroll',
@@ -17,23 +16,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         RESIZE = 'resize',
         DURATION = 100;
 
-    function isValidContainer(c) {
-        return c.nodeType != 9;
-    }
-
     function inDocument(el) {
         return DOM.contains(doc, el);
-    }
-
-    function getContainer(elem, cs) {
-        for (var i = 0; i < cs.length; i++) {
-            if (isValidContainer(cs[i])) {
-                if (cs[i].contains(elem)) {
-                    return cs[i];
-                }
-            }
-        }
-        return 0;
     }
 
     // 加载图片 src
@@ -47,30 +31,27 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         }
     };
 
-    function removeExisting(newed, exists) {
-        var ret = [];
-        for (var i = 0; i < newed.length; i++) {
-            if (!S.inArray(newed[i], exists)) {
-                ret.push(newed[i]);
-            }
-        }
-        return ret;
-    }
-
     // 从 textarea 中加载数据
-    function loadAreaData(area, execScript) {
+    function loadAreaData(textarea, execScript) {
         // 采用隐藏 textarea 但不去除方式，去除会引发 Chrome 下错乱
-        area.style.display = NONE;
-        area.className = ''; // clear hook
+        textarea.style.display = NONE;
+        textarea.className = ''; // clear hook
         var content = DOM.create('<div>');
-        // area 直接是 container 的儿子
-        area.parentNode.insertBefore(content, area);
-        DOM.html(content, area.value, execScript);
+        // textarea 直接是 container 的儿子
+        textarea.parentNode.insertBefore(content, textarea);
+        DOM.html(content, textarea.value, execScript);
     }
 
-    // filter for lazyload textarea
-    function filterArea(area) {
-        return DOM.hasClass(area, AREA_DATA_CLS);
+    function getCallbackKey(el, fn) {
+        var id, fid;
+        if (!(id = el.id)) {
+            id = el.id = S.guid('ks-lazyload');
+        }
+
+        if (!(fid = fn.ksLazyloadId)) {
+            fid = fn.ksLazyloadId = S.guid('ks-lazyload');
+        }
+        return id + fid;
     }
 
     /**
@@ -78,30 +59,24 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
      * @class KISSY.DataLazyload
      * @extends KISSY.Base
      */
-    function DataLazyload(containers, config) {
+    function DataLazyload(container, config) {
         var self = this;
 
         // factory or constructor
         if (!(self instanceof DataLazyload)) {
-            return new DataLazyload(containers, config);
+            return new DataLazyload(container, config);
         }
 
-        // 允许仅传递 config 一个参数
-        if (config === undefined) {
-            config = containers;
-            containers = [doc];
+        var newConfig = container;
+
+        if (!S.isPlainObject(newConfig)) {
+            newConfig = config || {};
+            if (container) {
+                newConfig.container = container;
+            }
         }
 
-        // containers 是一个 HTMLElement 时
-        if (!S.isArray(containers)) {
-            containers = [DOM.get(containers) || doc];
-        }
-
-        config = config || {};
-
-        config.containers = containers;
-
-        DataLazyload.superclass.constructor.call(self, config);
+        DataLazyload.superclass.constructor.call(self, newConfig);
 
 
         // 需要延迟下载的图片
@@ -109,27 +84,18 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
 
         // 需要延迟处理的 textarea
-        // self._areaes
+        // self._textareas
 
 
         // 和延迟项绑定的回调函数
-        self._callbacks = [];
+        self._callbacks = {};
+        self._containerIsNotDocument = self.get('container').nodeType != 9;
 
-        self._init();
+        self['_filterItems']();
+        self['_initLoadEvent']();
     }
 
     DataLazyload.ATTRS = {
-        /**
-         * Do not use this any more.
-         * @cfg {String} mod
-         * @deprecated
-         */
-        /**
-         * @ignore
-         */
-        mod: {
-            value: MANUAL
-        },
         /**
          * Distance outside viewport or specified container to pre load.
          * default: pre load one screen height and width.
@@ -152,15 +118,20 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         diff: {
             value: DEFAULT
         },
+
+        // TODO: add containerDiff for container is not document
+
         /**
-         * Placeholder img url for lazy loaded _images.
-         * default: empty
+         * Placeholder img url for lazy loaded _images if image 's src is empty.
+         * must be not empty!
+         * default: http://a.tbcdn.cn/kissy/1.0.0/build/imglazyload/spaceball.gif
          * @cfg {String} placeholder
          */
         /**
          * @ignore
          */
         placeholder: {
+            value: 'http://a.tbcdn.cn/kissy/1.0.0/build/imglazyload/spaceball.gif'
         },
 
         /**
@@ -176,16 +147,28 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         },
 
         /**
-         * Containers which will be monitor scroll event to lazy load elements within it.
-         * default: [ document ]
-         * @cfg {HTMLElement[]} containers
+         * Container which will be monitor scroll event to lazy load elements within it.
+         * default: document
+         * @cfg {HTMLElement} containers
          */
         /**
          * @ignore
          */
-        containers: {
+        container: {
+            setter: function (el) {
+                el = el || doc;
+                if (S.isWindow(el)) {
+                    el = el.document;
+                } else {
+                    el = DOM.get(el);
+                    if (DOM.nodeName(el) == 'body') {
+                        el = el.ownerDocument;
+                    }
+                }
+                return el;
+            },
             valueFn: function () {
-                return [doc];
+                return doc;
             }
         },
 
@@ -212,461 +195,412 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         return r.bottom >= r.top && r.right >= r.left;
     }
 
-    S.extend(DataLazyload,
-        Base,
+    S.extend(DataLazyload, Base, {
 
-        {
+        /**
+         * get _images and _textareas which will lazyload.
+         * @private
+         */
+        '_filterItems': function () {
+            var self = this,
+                container = self.get("container");
+            self._images = S.filter(DOM.query('img', container), self['_filterImg'], self);
+            self._textareas = DOM.query('textarea.' + AREA_DATA_CLS, container)
+        },
 
-            /**
-             * @private
-             */
-            _init: function () {
-                var self = this;
-                self._filterItems();
-                self._initLoadEvent();
-            },
+        /**
+         * filter for lazyload image
+         * @private
+         */
+        '_filterImg': function (img) {
+            var self = this,
+                placeholder = self.get("placeholder");
 
-            /**
-             * get _images and _areaes which will lazyload.
-             * @private
-             */
-            _filterItems: function () {
-                var self = this,
-                    containers = self.get("containers"),
-                    n, N, imgs, _areaes, img,
-                    lazyImgs = [], lazyAreas = [];
-
-                for (n = 0, N = containers.length; n < N; ++n) {
-                    imgs = removeExisting(DOM.query('img', containers[n]), lazyImgs);
-                    lazyImgs = lazyImgs.concat(S.filter(imgs, self._filterImg, self));
-
-                    _areaes = removeExisting(DOM.query('textarea', containers[n]), lazyAreas);
-                    lazyAreas = lazyAreas.concat(S.filter(_areaes, filterArea, self));
+            if (img.getAttribute(IMG_SRC_DATA)) {
+                if (!img.src) {
+                    img.src = placeholder;
                 }
+                return true;
+            }
 
-                self._images = lazyImgs;
-                self._areaes = lazyAreas;
-            },
+            return undefined;
+        },
 
-            /**
-             * filter for lazyload image
-             * @private
-             */
-            _filterImg: function (img) {
-                var self = this,
-                    dataSrc = img.getAttribute(IMG_SRC_DATA),
-                    placeholder = self.get("placeholder"),
-                    isManualMod = self.get("mod") === MANUAL;
 
-                // 手工模式，只处理有 data-src 的图片
-                if (isManualMod) {
-                    if (dataSrc) {
-                        if (placeholder) {
-                            img.src = placeholder;
-                        }
-                        return true;
+        /**
+         * attach scroll/resize event
+         * @private
+         */
+        '_initLoadEvent': function () {
+            var self = this,
+                autoDestroy = self.get("autoDestroy"),
+            // 加载延迟项
+                loadItems = function () {
+                    self['_loadItems']();
+                    if (autoDestroy && self['_isLoadAllLazyElements']()) {
+                        self.destroy();
                     }
-                }
-                // 自动模式，只处理 threshold 外无 data-src 的图片
-                else {
-                    // 注意：已有 data-src 的项，可能已有其它实例处理过，不用再次处理
-                    if (!dataSrc && !self._checkElemInViewport(img)) {
-                        DOM.attr(img, IMG_SRC_DATA, img.src);
-                        if (placeholder) {
-                            img.src = placeholder;
-                        } else {
-                            img.removeAttribute('src');
-                        }
-                        return true;
-                    }
-                }
-                return undefined;
-            },
-
-
-            /**
-             * attach scroll/resize event
-             * @private
-             */
-            _initLoadEvent: function () {
-                var self = this,
-                    autoDestroy = self.get("autoDestroy"),
-                // 加载延迟项
-                    loadItems = function () {
-                        self._loadItems();
-                        if (autoDestroy &&
-                            self._getItemsLength() === 0) {
-                            self.destroy();
-                        }
-                    };
-
-                // 加载函数
-                self._loadFn = S.buffer(loadItems, DURATION, this);
-
-                self.resume();
-
-                // 需要立即加载一次，以保证第一屏的延迟项可见
-                if (self._getItemsLength()) {
-                    S.ready(loadItems);
-                }
-            },
-
-            /**
-             * force datalazyload to recheck constraints and load lazyload
-             * @public
-             */
-            refresh: function () {
-                this._loadFn();
-            },
-
-            /**
-             * lazyload all items
-             * @private
-             */
-            _loadItems: function () {
-                var self = this;
-                self._loadImgs();
-                self._loadAreas();
-                self._fireCallbacks();
-            },
-
-            /**
-             * lazyload images
-             * @private
-             */
-            _loadImgs: function () {
-                var self = this;
-                self._images = S.filter(self._images, self._loadImg, self);
-            },
-
-            /**
-             * check image whether it is inside viewport and load
-             * @private
-             */
-            _loadImg: function (img) {
-                var self = this;
-                if (!inDocument(img)) {
-                } else if (self._checkElemInViewport(img)) {
-                    loadImgSrc(img);
-                } else {
-                    return true;
-                }
-                return undefined;
-            },
-
-
-            /**
-             * lazyload textareas
-             * @private
-             */
-            _loadAreas: function () {
-                var self = this;
-                self._areaes = S.filter(self._areaes, self._loadArea, self);
-            },
-
-            /**
-             * check textarea whether it is inside viewport and load
-             * @private
-             */
-            _loadArea: function (area) {
-                var self = this;
-                if (!inDocument(area)) {
-
-                } else if (self._checkElemInViewport(area)) {
-                    loadAreaData(area, self.get("execScript"));
-                } else {
-                    return true;
-                }
-                return undefined;
-            },
-
-            /**
-             * fire callbacks
-             * @private
-             */
-            _fireCallbacks: function () {
-                var self = this,
-                    callbacks = self._callbacks,
-                    newCallbacks = [];
-
-                // may be changed by callback
-                self._callbacks = [];
-
-                S.each(callbacks, function (callback) {
-                    var el = callback.el,
-                        remove = false,
-                        fn = callback.fn;
-                    if (!inDocument(el)) {
-                    } else if (self._checkElemInViewport(el)) {
-                        remove = fn.call(el);
-                    }
-                    if (remove === false) {
-                        newCallbacks.push({
-                            el: el,
-                            fn: fn
-                        });
-                    }
-                });
-
-                self._callbacks = self._callbacks.concat(newCallbacks);
-            },
-
-            /**
-             * Register callback function. When el is in viewport, then fn is called.
-             * @param {HTMLElement|String} el html element to be monitored.
-             * @param {function(this: HTMLElement): boolean} fn
-             * Callback function to be called when el is in viewport.
-             * return false to indicate el is actually not in viewport( for example display none element ).
-             */
-            'addCallback': function (el, fn) {
-                var self = this,
-                    callbacks = self._callbacks;
-
-                callbacks.push({
-                    el: DOM.get(el),
-                    fn: fn
-                });
-
-                // add 立即检测，防止首屏元素问题
-                self._loadFn();
-            },
-
-            /**
-             * Remove a callback function. See {@link KISSY.DataLazyload#addCallback}
-             * @param {HTMLElement|String} el html element to be monitored.
-             * @param {Function} [fn] Callback function to be called when el is in viewport.
-             *                        If not specified, remove all callbacks associated with el.
-             */
-            'removeCallback': function (el, fn) {
-                var callbacks = this._callbacks,
-                    i, callback;
-
-                el = DOM.get(el);
-
-                for (i = callbacks.length - 1; i >= 0; i--) {
-                    callback = callbacks[i];
-                    if (callback.el == el && callback.fn == fn) {
-                        callbacks.splice(i, 1);
-                    }
-                }
-            },
-
-            /**
-             * get to be lazy loaded elements
-             * @return {Object} eg: {images:,textareas:}
-             */
-            'getElements': function () {
-                return {
-                    images: this._images,
-                    textareas: this._areaes
                 };
-            },
 
-            /**
-             * Add a array of imgs or textareas to be lazy loaded to monitor list.
-             * @param {HTMLElement[]|String} els Array of imgs or textareas to be lazy loaded or selector
-             */
-            'addElements': function (els) {
-                if (typeof els == 'string') {
-                    els = DOM.query(els);
-                } else if (!S.isArray(els)) {
-                    els = [els];
+            // 加载函数
+            self._loadFn = S.buffer(loadItems, DURATION, self);
+
+            self.resume();
+
+            // 需要立即加载一次，以保证第一屏的延迟项可见
+            if (!self['_isLoadAllLazyElements']()) {
+                S.ready(loadItems);
+            }
+        },
+
+        /**
+         * force datalazyload to recheck constraints and load lazyload
+         * @public
+         */
+        refresh: function () {
+            this._loadFn();
+        },
+
+        /**
+         * lazyload all items
+         * @private
+         */
+        '_loadItems': function () {
+            var self = this;
+            self['_loadImgs']();
+            self['_loadTextAreas']();
+            self['_fireCallbacks']();
+        },
+
+        /**
+         * lazyload images
+         * @private
+         */
+        '_loadImgs': function () {
+            var self = this;
+            self._images = S.filter(self._images, self['_loadImg'], self);
+        },
+
+        /**
+         * check image whether it is inside viewport and load
+         * @private
+         */
+        '_loadImg': function (img) {
+            var self = this;
+            if (self['_elementInViewport'](img)) {
+                loadImgSrc(img);
+            } else {
+                return true;
+            }
+            return undefined;
+        },
+
+
+        /**
+         * lazyload textareas
+         * @private
+         */
+        '_loadTextAreas': function () {
+            var self = this;
+            self._textareas = S.filter(self._textareas, self['_loadTextArea'], self);
+        },
+
+        /**
+         * check textarea whether it is inside viewport and load
+         * @private
+         */
+        '_loadTextArea': function (textarea) {
+            var self = this;
+            if (self['_elementInViewport'](textarea)) {
+                loadAreaData(textarea, self.get("execScript"));
+            } else {
+                return true;
+            }
+            return undefined;
+        },
+
+        /**
+         * fire callbacks
+         * @private
+         */
+        '_fireCallbacks': function () {
+            var self = this,
+                callbacks = self._callbacks;
+
+            // may call addCallback/removeCallback
+            S.each(callbacks, function (callback, key) {
+                var el = callback.el,
+                    remove = false,
+                    fn = callback.fn;
+                if (self['_elementInViewport'](el)) {
+                    remove = fn.call(el);
                 }
-                var self = this,
-                    imgs = self._images || [],
-                    areaes = self._areaes || [];
-                S.each(els, function (el) {
-                    var nodeName = el.nodeName.toLowerCase();
-                    if (nodeName == "img") {
-                        if (!S.inArray(el, imgs)) {
-                            imgs.push(el);
-                        }
-                    } else if (nodeName == "textarea") {
-                        if (!S.inArray(el, areaes)) {
-                            areaes.push(el);
-                        }
+                if (remove !== false) {
+                    delete callbacks[key];
+                }
+            });
+        },
+
+        /**
+         * Register callback function. When el is in viewport, then fn is called.
+         * @param {HTMLElement|String} el html element to be monitored.
+         * @param {function(this: HTMLElement): boolean} fn
+         * Callback function to be called when el is in viewport.
+         * return false to indicate el is actually not in viewport( for example display none element ).
+         */
+        'addCallback': function (el, fn) {
+            var self = this,
+                callbacks = self._callbacks;
+            el = DOM.get(el);
+
+            callbacks[getCallbackKey(el, fn)] = {
+                el: DOM.get(el),
+                fn: fn
+            };
+
+            // add 立即检测，防止首屏元素问题
+            self._loadFn();
+        },
+
+        /**
+         * Remove a callback function. See {@link KISSY.DataLazyload#addCallback}
+         * @param {HTMLElement|String} el html element to be monitored.
+         * @param {Function} [fn] Callback function to be called when el is in viewport.
+         *                        If not specified, remove all callbacks associated with el.
+         */
+        'removeCallback': function (el, fn) {
+            var callbacks = this._callbacks;
+            el = DOM.get(el);
+            delete callbacks[getCallbackKey(el, fn)];
+        },
+
+        /**
+         * get to be lazy loaded elements
+         * @return {Object} eg: {images:,textareas:}
+         */
+        'getElements': function () {
+            return {
+                images: this._images,
+                textareas: this._textareas
+            };
+        },
+
+        /**
+         * Add a array of imgs or textareas to be lazy loaded to monitor list.
+         * @param {HTMLElement[]|String} els Array of imgs or textareas to be lazy loaded or selector
+         */
+        'addElements': function (els) {
+            if (typeof els == 'string') {
+                els = DOM.query(els);
+            } else if (!S.isArray(els)) {
+                els = [els];
+            }
+            var self = this,
+                imgs = self._images || [],
+                areaes = self._textareas || [];
+            S.each(els, function (el) {
+                var nodeName = el.nodeName.toLowerCase();
+                if (nodeName == "img") {
+                    if (!S.inArray(el, imgs)) {
+                        imgs.push(el);
                     }
-                });
-                self._images = imgs;
-                self._areaes = areaes;
-            },
-
-            /**
-             * Remove a array of element from monitor list. See {@link KISSY.DataLazyload#addElements}.
-             * @param {HTMLElement[]|String} els Array of imgs or textareas to be lazy loaded
-             */
-            'removeElements': function (els) {
-                if (typeof els == 'string') {
-                    els = DOM.query(els);
-                } else if (!S.isArray(els)) {
-                    els = [els];
-                }
-                var self = this,
-                    imgs = [], areaes = [];
-                S.each(self._images, function (img) {
-                    if (!S.inArray(img, els)) {
-                        imgs.push(img);
+                } else if (nodeName == "textarea") {
+                    if (!S.inArray(el, areaes)) {
+                        areaes.push(el);
                     }
-                });
-                S.each(self._areaes, function (area) {
-                    if (!S.inArray(area, els)) {
-                        areaes.push(area);
-                    }
-                });
-                self._images = imgs;
-                self._areaes = areaes;
-            },
-
-            /**
-             * get c's bounding area.
-             * @param {window|HTMLElement} [c]
-             * @private
-             */
-            _getBoundingRect: function (c) {
-                var vh, vw, left, top;
-
-                if (c !== undefined && !S.isWindow(c) && c.nodeType != 9) {
-                    vh = DOM.outerHeight(c);
-                    vw = DOM.outerWidth(c);
-                    var offset = DOM.offset(c);
-                    left = offset.left;
-                    top = offset.top;
-                } else {
-                    vh = DOM.viewportHeight();
-                    vw = DOM.viewportWidth();
-                    left = DOM.scrollLeft();
-                    top = DOM.scrollTop();
                 }
+            });
+            self._images = imgs;
+            self._textareas = areaes;
+        },
 
-                var diff = this.get("diff"),
-                    diffX = diff === DEFAULT ? vw : diff,
-                    diffX0 = 0,
-                    diffX1 = diffX,
-                    diffY = diff === DEFAULT ? vh : diff,
-                // 兼容，默认只向下预读
-                    diffY0 = 0,
-                    diffY1 = diffY,
-                    right = left + vw,
-                    bottom = top + vh;
-
-                if (S.isObject(diff)) {
-                    diffX0 = diff.left || 0;
-                    diffX1 = diff.right || 0;
-                    diffY0 = diff.top || 0;
-                    diffY1 = diff.bottom || 0;
+        /**
+         * Remove a array of element from monitor list. See {@link KISSY.DataLazyload#addElements}.
+         * @param {HTMLElement[]|String} els Array of imgs or textareas to be lazy loaded
+         */
+        'removeElements': function (els) {
+            if (typeof els == 'string') {
+                els = DOM.query(els);
+            } else if (!S.isArray(els)) {
+                els = [els];
+            }
+            var self = this,
+                imgs = [],
+                areaes = [];
+            S.each(self._images, function (img) {
+                if (!S.inArray(img, els)) {
+                    imgs.push(img);
                 }
+            });
+            S.each(self._textareas, function (textarea) {
+                if (!S.inArray(textarea, els)) {
+                    areaes.push(textarea);
+                }
+            });
+            self._images = imgs;
+            self._textareas = areaes;
+        },
 
-                left -= diffX0;
-                right += diffX1;
-                top -= diffY0;
-                bottom += diffY1;
+        /**
+         * get c's bounding textarea.
+         * @param {window|HTMLElement} [c]
+         * @private
+         */
+        '_getBoundingRect': function (c) {
+            var vh, vw, left, top;
 
-                return {
+            if (c !== undefined) {
+                vh = DOM.outerHeight(c);
+                vw = DOM.outerWidth(c);
+                var offset = DOM.offset(c);
+                left = offset.left;
+                top = offset.top;
+            } else {
+                vh = DOM.viewportHeight();
+                vw = DOM.viewportWidth();
+                left = DOM.scrollLeft();
+                top = DOM.scrollTop();
+            }
+
+            var diff = this.get("diff"),
+                diffX = diff === DEFAULT ? vw : diff,
+                diffX0 = 0,
+                diffX1 = diffX,
+                diffY = diff === DEFAULT ? vh : diff,
+            // 兼容，默认只向下预读
+                diffY0 = 0,
+                diffY1 = diffY,
+                right = left + vw,
+                bottom = top + vh;
+
+            if (S.isObject(diff)) {
+                diffX0 = diff.left || 0;
+                diffX1 = diff.right || 0;
+                diffY0 = diff.top || 0;
+                diffY1 = diff.bottom || 0;
+            }
+
+            left -= diffX0;
+            right += diffX1;
+            top -= diffY0;
+            bottom += diffY1;
+
+            return {
+                left: left,
+                top: top,
+                right: right,
+                bottom: bottom
+            };
+        },
+
+        /**
+         * get num of items waiting to lazyload
+         * @private
+         */
+        '_isLoadAllLazyElements': function () {
+            var self = this;
+            return (self._images.length +
+                self._textareas.length +
+                (S.isEmptyObject(self._callbacks) ? 0 : 1)) == 0;
+        },
+
+        /**
+         * whether part of elem can be seen by user.
+         * note: it will not handle display none.
+         * @private
+         * @param {HTMLElement} elem
+         */
+        '_elementInViewport': function (elem) {
+            // it's better to removeElements, but if user want to append it later?
+            if (!inDocument(elem)) {
+                return false;
+            }
+            // display none or inside display none
+            if (!elem.offsetWidth) {
+                return false;
+            }
+            var self = this,
+                elemOffset = DOM.offset(elem),
+                inContainer = true,
+                container = self.get('container'),
+                windowRegion = self['_getBoundingRect'](),
+                inWin,
+                containerRegion,
+                left = elemOffset.left,
+                top = elemOffset.top,
+                elemRegion = {
                     left: left,
                     top: top,
-                    right: right,
-                    bottom: bottom
+                    right: left + DOM.outerWidth(elem),
+                    bottom: top + DOM.outerHeight(elem)
                 };
-            },
 
-            /**
-             * get num of items waiting to lazyload
-             * @private
-             */
-            _getItemsLength: function () {
-                var self = this;
-                return self._images.length + self._areaes.length + self._callbacks.length;
-            },
+            inWin = isCross(windowRegion, elemRegion);
 
-            /**
-             * whether part of elem can be seen by user.
-             * note: it will not handle display none.
-             * @private
-             * @param {HTMLElement} elem
-             */
-            _checkElemInViewport: function (elem) {
-                // it's better to removeElements, but if user want to append it later?
-                if (!DOM.contains(doc, elem)) {
-                    return false;
-                }
-                // 注：不处理 elem display: none 或处于 display none 元素内的情景
-                var self = this,
-                    elemOffset = DOM.offset(elem),
-                    inContainer = true,
-                    container = getContainer(elem, self.get("containers")),
-                    windowRegion = self._getBoundingRect(),
-                    inWin,
-                    containerRegion,
-                    left = elemOffset.left,
-                    top = elemOffset.top,
-                    elemRegion = {
-                        left: left,
-                        top: top,
-                        right: left + DOM.outerWidth(elem),
-                        bottom: top + DOM.outerHeight(elem)
-                    };
-
-                if (container) {
-                    containerRegion = self._getBoundingRect(container);
-                    inContainer = isCross(containerRegion, elemRegion);
-                }
-
-                // 确保在容器内出现
-                // 并且在视窗内也出现
-                inWin = isCross(windowRegion, elemRegion);
-                return inContainer && inWin;
-            },
-
-            /**
-             * pause lazyload
-             */
-            pause: function () {
-                var self = this,
-                    load = self._loadFn;
-                Event.remove(win, SCROLL, load);
-                Event.remove(win, TOUCH_MOVE, load);
-                Event.remove(win, RESIZE, load);
-                load.stop();
-                S.each(self.get("containers"), function (c) {
-                    if (isValidContainer(c)) {
-                        Event.remove(c, SCROLL, load);
-                        Event.remove(c, TOUCH_MOVE, load);
-                    }
-                });
-            },
-
-            /**
-             * resume lazyload
-             */
-            resume: function () {
-                var self = this,
-                    load = self._loadFn;
-                // scroll 和 resize 时，加载图片
-                Event.on(win, SCROLL, load);
-                Event.on(win, TOUCH_MOVE, load);
-                Event.on(win, RESIZE, load);
-
-                S.each(self.get("containers"), function (c) {
-                    if (isValidContainer(c)) {
-                        Event.on(c, SCROLL, load);
-                        Event.on(c, TOUCH_MOVE, load);
-                    }
-                });
-            },
-
-            /**
-             * Destroy this component.Will fire destroy event.
-             */
-            destroy: function () {
-                var self = this;
-                self.pause();
-                self._callbacks = [];
-                self._images = [];
-                self._areaes = [];
-                S.log("datalazyload is destroyed!");
-                self.fire("destroy");
+            if (inWin && self._containerIsNotDocument) {
+                containerRegion = self['_getBoundingRect'](container);
+                inContainer = isCross(containerRegion, elemRegion);
             }
-        });
+
+            // 确保在容器内出现
+            // 并且在视窗内也出现
+            return inContainer && inWin;
+        },
+
+        /**
+         * pause lazyload
+         */
+        pause: function () {
+            var self = this,
+                load = self._loadFn;
+            if (self._destroyed) {
+                return;
+            }
+            Event.remove(win, SCROLL, load);
+            Event.remove(win, TOUCH_MOVE, load);
+            Event.remove(win, RESIZE, load);
+            load.stop();
+            if (self._containerIsNotDocument) {
+                var c = self.get('container');
+                Event.remove(c, SCROLL, load);
+                Event.remove(c, TOUCH_MOVE, load);
+            }
+        },
+
+        /**
+         * resume lazyload
+         */
+        resume: function () {
+            var self = this,
+                load = self._loadFn;
+            if (self._destroyed) {
+                return;
+            }
+            // scroll 和 resize 时，加载图片
+            Event.on(win, SCROLL, load);
+            Event.on(win, TOUCH_MOVE, load);
+            Event.on(win, RESIZE, load);
+            if (self._containerIsNotDocument) {
+                var c = self.get('container');
+                Event.on(c, SCROLL, load);
+                Event.on(c, TOUCH_MOVE, load);
+            }
+        },
+
+        /**
+         * Destroy this component.Will fire destroy event.
+         */
+        destroy: function () {
+            var self = this;
+            self.pause();
+            self._callbacks = {};
+            self._images = [];
+            self._textareas = [];
+            S.log("datalazyload is destroyed!");
+            self.fire("destroy");
+            self._destroyed = 1;
+        }
+    });
 
     /**
      * Load lazyload textarea and imgs manually.
@@ -691,6 +625,9 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             containers = [DOM.get(containers)];
         }
 
+        var imgFlag = flag || (IMG_SRC_DATA + CUSTOM),
+            areaFlag = flag || (AREA_DATA_CLS + CUSTOM);
+
         // 遍历处理
         S.each(containers, function (container) {
             switch (type) {
@@ -702,15 +639,13 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     }
 
                     S.each(imgs, function (img) {
-                        loadImgSrc(img, flag || (IMG_SRC_DATA + CUSTOM));
+                        loadImgSrc(img, imgFlag);
                     });
                     break;
 
                 default:
-                    DOM.query('textarea', container).each(function (area) {
-                        if (DOM.hasClass(area, flag || (AREA_DATA_CLS + CUSTOM))) {
-                            loadAreaData(area, true);
-                        }
+                    DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
+                        loadAreaData(textarea, true);
                     });
             }
         });
@@ -778,6 +713,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  *
  * UPDATE LOG:
+ *   - 2012-01-07 yiminghe@gmail.com 图片必须写 src 占位符，否则会导致性能问题
  *   - 2012-04-27 yiminghe@gmail.com refactor to extend base, add removeCallback/addElements ...
  *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textarea 可设置高度，宽度
  *   - 2012-04-25 yiminghe@gmail.com refactor, 监控容器内滚动，包括横轴滚动
