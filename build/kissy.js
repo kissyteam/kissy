@@ -9970,13 +9970,28 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         var val, args = arguments;
         // in case elem is window
         // elem.offsetWidth === undefined
-        if (elem.offsetWidth !== 0) {
-            val = getWH.apply(undefined, args);
-        } else {
-            swap(elem, cssShow, function () {
-                val = getWH.apply(undefined, args);
-            });
-        }
+        if (elem.offsetWidth === 0) {
+
+            // display: none的元素offsetLeft、offsetTop都等于0
+            // 在ie 6 7中，如果是<div style="display: none">
+            // 返回div.getBoundingClientRect()返回是[12, 17]，通过css display ===
+            // none来过滤
+            var isDisplayNone = false, 
+                offset = elem.getBoundingClientRect();
+            if (DOM.css(elem, 'display') === 'none' || (offset.left === 0 && offset.top === 0)) {
+                isDisplayNone = true;
+            }
+
+            if (isDisplayNone) {
+                swap(elem, cssShow, function () {
+                    val = getWH.apply(undefined, args);
+                });
+                return val;
+            }
+
+        } 
+
+        val = getWH.apply(undefined, args);
         return val;
     }
 
