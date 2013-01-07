@@ -713,7 +713,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  *
  * UPDATE LOG:
- *   - 2012-01-07 yiminghe@gmail.com 图片必须写 src 占位符，否则会导致性能问题
+ *   - 2012-01-07 yiminghe@gmail.com optimize for performance
  *   - 2012-04-27 yiminghe@gmail.com refactor to extend base, add removeCallback/addElements ...
  *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textarea 可设置高度，宽度
  *   - 2012-04-25 yiminghe@gmail.com refactor, 监控容器内滚动，包括横轴滚动
