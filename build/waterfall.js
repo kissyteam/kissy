@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:28
+build time: Jan 8 17:17
 */
 /**
  * @fileOverview Make Elements flow like waterfall.
@@ -169,10 +169,15 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
     function doResize() {
         var self = this,
+            container = self.get('container'),
             containerRegion = self._containerRegion || {};
-        // 宽度没变就没必要调整
-        if (containerRegion &&
-            self.get("container").width() === containerRegion.width) {
+
+        if (
+        // container display none ...
+            !container[0].offsetWidth ||
+                // 宽度没变就没必要调整
+                containerRegion &&
+                    container.width() === containerRegion.width) {
             return
         }
         self.adjust();
@@ -564,6 +569,9 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 var onResize = this.__onResize;
                 $(win).detach("resize", onResize);
                 onResize.stop();
+                S.log('waterfall is destroyed!');
+                self.fire('destroy');
+                self.__destroyed = 1;
             }
         });
 
@@ -616,8 +624,12 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
             self.__onScroll();
             return;
         }
-        var container = self.get("container"),
-            colHeight = container.offset().top,
+        var container = self.get("container");
+        // in case container is display none
+        if (!container[0].offsetWidth) {
+            return;
+        }
+        var colHeight = container.offset().top,
             diff = self.get("diff"),
             curColHeights = self.get("curColHeights");
         // 找到最小列高度
@@ -691,6 +703,9 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
              */
             start: function () {
                 var self = this;
+                if (self.__destroyed) {
+                    return;
+                }
                 if (!self.__started) {
                     $(win).on("scroll", self.__onScroll);
                     self.__started = 1;
@@ -702,6 +717,9 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
              */
             end: function () {
                 var self = this;
+                if (self.__destroyed) {
+                    return;
+                }
                 $(win).detach("scroll", self.__onScroll);
                 self.__onScroll.stop();
                 self.__started = 0;
