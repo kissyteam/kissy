@@ -249,6 +249,11 @@
             var self = this;
 
             var fn = function () {
+                // one callback failure does not interfere with others
+                setTimeout(function () {
+                    self.loading = 0;
+                    next(self);
+                }, 0);
                 // KISSY.use in callback will be queued
                 if (callback) {
                     // try {
@@ -257,11 +262,6 @@
 //                        S.log(e.stack || e, 'error');
 //                    }
                 }
-                // one failure does not interfere with others
-                setTimeout(function () {
-                    self.loading = 0;
-                    next(self);
-                }, 0);
             };
 
             var runtime = self.runtime;
