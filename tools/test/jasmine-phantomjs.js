@@ -54,7 +54,7 @@ function next(url) {
     });
 }
 var t = '';
-// t = '/kissy/src/xtemplate/tests/runner/test.html';
+// t = '/kissy/src/ajax/tests/runner/test-basic.html';
 // t='/src/seed/tests/specs/package-raw/test-combo.html';
 //t='/kissy/src/dd/sub-modules/constrain/tests/runner/test.html';
 next(t);

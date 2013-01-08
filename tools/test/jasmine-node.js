@@ -75,8 +75,12 @@ if (!S.endsWith(cwd, "src")) {
 
 var exitCode, index = 0;
 
+console.log(mods);
+
 // KISSY.use is asynchronous even in nodejs
-KISSY.use(mods, function () {
+KISSY.use(mods, function (S) {
+
+    var args = S.makeArray(arguments);
 
     var index = 0;
 
@@ -198,5 +202,9 @@ function executeSpecsInFolder(folder, done, isVerbose, showColors, matcher, juni
         require(filename.replace(/\.\w+$/, ""));
     }
 
-    jasmineEnv.execute();
+    setTimeout(function () {
+        // async use
+        jasmineEnv.execute();
+    },10);
+
 }
