@@ -102,7 +102,10 @@
 
             // in case modules is loaded statically
             // synchronous check
-            loadChecker.check();
+            // but always async for loader
+            setTimeout(function () {
+                loadChecker.check();
+            }, 0);
 
             return self;
         }

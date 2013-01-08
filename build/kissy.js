@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 8 13:06
+build time: Jan 8 13:12
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130108130654' will replace with current timestamp when compressing.
+         * NOTICE: '20130108131227' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130108130654',
+        __BUILD_TIME: '20130108131227',
         /**
          * KISSY Environment.
          * @private
@@ -5030,7 +5030,10 @@ var KISSY = (function (undefined) {
 
             // in case modules is loaded statically
             // synchronous check
-            loadChecker.check();
+            // but always async for loader
+            setTimeout(function () {
+                loadChecker.check();
+            }, 0);
 
             return self;
         }
@@ -5436,7 +5439,9 @@ var KISSY = (function (undefined) {
             // if all mods are attached, just run
             // do not queue
             if (utils.isAttached(runtime, unaliasModNames)) {
-                callback && callback.apply(null, utils.getModules(runtime, modNames));
+                setTimeout(function () {
+                    callback && callback.apply(null, utils.getModules(runtime, modNames));
+                }, 0);
                 return;
             }
 
@@ -5793,7 +5798,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130108130654'
+            tag: '20130108131227'
         }, getBaseInfo()));
     }
 

@@ -259,7 +259,9 @@
             // if all mods are attached, just run
             // do not queue
             if (utils.isAttached(runtime, unaliasModNames)) {
-                callback && callback.apply(null, utils.getModules(runtime, modNames));
+                setTimeout(function () {
+                    callback && callback.apply(null, utils.getModules(runtime, modNames));
+                }, 0);
                 return;
             }
 

@@ -9,6 +9,7 @@ describe("KISSY ComboLoader", function () {
         KISSY.clearLoader();
 
         var ret = 0;
+        var ret2 = 0;
 
         KISSY.config({
             packages: [
@@ -35,7 +36,10 @@ describe("KISSY ComboLoader", function () {
             S.use('tests3/b', function () {
                 a = 1
             });
-            ret = a;
+            setTimeout(function () {
+                ret = a;
+            }, 0);
+            ret2 = a;
         });
 
         waitsFor(function () {
@@ -44,6 +48,8 @@ describe("KISSY ComboLoader", function () {
 
         runs(function () {
             expect(ret).toBe(1);
+            // always async
+            expect(ret2).toBe(2444);
         });
 
     });
