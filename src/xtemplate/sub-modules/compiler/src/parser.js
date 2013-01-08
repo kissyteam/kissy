@@ -139,7 +139,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
 
             self.match = self.text = "";
 
-            if (!S.trim(input)) {
+            if (!input) {
                 return self.mapSymbol(Lexer.STATIC.END_TAG);
             }
 
@@ -197,27 +197,24 @@ KISSY.add("xtemplate/compiler/parser", function () {
     var lexer = new Lexer({
         'rules': [
             [0, /^[\s\S]*?(?={{)/, function () {
-                var text = this.text,
-                    l, n;
-                // '\\\\{{test}}'
-                l = text.length - 1;
-                n = 0;
-                while (text.charAt(l) == '\\') {
-                    n++;
-                    l--;
+                var self = this,
+                    text = self.text,
+                    m,
+                    n = 0;
+                if (m = text.match(/\\+$/)) {
+                    n = m[0].length;
                 }
                 if (n % 2) {
                     text = text.slice(0, -1);
-                }
-                if (n % 2) {
-                    this.pushState('et');
+                    self.pushState('et');
                 } else {
-                    this.pushState('t');
+                    self.pushState('t');
                 }
                 // only return when has content
-                if (this.text = text) {
+                if (self.text = text) {
                     return 'CONTENT';
                 }
+                return undefined;
             }],
             [2, /^[\s\S]+/, 0],
             [2, /^[\s\S]{2,}?(?:(?={{)|$)/, function () {

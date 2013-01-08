@@ -198,5 +198,8 @@ function executeSpecsInFolder(folder, done, isVerbose, showColors, matcher, juni
         require(filename.replace(/\.\w+$/, ""));
     }
 
-    jasmineEnv.execute();
+    setTimeout(function(){
+        jasmineEnv.execute();
+    },10);
+
 }

@@ -58,6 +58,8 @@ KISSY.use("ua,json,ajax,node", function (S, UA, JSON, io, Node) {
             runs(function () {
                 expect(re.join(",")).toBe(["abort", "abort"].join(","));
             });
+
+            waits(1000);
         });
 
         it("nothing happens if abort after form file upload", function () {
