@@ -542,28 +542,26 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         var val, args = arguments;
         // in case elem is window
         // elem.offsetWidth === undefined
-        if (elem.offsetWidth === 0) {
+        var isHide = elem.offsetWidth === 0;
 
-            // display: none的元素offsetLeft、offsetTop都等于0
-            // 在ie 6 7中，如果是<div style="display: none">
-            // 返回div.getBoundingClientRect()返回是[12, 17]，通过css display ===
-            // none来过滤
-            var isDisplayNone = false, 
-                offset = elem.getBoundingClientRect();
-            if (DOM.css(elem, 'display') === 'none' || (offset.left === 0 && offset.top === 0)) {
-                isDisplayNone = true;
-            }
+        // 在ie中，如果图片没有写src，那么会有一个默认的占位符，offsetWidth会大
+        // 于 0，如果是其他高级浏览器，没有src，那么offsetWidth等于0
+        // see: http://git.shepherdwind.com/test/bound.html
+        // 这在DataLazyLoad 中可能会导致很多没有写src的图片被误判断，非常耗性能
+        if (isHide && !UA.ie) {
+            var offset = elem.getBoundingClientRect();
+            isHide = offset.left === 0 && offset.top === 0;
+        }
 
-            if (isDisplayNone) {
-                swap(elem, cssShow, function () {
-                    val = getWH.apply(undefined, args);
-                });
-                return val;
-            }
+        if (isHide) {
+            swap(elem, cssShow, function () {
+                val = getWH.apply(undefined, args);
+            });
+        } else {
 
+            val = getWH.apply(undefined, args);
         } 
 
-        val = getWH.apply(undefined, args);
         return val;
     }
 
