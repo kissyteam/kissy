@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>align demo</title>
+<meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+<style>
+    .ks-waterfall {
+        position: absolute;
+        left: -999px;
+        top: -999px;
+        border: 1px solid red;
+        width: 99px;
+        height: 99px;
+        line-height: 99px;
+        font-size: 30px;
+    }
+
+    #article {
+        position: relative;
+        width: 100%;
+        min-width: 530px;
+        border: 1px solid green;
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+
+    #wrapper {
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+</style>
+<link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
+
+<script src="/kissy/build/seed.js"></script>
+<script src=".././src/base.js"></script>
+<script src=".././src/loader.js"></script>
+<script src=".././src/waterfall.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+    <div id="button_container">
+        对齐：
+        <select id="align">
+            <option>left</option>
+            <option>center</option>
+            <option>right</option>
+            <option>justify</option>
+        </select>
+    </div>
+
+    <div id="article">
+        <div id="ColumnContainer">
+            <div class="ks-waterfall">1</div>
+            <div class="ks-waterfall">2</div>
+            <div class="ks-waterfall">3</div>
+            <div class="ks-waterfall">4</div>
+            <div class="ks-waterfall">5</div>
+            <div class="ks-waterfall">6</div>
+            <div class="ks-waterfall" style="height: 400px">7</div>
+        </div>
+    </div>
+</div>
+<script>
+    KISSY.use("waterfall,ajax,node", function (S, Waterfall, io, Node) {
+        var $ = Node.all;
+        var waterfall = new Waterfall({
+            container:"#ColumnContainer",
+            minColCount:2,
+            colWidth:100,
+            align:$("#align").val()
+        });
+
+        $("#align").on("change", function () {
+            waterfall.set("align", $("#align").val());
+            waterfall.adjust();
+        });
+    });
+</script>
+
+</body>
+</html>

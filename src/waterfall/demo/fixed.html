@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>fixed demo</title>
+<meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+<link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
+<link rel="stylesheet" href="../demo/demo.css" type="text/css" media="all"/>
+<link href="../../button/demo/assets/custombutton.css" rel="stylesheet"/>
+
+<script src="/kissy/build/seed.js"></script>
+<script src=".././src/base.js"></script>
+<script src=".././src/loader.js"></script>
+<script src=".././src/waterfall.js"></script>
+</head>
+
+<body>
+
+<div id="wrapper">
+    <div id="article">
+        <div id="ColumnContainer">
+            <div class="pin ks-waterfall ks-waterfall-fixed-left">
+                <div style="height: 100px">
+                    always left
+                </div>
+            </div>
+
+            <div class="pin ks-waterfall ks-waterfall-fixed-right">
+                <div style="height: 100px">
+                    always right
+                </div>
+            </div>
+        </div>
+        <a id="BackToTop" href="#">Scroll to Top</a>
+        <div id="loadingPins"><img src="http://d3io1k5o0zdpqr.cloudfront.net/images/BouncingLoader.gif" alt="Pin Loader Image"/><span>Fetching pins&hellip;</span></div>
+    </div>
+</div>
+
+<script type="tpl" id="tpl">
+    <div class="pin ks-waterfall" data-id="{id}">
+        <a href="#" class="image">
+            <img height="{height}" alt="{title}" src="http://farm{farm}.static.flickr.com/{server}/{id}_{secret}_m.jpg"/>
+        </a>
+        <p class="description">{title}</p>
+    </div>
+</script>
+<script src="fixed.js"></script>
+
+</body>
+</html>

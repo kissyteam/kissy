@@ -1,0 +1,10 @@
+<project name="waterfall.build" default="build" basedir=".">
+    <description>Waterfall Build File</description>
+
+    <property name="component.name" value="waterfall"/>
+
+    <import file="../../tools/build-xml/common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>

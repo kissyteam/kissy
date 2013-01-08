@@ -1,0 +1,97 @@
+html {
+    background-color: #E8E7E3;
+    overflow-y: scroll;
+}
+
+body {
+    background-color: #E8E7E3;
+}
+
+#BackToTop {
+    position: fixed;
+    right: 9px;
+    bottom: 9px;
+    width: 50px;
+    padding: 20px 10px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #41545F;
+    text-decoration: none;
+    background-color: white;
+    border: 1px solid #ECECEC;
+    opacity: 0.9;
+    filter: alpha(opacity = 90);
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+#ColumnContainer {
+    position: relative;
+    min-width: 500px;
+    min-height: 500px;
+    margin: 0 auto;
+}
+
+#article {
+    width: auto;
+    min-width: 500px;
+    padding: 8px 0 0 0;
+}
+
+#wrapper {
+    position: relative;
+    width: auto;
+    margin: 0 auto;
+    border: none;
+}
+
+#loadingPins {
+    display: none;
+    height: 20px;
+    padding: 15px 0;
+    text-align: center;
+    font-weight: bold;
+    border-top: 1px solid #CCC;
+}
+
+#loadingPins img {
+    display: inline-block;
+    margin-right: 6px;
+}
+
+#loadingPins span {
+    font-size: 1.3em;
+}
+
+.pin {
+    position: absolute;
+    width: 193px;
+    padding: 14px;
+    background-color: white;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.pin .image {
+    position: relative;
+    display: block;
+    width: 190px;
+    overflow: hidden;
+    background-color: white;
+    border: 1px solid white;
+}
+
+.pin .description {
+    padding-top: 4px;
+}
+
+.pin p {
+    display: block;
+    margin: 0 2px;
+    font-size: 1.1em;
+    line-height: 1.45em;
+}
+
+.pin .image img {
+    display: block;
+}
