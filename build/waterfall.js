@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:28
+build time: Jan 9 00:10
 */
 /**
  * @fileOverview Make Elements flow like waterfall.
@@ -169,10 +169,15 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
     function doResize() {
         var self = this,
+            container = self.get('container'),
             containerRegion = self._containerRegion || {};
-        // 宽度没变就没必要调整
-        if (containerRegion &&
-            self.get("container").width() === containerRegion.width) {
+
+        if (
+        // container display none ...
+            !container[0].offsetWidth ||
+                // 宽度没变就没必要调整
+                containerRegion &&
+                    container.width() === containerRegion.width) {
             return
         }
         self.adjust();
@@ -309,7 +314,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             item = adjustItemAction(self, true, itemRaw),
             effect = self.get("effect");
         // then animate
-        if (effect && effect.effect) {
+        if (item && effect && effect.effect) {
             // 先隐藏才能调用 fadeIn slideDown
             item.hide();
             item.css("visibility", "");
@@ -561,9 +566,13 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
              * Destroy current instance.
              */
             destroy: function () {
-                var onResize = this.__onResize;
+                var self = this;
+                var onResize = self.__onResize;
                 $(win).detach("resize", onResize);
                 onResize.stop();
+                S.log('waterfall is destroyed!');
+                self.fire('destroy');
+                self.__destroyed = 1;
             }
         });
 
@@ -616,8 +625,12 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
             self.__onScroll();
             return;
         }
-        var container = self.get("container"),
-            colHeight = container.offset().top,
+        var container = self.get("container");
+        // in case container is display none
+        if (!container[0].offsetWidth) {
+            return;
+        }
+        var colHeight = container.offset().top,
             diff = self.get("diff"),
             curColHeights = self.get("curColHeights");
         // 找到最小列高度
@@ -687,40 +700,41 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
             },
 
             /**
-             * Start monitor scroll on window.
+             * @ignore
              */
             start: function () {
-                var self = this;
-                if (!self.__started) {
-                    $(win).on("scroll", self.__onScroll);
-                    self.__started = 1;
-                }
+                this.resume();
+            },
+
+            /**
+             * @ignore
+             */
+            end: function () {
+                this.pause();
             },
 
             /**
              * Stop monitor scroll on window.
              */
-            end: function () {
+            pause: function () {
                 var self = this;
+                if (self.__destroyed) {
+                    return;
+                }
                 $(win).detach("scroll", self.__onScroll);
                 self.__onScroll.stop();
-                self.__started = 0;
             },
 
             /**
-             * Use end instead.
-             * @deprecated 1.3
-             */
-            pause: function () {
-                this.end();
-            },
-
-            /**
-             * Use start instead.
-             * @deprecated 1.3
+             * Start monitor scroll on window.
              */
             resume: function () {
-                this.start();
+                var self = this;
+                if (self.__destroyed) {
+                    return;
+                }
+                $(win).on("scroll", self.__onScroll);
+                self.__started = 1;
             },
 
             /**
@@ -728,8 +742,8 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
              */
             destroy: function () {
                 var self = this;
-                Loader.superclass.destroy.apply(self, arguments);
                 self.end();
+                Loader.superclass.destroy.apply(self, arguments);
             }
         });
 

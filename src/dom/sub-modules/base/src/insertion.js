@@ -137,6 +137,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * Insert every element in the set of newNodes before every element in the set of refNodes.
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
+             * @param {Boolean} [loadScripts] whether execute script node
              */
             insertBefore: function (newNodes, refNodes, loadScripts) {
                 insertion(newNodes, refNodes, function (newNode, refNode) {
@@ -150,6 +151,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * Insert every element in the set of newNodes after every element in the set of refNodes.
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
+             * @param {Boolean} [loadScripts] whether execute script node
              */
             insertAfter: function (newNodes, refNodes, loadScripts) {
                 insertion(newNodes, refNodes, function (newNode, refNode) {
@@ -163,6 +165,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * Insert every element in the set of newNodes to the end of every element in the set of parents.
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
+             * @param {Boolean} [loadScripts] whether execute script node
              */
             appendTo: function (newNodes, parents, loadScripts) {
                 insertion(newNodes, parents, function (newNode, parent) {
@@ -174,6 +177,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * Insert every element in the set of newNodes to the beginning of every element in the set of parents.
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
+             * @param {Boolean} [loadScripts] whether execute script node
              */
             prependTo: function (newNodes, parents, loadScripts) {
                 insertion(newNodes, parents, function (newNode, parent) {

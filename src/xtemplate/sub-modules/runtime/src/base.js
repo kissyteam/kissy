@@ -10,6 +10,10 @@ KISSY.add('xtemplate/runtime/base', function (S) {
         /**
          * whether throw exception when template variable is not found in data
          *
+         * or
+         *
+         * command is not found
+         *
          *      @example
          *      '{{title}}'.render({t2:0})
          *
@@ -20,6 +24,10 @@ KISSY.add('xtemplate/runtime/base', function (S) {
 
         /**
          * whether throw exception when template variable is not found in data
+         *
+         * or
+         *
+         * command is not found
          *
          *      @example
          *      '{{title}}'.render({t2:0})

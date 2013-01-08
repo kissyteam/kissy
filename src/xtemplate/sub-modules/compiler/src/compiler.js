@@ -12,8 +12,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
     var utils = {
             'getProperty': 1
         },
-        doubleReg = /"/g,
-        single = /'/g, escapeString,
+        doubleReg = /\\*"/g,
+        singleReg = /\\*'/g,
         arrayPush = [].push,
         variableId = 0,
         xtemplateId = 0;
@@ -25,30 +25,33 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
     // consider str compiler
     XTemplateRuntime.includeCommand.invokeEngine = function (tpl, scopes, option) {
         if (typeof tpl == 'string') {
-            tpl = compiler.compileToFn(tpl, option);
+            tpl = compiler.compileToFn(/**
+             @type String
+             @ignore
+             */tpl, option);
         }
         return new XTemplateRuntime(tpl, S.merge(option)).render(scopes);
     };
 
     /**
      * @ignore
-     * @param str
-     * @param [quote]
-     * @return {*}
      */
-    escapeString = function (str, quote) {
-        var regexp = single;
-        if (quote == '"') {
-            regexp = doubleReg;
-        } else {
-            quote = "'";
-        }
-        return str//.replace(/\\/g, '\\\\')
+    function escapeString(str, isDouble) {
+        return escapeSingleQuoteInCodeString(str//.replace(/\\/g, '\\\\')
             .replace(/\r/g, '\\r')
             .replace(/\n/g, '\\n')
-            .replace(/\t/g, '\\t')
-            .replace(regexp, '\\' + quote);
-    };
+            .replace(/\t/g, '\\t'), isDouble);
+    }
+
+    function escapeSingleQuoteInCodeString(str, isDouble) {
+        return str.replace(isDouble ? doubleReg : singleReg, function (m) {
+            // \ 奇数，用户显式转过 "\'" , "\\\'" 就不处理了，否则手动对 ` 加 \ 转义
+            if (m.length % 2) {
+                m = '\\' + m;
+            }
+            return m;
+        });
+    }
 
     function pushToArray(to, from) {
         arrayPush.apply(to, from);
@@ -223,6 +226,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                     type + name2);
                 return ['', source];
             }
+
+            return undefined;
         },
 
         genOption: function (tplNode) {
@@ -311,11 +316,8 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
         },
 
         'string': function (e) {
-            // no need to escape \ or \n
-            // it is code in template too,
-            // just escape ' in case user use " for string in template code
-            // but here we use ' for string in template code
-            return ['', ["'" + e.value.replace(/'/g, "\\'") + "'"]];
+            // same as contentNode.value
+            return ['', ["'" + escapeString(e.value) + "'"]];
         },
 
         'number': function (e) {
@@ -399,7 +401,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             if (!existsNativeCommand) {
                 source.push('}');
                 source.push('else {');
-                source.push('error("can not find command: \'' +
+                source.push('S[option.silent?"log":"error"]("can not find command: \'' +
                     string + '\' at line ' + tplNode.path.lineNumber + '");');
                 source.push('}');
             }

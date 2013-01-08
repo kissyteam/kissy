@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 8 13:12
+build time: Jan 9 00:10
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130108131227' will replace with current timestamp when compressing.
+         * NOTICE: '20130109001035' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130108131227',
+        __BUILD_TIME: '20130109001035',
         /**
          * KISSY Environment.
          * @private
@@ -5008,9 +5008,10 @@ var KISSY = (function (undefined) {
          * @param {String|String[]} modNames names of mods to be loaded,if string then separated by space
          * @param {Function} callback callback when modNames are all loaded,
          * with KISSY as first argument and mod 's value as the following arguments
+         * @param _forceSync internal use, do not set
          * @chainable
          */
-        use: function (modNames, callback) {
+        use: function (modNames, callback, /* for internal */_forceSync) {
             var self = this,
                 normalizedModNames,
                 loadChecker = new LoadChecker(loadReady),
@@ -5031,10 +5032,13 @@ var KISSY = (function (undefined) {
             // in case modules is loaded statically
             // synchronous check
             // but always async for loader
-            setTimeout(function () {
+            if (_forceSync) {
                 loadChecker.check();
-            }, 0);
-
+            } else {
+                setTimeout(function () {
+                    loadChecker.check();
+                }, 0);
+            }
             return self;
         }
     });
@@ -5421,11 +5425,9 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * use
-         * @param modNames
-         * @param callback
+         * use, _forceSync for kissy.js, initialize dom,event sync
          */
-        use: function (modNames, callback) {
+        use: function (modNames, callback, /* for internal */_forceSync) {
             var self = this;
 
             var runtime = self.runtime;
@@ -5439,9 +5441,15 @@ var KISSY = (function (undefined) {
             // if all mods are attached, just run
             // do not queue
             if (utils.isAttached(runtime, unaliasModNames)) {
-                setTimeout(function () {
-                    callback && callback.apply(null, utils.getModules(runtime, modNames));
-                }, 0);
+                if (callback) {
+                    if (_forceSync) {
+                        callback.apply(null, utils.getModules(runtime, modNames));
+                    } else {
+                        setTimeout(function () {
+                            callback.apply(null, utils.getModules(runtime, modNames));
+                        }, 0);
+                    }
+                }
                 return;
             }
 
@@ -5686,7 +5694,8 @@ var KISSY = (function (undefined) {
              *      KISSY.use('overlay,dd', function(S, Overlay){});
              */
             use: function (names, callback) {
-                this.getLoader().use(names, callback);
+                var loader = this.getLoader();
+                loader.use.apply(loader, arguments);
             },
             /**
              * get KISSY 's loader instance
@@ -5798,7 +5807,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130108131227'
+            tag: '20130109001035'
         }, getBaseInfo()));
     }
 
@@ -6297,6 +6306,10 @@ config({
         return S.Promise;
     });
 
+    S.add('ua', function () {
+        return S.UA;
+    });
+
     S.add('uri', function () {
         return S.Uri;
     });
@@ -6306,98 +6319,6 @@ config({
     });
 
 })(KISSY);
-/*
-Copyright 2012, KISSY UI Library v1.40dev
-MIT Licensed
-build time: Dec 20 22:28
-*/
-/**
- * @ignore
- * @fileOverview ua-extra
- * @author gonghao@ghsky.com
- */
-KISSY.add('ua', function (S, undefined) {
-    var win = S.Env.host,
-        UA= S.UA,
-        navigator = win.navigator,
-        ua = navigator && navigator.userAgent || "",
-        m, external, shell,
-        o = {
-            /**
-             * 360 browser version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            se360: undefined,
-            /**
-             * maxthon version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            maxthon: undefined,
-            /**
-             * tencent browser version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            tt: undefined,
-            /**
-             * theworld version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            theworld: undefined,
-            /**
-             * sougou browser version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            sougou: undefined
-        },
-        numberify = UA._numberify;
-
-    /*
-     说明：
-     @子涯总结的各国产浏览器的判断依据: http://spreadsheets0.google.com/ccc?key=tluod2VGe60_ceDrAaMrfMw&hl=zh_CN#gid=0
-     根据 CNZZ 2009 年度浏览器占用率报告，优化了判断顺序：http://www.tanmi360.com/post/230.htm
-     如果检测出浏览器，但是具体版本号未知用 0.1 作为标识
-     世界之窗 & 360 浏览器，在 3.x 以下的版本都无法通过 UA 或者特性检测进行判断，所以目前只要检测到 UA 关键字就认为起版本号为 3
-     */
-
-    // 360Browser
-    if (m = ua.match(/360SE/)) {
-        o[shell = 'se360'] = 3; // issue: 360Browser 2.x cannot be recognised, so if recognised default set verstion number to 3
-    }
-    // Maxthon
-    else if ((m = ua.match(/Maxthon/)) && (external = win['external'])) {
-        // issue: Maxthon 3.x in IE-Core cannot be recognised and it doesn't have exact version number
-        // but other maxthon versions all have exact version number
-        shell = 'maxthon';
-        try {
-            o[shell] = numberify(external['max_version']);
-        } catch (ex) {
-            o[shell] = 0.1;
-        }
-    }
-    // TT
-    else if (m = ua.match(/TencentTraveler\s([\d.]*)/)) {
-        o[shell = 'tt'] = m[1] ? numberify(m[1]) : 0.1;
-    }
-    // TheWorld
-    else if (m = ua.match(/TheWorld/)) {
-        o[shell = 'theworld'] = 3; // issue: TheWorld 2.x cannot be recognised, so if recognised default set verstion number to 3
-    }
-    // Sougou
-    else if (m = ua.match(/SE\s([\d.]*)/)) {
-        o[shell = 'sougou'] = m[1] ? numberify(m[1]) : 0.1;
-    }
-
-    // If the browser has shell(no matter IE-core or Webkit-core or others), set the shell key
-    shell && (o.shell = shell);
-
-    S.mix(UA, o);
-    return UA;
-});
 /*
 Copyright 2012, KISSY UI Library v1.40dev
 MIT Licensed
@@ -21544,4 +21465,4 @@ KISSY.add('node/override', function (S, DOM,NodeList) {
  - append/prepend 参数是节点时，如果当前 NodeList 数量 > 1 需要经过 clone，因为同一节点不可能被添加到多个节点中去（NodeList）
  */
 
-KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie");
+KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie",0,1);

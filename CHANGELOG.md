@@ -73,6 +73,7 @@ History:
 
 #### ua
  - [+] html 标签键入 ua 标志，例如 "ks-ie ke-ie6"
+ - [!] 去除国产浏览器探测，用 gallery/ua-extra/1.0/ 替代
 
 #### event
  - [+] Event 模块：on/detach 支持事件分组

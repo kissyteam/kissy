@@ -111,6 +111,7 @@ KISSY.add("kison/lexer", function (S, Utils) {
                         }
                         return ret;
                     }
+                    return undefined;
                 } : 0);
 
             code.push("var lexer = new Lexer(" + newCfg + ");");
@@ -219,7 +220,7 @@ KISSY.add("kison/lexer", function (S, Utils) {
 
             self.match = self.text = "";
 
-            if (!S.trim(input)) {
+            if (!input) {
                 return self.mapSymbol(Lexer.STATIC.END_TAG);
             }
 
@@ -270,6 +271,7 @@ KISSY.add("kison/lexer", function (S, Utils) {
             }
 
             S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
+            return undefined;
         }
     };
 

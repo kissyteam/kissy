@@ -466,7 +466,6 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 });
 
-
                 it('support expression for variable in string', function () {
 
                     var tpl = '{{n+" is good"}}';
@@ -476,6 +475,21 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     };
 
                     expect(new XTemplate(tpl).render(data)).toBe('xtemplate is good');
+
+                });
+
+                it('support newline/quote for variable in string', function () {
+
+                    // {{""}} 中的内容相当于写在 {{}} 外边
+                    var tpl = '{{{"\n \\\' \\\\\\\'"}}} | \n \\\' \\\\\\\'';
+
+                    var data = {
+                        n: 'xtemplate'
+                    };
+
+                    var content = new XTemplate(tpl).render(data);
+
+                    expect(content).toBe('\n \' \\\' | \n \' \\\'');
 
                 });
 
@@ -500,7 +514,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                         '{{n2+1}}' +
                         '{{/if}}';
 
-                    var tpl5='{{#if n<5}}0{{else}}1{{/if}}';
+                    var tpl5 = '{{#if n<5}}0{{else}}1{{/if}}';
 
 
                     var data = {
@@ -523,7 +537,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                     expect(new XTemplate(tpl4).render(data3)).toBe('3');
 
-                    expect(new XTemplate(tpl5).render({n:5})).toBe('1');
+                    expect(new XTemplate(tpl5).render({n: 5})).toBe('1');
                 });
 
 
@@ -601,7 +615,6 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     expect(render).toBe('h-2');
                 });
 
-
                 it('support array', function () {
                     var tpl = '{{#data}}{{name}}-{{xindex}}/{{xcount}}|{{/data}}';
 
@@ -621,6 +634,37 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     expect(render).toBe('1-0/2|2-1/2|');
                 });
 
+                it('can ignore unset array in silent mode', function () {
+                    var tpl = '{{#data}}{{name}}-{{xindex}}/{{xcount}}|{{/data}}';
+
+                    var data = {
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('');
+                });
+
+                it('will error when unset array in non-silent mode', function () {
+                    var tpl = '{{#data}}{{name}}-{{xindex}}/{{xcount}}|{{/data}}';
+
+                    var data = {
+                    };
+
+                    var r = '';
+
+                    try {
+                         new XTemplate(tpl, {
+                            silent: false
+                        }).render(data);
+                    } catch (e) {
+                        r = e.message;
+                    }
+                    if (KISSY.Config.debug) {
+                        expect(r).toBe("can not find command: 'data' at line 1");
+                    }
+                });
+
                 it('support simple # as if', function () {
                     var tpl = '{{#data}}1{{/data}}';
 
@@ -632,7 +676,6 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                     expect(render).toBe('1');
                 });
-
 
                 it('support function as property value', function () {
                     var tpl = '{{data.d}}';

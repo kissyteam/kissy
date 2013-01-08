@@ -11,6 +11,10 @@
         return S.Promise;
     });
 
+    S.add('ua', function () {
+        return S.UA;
+    });
+
     S.add('uri', function () {
         return S.Uri;
     });

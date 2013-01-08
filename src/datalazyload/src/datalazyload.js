@@ -461,7 +461,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             }
             var self = this,
                 imgs = self._images || [],
-                areaes = self._textareas || [];
+                textareas = self._textareas || [];
             S.each(els, function (el) {
                 var nodeName = el.nodeName.toLowerCase();
                 if (nodeName == "img") {
@@ -469,13 +469,13 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                         imgs.push(el);
                     }
                 } else if (nodeName == "textarea") {
-                    if (!S.inArray(el, areaes)) {
-                        areaes.push(el);
+                    if (!S.inArray(el, textareas)) {
+                        textareas.push(el);
                     }
                 }
             });
             self._images = imgs;
-            self._textareas = areaes;
+            self._textareas = textareas;
         },
 
         /**
@@ -490,7 +490,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             }
             var self = this,
                 imgs = [],
-                areaes = [];
+                textareas = [];
             S.each(self._images, function (img) {
                 if (!S.inArray(img, els)) {
                     imgs.push(img);
@@ -498,11 +498,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             });
             S.each(self._textareas, function (textarea) {
                 if (!S.inArray(textarea, els)) {
-                    areaes.push(textarea);
+                    textareas.push(textarea);
                 }
             });
             self._images = imgs;
-            self._textareas = areaes;
+            self._textareas = textareas;
         },
 
         /**

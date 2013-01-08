@@ -164,10 +164,15 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
     function doResize() {
         var self = this,
+            container = self.get('container'),
             containerRegion = self._containerRegion || {};
-        // 宽度没变就没必要调整
-        if (containerRegion &&
-            self.get("container").width() === containerRegion.width) {
+
+        if (
+        // container display none ...
+            !container[0].offsetWidth ||
+                // 宽度没变就没必要调整
+                containerRegion &&
+                    container.width() === containerRegion.width) {
             return
         }
         self.adjust();
@@ -304,7 +309,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             item = adjustItemAction(self, true, itemRaw),
             effect = self.get("effect");
         // then animate
-        if (effect && effect.effect) {
+        if (item && effect && effect.effect) {
             // 先隐藏才能调用 fadeIn slideDown
             item.hide();
             item.css("visibility", "");
@@ -556,9 +561,13 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
              * Destroy current instance.
              */
             destroy: function () {
-                var onResize = this.__onResize;
+                var self = this;
+                var onResize = self.__onResize;
                 $(win).detach("resize", onResize);
                 onResize.stop();
+                S.log('waterfall is destroyed!');
+                self.fire('destroy');
+                self.__destroyed = 1;
             }
         });
 

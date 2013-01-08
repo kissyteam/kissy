@@ -241,11 +241,9 @@
         },
 
         /**
-         * use
-         * @param modNames
-         * @param callback
+         * use, _forceSync for kissy.js, initialize dom,event sync
          */
-        use: function (modNames, callback) {
+        use: function (modNames, callback, /* for internal */_forceSync) {
             var self = this;
 
             var runtime = self.runtime;
@@ -259,9 +257,15 @@
             // if all mods are attached, just run
             // do not queue
             if (utils.isAttached(runtime, unaliasModNames)) {
-                setTimeout(function () {
-                    callback && callback.apply(null, utils.getModules(runtime, modNames));
-                }, 0);
+                if (callback) {
+                    if (_forceSync) {
+                        callback.apply(null, utils.getModules(runtime, modNames));
+                    } else {
+                        setTimeout(function () {
+                            callback.apply(null, utils.getModules(runtime, modNames));
+                        }, 0);
+                    }
+                }
                 return;
             }
 

@@ -45,7 +45,8 @@
              *      KISSY.use('overlay,dd', function(S, Overlay){});
              */
             use: function (names, callback) {
-                this.getLoader().use(names, callback);
+                var loader = this.getLoader();
+                loader.use.apply(loader, arguments);
             },
             /**
              * get KISSY 's loader instance

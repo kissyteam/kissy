@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 8 13:12
+build time: Jan 9 00:10
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130108131227' will replace with current timestamp when compressing.
+         * NOTICE: '20130109001035' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130108131227',
+        __BUILD_TIME: '20130109001035',
         /**
          * KISSY Environment.
          * @private
@@ -4764,9 +4764,10 @@ var KISSY = (function (undefined) {
          * @param {String|String[]} modNames names of mods to be loaded,if string then separated by space
          * @param {Function} callback callback when modNames are all loaded,
          * with KISSY as first argument and mod 's value as the following arguments
+         * @param _forceSync internal use, do not set
          * @chainable
          */
-        use: function (modNames, callback) {
+        use: function (modNames, callback, /* for internal */_forceSync) {
             var self = this,
                 normalizedModNames,
                 loadChecker = new LoadChecker(loadReady),
@@ -4787,10 +4788,13 @@ var KISSY = (function (undefined) {
             // in case modules is loaded statically
             // synchronous check
             // but always async for loader
-            setTimeout(function () {
+            if (_forceSync) {
                 loadChecker.check();
-            }, 0);
-
+            } else {
+                setTimeout(function () {
+                    loadChecker.check();
+                }, 0);
+            }
             return self;
         }
     });
@@ -4981,7 +4985,8 @@ var KISSY = (function (undefined) {
              *      KISSY.use('overlay,dd', function(S, Overlay){});
              */
             use: function (names, callback) {
-                this.getLoader().use(names, callback);
+                var loader = this.getLoader();
+                loader.use.apply(loader, arguments);
             },
             /**
              * get KISSY 's loader instance
@@ -5093,7 +5098,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130108131227'
+            tag: '20130109001035'
         }, getBaseInfo()));
     }
 
@@ -5571,6 +5576,10 @@ config({
 
     S.add('promise', function () {
         return S.Promise;
+    });
+
+    S.add('ua', function () {
+        return S.UA;
     });
 
     S.add('uri', function () {
