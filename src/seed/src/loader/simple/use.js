@@ -80,9 +80,10 @@
          * @param {String|String[]} modNames names of mods to be loaded,if string then separated by space
          * @param {Function} callback callback when modNames are all loaded,
          * with KISSY as first argument and mod 's value as the following arguments
+         * @param _forceSync internal use, do not set
          * @chainable
          */
-        use: function (modNames, callback) {
+        use: function (modNames, callback, /* for internal */_forceSync) {
             var self = this,
                 normalizedModNames,
                 loadChecker = new LoadChecker(loadReady),
@@ -103,10 +104,13 @@
             // in case modules is loaded statically
             // synchronous check
             // but always async for loader
-            setTimeout(function () {
+            if (_forceSync) {
                 loadChecker.check();
-            }, 0);
-
+            } else {
+                setTimeout(function () {
+                    loadChecker.check();
+                }, 0);
+            }
             return self;
         }
     });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 8 13:14
+build time: Jan 8 14:01
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130108131404' will replace with current timestamp when compressing.
+         * NOTICE: '20130108140121' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130108131404',
+        __BUILD_TIME: '20130108140121',
         /**
          * KISSY Environment.
          * @private
@@ -5008,9 +5008,10 @@ var KISSY = (function (undefined) {
          * @param {String|String[]} modNames names of mods to be loaded,if string then separated by space
          * @param {Function} callback callback when modNames are all loaded,
          * with KISSY as first argument and mod 's value as the following arguments
+         * @param _forceSync internal use, do not set
          * @chainable
          */
-        use: function (modNames, callback) {
+        use: function (modNames, callback, /* for internal */_forceSync) {
             var self = this,
                 normalizedModNames,
                 loadChecker = new LoadChecker(loadReady),
@@ -5031,10 +5032,13 @@ var KISSY = (function (undefined) {
             // in case modules is loaded statically
             // synchronous check
             // but always async for loader
-            setTimeout(function () {
+            if (_forceSync) {
                 loadChecker.check();
-            }, 0);
-
+            } else {
+                setTimeout(function () {
+                    loadChecker.check();
+                }, 0);
+            }
             return self;
         }
     });
@@ -5421,11 +5425,9 @@ var KISSY = (function (undefined) {
         },
 
         /**
-         * use
-         * @param modNames
-         * @param callback
+         * use, _forceSync for kissy.js, initialize dom,event sync
          */
-        use: function (modNames, callback) {
+        use: function (modNames, callback, /* for internal */_forceSync) {
             var self = this;
 
             var runtime = self.runtime;
@@ -5439,9 +5441,15 @@ var KISSY = (function (undefined) {
             // if all mods are attached, just run
             // do not queue
             if (utils.isAttached(runtime, unaliasModNames)) {
-                setTimeout(function () {
-                    callback && callback.apply(null, utils.getModules(runtime, modNames));
-                }, 0);
+                if (callback) {
+                    if (_forceSync) {
+                        callback.apply(null, utils.getModules(runtime, modNames));
+                    } else {
+                        setTimeout(function () {
+                            callback.apply(null, utils.getModules(runtime, modNames));
+                        }, 0);
+                    }
+                }
                 return;
             }
 
@@ -5798,7 +5806,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130108131404'
+            tag: '20130108140121'
         }, getBaseInfo()));
     }
 
