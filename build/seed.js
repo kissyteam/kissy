@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 27 19:43
+build time: Jan 8 12:58
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20121227194332' will replace with current timestamp when compressing.
+         * NOTICE: '20130108125808' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20121227194332',
+        __BUILD_TIME: '20130108125808',
         /**
          * KISSY Environment.
          * @private
@@ -1534,7 +1534,7 @@ var KISSY = (function (undefined) {
                 return str == null ? EMPTY : trim.call(str);
             } :
             function (str) {
-                return str == null ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+                return str == null ? EMPTY : (str + '').replace(RE_TRIM, EMPTY);
             },
 
         /**
@@ -5221,24 +5221,22 @@ var KISSY = (function (undefined) {
     // ----------------------- private start
     // Load next use
     function next(self) {
-        var args;
         if (self.queue.length) {
-            args = self.queue.shift();
-            _use(self, args.modNames, args.fn);
+            var modItem = self.queue.shift();
+            _use(self, modItem);
         }
     }
 
     // Enqueue use
-    function enqueue(self, modNames, fn) {
-        self.queue.push({
-            modNames: modNames,
-            fn: fn
-        });
+    function enqueue(self, modItem) {
+        self.queue.push(modItem);
     }
 
     // Real use.
-    function _use(self, modNames, fn) {
-        var unaliasModNames,
+    function _use(self, modItem) {
+        var modNames = modItem.modNames,
+            unaliasModNames = modItem.unaliasModNames,
+            fn = modItem.fn,
             allModNames,
             comboUrls,
             css,
@@ -5250,12 +5248,6 @@ var KISSY = (function (undefined) {
             runtime = self.runtime;
 
         self.loading = 1;
-
-        modNames = utils.getModNamesAsArray(modNames);
-
-        modNames = utils.normalizeModNamesWithAlias(runtime, modNames);
-
-        unaliasModNames = utils.unalias(runtime, modNames);
 
         allModNames = self['calculate'](unaliasModNames);
 
@@ -5299,7 +5291,7 @@ var KISSY = (function (undefined) {
                 } else {
                     // new require is introduced by KISSY.add
                     // run again
-                    _use(self, modNames, fn)
+                    _use(self, modItem)
                 }
             }
         }
@@ -5329,7 +5321,7 @@ var KISSY = (function (undefined) {
                 });
             }
             if (ms.length) {
-                S.log('load remote modules: "' + ms.join(', ') + '" from: "' + ps.join(', ')+'"');
+                S.log('load remote modules: "' + ms.join(', ') + '" from: "' + ps.join(', ') + '"');
             }
         }
     }
@@ -5431,22 +5423,44 @@ var KISSY = (function (undefined) {
          * @param callback
          */
         use: function (modNames, callback) {
-            var self = this,
-                fn = function () {
-                    // KISSY.use in callback will be queued
-                    if (callback) {
-                        // one failure does not interfere with others
-                        try {
-                            callback.apply(this, arguments);
-                        } catch (e) {
-                            S.log(e.stack || e, 'error');
-                        }
-                    }
+            var self = this;
+
+            var fn = function () {
+                // KISSY.use in callback will be queued
+                if (callback) {
+                    // try {
+                    callback.apply(this, arguments);
+//                    } catch (e) {
+//                        S.log(e.stack || e, 'error');
+//                    }
+                }
+                // one failure does not interfere with others
+                setTimeout(function () {
                     self.loading = 0;
                     next(self);
-                };
+                }, 0);
+            };
 
-            enqueue(self, modNames, fn);
+            var runtime = self.runtime;
+
+            modNames = utils.getModNamesAsArray(modNames);
+
+            modNames = utils.normalizeModNamesWithAlias(runtime, modNames);
+
+            var unaliasModNames = utils.unalias(runtime, modNames);
+
+            // if all mods are attached, just run
+            // do not queue
+            if (utils.isAttached(runtime, unaliasModNames)) {
+                fn.apply(null, utils.getModules(runtime, modNames));
+                return;
+            }
+
+            enqueue(self, {
+                modNames: modNames,
+                unaliasModNames: unaliasModNames,
+                fn: fn
+            });
 
             if (!self.loading) {
                 next(self);
@@ -5779,7 +5793,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20121227194332'
+            tag: '20130108125808'
         }, getBaseInfo()));
     }
 

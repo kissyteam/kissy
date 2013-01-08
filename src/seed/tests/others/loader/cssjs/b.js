@@ -1,3 +1,0 @@
-KISSY.add("b",function(){
-
-});
