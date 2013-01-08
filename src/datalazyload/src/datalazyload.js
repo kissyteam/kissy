@@ -50,6 +50,61 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         return id + fid;
     }
 
+    function cacheWidth(el) {
+        if (el._ks_lazy_width) {
+            return el._ks_lazy_width;
+        }
+        return el._ks_lazy_width = DOM.outerWidth(el);
+    }
+
+
+    function cacheHeight(el) {
+        if (el._ks_lazy_height) {
+            return el._ks_lazy_height;
+        }
+        return el._ks_lazy_height = DOM.outerHeight(el);
+    }
+
+
+    /**
+     * whether part of elem can be seen by user.
+     * note: it will not handle display none.
+     * @ignore
+     */
+    function elementInViewport(elem, windowRegion, containerRegion) {
+        // it's better to removeElements,
+        // but if user want to append it later?
+        // use addElements instead
+        // if (!inDocument(elem)) {
+        //    return false;
+        // }
+        // display none or inside display none
+        if (!elem.offsetWidth) {
+            return false;
+        }
+        var elemOffset = DOM.offset(elem),
+            inContainer = true,
+            inWin,
+            left = elemOffset.left,
+            top = elemOffset.top,
+            elemRegion = {
+                left: left,
+                top: top,
+                right: left + cacheWidth(elem),
+                bottom: top + cacheHeight(elem)
+            };
+
+        inWin = isCross(windowRegion, elemRegion);
+
+        if (inWin && containerRegion) {
+            inContainer = isCross(containerRegion, elemRegion);
+        }
+
+        // 确保在容器内出现
+        // 并且在视窗内也出现
+        return inContainer && inWin;
+    }
+
     /**
      * LazyLoad elements which are out of current viewPort.
      * @class KISSY.DataLazyload
@@ -279,33 +334,37 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
          * @private
          */
         '_loadItems': function () {
-            var self = this;
-            self['_loadImgs']();
-            self['_loadTextAreas']();
-            self['_fireCallbacks']();
+            var self = this,
+                containerRegion,
+                container = self.get('container'),
+                windowRegion;
+            // container is display none
+            if (self._containerIsNotDocument && !container.offsetWidth) {
+                return;
+            }
+            windowRegion = self['_getBoundingRect']();
+            // 兼容，不检测 container
+            if (!self._backCompact && self._containerIsNotDocument) {
+                containerRegion = self['_getBoundingRect'](self.get('container'));
+            }
+            self['_loadImgs'](windowRegion, containerRegion);
+            self['_loadTextAreas'](windowRegion, containerRegion);
+            self['_fireCallbacks'](windowRegion, containerRegion);
         },
 
         /**
          * lazyload images
          * @private
          */
-        '_loadImgs': function () {
+        '_loadImgs': function (windowRegion, containerRegion) {
             var self = this;
-            self._images = S.filter(self._images, self['_loadImg'], self);
-        },
-
-        /**
-         * check image whether it is inside viewport and load
-         * @private
-         */
-        '_loadImg': function (img) {
-            var self = this;
-            if (self['_elementInViewport'](img)) {
-                loadImgSrc(img);
-            } else {
-                return true;
-            }
-            return undefined;
+            self._images = S.filter(self._images, function (img) {
+                if (elementInViewport(img, windowRegion, containerRegion)) {
+                    return loadImgSrc(img);
+                } else {
+                    return true;
+                }
+            }, self);
         },
 
 
@@ -313,30 +372,22 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
          * lazyload textareas
          * @private
          */
-        '_loadTextAreas': function () {
-            var self = this;
-            self._textareas = S.filter(self._textareas, self['_loadTextArea'], self);
-        },
-
-        /**
-         * check textarea whether it is inside viewport and load
-         * @private
-         */
-        '_loadTextArea': function (textarea) {
-            var self = this;
-            if (self['_elementInViewport'](textarea)) {
-                loadAreaData(textarea, self.get("execScript"));
-            } else {
-                return true;
-            }
-            return undefined;
+        '_loadTextAreas': function (windowRegion, containerRegion) {
+            var self = this, execScript = self.get('execScript');
+            self._textareas = S.filter(self._textareas, function (textarea) {
+                if (elementInViewport(textarea, windowRegion, containerRegion)) {
+                    return loadAreaData(textarea, execScript);
+                } else {
+                    return true;
+                }
+            }, self);
         },
 
         /**
          * fire callbacks
          * @private
          */
-        '_fireCallbacks': function () {
+        '_fireCallbacks': function (windowRegion, containerRegion) {
             var self = this,
                 callbacks = self._callbacks;
 
@@ -345,7 +396,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 var el = callback.el,
                     remove = false,
                     fn = callback.fn;
-                if (self['_elementInViewport'](el)) {
+                if (elementInViewport(el, windowRegion, containerRegion)) {
                     remove = fn.call(el);
                 }
                 if (remove !== false) {
@@ -515,52 +566,6 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             return (self._images.length +
                 self._textareas.length +
                 (S.isEmptyObject(self._callbacks) ? 0 : 1)) == 0;
-        },
-
-        /**
-         * whether part of elem can be seen by user.
-         * note: it will not handle display none.
-         * @private
-         * @param {HTMLElement} elem
-         */
-        '_elementInViewport': function (elem) {
-            // it's better to removeElements,
-            // but if user want to append it later?
-            // use addElements instead
-            // if (!inDocument(elem)) {
-            //    return false;
-            // }
-            // display none or inside display none
-            if (!elem.offsetWidth) {
-                return false;
-            }
-            var self = this,
-                elemOffset = DOM.offset(elem),
-                inContainer = true,
-                container = self.get('container'),
-                windowRegion = self['_getBoundingRect'](),
-                inWin,
-                containerRegion,
-                left = elemOffset.left,
-                top = elemOffset.top,
-                elemRegion = {
-                    left: left,
-                    top: top,
-                    right: left + DOM.outerWidth(elem),
-                    bottom: top + DOM.outerHeight(elem)
-                };
-
-            inWin = isCross(windowRegion, elemRegion);
-
-            // 兼容，不检测 container
-            if (!self._backCompact && inWin && self._containerIsNotDocument) {
-                containerRegion = self['_getBoundingRect'](container);
-                inContainer = isCross(containerRegion, elemRegion);
-            }
-
-            // 确保在容器内出现
-            // 并且在视窗内也出现
-            return inContainer && inWin;
         },
 
         /**
