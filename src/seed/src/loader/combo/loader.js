@@ -248,6 +248,21 @@
         use: function (modNames, callback) {
             var self = this;
 
+            var runtime = self.runtime;
+
+            modNames = utils.getModNamesAsArray(modNames);
+
+            modNames = utils.normalizeModNamesWithAlias(runtime, modNames);
+
+            var unaliasModNames = utils.unalias(runtime, modNames);
+
+            // if all mods are attached, just run
+            // do not queue
+            if (utils.isAttached(runtime, unaliasModNames)) {
+                callback && callback.apply(null, utils.getModules(runtime, modNames));
+                return;
+            }
+
             var fn = function () {
                 // one callback failure does not interfere with others
                 setTimeout(function () {
@@ -263,21 +278,6 @@
 //                    }
                 }
             };
-
-            var runtime = self.runtime;
-
-            modNames = utils.getModNamesAsArray(modNames);
-
-            modNames = utils.normalizeModNamesWithAlias(runtime, modNames);
-
-            var unaliasModNames = utils.unalias(runtime, modNames);
-
-            // if all mods are attached, just run
-            // do not queue
-            if (utils.isAttached(runtime, unaliasModNames)) {
-                fn.apply(null, utils.getModules(runtime, modNames));
-                return;
-            }
 
             enqueue(self, {
                 modNames: modNames,

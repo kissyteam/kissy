@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 8 13:00
+build time: Jan 8 13:06
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130108130047' will replace with current timestamp when compressing.
+         * NOTICE: '20130108130654' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130108130047',
+        __BUILD_TIME: '20130108130654',
         /**
          * KISSY Environment.
          * @private
@@ -5425,6 +5425,21 @@ var KISSY = (function (undefined) {
         use: function (modNames, callback) {
             var self = this;
 
+            var runtime = self.runtime;
+
+            modNames = utils.getModNamesAsArray(modNames);
+
+            modNames = utils.normalizeModNamesWithAlias(runtime, modNames);
+
+            var unaliasModNames = utils.unalias(runtime, modNames);
+
+            // if all mods are attached, just run
+            // do not queue
+            if (utils.isAttached(runtime, unaliasModNames)) {
+                callback && callback.apply(null, utils.getModules(runtime, modNames));
+                return;
+            }
+
             var fn = function () {
                 // one callback failure does not interfere with others
                 setTimeout(function () {
@@ -5440,21 +5455,6 @@ var KISSY = (function (undefined) {
 //                    }
                 }
             };
-
-            var runtime = self.runtime;
-
-            modNames = utils.getModNamesAsArray(modNames);
-
-            modNames = utils.normalizeModNamesWithAlias(runtime, modNames);
-
-            var unaliasModNames = utils.unalias(runtime, modNames);
-
-            // if all mods are attached, just run
-            // do not queue
-            if (utils.isAttached(runtime, unaliasModNames)) {
-                fn.apply(null, utils.getModules(runtime, modNames));
-                return;
-            }
 
             enqueue(self, {
                 modNames: modNames,
@@ -5793,7 +5793,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130108130047'
+            tag: '20130108130654'
         }, getBaseInfo()));
     }
 
