@@ -309,7 +309,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             item = adjustItemAction(self, true, itemRaw),
             effect = self.get("effect");
         // then animate
-        if (effect && effect.effect) {
+        if (item && effect && effect.effect) {
             // 先隐藏才能调用 fadeIn slideDown
             item.hide();
             item.css("visibility", "");
@@ -561,7 +561,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
              * Destroy current instance.
              */
             destroy: function () {
-                var onResize = this.__onResize;
+                var self = this;
+                var onResize = self.__onResize;
                 $(win).detach("resize", onResize);
                 onResize.stop();
                 S.log('waterfall is destroyed!');
