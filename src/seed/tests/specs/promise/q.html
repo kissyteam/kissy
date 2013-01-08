@@ -1,0 +1,44 @@
+<script src='/kissy/tools/third-party/q.js'></script>
+<script>
+    var d = Q.defer(),
+            ret = [],
+            p = d.promise;
+
+    var p2 = p.then(
+            function (v) {
+                ret.push("e1 :" + v);
+                throw "e1";
+            },
+            function (r) {
+                ret.push("e2 :" + r);
+                return "e2";
+            });
+
+    var p3 = p2.then(
+            function (v) {
+                ret.push("e3 :" + v);
+                throw "e3";
+            },
+            function (r) {
+                ret.push("e4 :" + r);
+                throw "e4";
+                // return "e4";
+            });
+
+    var p4 = p3.then(function (v) {
+        ret.push("e5 :" + v);
+        throw "e5";
+    }, function (r) {
+        ret.push("e6 :" + r);
+        return "e6";
+    });
+
+    setTimeout(function () {
+        d.resolve(1);
+    }, 100);
+
+    setTimeout(function () {
+        alert(ret.join("\n"));
+    }, 200);
+
+</script>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>Seed Test Runner</title>
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="../data/clear.js"></script>
+    <script>
+        KISSY.config("combine", true);
+    </script>
+</head>
+<body>
+<h1>KISSY Combo Core Test Cases</h1>
+
+
+<script>
+    describe("use core should works as simple loader", function () {
+        var S = KISSY;
+
+        it("core is an alias", function () {
+
+            var ret = 0;
+
+            KISSY.use("dom,event", function () {
+                ret = 1;
+            });
+
+            waitsFor(function () {
+                return ret;
+            });
+
+            runs(function () {
+                expect(S.DOM).not.toBeFalsy();
+                expect(S.Event).not.toBeFalsy();
+            });
+
+
+        });
+
+    });
+
+
+    setTimeout(function () {
+        jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+        jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+        jasmine.getEnv().execute(function () {
+            jasmine.kissyNext(this.results().failedCount);
+        });
+    }, 200);
+</script>
+</body>
+</html>

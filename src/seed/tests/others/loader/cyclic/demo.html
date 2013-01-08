@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+<title>test iframe</title>
+</head>
+<body>
+
+<script src="/kissy/build/seed.js"></script>
+
+<script>
+    var S = KISSY;
+    KISSY.config({
+        packages:[
+            {
+                name:'tests3',
+                path:'./combo/'
+            }
+        ]
+    });
+    S.getLoader().on("afterModAttached", function (e) {
+        S.log(e.mod.name + " is attached");
+    });
+    S.use("tests3/b", function (S, v) {
+        S.log(v);
+    });
+    S.use("tests3/b", function (S, v) {
+        S.log(v);
+    });
+</script>
+
+</body>
+</html>

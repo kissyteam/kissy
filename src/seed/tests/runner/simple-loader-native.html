@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>Seed Test Runner</title>
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="../data/clear.js"></script>
+</head>
+<body>
+<h1>KISSY Simple Loader Native Test Cases</h1>
+<script>
+    var S = KISSY;
+    describe("loader", function () {
+
+        it("should load native internal mods correctly", function () {
+            var ok = 0;
+
+            S.use("dom,ajax", function (S, Node) {
+                ok++;
+            });
+
+            S.use("dom,ajax", function (S, Node) {
+                ok++;
+            });
+
+            waitsFor(function () {
+                return ok == 2;
+            }, "dom,ajax never loaded");
+        });
+
+        it("load core when use dom", function () {
+
+            S.clearLoader();
+
+            KISSY.config({
+                debug: 0
+            });
+
+            var ok = 0;
+
+            S.use("dom", function () {
+                ok = 1;
+                expect(S.Event).not.toBeUndefined();
+            });
+
+            waitsFor(function () {
+                return ok;
+            }, "dom never loaded");
+
+        });
+
+    });
+
+
+    jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+    jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+    jasmine.getEnv().execute(function () {
+        jasmine.kissyNext(this.results().failedCount);
+    });
+
+
+</script>
+</body>
+</html>

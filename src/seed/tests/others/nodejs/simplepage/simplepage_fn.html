@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head><title>
+    simple分页
+</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body class="yui-skin-sam">
+<style>
+    body p {
+        font: 14px Georgia, "Times New Roman", Times, sans-serif;
+        color: #444;
+    }
+
+    h1 {
+        font-size: 26px;
+        color: #00859D;
+        font-family: Constantia, serif;
+    }
+
+    h3 {
+        font-size: 14px;
+        color: #555;
+        margin: 15px 0 5px;
+    }
+
+    code {
+        font-family: "Courier New"
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    a.on {
+        font-weight: bold;
+    }
+
+    a {
+        margin-right: 5px;
+    }
+</style>
+<script src="/kissy/build/seed.js"></script>
+<div class="page">
+    <table width="98%" id="Hook">
+        <tbody>
+        <tr>
+            <th>订单编号</th>
+            <th>订单日期</th>
+            <th>顾客编号</th>
+            <th>收货地址</th>
+        </tr>
+
+        <tr class="item hidden">
+            <td>10760</td>
+            <td>1997/12/1 0:00:00</td>
+            <td>MAISD</td>
+            <td>Rue Joseph-Bens 532</td>
+        </tr>
+        <tr class="item hidden">
+            <td>10761</td>
+            <td>1997/12/2 0:00:00</td>
+            <td>RATTC</td>
+            <td>2817 Milton Dr.</td>
+        </tr>
+        <tr class="item hidden">
+            <td>10762</td>
+            <td>1997/12/2 0:00:00</td>
+            <td>FOLKO</td>
+            <td>Akergatan 24</td>
+        </tr>
+
+        <tr class="item hidden">
+            <td>10763</td>
+            <td>1997/12/3 0:00:00</td>
+            <td>FOLIG</td>
+            <td>184, chausse de Tournai</td>
+        </tr>
+        <tr class="item hidden">
+            <td>10764</td>
+            <td>1997/12/3 0:00:00</td>
+            <td>ERNSH</td>
+            <td>Kirchgasse 6</td>
+        </tr>
+        <tr class="item hidden">
+            <td>10765</td>
+            <td>1997/12/4 0:00:00</td>
+            <td>QUICK</td>
+            <td>Taucherstrae 10</td>
+        </tr>
+
+        <tr class="item hidden">
+            <td>10766</td>
+            <td>1997/12/5 0:00:00</td>
+            <td>OTTIK</td>
+            <td>Mehrheimerstr. 369</td>
+        </tr>
+        <tr class="item hidden">
+            <td>10767</td>
+            <td>1997/12/5 0:00:00</td>
+            <td>SUPRD</td>
+            <td>Boulevard Tirou, 255</td>
+        </tr>
+        <tr class="item hidden">
+            <td>10768</td>
+            <td>1997/12/8 0:00:00</td>
+            <td>AROUT</td>
+            <td>Brook Farm Stratford St. Mary</td>
+        </tr>
+
+        <tr class="item hidden">
+            <td>10769</td>
+            <td>1997/12/8 0:00:00</td>
+            <td>VAFFE</td>
+            <td>Smagsloget 45</td>
+        </tr>
+        <tr class="item hidden">
+            <td>10770</td>
+            <td>1997/12/9 0:00:00</td>
+            <td>HANAR</td>
+            <td>Rua do Pao, 67</td>
+        </tr>
+        <tr class="item hidden">
+            <td>10771</td>
+            <td>1997/12/10 0:00:00</td>
+            <td>ERNSH</td>
+            <td>Kirchgasse 6</td>
+        </tr>
+
+        <tr class="item hidden">
+            <td>10772</td>
+            <td>1997/12/10 0:00:00</td>
+            <td>LEHMS</td>
+            <td>Magazinweg 7</td>
+        </tr>
+        <tr class="item hidden">
+            <td>10773</td>
+            <td>1997/12/11 0:00:00</td>
+            <td>ERNSH</td>
+            <td>Kirchgasse 6</td>
+        </tr>
+        <tr class="item hidden">
+            <td>10774</td>
+            <td>1997/12/11 0:00:00</td>
+            <td>FOLKO</td>
+            <td>Akergatan 24</td>
+        </tr>
+
+        <tr class="item hidden">
+            <td>10775</td>
+            <td>1997/12/12 0:00:00</td>
+            <td>THECR</td>
+            <td>55 Grizzly Peak Rd.</td>
+        </tr>
+        <tr class="item hidden">
+            <td>10776</td>
+            <td>1997/12/15 0:00:00</td>
+            <td>ERNSH</td>
+            <td>Kirchgasse 6</td>
+        </tr>
+        <tr class="item hidden">
+            <td>10777</td>
+            <td>1997/12/15 0:00:00</td>
+            <td>GOURL</td>
+            <td>Av. Brasil, 442</td>
+        </tr>
+        <tr class="item hidden">
+            <td>10778</td>
+            <td>1997/12/16 0:00:00</td>
+            <td>BERGS</td>
+            <td>Berguvsvagen 8</td>
+        </tr>
+
+        <tr class="item hidden">
+            <td>10779</td>
+            <td>1997/12/16 0:00:00</td>
+            <td>MORGK</td>
+            <td>Heerstr. 22</td>
+        </tr>
+        </tbody>
+    </table>
+    <p id="Page"></p>
+    <script>
+        var S = KISSY;
+        /**
+         * 包配置
+         */
+        S.config({
+            packages:[
+                {
+                    name:'example',
+                    path:'../../'
+                }
+            ]
+        });
+        S.use('example/simplepage/simplepage', function (S, Spage) {
+
+            new Spage(S.all('#Hook .item'), 'Page', {
+                step:4,
+                index:2,
+                selected_class:'on'
+            }).on('pagechange', function (o) {
+                S.log(o);
+            });
+
+        });
+    </script>
+</div>
+</body>
+</html>
+

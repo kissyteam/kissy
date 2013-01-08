@@ -1,0 +1,13 @@
+<script  src="/kissy/build/seed.js"></script>
+<script >
+    KISSY.config({
+        combine:true
+    });
+
+    KISSY.use("core", function (S) {
+        S.log(arguments.length);
+        S.each(arguments, function (v) {
+            S.log(v);
+        });
+    });
+</script>

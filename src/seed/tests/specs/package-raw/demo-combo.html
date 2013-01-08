@@ -1,0 +1,19 @@
+<script src="/kissy/build/seed.js"></script>
+<script >
+    KISSY.config({
+        debug: false,
+        combine:true,
+        packages:[
+            {
+                debug:true,
+                name:"t",
+                path:"./"
+            }
+        ]
+    });
+
+    KISSY.use("t/t2", function (S, t) {
+        alert(t);
+        console.log(t);
+    });
+</script>

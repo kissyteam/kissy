@@ -1,0 +1,17 @@
+<script src='../../../../../build/seed.js'></script>
+<script>
+    var S = KISSY;
+    S.getScript("./test.js", function () {
+        S.log("js1 returned");
+    });
+    S.getScript("./test.js", function () {
+        S.log("js2 returned");
+    });
+    S.getScript("http://localhost:9999/" +
+            "src/seed/tests/loader/getScript/test.css", function () {
+        S.log("css1 returned");
+    });
+    S.getScript("./test.css", function () {
+        S.log("css2 returned");
+    });
+</script>

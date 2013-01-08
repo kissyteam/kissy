@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+<title>test iframe</title>
+</head>
+<body>
+
+<script src="/kissy/build/seed.js"></script>
+
+<script>
+    KISSY.config({
+        packages:[
+            {
+                name:"cyclic",
+                path:"../"
+            }
+        ]
+    });
+    KISSY.getLoader().on("afterModAttached", function (e) {
+        S.log(e.mod.name + " : attached");
+    });
+    KISSY.use("cyclic/a", function () {
+        alert(1);
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,13 @@
+<script src="/kissy/build/seed.js"></script>
+<script>
+    KISSY.config({
+        map: [
+            [
+                /(.+)(overlay|component)\.js(\?.+)/,
+                '$1??overlay.js,component/base.js,component/extension.js'
+            ]
+        ]
+    });
+
+    KISSY.use("overlay");
+</script>

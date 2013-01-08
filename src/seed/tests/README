@@ -1,0 +1,14 @@
+
+注：kernel 包括 kissy.js + lang.js
+
+test.html         - 在浏览器环境下运行测试
+test-es5.js       - 在 BESENShell 中运行，测试 kernel 是否兼容 ES5
+test-es5.jsx      - 测试 kernel 能否运行在 Adobe ExtendScript Toolkit CS5 下
+test-ready.html   - 在浏览器环境下测试 S.ready
+
+kissy-spec.js     - kissy.js 的 specs
+lang-spec.js      - lang.js 的 specs
+scope-spec.js     - kernel 在不同 scope 下的 specs
+web-spec.js       - web.js 的 specs
+
+seed-cases.js     - 测试 kernel 可处理不同 seed

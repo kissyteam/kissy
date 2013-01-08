@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<project name="seed.build" default="build" basedir=".">
+    <description>Seed Build File</description>
+
+    <property name="component.name" value="seed"/>
+
+    <import file="../../tools/build-xml/common.xml"/>
+
+    <target name="merge-dependency">
+        <concat destfile="${component.src.dir}/modules.js" encoding="${charset}" outputencoding="${charset}">
+            <header filtering="no" trimleading="yes">
+                (function(config,Features,UA){
+            </header>
+            <fileset dir="${kissy.src.dir}" includes="**/meta/modules.js"/>
+            <footer>
+                })(function(c){
+                KISSY.config('modules', c);
+                },KISSY.Features,KISSY.UA);
+            </footer>
+        </concat>
+    </target>
+
+    <target name="seed-concat">
+        <concat destfile="${component.src.dir.tmp}/seed-pkg.js" encoding="${charset}" outputencoding="${charset}">
+            <path location="${component.src.dir}/kissy.js"/>
+
+
+            <!-- kissy lang start-->
+            <path location="${component.src.dir}/lang/object.js"/>
+            <path location="${component.src.dir}/lang/array.js"/>
+            <path location="${component.src.dir}/lang/escape.js"/>
+            <path location="${component.src.dir}/lang/function.js"/>
+            <path location="${component.src.dir}/lang/lang.js"/>
+            <path location="${component.src.dir}/lang/string.js"/>
+            <path location="${component.src.dir}/lang/type.js"/>
+            <!-- kissy lang end-->
+
+            <path location="${component.src.dir}/promise.js"/>
+            <path location="${component.src.dir}/path.js"/>
+            <path location="${component.src.dir}/uri.js"/>
+
+            <path location="${component.src.dir}/ua.js"/>
+            <path location="${component.src.dir}/features.js"/>
+
+            <!--kissy loader start-->
+            <path location="${component.src.dir}/loader/base.js"/>
+            <path location="${component.src.dir}/loader/target.js"/>
+            <path location="${component.src.dir}/loader/utils.js"/>
+            <path location="${component.src.dir}/loader/base-ext.js"/>
+            <path location="${component.src.dir}/loader/css-onload.js"/>
+            <path location="${component.src.dir}/loader/get-script.js"/>
+            <path location="${component.src.dir}/loader/configs.js"/>
+            <path location="${component.src.dir}/loader/simple/add.js"/>
+            <path location="${component.src.dir}/loader/simple/use.js"/>
+            <path location="${component.src.dir}/loader/combo/loader.js"/>
+            <path location="${component.src.dir}/loader/init.js"/>
+            <!--kissy loader end-->
+
+            <path location="${component.src.dir}/web.js"/>
+            <path location="${component.src.dir}/meta.js"/>
+            <path location="${component.src.dir}/modules.js"/>
+            <path location="${component.src.dir}/exports.js"/>
+            <filterchain>
+                <deletecharacters chars="${bom}"/>
+            </filterchain>
+        </concat>
+
+        <!-- build kissy-nodejs -->
+        <concat destfile="${component.src.dir.tmp}/kissy-nodejs-pkg.js" encoding="${charset}"
+                outputencoding="${charset}">
+            <path location="${component.src.dir}/kissy.js"/>
+
+            <!-- kissy lang start-->
+            <path location="${component.src.dir}/lang/object.js"/>
+            <path location="${component.src.dir}/lang/array.js"/>
+            <path location="${component.src.dir}/lang/escape.js"/>
+            <path location="${component.src.dir}/lang/function.js"/>
+            <path location="${component.src.dir}/lang/lang.js"/>
+            <path location="${component.src.dir}/lang/string.js"/>
+            <path location="${component.src.dir}/lang/type.js"/>
+            <!-- kissy lang end-->
+
+            <path location="${component.src.dir}/promise.js"/>
+            <path location="${component.src.dir}/path.js"/>
+            <path location="${component.src.dir}/uri.js"/>
+
+            <path location="${component.src.dir}/ua.js"/>
+            <path location="${component.src.dir}/features.js"/>
+
+            <!--kissy loader start-->
+            <path location="${component.src.dir}/loader/base.js"/>
+            <path location="${component.src.dir}/loader/target.js"/>
+            <path location="${component.src.dir}/loader/utils.js"/>
+            <path location="${component.src.dir}/loader/base-ext.js"/>
+            <path location="${component.src.dir}/loader/get-script-nodejs.js"/>
+            <path location="${component.src.dir}/loader/configs.js"/>
+            <path location="${component.src.dir}/loader/simple/add.js"/>
+            <path location="${component.src.dir}/loader/simple/use.js"/>
+            <path location="${component.src.dir}/loader/init.js"/>
+            <!--kissy loader end-->
+
+            <path location="${component.src.dir}/web.js"/>
+            <path location="${component.src.dir}/modules.js"/>
+            <path location="${component.src.dir}/exports.js"/>
+            <filterchain>
+                <deletecharacters chars="${bom}"/>
+            </filterchain>
+        </concat>
+    </target>
+
+    <target name="build" depends="merge-dependency,seed-concat,common-build.process">
+
+    </target>
+</project>
