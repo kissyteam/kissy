@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 8 17:17
+build time: Jan 8 17:37
 */
 /**
  * @fileOverview Make Elements flow like waterfall.
@@ -699,46 +699,41 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
             },
 
             /**
-             * Start monitor scroll on window.
+             * @ignore
              */
             start: function () {
-                var self = this;
-                if (self.__destroyed) {
-                    return;
-                }
-                if (!self.__started) {
-                    $(win).on("scroll", self.__onScroll);
-                    self.__started = 1;
-                }
+                this.resume();
+            },
+
+            /**
+             * @ignore
+             */
+            end: function () {
+                this.pause();
             },
 
             /**
              * Stop monitor scroll on window.
              */
-            end: function () {
+            pause: function () {
                 var self = this;
                 if (self.__destroyed) {
                     return;
                 }
                 $(win).detach("scroll", self.__onScroll);
                 self.__onScroll.stop();
-                self.__started = 0;
             },
 
             /**
-             * Use end instead.
-             * @deprecated 1.3
-             */
-            pause: function () {
-                this.end();
-            },
-
-            /**
-             * Use start instead.
-             * @deprecated 1.3
+             * Start monitor scroll on window.
              */
             resume: function () {
-                this.start();
+                var self = this;
+                if (self.__destroyed) {
+                    return;
+                }
+                $(win).on("scroll", self.__onScroll);
+                self.__started = 1;
             },
 
             /**
@@ -746,8 +741,8 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
              */
             destroy: function () {
                 var self = this;
-                Loader.superclass.destroy.apply(self, arguments);
                 self.end();
+                Loader.superclass.destroy.apply(self, arguments);
             }
         });
 
