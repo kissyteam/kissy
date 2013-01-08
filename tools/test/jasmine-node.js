@@ -200,6 +200,6 @@ function executeSpecsInFolder(folder, done, isVerbose, showColors, matcher, juni
 
     setTimeout(function(){
         jasmineEnv.execute();
-    },10);
+    },300);
 
 }
