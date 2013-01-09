@@ -200,7 +200,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         /**
          * Container which will be monitor scroll event to lazy load elements within it.
          * default: document
-         * @cfg {HTMLElement} containers
+         * @cfg {HTMLElement} container
          */
         /**
          * @ignore
