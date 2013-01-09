@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 9 19:12
+build time: Jan 9 19:16
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130109191238' will replace with current timestamp when compressing.
+         * NOTICE: '20130109191631' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130109191238',
+        __BUILD_TIME: '20130109191631',
         /**
          * KISSY Environment.
          * @private
@@ -5807,7 +5807,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130109191238'
+            tag: '20130109191631'
         }, getBaseInfo()));
     }
 
@@ -6322,7 +6322,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 9 18:56
+build time: Jan 9 19:16
 */
 /**
  * @ignore
@@ -9638,18 +9638,11 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             /**
              * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
-             * @deprecated
              * @param {window} [refWin=window] Window which will accept this stylesheet
              * @param {String} [cssText] The text containing the css rules
              * @param {String} [id] An id to add to the stylesheet for later removal
              */
             addStyleSheet: function (refWin, cssText, id) {
-                var warn = 'method addStyleSheet is deprecated in KISSY 1.3! ' +
-                    ' you can use DOM.create("<style>xx</style>") ' +
-                    ' or Node.all("<style>yy</style>") directly ';
-
-                S.log(warn, 'warn');
-
                 refWin = refWin || WINDOW;
 
                 if (typeof refWin == 'string') {
@@ -12024,7 +12017,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 9 19:12
+build time: Jan 9 19:16
 */
 /**
  * @ignore
