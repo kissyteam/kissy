@@ -10,7 +10,7 @@
         LOADING, LOADED, ERROR, ATTACHED;
 
     Loader = S.Loader;
-    data = Loader.STATUS;
+    data = Loader.Status;
     utils = Loader.Utils;
     UA = S.UA;
     LOADING = data.LOADING;

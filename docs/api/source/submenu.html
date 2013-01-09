@@ -105,6 +105,7 @@ KISSY.add(&quot;menu/submenu&quot;, function (S, Event, Component, MenuItem, Sub
                 // 2. 停止本身 highlighted false 而 buffer 的隐藏
                 self.clearSubMenuTimers();
                 self.showTimer_ = S.later(showMenu, self.get(&quot;menuDelay&quot;) * 1000, false, self);
+                return undefined;
             },
 
 <span id='KISSY-Menu-SubMenu-method-_onSetHighlighted'>            /**
@@ -154,7 +155,7 @@ KISSY.add(&quot;menu/submenu&quot;, function (S, Event, Component, MenuItem, Sub
              * Protected for subclass overridden.
              * @param {KISSY.Event.DOMEventObject} e key event.
              * @protected
-             * @return {Boolean} Whether the event was handled.
+             * @return {Boolean|undefined} Whether the event was handled.
              */
             handleKeydown: function (e) {
                 var self = this,
@@ -230,13 +231,13 @@ KISSY.add(&quot;menu/submenu&quot;, function (S, Event, Component, MenuItem, Sub
             },
 
             // 默认 addChild，这里里面的元素需要放到 menu 属性中
-            decorateChildrenInternal: function (ui, el) {
+            decorateChildrenInternal: function (UI, el) {
                 // 不能用 display:none
                 el.css(&quot;visibility&quot;, &quot;hidden&quot;);
                 var self = this,
                     docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
-                var menu = new ui({
+                var menu = new UI({
                     srcNode: el,
                     prefixCls: self.get(&quot;prefixCls&quot;)
                 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 9 19:59
+build time: Jan 9 23:26
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130109195936' will replace with current timestamp when compressing.
+         * NOTICE: '20130109232614' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130109195936',
+        __BUILD_TIME: '20130109232614',
         /**
          * KISSY Environment.
          * @private
@@ -3513,9 +3513,9 @@ var KISSY = (function (undefined) {
 
     /**
      * Loader Status Enum
-     * @enum {Number} KISSY.Loader.STATUS
+     * @enum {Number} KISSY.Loader.Status
      */
-    Loader.STATUS = {
+    Loader.Status = {
         /** init */
         'INIT': 0,
         /** loading */
@@ -3530,7 +3530,7 @@ var KISSY = (function (undefined) {
 
     S.Loader = Loader;
 
-    S.Loader.STATUS = Loader.STATUS;
+    S.Loader.Status = Loader.Status;
 
 })(KISSY);
 /*
@@ -3626,7 +3626,7 @@ var KISSY = (function (undefined) {
         Path = S.Path,
         host = S.Env.host,
         startsWith = S.startsWith,
-        data = Loader.STATUS,
+        data = Loader.Status,
         ATTACHED = data.ATTACHED,
         LOADED = data.LOADED,
         /**
@@ -4117,7 +4117,7 @@ var KISSY = (function (undefined) {
      * This class should not be instantiated manually.
      */
     function Module(cfg) {
-        this.status = Loader.STATUS.INIT;
+        this.status = Loader.Status.INIT;
         S.mix(this, cfg);
     }
 
@@ -4938,7 +4938,7 @@ var KISSY = (function (undefined) {
         LOADING, LOADED, ERROR, ATTACHED;
 
     Loader = S.Loader;
-    data = Loader.STATUS;
+    data = Loader.Status;
     utils = Loader.Utils;
     UA = S.UA;
     LOADING = data.LOADING;
@@ -5205,7 +5205,7 @@ var KISSY = (function (undefined) {
     }
 
     var Loader = S.Loader,
-        data = Loader.STATUS,
+        data = Loader.Status,
         utils = Loader.Utils;
 
     /**
@@ -5807,7 +5807,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130109195936'
+            tag: '20130109232614'
         }, getBaseInfo()));
     }
 

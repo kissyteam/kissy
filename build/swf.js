@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:28
+build time: Jan 9 23:26
 */
 /**
  * @ignore
@@ -78,13 +78,13 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
 
         // 2. flash 插件没有安装
         if (!fpv()) {
-            self.set('status', SWF.STATUS.NOT_INSTALLED);
+            self.set('status', SWF.Status.NOT_INSTALLED);
             return;
         }
 
         // 3. 已安装，但当前客户端版本低于指定版本时
         if (version && !fpvGTE(version)) {
-            self.set('status', SWF.STATUS.TOO_LOW);
+            self.set('status', SWF.Status.TOO_LOW);
 
             // 有 expressInstall 时，将 src 替换为快速安装
             if (expressInstall) {
@@ -149,7 +149,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         self.set('el', swf);
 
         if (!self.get('status')) {
-            self.set('status', SWF.STATUS.SUCCESS);
+            self.set('status', SWF.Status.SUCCESS);
         }
     }
 
@@ -314,7 +314,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
             /**
              * status of current swf
              * @property status
-             * @type {KISSY.SWF.STATUS}
+             * @type {KISSY.SWF.Status}
              * @readonly
              */
             /**
@@ -534,9 +534,9 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
 
     /**
      * swf status
-     * @enum {String} KISSY.SWF.STATUS
+     * @enum {String} KISSY.SWF.Status
      */
-    SWF.STATUS = {
+    SWF.Status = {
         /**
          * flash version is too low
          */
@@ -572,7 +572,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
     requires: ['dom', 'json', 'base', 'swf/ua']
 });/**
  * @ignore
- * @fileOverview Flash UA 探测
+ * Flash UA 探测
  * @author oicuicu@gmail.com
  */
 KISSY.add('swf/ua', function (S, undefined) {

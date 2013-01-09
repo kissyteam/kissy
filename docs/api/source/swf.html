@@ -90,13 +90,13 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
 
         // 2. flash 插件没有安装
         if (!fpv()) {
-            self.set('status', SWF.STATUS.NOT_INSTALLED);
+            self.set('status', SWF.Status.NOT_INSTALLED);
             return;
         }
 
         // 3. 已安装，但当前客户端版本低于指定版本时
         if (version &amp;&amp; !fpvGTE(version)) {
-            self.set('status', SWF.STATUS.TOO_LOW);
+            self.set('status', SWF.Status.TOO_LOW);
 
             // 有 expressInstall 时，将 src 替换为快速安装
             if (expressInstall) {
@@ -161,7 +161,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         self.set('el', swf);
 
         if (!self.get('status')) {
-            self.set('status', SWF.STATUS.SUCCESS);
+            self.set('status', SWF.Status.SUCCESS);
         }
     }
 
@@ -326,7 +326,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
 <span id='KISSY-SWF-property-status'>            /**
 </span>             * status of current swf
              * @property status
-             * @type {KISSY.SWF.STATUS}
+             * @type {KISSY.SWF.Status}
              * @readonly
              */
 <span id='global-property-status'>            /**
@@ -544,20 +544,20 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         return SPACE + key + EQUAL + DOUBLE_QUOTE + value + DOUBLE_QUOTE;
     }
 
-<span id='KISSY-SWF-STATUS'>    /**
+<span id='KISSY-SWF-Status'>    /**
 </span>     * swf status
-     * @enum {String} KISSY.SWF.STATUS
+     * @enum {String} KISSY.SWF.Status
      */
-    SWF.STATUS = {
-<span id='KISSY-SWF-STATUS-property-TOO_LOW'>        /**
+    SWF.Status = {
+<span id='KISSY-SWF-Status-property-TOO_LOW'>        /**
 </span>         * flash version is too low
          */
         TOO_LOW: 'flash version is too low',
-<span id='KISSY-SWF-STATUS-property-NOT_INSTALLED'>        /**
+<span id='KISSY-SWF-Status-property-NOT_INSTALLED'>        /**
 </span>         * flash is not installed
          */
         NOT_INSTALLED: 'flash is not installed',
-<span id='KISSY-SWF-STATUS-property-SUCCESS'>        /**
+<span id='KISSY-SWF-Status-property-SUCCESS'>        /**
 </span>         * success
          */
         SUCCESS: 'success'

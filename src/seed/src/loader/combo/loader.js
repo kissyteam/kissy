@@ -21,7 +21,7 @@
     }
 
     var Loader = S.Loader,
-        data = Loader.STATUS,
+        data = Loader.Status,
         utils = Loader.Utils;
 
     /**

@@ -9,7 +9,7 @@
         Path = S.Path,
         host = S.Env.host,
         startsWith = S.startsWith,
-        data = Loader.STATUS,
+        data = Loader.Status,
         ATTACHED = data.ATTACHED,
         LOADED = data.LOADED,
         /**

@@ -109,7 +109,7 @@
      * This class should not be instantiated manually.
      */
     function Module(cfg) {
-        this.status = Loader.STATUS.INIT;
+        this.status = Loader.Status.INIT;
         S.mix(this, cfg);
     }
 
