@@ -9,15 +9,16 @@ KISSY.add("component/base/decorate-child", function (S, DecorateChildren) {
     }
 
     S.augment(DecorateChild, DecorateChildren, {
-        decorateInternal:function (element) {
+        decorateInternal: function (element) {
             var self = this;
             // 不用 setInternal , 通知 view 更新
             self.set("el", element);
             var ui = self.get("decorateChildCls"),
+                prefixCls = self.get('prefixCls'),
                 child = element.one("." + ui);
             // 可以装饰?
             if (child) {
-                var UI = self.findUIConstructorByNode(child, 1);
+                var UI = self.findUIConstructorByNode(prefixCls, child, 1);
                 if (UI) {
                     // 可以直接装饰
                     self.decorateChildrenInternal(UI, child);
@@ -31,5 +32,5 @@ KISSY.add("component/base/decorate-child", function (S, DecorateChildren) {
 
     return DecorateChild;
 }, {
-    requires:['./decorate-children']
+    requires: ['./decorate-children']
 });

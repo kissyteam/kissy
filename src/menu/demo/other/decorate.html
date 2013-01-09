@@ -1,33 +1,51 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>menu decorate 测试</title>
-<link href="../assets/menu.css" rel="stylesheet"/>
-<link href="../assets/menuitem.css" rel="stylesheet"/>
-<link href="../assets/submenu.css" rel="stylesheet"/>
-<link href="../assets/filtermenu.css" rel="stylesheet"/>
-<style>
-    #menuTest {
-        width: 300px;
-    }
-</style>
+    <title>menu decorate 测试</title>
+    <link href="../assets/menu.css" rel="stylesheet"/>
+    <link href="../assets/menuitem.css" rel="stylesheet"/>
+    <link href="../assets/submenu.css" rel="stylesheet"/>
+    <link href="../assets/filtermenu.css" rel="stylesheet"/>
+    <style>
+        #menuTest,
+        #menuTest2 {
+            width: 300px;
+        }
+    </style>
 </head>
 <body>
 <h1>
     从已有元素生成 KISSY Menu
 </h1>
+
 <div id="menuTest">
     <div class="ks-menuitem">菜单1</div>
     <div class="ks-submenu">
         <span class="ks-menuitem-content">菜单2</span>
-        <div class="ks-popupmenu ks-ext-position">
+
+        <div class="ks-popupmenu">
             <div class="ks-menuitem">子菜单1</div>
             <div class="ks-menuitem">子菜单2</div>
+        </div>
+    </div>
+    <div class="ks-menuitem">菜单3</div>
+</div>
+
+<h1>省略默认 child class</h1>
+
+<div id="menuTest2">
+    <div>菜单2</div>
+    <div class="ks-submenu">
+        <span class="ks-menuitem-content">菜单2-1</span>
+
+        <div class="ks-popupmenu">
+            <div>子菜单2-1</div>
+            <div>子菜单2-2</div>
         </div>
     </div>
     <div class="ks-menuitem">菜单3</div>
@@ -35,11 +53,16 @@
 <script src="/kissy/build/seed.js"></script>
 <script>
 
-        S.use("menu", function (S, Menu) {
-            window.menuTest = new Menu({
-                srcNode:"#menuTest"
-            }).render();
-        });
+    KISSY.use("menu", function (S, Menu) {
+        window.menuTest = new Menu({
+            srcNode: "#menuTest"
+        }).render();
+
+
+        window.menuTest2 = new Menu({
+            srcNode: "#menuTest2"
+        }).render();
+    });
 
 </script>
 </body>
