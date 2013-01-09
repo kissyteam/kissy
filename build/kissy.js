@@ -1,11 +1,11 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 9 00:10
+build time: Jan 9 19:59
 */
 /**
  * @ignore
- * @fileOverview A seed where KISSY grows up from, KISS Yeah !
+ * A seed where KISSY grows up from, KISS Yeah !
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130109001035' will replace with current timestamp when compressing.
+         * NOTICE: '20130109195936' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130109001035',
+        __BUILD_TIME: '20130109195936',
         /**
          * KISSY Environment.
          * @private
@@ -194,7 +194,7 @@ var KISSY = (function (undefined) {
 
 })();/**
  * @ignore
- * @fileOverview object utilities of lang
+ * object utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -529,7 +529,7 @@ var KISSY = (function (undefined) {
     }
 })(KISSY);/**
  * @ignore
- * @fileOverview array utilities of lang
+ * array utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -705,7 +705,7 @@ var KISSY = (function (undefined) {
          * @param arr {Array} the array to iterate
          * @param fn {Function} the function to execute on each item
          * @param [context] {Object} optional context object
-         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
+         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
          * @return {Array} The items on which the supplied function returned
          * @member KISSY
          */
@@ -737,7 +737,7 @@ var KISSY = (function (undefined) {
          * @param arr {Array} the array to iterate
          * @param callback {Function} the function to execute on each item
          * @param initialValue {number} optional context object
-         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
          * @return {Array} The items on which the supplied function returned
          * @member KISSY
          */
@@ -867,7 +867,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- * @fileOverview escape of lang
+ * escape of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -1130,7 +1130,7 @@ var KISSY = (function (undefined) {
     });
 })(KISSY);/**
  * @ignore
- * @fileOverview function utilities of lang
+ * function utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -1308,7 +1308,7 @@ var KISSY = (function (undefined) {
     });
 })(KISSY);/**
  * @ignore
- * @fileOverview   lang
+ *   lang
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  *
  */
@@ -1361,7 +1361,7 @@ var KISSY = (function (undefined) {
              * @member KISSY
              * @param {Function} [filter] filter function
              * @return {Object} the new cloned object
-             * @see http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
+             * refer: http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
              */
             clone: function (input, filter) {
                 // 稍微改改就和规范一样了 :)
@@ -1390,7 +1390,7 @@ var KISSY = (function (undefined) {
             /**
              * Gets current date in milliseconds.
              * @method
-             * @see  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+             * refer:  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
              * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
              * http://kangax.github.com/es5-compat-table/
              * @member KISSY
@@ -1509,7 +1509,7 @@ var KISSY = (function (undefined) {
 })(KISSY);
 /**
  * @ignore
- * @fileOverview string utilities of lang
+ * string utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -1593,7 +1593,7 @@ var KISSY = (function (undefined) {
     });
 })(KISSY);/**
  * @ignore
- * @fileOverview   type of land
+ *   type of land
  * @author  lifesinger@gmail.com, yiminghe@gmail.com
  *
  */
@@ -1767,7 +1767,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- * @fileOverview implement Promise specification by KISSY
+ * implement Promise specification by KISSY
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
@@ -3050,7 +3050,7 @@ var KISSY = (function (undefined) {
  - same origin: http://tools.ietf.org/html/rfc6454
  *//**
  * @ignore
- * @fileOverview ua
+ * ua
  */
 (function (S, undefined) {
 
@@ -3490,7 +3490,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- * @fileOverview setup data structure for kissy loader
+ * setup data structure for kissy loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -3537,7 +3537,7 @@ var KISSY = (function (undefined) {
  TODO: implement conditional loader
  *//**
  * @ignore
- * @fileOverview simple event target for loader
+ * simple event target for loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -3617,7 +3617,7 @@ var KISSY = (function (undefined) {
     };
 })(KISSY);/**
  * @ignore
- * @fileOverview Utils for kissy loader
+ * Utils for kissy loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -4008,7 +4008,7 @@ var KISSY = (function (undefined) {
     }
 })(KISSY);/**
  * @ignore
- * @fileOverview setup data structure for kissy loader
+ * setup data structure for kissy loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -4320,7 +4320,7 @@ var KISSY = (function (undefined) {
  TODO: implement conditional loader
  *//**
  * @ignore
- * @fileOverview script/css load across browser
+ * script/css load across browser
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -4431,7 +4431,7 @@ var KISSY = (function (undefined) {
     });
 })(KISSY);/**
  * @ignore
- * @fileOverview getScript support for css and js callback after load
+ * getScript support for css and js callback after load
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
@@ -4613,7 +4613,7 @@ var KISSY = (function (undefined) {
  - syntax error in all trigger success
  *//**
  * @ignore
- * @fileOverview Declare config info for KISSY.
+ * Declare config info for KISSY.
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
@@ -4768,7 +4768,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- * @fileOverview add module to kissy simple loader
+ * add module to kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
@@ -4928,7 +4928,7 @@ var KISSY = (function (undefined) {
  */
 /**
  * @ignore
- * @fileOverview use and attach mod for kissy simple loader
+ * use and attach mod for kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
@@ -5184,7 +5184,7 @@ var KISSY = (function (undefined) {
  - 参考 async 重构，去除递归回调
  *//**
  * @ignore
- * @fileOverview using combo to load module files
+ * using combo to load module files
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
@@ -5649,7 +5649,7 @@ var KISSY = (function (undefined) {
  ATTACHED : fn executed
  *//**
  * @ignore
- * @fileOverview mix loader into S and infer KISSy baseUrl if not set
+ * mix loader into S and infer KISSy baseUrl if not set
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
@@ -5807,7 +5807,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130109001035'
+            tag: '20130109195936'
         }, getBaseInfo()));
     }
 
@@ -5826,9 +5826,9 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- * @fileOverview web.js
+ * web.js
  * @author lifesinger@gmail.com, yiminghe@gmail.com
- * @description this code can only run at browser environment
+ * this code can only run at browser environment
  */
 (function (S, undefined) {
 
@@ -6320,13 +6320,13 @@ config({
 
 })(KISSY);
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 26 18:07
+build time: Jan 9 19:54
 */
 /**
  * @ignore
- * @fileOverview dom
+ * dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/api', function (S) {
@@ -6491,7 +6491,7 @@ KISSY.add('dom/base/api', function (S) {
  */
 /**
  * @ignore
- * @fileOverview dom-attr
+ * dom-attr
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/attr', function (S, DOM, undefined) {
@@ -7101,7 +7101,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
 
  *//**
  * @ignore
- * @fileOverview dom
+ * dom
  * @author yiminghe@gmail.com
  */
 KISSY.add('dom/base', function (S, DOM) {
@@ -7127,7 +7127,7 @@ KISSY.add('dom/base', function (S, DOM) {
     ]
 });/**
  * @ignore
- * @fileOverview dom-class
+ * dom-class
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/class', function (S, DOM, undefined) {
@@ -7321,7 +7321,7 @@ KISSY.add('dom/base/class', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview dom-create
+ * dom-create
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/create', function (S, DOM, undefined) {
@@ -7615,7 +7615,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
              * @param {Boolean} [deepWithDataAndEvent=false]
              * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
              * if set true then deep argument must be set true as well.
-             * @see https://developer.mozilla.org/En/DOM/Node.cloneNode
+             * refer: https://developer.mozilla.org/En/DOM/Node.cloneNode
              * @return {HTMLElement}
              * @member KISSY.DOM
              */
@@ -7819,7 +7819,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview dom-data
+ * dom-data
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/data', function (S, DOM, undefined) {
@@ -8085,7 +8085,7 @@ KISSY.add('dom/base/data', function (S, DOM, undefined) {
  - 分层，节点和普通对象分开处理
  *//**
  * @ignore
- * @fileOverview dom-insertion
+ * dom-insertion
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/insertion', function (S, DOM) {
@@ -8222,6 +8222,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * Insert every element in the set of newNodes before every element in the set of refNodes.
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
+             * @param {Boolean} [loadScripts] whether execute script node
              */
             insertBefore: function (newNodes, refNodes, loadScripts) {
                 insertion(newNodes, refNodes, function (newNode, refNode) {
@@ -8235,6 +8236,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * Insert every element in the set of newNodes after every element in the set of refNodes.
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
+             * @param {Boolean} [loadScripts] whether execute script node
              */
             insertAfter: function (newNodes, refNodes, loadScripts) {
                 insertion(newNodes, refNodes, function (newNode, refNode) {
@@ -8248,6 +8250,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * Insert every element in the set of newNodes to the end of every element in the set of parents.
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
+             * @param {Boolean} [loadScripts] whether execute script node
              */
             appendTo: function (newNodes, parents, loadScripts) {
                 insertion(newNodes, parents, function (newNode, parent) {
@@ -8259,6 +8262,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * Insert every element in the set of newNodes to the beginning of every element in the set of parents.
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
+             * @param {Boolean} [loadScripts] whether execute script node
              */
             prependTo: function (newNodes, parents, loadScripts) {
                 insertion(newNodes, parents, function (newNode, parent) {
@@ -8366,7 +8370,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
  */
 /**
  * @ignore
- * @fileOverview dom-offset
+ * dom-offset
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/offset', function (S, DOM, undefined) {
@@ -8443,7 +8447,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
              * @param {Boolean} [hscroll=true] Whether trigger horizontal scroll.
              * @param {Boolean} [auto=false] Whether adjust element automatically
              * (only scrollIntoView when element is out of view)
-             * @see http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+             * refer: http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
              *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
              *        http://yiminghe.javaeye.com/blog/390732
              */
@@ -8818,7 +8822,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview selector
+ * selector
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/selector', function (S, DOM, undefined) {
@@ -9087,17 +9091,30 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
          * @singleton
          */
         {
-            _getAttr: getAttr,
             _hasSingleClass: hasSingleClass,
 
             _getElementById: function (id, context, doc, contextIsDocument) {
-                var el = doc.getElementById(id);
+                var el = doc.getElementById(id),
                 // ie confuse name with id
                 // https://github.com/kissyteam/kissy/issues/67
                 // 不能直接 el.id ，否则 input shadow form attribute
-                var elId = DOM._getAttr(el, 'id');
-                if (!el && !contextIsDocument && !DOM._contains(doc, context)
-                    || el && elId != id) {
+                    elId = getAttr(el, 'id');
+
+                // 1. context is not document and context is not in document,
+                // so el is null and context must not be document
+                // so filter inside context
+
+                // 2. ie confuse name with id, so if el 's id is not with parameter
+                // filter inside context
+
+                // 3. context is document, return getElementById directly
+
+                // 4. context is not document and context contains document.getElementById
+                // return getElementById
+
+                // return null
+                if (!el && !contextIsDocument && !DOM._contains(doc, context) ||
+                    el && elId != id) {
                     return DOM.filter('*', '#' + id, context)[0] || null;
                 } else if (contextIsDocument || el && DOM._contains(context, el)) {
                     return el;
@@ -9205,7 +9222,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {HTMLElement[]}
-             * @member DOM
+             * @member KISSY.DOM
              */
             filter: function (selector, filter, context) {
                 var elems = query(selector, context),
@@ -9266,6 +9283,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
              * @param {String|HTMLElement[]} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
+             * @member KISSY.DOM
              * @return {Boolean}
              */
             test: function (selector, filter, context) {
@@ -9368,7 +9386,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview dom/style
+ * dom/style
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/style', function (S, DOM, undefined) {
@@ -9635,6 +9653,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             /**
              * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+             * if cssText does not contain css hacks, u can just use DOM.create('<style>xx</style>')
              * @param {window} [refWin=window] Window which will accept this stylesheet
              * @param {String} [cssText] The text containing the css rules
              * @param {String} [id] An id to add to the stylesheet for later removal
@@ -9644,7 +9663,8 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
 
                 if (typeof refWin == 'string') {
                     id = cssText;
-                    cssText = refWin;
+                    cssText = /**@type String
+                     @ignore*/refWin;
                     refWin = WINDOW;
                 }
 
@@ -9663,9 +9683,16 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     return;
                 }
 
-                elem = DOM.create('<style>' + cssText + '</style>', { id: id }, doc);
+                elem = DOM.create('<style>', { id: id }, doc);
 
+                // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
                 DOM.get('head', doc).appendChild(elem);
+
+                if (elem.styleSheet) { // IE
+                    elem.styleSheet.cssText = cssText;
+                } else { // W3C
+                    elem.appendChild(doc.createTextNode(cssText));
+                }
             },
 
             /**
@@ -10009,7 +10036,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview dom-traversal
+ * dom-traversal
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
