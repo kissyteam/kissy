@@ -268,18 +268,11 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             /**
              * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
-             * @deprecated
              * @param {window} [refWin=window] Window which will accept this stylesheet
              * @param {String} [cssText] The text containing the css rules
              * @param {String} [id] An id to add to the stylesheet for later removal
              */
             addStyleSheet: function (refWin, cssText, id) {
-                var warn = 'method addStyleSheet is deprecated in KISSY 1.3! ' +
-                    ' you can use DOM.create("<style>xx</style>") ' +
-                    ' or Node.all("<style>yy</style>") directly ';
-
-                S.log(warn, 'warn');
-
                 refWin = refWin || WINDOW;
 
                 if (typeof refWin == 'string') {
