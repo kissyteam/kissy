@@ -1,5 +1,5 @@
 /**
- * @fileOverview scanner cdata (script/textarea/style)
+ * scanner cdata (script/textarea/style)
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/scanners/CdataScanner", function () {

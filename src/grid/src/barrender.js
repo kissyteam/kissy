@@ -1,5 +1,5 @@
 /**
- * @fileOverview bar aria from bar according to current baritem
+ * bar aria from bar according to current baritem
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add("grid/barrender", function(S,  Component) {

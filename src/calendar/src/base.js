@@ -1,5 +1,5 @@
 /**
- * @fileOverview KISSY Calendar
+ * KISSY Calendar
  * @author  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/base', function (S, Node, Event, undefined) {

@@ -1,5 +1,5 @@
 /**
- * @fileOverview bindable extension class.
+ * bindable extension class.
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/bindable',function(S){
@@ -26,7 +26,7 @@ KISSY.add('grid/bindable',function(S){
 		* False to disable a load mask from displaying will the view is loading. 
 		* This can also be a Grid.Util.LoadMask configuration object.
 		* @type {Boolean|Object} 
-		* @default true
+		* Defaults to: true
 		*/
 		loadMask : {
 			value : true
@@ -81,7 +81,7 @@ KISSY.add('grid/bindable',function(S){
 		* @protected
 		* after store load data
 		* @param {e} e The event object
-		* @see Grid.Store#event:load
+		* refer: Grid.Store#event:load
 		*/
 		onLoad : function(e){
 			
@@ -90,7 +90,7 @@ KISSY.add('grid/bindable',function(S){
 		* @protected
 		*  occurred exception when store is loading data
 		* @param {e} e The event object
-		* @see Grid.Store#event:exception
+		* refer: Grid.Store#event:exception
 		*/
 		onException : function(e){
 			
@@ -99,7 +99,7 @@ KISSY.add('grid/bindable',function(S){
 		* @protected
 		* after added data to store
 		* @param {e} e The event object
-		* @see Grid.Store#event:addrecords
+		* refer: Grid.Store#event:addrecords
 		*/
 		onAdd : function(e){
 		
@@ -108,7 +108,7 @@ KISSY.add('grid/bindable',function(S){
 		* @protected
 		* after remvoed data to store
 		* @param {e} e The event object
-		* @see Grid.Store#event:removerecords
+		* refer: Grid.Store#event:removerecords
 		*/
 		onRemove : function(e){
 		
@@ -117,7 +117,7 @@ KISSY.add('grid/bindable',function(S){
 		* @protected
 		* after updated data to store
 		* @param {e} e The event object
-		* @see Grid.Store#event:updaterecord
+		* refer: Grid.Store#event:updaterecord
 		*/
 		onUpdate : function(e){
 		
@@ -126,7 +126,7 @@ KISSY.add('grid/bindable',function(S){
 		* @protected
 		* after local sorted data to store
 		* @param {e} e The event object
-		* @see Grid.Store#event:localsort
+		* refer: Grid.Store#event:localsort
 		*/
 		onLocalSort : function(e){
 			

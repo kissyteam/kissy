@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview getScript support for css and js callback after load
+ * getScript support for css and js callback after load
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {

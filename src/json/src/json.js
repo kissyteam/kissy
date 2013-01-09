@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview kissy json use json2 or native conditionally
+ * kissy json use json2 or native conditionally
  */
 KISSY.add('json', function (S, J) {
 

@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview loading mask support for overlay
+ * loading mask support for overlay
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/extension/loading-render", function (S, Node) {

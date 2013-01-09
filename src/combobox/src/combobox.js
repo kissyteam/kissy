@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Export ComboBox.
+ * Export ComboBox.
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox", function (S, ComboBox, MultiValueComboBox, FilterSelect, LocalDataSource, RemoteDataSource) {

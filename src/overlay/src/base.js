@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview controller for overlay
+ * controller for overlay
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mask, OverlayRender, OverlayEffect) {

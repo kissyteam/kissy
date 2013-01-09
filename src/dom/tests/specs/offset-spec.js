@@ -1,7 +1,7 @@
 /**
  * test cases for offset sub module of dom module
  * @author yiminghe@gmail.com
- * @description need to be completed
+ * need to be completed
  */
 KISSY.use("dom,core", function (S, DOM) {
 

@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview process form config
+ * process form config
  * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/form', function (S, io, DOM, FormSerializer) {

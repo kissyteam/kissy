@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview utils for event
+ * utils for event
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/utils', function (S, DOM) {

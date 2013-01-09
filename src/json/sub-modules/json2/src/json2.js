@@ -1,5 +1,5 @@
 /*
- @fileOverview  http://www.JSON.org/json2.js
+  http://www.JSON.org/json2.js
 
  2010-08-25
 

@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview selector
+ * selector
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/selector', function (S, DOM, undefined) {
@@ -400,7 +400,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {HTMLElement[]}
-             * @member DOM
+             * @member KISSY.DOM
              */
             filter: function (selector, filter, context) {
                 var elems = query(selector, context),
@@ -461,6 +461,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
              * @param {String|HTMLElement[]} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
+             * @member KISSY.DOM
              * @return {Boolean}
              */
             test: function (selector, filter, context) {

@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview render aria from menu according to current menuitem
+ * render aria from menu according to current menuitem
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menu-render", function(S, Component) {

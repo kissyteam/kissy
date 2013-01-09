@@ -1,5 +1,5 @@
 /**
- * @fileOverview simple router to get path parameter and query parameter from hash(old ie) or url(html5)
+ * simple router to get path parameter and query parameter from hash(old ie) or url(html5)
  * @author yiminghe@gmail.com
  */
 KISSY.add('mvc/router', function (S, Event, Base) {
@@ -314,7 +314,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
      * @name Router
      * @class
      * Router used to route url to responding action callbacks.
-     * @memberOf MVC
+     * @member MVC
      * @extends KISSY.Base
      */
     function Router() {

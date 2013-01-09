@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview support standard mod for component
+ * support standard mod for component
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/extension/stdmod-render", function (S, Node) {

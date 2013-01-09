@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview base for xhr and subdomain
+ * base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/xhr-transport-base', function (S, io) {

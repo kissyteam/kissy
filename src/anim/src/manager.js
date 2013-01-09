@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview single timer for the whole anim module
+ * single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/manager', function (S) {

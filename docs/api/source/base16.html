@@ -17,717 +17,613 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview Input wrapper for ComboBox component.
+ * Make Elements flow like waterfall.
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;combobox/base&quot;, function (S, Node, Component, ComboBoxRender, Menu, undefined) {
-    var ComboBox,
-        $ = Node.all,
-        KeyCodes = Node.KeyCodes,
-        ALIGN = {
-            points: [&quot;bl&quot;, &quot;tl&quot;],
-            overflow: {
-                adjustX: 1,
-                adjustY: 1
+KISSY.add(&quot;waterfall/base&quot;, function (S, Node, Base) {
+
+    var $ = Node.all,
+        win = S.Env.host,
+        RESIZE_DURATION = 50;
+
+<span id='KISSY-Waterfall'>    /**
+</span>     * Make Elements flow like waterfall.
+     * @class KISSY.Waterfall
+     */
+    function Waterfall() {
+        var self = this;
+        Waterfall.superclass.constructor.apply(self, arguments);
+        // windows ie&lt;9
+        //  - 出滚动条就会触发 resize 事件
+        //  - ie&lt;8 出不出滚动条，窗口区域一致
+        //  - ie=8 出了滚动条窗口区域和以前不一样了，触发调整逻辑
+        var onResize = self.__onResize = S.buffer(doResize,
+            RESIZE_DURATION, self);
+        // 一开始就 adjust 一次，可以对已有静态数据处理
+        onResize();
+        $(win).on(&quot;resize&quot;, onResize);
+    }
+
+    function timedChunk(items, process, context, callback) {
+
+        var stopper = {},
+            timer, todo;
+
+        function start() {
+
+            todo = [].concat(S.makeArray(items));
+
+            if (todo.length &gt; 0) {
+                // 2012-07-10
+                // 第一次不延迟，防止
+                // adjust -&gt; recalculate -&gt; addItem -&gt; adjustItemAction
+                // 打乱了固定在左上角的元素
+                (function () {
+                    var start = +new Date();
+                    do {
+                        var item = todo.shift();
+                        process.call(context, item);
+                    } while (todo.length &gt; 0 &amp;&amp; (+new Date() - start &lt; 50));
+
+                    if (todo.length &gt; 0) {
+                        timer = setTimeout(arguments.callee, 25);
+                    } else {
+                        callback &amp;&amp; callback.call(context, items);
+                    }
+                })();
+            } else {
+                callback &amp;&amp; callback.call(context, items);
+            }
+        }
+
+        stopper.stop = function () {
+            if (timer) {
+                clearTimeout(timer);
+                todo = [];
+                items.each(function (item) {
+                    item.stop();
+                });
+            }
+        };
+
+        // 启动函数，防止同步时立刻被清掉了
+        stopper.start = start;
+
+        return stopper;
+    }
+
+
+    Waterfall.ATTRS = {
+<span id='KISSY-Waterfall-cfg-container'>        /**
+</span>         * Container which contains waterfall elements.
+         * @cfg {KISSY.NodeList} container
+         */
+<span id='global-property-container'>        /**
+</span>         * @ignore
+         */
+        container: {
+            setter: function (v) {
+                return $(v);
             }
         },
-        win = $(S.Env.host);
 
-<span id='KISSY-ComboBox'>    /**
-</span>     * KISSY ComboBox.
-     * xclass: 'combobox'.
-     * @extends KISSY.Component.Controller
-     * @class KISSY.ComboBox
-     */
-    ComboBox = Component.Controller.extend({
+<span id='KISSY-Waterfall-property-curColHeights'>        /**
+</span>         * Array of height of current waterfall cols.
+         * @protected
+         * @type {Number[]}
+         * @property curColHeights
+         */
+<span id='global-property-curColHeights'>        /**
+</span>         * @ignore
+         */
+        curColHeights: {
+            value: []
+        },
 
-            // user's input text
-            _savedInputValue: null,
+<span id='KISSY-Waterfall-cfg-align'>        /**
+</span>         * Horizontal alignment of waterfall items with container.
+         * Enum: 'left','center','right','justify'.
+         * @cfg {String} align
+         */
+<span id='global-property-align'>        /**
+</span>         * @ignore
+         */
+        align: {
+            value: 'center'
+        },
 
-            _stopNotify: 0,
+<span id='KISSY-Waterfall-cfg-minColCount'>        /**
+</span>         * Minimum col count of waterfall items.
+         * Event window resize to 0.
+         * Defaults to: 1.
+         * @cfg {Number} minColCount
+         */
+<span id='global-property-minColCount'>        /**
+</span>         * @ignore
+         */
+        minColCount: {
+            value: 1
+        },
 
-<span id='KISSY-ComboBox-method-normalizeData'>            /**
-</span>             * normalize returned data
-             * @protected
-             * @param data
-             */
-            'normalizeData': function (data) {
-                var self = this,
-                    contents, v, i, c;
-                if (data &amp;&amp; data.length) {
-                    data = data.slice(0, self.get(&quot;maxItemCount&quot;));
-                    if (self.get(&quot;format&quot;)) {
-                        contents = self.get(&quot;format&quot;).call(self, self['getValueInternal'](), data);
-                    } else {
-                        contents = [];
-                    }
-                    for (i = 0; i &lt; data.length; i++) {
-                        v = data[i];
-                        c = contents[i] = S.mix({
-                            content: v,
-                            textContent: v,
-                            value: v
-                        }, contents[i]);
-                    }
-                    return contents;
+<span id='KISSY-Waterfall-cfg-effect'>        /**
+</span>         * Effect config object when waterfall item is added to container.
+         *
+         * Defaults to: { effect:&quot;fadeIn&quot;,duration:1 }
+         * @cfg {Object} effect
+         *
+         *      for example:
+         *      {
+         *          effect:'fadeIn', // or slideUp
+         *          duration:1 // unit is second
+         *      }
+         */
+<span id='global-property-effect'>        /**
+</span>         * @ignore
+         */
+        effect: {
+            value: {
+                effect: &quot;fadeIn&quot;,
+                duration: 1
+            }
+        },
+
+<span id='KISSY-Waterfall-cfg-colWidth'>        /**
+</span>         * Column's width.
+         * @cfg {Number} colWidth
+         */
+<span id='global-property-colWidth'>        /**
+</span>         * @ignore
+         */
+        colWidth: {},
+
+<span id='KISSY-Waterfall-property-colItems'>        /**
+</span>         * Waterfall items grouped by col.
+         * @private
+         * @type {KISSY.NodeList[][]}
+         * @property colItems
+         *
+         *      for example:
+         *      [
+         *          [ node11, node12 ],
+         *          [ node21, node22 ]
+         *      ]
+         */
+<span id='global-property-colItems'>        /**
+</span>         * @ignore
+         */
+        colItems: {
+            value: []
+        },
+
+<span id='KISSY-Waterfall-cfg-adjustEffect'>        /**
+</span>         * Effect config object when waterfall item is adjusted on window resize.
+         *
+         * Defaults to: { easing:&quot;&quot;,duration:1 }
+         * @cfg {Object} adjustEffect
+         *
+         *      for example:
+         *      {
+         *          easing:'', // easing type
+         *          duration:1 // unit is second
+         *      }
+         */
+<span id='global-property-adjustEffect'>        /**
+</span>         * @ignore
+         */
+        adjustEffect: {}
+    };
+
+    function doResize() {
+        var self = this,
+            container = self.get('container'),
+            containerRegion = self._containerRegion || {};
+
+        if (
+        // container display none ...
+            !container[0].offsetWidth ||
+                // 宽度没变就没必要调整
+                containerRegion &amp;&amp;
+                    container.width() === containerRegion.width) {
+            return
+        }
+        self.adjust();
+    }
+
+    function recalculate() {
+        var self = this,
+            container = self.get(&quot;container&quot;),
+            containerWidth = container.width(),
+            curColHeights = self.get(&quot;curColHeights&quot;);
+        // 当前列数
+        curColHeights.length = Math.max(Math.floor(containerWidth / self.get(&quot;colWidth&quot;)),
+            self.get(&quot;minColCount&quot;));
+        // 当前容器宽度
+        self._containerRegion = {
+            width: containerWidth
+        };
+        S.each(curColHeights, function (v, i) {
+            curColHeights[i] = 0;
+        });
+        self.set(&quot;colItems&quot;, []);
+    }
+
+    function adjustItemAction(self, add, itemRaw, callback) {
+        var effect = self.get(&quot;effect&quot;),
+            item = $(itemRaw),
+            align = self.get(&quot;align&quot;),
+            margin,
+            curColHeights = self.get(&quot;curColHeights&quot;),
+            container = self.get(&quot;container&quot;),
+            colWidth = self.get(&quot;colWidth&quot;),
+            curColCount = curColHeights.length,
+            col = 0,
+            colProp,
+            containerRegion = self._containerRegion,
+            guard = Number['MAX_VALUE'];
+
+        if (!curColCount) {
+            return undefined;
+        }
+
+        // 固定左边或右边
+        if (item.hasClass(&quot;ks-waterfall-fixed-left&quot;)) {
+            col = 0;
+        } else if (item.hasClass(&quot;ks-waterfall-fixed-right&quot;)) {
+            col = curColCount &gt; 0 ? curColCount - 1 : 0;
+        } else {
+            // 否则找到最短的列
+            for (var i = 0; i &lt; curColCount; i++) {
+                if (curColHeights[i] &lt; guard) {
+                    guard = curColHeights[i];
+                    col = i;
                 }
-                return contents;
-            },
+            }
+        }
 
-            bindUI: function () {
-                var self = this,
-                    input = self.get(&quot;input&quot;);
+        // 元素保持间隔不变，居中
+        margin = align === 'left' ? 0 :
+            Math.max(containerRegion.width -
+                curColCount * self.get(&quot;colWidth&quot;), 0);
 
-                input.on(&quot;valuechange&quot;, onValueChange, self);
+        if (align === 'center') {
+            margin /= 2;
+        }
 
-<span id='KISSY-ComboBox-event-afterCollapsedChange'>                /**
-</span>                 * fired after combobox 's collapsed attribute is changed.
-                 * @event afterCollapsedChange
-                 * @param e
-                 * @param e.newVal current value
-                 * @param e.prevVal previous value
-                 */
+        if (align === 'justify' &amp;&amp; curColCount &gt; 1) {
+            margin = col &gt; 0 ? Math.max(
+                (containerRegion.width - colWidth) / (curColCount - 1) - colWidth,
+                0) * col : 0;
+        }
 
-            },
+        colProp = {
+            // 元素间固定间隔好点
+            left: col * colWidth + margin,
+            top: curColHeights[col]
+        };
 
-<span id='KISSY-ComboBox-method-getValueInternal'>            /**
-</span>             * get value
-             * @protected
+        function end(ifNotCall) {
+            // 加入到 dom 树才能取得高度
+            curColHeights[col] += item.outerHeight(true);
+            var colItems = self.get(&quot;colItems&quot;);
+            colItems[col] = colItems[col] || [];
+            colItems[col].push(item);
+            item.attr(&quot;data-waterfall-col&quot;, col);
+            var className = item[0].className
+                .replace(/\s*ks-waterfall-col-(?:first|last|\d+)/g, &quot;&quot;);
+            className += &quot; ks-waterfall-col-&quot; + col;
+            if (col == 0) {
+                className += &quot; ks-waterfall-col-first&quot;;
+            } else if (col == curColHeights.length - 1) {
+                className += &quot; ks-waterfall-col-last&quot;;
+            }
+            item[0].className = className;
+            if (!ifNotCall) {
+                callback &amp;&amp; callback();
+            }
+        }
+
+
+        /*
+         不在容器里，就加上
+         */
+        if (add) {
+            // 初始需要动画，那么先把透明度换成 0
+            item.css(colProp);
+            if (effect &amp;&amp; effect.effect) {
+                // has layout to allow to compute height
+                item.css(&quot;visibility&quot;, &quot;hidden&quot;);
+            }
+            container.append(item);
+            end();
+        }
+        // 否则调整，需要动画
+        else {
+            var adjustEffect = self.get(&quot;adjustEffect&quot;);
+            if (adjustEffect) {
+                end(1);
+                item.animate(colProp, adjustEffect.duration,
+                    adjustEffect.easing, callback);
+            } else {
+                item.css(colProp);
+                end();
+            }
+        }
+
+
+        return item;
+    }
+
+    function addItem(itemRaw) {
+        var self = this,
+        // update curColHeights first
+        // because may slideDown to affect height
+            item = adjustItemAction(self, true, itemRaw),
+            effect = self.get(&quot;effect&quot;);
+        // then animate
+        if (item &amp;&amp; effect &amp;&amp; effect.effect) {
+            // 先隐藏才能调用 fadeIn slideDown
+            item.hide();
+            item.css(&quot;visibility&quot;, &quot;&quot;);
+            item[effect.effect](
+                effect.duration,
+                0,
+                effect.easing
+            );
+        }
+    }
+
+    S.extend(Waterfall, Base, {
+<span id='KISSY-Waterfall-method-isAdjusting'>            /**
+</span>             * Whether is adjusting waterfall items.
+             * @return Boolean
              */
-            getValueInternal: function () {
-                return this.get('input').val();
+            isAdjusting: function () {
+                return !!this._adjuster;
             },
 
-<span id='KISSY-ComboBox-method-setValueInternal'>            /**
-</span>             * set value
-             * @protected
-             * @method
-             * @member KISSY.ComboBox
+<span id='KISSY-Waterfall-method-isAdding'>            /**
+</span>             * Whether is adding waterfall item.
+             * @return Boolean
              */
-            setValueInternal: function (value) {
-                this.get('input').val(value);
+            'isAdding': function () {
+                return !!this._adder;
             },
 
-<span id='KISSY-ComboBox-method-alignInternal'>            /**
-</span>             * align menu
-             * @protected
+<span id='KISSY-Waterfall-method-adjustItem'>            /**
+</span>             * Adjust the height of one specified item.
+             * @param {KISSY.NodeList} item Waterfall item to be adjusted.
+             * @param {Object} cfg Config object.
+             * @param {Function} cfg.callback Callback function after the item is adjusted.
+             * @param {Function} cfg.process Adjust logic function.
+             * If returns a number, it is used as item height after adjust.
+             * else use item.outerHeight(true) as item height after adjust.
+             * @param {Object} cfg.effect Same as {@link KISSY.Waterfall#adjustEffect}
+             * @param {Number} cfg.effect.duration
+             * @param {String} cfg.effect.easing
              */
-            'alignInternal': function () {
-                var self = this,
-                    menu = self.get(&quot;menu&quot;),
-                    align = S.clone(menu.get(&quot;align&quot;));
-                align.node = self.get(&quot;el&quot;);
-                S.mix(align, ALIGN, false);
-                menu.set(&quot;align&quot;, align);
-            },
+            adjustItem: function (item, cfg) {
+                var self = this;
+                cfg = cfg || {};
 
-            handleFocus: function () {
-                var self = this,
-                    placeholderEl;
-                setInvalid(self, false);
-                if (placeholderEl = self.get(&quot;placeholderEl&quot;)) {
-                    placeholderEl.hide();
-                }
-            },
-
-            handleBlur: function () {
-                var self = this,
-                    placeholderEl = self.get(&quot;placeholderEl&quot;),
-                    input;
-                ComboBox.superclass.handleBlur.apply(self, arguments);
-                delayHide.call(self);
-                input = self.get(&quot;input&quot;);
-                self.validate(function (error, val) {
-                    if (error) {
-                        if (!self.get(&quot;focused&quot;) &amp;&amp; val == input.val()) {
-                            setInvalid(self, error);
-                        }
-                    } else {
-                        setInvalid(self, false);
-                    }
-                });
-                if (placeholderEl &amp;&amp; !input.val()) {
-                    placeholderEl.show();
-                }
-            },
-
-            handleMouseDown: function (e) {
-                var self = this,
-                    input,
-                    target,
-                    trigger ,
-                    hasTrigger;
-                ComboBox.superclass.handleMouseDown.apply(self, arguments);
-                target = e.target;
-                trigger = self.get(&quot;trigger&quot;);
-                hasTrigger = self.get('hasTrigger');
-                if (hasTrigger &amp;&amp; (trigger[0] == target || trigger.contains(target))) {
-                    input = self.get(&quot;input&quot;);
-                    if (self.get('collapsed')) {
-                        // fetch data
-                        input[0].focus();
-                        self.sendRequest('');
-                    } else {
-                        // switch from open to collapse
-                        self.set('collapsed', true);
-                    }
-                    e.preventDefault();
-                }
-            },
-
-            handleKeyEventInternal: function (e) {
-                var self = this,
-                    updateInputOnDownUp,
-                    input,
-                    activeItem,
-                    handledByMenu,
-                    menu = getMenu(self);
-
-                if (!menu) {
+                if (self.isAdjusting()) {
                     return undefined;
                 }
 
-                input = self.get(&quot;input&quot;);
-                updateInputOnDownUp = self.get(&quot;updateInputOnDownUp&quot;);
+                var originalOuterHeight = item['outerHeight'](true),
+                    outerHeight;
 
-                if (updateInputOnDownUp) {
-                    // combobox will change input value
-                    // but it does not need to reload data
-                    if (S.inArray(e.keyCode, [
-                        KeyCodes.UP,
-                        KeyCodes.DOWN,
-                        KeyCodes.ESC
-                    ])) {
-                        self._stopNotify = 1;
-                    } else {
-                        self._stopNotify = 0;
-                    }
+                if (cfg.process) {
+                    outerHeight = cfg.process.call(self);
                 }
 
-                if (menu.get(&quot;visible&quot;)) {
-                    handledByMenu = menu['handleKeydown'](e);
-
-                    // esc
-                    if (e.keyCode == KeyCodes.ESC) {
-                        self.set(&quot;collapsed&quot;, true);
-                        if (updateInputOnDownUp) {
-                            // restore original user's input text
-                            self['setValueInternal'](self._savedInputValue);
-                        }
-                        return true;
-                    }
-
-                    activeItem = menu.get(&quot;activeItem&quot;);
-
-                    if (updateInputOnDownUp &amp;&amp;
-                        S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
-                        // update menu's active value to input just for show
-                        this.setValueInternal(activeItem.get(&quot;textContent&quot;));
-                    }
-
-                    // tab
-                    // if menu is open and an menuitem is highlighted, see as click/enter
-                    if (e.keyCode == KeyCodes.TAB &amp;&amp; activeItem) {
-                        // click activeItem
-                        activeItem.performActionInternal();
-                        // only prevent focus change in multiple mode
-                        if (self.get(&quot;multiple&quot;)) {
-                            return true;
-                        }
-                    }
-
-                    return handledByMenu;
-                } else if (e.keyCode == KeyCodes.DOWN || e.keyCode == KeyCodes.UP) {
-                    // re-fetch, consider multiple input
-                    // S.log(&quot;refetch : &quot; + getValue(self));
-                    self.sendRequest(this.getValueInternal());
-                    return true;
+                if (outerHeight === undefined) {
+                    outerHeight = item['outerHeight'](true);
                 }
-                return  undefined;
-            },
 
-            syncUI: function () {
-                var self = this,
-                    input ,
-                    inputValue;
-                if (self.get(&quot;placeholder&quot;)) {
-                    input = self.get(&quot;input&quot;);
-                    inputValue = self.get(&quot;inputValue&quot;);
-                    if (inputValue != undefined) {
-                        input.val(inputValue);
-                    }
-                    if (!input.val()) {
-                        self.get(&quot;placeholderEl&quot;).show();
-                    }
-                }
-            },
+                var diff = outerHeight - originalOuterHeight,
+                    curColHeights = self.get(&quot;curColHeights&quot;),
+                    col = parseInt(item['attr'](&quot;data-waterfall-col&quot;)),
+                    colItems = self.get(&quot;colItems&quot;)[col],
+                    items = [],
+                    original = Math.max.apply(Math, curColHeights),
+                    now;
 
-            validate: function (callback) {
-                var self = this,
-                    validator = self.get('validator'),
-                    val = self.get(&quot;input&quot;).val();
-
-                if (validator) {
-                    validator(val, function (error) {
-                        callback(error, val);
-                    });
-                } else {
-                    callback(false, val);
-                }
-            },
-
-            bindMenu: function () {
-                var self = this,
-                    el,
-                    contentEl,
-                    menu = self.get(&quot;menu&quot;);
-
-                menu.on(&quot;click&quot;, function (e) {
-                    var item = e.target,
-                        textContent = item.get('textContent');
-                    // stop valuechange event
-                    self._stopNotify = 1;
-                    self['setValueInternal'](textContent);
-                    self._savedInputValue = textContent;
-                    self.set(&quot;collapsed&quot;, true);
-                    setTimeout(
-                        function () {
-                            self._stopNotify = 0;
-                        },
-                        // valuechange interval, hack
-                        50
-                    );
-                });
-
-                win.on(&quot;resize&quot;, self.__repositionBuffer = S.buffer(reposition, 50), self);
-
-                el = menu.get(&quot;el&quot;);
-                contentEl = menu.get(&quot;contentEl&quot;);
-
-                // menu has input!
-                el.on(&quot;focusout&quot;, delayHide, self);
-                el.on(&quot;focusin&quot;, clearDismissTimer, self);
-
-                contentEl.on(&quot;mouseover&quot;, onMenuMouseOver, self);
-
-                self.bindMenu = S.noop;
-            },
-
-<span id='KISSY-ComboBox-method-sendRequest'>            /**
-</span>             * fetch comboBox list by value and show comboBox list
-             * @param {String} value value for fetching comboBox list
-             */
-            sendRequest: function (value) {
-                var self = this,
-                    dataSource = self.get(&quot;dataSource&quot;);
-                dataSource.fetchData(value, renderData, self);
-            },
-
-            _onSetCollapsed: function (v) {
-                var self = this;
-                if (v) {
-                    hideMenu(self);
-                } else {
-                    showMenu(self);
-                }
-            },
-
-            destructor: function () {
-                var self = this,
-                    repositionBuffer = self.__repositionBuffer;
-                win.detach(&quot;resize&quot;, repositionBuffer, self);
-                repositionBuffer.stop();
-            }
-        },
-        {
-            ATTRS: {
-
-<span id='KISSY-ComboBox-property-input'>                /**
-</span>                 * Input element of current combobox.
-                 * @type {KISSY.NodeList}
-                 * @property input
-                 */
-<span id='global-property-input'>                /**
-</span>                 * @ignore
-                 */
-                input: {
-                    view: 1
-                },
-
-<span id='KISSY-ComboBox-cfg-inputValue'>                /**
-</span>                 * initial value for input
-                 * @cfg {String} inputValue
-                 */
-<span id='global-property-inputValue'>                /**
-</span>                 * @ignore
-                 */
-                inputValue: {
-                    view: 1
-                },
-
-<span id='global-property-trigger'>                /**
-</span>                 * trigger arrow element
-                 * @ignore
-                 */
-                trigger: {
-                    view: 1
-                },
-
-<span id='KISSY-ComboBox-cfg-placeholder'>                /**
-</span>                 * placeholder
-                 * @cfg {String} placeholder
-                 */
-<span id='global-property-placeholder'>                /**
-</span>                 * @ignore
-                 */
-                placeholder: {
-                    view: 1
-                },
-
-
-<span id='global-property-placeholderEl'>                /**
-</span>                 * label for placeholder in ie
-                 * @ignore
-                 */
-                placeholderEl: {
-                    view: 1
-                },
-
-<span id='KISSY-ComboBox-property-validator'>                /**
-</span>                 * custom validation function
-                 * @type Function
-                 * @property validator
-                 */
-<span id='global-property-validator'>                /**
-</span>                 * @ignore
-                 */
-                validator: {
-
-                },
-
-<span id='global-property-invalidEl'>                /**
-</span>                 * invalid tag el
-                 * @ignore
-                 */
-                invalidEl: {
-                    view: 1
-                },
-
-                allowTextSelection: {
-                    value: true
-                },
-
-<span id='KISSY-ComboBox-cfg-hasTrigger'>                /**
-</span>                 * Whether show combobox trigger.
-                 * Defaults to: true.
-                 * @cfg {Boolean} hasTrigger
-                 */
-<span id='global-property-hasTrigger'>                /**
-</span>                 * @ignore
-                 */
-                hasTrigger: {
-                    view: 1
-                },
-
-<span id='KISSY-ComboBox-cfg-menu'>                /**
-</span>                 * ComboBox dropDown menuList or config
-                 * @cfg {KISSY.Menu.PopupMenu|Object} menu
-                 */
-<span id='KISSY-ComboBox-property-menu'>                /**
-</span>                 * ComboBox dropDown menuList or config
-                 * @property menu
-                 * @type {KISSY.Menu.PopupMenu}
-                 */
-<span id='global-property-menu'>                /**
-</span>                 * @ignore
-                 */
-                menu: {
-                    value: {},
-                    setter: function (m) {
-                        if (m &amp;&amp; m['isController']) {
-                            m.setInternal(&quot;parent&quot;, this);
-                        }
-                    }
-                },
-
-                defaultChildXClass: {
-                    value: 'popupmenu'
-                },
-
-<span id='KISSY-ComboBox-property-collapsed'>                /**
-</span>                 * Whether combobox menu is hidden.
-                 * @type {Boolean}
-                 * @property collapsed
-                 */
-<span id='global-property-collapsed'>                /**
-</span>                 * @ignore
-                 */
-                collapsed: {
-                    view: 1
-                },
-
-<span id='KISSY-ComboBox-cfg-dataSource'>                /**
-</span>                 * dataSource for comboBox.
-                 * @cfg {KISSY.ComboBox.LocalDataSource|KISSY.ComboBox.RemoteDataSource|Object} dataSource
-                 */
-<span id='global-property-dataSource'>                /**
-</span>                 * @ignore
-                 */
-                dataSource: {
-                    // 和 input 关联起来，input可以有很多，每个数据源可以不一样，但是 menu 共享
-                },
-
-<span id='KISSY-ComboBox-cfg-maxItemCount'>                /**
-</span>                 * maxItemCount max count of data to be shown
-                 * @cfg {Number} maxItemCount
-                 */
-<span id='global-property-maxItemCount'>                /**
-</span>                 * @ignore
-                 */
-                maxItemCount: {
-                    value: 99999
-                },
-
-<span id='KISSY-ComboBox-cfg-matchElWidth'>                /**
-</span>                 * Whether drop down menu is same width with input.
-                 * Defaults to: true.
-                 * @cfg {Boolean} matchElWidth
-                 */
-<span id='global-property-matchElWidth'>                /**
-</span>                 * @ignore
-                 */
-                matchElWidth: {
-                    value: true
-                },
-
-<span id='KISSY-ComboBox-cfg-format'>                /**
-</span>                 * Format function to return array of
-                 * html/text/menu item attributes from array of data.
-                 * @cfg {Function} format
-                 */
-<span id='global-property-format'>                /**
-</span>                 * @ignore
-                 */
-                format: {
-                },
-
-<span id='KISSY-ComboBox-cfg-updateInputOnDownUp'>                /**
-</span>                 * Whether update input's value at keydown or up when combobox menu shows.
-                 * Default to: true
-                 * @cfg {Boolean} updateInputOnDownUp
-                 */
-<span id='global-property-updateInputOnDownUp'>                /**
-</span>                 * @ignore
-                 */
-                updateInputOnDownUp: {
-                    value: true
-                },
-
-<span id='KISSY-ComboBox-cfg-autoHighlightFirst'>                /**
-</span>                 * Whether or not the first row should be highlighted by default.
-                 * Defaults to: false
-                 * @cfg {Boolean} autoHighlightFirst
-                 */
-<span id='global-property-autoHighlightFirst'>                /**
-</span>                 * @ignore
-                 */
-                autoHighlightFirst: {
-                },
-
-                xrender: {
-                    value: ComboBoxRender
-                }
-            }
-        },
-        {
-            xclass: 'combobox',
-            priority: 10
-        }
-    );
-
-
-    // #----------------------- private start
-
-    function onMenuMouseOver() {
-        var self = this;
-        // trigger el focus
-        self.get(&quot;input&quot;)[0].focus();
-        // prevent menu from hiding
-        clearDismissTimer.call(self);
-    }
-
-    function setInvalid(self, error) {
-        var el = self.get(&quot;el&quot;),
-            cls = self.get(&quot;prefixCls&quot;) + &quot;combobox-invalid&quot;,
-            invalidEl = self.get(&quot;invalidEl&quot;);
-        if (error) {
-            el.addClass(cls);
-            invalidEl.attr(&quot;title&quot;, error);
-            invalidEl.show();
-        } else {
-            el.removeClass(cls);
-            invalidEl.hide();
-        }
-    }
-
-    function getMenu(self, init) {
-        var m = self.get(&quot;menu&quot;);
-        if (m &amp;&amp; !m['isController']) {
-            if (init) {
-                m = Component.create(m, self);
-                self.setInternal(&quot;menu&quot;, m);
-            } else {
-                return null;
-            }
-        }
-        return m;
-    }
-
-    function hideMenu(self) {
-        var menu = getMenu(self);
-        if (menu) {
-            menu.hide();
-        }
-    }
-
-    function reposition() {
-        var self = this,
-            menu = getMenu(self);
-        if (menu &amp;&amp; menu.get(&quot;visible&quot;)) {
-            self['alignInternal']();
-        }
-    }
-
-    function delayHide() {
-        var self = this;
-        self._focusoutDismissTimer = setTimeout(function () {
-            self.set(&quot;collapsed&quot;, true);
-        }, 30);
-    }
-
-    function clearDismissTimer() {
-        var self = this, t;
-        if (t = self._focusoutDismissTimer) {
-            clearTimeout(t);
-            self._focusoutDismissTimer = null;
-        }
-    }
-
-    function showMenu(self) {
-        var el = self.get(&quot;el&quot;),
-            menu = getMenu(self, 1);
-
-        // 保证显示前已经 bind 好 menu 事件
-        clearDismissTimer.call(self);
-
-        if (menu &amp;&amp; !menu.get(&quot;visible&quot;)) {
-            // 先 render，监听 width 变化事件
-            menu.render();
-            self.bindMenu();
-            // 根据 el 自动调整大小
-            if (self.get(&quot;matchElWidth&quot;)) {
-                menu.set(&quot;width&quot;, el.innerWidth());
-            }
-            menu.show();
-            self.get(&quot;input&quot;).attr(&quot;aria-owns&quot;, menu.get(&quot;el&quot;).attr('id'));
-        }
-    }
-
-    function onValueChange() {
-        var self = this,
-            value;
-        if (self._stopNotify) {
-            return;
-        }
-        value = self['getValueInternal']();
-        if (value === undefined) {
-            self.set(&quot;collapsed&quot;, true);
-            return;
-        }
-        self._savedInputValue = value;
-        // S.log(&quot;value change: &quot; + value);
-        self.sendRequest(value);
-    }
-
-    function renderData(data) {
-        var self = this,
-            v,
-            children = [],
-            val,
-            matchVal,
-            i,
-            menu = getMenu(self, 1);
-
-        data = self['normalizeData'](data);
-
-        menu.removeChildren(true);
-
-        menu.set(&quot;highlightedItem&quot;, null);
-
-        if (data &amp;&amp; data.length) {
-            for (i = 0; i &lt; data.length; i++) {
-                v = data[i];
-                children.push(menu.addChild(v));
-            }
-
-            // make menu item (which textContent is same as input) active
-            val = self['getValueInternal']();
-            for (i = 0; i &lt; children.length; i++) {
-                if (children[i].get(&quot;textContent&quot;) == val) {
-                    menu.set(&quot;highlightedItem&quot;, children[i]);
-                    matchVal = true;
-                    break;
-                }
-            }
-            // Whether or not the first row should be highlighted by default.
-            if (!matchVal &amp;&amp; self.get(&quot;autoHighlightFirst&quot;)) {
-                for (i = 0; i &lt; children.length; i++) {
-                    if (!children[i].get(&quot;disabled&quot;)) {
-                        menu.set(&quot;highlightedItem&quot;, children[i]);
+                for (var i = 0; i &lt; colItems.length; i++) {
+                    if (colItems[i][0] === item[0]) {
                         break;
                     }
                 }
+
+                i++;
+
+                while (i &lt; colItems.length) {
+                    items.push(colItems[i]);
+                    i++;
+                }
+
+                curColHeights[col] += diff;
+
+                now = Math.max.apply(Math, curColHeights);
+
+                if (now != original) {
+                    self.get(&quot;container&quot;).height(now);
+                }
+
+                var effect = cfg.effect,
+                    num = items.length;
+
+                if (!num) {
+                    return cfg.callback &amp;&amp; cfg.callback.call(self);
+                }
+
+                function check() {
+                    num--;
+                    if (num &lt;= 0) {
+                        self._adjuster = 0;
+                        cfg.callback &amp;&amp; cfg.callback.call(self);
+                    }
+                }
+
+<span id='global-property-'>                if (effect === /**
+</span>                 @ignore
+                 @type String
+                 */undefined) {
+                    effect = self.get(&quot;adjustEffect&quot;);
+                }
+
+                self._adjuster = timedChunk(items, function (item) {
+                    if (effect) {
+                        item.animate({
+                                top: parseInt(item.css(&quot;top&quot;)) + diff
+                            },
+                            effect.duration,
+                            effect.easing,
+                            check);
+                    } else {
+                        item.css(&quot;top&quot;, parseInt(item.css(&quot;top&quot;)) + diff);
+                        check();
+                    }
+                });
+
+                self._adjuster.start();
+
+                return self._adjuster;
+            },
+
+<span id='KISSY-Waterfall-method-removeItem'>            /**
+</span>             * Remove a waterfall item.
+             * @param {KISSY.NodeList} item Waterfall item to be removed.
+             * @param {Object} cfg Config object.
+             * @param {Function} cfg.callback Callback function to be called after remove.
+             * @param {Object} cfg.effect Same as {@link KISSY.Waterfall#adjustEffect}
+             * @param {Number} cfg.effect.duration
+             * @param {String} cfg.effect.easing
+             */
+            removeItem: function (item, cfg) {
+                cfg = cfg || {};
+                var self = this,
+                    callback = cfg.callback;
+                self.adjustItem(item, S.mix(cfg, {
+                    process: function () {
+                        item['remove']();
+                        return 0;
+                    },
+                    callback: function () {
+                        var col = parseInt(item['attr'](&quot;data-waterfall-col&quot;)),
+                            colItems = self.get(&quot;colItems&quot;)[col];
+                        for (var i = 0; i &lt; colItems.length; i++) {
+                            if (colItems[i][0] == item[0]) {
+                                colItems.splice(i, 1);
+                                break;
+                            }
+                        }
+                        callback &amp;&amp; callback();
+                    }
+                }));
+            },
+
+<span id='KISSY-Waterfall-method-adjust'>            /**
+</span>             * Readjust existing waterfall item.
+             * @param {Function} [callback]
+             * Callback function to be called after adjust.
+             */
+            adjust: function (callback) {
+                S.log(&quot;waterfall:adjust&quot;);
+                var self = this,
+                    items = self.get(&quot;container&quot;).all(&quot;.ks-waterfall&quot;);
+                /* 正在加，直接开始这次调整，剩余的加和正在调整的一起处理 */
+                /* 正在调整中，取消上次调整，开始这次调整 */
+                if (self.isAdjusting()) {
+                    self._adjuster.stop();
+                    self._adjuster = 0;
+                }
+                /*计算容器宽度等信息*/
+                recalculate.call(self);
+                var num = items.length;
+
+                function check() {
+                    num--;
+                    if (num &lt;= 0) {
+                        self.get(&quot;container&quot;).height(Math.max.apply(Math, self.get(&quot;curColHeights&quot;)));
+                        self._adjuster = 0;
+                        callback &amp;&amp; callback.call(self);
+                        self.fire('adjustComplete', {
+                            items: items
+                        });
+                    }
+                }
+
+                if (!num) {
+                    return callback &amp;&amp; callback.call(self);
+                }
+
+                self._adjuster = timedChunk(items, function (item) {
+                    adjustItemAction(self, false, item, check);
+                });
+
+                self._adjuster.start();
+
+                return self._adjuster;
+            },
+
+<span id='KISSY-Waterfall-method-addItems'>            /**
+</span>             * Add array of waterfall items to current instance.
+             * @param {NodeList[]} items Waterfall items to be added.
+             * @param {Function} [callback] Callback function to be called after waterfall items are added.
+             */
+            addItems: function (items, callback) {
+                var self = this;
+
+                /* 正在调整中，直接这次加，和调整的节点一起处理 */
+                /* 正在加，直接这次加，一起处理 */
+                self._adder = timedChunk(items,
+                    addItem,
+                    self,
+                    function () {
+                        self.get(&quot;container&quot;).height(Math.max.apply(Math,
+                            self.get(&quot;curColHeights&quot;)));
+                        self._adder = 0;
+                        callback &amp;&amp; callback.call(self);
+                        self.fire('addComplete', {
+                            items: items
+                        });
+                    });
+
+                self._adder.start();
+
+                return self._adder;
+            },
+
+<span id='KISSY-Waterfall-method-destroy'>            /**
+</span>             * Destroy current instance.
+             */
+            destroy: function () {
+                var self = this;
+                var onResize = self.__onResize;
+                $(win).detach(&quot;resize&quot;, onResize);
+                onResize.stop();
+                S.log('waterfall is destroyed!');
+                self.fire('destroy');
+                self.__destroyed = 1;
             }
-            self.set(&quot;collapsed&quot;, false);
-            // 2012-12-28: in case autocomplete list becomes shorted or longer
-            reposition.call(self);
-        } else {
-            self.set(&quot;collapsed&quot;, true);
-        }
-    }
+        });
 
-    // #------------------------private end
 
-    return ComboBox;
+    return Waterfall;
+
 }, {
-    requires: [
-        'node',
-        'component/base',
-        './render',
-        'menu'
-    ]
+    requires: ['node', 'base']
 });
-
 <span id='global-property-'>/**
 </span> * @ignore
  *
- * !TODO
- *  - menubutton combobox 抽象提取 picker (extjs)
+ * 2012-07-10
+ *  - 注意滚动条在 ie 下导致的重新调整
+ *  - timeChunk 第一次不 setTimeout
  *
- *
- * 2012-05
- * auto-complete menu 对齐当前输入位置
- *  - http://kirblog.idetalk.com/2010/03/calculating-cursor-position-in-textarea.html
- *  - https://github.com/kir/js_cursor_position
- *
- * 2012-04-01 可能 issue :
- *  - 用户键盘上下键高亮一些选项，
- *    input 值为高亮项的 textContent,那么点击 body 失去焦点，
- *    到底要不要设置 selectedItem 为当前高亮项？
- *    additional note:
- *    1. tab 时肯定会把当前高亮项设置为 selectedItem
- *    2. 鼠标时不会把高亮项的 textContent 设到 input 上去
- *    1,2 都没问题，关键是键盘结合鼠标时怎么个处理？或者不考虑算了！
+ * 2012-03-21 yiminghe@gmail.com
+ *  - 增加动画特效
+ *  - 增加删除/调整接口
  **/</pre>
 </body>
 </html>

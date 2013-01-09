@@ -1,5 +1,5 @@
 /**
- * @fileOverview  a specialized pagingbar which use number buttons
+ *  a specialized pagingbar which use number buttons
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
@@ -14,7 +14,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 	* @name Number
     * @constructor
     * @extends Grid.PagingBar
-    * @memberOf Grid.PagingBar
+    * @member Grid.PagingBar
 	*/
 	var numberPagingBar = PBar.extend({
 		/**
@@ -159,14 +159,14 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			/**
 			* the text for skip page button
 			*
-			* @default {String} "确定"
+			* Defaults to: {String} "确定"
 			*/
 			skipText : {
 				value :'确定'
 			},
 			/**
 			* if the number of page is smaller then this value,show all number buttons,else show ellipsis button
-			* @default {Number} 4
+			* Defaults to: {Number} 4
 			*/
 			maxLimitCount : {
 				value : 4
@@ -192,7 +192,7 @@ KISSY.add('grid/numberpagingbar', function (S,Component,PBar,Bar) {
 			/**
 			* the template of current page info
 			*
-			* @default {String} '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
+			* Defaults to: {String} '到第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
 			*/
 			curPageTpl : {
 				value : '到第 <input type="text" '+

@@ -75,7 +75,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                  * editor mode.
                  * wysiswyg mode:1
                  * source mode:0
-                 * @default wysiswyg mode
+                 * Defaults to: wysiswyg mode
                  */
                 mode:{
                     value:1

@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview mvc based component framework for kissy
+ * mvc based component framework for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/base', function (S, Component, Controller, Render, Container, DelegateChildren, DecorateChildren, DecorateChild) {

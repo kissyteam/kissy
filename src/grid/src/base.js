@@ -1,5 +1,5 @@
 /**
- * @fileOverview This class specifies the definition for whow grid
+ * This class specifies the definition for whow grid
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
@@ -301,7 +301,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             },
             /**
              * columns of this grid,use to initial header and body
-             * @see Grid.Column
+             * refer: Grid.Column
              * @private
              */
             columns:{
@@ -313,7 +313,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
              * Headers are first sized according to configuration, whether that be a specific width, or flex.
              * Then they are all proportionally changed in width so that the entire content width is used.
              * @type {Boolean}
-             * @default 'false'
+             * Defaults to: 'false'
              */
             forceFit:{
                 toBody:true,
@@ -324,7 +324,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             /**
              * The CSS class to apply to this header's table and body's table elements.
              * @type {String}
-             * @default 'ks-grid-table' this css cannot be overridden
+             * Defaults to: 'ks-grid-table' this css cannot be overridden
              */
             tableCls:{
                 toBody:true,
@@ -333,7 +333,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             /**
              * Does it allow select multiple  rows
              * @type {Boolean}
-             * @default false
+             * Defaults to: false
              */
             multiSelect:{
                 toBody:true,
@@ -342,7 +342,7 @@ KISSY.add('grid/base', function (S, Component, Header, GridBody, Util) {
             /**
              * True to stripe the rows.
              * @type {Boolean}
-             * @default true
+             * Defaults to: true
              */
             stripeRows:{
                 toBody:true,

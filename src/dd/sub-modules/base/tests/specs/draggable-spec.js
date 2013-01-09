@@ -1,7 +1,7 @@
 /**
  * @module  draggable-spec
  * @author yiminghe@gmail.com
- * @description ie9 模式下 mousemove 触发事件有问题，无法测试
+ * ie9 模式下 mousemove 触发事件有问题，无法测试
  */
 KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
     var Draggable = DD.Draggable, DOM = S.DOM;

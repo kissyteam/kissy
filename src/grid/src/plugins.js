@@ -1,5 +1,5 @@
 /**
- * @fileOverview There are some plugins in this class
+ * There are some plugins in this class
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/plugins',function(S){

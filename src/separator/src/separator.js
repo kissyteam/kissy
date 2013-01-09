@@ -1,5 +1,5 @@
 /**
- * @fileOverview separator def
+ * separator def
  * @author yiminghe@gmail.com
  */
 KISSY.add("separator", function (S, Component, SeparatorRender) {
@@ -21,7 +21,7 @@ KISSY.add("separator", function (S, Component, SeparatorRender) {
             /**
              * Un-focusable.
              * readonly.
-             * @default false.
+             * Defaults to: false.
              */
             focusable:{
                 value:false

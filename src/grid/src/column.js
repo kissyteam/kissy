@@ -1,5 +1,5 @@
 /**
- * @fileOverview This class specifies the definition for a column of a grid.
+ * This class specifies the definition for a column of a grid.
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/column', function (S, Component, Template) {
@@ -141,7 +141,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 /**
                  * The name of the field in the grid's {@link Grid.Store} definition from which to draw the column's value.<b>Required</b>
                  * @type {String}
-                 * @default {String} empty string
+                 * Defaults to: {String} empty string
                  */
                 dataIndex:{
                     view:true,
@@ -172,7 +172,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 /**
                  * The unique id of this component instance.
                  * @type {String}
-                 * @default null
+                 * Defaults to: null
                  */
                 id:{
 
@@ -180,7 +180,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 /**
                  * A renderer is an 'interceptor' method which can be used transform data (value, appearance, etc.) before it is rendered. the function prototype is "function(value,obj,index){return value;}"
                  * @type {Function}
-                 * @default
+                 * Defaults to:
                  */
                 renderer:{
 
@@ -188,14 +188,14 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 /**
                  * False to prevent the column from being resizable.
                  * @type {Function}
-                 * @default true
+                 * Defaults to: true
                  */
                 resizable:{
                     value:true
                 },
                 /* False to disable sorting of this column. Whether local/remote sorting is used is specified in Grid.Store.remoteSort.
                  * @type {Boolean}
-                 * @default true.
+                 * Defaults to: true.
                  */
                 sortable:{
                     view:true,
@@ -204,7 +204,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                 /**
                  * The sort state of this column. the state have three value : null, 'ASC','DESC'
                  * @type {String}
-                 * @default null
+                 * Defaults to: null
                  */
                 sortState:{
                     view:true,
@@ -214,7 +214,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                  * The header text to be used as innerHTML (html tags are accepted) to display in the Grid.
                  * Note: to have a clickable header with no text displayed you can use the default of &#160; aka &nbsp;.
                  * @type {String}
-                 * @default {String} &#160;
+                 * Defaults to: {String} &#160;
                  */
                 title:{
                     view:true,
@@ -224,7 +224,7 @@ KISSY.add('grid/column', function (S, Component, Template) {
                  * The width of this component in pixels.
                  *
                  * @type {Number}
-                 * @default {Number} 80
+                 * Defaults to: {Number} 80
                  */
                 width:{
                     value:100

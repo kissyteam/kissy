@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 26 18:07
+build time: Jan 9 19:54
 */
 /**
  * @ignore
- * @fileOverview dom
+ * dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/api', function (S) {
@@ -170,7 +170,7 @@ KISSY.add('dom/base/api', function (S) {
  */
 /**
  * @ignore
- * @fileOverview dom-attr
+ * dom-attr
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/attr', function (S, DOM, undefined) {
@@ -780,7 +780,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
 
  *//**
  * @ignore
- * @fileOverview dom
+ * dom
  * @author yiminghe@gmail.com
  */
 KISSY.add('dom/base', function (S, DOM) {
@@ -806,7 +806,7 @@ KISSY.add('dom/base', function (S, DOM) {
     ]
 });/**
  * @ignore
- * @fileOverview dom-class
+ * dom-class
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/class', function (S, DOM, undefined) {
@@ -1000,7 +1000,7 @@ KISSY.add('dom/base/class', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview dom-create
+ * dom-create
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/create', function (S, DOM, undefined) {
@@ -1294,7 +1294,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
              * @param {Boolean} [deepWithDataAndEvent=false]
              * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
              * if set true then deep argument must be set true as well.
-             * @see https://developer.mozilla.org/En/DOM/Node.cloneNode
+             * refer: https://developer.mozilla.org/En/DOM/Node.cloneNode
              * @return {HTMLElement}
              * @member KISSY.DOM
              */
@@ -1498,7 +1498,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview dom-data
+ * dom-data
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/data', function (S, DOM, undefined) {
@@ -1764,7 +1764,7 @@ KISSY.add('dom/base/data', function (S, DOM, undefined) {
  - 分层，节点和普通对象分开处理
  *//**
  * @ignore
- * @fileOverview dom-insertion
+ * dom-insertion
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/insertion', function (S, DOM) {
@@ -1901,6 +1901,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * Insert every element in the set of newNodes before every element in the set of refNodes.
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
+             * @param {Boolean} [loadScripts] whether execute script node
              */
             insertBefore: function (newNodes, refNodes, loadScripts) {
                 insertion(newNodes, refNodes, function (newNode, refNode) {
@@ -1914,6 +1915,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * Insert every element in the set of newNodes after every element in the set of refNodes.
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} refNodes Nodes to be referred
+             * @param {Boolean} [loadScripts] whether execute script node
              */
             insertAfter: function (newNodes, refNodes, loadScripts) {
                 insertion(newNodes, refNodes, function (newNode, refNode) {
@@ -1927,6 +1929,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * Insert every element in the set of newNodes to the end of every element in the set of parents.
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
+             * @param {Boolean} [loadScripts] whether execute script node
              */
             appendTo: function (newNodes, parents, loadScripts) {
                 insertion(newNodes, parents, function (newNode, parent) {
@@ -1938,6 +1941,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
              * Insert every element in the set of newNodes to the beginning of every element in the set of parents.
              * @param {HTMLElement|HTMLElement[]} newNodes Nodes to be inserted
              * @param {HTMLElement|HTMLElement[]|String} parents Nodes to be referred as parentNode
+             * @param {Boolean} [loadScripts] whether execute script node
              */
             prependTo: function (newNodes, parents, loadScripts) {
                 insertion(newNodes, parents, function (newNode, parent) {
@@ -2045,7 +2049,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
  */
 /**
  * @ignore
- * @fileOverview dom-offset
+ * dom-offset
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/offset', function (S, DOM, undefined) {
@@ -2122,7 +2126,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
              * @param {Boolean} [hscroll=true] Whether trigger horizontal scroll.
              * @param {Boolean} [auto=false] Whether adjust element automatically
              * (only scrollIntoView when element is out of view)
-             * @see http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+             * refer: http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
              *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
              *        http://yiminghe.javaeye.com/blog/390732
              */
@@ -2497,7 +2501,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview selector
+ * selector
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/selector', function (S, DOM, undefined) {
@@ -2766,17 +2770,30 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
          * @singleton
          */
         {
-            _getAttr: getAttr,
             _hasSingleClass: hasSingleClass,
 
             _getElementById: function (id, context, doc, contextIsDocument) {
-                var el = doc.getElementById(id);
+                var el = doc.getElementById(id),
                 // ie confuse name with id
                 // https://github.com/kissyteam/kissy/issues/67
                 // 不能直接 el.id ，否则 input shadow form attribute
-                var elId = DOM._getAttr(el, 'id');
-                if (!el && !contextIsDocument && !DOM._contains(doc, context)
-                    || el && elId != id) {
+                    elId = getAttr(el, 'id');
+
+                // 1. context is not document and context is not in document,
+                // so el is null and context must not be document
+                // so filter inside context
+
+                // 2. ie confuse name with id, so if el 's id is not with parameter
+                // filter inside context
+
+                // 3. context is document, return getElementById directly
+
+                // 4. context is not document and context contains document.getElementById
+                // return getElementById
+
+                // return null
+                if (!el && !contextIsDocument && !DOM._contains(doc, context) ||
+                    el && elId != id) {
                     return DOM.filter('*', '#' + id, context)[0] || null;
                 } else if (contextIsDocument || el && DOM._contains(context, el)) {
                     return el;
@@ -2884,7 +2901,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {HTMLElement[]}
-             * @member DOM
+             * @member KISSY.DOM
              */
             filter: function (selector, filter, context) {
                 var elems = query(selector, context),
@@ -2945,6 +2962,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
              * @param {String|HTMLElement[]} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
+             * @member KISSY.DOM
              * @return {Boolean}
              */
             test: function (selector, filter, context) {
@@ -3047,7 +3065,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview dom/style
+ * dom/style
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/style', function (S, DOM, undefined) {
@@ -3314,6 +3332,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             /**
              * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+             * if cssText does not contain css hacks, u can just use DOM.create('<style>xx</style>')
              * @param {window} [refWin=window] Window which will accept this stylesheet
              * @param {String} [cssText] The text containing the css rules
              * @param {String} [id] An id to add to the stylesheet for later removal
@@ -3323,7 +3342,8 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
 
                 if (typeof refWin == 'string') {
                     id = cssText;
-                    cssText = refWin;
+                    cssText = /**@type String
+                     @ignore*/refWin;
                     refWin = WINDOW;
                 }
 
@@ -3342,9 +3362,16 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     return;
                 }
 
-                elem = DOM.create('<style>' + cssText + '</style>', { id: id }, doc);
+                elem = DOM.create('<style>', { id: id }, doc);
 
+                // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
                 DOM.get('head', doc).appendChild(elem);
+
+                if (elem.styleSheet) { // IE
+                    elem.styleSheet.cssText = cssText;
+                } else { // W3C
+                    elem.appendChild(doc.createTextNode(cssText));
+                }
             },
 
             /**
@@ -3688,7 +3715,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview dom-traversal
+ * dom-traversal
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/traversal', function (S, DOM, undefined) {

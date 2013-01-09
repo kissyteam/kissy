@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview animation framework for KISSY
+ * animation framework for KISSY
  * @author   yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {

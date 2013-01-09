@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview resizable support for kissy
+ * resizable support for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {

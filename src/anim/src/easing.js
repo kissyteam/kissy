@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Easing equation from yui3 and css3
+ * Easing equation from yui3 and css3
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('anim/easing', function () {

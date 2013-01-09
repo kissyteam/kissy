@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Single tab render in tab bar.
+ * Single tab render in tab bar.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/tab-render", function (S, Button) {

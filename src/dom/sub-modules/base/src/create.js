@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview dom-create
+ * dom-create
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/create', function (S, DOM, undefined) {
@@ -294,7 +294,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
              * @param {Boolean} [deepWithDataAndEvent=false]
              * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
              * if set true then deep argument must be set true as well.
-             * @see https://developer.mozilla.org/En/DOM/Node.cloneNode
+             * refer: https://developer.mozilla.org/En/DOM/Node.cloneNode
              * @return {HTMLElement}
              * @member KISSY.DOM
              */

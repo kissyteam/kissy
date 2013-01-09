@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview dom-traversal
+ * dom-traversal
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/traversal', function (S, DOM, undefined) {

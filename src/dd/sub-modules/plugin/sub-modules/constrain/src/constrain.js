@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview plugin constrain region for drag and drop
+ * plugin constrain region for drag and drop
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/plugin/constrain', function (S, Base, Node) {

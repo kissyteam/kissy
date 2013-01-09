@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview 数据延迟加载组件
+ * 数据延迟加载组件
  */
 KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
@@ -175,7 +175,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         /**
          * Placeholder img url for lazy loaded _images if image 's src is empty.
          * must be not empty!
-         * default: http://a.tbcdn.cn/kissy/1.0.0/build/imglazyload/spaceball.gif
+         *
+         * Defaults to: http://a.tbcdn.cn/kissy/1.0.0/build/imglazyload/spaceball.gif
          * @cfg {String} placeholder
          */
         /**
@@ -200,7 +201,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         /**
          * Container which will be monitor scroll event to lazy load elements within it.
          * default: document
-         * @cfg {HTMLElement} containers
+         * @cfg {HTMLElement} container
          */
         /**
          * @ignore
@@ -301,6 +302,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
          */
         '_initLoadEvent': function () {
             var self = this,
+                img = new Image(),
+                placeholder = self.get("placeholder"),
                 autoDestroy = self.get("autoDestroy"),
             // 加载延迟项
                 loadItems = function () {
@@ -315,15 +318,25 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
             self.resume();
 
-            // 需要立即加载一次，以保证第一屏的延迟项可见
-            if (!self['_isLoadAllLazyElements']()) {
-                S.ready(loadItems);
+            img.src = placeholder;
+
+            function firstLoad() {
+                // 需要立即加载一次，以保证第一屏的延迟项可见
+                if (!self['_isLoadAllLazyElements']()) {
+                    S.ready(loadItems);
+                }
+            }
+
+            if (img.complete) {
+                firstLoad()
+            } else {
+                img.onload = firstLoad;
             }
         },
 
         /**
          * force datalazyload to recheck constraints and load lazyload
-         * @public
+         *
          */
         refresh: function () {
             this._loadFn();
@@ -626,9 +639,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
     /**
      * Load lazyload textarea and imgs manually.
      * @ignore
-     * @name loadCustomLazyData
      * @method
-     * @memberOf DataLazyload
      * @param {HTMLElement[]} containers Containers with in which lazy loaded elements are loaded.
      * @param {String} type Type of lazy loaded element. "img" or "textarea"
      * @param {String} [flag] flag which will be searched to find lazy loaded elements from containers.

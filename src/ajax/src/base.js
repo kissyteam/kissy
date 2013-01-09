@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview a scalable client io framework
+ * a scalable client io framework
  * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/base', function (S, JSON, Event, undefined) {

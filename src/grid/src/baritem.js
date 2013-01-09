@@ -1,5 +1,5 @@
 /**
- * @fileOverview buttons or controls of toolbar
+ * buttons or controls of toolbar
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/baritem',function(S,Component,Button,Node){
@@ -12,7 +12,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
      * @name BarItem
      * @constructor
      * @extends KISSY.Component.Controller
-     * @memberOf Grid.Bar
+     * @member Grid.Bar
      */
 	var BarItem = Component.Controller.extend({
 		/* render baritem 's dom
@@ -33,7 +33,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			/**
 			* Whether this component can get focus.
 			* d
-			* @default {boolean} false
+			* Defaults to: {boolean} false
 			*/
 			focusable : {
 				value : false
@@ -48,7 +48,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
      * @name Button
      * @constructor
      * @extends  Grid.Bar.BarItem
-     * @memberOf Grid.Bar
+     * @member Grid.Bar
      */
 	var ButtonBarItem = BarItem.extend({
 
@@ -112,7 +112,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			},
 			/**
 			* The text to be used as innerHTML (html tags are accepted).
-			* @default {String} ""
+			* Defaults to: {String} ""
 			*/
 			text : {
 				value : ''
@@ -128,7 +128,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
      * @name Separator
      * @constructor
      * @extends  Grid.Bar.BarItem
-     * @memberOf Grid.Bar
+     * @member Grid.Bar
      */
 	var SeparatorBarItem = BarItem.extend({
 		/* render separator's dom
@@ -150,7 +150,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
      * @name Spacer
      * @constructor
      * @extends  Grid.Bar.BarItem
-     * @memberOf Grid.Bar
+     * @member Grid.Bar
      */
 	var SpacerBarItem = BarItem.extend({
 		
@@ -159,7 +159,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 		{
 			/**
 			* width of horizontal space between items
-			* @default {Number} 2
+			* Defaults to: {Number} 2
 			*/
 			width : {
 				value : 2
@@ -176,7 +176,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
      * @name TextItem
      * @constructor
      * @extends  Grid.Bar.BarItem
-     * @memberOf Grid.Bar
+     * @member Grid.Bar
      */
 	var TextBarItem = BarItem.extend({
 		_onSetText : function(text){
@@ -189,7 +189,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 		{
 			/**
 			* The text to be used as innerHTML (html tags are accepted).
-			* @default {String} ""
+			* Defaults to: {String} ""
 			*/
 			text : {
 				value : ''

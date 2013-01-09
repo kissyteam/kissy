@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Declare config info for KISSY.
+ * Declare config info for KISSY.
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {

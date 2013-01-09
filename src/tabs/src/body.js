@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Body for tab panels.
+ * Body for tab panels.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/body", function (S, Component) {

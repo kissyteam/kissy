@@ -1,5 +1,5 @@
 /**
- * @fileOverview this class details some util tools of grid,like loadMask, formatter for grid's cell render
+ * this class details some util tools of grid,like loadMask, formatter for grid's cell render
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/util', function (S) {
@@ -11,13 +11,13 @@ KISSY.add('grid/util', function (S) {
      * This class specifies some util tools of grid
      * @name Util
      * @class
-     * @memberOf Grid
+     * @member Grid
      */
     var util =
     /** @lends Grid.Util */
     {
         /**
-         * @description mask the dom element
+         * mask the dom element
          * @param {String|HTMLElement} element the element such as selector,Dom or Node will be masked
          * @param {String} [msg] when mask one element ,you can show some message to user
          * @param {String} [msgCls] when show message, you can set it's style by this css class
@@ -57,7 +57,7 @@ KISSY.add('grid/util', function (S) {
             return maskDiv;
         },
         /**
-         * @description unmask the dom element
+         * unmask the dom element
          * @param {String|HTMLElement} element the element such as selector,Dom or Node will  unmask
          * @example
          *    S.LP.unmaskElement('#domId');
@@ -88,13 +88,13 @@ KISSY.add('grid/util', function (S) {
      * This class specifies some formatter for grid's cell renderer
      * @name Format
      * @class
-     * @memberOf Grid.Util
+     * @member Grid.Util
      */
     util.Format =
     /** @lends Grid.Util.Format */
     {
         /**
-         @description 日期格式化函数
+         日期格式化函数
          @param {Number|Date} d 格式话的日期，一般为1970 年 1 月 1 日至今的毫秒数
          @return {String} 格式化后的日期格式为 2011-10-31
          @example
@@ -122,7 +122,7 @@ KISSY.add('grid/util', function (S) {
             return date.getFullYear() + '-' + formatTimeUnit(date.getMonth() + 1) + '-' + formatTimeUnit(date.getDate());//S.Date.format(d,'yyyy-mm-dd');
         },
         /**
-         @description 日期时间格式化函数
+         日期时间格式化函数
          @param {Number|Date} d 格式话的日期，一般为1970 年 1 月 1 日至今的毫秒数
          @return {String} 格式化后的日期格式时间为 2011-10-31 16 : 41 : 02
          */
@@ -145,7 +145,7 @@ KISSY.add('grid/util', function (S) {
             return date.getFullYear() + '-' + formatTimeUnit(date.getMonth() + 1) + '-' + formatTimeUnit(date.getDate()) + ' ' + formatTimeUnit(date.getHours()) + ':' + formatTimeUnit(date.getMinutes()) + ':' + formatTimeUnit(date.getSeconds());
         },
         /**
-         @description 文本截取函数，当文本超出一定数字时，会截取文本，添加...
+         文本截取函数，当文本超出一定数字时，会截取文本，添加...
          @param {Number} length 截取多少字符
          @return {Function} 返回处理函数 返回截取后的字符串，如果本身小于指定的数字，返回原字符串。如果大于，则返回截断后的字符串，并附加...
          */
@@ -159,7 +159,7 @@ KISSY.add('grid/util', function (S) {
             };
         },
         /**
-         * @description 枚举格式化函数
+         * 枚举格式化函数
          * @param {Object} enumObj 键值对的枚举对象 {"1":"大","2":"小"}
          * @return {Function} 返回指定枚举的格式化函数
          * @example
@@ -172,7 +172,7 @@ KISSY.add('grid/util', function (S) {
             };
         },
         /*
-         * @description 将多个值转换成一个字符串
+         * 将多个值转换成一个字符串
          * @param {Object} enumObj 键值对的枚举对象 {"1":"大","2":"小"}
          * @return {Function} 返回指定枚举的格式化函数
          * @example
@@ -199,7 +199,7 @@ KISSY.add('grid/util', function (S) {
             };
         },
         /*
-         * @description 将财务数据分转换成元
+         * 将财务数据分转换成元
          * @param {Number|String} enumObj 键值对的枚举对象 {"1":"大","2":"小"}
          * @return {Number} 返回将分转换成元的数字
          */
@@ -216,7 +216,7 @@ KISSY.add('grid/util', function (S) {
 
     /**
      * 屏蔽指定元素，并显示加载信息
-     * @memberOf Grid.Util
+     * @member Grid.Util
      * @class 加载屏蔽类
      * @property {String|DOM|Node} el 要屏蔽的元素，选择器、Dom元素或Node元素
      * @param {String|DOM|Node} element 要屏蔽的元素，选择器、Dom元素或Node元素
@@ -240,20 +240,20 @@ KISSY.add('grid/util', function (S) {
             /**
              * 加载时显示的加载信息
              * @field
-             * @default Loading...
+             * Defaults to: Loading...
              */
             msg:'Loading...',
             /**
              * 加载时显示的加载信息的样式
              * @field
-             * @default x-mask-loading
+             * Defaults to: x-mask-loading
              */
             msgCls:'x-mask-loading',
             /**
              * 加载控件是否禁用
              * @type {Boolean}
              * @field
-             * @default false
+             * Defaults to: false
              */
             disabled:false,
             _init:function () {
@@ -261,7 +261,7 @@ KISSY.add('grid/util', function (S) {
                 _self.msg = _self.get('msg') || _self.msg;
             },
             /**
-             * @description 设置控件不可用
+             * 设置控件不可用
              */
             disable:function () {
                 this.disabled = true;

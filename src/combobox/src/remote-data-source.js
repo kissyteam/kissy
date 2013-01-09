@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Remote datasource for ComboBox
+ * Remote datasource for ComboBox
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/RemoteDataSource", function (S, IO) {

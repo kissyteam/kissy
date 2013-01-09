@@ -1,5 +1,5 @@
 /**
- * @fileOverview A collection of commonly used function buttons or controls represented in compact visual form.
+ * A collection of commonly used function buttons or controls represented in compact visual form.
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add("grid/bar", function (S,Toolbar,BarRender,BarItem) {
@@ -10,7 +10,7 @@ KISSY.add("grid/bar", function (S,Toolbar,BarRender,BarItem) {
      * @name Bar
      * @constructor
      * @extends Toolbar
-     * @memberOf Grid
+     * @member Grid
      */
 	var Bar = Toolbar.extend(
 	 /**

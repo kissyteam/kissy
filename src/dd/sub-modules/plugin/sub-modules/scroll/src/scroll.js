@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview auto scroll for drag object's container
+ * auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node, DOM) {

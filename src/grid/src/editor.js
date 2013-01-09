@@ -1,5 +1,5 @@
 ﻿﻿/**
- * @fileOverview This class specifies the definition for a cell editor of a grid.
+ * This class specifies the definition for a cell editor of a grid.
  * @author dxq613@gmail.com
  */
 KISSY.add('grid/editor', function (S, Component) {
@@ -235,7 +235,7 @@ KISSY.add('grid/editor', function (S, Component) {
             /**
              * When you use custom editor,you can config the tpl and binder that bind event to the custom dom.
              * @type {Function}
-             * @default null;
+             * Defaults to: null;
              */
             binder:{
 
@@ -243,7 +243,7 @@ KISSY.add('grid/editor', function (S, Component) {
             /**
              * The initial set of data to apply to the tpl to update the content area of the Component.
              * @type {Object}
-             * @default {}
+             * Defaults to: {}
              */
             data:{
                 value:{}
@@ -325,7 +325,7 @@ KISSY.add('grid/editor', function (S, Component) {
             /**
              * User input is usually text, so need to convert format.This is a function you can format user's input.
              * @type {Function}
-             * @default function(v){return v;}
+             * Defaults to: function(v){return v;}
              */
             formatter:{
                 value:function (v) {
@@ -336,7 +336,7 @@ KISSY.add('grid/editor', function (S, Component) {
             /**
              * The record which user is editing
              * @type {Object}
-             * @default null
+             * Defaults to: null
              */
             record:{
                 value:null
@@ -344,7 +344,7 @@ KISSY.add('grid/editor', function (S, Component) {
             /**
              * The built-in validation rules,followed by kissy 's validation framework.
              * @type {Object}
-             * @default null
+             * Defaults to: null
              */
             rules:{
 
@@ -381,7 +381,7 @@ KISSY.add('grid/editor', function (S, Component) {
             /**
              * This is a function which is used to verify user's input.
              * @type {Function}
-             * @default
+             * Defaults to:
              *    <pre>function(v){ return '';}</pre>
              */
             validator:{

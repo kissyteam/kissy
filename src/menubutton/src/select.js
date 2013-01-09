@@ -1,5 +1,5 @@
 /**
- * @fileOverview manage a list of single-select options
+ * manage a list of single-select options
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, undefined) {
@@ -106,7 +106,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
      * with semantics similar to native HTML select.
      * xclass: 'select'.
      * @name Select
-     * @memberOf MenuButton
+     * @member MenuButton
      * @extends MenuButton
      */
     var Select = MenuButton.extend(
@@ -190,7 +190,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              * Generate a select component from native select element.
              * @param {HTMLElement} element Native html select element.
              * @param {Object} cfg Extra configuration for current select component.
-             * @memberOf MenuButton.Select
+             * @member MenuButton.Select
              */
             decorate: function (element, cfg) {
                 element = S.one(element);

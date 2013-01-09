@@ -1,5 +1,5 @@
 /**
- * @fileOverview collection of models
+ * collection of models
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/collection", function (S, Event, Model, Base) {
@@ -22,7 +22,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
      * @name Collection
      * @class
      * Collection. A list of model.
-     * @memberOf MVC
+     * @member MVC
      * @extends KISSY.Base
      */
     function Collection() {

@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview special patch for anim backgroundPosition
+ * special patch for anim backgroundPosition
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/background-position', function (S, DOM, Anim, Fx) {

@@ -1,5 +1,5 @@
 /**
- * @fileOverview grid component for kissy
+ * grid component for kissy
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid', function(S, Grid,Bar,Store,PagingBar,NumberPagingBar,Plugins,Editing,Util) {

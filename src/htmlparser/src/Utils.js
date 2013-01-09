@@ -1,5 +1,5 @@
 /**
- * @fileOverview utils about language for html parser
+ * utils about language for html parser
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/Utils", function() {
@@ -11,7 +11,7 @@ KISSY.add("htmlparser/Utils", function() {
             return 'a' <= ch && 'z' >= ch || 'A' <= ch && 'Z' >= ch;
         },
         /**
-         * @see http://www.w3.org/TR/html5/syntax.html#attributes-0
+         * refer: http://www.w3.org/TR/html5/syntax.html#attributes-0
          */
         isValidAttributeNameStartChar:function(ch) {
             return !this.isWhitespace(ch) &&

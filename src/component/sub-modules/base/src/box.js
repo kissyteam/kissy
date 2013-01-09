@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Box
+ * Box
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/base/box', function () {

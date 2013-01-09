@@ -1,5 +1,6 @@
 /**
- * @fileOverview Dynamic load waterfall items by monitor window scroll.
+ * @ignore
+ * Dynamic load waterfall items by monitor window scroll.
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
@@ -10,14 +11,15 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         SCROLL_TIMER = 50;
 
     /**
-     * @name Loader
-     * @extends Waterfall
-     * @class
-     * Dynamic load waterfall items by monitor window scroll.
-     * @memberOf Waterfall
+     * @class KISSY.Waterfall.Loader
+     * @extends KISSY.Waterfall
+     * Dynamic load waterfall items by monitoring window scroll.
      */
     function Loader() {
-        Loader.superclass.constructor.apply(this, arguments);
+        var self = this;
+        Loader.superclass.constructor.apply(self, arguments);
+        self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
+        self.start();
     }
 
     function doScroll() {
@@ -77,15 +79,14 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         }
     }
 
-    Loader.ATTRS =
-    /**
-     * @lends Waterfall.Loader#
-     */
-    {
+    Loader.ATTRS = {
         /**
          * Preload distance below viewport.
-         * @default 0.
-         * @type {Number}
+         * Defaults to: 0.
+         * @cfg {Number} diff
+         */
+        /**
+         * @ignore
          */
         diff: {
             value: 0
@@ -93,67 +94,57 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
     };
 
 
-    S.extend(Loader, Waterfall,
+    S.extend(Loader, Waterfall, {
+
         /**
-         * @lends Waterfall.Loader#
+         * @ignore
          */
-        {
-            _init: function () {
-                var self = this;
-                Loader.superclass._init.apply(self, arguments);
-                self.__onScroll = S.buffer(doScroll, SCROLL_TIMER, self);
-                // 初始化时立即检测一次，但是要等初始化 adjust 完成后.
-                self.__onScroll();
-                self.start();
-            },
+        start: function () {
+            this.resume();
+        },
 
-            /**
-             * @ignore
-             */
-            start: function () {
-                this.resume();
-            },
+        /**
+         * @ignore
+         */
+        end: function () {
+            this.pause();
+        },
 
-            /**
-             * @ignore
-             */
-            end: function () {
-                this.pause();
-            },
-
-            /**
-             * Stop monitor scroll on window.
-             */
-            pause: function () {
-                var self = this;
-                if (self.__destroyed) {
-                    return;
-                }
-                $(win).detach("scroll", self.__onScroll);
-                self.__onScroll.stop();
-            },
-
-            /**
-             * Start monitor scroll on window.
-             */
-            resume: function () {
-                var self = this;
-                if (self.__destroyed) {
-                    return;
-                }
-                $(win).on("scroll", self.__onScroll);
-                self.__started = 1;
-            },
-
-            /**
-             * Destroy this instance.
-             */
-            destroy: function () {
-                var self = this;
-                self.end();
-                Loader.superclass.destroy.apply(self, arguments);
+        /**
+         * Stop monitor scroll on window.
+         */
+        pause: function () {
+            var self = this;
+            if (self.__destroyed) {
+                return;
             }
-        });
+            $(win).detach("scroll", self.__onScroll);
+            self.__onScroll.stop();
+        },
+
+        /**
+         * Start monitor scroll on window.
+         */
+        resume: function () {
+            var self = this;
+            if (self.__destroyed) {
+                return;
+            }
+            $(win).on("scroll", self.__onScroll);
+            self.__started = 1;
+            // 初始化时立即检测一次，但是要等初始化 adjust 完成后.
+            self.__onScroll();
+        },
+
+        /**
+         * Destroy this instance.
+         */
+        destroy: function () {
+            var self = this;
+            self.end();
+            Loader.superclass.destroy.apply(self, arguments);
+        }
+    });
 
     return Loader;
 

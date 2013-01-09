@@ -1,5 +1,5 @@
 /**
- * @fileOverview Carousel Widget
+ * Carousel Widget
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('switchable/carousel/base', function (S, DOM, Event, Switchable) {

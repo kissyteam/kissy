@@ -1,5 +1,5 @@
 /**
- * @fileOverview check node render
+ * check node render
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-node-render", function (S, Node, TreeNodeRender) {

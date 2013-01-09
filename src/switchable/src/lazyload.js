@@ -1,5 +1,5 @@
 /**
- * @fileOverview Switchable Lazyload Plugin
+ * Switchable Lazyload Plugin
  */
 KISSY.add('switchable/lazyload', function (S, DOM, Switchable) {
 

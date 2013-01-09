@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview non-refresh upload file with form by iframe
+ * non-refresh upload file with form by iframe
  * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/iframe-transport', function (S, DOM, Event, io) {

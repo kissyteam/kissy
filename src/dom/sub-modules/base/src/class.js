@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview dom-class
+ * dom-class
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/class', function (S, DOM, undefined) {

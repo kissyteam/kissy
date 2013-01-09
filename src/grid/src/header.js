@@ -1,5 +1,5 @@
 /**
- * @fileOverview This class specifies the definition for a header of a grid.
+ * This class specifies the definition for a header of a grid.
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/header', function (S, Component, Column) {
@@ -21,7 +21,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
             _self.set('tableEl', tableEl);
         },
         /**
-         * @see {Component.Render#getContentElement}
+         * refer: {Component.Render#getContentElement}
          */
         getContentElement:function () {
             return this.get('el').one('tr');
@@ -91,7 +91,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
             },
             /**
              * For overridden.
-             * @see Component.Controller#bindUI
+             * refer: Component.Controller#bindUI
              */
             bindUI:function () {
                 var _self = this;
@@ -351,7 +351,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
                  *  A string column id or the numeric index of the column
                  * that should be initially activated within the container's layout on render.
                  * @type {String|Number}
-                 * @default null
+                 * Defaults to: null
                  */
                 activeItem:{
                     value:null
@@ -378,7 +378,7 @@ KISSY.add('grid/header', function (S, Component, Column) {
                  * true to force the columns to fit into the available width. Headers are first sized according to configuration, whether that be a specific width, or flex.
                  * Then they are all proportionally changed in width so that the entire content width is used.
                  * @type {Boolean}
-                 * @default 'false'
+                 * Defaults to: 'false'
                  */
                 forceFit:{
                     view:true,

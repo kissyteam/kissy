@@ -1,5 +1,5 @@
 /**
- * @fileOverview nest tag scanner recursively
+ * nest tag scanner recursively
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanners) {
@@ -14,7 +14,7 @@ KISSY.add("htmlparser/scanners/TagScanner", function (S, dtd, Tag, SpecialScanne
     };
 
     /**
-     * @see http://www.w3.org/TR/html5/tree-construction.html#tree-construction
+     * refer: http://www.w3.org/TR/html5/tree-construction.html#tree-construction
      * When the steps below require the UA to generate implied end tags,
      * then, while the current node is a dd element,
      * a dt element, an li element, an option element,

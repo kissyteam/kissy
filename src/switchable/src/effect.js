@@ -1,5 +1,5 @@
 /**
- * @fileOverview Switchable Effect Plugin
+ * Switchable Effect Plugin
  */
 KISSY.add('switchable/effect', function (S, DOM, Event, Anim, Switchable, undefined) {
 

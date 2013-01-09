@@ -1,5 +1,5 @@
 /**
- * @fileOverview calendar
+ * calendar
  */
 KISSY.add("calendar", function (S, C, Page, Time, Date) {
     S.Date = C.Date = Date;

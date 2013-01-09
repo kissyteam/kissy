@@ -1,5 +1,5 @@
 /**
- * @fileOverview view for kissy mvc : event delegation,el generator
+ * view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/view", function (S, Node, Base) {
@@ -17,7 +17,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
      * @name View
      * @class
      * View for delegating event on root element.
-     * @memberOf MVC
+     * @member MVC
      * @extends KISSY.Base
      */
     function View() {

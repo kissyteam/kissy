@@ -1,5 +1,6 @@
 /**
- * @fileOverview waterfall
+ * @ignore
+ * waterfall
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall", function (S, Waterfall, Loader) {

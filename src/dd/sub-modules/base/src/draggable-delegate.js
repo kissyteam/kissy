@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview delegate all draggable nodes to one draggable object
+ * delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, Event) {

@@ -1,5 +1,5 @@
 /**
- * @fileOverview Accordion Widget
+ * Accordion Widget
  * @author fool2fish@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('switchable/accordion/base', function (S, DOM, Switchable) {

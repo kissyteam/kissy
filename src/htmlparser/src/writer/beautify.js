@@ -1,5 +1,5 @@
 /**
- * @fileOverview format html prettily
+ * format html prettily
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/writer/beautify", function (S, BasicWriter, dtd, Utils) {

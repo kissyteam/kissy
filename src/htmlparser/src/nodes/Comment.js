@@ -1,5 +1,5 @@
 /**
- * @fileOverview comment node (<!-- content -->)
+ * comment node (<!-- content -->)
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/nodes/Comment", function (S, Text) {

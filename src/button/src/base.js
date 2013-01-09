@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Button control for KISSY.
+ * Button control for KISSY.
  * @author yiminghe@gmail.com
  */
 KISSY.add("button/base", function (S, Event, Component, ButtonRender) {

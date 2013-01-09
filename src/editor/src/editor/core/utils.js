@@ -16,7 +16,7 @@ KISSY.add("editor/core/utils", function (S) {
          * @namespace
          * Utilities for Editor.
          * @name Utils
-         * @memberOf Editor
+         * @member Editor
          */
             Utils =
         /**

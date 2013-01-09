@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview decorate function for children render from markup
+ * decorate function for children render from markup
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/decorate-children", function (S, Manager) {

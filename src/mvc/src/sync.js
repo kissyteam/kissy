@@ -1,5 +1,5 @@
 /**
- * @fileOverview default sync for model
+ * default sync for model
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/sync", function (S, io, JSON) {
@@ -13,7 +13,7 @@ KISSY.add("mvc/sync", function (S, io, JSON) {
     /**
      * Default sync mechanism.
      * Sync data with server using {@link IO} .
-     * @memberOf MVC
+     * @member MVC
      * @param {MVC.Model|MVC.Collection} self Model or Collection instance to sync with server.
      * @param {String} method Create or update or delete or read.
      * @param {Object} options IO options

@@ -1,5 +1,5 @@
 /**
- * @fileOverview Tabs Widget
+ * Tabs Widget
  * @author lifesinger@gmail.com
  */
 KISSY.add('switchable/tabs/base', function(S, Switchable) {

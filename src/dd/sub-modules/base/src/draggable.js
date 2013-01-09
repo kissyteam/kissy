@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview dd support for kissy, drag for dd
+ * dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {

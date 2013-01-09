@@ -1,5 +1,5 @@
 /**
- * @fileOverview root node represent a check tree
+ * root node represent a check tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender, TreeManager) {
@@ -9,7 +9,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
      * @class
      * KISSY Checked Tree.
      * xclass: 'check-tree'.
-     * @memberOf Tree
+     * @member Tree
      */
     var CheckTree = CheckNode.extend([TreeManager], {
         _onSetFocused: function () {

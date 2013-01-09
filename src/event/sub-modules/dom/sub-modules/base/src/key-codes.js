@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview some key-codes definition and utils from closure-library
+ * some key-codes definition and utils from closure-library
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/key-codes', function (S) {

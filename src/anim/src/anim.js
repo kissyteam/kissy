@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview anim
+ * anim
  */
 KISSY.add('anim', function (S, Anim, Easing) {
     Anim.Easing = Easing;

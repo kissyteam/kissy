@@ -1,5 +1,5 @@
 /**
- * @fileOverview common render for node
+ * common render for node
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/node-render", function (S, Node, Component) {

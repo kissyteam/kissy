@@ -1,5 +1,5 @@
 /**
- * @fileOverview This class specifies the definition for a container of grid editor.
+ * This class specifies the definition for a container of grid editor.
  * @author dxq613@gmail.com
  */
 KISSY.add('grid/editorpanel', function (S, Component) {
@@ -21,7 +21,7 @@ KISSY.add('grid/editorpanel', function (S, Component) {
 			new S.Node(tpl).appendTo(el);
 		},
 		/**
-         * @see {Component.Render#getContentElement}
+         * refer: {Component.Render#getContentElement}
          */
         getContentElement:function () {
 			return this.get('el').one('.' + CLS_EDITOR_CONTAINER);	

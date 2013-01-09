@@ -1,5 +1,5 @@
 /**
- * @fileOverview Store for grid.
+ * Store for grid.
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/store',function(S){
@@ -27,7 +27,7 @@ KISSY.add('grid/store',function(S){
 			* 加载数据时，返回数据的根目录
 			* @field
 			* @type {String}
-			* @default  "rows"
+			* Defaults to:  "rows"
 			* @example 
 			* '{"rows":[{"name":"abc"},{"name":"bcd"}],"results":100}'
 			*/
@@ -36,7 +36,7 @@ KISSY.add('grid/store',function(S){
 			* 加载数据时，符合条件的数据总数，用于分页
 			* @field
 			* @type {String}
-			* @default  "results"
+			* Defaults to:  "results"
 			* @example
 			*
 			* '{"rows":[{"name":"abc"},{"name":"bcd"}],"results":100}'
@@ -46,21 +46,21 @@ KISSY.add('grid/store',function(S){
 			* 加载数据时，返回的格式,目前只支持"json、jsonp"格式<br>
 			* @field
 			* @type {String}
-			* @default "json"
+			* Defaults to: "json"
 			*/
 			dataType: 'json', 
 			/**
 			* 创建对象时是否自动加载
 			* @field
 			* @type {Boolean}
-			* @default false
+			* Defaults to: false
 			*/
 			autoLoad: false,
 			/**
 			* 排序信息
 			* @field 
 			* @type {Object}
-			* @default { field: '', direction: 'ASC' }
+			* Defaults to: { field: '', direction: 'ASC' }
 			* @example 
 			* var store = new Store({
 			*		url : 'data.php',
@@ -76,7 +76,7 @@ KISSY.add('grid/store',function(S){
 			* memoryData : {Array} 内存中的数据，如果未设置url，而是设置了memeryData,则加载数据时将加载内存中的数据
 			* @field 
 			* @type {Object}
-			* @default { method: 'post',url:'',memoryData : null }
+			* Defaults to: { method: 'post',url:'',memoryData : null }
 			* @example 
 			* var store = new Store({
 			*		autoLoad : true,
@@ -100,14 +100,14 @@ KISSY.add('grid/store',function(S){
 			* 是否后端排序，如果为后端排序，每次排序发送新请求，否则，直接前端排序
 			* @field
 			* @type {Boolean}
-			* @default false
+			* Defaults to: false
 			*/
 			remoteSort: false,
 			/**
 			* 对象的匹配函数，验证两个对象是否相当
 			* @field
 			* @type {Function}
-			* @default function(obj1,obj2){return obj1==obj2};
+			* Defaults to: function(obj1,obj2){return obj1==obj2};
 			* 
 			*/
 			matchFunction : function(obj1,obj2){

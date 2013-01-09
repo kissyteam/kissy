@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview dom-attr
+ * dom-attr
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/attr', function (S, DOM, undefined) {

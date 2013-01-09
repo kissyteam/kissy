@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Local dataSource for ComboBox
+ * Local dataSource for ComboBox
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/LocalDataSource", function (S) {

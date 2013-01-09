@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview filter select from combobox
+ * filter select from combobox
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/filter-select", function (S, Combobox) {

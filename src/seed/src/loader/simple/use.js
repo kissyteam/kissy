@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview use and attach mod for kissy simple loader
+ * use and attach mod for kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {

@@ -406,7 +406,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
 
     /**
-     * @memberOf Editor
+     * @member Editor
      * @class
      * Range implementation across browsers.
      * @param document {Document}

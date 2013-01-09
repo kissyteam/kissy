@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview queue of anim objects
+ * queue of anim objects
  * @author yiminghe@gmail.com
  */
 KISSY.add('anim/queue', function (S, DOM) {

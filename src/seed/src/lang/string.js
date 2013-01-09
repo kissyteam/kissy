@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview string utilities of lang
+ * string utilities of lang
  * @author yiminghe@gmail.com
  *
  */

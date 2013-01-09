@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview   type of land
+ *   type of land
  * @author  lifesinger@gmail.com, yiminghe@gmail.com
  *
  */

@@ -1,5 +1,5 @@
 /**
- * @fileOverview checkable tree node
+ * checkable tree node
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
@@ -10,7 +10,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
 
     /**
      * @name CheckNode
-     * @memberOf Tree
+     * @member Tree
      * @class
      * Checked tree node.
      * xclass: 'check-tree-node'.

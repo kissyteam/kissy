@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview dom/style
+ * dom/style
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/style', function (S, DOM, undefined) {
@@ -267,6 +267,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             /**
              * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+             * if cssText does not contain css hacks, u can just use DOM.create('<style>xx</style>')
              * @param {window} [refWin=window] Window which will accept this stylesheet
              * @param {String} [cssText] The text containing the css rules
              * @param {String} [id] An id to add to the stylesheet for later removal
@@ -276,7 +277,8 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
 
                 if (typeof refWin == 'string') {
                     id = cssText;
-                    cssText = refWin;
+                    cssText = /**@type String
+                     @ignore*/refWin;
                     refWin = WINDOW;
                 }
 
@@ -295,9 +297,16 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     return;
                 }
 
-                elem = DOM.create('<style>' + cssText + '</style>', { id: id }, doc);
+                elem = DOM.create('<style>', { id: id }, doc);
 
+                // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
                 DOM.get('head', doc).appendChild(elem);
+
+                if (elem.styleSheet) { // IE
+                    elem.styleSheet.cssText = cssText;
+                } else { // W3C
+                    elem.appendChild(doc.createTextNode(cssText));
+                }
             },
 
             /**

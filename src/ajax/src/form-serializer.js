@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview form data  serialization util
+ * form data  serialization util
  * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/form-serializer', function (S, DOM) {

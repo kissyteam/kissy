@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview decorate its children from one element
+ * decorate its children from one element
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/decorate-child", function (S, DecorateChildren) {

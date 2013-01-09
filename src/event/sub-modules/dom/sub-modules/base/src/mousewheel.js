@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview normalize mousewheel in gecko
+ * normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/mousewheel', function (S, special) {

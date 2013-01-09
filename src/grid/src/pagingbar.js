@@ -1,5 +1,5 @@
 /**
- * @fileOverview  a specialized toolbar that is bound to a Grid.Store and provides automatic paging control.
+ *  a specialized toolbar that is bound to a Grid.Store and provides automatic paging control.
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
@@ -19,7 +19,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
      * @name PagingBar
      * @constructor
      * @extends Grid.Bar
-     * @memberOf Grid
+     * @member Grid
      */
     var PagingBar = Bar.extend([Bindable],
         /** @lends Grid.PagingBar.prototype*/
@@ -286,84 +286,84 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
             {
                 /**
                  * the text of button for first page
-                 * @default {String} "首 页"
+                 * Defaults to: {String} "首 页"
                  */
                 firstText:{
                     value:'首 页'
                 },
                 /**
                  * the cls of button for first page
-                 * @default {String} "ks-pb-first"
+                 * Defaults to: {String} "ks-pb-first"
                  */
                 fistCls:{
                     value:'ks-pb-first'
                 },
                 /**
                  * the text for previous page button
-                 * @default {String} "前一页"
+                 * Defaults to: {String} "前一页"
                  */
                 prevText:{
                     value:'上一页'
                 },
                 /**
                  * the cls for previous page button
-                 * @default {String} "ks-pb-prev"
+                 * Defaults to: {String} "ks-pb-prev"
                  */
                 prevCls:{
                     value:'ks-pb-prev'
                 },
                 /**
                  * the text for next page button
-                 * @default {String} "下一页"
+                 * Defaults to: {String} "下一页"
                  */
                 nextText:{
                     value:'下一页'
                 },
                 /**
                  * the cls for next page button
-                 * @default {String} "ks-pb-next"
+                 * Defaults to: {String} "ks-pb-next"
                  */
                 nextCls:{
                     value:'ks-pb-next'
                 },
                 /**
                  * the text for last page button
-                 * @default {String} "末 页"
+                 * Defaults to: {String} "末 页"
                  */
                 lastText:{
                     value:'末 页'
                 },
                 /**
                  * the cls for last page button
-                 * @default {String} "ks-pb-last"
+                 * Defaults to: {String} "ks-pb-last"
                  */
                 lastCls:{
                     value:'ks-pb-last'
                 },
                 /**
                  * the text for skip page button
-                 * @default {String} "跳 转"
+                 * Defaults to: {String} "跳 转"
                  */
                 skipText:{
                     value:'跳 转'
                 },
                 /**
                  * the cls for skip page button
-                 * @default {String} "ks-pb-last"
+                 * Defaults to: {String} "ks-pb-last"
                  */
                 skipCls:{
                     value:'ks-pb-skip'
                 },
                 /**
                  * the template of total page info
-                 * @default {String} '共 {totalPage} 页'
+                 * Defaults to: {String} '共 {totalPage} 页'
                  */
                 totalPageTpl:{
                     value:'共 {totalPage} 页'
                 },
                 /**
                  * the template of current page info
-                 * @default {String} '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
+                 * Defaults to: {String} '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
                  */
                 curPageTpl:{
                     value:'第 <input type="text" '+
@@ -371,7 +371,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
                 },
                 /**
                  * the template of total count info
-                 * @default {String} '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
+                 * Defaults to: {String} '第 <input type="text" autocomplete="off" class="ks-pb-page" size="20" name="inputItem"> 页'
                  */
                 totalCountTpl:{
                     value:'共{totalCount}条记录'
@@ -379,7 +379,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
                 /**
                  * current page of the paging bar
                  * @private
-                 * @default {Number} 0
+                 * Defaults to: {Number} 0
                  */
                 curPage:{
                     value:0
@@ -387,7 +387,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
                 /**
                  * total page of the paging bar
                  * @private
-                 * @default {Number} 0
+                 * Defaults to: {Number} 0
                  */
                 totalPage:{
                     value:0
@@ -395,7 +395,7 @@ KISSY.add('grid/pagingbar', function (S, Component, Bar, Bindable) {
                 /**
                  * total count of the store that the paging bar bind to
                  * @private
-                 * @default {Number} 0
+                 * Defaults to: {Number} 0
                  */
                 totalCount:{
                     value:0

@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview dom
+ * dom
  * @author yiminghe@gmail.com
  */
 KISSY.add('dom/base', function (S, DOM) {

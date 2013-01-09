@@ -17,7 +17,7 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview custom event target for publish and subscribe
+ * custom event target for publish and subscribe
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEvent) {
@@ -41,8 +41,11 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
          */
         {
 
-<span id='KISSY-Event-Target-method-fire'>            fire: function (target, type, eventData) {
-</span>                var self = target, ret = undefined;
+<span id='global-method-fire'>            /**
+</span>             * @ignore
+             */
+            fire: function (target, type, eventData) {
+                var self = target, ret = undefined;
 
                 eventData = eventData || {};
 
@@ -77,8 +80,11 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                 return ret;
             },
 
-<span id='KISSY-Event-Target-method-publish'>            publish: function (target, type, cfg) {
-</span>                var customEvent;
+<span id='global-method-publish'>            /**
+</span>             * @ignore
+             */
+            publish: function (target, type, cfg) {
+                var customEvent;
 
                 splitAndRun(type, function (t) {
                     customEvent = ObservableCustomEvent.getCustomEvent(target, t, 1);
@@ -88,16 +94,22 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                 return target;
             },
 
-<span id='KISSY-Event-Target-method-addTarget'>            addTarget: function (target, anotherTarget) {
-</span>                var targets = api.getTargets(target);
+<span id='global-method-addTarget'>            /**
+</span>             * @ignore
+             */
+            addTarget: function (target, anotherTarget) {
+                var targets = api.getTargets(target);
                 if (!S.inArray(anotherTarget, targets)) {
                     targets.push(anotherTarget);
                 }
                 return target;
             },
 
-<span id='KISSY-Event-Target-method-removeTarget'>            removeTarget: function (target, anotherTarget) {
-</span>                var targets = api.getTargets(target),
+<span id='global-method-removeTarget'>            /**
+</span>             * @ignore
+             */
+            removeTarget: function (target, anotherTarget) {
+                var targets = api.getTargets(target),
                     index = S.indexOf(anotherTarget, targets);
                 if (index != -1) {
                     targets.splice(index, 1);
@@ -105,13 +117,19 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                 return target;
             },
 
-<span id='KISSY-Event-Target-method-getTargets'>            getTargets: function (target) {
-</span>                target[KS_BUBBLE_TARGETS] = target[KS_BUBBLE_TARGETS] || [];
+<span id='global-method-getTargets'>            /**
+</span>             * @ignore
+             */
+            getTargets: function (target) {
+                target[KS_BUBBLE_TARGETS] = target[KS_BUBBLE_TARGETS] || [];
                 return target[KS_BUBBLE_TARGETS];
             },
 
-<span id='KISSY-Event-Target-method-on'>                       on: function (target, type, fn, context) {
-</span>                type = trim(type);
+<span id='global-method-on'>            /**
+</span>             * @ignore
+             */
+            on: function (target, type, fn, context) {
+                type = trim(type);
                 _Utils.batchForType(function (type, fn, context) {
                     var cfg = _Utils.normalizeParam(type, fn, context),
                         customEvent;
@@ -124,8 +142,11 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                 return target; // chain
             },
 
-<span id='KISSY-Event-Target-method-detach'>            detach: function (target, type, fn, context) {
-</span>                type = trim(type);
+<span id='global-method-detach'>            /**
+</span>             * @ignore
+             */
+            detach: function (target, type, fn, context) {
+                type = trim(type);
                 _Utils.batchForType(function (type, fn, context) {
                     var cfg = _Utils.normalizeParam(type, fn, context),
                         customEvents,
@@ -148,17 +169,19 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
             }
         });
 
-<span id='KISSY-Event-Target-method-'>    /**
+<span id='KISSY-Event-Target-method-fire'>    /**
 </span>     * Fire a custom event by name.
      * The callback functions will be executed from the context specified when the event was created,
      * and the {@link KISSY.Event.CustomEventObject} created will be mixed with eventData
+     * @method fire
      * @param {String} type The type of the event
      * @param {Object} [eventData] The data will be mixed with {@link KISSY.Event.CustomEventObject} created
      * @return {*} If any listen returns false, then the returned value is false. else return the last listener's returned value
      */
 
-<span id='KISSY-Event-Target-method-'>    /**
+<span id='KISSY-Event-Target-method-publish'>    /**
 </span>     * Creates a new custom event of the specified type
+     * @method publish
      * @param {String} type The type of the event
      * @param {Object} cfg Config params
      * @param {Boolean} [cfg.bubbles=true] whether or not this event bubbles
@@ -166,36 +189,39 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
      * @chainable
      */
 
-<span id='KISSY-Event-Target-method-'>    /**
+<span id='KISSY-Event-Target-method-addTarget'>    /**
 </span>     * Registers another EventTarget as a bubble target.
+     * @method addTarget
      * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to add
      * @chainable
      */
 
-<span id='KISSY-Event-Target-method-'>    /**
+<span id='KISSY-Event-Target-method-removeTarget'>    /**
 </span>     * Removes a bubble target
+     * @method removeTarget
      * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to remove
      * @chainable
      */
 
-<span id='KISSY-Event-Target-method-'>    /**
+<span id='KISSY-Event-Target-method-getTargets'>    /**
 </span>     * all targets where current target's events bubble to
      * @private
+     * @method getTargets
      * @return {Array}
      */
 
-<span id='KISSY-Event-Target-method-'>    /**
+<span id='KISSY-Event-Target-method-on'>    /**
 </span>     * Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
-     * @method
+     * @method on
      * @param {String} type The name of the event
      * @param {Function} fn The callback to execute in response to the event
      * @param {Object} [context] this object in callback
      * @chainable
      */
 
-<span id='KISSY-Event-Target-method-'>    /**
+<span id='KISSY-Event-Target-method-detach'>    /**
 </span>     * Detach one or more listeners from the specified event
-     * @method
+     * @method detach
      * @param {String} type The name of the event
      * @param {Function} [fn] The subscribed function to un-subscribe. if not supplied, all observers will be removed.
      * @param {Object} [context] The custom object passed to subscribe.

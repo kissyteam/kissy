@@ -17,7 +17,7 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview dom/style
+ * dom/style
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/style', function (S, DOM, undefined) {
@@ -284,6 +284,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
 <span id='KISSY-DOM-method-addStyleSheet'>            /**
 </span>             * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+             * if cssText does not contain css hacks, u can just use DOM.create('&lt;style&gt;xx&lt;/style&gt;')
              * @param {window} [refWin=window] Window which will accept this stylesheet
              * @param {String} [cssText] The text containing the css rules
              * @param {String} [id] An id to add to the stylesheet for later removal
@@ -293,7 +294,8 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
 
                 if (typeof refWin == 'string') {
                     id = cssText;
-                    cssText = refWin;
+<span id='global-property-'>                    cssText = /**@type String
+</span>                     @ignore*/refWin;
                     refWin = WINDOW;
                 }
 
@@ -312,9 +314,16 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     return;
                 }
 
-                elem = DOM.create('&lt;style&gt;' + cssText + '&lt;/style&gt;', { id: id }, doc);
+                elem = DOM.create('&lt;style&gt;', { id: id }, doc);
 
+                // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
                 DOM.get('head', doc).appendChild(elem);
+
+                if (elem.styleSheet) { // IE
+                    elem.styleSheet.cssText = cssText;
+                } else { // W3C
+                    elem.appendChild(doc.createTextNode(cssText));
+                }
             },
 
 <span id='KISSY-DOM-method-unselectable'>            /**

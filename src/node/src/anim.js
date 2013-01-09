@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview anim-node-plugin
+ * anim-node-plugin
  * @author yiminghe@gmail.com,
  *         lifesinger@gmail.com,
  *         qiaohua@taobao.com,

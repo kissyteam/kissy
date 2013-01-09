@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview storage for component
+ * storage for component
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/manager", function (S) {

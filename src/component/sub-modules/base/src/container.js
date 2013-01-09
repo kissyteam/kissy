@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview container can delegate event for its children
+ * container can delegate event for its children
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/container", function (S, Controller, DelegateChildren, DecorateChildren) {

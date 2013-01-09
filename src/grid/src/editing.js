@@ -65,7 +65,7 @@ KISSY.add('grid/editing',function(S,Component,EditorPanel,Overlay){
          * <li>rowfocus</li>
          * </ul>
          * @type {String}
-         * @default 'cellclick'
+         * Defaults to: 'cellclick'
          */
         triggerEvent : {
             value : 'cellclick'

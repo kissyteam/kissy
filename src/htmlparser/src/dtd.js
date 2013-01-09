@@ -1,5 +1,5 @@
 /**
- * @fileOverview modified from ckeditor dtd by yiminghe, support html5 tag and dtd
+ * modified from ckeditor dtd by yiminghe, support html5 tag and dtd
  * @author yimingh@gmail.com
  */
 /*

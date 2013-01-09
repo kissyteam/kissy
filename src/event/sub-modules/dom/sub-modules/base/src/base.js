@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview dom event facade
+ * dom event facade
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Special) {

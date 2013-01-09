@@ -1,5 +1,5 @@
 /**
- * @fileOverview This class specifies the definition for the body of grid.
+ * This class specifies the definition for the body of grid.
  * @author dxq613@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
@@ -21,7 +21,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
 
     var GridBodyRender = Component.Render.extend({
         /**
-         * @see {Component.Controller#renderUI}
+         * refer: {Component.Controller#renderUI}
          */
         renderUI:function () {
             var _self = this,
@@ -349,7 +349,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
         {
 
             /**
-             * @see Component.Controller#bindUI
+             * refer: Component.Controller#bindUI
              */
             bindUI:function () {
                 var _self = this;
@@ -413,7 +413,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
             },
             /**
              * @private
-             * @see Grid.Bindable#onLoad
+             * refer: Grid.Bindable#onLoad
              */
             onLoad:function () {
                 var _self = this,
@@ -423,7 +423,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
             },
             /**
              * @private
-             * @see Grid.Bindable#onAdd
+             * refer: Grid.Bindable#onAdd
              */
             onAdd:function (e) {
                 var _self = this,
@@ -636,7 +636,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
 
                 /**
                  * columns of the component
-                 * @see Grid.Column
+                 * refer: Grid.Column
                  * @private
                  */
                 columns:{
@@ -652,7 +652,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 /**
                  * The CSS class to apply to this header's table element.
                  * @type {String}
-                 * @default 'ks-grid-table' this css cannot be overridden, the other css can be added
+                 * Defaults to: 'ks-grid-table' this css cannot be overridden, the other css can be added
                  */
                 tableCls:{
                     view:true,
@@ -662,7 +662,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                  * true to force the columns to fit into the available width. Headers are first sized according to configuration, whether that be a specific width, or flex.
                  * Then they are all proportionally changed in width so that the entire content width is used.
                  * @type {Boolean}
-                 * @default 'false'
+                 * Defaults to: 'false'
                  */
                 forceFit:{
                     view:true,
@@ -670,7 +670,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 },
                 /**
                  * @type {Boolean}
-                 * @default false
+                 * Defaults to: false
                  */
                 multiSelect:{
                     value:false
@@ -678,7 +678,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                 /**
                  * True to stripe the rows.
                  * @type {Boolean}
-                 * @default true
+                 * Defaults to: true
                  */
                 stripeRows:{
                     view:true,
@@ -707,7 +707,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                  * An template of first row of this component ,which to fixed the width of every column.
                  * User can use the syntax of KISSY 's template component.
                  * @type {String}
-                 * @default  <pre>'&lt;tr class="ks-grid-header-row"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
+                 * Defaults to:  <pre>'&lt;tr class="ks-grid-header-row"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
                  */
                 headerRowTpl:{
                     view:true,
@@ -717,7 +717,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                  * An template used to create the row which encapsulates cells.
                  * User can use the syntax of KISSY 's template component.
                  * @type {String}
-                 * @default  <pre>'&lt;tr class="' + CLS_GRID_ROW + ' {{oddCls}}"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
+                 * Defaults to:  <pre>'&lt;tr class="' + CLS_GRID_ROW + ' {{oddCls}}"&gt;{{cellsTpl}}&lt;/tr&gt;'</pre>
                  */
                 rowTpl:{
                     view:true,
@@ -727,7 +727,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
                  * An template used to create the cell.
                  * User can use the syntax of KISSY 's template component.
                  * @type {String}
-                 * @default
+                 * Defaults to:
                  * <pre>
                  *     '&lt;td  class="' + CLS_GRID_CELL + ' grid-td-{{id}}" data-column-id="{{id}}" data-column-field = {{dataIndex}}&gt;'+
                  *        '&lt;div class="' + CLS_GRID_CELL_INNER + '" &gt;{{cellText}}&lt;/div&gt;'+
@@ -742,7 +742,7 @@ KISSY.add('grid/gridbody', function (S, Component, Template, Bindable) {
 
                 },
                 /**
-                 * @default &lt;span class="' + CLS_CELL_TEXT + ' " title = "{{tips}}"&gt;{{text}}&lt;/span&gt;
+                 * Defaults to: &lt;span class="' + CLS_CELL_TEXT + ' " title = "{{tips}}"&gt;{{text}}&lt;/span&gt;
                  */
                 cellTextTpl:{
                     view:true,

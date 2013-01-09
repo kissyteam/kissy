@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Utils for kissy loader
+ * Utils for kissy loader
  * @author yiminghe@gmail.com
  */
 (function (S) {

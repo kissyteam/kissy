@@ -1,5 +1,6 @@
 /**
- * @fileOverview Make Elements flow like waterfall.
+ * @ignore
+ * Make Elements flow like waterfall.
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall/base", function (S, Node, Base) {
@@ -9,18 +10,27 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         RESIZE_DURATION = 50;
 
     /**
-     * @class
      * Make Elements flow like waterfall.
-     * @name Waterfall
+     * @class KISSY.Waterfall
      */
     function Waterfall() {
-        Waterfall.superclass.constructor.apply(this, arguments);
-        this._init();
+        var self = this;
+        Waterfall.superclass.constructor.apply(self, arguments);
+        // windows ie<9
+        //  - 出滚动条就会触发 resize 事件
+        //  - ie<8 出不出滚动条，窗口区域一致
+        //  - ie=8 出了滚动条窗口区域和以前不一样了，触发调整逻辑
+        var onResize = self.__onResize = S.buffer(doResize,
+            RESIZE_DURATION, self);
+        // 一开始就 adjust 一次，可以对已有静态数据处理
+        onResize();
+        $(win).on("resize", onResize);
     }
 
     function timedChunk(items, process, context, callback) {
 
-        var stopper = {}, timer, todo;
+        var stopper = {},
+            timer, todo;
 
         function start() {
 
@@ -66,14 +76,13 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
     }
 
 
-    Waterfall.ATTRS =
-    /**
-     * @lends Waterfall
-     */
-    {
+    Waterfall.ATTRS = {
         /**
          * Container which contains waterfall elements.
-         * @type {KISSY.NodeList}
+         * @cfg {KISSY.NodeList} container
+         */
+        /**
+         * @ignore
          */
         container: {
             setter: function (v) {
@@ -85,6 +94,10 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
          * Array of height of current waterfall cols.
          * @protected
          * @type {Number[]}
+         * @property curColHeights
+         */
+        /**
+         * @ignore
          */
         curColHeights: {
             value: []
@@ -93,7 +106,10 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         /**
          * Horizontal alignment of waterfall items with container.
          * Enum: 'left','center','right','justify'.
-         * @type {String}
+         * @cfg {String} align
+         */
+        /**
+         * @ignore
          */
         align: {
             value: 'center'
@@ -102,8 +118,11 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         /**
          * Minimum col count of waterfall items.
          * Event window resize to 0.
-         * @default 1.
-         * @type {Number}
+         * Defaults to: 1.
+         * @cfg {Number} minColCount
+         */
+        /**
+         * @ignore
          */
         minColCount: {
             value: 1
@@ -111,15 +130,18 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Effect config object when waterfall item is added to container.
-         * @default { effect:"fadeIn",duration:1 }
-         * @type {Object}
-         * @example
-         * <code>
+         *
+         * Defaults to: { effect:"fadeIn",duration:1 }
+         * @cfg {Object} effect
+         *
+         *      for example:
          *      {
          *          effect:'fadeIn', // or slideUp
          *          duration:1 // unit is second
          *      }
-         * </code>
+         */
+        /**
+         * @ignore
          */
         effect: {
             value: {
@@ -130,18 +152,27 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Column's width.
-         * @type {Number}
+         * @cfg {Number} colWidth
+         */
+        /**
+         * @ignore
          */
         colWidth: {},
 
         /**
          * Waterfall items grouped by col.
          * @private
-         * @type (Node[])[]
-         * @example
-         * <code>
-         *  [[node11,node12],[node21,node22]]
-         * </code>
+         * @type {KISSY.NodeList[][]}
+         * @property colItems
+         *
+         *      for example:
+         *      [
+         *          [ node11, node12 ],
+         *          [ node21, node22 ]
+         *      ]
+         */
+        /**
+         * @ignore
          */
         colItems: {
             value: []
@@ -149,15 +180,18 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Effect config object when waterfall item is adjusted on window resize.
-         * @default { easing:"",duration:1 }
-         * @type {Object}
-         * @example
-         * <code>
+         *
+         * Defaults to: { easing:"",duration:1 }
+         * @cfg {Object} adjustEffect
+         *
+         *      for example:
          *      {
          *          easing:'', // easing type
          *          duration:1 // unit is second
          *      }
-         * </code>
+         */
+        /**
+         * @ignore
          */
         adjustEffect: {}
     };
@@ -208,7 +242,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             col = 0,
             colProp,
             containerRegion = self._containerRegion,
-            guard = Number.MAX_VALUE;
+            guard = Number['MAX_VALUE'];
 
         if (!curColCount) {
             return undefined;
@@ -321,11 +355,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         }
     }
 
-    S.extend(Waterfall, Base,
-        /**
-         * @lends Waterfall
-         */
-        {
+    S.extend(Waterfall, Base, {
             /**
              * Whether is adjusting waterfall items.
              * @return Boolean
@@ -342,29 +372,15 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 return !!this._adder;
             },
 
-            _init: function () {
-                var self = this,
-                    onResize;
-                // windows ie<9
-                //  - 出滚动条就会触发 resize 事件
-                //  - ie<8 出不出滚动条，窗口区域一致
-                //  - ie=8 出了滚动条窗口区域和以前不一样了，触发调整逻辑
-                onResize = self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
-                // 一开始就 adjust 一次，可以对已有静态数据处理
-                onResize();
-                $(win).on("resize", onResize);
-            },
-
-
             /**
-             * Ajust the height of one specified item.
+             * Adjust the height of one specified item.
              * @param {KISSY.NodeList} item Waterfall item to be adjusted.
              * @param {Object} cfg Config object.
              * @param {Function} cfg.callback Callback function after the item is adjusted.
              * @param {Function} cfg.process Adjust logic function.
              * If returns a number, it is used as item height after adjust.
              * else use item.outerHeight(true) as item height after adjust.
-             * @param {Object} cfg.effect Same as {@link Waterfall#adjustEffect}
+             * @param {Object} cfg.effect Same as {@link KISSY.Waterfall#adjustEffect}
              * @param {Number} cfg.effect.duration
              * @param {String} cfg.effect.easing
              */
@@ -373,10 +389,10 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 cfg = cfg || {};
 
                 if (self.isAdjusting()) {
-                    return;
+                    return undefined;
                 }
 
-                var originalOuterHeight = item.outerHeight(true),
+                var originalOuterHeight = item['outerHeight'](true),
                     outerHeight;
 
                 if (cfg.process) {
@@ -384,12 +400,12 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                 }
 
                 if (outerHeight === undefined) {
-                    outerHeight = item.outerHeight(true);
+                    outerHeight = item['outerHeight'](true);
                 }
 
                 var diff = outerHeight - originalOuterHeight,
                     curColHeights = self.get("curColHeights"),
-                    col = parseInt(item.attr("data-waterfall-col")),
+                    col = parseInt(item['attr']("data-waterfall-col")),
                     colItems = self.get("colItems")[col],
                     items = [],
                     original = Math.max.apply(Math, curColHeights),
@@ -431,7 +447,10 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                     }
                 }
 
-                if (effect === undefined) {
+                if (effect === /**
+                 @ignore
+                 @type String
+                 */undefined) {
                     effect = self.get("adjustEffect");
                 }
 
@@ -459,7 +478,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
              * @param {KISSY.NodeList} item Waterfall item to be removed.
              * @param {Object} cfg Config object.
              * @param {Function} cfg.callback Callback function to be called after remove.
-             * @param {Object} cfg.effect Same as {@link Waterfall#adjustEffect}
+             * @param {Object} cfg.effect Same as {@link KISSY.Waterfall#adjustEffect}
              * @param {Number} cfg.effect.duration
              * @param {String} cfg.effect.easing
              */
@@ -469,11 +488,11 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
                     callback = cfg.callback;
                 self.adjustItem(item, S.mix(cfg, {
                     process: function () {
-                        item.remove();
+                        item['remove']();
                         return 0;
                     },
                     callback: function () {
-                        var col = parseInt(item.attr("data-waterfall-col")),
+                        var col = parseInt(item['attr']("data-waterfall-col")),
                             colItems = self.get("colItems")[col];
                         for (var i = 0; i < colItems.length; i++) {
                             if (colItems[i][0] == item[0]) {
@@ -488,7 +507,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
             /**
              * Readjust existing waterfall item.
-             * @param {Function} [callback] Callback function to be called after adjust.
+             * @param {Function} [callback]
+             * Callback function to be called after adjust.
              */
             adjust: function (callback) {
                 S.log("waterfall:adjust");
@@ -578,6 +598,8 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
     requires: ['node', 'base']
 });
 /**
+ * @ignore
+ *
  * 2012-07-10
  *  - 注意滚动条在 ie 下导致的重新调整
  *  - timeChunk 第一次不 setTimeout
