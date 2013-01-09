@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  Flash UA 探测
+ * Flash UA 探测
  * @author oicuicu@gmail.com
  */
 KISSY.add('swf/ua', function (S, undefined) {

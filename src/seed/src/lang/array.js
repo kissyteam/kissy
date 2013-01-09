@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  array utilities of lang
+ * array utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -176,7 +176,7 @@
          * @param arr {Array} the array to iterate
          * @param fn {Function} the function to execute on each item
          * @param [context] {Object} optional context object
-         * https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
+         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
          * @return {Array} The items on which the supplied function returned
          * @member KISSY
          */
@@ -208,7 +208,7 @@
          * @param arr {Array} the array to iterate
          * @param callback {Function} the function to execute on each item
          * @param initialValue {number} optional context object
-         * https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
          * @return {Array} The items on which the supplied function returned
          * @member KISSY
          */

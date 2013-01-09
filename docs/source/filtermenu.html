@@ -17,10 +17,10 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- *  menu where items can be filtered based on user keyboard input
+ * menu where items can be filtered based on user keyboard input
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;menu/filtermenu&quot;, function (S, Menu, FilterMenuRender) {
+KISSY.add(&quot;menu/filtermenu&quot;, function (S, Component, Menu, FilterMenuRender) {
 
     var HIT_CLS = &quot;menuitem-hit&quot;;
 
@@ -37,7 +37,7 @@ KISSY.add(&quot;menu/filtermenu&quot;, function (S, Menu, FilterMenuRender) {
      * @extends KISSY.Menu
      * @class KISSY.Menu.FilterMenu
      */
-    var FilterMenu = Menu.extend({
+    var FilterMenu = Menu.extend([Component.DecorateChild], {
             bindUI: function () {
                 var self = this,
                     view = self.get(&quot;view&quot;),
@@ -171,14 +171,6 @@ KISSY.add(&quot;menu/filtermenu&quot;, function (S, Menu, FilterMenuRender) {
                 });
             },
 
-            decorateInternal: function (el) {
-                var self = this,
-                    prefixCls = self.get('prefixCls');
-                self.set(&quot;el&quot;, el);
-                var menuContent = el.one(&quot;.&quot; + prefixCls + &quot;menu-content&quot;);
-                self.decorateChildren(menuContent);
-            },
-
 <span id='KISSY-Menu-FilterMenu-method-reset'>            /**
 </span>             * Reset user input.
              */
@@ -246,6 +238,12 @@ KISSY.add(&quot;menu/filtermenu&quot;, function (S, Menu, FilterMenuRender) {
                     value: false
                 },
 
+                decorateChildCls: {
+                    valueFn: function () {
+                        return this.get(&quot;prefixCls&quot;) + &quot;menu-content&quot;
+                    }
+                },
+
                 xrender: {
                     value: FilterMenuRender
                 }
@@ -257,7 +255,7 @@ KISSY.add(&quot;menu/filtermenu&quot;, function (S, Menu, FilterMenuRender) {
 
     return FilterMenu;
 }, {
-    requires: ['./base', './filtermenu-render']
+    requires: ['component/base', './base', './filtermenu-render']
 });</pre>
 </body>
 </html>

@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  web.js
+ * web.js
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  * this code can only run at browser environment
  */

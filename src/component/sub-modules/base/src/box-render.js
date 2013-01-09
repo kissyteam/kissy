@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  Box
+ * Box
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/base/box-render', function (S) {

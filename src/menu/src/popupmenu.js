@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  positionable and not focusable menu
+ * positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenu", function (S,

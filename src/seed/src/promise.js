@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  implement Promise specification by KISSY
+ * implement Promise specification by KISSY
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {

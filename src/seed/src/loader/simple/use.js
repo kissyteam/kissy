@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  use and attach mod for kissy simple loader
+ * use and attach mod for kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
@@ -10,7 +10,7 @@
         LOADING, LOADED, ERROR, ATTACHED;
 
     Loader = S.Loader;
-    data = Loader.STATUS;
+    data = Loader.Status;
     utils = Loader.Utils;
     UA = S.UA;
     LOADING = data.LOADING;

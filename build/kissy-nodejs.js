@@ -1,11 +1,11 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 9 20:01
+build time: Jan 9 23:33
 */
 /**
  * @ignore
- *  A seed where KISSY grows up from, KISS Yeah !
+ * A seed where KISSY grows up from, KISS Yeah !
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130109200115' will replace with current timestamp when compressing.
+         * NOTICE: '20130109233320' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130109200115',
+        __BUILD_TIME: '20130109233320',
         /**
          * KISSY Environment.
          * @private
@@ -194,7 +194,7 @@ var KISSY = (function (undefined) {
 
 })();/**
  * @ignore
- *  object utilities of lang
+ * object utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -529,7 +529,7 @@ var KISSY = (function (undefined) {
     }
 })(KISSY);/**
  * @ignore
- *  array utilities of lang
+ * array utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -705,7 +705,7 @@ var KISSY = (function (undefined) {
          * @param arr {Array} the array to iterate
          * @param fn {Function} the function to execute on each item
          * @param [context] {Object} optional context object
-         * https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
+         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
          * @return {Array} The items on which the supplied function returned
          * @member KISSY
          */
@@ -737,7 +737,7 @@ var KISSY = (function (undefined) {
          * @param arr {Array} the array to iterate
          * @param callback {Function} the function to execute on each item
          * @param initialValue {number} optional context object
-         * https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         * refer: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
          * @return {Array} The items on which the supplied function returned
          * @member KISSY
          */
@@ -867,7 +867,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- *  escape of lang
+ * escape of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -1130,7 +1130,7 @@ var KISSY = (function (undefined) {
     });
 })(KISSY);/**
  * @ignore
- *  function utilities of lang
+ * function utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -1308,7 +1308,7 @@ var KISSY = (function (undefined) {
     });
 })(KISSY);/**
  * @ignore
- *    lang
+ *   lang
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  *
  */
@@ -1361,7 +1361,7 @@ var KISSY = (function (undefined) {
              * @member KISSY
              * @param {Function} [filter] filter function
              * @return {Object} the new cloned object
-             * http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
+             * refer: http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
              */
             clone: function (input, filter) {
                 // 稍微改改就和规范一样了 :)
@@ -1390,7 +1390,7 @@ var KISSY = (function (undefined) {
             /**
              * Gets current date in milliseconds.
              * @method
-             *  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+             * refer:  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
              * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
              * http://kangax.github.com/es5-compat-table/
              * @member KISSY
@@ -1509,7 +1509,7 @@ var KISSY = (function (undefined) {
 })(KISSY);
 /**
  * @ignore
- *  string utilities of lang
+ * string utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -1593,7 +1593,7 @@ var KISSY = (function (undefined) {
     });
 })(KISSY);/**
  * @ignore
- *    type of land
+ *   type of land
  * @author  lifesinger@gmail.com, yiminghe@gmail.com
  *
  */
@@ -1767,7 +1767,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- *  implement Promise specification by KISSY
+ * implement Promise specification by KISSY
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
@@ -3050,7 +3050,7 @@ var KISSY = (function (undefined) {
  - same origin: http://tools.ietf.org/html/rfc6454
  *//**
  * @ignore
- *  ua
+ * ua
  */
 (function (S, undefined) {
 
@@ -3490,7 +3490,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- *  setup data structure for kissy loader
+ * setup data structure for kissy loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -3513,9 +3513,9 @@ var KISSY = (function (undefined) {
 
     /**
      * Loader Status Enum
-     * @enum {Number} KISSY.Loader.STATUS
+     * @enum {Number} KISSY.Loader.Status
      */
-    Loader.STATUS = {
+    Loader.Status = {
         /** init */
         'INIT': 0,
         /** loading */
@@ -3530,14 +3530,14 @@ var KISSY = (function (undefined) {
 
     S.Loader = Loader;
 
-    S.Loader.STATUS = Loader.STATUS;
+    S.Loader.Status = Loader.Status;
 
 })(KISSY);
 /*
  TODO: implement conditional loader
  *//**
  * @ignore
- *  simple event target for loader
+ * simple event target for loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -3617,7 +3617,7 @@ var KISSY = (function (undefined) {
     };
 })(KISSY);/**
  * @ignore
- *  Utils for kissy loader
+ * Utils for kissy loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -3626,7 +3626,7 @@ var KISSY = (function (undefined) {
         Path = S.Path,
         host = S.Env.host,
         startsWith = S.startsWith,
-        data = Loader.STATUS,
+        data = Loader.Status,
         ATTACHED = data.ATTACHED,
         LOADED = data.LOADED,
         /**
@@ -4008,7 +4008,7 @@ var KISSY = (function (undefined) {
     }
 })(KISSY);/**
  * @ignore
- *  setup data structure for kissy loader
+ * setup data structure for kissy loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -4117,7 +4117,7 @@ var KISSY = (function (undefined) {
      * This class should not be instantiated manually.
      */
     function Module(cfg) {
-        this.status = Loader.STATUS.INIT;
+        this.status = Loader.Status.INIT;
         S.mix(this, cfg);
     }
 
@@ -4320,7 +4320,7 @@ var KISSY = (function (undefined) {
  TODO: implement conditional loader
  *//**
  * @ignore
- *  implement getScript for nodejs.
+ * implement getScript for nodejs.
  *  so loader need not to be changed.
  * @author yiminghe@gmail.com
  */
@@ -4369,7 +4369,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- *  Declare config info for KISSY.
+ * Declare config info for KISSY.
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
@@ -4524,7 +4524,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- *  add module to kissy simple loader
+ * add module to kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
@@ -4684,7 +4684,7 @@ var KISSY = (function (undefined) {
  */
 /**
  * @ignore
- *  use and attach mod for kissy simple loader
+ * use and attach mod for kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
@@ -4694,7 +4694,7 @@ var KISSY = (function (undefined) {
         LOADING, LOADED, ERROR, ATTACHED;
 
     Loader = S.Loader;
-    data = Loader.STATUS;
+    data = Loader.Status;
     utils = Loader.Utils;
     UA = S.UA;
     LOADING = data.LOADING;
@@ -4940,7 +4940,7 @@ var KISSY = (function (undefined) {
  - 参考 async 重构，去除递归回调
  *//**
  * @ignore
- *  mix loader into S and infer KISSy baseUrl if not set
+ * mix loader into S and infer KISSy baseUrl if not set
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
@@ -5098,7 +5098,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130109200115'
+            tag: '20130109233320'
         }, getBaseInfo()));
     }
 
@@ -5117,7 +5117,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- *  web.js
+ * web.js
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  * this code can only run at browser environment
  */

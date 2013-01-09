@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  simple event target for loader
+ * simple event target for loader
  * @author yiminghe@gmail.com
  */
 (function (S) {

@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 9 23:32
 */
 /**
  * @ignore
- * @fileOverview menu controller for kissy,accommodate menu items
+ * menu controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
@@ -221,7 +221,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
  *  - 去除 activeItem
  **//**
  * @ignore
- * @fileOverview filter menu render
+ * filter menu render
  * 1.create filter input
  * 2.change menu contentelement
  * @author yiminghe@gmail.com
@@ -298,10 +298,10 @@ KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender) {
     requires:['node', './menu-render']
 });/**
  * @ignore
- * @fileOverview menu where items can be filtered based on user keyboard input
+ * menu where items can be filtered based on user keyboard input
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
+KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
 
     var HIT_CLS = "menuitem-hit";
 
@@ -318,7 +318,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
      * @extends KISSY.Menu
      * @class KISSY.Menu.FilterMenu
      */
-    var FilterMenu = Menu.extend({
+    var FilterMenu = Menu.extend([Component.DecorateChild], {
             bindUI: function () {
                 var self = this,
                     view = self.get("view"),
@@ -452,14 +452,6 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 });
             },
 
-            decorateInternal: function (el) {
-                var self = this,
-                    prefixCls = self.get('prefixCls');
-                self.set("el", el);
-                var menuContent = el.one("." + prefixCls + "menu-content");
-                self.decorateChildren(menuContent);
-            },
-
             /**
              * Reset user input.
              */
@@ -527,6 +519,12 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                     value: false
                 },
 
+                decorateChildCls: {
+                    valueFn: function () {
+                        return this.get("prefixCls") + "menu-content"
+                    }
+                },
+
                 xrender: {
                     value: FilterMenuRender
                 }
@@ -538,10 +536,10 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
     return FilterMenu;
 }, {
-    requires: ['./base', './filtermenu-render']
+    requires: ['component/base', './base', './filtermenu-render']
 });/**
  * @ignore
- * @fileOverview render aria from menu according to current menuitem
+ * render aria from menu according to current menuitem
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menu-render", function(S, Component) {
@@ -584,7 +582,7 @@ KISSY.add("menu/menu-render", function(S, Component) {
     requires:['component/base']
 });/**
  * @ignore
- * @fileOverview menu
+ * menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, PopupMenu, PopupMenuRender, FilterMenu) {
@@ -611,22 +609,25 @@ KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuR
     ]
 });/**
  * @ignore
- * @fileOverview simple menuitem render
+ * simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/menuitem-render", function (S, Node, Component) {
+KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
 
     var CHECK_CLS = "menuitem-checkbox";
 
     function setUpCheckEl(self) {
         var el = self.get("el"),
-            prefixCls=self.get('prefixCls'),
-            checkEl = el.one("." + prefixCls+CHECK_CLS);
+            prefixCls = self.get('prefixCls'),
+            checkEl = el.one("." + prefixCls + CHECK_CLS);
         if (!checkEl) {
-            checkEl = new Node("<div class='" + prefixCls+CHECK_CLS + "'/>")
+            checkEl = new Node("<div class='" + prefixCls + CHECK_CLS + "'/>")
                 .prependTo(el);
             // if not ie will lose focus when click
-            checkEl.unselectable();
+            checkEl.unselectable(/**
+             @type HTMLElement
+             @ignore
+             */undefined);
         }
         return checkEl;
     }
@@ -647,11 +648,11 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component) {
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _onSetSelectable: function (v) {
+        '_onSetSelectable': function (v) {
             this.get("el").attr("role", v ? 'menuitemradio' : 'menuitem');
         },
 
-        _onSetCheckable: function (v) {
+        '_onSetCheckable': function (v) {
             if (v) {
                 setUpCheckEl(this);
             }
@@ -694,7 +695,7 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component) {
     requires: ['node', 'component/base']
 });/**
  * @ignore
- * @fileOverview menu item ,child component for menu
+ * menu item ,child component for menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
@@ -888,7 +889,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
     requires: ['component/base', './menuitem-render']
 });/**
  * @ignore
- * @fileOverview popup menu render
+ * popup menu render
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenu-render", function (S, extension, MenuRender) {
@@ -904,7 +905,7 @@ KISSY.add("menu/popupmenu-render", function (S, extension, MenuRender) {
     requires:['component/extension', './menu-render']
 });/**
  * @ignore
- * @fileOverview positionable and not focusable menu
+ * positionable and not focusable menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenu", function (S,
@@ -991,7 +992,7 @@ KISSY.add("menu/popupmenu", function (S,
         './base', './popupmenu-render']
 });/**
  * @ignore
- * @fileOverview submenu render for kissy ,extend menuitem render with arrow
+ * submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
@@ -1031,7 +1032,7 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
     requires: ['./menuitem-render']
 });/**
  * @ignore
- * @fileOverview submenu controller for kissy, transfer item's keycode to menu
+ * submenu controller for kissy, transfer item's keycode to menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender) {
@@ -1119,6 +1120,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 // 2. 停止本身 highlighted false 而 buffer 的隐藏
                 self.clearSubMenuTimers();
                 self.showTimer_ = S.later(showMenu, self.get("menuDelay") * 1000, false, self);
+                return undefined;
             },
 
             /**
@@ -1168,7 +1170,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              * Protected for subclass overridden.
              * @param {KISSY.Event.DOMEventObject} e key event.
              * @protected
-             * @return {Boolean} Whether the event was handled.
+             * @return {Boolean|undefined} Whether the event was handled.
              */
             handleKeydown: function (e) {
                 var self = this,
@@ -1244,13 +1246,13 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             },
 
             // 默认 addChild，这里里面的元素需要放到 menu 属性中
-            decorateChildrenInternal: function (ui, el) {
+            decorateChildrenInternal: function (UI, el) {
                 // 不能用 display:none
                 el.css("visibility", "hidden");
                 var self = this,
                     docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
-                var menu = new ui({
+                var menu = new UI({
                     srcNode: el,
                     prefixCls: self.get("prefixCls")
                 });

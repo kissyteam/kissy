@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  setup data structure for kissy loader
+ * setup data structure for kissy loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -23,9 +23,9 @@
 
     /**
      * Loader Status Enum
-     * @enum {Number} KISSY.Loader.STATUS
+     * @enum {Number} KISSY.Loader.Status
      */
-    Loader.STATUS = {
+    Loader.Status = {
         /** init */
         'INIT': 0,
         /** loading */
@@ -40,7 +40,7 @@
 
     S.Loader = Loader;
 
-    S.Loader.STATUS = Loader.STATUS;
+    S.Loader.Status = Loader.Status;
 
 })(KISSY);
 /*

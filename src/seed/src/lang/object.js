@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  object utilities of lang
+ * object utilities of lang
  * @author yiminghe@gmail.com
  *
  */

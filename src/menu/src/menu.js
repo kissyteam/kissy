@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  menu
+ * menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu", function (S, Menu, Render, Item, ItemRender, SubMenu, SubMenuRender, PopupMenu, PopupMenuRender, FilterMenu) {

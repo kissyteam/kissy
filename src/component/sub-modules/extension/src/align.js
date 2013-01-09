@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  Component.Extension.Align
+ * Component.Extension.Align
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
 KISSY.add('component/extension/align', function (S, DOM, Node) {

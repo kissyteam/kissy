@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  add module to kissy simple loader
+ * add module to kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {

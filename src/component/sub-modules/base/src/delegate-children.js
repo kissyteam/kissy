@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  delegate events for children
+ * delegate events for children
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/delegate-children", function (S, Event) {

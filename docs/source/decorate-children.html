@@ -17,7 +17,7 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- *  decorate function for children render from markup
+ * decorate function for children render from markup
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;component/base/decorate-children&quot;, function (S, Manager) {
@@ -45,15 +45,17 @@ KISSY.add(&quot;component/base/decorate-children&quot;, function (S, Manager) {
 </span>         * Get component's constructor from KISSY Node.
          * @member KISSY.Component.Container
          * @protected
+         * @param prefixCls
          * @param {KISSY.NodeList} childNode Child component's root node.
+         * @param ignoreError
+         * @param defaultChildXClass
          */
-        findUIConstructorByNode: function (childNode, ignoreError) {
-            var self = this,
-                cls = childNode.attr(&quot;class&quot;) || &quot;&quot;,
-                prefixCls = self.get(&quot;prefixCls&quot;);
+        findUIConstructorByNode: function (prefixCls,childNode, ignoreError, defaultChildXClass) {
+            var cls = childNode[0].className || &quot;&quot;;
             // 过滤掉特定前缀
             cls = cls.replace(new RegExp(&quot;\\b&quot; + prefixCls, &quot;ig&quot;), &quot;&quot;);
-            var UI = Manager.getConstructorByXClass(cls);
+            var UI = Manager.getConstructorByXClass(cls) ||
+                defaultChildXClass &amp;&amp; Manager.getConstructorByXClass(defaultChildXClass);
             if (!UI &amp;&amp; !ignoreError) {
                 S.log(childNode);
                 S.error(&quot;can not find ui &quot; + cls + &quot; from this markup&quot;);
@@ -78,9 +80,11 @@ KISSY.add(&quot;component/base/decorate-children&quot;, function (S, Manager) {
          */
         decorateChildren: function (el) {
             var self = this,
+                prefixCls=self.get('prefixCls'),
+                defaultChildXClass = self.get('defaultChildXClass'),
                 children = el.children();
             children.each(function (c) {
-                var UI = self.findUIConstructorByNode(c);
+                var UI = self.findUIConstructorByNode(prefixCls,c, 0, defaultChildXClass);
                 self.decorateChildrenInternal(UI, c);
             });
         }

@@ -1,9 +1,9 @@
 /**
  * @ignore
- *  menu where items can be filtered based on user keyboard input
+ * menu where items can be filtered based on user keyboard input
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
+KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
 
     var HIT_CLS = "menuitem-hit";
 
@@ -20,7 +20,7 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
      * @extends KISSY.Menu
      * @class KISSY.Menu.FilterMenu
      */
-    var FilterMenu = Menu.extend({
+    var FilterMenu = Menu.extend([Component.DecorateChild], {
             bindUI: function () {
                 var self = this,
                     view = self.get("view"),
@@ -154,14 +154,6 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                 });
             },
 
-            decorateInternal: function (el) {
-                var self = this,
-                    prefixCls = self.get('prefixCls');
-                self.set("el", el);
-                var menuContent = el.one("." + prefixCls + "menu-content");
-                self.decorateChildren(menuContent);
-            },
-
             /**
              * Reset user input.
              */
@@ -229,6 +221,12 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
                     value: false
                 },
 
+                decorateChildCls: {
+                    valueFn: function () {
+                        return this.get("prefixCls") + "menu-content"
+                    }
+                },
+
                 xrender: {
                     value: FilterMenuRender
                 }
@@ -240,5 +238,5 @@ KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {
 
     return FilterMenu;
 }, {
-    requires: ['./base', './filtermenu-render']
+    requires: ['component/base', './base', './filtermenu-render']
 });

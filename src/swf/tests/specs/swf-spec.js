@@ -69,7 +69,7 @@ if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
                         }
                     });
 
-                    expect(swf1.get('status')).toBe(SWF.STATUS.SUCCESS);
+                    expect(swf1.get('status')).toBe(SWF.Status.SUCCESS);
 
                     expect(DOM.last(document.body)).toBe(swf1.get('swfObject'));
                     expect(swf1.get('swfObject').nodeName.toLowerCase()).toBe('object');
@@ -98,7 +98,7 @@ if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
                         }
                     });
 
-                    expect(swf1.get('status')).toBe(SWF.STATUS.SUCCESS);
+                    expect(swf1.get('status')).toBe(SWF.Status.SUCCESS);
 
                     expect(DOM.hasClass(swf1.get('swfObject').parentNode, 'test')).toBe(true);
 
@@ -165,7 +165,7 @@ if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
                         version: '99'
                     });
 
-                    expect(swf1.get('status')).toBe(SWF.STATUS.TOO_LOW);
+                    expect(swf1.get('status')).toBe(SWF.Status.TOO_LOW);
 
                     expect(SWF.getSrc(swf1.get('el')))
                         .toBe(S.config('base') + 'swf/assets/expressInstall.swf');

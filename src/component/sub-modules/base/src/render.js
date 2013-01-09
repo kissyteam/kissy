@@ -1,8 +1,8 @@
 /**
  * @ignore
- *  render base class for kissy
+ * render base class for kissy
  * @author yiminghe@gmail.com
- * http://martinfowler.com/eaaDev/uiArchs.html
+ * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Manager) {
 

@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  shim for ie6 ,require box-ext
+ * shim for ie6 ,require box-ext
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/shim-render", function () {

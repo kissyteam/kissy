@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  decorate function for children render from markup
+ * decorate function for children render from markup
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/decorate-children", function (S, Manager) {
@@ -28,15 +28,17 @@ KISSY.add("component/base/decorate-children", function (S, Manager) {
          * Get component's constructor from KISSY Node.
          * @member KISSY.Component.Container
          * @protected
+         * @param prefixCls
          * @param {KISSY.NodeList} childNode Child component's root node.
+         * @param ignoreError
+         * @param defaultChildXClass
          */
-        findUIConstructorByNode: function (childNode, ignoreError) {
-            var self = this,
-                cls = childNode.attr("class") || "",
-                prefixCls = self.get("prefixCls");
+        findUIConstructorByNode: function (prefixCls,childNode, ignoreError, defaultChildXClass) {
+            var cls = childNode[0].className || "";
             // 过滤掉特定前缀
             cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
-            var UI = Manager.getConstructorByXClass(cls);
+            var UI = Manager.getConstructorByXClass(cls) ||
+                defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass);
             if (!UI && !ignoreError) {
                 S.log(childNode);
                 S.error("can not find ui " + cls + " from this markup");
@@ -61,9 +63,11 @@ KISSY.add("component/base/decorate-children", function (S, Manager) {
          */
         decorateChildren: function (el) {
             var self = this,
+                prefixCls=self.get('prefixCls'),
+                defaultChildXClass = self.get('defaultChildXClass'),
                 children = el.children();
             children.each(function (c) {
-                var UI = self.findUIConstructorByNode(c);
+                var UI = self.findUIConstructorByNode(prefixCls,c, 0, defaultChildXClass);
                 self.decorateChildrenInternal(UI, c);
             });
         }

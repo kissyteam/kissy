@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  implement getScript for nodejs.
+ * implement getScript for nodejs.
  *  so loader need not to be changed.
  * @author yiminghe@gmail.com
  */

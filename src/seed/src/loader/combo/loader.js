@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  using combo to load module files
+ * using combo to load module files
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
@@ -21,7 +21,7 @@
     }
 
     var Loader = S.Loader,
-        data = Loader.STATUS,
+        data = Loader.Status,
         utils = Loader.Utils;
 
     /**

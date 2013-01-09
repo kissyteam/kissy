@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  Base Controller class for KISSY Component.
+ * Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBase, Manager, Render, undefined) {
@@ -152,7 +152,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             getCssClassWithPrefix: Manager.getCssClassWithPrefix,
 
             /**
-             * Initialize this component.             *
+             * Initialize this component.
              * @protected
              */
             initializer: function () {
@@ -163,7 +163,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             /**
              * Constructor(or get) view object to create ui elements.
              * @protected
-             *
              */
             createDom: function () {
                 var self = this,

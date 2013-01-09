@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  popup menu render
+ * popup menu render
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/popupmenu-render", function (S, extension, MenuRender) {

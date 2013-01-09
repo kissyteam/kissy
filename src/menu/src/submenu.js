@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  submenu controller for kissy, transfer item's keycode to menu
+ * submenu controller for kissy, transfer item's keycode to menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender) {
@@ -88,6 +88,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 // 2. 停止本身 highlighted false 而 buffer 的隐藏
                 self.clearSubMenuTimers();
                 self.showTimer_ = S.later(showMenu, self.get("menuDelay") * 1000, false, self);
+                return undefined;
             },
 
             /**
@@ -137,7 +138,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              * Protected for subclass overridden.
              * @param {KISSY.Event.DOMEventObject} e key event.
              * @protected
-             * @return {Boolean} Whether the event was handled.
+             * @return {Boolean|undefined} Whether the event was handled.
              */
             handleKeydown: function (e) {
                 var self = this,
@@ -213,13 +214,13 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             },
 
             // 默认 addChild，这里里面的元素需要放到 menu 属性中
-            decorateChildrenInternal: function (ui, el) {
+            decorateChildrenInternal: function (UI, el) {
                 // 不能用 display:none
                 el.css("visibility", "hidden");
                 var self = this,
                     docBody = S.one(el[0].ownerDocument.body);
                 docBody.prepend(el);
-                var menu = new ui({
+                var menu = new UI({
                     srcNode: el,
                     prefixCls: self.get("prefixCls")
                 });

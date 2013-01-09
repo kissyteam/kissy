@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  UIBase
+ * UIBase
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefined) {

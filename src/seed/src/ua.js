@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  ua
+ * ua
  */
 (function (S, undefined) {
 

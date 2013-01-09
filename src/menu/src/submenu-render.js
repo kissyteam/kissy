@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  submenu render for kissy ,extend menuitem render with arrow
+ * submenu render for kissy ,extend menuitem render with arrow
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
