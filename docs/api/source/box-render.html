@@ -22,7 +22,9 @@
  */
 KISSY.add('component/base/box-render', function (S) {
 
-    var $ = S.all, doc = S.Env.host.document;
+    var $ = S.all,
+        UA = S.UA,
+        doc = S.Env.host.document;
 
     function BoxRender() {
     }
@@ -73,6 +75,7 @@ KISSY.add('component/base/box-render', function (S) {
             value: &quot;display&quot;
         },
         // content 设置的内容节点,默认根节点
+        // 防止 content 节点和根节点不是同一个节点，例如 submenu
         contentEl: {
             valueFn: function () {
                 return this.get(&quot;el&quot;);
@@ -98,7 +101,8 @@ KISSY.add('component/base/box-render', function (S) {
          * 通过 render 来重建原有的内容
          */
         __createDom: function () {
-            var self = this, el, contentEl;
+            var self = this,
+                el, contentEl;
             if (!self.get(&quot;srcNode&quot;)) {
                 contentEl = self.get(&quot;contentEl&quot;);
 
@@ -125,7 +129,10 @@ KISSY.add('component/base/box-render', function (S) {
                     el = self.get(&quot;el&quot;),
                     renderBefore = self.get(&quot;elBefore&quot;);
                 if (renderBefore) {
-                    el.insertBefore(renderBefore, undefined);
+<span id='global-property-'>                    el.insertBefore(renderBefore, /**
+</span>                     @type Node
+                     @ignore
+                     */undefined);
                 } else if (render) {
                     el.appendTo(render, undefined);
                 } else {
@@ -146,7 +153,7 @@ KISSY.add('component/base/box-render', function (S) {
             this.get(&quot;el&quot;).css(style);
         },
 
-        _onSetWidth: function (w) {
+        '_onSetWidth': function (w) {
             this.get(&quot;el&quot;).width(w);
         },
 
@@ -155,18 +162,25 @@ KISSY.add('component/base/box-render', function (S) {
             self.get(&quot;el&quot;).height(h);
         },
 
-        _onSetContent: function (c) {
-            var self = this, el;
+        '_onSetContent': function (c) {
+            var self = this,
+                el = self.get(&quot;contentEl&quot;);
             // srcNode 时不重新渲染 content
             // 防止内部有改变，而 content 则是老的 html 内容
             if (self.get(&quot;srcNode&quot;) &amp;&amp; !self.get(&quot;rendered&quot;)) {
             } else {
-                el = self.get(&quot;contentEl&quot;);
                 if (typeof c == &quot;string&quot;) {
                     el.html(c);
                 } else if (c) {
                     el.empty().append(c);
                 }
+            }
+            // ie needs to set unselectable attribute recursively
+            if (UA.ie &lt; 9 &amp;&amp; !self.get('allowTextSelection')) {
+<span id='global-property-'>                el.unselectable(/**
+</span>                 @type HTMLElement
+                 @ignore
+                 */undefined);
             }
         },
 

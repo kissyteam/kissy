@@ -20,19 +20,22 @@
  * @fileOverview simple menuitem render
  * @author yiminghe@gmail.com
  */
-KISSY.add(&quot;menu/menuitem-render&quot;, function (S, Node, Component) {
+KISSY.add(&quot;menu/menuitem-render&quot;, function (S, Node, Component, undefined) {
 
     var CHECK_CLS = &quot;menuitem-checkbox&quot;;
 
     function setUpCheckEl(self) {
         var el = self.get(&quot;el&quot;),
-            prefixCls=self.get('prefixCls'),
-            checkEl = el.one(&quot;.&quot; + prefixCls+CHECK_CLS);
+            prefixCls = self.get('prefixCls'),
+            checkEl = el.one(&quot;.&quot; + prefixCls + CHECK_CLS);
         if (!checkEl) {
-            checkEl = new Node(&quot;&lt;div class='&quot; + prefixCls+CHECK_CLS + &quot;'/&gt;&quot;)
+            checkEl = new Node(&quot;&lt;div class='&quot; + prefixCls + CHECK_CLS + &quot;'/&gt;&quot;)
                 .prependTo(el);
             // if not ie will lose focus when click
-            checkEl.unselectable();
+<span id='global-property-'>            checkEl.unselectable(/**
+</span>             @type HTMLElement
+             @ignore
+             */undefined);
         }
         return checkEl;
     }
@@ -53,11 +56,11 @@ KISSY.add(&quot;menu/menuitem-render&quot;, function (S, Node, Component) {
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
-        _onSetSelectable: function (v) {
+        '_onSetSelectable': function (v) {
             this.get(&quot;el&quot;).attr(&quot;role&quot;, v ? 'menuitemradio' : 'menuitem');
         },
 
-        _onSetCheckable: function (v) {
+        '_onSetCheckable': function (v) {
             if (v) {
                 setUpCheckEl(this);
             }

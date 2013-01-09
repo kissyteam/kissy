@@ -27,6 +27,10 @@ KISSY.add('xtemplate/runtime/base', function (S) {
 <span id='KISSY-XTemplate-cfg-silent'>        /**
 </span>         * whether throw exception when template variable is not found in data
          *
+         * or
+         *
+         * command is not found
+         *
          *      @example
          *      '{{title}}'.render({t2:0})
          *
@@ -37,6 +41,10 @@ KISSY.add('xtemplate/runtime/base', function (S) {
 
 <span id='KISSY-XTemplate-Runtime-cfg-silent'>        /**
 </span>         * whether throw exception when template variable is not found in data
+         *
+         * or
+         *
+         * command is not found
          *
          *      @example
          *      '{{title}}'.render({t2:0})
@@ -60,19 +68,35 @@ KISSY.add('xtemplate/runtime/base', function (S) {
          */
         name: '',
         utils: {
-            'getProperty': function (parts, from) {
-                if (!from) {
-                    return false;
-                }
+            'getProperty': function (parts, scopes) {
                 parts = parts.split('.');
-                var len = parts.length, i, v = from;
-                for (i = 0; i &lt; len; i++) {
-                    if (!(parts[i] in v)) {
-                        return false;
+                var len = parts.length,
+                    i,
+                    j,
+                    v,
+                    p,
+                    valid,
+                    sl = scopes.length;
+                for (j = 0; j &lt; sl; j++) {
+                    v = scopes[j];
+                    valid = 1;
+                    for (i = 0; i &lt; len; i++) {
+                        p = parts[i];
+                        if (!(p in v)) {
+                            valid = 0;
+                            break;
+                        }
+                        v = v[p];
                     }
-                    v = v[parts[i]];
+                    if (valid) {
+                        // support property function return value as property value
+                        if (typeof v == 'function') {
+                            v = v.call(scopes[sl - 1]);
+                        }
+                        return [v];
+                    }
                 }
-                return [v];
+                return false;
             }
         }
     };

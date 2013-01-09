@@ -36,7 +36,6 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
         SPACE = ' ',
         COMMA = ',',
         trim = S.trim,
-        ANY = '*',
         RE_ID = /^#[\w-]+$/,
         RE_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/;
 
@@ -132,8 +131,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
     function queryByContexts(selector, context) {
         var ret = [],
             isSelectorString = typeof selector == 'string';
-        if (isSelectorString &amp;&amp; selector.match(RE_QUERY) ||
-            !isSelectorString) {
+        if (isSelectorString &amp;&amp; selector.match(RE_QUERY) || !isSelectorString) {
             // 简单选择器自己处理
             ret = queryBySimple(selector, context);
         }
@@ -205,7 +203,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
                         // 处理 #id.cls
                         else {
                             t = getElementById(id, context);
-                            if (t &amp;&amp; DOM.hasClass(t, cls)) {
+                            if (hasSingleClass(t, cls)) {
                                 ret = [t];
                             }
                         }
@@ -256,7 +254,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
             return true;
         }
         // 节点受上下文约束
-        return DOM.contains(context, element);
+        return DOM._contains(context, element);
     }
 
     // throw exception
@@ -267,19 +265,18 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
     // query #id
     function getElementById(id, context) {
         var contextIsDocument = context.nodeType == NodeType.DOCUMENT_NODE,
-            doc = contextIsDocument ? context : context.ownerDocument,
-            el = DOM._getElementById(id, doc);
+            doc = contextIsDocument ? context : context.ownerDocument;
+        return DOM._getElementById(id, context, doc, contextIsDocument);
+    }
 
-        if (el &amp;&amp; !contextIsDocument) {
-            return DOM.contains(context, el) ? el : null;
-        }
+    function hasSingleClass(el, cls) {
+        var className = el &amp;&amp; el.className;
+        return className &amp;&amp; (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) &gt; -1;
+    }
 
-        // DOM.query('#x',DOM.create('&lt;div&gt;&lt;span id=&quot;x&quot;&gt;'))
-        if (!el &amp;&amp; !contextIsDocument &amp;&amp; !DOM.contains(context, doc)) {
-            el = DOM.filter(ANY, '#' + id, context)[0] || null;
-        }
-
-        return el;
+    function getAttr(el, name) {
+        var ret = el &amp;&amp; el.getAttributeNode(name);
+        return ret &amp;&amp; ret.nodeValue;
     }
 
     S.mix(DOM,
@@ -289,21 +286,48 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
          * @singleton
          */
         {
-            _getElementById: function (id, doc) {
-                return doc.getElementById(id);
+<span id='KISSY-DOM-property-_hasSingleClass'>            _hasSingleClass: hasSingleClass,
+</span>
+<span id='KISSY-DOM-method-_getElementById'>            _getElementById: function (id, context, doc, contextIsDocument) {
+</span>                var el = doc.getElementById(id),
+                // ie confuse name with id
+                // https://github.com/kissyteam/kissy/issues/67
+                // 不能直接 el.id ，否则 input shadow form attribute
+                    elId = getAttr(el, 'id');
+
+                // 1. context is not document and context is not in document,
+                // so el is null and context must not be document
+                // so filter inside context
+
+                // 2. ie confuse name with id, so if el 's id is not with parameter
+                // filter inside context
+
+                // 3. context is document, return getElementById directly
+
+                // 4. context is not document and context contains document.getElementById
+                // return getElementById
+
+                // return null
+                if (!el &amp;&amp; !contextIsDocument &amp;&amp; !DOM._contains(doc, context) ||
+                    el &amp;&amp; elId != id) {
+                    return DOM.filter('*', '#' + id, context)[0] || null;
+                } else if (contextIsDocument || el &amp;&amp; DOM._contains(context, el)) {
+                    return el;
+                }
+                return null;
             },
 
-            _getElementsByTagName: function (tag, context) {
-                return context.getElementsByTagName(tag);
+<span id='KISSY-DOM-method-_getElementsByTagName'>            _getElementsByTagName: function (tag, context) {
+</span>                return context.getElementsByTagName(tag);
             },
 
-            _getElementsByClassName: function (cls, tag, context) {
-                // ie8 return staticNodeList 对象,[].concat 会形成 [ staticNodeList ] ，手动转化为普通数组
+<span id='KISSY-DOM-method-_getElementsByClassName'>            _getElementsByClassName: function (cls, tag, context) {
+</span>                // ie8 return staticNodeList 对象,[].concat 会形成 [ staticNodeList ] ，手动转化为普通数组
                 return  makeArray(context.querySelectorAll((tag || '') + '.' + cls));
             },
 
-            // 貌似除了 ie 都有了...
-            _compareNodeOrder: function (a, b) {
+<span id='KISSY-DOM-method-_compareNodeOrder'>            // 貌似除了 ie 都有了...
+</span>            _compareNodeOrder: function (a, b) {
                 if (!a.compareDocumentPosition || !b.compareDocumentPosition) {
                     return a.compareDocumentPosition ? -1 : 1;
                 }
@@ -387,13 +411,13 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
                 };
             })(),
 
-<span id='KISSY-DOM-method-filter'>            /**
+<span id='DOM-method-filter'>            /**
 </span>             * Reduce the set of matched elements to those that match the selector or pass the function's test.
              * @param {String|HTMLElement[]} selector Matched elements
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {HTMLElement[]}
-             * @memeber DOM
+             * @member DOM
              */
             filter: function (selector, filter, context) {
                 var elems = query(selector, context),
@@ -422,14 +446,14 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
 
                             // 指定 cls 才进行判断
                             if (cls) {
-                                clsRe = DOM.hasClass(elem, cls);
+                                clsRe = hasSingleClass(elem, cls);
                             }
 
                             return clsRe &amp;&amp; tagRe;
                         }
                     } else if (id &amp;&amp; !tag &amp;&amp; !cls) {
                         filter = function (elem) {
-                            return DOM.attr(elem, 'id') == id;
+                            return getAttr(elem, 'id') == id;
                         };
                     }
                 }
@@ -469,6 +493,9 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
 
 /*
  NOTES:
+
+ 2012.12.26
+ - 尽量用原生方法提高性能
 
  2011.08.02
  - 利用 sizzle 重构选择器

@@ -17,7 +17,7 @@
 <button id="start">开始</button>
 <script src="/kissy/build/seed.js"></script>
 <script>
-    KISSY.use("htmlparser", function (S, HtmlParser) {
+    KISSY.use("htmlparser,core", function (S, HtmlParser) {
         var Lexer = HtmlParser.Lexer;
         S.one("#start").on("click", function () {
             var inp = S.one("#inp").val();
