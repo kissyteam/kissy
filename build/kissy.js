@@ -1,11 +1,11 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 8 22:06
+build time: Jan 9 18:56
 */
 /**
  * @ignore
- * @fileOverview A seed where KISSY grows up from, KISS Yeah !
+ *  A seed where KISSY grows up from, KISS Yeah !
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130108220604' will replace with current timestamp when compressing.
+         * NOTICE: '20130109185634' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130108220604',
+        __BUILD_TIME: '20130109185634',
         /**
          * KISSY Environment.
          * @private
@@ -194,7 +194,7 @@ var KISSY = (function (undefined) {
 
 })();/**
  * @ignore
- * @fileOverview object utilities of lang
+ *  object utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -529,7 +529,7 @@ var KISSY = (function (undefined) {
     }
 })(KISSY);/**
  * @ignore
- * @fileOverview array utilities of lang
+ *  array utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -705,7 +705,7 @@ var KISSY = (function (undefined) {
          * @param arr {Array} the array to iterate
          * @param fn {Function} the function to execute on each item
          * @param [context] {Object} optional context object
-         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
+         * https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/map
          * @return {Array} The items on which the supplied function returned
          * @member KISSY
          */
@@ -737,7 +737,7 @@ var KISSY = (function (undefined) {
          * @param arr {Array} the array to iterate
          * @param callback {Function} the function to execute on each item
          * @param initialValue {number} optional context object
-         * @see https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
+         * https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/array/reduce
          * @return {Array} The items on which the supplied function returned
          * @member KISSY
          */
@@ -867,7 +867,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- * @fileOverview escape of lang
+ *  escape of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -1130,7 +1130,7 @@ var KISSY = (function (undefined) {
     });
 })(KISSY);/**
  * @ignore
- * @fileOverview function utilities of lang
+ *  function utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -1308,7 +1308,7 @@ var KISSY = (function (undefined) {
     });
 })(KISSY);/**
  * @ignore
- * @fileOverview   lang
+ *    lang
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  *
  */
@@ -1361,7 +1361,7 @@ var KISSY = (function (undefined) {
              * @member KISSY
              * @param {Function} [filter] filter function
              * @return {Object} the new cloned object
-             * @see http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
+             * http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
              */
             clone: function (input, filter) {
                 // 稍微改改就和规范一样了 :)
@@ -1390,7 +1390,7 @@ var KISSY = (function (undefined) {
             /**
              * Gets current date in milliseconds.
              * @method
-             * @see  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+             *  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
              * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
              * http://kangax.github.com/es5-compat-table/
              * @member KISSY
@@ -1509,7 +1509,7 @@ var KISSY = (function (undefined) {
 })(KISSY);
 /**
  * @ignore
- * @fileOverview string utilities of lang
+ *  string utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -1593,7 +1593,7 @@ var KISSY = (function (undefined) {
     });
 })(KISSY);/**
  * @ignore
- * @fileOverview   type of land
+ *    type of land
  * @author  lifesinger@gmail.com, yiminghe@gmail.com
  *
  */
@@ -1767,7 +1767,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- * @fileOverview implement Promise specification by KISSY
+ *  implement Promise specification by KISSY
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
@@ -3050,7 +3050,7 @@ var KISSY = (function (undefined) {
  - same origin: http://tools.ietf.org/html/rfc6454
  *//**
  * @ignore
- * @fileOverview ua
+ *  ua
  */
 (function (S, undefined) {
 
@@ -3490,7 +3490,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- * @fileOverview setup data structure for kissy loader
+ *  setup data structure for kissy loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -3537,7 +3537,7 @@ var KISSY = (function (undefined) {
  TODO: implement conditional loader
  *//**
  * @ignore
- * @fileOverview simple event target for loader
+ *  simple event target for loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -3617,7 +3617,7 @@ var KISSY = (function (undefined) {
     };
 })(KISSY);/**
  * @ignore
- * @fileOverview Utils for kissy loader
+ *  Utils for kissy loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -4008,7 +4008,7 @@ var KISSY = (function (undefined) {
     }
 })(KISSY);/**
  * @ignore
- * @fileOverview setup data structure for kissy loader
+ *  setup data structure for kissy loader
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -4320,7 +4320,7 @@ var KISSY = (function (undefined) {
  TODO: implement conditional loader
  *//**
  * @ignore
- * @fileOverview script/css load across browser
+ *  script/css load across browser
  * @author yiminghe@gmail.com
  */
 (function (S) {
@@ -4431,7 +4431,7 @@ var KISSY = (function (undefined) {
     });
 })(KISSY);/**
  * @ignore
- * @fileOverview getScript support for css and js callback after load
+ *  getScript support for css and js callback after load
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
@@ -4613,7 +4613,7 @@ var KISSY = (function (undefined) {
  - syntax error in all trigger success
  *//**
  * @ignore
- * @fileOverview Declare config info for KISSY.
+ *  Declare config info for KISSY.
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
@@ -4768,7 +4768,7 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- * @fileOverview add module to kissy simple loader
+ *  add module to kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S) {
@@ -4928,7 +4928,7 @@ var KISSY = (function (undefined) {
  */
 /**
  * @ignore
- * @fileOverview use and attach mod for kissy simple loader
+ *  use and attach mod for kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
@@ -5184,7 +5184,7 @@ var KISSY = (function (undefined) {
  - 参考 async 重构，去除递归回调
  *//**
  * @ignore
- * @fileOverview using combo to load module files
+ *  using combo to load module files
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {
@@ -5649,7 +5649,7 @@ var KISSY = (function (undefined) {
  ATTACHED : fn executed
  *//**
  * @ignore
- * @fileOverview mix loader into S and infer KISSy baseUrl if not set
+ *  mix loader into S and infer KISSy baseUrl if not set
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
@@ -5807,7 +5807,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130108220604'
+            tag: '20130109185634'
         }, getBaseInfo()));
     }
 
@@ -5826,9 +5826,9 @@ var KISSY = (function (undefined) {
 
 })(KISSY);/**
  * @ignore
- * @fileOverview web.js
+ *  web.js
  * @author lifesinger@gmail.com, yiminghe@gmail.com
- * @description this code can only run at browser environment
+ * this code can only run at browser environment
  */
 (function (S, undefined) {
 
@@ -6320,105 +6320,13 @@ config({
 
 })(KISSY);
 /*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:28
+build time: Jan 9 18:56
 */
 /**
  * @ignore
- * @fileOverview ua-extra
- * @author gonghao@ghsky.com
- */
-KISSY.add('ua', function (S, undefined) {
-    var win = S.Env.host,
-        UA= S.UA,
-        navigator = win.navigator,
-        ua = navigator && navigator.userAgent || "",
-        m, external, shell,
-        o = {
-            /**
-             * 360 browser version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            se360: undefined,
-            /**
-             * maxthon version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            maxthon: undefined,
-            /**
-             * tencent browser version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            tt: undefined,
-            /**
-             * theworld version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            theworld: undefined,
-            /**
-             * sougou browser version
-             * @type undefined|Number
-             * @member KISSY.UA
-             */
-            sougou: undefined
-        },
-        numberify = UA._numberify;
-
-    /*
-     说明：
-     @子涯总结的各国产浏览器的判断依据: http://spreadsheets0.google.com/ccc?key=tluod2VGe60_ceDrAaMrfMw&hl=zh_CN#gid=0
-     根据 CNZZ 2009 年度浏览器占用率报告，优化了判断顺序：http://www.tanmi360.com/post/230.htm
-     如果检测出浏览器，但是具体版本号未知用 0.1 作为标识
-     世界之窗 & 360 浏览器，在 3.x 以下的版本都无法通过 UA 或者特性检测进行判断，所以目前只要检测到 UA 关键字就认为起版本号为 3
-     */
-
-    // 360Browser
-    if (m = ua.match(/360SE/)) {
-        o[shell = 'se360'] = 3; // issue: 360Browser 2.x cannot be recognised, so if recognised default set verstion number to 3
-    }
-    // Maxthon
-    else if ((m = ua.match(/Maxthon/)) && (external = win['external'])) {
-        // issue: Maxthon 3.x in IE-Core cannot be recognised and it doesn't have exact version number
-        // but other maxthon versions all have exact version number
-        shell = 'maxthon';
-        try {
-            o[shell] = numberify(external['max_version']);
-        } catch (ex) {
-            o[shell] = 0.1;
-        }
-    }
-    // TT
-    else if (m = ua.match(/TencentTraveler\s([\d.]*)/)) {
-        o[shell = 'tt'] = m[1] ? numberify(m[1]) : 0.1;
-    }
-    // TheWorld
-    else if (m = ua.match(/TheWorld/)) {
-        o[shell = 'theworld'] = 3; // issue: TheWorld 2.x cannot be recognised, so if recognised default set verstion number to 3
-    }
-    // Sougou
-    else if (m = ua.match(/SE\s([\d.]*)/)) {
-        o[shell = 'sougou'] = m[1] ? numberify(m[1]) : 0.1;
-    }
-
-    // If the browser has shell(no matter IE-core or Webkit-core or others), set the shell key
-    shell && (o.shell = shell);
-
-    S.mix(UA, o);
-    return UA;
-});
-/*
-Copyright 2012, KISSY UI Library v1.30
-MIT Licensed
-build time: Dec 26 18:09
-*/
-/**
- * @ignore
- * @fileOverview dom
+ * dom
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/api', function (S) {
@@ -6479,97 +6387,97 @@ KISSY.add('dom/base/api', function (S) {
              * notation type
              */
             'NOTATION_NODE': 12
-        },
-        /**
-         * KISSY DOM Utils.
-         * Provides DOM helper methods.
-         * @class KISSY.DOM
-         * @singleton
-         */
-            DOM = {
-
-            /**
-             * Whether has been set a custom domain.
-             * Note not perfect: localhost:8888, domain='localhost'
-             * @param {window} [win] Test window. Default current window.
-             * @return {Boolean}
-             */
-            isCustomDomain: function (win) {
-                win = win || WINDOW;
-                var domain = win.document.domain,
-                    hostname = win.location.hostname;
-                return domain != hostname &&
-                    domain != ( '[' + hostname + ']' );	// IPv6 IP support
-            },
-
-            /**
-             * Get appropriate src for new empty iframe.
-             * Consider custom domain.
-             * @param {window} [win] Window new iframe will be inserted into.
-             * @return {String} Src for iframe.
-             */
-            getEmptyIframeSrc: function (win) {
-                win = win || WINDOW;
-                if (UA['ie'] && DOM.isCustomDomain(win)) {
-                    return  'javascript:void(function(){' + encodeURIComponent(
-                        'document.open();' +
-                            "document.domain='" +
-                            win.document.domain
-                            + "';" +
-                            'document.close();') + '}())';
-                }
-                return '';
-            },
-
-            NodeType: NodeType,
-
-            /**
-             * Return corresponding window if elem is document or window.
-             * Return global window if elem is undefined
-             * Else return false.
-             * @param {undefined|window|HTMLDocument} elem
-             * @return {window|Boolean}
-             */
-            getWindow: function (elem) {
-                if (!elem) {
-                    return WINDOW;
-                }
-                return ('scrollTo' in elem && elem['document']) ?
-                    elem : elem.nodeType == NodeType.DOCUMENT_NODE ?
-                    elem.defaultView || elem.parentWindow :
-                    false;
-            },
-
-            // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
-            _isNodeList: function (o) {
-                // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
-                // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
-                // 注3：通过 namedItem 来判断不可靠
-                // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
-                // 注5: 考虑 iframe.contentWindow
-                return o && !o.nodeType && o.item && !o.setTimeout;
-            },
-
-            /**
-             * Get node 's nodeName in lowercase.
-             * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
-             * @return {String} el 's nodeName in lowercase
-             */
-            nodeName: function (selector) {
-                var el = DOM.get(selector),
-                    nodeName = el.nodeName.toLowerCase();
-                // http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
-                if (UA['ie']) {
-                    var scopeName = el['scopeName'];
-                    if (scopeName && scopeName != 'HTML') {
-                        nodeName = scopeName.toLowerCase() + ':' + nodeName;
-                    }
-                }
-                return nodeName;
-            },
-
-            _RE_NUM_NO_PX: new RegExp("^(" + RE_NUM + ")(?!px)[a-z%]+$", "i")
         };
+    /**
+     * KISSY DOM Utils.
+     * Provides DOM helper methods.
+     * @class KISSY.DOM
+     * @singleton
+     */
+    var DOM = {
+
+        /**
+         * Whether has been set a custom domain.
+         * Note not perfect: localhost:8888, domain='localhost'
+         * @param {window} [win] Test window. Default current window.
+         * @return {Boolean}
+         */
+        isCustomDomain: function (win) {
+            win = win || WINDOW;
+            var domain = win.document.domain,
+                hostname = win.location.hostname;
+            return domain != hostname &&
+                domain != ( '[' + hostname + ']' );	// IPv6 IP support
+        },
+
+        /**
+         * Get appropriate src for new empty iframe.
+         * Consider custom domain.
+         * @param {window} [win] Window new iframe will be inserted into.
+         * @return {String} Src for iframe.
+         */
+        getEmptyIframeSrc: function (win) {
+            win = win || WINDOW;
+            if (UA['ie'] && DOM.isCustomDomain(win)) {
+                return  'javascript:void(function(){' + encodeURIComponent(
+                    'document.open();' +
+                        "document.domain='" +
+                        win.document.domain
+                        + "';" +
+                        'document.close();') + '}())';
+            }
+            return '';
+        },
+
+        NodeType: NodeType,
+
+        /**
+         * Return corresponding window if elem is document or window.
+         * Return global window if elem is undefined
+         * Else return false.
+         * @param {undefined|window|HTMLDocument} elem
+         * @return {window|Boolean}
+         */
+        getWindow: function (elem) {
+            if (!elem) {
+                return WINDOW;
+            }
+            return ('scrollTo' in elem && elem['document']) ?
+                elem : elem.nodeType == NodeType.DOCUMENT_NODE ?
+                elem.defaultView || elem.parentWindow :
+                false;
+        },
+
+        // Ref: http://lifesinger.github.com/lab/2010/nodelist.html
+        _isNodeList: function (o) {
+            // 注1：ie 下，有 window.item, typeof node.item 在 ie 不同版本下，返回值不同
+            // 注2：select 等元素也有 item, 要用 !node.nodeType 排除掉
+            // 注3：通过 namedItem 来判断不可靠
+            // 注4：getElementsByTagName 和 querySelectorAll 返回的集合不同
+            // 注5: 考虑 iframe.contentWindow
+            return o && !o.nodeType && o.item && !o.setTimeout;
+        },
+
+        /**
+         * Get node 's nodeName in lowercase.
+         * @param {HTMLElement[]|String|HTMLElement} selector Matched elements.
+         * @return {String} el 's nodeName in lowercase
+         */
+        nodeName: function (selector) {
+            var el = DOM.get(selector),
+                nodeName = el.nodeName.toLowerCase();
+            // http://msdn.microsoft.com/en-us/library/ms534388(VS.85).aspx
+            if (UA['ie']) {
+                var scopeName = el['scopeName'];
+                if (scopeName && scopeName != 'HTML') {
+                    nodeName = scopeName.toLowerCase() + ':' + nodeName;
+                }
+            }
+            return nodeName;
+        },
+
+        _RE_NUM_NO_PX: new RegExp("^(" + RE_NUM + ")(?!px)[a-z%]+$", "i")
+    };
 
     S.mix(DOM, NodeType);
 
@@ -6583,7 +6491,7 @@ KISSY.add('dom/base/api', function (S) {
  */
 /**
  * @ignore
- * @fileOverview dom-attr
+ *  dom-attr
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/attr', function (S, DOM, undefined) {
@@ -6884,6 +6792,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
              * @param {HTMLElement[]|HTMLElement|String} selector matched elements
              * @param {String|Object} name The name of the attribute to set. or A map of attribute-value pairs to set.
              * @param [val] A value to set for the attribute.
+             * @param [pass] for internal use
              * @return {String}
              */
             attr: function (selector, name, val, /*internal use by anim/fx*/pass) {
@@ -7193,7 +7102,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
 
  *//**
  * @ignore
- * @fileOverview dom
+ *  dom
  * @author yiminghe@gmail.com
  */
 KISSY.add('dom/base', function (S, DOM) {
@@ -7219,7 +7128,7 @@ KISSY.add('dom/base', function (S, DOM) {
     ]
 });/**
  * @ignore
- * @fileOverview dom-class
+ *  dom-class
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/class', function (S, DOM, undefined) {
@@ -7413,7 +7322,7 @@ KISSY.add('dom/base/class', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview dom-create
+ *  dom-create
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/create', function (S, DOM, undefined) {
@@ -7707,7 +7616,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
              * @param {Boolean} [deepWithDataAndEvent=false]
              * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
              * if set true then deep argument must be set true as well.
-             * @see https://developer.mozilla.org/En/DOM/Node.cloneNode
+             * https://developer.mozilla.org/En/DOM/Node.cloneNode
              * @return {HTMLElement}
              * @member KISSY.DOM
              */
@@ -7911,7 +7820,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview dom-data
+ *  dom-data
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/data', function (S, DOM, undefined) {
@@ -8177,7 +8086,7 @@ KISSY.add('dom/base/data', function (S, DOM, undefined) {
  - 分层，节点和普通对象分开处理
  *//**
  * @ignore
- * @fileOverview dom-insertion
+ *  dom-insertion
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/insertion', function (S, DOM) {
@@ -8458,7 +8367,7 @@ KISSY.add('dom/base/insertion', function (S, DOM) {
  */
 /**
  * @ignore
- * @fileOverview dom-offset
+ *  dom-offset
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/offset', function (S, DOM, undefined) {
@@ -8535,7 +8444,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
              * @param {Boolean} [hscroll=true] Whether trigger horizontal scroll.
              * @param {Boolean} [auto=false] Whether adjust element automatically
              * (only scrollIntoView when element is out of view)
-             * @see http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+             * http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
              *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
              *        http://yiminghe.javaeye.com/blog/390732
              */
@@ -8910,7 +8819,7 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview selector
+ *  selector
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/selector', function (S, DOM, undefined) {
@@ -9297,7 +9206,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {HTMLElement[]}
-             * @member DOM
+             * @member KISSY.DOM
              */
             filter: function (selector, filter, context) {
                 var elems = query(selector, context),
@@ -9359,6 +9268,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
              * @param {String|Function} filter Selector string or filter function
              * @param {String|HTMLElement[]|HTMLDocument} [context] Context under which to find matched elements
              * @return {Boolean}
+             * @member KISSY.DOM
              */
             test: function (selector, filter, context) {
                 var elements = query(selector, context);
@@ -9460,7 +9370,7 @@ KISSY.add('dom/base/selector', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview dom/style
+ *  dom/style
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/style', function (S, DOM, undefined) {
@@ -9654,7 +9564,8 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                             ret = DOM._getComputedStyle(elem, name);
                         }
                     }
-                    return ret === undefined ? '' : ret;
+                    return ret === /**@type String
+                     @ignore*/undefined ? '' : ret;
                 }
                 // setter
                 else {
@@ -9727,16 +9638,24 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             /**
              * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+             * @deprecated
              * @param {window} [refWin=window] Window which will accept this stylesheet
              * @param {String} [cssText] The text containing the css rules
              * @param {String} [id] An id to add to the stylesheet for later removal
              */
             addStyleSheet: function (refWin, cssText, id) {
+                var warn = 'method addStyleSheet is deprecated in KISSY 1.3! ' +
+                    ' you can use DOM.create("<style>xx</style>") ' +
+                    ' or Node.all("<style>yy</style>") directly ';
+
+                S.log(warn, 'warn');
+
                 refWin = refWin || WINDOW;
 
                 if (typeof refWin == 'string') {
                     id = cssText;
-                    cssText = refWin;
+                    cssText = /**@type String
+                     @ignore*/refWin;
                     refWin = WINDOW;
                 }
 
@@ -9755,9 +9674,16 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     return;
                 }
 
-                elem = DOM.create('<style>' + cssText + '</style>', { id: id }, doc);
+                elem = DOM.create('<style>', { id: id }, doc);
 
+                // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
                 DOM.get('head', doc).appendChild(elem);
+
+                if (elem.styleSheet) { // IE
+                    elem.styleSheet.cssText = cssText;
+                } else { // W3C
+                    elem.appendChild(doc.createTextNode(cssText));
+                }
             },
 
             /**
@@ -9881,6 +9807,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                 if (computed) {
                     return getWHIgnoreDisplay(elem, name) + 'px';
                 }
+                return undefined;
             }
         };
     });
@@ -9889,8 +9816,9 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
 
         CUSTOM_STYLES[ name ] = {
             get: function (elem, computed) {
+                var val, offset;
                 if (computed) {
-                    var val = DOM._getComputedStyle(elem, name), offset;
+                    val = DOM._getComputedStyle(elem, name);
 
                     // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
                     //    比如：firefox 返回 0, webkit/ie 返回 auto
@@ -9917,8 +9845,8 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                         }
                         val += 'px';
                     }
-                    return val;
                 }
+                return val;
             }
         };
     });
@@ -10101,7 +10029,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview dom-traversal
+ *  dom-traversal
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
@@ -12094,9 +12022,9 @@ KISSY.add('event/custom/observer', function (S, Event) {
     requires: ['event/base']
 });
 /*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 9 18:44
 */
 /**
  * @ignore
@@ -12451,7 +12379,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
  */
 /**
  * @ignore
- * @fileOverview dom event facade
+ *  dom event facade
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Special) {
@@ -12511,7 +12439,7 @@ KISSY.add('event/dom/base/gesture', function (S) {
 
 });/**
  * @ignore
- * @fileOverview some key-codes definition and utils from closure-library
+ *  some key-codes definition and utils from closure-library
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/key-codes', function (S) {
@@ -13043,7 +12971,7 @@ KISSY.add('event/dom/base/key-codes', function (S) {
 
 });/**
  * @ignore
- * @fileOverview event-mouseenter
+ *  event-mouseenter
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
@@ -13096,7 +13024,7 @@ KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
  */
 /**
  * @ignore
- * @fileOverview normalize mousewheel in gecko
+ *  normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/mousewheel', function (S, special) {
@@ -13112,7 +13040,7 @@ KISSY.add('event/dom/base/mousewheel', function (S, special) {
     requires: ['./special']
 });/**
  * @ignore
- * @fileOverview event object for dom
+ *  event object for dom
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/object', function (S, Event, undefined) {
@@ -14062,14 +13990,14 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
     requires: ['./special', 'event/base']
 });/**
  * @ignore
- * @fileOverview special house for special events
+ *  special house for special events
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/special', function () {
     return {};
 });/**
  * @ignore
- * @fileOverview utils for event
+ *  utils for event
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/utils', function (S, DOM) {
@@ -14116,7 +14044,7 @@ KISSY.add('event/dom/base/utils', function (S, DOM) {
     requires: ['dom']
 });/**
  * @ignore
- * @fileOverview inspired by yui3
+ *  inspired by yui3
  * Synthetic event that fires when the <code>value</code> property of an input
  * field or textarea changes as a result of a keystroke, mouse operation, or
  * input method editor (IME) input event.

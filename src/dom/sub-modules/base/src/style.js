@@ -194,7 +194,8 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                             ret = DOM._getComputedStyle(elem, name);
                         }
                     }
-                    return ret === undefined ? '' : ret;
+                    return ret === /**@type String
+                     @ignore*/undefined ? '' : ret;
                 }
                 // setter
                 else {
@@ -267,16 +268,24 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             /**
              * Creates a stylesheet from a text blob of rules.
              * These rules will be wrapped in a STYLE tag and appended to the HEAD of the document.
+             * @deprecated
              * @param {window} [refWin=window] Window which will accept this stylesheet
              * @param {String} [cssText] The text containing the css rules
              * @param {String} [id] An id to add to the stylesheet for later removal
              */
             addStyleSheet: function (refWin, cssText, id) {
+                var warn = 'method addStyleSheet is deprecated in KISSY 1.3! ' +
+                    ' you can use DOM.create("<style>xx</style>") ' +
+                    ' or Node.all("<style>yy</style>") directly ';
+
+                S.log(warn, 'warn');
+
                 refWin = refWin || WINDOW;
 
                 if (typeof refWin == 'string') {
                     id = cssText;
-                    cssText = refWin;
+                    cssText = /**@type String
+                     @ignore*/refWin;
                     refWin = WINDOW;
                 }
 
@@ -295,9 +304,16 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     return;
                 }
 
-                elem = DOM.create('<style>' + cssText + '</style>', { id: id }, doc);
+                elem = DOM.create('<style>', { id: id }, doc);
 
+                // 先添加到 DOM 树中，再给 cssText 赋值，否则 css hack 会失效
                 DOM.get('head', doc).appendChild(elem);
+
+                if (elem.styleSheet) { // IE
+                    elem.styleSheet.cssText = cssText;
+                } else { // W3C
+                    elem.appendChild(doc.createTextNode(cssText));
+                }
             },
 
             /**
@@ -421,6 +437,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                 if (computed) {
                     return getWHIgnoreDisplay(elem, name) + 'px';
                 }
+                return undefined;
             }
         };
     });
@@ -429,8 +446,9 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
 
         CUSTOM_STYLES[ name ] = {
             get: function (elem, computed) {
+                var val, offset;
                 if (computed) {
-                    var val = DOM._getComputedStyle(elem, name), offset;
+                    val = DOM._getComputedStyle(elem, name);
 
                     // 1. 当没有设置 style.left 时，getComputedStyle 在不同浏览器下，返回值不同
                     //    比如：firefox 返回 0, webkit/ie 返回 auto
@@ -457,8 +475,8 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                         }
                         val += 'px';
                     }
-                    return val;
                 }
+                return val;
             }
         };
     });

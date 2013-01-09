@@ -1,11 +1,11 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 4 11:37
+build time: Jan 9 18:56
 */
 /**
  * @ignore
- * @fileOverview mvc based component framework for kissy
+ *  mvc based component framework for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/base', function (S, Component, Controller, Render, Container, DelegateChildren, DecorateChildren, DecorateChild) {
@@ -33,7 +33,7 @@ KISSY.add('component/base', function (S, Component, Controller, Render, Containe
     ]
 });/**
  * @ignore
- * @fileOverview Box
+ *  Box
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/base/box-render', function (S) {
@@ -180,7 +180,7 @@ KISSY.add('component/base/box-render', function (S) {
 
         '_onSetContent': function (c) {
             var self = this,
-                el= self.get("contentEl");
+                el = self.get("contentEl");
             // srcNode 时不重新渲染 content
             // 防止内部有改变，而 content 则是老的 html 内容
             if (self.get("srcNode") && !self.get("rendered")) {
@@ -236,7 +236,7 @@ KISSY.add('component/base/box-render', function (S) {
 });
 /**
  * @ignore
- * @fileOverview Box
+ *  Box
  * @author yiminghe@gmail.com
  */
 KISSY.add('component/base/box', function () {
@@ -485,7 +485,7 @@ KISSY.add('component/base/box', function () {
 });
 /**
  * @ignore
- * @fileOverview container can delegate event for its children
+ *  container can delegate event for its children
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/container", function (S, Controller, DelegateChildren, DecorateChildren) {
@@ -508,7 +508,7 @@ KISSY.add("component/base/container", function (S, Controller, DelegateChildren,
  *  - handleMouseEvents false for container ?
  *//**
  * @ignore
- * @fileOverview Base Controller class for KISSY Component.
+ *  Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBase, Manager, Render, undefined) {
@@ -1169,7 +1169,10 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 prefixCls: {
-                    value: 'ks-', // box srcNode need
+                    // box srcNode need
+                    valueFn: function () {
+                        return S.config('component/prefixCls') || 'ks-';
+                    },
                     view: 1
                 },
 
@@ -1290,7 +1293,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
 
  *//**
  * @ignore
- * @fileOverview decorate its children from one element
+ *  decorate its children from one element
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/decorate-child", function (S, DecorateChildren) {
@@ -1324,7 +1327,7 @@ KISSY.add("component/base/decorate-child", function (S, DecorateChildren) {
     requires:['./decorate-children']
 });/**
  * @ignore
- * @fileOverview decorate function for children render from markup
+ *  decorate function for children render from markup
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/decorate-children", function (S, Manager) {
@@ -1399,7 +1402,7 @@ KISSY.add("component/base/decorate-children", function (S, Manager) {
     requires: ['./manager']
 });/**
  * @ignore
- * @fileOverview delegate events for children
+ *  delegate events for children
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/delegate-children", function (S, Event) {
@@ -1555,7 +1558,7 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
     requires: ['./uibase', './manager']
 });/**
  * @ignore
- * @fileOverview storage for component
+ *  storage for component
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/manager", function (S) {
@@ -1688,9 +1691,9 @@ KISSY.add("component/base/manager", function (S) {
     return Manager;
 });/**
  * @ignore
- * @fileOverview render base class for kissy
+ *  render base class for kissy
  * @author yiminghe@gmail.com
- * @see http://martinfowler.com/eaaDev/uiArchs.html
+ * http://martinfowler.com/eaaDev/uiArchs.html
  */
 KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Manager) {
 
@@ -1818,7 +1821,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
     requires: ['./box-render', './impl', './uibase', './manager']
 });/**
  * @ignore
- * @fileOverview UIBase
+ *  UIBase
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefined) {
