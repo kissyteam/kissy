@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview attribute management and event in one
+ *  attribute management and event in one
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base', function (S, Attribute, Event) {

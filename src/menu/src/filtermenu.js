@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview menu where items can be filtered based on user keyboard input
+ *  menu where items can be filtered based on user keyboard input
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/filtermenu", function (S, Menu, FilterMenuRender) {

@@ -17,7 +17,7 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview dom-attr
+ *  dom-attr
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/attr', function (S, DOM, undefined) {
@@ -211,18 +211,18 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
          */
         {
 
-            _valHooks: valHooks,
-
-            _propFix: propFix,
-
-            _attrHooks: attrHooks,
-
-            _propHooks: propHooks,
-
-            _attrNodeHook: attrNodeHook,
-
-            _attrFix: attrFix,
-
+<span id='KISSY-DOM-property-_valHooks'>            _valHooks: valHooks,
+</span>
+<span id='KISSY-DOM-property-_propFix'>            _propFix: propFix,
+</span>
+<span id='KISSY-DOM-property-_attrHooks'>            _attrHooks: attrHooks,
+</span>
+<span id='KISSY-DOM-property-_propHooks'>            _propHooks: propHooks,
+</span>
+<span id='KISSY-DOM-property-_attrNodeHook'>            _attrNodeHook: attrNodeHook,
+</span>
+<span id='KISSY-DOM-property-_attrFix'>            _attrFix: attrFix,
+</span>
 <span id='KISSY-DOM-method-prop'>            /**
 </span>             * Get the value of a property for the first element in the set of matched elements.
              * or
@@ -318,6 +318,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
              * @param {HTMLElement[]|HTMLElement|String} selector matched elements
              * @param {String|Object} name The name of the attribute to set. or A map of attribute-value pairs to set.
              * @param [val] A value to set for the attribute.
+             * @param [pass] for internal use
              * @return {String}
              */
             attr: function (selector, name, val, /*internal use by anim/fx*/pass) {

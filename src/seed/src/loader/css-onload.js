@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview script/css load across browser
+ *  script/css load across browser
  * @author yiminghe@gmail.com
  */
 (function (S) {

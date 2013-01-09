@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview encapsulation of io object . as transaction object in yui3
+ *  encapsulation of io object . as transaction object in yui3
  * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/methods', function (S, IO, undefined) {

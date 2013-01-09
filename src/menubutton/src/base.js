@@ -1,5 +1,5 @@
 /**
- * @fileOverview combination of menu and button ,similar to native select
+ *  combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, Component, undefined) {
@@ -297,7 +297,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
                 /**
                  * Whether drop down menu is same width with button.
-                 * @default true.
+                 * Defaults to: true.
                  * @type {Boolean}
                  */
                 matchElWidth: {
@@ -307,7 +307,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 /**
                  * Whether hide drop down menu when click drop down menu item.
                  * eg: u do not want to set true when menu has checked menuitem.
-                 * @default false
+                 * Defaults to: false
                  * @type {Boolean}
                  */
                 collapseOnClick: {

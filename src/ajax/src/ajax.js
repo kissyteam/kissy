@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview io shortcut
+ *  io shortcut
  * @author yiminghe@gmail.com
  */
 KISSY.add('ajax', function (S, serializer, IO) {

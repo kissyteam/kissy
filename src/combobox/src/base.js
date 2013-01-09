@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Input wrapper for ComboBox component.
+ *  Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, undefined) {

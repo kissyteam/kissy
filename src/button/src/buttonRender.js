@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview abstract view for button
+ *  abstract view for button
  * @author yiminghe@gmail.com
  */
 KISSY.add("button/buttonRender", function (S, Component) {

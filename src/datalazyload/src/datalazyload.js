@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview 数据延迟加载组件
+ *  数据延迟加载组件
  */
 KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
@@ -323,7 +323,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
         /**
          * force datalazyload to recheck constraints and load lazyload
-         * @public
+         *
          */
         refresh: function () {
             this._loadFn();
@@ -626,9 +626,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
     /**
      * Load lazyload textarea and imgs manually.
      * @ignore
-     * @name loadCustomLazyData
      * @method
-     * @memberOf DataLazyload
      * @param {HTMLElement[]} containers Containers with in which lazy loaded elements are loaded.
      * @param {String} type Type of lazy loaded element. "img" or "textarea"
      * @param {String} [flag] flag which will be searched to find lazy loaded elements from containers.

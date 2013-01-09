@@ -1,5 +1,5 @@
 /**
- * @fileOverview enhanced base for model with sync
+ *  enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/model", function (S, Base) {
@@ -207,7 +207,7 @@ KISSY.add("mvc/model", function (S, Base) {
             {
                 /**
                  * Attribute name used to store id from server.
-                 * @default "id".
+                 * Defaults to: "id".
                  * @type {String}
                  */
                 idAttribute:{
@@ -226,7 +226,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 },
                 /**
                  * Called to get url for delete/edit/new current model.
-                 * @default collection.url+"/"+mode.id
+                 * Defaults to: collection.url+"/"+mode.id
                  * @type {Function}
                  */
                 url:{

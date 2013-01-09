@@ -1,5 +1,5 @@
 /**
- * @fileOverview Dynamic load waterfall items by monitor window scroll.
+ *  Dynamic load waterfall items by monitor window scroll.
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
@@ -84,7 +84,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
     {
         /**
          * Preload distance below viewport.
-         * @default 0.
+         * Defaults to: 0.
          * @type {Number}
          */
         diff: {

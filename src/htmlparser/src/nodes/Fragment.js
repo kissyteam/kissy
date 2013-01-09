@@ -1,5 +1,5 @@
 /**
- * @fileOverview fake document fragment
+ *  fake document fragment
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/nodes/Fragment", function (S, Tag) {

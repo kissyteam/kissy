@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview overlay
+ *  overlay
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay", function (S, O, OR, D, DR, P) {

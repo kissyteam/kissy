@@ -1,5 +1,5 @@
 /**
- * @fileOverview root node represent a simple tree
+ *  root node represent a simple tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager) {

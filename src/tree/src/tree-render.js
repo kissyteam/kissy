@@ -1,5 +1,5 @@
 /**
- * @fileOverview root node render
+ *  root node render
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/tree-render", function (S, TreeNodeRender, TreeManagerRender) {

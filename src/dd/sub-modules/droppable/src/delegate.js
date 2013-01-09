@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview only one droppable instance for multiple droppable nodes
+ *  only one droppable instance for multiple droppable nodes
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/droppable/delegate', function (S, DD, Droppable, DOM, Node) {

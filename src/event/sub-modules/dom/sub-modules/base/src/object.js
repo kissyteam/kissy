@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview event object for dom
+ *  event object for dom
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/object', function (S, Event, undefined) {

@@ -1,5 +1,5 @@
 /**
- * @fileOverview basic writer for inheritance
+ *  basic writer for inheritance
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser/writer/basic", function() {

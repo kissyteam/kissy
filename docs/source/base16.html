@@ -17,7 +17,7 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview Input wrapper for ComboBox component.
+ *  Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
 KISSY.add(&quot;combobox/base&quot;, function (S, Node, Component, ComboBoxRender, Menu, undefined) {
@@ -629,7 +629,6 @@ KISSY.add(&quot;combobox/base&quot;, function (S, Node, Component, ComboBoxRende
                 menu.set(&quot;width&quot;, el.innerWidth());
             }
             menu.show();
-            reposition.call(self);
             self.get(&quot;input&quot;).attr(&quot;aria-owns&quot;, menu.get(&quot;el&quot;).attr('id'));
         }
     }
@@ -690,6 +689,8 @@ KISSY.add(&quot;combobox/base&quot;, function (S, Node, Component, ComboBoxRende
                 }
             }
             self.set(&quot;collapsed&quot;, false);
+            // 2012-12-28: in case autocomplete list becomes shorted or longer
+            reposition.call(self);
         } else {
             self.set(&quot;collapsed&quot;, true);
         }

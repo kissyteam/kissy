@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview ua
+ *  ua
  */
 (function (S, undefined) {
 

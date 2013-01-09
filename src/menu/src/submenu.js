@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview submenu controller for kissy, transfer item's keycode to menu
+ *  submenu controller for kissy, transfer item's keycode to menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender) {

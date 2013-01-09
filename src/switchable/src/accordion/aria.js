@@ -1,5 +1,5 @@
 /**
- * @fileOverview accordion aria support
+ *  accordion aria support
  * @author yiminghe@gmail.com
  */
 KISSY.add('switchable/accordion/aria', function (S, DOM, Event, Aria, Accordion, Switchable) {

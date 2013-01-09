@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview hashchange event for non-standard browser
+ *  hashchange event for non-standard browser
  * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
 KISSY.add('event/dom/hashchange', function (S, Event, DOM) {

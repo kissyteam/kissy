@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview droppable for kissy
+ *  droppable for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/droppable/base', function (S, Node, RichBase, DD) {

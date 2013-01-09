@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview solve io between sub domains using proxy page
+ *  solve io between sub domains using proxy page
  * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) {

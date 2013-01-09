@@ -17,7 +17,7 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview KISSY.Dialog
+ *  KISSY.Dialog
  * @author yiminghe@gmail.com
  */
 KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, DialogEffect) {
@@ -50,7 +50,11 @@ KISSY.add('overlay/dialog', function (S, Overlay, DialogRender, Node, StdMod, Di
                 var self = this, el = self.get('el');
                 if (v) {
                     self.__lastActive = el[0].ownerDocument.activeElement;
-                    el[0].focus &amp;&amp; el[0].focus();
+                    self.set('focused', true);
+                    // if d.show(); d.hide();
+                    // async -&gt; focus event -&gt; handleFocus
+                    // -&gt; set('focused') -&gt; el.focus() -&gt; ie error
+                    // el[0].focus &amp;&amp; el[0].focus();
                     el.attr(&quot;aria-hidden&quot;, &quot;false&quot;);
                 } else {
                     el.attr(&quot;aria-hidden&quot;, &quot;true&quot;);

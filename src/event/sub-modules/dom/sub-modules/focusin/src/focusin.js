@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview event-focusin
+ *  event-focusin
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/focusin', function (S, Event) {

@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview ImageZoom.
+ *  ImageZoom.
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
 KISSY.add('imagezoom', function (S, Node, Overlay, Zoomer, undefined) {

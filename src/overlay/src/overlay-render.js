@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview KISSY Overlay
+ *  KISSY Overlay
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/overlay-render", function (S, Component, Extension, Loading, Close, Mask) {

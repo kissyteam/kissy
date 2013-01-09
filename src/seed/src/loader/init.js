@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview mix loader into S and infer KISSy baseUrl if not set
+ *  mix loader into S and infer KISSy baseUrl if not set
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {

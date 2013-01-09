@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview KISSY.Popup
+ *  KISSY.Popup
  * @author qiaohua@taobao.com, yiminghe@gmail.com
  */
 KISSY.add('overlay/popup', function (S, Overlay, undefined) {

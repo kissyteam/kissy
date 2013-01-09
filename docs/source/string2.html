@@ -17,7 +17,7 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview string utilities of lang
+ *  string utilities of lang
  * @author yiminghe@gmail.com
  *
  */
@@ -42,7 +42,7 @@
                 return str == null ? EMPTY : trim.call(str);
             } :
             function (str) {
-                return str == null ? EMPTY : str.toString().replace(RE_TRIM, EMPTY);
+                return str == null ? EMPTY : (str + '').replace(RE_TRIM, EMPTY);
             },
 
 <span id='KISSY-method-substitute'>        /**

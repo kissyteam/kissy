@@ -1,5 +1,5 @@
 /**
- * @fileOverview aria support for slide
+ *  aria support for slide
  * @author yiminghe@gmail.com
  */
 KISSY.add("switchable-ext/slide/aria", function (S, DOM, Event, Switchable) {

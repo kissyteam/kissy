@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview dom-attr
+ *  dom-attr
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('dom/base/attr', function (S, DOM, undefined) {
@@ -301,6 +301,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
              * @param {HTMLElement[]|HTMLElement|String} selector matched elements
              * @param {String|Object} name The name of the attribute to set. or A map of attribute-value pairs to set.
              * @param [val] A value to set for the attribute.
+             * @param [pass] for internal use
              * @return {String}
              */
             attr: function (selector, name, val, /*internal use by anim/fx*/pass) {

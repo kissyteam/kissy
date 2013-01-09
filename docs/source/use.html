@@ -17,7 +17,7 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview use and attach mod for kissy simple loader
+ *  use and attach mod for kissy simple loader
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 (function (S, undefined) {
@@ -97,9 +97,10 @@
          * @param {String|String[]} modNames names of mods to be loaded,if string then separated by space
          * @param {Function} callback callback when modNames are all loaded,
          * with KISSY as first argument and mod 's value as the following arguments
+         * @param _forceSync internal use, do not set
          * @chainable
          */
-        use: function (modNames, callback) {
+        use: function (modNames, callback, /* for internal */_forceSync) {
             var self = this,
                 normalizedModNames,
                 loadChecker = new LoadChecker(loadReady),
@@ -119,8 +120,14 @@
 
             // in case modules is loaded statically
             // synchronous check
-            loadChecker.check();
-
+            // but always async for loader
+            if (_forceSync) {
+                loadChecker.check();
+            } else {
+                setTimeout(function () {
+                    loadChecker.check();
+                }, 0);
+            }
             return self;
         }
     });

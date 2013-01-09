@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview A seed where KISSY grows up from, KISS Yeah !
+ *  A seed where KISSY grows up from, KISS Yeah !
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 

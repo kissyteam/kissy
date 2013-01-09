@@ -1,5 +1,5 @@
 /**
- * @fileOverview declare and initiate sub scanners
+ *  declare and initiate sub scanners
  * @author yiminghe@gmail.com
  */
 KISSY.add('htmlparser/Scanner', function(S, TagScanner, SpecialScanners) {

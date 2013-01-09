@@ -1,5 +1,5 @@
 /**
- * @fileOverview switchable
+ *  switchable
  */
 KISSY.add("switchable", function (S, Switchable, Accordion, Carousel, Slide, Tabs) {
     var re = {

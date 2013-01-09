@@ -1,5 +1,5 @@
 /**
- * @fileOverview HtmlParser for KISSY (Editor)
+ *  HtmlParser for KISSY (Editor)
  * @author yiminghe@gmail.com
  */
 KISSY.add("htmlparser", function (S, DTD, Lexer, Parser, BasicWriter, BeautifyWriter, MinifyWriter, Filter, CData, Comment, Node, Tag, Text) {

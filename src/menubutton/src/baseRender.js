@@ -1,5 +1,5 @@
 /**
- * @fileOverview render aria and drop arrow for menubutton
+ *  render aria and drop arrow for menubutton
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/baseRender", function (S, Button) {

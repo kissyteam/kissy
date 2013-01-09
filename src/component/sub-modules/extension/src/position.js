@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview position and visible extension，可定位的隐藏层
+ *  position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/position", function (S) {

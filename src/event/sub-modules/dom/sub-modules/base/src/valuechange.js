@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview inspired by yui3
+ *  inspired by yui3
  * Synthetic event that fires when the <code>value</code> property of an input
  * field or textarea changes as a result of a keystroke, mouse operation, or
  * input method editor (IME) input event.

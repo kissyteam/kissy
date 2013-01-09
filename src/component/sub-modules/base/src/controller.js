@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Base Controller class for KISSY Component.
+ *  Base Controller class for KISSY Component.
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBase, Manager, Render, undefined) {

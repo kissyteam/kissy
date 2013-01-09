@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview KISSY Tabs Component.
+ *  KISSY Tabs Component.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {

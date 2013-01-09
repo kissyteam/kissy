@@ -1,5 +1,5 @@
 /**
- * @fileOverview root node represent a check tree
+ *  root node represent a check tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender, TreeManager) {

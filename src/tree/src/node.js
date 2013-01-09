@@ -1,5 +1,5 @@
 /**
- * @fileOverview abstraction of tree node ,root and other node will extend it
+ *  abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
@@ -281,7 +281,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 /**
                  * Whether current tree node is expanded.
                  * @type {Boolean.}
-                 * @default false.
+                 * Defaults to: false.
                  */
                 expanded: {
                     view: 1
@@ -290,7 +290,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 /**
                  * Whether current tree node is collapsed.
                  * @type {Boolean.}
-                 * @default true.
+                 * Defaults to: true.
                  */
                 collapsed: {
                     getter: function () {

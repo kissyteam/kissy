@@ -1,5 +1,5 @@
 /**
- * @fileOverview Make Elements flow like waterfall.
+ *  Make Elements flow like waterfall.
  * @author yiminghe@gmail.com
  */
 KISSY.add("waterfall/base", function (S, Node, Base) {
@@ -102,7 +102,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         /**
          * Minimum col count of waterfall items.
          * Event window resize to 0.
-         * @default 1.
+         * Defaults to: 1.
          * @type {Number}
          */
         minColCount: {
@@ -111,7 +111,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Effect config object when waterfall item is added to container.
-         * @default { effect:"fadeIn",duration:1 }
+         * Defaults to: { effect:"fadeIn",duration:1 }
          * @type {Object}
          * @example
          * <code>
@@ -149,7 +149,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Effect config object when waterfall item is adjusted on window resize.
-         * @default { easing:"",duration:1 }
+         * Defaults to: { easing:"",duration:1 }
          * @type {Object}
          * @example
          * <code>

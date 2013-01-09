@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Render aria properties to input element.
+ *  Render aria properties to input element.
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/render", function (S, Component, undefined) {

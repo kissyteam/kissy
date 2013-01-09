@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview  change bubble and checkbox/radio fix patch for ie<9
+ *   change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/ie/change', function (S, Event, DOM) {

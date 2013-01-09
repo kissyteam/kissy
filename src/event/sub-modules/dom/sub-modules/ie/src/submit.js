@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview patch for ie<9 submit: does not bubble !
+ *  patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {

@@ -1,5 +1,5 @@
 /**
- * @fileOverview tc about fire function
+ *  tc about fire function
  * @author yiminghe@gmail.com
  */
 KISSY.use("dom,event/dom/base", function (S, DOM, Event) {

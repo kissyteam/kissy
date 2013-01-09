@@ -1,5 +1,5 @@
 /**
- * @fileOverview Switchable autorender Plugin
+ *  Switchable autorender Plugin
  * @author lifesinger@gmail.com
  */
 KISSY.add('switchable/autorender', function (S, DOM, JSON, Switchable) {

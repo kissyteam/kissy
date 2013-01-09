@@ -1,5 +1,5 @@
 /**
- * @fileOverview represent a menu option , just make it selectable and can have select status
+ *  represent a menu option , just make it selectable and can have select status
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/option", function (S, Menu) {
@@ -30,7 +30,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
             {
                 /**
                  * Whether this option can be selected.
-                 * @default true.
+                 * Defaults to: true.
                  * @type {Boolean}
                  */
                 selectable:{

@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview Easing equation from yui3
+ *  Easing equation from yui3
  */
 KISSY.add('anim/easing', function () {
 

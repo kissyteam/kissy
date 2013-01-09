@@ -1,8 +1,8 @@
 /**
  * @ignore
- * @fileOverview web.js
+ *  web.js
  * @author lifesinger@gmail.com, yiminghe@gmail.com
- * @description this code can only run at browser environment
+ * this code can only run at browser environment
  */
 (function (S, undefined) {
 

@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview mask extension for kissy
+ *  mask extension for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/extension/mask", function (S, Event) {

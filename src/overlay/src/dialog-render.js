@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview render for dialog
+ *  render for dialog
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/dialog-render", function (S, OverlayRender,StdMod) {

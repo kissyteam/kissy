@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview uibase
+ *  uibase
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension", function (S, Align, ContentBox, ContentBoxRender, Position, PositionRender, ShimRender) {

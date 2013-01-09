@@ -1,5 +1,5 @@
 /**
- * @fileOverview Switchable
+ *  Switchable
  */
 KISSY.add('switchable/base', function (S, DOM, Event, undefined) {
 

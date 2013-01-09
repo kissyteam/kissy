@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview position and visible extension，可定位的隐藏层
+ *  position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/position-render", function () {
@@ -20,7 +20,7 @@ KISSY.add("component/extension/position-render", function () {
         /**
          * @ignore
          * see {@link KISSY.Component.Extension.Box#cfg-visibleMode}.
-         * @default "visibility"
+         * Defaults to: "visibility"
          */
         visibleMode: {
             value: "visibility"

@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview event-mouseenter
+ *  event-mouseenter
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {

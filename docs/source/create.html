@@ -17,7 +17,7 @@
 <body onload="prettyPrint(); highlight();">
   <pre class="prettyprint lang-js"><span id='global-property-'>/**
 </span> * @ignore
- * @fileOverview dom-create
+ *  dom-create
  * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 KISSY.add('dom/base/create', function (S, DOM, undefined) {
@@ -148,14 +148,14 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 return attachProps(ret, props);
             },
 
-            _fixCloneAttributes: null,
-
-            _creators: {
-                div: defaultCreator
+<span id='KISSY-DOM-property-_fixCloneAttributes'>            _fixCloneAttributes: null,
+</span>
+<span id='KISSY-DOM-property-_creators'>            _creators: {
+</span>                div: defaultCreator
             },
 
-            _defaultCreator:defaultCreator,
-
+<span id='KISSY-DOM-property-_defaultCreator'>            _defaultCreator:defaultCreator,
+</span>
 <span id='KISSY-DOM-method-html'>            /**
 </span>             * Get the HTML contents of the first element in the set of matched elements.
              * or
@@ -311,7 +311,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
              * @param {Boolean} [deepWithDataAndEvent=false]
              * A Boolean indicating whether event handlers and data for all children of the cloned element should be copied.
              * if set true then deep argument must be set true as well.
-             * @see https://developer.mozilla.org/En/DOM/Node.cloneNode
+             * https://developer.mozilla.org/En/DOM/Node.cloneNode
              * @return {HTMLElement}
              * @member KISSY.DOM
              */
@@ -378,8 +378,8 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 }
             },
 
-            _nodeListToFragment: nodeListToFragment
-        });
+<span id='KISSY-DOM-property-_nodeListToFragment'>            _nodeListToFragment: nodeListToFragment
+</span>        });
 
     function processAll(fn, elem, clone) {
         var elemNodeType = elem.nodeType;

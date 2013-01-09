@@ -1,5 +1,5 @@
 /**
- * @fileOverview     日历
+ *      日历
  * @author  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/time', function(S, Node,Calendar) {

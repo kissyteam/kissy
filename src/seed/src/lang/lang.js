@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview   lang
+ *    lang
  * @author  yiminghe@gmail.com, lifesinger@gmail.com
  *
  */
@@ -53,7 +53,7 @@
              * @member KISSY
              * @param {Function} [filter] filter function
              * @return {Object} the new cloned object
-             * @see http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
+             * http://www.w3.org/TR/html5/common-dom-interfaces.html#safe-passing-of-structured-data
              */
             clone: function (input, filter) {
                 // 稍微改改就和规范一样了 :)
@@ -82,7 +82,7 @@
             /**
              * Gets current date in milliseconds.
              * @method
-             * @see  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
+             *  https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date/now
              * http://j-query.blogspot.com/2011/02/timing-ecmascript-5-datenow-function.html
              * http://kangax.github.com/es5-compat-table/
              * @member KISSY

@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview setup data structure for kissy loader
+ *  setup data structure for kissy loader
  * @author yiminghe@gmail.com
  */
 (function (S) {

@@ -1,5 +1,5 @@
 /**
- * @fileOverview Touch support for switchable
+ *  Touch support for switchable
  * @author yiminghe@gmail.com
  */
 KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {

@@ -1,5 +1,5 @@
 /**
- * @fileOverview separator render def
+ *  separator render def
  * @author yiminghe@gmail.com
  */
 KISSY.add("separator/separatorRender", function (S, Component) {

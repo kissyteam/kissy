@@ -1,5 +1,5 @@
 /**
- * @fileOverview KISSY 's MVC Framework for Page Application (Backbone Style)
+ *  KISSY 's MVC Framework for Page Application (Backbone Style)
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc", function (S, Model, Collection, View, Router, sync) {

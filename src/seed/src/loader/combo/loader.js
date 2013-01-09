@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview using combo to load module files
+ *  using combo to load module files
  * @author yiminghe@gmail.com
  */
 (function (S, undefined) {

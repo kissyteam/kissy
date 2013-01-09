@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview node
+ *  node
  * @author yiminghe@gmail.com
  */
 KISSY.add('node', function (S, Node) {

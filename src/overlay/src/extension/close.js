@@ -1,6 +1,6 @@
 /**
  * @ignore
- * @fileOverview close extension for kissy dialog
+ *  close extension for kissy dialog
  * @author yiminghe@gmail.com
  */
 KISSY.add("overlay/extension/close", function () {

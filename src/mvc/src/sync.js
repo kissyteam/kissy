@@ -1,5 +1,5 @@
 /**
- * @fileOverview default sync for model
+ *  default sync for model
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/sync", function (S, io, JSON) {
