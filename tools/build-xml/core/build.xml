@@ -27,7 +27,6 @@
                 encoding="${charset}" outputencoding="${charset}">
             <header filtering="no" trimleading="yes">${bom}</header>
             <path path="${kissy.build.dir}/seed.js"/>
-            <path path="${kissy.build.dir}/ua.js"/>
             <fileset dir="${kissy.build.dir}/dom/"
                      includes="**/*.js" excludes="**/*-min.js"/>
             <fileset dir="${kissy.build.dir}/event/"
