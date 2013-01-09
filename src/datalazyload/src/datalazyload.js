@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  数据延迟加载组件
+ * 数据延迟加载组件
  */
 KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
@@ -175,7 +175,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         /**
          * Placeholder img url for lazy loaded _images if image 's src is empty.
          * must be not empty!
-         * default: http://a.tbcdn.cn/kissy/1.0.0/build/imglazyload/spaceball.gif
+         *
+         * Defaults to: http://a.tbcdn.cn/kissy/1.0.0/build/imglazyload/spaceball.gif
          * @cfg {String} placeholder
          */
         /**
@@ -301,6 +302,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
          */
         '_initLoadEvent': function () {
             var self = this,
+                img = new Image(),
+                placeholder = self.get("placeholder"),
                 autoDestroy = self.get("autoDestroy"),
             // 加载延迟项
                 loadItems = function () {
@@ -315,9 +318,19 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
             self.resume();
 
-            // 需要立即加载一次，以保证第一屏的延迟项可见
-            if (!self['_isLoadAllLazyElements']()) {
-                S.ready(loadItems);
+            img.src = placeholder;
+
+            function firstLoad() {
+                // 需要立即加载一次，以保证第一屏的延迟项可见
+                if (!self['_isLoadAllLazyElements']()) {
+                    S.ready(loadItems);
+                }
+            }
+
+            if (img.complete) {
+                firstLoad()
+            } else {
+                img.onload = firstLoad;
             }
         },
 
@@ -461,7 +474,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             }
             var self = this,
                 imgs = self._images || [],
-                areaes = self._textareas || [];
+                textareas = self._textareas || [];
             S.each(els, function (el) {
                 var nodeName = el.nodeName.toLowerCase();
                 if (nodeName == "img") {
@@ -469,13 +482,13 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                         imgs.push(el);
                     }
                 } else if (nodeName == "textarea") {
-                    if (!S.inArray(el, areaes)) {
-                        areaes.push(el);
+                    if (!S.inArray(el, textareas)) {
+                        textareas.push(el);
                     }
                 }
             });
             self._images = imgs;
-            self._textareas = areaes;
+            self._textareas = textareas;
         },
 
         /**
@@ -490,7 +503,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             }
             var self = this,
                 imgs = [],
-                areaes = [];
+                textareas = [];
             S.each(self._images, function (img) {
                 if (!S.inArray(img, els)) {
                     imgs.push(img);
@@ -498,11 +511,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             });
             S.each(self._textareas, function (textarea) {
                 if (!S.inArray(textarea, els)) {
-                    areaes.push(textarea);
+                    textareas.push(textarea);
                 }
             });
             self._images = imgs;
-            self._textareas = areaes;
+            self._textareas = textareas;
         },
 
         /**
