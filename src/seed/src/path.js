@@ -18,28 +18,33 @@
      */
     function normalizeArray(parts, allowAboveRoot) {
         // level above root
-        var up = 0;
-        for (var i = parts.length - 1; i >= 0; i--) {
-            var last = parts[i];
+        var up = 0,
+            i = parts.length - 1,
+            newParts = [],
+            last;
+
+        for (; i >= 0; i--) {
+            last = parts[i];
             if (last == '.') {
-                parts.splice(i, 1);
             } else if (last === '..') {
-                parts.splice(i, 1);
                 up++;
             } else if (up) {
-                parts.splice(i, 1);
                 up--;
+            } else {
+                newParts[newParts.length] = last;
             }
         }
 
         // if allow above root, has to add ..
         if (allowAboveRoot) {
             for (; up--; up) {
-                parts.unshift('..');
+                newParts[newParts.length] = '..';
             }
         }
 
-        return parts;
+        newParts = newParts.reverse();
+
+        return newParts;
     }
 
     /**
@@ -55,11 +60,10 @@
          * @return {String} Resolved path.
          */
         resolve: function () {
-
             var resolvedPath = '',
                 resolvedPathStr,
                 i,
-                args = S.makeArray(arguments),
+                args = (arguments),
                 path,
                 absolute = 0;
 
@@ -164,7 +168,7 @@
 
             path = path.join('/');
 
-            return path;
+            return /**@type String  @ignore*/path;
         },
 
         /**
@@ -174,12 +178,13 @@
          * @return {String}
          */
         basename: function (path, ext) {
-            var result = path.match(splitPathRe) || [];
-            result = result[3] || '';
-            if (ext && result && result.slice(-1 * ext.length) == ext) {
-                result = result.slice(0, -1 * ext.length);
+            var result = path.match(splitPathRe) || [],
+                basename;
+            basename = result[3] || '';
+            if (ext && basename && basename.slice(-1 * ext.length) == ext) {
+                basename = basename.slice(0, -1 * ext.length);
             }
-            return result;
+            return basename;
         },
 
         /**
@@ -214,9 +219,9 @@
         }
 
     };
-
-    S.Path = Path;
-
+    if (Path) {
+        S.Path = Path;
+    }
 })(KISSY);
 /*
  Refer

@@ -24,19 +24,20 @@
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
     function indexMap(s) {
-        if (S.isArray(s)) {
+        if (typeof s == 'string') {
+            return indexMapStr(s);
+        } else {
             var ret = [], i = 0;
             for (; i < s.length; i++) {
                 ret[i] = indexMapStr(s[i]);
             }
             return ret;
         }
-        return indexMapStr(s);
     }
 
     function indexMapStr(s) {
         // 'x/' 'x/y/z/'
-        if (S.endsWith(Path.basename(s), '/')) {
+        if (s.charAt(s.length - 1) == '/') {
             s += 'index';
         }
         return s;
@@ -59,25 +60,25 @@
          * @return {string|Array}
          */
         normalDepModuleName: function (moduleName, depName) {
-            var i = 0;
+            var i = 0, l;
 
             if (!depName) {
                 return depName;
             }
 
-            if (S.isArray(depName)) {
-                for (; i < depName.length; i++) {
-                    depName[i] = Utils.normalDepModuleName(moduleName, depName[i]);
+            if (typeof depName == 'string') {
+                if (startsWith(depName, '../') || startsWith(depName, './')) {
+                    // x/y/z -> x/y/
+                    return Path.resolve(Path.dirname(moduleName), depName);
                 }
-                return depName;
+
+                return Path.normalize(depName);
             }
 
-            if (startsWith(depName, '../') || startsWith(depName, './')) {
-                // x/y/z -> x/y/
-                return Path.resolve(Path.dirname(moduleName), depName);
+            for (l = depName.length; i < l; i++) {
+                depName[i] = Utils.normalDepModuleName(moduleName, depName[i]);
             }
-
-            return Path.normalize(depName);
+            return depName;
         },
 
         /**
@@ -196,12 +197,14 @@
             if (status != LOADED) {
                 return 0;
             }
-            if (S.inArray(modName, stack)) {
+            if (S.Config.debug) {
+                if (S.inArray(modName, stack)) {
+                    stack.push(modName);
+                    S.error('find cyclic dependency between mods: ' + stack);
+                    return 0;
+                }
                 stack.push(modName);
-                S.error('find cyclic dependency between mods: ' + stack);
-                return 0;
             }
-            stack.push(modName);
             if (Utils.attachModsRecursively(m.getNormalizedRequires(), runtime, stack)) {
                 Utils.attachMod(runtime, m);
                 return 1;

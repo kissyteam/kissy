@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 9 23:33
+build time: Jan 10 13:37
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130109233320' will replace with current timestamp when compressing.
+         * NOTICE: '20130110133748' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130109233320',
+        __BUILD_TIME: '20130110133748',
         /**
          * KISSY Environment.
          * @private
@@ -2172,28 +2172,33 @@ var KISSY = (function (undefined) {
      */
     function normalizeArray(parts, allowAboveRoot) {
         // level above root
-        var up = 0;
-        for (var i = parts.length - 1; i >= 0; i--) {
-            var last = parts[i];
+        var up = 0,
+            i = parts.length - 1,
+            newParts = [],
+            last;
+
+        for (; i >= 0; i--) {
+            last = parts[i];
             if (last == '.') {
-                parts.splice(i, 1);
             } else if (last === '..') {
-                parts.splice(i, 1);
                 up++;
             } else if (up) {
-                parts.splice(i, 1);
                 up--;
+            } else {
+                newParts[newParts.length] = last;
             }
         }
 
         // if allow above root, has to add ..
         if (allowAboveRoot) {
             for (; up--; up) {
-                parts.unshift('..');
+                newParts[newParts.length] = '..';
             }
         }
 
-        return parts;
+        newParts = newParts.reverse();
+
+        return newParts;
     }
 
     /**
@@ -2209,11 +2214,10 @@ var KISSY = (function (undefined) {
          * @return {String} Resolved path.
          */
         resolve: function () {
-
             var resolvedPath = '',
                 resolvedPathStr,
                 i,
-                args = S.makeArray(arguments),
+                args = (arguments),
                 path,
                 absolute = 0;
 
@@ -2318,7 +2322,7 @@ var KISSY = (function (undefined) {
 
             path = path.join('/');
 
-            return path;
+            return /**@type String  @ignore*/path;
         },
 
         /**
@@ -2328,12 +2332,13 @@ var KISSY = (function (undefined) {
          * @return {String}
          */
         basename: function (path, ext) {
-            var result = path.match(splitPathRe) || [];
-            result = result[3] || '';
-            if (ext && result && result.slice(-1 * ext.length) == ext) {
-                result = result.slice(0, -1 * ext.length);
+            var result = path.match(splitPathRe) || [],
+                basename;
+            basename = result[3] || '';
+            if (ext && basename && basename.slice(-1 * ext.length) == ext) {
+                basename = basename.slice(0, -1 * ext.length);
             }
-            return result;
+            return basename;
         },
 
         /**
@@ -2368,9 +2373,9 @@ var KISSY = (function (undefined) {
         }
 
     };
-
-    S.Path = Path;
-
+    if (Path) {
+        S.Path = Path;
+    }
 })(KISSY);
 /*
  Refer
@@ -3609,10 +3614,12 @@ var KISSY = (function (undefined) {
          * @param obj
          */
         fire: function (eventName, obj) {
-            var fns = getEventHolder(this, eventName);
-            S.each(fns, function (f) {
-                f.call(null, obj);
-            });
+            var fns = getEventHolder(this, eventName) || [],
+                i,
+                l = fns.length;
+            for (i = 0; i < l; i++) {
+                fns[i].call(null, obj);
+            }
         }
     };
 })(KISSY);/**
@@ -3641,19 +3648,20 @@ var KISSY = (function (undefined) {
     // http://wiki.commonjs.org/wiki/Packages/Mappings/A
     // 如果模块名以 / 结尾，自动加 index
     function indexMap(s) {
-        if (S.isArray(s)) {
+        if (typeof s == 'string') {
+            return indexMapStr(s);
+        } else {
             var ret = [], i = 0;
             for (; i < s.length; i++) {
                 ret[i] = indexMapStr(s[i]);
             }
             return ret;
         }
-        return indexMapStr(s);
     }
 
     function indexMapStr(s) {
         // 'x/' 'x/y/z/'
-        if (S.endsWith(Path.basename(s), '/')) {
+        if (s.charAt(s.length - 1) == '/') {
             s += 'index';
         }
         return s;
@@ -3676,25 +3684,25 @@ var KISSY = (function (undefined) {
          * @return {string|Array}
          */
         normalDepModuleName: function (moduleName, depName) {
-            var i = 0;
+            var i = 0, l;
 
             if (!depName) {
                 return depName;
             }
 
-            if (S.isArray(depName)) {
-                for (; i < depName.length; i++) {
-                    depName[i] = Utils.normalDepModuleName(moduleName, depName[i]);
+            if (typeof depName == 'string') {
+                if (startsWith(depName, '../') || startsWith(depName, './')) {
+                    // x/y/z -> x/y/
+                    return Path.resolve(Path.dirname(moduleName), depName);
                 }
-                return depName;
+
+                return Path.normalize(depName);
             }
 
-            if (startsWith(depName, '../') || startsWith(depName, './')) {
-                // x/y/z -> x/y/
-                return Path.resolve(Path.dirname(moduleName), depName);
+            for (l = depName.length; i < l; i++) {
+                depName[i] = Utils.normalDepModuleName(moduleName, depName[i]);
             }
-
-            return Path.normalize(depName);
+            return depName;
         },
 
         /**
@@ -3813,12 +3821,14 @@ var KISSY = (function (undefined) {
             if (status != LOADED) {
                 return 0;
             }
-            if (S.inArray(modName, stack)) {
+            if (S.Config.debug) {
+                if (S.inArray(modName, stack)) {
+                    stack.push(modName);
+                    S.error('find cyclic dependency between mods: ' + stack);
+                    return 0;
+                }
                 stack.push(modName);
-                S.error('find cyclic dependency between mods: ' + stack);
-                return 0;
             }
-            stack.push(modName);
             if (Utils.attachModsRecursively(m.getNormalizedRequires(), runtime, stack)) {
                 Utils.attachMod(runtime, m);
                 return 1;
@@ -5098,7 +5108,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130109233320'
+            tag: '20130110133748'
         }, getBaseInfo()));
     }
 

@@ -72,10 +72,12 @@
          * @param obj
          */
         fire: function (eventName, obj) {
-            var fns = getEventHolder(this, eventName);
-            S.each(fns, function (f) {
-                f.call(null, obj);
-            });
+            var fns = getEventHolder(this, eventName) || [],
+                i,
+                l = fns.length;
+            for (i = 0; i < l; i++) {
+                fns[i].call(null, obj);
+            }
         }
     };
 })(KISSY);
