@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 10 13:36
+build time: Jan 10 14:06
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130110133628' will replace with current timestamp when compressing.
+         * NOTICE: '20130110140556' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130110133628',
+        __BUILD_TIME: '20130110140556',
         /**
          * KISSY Environment.
          * @private
@@ -2174,6 +2174,8 @@ var KISSY = (function (undefined) {
         // level above root
         var up = 0,
             i = parts.length - 1,
+            // splice costs a lot in ie
+            // use new array instead
             newParts = [],
             last;
 
@@ -3651,8 +3653,10 @@ var KISSY = (function (undefined) {
         if (typeof s == 'string') {
             return indexMapStr(s);
         } else {
-            var ret = [], i = 0;
-            for (; i < s.length; i++) {
+            var ret = [],
+                i = 0,
+                l = s.length;
+            for (; i < l; i++) {
                 ret[i] = indexMapStr(s[i]);
             }
             return ret;
@@ -4760,7 +4764,7 @@ var KISSY = (function (undefined) {
 
     function normalizeBase(base) {
         var baseUri;
-        if (!S.endsWith(base, '/')) {
+        if (base.charAt(base.length - 1) != '/') {
             base += '/';
         }
         if (simulatedLocation) {
@@ -5786,7 +5790,7 @@ var KISSY = (function (undefined) {
             base = src.substring(0, index);
             // a.tbcdn.cn??y.js, ie does not insert / after host
             // a.tbcdn.cn/combo? comboPrefix=/combo?
-            if (!S.endsWith(base, "/")) {
+            if (base.charAt(base.length - 1) != '/') {
                 base += '/';
             }
             parts = src.substring(index + comboPrefix.length).split(comboSep);
@@ -5817,7 +5821,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130110133628'
+            tag: '20130110140556'
         }, getBaseInfo()));
     }
 

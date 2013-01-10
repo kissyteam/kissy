@@ -127,7 +127,7 @@
             base = src.substring(0, index);
             // a.tbcdn.cn??y.js, ie does not insert / after host
             // a.tbcdn.cn/combo? comboPrefix=/combo?
-            if (!S.endsWith(base, "/")) {
+            if (base.charAt(base.length - 1) != '/') {
                 base += '/';
             }
             parts = src.substring(index + comboPrefix.length).split(comboSep);

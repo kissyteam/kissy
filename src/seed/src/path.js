@@ -20,6 +20,8 @@
         // level above root
         var up = 0,
             i = parts.length - 1,
+            // splice costs a lot in ie
+            // use new array instead
             newParts = [],
             last;
 
