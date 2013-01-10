@@ -56,20 +56,16 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
 
                 self.target = self.getCommonTarget(e);
 
-                Event.fire(self.target, ROTATE_START, {
-                    originalEvent: e.originalEvent,
-                    touches: e.touches,
+                Event.fire(self.target, ROTATE_START, S.mix(e, {
                     angle: angle,
                     rotation: 0
-                });
+                }));
 
             } else {
-                Event.fire(self.target, ROTATE, {
-                    touches: touches,
-                    originalEvent: e.originalEvent,
+                Event.fire(self.target, ROTATE, S.mix(e, {
                     angle: angle,
                     rotation: angle - self.startAngle
-                });
+                }));
             }
         },
 
@@ -81,16 +77,17 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
 
         fireEnd: function (e) {
             var self = this;
-            Event.fire(self.target, ROTATE_END, {
-                touches: self.lastTouches,
-                originalEvent: e.originalEvent
-            });
+            Event.fire(self.target, ROTATE_END, S.mix(e,{
+                touches: self.lastTouches
+            }));
         }
     });
 
     eventHandleMap[ROTATE] =
         eventHandleMap[ROTATE_END] =
-            eventHandleMap[ROTATE_START] = new Rotate();
+            eventHandleMap[ROTATE_START] = {
+                handle: new Rotate()
+            };
 
     return Rotate;
 

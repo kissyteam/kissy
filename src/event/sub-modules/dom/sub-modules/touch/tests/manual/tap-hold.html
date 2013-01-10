@@ -15,23 +15,28 @@
 
 <a href="http://www.g.cn">google</a>
 
-<div id='t' tabindex='0'
+<div id='t'
      style='border:1px solid green;
      width:200px;height:200px;margin:10px'>
     tttt ttttt ttttt tttttt tttttt
 </div>
+<div style="height: 900px;"></div>
+<script src="../../src/handle.js"></script>
+<script src="../../src/multi-touch.js"></script>
+<script src="../../src/pinch.js"></script>
+<script src="../../src/double-tap.js"></script>
+<script src="../../src/gesture.js"></script>
+<script src="../../src/handle-map.js"></script>
+<script src="../../src/rotate.js"></script>
+<script src="../../src/single-touch.js"></script>
+<script src="../../src/swipe.js"></script>
+<script src="../../src/tap-hold.js"></script>
+<script src="../../src/tap.js"></script>
+<script src="../../src/utils.js"></script>
 
 <script>
 
-    KISSY.use('event,event/dom/touch', function (S, Event) {
-
-        Event.on(document, "touchmove", function (e) {
-            // e.preventDefault();
-        });
-
-        Event.on('#t', 'touchstart', function (e) {
-            e.preventDefault();
-        });
+    KISSY.use('event', function (S, Event) {
 
         Event.on('#t', "tapHold", function (e) {
             log(e.type + ' : ' + e.duration);

@@ -16,7 +16,9 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         BUFFER_TIME = 1,
 
         MOVE_DELAY = 30,
-        _showShimMove = S.throttle(move,
+    // android can not throttle
+    // need preventDefault on every event!
+        _showShimMove = S.Features.isTouchSupported() ? move : S.throttle(move,
             MOVE_DELAY),
         SHIM_Z_INDEX = 999999;
 

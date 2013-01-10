@@ -15,26 +15,43 @@
 
 <a href="http://www.g.cn">google</a>
 <button onclick="alert(KISSY.DOM.offset('#t').top);alert(KISSY.DOM.width('#t'));">get top/width</button>
-<div id='t' tabindex='0'
+<div id='t'
      style='border:1px solid green;
      width:200px;height:200px;margin:100px'>
     pinch me
 </div>
 
 <a href="http://www.g.cn">google</a>
+
+<div style="height: 900px;">sd</div>
+<div style="height: 900px;">sd</div>
+
+
+<script src="../../src/handle.js"></script>
+<script src="../../src/multi-touch.js"></script>
+<script src="../../src/pinch.js"></script>
+<script src="../../src/double-tap.js"></script>
+<script src="../../src/gesture.js"></script>
+<script src="../../src/handle-map.js"></script>
+<script src="../../src/rotate.js"></script>
+<script src="../../src/single-touch.js"></script>
+<script src="../../src/swipe.js"></script>
+<script src="../../src/tap-hold.js"></script>
+<script src="../../src/tap.js"></script>
+<script src="../../src/utils.js"></script>
 <script>
 
     KISSY.use('event', function (S, Event) {
 
-        Event.on(document, "touchmove", function (e) {
-            // e.preventDefault();
-        });
 
-        Event.on('#t', 'touchstart', function (e) {
+        Event.on('#t', 'pinch pinchStart', function (e) {
+            // equal to prevent touchstart and touchmove
+            // preventDefault action for two finger
             e.preventDefault();
         });
 
         Event.on('#t', "pinch pinchStart pinchEnd", function (e) {
+            console.log(e.originalEvent && e.originalEvent.type);
             log(e.type + ' : ' + e.scale);
             S.log(e.type + ' : ' + e.scale);
         });

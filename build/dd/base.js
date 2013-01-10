@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:24
+build time: Jan 11 03:06
 */
 /**
  * @ignore
- * @fileOverview dd support for kissy
+ * dd support for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/base', function (S, DDM, Draggable, DraggableDelegate) {
@@ -27,7 +27,7 @@ KISSY.add('dd/base', function (S, DDM, Draggable, DraggableDelegate) {
     ]
 });/**
  * @ignore
- * @fileOverview dd support for kissy , dd objects central management module
+ * dd support for kissy , dd objects central management module
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
@@ -43,7 +43,9 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         BUFFER_TIME = 1,
 
         MOVE_DELAY = 30,
-        _showShimMove = S.throttle(move,
+    // android can not throttle
+    // need preventDefault on every event!
+        _showShimMove = S.Features.isTouchSupported() ? move : S.throttle(move,
             MOVE_DELAY),
         SHIM_Z_INDEX = 999999;
 
@@ -556,7 +558,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
 });
 /**
  * @ignore
- * @fileOverview delegate all draggable nodes to one draggable object
+ * delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, Event) {
@@ -725,12 +727,13 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
     requires: ['./ddm', './draggable', 'dom', 'node', 'event']
 });/**
  * @ignore
- * @fileOverview dd support for kissy, drag for dd
+ * dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
 
     var UA = S.UA,
+        $ = Node.all,
         each = S.each,
         DRAG_START_EVENT = Event.Gesture.start,
         ie = UA['ie'],
@@ -922,7 +925,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
         },
 
         '_onSetNode': function (n) {
-            var self=this;
+            var self = this;
             // dragNode is equal to node in single mode
             self.setInternal('dragNode', n);
             self.bindDragEvent();
@@ -984,7 +987,8 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                 return;
             }
 
-            var self = this;
+            var self = this,
+                target = $(ev.target);
 
             if (ie) {
                 fixIEMouseDown();
@@ -1210,7 +1214,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             node: {
                 setter: function (v) {
                     if (!(v instanceof Node)) {
-                        return Node.one(v);
+                        return $(v);
                     }
                 }
             },
@@ -1299,7 +1303,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                             v = self.get('node').one(v);
                         }
                         if (v.nodeType) {
-                            v = Node.one(v);
+                            v = $(v);
                         }
                         vs[i] = v;
                     });

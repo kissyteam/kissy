@@ -11,6 +11,7 @@
             log_div = DOM.create('<div style="position:fixed;' +
                 'right:0;top:0;width:200px;' +
                 'height:100px;' +
+                '-webkit-overflow-scrolling: touch;' +
                 'border:1px solid red;' +
                 'background:white;' +
                 'overflow:auto"></div>');
