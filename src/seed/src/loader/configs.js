@@ -137,7 +137,7 @@
 
     function normalizeBase(base) {
         var baseUri;
-        if (!S.endsWith(base, '/')) {
+        if (base.charAt(base.length - 1) != '/') {
             base += '/';
         }
         if (simulatedLocation) {

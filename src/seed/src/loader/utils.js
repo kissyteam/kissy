@@ -27,8 +27,10 @@
         if (typeof s == 'string') {
             return indexMapStr(s);
         } else {
-            var ret = [], i = 0;
-            for (; i < s.length; i++) {
+            var ret = [],
+                i = 0,
+                l = s.length;
+            for (; i < l; i++) {
                 ret[i] = indexMapStr(s[i]);
             }
             return ret;
