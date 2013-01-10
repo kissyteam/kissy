@@ -461,8 +461,8 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         } catch (e) {
             // Propagate exception as error if not done
             if (self.state < 2) {
-                S.log(e.stack||e, 'error');
-                self._ioReady(-1, e);
+                S.log(e.stack || e, 'error');
+                self._ioReady(-1, e.message);
                 // Simply rethrow otherwise
             } else {
                 S.error(e);

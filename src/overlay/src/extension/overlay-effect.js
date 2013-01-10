@@ -6,9 +6,9 @@
 KISSY.add('overlay/extension/overlay-effect', function (S) {
 
     var NONE = 'none',
-        BLOCK='block',
-        HIDDEN='hidden',
-        VISIBLE='visible',
+        BLOCK = 'block',
+        HIDDEN = 'hidden',
+        VISIBLE = 'visible',
         DURATION = 0.5,
         effects = {fade: ["Out", "In"], slide: ["Up", "Down"]};
 
@@ -17,8 +17,8 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
             ghost = el.clone(true);
 
         ghost.css({
-            visibility:'',
-            overflow:HIDDEN
+            visibility: '',
+            overflow: HIDDEN
         }).addClass(self.get('prefixCls') + 'overlay-ghost');
 
         return self.__afterCreateEffectGhost(ghost);
@@ -27,7 +27,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
     function processTarget(self, show, callback) {
 
         if (self.__effectGhost) {
-            self.__effectGhost.stop(1);
+            self.__effectGhost.stop(1, 1);
         }
 
         var el = self.get("el"),
@@ -50,7 +50,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
 
         ghost.insertAfter(el);
 
-        el.hide();
+        el.css('visibility', HIDDEN);
 
         if (show) {
             from = targetBox;
@@ -70,7 +70,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
             complete: function () {
                 self.__effectGhost = null;
                 ghost.remove();
-                el.show();
+                el.css('visibility', show ? VISIBLE : HIDDEN);
                 callback();
             }
         });
@@ -161,7 +161,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
 
     OverlayEffect.prototype = {
 
-        __afterCreateEffectGhost:function(ghost){
+        __afterCreateEffectGhost: function (ghost) {
             return ghost;
         },
 

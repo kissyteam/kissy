@@ -568,16 +568,41 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
 
             });
 
-            it('当 dataType 不为 jsonp, url 参数跨域时，不触发回调', function () {
+            it('当 dataType 不为 jsonp, url 参数 post 跨域时，不触发回调', function () {
                 var ret = 0;
+
+                // get post
+                // chrome/ff send 不报异常，status 0 statusText ''
+                // ie7 send 不报异常 status 0 statusText Security Violation
+                // ie 9 10 send 报异常 error: 未指明错误
+                // ch
                 IO({
                     url: 'http://www.g.cn/',
                     type: 'post',
                     error: function () {
                         var args = S.makeArray(arguments);
+                        expect(args[2].status || 500).toBe(500);
+                        ret = 1;
+                    }
+                });
+
+                waitsFor(function () {
+                    return ret;
+                });
+            });
+
+            it('当 dataType 不为 jsonp, url 参数 get 跨域时，不触发回调', function () {
+                var ret = 0;
+
+                IO({
+                    url: 'http://www.g.cn/',
+                    type: 'get',
+                    error: function () {
+                        var args = S.makeArray(arguments);
+                        // chrome status 0
                         // security error
-                        expect(args[2].status).toBe(0);
-                        expect(S.inArray(args[1], ['', 'Security Violation.'])).toBe(true);
+                        // ie10 throw error when send status 未指明的错误
+                        expect(args[2].status || 500).toBe(500);
                         ret = 1;
                     }
                 });
@@ -786,27 +811,6 @@ KISSY.use("json,ajax", function (S, JSON, IO) {
                 });
             });
 
-            it('当 dataType 不为 jsonp, url 参数跨域时，不触发回调', function () {
-
-                var ret = 0;
-
-                IO({
-                    url: 'http://www.g.cn/',
-                    type: 'get',
-                    error: function () {
-                        var args = S.makeArray(arguments);
-                        // security error
-                        expect(args[2].status).toBe(0);
-                        expect(S.inArray(args[1], ['', 'Security Violation.'])).toBe(true);
-                        ret = 1;
-                    }
-                });
-
-                waitsFor(function () {
-                    return ret;
-                });
-
-            });
 
             it('xhr 方式时，能正确设置 callback 里的 this', function () {
                 var ok = false;

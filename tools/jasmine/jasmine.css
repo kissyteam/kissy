@@ -50,7 +50,14 @@ body { padding: 0; margin: 5px; }
 #HTMLReporter .resultMessage span.result { display: block; }
 #HTMLReporter .stackTrace { margin: 5px 0 0 0; max-height: 224px; overflow: auto; line-height: 18px; color: #666666; border: 1px solid #ddd; background: white; white-space: pre; }
 
-#TrivialReporter { padding: 8px 13px; top: 0; bottom: 0; left: 0; right: 0; background-color: white; font-family: "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif; /*.resultMessage {*/ /*white-space: pre;*/ /*}*/ }
+#TrivialReporter {
+    /*position: absolute;*/
+    padding: 8px 13px; top: 100px;
+    bottom: 0; left: 0;
+    right: 0; background-color: white;
+    font-family: "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif;
+    /*.resultMessage {*/ /*white-space: pre;*/ /*}*/
+}
 #TrivialReporter a:visited, #TrivialReporter a { color: #303; }
 #TrivialReporter a:hover, #TrivialReporter a:active { color: blue; }
 #TrivialReporter .run_spec { float: right; padding-right: 5px; font-size: .8em; text-decoration: none; }
