@@ -3,7 +3,7 @@
  * fired when tap and hold for more than 1s
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, Event, utils) {
+KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, Event, Gesture) {
     var event = 'tapHold';
 
     var duration = 1000;
@@ -35,13 +35,17 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
         }
     });
 
+    function prevent(e) {
+        e.preventDefault();
+    }
+
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            utils.preventDefaultStart(this);
+            Event.on(el, Gesture.start, prevent);
         },
         tearDown: function () {
-            utils.allowDefaultStart(this);
+            Event.detach(el, Gesture.start, prevent);
         },
         handle: new TapHold()
     };
@@ -49,5 +53,5 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     return TapHold;
 
 }, {
-    requires: ['./handle-map', './single-touch', 'event/dom/base', './utils']
+    requires: ['./handle-map', './single-touch', 'event/dom/base', './gesture']
 });

@@ -282,6 +282,8 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     );
                 });
 
+                // need a handler for each instance
+                // or else will not register duplicate handler
                 win.on("resize", self.__repositionBuffer = S.buffer(reposition, 50), self);
 
                 el = menu.get("el");

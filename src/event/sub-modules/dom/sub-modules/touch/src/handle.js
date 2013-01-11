@@ -34,17 +34,18 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
 
     }
 
+    // 一个应用 一个 document 只需要注册一个 move
+    var throttleTouchMove = S.throttle(function (e) {
+        this.callEventHandle('onTouchMove', e);
+    }, MOVE_DELAY);
+
     DocumentHandler.prototype = {
 
         init: function () {
             var self = this,
                 doc = self.doc,
                 e, h;
-            // android can not throttle
-            // need preventDefault always
-            if (!Features.isTouchSupported()) {
-                self.onTouchMove = S.throttle(self.onTouchMove, MOVE_DELAY);
-            }
+
             for (e in touchEvents) {
                 h = touchEvents[e];
                 Event.on(doc, e, self[h], self);
@@ -70,6 +71,10 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
             }
         },
 
+        onTouchMove: function (e) {
+            throttleTouchMove.call(this, e);
+        },
+
         onTouchStart: function (event) {
             var e, h,
                 self = this,
@@ -79,10 +84,6 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
                 h.isActive = 1;
             }
             self.callEventHandle('onTouchStart', event);
-        },
-
-        onTouchMove: function (event) {
-            this.callEventHandle('onTouchMove', event);
         },
 
         onTouchEnd: function (event) {

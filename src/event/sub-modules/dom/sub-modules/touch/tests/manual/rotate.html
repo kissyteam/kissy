@@ -35,7 +35,7 @@
 <script src="../../src/swipe.js"></script>
 <script src="../../src/tap-hold.js"></script>
 <script src="../../src/tap.js"></script>
-<script src="../../src/utils.js"></script>
+
 <script>
 
     KISSY.use('event', function (S, Event) {
@@ -49,9 +49,6 @@
         });
 
         Event.on('#t', "rotate rotateStart", function (e) {
-            // equal to prevent touchstart and touchmove
-            // preventDefault action for two finger
-            e.preventDefault();
             log(e.type + ' : ' +
                     e.originalEvent.touches.length + ' : ' +
                     e.rotation + ' : ' + e.angle);

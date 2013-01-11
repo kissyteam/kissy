@@ -3,7 +3,7 @@
  * fired when rotate using two fingers
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Event, undefined) {
+KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Event, Gesture, undefined) {
     var ROTATE_START = 'rotateStart',
         ROTATE = 'rotate',
         RAD_2_DEG = 180 / Math.PI,
@@ -77,20 +77,39 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
 
         fireEnd: function (e) {
             var self = this;
-            Event.fire(self.target, ROTATE_END, S.mix(e,{
+            Event.fire(self.target, ROTATE_END, S.mix(e, {
                 touches: self.lastTouches
             }));
         }
     });
 
-    eventHandleMap[ROTATE] =
-        eventHandleMap[ROTATE_END] =
-            eventHandleMap[ROTATE_START] = {
-                handle: new Rotate()
-            };
+    function preventTwoFinger(e) {
+        // android can not throttle
+        // need preventDefault always
+        if (!e.touches || e.touches.length == 2) {
+            e.preventDefault();
+        }
+    }
+
+    var r = new Rotate();
+
+    eventHandleMap[ROTATE_END] =
+        eventHandleMap[ROTATE_START] = {
+            handle: r
+        };
+
+    eventHandleMap[ROTATE] = {
+        handle: r,
+        setup: function () {
+            Event.on(this, Gesture.move, preventTwoFinger);
+        },
+        tearDown: function () {
+            Event.detach(this, Gesture.move, preventTwoFinger);
+        }
+    };
 
     return Rotate;
 
 }, {
-    requires: ['./handle-map', './multi-touch', 'event/dom/base']
+    requires: ['./handle-map', './multi-touch', 'event/dom/base', './gesture']
 });

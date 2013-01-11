@@ -3,7 +3,7 @@
  * gesture swipe inspired by sencha touch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTouch, utils) {
+KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTouch, Gesture) {
 
     var event = 'swipe';
 
@@ -136,13 +136,18 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
         }
 
     });
+
+    function prevent(e) {
+        e.preventDefault();
+    }
+
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            utils.preventDefaultMove(this);
+            Event.on(el, Gesture.move, prevent);
         },
         tearDown: function () {
-            utils.allowDefaultMove(this);
+            Event.detach(el, Gesture.move, prevent);
         },
         handle: new Swipe()
     };
@@ -150,5 +155,5 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     return Swipe;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './single-touch', './utils']
+    requires: ['./handle-map', 'event/dom/base', './single-touch', './gesture']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 11 03:06
+build time: Jan 11 17:20
 */
 /**
  * @ignore
@@ -179,17 +179,18 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
 
     }
 
+    // 一个应用 一个 document 只需要注册一个 move
+    var throttleTouchMove = S.throttle(function (e) {
+        this.callEventHandle('onTouchMove', e);
+    }, MOVE_DELAY);
+
     DocumentHandler.prototype = {
 
         init: function () {
             var self = this,
                 doc = self.doc,
                 e, h;
-            // android can not throttle
-            // need preventDefault always
-            if (!Features.isTouchSupported()) {
-                self.onTouchMove = S.throttle(self.onTouchMove, MOVE_DELAY);
-            }
+
             for (e in touchEvents) {
                 h = touchEvents[e];
                 Event.on(doc, e, self[h], self);
@@ -215,6 +216,10 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
             }
         },
 
+        onTouchMove: function (e) {
+            throttleTouchMove.call(this, e);
+        },
+
         onTouchStart: function (event) {
             var e, h,
                 self = this,
@@ -224,10 +229,6 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
                 h.isActive = 1;
             }
             self.callEventHandle('onTouchStart', event);
-        },
-
-        onTouchMove: function (event) {
-            this.callEventHandle('onTouchMove', event);
         },
 
         onTouchEnd: function (event) {
@@ -416,7 +417,7 @@ KISSY.add('event/dom/touch/multi-touch', function (S, DOM) {
  * gesture pinch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouch) {
+KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouch, Gesture) {
 
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
@@ -473,22 +474,41 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
 
     });
 
-    eventHandleMap[PINCH] =
-        eventHandleMap[PINCH_END] =
-            eventHandleMap[PINCH_END] = {
-                handle: new Pinch()
-            };
+    var p = new Pinch();
+
+    eventHandleMap[PINCH_START] =
+        eventHandleMap[PINCH_END] = {
+            handle: p
+        };
+
+    function preventTwoFinger(e) {
+        // android can not throttle
+        // need preventDefault always
+        if (!e.touches || e.touches.length == 2) {
+            e.preventDefault();
+        }
+    }
+
+    eventHandleMap[PINCH] = {
+        handle: p,
+        setup: function () {
+            Event.on(this, Gesture.move, preventTwoFinger);
+        },
+        tearDown: function () {
+            Event.detach(this, Gesture.move, preventTwoFinger);
+        }
+    };
 
     return Pinch;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './multi-touch']
+    requires: ['./handle-map', 'event/dom/base', './multi-touch', './gesture']
 });/**
  * @ignore
  * fired when rotate using two fingers
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Event, undefined) {
+KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Event, Gesture, undefined) {
     var ROTATE_START = 'rotateStart',
         ROTATE = 'rotate',
         RAD_2_DEG = 180 / Math.PI,
@@ -562,22 +582,41 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
 
         fireEnd: function (e) {
             var self = this;
-            Event.fire(self.target, ROTATE_END, S.mix(e,{
+            Event.fire(self.target, ROTATE_END, S.mix(e, {
                 touches: self.lastTouches
             }));
         }
     });
 
-    eventHandleMap[ROTATE] =
-        eventHandleMap[ROTATE_END] =
-            eventHandleMap[ROTATE_START] = {
-                handle: new Rotate()
-            };
+    function preventTwoFinger(e) {
+        // android can not throttle
+        // need preventDefault always
+        if (!e.touches || e.touches.length == 2) {
+            e.preventDefault();
+        }
+    }
+
+    var r = new Rotate();
+
+    eventHandleMap[ROTATE_END] =
+        eventHandleMap[ROTATE_START] = {
+            handle: r
+        };
+
+    eventHandleMap[ROTATE] = {
+        handle: r,
+        setup: function () {
+            Event.on(this, Gesture.move, preventTwoFinger);
+        },
+        tearDown: function () {
+            Event.detach(this, Gesture.move, preventTwoFinger);
+        }
+    };
 
     return Rotate;
 
 }, {
-    requires: ['./handle-map', './multi-touch', 'event/dom/base']
+    requires: ['./handle-map', './multi-touch', 'event/dom/base', './gesture']
 });/**
  * @ignore
  * touch count guard
@@ -608,7 +647,7 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
  * gesture swipe inspired by sencha touch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTouch, utils) {
+KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTouch, Gesture) {
 
     var event = 'swipe';
 
@@ -741,13 +780,18 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
         }
 
     });
+
+    function prevent(e) {
+        e.preventDefault();
+    }
+
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            utils.preventDefaultMove(this);
+            Event.on(el, Gesture.move, prevent);
         },
         tearDown: function () {
-            utils.allowDefaultMove(this);
+            Event.detach(el, Gesture.move, prevent);
         },
         handle: new Swipe()
     };
@@ -755,13 +799,13 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     return Swipe;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './single-touch', './utils']
+    requires: ['./handle-map', 'event/dom/base', './single-touch', './gesture']
 });/**
  * @ignore
  * fired when tap and hold for more than 1s
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, Event, utils) {
+KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, Event, Gesture) {
     var event = 'tapHold';
 
     var duration = 1000;
@@ -793,13 +837,17 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
         }
     });
 
+    function prevent(e) {
+        e.preventDefault();
+    }
+
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            utils.preventDefaultStart(this);
+            Event.on(el, Gesture.start, prevent);
         },
         tearDown: function () {
-            utils.allowDefaultStart(this);
+            Event.detach(el, Gesture.start, prevent);
         },
         handle: new TapHold()
     };
@@ -807,7 +855,7 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     return TapHold;
 
 }, {
-    requires: ['./handle-map', './single-touch', 'event/dom/base', './utils']
+    requires: ['./handle-map', './single-touch', 'event/dom/base', './gesture']
 });/**
  * @ignore
  * gesture tap or click for pc
@@ -886,25 +934,4 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
 
 }, {
     requires: ['event/dom/base', './touch/handle-map', './touch/handle']
-});KISSY.add('event/dom/touch/utils', function (S, Event, Gesture) {
-    function prevent(e) {
-        e.preventDefault();
-    }
-
-    return {
-        preventDefaultMove: function (el) {
-            Event.on(el, Gesture.move, prevent);
-        },
-        allowDefaultMove: function (el) {
-            Event.detach(el, Gesture.move, prevent);
-        },
-        preventDefaultStart: function (el) {
-            Event.on(el, Gesture.start, prevent);
-        },
-        allowDefaultStart: function (el) {
-            Event.detach(el, Gesture.start, prevent);
-        }
-    };
-}, {
-    requires: ['event/dom/base', './gesture']
 });

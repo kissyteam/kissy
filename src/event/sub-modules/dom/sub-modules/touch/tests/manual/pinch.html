@@ -38,17 +38,10 @@
 <script src="../../src/swipe.js"></script>
 <script src="../../src/tap-hold.js"></script>
 <script src="../../src/tap.js"></script>
-<script src="../../src/utils.js"></script>
+
 <script>
 
     KISSY.use('event', function (S, Event) {
-
-
-        Event.on('#t', 'pinch pinchStart', function (e) {
-            // equal to prevent touchstart and touchmove
-            // preventDefault action for two finger
-            e.preventDefault();
-        });
 
         Event.on('#t', "pinch pinchStart pinchEnd", function (e) {
             console.log(e.originalEvent && e.originalEvent.type);

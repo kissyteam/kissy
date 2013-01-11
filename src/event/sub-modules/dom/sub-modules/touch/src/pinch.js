@@ -3,7 +3,7 @@
  * gesture pinch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouch) {
+KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouch, Gesture) {
 
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
@@ -60,14 +60,33 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
 
     });
 
-    eventHandleMap[PINCH] =
-        eventHandleMap[PINCH_END] =
-            eventHandleMap[PINCH_END] = {
-                handle: new Pinch()
-            };
+    var p = new Pinch();
+
+    eventHandleMap[PINCH_START] =
+        eventHandleMap[PINCH_END] = {
+            handle: p
+        };
+
+    function preventTwoFinger(e) {
+        // android can not throttle
+        // need preventDefault always
+        if (!e.touches || e.touches.length == 2) {
+            e.preventDefault();
+        }
+    }
+
+    eventHandleMap[PINCH] = {
+        handle: p,
+        setup: function () {
+            Event.on(this, Gesture.move, preventTwoFinger);
+        },
+        tearDown: function () {
+            Event.detach(this, Gesture.move, preventTwoFinger);
+        }
+    };
 
     return Pinch;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './multi-touch']
+    requires: ['./handle-map', 'event/dom/base', './multi-touch', './gesture']
 });
