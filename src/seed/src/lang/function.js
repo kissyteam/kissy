@@ -72,7 +72,7 @@
          * @param [data] that is provided to the function. This accepts either a single
          * item or an array. If an array is provided, the function is executed with
          * one parameter for each array item. If you need to pass a single array
-         * parameter, it needs to be wrapped in an array [myarray].
+         * parameter, it needs to be wrapped in an array.
          *
          * @return {Object} a timer object. Call the cancel() method on this object to stop
          * the timer.

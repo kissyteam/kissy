@@ -140,7 +140,7 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
         },
 
         /**
-         * remove item by sepcified tab
+         * remove item by specified tab
          * @param {KISSY.Tabs.Tab} tab
          * @param {Boolean} destroy whether destroy specified tab and panel
          * @chainable
@@ -286,11 +286,13 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
         decorateInternal: function (el) {
             var self = this,
                 prefixCls = self.get('prefixCls'),
+                changeType = self.get('changeType'),
                 bar = el.children("." + prefixCls + "tabs-bar"),
                 body = el.children("." + prefixCls + "tabs-body");
             self.set("el", el);
             self.set("bar", new Bar({
                 srcNode: bar,
+                changeType: changeType,
                 prefixCls: prefixCls
             }));
             self.set("body", new Body({

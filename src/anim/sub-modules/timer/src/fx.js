@@ -3,7 +3,7 @@
  * animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/fx', function (S, DOM, undefined) {
+KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
 
     /**
      * basic animation about single css property or element attribute
@@ -17,7 +17,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
     Fx.prototype = {
 
         // implemented by KISSY
-        isNative: 1,
+        isBasicFx: 1,
 
         constructor: Fx,
 
@@ -68,7 +68,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
             var self = this,
                 anim = self.anim,
                 prop = self.prop,
-                el = anim.config.el,
+                el = anim.el,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
@@ -98,7 +98,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
         cur: function () {
             var self = this,
                 prop = self.prop,
-                el = self.anim.config.el;
+                el = self.anim.el;
             if (isAttr(el, prop)) {
                 return DOM.attr(el, prop, undefined, 1);
             }
@@ -122,16 +122,19 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
         return 0;
     }
 
-    function getPos(anim, easing) {
+    function getPos(anim, propData) {
         var t = S.now(),
-            elapsedTime,
+            runTime,
             _startTime = anim._startTime,
-            duration = anim._duration;
-        if (t >= duration + _startTime) {
+            delay = propData.delay,
+            duration = propData.duration;
+        runTime = t - _startTime - delay;
+        if (runTime <= 0) {
+            return 0;
+        } else if (runTime >= duration) {
             return 1;
         } else {
-            elapsedTime = t - _startTime;
-            return easing(elapsedTime / duration);
+            return propData.easing(runTime / duration);
         }
     }
 

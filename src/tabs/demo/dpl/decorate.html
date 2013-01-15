@@ -35,6 +35,26 @@
 
     </div>
 
+
+    <h1>从已有 html 产生 Tabs - mouse</h1>
+
+    <div>
+        <div class="ks-tabs ks-tabs-top" id="tabs2">
+            <div class="ks-tabs-bar">
+                <div class="ks-tabs-tab ks-button ks-tabs-tab-selected">tab-1
+                </div>
+                <div class="ks-tabs-tab ks-button">tab-2
+                </div>
+            </div>
+            <div class="ks-tabs-body">
+                <div class="ks-tabs-panel ks-tabs-panel-selected"><p>
+                    panel-1</p></div>
+                <div class="ks-tabs-panel"><p>panel-2</p></div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 <script src="/kissy/build/seed.js"></script>
 <script src="../../src/bar.js"></script>
@@ -50,6 +70,11 @@
 
         var tabs = new Tabs({
             srcNode: '#tabs'
+        }).render();
+
+        var tabs2 = new Tabs({
+            srcNode: '#tabs2',
+            changeType:'mouse'
         }).render();
 
     });

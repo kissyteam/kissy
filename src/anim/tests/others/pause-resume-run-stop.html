@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+    <script src="/kissy/build/seed.js"></script>
+
+    <script src="../../sub-modules/base/src/base.js"></script>
+    <script src="../../sub-modules/base/src/queue.js"></script>
+    <script src="../../sub-modules/base/src/utils.js"></script>
+
+    <script src="../../sub-modules/facade/src/anim.js"></script>
+
+    <script src="../../sub-modules/timer/src/timer.js"></script>
+    <script src="../../sub-modules/timer/src/color.js"></script>
+    <script src="../../sub-modules/timer/src/easing.js"></script>
+    <script src="../../sub-modules/timer/src/fx.js"></script>
+    <script src="../../sub-modules/timer/src/manager.js"></script>
+    <script src="../../sub-modules/timer/src/short-hand.js"></script>
+
+    <script src="../../sub-modules/transition/src/transition.js"></script>
+</head>
+<body>
+<h1>anim pause resume run stop</h1>
+<select id="transition">
+    <option value="1">use transition anim</option>
+    <option value="">use js timer anim</option>
+</select>
+<button id="run" class="anim">run</button>
+<button id="pause" class="anim">pause</button>
+<button id="resume" class="anim">resume</button>
+<button id="stop-true" class="anim stop">stop true</button>
+<button id="stop-false" class="anim stop">stop false</button>
+
+<div id="t" style="position: absolute;left:100px;top:200px;width: 100px;height: 100px;
+border: 1px solid red">
+
+</div>
+<script>
+    KISSY.use('anim,node', function (S, Anim, Node) {
+        var $ = Node.all;
+        var t0, t1, t2;
+        var anim;
+
+        $('#transition').val('1');
+
+        function genAnim() {
+            anim = new Anim({
+                el: '#t',
+                props: {
+                    left: {
+                        value: 500,
+                        delay: 2,
+                        duration: 2,
+                        easing: 'ease-in'
+                    },
+                    top: {
+                        value: 500,
+                        duration: 4,
+                        easing: 'ease-out'
+                    }
+                },
+                complete: function () {
+                    S.log(S.now() - t1);
+                    S.log('anim completed');
+                },
+                useTransition: !!$('#transition').val()
+            });
+        }
+
+
+        $('#transition').on('change', function () {
+            genAnim();
+        });
+
+        genAnim();
+        $('.anim').prop('disabled',false);
+        $('#run').on('click', function () {
+            t1 = t0 = S.now();
+            $('#run')[0].disabled = true;
+            anim.run();
+        });
+        $('#pause').on('click', function () {
+            S.log(S.now() - t0);
+            $('#pause')[0].disabled = true;
+            anim.pause();
+            $('#resume')[0].disabled = false;
+        });
+        $('#resume').on('click', function () {
+            t1 = S.now();
+            anim.resume();
+            $('#resume')[0].disabled = true;
+        });
+        $('#stop-true').on('click', function () {
+            anim.stop(true);
+            $('.anim').prop('disabled',true);
+        });
+        $('#stop-false').on('click', function () {
+            S.log(S.now() - t1);
+            anim.stop();
+            $('.anim').prop('disabled',true);
+        });
+    });
+</script>
+</body>
+</html>

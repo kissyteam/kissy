@@ -3,7 +3,7 @@
  * single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/manager', function (S) {
+KISSY.add('anim/timer/manager', function (S) {
     var stamp = S.stamp;
 
     return {
@@ -67,7 +67,7 @@ KISSY.add('anim/manager', function (S) {
                 runnings = self.runnings;
             for (r in runnings) {
                 done = 0;
-                runnings[r]._frame();
+                runnings[r].frame();
             }
             return done;
         }

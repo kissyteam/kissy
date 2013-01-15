@@ -390,7 +390,6 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
         });
 
         it("should keeping inline style clean", function () {
-
             test.hide(0.2);
             waits(300);
             runs(function () {
@@ -403,7 +402,6 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
         });
 
         it("should not exist memory leak", function () {
-
             test.show();
             test.hide(1);
             waits(100);
@@ -443,6 +441,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             it("should call frame", function () {
                 var stoppedCalled = 0,
                     t = $("<div style='height:100px;width:100px;overflow: hidden;'></div>").appendTo("body");
+
                 var anim = new Anim(t, {
                     width: 10
                 }, {
@@ -454,6 +453,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                         t.css("height", fx.from + fx.pos * (fx.to - fx.from));
                     }
                 });
+                var start= S.now();
 
                 anim.run();
                 waits(100);
@@ -547,7 +547,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 }, {
                     duration: 1,
                     frame: function () {
-                        return Anim.PreventDefaultUpdate;
+                        return 1;
                     }
                 });
 
@@ -574,7 +574,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 }, {
                     duration: 1,
                     frame: function () {
-                        return Anim.StopToEnd | Anim.PreventDefaultUpdate;
+                        return 1 | 2;
                     },
                     complete: function () {
                         called = 1;
@@ -606,7 +606,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 }, {
                     duration: 1,
                     frame: function () {
-                        return Anim.StopToEnd;
+                        return 2;
                     },
                     complete: function () {
                         called = 1;

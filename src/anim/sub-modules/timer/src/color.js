@@ -3,12 +3,10 @@
  * special patch for making color gradual change
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
+KISSY.add('anim/timer/color', function (S, DOM, Fx,SHORT_HANDS) {
 
     var HEX_BASE = 16,
-
         floor = Math.floor,
-
         KEYWORDS = {
             'black':[0, 0, 0],
             'silver':[192, 192, 192],
@@ -28,12 +26,8 @@ KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
             'aqua':[0, 255, 255]
         },
         re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
-
         re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i,
-
         re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i,
-
-        SHORT_HANDS = Anim.SHORT_HANDS,
 
         COLORS = [
             'backgroundColor' ,
@@ -45,7 +39,6 @@ KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
             'outlineColor'
         ];
 
-    SHORT_HANDS['background'] = SHORT_HANDS['background'] || [];
     SHORT_HANDS['background'].push('backgroundColor');
 
     SHORT_HANDS['borderColor'] = [
@@ -113,7 +106,7 @@ KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
             return KEYWORDS[val];
         }
 
-        //transparent 或者 颜色字符串返回
+        //transparent 或者颜色字符串返回
         S.log('only allow rgb or hex color string : ' + val, 'warn');
         return [255, 255, 255];
     }
@@ -152,7 +145,7 @@ KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
                     floor(interpolate(from[3] || 1, to[3] || 1, pos))
                 ].join(', ') + ')';
             } else {
-                S.log('anim/color unknown value : ' + from);
+                return S.log('anim/color unknown value : ' + from);
             }
         }
 
@@ -165,7 +158,7 @@ KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
     return ColorFx;
 
 }, {
-    requires:['dom', './base', './fx']
+    requires:['dom','./fx','./short-hand']
 });
 
 /*

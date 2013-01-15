@@ -61,7 +61,8 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             // 否则动画不对
             div.css({
                 opacity: 0
-            }).animate(" width: 0; opacity: 1;", {
+            });
+            div.animate(" width: 0; opacity: 1;", {
                     duration: 0.2,
                     complete: function () {
                         div.remove();

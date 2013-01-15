@@ -8,8 +8,18 @@
     var Env = S.Env,
         win = Env.host,
         UA = S.UA,
+        VENDORS = [
+            'Webkit',
+            'Moz',
+            'O',
+            'Ms'
+        ],
     // nodejs
         doc = win.document || {},
+        isTransitionSupported = false,
+        transitionPrefix = '',
+        documentElement = doc.documentElement,
+        documentElementStyle,
     // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
         isTouchSupported = ('ontouchstart' in doc) && !(UA.phantomjs),
         documentMode = doc.documentMode,
@@ -19,6 +29,20 @@
     // ie 8.0.7600.16315@win7 json bug!
     if (documentMode && documentMode < 9) {
         isNativeJSONSupported = 0;
+    }
+
+    if (documentElement) {
+        documentElementStyle = documentElement.style;
+        if ('transition' in documentElementStyle) {
+            isTransitionSupported = true;
+        } else {
+            S.each(VENDORS, function (val) {
+                if ((val + 'Transition') in documentElementStyle) {
+                    transitionPrefix = val;
+                    isTransitionSupported = true;
+                }
+            });
+        }
     }
 
     /**
@@ -62,6 +86,14 @@
          */
         isNativeJSONSupported: function () {
             return isNativeJSONSupported;
+        },
+
+        'isTransitionSupported': function () {
+            return isTransitionSupported;
+        },
+
+        'getTransitionPrefix': function () {
+            return transitionPrefix;
         }
     };
 

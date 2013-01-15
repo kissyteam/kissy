@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+    <script src="/kissy/build/seed.js"></script>
+
+    <script src="../../sub-modules/base/src/base.js"></script>
+    <script src="../../sub-modules/base/src/queue.js"></script>
+    <script src="../../sub-modules/base/src/utils.js"></script>
+
+    <script src="../../sub-modules/facade/src/anim.js"></script>
+
+    <script src="../../sub-modules/timer/src/timer.js"></script>
+    <script src="../../sub-modules/timer/src/color.js"></script>
+    <script src="../../sub-modules/timer/src/easing.js"></script>
+    <script src="../../sub-modules/timer/src/fx.js"></script>
+    <script src="../../sub-modules/timer/src/manager.js"></script>
+    <script src="../../sub-modules/timer/src/short-hand.js"></script>
+
+    <script src="../../sub-modules/transition/src/transition.js"></script>
+</head>
+<body>
+<script>
+    KISSY.use('anim,node', function (S, Anim, Node) {
+        var $ = Node.all;
+        var div = $('<div></div>')
+                .prependTo('body');
+
+        debugger
+        div.animate({
+            '-webkit-transform': {
+                easing: 'linear',
+                fx: {
+                    frame: function (anim, fx) {
+                        S.log(fx.pos);
+                        div.css(fx.prop, 'translate(' +
+                                (100 * fx.pos) + 'px,' +
+                                (100 * fx.pos) + 'px' + ')');
+                    }
+                }
+            }
+        }, {
+            duration: 2
+        });
+
+        setTimeout(function () {
+            alert(div.style('-webkit-transform'));
+        }, 1000);
+    });
+</script>
+</body>
+</html>

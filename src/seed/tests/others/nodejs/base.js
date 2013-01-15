@@ -2,7 +2,7 @@ var KISSY = require('../../../../../build/kissy-nodejs').KISSY;
 
 var path=require('./path');
 
-var x=path.resolve(path.resolve('d:\\base.js','./'),'.\\');
+var x=path.resolve(path.resolve('d:\\timer.js','./'),'.\\');
 
 console.log(x);
 
