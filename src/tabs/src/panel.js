@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  single tab panel.
+ * single tab panel.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/panel", function (S, Component, PanelRender) {

@@ -1,11 +1,12 @@
 /**
  * @ignore
- *  dd support for kissy, drag for dd
+ * dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
 
     var UA = S.UA,
+        $ = Node.all,
         each = S.each,
         DRAG_START_EVENT = Event.Gesture.start,
         ie = UA['ie'],
@@ -197,7 +198,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
         },
 
         '_onSetNode': function (n) {
-            var self=this;
+            var self = this;
             // dragNode is equal to node in single mode
             self.setInternal('dragNode', n);
             self.bindDragEvent();
@@ -259,7 +260,8 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                 return;
             }
 
-            var self = this;
+            var self = this,
+                target = $(ev.target);
 
             if (ie) {
                 fixIEMouseDown();
@@ -485,7 +487,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             node: {
                 setter: function (v) {
                     if (!(v instanceof Node)) {
-                        return Node.one(v);
+                        return $(v);
                     }
                 }
             },
@@ -574,7 +576,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                             v = self.get('node').one(v);
                         }
                         if (v.nodeType) {
-                            v = Node.one(v);
+                            v = $(v);
                         }
                         vs[i] = v;
                     });

@@ -3,7 +3,7 @@
  * gesture pinch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouch) {
+KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouch, Gesture) {
 
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
@@ -21,15 +21,14 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
     S.extend(Pinch, MultiTouch, {
 
         onTouchMove: function (e) {
-
             var self = this;
 
             if (!self.isTracking) {
                 return;
             }
 
-            var touches = e.touches,
-                distance = getDistance(touches[0], touches[1]);
+            var touches = e.touches;
+            var distance = getDistance(touches[0], touches[1]);
 
             self.lastTouches = touches;
 
@@ -37,37 +36,57 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
                 self.isStarted = true;
                 self.startDistance = distance;
                 var target = self.target = self.getCommonTarget(e);
+
                 Event.fire(target,
-                    PINCH_START, {
-                        touches: touches,
+                    PINCH_START, S.mix(e, {
                         distance: distance,
                         scale: 1
-                    });
+                    }));
             } else {
                 Event.fire(self.target,
-                    PINCH, {
-                        touches: touches,
+                    PINCH, S.mix(e, {
                         distance: distance,
                         scale: distance / self.startDistance
-                    });
+                    }));
             }
         },
 
-        fireEnd: function () {
+        fireEnd: function (e) {
             var self = this;
-            Event.fire(self.target, PINCH_END, {
+            Event.fire(self.target, PINCH_END, S.mix(e, {
                 touches: self.lastTouches
-            });
+            }));
         }
 
     });
 
-    eventHandleMap[PINCH] =
-        eventHandleMap[PINCH_END] =
-            eventHandleMap[PINCH_END] = new Pinch();
+    var p = new Pinch();
+
+    eventHandleMap[PINCH_START] =
+        eventHandleMap[PINCH_END] = {
+            handle: p
+        };
+
+    function preventTwoFinger(e) {
+        // android can not throttle
+        // need preventDefault always
+        if (!e.touches || e.touches.length == 2) {
+            e.preventDefault();
+        }
+    }
+
+    eventHandleMap[PINCH] = {
+        handle: p,
+        setup: function () {
+            Event.on(this, Gesture.move, preventTwoFinger);
+        },
+        tearDown: function () {
+            Event.detach(this, Gesture.move, preventTwoFinger);
+        }
+    };
 
     return Pinch;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './multi-touch']
+    requires: ['./handle-map', 'event/dom/base', './multi-touch', './gesture']
 });

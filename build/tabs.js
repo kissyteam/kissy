@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 25 02:08
+build time: Jan 15 13:39
 */
 /**
  * @ignore
- * @fileOverview TabBar for KISSY.
+ * TabBar for KISSY.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/bar", function (S, Toolbar) {
@@ -106,7 +106,7 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
     requires: ['toolbar']
 });/**
  * @ignore
- * @fileOverview Body for tab panels.
+ * Body for tab panels.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/body", function (S, Component) {
@@ -162,7 +162,7 @@ KISSY.add("tabs/body", function (S, Component) {
     requires: ['component/base']
 });/**
  * @ignore
- * @fileOverview single tab panel render.
+ * single tab panel render.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/panel-render", function (S, Component) {
@@ -202,7 +202,7 @@ KISSY.add("tabs/panel-render", function (S, Component) {
     requires: ['component/base']
 });/**
  * @ignore
- * @fileOverview single tab panel.
+ * single tab panel.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/panel", function (S, Component, PanelRender) {
@@ -247,7 +247,7 @@ KISSY.add("tabs/panel", function (S, Component, PanelRender) {
     requires: ['component/base', './panel-render']
 });/**
  * @ignore
- * @fileOverview Tabs render.
+ * Tabs render.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/render", function (S, Component) {
@@ -276,7 +276,7 @@ KISSY.add("tabs/render", function (S, Component) {
     requires: ['component/base']
 });/**
  * @ignore
- * @fileOverview Single tab render in tab bar.
+ * Single tab render in tab bar.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/tab-render", function (S, Button) {
@@ -312,7 +312,7 @@ KISSY.add("tabs/tab-render", function (S, Button) {
     requires: ['button']
 });/**
  * @ignore
- * @fileOverview Single tab in tab bar.
+ * Single tab in tab bar.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/tab", function (S, Button, TabRender) {
@@ -363,7 +363,7 @@ KISSY.add("tabs/tab", function (S, Button, TabRender) {
     requires: ['button', './tab-render']
 });/**
  * @ignore
- * @fileOverview KISSY Tabs Component.
+ * KISSY Tabs Component.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
@@ -649,15 +649,18 @@ KISSY.add("tabs", function (S, Component, Bar, Body, Tab, Panel, Render) {
         decorateInternal: function (el) {
             var self = this,
                 prefixCls = self.get('prefixCls'),
+                changeType = self.get('changeType'),
                 bar = el.children("." + prefixCls + "tabs-bar"),
                 body = el.children("." + prefixCls + "tabs-body");
             self.set("el", el);
             self.set("bar", new Bar({
                 srcNode: bar,
+                changeType: changeType,
                 prefixCls: prefixCls
             }));
             self.set("body", new Body({
                 srcNode: body,
+                changeType: changeType,
                 prefixCls: prefixCls
             }));
         },

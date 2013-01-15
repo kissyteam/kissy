@@ -24,7 +24,9 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch
 
     });
 
-    eventHandleMap[event] = new Tap();
+    eventHandleMap[event] = {
+        handle: new Tap()
+    };
 
     return Tap;
 

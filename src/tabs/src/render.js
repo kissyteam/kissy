@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  Tabs render.
+ * Tabs render.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/render", function (S, Component) {

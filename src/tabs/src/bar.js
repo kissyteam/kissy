@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  TabBar for KISSY.
+ * TabBar for KISSY.
  * @author yiminghe@gmail.com
  */
 KISSY.add("tabs/bar", function (S, Toolbar) {

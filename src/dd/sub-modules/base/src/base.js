@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  dd support for kissy
+ * dd support for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/base', function (S, DDM, Draggable, DraggableDelegate) {

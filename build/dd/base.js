@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:24
+build time: Jan 15 13:39
 */
 /**
  * @ignore
- * @fileOverview dd support for kissy
+ * dd support for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/base', function (S, DDM, Draggable, DraggableDelegate) {
@@ -27,7 +27,7 @@ KISSY.add('dd/base', function (S, DDM, Draggable, DraggableDelegate) {
     ]
 });/**
  * @ignore
- * @fileOverview dd support for kissy , dd objects central management module
+ * dd support for kissy , dd objects central management module
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
@@ -41,10 +41,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         PIXEL_THRESH = 3,
     // or start when mousedown for 1 second
         BUFFER_TIME = 1,
-
         MOVE_DELAY = 30,
-        _showShimMove = S.throttle(move,
-            MOVE_DELAY),
         SHIM_Z_INDEX = 999999;
 
 
@@ -188,6 +185,16 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         }
     }
 
+    // 同一时刻只可能有个 drag 元素，只能有一次 move 被注册，不需要每个实例一个 throttle
+    // 一个应用一个 document 只需要注册一个 move
+    var throttleMove = S.throttle(move, MOVE_DELAY);
+
+    function throttleMoveHandle(e) {
+        // android can not throttle
+        // need preventDefault on every event!
+        e.preventDefault();
+        throttleMove.call(this, e);
+    }
 
     function notifyDropsMove(self, ev, activeDrag) {
         var mode = activeDrag.get('mode'),
@@ -200,7 +207,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
 
         S.each(drops, function (drop) {
             var a,
-                node = drop.getNodeFromTarget(ev,
+                node = drop['getNodeFromTarget'](ev,
                     // node
                     activeDrag.get('dragNode')[0],
                     // proxy node
@@ -210,7 +217,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
             // 当前 drop 区域已经包含  activeDrag.get('node')
             // 不要返回，可能想调整位置
                 ) {
-                return;
+                return undefined;
             }
 
             if (mode == 'point') {
@@ -244,6 +251,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
                     return false;
                 }
             }
+            return undefined;
         });
         oldDrop = self.get('activeDrop');
         if (oldDrop && oldDrop != activeDrop) {
@@ -334,7 +342,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
      */
     function registerEvent(self) {
         Event.on(doc, DRAG_END_EVENT, self._end, self);
-        Event.on(doc, DRAG_MOVE_EVENT, _showShimMove, self);
+        Event.on(doc, DRAG_MOVE_EVENT, throttleMoveHandle, self);
         // ie6 will not response to event when cursor is out of window.
         if (UA.ie === 6) {
             doc.body.setCapture();
@@ -345,7 +353,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
      结束时需要取消掉，防止平时无谓的监听
      */
     function unRegisterEvent(self) {
-        Event.remove(doc, DRAG_MOVE_EVENT, _showShimMove, self);
+        Event.remove(doc, DRAG_MOVE_EVENT, throttleMoveHandle, self);
         Event.remove(doc, DRAG_END_EVENT, self._end, self);
         if (UA.ie === 6) {
             doc.body.releaseCapture();
@@ -556,7 +564,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
 });
 /**
  * @ignore
- * @fileOverview delegate all draggable nodes to one draggable object
+ * delegate all draggable nodes to one draggable object
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, Event) {
@@ -725,12 +733,13 @@ KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, 
     requires: ['./ddm', './draggable', 'dom', 'node', 'event']
 });/**
  * @ignore
- * @fileOverview dd support for kissy, drag for dd
+ * dd support for kissy, drag for dd
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
 
     var UA = S.UA,
+        $ = Node.all,
         each = S.each,
         DRAG_START_EVENT = Event.Gesture.start,
         ie = UA['ie'],
@@ -922,7 +931,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
         },
 
         '_onSetNode': function (n) {
-            var self=this;
+            var self = this;
             // dragNode is equal to node in single mode
             self.setInternal('dragNode', n);
             self.bindDragEvent();
@@ -984,7 +993,8 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                 return;
             }
 
-            var self = this;
+            var self = this,
+                target = $(ev.target);
 
             if (ie) {
                 fixIEMouseDown();
@@ -1210,7 +1220,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             node: {
                 setter: function (v) {
                     if (!(v instanceof Node)) {
-                        return Node.one(v);
+                        return $(v);
                     }
                 }
             },
@@ -1299,7 +1309,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                             v = self.get('node').one(v);
                         }
                         if (v.nodeType) {
-                            v = Node.one(v);
+                            v = $(v);
                         }
                         vs[i] = v;
                     });

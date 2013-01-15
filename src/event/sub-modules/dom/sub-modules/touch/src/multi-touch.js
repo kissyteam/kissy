@@ -68,7 +68,6 @@ KISSY.add('event/dom/touch/multi-touch', function (S, DOM) {
 
                 if (self.isStarted) {
                     self.isStarted = false;
-
                     self.fireEnd(e);
                 }
             }
