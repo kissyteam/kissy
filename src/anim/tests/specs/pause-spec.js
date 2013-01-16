@@ -1,16 +1,20 @@
+/**
+ * test case for anim pause/resume
+ * @author yiminghe@gmail.com
+ */
 KISSY.use("node,anim", function (S, _, Anim) {
     var $ = S.all;
     describe("anim pause/resume", function () {
 
-        it("pause/resume works", function () {
+        it("anim-pause/resume works", function () {
 
             var div = $("<div style='width:100px;height: 100px;" +
                 "overflow:hidden;'></div>")
                 .appendTo("body");
 
             var anim = Anim(div[0], {
-                width:10,
-                height:10
+                width:"10px",
+                height:"10px"
             }, {
                 duration:0.4
             }).run();
@@ -42,7 +46,7 @@ KISSY.use("node,anim", function (S, _, Anim) {
                 expect(div.isRunning()).toBeTruthy();
                 expect(div.isPaused()).toBeFalsy();
             });
-            waits(400);
+            waits(600);
             runs(function () {
                 expect(div.width()).toBe(10);
                 expect(div.height()).toBe(10);
@@ -63,8 +67,8 @@ KISSY.use("node,anim", function (S, _, Anim) {
                 "height: 100px;'></div>").appendTo("body");
 
             div.animate({
-                width:10,
-                height:10
+                width:"10px",
+                height:"10px"
             }, {
                 duration:0.4
             });
@@ -93,7 +97,7 @@ KISSY.use("node,anim", function (S, _, Anim) {
                 expect(div.isRunning()).toBeTruthy();
                 expect(div.isPaused()).toBeFalsy();
             });
-            waits(400);
+            waits(600);
             runs(function () {
                 expect(div.width()).toBe(10);
                 expect(div.height()).toBe(10);

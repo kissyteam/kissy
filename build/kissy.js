@@ -1,12 +1,12 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 11 03:06
+build time: Jan 16 21:26
 */
 /**
  * @ignore
  * A seed where KISSY grows up from, KISS Yeah !
- * @author lifesinger@gmail.com, yiminghe@gmail.com
+ * @author https://github.com/kissyteam?tab=members
  */
 
 /**
@@ -39,19 +39,18 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130111030643' will replace with current timestamp when compressing.
+         * NOTICE: '20130116212600' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130111030643',
+        __BUILD_TIME: '20130116212600',
         /**
          * KISSY Environment.
          * @private
          * @type {Object}
          */
         Env: {
-            host: host,
-            nodejs: (typeof require == 'function') && (typeof exports == 'object')
+            host: host
         },
         /**
          * KISSY Config.
@@ -183,12 +182,6 @@ var KISSY = (function (undefined) {
             return (pre || EMPTY) + guid++;
         }
     };
-
-    // exports for nodejs
-    if (S.Env.nodejs) {
-        S.KISSY = S;
-        module.exports = S;
-    }
 
     return S;
 
@@ -1202,7 +1195,7 @@ var KISSY = (function (undefined) {
          * @param [data] that is provided to the function. This accepts either a single
          * item or an array. If an array is provided, the function is executed with
          * one parameter for each array item. If you need to pass a single array
-         * parameter, it needs to be wrapped in an array [myarray].
+         * parameter, it needs to be wrapped in an array.
          *
          * @return {Object} a timer object. Call the cancel() method on this object to stop
          * the timer.
@@ -3438,17 +3431,41 @@ var KISSY = (function (undefined) {
     var Env = S.Env,
         win = Env.host,
         UA = S.UA,
+        VENDORS = [
+            'Webkit',
+            'Moz',
+            'O',
+            'Ms'
+        ],
     // nodejs
         doc = win.document || {},
+        isTransitionSupported = false,
+        transitionPrefix = '',
+        documentElement = doc.documentElement,
+        documentElementStyle,
     // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
         isTouchSupported = ('ontouchstart' in doc) && !(UA.phantomjs),
         documentMode = doc.documentMode,
         ie = documentMode || UA.ie,
-        isNativeJSONSupported = ((Env.nodejs && typeof global === 'object') ? global : win).JSON;
+        isNativeJSONSupported = ((UA.nodejs && typeof global === 'object') ? global : win).JSON;
 
     // ie 8.0.7600.16315@win7 json bug!
     if (documentMode && documentMode < 9) {
         isNativeJSONSupported = 0;
+    }
+
+    if (documentElement) {
+        documentElementStyle = documentElement.style;
+        if ('transition' in documentElementStyle) {
+            isTransitionSupported = true;
+        } else {
+            S.each(VENDORS, function (val) {
+                if ((val + 'Transition') in documentElementStyle) {
+                    transitionPrefix = val;
+                    isTransitionSupported = true;
+                }
+            });
+        }
     }
 
     /**
@@ -3492,6 +3509,14 @@ var KISSY = (function (undefined) {
          */
         isNativeJSONSupported: function () {
             return isNativeJSONSupported;
+        },
+
+        'isTransitionSupported': function () {
+            return isTransitionSupported;
+        },
+
+        'getTransitionPrefix': function () {
+            return transitionPrefix;
         }
     };
 
@@ -4640,7 +4665,7 @@ var KISSY = (function (undefined) {
         locationHref,
         configFns = S.Config.fns;
 
-    if (!S.Env.nodejs && location && (locationHref = location.href)) {
+    if (!S.UA.nodejs && location && (locationHref = location.href)) {
         simulatedLocation = new S.Uri(locationHref)
     }
 
@@ -5720,7 +5745,7 @@ var KISSY = (function (undefined) {
                 var self = this,
                     Config = self.Config,
                     Env = self.Env;
-                if (Config.combine && !Env.nodejs) {
+                if (Config.combine && !S.UA.nodejs) {
                     return Env._comboLoader;
                 } else {
                     return Env._loader;
@@ -5807,7 +5832,7 @@ var KISSY = (function (undefined) {
         }, baseInfo);
     }
 
-    if (S.Env.nodejs) {
+    if (S.UA.nodejs) {
         // nodejs: no tag
         S.config({
             charset: 'utf-8',
@@ -5821,7 +5846,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130111030643'
+            tag: '20130116212600'
         }, getBaseInfo()));
     }
 
@@ -6093,9 +6118,25 @@ var KISSY = (function (undefined) {
 config({
 'ajax': {requires: ['dom','json','event']}
 });
+config({
+    anim: {
+        alias: ['anim/facade']
+    }
+});/*Generated by KISSY Module Compiler*/
+config({
+'anim/base': {requires: ['dom','event/custom']}
+});
 /*Generated by KISSY Module Compiler*/
 config({
-'anim': {requires: ['dom','event']}
+'anim/facade': {requires: ['dom','anim/base','anim/timer',KISSY.Features.isTransitionSupported() ? "anim/transition" : ""]}
+});
+/*Generated by KISSY Module Compiler*/
+config({
+'anim/timer': {requires: ['dom','event','anim/base']}
+});
+/*Generated by KISSY Module Compiler*/
+config({
+'anim/transition': {requires: ['dom','event','anim/base']}
 });
 /*Generated by KISSY Module Compiler*/
 config({
@@ -6221,7 +6262,11 @@ config({
 });
 /*Generated by KISSY Module Compiler*/
 config({
-'json': {requires: [KISSY.Features.isNativeJSONSupported() ? "" : "json/json2"]}
+'json': {alias: ["json/facade"]}
+});
+/*Generated by KISSY Module Compiler*/
+config({
+'json/facade': {requires: [KISSY.Features.isNativeJSONSupported() ? "" : "json/json2"]}
 });
 /*Generated by KISSY Module Compiler*/
 config({
@@ -6331,6 +6376,13 @@ config({
     S.add('path', function () {
         return S.Path
     });
+
+
+    // exports for nodejs
+    if (S.UA.nodejs) {
+        S.KISSY = S;
+        module.exports = S;
+    }
 
 })(KISSY);
 /*
@@ -14774,7 +14826,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 11 03:06
+build time: Jan 11 17:20
 */
 /**
  * @ignore
@@ -14952,17 +15004,18 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
 
     }
 
+    // 一个应用 一个 document 只需要注册一个 move
+    var throttleTouchMove = S.throttle(function (e) {
+        this.callEventHandle('onTouchMove', e);
+    }, MOVE_DELAY);
+
     DocumentHandler.prototype = {
 
         init: function () {
             var self = this,
                 doc = self.doc,
                 e, h;
-            // android can not throttle
-            // need preventDefault always
-            if (!Features.isTouchSupported()) {
-                self.onTouchMove = S.throttle(self.onTouchMove, MOVE_DELAY);
-            }
+
             for (e in touchEvents) {
                 h = touchEvents[e];
                 Event.on(doc, e, self[h], self);
@@ -14988,6 +15041,10 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
             }
         },
 
+        onTouchMove: function (e) {
+            throttleTouchMove.call(this, e);
+        },
+
         onTouchStart: function (event) {
             var e, h,
                 self = this,
@@ -14997,10 +15054,6 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
                 h.isActive = 1;
             }
             self.callEventHandle('onTouchStart', event);
-        },
-
-        onTouchMove: function (event) {
-            this.callEventHandle('onTouchMove', event);
         },
 
         onTouchEnd: function (event) {
@@ -15189,7 +15242,7 @@ KISSY.add('event/dom/touch/multi-touch', function (S, DOM) {
  * gesture pinch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouch) {
+KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouch, Gesture) {
 
     var PINCH = 'pinch',
         PINCH_START = 'pinchStart',
@@ -15246,22 +15299,41 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
 
     });
 
-    eventHandleMap[PINCH] =
-        eventHandleMap[PINCH_END] =
-            eventHandleMap[PINCH_END] = {
-                handle: new Pinch()
-            };
+    var p = new Pinch();
+
+    eventHandleMap[PINCH_START] =
+        eventHandleMap[PINCH_END] = {
+            handle: p
+        };
+
+    function preventTwoFinger(e) {
+        // android can not throttle
+        // need preventDefault always
+        if (!e.touches || e.touches.length == 2) {
+            e.preventDefault();
+        }
+    }
+
+    eventHandleMap[PINCH] = {
+        handle: p,
+        setup: function () {
+            Event.on(this, Gesture.move, preventTwoFinger);
+        },
+        tearDown: function () {
+            Event.detach(this, Gesture.move, preventTwoFinger);
+        }
+    };
 
     return Pinch;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './multi-touch']
+    requires: ['./handle-map', 'event/dom/base', './multi-touch', './gesture']
 });/**
  * @ignore
  * fired when rotate using two fingers
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Event, undefined) {
+KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Event, Gesture, undefined) {
     var ROTATE_START = 'rotateStart',
         ROTATE = 'rotate',
         RAD_2_DEG = 180 / Math.PI,
@@ -15335,22 +15407,41 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
 
         fireEnd: function (e) {
             var self = this;
-            Event.fire(self.target, ROTATE_END, S.mix(e,{
+            Event.fire(self.target, ROTATE_END, S.mix(e, {
                 touches: self.lastTouches
             }));
         }
     });
 
-    eventHandleMap[ROTATE] =
-        eventHandleMap[ROTATE_END] =
-            eventHandleMap[ROTATE_START] = {
-                handle: new Rotate()
-            };
+    function preventTwoFinger(e) {
+        // android can not throttle
+        // need preventDefault always
+        if (!e.touches || e.touches.length == 2) {
+            e.preventDefault();
+        }
+    }
+
+    var r = new Rotate();
+
+    eventHandleMap[ROTATE_END] =
+        eventHandleMap[ROTATE_START] = {
+            handle: r
+        };
+
+    eventHandleMap[ROTATE] = {
+        handle: r,
+        setup: function () {
+            Event.on(this, Gesture.move, preventTwoFinger);
+        },
+        tearDown: function () {
+            Event.detach(this, Gesture.move, preventTwoFinger);
+        }
+    };
 
     return Rotate;
 
 }, {
-    requires: ['./handle-map', './multi-touch', 'event/dom/base']
+    requires: ['./handle-map', './multi-touch', 'event/dom/base', './gesture']
 });/**
  * @ignore
  * touch count guard
@@ -15381,7 +15472,7 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
  * gesture swipe inspired by sencha touch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTouch, utils) {
+KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTouch, Gesture) {
 
     var event = 'swipe';
 
@@ -15514,13 +15605,18 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
         }
 
     });
+
+    function prevent(e) {
+        e.preventDefault();
+    }
+
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            utils.preventDefaultMove(this);
+            Event.on(el, Gesture.move, prevent);
         },
         tearDown: function () {
-            utils.allowDefaultMove(this);
+            Event.detach(el, Gesture.move, prevent);
         },
         handle: new Swipe()
     };
@@ -15528,13 +15624,13 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     return Swipe;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './single-touch', './utils']
+    requires: ['./handle-map', 'event/dom/base', './single-touch', './gesture']
 });/**
  * @ignore
  * fired when tap and hold for more than 1s
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, Event, utils) {
+KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, Event, Gesture) {
     var event = 'tapHold';
 
     var duration = 1000;
@@ -15566,13 +15662,17 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
         }
     });
 
+    function prevent(e) {
+        e.preventDefault();
+    }
+
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            utils.preventDefaultStart(this);
+            Event.on(el, Gesture.start, prevent);
         },
         tearDown: function () {
-            utils.allowDefaultStart(this);
+            Event.detach(el, Gesture.start, prevent);
         },
         handle: new TapHold()
     };
@@ -15580,7 +15680,7 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     return TapHold;
 
 }, {
-    requires: ['./handle-map', './single-touch', 'event/dom/base', './utils']
+    requires: ['./handle-map', './single-touch', 'event/dom/base', './gesture']
 });/**
  * @ignore
  * gesture tap or click for pc
@@ -15659,27 +15759,53 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
 
 }, {
     requires: ['event/dom/base', './touch/handle-map', './touch/handle']
-});KISSY.add('event/dom/touch/utils', function (S, Event, Gesture) {
-    function prevent(e) {
-        e.preventDefault();
+});
+/*
+Copyright 2013, KISSY UI Library v1.40dev
+MIT Licensed
+build time: Jan 16 16:50
+*/
+/**
+ * @ignore
+ * kissy json use json2 or native conditionally
+ */
+KISSY.add('json/facade', function (S, J) {
+
+    if (typeof JSON !== 'undefined') {
+        J = JSON;
     }
 
-    return {
-        preventDefaultMove: function (el) {
-            Event.on(el, Gesture.move, prevent);
+    /**
+     * Provide json utils for KISSY.
+     * @class KISSY.JSON
+     * @singleton
+     */
+    return S.JSON = {
+
+        /**
+         * Parse json object from string.
+         * @param text
+         * @return {Object}
+         */
+        parse: function (text) {
+            // 当输入为 undefined / null / '' 时，返回 null
+            if (text == null || text === '') {
+                return null;
+            }
+            return J.parse(text);
         },
-        allowDefaultMove: function (el) {
-            Event.detach(el, Gesture.move, prevent);
-        },
-        preventDefaultStart: function (el) {
-            Event.on(el, Gesture.start, prevent);
-        },
-        allowDefaultStart: function (el) {
-            Event.detach(el, Gesture.start, prevent);
-        }
+        /**
+         * serialize json object to string.
+         * @method
+         * @param {Object} jsonObject
+         * @return {String}
+         */
+        stringify: J.stringify
     };
 }, {
-    requires: ['event/dom/base', './gesture']
+    requires: [
+        KISSY.Features.isNativeJSONSupported() ? "" : "json/json2"
+    ]
 });
 /*
 Copyright 2012, KISSY UI Library v1.40dev
@@ -16165,53 +16291,6 @@ KISSY.add("json/json2", function () {
     };
 
     return JSON;
-});
-/*
-Copyright 2012, KISSY UI Library v1.40dev
-MIT Licensed
-build time: Dec 20 22:27
-*/
-/**
- * @ignore
- * @fileOverview kissy json use json2 or native conditionally
- */
-KISSY.add('json', function (S, J) {
-
-    if (typeof JSON !== 'undefined') {
-        J = JSON;
-    }
-
-    /**
-     * Provide json utils for KISSY.
-     * @class KISSY.JSON
-     * @singleton
-     */
-    return S.JSON = {
-
-        /**
-         * Parse json object from string.
-         * @param text
-         * @return {Object}
-         */
-        parse: function (text) {
-            // 当输入为 undefined / null / '' 时，返回 null
-            if (text == null || text === '') {
-                return null;
-            }
-            return J.parse(text);
-        },
-        /**
-         * serialize json object to string.
-         * @method
-         * @param {Object} jsonObject
-         * @return {String}
-         */
-        stringify: J.stringify
-    };
-}, {
-    requires: [
-        KISSY.Features.isNativeJSONSupported() ? "" : "json/json2"
-    ]
 });
 /*
 Copyright 2012, KISSY UI Library v1.40dev
@@ -19099,78 +19178,505 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 7 01:53
+build time: Jan 16 21:25
 */
 /**
+ * base class for transition anim and timer anim
+ * @author yiminghe@gmail.com
  * @ignore
- * @fileOverview anim
  */
-KISSY.add('anim', function (S, Anim, Easing) {
-    Anim.Easing = Easing;
-    S.mix(S, {
-        Anim:Anim,
-        Easing:Anim.Easing
-    });
-    return Anim;
-}, {
-    requires:['anim/base', 'anim/easing', 'anim/color']
-});/**
- * @ignore
- * @fileOverview animation framework for KISSY
- * @author   yiminghe@gmail.com, lifesinger@gmail.com
- */
-KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
+KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
 
-    var UA = S.UA,
-        OPT_FRAME_PREVENT_DEFAULT = 1,
-        OPT_FRAME_GOTO_END = 2,
-        camelCase = DOM._camelCase,
-        NodeType = DOM.NodeType,
-        specialVals = ['hide', 'show', 'toggle'],
-    // shorthand css properties
-        SHORT_HANDS = {
-            // http://www.w3.org/Style/CSS/Tracker/issues/9
-            // http://snook.ca/archives/html_and_css/background-position-x-y
-            // backgroundPositionX  backgroundPositionY does not support
-            background: [
-                'backgroundPosition',
-                'backgroundColor'
-            ],
-            border: [
-                'borderBottomWidth',
-                'borderLeftWidth',
-                'borderRightWidth',
-                // 'borderSpacing', 组合属性？
-                'borderTopWidth'
-            ],
-            'borderBottom': ['borderBottomWidth'],
-            'borderLeft': ['borderLeftWidth'],
-            borderTop: ['borderTopWidth'],
-            borderRight: ['borderRightWidth'],
-            font: [
-                'fontSize',
-                'fontWeight'
-            ],
-            margin: [
-                'marginBottom',
-                'marginLeft',
-                'marginRight',
-                'marginTop'
-            ],
-            padding: [
-                'paddingBottom',
-                'paddingLeft',
-                'paddingRight',
-                'paddingTop'
-            ]
+    var NodeType = DOM.NodeType;
+    var specialVals = {
+        toggle: 1,
+        hide: 1,
+        show: 1
+    };
+
+    /**
+     * superclass for transition anim and js anim
+     * @class KISSY.Anim.Base
+     */
+    function AnimBase(config) {
+        var self = this,
+            complete;
+        /**
+         * config object of current anim instance
+         * @type {Object}
+         */
+        self.config = config;
+        self.el = DOM.get(config.el);
+        // 实例属性
+        self._backupProps = {};
+        self._propsData = {};
+
+        if (complete = config.complete) {
+            self.on('complete', complete);
+        }
+    }
+
+    function onComplete(self) {
+        var _backupProps;
+
+        // only recover after complete anim
+        if (!S.isEmptyObject(_backupProps = self._backupProps)) {
+            DOM.css(self.el, _backupProps);
+        }
+    }
+
+    S.augment(AnimBase, EventCustom.Target, {
+        /**
+         * prepare fx hook
+         * @protected
+         */
+        prepareFx: function () {
         },
+
+        runInternal: function () {
+            var self = this,
+                config = self.config,
+                el = self.el,
+                val,
+                _backupProps = self._backupProps,
+                _propsData = self._propsData,
+                props = config.props,
+                defaultDelay = (config.delay || 0),
+                defaultDuration = config.duration;
+
+            // 进入该函数即代表执行（q[0] 已经是 ...）
+            Utils.saveRunningAnim(self);
+
+            if (self.fire('beforeStart') === false) {
+                // no need to invoke complete
+                self.stop(0);
+                return;
+            }
+
+            // 分离 easing
+            S.each(props, function (val, prop) {
+                if (!S.isPlainObject(val)) {
+                    val = {
+                        value: val
+                    };
+                }
+                _propsData[prop] = S.mix({
+                    // simulate css3
+                    delay: defaultDelay,
+                    //// timing-function
+                    easing: config.easing,
+                    frame: config.frame,
+                    duration: defaultDuration
+                }, val);
+            });
+
+            if (el.nodeType == NodeType.ELEMENT_NODE) {
+                var exit, hidden;
+                hidden = (DOM.css(el, 'display') === 'none');
+                S.each(_propsData, function (_propData, prop) {
+                    val = _propData.value;
+                    // 直接结束
+                    if (specialVals[val]) {
+                        if (val == 'hide' && hidden || val == 'show' && !hidden) {
+                            // need to invoke complete
+                            self.stop(1);
+                            return exit = false;
+                        }
+                        // backup original inline css value
+                        _backupProps[prop] = DOM.style(el, prop);
+                        if (val == 'toggle') {
+                            val = hidden ? 'show' : 'hide';
+                        }
+                        else if (val == 'hide') {
+                            _propData.value = 0;
+                            // 执行完后隐藏
+                            _backupProps.display = 'none';
+                        } else {
+                            _propData.value = DOM.css(el, prop);
+                            // prevent flash of content
+                            DOM.css(el, prop, 0);
+                            DOM.show(el);
+                        }
+                    }
+                    return undefined;
+                });
+
+                if (exit === false) {
+                    return;
+                }
+            }
+
+            self._startTime = S.now();
+
+            self.prepareFx();
+
+            self.doStart();
+        },
+
+        /**
+         * whether this animation is running
+         * @return {Boolean}
+         */
+        isRunning: function () {
+            return Utils.isAnimRunning(this);
+        },
+
+        /**
+         * whether this animation is paused
+         * @return {Boolean}
+         */
+        isPaused: function () {
+            return Utils.isAnimPaused(this);
+        },
+
+
+        /**
+         * pause current anim
+         * @chainable
+         */
+        pause: function () {
+            var self = this;
+            if (self.isRunning()) {
+                // already run time
+                self._runTime = S.now() - self._startTime;
+                Utils.removeRunningAnim(self);
+                Utils.savePausedAnim(self);
+                self.doStop();
+            }
+            return self;
+        },
+
+        /**
+         * stop by dom operation
+         * @protected
+         */
+        doStop: function () {
+        },
+
+        /**
+         * start by dom operation
+         * @protected
+         */
+        doStart: function () {
+        },
+
+        /**
+         * resume current anim
+         * @chainable
+         */
+        resume: function () {
+            var self = this;
+            if (self.isPaused()) {
+                // adjust time by run time caused by pause
+                self._startTime = S.now() - self._runTime;
+                Utils.removePausedAnim(self);
+                Utils.saveRunningAnim(self);
+                self['beforeResume']();
+                self.doStart();
+            }
+            return self;
+        },
+
+        /**
+         * before resume hook
+         * @protected
+         */
+        'beforeResume': function () {
+
+        },
+
+        /**
+         * start this animation
+         * @chainable
+         */
+        run: function () {
+            var self = this,
+                q,
+                queue = self.config.queue;
+
+            if (queue === false) {
+                self.runInternal();
+            } else {
+                // 当前动画对象加入队列
+                q = Q.queue(self.el, queue, self);
+                if (q.length == 1) {
+                    self.runInternal();
+                }
+            }
+
+            return self;
+        },
+
+        /**
+         * stop this animation
+         * @param {Boolean} [finish] whether jump to the last position of this animation
+         * @chainable
+         */
+        stop: function (finish) {
+            var self = this,
+                el = self.el,
+                q,
+                queue = self.config.queue;
+
+            if (!self.isRunning() && !self.isPaused()) {
+                if (queue !== false) {
+                    // queued but not start to run
+                    Q.remove(el, queue, self);
+                }
+                return self;
+            }
+
+            Utils.removeRunningAnim(self);
+            Utils.removePausedAnim(self);
+            self.doStop(finish);
+            if (finish) {
+                onComplete(self);
+                self.fire('complete');
+            }
+            if (queue !== false) {
+                // notify next anim to run in the same queue
+                q = Q.dequeue(el, queue);
+                if (q && q[0]) {
+                    q[0].runInternal();
+                }
+            }
+            self.fire('end');
+            return self;
+        }
+    });
+
+    AnimBase.Utils = Utils;
+    AnimBase.Q = Q;
+
+    return AnimBase;
+}, {
+    requires: ['dom', './base/utils', 'event/custom', './base/queue']
+});/**
+ * @ignore queue data structure
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('anim/base/queue', function (S, DOM) {
+
+    var // 队列集合容器
+        queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
+    // 默认队列
+        queueKey = S.guid('ks-queue-' + S.now() + '-'),
+        Q;
+
+    function getQueue(el, name, readOnly) {
+        name = name || queueKey;
+
+        var qu,
+            quCollection = DOM.data(el, queueCollectionKey);
+
+        if (!quCollection && !readOnly) {
+            DOM.data(el, queueCollectionKey, quCollection = {});
+        }
+
+        if (quCollection) {
+            qu = quCollection[name];
+            if (!qu && !readOnly) {
+                qu = quCollection[name] = [];
+            }
+        }
+
+        return qu;
+    }
+
+    return Q = {
+
+        queueCollectionKey: queueCollectionKey,
+
+        queue: function (el, queue, item) {
+            var qu = getQueue(el, queue);
+            qu.push(item);
+            return qu;
+        },
+
+        remove: function (el, queue, item) {
+            var qu = getQueue(el, queue, 1),
+                index;
+            if (qu) {
+                index = S.indexOf(item, qu);
+                if (index > -1) {
+                    qu.splice(index, 1);
+                }
+            }
+            if (qu && !qu.length) {
+                // remove queue data
+                Q.clearQueue(el, queue);
+            }
+            return qu;
+        },
+
+        'clearQueues': function (el) {
+            DOM.removeData(el, queueCollectionKey);
+        },
+
+        clearQueue: function clearQueue(el, queue) {
+            queue = queue || queueKey;
+            var quCollection = DOM.data(el, queueCollectionKey);
+            if (quCollection) {
+                delete quCollection[queue];
+            }
+            if (S.isEmptyObject(quCollection)) {
+                DOM.removeData(el, queueCollectionKey);
+            }
+        },
+
+        dequeue: function (el, queue) {
+            var qu = getQueue(el, queue, 1);
+            if (qu) {
+                qu.shift();
+                if (!qu.length) {
+                    // remove queue data
+                    Q.clearQueue(el, queue);
+                }
+            }
+            return qu;
+        }
+
+    };
+}, {
+    requires: ['dom']
+});/**
+ * utils for anim
+ * @author yiminghe@gmail.com
+ * @ignore
+ */
+KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
+
+    var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
+
+    function saveRunningAnim(anim) {
+        var el = anim.el,
+            allRunning = DOM.data(el, runningKey);
+        if (!allRunning) {
+            DOM.data(el, runningKey, allRunning = {});
+        }
+        allRunning[S.stamp(anim)] = anim;
+    }
+
+    function removeRunningAnim(anim) {
+        var el = anim.el,
+            allRunning = DOM.data(el, runningKey);
+        if (allRunning) {
+            delete allRunning[S.stamp(anim)];
+            if (S.isEmptyObject(allRunning)) {
+                DOM.removeData(el, runningKey);
+            }
+        }
+    }
+
+    function isAnimRunning(anim) {
+        var el = anim.el,
+            allRunning = DOM.data(el, runningKey);
+        if (allRunning) {
+            return !!allRunning[S.stamp(anim)];
+        }
+        return 0;
+    }
+
+    var pausedKey = S.guid('ks-anim-paused-' + S.now() + '-');
+
+    function savePausedAnim(anim) {
+        var el = anim.el,
+            paused = DOM.data(el, pausedKey);
+        if (!paused) {
+            DOM.data(el, pausedKey, paused = {});
+        }
+        paused[S.stamp(anim)] = anim;
+    }
+
+    function removePausedAnim(anim) {
+        var el = anim.el,
+            paused = DOM.data(el, pausedKey);
+        if (paused) {
+            delete paused[S.stamp(anim)];
+            if (S.isEmptyObject(paused)) {
+                DOM.removeData(el, pausedKey);
+            }
+        }
+    }
+
+    function isAnimPaused(anim) {
+        var el = anim.el,
+            paused = DOM.data(el, pausedKey);
+        if (paused) {
+            return !!paused[S.stamp(anim)];
+        }
+        return 0;
+    }
+
+    function pauseOrResumeQueue(el, queue, action) {
+        var allAnims = DOM.data(el, action == 'resume' ? pausedKey : runningKey),
+        // can not stop in for/in , stop will modified allRunning too
+            anims = S.merge(allAnims);
+
+        S.each(anims, function (anim) {
+            if (queue === undefined ||
+                anim.config.queue == queue) {
+                anim[action]();
+            }
+        });
+    }
+
+    return {
+        saveRunningAnim: saveRunningAnim,
+        removeRunningAnim: removeRunningAnim,
+        isAnimPaused: isAnimPaused,
+        removePausedAnim: removePausedAnim,
+        savePausedAnim: savePausedAnim,
+        isAnimRunning: isAnimRunning,
+        // whether el has paused anim
+        'isElPaused': function (el) {
+            var paused = DOM.data(el, pausedKey);
+            return paused && !S.isEmptyObject(paused);
+        },
+        // whether el is running anim
+        'isElRunning': function (el) {
+            var allRunning = DOM.data(el, runningKey);
+            return allRunning && !S.isEmptyObject(allRunning);
+        },
+        pauseOrResumeQueue: pauseOrResumeQueue,
+        stopEl: function (el, end, clearQueue, queue) {
+            if (clearQueue) {
+                if (queue === undefined) {
+                    Q.clearQueues(el);
+                } else if (queue !== false) {
+                    Q.clearQueue(el, queue);
+                }
+            }
+            var allRunning = DOM.data(el, runningKey),
+            // can not stop in for/in , stop will modified allRunning too
+                anims = S.merge(allRunning);
+            S.each(anims, function (anim) {
+                if (queue === undefined || anim.config.queue == queue) {
+                    anim.stop(end);
+                }
+            });
+        }
+    }
+}, {
+    requires: ['dom', './queue']
+});
+/*
+Copyright 2013, KISSY UI Library v1.40dev
+MIT Licensed
+build time: Jan 16 21:25
+*/
+/**
+ * anim facade between native and timer
+ * @author yiminghe@gmail.com
+ * @ignore
+ */
+KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) {
+
+    var Utils = AnimBase.Utils,
         defaultConfig = {
             duration: 1,
-            easing: 'easeNone'
-        },
-        NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
-
-    Anim.SHORT_HANDS = SHORT_HANDS;
+            easing: 'linear'
+        };
 
     /**
      * @class KISSY.Anim
@@ -19185,593 +19691,61 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
      * @cfg {String|Boolean} [queue] current animation's queue, if false then no queue
      */
     function Anim(el, props, duration, easing, complete) {
-
+        var config;
         if (el.el) {
-            var realEl = el.el;
-            props = el.props;
-            delete el.el;
-            delete  el.props;
-            return new Anim(realEl, props, el);
-        }
-
-        var self = this,
-            config;
-
-        // ignore non-exist element
-        if (!(el = DOM.get(el))) {
-            return;
-        }
-
-        // factory or constructor
-        if (!(self instanceof Anim)) {
-            return new Anim(el, props, duration, easing, complete);
-        }
-
-        // the transition properties
-        if (typeof props == 'string') {
-            props = S.unparam(String(props), ';', ':');
+            config = el;
         } else {
-            // clone to prevent collision within multiple instance
-            props = S.clone(props);
-        }
-
-        // camel case uniformity
-        S.each(props, function (v, prop) {
-            var camelProp = S.trim(camelCase(prop));
-            if (!camelProp) {
-                delete props[prop];
-            } else if (prop != camelProp) {
-                props[camelProp] = props[prop];
-                delete props[prop];
+            // the transition properties
+            if (typeof props == 'string') {
+                props = S.unparam(String(props), ';', ':');
+                S.each(props, function (value, prop) {
+                    var trimProp = S.trim(prop);
+                    if (trimProp) {
+                        props[trimProp] = S.trim(value);
+                    }
+                    if (!trimProp || trimProp != prop) {
+                        delete props[prop];
+                    }
+                });
+            } else {
+                // clone to prevent collision within multiple instance
+                props = S.clone(props);
             }
-        });
-
-        // animation config
-        if (S.isPlainObject(duration)) {
-            config = S.clone(duration);
-        } else {
-            config = {
-                duration: parseFloat(duration) || undefined,
-                easing: easing,
-                complete: complete
-            };
-        }
-
-        config = S.merge(defaultConfig, config);
-        config.el = el;
-        config.props = props;
-
-        /**
-         * config object of current anim instance
-         * @type {Object}
-         */
-        self.config = config;
-        self._duration = config.duration * 1000;
-
-        // domEl deprecated!
-        self['domEl'] = el;
-        // self.props = props;
-
-        // 实例属性
-        self._backupProps = {};
-        self._propsData = {};
-        // register complete
-        self.on('complete', onComplete);
-    }
-
-
-    function onComplete(e) {
-        var self = this,
-            _backupProps,
-            complete,
-            config = self.config;
-
-        // only recover after complete anim
-        if (!S.isEmptyObject(_backupProps = self._backupProps)) {
-            DOM.css(config.el, _backupProps);
-        }
-
-        if (complete = config.complete) {
-            complete.call(self, e);
-        }
-    }
-
-    function runInternal() {
-        var self = this,
-            config = self.config,
-            _backupProps = self._backupProps,
-            el = config.el,
-            elStyle,
-            hidden,
-            val,
-            prop,
-            _propsData = self._propsData,
-            props = config.props;
-
-        // 进入该函数即代表执行（q[0] 已经是 ...）
-        saveRunning(self);
-
-        if (self.fire('beforeStart') === false) {
-            // no need to invoke complete
-            self.stop(0);
-            return;
-        }
-
-        if (el.nodeType == NodeType.ELEMENT_NODE) {
-            hidden = (DOM.css(el, 'display') === 'none');
-            for (prop in props) {
-                val = props[prop];
-                // 直接结束
-                if (val == 'hide' && hidden || val == 'show' && !hidden) {
-                    // need to invoke complete
-                    self.stop(1);
-                    return;
-                }
-            }
-        }
-
-        // 放在前面，设置 overflow hidden，否则后面 ie6  取 width/height 初值导致错误
-        // <div style='width:0'><div style='width:100px'></div></div>
-        if (el.nodeType == NodeType.ELEMENT_NODE &&
-            (props.width || props.height)) {
-            // Make sure that nothing sneaks out
-            // Record all 3 overflow attributes because IE does not
-            // change the overflow attribute when overflowX and
-            // overflowY are set to the same value
-            elStyle = el.style;
-            S.mix(_backupProps, {
-                overflow: elStyle.overflow,
-                'overflow-x': elStyle.overflowX,
-                'overflow-y': elStyle.overflowY
-            });
-            elStyle.overflow = 'hidden';
-            // inline element should has layout/inline-block
-            if (DOM.css(el, 'display') === 'inline' &&
-                DOM.css(el, 'float') === 'none') {
-                if (UA['ie']) {
-                    elStyle.zoom = 1;
-                } else {
-                    elStyle.display = 'inline-block';
-                }
-            }
-        }
-
-        // 分离 easing
-        S.each(props, function (val, prop) {
-            var easing, _propData;
-            if (!S.isPlainObject(val)) {
-                val = {
-                    value: val
+            // animation config
+            if (S.isPlainObject(duration)) {
+                config = S.clone(duration);
+            } else {
+                config = {
+                    complete: complete
                 };
+                if (duration) {
+                    config.duration = duration;
+                }
+                if (easing) {
+                    config.easing = easing;
+                }
             }
-            _propData = _propsData[prop] = S.mix({
-                easing: config.easing,
-                frame: config.frame
-            }, val);
-            easing = _propData.easing;
-            if (typeof easing == 'string') {
-                _propData.easing = Easing.toFn(easing);
-            }
+            config.el = el;
+            config.props = props;
+        }
+        config = S.merge(defaultConfig, config, {
+            // default anim mode for whole kissy application
+            useTransition: S.config('anim/useTransition')
         });
-
-
-        // 扩展分属性
-        S.each(SHORT_HANDS, function (shortHands, p) {
-            var origin,
-                _propData = _propsData[p],
-                val;
-            // 自定义了 fx 就忽略
-            if (_propData && !_propData.fx) {
-                val = _propData.value;
-                origin = {};
-                S.each(shortHands, function (sh) {
-                    // 得到原始分属性之前值
-                    origin[sh] = DOM.css(el, sh);
-                });
-                DOM.css(el, p, val);
-                S.each(origin, function (val, sh) {
-                    // 如果分属性没有显式设置过，得到期待的分属性最后值
-                    if (!(sh in _propsData)) {
-                        _propsData[sh] = S.merge(_propData, {
-                            value: DOM.css(el, sh)
-                        });
-                    }
-                    // 还原
-                    DOM.css(el, sh, val);
-                });
-                // 删除复合属性
-                delete _propsData[p];
-            }
-        });
-
-        // 取得单位，并对单个属性构建 Fx 对象
-        for (prop in _propsData) {
-            var _propData = _propsData[prop];
-            // 自定义
-            if (_propData.fx) {
-                continue;
-            }
-            val = S.trim(_propData.value);
-            var to,
-                from,
-                propCfg = {
-                    prop: prop,
-                    anim: self,
-                    easing: _propData.easing
-                },
-                fx = Fx.getFx(propCfg);
-
-            // hide/show/toggle : special treat!
-            if (S.inArray(val, specialVals)) {
-                // backup original inline css value
-                _backupProps[prop] = DOM.style(el, prop);
-                if (val == 'toggle') {
-                    val = hidden ? 'show' : 'hide';
-                }
-                if (val == 'hide') {
-                    to = 0;
-                    from = fx.cur();
-                    // 执行完后隐藏
-                    _backupProps.display = 'none';
-                } else {
-                    from = 0;
-                    to = fx.cur();
-                    // prevent flash of content
-                    DOM.css(el, prop, from);
-                    DOM.show(el);
-                }
-                val = to;
-            } else {
-                to = val;
-                from = fx.cur();
-            }
-
-            val += '';
-
-            var unit = '',
-                parts = val.match(NUMBER_REG);
-
-            if (parts) {
-                to = parseFloat(parts[2]);
-                unit = parts[3];
-
-                // 有单位但单位不是 px
-                if (unit && unit !== 'px') {
-                    DOM.css(el, prop, val);
-                    from = (to / fx.cur()) * from;
-                    DOM.css(el, prop, from + unit);
-                }
-
-                // 相对
-                if (parts[1]) {
-                    to = ( (parts[ 1 ] === '-=' ? -1 : 1) * to ) + from;
-                }
-            }
-
-            // equal from and to is not necessary to run
-            if (from == to) {
-                delete _propsData[prop];
-                continue;
-            }
-
-            propCfg.from = from;
-            propCfg.to = to;
-            propCfg.unit = unit;
-            fx.load(propCfg);
-            _propData.fx = fx;
-        }
-
-        self._startTime = S.now();
-
-        AM.start(self);
-    }
-
-    Anim.prototype = {
-
-        constructor: Anim,
-
-        /**
-         * whether this animation is running
-         * @return {Boolean}
-         */
-        isRunning: function () {
-            return isRunning(this);
-        },
-
-        /**
-         * whether this animation is paused
-         * @return {Boolean}
-         */
-        isPaused: function () {
-            return isPaused(this);
-        },
-
-        /**
-         * pause current anim
-         * @chainable
-         */
-        pause: function () {
-            var self = this;
-            if (self.isRunning()) {
-                self._pauseDiff = S.now() - self._startTime;
-                AM.stop(self);
-                removeRunning(self);
-                savePaused(self);
-            }
-            return self;
-        },
-
-        /**
-         * resume current anim
-         * @chainable
-         */
-        resume: function () {
-            var self = this;
-            if (self.isPaused()) {
-                self._startTime = S.now() - self._pauseDiff;
-                removePaused(self);
-                saveRunning(self);
-                AM.start(self);
-            }
-            return self;
-        },
-
-        /**
-         * @ignore
-         */
-        _runInternal: runInternal,
-
-        /**
-         * start this animation
-         * @chainable
-         */
-        run: function () {
-            var self = this,
-                queueName = self.config.queue;
-
-            if (queueName === false) {
-                runInternal.call(self);
-            } else {
-                // 当前动画对象加入队列
-                Q.queue(self);
-            }
-
-            return self;
-        },
-
-        /**
-         * @ignore
-         */
-        _frame: function () {
-            var self = this,
-                prop,
-                end = 1,
-                c,
-                fx,
-                pos,
-                _propData,
-                _propsData = self._propsData;
-
-            for (prop in _propsData) {
-                _propData = _propsData[prop];
-                fx = _propData.fx;
-                // 当前属性没有结束
-                if (!(fx.finished)) {
-                    pos = Fx.getPos(self, _propData.easing);
-                    if (fx.isNative) {
-                        if (_propData.frame) {
-                            c = _propData.frame(self, {
-                                prop: prop,
-                                from: fx.from,
-                                to: fx.to,
-                                pos: pos
-                            });
-                            // in case frame call stop
-                            if (!self.isRunning()) {
-                                return;
-                            }
-                        }
-                        // to be removed, do not use this feature
-                        if (c & OPT_FRAME_GOTO_END) {
-                            fx.finished = 1;
-                        }
-                        if (c & OPT_FRAME_PREVENT_DEFAULT) {
-                        } else {
-                            fx.frame(fx.finished || pos);
-                        }
-                    } else {
-                        fx.finished = fx.finished || pos == 1;
-                        fx.frame(self, {
-                            prop: prop,
-                            pos: pos
-                        });
-                        // in case frame call stop
-                        if (!self.isRunning()) {
-                            return;
-                        }
-                    }
-                    end &= fx.finished;
-                }
-            }
-
-            if ((self.fire('step') === false) || end) {
-                // complete 事件只在动画到达最后一帧时才触发
-                self.stop(/**
-                 @type Boolean
-                 @ignore
-                 */end);
-            }
-        },
-
-        /**
-         * stop this animation
-         * @param {Boolean} [finish] whether jump to the last position of this animation
-         * @chainable
-         */
-        stop: function (finish) {
-            var self = this,
-                config = self.config,
-                queueName = config.queue,
-                prop,
-                fx,
-                c,
-                _propData,
-                _propsData = self._propsData;
-
-
-            // already stopped
-            if (!self.isRunning() && !self.isPaused()) {
-                return self;
-            }
-
-            removeRunning(self);
-            removePaused(self);
-            AM.stop(self);
-
-            if (finish) {
-                for (prop in _propsData) {
-                    _propData = _propsData[prop];
-                    fx = _propData.fx;
-                    // 当前属性没有结束
-                    if (!(fx.finished)) {
-                        if (fx.isNative) {
-                            if (_propData.frame) {
-                                c = _propData.frame(self, {
-                                    prop: prop,
-                                    from: fx.from,
-                                    to: fx.to,
-                                    pos: 1
-                                });
-                            }
-                            // to be removed, do not use this feature
-                            if (c & OPT_FRAME_PREVENT_DEFAULT) {
-                            } else {
-                                fx.frame(1);
-                            }
-                        } else {
-                            fx.frame(self, {
-                                prop:prop,
-                                pos:1
-                            });
-                        }
-                        fx.finished = 1;
-                    }
-                }
-                self.fire('complete');
-            }
-
-            if (queueName !== false) {
-                // notify next anim to run in the same queue
-                Q.dequeue(self);
-            }
-
-            self.fire('end');
-            return self;
-        }
-    };
-
-    S.augment(Anim, Event.Target);
-
-    var runningKey = S.guid('ks-anim-unqueued-' + S.now() + '-');
-
-    function saveRunning(anim) {
-        var el = anim.config.el,
-            allRunning = DOM.data(el, runningKey);
-        if (!allRunning) {
-            DOM.data(el, runningKey, allRunning = {});
-        }
-        allRunning[S.stamp(anim)] = anim;
-    }
-
-    function removeRunning(anim) {
-        var el = anim.config.el,
-            allRunning = DOM.data(el, runningKey);
-        if (allRunning) {
-            delete allRunning[S.stamp(anim)];
-            if (S.isEmptyObject(allRunning)) {
-                DOM.removeData(el, runningKey);
-            }
+        if (config['useTransition'] && TransitionAnim) {
+            // S.log('use transition anim');
+            return new TransitionAnim(config);
+        } else {
+            // S.log('use js timer anim');
+            return new TimerAnim(config);
         }
     }
-
-    function isRunning(anim) {
-        var el = anim.config.el,
-            allRunning = DOM.data(el, runningKey);
-        if (allRunning) {
-            return !!allRunning[S.stamp(anim)];
-        }
-        return 0;
-    }
-
-
-    var pausedKey = S.guid('ks-anim-paused-' + S.now() + '-');
-
-    function savePaused(anim) {
-        var el = anim.config.el,
-            paused = DOM.data(el, pausedKey);
-        if (!paused) {
-            DOM.data(el, pausedKey, paused = {});
-        }
-        paused[S.stamp(anim)] = anim;
-    }
-
-    function removePaused(anim) {
-        var el = anim.config.el,
-            paused = DOM.data(el, pausedKey);
-        if (paused) {
-            delete paused[S.stamp(anim)];
-            if (S.isEmptyObject(paused)) {
-                DOM.removeData(el, pausedKey);
-            }
-        }
-    }
-
-    function isPaused(anim) {
-        var el = anim.config.el,
-            paused = DOM.data(el, pausedKey);
-        if (paused) {
-            return !!paused[S.stamp(anim)];
-        }
-        return 0;
-    }
-
-    /**
-     * stop all the anims currently running
-     * @static
-     * @param {HTMLElement} el element which anim belongs to
-     * @param {Boolean} end whether jump to last position
-     * @param {Boolean} clearQueue whether clean current queue
-     * @param {String|Boolean} queueName current queue's name to be cleared
-     */
-    Anim.stop = function (el, end, clearQueue, queueName) {
-        if (
-        // default queue
-            queueName === null ||
-                // name of specified queue
-                typeof queueName == 'string' ||
-                // anims not belong to any queue
-                queueName === false
-            ) {
-            return stopQueue.apply(undefined, arguments);
-        }
-        // first stop first anim in queues
-        if (clearQueue) {
-            Q.removeQueues(el);
-        }
-        var allRunning = DOM.data(el, runningKey),
-        // can not stop in for/in , stop will modified allRunning too
-            anims = S.merge(allRunning);
-        S.each(anims, function (anim) {
-            anim.stop(end);
-        });
-        return undefined;
-    };
 
 
     /**
      * pause all the anims currently running
      * @param {HTMLElement} el element which anim belongs to
-     * @param {String|Boolean} queueName current queue's name to be cleared
+     * @param {String|Boolean} queue current queue's name to be cleared
      * @method pause
      * @member KISSY.Anim
      * @static
@@ -19780,133 +19754,75 @@ KISSY.add('anim/base', function (S, DOM, Event, Easing, AM, Fx, Q, undefined) {
     /**
      * resume all the anims currently running
      * @param {HTMLElement} el element which anim belongs to
-     * @param {String|Boolean} queueName current queue's name to be cleared
+     * @param {String|Boolean} queue current queue's name to be cleared
      * @method resume
      * @member KISSY.Anim
      * @static
      */
 
     S.each(['pause', 'resume'], function (action) {
-        Anim[action] = function (el, queueName) {
+        Anim[action] = function (el, queue) {
             if (
             // default queue
-                queueName === null ||
+                queue === null ||
                     // name of specified queue
-                    typeof queueName == 'string' ||
+                    typeof queue == 'string' ||
                     // anims not belong to any queue
-                    queueName === false
+                    queue === false
                 ) {
-                return pauseResumeQueue(el, queueName, action);
+                return Utils.pauseOrResumeQueue(el, queue, action);
             }
-            pauseResumeQueue(el, undefined, action);
-            return undefined;
+            return Utils.pauseOrResumeQueue(el, undefined, action);
         };
     });
 
-    function pauseResumeQueue(el, queueName, action) {
-        var allAnims = DOM.data(el, action == 'resume' ? pausedKey : runningKey),
-        // can not stop in for/in , stop will modified allRunning too
-            anims = S.merge(allAnims);
-
-        S.each(anims, function (anim) {
-            if (queueName === undefined ||
-                anim.config.queue == queueName) {
-                anim[action]();
-            }
-        });
-    }
-
-    /**
-     *
-     * @param el element which anim belongs to
-     * @param queueName queue'name if set to false only remove
-     * @param end
-     * @param clearQueue
-     * @ignore
-     */
-    function stopQueue(el, end, clearQueue, queueName) {
-        if (clearQueue && queueName !== false) {
-            Q.removeQueue(el, queueName);
-        }
-        var allRunning = DOM.data(el, runningKey),
-            anims = S.merge(allRunning);
-        S.each(anims, function (anim) {
-            if (anim.config.queue == queueName) {
-                anim.stop(end);
-            }
-        });
-    }
-
     /**
      * whether el is running anim
+     * @method
      * @param {HTMLElement} el
      * @return {Boolean}
      * @static
      */
-    Anim.isRunning = function (el) {
-        var allRunning = DOM.data(el, runningKey);
-        return allRunning && !S.isEmptyObject(allRunning);
-    };
+    Anim.isRunning = Utils.isElRunning;
 
     /**
      * whether el has paused anim
+     * @method
      * @param {HTMLElement} el
      * @return {Boolean}
      * @static
      */
-    Anim.isPaused = function (el) {
-        var paused = DOM.data(el, pausedKey);
-        return paused && !S.isEmptyObject(paused);
-    };
+    Anim.isPaused = Utils.isElPaused;
 
-    /**
-     * @ignore
-     */
-    Anim.Q = Q;
+    Anim.stop = Utils.stopEl;
 
-    if (SHORT_HANDS) {
-    }
+    Anim.Easing = TimerAnim.Easing;
 
-    Anim.PreventDefaultUpdate = OPT_FRAME_PREVENT_DEFAULT;
-    Anim.StopToEnd = OPT_FRAME_GOTO_END;
+    S.Anim = Anim;
+
+    Anim.Q = AnimBase.Q;
+
     return Anim;
+
 }, {
-    requires: ['dom', 'event', './easing', './manager', './fx', './queue']
+    requires: ['dom', 'anim/base', 'anim/timer',
+        KISSY.Features.isTransitionSupported() ? 'anim/transition' : '']
+
 });
-
 /*
- 2013-01 yiminghe@gmail.com
- - 分属性细粒度控制 {'width':{value:,easing:,fx: }}
- - TODO: 内部数据结构需整理，围绕属性展开
-
- 2011-11 yiminghe@gmail.com
- - 重构，抛弃 emile，优化性能，只对需要的属性进行动画
- - 添加 stop/stopQueue/isRunning，支持队列管理
-
- 2011-04 yiminghe@gmail.com
- - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
- - 支持配置 scrollTop/scrollLeft
-
- - 效率需要提升，当使用 nativeSupport 时仍做了过多动作
- - opera nativeSupport 存在 bug ，浏览器自身 bug ?
- - 实现 jQuery Effects 的 queue / specialEasing / += / 等特性
-
- NOTES:
- - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
- - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
- - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile *
- */
+Copyright 2013, KISSY UI Library v1.40dev
+MIT Licensed
+build time: Jan 16 21:25
+*/
 /**
  * @ignore
- * @fileOverview special patch for making color gradual change
+ * special patch for making color gradual change
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
+KISSY.add('anim/timer/color', function (S, DOM, Fx,SHORT_HANDS) {
 
     var HEX_BASE = 16,
-
         floor = Math.floor,
-
         KEYWORDS = {
             'black':[0, 0, 0],
             'silver':[192, 192, 192],
@@ -19926,12 +19842,8 @@ KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
             'aqua':[0, 255, 255]
         },
         re_RGB = /^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)\)$/i,
-
         re_RGBA = /^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+),\s*([0-9]+)\)$/i,
-
         re_hex = /^#?([0-9A-F]{1,2})([0-9A-F]{1,2})([0-9A-F]{1,2})$/i,
-
-        SHORT_HANDS = Anim.SHORT_HANDS,
 
         COLORS = [
             'backgroundColor' ,
@@ -19943,7 +19855,6 @@ KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
             'outlineColor'
         ];
 
-    SHORT_HANDS['background'] = SHORT_HANDS['background'] || [];
     SHORT_HANDS['background'].push('backgroundColor');
 
     SHORT_HANDS['borderColor'] = [
@@ -20011,7 +19922,7 @@ KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
             return KEYWORDS[val];
         }
 
-        //transparent 或者 颜色字符串返回
+        //transparent 或者颜色字符串返回
         S.log('only allow rgb or hex color string : ' + val, 'warn');
         return [255, 255, 255];
     }
@@ -20050,7 +19961,7 @@ KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
                     floor(interpolate(from[3] || 1, to[3] || 1, pos))
                 ].join(', ') + ')';
             } else {
-                S.log('anim/color unknown value : ' + from);
+                return S.log('anim/color unknown value : ' + from);
             }
         }
 
@@ -20063,7 +19974,7 @@ KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
     return ColorFx;
 
 }, {
-    requires:['dom', './base', './fx']
+    requires:['dom','./fx','./short-hand']
 });
 
 /*
@@ -20072,10 +19983,10 @@ KISSY.add('anim/color', function (S, DOM, Anim, Fx) {
    - https://github.com/jquery/jquery-color/blob/master/jquery.color.js
 *//**
  * @ignore
- * @fileOverview Easing equation from yui3 and css3
+ * Easing equation from yui3 and css3
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('anim/easing', function () {
+KISSY.add('anim/timer/easing', function () {
 
     // Based on Easing Equations (c) 2003 Robert Penner, all rights reserved.
     // This work is subject to the terms in http://www.robertpenner.com/easing_terms_of_use.html
@@ -20414,10 +20325,10 @@ KISSY.add('anim/easing', function () {
  */
 /**
  * @ignore
- * @fileOverview animate on single property
+ * animate on single property
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/fx', function (S, DOM, undefined) {
+KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
 
     /**
      * basic animation about single css property or element attribute
@@ -20431,7 +20342,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
     Fx.prototype = {
 
         // implemented by KISSY
-        isNative: 1,
+        isBasicFx: 1,
 
         constructor: Fx,
 
@@ -20482,7 +20393,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
             var self = this,
                 anim = self.anim,
                 prop = self.prop,
-                el = anim.config.el,
+                el = anim.el,
                 from = self.from,
                 to = self.to,
                 val = self.interpolate(from, to, self.pos);
@@ -20512,7 +20423,7 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
         cur: function () {
             var self = this,
                 prop = self.prop,
-                el = self.anim.config.el;
+                el = self.anim.el;
             if (isAttr(el, prop)) {
                 return DOM.attr(el, prop, undefined, 1);
             }
@@ -20536,16 +20447,19 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
         return 0;
     }
 
-    function getPos(anim, easing) {
+    function getPos(anim, propData) {
         var t = S.now(),
-            elapsedTime,
+            runTime,
             _startTime = anim._startTime,
-            duration = anim._duration;
-        if (t >= duration + _startTime) {
+            delay = propData.delay,
+            duration = propData.duration;
+        runTime = t - _startTime - delay;
+        if (runTime <= 0) {
+            return 0;
+        } else if (runTime >= duration) {
             return 1;
         } else {
-            elapsedTime = t - _startTime;
-            return easing(elapsedTime / duration);
+            return propData.easing(runTime / duration);
         }
     }
 
@@ -20574,10 +20488,10 @@ KISSY.add('anim/fx', function (S, DOM, undefined) {
  - jq 插件: http://plugins.jquery.com/project/2d-transform
  *//**
  * @ignore
- * @fileOverview single timer for the whole anim module
+ * single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/manager', function (S) {
+KISSY.add('anim/timer/manager', function (S) {
     var stamp = S.stamp;
 
     return {
@@ -20641,7 +20555,7 @@ KISSY.add('anim/manager', function (S) {
                 runnings = self.runnings;
             for (r in runnings) {
                 done = 0;
-                runnings[r]._frame();
+                runnings[r].frame();
             }
             return done;
         }
@@ -20652,115 +20566,505 @@ KISSY.add('anim/manager', function (S) {
  *
  * !TODO: deal with https://developers.google.com/chrome/whitepapers/pagevisibility
  *//**
- * @ignore
- * @fileOverview queue of anim objects
+ * short-hand css properties
  * @author yiminghe@gmail.com
+ * @ignore
  */
-KISSY.add('anim/queue', function (S, DOM) {
+KISSY.add('anim/timer/short-hand', function () {
+    // shorthand css properties
+    return {
+        // http://www.w3.org/Style/CSS/Tracker/issues/9
+        // http://snook.ca/archives/html_and_css/background-position-x-y
+        // backgroundPositionX  backgroundPositionY does not support
+        background: [
+        ],
+        border: [
+            'borderBottomWidth',
+            'borderLeftWidth',
+            'borderRightWidth',
+            // 'borderSpacing', 组合属性？
+            'borderTopWidth'
+        ],
+        'borderBottom': ['borderBottomWidth'],
+        'borderLeft': ['borderLeftWidth'],
+        borderTop: ['borderTopWidth'],
+        borderRight: ['borderRightWidth'],
+        font: [
+            'fontSize',
+            'fontWeight'
+        ],
+        margin: [
+            'marginBottom',
+            'marginLeft',
+            'marginRight',
+            'marginTop'
+        ],
+        padding: [
+            'paddingBottom',
+            'paddingLeft',
+            'paddingRight',
+            'paddingTop'
+        ]
+    };
+});/**
+ * animation using js timer
+ * @author yiminghe@gmail.com
+ * @ignore
+ */
+KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
 
-    var // 队列集合容器
-        queueCollectionKey = S.guid('ks-queue-' + S.now() + '-'),
-    // 默认队列
-        queueKey = S.guid('ks-queue-' + S.now() + '-'),
-    // 当前队列是否有动画正在执行
-        processing = '...';
+    var OPT_FRAME_PREVENT_DEFAULT = 1,
+        camelCase = DOM._camelCase,
+        OPT_FRAME_GOTO_END = 2,
+        NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
-    function getQueue(el, name, readOnly) {
-        name = name || queueKey;
-
-        var qu,
-            quCollection = DOM.data(el, queueCollectionKey);
-
-        if (!quCollection && !readOnly) {
-            DOM.data(el, queueCollectionKey, quCollection = {});
-        }
-
-        if (quCollection) {
-            qu = quCollection[name];
-            if (!qu && !readOnly) {
-                qu = quCollection[name] = [];
+    function Anim() {
+        var self = this,
+            props;
+        Anim.superclass.constructor.apply(self, arguments);
+        // camel case uniformity
+        S.each(props = self.props, function (v, prop) {
+            var camelProp = camelCase(prop);
+            if (prop != camelProp) {
+                props[camelProp] = props[prop];
+                delete props[prop];
             }
-        }
-
-        return qu;
+        });
     }
 
-    function removeQueue(el, name) {
-        name = name || queueKey;
-        var quCollection = DOM.data(el, queueCollectionKey);
-        if (quCollection) {
-            delete quCollection[name];
-        }
-        if (S.isEmptyObject(quCollection)) {
-            DOM.removeData(el, queueCollectionKey);
-        }
-    }
+    S.extend(Anim, AnimBase, {
 
-    var q = {
+        prepareFx: function () {
+            var self = this,
+                el = self.el,
+                _propsData = self._propsData;
 
-        queueCollectionKey: queueCollectionKey,
+            S.each(_propsData, function (_propData) {
+                // ms
+                _propData.duration *= 1000;
+                _propData.delay *= 1000;
+                if (typeof _propData.easing == 'string') {
+                    _propData.easing = Easing.toFn(_propData.easing);
+                }
+            });
 
-        queue: function (anim) {
-            var el = anim.config.el,
-                name = anim.config.queue,
-                qu = getQueue(el, name);
-            qu.push(anim);
-            if (qu[0] !== processing) {
-                q.dequeue(anim);
+            // 扩展分属性
+            S.each(SHORT_HANDS, function (shortHands, p) {
+                var origin,
+                    _propData = _propsData[p],
+                    val;
+                // 自定义了 fx 就忽略
+                if (_propData && !_propData.fx) {
+                    val = _propData.value;
+                    origin = {};
+                    S.each(shortHands, function (sh) {
+                        // 得到原始分属性之前值
+                        origin[sh] = DOM.css(el, sh);
+                    });
+                    DOM.css(el, p, val);
+                    S.each(origin, function (val, sh) {
+                        // 如果分属性没有显式设置过，得到期待的分属性最后值
+                        if (!(sh in _propsData)) {
+                            _propsData[sh] = S.merge(_propData, {
+                                value: DOM.css(el, sh)
+                            });
+                        }
+                        // 还原
+                        DOM.css(el, sh, val);
+                    });
+                    // 删除复合属性
+                    delete _propsData[p];
+                }
+            });
+
+            var prop,
+                _propData,
+                val,
+                to,
+                from,
+                propCfg,
+                fx,
+                unit,
+                parts;
+
+            // 取得单位，并对单个属性构建 Fx 对象
+            for (prop in _propsData) {
+                _propData = _propsData[prop];
+
+                // 自定义
+                if (_propData.fx) {
+                    continue;
+                }
+
+                val = _propData.value;
+                propCfg = {
+                    prop: prop,
+                    anim: self,
+                    propData: _propData
+                };
+                fx = Fx.getFx(propCfg);
+                to = val;
+                from = fx.cur();
+                val += '';
+                unit = '';
+                parts = val.match(NUMBER_REG);
+
+                if (parts) {
+                    to = parseFloat(parts[2]);
+                    unit = parts[3];
+
+                    // 有单位但单位不是 px
+                    if (unit && unit !== 'px') {
+                        DOM.css(el, prop, val);
+                        from = (to / fx.cur()) * from;
+                        DOM.css(el, prop, from + unit);
+                    }
+
+                    // 相对
+                    if (parts[1]) {
+                        to = ( (parts[ 1 ] === '-=' ? -1 : 1) * to ) + from;
+                    }
+                }
+
+                propCfg.from = from;
+                propCfg.to = to;
+                propCfg.unit = unit;
+                fx.load(propCfg);
+                _propData.fx = fx;
             }
-            return qu;
         },
 
-        remove: function (anim) {
-            var el = anim.config.el,
-                name = anim.config.queue,
-                qu = getQueue(el, name, 1), index;
-            if (qu) {
-                index = S.indexOf(anim, qu);
-                if (index > -1) {
-                    qu.splice(index, 1);
+        /**
+         * frame of animation
+         * @private
+         */
+        frame: function () {
+            var self = this,
+                prop,
+                end = 1,
+                c,
+                fx,
+                pos,
+                _propData,
+                _propsData = self._propsData;
+
+            for (prop in _propsData) {
+                _propData = _propsData[prop];
+                fx = _propData.fx;
+                // 当前属性没有结束
+                if (!(fx.finished)) {
+                    pos = Fx.getPos(self, _propData);
+                    if (pos == 0) {
+                        continue;
+                    }
+                    if (fx.isBasicFx) {
+                        // equal attr value, just skip
+                        if (fx.from == fx.to) {
+                            fx.finished = fx.finished || pos == 1;
+                            continue;
+                        }
+                        if (_propData.frame) {
+                            c = _propData.frame(self, {
+                                prop: prop,
+                                from: fx.from,
+                                to: fx.to,
+                                pos: pos
+                            });
+                            // in case frame call stop
+                            if (!self.isRunning()) {
+                                return;
+                            }
+                        }
+                        // to be removed, do not use this feature
+                        if (c & OPT_FRAME_GOTO_END) {
+                            fx.finished = 1;
+                        }
+                        if (c & OPT_FRAME_PREVENT_DEFAULT) {
+                        } else {
+                            fx.frame(fx.finished || pos);
+                        }
+                    } else {
+                        fx.finished = fx.finished || pos == 1;
+                        fx.frame(self, {
+                            prop: prop,
+                            pos: pos
+                        });
+                        // in case frame call stop
+                        if (!self.isRunning()) {
+                            return;
+                        }
+                    }
+                    end &= fx.finished;
+                }
+            }
+
+            if ((self.fire('step') === false) || end) {
+                // complete 事件只在动画到达最后一帧时才触发
+                self['stop'](end);
+            }
+        },
+
+        doStop: function (finish) {
+            var self = this,
+                prop,
+                fx,
+                c,
+                _propData,
+                _propsData = self._propsData;
+            AM.stop(self);
+            if (finish) {
+                for (prop in _propsData) {
+                    _propData = _propsData[prop];
+                    fx = _propData.fx;
+                    // 当前属性没有结束
+                    if (fx && !(fx.finished)) {
+                        if (fx.isBasicFx) {
+                            if (_propData.frame) {
+                                c = _propData.frame(self, {
+                                    prop: prop,
+                                    from: fx.from,
+                                    to: fx.to,
+                                    pos: 1
+                                });
+                            }
+                            // to be removed, do not use this feature
+                            if (c & OPT_FRAME_PREVENT_DEFAULT) {
+                            } else {
+                                fx.frame(1);
+                            }
+                        } else {
+                            fx.frame(self, {
+                                prop: prop,
+                                pos: 1
+                            });
+                        }
+                        fx.finished = 1;
+                    }
                 }
             }
         },
 
-        removeQueues: function (el) {
-            DOM.removeData(el, queueCollectionKey);
+        doStart: function () {
+            AM.start(this);
+        }
+    });
+
+    return Anim;
+}, {
+    requires: [
+        'dom', 'event', './base',
+        './timer/easing', './timer/manager',
+        './timer/fx', './timer/short-hand'
+        , './timer/color'
+    ]
+});
+
+/*
+ 2013-01 yiminghe@gmail.com
+ - 分属性细粒度控制 {'width':{value:,easing:,fx: }}
+ - 重构，merge css3 transition and js animation
+
+ 2011-11 yiminghe@gmail.com
+ - 重构，抛弃 emile，优化性能，只对需要的属性进行动画
+ - 添加 stop/stopQueue/isRunning，支持队列管理
+
+ 2011-04 yiminghe@gmail.com
+ - 借鉴 yui3 ，中央定时器，否则 ie6 内存泄露？
+ - 支持配置 scrollTop/scrollLeft
+
+ - 效率需要提升，当使用 nativeSupport 时仍做了过多动作
+ - opera nativeSupport 存在 bug ，浏览器自身 bug ?
+ - 实现 jQuery Effects 的 queue / specialEasing / += / 等特性
+
+ NOTES:
+ - 与 emile 相比，增加了 borderStyle, 使得 border: 5px solid #ccc 能从无到有，正确显示
+ - api 借鉴了 YUI, jQuery 以及 http://www.w3.org/TR/css3-transitions/
+ - 代码实现了借鉴了 Emile.js: http://github.com/madrobby/emile *
+ */
+/*
+Copyright 2013, KISSY UI Library v1.40dev
+MIT Licensed
+build time: Jan 16 21:25
+*/
+/**
+ * animation using css transition
+ * @author yiminghe@gmail.com
+ * @ignore
+ */
+KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
+
+    function hypen(str) {
+        return str.replace(/[A-Z]/g, function (m) {
+            return '-' + (m.toLowerCase());
+        })
+    }
+
+    var vendorPrefix = S.Features.getTransitionPrefix();
+    var TRANSITION_END_EVENT = vendorPrefix ?
+        (vendorPrefix.toLowerCase() + 'TransitionEnd') :
+        'transitionend';
+
+    vendorPrefix = vendorPrefix ? (hypen(vendorPrefix) + '-') : '';
+    var TRANSITION = vendorPrefix + 'transition';
+//    var TRANSITION_PROPERTY = vendorPrefix + 'transition-property';
+//    var TRANSITION_DURATION = vendorPrefix + 'transition-duration';
+//    var TRANSITION_TIMING_FUNCTION = vendorPrefix + 'transition-timing-function';
+//    var TRANSITION_DELAY = vendorPrefix + 'transition-delay';
+
+    // firefox set transition
+    // set transition-property/duration is unstable
+
+    function genTransition(propsData) {
+        var str = '';
+        S.each(propsData, function (propData, prop) {
+            if (str) {
+                str += ',';
+            }
+            str += prop + ' ' + propData.duration +
+                's ' + propData.easing + ' ' + propData.delay + 's';
+        });
+        return str;
+    }
+
+    function TransitionAnim(config) {
+        TransitionAnim.superclass.constructor.apply(this, arguments);
+    }
+
+    S.extend(TransitionAnim, AnimBase, {
+
+        doStart: function () {
+            var self = this,
+                el = self.el,
+                elStyle = el.style,
+                _propsData = self._propsData,
+                original = elStyle[TRANSITION],
+                propsCss = {};
+
+            S.each(_propsData, function (propData, prop) {
+                var v = propData.value,
+                    currentValue = DOM.css(el, prop);
+                if (typeof v == 'number') {
+                    currentValue = parseFloat(currentValue);
+                }
+                if (currentValue == v) {
+                    // browser does not trigger _onTransitionEnd if from is same with to
+                    setTimeout(function () {
+                        self._onTransitionEnd({
+                            originalEvent: {
+                                propertyName: prop
+                            }
+                        });
+                    }, 0);
+                }
+                propsCss[prop] = v;
+            });
+            // chrome none
+            // firefox none 0s ease 0s
+            if (original.indexOf('none')!=-1) {
+                original = '';
+            } else if (original) {
+                original += ',';
+            }
+
+            // S.log('before start: '+original);
+            elStyle[TRANSITION] = original + genTransition(_propsData);
+            // S.log('after start: '+elStyle[TRANSITION]);
+
+            Event.on(el, TRANSITION_END_EVENT, self._onTransitionEnd, self);
+
+            DOM.css(el, propsCss);
         },
 
-        removeQueue: removeQueue,
+        beforeResume: function () {
+            // note: pause/resume in css transition is not smooth as js timer
+            // already run time before pause
+            var self = this,
+                propsData = self._propsData,
+                tmpPropsData = S.merge(propsData),
+                runTime = self._runTime / 1000;
+            S.each(tmpPropsData, function (propData, prop) {
+                var tRunTime = runTime;
+                if (propData.delay >= tRunTime) {
+                    propData.delay -= tRunTime;
+                } else {
+                    tRunTime -= propData.delay;
+                    propData.delay = 0;
+                    if (propData.duration >= tRunTime) {
+                        propData.duration -= tRunTime;
+                    } else {
+                        delete propsData[prop];
+                    }
+                }
+            });
+        },
 
-        dequeue: function (anim) {
-            var el = anim.config.el,
-                name = anim.config.queue,
-                qu = getQueue(el, name, 1),
-                nextAnim = qu && qu.shift();
-
-            if (nextAnim == processing) {
-                nextAnim = qu.shift();
+        _onTransitionEnd: function (e) {
+            e = e.originalEvent;
+            var self = this,
+                allFinished = 1,
+                propsData = self._propsData;
+            // other anim on the same element
+            if (!propsData[e.propertyName]) {
+                return;
             }
-
-            if (nextAnim) {
-                qu.unshift(processing);
-                nextAnim._runInternal();
-            } else {
-                // remove queue data
-                removeQueue(el, name);
+            propsData[e.propertyName].finished = 1;
+            S.each(propsData, function (propData) {
+                if (!propData.finished) {
+                    allFinished = 0;
+                    return false;
+                }
+                return undefined;
+            });
+            if (allFinished) {
+                self.stop(true);
             }
+        },
+
+        doStop: function (finish) {
+            var self = this,
+                el = self.el,
+                elStyle = el.style,
+                _propsData = self._propsData,
+                propList = [],
+                clear,
+                propsCss = {};
+
+            Event.detach(el, TRANSITION_END_EVENT, self._onTransitionEnd, self);
+            S.each(_propsData, function (propData, prop) {
+                if (!finish) {
+                    propsCss[prop] = DOM.css(el, prop);
+                }
+                propList.push(prop);
+            });
+
+            // firefox need set transition and need set none
+            clear = S.trim(elStyle[TRANSITION]
+                    .replace(new RegExp('(^|,)' + '\\s*(?:' + propList.join('|') + ')\\s+[^,]+', 'gi'),
+                        '$1'))
+                .replace(/^,|,,|,$/g, '') || 'none';
+
+            // S.log('before end: '+elStyle[TRANSITION]);
+            elStyle[TRANSITION] = clear;
+            // S.log('after end: '+elStyle[TRANSITION]);
+
+
+            DOM.css(el, propsCss);
         }
+    });
 
-    };
-    return q;
+    return TransitionAnim;
+
 }, {
-    requires: ['dom']
+    requires: ['dom', 'event', './base']
 });
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 16 20:55
 */
 /**
  * @ignore
- * @fileOverview anim-node-plugin
+ * anim-node-plugin
  * @author yiminghe@gmail.com,
  *         lifesinger@gmail.com,
  *         qiaohua@taobao.com,
@@ -20770,9 +21074,9 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
 
     var FX = [
         // height animations
-        [ 'height', 'marginTop', 'marginBottom', 'paddingTop', 'paddingBottom' ],
+        [ 'height', 'margin-top', 'margin-bottom', 'padding-top', 'padding-bottom' ],
         // width animations
-        [ 'width', 'marginLeft', 'marginRight', 'paddingLeft', 'paddingRight' ],
+        [ 'width', 'margin-left', 'margin-right', 'padding-left', 'padding-right' ],
         // opacity animations
         [ 'opacity' ]
     ];
@@ -20789,100 +21093,100 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         return obj;
     }
 
-    S.augment(Node,{
-            /**
-             * animate for current node list.
-             * @param var_args see {@link KISSY.Anim}
-             * @chainable
-             * @member KISSY.NodeList
-             */
-            animate: function (var_args) {
-                var self = this,
-                    originArgs = S.makeArray(arguments);
-                S.each(self, function (elem) {
-                    var args = S.clone(originArgs),
-                        arg0 = args[0];
-                    if (arg0.props) {
-                        arg0.el = elem;
-                        Anim(arg0).run();
-                    } else {
-                        Anim.apply(undefined, [elem].concat(args)).run();
-                    }
-                });
-                return self;
-            },
-            /**
-             * stop anim of current node list.
-             * @param {Boolean} [end] see {@link KISSY.Anim#static-method-stop}
-             * @param [clearQueue]
-             * @param [queue]
-             * @chainable
-             * @member KISSY.NodeList
-             */
-            stop: function (end, clearQueue, queue) {
-                var self = this;
-                S.each(self, function (elem) {
-                    Anim.stop(elem, end, clearQueue, queue);
-                });
-                return self;
-            },
-            /**
-             * pause anim of current node list.
-             * @param {Boolean} end see {@link KISSY.Anim#static-method-pause}
-             * @param queue
-             * @chainable
-             * @member KISSY.NodeList
-             */
-            pause: function (end, queue) {
-                var self = this;
-                S.each(self, function (elem) {
-                    Anim.pause(elem, queue);
-                });
-                return self;
-            },
-            /**
-             * resume anim of current node list.
-             * @param {Boolean} end see {@link KISSY.Anim#static-method-resume}
-             * @param queue
-             * @chainable
-             * @member KISSY.NodeList
-             */
-            resume: function (end, queue) {
-                var self = this;
-                S.each(self, function (elem) {
-                    Anim.resume(elem, queue);
-                });
-                return self;
-            },
-            /**
-             * whether one of current node list is animating.
-             * @return {Boolean}
-             * @member KISSY.NodeList
-             */
-            isRunning: function () {
-                var self = this;
-                for (var i = 0; i < self.length; i++) {
-                    if (Anim.isRunning(self[i])) {
-                        return true;
-                    }
+    S.augment(Node, {
+        /**
+         * animate for current node list.
+         * @param var_args see {@link KISSY.Anim}
+         * @chainable
+         * @member KISSY.NodeList
+         */
+        animate: function (var_args) {
+            var self = this,
+                originArgs = S.makeArray(arguments);
+            S.each(self, function (elem) {
+                var args = S.clone(originArgs),
+                    arg0 = args[0];
+                if (arg0.props) {
+                    arg0.el = elem;
+                    Anim(arg0).run();
+                } else {
+                    Anim.apply(undefined, [elem].concat(args)).run();
                 }
-                return false;
-            },
-            /**
-             * whether one of current node list 's animation is paused.
-             * @return {Boolean}
-             * @member KISSY.NodeList
-             */
-            isPaused: function () {
-                var self = this;
-                for (var i = 0; i < self.length; i++) {
-                    if (Anim.isPaused(self[i])) {
-                        return 1;
-                    }
+            });
+            return self;
+        },
+        /**
+         * stop anim of current node list.
+         * @param {Boolean} [end] see {@link KISSY.Anim#static-method-stop}
+         * @param [clearQueue]
+         * @param [queue]
+         * @chainable
+         * @member KISSY.NodeList
+         */
+        stop: function (end, clearQueue, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.stop(elem, end, clearQueue, queue);
+            });
+            return self;
+        },
+        /**
+         * pause anim of current node list.
+         * @param {Boolean} end see {@link KISSY.Anim#static-method-pause}
+         * @param queue
+         * @chainable
+         * @member KISSY.NodeList
+         */
+        pause: function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.pause(elem, queue);
+            });
+            return self;
+        },
+        /**
+         * resume anim of current node list.
+         * @param {Boolean} end see {@link KISSY.Anim#static-method-resume}
+         * @param queue
+         * @chainable
+         * @member KISSY.NodeList
+         */
+        resume: function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.resume(elem, queue);
+            });
+            return self;
+        },
+        /**
+         * whether one of current node list is animating.
+         * @return {Boolean}
+         * @member KISSY.NodeList
+         */
+        isRunning: function () {
+            var self = this;
+            for (var i = 0; i < self.length; i++) {
+                if (Anim.isRunning(self[i])) {
+                    return true;
                 }
-                return 0;
             }
-        });
+            return false;
+        },
+        /**
+         * whether one of current node list 's animation is paused.
+         * @return {Boolean}
+         * @member KISSY.NodeList
+         */
+        isPaused: function () {
+            var self = this;
+            for (var i = 0; i < self.length; i++) {
+                if (Anim.isPaused(self[i])) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    });
 
     /**
      * animate show effect for current node list.
@@ -20987,13 +21291,25 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         },
         function (v, k) {
             Node.prototype[k] = function (duration, complete, easing) {
-                var self = this;
+                var self = this,
+                    useTransition;
                 // 没有参数时，调用 DOM 中的对应方法
                 if (DOM[k] && !duration) {
                     DOM[k](self);
                 } else {
+                    useTransition = S.config('anim/useTransition');
+                    if (!S.isPlainObject(duration)) {
+                        if (!duration.easing) {
+                            if (duration.useTransition != undefined) {
+                                useTransition = duration.useTransition;
+                            }
+                            duration.easing = (useTransition ? 'ease-out' : 'easeOut');
+                        }
+                    } else if (!easing) {
+                        easing = (useTransition ? 'ease-out' : 'easeOut');
+                    }
                     S.each(self, function (elem) {
-                        Anim(elem, v, duration, easing || 'easeOut', complete).run();
+                        Anim(elem, v, duration, easing, complete).run();
                     });
                 }
                 return self;
@@ -21009,13 +21325,10 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
 
  2011-05-17
  - yiminghe@gmail.com：添加 stop ，随时停止动画
-
- TODO
- - anim needs queue mechanism ?
  */
 /**
  * @ignore
- * @fileOverview import methods from DOM to NodeList.prototype
+ * import methods from DOM to NodeList.prototype
  * @author yiminghe@gmail.com
  */
 KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
@@ -21192,7 +21505,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
  */
 /**
  * @ignore
- * @fileOverview definition for node and nodelist
+ * definition for node and nodelist
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('node/base', function (S, DOM, undefined) {
@@ -21470,7 +21783,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview node
+ * node
  * @author yiminghe@gmail.com
  */
 KISSY.add('node', function (S, Node) {
@@ -21490,7 +21803,7 @@ KISSY.add('node', function (S, Node) {
     ]
 });/**
  * @ignore
- * @fileOverview overrides methods in NodeList.prototype
+ * overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
 KISSY.add('node/override', function (S, DOM,NodeList) {

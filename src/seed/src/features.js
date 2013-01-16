@@ -24,7 +24,7 @@
         isTouchSupported = ('ontouchstart' in doc) && !(UA.phantomjs),
         documentMode = doc.documentMode,
         ie = documentMode || UA.ie,
-        isNativeJSONSupported = ((Env.nodejs && typeof global === 'object') ? global : win).JSON;
+        isNativeJSONSupported = ((UA.nodejs && typeof global === 'object') ? global : win).JSON;
 
     // ie 8.0.7600.16315@win7 json bug!
     if (documentMode && documentMode < 9) {

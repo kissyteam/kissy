@@ -1,6 +1,7 @@
 /**
  * utils for anim
  * @author yiminghe@gmail.com
+ * @ignore
  */
 KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
 

@@ -1,3 +1,8 @@
+/**
+ * base class for transition anim and timer anim
+ * @author yiminghe@gmail.com
+ * @ignore
+ */
 KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
 
     var NodeType = DOM.NodeType;

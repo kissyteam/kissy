@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+    <script src="/kissy/build/seed.js"></script>
+
+    <script src="../../sub-modules/base/src/base.js"></script>
+    <script src="../../sub-modules/base/src/queue.js"></script>
+    <script src="../../sub-modules/base/src/utils.js"></script>
+
+    <script src="../../sub-modules/facade/src/facade.js"></script>
+
+    <script src="../../sub-modules/timer/src/timer.js"></script>
+    <script src="../../sub-modules/timer/src/color.js"></script>
+    <script src="../../sub-modules/timer/src/easing.js"></script>
+    <script src="../../sub-modules/timer/src/fx.js"></script>
+    <script src="../../sub-modules/timer/src/manager.js"></script>
+    <script src="../../sub-modules/timer/src/short-hand.js"></script>
+
+    <script src="../../sub-modules/transition/src/transition.js"></script>
+    <style>
+        #test1 {
+            width: 10px;
+            height: 10px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+<script>
+    KISSY.use('anim,node', function (S, Anim, Node) {
+        var $ = Node.all;
+        var test = $('<div id="test1"></div>').appendTo('body');
+        Anim(test[0], {
+            width: "200px"
+        }, {
+            duration: 5,
+            useTransition:true,
+            queue: "now"
+        }).run();
+        Anim(test[0], {
+            height: "200px"
+        }, {
+            duration: 5,
+            useTransition:true,
+            queue: "before"
+        }).run();
+        Anim(test[0], {
+            height: "600px"
+        }, {
+            duration: 5,
+            useTransition:true,
+            queue: "now"
+        }).run();
+    });
+</script>
+</body>
+</html>

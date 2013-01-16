@@ -1,15 +1,27 @@
 /**
  * animation using js timer
  * @author yiminghe@gmail.com
+ * @ignore
  */
 KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
 
     var OPT_FRAME_PREVENT_DEFAULT = 1,
+        camelCase = DOM._camelCase,
         OPT_FRAME_GOTO_END = 2,
         NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
     function Anim() {
-        Anim.superclass.constructor.apply(this, arguments);
+        var self = this,
+            props;
+        Anim.superclass.constructor.apply(self, arguments);
+        // camel case uniformity
+        S.each(props = self.props, function (v, prop) {
+            var camelProp = camelCase(prop);
+            if (prop != camelProp) {
+                props[camelProp] = props[prop];
+                delete props[prop];
+            }
+        });
     }
 
     S.extend(Anim, AnimBase, {

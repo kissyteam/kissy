@@ -13,7 +13,7 @@
         locationHref,
         configFns = S.Config.fns;
 
-    if (!S.Env.nodejs && location && (locationHref = location.href)) {
+    if (!S.UA.nodejs && location && (locationHref = location.href)) {
         simulatedLocation = new S.Uri(locationHref)
     }
 

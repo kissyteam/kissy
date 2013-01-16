@@ -1,6 +1,7 @@
 /**
  * animation using css transition
  * @author yiminghe@gmail.com
+ * @ignore
  */
 KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
 
@@ -48,13 +49,38 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
                 el = self.el,
                 elStyle = el.style,
                 _propsData = self._propsData,
+                original = elStyle[TRANSITION],
                 propsCss = {};
 
             S.each(_propsData, function (propData, prop) {
-                propsCss[prop] = propData.value;
+                var v = propData.value,
+                    currentValue = DOM.css(el, prop);
+                if (typeof v == 'number') {
+                    currentValue = parseFloat(currentValue);
+                }
+                if (currentValue == v) {
+                    // browser does not trigger _onTransitionEnd if from is same with to
+                    setTimeout(function () {
+                        self._onTransitionEnd({
+                            originalEvent: {
+                                propertyName: prop
+                            }
+                        });
+                    }, 0);
+                }
+                propsCss[prop] = v;
             });
+            // chrome none
+            // firefox none 0s ease 0s
+            if (original.indexOf('none')!=-1) {
+                original = '';
+            } else if (original) {
+                original += ',';
+            }
 
-            elStyle[TRANSITION] = genTransition(_propsData);
+            // S.log('before start: '+original);
+            elStyle[TRANSITION] = original + genTransition(_propsData);
+            // S.log('after start: '+elStyle[TRANSITION]);
 
             Event.on(el, TRANSITION_END_EVENT, self._onTransitionEnd, self);
 
@@ -87,9 +113,21 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
         _onTransitionEnd: function (e) {
             e = e.originalEvent;
             var self = this,
+                allFinished = 1,
                 propsData = self._propsData;
-            delete propsData[e.propertyName];
-            if (S.isEmptyObject(propsData)) {
+            // other anim on the same element
+            if (!propsData[e.propertyName]) {
+                return;
+            }
+            propsData[e.propertyName].finished = 1;
+            S.each(propsData, function (propData) {
+                if (!propData.finished) {
+                    allFinished = 0;
+                    return false;
+                }
+                return undefined;
+            });
+            if (allFinished) {
                 self.stop(true);
             }
         },
@@ -117,7 +155,11 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
                         '$1'))
                 .replace(/^,|,,|,$/g, '') || 'none';
 
+            // S.log('before end: '+elStyle[TRANSITION]);
             elStyle[TRANSITION] = clear;
+            // S.log('after end: '+elStyle[TRANSITION]);
+
+
             DOM.css(el, propsCss);
         }
     });

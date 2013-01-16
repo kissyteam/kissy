@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 16 20:55
 */
 /**
  * @ignore
- * @fileOverview anim-node-plugin
+ * anim-node-plugin
  * @author yiminghe@gmail.com,
  *         lifesinger@gmail.com,
  *         qiaohua@taobao.com,
@@ -15,9 +15,9 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
 
     var FX = [
         // height animations
-        [ 'height', 'marginTop', 'marginBottom', 'paddingTop', 'paddingBottom' ],
+        [ 'height', 'margin-top', 'margin-bottom', 'padding-top', 'padding-bottom' ],
         // width animations
-        [ 'width', 'marginLeft', 'marginRight', 'paddingLeft', 'paddingRight' ],
+        [ 'width', 'margin-left', 'margin-right', 'padding-left', 'padding-right' ],
         // opacity animations
         [ 'opacity' ]
     ];
@@ -34,100 +34,100 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         return obj;
     }
 
-    S.augment(Node,{
-            /**
-             * animate for current node list.
-             * @param var_args see {@link KISSY.Anim}
-             * @chainable
-             * @member KISSY.NodeList
-             */
-            animate: function (var_args) {
-                var self = this,
-                    originArgs = S.makeArray(arguments);
-                S.each(self, function (elem) {
-                    var args = S.clone(originArgs),
-                        arg0 = args[0];
-                    if (arg0.props) {
-                        arg0.el = elem;
-                        Anim(arg0).run();
-                    } else {
-                        Anim.apply(undefined, [elem].concat(args)).run();
-                    }
-                });
-                return self;
-            },
-            /**
-             * stop anim of current node list.
-             * @param {Boolean} [end] see {@link KISSY.Anim#static-method-stop}
-             * @param [clearQueue]
-             * @param [queue]
-             * @chainable
-             * @member KISSY.NodeList
-             */
-            stop: function (end, clearQueue, queue) {
-                var self = this;
-                S.each(self, function (elem) {
-                    Anim.stop(elem, end, clearQueue, queue);
-                });
-                return self;
-            },
-            /**
-             * pause anim of current node list.
-             * @param {Boolean} end see {@link KISSY.Anim#static-method-pause}
-             * @param queue
-             * @chainable
-             * @member KISSY.NodeList
-             */
-            pause: function (end, queue) {
-                var self = this;
-                S.each(self, function (elem) {
-                    Anim.pause(elem, queue);
-                });
-                return self;
-            },
-            /**
-             * resume anim of current node list.
-             * @param {Boolean} end see {@link KISSY.Anim#static-method-resume}
-             * @param queue
-             * @chainable
-             * @member KISSY.NodeList
-             */
-            resume: function (end, queue) {
-                var self = this;
-                S.each(self, function (elem) {
-                    Anim.resume(elem, queue);
-                });
-                return self;
-            },
-            /**
-             * whether one of current node list is animating.
-             * @return {Boolean}
-             * @member KISSY.NodeList
-             */
-            isRunning: function () {
-                var self = this;
-                for (var i = 0; i < self.length; i++) {
-                    if (Anim.isRunning(self[i])) {
-                        return true;
-                    }
+    S.augment(Node, {
+        /**
+         * animate for current node list.
+         * @param var_args see {@link KISSY.Anim}
+         * @chainable
+         * @member KISSY.NodeList
+         */
+        animate: function (var_args) {
+            var self = this,
+                originArgs = S.makeArray(arguments);
+            S.each(self, function (elem) {
+                var args = S.clone(originArgs),
+                    arg0 = args[0];
+                if (arg0.props) {
+                    arg0.el = elem;
+                    Anim(arg0).run();
+                } else {
+                    Anim.apply(undefined, [elem].concat(args)).run();
                 }
-                return false;
-            },
-            /**
-             * whether one of current node list 's animation is paused.
-             * @return {Boolean}
-             * @member KISSY.NodeList
-             */
-            isPaused: function () {
-                var self = this;
-                for (var i = 0; i < self.length; i++) {
-                    if (Anim.isPaused(self[i])) {
-                        return 1;
-                    }
+            });
+            return self;
+        },
+        /**
+         * stop anim of current node list.
+         * @param {Boolean} [end] see {@link KISSY.Anim#static-method-stop}
+         * @param [clearQueue]
+         * @param [queue]
+         * @chainable
+         * @member KISSY.NodeList
+         */
+        stop: function (end, clearQueue, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.stop(elem, end, clearQueue, queue);
+            });
+            return self;
+        },
+        /**
+         * pause anim of current node list.
+         * @param {Boolean} end see {@link KISSY.Anim#static-method-pause}
+         * @param queue
+         * @chainable
+         * @member KISSY.NodeList
+         */
+        pause: function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.pause(elem, queue);
+            });
+            return self;
+        },
+        /**
+         * resume anim of current node list.
+         * @param {Boolean} end see {@link KISSY.Anim#static-method-resume}
+         * @param queue
+         * @chainable
+         * @member KISSY.NodeList
+         */
+        resume: function (end, queue) {
+            var self = this;
+            S.each(self, function (elem) {
+                Anim.resume(elem, queue);
+            });
+            return self;
+        },
+        /**
+         * whether one of current node list is animating.
+         * @return {Boolean}
+         * @member KISSY.NodeList
+         */
+        isRunning: function () {
+            var self = this;
+            for (var i = 0; i < self.length; i++) {
+                if (Anim.isRunning(self[i])) {
+                    return true;
                 }
-                return 0;
             }
-        });
+            return false;
+        },
+        /**
+         * whether one of current node list 's animation is paused.
+         * @return {Boolean}
+         * @member KISSY.NodeList
+         */
+        isPaused: function () {
+            var self = this;
+            for (var i = 0; i < self.length; i++) {
+                if (Anim.isPaused(self[i])) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    });
 
     /**
      * animate show effect for current node list.
@@ -232,13 +232,25 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         },
         function (v, k) {
             Node.prototype[k] = function (duration, complete, easing) {
-                var self = this;
+                var self = this,
+                    useTransition;
                 // 没有参数时，调用 DOM 中的对应方法
                 if (DOM[k] && !duration) {
                     DOM[k](self);
                 } else {
+                    useTransition = S.config('anim/useTransition');
+                    if (!S.isPlainObject(duration)) {
+                        if (!duration.easing) {
+                            if (duration.useTransition != undefined) {
+                                useTransition = duration.useTransition;
+                            }
+                            duration.easing = (useTransition ? 'ease-out' : 'easeOut');
+                        }
+                    } else if (!easing) {
+                        easing = (useTransition ? 'ease-out' : 'easeOut');
+                    }
                     S.each(self, function (elem) {
-                        Anim(elem, v, duration, easing || 'easeOut', complete).run();
+                        Anim(elem, v, duration, easing, complete).run();
                     });
                 }
                 return self;
@@ -254,13 +266,10 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
 
  2011-05-17
  - yiminghe@gmail.com：添加 stop ，随时停止动画
-
- TODO
- - anim needs queue mechanism ?
  */
 /**
  * @ignore
- * @fileOverview import methods from DOM to NodeList.prototype
+ * import methods from DOM to NodeList.prototype
  * @author yiminghe@gmail.com
  */
 KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
@@ -437,7 +446,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
  */
 /**
  * @ignore
- * @fileOverview definition for node and nodelist
+ * definition for node and nodelist
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('node/base', function (S, DOM, undefined) {
@@ -715,7 +724,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview node
+ * node
  * @author yiminghe@gmail.com
  */
 KISSY.add('node', function (S, Node) {
@@ -735,7 +744,7 @@ KISSY.add('node', function (S, Node) {
     ]
 });/**
  * @ignore
- * @fileOverview overrides methods in NodeList.prototype
+ * overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
 KISSY.add('node/override', function (S, DOM,NodeList) {

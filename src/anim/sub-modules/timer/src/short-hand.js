@@ -1,6 +1,7 @@
 /**
  * short-hand css properties
  * @author yiminghe@gmail.com
+ * @ignore
  */
 KISSY.add('anim/timer/short-hand', function () {
     // shorthand css properties

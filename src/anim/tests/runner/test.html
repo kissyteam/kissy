@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Test Runner</title>
-<link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
-<script src="/kissy/tools/jasmine/jasmine.js"></script>
-<script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <meta charset="utf-8">
+    <title>Test Runner</title>
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
-<script src="/kissy/tools/jasmine/event-simulate.js"></script>
+    <script src="/kissy/tools/jasmine/event-simulate.js"></script>
 
-<script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/build/seed.js"></script>
 
     <script src="../../sub-modules/base/src/base.js"></script>
     <script src="../../sub-modules/base/src/queue.js"></script>
     <script src="../../sub-modules/base/src/utils.js"></script>
 
-    <script src="../../sub-modules/facade/src/anim.js"></script>
+    <script src="../../sub-modules/facade/src/facade.js"></script>
 
     <script src="../../sub-modules/timer/src/timer.js"></script>
     <script src="../../sub-modules/timer/src/color.js"></script>
@@ -23,36 +23,16 @@
     <script src="../../sub-modules/timer/src/fx.js"></script>
     <script src="../../sub-modules/timer/src/manager.js"></script>
     <script src="../../sub-modules/timer/src/short-hand.js"></script>
-
     <script src="../../sub-modules/transition/src/transition.js"></script>
-<style>
-    #test2 {
-        width: 100px;
-        height: 100px;
-        border: 1px solid red;
-    }
-</style>
 </head>
 <body>
-<div id="test1" style="position: absolute; text-align: center;overflow: hidden">^o^</div>
-<div id="test8" style="width:100px;overflow:hidden;border:1px solid red;">
-    <div style="width:500px;">
-        1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,
-        6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,
-        3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,
-        0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,
-        6,7,8,9,0,1,2,3,4,5
-        ,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,
-        3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,
-    </div>
-</div>
-<div id="test2">
-</div>
 <h1>KISSY.Anim Test Cases</h1>
-<script src="../specs/anim-spec.js"></script>
-<script src="../specs/width-spec.js"></script>
+<script src="../specs/simple-spec.js"></script>
+<script src="../specs/queue-spec.js"></script>
 <script src="../specs/pause-spec.js"></script>
-<script src="../specs/advanced-spec.js"></script>
+<script src="../specs/frame-spec.js"></script>
+<script src="../specs/fx-spec.js"></script>
+<script src="../specs/scroll-spec.js"></script>
 <script>
     KISSY.use('core', function () {
         setTimeout(function () {

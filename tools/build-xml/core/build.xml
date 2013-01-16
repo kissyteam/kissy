@@ -37,7 +37,8 @@
             <path path="${kissy.build.dir}/ajax.js"/>
             <path path="${kissy.build.dir}/cookie.js"/>
             <path path="${kissy.build.dir}/base.js"/>
-            <path path="${kissy.build.dir}/anim.js"/>
+            <fileset dir="${kissy.build.dir}/anim/"
+                     includes="**/*.js" excludes="**/*-min.js"/>
             <path path="${kissy.build.dir}/node.js"/>
             <footer filtering="no" trimleading="yes">
                 KISSY.use("ua,dom,event,node,json,ajax,anim,base,cookie",0,1);

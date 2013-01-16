@@ -45,7 +45,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
     function escapeSingleQuoteInCodeString(str, isDouble) {
         return str.replace(isDouble ? doubleReg : singleReg, function (m) {
-            // \ 奇数，用户显式转过 "\'" , "\\\'" 就不处理了，否则手动对 ` 加 \ 转义
+            // \ 's number ，用户显式转过 "\'" , "\\\'" 就不处理了，否则手动对 ` 加 \ 转义
             if (m.length % 2) {
                 m = '\\' + m;
             }

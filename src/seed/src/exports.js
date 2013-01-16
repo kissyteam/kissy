@@ -23,4 +23,11 @@
         return S.Path
     });
 
+
+    // exports for nodejs
+    if (S.UA.nodejs) {
+        S.KISSY = S;
+        module.exports = S;
+    }
+
 })(KISSY);

@@ -661,9 +661,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 prefixCls: {
                     // box srcNode need
-                    valueFn: function () {
-                        return S.config('component/prefixCls') || 'ks-';
-                    },
+                    value: S.config('component/prefixCls') || 'ks-',
                     view: 1
                 },
 

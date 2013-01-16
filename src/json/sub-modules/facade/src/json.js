@@ -1,13 +1,8 @@
-﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
-MIT Licensed
-build time: Dec 20 22:27
-*/
 /**
  * @ignore
- * @fileOverview kissy json use json2 or native conditionally
+ * kissy json use json2 or native conditionally
  */
-KISSY.add('json', function (S, J) {
+KISSY.add('json/facade', function (S, J) {
 
     if (typeof JSON !== 'undefined') {
         J = JSON;

@@ -1,7 +1,7 @@
 /**
  * @ignore
  * A seed where KISSY grows up from, KISS Yeah !
- * @author lifesinger@gmail.com, yiminghe@gmail.com
+ * @author https://github.com/kissyteam?tab=members
  */
 
 /**
@@ -45,8 +45,7 @@ var KISSY = (function (undefined) {
          * @type {Object}
          */
         Env: {
-            host: host,
-            nodejs: (typeof require == 'function') && (typeof exports == 'object')
+            host: host
         },
         /**
          * KISSY Config.
@@ -178,12 +177,6 @@ var KISSY = (function (undefined) {
             return (pre || EMPTY) + guid++;
         }
     };
-
-    // exports for nodejs
-    if (S.Env.nodejs) {
-        S.KISSY = S;
-        module.exports = S;
-    }
 
     return S;
 

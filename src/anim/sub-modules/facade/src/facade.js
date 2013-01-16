@@ -1,11 +1,11 @@
 /**
  * anim facade between native and timer
  * @author yiminghe@gmail.com
+ * @ignore
  */
 KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) {
 
-    var camelCase = DOM._camelCase,
-        Utils = AnimBase.Utils,
+    var Utils = AnimBase.Utils,
         defaultConfig = {
             duration: 1,
             easing: 'linear'
@@ -32,22 +32,18 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
             if (typeof props == 'string') {
                 props = S.unparam(String(props), ';', ':');
                 S.each(props, function (value, prop) {
-                    props[prop] = S.trim(value);
+                    var trimProp = S.trim(prop);
+                    if (trimProp) {
+                        props[trimProp] = S.trim(value);
+                    }
+                    if (!trimProp || trimProp != prop) {
+                        delete props[prop];
+                    }
                 });
             } else {
                 // clone to prevent collision within multiple instance
                 props = S.clone(props);
             }
-            // camel case uniformity
-            S.each(props, function (v, prop) {
-                var camelProp = S.trim(camelCase(prop));
-                if (!camelProp) {
-                    delete props[prop];
-                } else if (prop != camelProp) {
-                    props[camelProp] = props[prop];
-                    delete props[prop];
-                }
-            });
             // animation config
             if (S.isPlainObject(duration)) {
                 config = S.clone(duration);
@@ -65,12 +61,15 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
             config.el = el;
             config.props = props;
         }
-        config = S.merge(defaultConfig, config);
+        config = S.merge(defaultConfig, config, {
+            // default anim mode for whole kissy application
+            useTransition: S.config('anim/useTransition')
+        });
         if (config['useTransition'] && TransitionAnim) {
-            S.log('use transition anim');
+            // S.log('use transition anim');
             return new TransitionAnim(config);
         } else {
-            S.log('use js timer anim');
+            // S.log('use js timer anim');
             return new TimerAnim(config);
         }
     }

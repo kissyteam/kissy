@@ -57,7 +57,7 @@
                 var self = this,
                     Config = self.Config,
                     Env = self.Env;
-                if (Config.combine && !Env.nodejs) {
+                if (Config.combine && !S.UA.nodejs) {
                     return Env._comboLoader;
                 } else {
                     return Env._loader;
@@ -144,7 +144,7 @@
         }, baseInfo);
     }
 
-    if (S.Env.nodejs) {
+    if (S.UA.nodejs) {
         // nodejs: no tag
         S.config({
             charset: 'utf-8',
