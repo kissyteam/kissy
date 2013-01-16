@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 9 00:10
+build time: Jan 16 15:01
 */
 /**
  * Ast node class for xtemplate

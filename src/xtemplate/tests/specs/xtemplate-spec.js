@@ -68,7 +68,6 @@ KISSY.use('xtemplate', function (S, XTemplate) {
             describe('each', function () {
 
                 it('ignore if not found', function () {
-
                     var tpl = '{{#each l}}{{title}}{{/each}}';
 
                     var data = {
@@ -82,6 +81,16 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     var render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('');
+                });
+
+                it('support array as render parameter',function(){
+                    var tpl = '!{{#each this}}{{this}}-{{/each}}!';
+
+                    var data = [1,2];
+
+                    var render = new XTemplate(tpl, data).render(data);
+
+                    expect(render).toBe('!1-2-!');
                 });
 
                 it('support object', function () {

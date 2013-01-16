@@ -23,16 +23,14 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
         // 实例属性
         self._backupProps = {};
         self._propsData = {};
-        // register complete
-        self.on('complete', onComplete);
+
         if (complete = config.complete) {
             self.on('complete', complete);
         }
     }
 
-    function onComplete() {
-        var self = this,
-            _backupProps;
+    function onComplete(self) {
+        var _backupProps;
 
         // only recover after complete anim
         if (!S.isEmptyObject(_backupProps = self._backupProps)) {
@@ -113,6 +111,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
                             DOM.show(el);
                         }
                     }
+                    return undefined;
                 });
 
                 if (exit === false) {
@@ -244,6 +243,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
             Utils.removePausedAnim(self);
             self.doStop(finish);
             if (finish) {
+                onComplete(self);
                 self.fire('complete');
             }
             if (queue !== false) {

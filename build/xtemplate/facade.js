@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:28
+build time: Jan 16 15:02
 */
 /**
  * @ignore
@@ -30,7 +30,7 @@ KISSY.add('xtemplate/facade', function (S, XTemplateRuntime, compiler) {
 
     // allow str sub template
     XTemplateRuntime.includeCommand.invokeEngine = function (tpl, scopes, option) {
-        return new XTemplate(tpl, S.merge(option)).render(scopes);
+        return new XTemplate(tpl, S.merge(option)).render(scopes, true);
     };
 
     var defaultCfg = {
@@ -101,7 +101,7 @@ KISSY.add('xtemplate/facade', function (S, XTemplateRuntime, compiler) {
          * @return {String}
          */
         render: function (data) {
-            return this.runtime.render(data);
+            return this.runtime.render.apply(this.runtime, arguments);
         }
     });
 
