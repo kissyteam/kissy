@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 9 23:32
+build time: Jan 16 16:35
 */
 /**
  * @ignore
@@ -1169,9 +1169,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  */
                 prefixCls: {
                     // box srcNode need
-                    valueFn: function () {
-                        return S.config('component/prefixCls') || 'ks-';
-                    },
+                    value: S.config('component/prefixCls') || 'ks-',
                     view: 1
                 },
 
