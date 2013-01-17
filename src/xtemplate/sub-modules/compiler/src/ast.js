@@ -25,7 +25,7 @@ KISSY.add("xtemplate/compiler/ast", function (S) {
 
     ast.BlockNode = function (lineNumber, tpl, program, close) {
         var closeParts = close['parts'], self = this, e;
-        // 开始没有结束
+        // no close tag
         if (!S.equals(tpl.path['parts'], closeParts)) {
             e = ("parse error at line " +
                 lineNumber +

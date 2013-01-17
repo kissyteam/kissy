@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 17 15:56
+build time: Jan 17 16:05
 */
 /**
  * Ast node class for xtemplate
@@ -30,7 +30,7 @@ KISSY.add("xtemplate/compiler/ast", function (S) {
 
     ast.BlockNode = function (lineNumber, tpl, program, close) {
         var closeParts = close['parts'], self = this, e;
-        // 开始没有结束
+        // no close tag
         if (!S.equals(tpl.path['parts'], closeParts)) {
             e = ("parse error at line " +
                 lineNumber +
