@@ -52,6 +52,14 @@ KISSY.add('xtemplate/runtime/base', function (S) {
         name: '',
         utils: {
             'getProperty': function (parts, scopes) {
+                // this refer to current scope object
+                if (parts == 'this') {
+                    if (scopes.length) {
+                        return [scopes[0]];
+                    } else {
+                        return false;
+                    }
+                }
                 parts = parts.split('.');
                 var len = parts.length,
                     i,
@@ -65,7 +73,8 @@ KISSY.add('xtemplate/runtime/base', function (S) {
                     valid = 1;
                     for (i = 0; i < len; i++) {
                         p = parts[i];
-                        if (!(p in v)) {
+                        // may not be object at all
+                        if (typeof v != 'object' || !(p in v)) {
                             valid = 0;
                             break;
                         }
@@ -137,10 +146,11 @@ KISSY.add('xtemplate/runtime/base', function (S) {
          * get result by merge data with template
          * @param data
          * @return {String}
+         * @param {boolean} [keepDataFormat] internal use
          */
-        render: function (data) {
+        render: function (data, keepDataFormat) {
             var self = this;
-            if (!S.isArray(data)) {
+            if (!keepDataFormat) {
                 data = [data];
             }
             return self.tpl(data, self.option);

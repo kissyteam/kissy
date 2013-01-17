@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 6 19:11
+build time: Jan 17 15:57
 */
 /**
  * xtemplate base
@@ -15,6 +15,10 @@ KISSY.add('xtemplate/runtime/base', function (S) {
         /**
          * whether throw exception when template variable is not found in data
          *
+         * or
+         *
+         * command is not found
+         *
          *      @example
          *      '{{title}}'.render({t2:0})
          *
@@ -25,6 +29,10 @@ KISSY.add('xtemplate/runtime/base', function (S) {
 
         /**
          * whether throw exception when template variable is not found in data
+         *
+         * or
+         *
+         * command is not found
          *
          *      @example
          *      '{{title}}'.render({t2:0})
@@ -49,6 +57,14 @@ KISSY.add('xtemplate/runtime/base', function (S) {
         name: '',
         utils: {
             'getProperty': function (parts, scopes) {
+                // this refer to current scope object
+                if (parts == 'this') {
+                    if (scopes.length) {
+                        return [scopes[0]];
+                    } else {
+                        return false;
+                    }
+                }
                 parts = parts.split('.');
                 var len = parts.length,
                     i,
@@ -62,7 +78,8 @@ KISSY.add('xtemplate/runtime/base', function (S) {
                     valid = 1;
                     for (i = 0; i < len; i++) {
                         p = parts[i];
-                        if (!(p in v)) {
+                        // may not be object at all
+                        if (typeof v != 'object' || !(p in v)) {
                             valid = 0;
                             break;
                         }
@@ -134,10 +151,11 @@ KISSY.add('xtemplate/runtime/base', function (S) {
          * get result by merge data with template
          * @param data
          * @return {String}
+         * @param {boolean} [keepDataFormat] internal use
          */
-        render: function (data) {
+        render: function (data, keepDataFormat) {
             var self = this;
-            if (!S.isArray(data)) {
+            if (!keepDataFormat) {
                 data = [data];
             }
             return self.tpl(data, self.option);
@@ -151,36 +169,32 @@ KISSY.add('xtemplate/runtime/base', function (S) {
  * @ignore
  */
 KISSY.add("xtemplate/runtime/commands", function (S, includeCommand, undefined) {
-    var error = S.error;
+    var error = function (option, str) {
+        S[option.silent ? 'log' : 'error'](str);
+    };
     return {
         'each': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 1) {
-                error('each must has one param');
+                error(option, 'each must has one param');
+                return '';
             }
             var param0 = params[0];
             var buffer = '';
             var xcount;
-            var single;
+            // if undefined, will emit warning by compiler
             if (param0 !== undefined) {
-                if (S.isArray(param0)) {
-                    var opScopes = [0].concat(scopes);
-                    xcount = param0.length;
-                    for (var xindex = 0; xindex < xcount; xindex++) {
-                        var holder = {};
-                        single = param0[xindex];
-                        holder['this'] = single;
-                        holder.xcount = xcount;
-                        holder.xindex = xindex;
-                        if (S.isObject(single)) {
-                            S.mix(holder, single);
-                        }
-                        opScopes[0] = holder;
-                        buffer += option.fn(opScopes);
-                    }
-                } else {
-                    S.log(param0, 'error');
-                    error('each can only apply to array');
+                // skip array check for performance
+                var opScopes = [0, 0].concat(scopes);
+                xcount = param0.length;
+                for (var xindex = 0; xindex < xcount; xindex++) {
+                    // two more variable scope for array looping
+                    opScopes[0] = param0[xindex];
+                    opScopes[1] = {
+                        xcount: xcount,
+                        xindex: xindex
+                    };
+                    buffer += option.fn(opScopes);
                 }
             }
             return buffer;
@@ -189,19 +203,16 @@ KISSY.add("xtemplate/runtime/commands", function (S, includeCommand, undefined) 
         'with': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 1) {
-                error('with must has one param');
+                error(option, 'with must has one param');
+                return '';
             }
             var param0 = params[0];
             var opScopes = [0].concat(scopes);
             var buffer = '';
             if (param0 !== undefined) {
-                if (S.isObject(param0)) {
-                    opScopes[0] = param0;
-                    buffer = option.fn(opScopes);
-                } else {
-                    S.log(param0, 'error');
-                    error('with can only apply to object');
-                }
+                // skip object check for performance
+                opScopes[0] = param0;
+                buffer = option.fn(opScopes);
             }
             return buffer;
         },
@@ -209,7 +220,8 @@ KISSY.add("xtemplate/runtime/commands", function (S, includeCommand, undefined) 
         'if': function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 1) {
-                error('if must has one param');
+                error(option, 'if must has one param');
+                return '';
             }
             var param0 = params[0];
             var buffer = '';
@@ -222,7 +234,13 @@ KISSY.add("xtemplate/runtime/commands", function (S, includeCommand, undefined) 
         },
 
         'set': function (scopes, option) {
-            S.mix(scopes[0], option.hash);
+            // in case scopes[0] is not object ,{{#each}}{{set }}{{/each}}
+            for (var i = scopes.length - 1; i >= 0; i--) {
+                if (typeof scopes[i] == 'object') {
+                    S.mix(scopes[i], option.hash);
+                    break;
+                }
+            }
             return '';
         },
 
@@ -241,18 +259,20 @@ KISSY.add('xtemplate/runtime/include-command', function (S, XTemplateRuntime) {
     var include = {
 
         invokeEngine: function (tpl, scopes, option) {
-            return new XTemplateRuntime(tpl, S.merge(option)).render(scopes);
+            return new XTemplateRuntime(tpl, S.merge(option)).render(scopes, true);
         },
 
         include: function (scopes, option) {
             var params = option.params;
             if (!params || params.length != 1) {
-                error('include must has one param');
+                S[option.silent ? 'log' : 'error']('include must has one param');
+                return '';
             }
             var param0 = params[0], tpl;
             var subTpls = option.subTpls;
             if (!(tpl = subTpls[param0])) {
-                error('does not include sub template "' + param0 + '"');
+                S[option.silent ? 'log' : 'error']('does not include sub template "' + param0 + '"');
+                return '';
             }
             // template file name
             option.name = param0;

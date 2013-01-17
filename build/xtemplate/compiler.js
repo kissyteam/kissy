@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 9 23:33
+build time: Jan 17 15:56
 */
 /**
  * Ast node class for xtemplate
@@ -242,7 +242,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
     function escapeSingleQuoteInCodeString(str, isDouble) {
         return str.replace(isDouble ? doubleReg : singleReg, function (m) {
-            // \ 奇数，用户显式转过 "\'" , "\\\'" 就不处理了，否则手动对 ` 加 \ 转义
+            // \ 's number ，用户显式转过 "\'" , "\\\'" 就不处理了，否则手动对 ` 加 \ 转义
             if (m.length % 2) {
                 m = '\\' + m;
             }
