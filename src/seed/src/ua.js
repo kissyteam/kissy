@@ -377,6 +377,9 @@
 
 /*
  NOTES:
+ 2013.01.17
+ - expose getDescriptorFromUserAgent for analysis tool in nodejs
+
  2012.11.27
  - moved to seed for conditional loading and better code share
 
