@@ -196,8 +196,24 @@
 
         } else {
 
+            // MSIE for analysis tools in nodejs
+            if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
+                o[core = 'trident'] = 0.1; // Trident detected, look for revision
+                // 注意：
+                //  o.shell = ie, 表示外壳是 ie
+                //  但 o.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
+                //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 o.ie = 8, 否则
+                //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
+                o[shell = 'ie'] = numberify(m[1]);
+
+                // Get the Trident's accurate version
+                if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
+                    o[core] = numberify(m[1]);
+                }
+            }
+
             // WebKit
-            if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
+            else if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
                 UA[core = 'webkit'] = numberify(m[1]);
 
                 // Chrome
@@ -357,7 +373,8 @@
             documentElement.className = S.trim(documentElement.className + className);
         }
     }
-})(KISSY);
+})
+    (KISSY);
 
 /*
  NOTES:

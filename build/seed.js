@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 17 22:41
+build time: Jan 17 22:46
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130117224055' will replace with current timestamp when compressing.
+         * NOTICE: '20130117224637' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130117224055',
+        __BUILD_TIME: '20130117224637',
         /**
          * KISSY Environment.
          * @private
@@ -3246,8 +3246,24 @@ var KISSY = (function (undefined) {
 
         } else {
 
+            // MSIE for analysic tools in nodej
+            if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
+                o[core = 'trident'] = 0.1; // Trident detected, look for revision
+                // 注意：
+                //  o.shell = ie, 表示外壳是 ie
+                //  但 o.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
+                //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 o.ie = 8, 否则
+                //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
+                o[shell = 'ie'] = numberify(m[1]);
+
+                // Get the Trident's accurate version
+                if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
+                    o[core] = numberify(m[1]);
+                }
+            }
+
             // WebKit
-            if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
+            else if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
                 UA[core = 'webkit'] = numberify(m[1]);
 
                 // Chrome
@@ -3407,7 +3423,8 @@ var KISSY = (function (undefined) {
             documentElement.className = S.trim(documentElement.className + className);
         }
     }
-})(KISSY);
+})
+    (KISSY);
 
 /*
  NOTES:
@@ -5853,7 +5870,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130117224055'
+            tag: '20130117224637'
         }, getBaseInfo()));
     }
 
