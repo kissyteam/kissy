@@ -162,7 +162,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
      * @param {Editor.Range} range
      * @class
      * Walker for DOM.
-     * @memberOf Editor
+     * @member Editor
      */
     function Walker(range) {
         this.range = range;
@@ -173,7 +173,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
          * matched nodes are considered good.
          * If the function returns "FALSE" the node is ignored.
          * @type {Function}
-         * @memberOf Editor.Walker#
+         * @member Editor.Walker#
          */
         this.evaluator = NULL;// 当前 range 范围内深度遍历的元素调用
 
@@ -184,7 +184,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
          * If this function returns "FALSE", the walking ends and no more
          * nodes are evaluated.
          * @type {Function}
-         * @memberOf Editor.Walker#
+         * @member Editor.Walker#
          */
         this.guard = NULL;// 人为缩小当前 range 范围
 

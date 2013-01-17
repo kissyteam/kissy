@@ -549,7 +549,7 @@ KISSY.add("editor/core/selection", function (S) {
                         (( UA.gecko && UA.gecko < 1.0900 ) || UA.opera || UA['webkit']) &&
                         startContainer[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
                         !startContainer[0].childNodes.length) {
-                        // webkit 光标停留不到在空元素内，要fill char，之后范围定在 fillchar 之后
+                        // webkit 光标停留不到在空元素内，要fill char，之后范围定在 fill char 之后
                         startContainer[0].appendChild(self.document.createTextNode(UA['webkit'] ? "\u200b" : ""));
                         range.startOffset++;
                         range.endOffset++;
