@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 17 22:46
+build time: Jan 17 22:56
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130117224637' will replace with current timestamp when compressing.
+         * NOTICE: '20130117225636' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130117224637',
+        __BUILD_TIME: '20130117225636',
         /**
          * KISSY Environment.
          * @private
@@ -3246,7 +3246,7 @@ var KISSY = (function (undefined) {
 
         } else {
 
-            // MSIE for analysic tools in nodej
+            // MSIE for analysis tools in nodejs
             if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
                 o[core = 'trident'] = 0.1; // Trident detected, look for revision
                 // 注意：
@@ -3377,21 +3377,20 @@ var KISSY = (function (undefined) {
             }
         }
 
-        // nodejs
-        if (typeof process === 'object') {
-            var versions, nodeVersion;
-            if ((versions = process.versions) && (nodeVersion = versions.node)) {
-                os = process.platform;
-                UA.nodejs = numberify(nodeVersion);
-            }
-        }
-
         UA.os = os;
         UA.core = core;
         UA.shell = shell;
     }
 
     var UA = KISSY.UA = getDescriptorFromUserAgent(ua);
+    // nodejs
+    if (typeof process === 'object') {
+        var versions, nodeVersion;
+        if ((versions = process.versions) && (nodeVersion = versions.node)) {
+            UA.os = process.platform;
+            UA.nodejs = numberify(nodeVersion);
+        }
+    }
 
     // use by analysis tools in nodejs
     UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
@@ -5161,7 +5160,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130117224637'
+            tag: '20130117225636'
         }, getBaseInfo()));
     }
 

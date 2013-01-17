@@ -327,21 +327,20 @@
             }
         }
 
-        // nodejs
-        if (typeof process === 'object') {
-            var versions, nodeVersion;
-            if ((versions = process.versions) && (nodeVersion = versions.node)) {
-                os = process.platform;
-                UA.nodejs = numberify(nodeVersion);
-            }
-        }
-
         UA.os = os;
         UA.core = core;
         UA.shell = shell;
     }
 
     var UA = KISSY.UA = getDescriptorFromUserAgent(ua);
+    // nodejs
+    if (typeof process === 'object') {
+        var versions, nodeVersion;
+        if ((versions = process.versions) && (nodeVersion = versions.node)) {
+            UA.os = process.platform;
+            UA.nodejs = numberify(nodeVersion);
+        }
+    }
 
     // use by analysis tools in nodejs
     UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
