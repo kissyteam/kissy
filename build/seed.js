@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 21:26
+build time: Jan 17 22:41
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130116212600' will replace with current timestamp when compressing.
+         * NOTICE: '20130117224055' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130116212600',
+        __BUILD_TIME: '20130117224055',
         /**
          * KISSY Environment.
          * @private
@@ -3053,30 +3053,39 @@ var KISSY = (function (undefined) {
  * ua
  */
 (function (S, undefined) {
-
     var win = S.Env.host,
         doc = win.document,
         navigator = win.navigator,
-        ua = navigator && navigator.userAgent || "",
-        EMPTY = '',
-        os,
-        MOBILE = 'mobile',
-        core = EMPTY,
-        shell = EMPTY, m,
-        IE_DETECT_RANGE = [6, 9],
-        v,
-        end,
-        VERSION_PLACEHOLDER = '{{version}}',
-        IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
-        div = doc && doc.createElement('div'),
-        s = [];
-    /**
-     * KISSY UA
-     * @member KISSY
-     * @class KISSY.UA
-     * @singleton
-     */
-    var UA = KISSY.UA = {
+        ua = navigator && navigator.userAgent || "";
+
+    function numberify(s) {
+        var c = 0;
+        // convert '1.2.3.4' to 1.234
+        return parseFloat(s.replace(/\./g, function () {
+            return (c++ === 0) ? '.' : '';
+        }));
+    }
+
+    function getDescriptorFromUserAgent(ua) {
+        var EMPTY = '',
+            os,
+            MOBILE = 'mobile',
+            core = EMPTY,
+            shell = EMPTY, m,
+            IE_DETECT_RANGE = [6, 9],
+            v,
+            end,
+            VERSION_PLACEHOLDER = '{{version}}',
+            IE_DETECT_TPL = '<!--[if IE ' + VERSION_PLACEHOLDER + ']><' + 's></s><![endif]-->',
+            div = doc && doc.createElement('div'),
+            s = [];
+        /**
+         * KISSY UA
+         * @member KISSY
+         * @class KISSY.UA
+         * @singleton
+         */
+        var UA = {
             /**
              * webkit version
              * @type undefined|Number
@@ -3202,176 +3211,174 @@ var KISSY = (function (undefined) {
              * @member KISSY.UA
              */
             nodejs: undefined
-        },
-        numberify = function (s) {
-            var c = 0;
-            // convert '1.2.3.4' to 1.234
-            return parseFloat(s.replace(/\./g, function () {
-                return (c++ === 0) ? '.' : '';
-            }));
         };
 
-    if (div) {
-        // try to use IE-Conditional-Comment detect IE more accurately
-        // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
-        div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
-        s = div.getElementsByTagName('s');
-    }
-
-    if (s.length > 0) {
-
-        shell = 'ie';
-        UA[core = 'trident'] = 0.1; // Trident detected, look for revision
-
-        // Get the Trident's accurate version
-        if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
-            UA[core] = numberify(m[1]);
+        if (div) {
+            // try to use IE-Conditional-Comment detect IE more accurately
+            // IE10 doesn't support this method, @ref: http://blogs.msdn.com/b/ie/archive/2011/07/06/html5-parsing-in-ie10.aspx
+            div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, '');
+            s = div.getElementsByTagName('s');
         }
 
-        // Detect the accurate version
-        // 注意：
-        //  UA.shell = ie, 表示外壳是 ie
-        //  但 UA.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
-        //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 UA.ie = 8, 否则
-        //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
-        for (v = IE_DETECT_RANGE[0], end = IE_DETECT_RANGE[1]; v <= end; v++) {
-            div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, v);
-            if (s.length > 0) {
-                UA[shell] = v;
-                break;
-            }
-        }
+        if (s.length > 0) {
 
-    } else {
+            shell = 'ie';
+            UA[core = 'trident'] = 0.1; // Trident detected, look for revision
 
-        // WebKit
-        if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
-            UA[core = 'webkit'] = numberify(m[1]);
-
-            // Chrome
-            if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
-                UA[shell = 'chrome'] = numberify(m[1]);
-            }
-            // Safari
-            else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
-                UA[shell = 'safari'] = numberify(m[1]);
+            // Get the Trident's accurate version
+            if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
+                UA[core] = numberify(m[1]);
             }
 
-            // Apple Mobile
-            if (/ Mobile\//.test(ua) && ua.match(/iPad|iPod|iPhone/)) {
-                UA[MOBILE] = 'apple'; // iPad, iPhone or iPod Touch
-
-                m = ua.match(/OS ([^\s]*)/);
-                if (m && m[1]) {
-                    UA.ios = numberify(m[1].replace('_', '.'));
-                }
-                os = 'ios';
-                m = ua.match(/iPad|iPod|iPhone/);
-                if (m && m[0]) {
-                    UA[m[0].toLowerCase()] = UA.ios;
-                }
-            } else if (/ Android/.test(ua)) {
-                if (/Mobile/.test(ua)) {
-                    os = UA.mobile = 'android';
-                }
-                m = ua.match(/Android ([^\s]*);/);
-                if (m && m[1]) {
-                    UA.android = numberify(m[1]);
+            // Detect the accurate version
+            // 注意：
+            //  UA.shell = ie, 表示外壳是 ie
+            //  但 UA.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
+            //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 UA.ie = 8, 否则
+            //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
+            for (v = IE_DETECT_RANGE[0], end = IE_DETECT_RANGE[1]; v <= end; v++) {
+                div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, v);
+                if (s.length > 0) {
+                    UA[shell] = v;
+                    break;
                 }
             }
-            // Other WebKit Mobile Browsers
-            else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
-                UA[MOBILE] = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
-            }
 
-            if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
-                UA.phantomjs = numberify(m[1]);
-            }
-        }
-        // NOT WebKit
-        else {
-            // Presto
-            // ref: http://www.useragentstring.com/pages/useragentstring.php
-            if ((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
-                UA[core = 'presto'] = numberify(m[1]);
+        } else {
 
-                // Opera
-                if ((m = ua.match(/Opera\/([\d.]*)/)) && m[1]) {
-                    UA[shell = 'opera'] = numberify(m[1]); // Opera detected, look for revision
+            // WebKit
+            if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
+                UA[core = 'webkit'] = numberify(m[1]);
 
-                    if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
-                        UA[shell] = numberify(m[1]);
+                // Chrome
+                if ((m = ua.match(/Chrome\/([\d.]*)/)) && m[1]) {
+                    UA[shell = 'chrome'] = numberify(m[1]);
+                }
+                // Safari
+                else if ((m = ua.match(/\/([\d.]*) Safari/)) && m[1]) {
+                    UA[shell = 'safari'] = numberify(m[1]);
+                }
+
+                // Apple Mobile
+                if (/ Mobile\//.test(ua) && ua.match(/iPad|iPod|iPhone/)) {
+                    UA[MOBILE] = 'apple'; // iPad, iPhone or iPod Touch
+
+                    m = ua.match(/OS ([^\s]*)/);
+                    if (m && m[1]) {
+                        UA.ios = numberify(m[1].replace('_', '.'));
                     }
-
-                    // Opera Mini
-                    if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
-                        UA[MOBILE] = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
+                    os = 'ios';
+                    m = ua.match(/iPad|iPod|iPhone/);
+                    if (m && m[0]) {
+                        UA[m[0].toLowerCase()] = UA.ios;
                     }
-                    // Opera Mobile
-                    // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
-                    // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
-                    else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
-                        UA[MOBILE] = m[0];
+                } else if (/ Android/.test(ua)) {
+                    if (/Mobile/.test(ua)) {
+                        os = UA.mobile = 'android';
+                    }
+                    m = ua.match(/Android ([^\s]*);/);
+                    if (m && m[1]) {
+                        UA.android = numberify(m[1]);
                     }
                 }
+                // Other WebKit Mobile Browsers
+                else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
+                    UA[MOBILE] = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
+                }
 
-                // NOT WebKit or Presto
-            } else {
-                // MSIE
-                // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
-                if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
-                    UA[core = 'trident'] = 0.1; // Trident detected, look for revision
-                    UA[shell = 'ie'] = numberify(m[1]);
+                if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
+                    UA.phantomjs = numberify(m[1]);
+                }
+            }
+            // NOT WebKit
+            else {
+                // Presto
+                // ref: http://www.useragentstring.com/pages/useragentstring.php
+                if ((m = ua.match(/Presto\/([\d.]*)/)) && m[1]) {
+                    UA[core = 'presto'] = numberify(m[1]);
 
-                    // Get the Trident's accurate version
-                    if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
-                        UA[core] = numberify(m[1]);
+                    // Opera
+                    if ((m = ua.match(/Opera\/([\d.]*)/)) && m[1]) {
+                        UA[shell = 'opera'] = numberify(m[1]); // Opera detected, look for revision
+
+                        if ((m = ua.match(/Opera\/.* Version\/([\d.]*)/)) && m[1]) {
+                            UA[shell] = numberify(m[1]);
+                        }
+
+                        // Opera Mini
+                        if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
+                            UA[MOBILE] = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
+                        }
+                        // Opera Mobile
+                        // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
+                        // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
+                        else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
+                            UA[MOBILE] = m[0];
+                        }
                     }
 
-                    // NOT WebKit, Presto or IE
+                    // NOT WebKit or Presto
                 } else {
-                    // Gecko
-                    if ((m = ua.match(/Gecko/))) {
-                        UA[core = 'gecko'] = 0.1; // Gecko detected, look for revision
-                        if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
+                    // MSIE
+                    // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
+                    if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
+                        UA[core = 'trident'] = 0.1; // Trident detected, look for revision
+                        UA[shell = 'ie'] = numberify(m[1]);
+
+                        // Get the Trident's accurate version
+                        if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
                             UA[core] = numberify(m[1]);
                         }
 
-                        // Firefox
-                        if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
-                            UA[shell = 'firefox'] = numberify(m[1]);
+                        // NOT WebKit, Presto or IE
+                    } else {
+                        // Gecko
+                        if ((m = ua.match(/Gecko/))) {
+                            UA[core = 'gecko'] = 0.1; // Gecko detected, look for revision
+                            if ((m = ua.match(/rv:([\d.]*)/)) && m[1]) {
+                                UA[core] = numberify(m[1]);
+                            }
+
+                            // Firefox
+                            if ((m = ua.match(/Firefox\/([\d.]*)/)) && m[1]) {
+                                UA[shell = 'firefox'] = numberify(m[1]);
+                            }
                         }
                     }
                 }
             }
         }
-    }
 
-    if (!os) {
-        if ((/windows|win32/i).test(ua)) {
-            os = 'windows';
-        } else if ((/macintosh|mac_powerpc/i).test(ua)) {
-            os = 'macintosh';
-        } else if ((/linux/i).test(ua)) {
-            os = 'linux';
-        } else if ((/rhino/i).test(ua)) {
-            os = 'rhino';
+        if (!os) {
+            if ((/windows|win32/i).test(ua)) {
+                os = 'windows';
+            } else if ((/macintosh|mac_powerpc/i).test(ua)) {
+                os = 'macintosh';
+            } else if ((/linux/i).test(ua)) {
+                os = 'linux';
+            } else if ((/rhino/i).test(ua)) {
+                os = 'rhino';
+            }
         }
-    }
 
-    // nodejs
-    if (typeof process === 'object') {
-        var versions, nodeVersion;
-        if ((versions = process.versions) && (nodeVersion = versions.node)) {
-            os = process.platform;
-            UA.nodejs = numberify(nodeVersion);
+        // nodejs
+        if (typeof process === 'object') {
+            var versions, nodeVersion;
+            if ((versions = process.versions) && (nodeVersion = versions.node)) {
+                os = process.platform;
+                UA.nodejs = numberify(nodeVersion);
+            }
         }
+
+        UA.os = os;
+        UA.core = core;
+        UA.shell = shell;
     }
 
-    UA.os = os;
-    UA.core = core;
-    UA.shell = shell;
-    UA._numberify = numberify;
+    var UA = KISSY.UA = getDescriptorFromUserAgent(ua);
+
+    // use by analysis tools in nodejs
+    UA.getDescriptorFromUserAgent = getDescriptorFromUserAgent;
 
     var o = [
             // browser core type
@@ -5846,7 +5853,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130116212600'
+            tag: '20130117224055'
         }, getBaseInfo()));
     }
 

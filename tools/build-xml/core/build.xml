@@ -33,7 +33,6 @@
                      includes="**/*.js" excludes="**/*-min.js"/>
             <fileset dir="${kissy.build.dir}/json/"
                      includes="**/*.js" excludes="**/*-min.js"/>
-            <path path="${kissy.build.dir}/json.js"/>
             <path path="${kissy.build.dir}/ajax.js"/>
             <path path="${kissy.build.dir}/cookie.js"/>
             <path path="${kissy.build.dir}/base.js"/>
