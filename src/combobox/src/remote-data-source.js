@@ -114,5 +114,5 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO) {
     });
     return RemoteDataSource;
 }, {
-    requires: ['ajax']
+    requires: ['io']
 });

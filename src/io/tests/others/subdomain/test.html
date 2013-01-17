@@ -1,0 +1,45 @@
+<script src="/kissy/build/seed.js"></script>
+<script>
+
+    S.use("io", function (S, io) {
+        document.domain = location.hostname;
+
+        if (0) {
+            io({
+                url: 'http://' + location.hostname + ':9999/kissy/src/io/tests/data/io.jss',
+                cache: false,
+                success: function () {
+                    S.log("success");
+                },
+                error: function (d, s) {
+                    S.log(s || "error");
+                },
+                complete: function () {
+                    S.log("complete");
+                }
+            });
+        }
+
+        io({
+            url: 'http://' + location.hostname + ':9999/kissy/src/io/tests/data/io.jss',
+            cache: false,
+            xdr: {
+                subDomain: {
+                    proxy: "/kissy/src/io/tests/others/subdomain/proxy.html"
+                }
+            },
+            success: function () {
+                S.log("success");
+            },
+            error: function (d, s) {
+                S.log(s || "error");
+            },
+            complete: function () {
+                S.log("complete");
+            }
+        });
+
+
+    });
+
+</script>

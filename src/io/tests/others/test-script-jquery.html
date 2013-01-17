@@ -1,0 +1,24 @@
+<script  src="../../../tools/third-party/jquery.js"></script>
+<script >
+    $(function() {
+        $.io({
+                    url:"http://"+location.hostname+":9999/kissy/src/io/tests/script.jss",
+                    dataType:'script',
+                    success:function() {
+                        var args = $.makeArray(arguments);
+                        debugger
+                        console.log(1);
+                    },
+                    error:function() {
+                        var args = $.makeArray(arguments);
+                        debugger
+                        console.log(2);
+                    },
+                    complete:function() {
+                        var args = $.makeArray(arguments);
+                        debugger
+                        console.log(3);
+                    }
+                });
+    });
+</script>

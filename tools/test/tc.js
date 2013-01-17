@@ -2,11 +2,11 @@
 gen by gen-tc.js
 */
 module.exports=function(){ var tests=[];
-tests.push('/kissy/src/ajax/tests/runner/test-basic.html');
+tests.push('/kissy/src/io/tests/runner/test-basic.html');
 
-tests.push('/kissy/src/ajax/tests/runner/test-xdr.html');
+tests.push('/kissy/src/io/tests/runner/test-xdr.html');
 
-tests.push('/kissy/src/ajax/tests/runner/test.html');
+tests.push('/kissy/src/io/tests/runner/test.html');
 
 tests.push('/kissy/src/anim/tests/runner/test.html');
 

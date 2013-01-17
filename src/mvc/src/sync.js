@@ -46,5 +46,5 @@ KISSY.add("mvc/sync", function (S, io, JSON) {
 
     return sync;
 }, {
-    requires: ['ajax', 'json']
+    requires: ['io', 'json']
 });

@@ -330,6 +330,8 @@
         UA.os = os;
         UA.core = core;
         UA.shell = shell;
+
+        return UA;
     }
 
     var UA = KISSY.UA = getDescriptorFromUserAgent(ua);

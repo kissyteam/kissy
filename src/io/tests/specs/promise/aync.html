@@ -1,0 +1,16 @@
+<script src="/kissy/build/seed.js"></script>
+<script >
+    KISSY.use("io", function (S, io) {
+
+        io({
+            url:"./gen-json.jss",
+            async:false,
+            data:{
+                x:999
+            }, success:function (d) {
+                S.log(d.x);
+            }
+        });
+        S.log("end");
+    });
+</script>

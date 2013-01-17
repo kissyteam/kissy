@@ -1,0 +1,17 @@
+<script  src="/kissy/build/seed.js"></script>
+<script >
+    KISSY.use("io", function (S, io) {
+
+        S.ready(function(){
+            throw new Error("haha2");
+        });
+
+        io({
+            url:'../io-json.jss',
+            dataType:'json',
+            success:function () {
+                throw new Error("hahahah !");
+            }
+        });
+    });
+</script>

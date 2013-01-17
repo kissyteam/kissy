@@ -142,7 +142,7 @@
         }
 
         // 已经静态存在在页面上
-        // 或者该模块不是根据自身模块名动态加载来的(ajax.js包含 ajax/base,ajax/form)
+        // 或者该模块不是根据自身模块名动态加载来的(io.js包含 io/base,io/form)
         if (status === LOADED) {
             loadChecker.loadModRequires(self, mod);
         } else {

@@ -11,7 +11,7 @@
             <header filtering="no" trimleading="yes">
                 (function(config,Features,UA){
             </header>
-            <fileset dir="${kissy.src.dir}" includes="**/meta/modules.js"/>
+            <fileset dir="${kissy.src.dir}" includes="**/meta/*.js"/>
             <footer>
                 })(function(c){
                 KISSY.config('modules', c);

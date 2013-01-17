@@ -631,5 +631,5 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
 
     return ImageDialog;
 }, {
-    requires: ['ajax', 'editor', '../overlay/', 'tabs', '../menubutton/']
+    requires: ['io', 'editor', '../overlay/', 'tabs', '../menubutton/']
 });

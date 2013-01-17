@@ -1,4 +1,4 @@
-﻿KISSY.use("waterfall,ajax,node", function (S, Waterfall, io,  Node) {
+﻿KISSY.use("waterfall,io,node", function (S, Waterfall, io,  Node) {
     var $ = Node.all;
 
     var tpl = $('#tpl').html(),
@@ -7,7 +7,7 @@
             container:"#ColumnContainer",
             load:function (success, end) {
                 $('#loadingPins').show();
-                S.ajax({
+                S.io({
                     data:{
                         'method':'flickr.photos.search',
                         'api_key':'5d93c2e473e39e9307e86d4a01381266',

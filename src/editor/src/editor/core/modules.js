@@ -4,7 +4,7 @@ KISSY.config('modules', {
 'editor/plugin/page-break/index': {requires: ['editor','editor/plugin/fake-objects/']},
 'editor/plugin/italic/cmd': {requires: ['editor','editor/plugin/font/cmd']},
 'editor/plugin/font-size/cmd': {requires: ['editor','editor/plugin/font/cmd']},
-'editor/plugin/image/dialog': {requires: ['ajax','editor','editor/plugin/overlay/','tabs','editor/plugin/menubutton/']},
+'editor/plugin/image/dialog': {requires: ['io','editor','editor/plugin/overlay/','tabs','editor/plugin/menubutton/']},
 'editor/plugin/underline/index': {requires: ['editor','editor/plugin/font/ui','editor/plugin/underline/cmd']},
 'editor/plugin/maximize/cmd': {requires: ['editor']},
 'editor/plugin/contextmenu/index': {requires: ['editor','menu','editor/plugin/focus-fix/']},

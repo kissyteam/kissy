@@ -590,7 +590,7 @@ KISSY.add('grid/store',function(S){
 				return;
 			}
 			data = _self.proxy.method === 'post' ? loadparams : (loadparams ? S.param(loadparams) : '');
-			S.ajax({
+			S.io({
 				cache: false,
                 url: _self.proxy.url,
                 dataType: _self.dataType,

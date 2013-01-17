@@ -1,0 +1,31 @@
+<script  src="http://a.tbcdn.cn/s/kissy/1.1.6/kissy.js"></script>
+<script >
+    KISSY.ready(function(S) {
+        S.use("io", function(S, io) {
+            io = S.io;
+            if (true) {
+                debugger
+                io({
+                            url:"io.jss",
+                            // dataType:'xml',
+                            // dataType:'json',
+                            success:function() {
+                                var args = S.makeArray(arguments);
+                                debugger
+                                console.log(1);
+                            },
+                            error:function() {
+                                var args = S.makeArray(arguments);
+                                debugger
+                                console.log(2);
+                            },
+                            complete:function() {
+                                var args = S.makeArray(arguments);
+                                debugger
+                                console.log(3);
+                            }
+                        });
+            }
+        });
+    });
+</script>

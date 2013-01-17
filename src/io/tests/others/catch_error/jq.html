@@ -1,0 +1,11 @@
+<script  src="http://localhost/lib/jquery/dist/jquery.js"></script>
+
+<script >
+    $.io({
+        url:'../io-json.jss',
+        dataType:'json',
+        success:function () {
+            throw new Error("hahahah !");
+        }
+    });
+</script>
