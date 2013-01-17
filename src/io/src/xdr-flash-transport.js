@@ -3,7 +3,7 @@
  * use flash to accomplish cross domain request, usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xdr-flash-transport', function (S, io, DOM) {
+KISSY.add('io/xdr-flash-transport', function (S, IO, DOM) {
 
     var // current running request instances
         maps = {},
@@ -28,7 +28,7 @@ KISSY.add('io/xdr-flash-transport', function (S, io, DOM) {
                 '<param name="FlashVars" value="yid=' +
                 _ + '&uid=' +
                 uid +
-                '&host=KISSY.io" />' +
+                '&host=KISSY.IO" />' +
                 '<param name="allowScriptAccess" value="always" />' +
                 '</object>',
             c = doc.createElement('div');
@@ -113,10 +113,10 @@ KISSY.add('io/xdr-flash-transport', function (S, io, DOM) {
     });
 
     /*called by flash*/
-    io['applyTo'] = function (_, cmd, args) {
+    IO['applyTo'] = function (_, cmd, args) {
         // S.log(cmd + ' execute');
         var cmds = cmd.split('.').slice(1),
-            func = io;
+            func = IO;
         S.each(cmds, function (c) {
             func = func[c];
         });
@@ -124,7 +124,7 @@ KISSY.add('io/xdr-flash-transport', function (S, io, DOM) {
     };
 
     // when flash is loaded
-    io['xdrReady'] = function () {
+    IO['xdrReady'] = function () {
         flash = doc.getElementById(ID);
     };
 
@@ -133,7 +133,7 @@ KISSY.add('io/xdr-flash-transport', function (S, io, DOM) {
      @param e response status
      @param o internal data
      */
-    io['xdrResponse'] = function (e, o) {
+    IO['xdrResponse'] = function (e, o) {
         var xhr = maps[o.uid];
         xhr && xhr._xdrResponse(e, o);
     };

@@ -3,7 +3,7 @@
  * non-refresh upload file with form by iframe
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/iframe-transport', function (S, DOM, Event, io) {
+KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
 
     'use strict';
 
@@ -13,10 +13,10 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, io) {
         BREATH_INTERVAL = 30;
 
     // iframe 内的内容就是 body.innerText
-    io.setupConfig({
+    IO.setupConfig({
         converters: {
             // iframe 到其他类型的转化和 text 一样
-            iframe: io.getConfig().converters.text,
+            iframe: IO.getConfig().converters.text,
             text: {
                 // fake type, just mirror
                 iframe: function (text) {
@@ -225,9 +225,9 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, io) {
         }
     });
 
-    io['setupTransport']('iframe', IframeTransport);
+    IO['setupTransport']('iframe', IframeTransport);
 
-    return io;
+    return IO;
 
 }, {
     requires: ['dom', 'event', './base']

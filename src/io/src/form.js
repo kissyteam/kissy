@@ -3,9 +3,9 @@
  * process form config
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/form', function (S, io, DOM, FormSerializer) {
+KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
 
-    io.on('start', function (e) {
+    IO.on('start', function (e) {
         var io = e.io,
             form,
             d,
@@ -48,7 +48,7 @@ KISSY.add('io/form', function (S, io, DOM, FormSerializer) {
         }
     });
 
-    return io;
+    return IO;
 
 }, {
     requires: ['./base', 'dom', './form-serializer']

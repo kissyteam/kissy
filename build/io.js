@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 17 23:18
+build time: Jan 17 23:33
 */
 /**
  * @ignore
@@ -642,9 +642,9 @@ KISSY.add('io/form-serializer', function (S, DOM) {
  * process form config
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/form', function (S, io, DOM, FormSerializer) {
+KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
 
-    io.on('start', function (e) {
+    IO.on('start', function (e) {
         var io = e.io,
             form,
             d,
@@ -687,7 +687,7 @@ KISSY.add('io/form', function (S, io, DOM, FormSerializer) {
         }
     });
 
-    return io;
+    return IO;
 
 }, {
     requires: ['./base', 'dom', './form-serializer']
@@ -696,7 +696,7 @@ KISSY.add('io/form', function (S, io, DOM, FormSerializer) {
  * non-refresh upload file with form by iframe
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/iframe-transport', function (S, DOM, Event, io) {
+KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
 
     'use strict';
 
@@ -706,10 +706,10 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, io) {
         BREATH_INTERVAL = 30;
 
     // iframe 内的内容就是 body.innerText
-    io.setupConfig({
+    IO.setupConfig({
         converters: {
             // iframe 到其他类型的转化和 text 一样
-            iframe: io.getConfig().converters.text,
+            iframe: IO.getConfig().converters.text,
             text: {
                 // fake type, just mirror
                 iframe: function (text) {
@@ -918,9 +918,9 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, io) {
         }
     });
 
-    io['setupTransport']('iframe', IframeTransport);
+    IO['setupTransport']('iframe', IframeTransport);
 
-    return io;
+    return IO;
 
 }, {
     requires: ['dom', 'event', './base']
@@ -1104,9 +1104,9 @@ KISSY.add('io', function (S, serializer, IO) {
  * jsonp transport based on script transport
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/jsonp', function (S, io) {
+KISSY.add('io/jsonp', function (S, IO) {
     var win = S.Env.host;
-    io.setupConfig({
+    IO.setupConfig({
         jsonp: 'callback',
         jsonpCallback: function () {
             // 不使用 now() ，极端情况下可能重复
@@ -1114,7 +1114,7 @@ KISSY.add('io/jsonp', function (S, io) {
         }
     });
 
-    io.on('start', function (e) {
+    IO.on('start', function (e) {
         var io = e.io,
             c = io.config,
             dataType = c.dataType;
@@ -1180,7 +1180,7 @@ KISSY.add('io/jsonp', function (S, io) {
         }
     });
 
-    return io;
+    return IO;
 }, {
     requires: ['./base']
 });
@@ -1650,7 +1650,7 @@ KISSY.add('io/sub-domain-transport', function (S, XhrTransportBase, Event, DOM) 
  * use flash to accomplish cross domain request, usage scenario ? why not jsonp ?
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xdr-flash-transport', function (S, io, DOM) {
+KISSY.add('io/xdr-flash-transport', function (S, IO, DOM) {
 
     var // current running request instances
         maps = {},
@@ -1675,7 +1675,7 @@ KISSY.add('io/xdr-flash-transport', function (S, io, DOM) {
                 '<param name="FlashVars" value="yid=' +
                 _ + '&uid=' +
                 uid +
-                '&host=KISSY.io" />' +
+                '&host=KISSY.IO" />' +
                 '<param name="allowScriptAccess" value="always" />' +
                 '</object>',
             c = doc.createElement('div');
@@ -1760,10 +1760,10 @@ KISSY.add('io/xdr-flash-transport', function (S, io, DOM) {
     });
 
     /*called by flash*/
-    io['applyTo'] = function (_, cmd, args) {
+    IO['applyTo'] = function (_, cmd, args) {
         // S.log(cmd + ' execute');
         var cmds = cmd.split('.').slice(1),
-            func = io;
+            func = IO;
         S.each(cmds, function (c) {
             func = func[c];
         });
@@ -1771,7 +1771,7 @@ KISSY.add('io/xdr-flash-transport', function (S, io, DOM) {
     };
 
     // when flash is loaded
-    io['xdrReady'] = function () {
+    IO['xdrReady'] = function () {
         flash = doc.getElementById(ID);
     };
 
@@ -1780,7 +1780,7 @@ KISSY.add('io/xdr-flash-transport', function (S, io, DOM) {
      @param e response status
      @param o internal data
      */
-    io['xdrResponse'] = function (e, o) {
+    IO['xdrResponse'] = function (e, o) {
         var xhr = maps[o.uid];
         xhr && xhr._xdrResponse(e, o);
     };
@@ -1794,7 +1794,7 @@ KISSY.add('io/xdr-flash-transport', function (S, io, DOM) {
  * base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xhr-transport-base', function (S, io) {
+KISSY.add('io/xhr-transport-base', function (S, IO) {
     var OK_CODE = 200,
         win = S.Env.host,
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
@@ -1807,8 +1807,8 @@ KISSY.add('io/xhr-transport-base', function (S, io) {
         }, lastModifiedCached = {},
         eTagCached = {};
 
-    io.__lastModifiedCached = lastModifiedCached;
-    io.__eTagCached = eTagCached;
+    IO.__lastModifiedCached = lastModifiedCached;
+    IO.__eTagCached = eTagCached;
 
     function createStandardXHR(_, refWin) {
         try {
@@ -1833,7 +1833,7 @@ KISSY.add('io/xhr-transport-base', function (S, io) {
             return new _XDomainRequest();
         }
         // ie7 XMLHttpRequest 不能访问本地文件
-        return !io.isLocal && createStandardXHR(crossDomain, refWin) ||
+        return !IO.isLocal && createStandardXHR(crossDomain, refWin) ||
             createActiveXHR(crossDomain, refWin);
     } : createStandardXHR;
 
@@ -2057,7 +2057,7 @@ KISSY.add('io/xhr-transport-base', function (S, io) {
  * io xhr transport class, route subdomain, xdr
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xhr-transport', function (S, io, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
+KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransport, XdrFlashTransport) {
 
     var win = S.Env.host,
         doc = win.document,
@@ -2117,10 +2117,10 @@ KISSY.add('io/xhr-transport', function (S, io, XhrTransportBase, SubDomainTransp
 
         });
 
-        io['setupTransport']('*', XhrTransport);
+        IO['setupTransport']('*', XhrTransport);
     }
 
-    return io;
+    return IO;
 }, {
     requires: ['./base', './xhr-transport-base', './sub-domain-transport', './xdr-flash-transport']
 });

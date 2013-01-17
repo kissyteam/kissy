@@ -3,7 +3,7 @@
  * base for xhr and subdomain
  * @author yiminghe@gmail.com
  */
-KISSY.add('io/xhr-transport-base', function (S, io) {
+KISSY.add('io/xhr-transport-base', function (S, IO) {
     var OK_CODE = 200,
         win = S.Env.host,
     // http://msdn.microsoft.com/en-us/library/cc288060(v=vs.85).aspx
@@ -16,8 +16,8 @@ KISSY.add('io/xhr-transport-base', function (S, io) {
         }, lastModifiedCached = {},
         eTagCached = {};
 
-    io.__lastModifiedCached = lastModifiedCached;
-    io.__eTagCached = eTagCached;
+    IO.__lastModifiedCached = lastModifiedCached;
+    IO.__eTagCached = eTagCached;
 
     function createStandardXHR(_, refWin) {
         try {
@@ -42,7 +42,7 @@ KISSY.add('io/xhr-transport-base', function (S, io) {
             return new _XDomainRequest();
         }
         // ie7 XMLHttpRequest 不能访问本地文件
-        return !io.isLocal && createStandardXHR(crossDomain, refWin) ||
+        return !IO.isLocal && createStandardXHR(crossDomain, refWin) ||
             createActiveXHR(crossDomain, refWin);
     } : createStandardXHR;
 
