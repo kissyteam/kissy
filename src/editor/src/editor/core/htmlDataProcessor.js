@@ -126,6 +126,12 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                         // kissy 相关
                         [ ( /^_ks.*/ ), '' ]
                     ],
+                    text:function(text){
+                        // remove fill char for webkit
+                        if(UA.webkit){
+                            return text.replace(/\u200b/g,"");
+                        }
+                    },
                     comment: function (contents) {
                         // If this is a comment for protected source.
                         if (contents.substr(0, protectedSourceMarker.length) == protectedSourceMarker) {

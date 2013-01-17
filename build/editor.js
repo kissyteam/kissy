@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 17 14:27
 */
 /**
  * Set up editor constructor
@@ -80,7 +80,7 @@ KISSY.add("editor/core/base", function (S, HtmlParser, Component) {
                  * editor mode.
                  * wysiswyg mode:1
                  * source mode:0
-                 * @default wysiswyg mode
+                 * Defaults to: wysiswyg mode
                  */
                 mode:{
                     value:1
@@ -3495,6 +3495,12 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                         // kissy 相关
                         [ ( /^_ks.*/ ), '' ]
                     ],
+                    text:function(text){
+                        // remove fill char for webkit
+                        if(UA.webkit){
+                            return text.replace(/\u200b/g,"");
+                        }
+                    },
                     comment: function (contents) {
                         // If this is a comment for protected source.
                         if (contents.substr(0, protectedSourceMarker.length) == protectedSourceMarker) {
@@ -3778,8 +3784,8 @@ KISSY.config('modules', {
 'editor/plugin/heading/index': {requires: ['editor','editor/plugin/heading/cmd']},
 'editor/plugin/drag-upload/index': {requires: ['editor']},
 'editor/plugin/color/cmd': {requires: ['editor']},
-'editor/plugin/flash/dialog': {requires: ['editor','editor/plugin/flash-common/utils','editor/plugin/overlay/','editor/plugin/menubutton/']},
 'editor/plugin/code/index': {requires: ['editor','editor/plugin/dialog-loader/']},
+'editor/plugin/flash/dialog': {requires: ['editor','editor/plugin/flash-common/utils','editor/plugin/overlay/','editor/plugin/menubutton/']},
 'editor/plugin/strike-through/cmd': {requires: ['editor','editor/plugin/font/cmd']},
 'editor/plugin/unordered-list/index': {requires: ['editor','editor/plugin/list-utils/btn','editor/plugin/unordered-list/cmd']},
 'editor/plugin/outdent/cmd': {requires: ['editor','editor/plugin/dent-utils/cmd']},
@@ -3846,9 +3852,9 @@ KISSY.config('modules', {
 'editor/plugin/justify-left/index': {requires: ['editor','editor/plugin/justify-left/cmd']},
 'editor/plugin/outdent/index': {requires: ['editor','editor/plugin/outdent/cmd']},
 'editor/plugin/fake-objects/index': {requires: ['editor']},
-'editor/plugin/link/dialog': {requires: ['editor','editor/plugin/overlay/','editor/plugin/link/utils']},
 'editor/plugin/font-family/cmd': {requires: ['editor','editor/plugin/font/cmd']},
 'editor/plugin/back-color/cmd': {requires: ['editor/plugin/color/cmd']},
+'editor/plugin/link/dialog': {requires: ['editor','editor/plugin/overlay/','editor/plugin/link/utils']},
 'editor/plugin/multiple-upload/dialog': {requires: ['editor','component/plugin/drag','editor/plugin/progressbar/','editor/plugin/overlay/','editor/plugin/flash-bridge/','editor/plugin/local-storage/','swf']},
 'editor/plugin/code/dialog': {requires: ['editor','editor/plugin/overlay/','menubutton']},
 'editor/plugin/justify-center/cmd': {requires: ['editor/plugin/justify-utils/cmd']},
@@ -4264,7 +4270,7 @@ KISSY.add("editor/core/range", function (S, Editor, Utils, Walker, ElementPath) 
 
 
     /**
-     * @memberOf Editor
+     * @member Editor
      * @class
      * Range implementation across browsers.
      * @param document {Document}
@@ -6177,7 +6183,7 @@ KISSY.add("editor/core/selection", function (S) {
                         (( UA.gecko && UA.gecko < 1.0900 ) || UA.opera || UA['webkit']) &&
                         startContainer[0].nodeType == DOM.NodeType.ELEMENT_NODE &&
                         !startContainer[0].childNodes.length) {
-                        // webkit 光标停留不到在空元素内，要fill char，之后范围定在 fillchar 之后
+                        // webkit 光标停留不到在空元素内，要fill char，之后范围定在 fill char 之后
                         startContainer[0].appendChild(self.document.createTextNode(UA['webkit'] ? "\u200b" : ""));
                         range.startOffset++;
                         range.endOffset++;
@@ -8303,7 +8309,7 @@ KISSY.add("editor/core/utils", function (S) {
          * @namespace
          * Utilities for Editor.
          * @name Utils
-         * @memberOf Editor
+         * @member Editor
          */
             Utils =
         /**
@@ -8816,7 +8822,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
      * @param {Editor.Range} range
      * @class
      * Walker for DOM.
-     * @memberOf Editor
+     * @member Editor
      */
     function Walker(range) {
         this.range = range;
@@ -8827,7 +8833,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
          * matched nodes are considered good.
          * If the function returns "FALSE" the node is ignored.
          * @type {Function}
-         * @memberOf Editor.Walker#
+         * @member Editor.Walker#
          */
         this.evaluator = NULL;// 当前 range 范围内深度遍历的元素调用
 
@@ -8838,7 +8844,7 @@ KISSY.add("editor/core/walker", function (S, Editor) {
          * If this function returns "FALSE", the walking ends and no more
          * nodes are evaluated.
          * @type {Function}
-         * @memberOf Editor.Walker#
+         * @member Editor.Walker#
          */
         this.guard = NULL;// 人为缩小当前 range 范围
 

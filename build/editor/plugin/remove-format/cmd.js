@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 17 14:27
 */
 /**
  * Add remove-format command for KISSY Editor.
@@ -16,7 +16,7 @@ KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
          * when executing the "remove format" command.
          * Note that only inline elements are allowed.
          * @type {String}
-         * @default 'b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var'
+         * Defaults to: 'b,big,code,del,dfn,em,font,i,ins,kbd,q,samp,small,span,strike,strong,sub,sup,tt,u,var'
          * @example
          */
             removeFormatTags = 'b,big,code,del,dfn,em,font,i,ins,kbd,' +
@@ -25,7 +25,7 @@ KISSY.add("editor/plugin/remove-format/cmd", function (S, Editor) {
          * A comma separated list of elements attributes to be removed
          * when executing the "remove format" command.
          * @type {String}
-         * @default 'class,style,lang,width,height,align,hspace,valign'
+         * Defaults to: 'class,style,lang,width,height,align,hspace,valign'
          * @example
          */
             removeFormatAttributes = ('class,style,lang,width,height,' +
