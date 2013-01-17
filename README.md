@@ -2,10 +2,9 @@
 
  * Source: <http://github.com/kissyteam/kissy>
  * Docs: <http://docs.kissyui.com/>
- * Changelog: <http://github.com/kissyteam/kissy/blob/master/CHANGELOG.md>
+ * History: <http://github.com/kissyteam/kissy/blob/master/HISTORY.md>
  * License: <http://github.com/kissyteam/kissy/blob/master/LICENSE.md>
- * Nodejs README: <https://github.com/kissyteam/kissy/blob/master/src/seed/nodejs.md>
-
+ * Contributing Guide: <http://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md>
 
 ## Vision
 
