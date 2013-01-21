@@ -1,66 +1,66 @@
 <script src="/kissy/build/seed.js"></script>
+<script type="text/javascript">
+    document.writeln('<iframe src="' +
+            'http://' + location.hostname + ':9999/kissy/src/' +
+            'io/tests/others/xdr/set-cookie.html' +
+            '"></iframe>')
+</script>
 <script>
-    KISSY.use("io", function (S, io) {
-        S.ready(function (S) {
-            io({
-                headers: {
-                    // cross domain 设置 header ie 无效
-                    // 原生 chrome.firefox 也不行，响应头也不能读
-                    yiminghe: 1
-                },
-                cache:false,
-                // force to use native xhr no sub domain proxy
-                crossDomain: false,
-                dataType: 'json',
-                url: 'http://'+location.hostname+':9999/kissy/src/' +
-                        'io/tests/others/xdr/xdr.jss',
-                xhrFields: {
-                    // Cannot use wildcard in Access-Control-Allow-Origin
-                    // when credentials flag is true.
-                    // Access-Control-Allow-Origin:http://localhost
-                    // 必须设置完全 hostname 匹配
+    window.onload = function () {
+        KISSY.use("io", function (S, io) {
+            S.ready(function (S) {
+                var o = io({
+                    headers: {
+                        // cross domain 设置 header ie 无效
+                        // 原生 chrome.firefox 可行
+                        yiminghe: 'oo'
+                    },
+                    cache: false,
+                    dataType: 'json',
+                    url: 'http://' + location.hostname + ':9999/kissy/src/' +
+                            'io/tests/others/xdr/xdr.jss',
+                    xhrFields: {
+                        // Cannot use wildcard in Access-Control-Allow-Origin
+                        // when credentials flag is true.
+                        // Access-Control-Allow-Origin:http://localhost
+                        // 必须设置完全 hostname 匹配
 
-                    // firefox , chrome 携带 cookie
-                    withCredentials: true
-                },
-                xdr: {
-                    // 强制用 flash，ie 可携带cookie
-                    use: "flash"
-                },
-                data: {
-                    action: "x"
-                },
-                success: function (d, s, r) {
-                    S.log("x : " + d.x);
-                    // 原生 chrome.firefox 也不行，响应头也不能读
-                    S.log(r.getResponseHeader("X-Powered-By"));
-                }
-            });
+                        // firefox , chrome 携带 cookie
+                        withCredentials: true
+                    },
+                    xdr: {
+                        // 强制用 flash，ie 可携带cookie
+                        // use: "flash",
+                        // force to use native xhr no sub domain proxy
+                        subDomain: {
+                            proxy: false
+                        }
+                    },
+                    data: {
+                        action: "x"
+                    },
+                    success: function (d, s, r) {
+                        // body 都可读
+                        S.log("body : " + d.action);
 
-            if (1)return;
+                        // ie6-7 flash 不可读
+                        // ie8-9 XDomainRequest 不可读
+                        // header ie10 ,chrome, firefox 可读
+                        S.log("header : " + d.yiminghe);
 
-            io({
-                crossDomain: false,
-                headers: {
-                    // cross domain 设置 header ie 无效
-                    // yiminghe:1
-                },
-                dataType: 'json',
-                url: 'http://'+location.hostname+':9999/kissy/src/' +
-                        'io/tests/others/xdr/xdr.jss',
-                xhrFields: {
-                    // Cannot use wildcard in Access-Control-Allow-Origin
-                    // when credentials flag is true.
-                    // withCredentials:true
-                },
-                data: {
-                    action: "y"
-                },
-                success: function (d, s, r) {
-                    S.log("y : " + d.y);
-                    S.log(r.getResponseHeader("X-Powered-By"));
-                }
+                        // ie8-9 XDomainRequest 不可读
+                        // header ie10 ,chrome, firefox 可读
+                        // ie6-7 flash 可读
+                        S.log("cookie : " + d.cors);
+
+                        // 原生 chrome.firefox 响应头不能读
+                        // ie6-7 flash 不可读
+                        // ie8-9 XDomainRequest 不可读
+                        // ie10 可以读
+                        S.log(r.getResponseHeader("X-Powered-By"));
+                    }
+                });
             });
         });
-    })
+    };
 </script>

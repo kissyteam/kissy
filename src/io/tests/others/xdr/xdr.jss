@@ -8,7 +8,9 @@ module.exports = function (req, res) {
         res.set('Access-Control-Allow-Credentials', 'true');
         res.set('Access-Control-Allow-Origin', 'http://'+req.host+':8888');
         res.set('Access-Control-Allow-Headers', 'origin, x-requested-with, yiminghe, content-type, accept, *');
-        res.send('{"' + req.query.action + '": 1}');
+        res.send('{"yiminghe' +  '": "'+req.get('yiminghe')+'",'+
+        '"'+'action' +  '": "'+req.query.action+'",'+
+        '"cors":"'+req.cookies.cors+'"}');
     }, 10);
 
 };

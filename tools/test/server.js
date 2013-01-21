@@ -21,6 +21,7 @@ S.use('xtemplate', function (S, XTemplate) {
         var listTpl = new XTemplate(fs.readFileSync(currentDir + '/list-xtpl.html', 'utf-8'));
 
         // app.use(express.compress());
+        app.use(express.cookieParser());
         app.use(express.bodyParser());
 
         // combo

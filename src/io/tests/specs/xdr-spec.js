@@ -15,41 +15,91 @@ KISSY.use("ua,json,io,node", function (S, UA, JSON, io, Node) {
         document.domain = host.split('.').slice(-3).join('.');
 
         it("should works for any domain", function () {
-            var v1, v2;
-            io({
-                headers: {
-                    // cross domain 设置 header ie 无效
-                    // flash 也不行
+            var v1;
 
-                    // 原生 chrome.firefox 也不行，响应头也不能读
-                    // yiminghe:1
-                },
-                // force to not use sub domain
-                xdr: {
-                    subDomain: {
-                        proxy: false
+            var iframe = $('<iframe></iframe>');
+            iframe.on('load', function () {
+
+                io({
+                    headers: {
+                        // cross domain 设置 header ie 无效
+                        // 原生 chrome.firefox 可行
+                        yiminghe: 'oo'
+                    },
+                    cache: false,
+                    dataType: 'json',
+                    url: 'http://' + location.hostname + ':9999/kissy/src/' +
+                        'io/tests/others/xdr/xdr.jss',
+                    xhrFields: {
+                        // Cannot use wildcard in Access-Control-Allow-Origin
+                        // when credentials flag is true.
+                        // Access-Control-Allow-Origin:http://localhost
+                        // 必须设置完全 hostname 匹配
+
+                        // firefox , chrome 携带 cookie
+                        withCredentials: true
+                    },
+                    xdr: {
+                        // 强制用 flash，ie 可携带cookie
+                        // use: "flash",
+                        // force to use native xhr no sub domain proxy
+                        subDomain: {
+                            proxy: false
+                        }
+                    },
+                    data: {
+                        action: "x"
+                    },
+                    success: function (d, s, r) {
+                        // body 都可读
+                        expect(d.action).toBe('x');
+
+                        // ie6-7 flash 不可读
+                        // ie8-9 XDomainRequest 不可读
+                        // header ie10 ,chrome, firefox 可读
+                        if(UA.ie&&UA.ie<10){
+                            expect(d.yiminghe).toBe('undefined');
+                        }else{
+                            expect(d.yiminghe).toBe('oo');
+                        }
+
+                        // ie8-9 XDomainRequest 不可读
+                        // header ie10 ,chrome, firefox 可读
+                        // ie6-7 flash 可读
+                        if(UA.ie&&UA.ie>=8 && UA.ie<=9){
+                            expect( d.cors).toBe('undefined');
+                        }else{
+                            expect( d.cors).toBe('ok')
+                        }
+
+                        // 原生 chrome.firefox 响应头不能读
+                        // ie6-7 flash 不可读
+                        // ie8-9 XDomainRequest 不可读
+                        // ie10 可以读
+                        if(UA.ie>=10){
+                            expect(r.getResponseHeader("X-Powered-By")).toBe('Express');
+                        }else{
+                            expect(r.getResponseHeader("X-Powered-By")).toBeNull();
+                        }
+
+                        v1 = 1;
                     }
-                },
-                dataType: 'json',
-                url: 'http://' + host + ':9999/kissy/src/' +
-                    'io/tests/others/xdr/xdr.jss',
-                xhrFields: {
-                    // Cannot use wildcard in Access-Control-Allow-Origin
-                    // when credentials flag is true.
-                    // withCredentials:true
-                },
-                data: {
-                    action: "x"
-                },
-                success: function (d, s, r) {
-                    v1 = d.x;
-                }
+                });
+
             });
 
+            iframe[0].src = 'http://' + location.hostname + ':9999/kissy/src/' +
+                'io/tests/others/xdr/set-cookie.html';
+            iframe.appendTo('body');
 
             waitsFor(function () {
                 return v1 === 1;
             }, 5000, "xdr should return!");
+
+            waits(100);
+            runs(function () {
+                iframe.remove();
+            });
         });
 
 
@@ -108,7 +158,7 @@ KISSY.use("ua,json,io,node", function (S, UA, JSON, io, Node) {
                     expect(data.test2).toBe('2');
                     ok = 1;
                 },
-                error:function(_,e){
+                error: function (_, e) {
                     alert(e.message);
                 }
             });

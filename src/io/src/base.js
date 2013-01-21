@@ -177,7 +177,8 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
      *
      * @cfg {Boolean} crossDomain
      * Default to: false for same-domain request,true for cross-domain request
-     * if server-side jsonp redirect to another domain ,you should set this to true
+     * if server-side jsonp redirect to another domain, you should set this to true.
+     * if you want use script for jsonp for same domain request, you should set this to true.
      *
      * @cfg {Object} data
      * Data sent to server.if processData is true,data will be serialized to String type.

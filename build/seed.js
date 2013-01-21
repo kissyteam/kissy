@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 17 23:33
+build time: Jan 22 00:01
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130117233306' will replace with current timestamp when compressing.
+         * NOTICE: '20130122000126' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130117233306',
+        __BUILD_TIME: '20130122000126',
         /**
          * KISSY Environment.
          * @private
@@ -3066,6 +3066,18 @@ var KISSY = (function (undefined) {
         }));
     }
 
+    function setTridentVersion(ua, UA) {
+        var core, m;
+        UA[core = 'trident'] = 0.1; // Trident detected, look for revision
+
+        // Get the Trident's accurate version
+        if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
+            UA[core] = numberify(m[1]);
+        }
+
+        UA.core = core;
+    }
+
     function getDescriptorFromUserAgent(ua) {
         var EMPTY = '',
             os,
@@ -3222,13 +3234,7 @@ var KISSY = (function (undefined) {
 
         if (s.length > 0) {
 
-            shell = 'ie';
-            UA[core = 'trident'] = 0.1; // Trident detected, look for revision
-
-            // Get the Trident's accurate version
-            if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
-                UA[core] = numberify(m[1]);
-            }
+            setTridentVersion(ua, UA);
 
             // Detect the accurate version
             // 注意：
@@ -3239,31 +3245,14 @@ var KISSY = (function (undefined) {
             for (v = IE_DETECT_RANGE[0], end = IE_DETECT_RANGE[1]; v <= end; v++) {
                 div.innerHTML = IE_DETECT_TPL.replace(VERSION_PLACEHOLDER, v);
                 if (s.length > 0) {
-                    UA[shell] = v;
+                    UA[shell = 'ie'] = v;
                     break;
                 }
             }
 
         } else {
-
-            // MSIE for analysis tools in nodejs
-            if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
-                o[core = 'trident'] = 0.1; // Trident detected, look for revision
-                // 注意：
-                //  o.shell = ie, 表示外壳是 ie
-                //  但 o.ie = 7, 并不代表外壳是 ie7, 还有可能是 ie8 的兼容模式
-                //  对于 ie8 的兼容模式，还要通过 documentMode 去判断。但此处不能让 o.ie = 8, 否则
-                //  很多脚本判断会失误。因为 ie8 的兼容模式表现行为和 ie7 相同，而不是和 ie8 相同
-                o[shell = 'ie'] = numberify(m[1]);
-
-                // Get the Trident's accurate version
-                if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
-                    o[core] = numberify(m[1]);
-                }
-            }
-
             // WebKit
-            else if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
+            if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
                 UA[core = 'webkit'] = numberify(m[1]);
 
                 // Chrome
@@ -3337,15 +3326,10 @@ var KISSY = (function (undefined) {
                 } else {
                     // MSIE
                     // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
+                    // and analysis tools in nodejs
                     if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
-                        UA[core = 'trident'] = 0.1; // Trident detected, look for revision
                         UA[shell = 'ie'] = numberify(m[1]);
-
-                        // Get the Trident's accurate version
-                        if ((m = ua.match(/Trident\/([\d.]*)/)) && m[1]) {
-                            UA[core] = numberify(m[1]);
-                        }
-
+                        setTridentVersion(ua, UA);
                         // NOT WebKit, Presto or IE
                     } else {
                         // Gecko
@@ -3378,7 +3362,7 @@ var KISSY = (function (undefined) {
         }
 
         UA.os = os;
-        UA.core = core;
+        UA.core = UA.core || core;
         UA.shell = shell;
 
         return UA;
@@ -3424,8 +3408,7 @@ var KISSY = (function (undefined) {
             documentElement.className = S.trim(documentElement.className + className);
         }
     }
-})
-    (KISSY);
+})(KISSY);
 
 /*
  NOTES:
@@ -5874,7 +5857,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130117233306'
+            tag: '20130122000126'
         }, getBaseInfo()));
     }
 
