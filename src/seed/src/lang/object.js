@@ -121,7 +121,7 @@
          * all the supplied objects. The properties from later objects
          * will overwrite those in earlier objects. Passing in a
          * single object will create a shallow copy of it.
-         * @param {...Object} var_args objects need to be merged
+         * @param {Object...} var_args objects need to be merged
          * @return {Object} the new merged object
          * @member KISSY
          */
@@ -139,7 +139,7 @@
         /**
          * Applies prototype properties from the supplier to the receiver.
          * @param   {Object} r received object
-         * @param   {...Object} var_args object need to  augment
+         * @param   {Object...} var_args object need to  augment
          *          {Boolean} [ov=TRUE] whether overwrite existing property
          *          {String[]} [wl] array of white-list properties
          * @return  {Object} the augmented object

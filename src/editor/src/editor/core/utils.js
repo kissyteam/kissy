@@ -80,7 +80,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              * 执行一系列函数
-             * @param var_args {...function()}
+             * @param {Function...} var_args
              * @return {*} 得到成功的返回
              */
             tryThese: function (var_args) {
