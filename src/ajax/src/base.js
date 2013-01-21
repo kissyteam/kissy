@@ -1,6 +1,6 @@
 /**
  * @ignore
- *  a scalable client io framework
+ * a scalable client io framework
  * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
@@ -177,7 +177,8 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
      *
      * @cfg {Boolean} crossDomain
      * Default to: false for same-domain request,true for cross-domain request
-     * if server-side jsonp redirect to another domain ,you should set this to true
+     * if server-side jsonp redirect to another domain, you should set this to true.
+     * if you want use script for jsonp for same domain request, you should set this to true.
      *
      * @cfg {Object} data
      * Data sent to server.if processData is true,data will be serialized to String type.
@@ -461,8 +462,8 @@ KISSY.add('ajax/base', function (S, JSON, Event, undefined) {
         } catch (e) {
             // Propagate exception as error if not done
             if (self.state < 2) {
-                S.log(e.stack||e, 'error');
-                self._ioReady(-1, e);
+                S.log(e.stack || e, 'error');
+                self._ioReady(-1, e.message);
                 // Simply rethrow otherwise
             } else {
                 S.error(e);

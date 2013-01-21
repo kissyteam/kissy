@@ -1,7 +1,8 @@
 /**
  * @ignore
- * script transport for kissy io
- * modified version of S.getScript , add abort ability
+ * script transport for kissy io,
+ * modified version of S.getScript,
+ * add abort ability
  * @author yiminghe@gmail.com
  */
 KISSY.add('ajax/script-transport', function (S, IO, _, undefined) {

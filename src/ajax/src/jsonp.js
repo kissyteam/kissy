@@ -1,11 +1,11 @@
 /**
  * @ignore
- *  jsonp transport based on script transport
+ * jsonp transport based on script transport
  * @author yiminghe@gmail.com
  */
-KISSY.add('ajax/jsonp', function (S, io) {
+KISSY.add('ajax/jsonp', function (S, IO) {
     var win = S.Env.host;
-    io.setupConfig({
+    IO.setupConfig({
         jsonp: 'callback',
         jsonpCallback: function () {
             // 不使用 now() ，极端情况下可能重复
@@ -13,7 +13,7 @@ KISSY.add('ajax/jsonp', function (S, io) {
         }
     });
 
-    io.on('start', function (e) {
+    IO.on('start', function (e) {
         var io = e.io,
             c = io.config,
             dataType = c.dataType;
@@ -79,7 +79,7 @@ KISSY.add('ajax/jsonp', function (S, io) {
         }
     });
 
-    return io;
+    return IO;
 }, {
     requires: ['./base']
 });
