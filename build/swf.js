@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 9 23:26
+build time: Jan 23 19:30
 */
 /**
  * @ignore
@@ -129,7 +129,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         if ('outerHTML' in placeHolder) {
             placeHolder.outerHTML = html;
         } else {
-            placeHolder.parentNode.replaceChild(placeHolder, DOM.create(html));
+            placeHolder.parentNode.replaceChild(DOM.create(html),placeHolder);
         }
 
         swf = DOM.get('#' + id, doc);

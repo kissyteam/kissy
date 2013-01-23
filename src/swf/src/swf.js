@@ -124,7 +124,7 @@ KISSY.add('swf', function (S, DOM, JSON, Base, FlashUA, undefined) {
         if ('outerHTML' in placeHolder) {
             placeHolder.outerHTML = html;
         } else {
-            placeHolder.parentNode.replaceChild(placeHolder, DOM.create(html));
+            placeHolder.parentNode.replaceChild(DOM.create(html),placeHolder);
         }
 
         swf = DOM.get('#' + id, doc);
