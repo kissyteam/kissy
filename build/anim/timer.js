@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 21:25
+build time: Jan 23 19:58
 */
 /**
  * @ignore
@@ -1037,6 +1037,8 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
             AM.start(this);
         }
     });
+
+    Anim.Easing=Easing;
 
     return Anim;
 }, {

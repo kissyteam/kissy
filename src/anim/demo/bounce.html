@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+    <script src="/kissy/build/seed.js"></script>
+    <style>
+        #t {
+            position: absolute;
+            left: 10px;
+            top: 150px;
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+<h1>bounce</h1>
+<button id="run">run</button>
+<div id="t"></div>
+
+<script>
+    KISSY.use('core', function (S) {
+        var $ = S.all, t = $('#t');
+        var run = $('#run');
+
+        var SPRING_TENSION = 0.3;
+        var ACCELERATION = 30;
+
+        run.attr('disabled', false);
+        run.on('click', function () {
+            run.attr('disabled', true);
+            // alert(t.isRunning());
+            var startVelocity = 0.3;
+            var startValue = parseInt(t.css('left'));
+            var velocity = startVelocity * ACCELERATION;
+            t.animate({
+                left: {
+                    fx: {
+                        frame: function (anim) {
+                            var deltaTime = S.now() - anim.startTime,
+                                    theta = (deltaTime / ACCELERATION),
+                            // long tail hump
+                                    powTime = theta * Math.exp(-SPRING_TENSION * theta),
+                                    value = parseInt(velocity * powTime);
+                            if (value === 0) {
+                                S.log('duration: ' + deltaTime);
+                                this.finished = 1;
+                            }
+                            //S.log(powTime);
+                            t[0].style.left = startValue + value + 'px';
+                        }
+                    }
+                }
+            }, {
+                duration: 999,
+                complete: function () {
+                    run.attr('disabled', false);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

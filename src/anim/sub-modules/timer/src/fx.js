@@ -125,10 +125,10 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
     function getPos(anim, propData) {
         var t = S.now(),
             runTime,
-            _startTime = anim._startTime,
+            startTime = anim.startTime,
             delay = propData.delay,
             duration = propData.duration;
-        runTime = t - _startTime - delay;
+        runTime = t - startTime - delay;
         if (runTime <= 0) {
             return 0;
         } else if (runTime >= duration) {

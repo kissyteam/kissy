@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 21:25
+build time: Jan 23 20:05
 */
 /**
  * base class for transition anim and timer anim
@@ -129,7 +129,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
                 }
             }
 
-            self._startTime = S.now();
+            self.startTime = S.now();
 
             self.prepareFx();
 
@@ -161,7 +161,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
             var self = this;
             if (self.isRunning()) {
                 // already run time
-                self._runTime = S.now() - self._startTime;
+                self._runTime = S.now() - self.startTime;
                 Utils.removeRunningAnim(self);
                 Utils.savePausedAnim(self);
                 self.doStop();
@@ -191,7 +191,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
             var self = this;
             if (self.isPaused()) {
                 // adjust time by run time caused by pause
-                self._startTime = S.now() - self._runTime;
+                self.startTime = S.now() - self._runTime;
                 Utils.removePausedAnim(self);
                 Utils.saveRunningAnim(self);
                 self['beforeResume']();

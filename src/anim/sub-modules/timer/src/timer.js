@@ -241,6 +241,8 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
         }
     });
 
+    Anim.Easing=Easing;
+
     return Anim;
 }, {
     requires: [
