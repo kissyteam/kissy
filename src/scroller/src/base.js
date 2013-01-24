@@ -268,6 +268,11 @@ KISSY.add('scroller/base', function (S, DD, Component, Extension, Render, Event)
             S.log('dragend: ' + e.timeStamp);
             onDragEndAxis(this, e, 'left');
             onDragEndAxis(this, e, 'top');
+        },
+
+        destructor: function () {
+            this.dd.destroy();
+            this.get('contentEl').stop();
         }
 
     }, {

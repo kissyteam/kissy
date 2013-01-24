@@ -22,7 +22,7 @@
             padding: 10px;
         }
 
-        h1{
+        h1 {
             text-align: center;
             /*margin-bottom: 20px;*/
         }
@@ -30,6 +30,7 @@
 </head>
 <body>
 <h1>KISSY Scroller</h1>
+<button id="destroy">destroy</button>
 <script src="../src/base.js"></script>
 <script src="../src/render.js"></script>
 <script src="../src/scroller.js"></script>
@@ -39,12 +40,17 @@
         for (var i = 0; i < 23; i++) {
             content += '<p>' + i + '</p>';
         }
-        new Scroller({
+        var scroller = new Scroller({
             width: 320,
             render: 'body',
             height: 219,
             content: content
         }).render();
+
+        S.all('#destroy').on('click', function () {
+            scroller.destroy();
+            S.all('#destroy').attr('disabled', true);
+        });
     });
 </script>
 </body>
