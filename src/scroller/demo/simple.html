@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>KISSY Scroller</title>
+    <script src="/kissy/build/seed.js"></script>
+    <link rel="stylesheet" href="../assets/dpl.css">
+    <style>
+        .ks-scroller {
+            border: 1px solid red;
+            margin: 0 auto;
+        }
+
+        .ks-scroller p {
+            height: 20px;
+            border: 1px solid green;
+            margin: 0;
+            padding: 10px;
+        }
+
+        h1{
+            text-align: center;
+            /*margin-bottom: 20px;*/
+        }
+    </style>
+</head>
+<body>
+<h1>KISSY Scroller</h1>
+<script src="../src/base.js"></script>
+<script src="../src/render.js"></script>
+<script src="../src/scroller.js"></script>
+<script>
+    KISSY.use('scroller', function (S, Scroller) {
+        var content = '';
+        for (var i = 0; i < 23; i++) {
+            content += '<p>' + i + '</p>';
+        }
+        new Scroller({
+            width: 320,
+            render: 'body',
+            height: 219,
+            content: content
+        }).render();
+    });
+</script>
+</body>
+</html>

@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:23
+build time: Jan 24 16:12
 */
 /**
  * @ignore
- * @fileOverview Button control for KISSY.
+ * Button control for KISSY.
  * @author yiminghe@gmail.com
  */
 KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
@@ -131,7 +131,7 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
     requires: ['event', 'component/base', './buttonRender']
 });/**
  * @ignore
- * @fileOverview simulated button for kissy , inspired by goog button
+ * simulated button for kissy , inspired by goog button
  * @author yiminghe@gmail.com
  */
 KISSY.add("button", function (S, Button, Render) {
@@ -144,7 +144,7 @@ KISSY.add("button", function (S, Button, Render) {
     ]
 });/**
  * @ignore
- * @fileOverview abstract view for button
+ * abstract view for button
  * @author yiminghe@gmail.com
  */
 KISSY.add("button/buttonRender", function (S, Component) {
@@ -158,7 +158,7 @@ KISSY.add("button/buttonRender", function (S, Component) {
         _onSetChecked:function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getCssClassWithState("-checked");
+                cls = self.getCssClassWithState("checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
         _onSetTooltip:function (title) {

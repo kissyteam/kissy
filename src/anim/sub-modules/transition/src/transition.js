@@ -72,7 +72,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
             });
             // chrome none
             // firefox none 0s ease 0s
-            if (original.indexOf('none')!=-1) {
+            if (original.indexOf('none') != -1) {
                 original = '';
             } else if (original) {
                 original += ',';

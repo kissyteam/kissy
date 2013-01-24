@@ -3,7 +3,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
-    var $=Node.all;
+    var $ = Node.all;
     describe('anim-frame config', function () {
         it("should call frame", function () {
             var stoppedCalled = 0,
@@ -113,7 +113,7 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
             }, {
                 duration: 1,
                 frame: function () {
-                    return 1;
+                    return false;
                 }
             });
 
@@ -139,8 +139,9 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 width: 10
             }, {
                 duration: 1,
-                frame: function () {
-                    return 1 | 2;
+                frame: function (anim, fx) {
+                    fx.finished = 1;
+                    return false;
                 },
                 complete: function () {
                     called = 1;
@@ -171,8 +172,8 @@ KISSY.use("dom,anim,node", function (S, DOM, Anim, Node) {
                 width: 10
             }, {
                 duration: 1,
-                frame: function () {
-                    return 2;
+                frame: function (anim, fx) {
+                    fx.finished = 1;
                 },
                 complete: function () {
                     called = 1;

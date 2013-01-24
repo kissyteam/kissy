@@ -5,9 +5,7 @@
  */
 KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
 
-    var OPT_FRAME_PREVENT_DEFAULT = 1,
-        camelCase = DOM._camelCase,
-        OPT_FRAME_GOTO_END = 2,
+    var camelCase = DOM._camelCase,
         NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
     function Anim() {
@@ -85,6 +83,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 
                 // 自定义
                 if (_propData.fx) {
+                    _propData.fx.prop = prop;
                     continue;
                 }
 
@@ -149,38 +148,29 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                     if (pos == 0) {
                         continue;
                     }
+                    fx.pos = pos;
                     if (fx.isBasicFx) {
                         // equal attr value, just skip
                         if (fx.from == fx.to) {
                             fx.finished = fx.finished || pos == 1;
                             continue;
                         }
+                        c = 0;
                         if (_propData.frame) {
-                            c = _propData.frame(self, {
-                                prop: prop,
-                                from: fx.from,
-                                to: fx.to,
-                                pos: pos
-                            });
+                            // from to pos prop -> fx
+                            c = _propData.frame(self, fx);
                             // in case frame call stop
                             if (!self.isRunning()) {
                                 return;
                             }
                         }
-                        // to be removed, do not use this feature
-                        if (c & OPT_FRAME_GOTO_END) {
-                            fx.finished = 1;
-                        }
-                        if (c & OPT_FRAME_PREVENT_DEFAULT) {
-                        } else {
+                        // prevent default
+                        if (c !== false) {
                             fx.frame(fx.finished || pos);
                         }
                     } else {
                         fx.finished = fx.finished || pos == 1;
-                        fx.frame(self, {
-                            prop: prop,
-                            pos: pos
-                        });
+                        fx.frame(self, fx);
                         // in case frame call stop
                         if (!self.isRunning()) {
                             return;
@@ -210,25 +200,18 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                     fx = _propData.fx;
                     // 当前属性没有结束
                     if (fx && !(fx.finished)) {
+                        fx.pos = 1;
                         if (fx.isBasicFx) {
+                            c = 0;
                             if (_propData.frame) {
-                                c = _propData.frame(self, {
-                                    prop: prop,
-                                    from: fx.from,
-                                    to: fx.to,
-                                    pos: 1
-                                });
+                                c = _propData.frame(self, fx);
                             }
-                            // to be removed, do not use this feature
-                            if (c & OPT_FRAME_PREVENT_DEFAULT) {
-                            } else {
+                            // prevent default
+                            if (c !== false) {
                                 fx.frame(1);
                             }
                         } else {
-                            fx.frame(self, {
-                                prop: prop,
-                                pos: 1
-                            });
+                            fx.frame(self, fx);
                         }
                         fx.finished = 1;
                     }
@@ -241,7 +224,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
         }
     });
 
-    Anim.Easing=Easing;
+    Anim.Easing = Easing;
 
     return Anim;
 }, {

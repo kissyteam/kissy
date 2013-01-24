@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 9 23:21
+build time: Jan 24 16:12
 */
 /**
  * @ignore
@@ -637,14 +637,14 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
         _onSetChecked: function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getCssClassWithState("-checked");
+                cls = self.getCssClassWithState("checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
         _onSetSelected: function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getCssClassWithState("-selected");
+                cls = self.getCssClassWithState("selected");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 

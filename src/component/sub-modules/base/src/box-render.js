@@ -35,7 +35,7 @@ KISSY.add('component/base/box-render', function (S) {
 
         elTagName: {
             // 生成标签名字
-            value: "div"
+            value: 'div'
         },
 
         elAttrs: {
@@ -55,13 +55,13 @@ KISSY.add('component/base/box-render', function (S) {
         },
 
         visibleMode: {
-            value: "display"
+            value: 'display'
         },
         // content 设置的内容节点,默认根节点
         // 防止 content 节点和根节点不是同一个节点，例如 submenu
         contentEl: {
             valueFn: function () {
-                return this.get("el");
+                return this.get('el');
             }
         }
     };
@@ -71,7 +71,7 @@ KISSY.add('component/base/box-render', function (S) {
             return srcNode;
         },
         content: function (el) {
-            var contentEl = this.get("contentEl") || el;
+            var contentEl = this.get('contentEl') || el;
             return contentEl.html();
         }
     };
@@ -85,32 +85,38 @@ KISSY.add('component/base/box-render', function (S) {
          */
         __createDom: function () {
             var self = this,
-                el, contentEl;
-            if (!self.get("srcNode")) {
-                contentEl = self.get("contentEl");
-
-                el = $("<" + self.get("elTagName") + ">");
+                el,
+                css = self.getCssClassWithState(),
+                tagName,
+                contentEl;
+            if (!(el = self.get('srcNode'))) {
+                contentEl = self.get('contentEl');
+                tagName = self.get('elTagName');
+                el = $('<' + tagName + ' class="' +
+                    css + '">' + '</' + tagName + '>');
 
                 if (contentEl) {
                     el.append(contentEl);
                 }
 
-                self.setInternal("el", el);
+                self.setInternal('el', el);
 
                 if (!contentEl) {
-                    // 没取到,这里设下值, uiSet 时可以 set("content")  取到
-                    self.setInternal("contentEl", el);
+                    // 没取到,这里设下值, uiSet 时可以 set('content')  取到
+                    self.setInternal('contentEl', el);
                 }
+            } else {
+                el.addClass(css);
             }
         },
 
         __renderUI: function () {
             var self = this;
             // 新建的节点才需要摆放定位
-            if (!self.get("srcNode")) {
-                var render = self.get("render"),
-                    el = self.get("el"),
-                    renderBefore = self.get("elBefore");
+            if (!self.get('srcNode')) {
+                var render = self.get('render'),
+                    el = self.get('el'),
+                    renderBefore = self.get('elBefore');
                 if (renderBefore) {
                     el.insertBefore(renderBefore, /**
                      @type Node
@@ -125,34 +131,34 @@ KISSY.add('component/base/box-render', function (S) {
         },
 
         _onSetElAttrs: function (attrs) {
-            this.get("el").attr(attrs);
+            this.get('el').attr(attrs);
         },
 
         _onSetElCls: function (cls) {
-            this.get("el").addClass(cls);
+            this.get('el').addClass(cls);
         },
 
         _onSetElStyle: function (style) {
-            this.get("el").css(style);
+            this.get('el').css(style);
         },
 
         '_onSetWidth': function (w) {
-            this.get("el").width(w);
+            this.get('el').width(w);
         },
 
         _onSetHeight: function (h) {
             var self = this;
-            self.get("el").height(h);
+            self.get('el').height(h);
         },
 
         '_onSetContent': function (c) {
             var self = this,
-                el = self.get("contentEl");
+                el = self.get('contentEl');
             // srcNode 时不重新渲染 content
             // 防止内部有改变，而 content 则是老的 html 内容
-            if (self.get("srcNode") && !self.get("rendered")) {
+            if (self.get('srcNode') && !self.get('rendered')) {
             } else {
-                if (typeof c == "string") {
+                if (typeof c == 'string') {
                     el.html(c);
                 } else if (c) {
                     el.empty().append(c);
@@ -169,10 +175,10 @@ KISSY.add('component/base/box-render', function (S) {
 
         _onSetVisible: function (visible) {
             var self = this,
-                el = self.get("el"),
-                shownCls = self.getCssClassWithState('-shown'),
-                hiddenCls = self.getCssClassWithState('-hidden'),
-                visibleMode = self.get("visibleMode");
+                el = self.get('el'),
+                shownCls = self.getCssClassWithState('shown'),
+                hiddenCls = self.getCssClassWithState('hidden'),
+                visibleMode = self.get('visibleMode');
             if (visible) {
                 el.removeClass(hiddenCls);
                 el.addClass(shownCls);
@@ -182,15 +188,15 @@ KISSY.add('component/base/box-render', function (S) {
             }
             //return;
             // !TODO 兼容代码，去除，通过 css 控制隐藏属性
-            if (visibleMode == "visibility") {
-                el.css("visibility", visible ? "visible" : "hidden");
+            if (visibleMode == 'visibility') {
+                el.css('visibility', visible ? 'visible' : 'hidden');
             } else {
-                el.css("display", visible ? "" : "none");
+                el.css('display', visible ? '' : 'none');
             }
         },
 
         __destructor: function () {
-            var el = this.get("el");
+            var el = this.get('el');
             if (el) {
                 el.remove();
             }

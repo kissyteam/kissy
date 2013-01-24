@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 11 17:20
+build time: Jan 24 19:29
 */
 /**
  * @ignore
@@ -187,7 +187,8 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
 
     // 同一时刻只可能有个 drag 元素，只能有一次 move 被注册，不需要每个实例一个 throttle
     // 一个应用一个 document 只需要注册一个 move
-    var throttleMove = S.throttle(move, MOVE_DELAY);
+    // 2013-01-24 更灵敏 for scroller in webkit
+    var throttleMove = UA.ie < 8 ? S.throttle(move, MOVE_DELAY) : move;
 
     function throttleMoveHandle(e) {
         // android can not throttle

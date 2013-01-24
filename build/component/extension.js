@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:24
+build time: Jan 24 16:11
 */
 /**
  * @ignore
- * @fileOverview Component.Extension.Align
+ * Component.Extension.Align
  * @author yiminghe@gmail.com, qiaohua@taobao.com
  */
 KISSY.add('component/extension/align', function (S, DOM, Node) {
@@ -457,10 +457,10 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
  *   - 增加智能对齐，以及大小调整选项
  **//**
  * @ignore
- * @fileOverview 里层包裹层定义， 适合mask以及shim
+ * 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
  */
-KISSY.add("component/extension/content-box-render", function (S, Node, DOM) {
+KISSY.add('component/extension/content-box-render', function (S, Node, DOM) {
 
     function ContentBoxRender() {
     }
@@ -478,27 +478,31 @@ KISSY.add("component/extension/content-box-render", function (S, Node, DOM) {
         __createDom: function () {
             var self = this,
                 contentEl,
-                el = self.get("el");
-
-            var childNodes = el[0].childNodes,
+                el = self.get('el'),
+                childNodes = el[0].childNodes,
+                css = self.getCssClassWithPrefix('contentbox') +
+                    ' ' + self.getCssClassWithState('contentbox'),
                 c = childNodes.length && DOM._nodeListToFragment(childNodes);
 
             // 产生新的 contentEl
-            contentEl = Node.all("<div class='" + self.get('prefixCls') + "contentbox'>" +
-                "</div>").append(c);
+            contentEl = Node.all('<div class="' + css + '"></div>');
+
+            if (c) {
+                contentEl.append(c);
+            }
 
             el.append(contentEl);
 
-            self.setInternal("contentEl", contentEl);
+            self.setInternal('contentEl', contentEl);
         }
     };
 
     return ContentBoxRender;
 }, {
-    requires: ["node", 'dom']
+    requires: ['node', 'dom']
 });/**
  * @ignore
- * @fileOverview 里层包裹层定义， 适合mask以及shim
+ * 里层包裹层定义， 适合mask以及shim
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/content-box", function () {
@@ -529,7 +533,7 @@ KISSY.add("component/extension/content-box", function () {
     return ContentBox;
 });/**
  * @ignore
- * @fileOverview uibase
+ * uibase
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension", function (S, Align, ContentBox, ContentBoxRender, Position, PositionRender, ShimRender) {
@@ -554,7 +558,7 @@ KISSY.add("component/extension", function (S, Align, ContentBox, ContentBoxRende
     ]
 });/**
  * @ignore
- * @fileOverview position and visible extension，可定位的隐藏层
+ * position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/position-render", function () {
@@ -574,7 +578,7 @@ KISSY.add("component/extension/position-render", function () {
         /**
          * @ignore
          * see {@link KISSY.Component.Extension.Box#cfg-visibleMode}.
-         * @default "visibility"
+         * Defaults to: "visibility"
          */
         visibleMode: {
             value: "visibility"
@@ -612,7 +616,7 @@ KISSY.add("component/extension/position-render", function () {
     return Position;
 });/**
  * @ignore
- * @fileOverview position and visible extension，可定位的隐藏层
+ * position and visible extension，可定位的隐藏层
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/position", function (S) {
@@ -732,7 +736,7 @@ KISSY.add("component/extension/position", function (S) {
     return Position;
 });/**
  * @ignore
- * @fileOverview shim for ie6 ,require box-ext
+ * shim for ie6 ,require box-ext
  * @author yiminghe@gmail.com
  */
 KISSY.add("component/extension/shim-render", function () {

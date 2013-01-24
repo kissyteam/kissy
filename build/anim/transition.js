@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 21:25
+build time: Jan 24 18:05
 */
 /**
  * animation using css transition
@@ -77,7 +77,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
             });
             // chrome none
             // firefox none 0s ease 0s
-            if (original.indexOf('none')!=-1) {
+            if (original.indexOf('none') != -1) {
                 original = '';
             } else if (original) {
                 original += ',';

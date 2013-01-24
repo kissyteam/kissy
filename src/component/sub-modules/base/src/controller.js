@@ -100,7 +100,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             }
             constructor = constructor.superclass && constructor.superclass.constructor;
         }
-        return re.join(" ");
+        return re;
     }
 
     function isMouseEventWithinElement(e, elem) {

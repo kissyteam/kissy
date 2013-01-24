@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 10 18:36
+build time: Jan 24 16:12
 */
 /**
  * @ignore
@@ -604,7 +604,8 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
     }
 
     function initMask(self) {
-        var maskCls = self.get("prefixCls") + "ext-mask " + self.getCssClassWithState('-mask'),
+        var maskCls = self.getCssClassWithPrefix('ext-mask')+' '+
+                self.getCssClassWithState('mask'),
             mask = $("<div " +
                 " style='width:" + docWidth() + ";" +
                 "left:0;" +
@@ -667,9 +668,9 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
 
         ksSetMaskVisible: function (shown, hideInline) {
             var self = this,
-                shownCls = self.getCssClassWithState('-mask-shown'),
+                shownCls = self.getCssClassWithState('mask-shown'),
                 maskNode = self.get('maskNode'),
-                hiddenCls = self.getCssClassWithState('-mask-hidden');
+                hiddenCls = self.getCssClassWithState('mask-hidden');
             if (shown) {
                 maskNode.removeClass(hiddenCls).addClass(shownCls);
             } else {

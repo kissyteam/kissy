@@ -28,14 +28,14 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
         _onSetChecked: function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getCssClassWithState("-checked");
+                cls = self.getCssClassWithState("checked");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 
         _onSetSelected: function (v) {
             var self = this,
                 el = self.get("el"),
-                cls = self.getCssClassWithState("-selected");
+                cls = self.getCssClassWithState("selected");
             el[v ? 'addClass' : 'removeClass'](cls);
         },
 

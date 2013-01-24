@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 20:55
+build time: Jan 24 18:15
 */
 /**
  * @ignore
@@ -232,23 +232,11 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         },
         function (v, k) {
             Node.prototype[k] = function (duration, complete, easing) {
-                var self = this,
-                    useTransition;
+                var self = this;
                 // 没有参数时，调用 DOM 中的对应方法
                 if (DOM[k] && !duration) {
                     DOM[k](self);
                 } else {
-                    useTransition = S.config('anim/useTransition');
-                    if (!S.isPlainObject(duration)) {
-                        if (!duration.easing) {
-                            if (duration.useTransition != undefined) {
-                                useTransition = duration.useTransition;
-                            }
-                            duration.easing = (useTransition ? 'ease-out' : 'easeOut');
-                        }
-                    } else if (!easing) {
-                        easing = (useTransition ? 'ease-out' : 'easeOut');
-                    }
                     S.each(self, function (elem) {
                         Anim(elem, v, duration, easing, complete).run();
                     });

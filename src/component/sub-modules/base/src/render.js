@@ -20,9 +20,12 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
          */
         getCssClassWithState: function (state) {
             var self = this,
-                componentCls = self.get("ksComponentCss") || "";
+                componentCls = self.get("ksComponentCss");
             state = state || "";
-            return self.getCssClassWithPrefix(componentCls.split(/\s+/).join(state + " ") + state);
+            if (state) {
+                state = "-" + state;
+            }
+            return self.getCssClassWithPrefix(componentCls.join(state + " ") + state);
         },
 
         /**
@@ -33,11 +36,6 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
          * @ignore
          */
         getCssClassWithPrefix: Manager.getCssClassWithPrefix,
-
-        createDom: function () {
-            var self = this;
-            self.get("el").addClass(self.getCssClassWithState());
-        },
 
         /**
          * Returns the dom element which is responsible for listening keyboard events.

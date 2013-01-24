@@ -1,0 +1,10 @@
+.ks-scroller {
+    overflow: hidden;
+    position: relative;
+}
+
+.ks-scroller-contentbox {
+    position: relative;
+    left: 0;
+    top: 0;
+}
