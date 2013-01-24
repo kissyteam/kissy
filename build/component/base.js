@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 24 16:11
+build time: Jan 24 21:43
 */
 /**
  * @ignore
@@ -1720,6 +1720,9 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         getCssClassWithState: function (state) {
             var self = this,
                 componentCls = self.get("ksComponentCss");
+            if (!componentCls) {
+                return '';
+            }
             state = state || "";
             if (state) {
                 state = "-" + state;

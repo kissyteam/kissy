@@ -21,6 +21,9 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         getCssClassWithState: function (state) {
             var self = this,
                 componentCls = self.get("ksComponentCss");
+            if (!componentCls) {
+                return '';
+            }
             state = state || "";
             if (state) {
                 state = "-" + state;

@@ -22,9 +22,10 @@ KISSY.add('component/extension/content-box-render', function (S, Node, DOM) {
             var self = this,
                 contentEl,
                 el = self.get('el'),
+                contentCls = self.getCssClassWithState('contentbox'),
                 childNodes = el[0].childNodes,
                 css = self.getCssClassWithPrefix('contentbox') +
-                    ' ' + self.getCssClassWithState('contentbox'),
+                    (contentCls ? (' ' + contentCls) : contentCls),
                 c = childNodes.length && DOM._nodeListToFragment(childNodes);
 
             // 产生新的 contentEl
