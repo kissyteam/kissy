@@ -22,13 +22,13 @@ KISSY.add("stylesheet", function (S, DOM) {
          * @type {HTMLElement}
          * @property el
          */
-        
+
 
         if (el.el) {
             el = el.el;
         }
 
-        this['el'] = DOM.get(el);
+        el = this['el'] = DOM.get(el);
         // http://msdn.microsoft.com/en-us/library/ie/ms535871(v=vs.85).aspx
         // firefox 跨域时抛出异常
         var sheet = el.sheet || el.styleSheet;

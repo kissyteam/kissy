@@ -1,42 +1,51 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>KISSY MenuButton</title>
-<link href="../../src/css/src/dpl/base.css" rel="stylesheet"/>
-<link href="demo/test.css" rel="stylesheet" id="link1"/>
-<style>
-    li {
-        padding: 5px;
-        border: 1px solid white;
-    }
+    <title>KISSY MenuButton</title>
+    <link href="../../src/css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="demo/test.css" rel="stylesheet" id="link1"/>
+    <style>
+        li {
+            padding: 5px;
+            border: 1px solid white;
+        }
 
-    h1 {
-        font-size: 2em;
-        margin: 10px;
-        text-align: center;
-    }
+        h1 {
+            font-size: 2em;
+            margin: 10px;
+            text-align: center;
+        }
 
-    h2 {
-        font-size: 1.5em;
-        margin: 10px;
-        text-align: center;
-    }
+        h2 {
+            font-size: 1.5em;
+            margin: 10px;
+            text-align: center;
+        }
 
-    #wrap {
-        width: 90%;
-        margin: 0 auto;
-    }
-</style>
-<style id="style1">
-    .test2 {
-        color: green;
-    }
-</style>
+        #wrap {
+            width: 90%;
+            margin: 0 auto;
+        }
+    </style>
+    <style id="style1">
+        .test2 {
+            color: green;
+        }
+    </style>
+
+    <style id="style3">
+        .test3 {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            margin: 10px;
+        }
+    </style>
 </head>
 <body>
 <div id="wrap">
@@ -47,6 +56,10 @@
     <br>
 
     <p class="test2"> test2 original green </p>
+
+    <div class="test3">test3 width</div>
+
+    <div class="test3">test3 width 2</div>
 
     <button id="c1"> turn red to green</button>
     <button id="c2"> turn green to red</button>
@@ -60,38 +73,42 @@
     <button id="c9">add class test3 in link1</button>
 
     <button id="c10">disable link1</button>
+
+    <button id="c11">enlarge test3</button>
 </div>
 <script src="/kissy/build/seed.js"></script>
 <script src="src/stylesheet.js"></script>
 <script>
     var styleSheet1, styleSheet2;
-    KISSY.use("stylesheet", function (S, StyleSheet) {
+    KISSY.use("stylesheet,core", function (S, StyleSheet) {
         var $ = S.all;
 
         styleSheet1 = new StyleSheet(S.get("#link1"));
         styleSheet2 = new StyleSheet(S.get("#style1"));
 
+        styleSheet3 = new StyleSheet(S.get("#style3"));
+
         $("#c1").on("click", function () {
             styleSheet1.set('.test1', {
-                color:'green'
+                color: 'green'
             });
         });
 
         $("#c2").on("click", function () {
             styleSheet2.set('.test2', {
-                color:'red'
+                color: 'red'
             });
         });
 
         $("#c3").on("click", function () {
             styleSheet1.set('.test1', {
-                "fontSize":'20px'
+                "fontSize": '20px'
             });
         });
 
         $("#c4").on("click", function () {
             styleSheet2.set('.test2', {
-                "font-size":'20px'
+                "font-size": '20px'
             });
         });
 
@@ -105,26 +122,32 @@
 
         $("#c7").on("click", function () {
             styleSheet1.set(".test1", {
-                fontSize:""
+                fontSize: ""
             });
         });
 
         $("#c8").on("click", function () {
             styleSheet1.set(".test1", {
-                fontSize:"",
-                color:""
+                fontSize: "",
+                color: ""
             });
         });
 
         $("#c9").on("click", function () {
             styleSheet1.set(".test3", {
-                fontSize:"20px",
-                color:"green"
+                fontSize: "20px",
+                color: "green"
             });
         });
 
         $("#c10").on("click", function () {
             styleSheet1.disable();
+        });
+
+        $("#c11").on("click", function () {
+            styleSheet3.set('.test3', {
+                width: '200px'
+            });
         });
     });
 </script>

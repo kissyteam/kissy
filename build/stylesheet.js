@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:28
+build time: Jan 25 14:15
 */
 /**
  * @ignore
@@ -27,13 +27,13 @@ KISSY.add("stylesheet", function (S, DOM) {
          * @type {HTMLElement}
          * @property el
          */
-        
+
 
         if (el.el) {
             el = el.el;
         }
 
-        this['el'] = DOM.get(el);
+        el = this['el'] = DOM.get(el);
         // http://msdn.microsoft.com/en-us/library/ie/ms535871(v=vs.85).aspx
         // firefox 跨域时抛出异常
         var sheet = el.sheet || el.styleSheet;

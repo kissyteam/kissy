@@ -42,7 +42,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
         }
         var colHeight = container.offset().top,
             diff = self.get("diff"),
-            curColHeights = self.get("curColHeights");
+            curColHeights = self._curColHeights;
         // 找到最小列高度
         if (curColHeights.length) {
             colHeight += Math.min.apply(Math, curColHeights);
@@ -133,7 +133,7 @@ KISSY.add("waterfall/loader", function (S, Node, Waterfall) {
             $(win).on("scroll", self.__onScroll);
             self.__started = 1;
             // 初始化时立即检测一次，但是要等初始化 adjust 完成后.
-            self.__onScroll();
+            doScroll.call(self);
         },
 
         /**

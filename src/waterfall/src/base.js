@@ -20,10 +20,9 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         //  - 出滚动条就会触发 resize 事件
         //  - ie<8 出不出滚动条，窗口区域一致
         //  - ie=8 出了滚动条窗口区域和以前不一样了，触发调整逻辑
-        var onResize = self.__onResize = S.buffer(doResize,
-            RESIZE_DURATION, self);
+        var onResize = self.__onResize = S.buffer(doResize, RESIZE_DURATION, self);
         // 一开始就 adjust 一次，可以对已有静态数据处理
-        onResize();
+        doResize.call(self);
         $(win).on("resize", onResize);
     }
 
@@ -91,19 +90,6 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         },
 
         /**
-         * Array of height of current waterfall cols.
-         * @protected
-         * @type {Number[]}
-         * @property curColHeights
-         */
-        /**
-         * @ignore
-         */
-        curColHeights: {
-            value: []
-        },
-
-        /**
          * Horizontal alignment of waterfall items with container.
          * Enum: 'left','center','right','justify'.
          * @cfg {String} align
@@ -152,31 +138,12 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
         /**
          * Column's width.
-         * @cfg {Number} colWidth
+         * @cfg {Number|Function} colWidth
          */
         /**
          * @ignore
          */
         colWidth: {},
-
-        /**
-         * Waterfall items grouped by col.
-         * @private
-         * @type {KISSY.NodeList[][]}
-         * @property colItems
-         *
-         *      for example:
-         *      [
-         *          [ node11, node12 ],
-         *          [ node21, node22 ]
-         *      ]
-         */
-        /**
-         * @ignore
-         */
-        colItems: {
-            value: []
-        },
 
         /**
          * Effect config object when waterfall item is adjusted on window resize.
@@ -198,17 +165,26 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
 
     function doResize() {
         var self = this,
+            colWidth = self.get('colWidth'),
             container = self.get('container'),
             containerRegion = self._containerRegion || {};
+
+        // support fluid width
+        // responsive design!
+        if (S.isFunction(colWidth)) {
+            colWidth = colWidth(self);
+        }
+        // S.log('resize: colWidth: ' + colWidth);
 
         if (
         // container display none ...
             !container[0].offsetWidth ||
-                // 宽度没变就没必要调整
-                containerRegion &&
+                // 容器宽度没变并且每列宽度也没变就没必要调整
+                self._colWidth === colWidth &&
                     container.width() === containerRegion.width) {
             return
         }
+        self._colWidth = colWidth;
         self.adjust();
     }
 
@@ -216,10 +192,16 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         var self = this,
             container = self.get("container"),
             containerWidth = container.width(),
-            curColHeights = self.get("curColHeights");
+            curColHeights = self._curColHeights || [];
+        /**
+         * Array of height of current waterfall cols.
+         * @protected
+         * @type {Number[]}
+         * @property curColHeights
+         */
+        self._curColHeights = curColHeights;
         // 当前列数
-        curColHeights.length = Math.max(Math.floor(containerWidth / self.get("colWidth")),
-            self.get("minColCount"));
+        curColHeights.length = Math.max(Math.floor(containerWidth / self._colWidth), self.get("minColCount"));
         // 当前容器宽度
         self._containerRegion = {
             width: containerWidth
@@ -227,7 +209,19 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         S.each(curColHeights, function (v, i) {
             curColHeights[i] = 0;
         });
-        self.set("colItems", []);
+        /**
+         * Waterfall items grouped by col.
+         * @private
+         * @type {KISSY.NodeList[][]}
+         * @property colItems
+         *
+         *      for example:
+         *      [
+         *          [ node11, node12 ],
+         *          [ node21, node22 ]
+         *      ]
+         */
+        self._colItems = [];
     }
 
     function adjustItemAction(self, add, itemRaw, callback) {
@@ -235,9 +229,9 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
             item = $(itemRaw),
             align = self.get("align"),
             margin,
-            curColHeights = self.get("curColHeights"),
+            curColHeights = self._curColHeights,
             container = self.get("container"),
-            colWidth = self.get("colWidth"),
+            colWidth = self._colWidth,
             curColCount = curColHeights.length,
             col = 0,
             colProp,
@@ -266,7 +260,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         // 元素保持间隔不变，居中
         margin = align === 'left' ? 0 :
             Math.max(containerRegion.width -
-                curColCount * self.get("colWidth"), 0);
+                curColCount * colWidth, 0);
 
         if (align === 'center') {
             margin /= 2;
@@ -287,7 +281,7 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
         function end(ifNotCall) {
             // 加入到 dom 树才能取得高度
             curColHeights[col] += item.outerHeight(true);
-            var colItems = self.get("colItems");
+            var colItems = self._colItems;
             colItems[col] = colItems[col] || [];
             colItems[col].push(item);
             item.attr("data-waterfall-col", col);
@@ -356,240 +350,240 @@ KISSY.add("waterfall/base", function (S, Node, Base) {
     }
 
     S.extend(Waterfall, Base, {
-            /**
-             * Whether is adjusting waterfall items.
-             * @return Boolean
-             */
-            isAdjusting: function () {
-                return !!this._adjuster;
-            },
+        /**
+         * Whether is adjusting waterfall items.
+         * @return Boolean
+         */
+        isAdjusting: function () {
+            return !!this._adjuster;
+        },
 
-            /**
-             * Whether is adding waterfall item.
-             * @return Boolean
-             */
-            'isAdding': function () {
-                return !!this._adder;
-            },
+        /**
+         * Whether is adding waterfall item.
+         * @return Boolean
+         */
+        'isAdding': function () {
+            return !!this._adder;
+        },
 
-            /**
-             * Adjust the height of one specified item.
-             * @param {KISSY.NodeList} item Waterfall item to be adjusted.
-             * @param {Object} cfg Config object.
-             * @param {Function} cfg.callback Callback function after the item is adjusted.
-             * @param {Function} cfg.process Adjust logic function.
-             * If returns a number, it is used as item height after adjust.
-             * else use item.outerHeight(true) as item height after adjust.
-             * @param {Object} cfg.effect Same as {@link KISSY.Waterfall#adjustEffect}
-             * @param {Number} cfg.effect.duration
-             * @param {String} cfg.effect.easing
-             */
-            adjustItem: function (item, cfg) {
-                var self = this;
-                cfg = cfg || {};
+        /**
+         * Adjust the height of one specified item.
+         * @param {KISSY.NodeList} item Waterfall item to be adjusted.
+         * @param {Object} cfg Config object.
+         * @param {Function} cfg.callback Callback function after the item is adjusted.
+         * @param {Function} cfg.process Adjust logic function.
+         * If returns a number, it is used as item height after adjust.
+         * else use item.outerHeight(true) as item height after adjust.
+         * @param {Object} cfg.effect Same as {@link KISSY.Waterfall#adjustEffect}
+         * @param {Number} cfg.effect.duration
+         * @param {String} cfg.effect.easing
+         */
+        adjustItem: function (item, cfg) {
+            var self = this;
+            cfg = cfg || {};
 
-                if (self.isAdjusting()) {
-                    return undefined;
-                }
-
-                var originalOuterHeight = item['outerHeight'](true),
-                    outerHeight;
-
-                if (cfg.process) {
-                    outerHeight = cfg.process.call(self);
-                }
-
-                if (outerHeight === undefined) {
-                    outerHeight = item['outerHeight'](true);
-                }
-
-                var diff = outerHeight - originalOuterHeight,
-                    curColHeights = self.get("curColHeights"),
-                    col = parseInt(item['attr']("data-waterfall-col")),
-                    colItems = self.get("colItems")[col],
-                    items = [],
-                    original = Math.max.apply(Math, curColHeights),
-                    now;
-
-                for (var i = 0; i < colItems.length; i++) {
-                    if (colItems[i][0] === item[0]) {
-                        break;
-                    }
-                }
-
-                i++;
-
-                while (i < colItems.length) {
-                    items.push(colItems[i]);
-                    i++;
-                }
-
-                curColHeights[col] += diff;
-
-                now = Math.max.apply(Math, curColHeights);
-
-                if (now != original) {
-                    self.get("container").height(now);
-                }
-
-                var effect = cfg.effect,
-                    num = items.length;
-
-                if (!num) {
-                    return cfg.callback && cfg.callback.call(self);
-                }
-
-                function check() {
-                    num--;
-                    if (num <= 0) {
-                        self._adjuster = 0;
-                        cfg.callback && cfg.callback.call(self);
-                    }
-                }
-
-                if (effect === /**
-                 @ignore
-                 @type String
-                 */undefined) {
-                    effect = self.get("adjustEffect");
-                }
-
-                self._adjuster = timedChunk(items, function (item) {
-                    if (effect) {
-                        item.animate({
-                                top: parseInt(item.css("top")) + diff
-                            },
-                            effect.duration,
-                            effect.easing,
-                            check);
-                    } else {
-                        item.css("top", parseInt(item.css("top")) + diff);
-                        check();
-                    }
-                });
-
-                self._adjuster.start();
-
-                return self._adjuster;
-            },
-
-            /**
-             * Remove a waterfall item.
-             * @param {KISSY.NodeList} item Waterfall item to be removed.
-             * @param {Object} cfg Config object.
-             * @param {Function} cfg.callback Callback function to be called after remove.
-             * @param {Object} cfg.effect Same as {@link KISSY.Waterfall#adjustEffect}
-             * @param {Number} cfg.effect.duration
-             * @param {String} cfg.effect.easing
-             */
-            removeItem: function (item, cfg) {
-                cfg = cfg || {};
-                var self = this,
-                    callback = cfg.callback;
-                self.adjustItem(item, S.mix(cfg, {
-                    process: function () {
-                        item['remove']();
-                        return 0;
-                    },
-                    callback: function () {
-                        var col = parseInt(item['attr']("data-waterfall-col")),
-                            colItems = self.get("colItems")[col];
-                        for (var i = 0; i < colItems.length; i++) {
-                            if (colItems[i][0] == item[0]) {
-                                colItems.splice(i, 1);
-                                break;
-                            }
-                        }
-                        callback && callback();
-                    }
-                }));
-            },
-
-            /**
-             * Readjust existing waterfall item.
-             * @param {Function} [callback]
-             * Callback function to be called after adjust.
-             */
-            adjust: function (callback) {
-                S.log("waterfall:adjust");
-                var self = this,
-                    items = self.get("container").all(".ks-waterfall");
-                /* 正在加，直接开始这次调整，剩余的加和正在调整的一起处理 */
-                /* 正在调整中，取消上次调整，开始这次调整 */
-                if (self.isAdjusting()) {
-                    self._adjuster.stop();
-                    self._adjuster = 0;
-                }
-                /*计算容器宽度等信息*/
-                recalculate.call(self);
-                var num = items.length;
-
-                function check() {
-                    num--;
-                    if (num <= 0) {
-                        self.get("container").height(Math.max.apply(Math, self.get("curColHeights")));
-                        self._adjuster = 0;
-                        callback && callback.call(self);
-                        self.fire('adjustComplete', {
-                            items: items
-                        });
-                    }
-                }
-
-                if (!num) {
-                    return callback && callback.call(self);
-                }
-
-                self._adjuster = timedChunk(items, function (item) {
-                    adjustItemAction(self, false, item, check);
-                });
-
-                self._adjuster.start();
-
-                return self._adjuster;
-            },
-
-            /**
-             * Add array of waterfall items to current instance.
-             * @param {NodeList[]} items Waterfall items to be added.
-             * @param {Function} [callback] Callback function to be called after waterfall items are added.
-             */
-            addItems: function (items, callback) {
-                var self = this;
-
-                /* 正在调整中，直接这次加，和调整的节点一起处理 */
-                /* 正在加，直接这次加，一起处理 */
-                self._adder = timedChunk(items,
-                    addItem,
-                    self,
-                    function () {
-                        self.get("container").height(Math.max.apply(Math,
-                            self.get("curColHeights")));
-                        self._adder = 0;
-                        callback && callback.call(self);
-                        self.fire('addComplete', {
-                            items: items
-                        });
-                    });
-
-                self._adder.start();
-
-                return self._adder;
-            },
-
-            /**
-             * Destroy current instance.
-             */
-            destroy: function () {
-                var self = this;
-                var onResize = self.__onResize;
-                $(win).detach("resize", onResize);
-                onResize.stop();
-                S.log('waterfall is destroyed!');
-                self.fire('destroy');
-                self.__destroyed = 1;
+            if (self.isAdjusting()) {
+                return undefined;
             }
-        });
+
+            var originalOuterHeight = item['outerHeight'](true),
+                outerHeight;
+
+            if (cfg.process) {
+                outerHeight = cfg.process.call(self);
+            }
+
+            if (outerHeight === undefined) {
+                outerHeight = item['outerHeight'](true);
+            }
+
+            var diff = outerHeight - originalOuterHeight,
+                curColHeights = self._curColHeights,
+                col = parseInt(item['attr']("data-waterfall-col")),
+                colItems = self._colItems[col],
+                items = [],
+                original = Math.max.apply(Math, curColHeights),
+                now;
+
+            for (var i = 0; i < colItems.length; i++) {
+                if (colItems[i][0] === item[0]) {
+                    break;
+                }
+            }
+
+            i++;
+
+            while (i < colItems.length) {
+                items.push(colItems[i]);
+                i++;
+            }
+
+            curColHeights[col] += diff;
+
+            now = Math.max.apply(Math, curColHeights);
+
+            if (now != original) {
+                self.get("container").height(now);
+            }
+
+            var effect = cfg.effect,
+                num = items.length;
+
+            if (!num) {
+                return cfg.callback && cfg.callback.call(self);
+            }
+
+            function check() {
+                num--;
+                if (num <= 0) {
+                    self._adjuster = 0;
+                    cfg.callback && cfg.callback.call(self);
+                }
+            }
+
+            if (effect === /**
+             @ignore
+             @type String
+             */undefined) {
+                effect = self.get("adjustEffect");
+            }
+
+            self._adjuster = timedChunk(items, function (item) {
+                if (effect) {
+                    item.animate({
+                            top: parseInt(item.css("top")) + diff
+                        },
+                        effect.duration,
+                        effect.easing,
+                        check);
+                } else {
+                    item.css("top", parseInt(item.css("top")) + diff);
+                    check();
+                }
+            });
+
+            self._adjuster.start();
+
+            return self._adjuster;
+        },
+
+        /**
+         * Remove a waterfall item.
+         * @param {KISSY.NodeList} item Waterfall item to be removed.
+         * @param {Object} cfg Config object.
+         * @param {Function} cfg.callback Callback function to be called after remove.
+         * @param {Object} cfg.effect Same as {@link KISSY.Waterfall#adjustEffect}
+         * @param {Number} cfg.effect.duration
+         * @param {String} cfg.effect.easing
+         */
+        removeItem: function (item, cfg) {
+            cfg = cfg || {};
+            var self = this,
+                callback = cfg.callback;
+            self.adjustItem(item, S.mix(cfg, {
+                process: function () {
+                    item['remove']();
+                    return 0;
+                },
+                callback: function () {
+                    var col = parseInt(item['attr']("data-waterfall-col")),
+                        colItems = self._colItems[col];
+                    for (var i = 0; i < colItems.length; i++) {
+                        if (colItems[i][0] == item[0]) {
+                            colItems.splice(i, 1);
+                            break;
+                        }
+                    }
+                    callback && callback();
+                }
+            }));
+        },
+
+        /**
+         * Readjust existing waterfall item.
+         * @param {Function} [callback]
+         * Callback function to be called after adjust.
+         */
+        adjust: function (callback) {
+            S.log("waterfall:adjust");
+            var self = this,
+                items = self.get("container").all(".ks-waterfall");
+            /* 正在加，直接开始这次调整，剩余的加和正在调整的一起处理 */
+            /* 正在调整中，取消上次调整，开始这次调整 */
+            if (self.isAdjusting()) {
+                self._adjuster.stop();
+                self._adjuster = 0;
+            }
+            /*计算容器宽度等信息*/
+            recalculate.call(self);
+            var num = items.length;
+
+            function check() {
+                num--;
+                if (num <= 0) {
+                    self.get("container").height(Math.max.apply(Math, self._curColHeights));
+                    self._adjuster = 0;
+                    callback && callback.call(self);
+                    self.fire('adjustComplete', {
+                        items: items
+                    });
+                }
+            }
+
+            if (!num) {
+                return callback && callback.call(self);
+            }
+
+            self._adjuster = timedChunk(items, function (item) {
+                adjustItemAction(self, false, item, check);
+            });
+
+            self._adjuster.start();
+
+            return self._adjuster;
+        },
+
+        /**
+         * Add array of waterfall items to current instance.
+         * @param {NodeList[]} items Waterfall items to be added.
+         * @param {Function} [callback] Callback function to be called after waterfall items are added.
+         */
+        addItems: function (items, callback) {
+            var self = this;
+
+            /* 正在调整中，直接这次加，和调整的节点一起处理 */
+            /* 正在加，直接这次加，一起处理 */
+            self._adder = timedChunk(items,
+                addItem,
+                self,
+                function () {
+                    self.get("container").height(Math.max.apply(Math,
+                        self._curColHeights));
+                    self._adder = 0;
+                    callback && callback.call(self);
+                    self.fire('addComplete', {
+                        items: items
+                    });
+                });
+
+            self._adder.start();
+
+            return self._adder;
+        },
+
+        /**
+         * Destroy current instance.
+         */
+        destroy: function () {
+            var self = this;
+            var onResize = self.__onResize;
+            $(win).detach("resize", onResize);
+            onResize.stop();
+            S.log('waterfall is destroyed!');
+            self.fire('destroy');
+            self.__destroyed = 1;
+        }
+    });
 
 
     return Waterfall;
