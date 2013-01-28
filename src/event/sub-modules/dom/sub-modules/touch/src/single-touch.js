@@ -16,6 +16,7 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
                 return false;
             }
             self.lastTouches = e.touches;
+            return undefined;
         },
         onTouchMove: S.noop,
         onTouchEnd: S.noop

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 28 14:05
+build time: Jan 28 14:33
 */
 /**
  * @ignore
@@ -635,6 +635,7 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
                 return false;
             }
             self.lastTouches = e.touches;
+            return undefined;
         },
         onTouchMove: S.noop,
         onTouchEnd: S.noop
@@ -782,7 +783,9 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     });
 
     function prevent(e) {
-        e.preventDefault();
+        if (!e.touches || e.touches.length == 1) {
+            e.preventDefault();
+        }
     }
 
     eventHandleMap[event] = {
@@ -838,7 +841,9 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     });
 
     function prevent(e) {
-        e.preventDefault();
+        if (!e.touches || e.touches.length == 1) {
+            e.preventDefault();
+        }
     }
 
     eventHandleMap[event] = {
