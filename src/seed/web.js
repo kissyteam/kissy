@@ -3,7 +3,7 @@
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  * @description this code can only run at browser environment
  */
-(function(S, undefined) {
+(function (S, undefined) {
 
     var win = S.__HOST,
         doc = win['document'],
@@ -12,19 +12,19 @@
 
         EMPTY = '',
 
-        // Is the DOM ready to be used? Set to true once it occurs.
+    // Is the DOM ready to be used? Set to true once it occurs.
         isReady = false,
 
-        // The functions to execute on DOM ready.
+    // The functions to execute on DOM ready.
         readyList = [],
 
-        // The number of poll times.
+    // The number of poll times.
         POLL_RETRYS = 500,
 
-        // The poll interval in milliseconds.
+    // The poll interval in milliseconds.
         POLL_INTERVAL = 40,
 
-        // #id or id
+    // #id or id
         RE_IDSTR = /^#?([\w-]+)$/,
 
         RE_NOT_WHITE = /\S/;
@@ -34,7 +34,7 @@
         /**
          * A crude way of determining if an object is a window
          */
-        isWindow: function(o) {
+        isWindow: function (o) {
             return S.type(o) === 'object'
                 && 'setInterval' in o
                 && 'document' in o
@@ -42,7 +42,7 @@
         },
 
 
-        parseXML: function(data) {
+        parseXML: function (data) {
             var xml;
             try {
                 // Standard
@@ -53,7 +53,7 @@
                     xml.async = "false";
                     xml.loadXML(data);
                 }
-            } catch(e) {
+            } catch (e) {
                 S.log("parseXML error : ");
                 S.log(e);
                 xml = undefined;
@@ -67,10 +67,10 @@
         /**
          * Evalulates a script in a global context.
          */
-        globalEval: function(data) {
+        globalEval: function (data) {
             if (data && RE_NOT_WHITE.test(data)) {
                 // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
-                ( window.execScript || function(data) {
+                ( window.execScript || function (data) {
                     window[ "eval" ].call(window, data);
                 } )(data);
             }
@@ -84,7 +84,7 @@
          * </code>
          * @return {KISSY}
          */
-        ready: function(fn) {
+        ready: function (fn) {
 
             // If the DOM is already ready
             if (isReady) {
@@ -103,7 +103,7 @@
          * @param id <String> The id of the element, or an array of ids to look for.
          * @param fn <Function> What to execute when the element is found.
          */
-        available: function(id, fn) {
+        available: function (id, fn) {
             id = (id + EMPTY).match(RE_IDSTR)[1];
             if (!id || !S.isFunction(fn)) {
                 return;
@@ -111,7 +111,7 @@
 
             var retryCount = 1,
                 node,
-                timer = S.later(function() {
+                timer = S.later(function () {
                     if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
                         ++retryCount > POLL_RETRYS) {
                         timer.cancel();
@@ -126,9 +126,9 @@
      */
     function _bindReady() {
         var doScroll = docElem.doScroll,
-            eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
+            eventType = doc.addEventListener ? 'DOMContentLoaded' : 'onreadystatechange',
             COMPLETE = 'complete',
-            fire = function() {
+            fire = function () {
                 _fireReady();
             };
 
@@ -171,7 +171,7 @@
 
             try {
                 notframe = (win['frameElement'] === null);
-            } catch(e) {
+            } catch (e) {
                 S.log("frameElement error : ");
                 S.log(e);
             }
@@ -182,7 +182,7 @@
                         // Ref: http://javascript.nwbox.com/IEContentLoaded/
                         doScroll('left');
                         fire();
-                    } catch(ex) {
+                    } catch (ex) {
                         //S.log("detect document ready : " + ex);
                         setTimeout(readyScroll, POLL_INTERVAL);
                     }

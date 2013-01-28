@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.20
+Copyright 2013, KISSY UI Library v1.20
 MIT Licensed
-build time: Nov 2 11:43
+build time: Jan 28 17:15
 */
 /*
  * a seed where KISSY grows up from , KISS Yeah !
@@ -92,7 +92,7 @@ build time: Nov 2 11:43
          */
         version:'1.20',
 
-        buildTime:'20121102114320',
+        buildTime:'20130128171456',
 
         /**
          * Returns a new object containing all of the properties of
@@ -2695,7 +2695,7 @@ build time: Nov 2 11:43
  * @author  lifesinger@gmail.com,yiminghe@gmail.com
  * @description this code can only run at browser environment
  */
-(function(S, undefined) {
+(function (S, undefined) {
 
     var win = S.__HOST,
         doc = win['document'],
@@ -2704,19 +2704,19 @@ build time: Nov 2 11:43
 
         EMPTY = '',
 
-        // Is the DOM ready to be used? Set to true once it occurs.
+    // Is the DOM ready to be used? Set to true once it occurs.
         isReady = false,
 
-        // The functions to execute on DOM ready.
+    // The functions to execute on DOM ready.
         readyList = [],
 
-        // The number of poll times.
+    // The number of poll times.
         POLL_RETRYS = 500,
 
-        // The poll interval in milliseconds.
+    // The poll interval in milliseconds.
         POLL_INTERVAL = 40,
 
-        // #id or id
+    // #id or id
         RE_IDSTR = /^#?([\w-]+)$/,
 
         RE_NOT_WHITE = /\S/;
@@ -2726,7 +2726,7 @@ build time: Nov 2 11:43
         /**
          * A crude way of determining if an object is a window
          */
-        isWindow: function(o) {
+        isWindow: function (o) {
             return S.type(o) === 'object'
                 && 'setInterval' in o
                 && 'document' in o
@@ -2734,7 +2734,7 @@ build time: Nov 2 11:43
         },
 
 
-        parseXML: function(data) {
+        parseXML: function (data) {
             var xml;
             try {
                 // Standard
@@ -2745,7 +2745,7 @@ build time: Nov 2 11:43
                     xml.async = "false";
                     xml.loadXML(data);
                 }
-            } catch(e) {
+            } catch (e) {
                 S.log("parseXML error : ");
                 S.log(e);
                 xml = undefined;
@@ -2759,10 +2759,10 @@ build time: Nov 2 11:43
         /**
          * Evalulates a script in a global context.
          */
-        globalEval: function(data) {
+        globalEval: function (data) {
             if (data && RE_NOT_WHITE.test(data)) {
                 // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
-                ( window.execScript || function(data) {
+                ( window.execScript || function (data) {
                     window[ "eval" ].call(window, data);
                 } )(data);
             }
@@ -2776,7 +2776,7 @@ build time: Nov 2 11:43
          * </code>
          * @return {KISSY}
          */
-        ready: function(fn) {
+        ready: function (fn) {
 
             // If the DOM is already ready
             if (isReady) {
@@ -2795,7 +2795,7 @@ build time: Nov 2 11:43
          * @param id <String> The id of the element, or an array of ids to look for.
          * @param fn <Function> What to execute when the element is found.
          */
-        available: function(id, fn) {
+        available: function (id, fn) {
             id = (id + EMPTY).match(RE_IDSTR)[1];
             if (!id || !S.isFunction(fn)) {
                 return;
@@ -2803,7 +2803,7 @@ build time: Nov 2 11:43
 
             var retryCount = 1,
                 node,
-                timer = S.later(function() {
+                timer = S.later(function () {
                     if ((node = doc.getElementById(id)) && (fn(node) || 1) ||
                         ++retryCount > POLL_RETRYS) {
                         timer.cancel();
@@ -2818,9 +2818,9 @@ build time: Nov 2 11:43
      */
     function _bindReady() {
         var doScroll = docElem.doScroll,
-            eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
+            eventType = doc.addEventListener ? 'DOMContentLoaded' : 'onreadystatechange',
             COMPLETE = 'complete',
-            fire = function() {
+            fire = function () {
                 _fireReady();
             };
 
@@ -2863,7 +2863,7 @@ build time: Nov 2 11:43
 
             try {
                 notframe = (win['frameElement'] === null);
-            } catch(e) {
+            } catch (e) {
                 S.log("frameElement error : ");
                 S.log(e);
             }
@@ -2874,7 +2874,7 @@ build time: Nov 2 11:43
                         // Ref: http://javascript.nwbox.com/IEContentLoaded/
                         doScroll('left');
                         fire();
-                    } catch(ex) {
+                    } catch (ex) {
                         //S.log("detect document ready : " + ex);
                         setTimeout(readyScroll, POLL_INTERVAL);
                     }
