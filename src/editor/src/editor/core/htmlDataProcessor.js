@@ -17,8 +17,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 dataFilter = new HtmlParser.Filter();
 
             function filterSpan(element) {
-                if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) ||
-                    !(element.attributes.length)) {
+                if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) || !(element.attributes.length)) {
                     element.setTagName(null);
                     return undefined;
                 }
@@ -126,10 +125,10 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                         // kissy 相关
                         [ ( /^_ks.*/ ), '' ]
                     ],
-                    text:function(text){
+                    text: function (text) {
                         // remove fill char for webkit
-                        if(UA.webkit){
-                            return text.replace(/\u200b/g,"");
+                        if (UA.webkit) {
+                            return text.replace(/\u200b/g, "");
                         }
                     },
                     comment: function (contents) {
@@ -295,7 +294,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
 
             var protectedSourceMarker = '{ke_protected}';
 
-            var protectElementsRegex = /(?:<style[^>]*>[\s\S]*<\/style>)|(?:<(:?link|meta|base)[^>]*>)/gi,
+            var protectElementsRegex = /(?:<textarea[^>]*>[\s\S]*<\/textarea>)|(?:<style[^>]*>[\s\S]*<\/style>)|(?:<(:?link|meta|base)[^>]*>)/gi,
                 encodedElementsRegex = /<ke:encoded>([^<]*)<\/ke:encoded>/gi;
 
             var protectElementNamesRegex = /(<\/?)((?:object|embed|param|html|body|head|title|script|noscript)[^>]*>)/gi,
@@ -348,11 +347,12 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     //可以传 wordFilter 或 dataFilter
                     _dataFilter = _dataFilter || dataFilter;
 
-                    html = protectAttributes(html);
-
                     // Protect elements than can't be set inside a DIV. E.g. IE removes
                     // style tags from innerHTML. (#3710)
+                    // and protect textarea, in case textarea has un-encoded html
                     html = protectElements(html);
+
+                    html = protectAttributes(html);
 
                     // Certain elements has problem to go through DOM operation, protect
                     // them by prefixing 'ke' namespace. (#3591)

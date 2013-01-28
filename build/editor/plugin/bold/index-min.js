@@ -1,6 +1,6 @@
 /*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 17 14:28
+build time: Jan 28 22:19
 */
 KISSY.add("editor/plugin/bold/index",function(c,g,e,f){function d(){}c.augment(d,{pluginRenderUI:function(a){f.init(a);a.addButton("bold",{cmdType:"bold",tooltip:"粗体 "},e.Button);a.docReady(function(){a.get("document").on("keydown",function(b){b.ctrlKey&&b.keyCode==c.Node.KeyCodes.B&&(a.execCommand("bold"),b.preventDefault())})})}});return d},{requires:["editor","../font/ui","./cmd"]});
