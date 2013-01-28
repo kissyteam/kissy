@@ -1,7 +1,7 @@
 /**
  * @ignore
  * A seed where KISSY grows up from, KISS Yeah !
- * @author lifesinger@gmail.com, yiminghe@gmail.com
+ * @author https://github.com/kissyteam?tab=members
  */
 
 /**
