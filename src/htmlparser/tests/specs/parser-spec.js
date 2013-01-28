@@ -53,6 +53,20 @@ KISSY.use("htmlparser", function (S, HtmlParser) {
             expect(childnode2[1].childNodes[0].toHtml()).toBe("http://www.taobao.com");
         });
 
+        it('works for textarea',function(){
+
+            var html='<textarea><img src="xx.jpg"/><img src="yy.jpg"/></textarea>';
+
+            var parser = new Parser(html),
+                node;
+
+            node = parser.parse().childNodes[0];
+
+            expect(node.childNodes.length).toBe(1);
+            // cdata
+            expect(node.childNodes[0].nodeType).toBe(4);
+        });
+
 
         it("works for valid script", function () {
 

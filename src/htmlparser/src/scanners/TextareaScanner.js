@@ -2,13 +2,13 @@
  * textarea data scanner
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/scanners/TextareaScanner", function(S, CdataScanner, SpecialScanners) {
+KISSY.add("htmlparser/scanners/TextareaScanner", function(S, CDataScanner, SpecialScanners) {
     return SpecialScanners["textarea"] = {
         scan:function(tag, lexer, opts) {
             opts = opts || {};
-            CdataScanner.scan(tag, lexer, opts);
+            CDataScanner.scan(tag, lexer, opts);
         }
     };
 }, {
-    requires:["./CdataScanner","./SpecialScanners"]
+    requires:["./CDataScanner","./SpecialScanners"]
 });

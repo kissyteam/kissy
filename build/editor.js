@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 17 14:27
+build time: Jan 28 22:18
 */
 /**
  * Set up editor constructor
@@ -3386,8 +3386,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                 dataFilter = new HtmlParser.Filter();
 
             function filterSpan(element) {
-                if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) ||
-                    !(element.attributes.length)) {
+                if (((element.getAttribute('class') + "").match(/Apple-\w+-span/)) || !(element.attributes.length)) {
                     element.setTagName(null);
                     return undefined;
                 }
@@ -3495,10 +3494,10 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                         // kissy 相关
                         [ ( /^_ks.*/ ), '' ]
                     ],
-                    text:function(text){
+                    text: function (text) {
                         // remove fill char for webkit
-                        if(UA.webkit){
-                            return text.replace(/\u200b/g,"");
+                        if (UA.webkit) {
+                            return text.replace(/\u200b/g, "");
                         }
                     },
                     comment: function (contents) {
@@ -3664,7 +3663,7 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
 
             var protectedSourceMarker = '{ke_protected}';
 
-            var protectElementsRegex = /(?:<style[^>]*>[\s\S]*<\/style>)|(?:<(:?link|meta|base)[^>]*>)/gi,
+            var protectElementsRegex = /(?:<textarea[^>]*>[\s\S]*<\/textarea>)|(?:<style[^>]*>[\s\S]*<\/style>)|(?:<(:?link|meta|base)[^>]*>)/gi,
                 encodedElementsRegex = /<ke:encoded>([^<]*)<\/ke:encoded>/gi;
 
             var protectElementNamesRegex = /(<\/?)((?:object|embed|param|html|body|head|title|script|noscript)[^>]*>)/gi,
@@ -3717,11 +3716,12 @@ KISSY.add("editor/core/htmlDataProcessor", function (S, Editor) {
                     //可以传 wordFilter 或 dataFilter
                     _dataFilter = _dataFilter || dataFilter;
 
-                    html = protectAttributes(html);
-
                     // Protect elements than can't be set inside a DIV. E.g. IE removes
                     // style tags from innerHTML. (#3710)
+                    // and protect textarea, in case textarea has un-encoded html
                     html = protectElements(html);
+
+                    html = protectAttributes(html);
 
                     // Certain elements has problem to go through DOM operation, protect
                     // them by prefixing 'ke' namespace. (#3591)
@@ -3777,7 +3777,7 @@ KISSY.config('modules', {
 'editor/plugin/page-break/index': {requires: ['editor','editor/plugin/fake-objects/']},
 'editor/plugin/italic/cmd': {requires: ['editor','editor/plugin/font/cmd']},
 'editor/plugin/font-size/cmd': {requires: ['editor','editor/plugin/font/cmd']},
-'editor/plugin/image/dialog': {requires: ['ajax','editor','editor/plugin/overlay/','tabs','editor/plugin/menubutton/']},
+'editor/plugin/image/dialog': {requires: ['io','editor','editor/plugin/overlay/','tabs','editor/plugin/menubutton/']},
 'editor/plugin/underline/index': {requires: ['editor','editor/plugin/font/ui','editor/plugin/underline/cmd']},
 'editor/plugin/maximize/cmd': {requires: ['editor']},
 'editor/plugin/contextmenu/index': {requires: ['editor','menu','editor/plugin/focus-fix/']},
@@ -8373,7 +8373,7 @@ KISSY.add("editor/core/utils", function (S) {
 
             /**
              * 执行一系列函数
-             * @param var_args {...function()}
+             * @param {Function...} var_args
              * @return {*} 得到成功的返回
              */
             tryThese: function (var_args) {

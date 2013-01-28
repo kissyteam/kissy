@@ -2,12 +2,12 @@
  * scanner cdata (script/textarea/style) with quote smart
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CdataScanner, Dtd, SpecialScanners) {
+KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CDataScanner, Dtd, SpecialScanners) {
     var ret = {
         scan:function(tag, lexer, opts) {
             opts = opts || {};
             opts.quoteSmart = 1;
-            CdataScanner.scan(tag, lexer, opts);
+            CDataScanner.scan(tag, lexer, opts);
             opts.quoteSmart = 0;
         }
     };
@@ -17,5 +17,5 @@ KISSY.add("htmlparser/scanners/QuoteCdataScanner", function(S, CdataScanner, Dtd
     }
     return ret;
 }, {
-    requires:["./CdataScanner",'../dtd','./SpecialScanners']
+    requires:["./CDataScanner",'../dtd','./SpecialScanners']
 });

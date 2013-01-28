@@ -2,10 +2,10 @@
  * scanner cdata (script/textarea/style)
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/scanners/CdataScanner", function () {
+KISSY.add("htmlparser/scanners/CDataScanner", function () {
     return {
         scan:function (tag, lexer, opts) {
-            // only terminate when encouter </tag>
+            // only terminate when encounter </tag>
             // <textarea><div></div></textarea>
             var content = lexer.parseCDATA(opts.quoteSmart, tag.nodeName),
                 position = lexer.getPosition(),
