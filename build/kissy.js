@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 22 00:01
+build time: Jan 28 13:35
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130122000126' will replace with current timestamp when compressing.
+         * NOTICE: '20130128133457' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130122000126',
+        __BUILD_TIME: '20130128133457',
         /**
          * KISSY Environment.
          * @private
@@ -5857,7 +5857,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130122000126'
+            tag: '20130128133457'
         }, getBaseInfo()));
     }
 
@@ -5884,7 +5884,7 @@ var KISSY = (function (undefined) {
 
     var win = S.Env.host,
 
-        UA= S.UA,
+        UA = S.UA,
 
         doc = win['document'],
 
@@ -5905,9 +5905,27 @@ var KISSY = (function (undefined) {
         POLL_INTERVAL = 40,
 
     // #id or id
-        RE_IDSTR = /^#?([\w-]+)$/,
+        RE_ID_STR = /^#?([\w-]+)$/,
 
-        RE_NOT_WHITE = /\S/;
+        RE_NOT_WHITESPACE = /\S/,
+
+        standardEventModel = !!(doc && doc.addEventListener),
+        DOM_READY_EVENT = 'DOMContentLoaded',
+        READY_STATE_CHANGE_EVENT = 'readystatechange',
+        LOAD_EVENT = 'load',
+        COMPLETE = 'complete',
+
+        addEventListener = standardEventModel ? function (el, type, fn) {
+            el.addEventListener(type, fn, false);
+        } : function (el, type, fn) {
+            el.attachEvent('on' + type, fn);
+        },
+
+        removeEventListener = standardEventModel ? function (el, type, fn) {
+            el.removeEventListener(type, fn, false);
+        } : function (el, type, fn) {
+            el.detachEvent('on' + type, fn);
+        };
 
     S.mix(S, {
 
@@ -5957,7 +5975,7 @@ var KISSY = (function (undefined) {
          * @member KISSY
          */
         globalEval: function (data) {
-            if (data && RE_NOT_WHITE.test(data)) {
+            if (data && RE_NOT_WHITESPACE.test(data)) {
                 // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
                 // http://msdn.microsoft.com/en-us/library/ie/ms536420(v=vs.85).aspx always return null
                 ( win.execScript || function (data) {
@@ -5991,11 +6009,7 @@ var KISSY = (function (undefined) {
          * @member KISSY
          */
         available: function (id, fn) {
-            id = (id + EMPTY).match(RE_IDSTR)[1];
-            if (!id || !S.isFunction(fn)) {
-                return;
-            }
-
+            id = (id + EMPTY).match(RE_ID_STR)[1];
             var retryCount = 1,
                 node,
                 timer = S.later(function () {
@@ -6007,81 +6021,76 @@ var KISSY = (function (undefined) {
         }
     });
 
+    function fireReady() {
+        removeEventListener(win, LOAD_EVENT, fireReady);
+        readyDefer.resolve(S);
+    }
+
     /**
      * Binds ready events.
      * @ignore
      */
-    function _bindReady() {
-        var doScroll = docElem && docElem.doScroll,
-            eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
-            COMPLETE = 'complete',
-            fire = function () {
-                readyDefer.resolve(S)
-            };
+    function bindReady() {
 
         // Catch cases where ready() is called after the
         // browser event has already occurred.
         if (!doc || doc.readyState === COMPLETE) {
-            return fire();
+            fireReady();
+            return;
         }
 
+        // A fallback to window.onload, that will always work
+        addEventListener(win, LOAD_EVENT, fireReady);
+
         // w3c mode
-        if (doc.addEventListener) {
-            function domReady() {
-                doc.removeEventListener(eventType, domReady, false);
-                fire();
-            }
+        if (standardEventModel) {
+            var domReady = function () {
+                removeEventListener(doc, DOM_READY_EVENT, domReady);
+                fireReady();
+            };
 
-            doc.addEventListener(eventType, domReady, false);
-
-            // A fallback to window.onload, that will always work
-            win.addEventListener('load', fire, false);
+            addEventListener(doc, DOM_READY_EVENT, domReady);
         }
         // IE event model is used
         else {
-            function stateChange() {
+
+            var stateChange = function () {
                 if (doc.readyState === COMPLETE) {
-                    doc.detachEvent(eventType, stateChange);
-                    fire();
+                    removeEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
+                    fireReady();
                 }
-            }
+            };
 
             // ensure firing before onload (but completed after all inner iframes is loaded)
             // maybe late but safe also for iframes
-            doc.attachEvent(eventType, stateChange);
-
-            // A fallback to window.onload, that will always work.
-            win.attachEvent('onload', fire);
+            addEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
 
             // If IE and not a frame
             // continually check to see if the document is ready
-            var notframe;
+            var notframe,
+                doScroll = docElem && docElem.doScroll;
 
             try {
                 notframe = (win['frameElement'] === null);
             } catch (e) {
-                S.log('get frameElement error : ');
-                S.log(e);
                 notframe = false;
             }
 
             // can not use in iframe,parent window is dom ready so doScroll is ready too
             if (doScroll && notframe) {
-                function readyScroll() {
+                var readyScroll = function () {
                     try {
                         // Ref: http://javascript.nwbox.com/IEContentLoaded/
                         doScroll('left');
-                        fire();
+                        fireReady();
                     } catch (ex) {
                         //S.log('detect document ready : ' + ex);
                         setTimeout(readyScroll, POLL_INTERVAL);
                     }
-                }
-
+                };
                 readyScroll();
             }
         }
-        return 0;
     }
 
     // If url contains '?ks-debug', debug mode will turn on automatically.
@@ -6090,11 +6099,11 @@ var KISSY = (function (undefined) {
     }
 
 
-//     bind on start
-//     in case when you bind but the DOMContentLoaded has triggered
-//     then you has to wait onload
-//     worst case no callback at all
-    _bindReady();
+    // bind on start
+    // in case when you bind but the DOMContentLoaded has triggered
+    // then you has to wait onload
+    // worst case no callback at all
+    bindReady();
 
     if (UA.ie) {
         try {
@@ -19196,7 +19205,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 21:25
+build time: Jan 23 20:05
 */
 /**
  * base class for transition anim and timer anim
@@ -19324,7 +19333,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
                 }
             }
 
-            self._startTime = S.now();
+            self.startTime = S.now();
 
             self.prepareFx();
 
@@ -19356,7 +19365,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
             var self = this;
             if (self.isRunning()) {
                 // already run time
-                self._runTime = S.now() - self._startTime;
+                self._runTime = S.now() - self.startTime;
                 Utils.removeRunningAnim(self);
                 Utils.savePausedAnim(self);
                 self.doStop();
@@ -19386,7 +19395,7 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
             var self = this;
             if (self.isPaused()) {
                 // adjust time by run time caused by pause
-                self._startTime = S.now() - self._runTime;
+                self.startTime = S.now() - self._runTime;
                 Utils.removePausedAnim(self);
                 Utils.saveRunningAnim(self);
                 self['beforeResume']();
@@ -19830,7 +19839,7 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 21:25
+build time: Jan 24 18:08
 */
 /**
  * @ignore
@@ -20468,10 +20477,10 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
     function getPos(anim, propData) {
         var t = S.now(),
             runTime,
-            _startTime = anim._startTime,
+            startTime = anim.startTime,
             delay = propData.delay,
             duration = propData.duration;
-        runTime = t - _startTime - delay;
+        runTime = t - startTime - delay;
         if (runTime <= 0) {
             return 0;
         } else if (runTime >= duration) {
@@ -20631,9 +20640,7 @@ KISSY.add('anim/timer/short-hand', function () {
  */
 KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT_HANDS) {
 
-    var OPT_FRAME_PREVENT_DEFAULT = 1,
-        camelCase = DOM._camelCase,
-        OPT_FRAME_GOTO_END = 2,
+    var camelCase = DOM._camelCase,
         NUMBER_REG = /^([+\-]=)?([\d+.\-]+)([a-z%]*)$/i;
 
     function Anim() {
@@ -20711,6 +20718,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 
                 // 自定义
                 if (_propData.fx) {
+                    _propData.fx.prop = prop;
                     continue;
                 }
 
@@ -20775,38 +20783,29 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                     if (pos == 0) {
                         continue;
                     }
+                    fx.pos = pos;
                     if (fx.isBasicFx) {
                         // equal attr value, just skip
                         if (fx.from == fx.to) {
                             fx.finished = fx.finished || pos == 1;
                             continue;
                         }
+                        c = 0;
                         if (_propData.frame) {
-                            c = _propData.frame(self, {
-                                prop: prop,
-                                from: fx.from,
-                                to: fx.to,
-                                pos: pos
-                            });
+                            // from to pos prop -> fx
+                            c = _propData.frame(self, fx);
                             // in case frame call stop
                             if (!self.isRunning()) {
                                 return;
                             }
                         }
-                        // to be removed, do not use this feature
-                        if (c & OPT_FRAME_GOTO_END) {
-                            fx.finished = 1;
-                        }
-                        if (c & OPT_FRAME_PREVENT_DEFAULT) {
-                        } else {
+                        // prevent default
+                        if (c !== false) {
                             fx.frame(fx.finished || pos);
                         }
                     } else {
                         fx.finished = fx.finished || pos == 1;
-                        fx.frame(self, {
-                            prop: prop,
-                            pos: pos
-                        });
+                        fx.frame(self, fx);
                         // in case frame call stop
                         if (!self.isRunning()) {
                             return;
@@ -20836,25 +20835,18 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                     fx = _propData.fx;
                     // 当前属性没有结束
                     if (fx && !(fx.finished)) {
+                        fx.pos = 1;
                         if (fx.isBasicFx) {
+                            c = 0;
                             if (_propData.frame) {
-                                c = _propData.frame(self, {
-                                    prop: prop,
-                                    from: fx.from,
-                                    to: fx.to,
-                                    pos: 1
-                                });
+                                c = _propData.frame(self, fx);
                             }
-                            // to be removed, do not use this feature
-                            if (c & OPT_FRAME_PREVENT_DEFAULT) {
-                            } else {
+                            // prevent default
+                            if (c !== false) {
                                 fx.frame(1);
                             }
                         } else {
-                            fx.frame(self, {
-                                prop: prop,
-                                pos: 1
-                            });
+                            fx.frame(self, fx);
                         }
                         fx.finished = 1;
                     }
@@ -20866,6 +20858,8 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
             AM.start(this);
         }
     });
+
+    Anim.Easing = Easing;
 
     return Anim;
 }, {
@@ -20902,7 +20896,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 21:25
+build time: Jan 24 18:05
 */
 /**
  * animation using css transition
@@ -20978,7 +20972,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
             });
             // chrome none
             // firefox none 0s ease 0s
-            if (original.indexOf('none')!=-1) {
+            if (original.indexOf('none') != -1) {
                 original = '';
             } else if (original) {
                 original += ',';
@@ -21078,7 +21072,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 20:55
+build time: Jan 24 18:15
 */
 /**
  * @ignore
@@ -21309,23 +21303,11 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
         },
         function (v, k) {
             Node.prototype[k] = function (duration, complete, easing) {
-                var self = this,
-                    useTransition;
+                var self = this;
                 // 没有参数时，调用 DOM 中的对应方法
                 if (DOM[k] && !duration) {
                     DOM[k](self);
                 } else {
-                    useTransition = S.config('anim/useTransition');
-                    if (!S.isPlainObject(duration)) {
-                        if (!duration.easing) {
-                            if (duration.useTransition != undefined) {
-                                useTransition = duration.useTransition;
-                            }
-                            duration.easing = (useTransition ? 'ease-out' : 'easeOut');
-                        }
-                    } else if (!easing) {
-                        easing = (useTransition ? 'ease-out' : 'easeOut');
-                    }
                     S.each(self, function (elem) {
                         Anim(elem, v, duration, easing, complete).run();
                     });

@@ -8,7 +8,7 @@
 
     var win = S.Env.host,
 
-        UA= S.UA,
+        UA = S.UA,
 
         doc = win['document'],
 
@@ -29,9 +29,27 @@
         POLL_INTERVAL = 40,
 
     // #id or id
-        RE_IDSTR = /^#?([\w-]+)$/,
+        RE_ID_STR = /^#?([\w-]+)$/,
 
-        RE_NOT_WHITE = /\S/;
+        RE_NOT_WHITESPACE = /\S/,
+
+        standardEventModel = !!(doc && doc.addEventListener),
+        DOM_READY_EVENT = 'DOMContentLoaded',
+        READY_STATE_CHANGE_EVENT = 'readystatechange',
+        LOAD_EVENT = 'load',
+        COMPLETE = 'complete',
+
+        addEventListener = standardEventModel ? function (el, type, fn) {
+            el.addEventListener(type, fn, false);
+        } : function (el, type, fn) {
+            el.attachEvent('on' + type, fn);
+        },
+
+        removeEventListener = standardEventModel ? function (el, type, fn) {
+            el.removeEventListener(type, fn, false);
+        } : function (el, type, fn) {
+            el.detachEvent('on' + type, fn);
+        };
 
     S.mix(S, {
 
@@ -81,7 +99,7 @@
          * @member KISSY
          */
         globalEval: function (data) {
-            if (data && RE_NOT_WHITE.test(data)) {
+            if (data && RE_NOT_WHITESPACE.test(data)) {
                 // http://weblogs.java.net/blog/driscoll/archive/2009/09/08/eval-javascript-global-context
                 // http://msdn.microsoft.com/en-us/library/ie/ms536420(v=vs.85).aspx always return null
                 ( win.execScript || function (data) {
@@ -115,11 +133,7 @@
          * @member KISSY
          */
         available: function (id, fn) {
-            id = (id + EMPTY).match(RE_IDSTR)[1];
-            if (!id || !S.isFunction(fn)) {
-                return;
-            }
-
+            id = (id + EMPTY).match(RE_ID_STR)[1];
             var retryCount = 1,
                 node,
                 timer = S.later(function () {
@@ -131,81 +145,76 @@
         }
     });
 
+    function fireReady() {
+        removeEventListener(win, LOAD_EVENT, fireReady);
+        readyDefer.resolve(S);
+    }
+
     /**
      * Binds ready events.
      * @ignore
      */
-    function _bindReady() {
-        var doScroll = docElem && docElem.doScroll,
-            eventType = doScroll ? 'onreadystatechange' : 'DOMContentLoaded',
-            COMPLETE = 'complete',
-            fire = function () {
-                readyDefer.resolve(S)
-            };
+    function bindReady() {
 
         // Catch cases where ready() is called after the
         // browser event has already occurred.
         if (!doc || doc.readyState === COMPLETE) {
-            return fire();
+            fireReady();
+            return;
         }
 
+        // A fallback to window.onload, that will always work
+        addEventListener(win, LOAD_EVENT, fireReady);
+
         // w3c mode
-        if (doc.addEventListener) {
-            function domReady() {
-                doc.removeEventListener(eventType, domReady, false);
-                fire();
-            }
+        if (standardEventModel) {
+            var domReady = function () {
+                removeEventListener(doc, DOM_READY_EVENT, domReady);
+                fireReady();
+            };
 
-            doc.addEventListener(eventType, domReady, false);
-
-            // A fallback to window.onload, that will always work
-            win.addEventListener('load', fire, false);
+            addEventListener(doc, DOM_READY_EVENT, domReady);
         }
         // IE event model is used
         else {
-            function stateChange() {
+
+            var stateChange = function () {
                 if (doc.readyState === COMPLETE) {
-                    doc.detachEvent(eventType, stateChange);
-                    fire();
+                    removeEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
+                    fireReady();
                 }
-            }
+            };
 
             // ensure firing before onload (but completed after all inner iframes is loaded)
             // maybe late but safe also for iframes
-            doc.attachEvent(eventType, stateChange);
-
-            // A fallback to window.onload, that will always work.
-            win.attachEvent('onload', fire);
+            addEventListener(doc, READY_STATE_CHANGE_EVENT, stateChange);
 
             // If IE and not a frame
             // continually check to see if the document is ready
-            var notframe;
+            var notframe,
+                doScroll = docElem && docElem.doScroll;
 
             try {
                 notframe = (win['frameElement'] === null);
             } catch (e) {
-                S.log('get frameElement error : ');
-                S.log(e);
                 notframe = false;
             }
 
             // can not use in iframe,parent window is dom ready so doScroll is ready too
             if (doScroll && notframe) {
-                function readyScroll() {
+                var readyScroll = function () {
                     try {
                         // Ref: http://javascript.nwbox.com/IEContentLoaded/
                         doScroll('left');
-                        fire();
+                        fireReady();
                     } catch (ex) {
                         //S.log('detect document ready : ' + ex);
                         setTimeout(readyScroll, POLL_INTERVAL);
                     }
-                }
-
+                };
                 readyScroll();
             }
         }
-        return 0;
     }
 
     // If url contains '?ks-debug', debug mode will turn on automatically.
@@ -214,11 +223,11 @@
     }
 
 
-//     bind on start
-//     in case when you bind but the DOMContentLoaded has triggered
-//     then you has to wait onload
-//     worst case no callback at all
-    _bindReady();
+    // bind on start
+    // in case when you bind but the DOMContentLoaded has triggered
+    // then you has to wait onload
+    // worst case no callback at all
+    bindReady();
 
     if (UA.ie) {
         try {
