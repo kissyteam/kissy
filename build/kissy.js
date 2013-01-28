@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 28 14:31
+build time: Jan 28 16:55
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130128143115' will replace with current timestamp when compressing.
+         * NOTICE: '20130128165543' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130128143115',
+        __BUILD_TIME: '20130128165543',
         /**
          * KISSY Environment.
          * @private
@@ -5857,7 +5857,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130128143115'
+            tag: '20130128165543'
         }, getBaseInfo()));
     }
 
@@ -15840,12 +15840,12 @@ KISSY.add('json/facade', function (S, J) {
     ]
 });
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 28 16:55
 */
 /*
- @fileOverview  http://www.JSON.org/json2.js
+  http://www.JSON.org/json2.js
 
  2010-08-25
 
@@ -16300,7 +16300,7 @@ KISSY.add("json/json2", function () {
 
         if (/^[\],:{}\s]*$/
             .test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
-            .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
+            .replace(/"[^"\\\n\t\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
             .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 
 // In the third stage we use the eval function to compile the text into a

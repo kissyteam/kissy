@@ -1,11 +1,11 @@
-KISSY.use("json", function(S, JSON) {
+KISSY.use("json", function (S, JSON) {
 
 
-    describe('json', function() {
+    describe('json', function () {
 
-        describe('stringify', function() {
+        describe('stringify', function () {
 
-            it('should convert an arbitrary value to a JSON string representation', function() {
+            it('should convert an arbitrary value to a JSON string representation', function () {
 
                 expect(JSON.stringify({'a': true})).toBe('{"a":true}');
 
@@ -16,9 +16,9 @@ KISSY.use("json", function(S, JSON) {
             });
         });
 
-        describe('parse', function() {
+        describe('parse', function () {
 
-            it('should parse a JSON string to the native JavaScript representation', function() {
+            it('should parse a JSON string to the native JavaScript representation', function () {
 
                 expect(JSON.parse('{"test":1}')).toEqual({test: 1});
                 expect(JSON.parse('{}')).toEqual({});
@@ -33,9 +33,13 @@ KISSY.use("json", function(S, JSON) {
                 expect(JSON.parse('null')).toBe(null);
 
                 expect(
-                      function() {
-                          JSON.parse('{a:1}');
-                      }).toThrow();
+                    function () {
+                        JSON.parse('{a:1}');
+                    }).toThrow();
+
+                expect(function () {
+                    JSON.parse('{"x":"\t"}');
+                }).toThrow();
 
             });
         });
