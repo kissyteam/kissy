@@ -54,7 +54,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
          */
         _onSetHighlighted: function (v) {
             var self = this,
-                componentCls = self.getCssClassWithState("-hover"),
+                componentCls = self.getCssClassWithState("hover"),
                 el = self.get("el");
             el[v ? 'addClass' : 'removeClass'](componentCls);
         },
@@ -64,7 +64,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
          */
         _onSetDisabled: function (v) {
             var self = this,
-                componentCls = self.getCssClassWithState("-disabled"),
+                componentCls = self.getCssClassWithState("disabled"),
                 el = self.get("el");
             el[v ? 'addClass' : 'removeClass'](componentCls)
                 .attr("aria-disabled", v);
@@ -76,9 +76,9 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         /**
          * @ignore
          */
-        _onSetActive: function (v) {
+        '_onSetActive': function (v) {
             var self = this,
-                componentCls = self.getCssClassWithState("-active");
+                componentCls = self.getCssClassWithState("active");
             self.get("el")[v ? 'addClass' : 'removeClass'](componentCls)
                 .attr("aria-pressed", !!v);
         },
@@ -88,7 +88,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         _onSetFocused: function (v) {
             var self = this,
                 el = self.get("el"),
-                componentCls = self.getCssClassWithState("-focused");
+                componentCls = self.getCssClassWithState("focused");
             el[v ? 'addClass' : 'removeClass'](componentCls);
         },
 
@@ -105,7 +105,7 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         ATTRS: {
 
             prefixCls: {
-                value: "ks-"
+                value: S.config('component/prefixCls') || 'ks-'
             },
 
             focusable: {
@@ -122,7 +122,8 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         },
         HTML_PARSER: {
             disabled: function (el) {
-                var self = this, componentCls = self.getCssClassWithState("-disabled");
+                var self = this,
+                    componentCls = self.getCssClassWithState("disabled");
                 return self.get("el").hasClass(componentCls);
             }
         }
