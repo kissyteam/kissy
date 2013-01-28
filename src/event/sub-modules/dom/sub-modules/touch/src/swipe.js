@@ -144,10 +144,10 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            Event.on(el, Gesture.move, prevent);
+            Event.on(this, Gesture.move, prevent);
         },
         tearDown: function () {
-            Event.detach(el, Gesture.move, prevent);
+            Event.detach(this, Gesture.move, prevent);
         },
         handle: new Swipe()
     };

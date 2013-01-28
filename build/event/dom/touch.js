@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 11 17:20
+build time: Jan 28 14:02
 */
 /**
  * @ignore
@@ -788,10 +788,10 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            Event.on(el, Gesture.move, prevent);
+            Event.on(this, Gesture.move, prevent);
         },
         tearDown: function () {
-            Event.detach(el, Gesture.move, prevent);
+            Event.detach(this, Gesture.move, prevent);
         },
         handle: new Swipe()
     };
@@ -844,10 +844,10 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            Event.on(el, Gesture.start, prevent);
+            Event.on(this, Gesture.start, prevent);
         },
         tearDown: function () {
-            Event.detach(el, Gesture.start, prevent);
+            Event.detach(this, Gesture.start, prevent);
         },
         handle: new TapHold()
     };
