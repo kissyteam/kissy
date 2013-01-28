@@ -146,7 +146,10 @@
     });
 
     function fireReady() {
-        removeEventListener(win, LOAD_EVENT, fireReady);
+        // nodejs
+        if (doc) {
+            removeEventListener(win, LOAD_EVENT, fireReady);
+        }
         readyDefer.resolve(S);
     }
 
