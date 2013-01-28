@@ -1,50 +1,53 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-<title>淘宝首页模式</title>
-<link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
-<link href="../assets/default.css" rel="stylesheet"/>
-<style>
-    h5 {
-        margin: 0;
-        padding: 0;
-        font-size: 100%;
-    }
+    <title>淘宝首页模式</title>
+    <link href="/kissy/build/css/dpl/base.css" rel="stylesheet"/>
+    <link href="../assets/default.css" rel="stylesheet"/>
+    <style>
+        h5 {
+            margin: 0;
+            padding: 0;
+            font-size: 100%;
+        }
 
-    .item-wrapper {
-        overflow: hidden;
-        zoom: 1;
-    }
+        .item-wrapper {
+            overflow: hidden;
+            zoom: 1;
+        }
 
-    .item-text {
-        float: left;
-        text-align: left;
-        padding-left: 5px;
-    }
+        .item-text {
+            float: left;
+            text-align: left;
+            padding-left: 5px;
+        }
 
-    .item-count {
-        float: right;
-        text-align: right;
-        padding-right: 5px;
-        color: green;
-    }
+        .item-count {
+            float: right;
+            text-align: right;
+            padding-right: 5px;
+            color: green;
+        }
 
-    .ks-menuitem-highlight .item-count,
-    .ks-menuitem-hover .item-count {
-        color: white;
-    }
-</style>
+        .ks-menuitem-highlight .item-count,
+        .ks-menuitem-hover .item-count {
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
 <div style="margin:10px auto; width:800px;text-align: center" id="container">
     <h1>taobao 首页模式</h1>
 </div>
+<p style="margin:10px auto; width:800px;text-align: center">
+    <button id="search">search</button>
+</p>
 
 <script src="/kissy/build/seed.js"></script>
 <script src="../../src/render.js"></script>
@@ -69,34 +72,34 @@
                     "</div>";
 
             var basicComboBox = new ComboBox({
-                render:S.one("#container"),
-                hasTrigger:false,
-                width:500,
-                dataSource:new ComboBox.RemoteDataSource({
-                    xhrCfg:{
-                        url:'http://suggest.taobao.com/sug',
-                        dataType:'jsonp',
-                        data:{
-                            code:"utf-8"
+                render: S.one("#container"),
+                hasTrigger: false,
+                width: 500,
+                dataSource: new ComboBox.RemoteDataSource({
+                    xhrCfg: {
+                        url: 'http://suggest.taobao.com/sug',
+                        dataType: 'jsonp',
+                        data: {
+                            code: "utf-8"
                         }
                     },
-                    paramName:"q",
-                    parse:function (query, results) {
+                    paramName: "q",
+                    parse: function (query, results) {
                         // 返回结果对象数组
                         return results.result;
                     },
-                    cache:true
+                    cache: true
                 }),
-                format:function (query, results) {
+                format: function (query, results) {
                     var ret = [];
                     S.each(results, function (r) {
                         ret.push({
                             // 点击菜单项后要放入 input 中的内容
-                            textContent:r[0],
+                            textContent: r[0],
                             // 菜单项的
-                            content:S.substitute(tmpl, {
-                                text:r[0],
-                                count:r[1]
+                            content: S.substitute(tmpl, {
+                                text: r[0],
+                                count: r[1]
                             })
                         });
                     });
@@ -166,6 +169,15 @@
                     footer.one(".tdg-input")
                             .val(basicComboBox.get("input").val())
                 }
+            });
+
+
+            basicComboBox.on('click', function (e) {
+                S.all('#search')[0].click();
+            });
+
+            S.all('#search').on('click',function(){
+                location.hash='#!q='+basicComboBox.get('input').val();
             });
         })();
     });
