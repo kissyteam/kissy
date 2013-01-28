@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 28 14:10
+build time: Jan 28 14:31
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130128141037' will replace with current timestamp when compressing.
+         * NOTICE: '20130128143115' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130128141037',
+        __BUILD_TIME: '20130128143115',
         /**
          * KISSY Environment.
          * @private
@@ -5857,7 +5857,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130128141037'
+            tag: '20130128143115'
         }, getBaseInfo()));
     }
 
@@ -14853,7 +14853,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 28 14:02
+build time: Jan 28 14:30
 */
 /**
  * @ignore
@@ -15487,6 +15487,7 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
                 return false;
             }
             self.lastTouches = e.touches;
+            return undefined;
         },
         onTouchMove: S.noop,
         onTouchEnd: S.noop
@@ -15634,7 +15635,9 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     });
 
     function prevent(e) {
-        e.preventDefault();
+        if (!e.touches || e.touches.length == 1) {
+            e.preventDefault();
+        }
     }
 
     eventHandleMap[event] = {
@@ -15690,7 +15693,9 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     });
 
     function prevent(e) {
-        e.preventDefault();
+        if (!e.touches || e.touches.length == 1) {
+            e.preventDefault();
+        }
     }
 
     eventHandleMap[event] = {

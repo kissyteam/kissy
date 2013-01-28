@@ -138,7 +138,9 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     });
 
     function prevent(e) {
-        e.preventDefault();
+        if (!e.touches || e.touches.length == 1) {
+            e.preventDefault();
+        }
     }
 
     eventHandleMap[event] = {

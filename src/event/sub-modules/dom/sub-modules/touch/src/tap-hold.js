@@ -36,7 +36,9 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     });
 
     function prevent(e) {
-        e.preventDefault();
+        if (!e.touches || e.touches.length == 1) {
+            e.preventDefault();
+        }
     }
 
     eventHandleMap[event] = {
