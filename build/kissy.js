@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 28 13:36
+build time: Jan 28 14:05
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130128133645' will replace with current timestamp when compressing.
+         * NOTICE: '20130128140535' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130128133645',
+        __BUILD_TIME: '20130128140535',
         /**
          * KISSY Environment.
          * @private
@@ -5821,7 +5821,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130128133645'
+            tag: '20130128140535'
         }, getBaseInfo()));
     }
 
@@ -14769,7 +14769,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 15 13:39
+build time: Jan 28 14:05
 */
 /**
  * @ignore
@@ -15556,10 +15556,10 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            Event.on(el, Gesture.move, prevent);
+            Event.on(this, Gesture.move, prevent);
         },
         tearDown: function () {
-            Event.detach(el, Gesture.move, prevent);
+            Event.detach(this, Gesture.move, prevent);
         },
         handle: new Swipe()
     };
@@ -15612,10 +15612,10 @@ KISSY.add('event/dom/touch/tap-hold', function (S, eventHandleMap, SingleTouch, 
     eventHandleMap[event] = {
         setup: function () {
             // prevent native scroll
-            Event.on(el, Gesture.start, prevent);
+            Event.on(this, Gesture.start, prevent);
         },
         tearDown: function () {
-            Event.detach(el, Gesture.start, prevent);
+            Event.detach(this, Gesture.start, prevent);
         },
         handle: new TapHold()
     };

@@ -24,10 +24,22 @@
      border: 1px solid red;
      ">
 </div>
-
+<div style="height: 900px;"></div>
+<script src="../../src/handle.js"></script>
+<script src="../../src/multi-touch.js"></script>
+<script src="../../src/pinch.js"></script>
+<script src="../../src/double-tap.js"></script>
+<script src="../../src/gesture.js"></script>
+<script src="../../src/handle-map.js"></script>
+<script src="../../src/rotate.js"></script>
+<script src="../../src/single-touch.js"></script>
+<script src="../../src/swipe.js"></script>
+<script src="../../src/tap-hold.js"></script>
+<script src="../../src/tap.js"></script>
+<script src="../../src/touch.js"></script>
 <script>
 
-    KISSY.use('event,node,event/dom/touch', function (S, Event) {
+    KISSY.use('event,node', function (S, Event) {
 
         var $ = S.all;
 
@@ -37,11 +49,6 @@
 
         Event.on('#t', "swipe", function (e) {
             log(e.type + ' : ' + e.direction + ' : ' + e.duration + ' : ' + e.distance);
-        });
-
-        // prevent native scroll
-        Event.on('#t', 'touchmove', function (e) {
-            e.preventDefault();
         });
 
     });
