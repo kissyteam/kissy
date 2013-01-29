@@ -1,15 +1,15 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 29 22:46
 */
 /**
  * @ignore
- * @fileOverview kissy json use json2 or native conditionally
+ *  kissy json use json2 or native conditionally
  */
 KISSY.add('json', function (S, J) {
 
-    if (typeof JSON !== 'undefined') {
+    if (!J) {
         J = JSON;
     }
 

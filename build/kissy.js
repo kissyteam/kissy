@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 29 20:43
+build time: Jan 29 22:46
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130129204319' will replace with current timestamp when compressing.
+         * NOTICE: '20130129224634' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130129204319',
+        __BUILD_TIME: '20130129224634',
         /**
          * KISSY Environment.
          * @private
@@ -5821,7 +5821,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130129204319'
+            tag: '20130129224634'
         }, getBaseInfo()));
     }
 
@@ -15736,6 +15736,11 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
     requires: ['event/dom/base', './touch/handle-map', './touch/handle']
 });
 /*
+Copyright 2013, KISSY UI Library v1.30
+MIT Licensed
+build time: Jan 29 22:46
+*/
+/*
 Copyright 2012, KISSY UI Library v1.30
 MIT Licensed
 build time: Dec 20 22:27
@@ -16221,17 +16226,17 @@ KISSY.add("json/json2", function () {
     return JSON;
 });
 /*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 29 22:46
 */
 /**
  * @ignore
- * @fileOverview kissy json use json2 or native conditionally
+ *  kissy json use json2 or native conditionally
  */
 KISSY.add('json', function (S, J) {
 
-    if (typeof JSON !== 'undefined') {
+    if (!J) {
         J = JSON;
     }
 

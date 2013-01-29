@@ -4,7 +4,7 @@
  */
 KISSY.add('json', function (S, J) {
 
-    if (typeof JSON !== 'undefined') {
+    if (!J) {
         J = JSON;
     }
 
