@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 16:50
+build time: Jan 29 22:45
 */
 /**
  * @ignore
@@ -9,7 +9,7 @@ build time: Jan 16 16:50
  */
 KISSY.add('json/facade', function (S, J) {
 
-    if (typeof JSON !== 'undefined') {
+    if (!J) {
         J = JSON;
     }
 

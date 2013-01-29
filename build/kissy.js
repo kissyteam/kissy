@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 29 20:31
+build time: Jan 29 22:45
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130129203106' will replace with current timestamp when compressing.
+         * NOTICE: '20130129224517' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130129203106',
+        __BUILD_TIME: '20130129224517',
         /**
          * KISSY Environment.
          * @private
@@ -5857,7 +5857,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130129203106'
+            tag: '20130129224517'
         }, getBaseInfo()));
     }
 
@@ -15819,7 +15819,7 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 16:50
+build time: Jan 29 22:45
 */
 /**
  * @ignore
@@ -15827,7 +15827,7 @@ build time: Jan 16 16:50
  */
 KISSY.add('json/facade', function (S, J) {
 
-    if (typeof JSON !== 'undefined') {
+    if (!J) {
         J = JSON;
     }
 
@@ -15866,7 +15866,7 @@ KISSY.add('json/facade', function (S, J) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 28 16:55
+build time: Jan 29 22:45
 */
 /*
   http://www.JSON.org/json2.js

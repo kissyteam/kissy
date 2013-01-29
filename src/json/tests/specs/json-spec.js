@@ -37,11 +37,15 @@ KISSY.use("json", function (S, JSON) {
                         JSON.parse('{a:1}');
                     }).toThrow();
 
-                expect(function () {
-                    JSON.parse('{"x":"\t"}');
-                }).toThrow();
-
             });
+            if (!S.UA.phantomjs) {
+                // phantomjs allow \t
+                it('should throw exception when encounter \\t', function () {
+                    expect(function () {
+                        JSON.parse('{"x":"\t"}');
+                    }).toThrow();
+                });
+            }
         });
     });
 });
