@@ -161,13 +161,21 @@ KISSY.add("editor/core/enterKey", function (S,Editor,Walker,ElementPath) {
                 tmpNode.html('&nbsp;');
 
                 range.insertNode(tmpNode);
-                tmpNode.scrollIntoView(undefined,false);
+                tmpNode.scrollIntoView(undefined,{
+                    alignWithTop:false,
+                    allowHorizontalScroll:true,
+                    onlyScrollIfNeeded:true
+                });
                 range.deleteContents();
             }
             else {
                 // We may use the above scroll logic for the new block case
                 // too, but it gives some weird result with Opera.
-                newBlock.scrollIntoView(undefined,false);
+                newBlock.scrollIntoView(undefined,{
+                    alignWithTop:false,
+                    allowHorizontalScroll:true,
+                    onlyScrollIfNeeded:true
+                });
             }
         }
         range.select();

@@ -70,19 +70,22 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
             },
 
             /**
-             * Makes the first of matched elements visible in the container
+             * scrolls the first of matched elements into container view
              * @param {HTMLElement[]|String|HTMLElement} selector Matched elements
              * @param {String|HTMLElement|HTMLDocument} [container=window] Container element
-             * @param {Boolean} [top=true] Whether align with top of container.
-             * @param {Boolean} [hscroll=true] Whether trigger horizontal scroll.
-             * @param {Boolean} [auto=false] Whether adjust element automatically
-             * (only scrollIntoView when element is out of view)
-             * http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
+             * @param {Boolean|Object} [alignWithTop=true]If true, the scrolled element is aligned with the top of the scroll area.
+             * If false, it is aligned with the bottom.
+             * @param {Boolean} [alignWithTop.allowHorizontalScroll=true] Whether trigger horizontal scroll.
+             * @param {Boolean} [alignWithTop.onlyScrollIfNeeded=false] scrollIntoView when element is out of view
+             * and set top to false or true automatically if top is undefined
+             * @param {Boolean} [allowHorizontalScroll=true] Whether trigger horizontal scroll.
+             * refer: http://www.w3.org/TR/2009/WD-html5-20090423/editing.html#scrollIntoView
              *        http://www.sencha.com/deploy/dev/docs/source/Element.scroll-more.html#scrollIntoView
              *        http://yiminghe.javaeye.com/blog/390732
              */
-            scrollIntoView: function (selector, container, top, hscroll, auto) {
-                var elem;
+            scrollIntoView: function (selector, container, alignWithTop, allowHorizontalScroll) {
+                var elem,
+                    onlyScrollIfNeeded;
 
                 if (!(elem = DOM.get(selector))) {
                     return;
@@ -96,15 +99,18 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
                     container = elem.ownerDocument;
                 }
 
-                if (auto !== true) {
-                    hscroll = hscroll === undefined ? true : !!hscroll;
-                    top = top === undefined ? true : !!top;
-                }
-
                 // document 归一化到 window
                 if (container.nodeType == NodeType.DOCUMENT_NODE) {
                     container = getWin(container);
                 }
+
+                if (S.isPlainObject(alignWithTop)) {
+                    allowHorizontalScroll = alignWithTop.allowHorizontalScroll;
+                    onlyScrollIfNeeded = alignWithTop.onlyScrollIfNeeded;
+                    alignWithTop = alignWithTop.alignWithTop;
+                }
+
+                allowHorizontalScroll = allowHorizontalScroll === undefined ? true : allowHorizontalScroll;
 
                 var isWin = !!getWin(container),
                     elemOffset = DOM.offset(elem),
@@ -151,10 +157,10 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
                     // elem 相对 container 可视视窗的距离
                     // 注意边框 , offset 是边框到根节点
                     diffTop = {
-                        left: elemOffset[LEFT] - containerOffset[LEFT] -
-                            (myParseInt(DOM.css(container, 'borderLeftWidth')) || 0),
-                        top: elemOffset[TOP] - containerOffset[TOP] -
-                            (myParseInt(DOM.css(container, 'borderTopWidth')) || 0)
+                        left: elemOffset[LEFT] - (containerOffset[LEFT] +
+                            (myParseInt(DOM.css(container, 'borderLeftWidth')) || 0)),
+                        top: elemOffset[TOP] - (containerOffset[TOP] +
+                            (myParseInt(DOM.css(container, 'borderTopWidth')) || 0))
                     };
                     diffBottom = {
                         left: elemOffset[LEFT] + ew -
@@ -166,36 +172,54 @@ KISSY.add('dom/base/offset', function (S, DOM, undefined) {
                     };
                 }
 
-                if (diffTop.top < 0 || diffBottom.top > 0) {
-                    // 强制向上
-                    if (top === true) {
-                        DOM.scrollTop(container, containerScroll.top + diffTop.top);
-                    } else if (top === false) {
-                        DOM.scrollTop(container, containerScroll.top + diffBottom.top);
-                    } else {
-                        // 自动调整
-                        if (diffTop.top < 0) {
+                if (onlyScrollIfNeeded) {
+                    if (diffTop.top < 0 || diffBottom.top > 0) {
+                        // 强制向上
+                        if (alignWithTop === true) {
                             DOM.scrollTop(container, containerScroll.top + diffTop.top);
-                        } else {
+                        } else if (alignWithTop === false) {
                             DOM.scrollTop(container, containerScroll.top + diffBottom.top);
+                        } else {
+                            // 自动调整
+                            if (diffTop.top < 0) {
+                                DOM.scrollTop(container, containerScroll.top + diffTop.top);
+                            } else {
+                                DOM.scrollTop(container, containerScroll.top + diffBottom.top);
+                            }
                         }
+                    }
+                } else {
+                    alignWithTop = alignWithTop === undefined ? true : !!alignWithTop;
+                    if (alignWithTop) {
+                        DOM.scrollTop(container, containerScroll.top + diffTop.top);
+                    } else {
+                        DOM.scrollTop(container, containerScroll.top + diffBottom.top);
                     }
                 }
 
-                if (hscroll) {
-                    if (diffTop.left < 0 || diffBottom.left > 0) {
-                        // 强制向上
-                        if (top === true) {
-                            DOM.scrollLeft(container, containerScroll.left + diffTop.left);
-                        } else if (top === false) {
-                            DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
-                        } else {
-                            // 自动调整
-                            if (diffTop.left < 0) {
+                if (allowHorizontalScroll) {
+                    if (onlyScrollIfNeeded) {
+                        if (diffTop.left < 0 || diffBottom.left > 0) {
+                            // 强制向上
+                            if (alignWithTop === true) {
                                 DOM.scrollLeft(container, containerScroll.left + diffTop.left);
-                            } else {
+                            } else if (alignWithTop === false) {
                                 DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
+                            } else {
+                                // 自动调整
+                                if (diffTop.left < 0) {
+                                    DOM.scrollLeft(container, containerScroll.left + diffTop.left);
+                                } else {
+                                    DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
+                                }
                             }
+                        }
+                    } else {
+                        alignWithTop = alignWithTop === undefined ? true : !!alignWithTop;
+                        if (alignWithTop) {
+                            DOM.scrollLeft(container, containerScroll.left + diffTop.left);
+                        } else {
+                            DOM.scrollLeft(container, containerScroll.left + diffBottom.left);
                         }
                     }
                 }

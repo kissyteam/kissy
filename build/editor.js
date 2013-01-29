@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 28 22:19
+build time: Jan 29 20:43
 */
 /**
  * Set up editor constructor
@@ -2334,7 +2334,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
                 // only tag can scroll
                 if (clone && clone[0].nodeType == 1) {
-                    clone.scrollIntoView(undefined, false);
+                    clone.scrollIntoView(undefined,{
+                        alignWithTop:false,
+                        allowHorizontalScroll:true,
+                        onlyScrollIfNeeded:true
+                    });
                 }
                 saveLater.call(self);
                 return clone;
@@ -3228,13 +3232,21 @@ KISSY.add("editor/core/enterKey", function (S,Editor,Walker,ElementPath) {
                 tmpNode.html('&nbsp;');
 
                 range.insertNode(tmpNode);
-                tmpNode.scrollIntoView(undefined,false);
+                tmpNode.scrollIntoView(undefined,{
+                    alignWithTop:false,
+                    allowHorizontalScroll:true,
+                    onlyScrollIfNeeded:true
+                });
                 range.deleteContents();
             }
             else {
                 // We may use the above scroll logic for the new block case
                 // too, but it gives some weird result with Opera.
-                newBlock.scrollIntoView(undefined,false);
+                newBlock.scrollIntoView(undefined,{
+                    alignWithTop:false,
+                    allowHorizontalScroll:true,
+                    onlyScrollIfNeeded:true
+                });
             }
         }
         range.select();
@@ -6259,7 +6271,11 @@ KISSY.add("editor/core/selection", function (S) {
             // If we have split the block, adds a temporary span at the
             // range position and scroll relatively to it.
             var start = this.getStartElement();
-            start && start.scrollIntoView(undefined, false);
+            start && start.scrollIntoView(undefined,{
+                alignWithTop:false,
+                allowHorizontalScroll:true,
+                onlyScrollIfNeeded:true
+            });
         },
         removeAllRanges:function () {
             var sel = this.getNative();

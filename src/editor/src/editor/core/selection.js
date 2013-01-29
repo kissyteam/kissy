@@ -625,7 +625,11 @@ KISSY.add("editor/core/selection", function (S) {
             // If we have split the block, adds a temporary span at the
             // range position and scroll relatively to it.
             var start = this.getStartElement();
-            start && start.scrollIntoView(undefined, false);
+            start && start.scrollIntoView(undefined,{
+                alignWithTop:false,
+                allowHorizontalScroll:true,
+                onlyScrollIfNeeded:true
+            });
         },
         removeAllRanges:function () {
             var sel = this.getNative();

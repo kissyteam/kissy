@@ -195,7 +195,11 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
                 var element = sel.getStartElement();
                 //使用原生不行的，会使主窗口滚动
                 //element[0] && element[0].scrollIntoView(true);
-                element && element.scrollIntoView(undefined, false);
+                element && element.scrollIntoView(undefined,{
+                    alignWithTop:false,
+                    allowHorizontalScroll:true,
+                    onlyScrollIfNeeded:true
+                });
             }
         },
 
