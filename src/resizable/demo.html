@@ -8,18 +8,33 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <title>S.Resizable Demo</title>
     <link rel="stylesheet" href="demo/resizable.css"/>
+    <style>
+        #t,#t2{
+            position: absolute;
+        }
+    </style>
 </head>
 <body>
 <div style="width:900px;margin: 20px auto;text-align: center;">
-    <h1>拖放测试</h1>
+    <h1>resizable测试</h1>
 
     <div style="border:1px solid red;width:200px;
-    height:100px;overflow:hidden;"
+    height:100px;overflow:hidden;top:100px;"
          id="t">
         <button id="destroy" style='margin-top:50px;'>
             destroy resize
         </button>
     </div>
+
+
+    <div style="border:1px solid red;width:200px;
+    height:100px;overflow:hidden;top:500px;"
+         id="t2">
+        <button id="destroy2" style='margin-top:50px;'>
+            destroy resize
+        </button>
+    </div>
+
 </div>
 <script src="/kissy/build/seed.js"></script>
 <script src="src/resizable.js"></script>
@@ -39,6 +54,21 @@
             });
             Node.one("#destroy").on("click", function () {
                 r.destroy();
+            });
+
+
+            var r2 = new Resizable({
+                node: "#t2",
+                handlers: ["b", "t", "r", "l", "tr", "tl", "br", "bl"],
+                preserveRatio: true,
+                // optional configs
+                minHeight: 50,
+                minWidth: 50,
+                maxHeight: 500,
+                maxWidth: 500
+            });
+            Node.one("#destroy2").on("click", function () {
+                r2.destroy();
             });
 
         });

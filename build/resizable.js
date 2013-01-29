@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:28
+build time: Jan 29 13:39
 */
 /**
  * @ignore
- * @fileOverview resizable support for kissy
+ * resizable support for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
@@ -19,23 +19,39 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
         vertical = ["t", "b"],
         ATTRS_ORDER = ["width", "height", "top", "left"],
         hcNormal = {
-            "t": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT) {
+            "t": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
                 var h = getBoundValue(minH, maxH, oh - diffT),
-                    t = ot + oh - h;
-                return [0, h, t, 0]
+                    t = ot + oh - h,
+                    w = 0;
+                if (preserveRatio) {
+                    w = h / oh * ow;
+                }
+                return [w, h, t, 0]
             },
-            "b": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT) {
-                var h = getBoundValue(minH, maxH, oh + diffT);
-                return [0, h, 0, 0];
+            "b": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+                var h = getBoundValue(minH, maxH, oh + diffT),
+                    w = 0;
+                if (preserveRatio) {
+                    w = h / oh * ow;
+                }
+                return [w, h, 0, 0];
             },
-            "r": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL) {
-                var w = getBoundValue(minW, maxW, ow + diffL);
-                return [w, 0, 0, 0];
+            "r": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
+                var w = getBoundValue(minW, maxW, ow + diffL),
+                    h = 0;
+                if (preserveRatio) {
+                    h = w / ow * oh;
+                }
+                return [w, h, 0, 0];
             },
-            "l": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL) {
+            "l": function (minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio) {
                 var w = getBoundValue(minW, maxW, ow - diffL),
+                    h = 0,
                     l = ol + ow - w;
-                return [w, 0, 0, l]
+                if (preserveRatio) {
+                    h = w / ow * oh;
+                }
+                return [w, h, 0, l]
             }
         };
 
@@ -66,6 +82,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
         var dds = self['dds'],
             node = self.get('node'),
             handlers = self.get('handlers'),
+            preserveRatio,
             prefixCls = self.get('prefixCls'),
             prefix = prefixCls + CLS_PREFIX;
         for (i = 0; i < handlers.length; i++) {
@@ -94,7 +111,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
                         diffL = ev.left - dd.get('startNodePos').left,
                         ot = self._top,
                         ol = self._left,
-                        pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL);
+                        pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio);
                     for (i = 0; i < ATTRS_ORDER.length; i++) {
                         if (pos[i]) {
                             node.css(ATTRS_ORDER[i], pos[i]);
@@ -106,6 +123,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
                     });
                 });
                 dd.on("dragstart", function () {
+                    preserveRatio = self.get('preserveRatio');
                     self._width = node.width();
                     self._top = parseInt(node.css("top"));
                     self._left = parseInt(node.css("left"));
@@ -260,6 +278,16 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
              */
             maxHeight: {
                 value: Number['MAX_VALUE']
+            },
+            /**
+             * Whether preserve width/height ratio when resizing
+             * @cfg {Boolean} preserveRatio
+             */
+            /**
+             * @ignore
+             */
+            preserveRatio: {
+                value: false
             },
             /**
              * directions can current node resize to.

@@ -7,8 +7,8 @@ KISSY.use('resizable', function (S, Resizable) {
     if (document.documentMode == 9) {
         return;
     }
-    
-    var Gesture= S.Event.Gesture;
+
+    var Gesture = S.Event.Gesture;
 
     var $ = S.all;
 
@@ -45,7 +45,7 @@ KISSY.use('resizable', function (S, Resizable) {
             'left: 100px;top:100px;';
 
         var dom = $('<div></div>').appendTo('body');
-
+        dom.attr('style', cssText);
 
         beforeEach(function () {
             dom.attr('style', cssText);
@@ -109,6 +109,8 @@ KISSY.use('resizable', function (S, Resizable) {
             runs(function () {
                 expect(dom.width()).toBeEqual(120);
                 expect(dom.offset().left).toBeEqual(80);
+                expect(dom.height()).toBeEqual(100);
+                expect(dom.offset().top).toBeEqual(100);
             });
             runs(function () {
                 expect(start).toBe('l');
