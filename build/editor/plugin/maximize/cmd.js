@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 28 22:18
+build time: Jan 29 20:30
 */
 /**
  * Add maximizeWindow/restoreWindow to Editor.
@@ -200,7 +200,11 @@ KISSY.add("editor/plugin/maximize/cmd", function (S, Editor) {
                 var element = sel.getStartElement();
                 //使用原生不行的，会使主窗口滚动
                 //element[0] && element[0].scrollIntoView(true);
-                element && element.scrollIntoView(undefined, false);
+                element && element.scrollIntoView(undefined,{
+                    alignWithTop:false,
+                    allowHorizontalScroll:true,
+                    onlyScrollIfNeeded:true
+                });
             }
         },
 

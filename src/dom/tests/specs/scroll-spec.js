@@ -6,15 +6,19 @@ KISSY.use("dom,core", function (S, DOM) {
 
     var $ = S.all;
 
-    var tpl = '<div id="test-scroll">' +
+    var tpl = '<div id="test-scroll" style="position:absolute;top:0;' +
+            'left:0;width:300px;' +
+            'background-color:white;">' +
             '<p>x</p>' +
-            new Array(20).join('<p>x</p>') +
+            new Array(5).join('<p>x</p>') +
             '<div style="width:200px;' +
             'height:200px;overflow:auto;' +
+            'position:relative;' +
             'border: 5px solid #ccc;"' +
             ' id="scroll-container">' +
-            new Array(20).join('<p>x</p>') +
-            '<div id="scroll-el" style="border:3px solid #9f9;">' +
+            new Array(20).join('<p style="width:1000px;">x</p>') +
+            '<div id="scroll-el" style="border:3px solid #9f9;' +
+            'position:absolute;left:100px;">' +
             'test' +
             '</div>' +
             new Array(20).join('<p>x</p>') +
@@ -38,7 +42,7 @@ KISSY.use("dom,core", function (S, DOM) {
 
         var container ,
             node , container_border_width,
-            container_height,
+            container_client_height,
             node_height;
 
         beforeEach(function () {
@@ -47,7 +51,7 @@ KISSY.use("dom,core", function (S, DOM) {
             node = DOM.get('#scroll-el');
             container_border_width = parseInt(DOM.css(container,
                 "border-top-width"));
-            container_height = DOM.height(container);
+            container_client_height = container.clientHeight;
             node_height = node.offsetHeight;
         });
 
@@ -60,8 +64,8 @@ KISSY.use("dom,core", function (S, DOM) {
                 toBeAlmostEqual: function (expected) {
                     return Math.abs(parseInt(this.actual) - parseInt(expected)) < 20;
                 },
-                toBeEqual: function (expected) {
-                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 5;
+                toBeAbsEqual: function (expected) {
+                    return Math.abs(parseInt(this.actual) - parseInt(expected)) < 3;
                 }
             });
         });
@@ -71,47 +75,83 @@ KISSY.use("dom,core", function (S, DOM) {
             DOM.scrollTop(container, 0);
         });
 
-        it("scroll node to container manually works", function () {
+        describe('non-auto works', function () {
+            it("scroll node to container at axis xy manually works", function () {
+                var nodeOffset = DOM.offset(node),
+                    containerOffset = DOM.offset(container);
 
-            DOM.scrollIntoView(node, container);
+                var scrollTop = nodeOffset.top - containerOffset.top - container_border_width;
+                var scrollLeft = nodeOffset.left - containerOffset.left - container_border_width;
 
-            var scrollTop = Math.round(DOM.scrollTop()),
-                nt = Math.round(DOM.offset(node).top),
-                ct = Math.round(DOM.offset(container).top);
+                DOM.scrollIntoView(node, container);
 
-            expect(scrollTop).toBeEqual(0);
-            expect(nt - ct).toBeEqual(container_border_width);
+                nodeOffset = DOM.offset(node);
+                containerOffset = DOM.offset(container);
 
-            $('#scroll-iframe-holder')[0].innerHTML = iframeTpl;
+                expect(DOM.scrollTop()).toBeAbsEqual(0);
 
-            var iframe = S.get('#test-iframe');
+                expect(DOM.scrollTop(container)).toBeAbsEqual(scrollTop);
+                expect(DOM.scrollLeft(container)).toBeAbsEqual(scrollLeft);
 
-            var ok = 0;
+                expect(nodeOffset.top - containerOffset.top).toBeAbsEqual(container_border_width);
 
-            $(iframe).on('load', function () {
-                var inner = S.get('#test-inner', iframe.contentWindow.document);
-
-                DOM.scrollIntoView(inner, iframe.contentWindow);
-                nt = Math.round(DOM.offset(inner).top);
-                expect(nt).toBeEqual(DOM.scrollTop(iframe.contentWindow));
-
-                setTimeout(function () {
-                    ok = 1;
-                }, 100);
+                expect(DOM.scrollLeft()).toBeAbsEqual(0);
+                expect(nodeOffset.left - containerOffset.left).toBeAbsEqual(container_border_width);
             });
 
-            waitsFor(function () {
-                return ok;
+
+            it("scroll node to container at axis y manually works", function () {
+                var nodeOffset = DOM.offset(node),
+                    containerOffset = DOM.offset(container);
+
+                var scrollTop = nodeOffset.top - containerOffset.top - container_border_width;
+
+                DOM.scrollIntoView(node, container, {
+                    alignWithTop:true,
+                    allowHorizontalScroll:false
+                });
+
+                nodeOffset = DOM.offset(node);
+                containerOffset = DOM.offset(container);
+
+                expect(DOM.scrollTop()).toBeAbsEqual(0);
+
+                expect(DOM.scrollTop(container)).toBeAbsEqual(scrollTop);
+                expect(DOM.scrollLeft(container)).toBeAbsEqual(0);
+
+                expect(nodeOffset.top - containerOffset.top).toBeAbsEqual(container_border_width);
+
+                expect(DOM.scrollLeft()).toBeAbsEqual(0);
+                expect(nodeOffset.left - containerOffset.left).toBeAbsEqual(105);
             });
-        });
 
-        it("scroll node to container at bottom", function () {
+            it('works for iframe', function () {
+                $('#scroll-iframe-holder')[0].innerHTML = iframeTpl;
 
-            waitsFor(function () {
-                return node_height = node.offsetHeight;
-            }, "node_height got", 10000);
-            runs(function () {
-                DOM.scrollIntoView(node, container, false);
+                var iframe = S.get('#test-iframe');
+
+                var ok = 0;
+
+                $(iframe).on('load', function () {
+                    var inner = S.get('#test-inner', iframe.contentWindow.document);
+                    DOM.scrollIntoView(inner, iframe.contentWindow);
+                    var nt = Math.round(DOM.offset(inner).top);
+                    expect(nt).toBeAbsEqual(DOM.scrollTop(iframe.contentWindow));
+                    setTimeout(function () {
+                        ok = 1;
+                    }, 100);
+                });
+
+                waitsFor(function () {
+                    return ok;
+                });
+            });
+
+
+            it("scroll node to container at bottom", function () {
+                DOM.scrollIntoView(node, container, {
+                    alignWithTop:false
+                });
                 var nt = Math.round(DOM.offset(node).top);
                 var ct = Math.round(DOM.offset(container).top);
 
@@ -122,26 +162,126 @@ KISSY.use("dom,core", function (S, DOM) {
                 //  | |  | |
                 //  | ---- |
                 //  --------
-                expect(nt).toBeEqual(ct +
+                expect(nt).toBeAbsEqual(ct +
                     container_border_width +
-                    container_height -
+                    container_client_height -
                     node_height);
-                DOM.scrollIntoView(container);
             });
+
+            if (S.UA.ios && window.frameElement) {
+
+            } else {
+                it("scroll node into top view of window", function () {
+                    DOM.scrollIntoView(container);
+                    var ct = Math.round(DOM.offset(container).top);
+                    expect(ct).toBeAbsEqual(DOM.scrollTop());
+                });
+            }
         });
 
-        if (S.UA.ios && window.frameElement) {
+        describe('auto works', function () {
 
-        } else {
-            it("scroll node to bottom of window", function () {
-                DOM.scrollIntoView(container);
-                var ct = Math.round(DOM.offset(container).top);
-                expect(ct)
-                    .toBeEqual(DOM.scrollTop() +
-                        document.body.clientTop +
-                        document.documentElement.clientTop);
+            it('will not scroll if node is inside container', function () {
+
+                DOM.scrollIntoView(node, container);
+
+                DOM.scrollTop(container, DOM.scrollTop(container) - 10);
+
+                var scrollTop = DOM.scrollTop(container);
+
+                DOM.scrollIntoView(node, container, {
+                    onlyScrollIfNeeded:true
+                });
+
+                expect(DOM.scrollTop(container)).toBe(scrollTop);
+
             });
-        }
+
+
+            it('will scroll and adjust top to true if node is outside container', function () {
+
+                DOM.scrollIntoView(node, container);
+
+                var scrollTop = DOM.scrollTop(container);
+
+                DOM.scrollTop(container, DOM.scrollTop(container) + 10);
+
+                DOM.scrollIntoView(node, container,{
+                    onlyScrollIfNeeded:true
+                });
+
+                expect(DOM.scrollTop(container)).toBe(scrollTop);
+
+            });
+
+
+            it('will scroll and adjust top to false if node is outside container', function () {
+
+                DOM.scrollIntoView(node, container, {
+                    alignWithTop:false
+                });
+
+                var scrollTop = DOM.scrollTop(container);
+
+                DOM.scrollTop(container, DOM.scrollTop(container) - 10);
+
+                DOM.scrollIntoView(node, container, {
+                    onlyScrollIfNeeded:true
+                });
+
+                expect(DOM.scrollTop(container)).toBe(scrollTop);
+
+            });
+
+
+            it('will scroll and adjust top to true if node is outside container', function () {
+
+                DOM.scrollIntoView(node, container, {
+                    alignWithTop:true
+                });
+
+                var scrollTop = DOM.scrollTop(container);
+
+                DOM.scrollIntoView(node, container,  {
+                    alignWithTop:false
+                });
+
+                DOM.scrollTop(container, DOM.scrollTop(container) - 10);
+
+                DOM.scrollIntoView(node, container,   {
+                    alignWithTop:true,
+                    onlyScrollIfNeeded:true
+                });
+
+                expect(DOM.scrollTop(container)).toBe(scrollTop);
+
+            });
+
+
+            it('will scroll to top false if node is outside container', function () {
+
+                DOM.scrollIntoView(node, container, {
+                    alignWithTop:false
+                });
+
+                var scrollTop = DOM.scrollTop(container);
+
+                DOM.scrollIntoView(node, container, {
+                    alignWithTop:true
+                });
+
+                DOM.scrollTop(container, DOM.scrollTop(container) + 10);
+
+                DOM.scrollIntoView(node, container,{
+                    alignWithTop:false,
+                    onlyScrollIfNeeded:true
+                });
+
+                expect(DOM.scrollTop(container)).toBe(scrollTop);
+
+            });
+
+        });
 
     });
 });

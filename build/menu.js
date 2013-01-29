@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 24 16:12
+build time: Jan 29 20:24
 */
 /**
  * @ignore
@@ -781,7 +781,11 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                     if (!p) {
                         return;
                     }
-                    el.scrollIntoView(p, undefined, undefined, true);
+                    el.scrollIntoView(p,{
+                        alignWithTop:true,
+                        allowHorizontalScroll:true,
+                        onlyScrollIfNeeded:true
+                    });
                 }
             },
 

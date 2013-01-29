@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 28 22:18
+build time: Jan 29 20:30
 */
 /**
  * undo,redo manager for kissy editor
@@ -34,12 +34,12 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
          * 编辑状态间是否相等
          * @param otherImage
          */
-        equals:function (otherImage) {
+        equals: function (otherImage) {
             var self = this,
                 thisContents = self.contents,
                 otherContents = otherImage.contents;
 
-            if (thisContents != otherContents){
+            if (thisContents != otherContents) {
                 return false;
             }
 
@@ -56,9 +56,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
 
                     if (
                         bookmarkA.startOffset != bookmarkB.startOffset ||
-                            bookmarkA.endOffset != bookmarkB.endOffset ||
-                            !arrayCompare(bookmarkA.start, bookmarkB.start) ||
-                            !arrayCompare(bookmarkA.end, bookmarkB.end)) {
+                            bookmarkA.endOffset != bookmarkB.endOffset || !arrayCompare(bookmarkA.start, bookmarkB.start) || !arrayCompare(bookmarkA.end, bookmarkB.end)) {
                         return false;
                     }
                 }
@@ -88,9 +86,9 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
     }
 
     var //editingKeyCodes = { /*Backspace*/ 8:1, /*Delete*/ 46:1 },
-        modifierKeyCodes = { /*Shift*/ 16:1, /*Ctrl*/ 17:1, /*Alt*/ 18:1 },
+        modifierKeyCodes = { /*Shift*/ 16: 1, /*Ctrl*/ 17: 1, /*Alt*/ 18: 1 },
     // Arrows: L, T, R, B
-        navigationKeyCodes = { 37:1, 38:1, 39:1, 40:1, 33:1, 34:1 },
+        navigationKeyCodes = { 37: 1, 38: 1, 39: 1, 40: 1, 33: 1, 34: 1 },
         zKeyCode = 90,
         yKeyCode = 89;
 
@@ -99,7 +97,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
         /**
          * 监控键盘输入，buffer处理
          */
-        _keyMonitor:function () {
+        _keyMonitor: function () {
             var self = this,
                 editor = self.editor;
 
@@ -126,14 +124,14 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                         ev.halt();
                         return;
                     }
-                    if (editor.fire("beforeSave", {buffer:1}) !== false) {
+                    if (editor.fire("beforeSave", {buffer: 1}) !== false) {
                         self.save(1);
                     }
                 });
             });
         },
 
-        _init:function () {
+        _init: function () {
             var self = this;
             self._keyMonitor();
             //先save一下,why??
@@ -148,7 +146,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
         /**
          * 保存历史
          */
-        save:function (buffer) {
+        save: function (buffer) {
             var editor = this.editor;
 
             // 代码模式下不和可视模式下混在一起
@@ -183,14 +181,14 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                 }
                 history.push(current);
                 self.index = index = history.length - 1;
-                editor.fire("afterSave", {history:history, index:index});
+                editor.fire("afterSave", {history: history, index: index});
             }
         },
 
         /**
          * @param d 1.向前撤销 ，-1.向后重做
          */
-        restore:function (d) {
+        restore: function (d) {
 
             // 代码模式下不和可视模式下混在一起
             if (this.editor.get("mode") != Editor.WYSIWYG_MODE) {
@@ -222,8 +220,8 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                 }
                 self.index += d;
                 editor.fire(d > 0 ? "afterUndo" : "afterRedo", {
-                    history:history,
-                    index:self.index
+                    history: history,
+                    index: self.index
                 });
                 editor.notifySelectionChange();
             }
@@ -234,23 +232,23 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
 
 
     return {
-        init:function (editor) {
+        init: function (editor) {
             if (!editor.hasCommand("save")) {
                 var undoRedo = new UndoManager(editor);
                 editor.addCommand("save", {
-                    exec:function (_, buffer) {
+                    exec: function (_, buffer) {
                         editor.focus();
                         undoRedo.save(buffer);
                     }
                 });
                 editor.addCommand("undo", {
-                    exec:function () {
+                    exec: function () {
                         editor.focus();
                         undoRedo.restore(-1);
                     }
                 });
                 editor.addCommand("redo", {
-                    exec:function () {
+                    exec: function () {
                         editor.focus();
                         undoRedo.restore(1);
                     }
@@ -259,5 +257,5 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
         }
     };
 }, {
-    requires:['editor']
+    requires: ['editor']
 });
