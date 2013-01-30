@@ -104,13 +104,9 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
     }, {//  screen state
         ATTRS: {
 
-            prefixCls: {
-                value: S.config('component/prefixCls') || 'ks-'
-            },
+            prefixCls: {},
 
-            focusable: {
-                value: true
-            },
+            focusable: {},
 
             focused: {},
 

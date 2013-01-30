@@ -1,8 +1,8 @@
 /**
- * scroller render
+ * scrollview render
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroller/render', function (S, Component, Extension) {
+KISSY.add('scrollview/render', function (S, Component, Extension) {
 
     return Component.Render.extend([Extension.ContentBox.Render], {
 

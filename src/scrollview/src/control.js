@@ -1,8 +1,8 @@
 /**
- * scroller controller
+ * scrollview controller
  * @author yiminghe@gmail.com
  */
-KISSY.add('scroller/base', function (S, DD, Component, Extension, Render, Event) {
+KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, Event) {
 
     var OUT_OF_BOUND_FACTOR = 0.5;
 
@@ -47,7 +47,7 @@ KISSY.add('scroller/base', function (S, DD, Component, Extension, Render, Event)
                 timeDiff > SWIPE_SAMPLE_INTERVAL) {
                 self._swipe[axis].startTime = now;
                 self._swipe[axis].scroll = scroll;
-                S.log('record for swipe: ' + timeDiff + ' : ' + scroll);
+                // S.log('record for swipe: ' + timeDiff + ' : ' + scroll);
             }
 
             self.set('scroll' + S.ucfirst(axis), scroll);
@@ -64,7 +64,7 @@ KISSY.add('scroller/base', function (S, DD, Component, Extension, Render, Event)
         var contentEl = self.get('contentEl');
         var scroll = self.get(scrollAxis);
 
-        S.log('drag end: ' + scroll);
+        // S.log('drag end: ' + scroll);
 
         var anim = {}, bound;
         if (scroll < self._minScroll[axis]) {
@@ -91,7 +91,7 @@ KISSY.add('scroller/base', function (S, DD, Component, Extension, Render, Event)
 
         var duration = e.timeStamp - self._swipe[axis].startTime;
 
-        S.log('duration: ' + duration);
+        // S.log('duration: ' + duration);
 
         if (duration == 0) {
             return;
@@ -99,7 +99,7 @@ KISSY.add('scroller/base', function (S, DD, Component, Extension, Render, Event)
 
         var distance = (scroll - self._swipe[axis].scroll);
 
-        S.log('distance: ' + distance);
+        // S.log('distance: ' + distance);
 
         if (distance == 0) {
             return;
@@ -109,8 +109,9 @@ KISSY.add('scroller/base', function (S, DD, Component, Extension, Render, Event)
 
         velocity = Math.min(Math.max(velocity, -MAX_SWIPE_VELOCITY), MAX_SWIPE_VELOCITY);
 
-        S.log('velocity: ' + velocity);
+        // S.log('velocity: ' + velocity);
 
+        // S.log('after dragend scroll value: ' + scroll);
         anim[axis] = {
             fx: {
                 frame: makeMomentumFx(self, velocity, scroll,
@@ -130,6 +131,10 @@ KISSY.add('scroller/base', function (S, DD, Component, Extension, Render, Event)
     var THETA = Math.log(1 - (FRICTION / 10));
     var ALPHA = THETA / ACCELERATION;
     var SPRING_TENSION = 0.3;
+
+    function constrain(v, max, min) {
+        return Math.min(Math.max(v, min), max);
+    }
 
     function makeMomentumFx(self, startVelocity, startScroll, scrollAxis, maxScroll, minScroll) {
         var velocity = startVelocity * ACCELERATION;
@@ -158,8 +163,13 @@ KISSY.add('scroller/base', function (S, DD, Component, Extension, Render, Event)
                 }
                 inertia = 0;
                 velocity = velocity * frictionFactor;
-                S.log('start bounce: ' + velocity);
-                startScroll = value < minScroll ? minScroll : maxScroll;
+                // S.log('before bounce value: ' + value);
+                // S.log('before bounce startScroll: ' + value);
+                // S.log('start bounce velocity: ' + velocity);
+                // S.log('before bounce minScroll: ' + minScroll);
+                // S.log('before bounce maxScroll: ' + maxScroll);
+                startScroll = value <= minScroll ? minScroll : maxScroll;
+                // S.log('startScroll value: ' + startScroll);
                 bounceStartTime = now;
             } else {
                 deltaTime = now - bounceStartTime;
@@ -189,6 +199,40 @@ KISSY.add('scroller/base', function (S, DD, Component, Extension, Render, Event)
                 .on('dragend', this._onDragEnd, this);
 
             this.get('el').on(Event.Gesture.start, this._onGestureStart, this);
+
+            this.get('el').on('mousewheel', this._onMouseWheel, this);
+        },
+
+        _onMouseWheel: function (e) {
+            var max,
+                min,
+                scrollStep = this.scrollStep,
+                deltaY,
+                deltaX,
+                _maxScroll = this._maxScroll,
+                _minScroll = this._minScroll;
+
+            if ((deltaY = e.deltaY) && this.isAxisEnabled('y')) {
+                var scrollTop = this.get('scrollTop');
+                max = _maxScroll.top;
+                min = _minScroll.top;
+                if (scrollTop <= min && deltaY < 0 || scrollTop >= max && deltaY > 0) {
+                } else {
+                    this.set('scrollTop', constrain(scrollTop + e.deltaY * scrollStep, max, min));
+                    e.preventDefault();
+                }
+            }
+
+            if ((deltaX = e.deltaX) && this.isAxisEnabled('x')) {
+                var scrollLeft = this.get('scrollLeft');
+                max = _maxScroll.left;
+                min = _minScroll.left;
+                if (scrollLeft <= min && deltaX < 0 || scrollLeft >= max && deltaX > 0) {
+                } else {
+                    this.set('scrollLeft', constrain(scrollLeft + e.deltaX * scrollStep, max, min));
+                    e.preventDefault();
+                }
+            }
         },
 
         _onGestureStart: function () {
@@ -234,7 +278,25 @@ KISSY.add('scroller/base', function (S, DD, Component, Extension, Render, Event)
                 top: elHeight - contentElHeight
             };
 
+            var scrollStep = Math.max(elHeight * elHeight * 0.7 / S.all(el[0].ownerDocument).height(), 20);
+
+            this.scrollStep = scrollStep;
+
             this._initStates();
+        },
+
+
+        getMaxScroll: function () {
+            return this._maxScroll;
+        },
+
+        getMinScroll: function () {
+            return this._minScroll;
+        },
+
+        'isAxisEnabled': function (axis) {
+            axis = axis == 'x' ? 'left' : 'top';
+            return this._allowScroll[axis];
         },
 
         _initStates: function () {
@@ -251,21 +313,21 @@ KISSY.add('scroller/base', function (S, DD, Component, Extension, Render, Event)
         },
 
         _onDragStart: function (e) {
-            S.log('dragstart: ' + e.timeStamp);
+            // S.log('dragstart: ' + e.timeStamp);
             this._initStates();
             onDragStart(this, e, 'left');
             onDragStart(this, e, 'top');
         },
 
         _onDrag: function (e) {
-            S.log('drag: ' + e.timeStamp);
+            // S.log('drag: ' + e.timeStamp);
             var startMousePos = this.dd.get('startMousePos');
             onDragAxis(this, e, 'left', startMousePos);
             onDragAxis(this, e, 'top', startMousePos);
         },
 
         _onDragEnd: function (e) {
-            S.log('dragend: ' + e.timeStamp);
+            // S.log('dragend: ' + e.timeStamp);
             onDragEndAxis(this, e, 'left');
             onDragEndAxis(this, e, 'top');
         },
@@ -305,7 +367,7 @@ KISSY.add('scroller/base', function (S, DD, Component, Extension, Render, Event)
             }
         }
     }, {
-        xclass: 'scroller'
+        xclass: 'scrollview'
     });
 
 }, {

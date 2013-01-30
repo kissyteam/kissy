@@ -6,16 +6,16 @@
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <title>KISSY Scroller</title>
+    <title>KISSY ScrollView</title>
     <script src="/kissy/build/seed.js"></script>
     <link rel="stylesheet" href="../assets/dpl.css">
     <style>
-        .ks-scroller {
+        .ks-scrollview {
             border: 1px solid red;
             margin: 0 auto;
         }
 
-        .ks-scroller p {
+        .ks-scrollview p {
             height: 20px;
             border: 1px solid green;
             margin: 0;
@@ -29,18 +29,18 @@
     </style>
 </head>
 <body>
-<h1>KISSY Scroller</h1>
+<h1>KISSY ScrollView</h1>
 <button id="destroy">destroy</button>
-<script src="../src/base.js"></script>
+<script src="../src/control.js"></script>
 <script src="../src/render.js"></script>
-<script src="../src/scroller.js"></script>
+<script src="../src/scrollview.js"></script>
 <script>
-    KISSY.use('scroller', function (S, Scroller) {
+    KISSY.use('scrollview', function (S, ScrollView) {
         var content = '';
         for (var i = 0; i < 23; i++) {
             content += '<p>' + i + '</p>';
         }
-        var scroller = new Scroller({
+        var scrollview = new ScrollView({
             width: 320,
             render: 'body',
             height: 219,
@@ -48,7 +48,7 @@
         }).render();
 
         S.all('#destroy').on('click', function () {
-            scroller.destroy();
+            scrollview.destroy();
             S.all('#destroy').attr('disabled', true);
         });
     });

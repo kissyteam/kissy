@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 28 14:45
+build time: Jan 30 22:37
 */
 /**
  * @ignore
@@ -1095,6 +1095,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 allowTextSelection: {
+                    view: 1,
                     // 和 focusable 分离
                     // grid 需求：容器允许选择里面内容
                     value: false
@@ -1174,6 +1175,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 prefixCls: {
+                    value: S.config('component/prefixCls') || 'ks-',
                     view: 1
                 },
 
@@ -1801,13 +1803,9 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
     }, {//  screen state
         ATTRS: {
 
-            prefixCls: {
-                value: S.config('component/prefixCls') || 'ks-'
-            },
+            prefixCls: {},
 
-            focusable: {
-                value: true
-            },
+            focusable: {},
 
             focused: {},
 
@@ -2066,12 +2064,12 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
             UIBase.superclass.plug.apply(self, arguments);
             p = plugins[plugins.length - 1];
             if (self.get('rendered')) {
-                p.pluginCreateDom(self);
-                p.pluginRenderUI(self);
-                p.pluginBindUI(self);
-                p.pluginSyncUI(self);
+                p.pluginCreateDom && p.pluginCreateDom(self);
+                p.pluginRenderUI && p.pluginRenderUI(self);
+                p.pluginBindUI && p.pluginBindUI(self);
+                p.pluginSyncUI && p.pluginSyncUI(self);
             } else if (self.get('created')) {
-                p.pluginCreateDom(self);
+                p.pluginCreateDom && p.pluginCreateDom(self);
             }
             return self;
         },
