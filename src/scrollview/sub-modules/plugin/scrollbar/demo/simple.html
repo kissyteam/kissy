@@ -48,7 +48,7 @@
         S.ready(function () {
             var content = '';
             for (var i = 0; i < 23; i++) {
-                content += '<p class="row">' + new Array(10).join(' long ') + '</p>';
+                content += '<p class="row">' +i+': '+ new Array(10).join(' long ') + '</p>';
             }
             window.scrollview = new ScrollView({
                 width: 320,
