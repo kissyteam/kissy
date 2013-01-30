@@ -9,22 +9,9 @@ KISSY.add("component/extension/position-render", function () {
     }
 
     Position.ATTRS = {
-        x: {
-            // 水平方向绝对位置
-        },
-        y: {
-            // 垂直方向绝对位置
-        },
-        zIndex: {
-        },
-        /**
-         * @ignore
-         * see {@link KISSY.Component.Extension.Box#cfg-visibleMode}.
-         * Defaults to: "visibility"
-         */
-        visibleMode: {
-            value: "visibility"
-        }
+        x: {},
+        y: {},
+        zIndex: {}
     };
 
 

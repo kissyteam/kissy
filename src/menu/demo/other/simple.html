@@ -60,6 +60,8 @@
 
     </div>
     <label>禁用：<input type="checkbox" id='dis'/></label>
+    <br>
+    <label>隐藏：<input type="checkbox" id='hide'/></label>
 
 </div>
 <script src="/kissy/build/seed.js"></script>
@@ -157,6 +159,15 @@
                     });
 
                     dis[0].checked = false;
+
+
+                    var hide = Node.one("#hide");
+
+                    hide.on("click", function () {
+                        menu[!!hide[0].checked ? 'hide' : 'show']()
+                    });
+
+                    hide[0].checked = false;
                 });
     })();
 </script>

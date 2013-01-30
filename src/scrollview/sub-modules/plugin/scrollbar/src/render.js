@@ -74,9 +74,7 @@ KISSY.add('scrollview/plugin/scrollbar/render', function (S, Component) {
 
     }, {
         ATTRS: {
-            scrollView: {
-                view: 1
-            },
+            scrollView: {},
             dragWidth: {},
             dragHeight: {},
             dragLeft: {},

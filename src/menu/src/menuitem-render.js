@@ -25,6 +25,13 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
 
     return Component.Render.extend({
 
+        _createDom:function(){
+            this.get('el').attr({
+                role: "menuitem",
+                id: S.guid("ks-menuitem")
+            });
+        },
+
         _onSetChecked: function (v) {
             var self = this,
                 el = self.get("el"),
@@ -57,14 +64,6 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
     }, {
         ATTRS: {
             checkable: {},
-            elAttrs: {
-                valueFn: function () {
-                    return {
-                        role: "menuitem",
-                        id: S.guid("ks-menuitem")
-                    };
-                }
-            },
             selected: {},
             // @inheritedDoc
             // content:{},

@@ -2,7 +2,7 @@
  * @ignore
  * filter menu render
  * 1.create filter input
- * 2.change menu contentelement
+ * 2.change menu content element
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender) {
@@ -51,7 +51,6 @@ KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender) {
     }, {
 
         ATTRS:{
-            /* 过滤输入框的提示 */
             label:{}
         },
 

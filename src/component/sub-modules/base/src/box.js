@@ -147,7 +147,12 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         el: {
-            view: 1
+            view: 1,
+            setter: function (v) {
+                if (!v.isNodeList)
+                    v = $(v);
+                return v;
+            }
         },
 
         /**
@@ -169,7 +174,8 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         visibleMode: {
-            view: 1
+            view: 1,
+            value: 'display'
         },
 
         /**

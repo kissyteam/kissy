@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 29 20:24
+build time: Jan 30 23:57
 */
 /**
  * @ignore
@@ -223,7 +223,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
  * @ignore
  * filter menu render
  * 1.create filter input
- * 2.change menu contentelement
+ * 2.change menu content element
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender) {
@@ -272,7 +272,6 @@ KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender) {
     }, {
 
         ATTRS:{
-            /* 过滤输入框的提示 */
             label:{}
         },
 
@@ -634,6 +633,13 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
 
     return Component.Render.extend({
 
+        _createDom:function(){
+            this.get('el').attr({
+                role: "menuitem",
+                id: S.guid("ks-menuitem")
+            });
+        },
+
         _onSetChecked: function (v) {
             var self = this,
                 el = self.get("el"),
@@ -666,14 +672,6 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
     }, {
         ATTRS: {
             checkable: {},
-            elAttrs: {
-                valueFn: function () {
-                    return {
-                        role: "menuitem",
-                        id: S.guid("ks-menuitem")
-                    };
-                }
-            },
             selected: {},
             // @inheritedDoc
             // content:{},

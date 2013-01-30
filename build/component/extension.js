@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 24 21:43
+build time: Jan 30 23:53
 */
 /**
  * @ignore
@@ -568,22 +568,9 @@ KISSY.add("component/extension/position-render", function () {
     }
 
     Position.ATTRS = {
-        x: {
-            // 水平方向绝对位置
-        },
-        y: {
-            // 垂直方向绝对位置
-        },
-        zIndex: {
-        },
-        /**
-         * @ignore
-         * see {@link KISSY.Component.Extension.Box#cfg-visibleMode}.
-         * Defaults to: "visibility"
-         */
-        visibleMode: {
-            value: "visibility"
-        }
+        x: {},
+        y: {},
+        zIndex: {}
     };
 
 
@@ -713,6 +700,15 @@ KISSY.add("component/extension/position", function (S) {
          */
         visible: {
             value: false
+        },
+
+        /**
+         * @ignore
+         * see {@link KISSY.Component.Extension.Box#cfg-visibleMode}.
+         * Defaults to: "visibility"
+         */
+        visibleMode: {
+            value: "visibility"
         }
     };
 

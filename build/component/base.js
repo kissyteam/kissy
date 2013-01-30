@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 30 22:37
+build time: Jan 30 23:54
 */
 /**
  * @ignore
@@ -46,50 +46,29 @@ KISSY.add('component/base/box-render', function (S) {
     }
 
     BoxRender.ATTRS = {
-        el: {
-            //容器元素
-            setter: function (v) {
-                return $(v);
-            }
-        },
+        el: {},
 
         // 构建时批量生成，不需要执行单个
-        elCls: {
-        },
+        elCls: {},
 
-        elStyle: {
-        },
+        elStyle: {},
 
-        width: {
-        },
+        width: {},
 
-        height: {
-        },
+        height: {},
 
-        elTagName: {
-            // 生成标签名字
-            value: 'div'
-        },
+        elAttrs: {},
 
-        elAttrs: {
-        },
+        content: {},
 
-        content: {
-        },
-
-        elBefore: {
-            // better named to renderBefore, too late !
-        },
+        // renderBefore
+        elBefore: {},
 
         render: {},
 
-        visible: {
-            value: true
-        },
+        visible: {},
 
-        visibleMode: {
-            value: 'display'
-        },
+        visibleMode: {},
         // content 设置的内容节点,默认根节点
         // 防止 content 节点和根节点不是同一个节点，例如 submenu
         contentEl: {
@@ -124,7 +103,7 @@ KISSY.add('component/base/box-render', function (S) {
                 contentEl;
             if (!(el = self.get('srcNode'))) {
                 contentEl = self.get('contentEl');
-                tagName = self.get('elTagName');
+                tagName = 'div';
                 el = $('<' + tagName + ' class="' +
                     css + '">' + '</' + tagName + '>');
 
@@ -389,7 +368,12 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         el: {
-            view: 1
+            view: 1,
+            setter: function (v) {
+                if (!v.isNodeList)
+                    v = $(v);
+                return v;
+            }
         },
 
         /**
@@ -411,7 +395,8 @@ KISSY.add('component/base/box', function () {
          * @ignore
          */
         visibleMode: {
-            view: 1
+            view: 1,
+            value: 'display'
         },
 
         /**
