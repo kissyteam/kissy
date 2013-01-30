@@ -21,10 +21,12 @@ KISSY.add('scrollview/plugin/scrollbar/render', function (S, Component) {
             '</div>' +
             '<div class="' + DRAG_PREFIX + 'arrow-up" >' +
             '<a href="javascript:void(\'up\')">' +
+            'up' +
             '</a>' +
             '</div>' +
             '<div class="' + DRAG_PREFIX + 'arrow-down" >' +
             '<a href="javascript:void(\'down\')">' +
+            'down' +
             '</a>' +
             '</div>';
 
@@ -37,6 +39,10 @@ KISSY.add('scrollview/plugin/scrollbar/render', function (S, Component) {
     }
 
     return Component.Render.extend({
+
+        createDom: function () {
+            this.get('el').addClass(this.get('prefixCls') + 'scrollbar-' + this.get('axis'));
+        },
 
         renderUI: function () {
             var self = this,

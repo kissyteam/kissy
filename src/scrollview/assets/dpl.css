@@ -19,14 +19,14 @@
 .ks-scrollbar-y-arrow-up,
 .ks-scrollbar-y-arrow-down,
 .ks-scrollbar-y-drag,
-.ks-scrollbar,
+.ks-scrollbar-y,
 .ks-scrollbar-y-drag-top,
 .ks-scrollbar-y-drag-bottom,
 .ks-scrollbar-y-drag-center {
     width: 15px;
 }
 
-.ks-scrollbar {
+.ks-scrollbar-y {
     position: absolute;
     z-index: 10;
     top: 0;
@@ -122,4 +122,52 @@
     _height: expression(this.parentNode.clientHeight-20);
     background-image: url(http://img04.taobaocdn.com/tps/i4/T1DNBXXy0dXXaFKXYX-15-1.png);
     background-repeat: repeat-y;
+}
+
+.ks-scrollbar-x {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 9;
+}
+
+.ks-scrollbar-x-track,
+.ks-scrollbar-x-arrow-up,
+.ks-scrollbar-x-arrow-down,
+.ks-scrollbar-x-drag,
+.ks-scrollbar-x {
+    height: 6px;
+}
+
+.ks-scrollbar-x-track {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    _width: expression(this.parentNode.clientWidth)
+}
+
+/*上下箭头 这个样式木有*/
+.ks-scrollbar-x-arrow-up, .ks-scrollbar-x-arrow-down {
+    width: 14px;
+    position: absolute;
+    overflow: visible;
+}
+
+.ks-scrollbar-x-arrow-down {
+    right: 0;
+}
+
+.ks-scrollbar-x-arrow-up a, .ks-scrollbar-x-arrow-down a {
+    text-indent: -1000px;
+    width: 15px;
+    height: 6px;
+    display: block;
+}
+
+.ks-scrollbar-x-drag {
+    position: absolute;
+    background: #333;
+    border-radius: 3px;
+    opacity: 0.5;
+    *filter: alpha(opacity = 50);
 }

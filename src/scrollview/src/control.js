@@ -243,8 +243,8 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
             var el = this.get('el'),
                 contentEl = this.get('contentEl');
             var axis = this.get('axis'),
-                contentElHeight = contentEl.height() ,
-                contentElWidth = contentEl.width(),
+                contentElHeight = contentEl[0].scrollHeight ,
+                contentElWidth = contentEl[0].scrollWidth,
                 elHeight = el.height(),
                 elWidth = el.width();
 

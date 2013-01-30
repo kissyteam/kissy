@@ -57,12 +57,12 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Component, ScrollB
             var dragEl = this.get('dragEl');
             var ratio;
             if (this.get('axis') == 'x') {
-                this._contentSize = scrollContent.width();
+                this._contentSize = scrollContent[0].scrollWidth;
                 this._trackElSize = trackEl.width();
                 ratio = scrollEl.width() / this._contentSize;
                 this.set('dragWidth', this.barWidth = ratio * this._trackElSize);
             } else {
-                this._contentSize = scrollContent.height();
+                this._contentSize = scrollContent[0].scrollHeight;
                 this._trackElSize = trackEl.height();
                 ratio = scrollEl.height() / this._contentSize;
                 this.set('dragHeight', this.barHeight = ratio * this._trackElSize);

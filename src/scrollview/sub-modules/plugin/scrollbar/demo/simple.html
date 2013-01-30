@@ -20,6 +20,7 @@
             border: 1px solid green;
             margin: 0;
             padding: 10px;
+            width:600px;
         }
 
         h1 {
@@ -47,7 +48,7 @@
         S.ready(function () {
             var content = '';
             for (var i = 0; i < 23; i++) {
-                content += '<p class="row">' + i + '</p>';
+                content += '<p class="row">' + new Array(10).join(' long ') + '</p>';
             }
             window.scrollview = new ScrollView({
                 width: 320,
