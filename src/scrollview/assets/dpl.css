@@ -169,5 +169,10 @@
     background: #333;
     border-radius: 3px;
     opacity: 0.5;
-    *filter: alpha(opacity = 50);
+}
+
+.ks-ie6 .ks-scrollbar-x-drag,
+.ks-ie7 .ks-scrollbar-x-drag,
+.ks-ie8 .ks-scrollbar-x-drag {
+    filter: alpha(opacity = 50);
 }
