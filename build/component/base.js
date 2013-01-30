@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 16 16:35
+build time: Jan 30 20:48
 */
 /**
  * @ignore
@@ -1089,6 +1089,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 allowTextSelection: {
+                    view: 1,
                     // 和 focusable 分离
                     // grid 需求：容器允许选择里面内容
                     value: false
