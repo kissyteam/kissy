@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 30 23:47
+build time: Jan 31 23:02
 */
 /**
  * @ignore
@@ -499,6 +499,8 @@ KISSY.add('node/base', function (S, DOM, undefined) {
     }
 
     NodeList.prototype = {
+
+        constructor: NodeList,
 
         isNodeList: true,
 

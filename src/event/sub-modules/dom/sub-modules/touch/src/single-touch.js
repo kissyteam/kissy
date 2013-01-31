@@ -9,6 +9,7 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
     }
 
     SingleTouch.prototype = {
+        constructor: SingleTouch,
         requiredTouchCount: 1,
         onTouchStart: function (e) {
             var self = this;

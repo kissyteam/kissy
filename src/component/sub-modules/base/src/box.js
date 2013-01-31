@@ -219,8 +219,8 @@ KISSY.add('component/base/box', function () {
         }
     };
 
-    Box.prototype =
-    {
+    // for augment, no need constructor
+    Box.prototype = {
 
         _onSetVisible: function (v) {
             // do not fire event at render phrase

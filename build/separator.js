@@ -1,10 +1,10 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:28
+build time: Jan 31 23:02
 */
 /**
- * @fileOverview separator def
+ * separator def
  * @author yiminghe@gmail.com
  */
 KISSY.add("separator", function (S, Component, SeparatorRender) {
@@ -26,7 +26,7 @@ KISSY.add("separator", function (S, Component, SeparatorRender) {
             /**
              * Un-focusable.
              * readonly.
-             * @default false.
+             * Defaults to: false.
              */
             focusable:{
                 value:false
@@ -53,7 +53,7 @@ KISSY.add("separator", function (S, Component, SeparatorRender) {
 }, {
     requires:['component/base', 'separator/separatorRender']
 });/**
- * @fileOverview separator render def
+ * separator render def
  * @author yiminghe@gmail.com
  */
 KISSY.add("separator/separatorRender", function (S, Component) {

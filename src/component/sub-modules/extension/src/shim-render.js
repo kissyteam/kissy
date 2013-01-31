@@ -8,6 +8,7 @@ KISSY.add("component/extension/shim-render", function () {
     function Shim() {
     }
 
+    // for augment, no need constructor
     Shim.prototype = {
         __createDom: function () {
             this.get("el").prepend("<" + "iframe style='position: absolute;" +

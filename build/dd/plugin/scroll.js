@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:24
+build time: Jan 31 22:56
 */
 /**
  * @ignore
- * @fileOverview auto scroll for drag object's container
+ * auto scroll for drag object's container
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/plugin/scroll', function (S, DD, Base, Node, DOM) {

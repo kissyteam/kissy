@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 21:25
+build time: Jan 31 22:54
 */
 /**
  * anim facade between native and timer

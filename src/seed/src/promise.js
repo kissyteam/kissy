@@ -65,8 +65,7 @@
         self.promise = promise || new Promise();
     }
 
-    Defer.prototype =
-    {
+    Defer.prototype = {
         constructor: Defer,
         /**
          * fulfill defer object's promise
@@ -121,8 +120,7 @@
         }
     }
 
-    Promise.prototype =
-    {
+    Promise.prototype = {
         constructor: Promise,
         /**
          * register callbacks when this promise object is resolved

@@ -1,10 +1,10 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 23:11
+build time: Jan 31 23:02
 */
 /**
- * @fileOverview combination of menu and button ,similar to native select
+ * combination of menu and button ,similar to native select
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, Component, undefined) {
@@ -302,7 +302,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
                 /**
                  * Whether drop down menu is same width with button.
-                 * @default true.
+                 * Defaults to: true.
                  * @type {Boolean}
                  */
                 matchElWidth: {
@@ -312,7 +312,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 /**
                  * Whether hide drop down menu when click drop down menu item.
                  * eg: u do not want to set true when menu has checked menuitem.
-                 * @default false
+                 * Defaults to: false
                  * @type {Boolean}
                  */
                 collapseOnClick: {
@@ -364,7 +364,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 }, {
     requires: [ "node", "button", "./baseRender", "menu", "component/base"]
 });/**
- * @fileOverview render aria and drop arrow for menubutton
+ * render aria and drop arrow for menubutton
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/baseRender", function (S, Button) {
@@ -428,7 +428,7 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
 }, {
     requires: ['button']
 });/**
- * @fileOverview menubutton
+ * menubutton
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option) {
@@ -442,7 +442,7 @@ KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option
         'menubutton/select',
         'menubutton/option']
 });/**
- * @fileOverview represent a menu option , just make it selectable and can have select status
+ * represent a menu option , just make it selectable and can have select status
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/option", function (S, Menu) {
@@ -452,7 +452,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
      * @class
      * Option for Select component.
      * xclass: 'option'.
-     * @memberOf MenuButton
+     * @member MenuButton
      * @extends Menu.Item
      */
     var Option = MenuItem.extend(
@@ -473,7 +473,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
             {
                 /**
                  * Whether this option can be selected.
-                 * @default true.
+                 * Defaults to: true.
                  * @type {Boolean}
                  */
                 selectable:{
@@ -497,7 +497,7 @@ KISSY.add("menubutton/option", function (S, Menu) {
 }, {
     requires:['menu']
 });/**
- * @fileOverview manage a list of single-select options
+ * manage a list of single-select options
  * @author yiminghe@gmail.com
  */
 KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, undefined) {
@@ -604,7 +604,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
      * with semantics similar to native HTML select.
      * xclass: 'select'.
      * @name Select
-     * @memberOf MenuButton
+     * @member MenuButton
      * @extends MenuButton
      */
     var Select = MenuButton.extend(
@@ -688,7 +688,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
              * Generate a select component from native select element.
              * @param {HTMLElement} element Native html select element.
              * @param {Object} cfg Extra configuration for current select component.
-             * @memberOf MenuButton.Select
+             * @member MenuButton.Select
              */
             decorate: function (element, cfg) {
                 element = S.one(element);

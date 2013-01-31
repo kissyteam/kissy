@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 15:01
+build time: Jan 31 23:03
 */
 /**
  * Ast node class for xtemplate
@@ -30,7 +30,7 @@ KISSY.add("xtemplate/compiler/ast", function (S) {
 
     ast.BlockNode = function (lineNumber, tpl, program, close) {
         var closeParts = close['parts'], self = this, e;
-        // 开始没有结束
+        // no close tag
         if (!S.equals(tpl.path['parts'], closeParts)) {
             e = ("parse error at line " +
                 lineNumber +
@@ -242,7 +242,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
     function escapeSingleQuoteInCodeString(str, isDouble) {
         return str.replace(isDouble ? doubleReg : singleReg, function (m) {
-            // \ 奇数，用户显式转过 "\'" , "\\\'" 就不处理了，否则手动对 ` 加 \ 转义
+            // \ 's number ，用户显式转过 "\'" , "\\\'" 就不处理了，否则手动对 ` 加 \ 转义
             if (m.length % 2) {
                 m = '\\' + m;
             }
@@ -748,6 +748,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
 
     };
     Lexer.prototype = {
+        constructor: Lexer,
         'resetInput': function (input) {
             S.mix(this, {
                 input: input,

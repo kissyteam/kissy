@@ -435,6 +435,14 @@ KISSY.add('rich-base', function (S, Base) {
                 C[ATTRS] = attrs;
 
                 S.augment(C, prototype);
+
+                // in case extension set constructor
+                // for(var k in {
+                //  constructor:x
+                // }){
+                //  S.log(k);
+                // }
+                C.prototype.constructor = C;
             }
 
             C.extend = extend;

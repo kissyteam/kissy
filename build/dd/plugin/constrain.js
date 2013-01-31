@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:24
+build time: Jan 31 22:56
 */
 /**
  * @ignore
- * @fileOverview plugin constrain region for drag and drop
+ * plugin constrain region for drag and drop
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/plugin/constrain', function (S, Base, Node) {

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 30 23:54
+build time: Jan 31 22:55
 */
 /**
  * @ignore
@@ -88,8 +88,8 @@ KISSY.add('component/base/box-render', function (S) {
         }
     };
 
+    // for augment, no need constructor
     BoxRender.prototype = {
-
         /**
          * @ignore
          * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失
@@ -440,8 +440,8 @@ KISSY.add('component/base/box', function () {
         }
     };
 
-    Box.prototype =
-    {
+    // for augment, no need constructor
+    Box.prototype = {
 
         _onSetVisible: function (v) {
             // do not fire event at render phrase

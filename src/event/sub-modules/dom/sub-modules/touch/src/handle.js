@@ -41,6 +41,8 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
 
     DocumentHandler.prototype = {
 
+        constructor: DocumentHandler,
+
         init: function () {
             var self = this,
                 doc = self.doc,

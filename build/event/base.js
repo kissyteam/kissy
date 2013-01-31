@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 23:01
 */
 /**
  * @ignore
@@ -338,7 +338,7 @@ KISSY.add('event/base/observer', function (S) {
 
 });/**
  * @ignore
- * @fileOverview utils for event
+ * utils for event
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/base/utils', function (S) {

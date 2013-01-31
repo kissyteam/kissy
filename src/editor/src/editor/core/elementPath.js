@@ -101,6 +101,7 @@ KISSY.add("editor/core/elementPath", function (S) {
     }
 
     ElementPath.prototype = {
+        constructor:ElementPath,
         /**
          * Compares this element path with another one.
          * @param otherPath ElementPath The elementPath object to be

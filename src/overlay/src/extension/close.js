@@ -68,6 +68,7 @@ KISSY.add("overlay/extension/close", function () {
         destroy:"destroy"
     };
 
+    // for augment, no need constructor
     Close.prototype = {
         _onSetClosable:function (v) {
             var self = this;

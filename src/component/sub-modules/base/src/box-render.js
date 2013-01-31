@@ -55,8 +55,8 @@ KISSY.add('component/base/box-render', function (S) {
         }
     };
 
+    // for augment, no need constructor
     BoxRender.prototype = {
-
         /**
          * @ignore
          * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失

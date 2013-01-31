@@ -2,7 +2,7 @@
  * basic writer for inheritance
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/writer/basic", function() {
+KISSY.add("htmlparser/writer/basic", function () {
 
     function escapeAttrValue(str) {
         return String(str).replace(/"/g, "&quote;");
@@ -15,7 +15,9 @@ KISSY.add("htmlparser/writer/basic", function() {
 
     BasicWriter.prototype = {
 
-        append:function() {
+        constructor: BasicWriter,
+
+        append: function () {
             var o = this.output,
                 args = (arguments),
                 arg;
@@ -32,22 +34,22 @@ KISSY.add("htmlparser/writer/basic", function() {
             return this;
         },
 
-        openTag:function(el) {
+        openTag: function (el) {
             this.append("<", el.tagName);
         },
 
-        openTagClose:function(el) {
+        openTagClose: function (el) {
             if (el.isSelfClosed) {
                 this.append(" ", "/");
             }
             this.append(">");
         },
 
-        closeTag:function(el) {
+        closeTag: function (el) {
             this.append("<\/", el.tagName, ">");
         },
 
-        attribute:function(attr) {
+        attribute: function (attr) {
             this.append(" ",
                 attr.name,
                 "=\"",
@@ -55,19 +57,19 @@ KISSY.add("htmlparser/writer/basic", function() {
                 "\"");
         },
 
-        text:function(text) {
+        text: function (text) {
             this.append(text);
         },
 
-        cdata:function(cdata) {
+        cdata: function (cdata) {
             this.append(cdata);
         },
 
-        comment:function(comment) {
-            this.append("<!--"+comment+"-->");
+        comment: function (comment) {
+            this.append("<!--" + comment + "-->");
         },
 
-        getHtml:function() {
+        getHtml: function () {
             return this.output.join("");
         }
 

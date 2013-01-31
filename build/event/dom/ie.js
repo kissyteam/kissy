@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 23:01
 */
 /**
  * @ignore
- * @fileOverview  change bubble and checkbox/radio fix patch for ie<9
+ *  change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
@@ -120,7 +120,7 @@ KISSY.add('event/dom/ie', function () {
     requires: ['./ie/change', './ie/submit']
 });/**
  * @ignore
- * @fileOverview patch for ie<9 submit: does not bubble !
+ * patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {

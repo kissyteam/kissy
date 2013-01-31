@@ -1,10 +1,10 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 23:02
 */
 /**
- * @fileOverview collection of models
+ * collection of models
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/collection", function (S, Event, Model, Base) {
@@ -27,7 +27,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
      * @name Collection
      * @class
      * Collection. A list of model.
-     * @memberOf MVC
+     * @member MVC
      * @extends KISSY.Base
      */
     function Collection() {
@@ -313,7 +313,7 @@ KISSY.add("mvc/collection", function (S, Event, Model, Base) {
 }, {
     requires:['event', './model', 'base']
 });/**
- * @fileOverview enhanced base for model with sync
+ * enhanced base for model with sync
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/model", function (S, Base) {
@@ -331,7 +331,7 @@ KISSY.add("mvc/model", function (S, Base) {
      * @name Model
      * @class
      * Model represent a data record.
-     * @memberOf MVC
+     * @member MVC
      * @extends KISSY.Base
      */
     function Model() {
@@ -521,7 +521,7 @@ KISSY.add("mvc/model", function (S, Base) {
             {
                 /**
                  * Attribute name used to store id from server.
-                 * @default "id".
+                 * Defaults to: "id".
                  * @type {String}
                  */
                 idAttribute:{
@@ -540,7 +540,7 @@ KISSY.add("mvc/model", function (S, Base) {
                 },
                 /**
                  * Called to get url for delete/edit/new current model.
-                 * @default collection.url+"/"+mode.id
+                 * Defaults to: collection.url+"/"+mode.id
                  * @type {Function}
                  */
                 url:{
@@ -613,7 +613,7 @@ KISSY.add("mvc/model", function (S, Base) {
 }, {
     requires:['base']
 });/**
- * @fileOverview KISSY 's MVC Framework for Page Application (Backbone Style)
+ * KISSY 's MVC Framework for Page Application (Backbone Style)
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc", function (S, Model, Collection, View, Router, sync) {
@@ -634,7 +634,7 @@ KISSY.add("mvc", function (S, Model, Collection, View, Router, sync) {
 }, {
     requires:["mvc/model", "mvc/collection", "mvc/view", "mvc/router", "mvc/sync"]
 });/**
- * @fileOverview simple router to get path parameter and query parameter from hash(old ie) or url(html5)
+ * simple router to get path parameter and query parameter from hash(old ie) or url(html5)
  * @author yiminghe@gmail.com
  */
 KISSY.add('mvc/router', function (S, Event, Base) {
@@ -949,7 +949,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
      * @name Router
      * @class
      * Router used to route url to responding action callbacks.
-     * @memberOf MVC
+     * @member MVC
      * @extends KISSY.Base
      */
     function Router() {
@@ -1180,7 +1180,7 @@ KISSY.add('mvc/router', function (S, Event, Base) {
  * http://www.w3.org/TR/html5/history.html
  * http://documentcloud.github.com/backbone/
  **//**
- * @fileOverview default sync for model
+ * default sync for model
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/sync", function (S, io, JSON) {
@@ -1194,7 +1194,7 @@ KISSY.add("mvc/sync", function (S, io, JSON) {
     /**
      * Default sync mechanism.
      * Sync data with server using {@link IO} .
-     * @memberOf MVC
+     * @member MVC
      * @param {MVC.Model|MVC.Collection} self Model or Collection instance to sync with server.
      * @param {String} method Create or update or delete or read.
      * @param {Object} options IO options
@@ -1227,9 +1227,9 @@ KISSY.add("mvc/sync", function (S, io, JSON) {
 
     return sync;
 }, {
-    requires: ['ajax', 'json']
+    requires: ['io', 'json']
 });/**
- * @fileOverview view for kissy mvc : event delegation,el generator
+ * view for kissy mvc : event delegation,el generator
  * @author yiminghe@gmail.com
  */
 KISSY.add("mvc/view", function (S, Node, Base) {
@@ -1247,7 +1247,7 @@ KISSY.add("mvc/view", function (S, Node, Base) {
      * @name View
      * @class
      * View for delegating event on root element.
-     * @memberOf MVC
+     * @member MVC
      * @extends KISSY.Base
      */
     function View() {

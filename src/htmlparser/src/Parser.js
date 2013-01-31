@@ -24,6 +24,9 @@ KISSY.add("htmlparser/Parser", function (S, dtd, Tag, Fragment, Cursor, Lexer, D
     }
 
     Parser.prototype = {
+
+        constructor:Parser,
+
         elements:function () {
             var root ,
                 doc,

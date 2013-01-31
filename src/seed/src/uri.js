@@ -90,8 +90,7 @@
     }
 
 
-    Query.prototype =
-    {
+    Query.prototype = {
         constructor: Query,
 
         /**
@@ -349,8 +348,7 @@
         return self;
     }
 
-    Uri.prototype =
-    {
+    Uri.prototype = {
 
         constructor: Uri,
 

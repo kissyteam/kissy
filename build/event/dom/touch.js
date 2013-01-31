@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 28 14:30
+build time: Jan 31 23:01
 */
 /**
  * @ignore
@@ -186,6 +186,8 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
 
     DocumentHandler.prototype = {
 
+        constructor: DocumentHandler,
+
         init: function () {
             var self = this,
                 doc = self.doc,
@@ -343,6 +345,8 @@ KISSY.add('event/dom/touch/multi-touch', function (S, DOM) {
     }
 
     MultiTouch.prototype = {
+
+        constructor: MultiTouch,
 
         requiredTouchCount: 2,
 
@@ -628,6 +632,7 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
     }
 
     SingleTouch.prototype = {
+        constructor: SingleTouch,
         requiredTouchCount: 1,
         onTouchStart: function (e) {
             var self = this;

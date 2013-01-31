@@ -78,6 +78,7 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
         el[m](duration, null, easing);
     }
 
+    // for augment, no need constructor
     Mask.prototype = {
 
         __bindUI: function () {

@@ -307,6 +307,7 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
         return { left:x, top:y };
     }
 
+    // for augment, no need constructor
     Align.prototype =    {
 
         '_onSetAlign':function (v) {

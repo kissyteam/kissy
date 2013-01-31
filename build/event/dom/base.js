@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 23:01
 */
 /**
  * @ignore
@@ -356,7 +356,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
  */
 /**
  * @ignore
- * @fileOverview dom event facade
+ * dom event facade
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Special) {
@@ -416,7 +416,7 @@ KISSY.add('event/dom/base/gesture', function (S) {
 
 });/**
  * @ignore
- * @fileOverview some key-codes definition and utils from closure-library
+ * some key-codes definition and utils from closure-library
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/key-codes', function (S) {
@@ -948,7 +948,7 @@ KISSY.add('event/dom/base/key-codes', function (S) {
 
 });/**
  * @ignore
- * @fileOverview event-mouseenter
+ * event-mouseenter
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
@@ -1001,7 +1001,7 @@ KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
  */
 /**
  * @ignore
- * @fileOverview normalize mousewheel in gecko
+ * normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/mousewheel', function (S, special) {
@@ -1017,7 +1017,7 @@ KISSY.add('event/dom/base/mousewheel', function (S, special) {
     requires: ['./special']
 });/**
  * @ignore
- * @fileOverview event object for dom
+ * event object for dom
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/object', function (S, Event, undefined) {
@@ -1967,14 +1967,14 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
     requires: ['./special', 'event/base']
 });/**
  * @ignore
- * @fileOverview special house for special events
+ * special house for special events
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/special', function () {
     return {};
 });/**
  * @ignore
- * @fileOverview utils for event
+ * utils for event
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/utils', function (S, DOM) {
@@ -2021,7 +2021,7 @@ KISSY.add('event/dom/base/utils', function (S, DOM) {
     requires: ['dom']
 });/**
  * @ignore
- * @fileOverview inspired by yui3
+ * inspired by yui3
  * Synthetic event that fires when the <code>value</code> property of an input
  * field or textarea changes as a result of a keystroke, mouse operation, or
  * input method editor (IME) input event.

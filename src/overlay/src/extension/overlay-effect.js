@@ -159,6 +159,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
         }
     };
 
+    // for augment, no need constructor
     OverlayEffect.prototype = {
 
         __afterCreateEffectGhost: function (ghost) {

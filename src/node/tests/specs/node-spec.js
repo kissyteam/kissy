@@ -11,6 +11,16 @@ KISSY.use("dom,node", function (S, DOM, Node) {
     //DOM 已经测试通过，通过 DOM 测 Node
     describe("node", function () {
 
+
+        it('node is not plainObject', function () {
+
+            expect(S.isPlainObject($('body'))).toBe(false);
+            expect(S.isPlainObject($('#ee'))).toBe(false);
+
+            expect(S.isPlainObject($(document.body))).toBe(false);
+
+        });
+
         it("add works", function () {
             var x = $();
             var y = x.add("<div></div><p></p>");

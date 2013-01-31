@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 30 23:53
+build time: Jan 31 22:55
 */
 /**
  * @ignore
@@ -312,6 +312,7 @@ KISSY.add('component/extension/align', function (S, DOM, Node) {
         return { left:x, top:y };
     }
 
+    // for augment, no need constructor
     Align.prototype =    {
 
         '_onSetAlign':function (v) {
@@ -474,6 +475,7 @@ KISSY.add('component/extension/content-box-render', function (S, Node, DOM) {
     /*
      ! contentEl 只能由组件动态生成
      */
+    // for augment, no need constructor
     ContentBoxRender.prototype = {
         __createDom: function () {
             var self = this,
@@ -573,9 +575,8 @@ KISSY.add("component/extension/position-render", function () {
         zIndex: {}
     };
 
-
+    // for augment, no need constructor
     Position.prototype = {
-
         __createDom: function () {
             this.get("el").addClass(this.get('prefixCls') + "ext-position");
         },
@@ -712,7 +713,7 @@ KISSY.add("component/extension/position", function (S) {
         }
     };
 
-
+    // for augment, no need constructor
     Position.prototype = {
         /**
          * Move to absolute position.
@@ -741,6 +742,7 @@ KISSY.add("component/extension/shim-render", function () {
     function Shim() {
     }
 
+    // for augment, no need constructor
     Shim.prototype = {
         __createDom: function () {
             this.get("el").prepend("<" + "iframe style='position: absolute;" +

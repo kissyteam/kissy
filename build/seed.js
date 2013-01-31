@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 29 22:45
+build time: Jan 31 23:04
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130129224517' will replace with current timestamp when compressing.
+         * NOTICE: '20130131230401' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130129224517',
+        __BUILD_TIME: '20130131230401',
         /**
          * KISSY Environment.
          * @private
@@ -1598,7 +1598,7 @@ var KISSY = (function (undefined) {
         toString = OP.toString;
 
     function hasOwnProperty(o, p) {
-        return Object.prototype.hasOwnProperty.call(o, p);
+        return OP.hasOwnProperty.call(o, p);
     }
 
     S.mix(S,
@@ -1724,22 +1724,22 @@ var KISSY = (function (undefined) {
                     return FALSE;
                 }
 
+                var key, objConstructor;
+
                 try {
                     // Not own constructor property must be Object
-                    if (obj.constructor &&
-                        !hasOwnProperty(obj, "constructor") &&
-                        !hasOwnProperty(obj.constructor.prototype, "isPrototypeOf")) {
+                    if ((objConstructor = obj.constructor) && !hasOwnProperty(obj, "constructor") && !hasOwnProperty(objConstructor.prototype, "isPrototypeOf")) {
                         return FALSE;
                     }
                 } catch (e) {
-                    // IE8,9 Will throw exceptions on certain host objects #9897
+                    // IE8,9 Will throw exceptions on certain host objects
                     return FALSE;
                 }
 
                 // Own properties are enumerated firstly, so to speed up,
                 // if last one is own, then all properties are own.
 
-                var key;
+
                 for (key in obj) {
                 }
 
@@ -1825,8 +1825,7 @@ var KISSY = (function (undefined) {
         self.promise = promise || new Promise();
     }
 
-    Defer.prototype =
-    {
+    Defer.prototype = {
         constructor: Defer,
         /**
          * fulfill defer object's promise
@@ -1881,8 +1880,7 @@ var KISSY = (function (undefined) {
         }
     }
 
-    Promise.prototype =
-    {
+    Promise.prototype = {
         constructor: Promise,
         /**
          * register callbacks when this promise object is resolved
@@ -2467,8 +2465,7 @@ var KISSY = (function (undefined) {
     }
 
 
-    Query.prototype =
-    {
+    Query.prototype = {
         constructor: Query,
 
         /**
@@ -2726,8 +2723,7 @@ var KISSY = (function (undefined) {
         return self;
     }
 
-    Uri.prototype =
-    {
+    Uri.prototype = {
 
         constructor: Uri,
 
@@ -5006,6 +5002,8 @@ var KISSY = (function (undefined) {
 
     LoadChecker.prototype = {
 
+        constructor: LoadChecker,
+
         check: function () {
             var self = this,
                 fn = self.fn;
@@ -5857,7 +5855,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130129224517'
+            tag: '20130131230401'
         }, getBaseInfo()));
     }
 

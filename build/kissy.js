@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 29 22:45
+build time: Jan 31 23:04
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130129224517' will replace with current timestamp when compressing.
+         * NOTICE: '20130131230401' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130129224517',
+        __BUILD_TIME: '20130131230401',
         /**
          * KISSY Environment.
          * @private
@@ -1598,7 +1598,7 @@ var KISSY = (function (undefined) {
         toString = OP.toString;
 
     function hasOwnProperty(o, p) {
-        return Object.prototype.hasOwnProperty.call(o, p);
+        return OP.hasOwnProperty.call(o, p);
     }
 
     S.mix(S,
@@ -1724,22 +1724,22 @@ var KISSY = (function (undefined) {
                     return FALSE;
                 }
 
+                var key, objConstructor;
+
                 try {
                     // Not own constructor property must be Object
-                    if (obj.constructor &&
-                        !hasOwnProperty(obj, "constructor") &&
-                        !hasOwnProperty(obj.constructor.prototype, "isPrototypeOf")) {
+                    if ((objConstructor = obj.constructor) && !hasOwnProperty(obj, "constructor") && !hasOwnProperty(objConstructor.prototype, "isPrototypeOf")) {
                         return FALSE;
                     }
                 } catch (e) {
-                    // IE8,9 Will throw exceptions on certain host objects #9897
+                    // IE8,9 Will throw exceptions on certain host objects
                     return FALSE;
                 }
 
                 // Own properties are enumerated firstly, so to speed up,
                 // if last one is own, then all properties are own.
 
-                var key;
+
                 for (key in obj) {
                 }
 
@@ -1825,8 +1825,7 @@ var KISSY = (function (undefined) {
         self.promise = promise || new Promise();
     }
 
-    Defer.prototype =
-    {
+    Defer.prototype = {
         constructor: Defer,
         /**
          * fulfill defer object's promise
@@ -1881,8 +1880,7 @@ var KISSY = (function (undefined) {
         }
     }
 
-    Promise.prototype =
-    {
+    Promise.prototype = {
         constructor: Promise,
         /**
          * register callbacks when this promise object is resolved
@@ -2467,8 +2465,7 @@ var KISSY = (function (undefined) {
     }
 
 
-    Query.prototype =
-    {
+    Query.prototype = {
         constructor: Query,
 
         /**
@@ -2726,8 +2723,7 @@ var KISSY = (function (undefined) {
         return self;
     }
 
-    Uri.prototype =
-    {
+    Uri.prototype = {
 
         constructor: Uri,
 
@@ -5006,6 +5002,8 @@ var KISSY = (function (undefined) {
 
     LoadChecker.prototype = {
 
+        constructor: LoadChecker,
+
         check: function () {
             var self = this,
                 fn = self.fn;
@@ -5857,7 +5855,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130129224517'
+            tag: '20130131230401'
         }, getBaseInfo()));
     }
 
@@ -6415,7 +6413,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 29 20:26
+build time: Jan 31 22:56
 */
 /**
  * @ignore
@@ -10484,9 +10482,9 @@ KISSY.add('dom/base/traversal', function (S, DOM, undefined) {
  遵循 8/2 原则，用尽可能少的代码满足用户最常用的功能。
  */
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 26 18:07
+build time: Jan 31 22:56
 */
 /**
  * attr ie hack
@@ -11174,9 +11172,9 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
     requires: ['dom/base']
 });
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 23:01
 */
 /**
  * @ignore
@@ -11513,7 +11511,7 @@ KISSY.add('event/base/observer', function (S) {
 
 });/**
  * @ignore
- * @fileOverview utils for event
+ * utils for event
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/base/utils', function (S) {
@@ -11591,13 +11589,13 @@ KISSY.add('event/base/utils', function (S) {
 
 });
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 23:01
 */
 /**
  * @ignore
- * @fileOverview custom event target for publish and subscribe
+ * custom event target for publish and subscribe
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEvent) {
@@ -11622,12 +11620,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
         {
 
             /**
-             * Fire a custom event by name.
-             * The callback functions will be executed from the context specified when the event was created,
-             * and the {@link KISSY.Event.CustomEventObject} created will be mixed with eventData
-             * @param {String} type The type of the event
-             * @param {Object} [eventData] The data will be mixed with {@link KISSY.Event.CustomEventObject} created
-             * @return {*} If any listen returns false, then the returned value is false. else return the last listener's returned value
+             * @ignore
              */
             fire: function (target, type, eventData) {
                 var self = target, ret = undefined;
@@ -11666,12 +11659,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
             },
 
             /**
-             * Creates a new custom event of the specified type
-             * @param {String} type The type of the event
-             * @param {Object} cfg Config params
-             * @param {Boolean} [cfg.bubbles=true] whether or not this event bubbles
-             * @param {Function} [cfg.defaultFn] this event's default action
-             * @chainable
+             * @ignore
              */
             publish: function (target, type, cfg) {
                 var customEvent;
@@ -11685,9 +11673,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
             },
 
             /**
-             * Registers another EventTarget as a bubble target.
-             * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to add
-             * @chainable
+             * @ignore
              */
             addTarget: function (target, anotherTarget) {
                 var targets = api.getTargets(target);
@@ -11698,9 +11684,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
             },
 
             /**
-             * Removes a bubble target
-             * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to remove
-             * @chainable
+             * @ignore
              */
             removeTarget: function (target, anotherTarget) {
                 var targets = api.getTargets(target),
@@ -11712,9 +11696,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
             },
 
             /**
-             * all targets where current target's events bubble to
-             * @private
-             * @return {Array}
+             * @ignore
              */
             getTargets: function (target) {
                 target[KS_BUBBLE_TARGETS] = target[KS_BUBBLE_TARGETS] || [];
@@ -11722,12 +11704,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
             },
 
             /**
-             * Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
-             * @method
-             * @param {String} type The name of the event
-             * @param {Function} fn The callback to execute in response to the event
-             * @param {Object} [context] this object in callback
-             * @chainable
+             * @ignore
              */
             on: function (target, type, fn, context) {
                 type = trim(type);
@@ -11740,17 +11717,11 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                         customEvent.on(cfg);
                     }
                 }, 0, type, fn, context);
-
                 return target; // chain
             },
 
             /**
-             * Detach one or more listeners from the specified event
-             * @method
-             * @param {String} type The name of the event
-             * @param {Function} [fn] The subscribed function to un-subscribe. if not supplied, all observers will be removed.
-             * @param {Object} [context] The custom object passed to subscribe.
-             * @chainable
+             * @ignore
              */
             detach: function (target, type, fn, context) {
                 type = trim(type);
@@ -11775,6 +11746,65 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                 return target; // chain
             }
         });
+
+    /**
+     * Fire a custom event by name.
+     * The callback functions will be executed from the context specified when the event was created,
+     * and the {@link KISSY.Event.CustomEventObject} created will be mixed with eventData
+     * @method fire
+     * @param {String} type The type of the event
+     * @param {Object} [eventData] The data will be mixed with {@link KISSY.Event.CustomEventObject} created
+     * @return {*} If any listen returns false, then the returned value is false. else return the last listener's returned value
+     */
+
+    /**
+     * Creates a new custom event of the specified type
+     * @method publish
+     * @param {String} type The type of the event
+     * @param {Object} cfg Config params
+     * @param {Boolean} [cfg.bubbles=true] whether or not this event bubbles
+     * @param {Function} [cfg.defaultFn] this event's default action
+     * @chainable
+     */
+
+    /**
+     * Registers another EventTarget as a bubble target.
+     * @method addTarget
+     * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to add
+     * @chainable
+     */
+
+    /**
+     * Removes a bubble target
+     * @method removeTarget
+     * @param {KISSY.Event.Target} anotherTarget Another EventTarget instance to remove
+     * @chainable
+     */
+
+    /**
+     * all targets where current target's events bubble to
+     * @private
+     * @method getTargets
+     * @return {Array}
+     */
+
+    /**
+     * Subscribe a callback function to a custom event fired by this object or from an object that bubbles its events to this object.
+     * @method on
+     * @param {String} type The name of the event
+     * @param {Function} fn The callback to execute in response to the event
+     * @param {Object} [context] this object in callback
+     * @chainable
+     */
+
+    /**
+     * Detach one or more listeners from the specified event
+     * @method detach
+     * @param {String} type The name of the event
+     * @param {Function} [fn] The subscribed function to un-subscribe. if not supplied, all observers will be removed.
+     * @param {Object} [context] The custom object passed to subscribe.
+     * @chainable
+     */
 }, {
     requires: ['./api', 'event/base', './observable']
 });
@@ -11786,7 +11816,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
  - implement bubble for custom event
  *//**
  * @ignore
- * @fileOverview custom event target for publish and subscribe
+ * custom event target for publish and subscribe
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/custom/api', function () {
@@ -12072,7 +12102,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
     /**
      * Get custom event for specified event
      * @static
-     * @private
+     * @protected
      * @member KISSY.Event.ObservableCustomEvent
      * @param {HTMLElement} target
      * @param {String} type event type
@@ -12080,8 +12110,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
      * @return {KISSY.Event.ObservableCustomEvent}
      */
     ObservableCustomEvent.getCustomEvent = function (target, type, create) {
-        var self = this,
-            customEvent,
+        var customEvent,
             customEvents = ObservableCustomEvent.getCustomEvents(target, create);
         customEvent = customEvents && customEvents[type];
         if (!customEvent && create) {
@@ -12095,7 +12124,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
 
     /**
      * Get custom events holder
-     * @private
+     * @protected
      * @static
      * @param {HTMLElement} target
      * @param {Boolean} [create] whether create custom event container on fly
@@ -12146,9 +12175,9 @@ KISSY.add('event/custom/observer', function (S, Event) {
     requires: ['event/base']
 });
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 23:01
 */
 /**
  * @ignore
@@ -12503,7 +12532,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
  */
 /**
  * @ignore
- * @fileOverview dom event facade
+ * dom event facade
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Special) {
@@ -12563,7 +12592,7 @@ KISSY.add('event/dom/base/gesture', function (S) {
 
 });/**
  * @ignore
- * @fileOverview some key-codes definition and utils from closure-library
+ * some key-codes definition and utils from closure-library
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/key-codes', function (S) {
@@ -13095,7 +13124,7 @@ KISSY.add('event/dom/base/key-codes', function (S) {
 
 });/**
  * @ignore
- * @fileOverview event-mouseenter
+ * event-mouseenter
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
@@ -13148,7 +13177,7 @@ KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
  */
 /**
  * @ignore
- * @fileOverview normalize mousewheel in gecko
+ * normalize mousewheel in gecko
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/mousewheel', function (S, special) {
@@ -13164,7 +13193,7 @@ KISSY.add('event/dom/base/mousewheel', function (S, special) {
     requires: ['./special']
 });/**
  * @ignore
- * @fileOverview event object for dom
+ * event object for dom
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/object', function (S, Event, undefined) {
@@ -14114,14 +14143,14 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
     requires: ['./special', 'event/base']
 });/**
  * @ignore
- * @fileOverview special house for special events
+ * special house for special events
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/special', function () {
     return {};
 });/**
  * @ignore
- * @fileOverview utils for event
+ * utils for event
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/utils', function (S, DOM) {
@@ -14168,7 +14197,7 @@ KISSY.add('event/dom/base/utils', function (S, DOM) {
     requires: ['dom']
 });/**
  * @ignore
- * @fileOverview inspired by yui3
+ * inspired by yui3
  * Synthetic event that fires when the <code>value</code> property of an input
  * field or textarea changes as a result of a keystroke, mouse operation, or
  * input method editor (IME) input event.
@@ -14282,13 +14311,13 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
  -> mousedown -> blur -> webkitspeechchange -> focus
  */
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 23:01
 */
 /**
  * @ignore
- * @fileOverview event-focusin
+ * event-focusin
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/focusin', function (S, Event) {
@@ -14344,13 +14373,13 @@ KISSY.add('event/dom/focusin', function (S, Event) {
  - 更加合理的模拟冒泡顺序，子元素先出触发，父元素后触发
  */
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 23:01
 */
 /**
  * @ignore
- * @fileOverview hashchange event for non-standard browser
+ * hashchange event for non-standard browser
  * @author yiminghe@gmail.com, xiaomacji@gmail.com
  */
 KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
@@ -14585,13 +14614,13 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
  https://github.com/cowboy/jquery-hashchange
  */
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 23:01
 */
 /**
  * @ignore
- * @fileOverview  change bubble and checkbox/radio fix patch for ie<9
+ *  change bubble and checkbox/radio fix patch for ie<9
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
@@ -14706,7 +14735,7 @@ KISSY.add('event/dom/ie', function () {
     requires: ['./ie/change', './ie/submit']
 });/**
  * @ignore
- * @fileOverview patch for ie<9 submit: does not bubble !
+ * patch for ie<9 submit: does not bubble !
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
@@ -14781,9 +14810,9 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
  - http://bugs.jquery.com/ticket/11049
  */
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 23:01
 */
 /**
  * @ignore
@@ -14877,7 +14906,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 28 14:30
+build time: Jan 31 23:01
 */
 /**
  * @ignore
@@ -15062,6 +15091,8 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
 
     DocumentHandler.prototype = {
 
+        constructor: DocumentHandler,
+
         init: function () {
             var self = this,
                 doc = self.doc,
@@ -15219,6 +15250,8 @@ KISSY.add('event/dom/touch/multi-touch', function (S, DOM) {
     }
 
     MultiTouch.prototype = {
+
+        constructor: MultiTouch,
 
         requiredTouchCount: 2,
 
@@ -15504,6 +15537,7 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
     }
 
     SingleTouch.prototype = {
+        constructor: SingleTouch,
         requiredTouchCount: 1,
         onTouchStart: function (e) {
             var self = this;
@@ -15819,7 +15853,7 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 29 22:45
+build time: Jan 31 23:01
 */
 /**
  * @ignore
@@ -15866,7 +15900,7 @@ KISSY.add('json/facade', function (S, J) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 29 22:45
+build time: Jan 31 23:01
 */
 /*
   http://www.JSON.org/json2.js
@@ -16351,7 +16385,7 @@ KISSY.add("json/json2", function () {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 21 23:52
+build time: Jan 31 23:01
 */
 /**
  * @ignore
@@ -18485,13 +18519,13 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
  CORS : http://www.nczonline.net/blog/2010/05/25/cross-domain-io-with-cross-origin-resource-sharing/
  */
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:24
+build time: Jan 31 22:55
 */
 /**
  * @ignore
- * @fileOverview cookie
+ * cookie
  * @author lifesinger@gmail.com
  */
 KISSY.add('cookie', function (S) {
@@ -18595,13 +18629,13 @@ KISSY.add('cookie', function (S) {
  独立成静态工具类的方式更优。
  */
 /*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:23
+build time: Jan 31 22:55
 */
 /**
  * @ignore
- * @fileOverview attribute management
+ * attribute management
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base/attribute', function (S, undefined) {
@@ -18813,7 +18847,7 @@ KISSY.add('base/attribute', function (S, undefined) {
     function Attribute() {
     }
 
-
+    // for S.augment, no need to specify constructor
     Attribute.prototype = {
 
         /**
@@ -19145,7 +19179,7 @@ KISSY.add('base/attribute', function (S, undefined) {
  */
 /**
  * @ignore
- * @fileOverview attribute management and event in one
+ * attribute management and event in one
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base', function (S, Attribute, Event) {
@@ -19237,7 +19271,7 @@ KISSY.add('base', function (S, Attribute, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 23 20:05
+build time: Jan 31 22:54
 */
 /**
  * base class for transition anim and timer anim
@@ -19722,7 +19756,7 @@ KISSY.add('anim/base/utils', function (S, DOM, Q,undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 16 21:25
+build time: Jan 31 22:54
 */
 /**
  * anim facade between native and timer
@@ -19871,7 +19905,7 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 24 18:08
+build time: Jan 31 22:54
 */
 /**
  * @ignore
@@ -20928,7 +20962,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 24 18:05
+build time: Jan 31 22:55
 */
 /**
  * animation using css transition
@@ -21104,7 +21138,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 24 18:15
+build time: Jan 31 23:02
 */
 /**
  * @ignore
@@ -21602,6 +21636,10 @@ KISSY.add('node/base', function (S, DOM, undefined) {
     }
 
     NodeList.prototype = {
+
+        constructor: NodeList,
+
+        isNodeList: true,
 
         /**
          * length of nodelist

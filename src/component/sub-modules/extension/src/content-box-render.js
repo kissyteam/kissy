@@ -17,6 +17,7 @@ KISSY.add('component/extension/content-box-render', function (S, Node, DOM) {
     /*
      ! contentEl 只能由组件动态生成
      */
+    // for augment, no need constructor
     ContentBoxRender.prototype = {
         __createDom: function () {
             var self = this,

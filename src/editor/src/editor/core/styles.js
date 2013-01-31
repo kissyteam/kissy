@@ -132,6 +132,9 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     }
 
     KEStyle.prototype = {
+
+        constructor:KEStyle,
+
         apply: function (document) {
             applyStyle.call(this, document, FALSE);
         },

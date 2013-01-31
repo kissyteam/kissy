@@ -1,10 +1,10 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:28
+build time: Jan 31 23:03
 */
 /**
- * @fileOverview root node represent a simple tree
+ * root node represent a simple tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager) {
@@ -68,7 +68,7 @@ KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager
  home : 移动到根节点
  end : 移动到前序遍历最后一个节点
  *//**
- * @fileOverview check node render
+ * check node render
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-node-render", function (S, Node, TreeNodeRender) {
@@ -106,7 +106,7 @@ KISSY.add("tree/check-node-render", function (S, Node, TreeNodeRender) {
 }, {
     requires:['node', './node-render']
 });/**
- * @fileOverview checkable tree node
+ * checkable tree node
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
@@ -117,7 +117,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
 
     /**
      * @name CheckNode
-     * @memberOf Tree
+     * @member Tree
      * @class
      * Checked tree node.
      * xclass: 'check-tree-node'.
@@ -258,7 +258,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
 }, {
     requires: ['node', './node', './check-node-render']
 });/**
- * @fileOverview root node render for check-tree
+ * root node render for check-tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-tree-render", function (S, CheckNodeRender, TreeManagerRender) {
@@ -266,7 +266,7 @@ KISSY.add("tree/check-tree-render", function (S, CheckNodeRender, TreeManagerRen
 }, {
     requires:['./check-node-render', './tree-manager-render']
 });/**
- * @fileOverview root node represent a check tree
+ * root node represent a check tree
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender, TreeManager) {
@@ -276,7 +276,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
      * @class
      * KISSY Checked Tree.
      * xclass: 'check-tree'.
-     * @memberOf Tree
+     * @member Tree
      */
     var CheckTree = CheckNode.extend([TreeManager], {
         _onSetFocused: function () {
@@ -308,7 +308,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
 }, {
     requires: ['component/base', './check-node', './check-tree-render', './tree-manager']
 });/**
- * @fileOverview common render for node
+ * common render for node
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/node-render", function (S, Node, Component) {
@@ -517,7 +517,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
 }, {
     requires: ['node', 'component/base']
 });/**
- * @fileOverview abstraction of tree node ,root and other node will extend it
+ * abstraction of tree node ,root and other node will extend it
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
@@ -529,7 +529,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
      * Tree Node.
      * xclass: 'tree-node'.
      * @name Node
-     * @memberOf Tree
+     * @member Tree
      * @extends KISSY.Component.Controller
      */
     var TreeNode = Component.Container.extend(
@@ -799,7 +799,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 /**
                  * Whether current tree node is expanded.
                  * @type {Boolean.}
-                 * @default false.
+                 * Defaults to: false.
                  */
                 expanded: {
                     view: 1
@@ -808,7 +808,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 /**
                  * Whether current tree node is collapsed.
                  * @type {Boolean.}
-                 * @default true.
+                 * Defaults to: true.
                  */
                 collapsed: {
                     getter: function () {
@@ -983,7 +983,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
  * 2012-09-25
  *  - 去除 dblclick 支持，该交互会重复触发 click 事件，可能会重复执行逻辑
  *//**
- * @fileOverview tree management utils render
+ * tree management utils render
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/tree-manager-render", function (S) {
@@ -1012,7 +1012,7 @@ KISSY.add("tree/tree-manager-render", function (S) {
 
     return TreeManagerRender;
 });/**
- * @fileOverview tree management utils
+ * tree management utils
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/tree-manager", function (S, Event) {
@@ -1144,7 +1144,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
 }, {
     requires: ['event']
 });/**
- * @fileOverview root node render
+ * root node render
  * @author yiminghe@gmail.com
  */
 KISSY.add("tree/tree-render", function (S, TreeNodeRender, TreeManagerRender) {
@@ -1152,7 +1152,7 @@ KISSY.add("tree/tree-render", function (S, TreeNodeRender, TreeManagerRender) {
 }, {
     requires:['./node-render', './tree-manager-render']
 });/**
- * @fileOverview tree component for kissy
+ * tree component for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add('tree', function (S, Tree, TreeNode, CheckNode, CheckTree) {

@@ -9,6 +9,7 @@ KISSY.add('overlay/extension/dialog-effect', function (S) {
 
     }
 
+    // for augment, no need constructor
     DialogEffect.prototype = {
 
         // also simplify body

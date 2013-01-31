@@ -212,7 +212,7 @@ KISSY.add('base/attribute', function (S, undefined) {
     function Attribute() {
     }
 
-
+    // for S.augment, no need to specify constructor
     Attribute.prototype = {
 
         /**

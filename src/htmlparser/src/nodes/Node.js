@@ -30,12 +30,15 @@ KISSY.add("htmlparser/nodes/Node", function (S) {
     }
 
     Node.prototype = {
-        toHtml:function () {
+
+        constructor: Node,
+
+        toHtml: function () {
             if (this.page && this.page.getText) {
                 return this.page.getText(this.startPosition, this.endPosition);
             }
         },
-        toString:function () {
+        toString: function () {
             var ret = [],
                 self = this;
             ret.push(self.nodeName +

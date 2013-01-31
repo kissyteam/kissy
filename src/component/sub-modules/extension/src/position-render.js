@@ -14,9 +14,8 @@ KISSY.add("component/extension/position-render", function () {
         zIndex: {}
     };
 
-
+    // for augment, no need constructor
     Position.prototype = {
-
         __createDom: function () {
             this.get("el").addClass(this.get('prefixCls') + "ext-position");
         },

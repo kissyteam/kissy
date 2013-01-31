@@ -2,14 +2,17 @@
  * represent html source
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/lexer/Page", function(S, Index) {
+KISSY.add("htmlparser/lexer/Page", function (S, Index) {
     function Page(source) {
         this.source = source;
         this.lineIndex = new Index();
     }
 
     Page.prototype = {
-        getChar:function(cursor) {
+
+        constructor: Page,
+
+        getChar: function (cursor) {
             var source = this.source;
             var i = cursor.position;
             if (i >= source.length) {
@@ -43,7 +46,7 @@ KISSY.add("htmlparser/lexer/Page", function(S, Index) {
 
         },
 
-        ungetChar:function(cursor) {
+        ungetChar: function (cursor) {
             var source = this.source;
             cursor.retreat();
             var i = cursor.position,
@@ -56,20 +59,20 @@ KISSY.add("htmlparser/lexer/Page", function(S, Index) {
             }
         },
 
-        getText:function(start, end) {
+        getText: function (start, end) {
             return this.source.slice(start, end);
         },
 
-        row:function(cursor) {
+        row: function (cursor) {
             return this.lineIndex.row(cursor);
         },
 
-        col:function(cursor) {
+        col: function (cursor) {
             return this.lineIndex.col(cursor);
         }
     };
 
     return Page;
 }, {
-    requires:['./Index']
+    requires: ['./Index']
 });

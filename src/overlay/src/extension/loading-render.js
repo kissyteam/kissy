@@ -8,6 +8,7 @@ KISSY.add("overlay/extension/loading-render", function (S, Node) {
     function Loading() {
     }
 
+    // for augment, no need constructor
     Loading.prototype = {
         loading: function () {
             var self = this;

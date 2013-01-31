@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 29 20:30
+build time: Jan 31 23:00
 */
 /**
  * Set up editor constructor
@@ -359,6 +359,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
     };
 
     cutCopyCmd.prototype = {
+        constructor:cutCopyCmd,
         exec: function (editor) {
             this.type == 'cut' && fixCut(editor);
 
@@ -3025,6 +3026,7 @@ KISSY.add("editor/core/elementPath", function (S) {
     }
 
     ElementPath.prototype = {
+        constructor:ElementPath,
         /**
          * Compares this element path with another one.
          * @param otherPath ElementPath The elementPath object to be
@@ -7065,6 +7067,9 @@ KISSY.add("editor/core/styles", function (S, Editor) {
     }
 
     KEStyle.prototype = {
+
+        constructor:KEStyle,
+
         apply: function (document) {
             applyStyle.call(this, document, FALSE);
         },

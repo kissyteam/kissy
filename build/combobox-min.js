@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 17 23:18
+build time: Jan 31 22:55
 */
 KISSY.add("combobox/base",function(d,c,i,k,j,h){function b(){this.get("input")[0].focus();o.call(this)}function a(g,a){var b=g.get("el"),e=g.get("prefixCls")+"combobox-invalid",h=g.get("invalidEl");a?(b.addClass(e),h.attr("title",a),h.show()):(b.removeClass(e),h.hide())}function e(g,a){var b=g.get("menu");if(b&&!b.isController)if(a)b=i.create(b,g),g.setInternal("menu",b);else return null;return b}function q(){var g=e(this);g&&g.get("visible")&&this.alignInternal()}function f(){var g=this;g._focusoutDismissTimer=
 setTimeout(function(){g.set("collapsed",!0)},30)}function o(){var g;if(g=this._focusoutDismissTimer)clearTimeout(g),this._focusoutDismissTimer=null}function s(){var g;this._stopNotify||(g=this.getValueInternal(),g===h?this.set("collapsed",!0):(this._savedInputValue=g,this.sendRequest(g)))}function r(g){var a,b=[],h,f,c=e(this,1),g=this.normalizeData(g);c.removeChildren(!0);c.set("highlightedItem",null);if(g&&g.length){for(f=0;f<g.length;f++)a=g[f],b.push(c.addChild(a));g=this.getValueInternal();for(f=

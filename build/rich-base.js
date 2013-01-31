@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:28
+build time: Jan 31 23:02
 */
 /**
  * @ignore
@@ -440,6 +440,14 @@ KISSY.add('rich-base', function (S, Base) {
                 C[ATTRS] = attrs;
 
                 S.augment(C, prototype);
+
+                // in case extension set constructor
+                // for(var k in {
+                //  constructor:x
+                // }){
+                //  S.log(k);
+                // }
+                C.prototype.constructor = C;
             }
 
             C.extend = extend;

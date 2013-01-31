@@ -2,7 +2,7 @@
  * represent line index of each line
  * @author yiminghe@gmail.com
  */
-KISSY.add("htmlparser/lexer/Index",function() {
+KISSY.add("htmlparser/lexer/Index", function () {
 
     function Index() {
         this.lineCursors = [];
@@ -10,8 +10,9 @@ KISSY.add("htmlparser/lexer/Index",function() {
 
     Index.prototype = {
 
+        constructor: Index,
 
-        add:function(cursor) {
+        add: function (cursor) {
             if (indexOfCursor(this.lineCursors, cursor) != -1) {
                 return;
             }
@@ -19,7 +20,7 @@ KISSY.add("htmlparser/lexer/Index",function() {
             this.lineCursors.splice(index, 0, cursor);
         },
 
-        remove:function(cursor) {
+        remove: function (cursor) {
             var cs = this.lineCursors;
             var index = indexOfCursor(this.lineCursors, cursor);
             if (index != -1) {
@@ -31,11 +32,11 @@ KISSY.add("htmlparser/lexer/Index",function() {
          * line number of this cursor , index from zero
          * @param cursor
          */
-        row:function(cursor) {
+        row: function (cursor) {
             return indexOfCursorForInsert(this.lineCursors, cursor) - 1;
         },
 
-        col:function(cursor) {
+        col: function (cursor) {
             var row = indexOfCursorForInsert(this.lineCursors, cursor) - 1;
             return cursor.position - this.lineCursors[row]
         }

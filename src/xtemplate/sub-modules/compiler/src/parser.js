@@ -42,6 +42,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
 
     };
     Lexer.prototype = {
+        constructor: Lexer,
         'resetInput': function (input) {
             S.mix(this, {
                 input: input,

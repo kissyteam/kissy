@@ -69,6 +69,7 @@ KISSY.add("overlay/extension/stdmod-render", function (S, Node) {
         }
     }
 
+    // for augment, no need constructor
     StdModRender.prototype = {
 
         __createDom: function () {

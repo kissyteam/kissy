@@ -211,6 +211,7 @@ KISSY.add("editor/core/clipboard", function (S, Editor, KERange, KES) {
     };
 
     cutCopyCmd.prototype = {
+        constructor:cutCopyCmd,
         exec: function (editor) {
             this.type == 'cut' && fixCut(editor);
 

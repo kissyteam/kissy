@@ -1,10 +1,10 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:23
+build time: Jan 31 22:55
 */
 /**
- * @fileOverview KISSY Calendar
+ * KISSY Calendar
  * @author  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/base', function (S, Node, Event, undefined) {
@@ -747,7 +747,7 @@ KISSY.add('calendar/base', function (S, Node, Event, undefined) {
  *   - 日历日期的输出格式的定制
  *   - 多选日期的场景的交互设计
  *//**
- * @fileOverview calendar
+ * calendar
  */
 KISSY.add("calendar", function (S, C, Page, Time, Date) {
     S.Date = C.Date = Date;
@@ -777,7 +777,7 @@ KISSY.add("calendar", function (S, C, Page, Time, Date) {
  4.样式的调整
  -美化了
  **//*
- * @fileOverview Date Format 1.2.3
+ * Date Format 1.2.3
  * (c) 2007-2009 Steven Levithan <stevenlevithan.com>
  * MIT license
  *
@@ -954,7 +954,7 @@ KISSY.add('calendar/date', function (S) {
         }
     };
 });/**
- * @@fileOverview     日历
+ * @    日历
  * @author  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/page', function (S, Node, Calendar) {
@@ -1557,7 +1557,7 @@ KISSY.add('calendar/page', function (S, Node, Calendar) {
  *        - 模块名称取为datetype还是直接用date? 我更倾向于用date
  *        - YUI的datetype花了大量精力对全球语种进行hack，似乎KISSY是不必要的，KISSY只对中文做hack即可
  *//**
- * @fileOverview     日历
+ *     日历
  * @author  拔赤<lijing00333@163.com>
  */
 KISSY.add('calendar/time', function(S, Node,Calendar) {

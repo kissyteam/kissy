@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 29 20:30
+build time: Jan 31 23:00
 */
 /**
  * Add ul and ol command identifier for KISSY Editor.
@@ -25,6 +25,8 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
     }
 
     ListCommand.prototype = {
+
+        constructor:ListCommand,
 
         changeListType: function (editor, groupObj, database, listsCreated, listStyleType) {
             // This case is easy...

@@ -21,6 +21,8 @@ KISSY.add("editor/plugin/list-utils/cmd", function (S, Editor, ListUtils, undefi
 
     ListCommand.prototype = {
 
+        constructor:ListCommand,
+
         changeListType: function (editor, groupObj, database, listsCreated, listStyleType) {
             // This case is easy...
             // 1. Convert the whole list into a one-dimensional array.

@@ -37,6 +37,7 @@ KISSY.add("overlay/extension/close-render", function (S, Node) {
         }
     };
 
+    // for augment, no need constructor
     CloseRender.prototype = {
         _onSetClosable: function (v) {
             var self = this,

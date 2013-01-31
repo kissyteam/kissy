@@ -12,7 +12,7 @@
         toString = OP.toString;
 
     function hasOwnProperty(o, p) {
-        return Object.prototype.hasOwnProperty.call(o, p);
+        return OP.hasOwnProperty.call(o, p);
     }
 
     S.mix(S,
@@ -138,22 +138,22 @@
                     return FALSE;
                 }
 
+                var key, objConstructor;
+
                 try {
                     // Not own constructor property must be Object
-                    if (obj.constructor &&
-                        !hasOwnProperty(obj, "constructor") &&
-                        !hasOwnProperty(obj.constructor.prototype, "isPrototypeOf")) {
+                    if ((objConstructor = obj.constructor) && !hasOwnProperty(obj, "constructor") && !hasOwnProperty(objConstructor.prototype, "isPrototypeOf")) {
                         return FALSE;
                     }
                 } catch (e) {
-                    // IE8,9 Will throw exceptions on certain host objects #9897
+                    // IE8,9 Will throw exceptions on certain host objects
                     return FALSE;
                 }
 
                 // Own properties are enumerated firstly, so to speed up,
                 // if last one is own, then all properties are own.
 
-                var key;
+
                 for (key in obj) {
                 }
 

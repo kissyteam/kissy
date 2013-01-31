@@ -75,6 +75,8 @@ KISSY.add("htmlparser/writer/filter", function (S) {
 
     Filter.prototype = {
 
+        constructor: Filter,
+
         /**
          *
          * @param rules

@@ -1,7 +1,7 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 23:01
 */
 /**
  * LALR grammar parser
@@ -964,26 +964,26 @@ KISSY.add("kison/lexer", function (S, Utils) {
             var self = this;
 
             /*
-              lex rules.
-              @type {Object[]}
-              @example
-              [
-               {
-                regexp:'\\w+',
-                state:['xx'],
-                token:'c',
-                // this => lex
-                action:function(){}
-               }
-              ]
+             lex rules.
+             @type {Object[]}
+             @example
+             [
+             {
+             regexp:'\\w+',
+             state:['xx'],
+             token:'c',
+             // this => lex
+             action:function(){}
+             }
+             ]
              */
             self.rules = [];
 
             S.mix(self, cfg);
 
             /*
-              Input languages
-              @type {String}
+             Input languages
+             @type {String}
              */
 
             self.resetInput(self.input);
@@ -997,6 +997,8 @@ KISSY.add("kison/lexer", function (S, Utils) {
     };
 
     Lexer.prototype = {
+
+        constructor: Lexer,
 
         resetInput: function (input) {
             S.mix(this, {
@@ -1064,6 +1066,7 @@ KISSY.add("kison/lexer", function (S, Utils) {
                         }
                         return ret;
                     }
+                    return undefined;
                 } : 0);
 
             code.push("var lexer = new Lexer(" + newCfg + ");");
@@ -1172,7 +1175,7 @@ KISSY.add("kison/lexer", function (S, Utils) {
 
             self.match = self.text = "";
 
-            if (!S.trim(input)) {
+            if (!input) {
                 return self.mapSymbol(Lexer.STATIC.END_TAG);
             }
 
@@ -1223,6 +1226,7 @@ KISSY.add("kison/lexer", function (S, Utils) {
             }
 
             S.error("lex error at line " + self.lineNumber + ":\n" + self.showDebugInfo());
+            return undefined;
         }
     };
 

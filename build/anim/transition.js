@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 24 18:05
+build time: Jan 31 22:55
 */
 /**
  * animation using css transition

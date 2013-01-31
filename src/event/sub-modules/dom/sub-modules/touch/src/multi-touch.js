@@ -10,6 +10,8 @@ KISSY.add('event/dom/touch/multi-touch', function (S, DOM) {
 
     MultiTouch.prototype = {
 
+        constructor: MultiTouch,
+
         requiredTouchCount: 2,
 
         onTouchStart: function (e) {

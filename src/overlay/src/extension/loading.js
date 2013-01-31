@@ -12,6 +12,7 @@ KISSY.add("overlay/extension/loading", function () {
     function Loading() {
     }
 
+    // for augment, no need constructor
     Loading.prototype = {
         /**
          * mask component as loading

@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:24
+build time: Jan 31 22:56
 */
 /**
  * @ignore
- * @fileOverview droppable for kissy
+ * droppable for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/droppable/base', function (S, Node, RichBase, DD) {
@@ -246,7 +246,7 @@ KISSY.add('dd/droppable/base', function (S, Node, RichBase, DD) {
     },
     { requires: ['node', 'rich-base', 'dd/base'] });/**
  * @ignore
- * @fileOverview only one droppable instance for multiple droppable nodes
+ * only one droppable instance for multiple droppable nodes
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/droppable/delegate', function (S, DD, Droppable, DOM, Node) {
@@ -403,7 +403,7 @@ KISSY.add('dd/droppable/delegate', function (S, DD, Droppable, DOM, Node) {
     requires: ['dd/base', './base', 'dom', 'node']
 });/**
  * @ignore
- * @fileOverview droppable for kissy
+ * droppable for kissy
  * @author yiminghe@gmail.com
  */
 KISSY.add('dd/droppable', function (S, DD, Droppable, DroppableDelegate) {

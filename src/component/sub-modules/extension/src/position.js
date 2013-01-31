@@ -108,7 +108,7 @@ KISSY.add("component/extension/position", function (S) {
         }
     };
 
-
+    // for augment, no need constructor
     Position.prototype = {
         /**
          * Move to absolute position.

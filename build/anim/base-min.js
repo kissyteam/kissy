@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 23 20:05
+build time: Jan 31 22:54
 */
 KISSY.add("anim/base",function(d,e,h,i,g){function f(a){this.config=a;this.el=e.get(a.el);this._backupProps={};this._propsData={};if(a=a.complete)this.on("complete",a)}var b=e.NodeType,c={toggle:1,hide:1,show:1};d.augment(f,i.Target,{prepareFx:function(){},runInternal:function(){var a=this,k=a.config,j=a.el,g,f=a._backupProps,i=a._propsData,n=k.props,o=k.delay||0,p=k.duration;h.saveRunningAnim(a);if(!1===a.fire("beforeStart"))a.stop(0);else{d.each(n,function(a,b){d.isPlainObject(a)||(a={value:a});
 i[b]=d.mix({delay:o,easing:k.easing,frame:k.frame,duration:p},a)});if(j.nodeType==b.ELEMENT_NODE){var m,l;l="none"===e.css(j,"display");d.each(i,function(b,d){g=b.value;if(c[g]){if("hide"==g&&l||"show"==g&&!l)return a.stop(1),m=!1;f[d]=e.style(j,d);"toggle"==g?g=l?"show":"hide":"hide"==g?(b.value=0,f.display="none"):(b.value=e.css(j,d),e.css(j,d,0),e.show(j))}});if(!1===m)return}a.startTime=d.now();a.prepareFx();a.doStart()}},isRunning:function(){return h.isAnimRunning(this)},isPaused:function(){return h.isAnimPaused(this)},

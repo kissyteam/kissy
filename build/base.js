@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.40dev
+Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Dec 20 22:23
+build time: Jan 31 22:55
 */
 /**
  * @ignore
- * @fileOverview attribute management
+ * attribute management
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base/attribute', function (S, undefined) {
@@ -217,7 +217,7 @@ KISSY.add('base/attribute', function (S, undefined) {
     function Attribute() {
     }
 
-
+    // for S.augment, no need to specify constructor
     Attribute.prototype = {
 
         /**
@@ -549,7 +549,7 @@ KISSY.add('base/attribute', function (S, undefined) {
  */
 /**
  * @ignore
- * @fileOverview attribute management and event in one
+ * attribute management and event in one
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('base', function (S, Attribute, Event) {

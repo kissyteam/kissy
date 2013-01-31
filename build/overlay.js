@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 24 16:12
+build time: Jan 31 23:02
 */
 /**
  * @ignore
@@ -356,6 +356,7 @@ KISSY.add("overlay/extension/close-render", function (S, Node) {
         }
     };
 
+    // for augment, no need constructor
     CloseRender.prototype = {
         _onSetClosable: function (v) {
             var self = this,
@@ -447,6 +448,7 @@ KISSY.add("overlay/extension/close", function () {
         destroy:"destroy"
     };
 
+    // for augment, no need constructor
     Close.prototype = {
         _onSetClosable:function (v) {
             var self = this;
@@ -485,6 +487,7 @@ KISSY.add('overlay/extension/dialog-effect', function (S) {
 
     }
 
+    // for augment, no need constructor
     DialogEffect.prototype = {
 
         // also simplify body
@@ -517,6 +520,7 @@ KISSY.add("overlay/extension/loading-render", function (S, Node) {
     function Loading() {
     }
 
+    // for augment, no need constructor
     Loading.prototype = {
         loading: function () {
             var self = this;
@@ -561,6 +565,7 @@ KISSY.add("overlay/extension/loading", function () {
     function Loading() {
     }
 
+    // for augment, no need constructor
     Loading.prototype = {
         /**
          * mask component as loading
@@ -650,6 +655,7 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
 
     };
 
+    // for augment, no need constructor
     Mask.prototype = {
 
         __renderUI: function () {
@@ -774,6 +780,7 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
         el[m](duration, null, easing);
     }
 
+    // for augment, no need constructor
     Mask.prototype = {
 
         __bindUI: function () {
@@ -962,6 +969,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
         }
     };
 
+    // for augment, no need constructor
     OverlayEffect.prototype = {
 
         __afterCreateEffectGhost: function (ghost) {
@@ -1059,6 +1067,7 @@ KISSY.add("overlay/extension/stdmod-render", function (S, Node) {
         }
     }
 
+    // for augment, no need constructor
     StdModRender.prototype = {
 
         __createDom: function () {

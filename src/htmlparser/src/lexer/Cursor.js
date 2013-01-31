@@ -8,6 +8,9 @@ KISSY.add("htmlparser/lexer/Cursor",function() {
     }
 
     Cursor.prototype = {
+
+        constructor:Cursor,
+
         advance:function() {
             this.position++;
         },

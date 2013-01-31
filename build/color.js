@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 24 20:42
+build time: Jan 31 22:55
 */
 /**
  * Color For KISSY.

@@ -28,6 +28,8 @@
 
     LoadChecker.prototype = {
 
+        constructor: LoadChecker,
+
         check: function () {
             var self = this,
                 fn = self.fn;
