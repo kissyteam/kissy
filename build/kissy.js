@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 31 22:56
+build time: Jan 31 23:15
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130131225559' will replace with current timestamp when compressing.
+         * NOTICE: '20130131231507' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130131225559',
+        __BUILD_TIME: '20130131231507',
         /**
          * KISSY Environment.
          * @private
@@ -5821,7 +5821,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130131225559'
+            tag: '20130131231507'
         }, getBaseInfo()));
     }
 
@@ -16275,7 +16275,7 @@ KISSY.add('json', function (S, J) {
 /*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 22 00:15
+build time: Jan 31 23:15
 */
 /**
  * @ignore
@@ -17063,6 +17063,12 @@ KISSY.add('ajax/form-serializer', function (S, DOM) {
             });
             S.each(elements, function (el) {
                 var val = DOM.val(el), vs;
+
+                // <select></select> select nothing!
+                // #297
+                if (val === null) {
+                    return;
+                }
 
                 // 字符串换行平台归一化
                 if (S.isArray(val)) {

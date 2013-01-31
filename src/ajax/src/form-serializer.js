@@ -57,6 +57,12 @@ KISSY.add('ajax/form-serializer', function (S, DOM) {
             S.each(elements, function (el) {
                 var val = DOM.val(el), vs;
 
+                // <select></select> select nothing!
+                // #297
+                if (val === null) {
+                    return;
+                }
+
                 // 字符串换行平台归一化
                 if (S.isArray(val)) {
                     val = S.map(val, normalizeCRLF);
