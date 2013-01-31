@@ -17,6 +17,9 @@ KISSY.use("node,io", function (S, Node, io) {
                     '<textarea name="d" rows="8" cols="40">4</textarea>' +
                     '</div>' +
                     '<div>' +
+                    // empty select! #297
+                    '<select name="empty">' +
+                    '</select>' +
                     '<select name="e">' +
                     '<option value="5" selected="selected">5</option>' +
                     '<option value="6">6</option>' +

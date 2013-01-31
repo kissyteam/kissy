@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:01
+build time: Jan 31 23:14
 */
 /**
  * @ignore
@@ -614,6 +614,12 @@ KISSY.add('io/form-serializer', function (S, DOM) {
             });
             S.each(elements, function (el) {
                 var val = DOM.val(el), vs;
+
+                // <select></select> select nothing!
+                // #297
+                if (val === null) {
+                    return;
+                }
 
                 // 字符串换行平台归一化
                 if (S.isArray(val)) {
