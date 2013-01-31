@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 29 22:46
+build time: Jan 31 22:56
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130129224634' will replace with current timestamp when compressing.
+         * NOTICE: '20130131225559' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130129224634',
+        __BUILD_TIME: '20130131225559',
         /**
          * KISSY Environment.
          * @private
@@ -5821,7 +5821,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130129224634'
+            tag: '20130131225559'
         }, getBaseInfo()));
     }
 
@@ -20706,13 +20706,13 @@ KISSY.add('anim/queue', function (S, DOM) {
     requires: ['dom']
 });
 /*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 22:55
 */
 /**
  * @ignore
- * @fileOverview anim-node-plugin
+ *  anim-node-plugin
  * @author yiminghe@gmail.com,
  *         lifesinger@gmail.com,
  *         qiaohua@taobao.com,
@@ -20967,7 +20967,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
  */
 /**
  * @ignore
- * @fileOverview import methods from DOM to NodeList.prototype
+ *  import methods from DOM to NodeList.prototype
  * @author yiminghe@gmail.com
  */
 KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
@@ -21144,7 +21144,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
  */
 /**
  * @ignore
- * @fileOverview definition for node and nodelist
+ *  definition for node and nodelist
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('node/base', function (S, DOM, undefined) {
@@ -21209,6 +21209,8 @@ KISSY.add('node/base', function (S, DOM, undefined) {
     }
 
     NodeList.prototype = {
+
+        constructor: NodeList,
 
         /**
          * length of nodelist
@@ -21422,7 +21424,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview node
+ *  node
  * @author yiminghe@gmail.com
  */
 KISSY.add('node', function (S, Node) {
@@ -21442,7 +21444,7 @@ KISSY.add('node', function (S, Node) {
     ]
 });/**
  * @ignore
- * @fileOverview overrides methods in NodeList.prototype
+ *  overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
 KISSY.add('node/override', function (S, DOM,NodeList) {

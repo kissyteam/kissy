@@ -66,6 +66,8 @@ KISSY.add('node/base', function (S, DOM, undefined) {
 
     NodeList.prototype = {
 
+        constructor: NodeList,
+
         /**
          * length of nodelist
          * @type {Number}

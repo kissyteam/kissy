@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 20 22:27
+build time: Jan 31 22:55
 */
 /**
  * @ignore
- * @fileOverview anim-node-plugin
+ *  anim-node-plugin
  * @author yiminghe@gmail.com,
  *         lifesinger@gmail.com,
  *         qiaohua@taobao.com,
@@ -260,7 +260,7 @@ KISSY.add('node/anim', function (S, DOM, Anim, Node, undefined) {
  */
 /**
  * @ignore
- * @fileOverview import methods from DOM to NodeList.prototype
+ *  import methods from DOM to NodeList.prototype
  * @author yiminghe@gmail.com
  */
 KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
@@ -437,7 +437,7 @@ KISSY.add('node/attach', function (S, DOM, Event, NodeList, undefined) {
  */
 /**
  * @ignore
- * @fileOverview definition for node and nodelist
+ *  definition for node and nodelist
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
 KISSY.add('node/base', function (S, DOM, undefined) {
@@ -502,6 +502,8 @@ KISSY.add('node/base', function (S, DOM, undefined) {
     }
 
     NodeList.prototype = {
+
+        constructor: NodeList,
 
         /**
          * length of nodelist
@@ -715,7 +717,7 @@ KISSY.add('node/base', function (S, DOM, undefined) {
  */
 /**
  * @ignore
- * @fileOverview node
+ *  node
  * @author yiminghe@gmail.com
  */
 KISSY.add('node', function (S, Node) {
@@ -735,7 +737,7 @@ KISSY.add('node', function (S, Node) {
     ]
 });/**
  * @ignore
- * @fileOverview overrides methods in NodeList.prototype
+ *  overrides methods in NodeList.prototype
  * @author yiminghe@gmail.com
  */
 KISSY.add('node/override', function (S, DOM,NodeList) {
