@@ -340,8 +340,14 @@
                 // need encoded content
                 self.query = new Query(v);
             } else {
+                // https://github.com/kissyteam/kissy/issues/298
+                try {
+                    v = S.urlDecode(v);
+                } catch (e) {
+                    S.log(e + 'urlDecode error : ' + v, 'error');
+                }
                 // need to decode to get data structure in memory
-                self[key] = S.urlDecode(v);
+                self[key] = v;
             }
         });
 
