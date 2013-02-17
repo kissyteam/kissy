@@ -1,6 +1,9 @@
 .ks-scrollview {
     overflow: hidden;
     position: relative;
+    /*do not use move cursor of dd*/
+    cursor: default;
+    outline: none;
 }
 
 .ks-scrollview-contentbox {

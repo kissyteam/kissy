@@ -8,7 +8,7 @@
     <meta name="apple-touch-fullscreen" content="yes">
     <title>KISSY ScrollView</title>
     <script src="/kissy/build/seed.js"></script>
-    <link rel="stylesheet" href="../assets/dpl.css">
+    <link rel="stylesheet" href="../../../assets/dpl.css">
     <style>
         .ks-scrollview {
             border: 1px solid red;
@@ -26,24 +26,40 @@
             text-align: center;
             /*margin-bottom: 20px;*/
         }
+
+        #native {
+            width: 320px;
+            height: 219px;
+            overflow: auto;
+            border: 1px solid red;
+            margin: 0 auto;
+            position: relative;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body>
 <h1>KISSY ScrollView</h1>
+
+<div id="native"></div>
 <button id="destroy">destroy</button>
 <script src="../src/control.js"></script>
 <script src="../src/render.js"></script>
 <script src="../src/scrollview.js"></script>
 <script>
-    KISSY.use('scrollview', function (S, ScrollView) {
+    KISSY.use('scrollview/base', function (S, ScrollView) {
         var content = '';
         for (var i = 0; i < 23; i++) {
             content += '<p>' + i + '</p>';
         }
+
+        S.all('#native').html(content);
+
         var scrollview = new ScrollView({
             width: 320,
             render: 'body',
             height: 219,
+            allowDrag: true,
             content: content
         }).render();
 

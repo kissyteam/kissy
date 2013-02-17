@@ -2,13 +2,17 @@
  * scrollview controller
  * @author yiminghe@gmail.com
  */
-KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, Event) {
+KISSY.add('scrollview/base/control', function (S, DD, Component, Extension, Render, Event) {
+
+    var undefined = undefined;
 
     var OUT_OF_BOUND_FACTOR = 0.5;
 
     var SWIPE_SAMPLE_INTERVAL = 300;
 
     var MAX_SWIPE_VELOCITY = 6;
+
+    var KeyCodes = Event.KeyCodes;
 
     function onDragStart(self, e, axis) {
         var now = e.timeStamp,
@@ -26,17 +30,17 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
             if (self._lastPageXY[pageXY]) {
                 direction = ( e[pageXY] - self._lastPageXY[pageXY]) > 0;
             }
-            var scroll = self._startScroll[axis] + diff;
+            var scroll = self._startScroll[axis] - diff;
             var bound;
             var now = S.now();
-            if (scroll < self._minScroll[axis]) {
-                bound = self._minScroll[axis] - scroll;
+            if (scroll < self.minScroll[axis]) {
+                bound = self.minScroll[axis] - scroll;
                 bound *= OUT_OF_BOUND_FACTOR;
-                scroll = self._minScroll[axis] - bound;
-            } else if (scroll > self._maxScroll[axis]) {
-                bound = scroll - self._maxScroll[axis];
+                scroll = self.minScroll[axis] - bound;
+            } else if (scroll > self.maxScroll[axis]) {
+                bound = scroll - self.maxScroll[axis];
                 bound *= OUT_OF_BOUND_FACTOR;
-                scroll = self._maxScroll[axis] + bound;
+                scroll = self.maxScroll[axis] + bound;
             }
 
             var timeDiff = (now - self._swipe[axis].startTime);
@@ -56,6 +60,12 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
         self._lastPageXY[pageXY] = e[pageXY];
     }
 
+    function fireScrollEnd(self, xy) {
+        self.fire('scrollEnd', {
+            axis: xy
+        });
+    }
+
     function onDragEndAxis(self, e, axis) {
         if (!self._allowScroll[axis]) {
             return;
@@ -63,14 +73,15 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
         var scrollAxis = 'scroll' + S.ucfirst(axis);
         var contentEl = self.get('contentEl');
         var scroll = self.get(scrollAxis);
+        var xy = axis == 'left' ? 'x' : 'y';
 
         // S.log('drag end: ' + scroll);
 
         var anim = {}, bound;
-        if (scroll < self._minScroll[axis]) {
-            bound = self._minScroll[axis];
-        } else if (scroll > self._maxScroll[axis]) {
-            bound = self._maxScroll[axis];
+        if (scroll < self.minScroll[axis]) {
+            bound = self.minScroll[axis];
+        } else if (scroll > self.maxScroll[axis]) {
+            bound = self.maxScroll[axis];
         }
         if (bound !== undefined) {
             anim[axis] = {
@@ -84,7 +95,10 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
             contentEl.animate(anim, {
                 duration: self.get('bounceDuration'),
                 easing: self.get('bounceEasing'),
-                queue: false
+                queue: false,
+                complete: function () {
+                    fireScrollEnd(self, xy);
+                }
             });
             return;
         }
@@ -94,6 +108,7 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
         // S.log('duration: ' + duration);
 
         if (duration == 0) {
+            fireScrollEnd(self, xy);
             return;
         }
 
@@ -102,6 +117,7 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
         // S.log('distance: ' + distance);
 
         if (distance == 0) {
+            fireScrollEnd(self, xy);
             return;
         }
 
@@ -115,14 +131,17 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
         anim[axis] = {
             fx: {
                 frame: makeMomentumFx(self, velocity, scroll,
-                    scrollAxis, self._maxScroll[axis],
-                    self._minScroll[axis])
+                    scrollAxis, self.maxScroll[axis],
+                    self.minScroll[axis])
             }
         };
 
         contentEl.animate(anim, {
             duration: 9999,
-            queue: false
+            queue: false,
+            complete: function () {
+                fireScrollEnd(self, xy);
+            }
         });
     }
 
@@ -189,18 +208,89 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
     return Component.Controller.extend([Extension.ContentBox], {
 
         bindUI: function () {
-            var dd = this.dd = new DD.Draggable({
-                node: this.get('el'),
-                //clickPixelThresh: 0,
-                move: 0
-            });
-            dd.on('dragstart', this._onDragStart, this)
-                .on('drag', this._onDrag, this)
-                .on('dragend', this._onDragEnd, this);
+            var el = this.get('el');
+            if (this.get('allowDrag')) {
+                var dd = this.dd = new DD.Draggable({
+                    node: this.get('el'),
+                    // allow nested scrollview
+                    halt: true,
+                    move: 0
+                });
+                dd.on('dragstart', this._onDragStart, this)
+                    .on('drag', this._onDrag, this)
+                    .on('dragend', this._onDragEnd, this);
 
-            this.get('el').on(Event.Gesture.start, this._onGestureStart, this);
+                el.on(Event.Gesture.start, this._onGestureStart, this);
+            }
+            el.on('mousewheel', this._onMouseWheel, this);
+        },
 
-            this.get('el').on('mousewheel', this._onMouseWheel, this);
+        handleKeyEventInternal: function (e) {
+            var keyCode = e.keyCode;
+            var allowX = this.isAxisEnabled('x');
+            var allowY = this.isAxisEnabled('x');
+            var minScroll = this.minScroll;
+            var maxScroll = this.maxScroll;
+            var scrollStep = this.scrollStep;
+            var isMax, isMin;
+            var ok = 0;
+            if (allowY) {
+                var scrollStepY = scrollStep.top;
+                var clientHeight = this.clientHeight;
+                var scrollTop = this.get('scrollTop');
+                isMax = scrollTop == maxScroll.top;
+                isMin = scrollTop == minScroll.top;
+                if (keyCode == KeyCodes.DOWN) {
+                    if (isMax) {
+                        return undefined;
+                    }
+                    this.scrollTo(undefined, scrollTop + scrollStepY);
+                    ok = 1;
+                } else if (keyCode == KeyCodes.UP) {
+                    if (isMin) {
+                        return undefined;
+                    }
+                    this.scrollTo(undefined, scrollTop - scrollStepY);
+                    ok = 1;
+                } else if (keyCode == KeyCodes.PAGE_DOWN) {
+                    if (isMax) {
+                        return undefined;
+                    }
+                    this.scrollTo(undefined, scrollTop + clientHeight);
+                    ok = 1;
+                } else if (keyCode == KeyCodes.PAGE_UP) {
+                    if (isMin) {
+                        return undefined;
+                    }
+                    this.scrollTo(undefined, scrollTop - clientHeight);
+                    ok = 1;
+                }
+            }
+            if (allowX) {
+                var scrollStepX = scrollStep.left;
+                var scrollLeft = this.get('scrollLeft');
+                isMax = scrollLeft == maxScroll.left;
+                isMin = scrollLeft == minScroll.left;
+                if (keyCode == KeyCodes.RIGHT) {
+                    if (isMax) {
+                        return undefined;
+                    }
+                    this.scrollTo(scrollLeft + scrollStepX);
+                    ok = 1;
+                } else if (keyCode == KeyCodes.LEFT) {
+                    if (isMin) {
+                        return undefined;
+                    }
+                    this.scrollTo(scrollLeft - scrollStepX);
+                    ok = 1;
+                }
+            }
+
+            if (ok) {
+                // allow nested
+                return true;
+            }
+            return undefined;
         },
 
         _onMouseWheel: function (e) {
@@ -209,27 +299,27 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
                 scrollStep = this.scrollStep,
                 deltaY,
                 deltaX,
-                _maxScroll = this._maxScroll,
-                _minScroll = this._minScroll;
+                maxScroll = this.maxScroll,
+                minScroll = this.minScroll;
 
             if ((deltaY = e.deltaY) && this.isAxisEnabled('y')) {
                 var scrollTop = this.get('scrollTop');
-                max = _maxScroll.top;
-                min = _minScroll.top;
-                if (scrollTop <= min && deltaY < 0 || scrollTop >= max && deltaY > 0) {
+                max = maxScroll.top;
+                min = minScroll.top;
+                if (scrollTop <= min && deltaY > 0 || scrollTop >= max && deltaY < 0) {
                 } else {
-                    this.set('scrollTop', constrain(scrollTop + e.deltaY * scrollStep, max, min));
+                    this.scrollTo(undefined, scrollTop - e.deltaY * scrollStep['top']);
                     e.preventDefault();
                 }
             }
 
             if ((deltaX = e.deltaX) && this.isAxisEnabled('x')) {
                 var scrollLeft = this.get('scrollLeft');
-                max = _maxScroll.left;
-                min = _minScroll.left;
-                if (scrollLeft <= min && deltaX < 0 || scrollLeft >= max && deltaX > 0) {
+                max = maxScroll.left;
+                min = minScroll.left;
+                if (scrollLeft <= min && deltaX > 0 || scrollLeft >= max && deltaX < 0) {
                 } else {
-                    this.set('scrollLeft', constrain(scrollLeft + e.deltaX * scrollStep, max, min));
+                    this.scrollTo(scrollLeft - e.deltaX * scrollStep['left']);
                     e.preventDefault();
                 }
             }
@@ -241,19 +331,25 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
 
         syncUI: function () {
             var el = this.get('el'),
-                contentEl = this.get('contentEl');
+                contentEl = this.get('contentEl'),
+                domContentEl = contentEl[0];
             var axis = this.get('axis'),
-                contentElHeight = contentEl[0].scrollHeight ,
-                contentElWidth = contentEl[0].scrollWidth,
-                elHeight = el.height(),
-                elWidth = el.width();
+                scrollHeight = domContentEl.scrollHeight ,
+                scrollWidth = domContentEl.scrollWidth ,
+                clientHeight = el.innerHeight(),
+                clientWidth = el.innerWidth();
+
+            this.scrollHeight = scrollHeight;
+            this.scrollWidth = scrollWidth;
+            this.clientHeight = clientHeight;
+            this.clientWidth = clientWidth;
 
             if (!axis) {
                 axis = '';
-                if (contentElHeight > elHeight) {
+                if (scrollHeight > clientHeight) {
                     axis += 'y';
                 }
-                if (contentElWidth > elWidth) {
+                if (scrollWidth > clientWidth) {
                     axis += 'x';
                 }
             }
@@ -268,30 +364,24 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
                 this._allowScroll.top = 1;
             }
 
-            this._maxScroll = {
+            this.minScroll = {
                 left: 0,
                 top: 0
             };
 
-            this._minScroll = {
-                left: elWidth - contentElWidth,
-                top: elHeight - contentElHeight
+            this.maxScroll = {
+                left: scrollWidth - clientWidth,
+                top: scrollHeight - clientHeight
             };
 
-            var scrollStep = Math.max(elHeight * elHeight * 0.7 / S.all(el[0].ownerDocument).height(), 20);
+            var elDoc = S.all(el[0].ownerDocument);
 
-            this.scrollStep = scrollStep;
+            this.scrollStep = {
+                top: Math.max(clientHeight * clientHeight * 0.7 / elDoc.height(), 20),
+                left: Math.max(clientWidth * clientWidth * 0.7 / elDoc.width(), 20)
+            };
 
             this._initStates();
-        },
-
-
-        getMaxScroll: function () {
-            return this._maxScroll;
-        },
-
-        getMinScroll: function () {
-            return this._minScroll;
         },
 
         'isAxisEnabled': function (axis) {
@@ -317,6 +407,7 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
             this._initStates();
             onDragStart(this, e, 'left');
             onDragStart(this, e, 'top');
+            this.fire('scrollStart');
         },
 
         _onDrag: function (e) {
@@ -333,8 +424,24 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
         },
 
         destructor: function () {
-            this.dd.destroy();
+            if (this.dd) {
+                this.dd.destroy();
+            }
             this.get('contentEl').stop();
+        },
+
+        scrollTo: function (left, top) {
+            this.get('contentEl').stop();
+            var maxScroll = this.maxScroll,
+                minScroll = this.minScroll;
+            if (left != undefined) {
+                left = constrain(left, maxScroll.left, minScroll.left);
+                this.set('scrollLeft', left);
+            }
+            if (top != undefined) {
+                top = constrain(top, maxScroll.top, minScroll.top);
+                this.set('scrollTop', top);
+            }
         }
 
     }, {
@@ -347,6 +454,17 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
             scrollTop: {
                 view: 1
             },
+            /**
+             * whether allow drag for scrollview.
+             * Defaults: true for touch device, false for non-touch device.
+             * @cfg {Boolean} allowDrag
+             */
+            /**
+             * @ignore
+             */
+            allowDrag: {
+                value: S.Features.isTouchSupported()
+            },
             bounceDuration: {
                 value: 0.4
             },
@@ -354,7 +472,8 @@ KISSY.add('scrollview/control', function (S, DD, Component, Extension, Render, E
                 value: 'easeOut'
             },
             focusable: {
-                value: false
+                // need process keydown
+                value: true
             },
             allowTextSelection: {
                 value: true

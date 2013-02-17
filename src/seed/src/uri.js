@@ -588,7 +588,7 @@
          * Serialize to string.
          * See rfc 5.3 Component Recomposition.
          * But kissy does not differentiate between undefined and empty.
-         * @param {boolean} [serializeArray=true]
+         * @param {Boolean} [serializeArray=true]
          * whether append [] to key name when value 's type is array
          * @return {String}
          */

@@ -137,7 +137,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              *
              *      menu.isController // => true
              *
-             * @type {boolean}
+             * @type {Boolean}
              * @member KISSY.Component.Controller
              */
             isController: true,

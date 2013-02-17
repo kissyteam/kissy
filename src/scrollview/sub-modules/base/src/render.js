@@ -2,7 +2,7 @@
  * scrollview render
  * @author yiminghe@gmail.com
  */
-KISSY.add('scrollview/render', function (S, Component, Extension) {
+KISSY.add('scrollview/base/render', function (S, Component, Extension) {
 
     return Component.Render.extend([Extension.ContentBox.Render], {
 
@@ -11,11 +11,11 @@ KISSY.add('scrollview/render', function (S, Component, Extension) {
         },
 
         '_onSetScrollLeft': function (v) {
-            this._contentEl[0].style.left = v + 'px';
+            this._contentEl[0].style.left = -v + 'px';
         },
 
         '_onSetScrollTop': function (v) {
-            this._contentEl[0].style.top = v + 'px';
+            this._contentEl[0].style.top = -v + 'px';
         }
 
     }, {

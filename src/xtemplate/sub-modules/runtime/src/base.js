@@ -146,7 +146,7 @@ KISSY.add('xtemplate/runtime/base', function (S) {
          * get result by merge data with template
          * @param data
          * @return {String}
-         * @param {boolean} [keepDataFormat] internal use
+         * @param {Boolean} [keepDataFormat] internal use
          */
         render: function (data, keepDataFormat) {
             var self = this;

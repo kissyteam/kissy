@@ -33,7 +33,7 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mas
              *
              * Defaults to: false.
              *
-             * @cfg {boolean} focusable
+             * @cfg {Boolean} focusable
              * @protected
              */
             /**
@@ -48,7 +48,7 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mas
              *
              * Defaults to: true.
              *
-             * @cfg {boolean} allowTextSelection
+             * @cfg {Boolean} allowTextSelection
              * @protected
              */
             /**

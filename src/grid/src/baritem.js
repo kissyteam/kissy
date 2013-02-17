@@ -33,7 +33,7 @@ KISSY.add('grid/baritem',function(S,Component,Button,Node){
 			/**
 			* Whether this component can get focus.
 			* d
-			* Defaults to: {boolean} false
+			* Defaults to: {Boolean} false
 			*/
 			focusable : {
 				value : false
