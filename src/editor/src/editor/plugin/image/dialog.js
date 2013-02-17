@@ -251,10 +251,8 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
 
             self.imgHeight.on("keyup", function () {
                 var v = parseInt(valInput(self.imgHeight));
-                if (!v ||
-                    !self.imgRatio[0].checked ||
-                    self.imgRatio[0].disabled ||
-                    !self.imgRatioValue) {
+                if (!v || !self.imgRatio[0].checked ||
+                    self.imgRatio[0].disabled || !self.imgRatioValue) {
                     return;
                 }
                 valInput(self.imgWidth, Math.floor(v * self.imgRatioValue));
@@ -262,10 +260,8 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
 
             self.imgWidth.on("keyup", function () {
                 var v = parseInt(valInput(self.imgWidth));
-                if (!v ||
-                    !self.imgRatio[0].checked ||
-                    self.imgRatio[0].disabled ||
-                    !self.imgRatioValue) {
+                if (!v || !self.imgRatio[0].checked ||
+                    self.imgRatio[0].disabled || !self.imgRatioValue) {
                     return;
                 }
                 valInput(self.imgHeight, Math.floor(v / self.imgRatioValue));
@@ -304,7 +300,9 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
 
             ok.on("click", function (ev) {
                 ev.halt();
-                if (S.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) == 1 && self.cfg) {
+                if ((self.imageCfg['remote'] === false ||
+                    S.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) == 1) &&
+                    self.cfg) {
 
                     if (!verifyInputs(commonSettingTable.all("input"))) {
                         return;

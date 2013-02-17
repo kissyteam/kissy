@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:00
+build time: Feb 17 17:28
 */
 KISSY.add("editor/plugin/xiami-music/dialog",function(f,l,p,q){function m(){m.superclass.constructor.apply(this,arguments)}function j(e,a,f){return"<a class='{prefixCls}editor-xiami-page-item {prefixCls}editor-button ks-inline-block"+(e==a?" {prefixCls}editor-xiami-curpage":"")+"' data-value='"+a+"' href='#'>"+(f||a)+"</a>"}var n=f.DOM,r=f.Node,s=l.Utils.debugUrl("theme/tao-loading.gif"),t="http://www.xiami.com/app/nineteen/search/key/{key}/page/{page}",o="输入歌曲名、专辑名、艺人名";f.extend(m,p,{_config:function(){var e=
 this.editor.get("prefixCls");this._cls="ke_xiami";this._type="xiami-music";this._title="虾米音乐";this._bodyHtml=f.substitute("<div style='padding:40px 0 70px 0;'><form action='#' class='{prefixCls}editor-xiami-form' style='margin:0 20px;'><p class='{prefixCls}editor-xiami-title'></p><p class='{prefixCls}editor-xiami-url-wrap'><input class='{prefixCls}editor-xiami-url {prefixCls}editor-input' style='width:370px;'/> &nbsp;  <a class='{prefixCls}editor-xiami-submit {prefixCls}editor-button ks-inline-block'>搜 索</a></p><p style='margin:10px 0'><label>对 齐： <select class='{prefixCls}editor-xiami-align' title='对齐'><option value='none'>无</option><option value='left'>左对齐</option><option value='right'>右对齐</option></select></label><label style='margin-left:70px;'>间距：  <input  data-verify='^\\d+$'  data-warning='间距请输入非负整数' class='{prefixCls}editor-xiami-margin {prefixCls}editor-input' style='width:60px;' value='0'/> 像素</label></p></form><div class='{prefixCls}editor-xiami-list'></div></div>",

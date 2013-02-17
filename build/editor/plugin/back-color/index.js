@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:00
+build time: Feb 17 17:28
 */
 /**
  * backColor button.
