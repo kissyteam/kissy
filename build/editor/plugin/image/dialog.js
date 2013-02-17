@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 29 20:43
+build time: Feb 17 17:29
 */
 /**
  * image dialog (support upload and remote)
@@ -309,8 +309,9 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
 
             ok.on("click", function (ev) {
                 ev.halt();
-                if (S.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) == 1 && self.cfg) {
-
+                if ((self.imageCfg['remote'] === false ||
+                    S.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) == 1) &&
+                    self.cfg) {
                     if (!verifyInputs(commonSettingTable.all("input"))) {
                         return;
                     }

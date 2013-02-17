@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 29 20:43
+build time: Feb 17 17:29
 */
 KISSY.add("editor/plugin/code/dialog",function(b,g,j,k){function h(a){this.editor=a}var i=g.XHTML_DTD,l=b.DOM.NodeType,m=g.Walker.whitespaces(!0),n='<div class="{prefixCls}code-wrap"><table class="{prefixCls}code-table"><tr><td class="{prefixCls}code-label"><label for="ks-editor-code-type">类型：</label></td><td class="{prefixCls}code-content"><select id="ks-editor-code-type"  class="{prefixCls}code-type">'+b.map([["ActionScript3","as3"],["Bash/Shell","bash"],["C/C++","cpp"],["Css","css"],["CodeFunction",
 "cf"],["C#","c#"],["Delphi","delphi"],["Diff","diff"],["Erlang","erlang"],["Groovy","groovy"],["Html","html"],["Java","java"],["JavaFx","jfx"],["Javascript","js"],["Perl","pl"],["Php","php"],["Plain Text","plain"],["PowerShell","ps"],["Python","python"],["Ruby","ruby"],["Scala","scala"],["Sql","sql"],["Vb","vb"],["Xml","xml"]],function(a){return'<option value="'+a[1]+'">'+a[0]+"</option>"})+'</select></td></tr><tr><td><label for="ks-editor-code-textarea">代码：</label></td><td><textarea id="ks-editor-code-textarea"  class="{prefixCls}code-textarea {prefixCls}input"></textarea></td></tr></table></div>';

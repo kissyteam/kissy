@@ -304,8 +304,9 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
 
             ok.on("click", function (ev) {
                 ev.halt();
-                if (S.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) == 1 && self.cfg) {
-
+                if ((self.imageCfg['remote'] === false ||
+                    S.indexOf(self.tab.getSelectedTab(), self.tab.getTabs()) == 1) &&
+                    self.cfg) {
                     if (!verifyInputs(commonSettingTable.all("input"))) {
                         return;
                     }
