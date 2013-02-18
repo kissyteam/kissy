@@ -320,8 +320,10 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             destructor: function () {
                 var self = this,
                     repositionBuffer = self.__repositionBuffer;
-                win.detach("resize", repositionBuffer, self);
-                repositionBuffer.stop();
+                if (repositionBuffer) {
+                    win.detach("resize", repositionBuffer, self);
+                    repositionBuffer.stop();
+                }
             }
         },
         {
