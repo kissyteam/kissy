@@ -1,11 +1,11 @@
 ﻿/*
-Copyright 2012, KISSY UI Library v1.30
+Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Dec 28 15:36
+build time: Feb 18 14:58
 */
 /**
  * @ignore
- * @fileOverview Input wrapper for ComboBox component.
+ *  Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, undefined) {
@@ -323,8 +323,10 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             destructor: function () {
                 var self = this,
                     repositionBuffer = self.__repositionBuffer;
-                win.detach("resize", repositionBuffer, self);
-                repositionBuffer.stop();
+                if (repositionBuffer) {
+                    win.detach("resize", repositionBuffer, self);
+                    repositionBuffer.stop();
+                }
             }
         },
         {
@@ -718,7 +720,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
  *    1,2 都没问题，关键是键盘结合鼠标时怎么个处理？或者不考虑算了！
  **//**
  * @ignore
- * @fileOverview Export ComboBox.
+ *  Export ComboBox.
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox", function (S, ComboBox, MultiValueComboBox, FilterSelect, LocalDataSource, RemoteDataSource) {
@@ -895,7 +897,7 @@ KISSY.add('combobox/cursor', function (S, DOM) {
     requires: ['dom']
 });/**
  * @ignore
- * @fileOverview filter select from combobox
+ *  filter select from combobox
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/filter-select", function (S, Combobox) {
@@ -952,7 +954,7 @@ KISSY.add("combobox/filter-select", function (S, Combobox) {
     requires: ['./base']
 });/**
  * @ignore
- * @fileOverview Local dataSource for ComboBox
+ *  Local dataSource for ComboBox
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/LocalDataSource", function (S) {
@@ -1024,7 +1026,7 @@ KISSY.add("combobox/LocalDataSource", function (S) {
     requires:['component/base']
 });/**
  * @ignore
- * @fileOverview Input wrapper for ComboBox component.
+ *  Input wrapper for ComboBox component.
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
@@ -1308,7 +1310,7 @@ KISSY.add("combobox/multi-value-combobox", function (S, getCursor, ComboBox) {
  *    1,2 都没问题，关键是键盘结合鼠标时怎么个处理？或者不考虑算了！
  **//**
  * @ignore
- * @fileOverview Remote datasource for ComboBox
+ *  Remote datasource for ComboBox
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/RemoteDataSource", function (S, IO) {
@@ -1425,7 +1427,7 @@ KISSY.add("combobox/RemoteDataSource", function (S, IO) {
     requires: ['ajax']
 });/**
  * @ignore
- * @fileOverview Render aria properties to input element.
+ *  Render aria properties to input element.
  * @author yiminghe@gmail.com
  */
 KISSY.add("combobox/render", function (S, Component, undefined) {
