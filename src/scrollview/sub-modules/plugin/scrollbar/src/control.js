@@ -111,6 +111,7 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
         },
 
         _startHideTimer: function () {
+            this._clearHideTimer();
             this._hideTimer = setTimeout(this._hideFn, this.get('hideDelay') * 1000);
         },
 
@@ -125,7 +126,7 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
             var xAxis = this._xAxis;
             var property = xAxis ? 'scrollLeft' : 'scrollTop';
             var scrollView = this.scrollView;
-            var step=scrollView.scrollStep[xAxis?'left':'top'];
+            var step = scrollView.scrollStep[xAxis ? 'left' : 'top'];
             var downBtn = this.get('downBtn');
             var target = e.target;
             var direction = (target == downBtn[0] || downBtn.contains(target)) ? 1 : -1;
@@ -179,16 +180,19 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
 
         afterScrollChange: function (e, axis) {
             // only show when scroll
-            this._clearHideTimer();
-            this.show();
             var xAxis = axis == 'x' ? 1 : 0;
+            var scrollView = this.scrollView;
+            this.show();
+            if (this._hideFn && !scrollView.dd.get('dragging')) {
+                this._startHideTimer();
+            }
             var dragAxis = xAxis ? 'dragLeft' : 'dragTop';
             var dragSizeAxis = xAxis ? 'dragWidth' : 'dragHeight';
             var barSize = this.barSize;
             var contentSize = this._scrollLength;
             var trackElSize = this._trackElSize;
             var val = e.newVal;
-            var scrollView = this.scrollView;
+
             var maxScrollOffset = scrollView.maxScroll;
             var minScrollOffset = scrollView.minScroll;
             var minScroll = xAxis ? minScrollOffset.left : minScrollOffset.top;
