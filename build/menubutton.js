@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:02
+build time: Feb 18 14:56
 */
 /**
  * combination of menu and button ,similar to native select
@@ -276,10 +276,14 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             },
 
             destructor: function () {
-                var self = this;
-                $(win).detach("resize", self.__repositionBuffer, self);
-                self.__repositionBuffer.stop();
-                var menu = self.get("menu");
+                var self = this,
+                    menu,
+                    repositionBuffer = self.__repositionBuffer;
+                if (repositionBuffer) {
+                    $(win).detach("resize", repositionBuffer, self);
+                    repositionBuffer.stop();
+                }
+                menu = self.get("menu");
                 if (menu.destroy) {
                     menu.destroy();
                 }
