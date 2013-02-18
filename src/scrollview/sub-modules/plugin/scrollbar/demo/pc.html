@@ -15,18 +15,19 @@
             margin: 0 auto;
         }
 
-        .ks-scrollview .row {
+        .row {
             height: 20px;
             border: 1px solid green;
             margin: 0;
             padding: 10px;
-            width:600px;
+            width: 600px;
         }
 
         h1 {
             text-align: center;
             /*margin-bottom: 20px;*/
         }
+
         #native {
             width: 320px;
             height: 219px;
@@ -59,8 +60,17 @@
     KISSY.use('scrollview/base,scrollview/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
         S.ready(function () {
             var content = '';
-            for (var i = 0; i < 23; i++) {
-                content += '<p class="row">' +i+': '+ new Array(10).join(' long ') + '</p>';
+            for (var i = 0; i < 10; i++) {
+                content += '<p class="row">' + i + '</p>';
+            }
+            content += '<textarea rows="10" cols="20"></textarea>';
+            content += '<p style="height:100px;border: 1px solid #ff4500;overflow: auto" contentEditable="true">' +
+                    '<span>' +
+                    '12345' +
+                    '</span>' +
+                    '</p>';
+            for (i = 11; i < 23; i++) {
+                content += '<p class="row">' + i + '</p>';
             }
 
             S.all('#native').html(content);

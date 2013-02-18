@@ -2,7 +2,7 @@
  * scrollview controller
  * @author yiminghe@gmail.com
  */
-KISSY.add('scrollview/base/control', function (S, DD, Component, Extension, Render, Event) {
+KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension, Render, Event) {
 
     var undefined = undefined;
 
@@ -223,12 +223,35 @@ KISSY.add('scrollview/base/control', function (S, DD, Component, Extension, Rend
                 el.on(Event.Gesture.start, this._onGestureStart, this);
             }
             el.on('mousewheel', this._onMouseWheel, this);
+            // textarea enter cause el to scroll
+            // bug: left top scroll does not fire scroll event, because scrollTop is 0!
+            el.on('scroll', this._onElScroll, this);
+        },
+
+        _onElScroll: function () {
+            var el = this.get('el'),
+                scrollTop = el[0].scrollTop,
+                scrollLeft = el[0].scrollLeft;
+            S.log(scrollLeft);
+            if (scrollTop)
+                this.set('scrollTop', scrollTop + this.get('scrollTop'));
+            if (scrollLeft)
+                this.set('scrollLeft', scrollLeft + this.get('scrollLeft'));
+            el[0].scrollTop = el[0].scrollLeft = 0;
         },
 
         handleKeyEventInternal: function (e) {
+            var nodeName = e.target.nodeName.toLowerCase();
+            // editable element
+            if (nodeName == 'input' ||
+                nodeName == 'textarea' ||
+                nodeName == 'select' ||
+                DOM.hasAttr(e.target, 'contenteditable')) {
+                return undefined;
+            }
             var keyCode = e.keyCode;
             var allowX = this.isAxisEnabled('x');
-            var allowY = this.isAxisEnabled('x');
+            var allowY = this.isAxisEnabled('y');
             var minScroll = this.minScroll;
             var maxScroll = this.maxScroll;
             var scrollStep = this.scrollStep;
@@ -330,12 +353,12 @@ KISSY.add('scrollview/base/control', function (S, DD, Component, Extension, Rend
         },
 
         syncUI: function () {
-            var el = this.get('el'),
-                contentEl = this.get('contentEl'),
-                domContentEl = contentEl[0];
+            var el = this.get('el');
+
             var axis = this.get('axis'),
-                scrollHeight = domContentEl.scrollHeight ,
-                scrollWidth = domContentEl.scrollWidth ,
+                scrollHeight = el[0].scrollHeight ,
+            // contentEl[0].scrollWidth is same with el.innerWidth()!
+                scrollWidth = el[0].scrollWidth ,
                 clientHeight = el.innerHeight(),
                 clientWidth = el.innerWidth();
 
@@ -490,5 +513,5 @@ KISSY.add('scrollview/base/control', function (S, DD, Component, Extension, Rend
     });
 
 }, {
-    requires: ['dd/base', 'component/base', 'component/extension', './render', 'event']
+    requires: ['dom', 'dd/base', 'component/base', 'component/extension', './render', 'event']
 });

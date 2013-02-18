@@ -49,7 +49,11 @@
 <script>
     KISSY.use('scrollview/base', function (S, ScrollView) {
         var content = '';
-        for (var i = 0; i < 23; i++) {
+        for (var i = 0; i < 10; i++) {
+            content += '<p>' + i + '</p>';
+        }
+        content += '<textarea rows="10" cols="20"></textarea>';
+        for (i = 11; i < 23; i++) {
             content += '<p>' + i + '</p>';
         }
 
