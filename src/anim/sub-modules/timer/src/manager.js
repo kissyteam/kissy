@@ -6,12 +6,33 @@
 KISSY.add('anim/timer/manager', function (S, undefined) {
     var stamp = S.stamp;
     var win = S.Env.host;
+    // note in background tab, interval is set to 1s in chrome/firefox
+    // no interval change in ie for 15, if interval is less than 15
+    // then in background tab interval is changed to 15
+    var INTERVAL = 15;
+    // https://gist.github.com/paulirish/1579671
+    var requestAnimationFrameFn = win['requestAnimationFrame'],
+        cancelAnimationFrameFn = win['cancelAnimationFrame'];
+    if (!requestAnimationFrameFn) {
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+        for (var x = 0; x < vendors.length && !requestAnimationFrameFn; ++x) {
+            requestAnimationFrameFn = win[vendors[x] + 'RequestAnimationFrame'];
+            cancelAnimationFrameFn = win[vendors[x] + 'CancelAnimationFrame'] ||
+                win[vendors[x] + 'CancelRequestAnimationFrame'];
+        }
+    }
+    if (requestAnimationFrameFn) {
+        S.log('anim use requestAnimationFrame');
+    } else {
+        requestAnimationFrameFn = function (fn) {
+            return setTimeout(fn, INTERVAL);
+        };
+        cancelAnimationFrameFn = function (timer) {
+            clearTimeout(timer);
+        };
+    }
 
-    var manager = {
-        // note in background tab, interval is set to 1s in chrome/firefox
-        // no interval change in ie for 15, if interval is less than 15
-        // then in background tab interval is changed to 15
-        interval: 15,
+    return {
         runnings: {},
         timer: null,
         start: function (anim) {
@@ -43,21 +64,20 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
         startTimer: function () {
             var self = this;
             if (!self.timer) {
-                self.timer = setTimeout(function () {
-                    if (!self.runFrames()) {
-                        self.timer = 0;
-                        self.startTimer();
-                    } else {
+                self.timer = requestAnimationFrameFn(function run() {
+                    if (self.runFrames()) {
                         self.stopTimer();
+                    } else {
+                        self.timer = requestAnimationFrameFn(run);
                     }
-                }, self.interval);
+                });
             }
         },
         stopTimer: function () {
             var self = this,
                 t = self.timer;
             if (t) {
-                clearTimeout(t);
+                cancelAnimationFrameFn(t);
                 self.timer = 0;
             }
         },
@@ -73,43 +93,6 @@ KISSY.add('anim/timer/manager', function (S, undefined) {
             return flag === undefined;
         }
     };
-
-    var requestAnimationFrameFn = win['requestAnimationFrame'] ||
-            win['mozRequestAnimationFrame'] ||
-            win['msRequestAnimationFrame'] ||
-            win['webkitRequestAnimationFrame'],
-        cancelAnimationFrameFn = win['cancelAnimationFrame'] ||
-            win['mozCancelAnimationFrame'] ||
-            win['msCancelAnimationFrame'] ||
-            win['webkitCancelAnimationFrame'];
-
-    if (requestAnimationFrameFn) {
-        S.log('anim use requestAnimationFrame', 'info');
-        S.mix(manager, {
-            startTimer: function () {
-                var self = this;
-                if (!self.timer) {
-                    self.timer = requestAnimationFrameFn(function run() {
-                        if (self.runFrames()) {
-                            self.stopTimer();
-                        } else {
-                            self.timer = requestAnimationFrameFn(run);
-                        }
-                    });
-                }
-            },
-            stopTimer: function () {
-                var self = this,
-                    t = self.timer;
-                if (t) {
-                    cancelAnimationFrameFn(t);
-                    self.timer = 0;
-                }
-            }
-        });
-    }
-
-    return manager;
 });
 /**
  * @ignore
