@@ -56,6 +56,9 @@
                 symbol: 'openBlock',
                 rhs: ['OPEN_BLOCK', 'inTpl', 'CLOSE'],
                 action: function () {
+                    if (this.$1[this.$1.length - 1] == '^') {
+                        this.$2.isInversed = 1;
+                    }
                     return this.$2;
                 }
             },
@@ -433,7 +436,8 @@
                 },
                 {
                     state: ['t'],
-                    regexp: /^{{#/,
+                    // support Inverted Sections in mustache
+                    regexp: /^{{(?:#|\^)/,
                     token: 'OPEN_BLOCK'
                 },
                 {
