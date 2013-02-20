@@ -57,6 +57,9 @@ KISSY.add("xtemplate/compiler/ast", function (S) {
         self.params = params;
         self.hash = hash;
         self.escaped = true;
+        // inside {{^}}
+        // default: inside {{#}}
+        self.isInversed = false;
     };
 
     ast.TplNode.prototype.type = 'tpl';

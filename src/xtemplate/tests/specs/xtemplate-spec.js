@@ -24,6 +24,41 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
             });
 
+            describe("property", function () {
+
+                it('support sub property', function () {
+
+                    var tpl = "{{data.x}}";
+
+                    var data = {
+                        data: {
+                            x: 1
+                        }
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('1');
+
+                });
+
+
+                it('support array index', function () {
+
+                    var tpl = "{{data.1.1}}";
+
+                    var data = {
+                        data: [1, [3, 2]]
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('2');
+
+                });
+
+            });
+
 
             it('support function as template', function () {
 
@@ -83,10 +118,46 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     expect(render).toBe('');
                 });
 
-                it('support array as render parameter',function(){
+
+                it('support {{^', function () {
+                    var tpl = '{{^each x}}wrong{{else}}{{title}}{{/each}}';
+
+                    var data = {
+                        x: [
+                            {
+                                title: 5
+                            },
+                            {
+                                title: 6
+                            }
+                        ]
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('56');
+                });
+
+                it('support else', function () {
+                    var tpl = '{{#each l}}{{title}}{{else}}1{{/each}}';
+
+                    var data = {
+                        x: [
+                            {
+                                title: 5
+                            }
+                        ]
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('1');
+                });
+
+                it('support array as render parameter', function () {
                     var tpl = '!{{#each this}}{{this}}-{{/each}}!';
 
-                    var data = [1,2];
+                    var data = [1, 2];
 
                     var render = new XTemplate(tpl, data).render(data);
 
@@ -663,7 +734,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     var r = '';
 
                     try {
-                         new XTemplate(tpl, {
+                        new XTemplate(tpl, {
                             silent: false
                         }).render(data);
                     } catch (e) {
@@ -682,6 +753,14 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     };
 
                     var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('1');
+                });
+
+                it('support {{^', function () {
+                    var tpl = '{{^xx}}1{{/xx}}';
+
+                    var render = new XTemplate(tpl).render({});
 
                     expect(render).toBe('1');
                 });

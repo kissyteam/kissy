@@ -3,22 +3,15 @@
  * @author yiminghe@gmail.com
  * @ignore
  */
-KISSY.add("xtemplate/runtime/commands", function (S, includeCommand, undefined) {
-    var error = function (option, str) {
-        S[option.silent ? 'log' : 'error'](str);
-    };
+KISSY.add("xtemplate/runtime/commands", function (S, includeCommand) {
     return {
         'each': function (scopes, option) {
             var params = option.params;
-            if (!params || params.length != 1) {
-                error(option, 'each must has one param');
-                return '';
-            }
             var param0 = params[0];
             var buffer = '';
             var xcount;
             // if undefined, will emit warning by compiler
-            if (param0 !== undefined) {
+            if (param0) {
                 // skip array check for performance
                 var opScopes = [0, 0].concat(scopes);
                 xcount = param0.length;
@@ -31,33 +24,29 @@ KISSY.add("xtemplate/runtime/commands", function (S, includeCommand, undefined) 
                     };
                     buffer += option.fn(opScopes);
                 }
+            } else if (option.inverse) {
+                buffer = option.inverse(scopes);
             }
             return buffer;
         },
 
         'with': function (scopes, option) {
             var params = option.params;
-            if (!params || params.length != 1) {
-                error(option, 'with must has one param');
-                return '';
-            }
             var param0 = params[0];
             var opScopes = [0].concat(scopes);
             var buffer = '';
-            if (param0 !== undefined) {
+            if (param0) {
                 // skip object check for performance
                 opScopes[0] = param0;
                 buffer = option.fn(opScopes);
+            } else if (option.inverse) {
+                buffer = option.inverse(scopes);
             }
             return buffer;
         },
 
         'if': function (scopes, option) {
             var params = option.params;
-            if (!params || params.length != 1) {
-                error(option, 'if must has one param');
-                return '';
-            }
             var param0 = params[0];
             var buffer = '';
             if (param0) {

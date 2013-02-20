@@ -5,8 +5,6 @@
  */
 KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
-    'use strict';
-
     parser.yy = ast;
 
     var utils = {
@@ -70,7 +68,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             if (!global) {
                 source.push('function(scopes) {');
             }
-            source.push('"use strict";');
             source.push('var buffer = ""' + (global ? ',' : ';'));
             if (global) {
                 source.push('S = KISSY,' +
@@ -343,7 +340,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 commands = XTemplateRuntime.commands,
                 string = tplNode.path.string,
                 inverseFn,
-                tmp,
                 existsNativeCommand,
                 variableName;
 
@@ -355,6 +351,15 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
             if (programNode.inverse) {
                 inverseFn = self.genFunction(programNode.inverse).join('\n');
                 source.push(optionName + '.inverse=' + inverseFn + ';');
+            }
+
+            // support {{^
+            // exchange fn with inverse
+            if (tplNode.isInversed) {
+                var tmp = guid('inverse');
+                source.push('var ' + tmp + '=' + optionName + '.fn;');
+                source.push(optionName + '.fn = ' + optionName + '.inverse;');
+                source.push(optionName + '.inverse = ' + tmp + ';');
             }
 
             // reduce generated code size
@@ -370,11 +375,10 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 // else => {{#if xx}}1{/if}}
                 if (!tplNode.hash && !tplNode.params) {
                     source.push('if(!' + tmpNameCommand + '){');
-                    tmp = guid('tmp');
-                    source.push('var ' + tmp + ' = getProperty("' + string + '",scopes);');
-                    source.push('if(' + tmp + ' !== false){');
-                    variableName = guid('tmp');
-                    source.push('var ' + variableName + '=' + tmp + '[0];');
+                    var propertyValueHolder = guid('propertyValueHolder');
+                    source.push('var ' + propertyValueHolder + ' = getProperty("' + string + '",scopes);');
+                    variableName = guid('variableName');
+                    source.push('var ' + variableName + '=' + propertyValueHolder + '&&' + propertyValueHolder + '[0];');
                     source.push(optionName + '.params=[' + variableName + '];');
                     source.push('if(isArray(' + variableName + ')){');
                     source.push(tmpNameCommand + '=commands["each"];');
@@ -384,7 +388,6 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                     source.push('}');
                     source.push('else {');
                     source.push(tmpNameCommand + '=commands["if"];');
-                    source.push('}');
                     source.push('}');
                     source.push('}');
                 }
@@ -400,7 +403,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
 
             if (!existsNativeCommand) {
                 source.push('}');
-                source.push('else {');
+                source.push('if('+propertyValueHolder+'===false) {');
                 source.push('S[option.silent?"log":"error"]("can not find command: \'' +
                     string + '\' at line ' + tplNode.path.lineNumber + '");');
                 source.push('}');
