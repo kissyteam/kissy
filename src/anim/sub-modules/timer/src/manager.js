@@ -3,10 +3,11 @@
  * single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/timer/manager', function (S) {
+KISSY.add('anim/timer/manager', function (S, undefined) {
     var stamp = S.stamp;
+    var win = S.Env.host;
 
-    return {
+    var manager = {
         // note in background tab, interval is set to 1s in chrome/firefox
         // no interval change in ie for 15, if interval is less than 15
         // then in background tab interval is changed to 15
@@ -62,16 +63,53 @@ KISSY.add('anim/timer/manager', function (S) {
         },
         runFrames: function () {
             var self = this,
-                done = 1,
                 r,
+                flag,
                 runnings = self.runnings;
             for (r in runnings) {
-                done = 0;
                 runnings[r].frame();
+                flag = 0;
             }
-            return done;
+            return flag === undefined;
         }
     };
+
+    var requestAnimationFrameFn = win['requestAnimationFrame'] ||
+            win['mozRequestAnimationFrame'] ||
+            win['msRequestAnimationFrame'] ||
+            win['webkitRequestAnimationFrame'],
+        cancelAnimationFrameFn = win['cancelAnimationFrame'] ||
+            win['mozCancelAnimationFrame'] ||
+            win['msCancelAnimationFrame'] ||
+            win['webkitCancelAnimationFrame'];
+
+    if (requestAnimationFrameFn) {
+        S.log('anim use requestAnimationFrame', 'info');
+        S.mix(manager, {
+            startTimer: function () {
+                var self = this;
+                if (!self.timer) {
+                    self.timer = requestAnimationFrameFn(function run() {
+                        if (self.runFrames()) {
+                            self.stopTimer();
+                        } else {
+                            self.timer = requestAnimationFrameFn(run);
+                        }
+                    });
+                }
+            },
+            stopTimer: function () {
+                var self = this,
+                    t = self.timer;
+                if (t) {
+                    cancelAnimationFrameFn(t);
+                    self.timer = 0;
+                }
+            }
+        });
+    }
+
+    return manager;
 });
 /**
  * @ignore
