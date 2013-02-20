@@ -427,14 +427,25 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
          * 全局通知当前拖动对象：结束拖动了！
          * @ignore
          */
-        _end: function () {
+        _end: function (e) {
             var self = this,
+                __activeToDrag = self.__activeToDrag,
                 activeDrag = self.get('activeDrag'),
                 activeDrop = self.get('activeDrop');
+
+            // 最后通知 move 一次，防止 touch 设备触发 touchmove 不灵敏
+            e = ddm._normalEvent(e);
+            if (__activeToDrag) {
+                __activeToDrag._move(e);
+            }
+            if (activeDrag) {
+                activeDrag._move(e);
+            }
+
             unRegisterEvent(self);
             // 预备役清掉 , click 情况下 mousedown->mouseup 极快过渡
-            if (self.__activeToDrag) {
-                self.__activeToDrag._end();
+            if (__activeToDrag) {
+                __activeToDrag._end();
                 self.__activeToDrag = 0;
             }
             if (self._shim) {
@@ -516,7 +527,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
      normal event between devices
      */
     ddm._normalEvent = function (e) {
-        var touches = e.touches,
+        var touches = String(e.type) == 'touchend' ? e.changedTouches : e.touches,
             touch;
         if (touches) {
             if (touches.length != 1) {

@@ -182,6 +182,7 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
             // only show when scroll
             var xAxis = axis == 'x' ? 1 : 0;
             var scrollView = this.scrollView;
+            this._clearHideTimer();
             this.show();
             if (this._hideFn && !scrollView.dd.get('dragging')) {
                 this._startHideTimer();

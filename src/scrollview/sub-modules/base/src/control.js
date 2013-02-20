@@ -26,13 +26,16 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
         var pageXY = axis == 'left' ? 'pageX' : 'pageY';
         if (self._allowScroll[axis]) {
             var diff = e[pageXY] - startMousePos[axis],
+            // touchend == last touchmove
+                eqWithLastPoint,
                 direction;
             if (self._lastPageXY[pageXY]) {
+                eqWithLastPoint = e[pageXY] == self._lastPageXY[pageXY];
                 direction = ( e[pageXY] - self._lastPageXY[pageXY]) > 0;
             }
             var scroll = self._startScroll[axis] - diff;
             var bound;
-            var now = S.now();
+            var now = e.timeStamp;
             if (scroll < self.minScroll[axis]) {
                 bound = self.minScroll[axis] - scroll;
                 bound *= OUT_OF_BOUND_FACTOR;
@@ -46,7 +49,8 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
             var timeDiff = (now - self._swipe[axis].startTime);
 
             // swipe sample
-            if (self._lastDirection[axis] !== undefined &&
+            if (!eqWithLastPoint &&
+                self._lastDirection[axis] !== undefined &&
                 self._lastDirection[axis] !== direction ||
                 timeDiff > SWIPE_SAMPLE_INTERVAL) {
                 self._swipe[axis].startTime = now;
@@ -121,7 +125,19 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
             return;
         }
 
+        // duration is too long in android when momentum
+        // touchend time - touchstart time
+        // sencha solve this problem, but i do not know how!
+        // hack!
+        if (S.UA.android && duration > 50) {
+           // duration -= 50;
+        }
+
+        // log(duration);
+        //log('distance:' + distance);
+
         var velocity = distance / duration;
+
 
         velocity = Math.min(Math.max(velocity, -MAX_SWIPE_VELOCITY), MAX_SWIPE_VELOCITY);
 
@@ -437,6 +453,7 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
             var startMousePos = this.dd.get('startMousePos');
             onDragAxis(this, e, 'left', startMousePos);
             onDragAxis(this, e, 'top', startMousePos);
+            // touchmove frequency is slow on android
         },
 
         _onDragEnd: function (e) {
