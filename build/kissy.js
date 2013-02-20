@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 17 19:27
+build time: Feb 20 22:41
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130217192723' will replace with current timestamp when compressing.
+         * NOTICE: '20130220224125' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130217192723',
+        __BUILD_TIME: '20130220224125',
         /**
          * KISSY Environment.
          * @private
@@ -3528,7 +3528,7 @@ var KISSY = (function (undefined) {
             return isTransitionSupported;
         },
 
-        'getTransitionPrefix': function () {
+        'getCss3Prefix': function () {
             return transitionPrefix;
         }
     };
@@ -5861,7 +5861,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130217192723'
+            tag: '20130220224125'
         }, getBaseInfo()));
     }
 
@@ -19921,7 +19921,7 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 22:54
+build time: Feb 20 21:38
 */
 /**
  * @ignore
@@ -20600,14 +20600,36 @@ KISSY.add('anim/timer/fx', function (S, DOM, undefined) {
  * single timer for the whole anim module
  * @author yiminghe@gmail.com
  */
-KISSY.add('anim/timer/manager', function (S) {
+KISSY.add('anim/timer/manager', function (S, undefined) {
     var stamp = S.stamp;
+    var win = S.Env.host;
+    // note in background tab, interval is set to 1s in chrome/firefox
+    // no interval change in ie for 15, if interval is less than 15
+    // then in background tab interval is changed to 15
+    var INTERVAL = 15;
+    // https://gist.github.com/paulirish/1579671
+    var requestAnimationFrameFn = win['requestAnimationFrame'],
+        cancelAnimationFrameFn = win['cancelAnimationFrame'];
+    if (!requestAnimationFrameFn) {
+        var vendors = ['ms', 'moz', 'webkit', 'o'];
+        for (var x = 0; x < vendors.length && !requestAnimationFrameFn; ++x) {
+            requestAnimationFrameFn = win[vendors[x] + 'RequestAnimationFrame'];
+            cancelAnimationFrameFn = win[vendors[x] + 'CancelAnimationFrame'] ||
+                win[vendors[x] + 'CancelRequestAnimationFrame'];
+        }
+    }
+    if (requestAnimationFrameFn) {
+        S.log('anim use requestAnimationFrame');
+    } else {
+        requestAnimationFrameFn = function (fn) {
+            return setTimeout(fn, INTERVAL);
+        };
+        cancelAnimationFrameFn = function (timer) {
+            clearTimeout(timer);
+        };
+    }
 
     return {
-        // note in background tab, interval is set to 1s in chrome/firefox
-        // no interval change in ie for 15, if interval is less than 15
-        // then in background tab interval is changed to 15
-        interval: 15,
         runnings: {},
         timer: null,
         start: function (anim) {
@@ -20639,34 +20661,33 @@ KISSY.add('anim/timer/manager', function (S) {
         startTimer: function () {
             var self = this;
             if (!self.timer) {
-                self.timer = setTimeout(function () {
-                    if (!self.runFrames()) {
-                        self.timer = 0;
-                        self.startTimer();
-                    } else {
+                self.timer = requestAnimationFrameFn(function run() {
+                    if (self.runFrames()) {
                         self.stopTimer();
+                    } else {
+                        self.timer = requestAnimationFrameFn(run);
                     }
-                }, self.interval);
+                });
             }
         },
         stopTimer: function () {
             var self = this,
                 t = self.timer;
             if (t) {
-                clearTimeout(t);
+                cancelAnimationFrameFn(t);
                 self.timer = 0;
             }
         },
         runFrames: function () {
             var self = this,
-                done = 1,
                 r,
+                flag,
                 runnings = self.runnings;
             for (r in runnings) {
-                done = 0;
                 runnings[r].frame();
+                flag = 0;
             }
-            return done;
+            return flag === undefined;
         }
     };
 });
@@ -20978,7 +20999,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 22:55
+build time: Feb 20 22:41
 */
 /**
  * animation using css transition
@@ -20993,7 +21014,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
         })
     }
 
-    var vendorPrefix = S.Features.getTransitionPrefix();
+    var vendorPrefix = S.Features.getCss3Prefix();
     var TRANSITION_END_EVENT = vendorPrefix ?
         (vendorPrefix.toLowerCase() + 'TransitionEnd') :
         'transitionend';

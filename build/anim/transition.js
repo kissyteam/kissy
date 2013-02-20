@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 22:55
+build time: Feb 20 22:41
 */
 /**
  * animation using css transition
@@ -16,7 +16,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
         })
     }
 
-    var vendorPrefix = S.Features.getTransitionPrefix();
+    var vendorPrefix = S.Features.getCss3Prefix();
     var TRANSITION_END_EVENT = vendorPrefix ?
         (vendorPrefix.toLowerCase() + 'TransitionEnd') :
         'transitionend';

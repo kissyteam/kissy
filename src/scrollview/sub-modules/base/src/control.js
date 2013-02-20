@@ -54,7 +54,7 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
                 // S.log('record for swipe: ' + timeDiff + ' : ' + scroll);
             }
 
-            self.set('scroll' + S.ucfirst(axis), scroll);
+            self.set(axis == 'left' ? 'scrollLeft' : 'scrollTop', scroll);
             self._lastDirection[axis] = direction;
         }
         self._lastPageXY[pageXY] = e[pageXY];
@@ -232,7 +232,6 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
             var el = this.get('el'),
                 scrollTop = el[0].scrollTop,
                 scrollLeft = el[0].scrollLeft;
-            S.log(scrollLeft);
             if (scrollTop)
                 this.set('scrollTop', scrollTop + this.get('scrollTop'));
             if (scrollLeft)
@@ -496,7 +495,7 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
             },
             focusable: {
                 // need process keydown
-                value: true
+                value: !S.Features.isTouchSupported()
             },
             allowTextSelection: {
                 value: true

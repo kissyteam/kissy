@@ -92,7 +92,7 @@
             return isTransitionSupported;
         },
 
-        'getTransitionPrefix': function () {
+        'getCss3Prefix': function () {
             return transitionPrefix;
         }
     };
