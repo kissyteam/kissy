@@ -6,6 +6,8 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
 
     var undefined = undefined;
 
+    var $ = S.all;
+
     var OUT_OF_BOUND_FACTOR = 0.5;
 
     var SWIPE_SAMPLE_INTERVAL = 300;
@@ -242,6 +244,7 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
             // textarea enter cause el to scroll
             // bug: left top scroll does not fire scroll event, because scrollTop is 0!
             el.on('scroll', this._onElScroll, this);
+            $(DOM.getWindow(el[0].document)).on('resize orientationchange', this.sync, this);
         },
 
         _onElScroll: function () {
@@ -368,14 +371,14 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
         },
 
         syncUI: function () {
-            var el = this.get('el');
-
+            var domEl = this.get('el')[0];
+            var domContentEl = this.get('contentEl')[0];
             var axis = this.get('axis'),
-                scrollHeight = el[0].scrollHeight ,
+                scrollHeight = Math.max(domEl.scrollHeight, domContentEl.offsetHeight),
             // contentEl[0].scrollWidth is same with el.innerWidth()!
-                scrollWidth = el[0].scrollWidth ,
-                clientHeight = el.innerHeight(),
-                clientWidth = el.innerWidth();
+                scrollWidth = Math.max(domEl.scrollWidth, domContentEl.offsetWidth) ,
+                clientHeight =domEl.clientHeight,
+                clientWidth = domEl.clientWidth;
 
             this.scrollHeight = scrollHeight;
             this.scrollWidth = scrollWidth;
@@ -412,7 +415,7 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
                 top: scrollHeight - clientHeight
             };
 
-            var elDoc = S.all(el[0].ownerDocument);
+            var elDoc = $(domEl.ownerDocument);
 
             this.scrollStep = {
                 top: Math.max(clientHeight * clientHeight * 0.7 / elDoc.height(), 20),
@@ -420,6 +423,12 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
             };
 
             this._initStates();
+
+            var scrollLeft = this.get('scrollLeft'),
+                scrollTop = this.get('scrollTop');
+
+            // in case content is reduces
+            this.scrollTo(scrollLeft, scrollTop);
         },
 
         'isAxisEnabled': function (axis) {

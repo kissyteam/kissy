@@ -131,7 +131,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
         },
 
         /**
-         * Put dom structure of this component to document and bind event.
+         * Put dom structure of this component to document, bind event and sync attribute.
          * @chainable
          */
         render: function () {
@@ -178,28 +178,37 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
                 self.fire('afterBindUI');
                 self.callPluginsMethod("bindUI");
 
-                /**
-                 * @event beforeSyncUI
-                 * fired before component 's internal state is synchronized.
-                 * @param {KISSY.Event.CustomEventObject} e
-                 */
+                self.sync();
 
-                self.fire('beforeSyncUI');
-
-                UIBase.superclass.syncInternal.call(self);
-                self.callMethodByHierarchy("syncUI", "__syncUI");
-
-                /**
-                 * @event afterSyncUI
-                 * fired after component 's internal state is synchronized.
-                 * @param {KISSY.Event.CustomEventObject} e
-                 */
-
-                self.fire('afterSyncUI');
-                self.callPluginsMethod("syncUI");
                 self.setInternal("rendered", true);
             }
             return self;
+        },
+
+        /**
+         * sync attribute value
+         */
+        sync: function () {
+            var self = this;
+            /**
+             * @event beforeSyncUI
+             * fired before component 's internal state is synchronized.
+             * @param {KISSY.Event.CustomEventObject} e
+             */
+
+            self.fire('beforeSyncUI');
+
+            UIBase.superclass.syncInternal.call(self);
+            self.callMethodByHierarchy("syncUI", "__syncUI");
+
+            /**
+             * @event afterSyncUI
+             * fired after component 's internal state is synchronized.
+             * @param {KISSY.Event.CustomEventObject} e
+             */
+
+            self.fire('afterSyncUI');
+            self.callPluginsMethod("syncUI");
         },
 
         /**

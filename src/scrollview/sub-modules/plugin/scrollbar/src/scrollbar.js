@@ -24,33 +24,31 @@ KISSY.add('scrollview/plugin/scrollbar', function (S, Base, ScrollBar) {
                 cfg.minLength = minLength;
             }
 
-            if (scrollView.isAxisEnabled('x')) {
-                if (this.scrollBarX) {
-                    this.scrollBarX.sync();
-                } else {
-                    my = {
-                        axis: 'x'
-                    };
-                    if (autoHideX !== undefined) {
-                        cfg.autoHide = autoHideX;
-                    }
-                    this.scrollBarX = new ScrollBar(S.merge(cfg, my)).render();
+            if (this.scrollBarX) {
+                this.scrollBarX.set('disabled', false);
+                this.scrollBarX.sync();
+            } else if (scrollView.isAxisEnabled('x')) {
+                my = {
+                    axis: 'x'
+                };
+                if (autoHideX !== undefined) {
+                    cfg.autoHide = autoHideX;
                 }
+                this.scrollBarX = new ScrollBar(S.merge(cfg, my)).render();
             }
 
-            if (scrollView.isAxisEnabled('y')) {
-                if (this.scrollBarY) {
-                    this.scrollBarY.sync();
-                } else {
-                    my = {
-                        axis: 'y'
-                    };
-                    if (autoHideY !== undefined) {
-                        cfg.autoHide = autoHideY;
-                    }
-                    this.scrollBarY = new ScrollBar(S.merge(cfg, my)).render();
+            if (this.scrollBarY) {
+                this.scrollBarY.sync();
+            } else if (scrollView.isAxisEnabled('y')) {
+                my = {
+                    axis: 'y'
+                };
+                if (autoHideY !== undefined) {
+                    cfg.autoHide = autoHideY;
                 }
+                this.scrollBarY = new ScrollBar(S.merge(cfg, my)).render();
             }
+
         },
 
         pluginDestructor: function () {

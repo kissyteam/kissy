@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 22:55
+build time: Feb 21 15:15
 */
 /**
  * @ignore
@@ -636,7 +636,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              *
              *      menu.isController // => true
              *
-             * @type {boolean}
+             * @type {Boolean}
              * @member KISSY.Component.Controller
              */
             isController: true,
@@ -1943,7 +1943,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
         },
 
         /**
-         * Put dom structure of this component to document and bind event.
+         * Put dom structure of this component to document, bind event and sync attribute.
          * @chainable
          */
         render: function () {
@@ -1990,28 +1990,37 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
                 self.fire('afterBindUI');
                 self.callPluginsMethod("bindUI");
 
-                /**
-                 * @event beforeSyncUI
-                 * fired before component 's internal state is synchronized.
-                 * @param {KISSY.Event.CustomEventObject} e
-                 */
+                self.sync();
 
-                self.fire('beforeSyncUI');
-
-                UIBase.superclass.syncInternal.call(self);
-                self.callMethodByHierarchy("syncUI", "__syncUI");
-
-                /**
-                 * @event afterSyncUI
-                 * fired after component 's internal state is synchronized.
-                 * @param {KISSY.Event.CustomEventObject} e
-                 */
-
-                self.fire('afterSyncUI');
-                self.callPluginsMethod("syncUI");
                 self.setInternal("rendered", true);
             }
             return self;
+        },
+
+        /**
+         * sync attribute value
+         */
+        sync: function () {
+            var self = this;
+            /**
+             * @event beforeSyncUI
+             * fired before component 's internal state is synchronized.
+             * @param {KISSY.Event.CustomEventObject} e
+             */
+
+            self.fire('beforeSyncUI');
+
+            UIBase.superclass.syncInternal.call(self);
+            self.callMethodByHierarchy("syncUI", "__syncUI");
+
+            /**
+             * @event afterSyncUI
+             * fired after component 's internal state is synchronized.
+             * @param {KISSY.Event.CustomEventObject} e
+             */
+
+            self.fire('afterSyncUI');
+            self.callPluginsMethod("syncUI");
         },
 
         /**

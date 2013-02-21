@@ -11,40 +11,99 @@
     <script src="/kissy/src/log.js"></script>
     <link rel="stylesheet" href="../../../../assets/dpl.css">
     <style>
-        .ks-scrollview {
-            border: 1px solid red;
-            margin: 0 auto;
-        }
-
-        .row {
-            height: 20px;
-            border: 1px solid green;
+        body, ul, li {
+            padding: 0;
             margin: 0;
-            padding: 10px;
+            border: 0;
         }
 
-        h1 {
+        body {
+            font-size: 12px;
+            -webkit-user-select: none;
+            -webkit-text-size-adjust: none;
+            font-family: helvetica;
+        }
+
+        #header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 45px;
+            line-height: 45px;
+            background-color: #00A0E9;
+            padding: 0;
+            color: #eee;
+            font-size: 20px;
             text-align: center;
-            /*margin-bottom: 20px;*/
         }
 
-        #native {
-            width: 280px;
-            height: 219px;
-            overflow: auto;
-            border: 1px solid red;
-            margin: 0 auto;
-            position: relative;
-            white-space: nowrap;
+        #header a {
+            color: #f3f3f3;
+            text-decoration: none;
+            font-weight: bold;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
         }
+
+        #footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 48px;
+            background-image: -webkit-gradient(linear, 0 0, 0 100%, color-stop(0, #999), color-stop(0.02, #666), color-stop(1, #222));
+            background-image: -moz-linear-gradient(top, #999, #666 2%, #222);
+            background-image: -o-linear-gradient(top, #999, #666 2%, #222);
+            padding: 0;
+            border-top: 1px solid #444;
+        }
+
+        #wrapper {
+            position: absolute;
+            z-index: 1;
+            top: 45px;
+            bottom: 48px;
+            left: 0;
+            width: 100%;
+            background: #555;
+            overflow: auto;
+        }
+
+        #wrapper ul {
+            position: relative;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            text-align: left;
+        }
+
+        #wrapper li {
+            padding: 0 10px;
+            height: 40px;
+            line-height: 40px;
+            border-bottom: 1px solid #ccc;
+            border-top: 1px solid #fff;
+            background-color: #fafafa;
+            font-size: 14px;
+        }
+
+        #wrapper li > a {
+            display: block;
+        }
+
     </style>
 </head>
 <body>
-<h1>KISSY ScrollView</h1>
+<div id="header">KISSY ScrollView</div>
+<div id="wrapper">
 
-<div id="native"></div>
+    <ul id="thelist">
+    </ul>
 
-<button id="destroy">destroy</button>
+</div>
+
+<div id="footer"></div>
 
 
 <script src="../../../base/src/control.js"></script>
@@ -59,33 +118,17 @@
 
     KISSY.use('scrollview/base,scrollview/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
         S.ready(function () {
-            var content = '';
-            for (var i = 0; i < 10; i++) {
-                content += '<p class="row">' + i + '</p>';
+            var str = '';
+            for (var i = 1; i < 15; i++) {
+                str += '<li>line ' + i + '</li>'
             }
-            for (i = 11; i < 43; i++) {
-                content += '<p class="row">' + i + '</p>';
-            }
-
-            S.all('#native').html(content);
-
+            S.all('#thelist').html(str);
             window.scrollview = new ScrollView({
-                width: 280,
-                render: 'body',
-                height: 219,
-                allowDrag:true,
+                srcNode: '#wrapper',
+                allowDrag: true,
                 plugins: [new ScrollbarPlugin({
-                })],
-                content: content
+                })]
             }).render();
-
-
-            S.all('#destroy').on('click', function () {
-                scrollview.destroy();
-                S.all('#destroy').attr('disabled', true);
-            });
-
-            S.all('<div style="height:1000px"></div>').appendTo('body');
         });
     });
 </script>

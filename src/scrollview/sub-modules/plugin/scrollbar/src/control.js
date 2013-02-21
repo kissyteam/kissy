@@ -46,11 +46,13 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
         },
 
         _onDragX: function (e) {
-            this._onDrag(e, 'x');
+            if (!this._disabled)
+                this._onDrag(e, 'x');
         },
 
         _onDragY: function (e) {
-            this._onDrag(e, 'y');
+            if (!this._disabled)
+                this._onDrag(e, 'y');
         },
 
         _onDragStart: function () {
@@ -80,16 +82,42 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
             this.scrollView = scrollView;
             var ratio;
             if (this._xAxis) {
+                if (!scrollView.isAxisEnabled('x')) {
+                    this._disabled = true;
+                    if (!this.get('autoHide')) {
+                        this.hide();
+                    }
+                    return;
+                }
                 this._scrollLength = scrollView.scrollWidth;
                 this._trackElSize = trackEl.width();
                 ratio = scrollView.clientWidth / this._scrollLength;
                 this.set('dragWidth', this.barSize = ratio * this._trackElSize);
+                if (this.get('rendered')) {
+                    this.afterScrollLeftChange({
+                        newVal: scrollView.get('scrollLeft')
+                    });
+                }
             } else {
+                if (!scrollView.isAxisEnabled('y')) {
+                    this._disabled = true;
+                    if (!this.get('autoHide')) {
+                        this.hide();
+                    }
+                    return;
+                }
                 this._scrollLength = scrollView.scrollHeight;
                 this._trackElSize = trackEl.height();
                 ratio = scrollView.clientHeight / this._scrollLength;
                 this.set('dragHeight', this.barSize = ratio * this._trackElSize);
+                // avoid recursive render in show
+                if (this.get('rendered')) {
+                    this.afterScrollTopChange({
+                        newVal: scrollView.get('scrollTop')
+                    });
+                }
             }
+            this._disabled = false;
             if (this.get('autoHide')) {
                 this.hide();
             }
@@ -105,7 +133,7 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
         },
 
         _onScrollEnd: function (e) {
-            if (this.get('axis') == e.axis) {
+            if (!this._disabled && this.get('axis') == e.axis) {
                 this._startHideTimer();
             }
         },
@@ -123,6 +151,9 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
         },
 
         _onUpDownBtnMouseDown: function (e) {
+            if (this._disabled) {
+                return;
+            }
             var xAxis = this._xAxis;
             var property = xAxis ? 'scrollLeft' : 'scrollTop';
             var scrollView = this.scrollView;
@@ -147,6 +178,9 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
         },
 
         _onTrackElMouseDown: function (e) {
+            if (this._disabled) {
+                return;
+            }
             var xAxis = this._xAxis;
             var leftTop = xAxis ? 'left' : 'top';
             var pageXY = xAxis ? 'pageX' : 'pageY';
@@ -171,11 +205,13 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
         },
 
         afterScrollLeftChange: function (e) {
-            this.afterScrollChange(e, 'x');
+            if (!this._disabled)
+                this.afterScrollChange(e, 'x');
         },
 
         afterScrollTopChange: function (e) {
-            this.afterScrollChange(e, 'y');
+            if (!this._disabled)
+                this.afterScrollChange(e, 'y');
         },
 
         afterScrollChange: function (e, axis) {
@@ -238,7 +274,7 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
              * @ignore
              */
             autoHide: {
-                value: false
+                value: S.UA.ios
             },
             /**
              * second of hide delay for scrollbar if allow autoHide
