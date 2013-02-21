@@ -130,10 +130,10 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
         // sencha solve this problem, but i do not know how!
         // hack!
         if (S.UA.android && duration > 50) {
-           // duration -= 50;
+            // duration -= 50;
         }
 
-        // log(duration);
+        //alert('duration:' + duration);
         //log('distance:' + distance);
 
         var velocity = distance / duration;

@@ -155,7 +155,10 @@ KISSY.use("ua,node,dd/base,dd/droppable", function (S, UA, Node, DD, Droppable) 
                 waits(100);
 
                 runs(function () {
-                    jasmine.simulateForDrag(document, Gesture.end);
+                    jasmine.simulateForDrag(document, Gesture.end, {
+                        clientX: dropXy.left + 10 - DOM.scrollLeft(),
+                        clientY: dropXy.top + 10 - DOM.scrollTop()
+                    });
                 });
                 waits(100);
 
@@ -197,7 +200,10 @@ KISSY.use("ua,node,dd/base,dd/droppable", function (S, UA, Node, DD, Droppable) 
                 waits(100);
 
                 runs(function () {
-                    jasmine.simulateForDrag(document, Gesture.end);
+                    jasmine.simulateForDrag(document, Gesture.end, {
+                        clientX: dropXy.left + 150 - DOM.scrollLeft(),
+                        clientY: dropXy.top + 150 - DOM.scrollTop()
+                    });
                 });
 
                 waits(100);

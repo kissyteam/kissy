@@ -107,7 +107,10 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
             waits(300);
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: xy.left - 100 - scrollLeft,
+                    clientY: xy.top - 100 - scrollTop
+                });
             });
 
             waits(300);
@@ -160,7 +163,10 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
             waits(100);
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: xy.left + 100 - DOM.scrollLeft(),
+                    clientY: xy.top + 100 - DOM.scrollTop()
+                });
             });
 
             waits(100);
@@ -214,7 +220,10 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
             waits(300);
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: xy.left + 100 - DOM.scrollLeft(),
+                    clientY: xy.top + 100 - DOM.scrollTop()
+                });
             });
             waits(300);
             runs(function () {
@@ -272,7 +281,10 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
             waits(100);
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: xy.left + 100 - DOM.scrollLeft(),
+                    clientY: xy.top + 100 - DOM.scrollTop()
+                });
             });
 
             waits(100);

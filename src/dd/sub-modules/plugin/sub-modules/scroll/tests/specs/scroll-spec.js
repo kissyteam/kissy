@@ -67,7 +67,11 @@ KISSY.use("dom,ua,node,dd/base,dd/plugin/scroll", function (S, DOM, UA, Node, DD
 
             waits(300);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: containerOffset.left + 50 - DOM.scrollLeft(),
+                    clientY: containerOffset.top + dragContainer[0].offsetHeight - 10
+                        + 2 - DOM.scrollTop()
+                });
             });
 
             waits(300);

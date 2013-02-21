@@ -107,7 +107,10 @@ KISSY.use("ua,node,dd/base,dom,dd/plugin/proxy,dd/droppable", function (S, UA, N
 
             waits(100);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: c1.offset().left + 6 - DOM.scrollLeft(),
+                    clientY: c1.offset().top + 6 - DOM.scrollTop()
+                });
             });
 
             waits(100);
@@ -216,7 +219,10 @@ KISSY.use("ua,node,dd/base,dom,dd/plugin/proxy,dd/droppable", function (S, UA, N
 
             waits(100);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: c1.offset().left + 6 - DOM.scrollLeft(),
+                    clientY: c1.offset().top + 6 - DOM.scrollTop()
+                });
             });
 
             waits(100);

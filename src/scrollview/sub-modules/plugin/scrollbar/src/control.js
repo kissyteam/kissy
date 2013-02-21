@@ -238,7 +238,7 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
              * @ignore
              */
             autoHide: {
-                value: S.Features.isTouchSupported()
+                value: false
             },
             /**
              * second of hide delay for scrollbar if allow autoHide

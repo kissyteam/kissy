@@ -55,7 +55,10 @@ KISSY.use("ua,node,dd/base,dd/plugin/proxy", function (S, UA, Node, DD,Proxy) {
             });
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: dragXy.left + 15 - DOM.scrollLeft(),
+                    clientY: dragXy.top + 15 - DOM.scrollTop()
+                });
             });
 
 

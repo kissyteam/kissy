@@ -79,7 +79,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 82,
+                    clientY: 110
+                });
             });
             waits(200);
             runs(function () {

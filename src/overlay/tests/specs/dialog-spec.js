@@ -121,7 +121,11 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                         waits(100);
 
                         runs(function () {
-                            jasmine.simulateForDrag(document, Gesture.end);
+                            jasmine.simulateForDrag(document, Gesture.end, {
+
+                                clientX: xy[0] + 100,
+                                clientY: xy[1] + 100
+                            });
                         });
 
                         runs(function () {
@@ -173,7 +177,11 @@ KISSY.use("ua,node,overlay,dd/plugin/constrain,component/plugin/drag",
                     waits(100);
 
                     runs(function () {
-                        jasmine.simulateForDrag(document, Gesture.end);
+                        jasmine.simulateForDrag(document, Gesture.end, {
+
+                            clientX: xy[0] + DOM.viewportWidth(),
+                            clientY: xy[1] + DOM.viewportHeight()
+                        });
                     });
                     waits(100);
 

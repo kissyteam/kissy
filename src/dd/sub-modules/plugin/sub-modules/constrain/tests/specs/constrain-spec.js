@@ -69,7 +69,10 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 500,
+                    clientY: 500
+                });
             });
 
             waits(100);
@@ -120,7 +123,10 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 5500,
+                    clientY: 5500
+                });
             });
 
             waits(100);
@@ -171,7 +177,10 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 5500,
+                    clientY: 5500
+                });
             });
 
             waits(100);
@@ -220,7 +229,10 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 5500,
+                    clientY: 5500
+                });
             });
 
             waits(100);
@@ -271,7 +283,10 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
             waits(100);
 
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 5500,
+                    clientY: 5500
+                });
             });
 
             waits(100);

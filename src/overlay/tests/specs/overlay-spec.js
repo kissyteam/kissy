@@ -207,7 +207,10 @@ KISSY.use("u" +
                 waits(100);
 
                 runs(function () {
-                    jasmine.simulateForDrag(document, Gesture.end);
+                    jasmine.simulateForDrag(document, Gesture.end, {
+                        clientX: hxy.left - 100,
+                        clientY: hxy.top - 100
+                    });
                 });
 
                 waits(300);

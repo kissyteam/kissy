@@ -103,7 +103,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 82,
+                    clientY: 110
+                });
             });
             waits(200);
             runs(function () {
@@ -139,7 +142,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 218,
+                    clientY: 110
+                });
             });
             waits(200);
             runs(function () {
@@ -174,7 +180,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 102,
+                    clientY: 82
+                });
             });
             waits(200);
             runs(function () {
@@ -205,7 +214,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 102,
+                    clientY: 222
+                });
             });
             waits(200);
             runs(function () {
@@ -236,7 +248,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 82,
+                    clientY: 218
+                });
             });
             waits(200);
             runs(function () {
@@ -273,7 +288,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 122,
+                    clientY: 122
+                });
             });
             waits(200);
             runs(function () {
@@ -306,7 +324,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 218,
+                    clientY: 82
+                });
             });
             waits(200);
             runs(function () {
@@ -339,7 +360,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 218,
+                    clientY: 218
+                });
             });
             waits(200);
             runs(function () {
@@ -373,7 +397,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 82,
+                    clientY: 110
+                });
             });
             waits(200);
             runs(function () {
@@ -406,7 +433,10 @@ KISSY.use('resizable', function (S, Resizable) {
             });
             waits(200);
             runs(function () {
-                jasmine.simulateForDrag(document, Gesture.end);
+                jasmine.simulateForDrag(document, Gesture.end, {
+                    clientX: 82,
+                    clientY: 110
+                });
             });
             waits(200);
             runs(function () {
