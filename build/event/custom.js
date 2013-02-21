@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:01
+build time: Feb 21 21:28
 */
 /**
  * @ignore
@@ -33,11 +33,15 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
              * @ignore
              */
             fire: function (target, type, eventData) {
-                var self = target, ret = undefined;
+                var self = target,
+                    ret = undefined,
+                    targets = api.getTargets(self, 1),
+                    hasTargets = targets && targets.length;
 
                 eventData = eventData || {};
 
                 splitAndRun(type, function (type) {
+
                     var r2, customEvent,
                         typedGroups = _Utils.getTypedGroups(type),
                         _ks_groups = typedGroups[1];
@@ -49,20 +53,40 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                         eventData._ks_groups = _ks_groups;
                     }
 
-                    customEvent = ObservableCustomEvent.getCustomEvent(self, type) ||
+                    // default bubble true
+                    // if bubble false, it must has customEvent structure set already
+                    customEvent = ObservableCustomEvent.getCustomEvent(self, type);
+
+                    // optimize performance for empty event listener
+                    if (!customEvent && !hasTargets) {
+                        return;
+                    }
+
+                    if (customEvent) {
+
+                        if (!customEvent.hasObserver()) {
+
+                            if (customEvent.bubbles && !hasTargets || !customEvent.bubbles) {
+                                return;
+                            }
+
+                        }
+
+                    } else {
                         // in case no publish custom event but we need bubble
                         // because bubbles defaults to true!
-                        new ObservableCustomEvent({
-                            currentTarget: target,
+                        customEvent = new ObservableCustomEvent({
+                            currentTarget: self,
                             type: type
                         });
-
+                    }
 
                     r2 = customEvent.fire(eventData);
 
                     if (ret !== false) {
                         ret = r2;
                     }
+
                 });
 
                 return ret;
@@ -108,8 +132,10 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
             /**
              * @ignore
              */
-            getTargets: function (target) {
-                target[KS_BUBBLE_TARGETS] = target[KS_BUBBLE_TARGETS] || [];
+            getTargets: function (target, readOnly) {
+                if (!readOnly) {
+                    target[KS_BUBBLE_TARGETS] = target[KS_BUBBLE_TARGETS] || [];
+                }
                 return target[KS_BUBBLE_TARGETS];
             },
 
@@ -372,19 +398,16 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
          */
         fire: function (eventData) {
 
-            if (!this.hasObserver() && !this.bubbles) {
-                return;
-            }
-
             eventData = eventData || {};
 
             var self = this,
+                bubbles = self.bubbles,
+                currentTarget = self.currentTarget,
+                parents,
+                parentsLen,
                 type = self.type,
                 defaultFn = self.defaultFn,
                 i,
-                parents,
-                len,
-                currentTarget = self.currentTarget,
                 customEvent = eventData,
                 gRet, ret;
 
@@ -403,11 +426,13 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
                 gRet = ret;
             }
 
-            if (self.bubbles) {
-                parents = api.getTargets(currentTarget);
-                len = parents && parents.length || 0;
+            if (bubbles) {
 
-                for (i = 0; i < len && !customEvent.isPropagationStopped(); i++) {
+                parents = api.getTargets(currentTarget, 1);
+
+                parentsLen = parents && parents.length || 0;
+
+                for (i = 0; i < parentsLen && !customEvent.isPropagationStopped(); i++) {
 
                     ret = api.fire(parents[i], type, customEvent);
 
@@ -420,7 +445,8 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
             }
 
             if (defaultFn && !customEvent.isDefaultPrevented()) {
-                var lowestCustomEvent = ObservableCustomEvent.getCustomEvent(customEvent.target, customEvent.type);
+                var lowestCustomEvent = ObservableCustomEvent.getCustomEvent(customEvent.target,
+                    customEvent.type);
                 if ((!self.defaultTargetOnly && !lowestCustomEvent.defaultTargetOnly) ||
                     self == customEvent.target) {
                     defaultFn.call(self);
@@ -441,7 +467,8 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
             var observers = this.observers,
                 ret,
                 gRet,
-                len = observers.length, i;
+                len = observers.length,
+                i;
 
             for (i = 0; i < len && !event.isImmediatePropagationStopped(); i++) {
                 ret = observers[i].notify(event, this);

@@ -178,6 +178,7 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
                 self.fire('afterBindUI');
                 self.callPluginsMethod("bindUI");
 
+                UIBase.superclass.syncInternal.call(self);
                 self.sync();
 
                 self.setInternal("rendered", true);
@@ -197,8 +198,6 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
              */
 
             self.fire('beforeSyncUI');
-
-            UIBase.superclass.syncInternal.call(self);
             self.callMethodByHierarchy("syncUI", "__syncUI");
 
             /**

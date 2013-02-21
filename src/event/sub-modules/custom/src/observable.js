@@ -69,19 +69,16 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
          */
         fire: function (eventData) {
 
-            if (!this.hasObserver() && !this.bubbles) {
-                return;
-            }
-
             eventData = eventData || {};
 
             var self = this,
+                bubbles = self.bubbles,
+                currentTarget = self.currentTarget,
+                parents,
+                parentsLen,
                 type = self.type,
                 defaultFn = self.defaultFn,
                 i,
-                parents,
-                len,
-                currentTarget = self.currentTarget,
                 customEvent = eventData,
                 gRet, ret;
 
@@ -100,11 +97,13 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
                 gRet = ret;
             }
 
-            if (self.bubbles) {
-                parents = api.getTargets(currentTarget);
-                len = parents && parents.length || 0;
+            if (bubbles) {
 
-                for (i = 0; i < len && !customEvent.isPropagationStopped(); i++) {
+                parents = api.getTargets(currentTarget, 1);
+
+                parentsLen = parents && parents.length || 0;
+
+                for (i = 0; i < parentsLen && !customEvent.isPropagationStopped(); i++) {
 
                     ret = api.fire(parents[i], type, customEvent);
 
@@ -117,7 +116,8 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
             }
 
             if (defaultFn && !customEvent.isDefaultPrevented()) {
-                var lowestCustomEvent = ObservableCustomEvent.getCustomEvent(customEvent.target, customEvent.type);
+                var lowestCustomEvent = ObservableCustomEvent.getCustomEvent(customEvent.target,
+                    customEvent.type);
                 if ((!self.defaultTargetOnly && !lowestCustomEvent.defaultTargetOnly) ||
                     self == customEvent.target) {
                     defaultFn.call(self);
@@ -138,7 +138,8 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
             var observers = this.observers,
                 ret,
                 gRet,
-                len = observers.length, i;
+                len = observers.length,
+                i;
 
             for (i = 0; i < len && !event.isImmediatePropagationStopped(); i++) {
                 ret = observers[i].notify(event, this);

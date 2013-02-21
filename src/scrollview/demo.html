@@ -6,19 +6,19 @@
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
-    <title>KISSY Tabs Demo</title>
+    <title>KISSY Menu Demo</title>
     <link href="/kissy/src/css/src/dpl/base.css" rel="stylesheet"/>
-    <link href="../../src/menu/assets/dpl.css" rel="stylesheet"/>
+    <link href="/kissy/src/menu/assets/dpl.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
-    <h1>KISSY Tabs</h1>
+    <h1>KISSY ScrollView</h1>
 </div>
 <script src="/kissy/build/seed.js"></script>
 <script>
     KISSY.use("menu", function (S, Menu) {
         new Menu({
-            width: 200,
+            width: 250,
             render: '.container',
             listeners: {
                 "click": function (e) {
@@ -30,28 +30,16 @@
             },
             children: [
                 {
-                    content: "dpl index",
-                    href: 'demo/dpl/demo.html'
+                    content: "simple scrollview",
+                    href: 'sub-modules/base/demo/simple.html'
                 },
                 {
-                    content: "build by new",
-                    href: 'demo/dpl/simple.html'
+                    content: "simple scrollview with scrollbar",
+                    href: 'sub-modules/plugin/scrollbar/demo/simple.html'
                 },
                 {
-                    content: "bottom tabs",
-                    href: 'demo/dpl/bottom.html'
-                },
-                {
-                    content: "build by markup",
-                    href: 'demo/dpl/decorate.html'
-                },
-                {
-                    content: "add and remove",
-                    href: 'demo/dpl/dynamic.html'
-                },
-                {
-                    content: "config selectedCls",
-                    href: 'demo/dpl/selectedCls.html'
+                    content: "beautify scrollview with scrollbar",
+                    href: 'sub-modules/plugin/scrollbar/demo/single.html'
                 }
             ]
         }).render();
