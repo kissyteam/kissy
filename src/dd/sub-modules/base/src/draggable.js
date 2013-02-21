@@ -11,6 +11,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
         DRAG_START_EVENT = Event.Gesture.start,
         ie = UA['ie'],
         Features = S.Features,
+        isTouchSupported = Features.isTouchSupported(),
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
         doc = S.Env.host.document;
@@ -235,8 +236,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                 ret = 0;
             each(handlers, function (handler) {
                 //子区域内点击也可以启动
-                if (handler.contains(t) ||
-                    handler[0] == t) {
+                if (handler[0] == t || handler.contains(t)) {
                     ret = 1;
                     self.setInternal('activeHandler', handler);
                     return false;
@@ -281,7 +281,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             // in touch device
             // prevent touchdown
             // will prevent text selection and link click
-            if (!Features.isTouchSupported()) {
+            if (!isTouchSupported) {
                 ev.preventDefault();
             }
 
@@ -334,15 +334,19 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
 
             if (!self.get('dragging')) {
                 var startMousePos = self.get('startMousePos'),
+                    start = 0,
                     clickPixelThresh = self.get('clickPixelThresh');
                 // 鼠标经过了一定距离，立即开始
                 if (Math.abs(pageX - startMousePos.left) >= clickPixelThresh ||
                     Math.abs(pageY - startMousePos.top) >= clickPixelThresh) {
                     //S.log('start drag by pixel : ' + l1 + ' : ' + l2);
                     self._start();
+                    start = 1;
                 }
-                // 开始后，下轮 move 开始触发 drag 事件
-                return;
+                // 2013-02-12 更快速响应 touch，本轮就触发 drag 事件
+                if (!start) {
+                    return;
+                }
             }
 
             var diff = self.get('deltaPos'),

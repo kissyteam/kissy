@@ -244,7 +244,10 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
             // textarea enter cause el to scroll
             // bug: left top scroll does not fire scroll event, because scrollTop is 0!
             el.on('scroll', this._onElScroll, this);
-            $(DOM.getWindow(el[0].document)).on('resize orientationchange', this.sync, this);
+            $(DOM.getWindow(el[0].document))
+                .on('resize orientationchange', S.UA.ie < 9 ?
+                    S.buffer(this.sync, 30) :
+                    this.sync, this);
         },
 
         _onElScroll: function () {
@@ -367,7 +370,7 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
         },
 
         _onGestureStart: function () {
-            this.get('contentEl').stop();
+            this._stopMomentumAnim();
         },
 
         syncUI: function () {
@@ -377,7 +380,7 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
                 scrollHeight = Math.max(domEl.scrollHeight, domContentEl.offsetHeight),
             // contentEl[0].scrollWidth is same with el.innerWidth()!
                 scrollWidth = Math.max(domEl.scrollWidth, domContentEl.offsetWidth) ,
-                clientHeight =domEl.clientHeight,
+                clientHeight = domEl.clientHeight,
                 clientWidth = domEl.clientWidth;
 
             this.scrollHeight = scrollHeight;
@@ -471,15 +474,19 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
             onDragEndAxis(this, e, 'top');
         },
 
+        _stopMomentumAnim: function () {
+            this.get('contentEl').stop();
+        },
+
         destructor: function () {
             if (this.dd) {
                 this.dd.destroy();
             }
-            this.get('contentEl').stop();
+            this._stopMomentumAnim();
         },
 
         scrollTo: function (left, top) {
-            this.get('contentEl').stop();
+            this._stopMomentumAnim();
             var maxScroll = this.maxScroll,
                 minScroll = this.minScroll;
             if (left != undefined) {
