@@ -17,11 +17,8 @@ KISSY.use("ua,node,dd/base,dd/droppable", function (S, UA, Node, DD, Droppable) 
             var drag, drop, dragNode, dragXy, dropNode, dropXy;
             drag = new Draggable({
                 mode: 'point',
+                move:1,
                 node: '#drag_mode'
-            });
-
-            drag.on("drag", function (ev) {
-                drag.get("dragNode").offset(ev);
             });
 
             drop = new Droppable({

@@ -30,14 +30,11 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
                 dragHeader = Node.one("#dragHeader_before");
             var action = new Draggable({
                     node: drag,
+                    move:1,
                     handlers: [dragHeader]
                 }),
                 scrollLeft = DOM.scrollLeft(),
                 scrollTop = DOM.scrollTop();
-
-            action.on("drag", function (off) {
-                drag.offset(off);
-            });
 
             waits(300);
             runs(function () {
@@ -65,14 +62,11 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
                 scrollTop = DOM.scrollTop();
             var action = new Draggable({
                 node: drag,
+                move:1,
                 handlers: [dragHeader]
             });
 
             var xy = dragHeader.offset();
-
-            action.on("drag", function (off) {
-                drag.offset(off);
-            });
 
             runs(function () {
 
@@ -133,14 +127,11 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
 
             var action = new Draggable({
                 node: drag,
+                move:1,
                 handlers: [dragHeader]
             });
 
             var xy = dragHeader.offset();
-
-            action.on("drag", function (off) {
-                drag.offset(off);
-            });
 
             runs(function () {
                 jasmine.simulateForDrag(dragHeader[0], Gesture.start, {
@@ -185,14 +176,11 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
 
             var action = new Draggable({
                 node: drag,
+                move:1,
                 handlers: [dragHeader]
             });
 
             var xy = dragHeader.offset();
-
-            action.on("drag", function (off) {
-                drag.offset(off);
-            });
 
             runs(function () {
                 jasmine.simulateForDrag(dragHeader[0], Gesture.start, {
@@ -251,14 +239,11 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
             var action = new Draggable({
                 node: drag,
                 disabled: true,
+                move:1,
                 handlers: [dragHeader]
             });
 
             var xy = dragHeader.offset();
-
-            action.on("drag", function (off) {
-                drag.offset(off);
-            });
 
             runs(function () {
                 jasmine.simulateForDrag(dragHeader[0], Gesture.start, {

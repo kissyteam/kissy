@@ -128,14 +128,17 @@ KISSY.use('dd', function (S, DD) {
         };
 
         var canvasDD = new DD.Draggable({
-            node: canvasWrap,
-            move: 0
+            node: canvasWrap
         });
 
         canvasDD.on("dragstart", function () {
             S.log('dragstart');
             currentMouse = {};
-            currentMouse.start = canvasDD.get('deltaPos');
+            var startMousePos=canvasDD.get('startMousePos');
+            currentMouse.start = {
+                left: startMousePos.left - nxy.left,
+                top: startMousePos.top - nxy.top
+            };
             mouse.push(currentMouse);
         });
 

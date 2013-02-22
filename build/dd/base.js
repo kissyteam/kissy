@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 22 14:25
+build time: Feb 22 14:46
 */
 /**
  * @ignore
@@ -951,6 +951,8 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              * @param {KISSY.Event.CustomEventObject} e
              * @param e.drag current draggable object
              */
+
+            self._allowMove=self.get('move');
         },
 
         '_onSetNode': function (n) {
@@ -1048,7 +1050,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                 top: my
             });
 
-            if (self.get('move')) {
+            if (self._allowMove) {
 
                 var node = self.get('node'),
                     nxy = node.offset();
@@ -1118,7 +1120,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                 drag: self
             };
 
-            var move = self.get('move');
+            var move = self._allowMove;
 
             if (move) {
                 var diff = self.get('deltaPos'),
@@ -1509,7 +1511,9 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             },
 
             /**
-             * node position ar drag start
+             * node position ar drag start.
+             * only valid when move is set to true.
+             *
              * for example:
              *      @example
              *      {
@@ -1529,7 +1533,8 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             },
 
             /**
-             * The offset of the mouse position to the element's position
+             * The offset of the mouse position to the element's position.
+             * only valid when move is set to true.
              * @property deltaPos
              * @type {Object}
              * @readonly
@@ -1542,7 +1547,9 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             },
 
             /**
-             * The xy that the node will be set to. Changing this will alter the position as it's dragged.
+             * The xy that the node will be set to.
+             * Changing this will alter the position as it's dragged.
+             * only valid when move is set to true.
              * @property actualPos
              * @type {Object}
              * @readonly

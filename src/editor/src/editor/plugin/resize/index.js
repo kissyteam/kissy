@@ -46,6 +46,7 @@ this.config=config||{};
                 }),
                 height = 0,
                 width = 0,
+                startNodePos,
                 heightEl = editor.get("el"),
                 widthEl = editor.get("el");
 
@@ -53,12 +54,13 @@ this.config=config||{};
                 height = heightEl.height();
                 width = widthEl.width();
                 editor.fire("resizeStart");
+                startNodePos=resizer.offset();
             });
 
             d.on("drag", function (ev) {
                 var self = this,
-                    diffX = ev.left - self.get('startNodePos').left,
-                    diffY = ev.top - self.get('startNodePos').top;
+                    diffX = ev.left - startNodePos.left,
+                    diffY = ev.top - startNodePos.top;
                 if (S.inArray("y", direction)) {
                     editor.set("height", height + diffY);
                 }

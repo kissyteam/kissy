@@ -233,8 +233,7 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
                 var dd = this.dd = new DD.Draggable({
                     node: this.get('el'),
                     // allow nested scrollview
-                    halt: true,
-                    move: 0
+                    halt: true
                 });
                 dd.on('dragstart', this._onDragStart, this)
                     .on('drag', this._onDrag, this)

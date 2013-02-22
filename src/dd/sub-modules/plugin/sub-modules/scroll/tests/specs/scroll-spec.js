@@ -16,7 +16,8 @@ KISSY.use("dom,ua,node,dd/base,dd/plugin/scroll", function (S, DOM, UA, Node, DD
         dragNode = $("#drag-scroll");
         dragContainer = $("#drag_scroll_container");
         drag = new Draggable({
-            node: dragNode
+            node: dragNode,
+            move:1
         });
 
         drag.plug(new Scroll({
@@ -24,9 +25,7 @@ KISSY.use("dom,ua,node,dd/base,dd/plugin/scroll", function (S, DOM, UA, Node, DD
             diff: [10, 10]
         }));
 
-        drag.on("drag", function (ev) {
-            dragNode.offset(ev);
-        });
+
         dragOffset = dragNode.offset();
         containerOffset = dragContainer.offset();
 

@@ -32,8 +32,7 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
                 var dd = self.dd = new DD.Draggable({
                     node: self.get('dragEl'),
                     // allow nested scrollview
-                    halt: true,
-                    move: 0
+                    halt: true
                 });
                 dd.on('drag', xAxis ? self._onDragX : self._onDragY, self)
                     .on('dragstart', self._onDragStart, self);

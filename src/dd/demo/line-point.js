@@ -99,15 +99,18 @@ KISSY.use('dd', function (S, DD) {
         };
 
         var canvasDD = new DD.Draggable({
-            node: canvasWrap,
-            move: 0
+            node: canvasWrap
         });
 
         canvasDD.on("dragstart", function () {
             S.log('dragstart');
             if (mouse.length == 0) {
                 mouse[0] = {};
-                mouse[0].start = canvasDD.get('deltaPos');
+                var startMousePos=canvasDD.get('startMousePos');
+                mouse[0].start = {
+                    left: startMousePos.left - nxy.left,
+                    top: startMousePos.top - nxy.top
+                };
             }
         });
 
