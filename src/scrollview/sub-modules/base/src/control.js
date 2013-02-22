@@ -24,10 +24,10 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
         self._swipe[axis].scroll = scroll;
     }
 
-    function onDragAxis(self, e, axis, startMousePos) {
+    function onDragAxis(self, e, axis, dragStartMousePos) {
         var pageXY = axis == 'left' ? 'pageX' : 'pageY';
         if (self._allowScroll[axis]) {
-            var diff = e[pageXY] - startMousePos[axis],
+            var diff = e[pageXY] - dragStartMousePos[axis],
             // touchend == last touchmove
                 eqWithLastPoint,
                 direction;
@@ -455,6 +455,10 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
         _onDragStart: function (e) {
             // S.log('dragstart: ' + e.timeStamp);
             this._initStates();
+            this._dragStartMousePos = {
+                left: e.pageX,
+                top: e.pageY
+            };
             onDragStart(this, e, 'left');
             onDragStart(this, e, 'top');
             this.fire('scrollStart');
@@ -462,9 +466,9 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
 
         _onDrag: function (e) {
             // S.log('drag: ' + e.timeStamp);
-            var startMousePos = this.dd.get('startMousePos');
-            onDragAxis(this, e, 'left', startMousePos);
-            onDragAxis(this, e, 'top', startMousePos);
+            var dragStartMousePos = this._dragStartMousePos;
+            onDragAxis(this, e, 'left', dragStartMousePos);
+            onDragAxis(this, e, 'top', dragStartMousePos);
             // touchmove frequency is slow on android
         },
 

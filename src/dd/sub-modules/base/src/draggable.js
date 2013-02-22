@@ -461,8 +461,8 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             DDM._start();
             self.fire('dragstart', {
                 drag: self,
-                left: ev.pageX,
-                top: ev.pageY
+                pageX: ev.pageX,
+                pageY: ev.pageY
             });
         },
 

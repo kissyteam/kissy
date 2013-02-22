@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 22 13:54
+build time: Feb 22 14:03
 */
 /**
  * @ignore
@@ -1211,8 +1211,8 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             DDM._start();
             self.fire('dragstart', {
                 drag: self,
-                left: ev.pageX,
-                top: ev.pageY
+                pageX: ev.pageX,
+                pageY: ev.pageY
             });
         },
 
