@@ -8,6 +8,8 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
 
     var $ = S.all;
 
+    var isTouchSupported = S.Features.isTouchSupported();
+
     var OUT_OF_BOUND_FACTOR = 0.5;
 
     var SWIPE_SAMPLE_INTERVAL = 300;
@@ -522,7 +524,7 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
              * @ignore
              */
             allowDrag: {
-                value: S.Features.isTouchSupported()
+                value: isTouchSupported
             },
             bounceDuration: {
                 value: 0.4
@@ -532,7 +534,7 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
             },
             focusable: {
                 // need process keydown
-                value: !S.Features.isTouchSupported()
+                value: !isTouchSupported
             },
             allowTextSelection: {
                 value: true

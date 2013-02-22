@@ -9,7 +9,6 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         win = S.Env.host,
         doc = win.document,
         ie6 = UA['ie'] === 6,
-
     // prevent collision with click , only start when move
         PIXEL_THRESH = 3,
     // or start when mousedown for 1 second
@@ -17,13 +16,11 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         MOVE_DELAY = 30,
         SHIM_Z_INDEX = 999999;
 
-
     var TARGET = 'target',
         Gesture = Event.Gesture,
         CURRENT_TARGET = 'currentTarget',
         DRAG_MOVE_EVENT = Gesture.move,
         DRAG_END_EVENT = Gesture.end;
-
 
     /**
      * @class KISSY.DD.DDM
@@ -75,7 +72,9 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         /**
          * @ignore
          */
-        bufferTime: { value: BUFFER_TIME },
+        bufferTime: {
+            value: BUFFER_TIME
+        },
 
         /**
          * currently active draggable object
@@ -343,17 +342,21 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
     function _activeDrops(self) {
         var drops = self.get('drops');
         self.setInternal('validDrops', []);
-        S.each(drops, function (d) {
-            d._active();
-        });
+        if (drops.length) {
+            S.each(drops, function (d) {
+                d._active();
+            });
+        }
     }
 
     function _deActiveDrops(self) {
         var drops = self.get('drops');
         self.setInternal('validDrops', []);
-        S.each(drops, function (d) {
-            d._deActive();
-        });
+        if (drops.length) {
+            S.each(drops, function (d) {
+                d._deActive();
+            });
+        }
     }
 
     /*
@@ -381,9 +384,10 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
          */
         _unRegDrop: function (d) {
             var self = this,
-                index = S.indexOf(d, self.get('drops'));
+                drops = self.get('drops'),
+                index = S.indexOf(d, drops);
             if (index != -1) {
-                self.get('drops').splice(index, 1);
+                drops.splice(index, 1);
             }
         },
 
@@ -397,7 +401,6 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
             // 事件先要注册好，防止点击，导致 mouseup 时还没注册事件
             self.__activeToDrag = drag;
             registerEvent(self);
-
         },
 
         /**
@@ -417,8 +420,10 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
             if (drag.get('shim')) {
                 activeShim(self);
             }
-            cacheWH(drag.get('node'));
             _activeDrops(self);
+            if (self.get('validDrops').length) {
+                cacheWH(drag.get('node'));
+            }
         },
 
         /**

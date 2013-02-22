@@ -384,7 +384,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                 def = 0;
             }
 
-            if (def && self.get('move')) {
+            if (def && move) {
                 // 取 'node' , 改 node 可能是代理哦
                 self.get('node').offset(self.get('actualPos'));
             }
@@ -561,7 +561,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              * @ignore
              */
             shim: {
-                value: true
+                value: !isTouchSupported
             },
 
             /**
