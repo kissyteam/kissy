@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 21 18:37
+build time: Feb 22 13:54
 */
 /**
  * @ignore
@@ -200,7 +200,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
     function notifyDropsMove(self, ev, activeDrag) {
         var drops = self.get('validDrops');
 
-        if (S.isEmptyObject(drops)) {
+        if (!drops.length) {
             return;
         }
 
@@ -1035,22 +1035,25 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                 ev.preventDefault();
             }
 
-            var node = self.get('node'),
-                mx = ev.pageX,
-                my = ev.pageY,
-                nxy = node.offset();
+            var mx = ev.pageX,
+                my = ev.pageY;
 
             self.setInternal('startMousePos', self.mousePos = {
                 left: mx,
                 top: my
             });
 
-            self.setInternal('startNodePos', nxy);
+            if (self.get('move')) {
 
-            self.setInternal('deltaPos', {
-                left: mx - nxy.left,
-                top: my - nxy.top
-            });
+                var node = self.get('node'),
+                    nxy = node.offset();
+                self.setInternal('startNodePos', nxy);
+                self.setInternal('deltaPos', {
+                    left: mx - nxy.left,
+                    top: my - nxy.top
+                });
+
+            }
 
             DDM._regToDrag(self);
 
@@ -1061,7 +1064,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                 self._bufferTimer = setTimeout(function () {
                     // 事件到了，仍然是 mousedown 触发！
                     //S.log('drag start by timeout');
-                    self._start();
+                    self._start(ev);
                 }, bufferTime * 1000);
             }
 
@@ -1090,19 +1093,14 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                 if (Math.abs(pageX - startMousePos.left) >= clickPixelThresh ||
                     Math.abs(pageY - startMousePos.top) >= clickPixelThresh) {
                     //S.log('start drag by pixel : ' + l1 + ' : ' + l2);
-                    self._start();
+                    self._start(ev);
                     start = 1;
                 }
-                // 开始后，下轮 move 开始触发 drag 事件
                 // 2013-02-12 更快速响应 touch，本轮就触发 drag 事件
                 if (!start) {
                     return;
                 }
             }
-
-            var diff = self.get('deltaPos'),
-                left = pageX - diff.left,
-                top = pageY - diff.top;
 
             self.mousePos = {
                 left: pageX,
@@ -1110,19 +1108,25 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             };
 
             ret = {
-                left: left,
-                top: top,
                 pageX: pageX,
                 pageY: pageY,
                 drag: self
             };
 
-            self.setInternal('actualPos', {
-                left: left,
-                top: top
-            });
+            var move = self.get('move');
 
-            self.fire('dragalign', ret);
+            if (move) {
+                var diff = self.get('deltaPos'),
+                    left = pageX - diff.left,
+                    top = pageY - diff.top;
+                ret.left = left;
+                ret.top = top;
+                self.setInternal('actualPos', {
+                    left: left,
+                    top: top
+                });
+                self.fire('dragalign', ret);
+            }
 
             var def = 1;
 
@@ -1196,13 +1200,19 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             this.fire('dragover', e);
         },
 
-        _start: function () {
+        _start: function (ev) {
             var self = this;
             self._clearBufferTimer();
             self.setInternal('dragging', 1);
+            self.setInternal('dragStartMousePos', {
+                left: ev.pageX,
+                top: ev.pageY
+            });
             DDM._start();
             self.fire('dragstart', {
-                drag: self
+                drag: self,
+                left: ev.pageX,
+                top: ev.pageY
             });
         },
 
@@ -1453,7 +1463,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             },
 
             /**
-             * mouse position at drag start
+             * mouse position at mousedown
              * for example:
              *      @example
              *      {
@@ -1469,6 +1479,27 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              * @ignore
              */
             startMousePos: {
+
+            },
+
+
+            /**
+             * mouse position at drag start
+             * for example:
+             *      @example
+             *      {
+             *          left: 100,
+             *          top: 200
+             *      }
+             *
+             * @property dragStartMousePos
+             * @type {Object}
+             * @readonly
+             */
+            /**
+             * @ignore
+             */
+            dragStartMousePos: {
 
             },
 

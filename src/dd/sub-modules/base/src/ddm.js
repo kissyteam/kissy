@@ -173,7 +173,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
     function notifyDropsMove(self, ev, activeDrag) {
         var drops = self.get('validDrops');
 
-        if (S.isEmptyObject(drops)) {
+        if (!drops.length) {
             return;
         }
 
