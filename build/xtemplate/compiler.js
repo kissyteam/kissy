@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 20 17:47
+build time: Feb 25 22:38
 */
 /**
  * Ast node class for xtemplate
@@ -605,7 +605,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 source.push('}');
                 source.push('if('+propertyValueHolder+'===false) {');
                 source.push('S[option.silent?"log":"error"]("can not find command: \'' +
-                    string + '\' at line ' + tplNode.path.lineNumber + '");');
+                    string + '\' at line ' + tplNode.path.lineNumber + '","warn");');
                 source.push('}');
             }
             return source;

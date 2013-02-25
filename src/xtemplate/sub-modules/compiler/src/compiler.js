@@ -405,7 +405,7 @@ KISSY.add("xtemplate/compiler", function (S, parser, ast, XTemplateRuntime) {
                 source.push('}');
                 source.push('if('+propertyValueHolder+'===false) {');
                 source.push('S[option.silent?"log":"error"]("can not find command: \'' +
-                    string + '\' at line ' + tplNode.path.lineNumber + '");');
+                    string + '\' at line ' + tplNode.path.lineNumber + '","warn");');
                 source.push('}');
             }
             return source;
