@@ -92,22 +92,18 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
                     node: el,
                     cursor: null
                 });
-            (function (hc, dd,el) {
-                var startNodePos;
-                dd.on('dragstart',function(){
-                    startNodePos=el.offset();
-                });
+            (function (hc, dd) {
+                var startEdgePos;
                 dd.on("drag", function (ev) {
-                    var node = self.get('node'),
-                        dd = ev.target,
+                    var dd = ev.target,
                         ow = self._width,
                         oh = self._height,
                         minW = self.get("minWidth"),
                         maxW = self.get("maxWidth"),
                         minH = self.get("minHeight"),
                         maxH = self.get("maxHeight"),
-                        diffT = ev.top - startNodePos.top,
-                        diffL = ev.left - startNodePos.left,
+                        diffT = ev.pageY - startEdgePos.top,
+                        diffL = ev.pageX - startEdgePos.left,
                         ot = self._top,
                         ol = self._left,
                         pos = hcNormal[hc](minW, maxW, minH, maxH, ot, ol, ow, oh, diffT, diffL, preserveRatio);
@@ -122,6 +118,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
                     });
                 });
                 dd.on("dragstart", function () {
+                    startEdgePos = dd.get('startMousePos');
                     preserveRatio = self.get('preserveRatio');
                     self._width = node.width();
                     self._top = parseInt(node.css("top"));
@@ -138,7 +135,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
                         dd: dd
                     });
                 });
-            })(hc, dd,el);
+            })(hc, dd);
         }
     }
 
