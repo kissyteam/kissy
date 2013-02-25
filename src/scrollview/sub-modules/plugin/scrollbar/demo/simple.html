@@ -20,13 +20,14 @@
             border: 1px solid green;
             margin: 0;
             padding: 10px;
-            width:600px;
+            width: 600px;
         }
 
         h1 {
             text-align: center;
             /*margin-bottom: 20px;*/
         }
+
         #native {
             width: 320px;
             height: 219px;
@@ -44,7 +45,8 @@
 <div id="native"></div>
 
 <button id="destroy">destroy</button>
-
+<button id="disable">disable</button>
+<button id="enable">enable</button>
 
 <script src="../../../base/src/control.js"></script>
 <script src="../../../base/src/render.js"></script>
@@ -60,7 +62,7 @@
         S.ready(function () {
             var content = '';
             for (var i = 0; i < 23; i++) {
-                content += '<p class="row">' +i+': '+ new Array(10).join(' long ') + '</p>';
+                content += '<p class="row">' + i + ': ' + new Array(10).join(' long ') + '</p>';
             }
 
             S.all('#native').html(content);
@@ -69,18 +71,25 @@
                 width: 320,
                 render: 'body',
                 height: 219,
-                allowDrag:true,
+                allowDrag: true,
                 plugins: [new ScrollbarPlugin({
-                    autoHideX:true,
-                    autoHideY:false
+                    autoHideX: true,
+                    autoHideY: false
                 })],
                 content: content
             }).render();
 
-
             S.all('#destroy').on('click', function () {
                 scrollview.destroy();
                 S.all('#destroy').attr('disabled', true);
+            });
+
+            S.all('#disable').on('click', function () {
+                scrollview.set('disabled', true);
+            });
+
+            S.all('#enable').on('click', function () {
+                scrollview.set('disabled', false);
             });
 
             S.all('<div style="height:1000px"></div>').appendTo('body');

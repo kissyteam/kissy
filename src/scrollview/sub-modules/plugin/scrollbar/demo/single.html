@@ -123,6 +123,9 @@
                 plugins: [new ScrollbarPlugin({})]
             }).render();
 
+            S.all(window).on('resize orientationchange', S.UA.ie < 9 ?
+                            S.buffer(scrollview.sync, 30) :
+                    scrollview.sync, scrollview);
         });
     });
 </script>

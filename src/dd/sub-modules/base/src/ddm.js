@@ -455,7 +455,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
             unRegisterEvent(self);
             // 预备役清掉 , click 情况下 mousedown->mouseup 极快过渡
             if (__activeToDrag) {
-                __activeToDrag._end();
+                __activeToDrag._end(e);
                 self.__activeToDrag = 0;
             }
             if (self._shim) {
@@ -464,10 +464,10 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
             if (!activeDrag) {
                 return;
             }
-            activeDrag._end();
+            activeDrag._end(e);
             _deActiveDrops(self);
             if (activeDrop) {
-                activeDrop._end();
+                activeDrop._end(e);
             }
             self.setInternal('activeDrag', null);
             self.setInternal('activeDrop', null);

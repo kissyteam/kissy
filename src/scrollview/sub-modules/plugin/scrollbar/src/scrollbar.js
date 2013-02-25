@@ -10,24 +10,25 @@ KISSY.add('scrollview/plugin/scrollbar', function (S, Base, ScrollBar) {
 
     S.extend(ScrollBarPlugin, Base, {
 
-        pluginSyncUI: function (scrollView) {
+        pluginId: 'scrollview/plugin/scrollbar',
+
+        pluginSyncUI: function (scrollview) {
             var minLength = this.get('minLength');
             var autoHideX = this.get('autoHideX');
             var autoHideY = this.get('autoHideY');
             var my;
             var cfg = {
-                scrollView: scrollView,
-                // render: scrollView.get('el') => ie7 bug
-                elBefore: scrollView.get('contentEl')
+                scrollview: scrollview,
+                // render: scrollview.get('el') => ie7 bug
+                elBefore: scrollview.get('contentEl')
             };
             if (minLength !== undefined) {
                 cfg.minLength = minLength;
             }
 
             if (this.scrollBarX) {
-                this.scrollBarX.set('disabled', false);
                 this.scrollBarX.sync();
-            } else if (scrollView.isAxisEnabled('x')) {
+            } else if (scrollview.isAxisEnabled('x')) {
                 my = {
                     axis: 'x'
                 };
@@ -39,7 +40,7 @@ KISSY.add('scrollview/plugin/scrollbar', function (S, Base, ScrollBar) {
 
             if (this.scrollBarY) {
                 this.scrollBarY.sync();
-            } else if (scrollView.isAxisEnabled('y')) {
+            } else if (scrollview.isAxisEnabled('y')) {
                 my = {
                     axis: 'y'
                 };

@@ -96,7 +96,7 @@ KISSY.add('scrollview/plugin/scrollbar/render', function (S, Component) {
 
     return Component.Render.extend(methods, {
         ATTRS: {
-            scrollView: {},
+            scrollview: {},
             dragWidth: {},
             dragHeight: {},
             dragLeft: {},

@@ -197,7 +197,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              * @param e.drag current draggable object
              */
 
-            self._allowMove=self.get('move');
+            self._allowMove = self.get('move');
         },
 
         '_onSetNode': function (n) {
@@ -400,7 +400,10 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             DDM._end();
         },
 
-        _end: function () {
+        _end: function (e) {
+
+            e = e || {};
+
             var self = this,
                 activeDrop;
 
@@ -425,7 +428,9 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                 }
                 self.setInternal('dragging', 0);
                 self.fire('dragend', {
-                    drag: self
+                    drag: self,
+                    pageX: e.pageX,
+                    pageY: e.pageY
                 });
             }
         },

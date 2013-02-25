@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 22 14:46
+build time: Feb 25 21:59
 */
 /**
  * @ignore
@@ -482,7 +482,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
             unRegisterEvent(self);
             // 预备役清掉 , click 情况下 mousedown->mouseup 极快过渡
             if (__activeToDrag) {
-                __activeToDrag._end();
+                __activeToDrag._end(e);
                 self.__activeToDrag = 0;
             }
             if (self._shim) {
@@ -491,10 +491,10 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
             if (!activeDrag) {
                 return;
             }
-            activeDrag._end();
+            activeDrag._end(e);
             _deActiveDrops(self);
             if (activeDrop) {
-                activeDrop._end();
+                activeDrop._end(e);
             }
             self.setInternal('activeDrag', null);
             self.setInternal('activeDrop', null);
@@ -952,7 +952,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              * @param e.drag current draggable object
              */
 
-            self._allowMove=self.get('move');
+            self._allowMove = self.get('move');
         },
 
         '_onSetNode': function (n) {
@@ -1155,7 +1155,10 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             DDM._end();
         },
 
-        _end: function () {
+        _end: function (e) {
+
+            e = e || {};
+
             var self = this,
                 activeDrop;
 
@@ -1180,7 +1183,9 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                 }
                 self.setInternal('dragging', 0);
                 self.fire('dragend', {
-                    drag: self
+                    drag: self,
+                    pageX: e.pageX,
+                    pageY: e.pageY
                 });
             }
         },
