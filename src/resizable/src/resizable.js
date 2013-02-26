@@ -90,7 +90,8 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
                     .prependTo(node, undefined),
                 dd = dds[hc] = new Draggable({
                     node: el,
-                    cursor: null
+                    cursor: null,
+                    groups:false
                 });
             (function (hc, dd) {
                 var startEdgePos;

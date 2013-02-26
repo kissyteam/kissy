@@ -17,7 +17,8 @@ KISSY.use("dom,ua,node,dd/base,dd/plugin/scroll", function (S, DOM, UA, Node, DD
         dragContainer = $("#drag_scroll_container");
         drag = new Draggable({
             node: dragNode,
-            move:1
+            move:1,
+            groups:false
         });
 
         drag.plug(new Scroll({

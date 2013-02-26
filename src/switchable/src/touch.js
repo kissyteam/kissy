@@ -126,7 +126,7 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                             } else if (activeIndex == 0) {
                                 Switchable.adjustPosition
                                     .call(self, self.panels,
-                                    threshold, prop, viewSize);
+                                        threshold, prop, viewSize);
                             }
                         }
 
@@ -182,7 +182,8 @@ KISSY.add("switchable/touch", function (S, DOM, Event, Switchable, DD) {
                 }
                 if (DD) {
                     var contentDD = new DD.Draggable({
-                        node: content
+                        node: content,
+                        groups: false
                     });
                     contentDD.on("dragstart", function () {
                         start();

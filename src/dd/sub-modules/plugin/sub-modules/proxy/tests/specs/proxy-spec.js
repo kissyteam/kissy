@@ -14,7 +14,8 @@ KISSY.use("ua,node,dd/base,dd/plugin/proxy", function (S, UA, Node, DD,Proxy) {
 
         drag = new Draggable({
             node: "#drag_proxy",
-            move:1
+            move:1,
+            groups:false
         });
 
         dragNode = drag.get("dragNode");

@@ -42,7 +42,8 @@ this.config=config||{};
             });
 
             var d = new Draggable({
-                    node:resizer
+                    node:resizer,
+                    groups:false
                 }),
                 height = 0,
                 width = 0,

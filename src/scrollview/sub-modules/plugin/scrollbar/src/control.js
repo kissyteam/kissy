@@ -28,6 +28,7 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
                 self.get('trackEl').on(Event.Gesture.start, self._onTrackElMouseDown, self);
                 dd = self.dd = new DD.Draggable({
                     node: self.get('dragEl'),
+                    groups: false,
                     // allow nested scrollview
                     halt: true
                 });

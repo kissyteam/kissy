@@ -37,6 +37,12 @@
             position: relative;
             white-space: nowrap;
         }
+
+        .box {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+        }
     </style>
 </head>
 <body>
@@ -58,7 +64,7 @@
 
 <script>
 
-    KISSY.use('scrollview/base,scrollview/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
+    KISSY.use('scrollview/base,scrollview/plugin/scrollbar,dd/droppable', function (S, ScrollView, ScrollbarPlugin,Droppable) {
         S.ready(function () {
             var content = '';
             for (var i = 0; i < 23; i++) {
@@ -92,7 +98,15 @@
                 scrollview.set('disabled', false);
             });
 
+//            for(i=0;i<100;i++){
+//                var b= S.all('<div class="box"></div>').appendTo('body');
+//                new Droppable({
+//                    node:b
+//                });
+//            }
+
             S.all('<div style="height:1000px"></div>').appendTo('body');
+
         });
     });
 </script>

@@ -702,7 +702,9 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             },
 
             /**
-             * groups this draggable object belongs to
+             * groups this draggable object belongs to, can interact with droppable.
+             * if this draggable does not want to interact with droppable for performance,
+             * can set this to false.
              * for example:
              *      @example
              *      {
@@ -716,7 +718,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              * @ignore
              */
             groups: {
-                value: {}
+                value: true
             },
 
             /**

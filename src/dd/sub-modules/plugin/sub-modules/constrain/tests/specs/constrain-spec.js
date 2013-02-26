@@ -25,7 +25,8 @@ KISSY.use("dd/base,dd/plugin/constrain", function (S, DD, Constrain) {
 
         var draggable = new Draggable({
             node: node,
-            move: 1
+            move: 1,
+            groups:false
         });
 
         var constrain = new Constrain({

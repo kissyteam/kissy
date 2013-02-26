@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 25 21:59
+build time: Feb 26 11:38
 */
 /**
  * @ignore
@@ -178,8 +178,10 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         } else if (activeDrag = self.get('activeDrag')) {
 
             activeDrag._move(ev);
-            // 获得当前的激活drop
-            notifyDropsMove(self, ev, activeDrag);
+            // for drop-free draggable performance
+            if (self.__needDropCheck) {
+                notifyDropsMove(self, ev, activeDrag);
+            }
 
         }
     }
@@ -197,13 +199,8 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
     }
 
     function notifyDropsMove(self, ev, activeDrag) {
-        var drops = self.get('validDrops');
-
-        if (!drops.length) {
-            return;
-        }
-
-        var mode = activeDrag.get('mode'),
+        var drops = self.get('validDrops'),
+            mode = activeDrag.get('mode'),
             activeDrop = 0,
             oldDrop,
             vArea = 0,
@@ -273,7 +270,6 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
             }
         }
     }
-
 
     /*
      垫片只需创建一次
@@ -365,7 +361,6 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         }
     }
 
-
     function _activeDrops(self) {
         var drops = self.get('drops');
         self.setInternal('validDrops', []);
@@ -447,9 +442,14 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
             if (drag.get('shim')) {
                 activeShim(self);
             }
-            _activeDrops(self);
-            if (self.get('validDrops').length) {
-                cacheWH(drag.get('node'));
+            // avoid unnecessary drop check
+            self.__needDropCheck = 0;
+            if (drag.get('groups')) {
+                _activeDrops(self);
+                if (self.get('validDrops').length) {
+                    cacheWH(drag.get('node'));
+                    self.__needDropCheck = 1;
+                }
             }
         },
 
@@ -1457,7 +1457,9 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             },
 
             /**
-             * groups this draggable object belongs to
+             * groups this draggable object belongs to, can interact with droppable.
+             * if this draggable does not want to interact with droppable for performance,
+             * can set this to false.
              * for example:
              *      @example
              *      {
@@ -1471,7 +1473,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
              * @ignore
              */
             groups: {
-                value: {}
+                value: true
             },
 
             /**

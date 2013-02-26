@@ -31,7 +31,8 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
             var action = new Draggable({
                     node: drag,
                     move:1,
-                    handlers: [dragHeader]
+                    handlers: [dragHeader],
+                    groups:false
                 }),
                 scrollLeft = DOM.scrollLeft(),
                 scrollTop = DOM.scrollTop();
@@ -63,7 +64,8 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
             var action = new Draggable({
                 node: drag,
                 move:1,
-                handlers: [dragHeader]
+                handlers: [dragHeader],
+                groups:false
             });
 
             var xy = dragHeader.offset();
@@ -128,7 +130,8 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
             var action = new Draggable({
                 node: drag,
                 move:1,
-                handlers: [dragHeader]
+                handlers: [dragHeader],
+                groups:false
             });
 
             var xy = dragHeader.offset();
@@ -177,7 +180,8 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
             var action = new Draggable({
                 node: drag,
                 move:1,
-                handlers: [dragHeader]
+                handlers: [dragHeader],
+                groups:false
             });
 
             var xy = dragHeader.offset();
@@ -240,7 +244,8 @@ KISSY.use("ua,node,dd/base", function (S, UA, Node, DD) {
                 node: drag,
                 disabled: true,
                 move:1,
-                handlers: [dragHeader]
+                handlers: [dragHeader],
+                groups:false
             });
 
             var xy = dragHeader.offset();

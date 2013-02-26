@@ -52,6 +52,9 @@ KISSY.add('component/plugin/drag', function (S, RichBase, DD) {
         ATTRS: {
             move: {
                 value: 1
+            },
+            groups: {
+                value: false
             }
         }
     });

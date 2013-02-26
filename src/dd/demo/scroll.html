@@ -244,7 +244,8 @@
         (function () {
             var drag = new Draggable({
                 node: '#component',
-                move: 1
+                move: 1,
+                groups:false
             });
 
             drag.plug(new Scroll({
@@ -261,7 +262,8 @@
         (function () {
             var drag = new Draggable({
                 node: '#free',
-                move: 1
+                move: 1,
+                groups:false
             });
 
             drag.plug(new Scroll({

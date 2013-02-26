@@ -144,7 +144,7 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
 
         velocity = Math.min(Math.max(velocity, -MAX_SWIPE_VELOCITY), MAX_SWIPE_VELOCITY);
 
-         // S.log('velocity: ' + velocity);
+        // S.log('velocity: ' + velocity);
 
         // S.log('after dragend scroll value: ' + scroll);
         anim[axis] = {
@@ -234,6 +234,7 @@ KISSY.add('scrollview/base/control', function (S, DOM, DD, Component, Extension,
             if (self.get('allowDrag')) {
                 var dd = self.dd = new DD.Draggable({
                     node: el,
+                    groups: false,
                     // allow nested scrollview
                     halt: true
                 });

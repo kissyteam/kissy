@@ -106,11 +106,13 @@
                     preview = $("#preview"),
                     pickerBg = $(".picker-bg"),
                     pickDD = new DD.Draggable({
-                        node:pickerBg
+                        node:pickerBg,
+                        groups:false
                     }),
                     hueBg = $(".picker-hue-bg"),
                     hueDD = new DD.Draggable({
-                        node:hueBg
+                        node:hueBg,
+                        groups:false
                     }),
                     picker_thumb = pickerBg.first(),
                     hue_thumb = hueBg.first(),

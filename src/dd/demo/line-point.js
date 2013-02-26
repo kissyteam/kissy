@@ -99,7 +99,8 @@ KISSY.use('dd', function (S, DD) {
         };
 
         var canvasDD = new DD.Draggable({
-            node: canvasWrap
+            node: canvasWrap,
+            groups:false
         });
 
         canvasDD.on("dragstart", function () {

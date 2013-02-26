@@ -9,7 +9,7 @@ KISSY.add('dd/droppable/base', function (S, Node, RichBase, DD) {
             PREFIX_CLS = DDM.PREFIX_CLS;
 
         function validDrop(dropGroups, dragGroups) {
-            if (dropGroups === true) {
+            if (dragGroups === true) {
                 return 1;
             }
             for (var d in dropGroups) {
@@ -223,8 +223,7 @@ KISSY.add('dd/droppable/base', function (S, Node, RichBase, DD) {
                 },
 
                 /**
-                 * groups this droppable object belongs to. true to match any group.
-                 * default  true
+                 * groups this droppable object belongs to.
                  * @cfg {Object|Boolean} groups
                  * @member KISSY.DD.Droppable
                  */
@@ -232,7 +231,9 @@ KISSY.add('dd/droppable/base', function (S, Node, RichBase, DD) {
                  * @ignore
                  */
                 groups: {
-                    value: true
+                    value: {
+
+                    }
                 }
 
             }
