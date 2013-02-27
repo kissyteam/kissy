@@ -764,9 +764,11 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                     expect(render).toBe('1');
 
+                    tpl = '{{^xx}}1{{else}}2{{/xx}}';
+
                     render = new XTemplate(tpl).render({xx: 1});
 
-                    expect(render).toBe('');
+                    expect(render).toBe('2');
                 });
 
                 it('support function as property value', function () {
