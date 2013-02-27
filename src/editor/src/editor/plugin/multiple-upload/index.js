@@ -4,11 +4,11 @@
  */
 KISSY.add("editor/plugin/multiple-upload/index", function (S, Editor, DialogLoader) {
 
-    function multipleUpload(config) {
+    function MultipleUpload(config) {
         this.config = config || {};
     }
 
-    S.augment(multipleUpload, {
+    S.augment(MultipleUpload, {
         pluginRenderUI:function (editor) {
             var self = this;
             editor.addButton("multipleUpload", {
@@ -24,7 +24,7 @@ KISSY.add("editor/plugin/multiple-upload/index", function (S, Editor, DialogLoad
         }
     });
 
-    return multipleUpload;
+    return MultipleUpload;
 
 }, {
     requires:['editor', '../dialog-loader/']
