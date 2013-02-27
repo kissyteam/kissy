@@ -763,6 +763,10 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     var render = new XTemplate(tpl).render({});
 
                     expect(render).toBe('1');
+
+                    render = new XTemplate(tpl).render({xx: 1});
+
+                    expect(render).toBe('');
                 });
 
                 it('support function as property value', function () {

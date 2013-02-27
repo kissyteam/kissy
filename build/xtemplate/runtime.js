@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Feb 20 17:49
+build time: Feb 27 13:36
 */
 /**
  * xtemplate base
@@ -215,7 +215,9 @@ KISSY.add("xtemplate/runtime/commands", function (S, includeCommand) {
             var param0 = params[0];
             var buffer = '';
             if (param0) {
-                buffer = option.fn(scopes);
+                if (option.fn) {
+                    buffer = option.fn(scopes);
+                }
             } else if (option.inverse) {
                 buffer = option.inverse(scopes);
             }
