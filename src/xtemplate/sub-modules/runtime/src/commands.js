@@ -50,7 +50,9 @@ KISSY.add("xtemplate/runtime/commands", function (S, includeCommand) {
             var param0 = params[0];
             var buffer = '';
             if (param0) {
-                buffer = option.fn(scopes);
+                if (option.fn) {
+                    buffer = option.fn(scopes);
+                }
             } else if (option.inverse) {
                 buffer = option.inverse(scopes);
             }
