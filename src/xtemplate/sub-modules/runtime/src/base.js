@@ -53,9 +53,9 @@ KISSY.add('xtemplate/runtime/base', function (S) {
         utils: {
             'getProperty': function (parts, scopes) {
                 // this refer to current scope object
-                if (parts == 'this') {
+                if (parts == 'this' || parts == '.') {
                     if (scopes.length) {
-                        return [scopes[0]];
+                        return [ scopes[0] ];
                     } else {
                         return false;
                     }

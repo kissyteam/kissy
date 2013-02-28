@@ -50,8 +50,6 @@ KISSY.add('xtemplate/facade', function (S, XTemplateRuntime, compiler) {
         var self = this;
         option = S.merge(defaultCfg, option);
         if (typeof tpl == 'string') {
-            // prevent messing up with velocity
-            tpl = tpl.replace(/\{\{@/g, '{{#');
             tpl = compile(tpl, option);
         }
         self.option = option;
