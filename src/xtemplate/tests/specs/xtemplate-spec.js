@@ -85,7 +85,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
             });
 
 
-            it('support {{#if}}', function () {
+            it('support {{#if}} {{@', function () {
                 var tpl = '{{#if title}}has title{{/if}}\n' +
                     '{{@if title2}}has title2{{else}}not has title2{{/if}}';
 
@@ -295,6 +295,10 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     var render = new XTemplate(tpl).render(data);
 
                     expect(render).toBe('my  {{title}}');
+
+                    render = new XTemplate('\\{{@').render({});
+
+                    expect(render).toBe('{{@');
 
                 });
 
@@ -695,6 +699,33 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     expect(render).toBe('h-2');
                 });
 
+
+                it('support {{.}}', function () {
+
+                    var tpl = '{{.}}';
+
+                    var data = '1';
+
+                    var renderFn = new XTemplate(tpl);
+
+                    var render = renderFn.render(data);
+
+                    expect(render).toBe('1');
+
+
+                    tpl = '{{#.}}{{.}}{{/.}}';
+
+                    data = [
+                        [1]
+                    ];
+
+                    renderFn = new XTemplate(tpl);
+
+                    render = renderFn.render(data);
+
+                    expect(render).toBe('1');
+                });
+
                 it('support array', function () {
                     var tpl = '{{#data}}{{name}}-{{xindex}}/{{xcount}}|{{/data}}';
 
@@ -764,9 +795,11 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                     expect(render).toBe('1');
 
+                    tpl = '{{^xx}}1{{else}}2{{/xx}}';
+
                     render = new XTemplate(tpl).render({xx: 1});
 
-                    expect(render).toBe('');
+                    expect(render).toBe('2');
                 });
 
                 it('support function as property value', function () {

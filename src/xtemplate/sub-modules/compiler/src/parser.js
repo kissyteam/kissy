@@ -252,7 +252,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
             [2, /^[\s\S]{2,}?(?:(?={{)|$)/, function () {
                 this.popState();
             }, ['et']],
-            [3, /^{{(?:#|\^)/, 0, ['t']],
+            [3, /^{{(?:#|@|\^)/, 0, ['t']],
             [4, /^{{\//, 0, ['t']],
             [5, /^{{\s*else/, 0, ['t']],
             [6, /^{{{/, 0, ['t']],
@@ -294,6 +294,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
             [26, /^false/, 0, ['t']],
             [27, /^\d+(?:\.\d+)?(?:e-?\d+)?/i, 0, ['t']],
             [28, /^=/, 0, ['t']],
+            [29, /^\.(?=})/, 0, ['t']],
             [29, /^\.\./, function () {
                 // wait for '/'
                 this.pushState('ws');

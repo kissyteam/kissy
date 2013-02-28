@@ -1,9 +1,9 @@
 /*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Feb 27 13:36
+build time: Feb 28 18:33
 */
-KISSY.add("xtemplate/runtime/base",function(d){function a(c,b){this.tpl=c;b=d.merge(e,b);b.subTpls=d.merge(b.subTpls,a.subTpls);b.commands=d.merge(b.commands,a.commands);this.option=b}var e={silent:!0,name:"",utils:{getProperty:function(c,b){if("this"==c)return b.length?[b[0]]:!1;var c=c.split("."),g=c.length,e,a,f,d,h,j=b.length;for(a=0;a<j;a++){f=b[a];h=1;for(e=0;e<g;e++){d=c[e];if("object"!=typeof f||!(d in f)){h=0;break}f=f[d]}if(h)return"function"==typeof f&&(f=f.call(b[j-1])),[f]}return!1}}};
+KISSY.add("xtemplate/runtime/base",function(d){function a(c,b){this.tpl=c;b=d.merge(e,b);b.subTpls=d.merge(b.subTpls,a.subTpls);b.commands=d.merge(b.commands,a.commands);this.option=b}var e={silent:!0,name:"",utils:{getProperty:function(c,b){if("this"==c||"."==c)return b.length?[b[0]]:!1;var c=c.split("."),g=c.length,e,a,f,d,h,j=b.length;for(a=0;a<j;a++){f=b[a];h=1;for(e=0;e<g;e++){d=c[e];if("object"!=typeof f||!(d in f)){h=0;break}f=f[d]}if(h)return"function"==typeof f&&(f=f.call(b[j-1])),[f]}return!1}}};
 a.prototype={constructor:a,removeSubTpl:function(c){delete this.option.subTpls[c]},removeCommand:function(c){delete this.option.commands[c]},addSubTpl:function(c,b){this.option.subTpls[c]=b},addCommand:function(c,b){this.option.commands[c]=b},render:function(c,b){b||(c=[c]);return this.tpl(c,this.option)}};return a});
 KISSY.add("xtemplate/runtime/commands",function(d,a){return{each:function(e,c){var b=c.params[0],g="",a;if(b){var d=[0,0].concat(e);a=b.length;for(var f=0;f<a;f++)d[0]=b[f],d[1]={xcount:a,xindex:f},g+=c.fn(d)}else c.inverse&&(g=c.inverse(e));return g},"with":function(a,c){var b=c.params[0],g=[0].concat(a),d="";b?(g[0]=b,d=c.fn(g)):c.inverse&&(d=c.inverse(a));return d},"if":function(a,c){var b="";c.params[0]?c.fn&&(b=c.fn(a)):c.inverse&&(b=c.inverse(a));return b},set:function(a,c){for(var b=a.length-
 1;0<=b;b--)if("object"==typeof a[b]){d.mix(a[b],c.hash);break}return""},include:a.include}},{requires:["./include-command"]});

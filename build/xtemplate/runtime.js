@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Feb 27 13:36
+build time: Feb 28 18:33
 */
 /**
  * xtemplate base
@@ -58,9 +58,9 @@ KISSY.add('xtemplate/runtime/base', function (S) {
         utils: {
             'getProperty': function (parts, scopes) {
                 // this refer to current scope object
-                if (parts == 'this') {
+                if (parts == 'this' || parts == '.') {
                     if (scopes.length) {
-                        return [scopes[0]];
+                        return [ scopes[0] ];
                     } else {
                         return false;
                     }

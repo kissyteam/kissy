@@ -437,7 +437,8 @@
                 {
                     state: ['t'],
                     // support Inverted Sections in mustache
-                    regexp: /^{{(?:#|\^)/,
+                    // support {{@
+                    regexp: /^{{(?:#|@|\^)/,
                     token: 'OPEN_BLOCK'
                 },
                 {
@@ -607,6 +608,12 @@
                     state: ['t'],
                     regexp: /^=/,
                     token: 'EQUALS'
+                },
+                {
+                    // support {{.}}
+                    state: ['t'],
+                    regexp: /^\.(?=})/,
+                    token: 'ID'
                 },
                 {
                     state: ['t'],

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Feb 20 17:49
+build time: Feb 28 18:33
 */
 /**
  * @ignore
@@ -55,8 +55,6 @@ KISSY.add('xtemplate/facade', function (S, XTemplateRuntime, compiler) {
         var self = this;
         option = S.merge(defaultCfg, option);
         if (typeof tpl == 'string') {
-            // prevent messing up with velocity
-            tpl = tpl.replace(/\{\{@/g, '{{#');
             tpl = compile(tpl, option);
         }
         self.option = option;
