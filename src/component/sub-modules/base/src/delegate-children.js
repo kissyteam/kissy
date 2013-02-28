@@ -61,7 +61,7 @@ KISSY.add("component/base/delegate-children", function (S, Event) {
                 events;
             if (self.get("delegateChildren")) {
 
-                events = Gesture.start + " " + Gesture.end + " " + Gesture.tap + " ";
+                events = Gesture.start + " " + Gesture.end + " " + Gesture.tap + " touchcancel ";
 
                 if (!isTouchSupported) {
                     events += "mouseover mouseout contextmenu " +

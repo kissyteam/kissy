@@ -20,7 +20,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         Gesture = Event.Gesture,
         CURRENT_TARGET = 'currentTarget',
         DRAG_MOVE_EVENT = Gesture.move,
-        DRAG_END_EVENT = Gesture.end;
+        DRAG_END_EVENT = Gesture.end+' touchcancel';
 
     /**
      * @class KISSY.DD.DDM
@@ -537,7 +537,8 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
      normal event between devices
      */
     ddm._normalEvent = function (e) {
-        var touches = String(e.type) == 'touchend' ? e.changedTouches : e.touches,
+        var type= String(e.type),
+            touches = type == 'touchend'||type == 'touchcancel' ? e.changedTouches : e.touches,
             touch;
         if (touches) {
             if (touches.length != 1) {

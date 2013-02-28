@@ -16,10 +16,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
     touchEvents[Gesture.start] = 'onTouchStart';
     touchEvents[Gesture.move] = 'onTouchMove';
     touchEvents[Gesture.end] = 'onTouchEnd';
-
-    if (Gesture.start !== 'mousedown') {
-        touchEvents.touchcancel = 'onTouchEnd';
-    }
+    touchEvents['touchcancel'] = 'onTouchEnd';
 
     function DocumentHandler(doc) {
 
