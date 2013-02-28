@@ -95,9 +95,9 @@
 <div id="footer"></div>
 
 
-<script src="../../../base/src/control.js"></script>
+<script src="../../../base/src/base.js"></script>
 <script src="../../../base/src/render.js"></script>
-<script src="../../../base/src/scrollview.js"></script>
+<script src="../../../drag/src/drag.js"></script>
 
 <script src="../src/render.js"></script>
 <script src="../src/control.js"></script>
@@ -108,18 +108,21 @@
     // 本 demo 会在 ie10 模拟 ie7 下白屏，原因不明，请设置
     // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    KISSY.use('scrollview/base,scrollview/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
+    KISSY.use('scrollview/drag,scrollview/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
         S.ready(function () {
 
+            var num=new S.Uri(location.href).getQuery().get('num')||'41';
+
+            num=parseInt(num);
+
             var str = '';
-            for (var i = 1; i < 41; i++) {
+            for (var i = 1; i < num; i++) {
                 str += '<p>line ' + i + '</p>'
             }
             S.all('#thelist').html(str);
 
             window.scrollview = new ScrollView({
                 srcNode: '#wrapper',
-                allowDrag: true,
                 plugins: [new ScrollbarPlugin({})]
             }).render();
 

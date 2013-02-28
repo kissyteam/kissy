@@ -1,5 +1,5 @@
 config({
     "scrollview": {
-        "alias": ['scrollview/base']
+        "alias": [Features.isTouchSupported() ? 'scrollview/drag' : 'scrollview/base']
     }
 });

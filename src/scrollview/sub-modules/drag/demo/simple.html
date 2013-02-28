@@ -43,10 +43,12 @@
 
 <div id="native"></div>
 <button id="destroy">destroy</button>
-<script src="../src/base.js"></script>
-<script src="../src/render.js"></script>
+<script src="../../base/src/base.js"></script>
+<script src="../../base/src/render.js"></script>
+<script src="../src/drag.js"></script>
+
 <script>
-    KISSY.use('scrollview/base', function (S, ScrollView) {
+    KISSY.use('scrollview/drag', function (S, ScrollView) {
         var content = '';
         for (var i = 0; i < 10; i++) {
             content += '<p>' + i + '</p>';

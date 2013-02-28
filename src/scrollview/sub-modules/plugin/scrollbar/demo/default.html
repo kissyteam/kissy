@@ -100,9 +100,9 @@
 <div id="footer"></div>
 
 
-<script src="../../../base/src/control.js"></script>
+<script src="../../../base/src/base.js"></script>
 <script src="../../../base/src/render.js"></script>
-<script src="../../../base/src/scrollview.js"></script>
+<script src="../../../drag/src/drag.js"></script>
 
 <script src="../src/render.js"></script>
 <script src="../src/control.js"></script>
@@ -110,7 +110,7 @@
 
 <script>
 
-    KISSY.use('scrollview/base,scrollview/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
+    KISSY.use('scrollview,scrollview/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
         S.ready(function () {
             var str = '';
             for (var i = 1; i < 41; i++) {

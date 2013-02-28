@@ -54,9 +54,9 @@
 <button id="disable">disable</button>
 <button id="enable">enable</button>
 
-<script src="../../../base/src/control.js"></script>
+<script src="../../../base/src/base.js"></script>
 <script src="../../../base/src/render.js"></script>
-<script src="../../../base/src/scrollview.js"></script>
+<script src="../../../drag/src/drag.js"></script>
 
 <script src="../src/render.js"></script>
 <script src="../src/control.js"></script>
@@ -64,7 +64,7 @@
 
 <script>
 
-    KISSY.use('scrollview/base,scrollview/plugin/scrollbar,dd/droppable', function (S, ScrollView, ScrollbarPlugin,Droppable) {
+    KISSY.use('scrollview/drag,scrollview/plugin/scrollbar,dd/droppable', function (S, ScrollView, ScrollbarPlugin,Droppable) {
         S.ready(function () {
             var content = '';
             for (var i = 0; i < 23; i++) {
@@ -77,7 +77,6 @@
                 width: 320,
                 render: 'body',
                 height: 219,
-                allowDrag: true,
                 plugins: [new ScrollbarPlugin({
                     autoHideX: true,
                     autoHideY: false
