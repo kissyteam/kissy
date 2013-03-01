@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 21 21:31
+build time: Mar 1 20:38
 */
 /**
  * @ignore
@@ -723,6 +723,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
 
                     el.on(Gesture.start + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseDown"))
                         .on(Gesture.end + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseUp"))
+                        .on('touchcancel' + MOUSE_EVENT_GROUP, wrapBehavior(self, "handleMouseUp"))
                         // consider touch environment
                         .on(Gesture.tap + MOUSE_EVENT_GROUP, wrapBehavior(self, "performActionInternal"));
 
@@ -1114,7 +1115,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 focused: {
-                    view: 1
+                    view: 1,
+                    value: false
                 },
 
                 /**
@@ -1126,7 +1128,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 active: {
-                    view: 1
+                    view: 1,
+                    value: false
                 },
 
                 /**
@@ -1138,7 +1141,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 highlighted: {
-                    view: 1
+                    view: 1,
+                    value: false
                 },
 
                 /**
@@ -1197,7 +1201,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 disabled: {
-                    view: 1
+                    view: 1,
+                    value: false
                 },
 
                 /**
@@ -1456,7 +1461,7 @@ KISSY.add("component/base/delegate-children", function (S, Event) {
                 events;
             if (self.get("delegateChildren")) {
 
-                events = Gesture.start + " " + Gesture.end + " " + Gesture.tap + " ";
+                events = Gesture.start + " " + Gesture.end + " " + Gesture.tap + " touchcancel ";
 
                 if (!isTouchSupported) {
                     events += "mouseover mouseout contextmenu " +

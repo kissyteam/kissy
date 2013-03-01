@@ -616,7 +616,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 focused: {
-                    view: 1
+                    view: 1,
+                    value: false
                 },
 
                 /**
@@ -628,7 +629,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 active: {
-                    view: 1
+                    view: 1,
+                    value: false
                 },
 
                 /**
@@ -640,7 +642,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 highlighted: {
-                    view: 1
+                    view: 1,
+                    value: false
                 },
 
                 /**
@@ -699,7 +702,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                  * @ignore
                  */
                 disabled: {
-                    view: 1
+                    view: 1,
+                    value: false
                 },
 
                 /**

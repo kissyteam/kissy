@@ -226,17 +226,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     iframe = self.get("iframe"),
                     textarea = self.get("textarea");
                 if (v == WYSIWYG_MODE) {
-                    // 初始化时不保存历史
-                    if (rendered) {
-                        self.execCommand("save");
-                    }
-                    // recreate iframe need load time
-                    self.on("docReady", save = function () {
-                        if (rendered) {
-                            self.execCommand("save");
-                        }
-                        self.detach("docReady", save);
-                    });
                     self._setData(textarea.val());
                     textarea.hide();
                     self.fire("wysiwygMode");
@@ -548,6 +537,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 }
             },
 
+            isDocReady: function () {
+                return  this.__docReady;
+            },
+
             /**
              * Check whether selection has changed since last check point.
              */
@@ -616,7 +609,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     return undefined;
                 }
 
-                self.execCommand("save");
+                self.execCommand('save');
 
                 for (i = ranges.length - 1; i >= 0; i--) {
                     range = ranges[ i ];
@@ -655,10 +648,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
                 // only tag can scroll
                 if (clone && clone[0].nodeType == 1) {
-                    clone.scrollIntoView(undefined,{
-                        alignWithTop:false,
-                        allowHorizontalScroll:true,
-                        onlyScrollIfNeeded:true
+                    clone.scrollIntoView(undefined, {
+                        alignWithTop: false,
+                        allowHorizontalScroll: true,
+                        onlyScrollIfNeeded: true
                     });
                 }
                 saveLater.call(self);
@@ -684,7 +677,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 }
 
                 self.focus();
-                self.execCommand("save");
+                self.execCommand('save');
 
                 // ie9 仍然需要这样！
                 // ie9 标准 selection 有问题，连续插入不能定位光标到插入内容后面
@@ -1106,12 +1099,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     'parent.KISSY.Editor._initIFrame("' + id + '");' +
                     '</script>') :
                 ''
-
         });
     }
 
     var saveLater = S.buffer(function () {
-        this.execCommand("save");
+        this.execCommand('save');
     }, 50);
 
     function setUpIFrame(self, data) {

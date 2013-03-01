@@ -617,15 +617,17 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                 }
 
                 // Check if the current node can be a child of the style element.
-                if (!nodeName || ( dtd[ nodeName ]
-                    && ( currentNode._4e_position(lastNode) |
-                    ( KEP.POSITION_PRECEDING |
-                        KEP.POSITION_IDENTICAL |
-                        KEP.POSITION_IS_CONTAINED) )
-                    == ( KEP.POSITION_PRECEDING +
-                    KEP.POSITION_IDENTICAL +
-                    KEP.POSITION_IS_CONTAINED )
-                    && ( !def["childRule"] || def["childRule"](currentNode) ) )) {
+                if (!nodeName || (
+                    dtd[ nodeName ]&&
+                        ( currentNode._4e_position(lastNode) |
+                            ( KEP.POSITION_PRECEDING |
+                            KEP.POSITION_IDENTICAL |
+                            KEP.POSITION_IS_CONTAINED) )
+                            == ( KEP.POSITION_PRECEDING +
+                            KEP.POSITION_IDENTICAL +
+                            KEP.POSITION_IS_CONTAINED )&&
+                        ( !def["childRule"] || def["childRule"](currentNode) )
+                    )) {
                     var currentParent = currentNode.parent();
 
 
@@ -758,7 +760,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
                         }
                         //bug notice add by yiminghe@gmail.com
-                        //<span style="font-size:70px"><span style="font-size:30px">xcxx</span></span>
+                        //<span style="font-size:70px"><span style="font-size:30px">^xxx$</span></span>
                         //下一次格式xxx为70px
                         //var exit = FALSE;
                         for (styleName in def.styles) {
@@ -815,7 +817,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                  2.ctrl-a 设置字体大小 x
                  3.选中b设置字体大小 y
                  4.保持选中b,设置字体大小 x
-                 exptected: b 大小为 x
+                 expect: b 大小为 x
                  actual: b 大小为 y
                  */
                 else {

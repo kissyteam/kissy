@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 17 17:28
+build time: Mar 1 22:08
 */
 /**
  * resize functionality
@@ -47,10 +47,12 @@ this.config=config||{};
             });
 
             var d = new Draggable({
-                    node:resizer
+                    node:resizer,
+                    groups:false
                 }),
                 height = 0,
                 width = 0,
+                startNodePos,
                 heightEl = editor.get("el"),
                 widthEl = editor.get("el");
 
@@ -58,12 +60,13 @@ this.config=config||{};
                 height = heightEl.height();
                 width = widthEl.width();
                 editor.fire("resizeStart");
+                startNodePos=resizer.offset();
             });
 
             d.on("drag", function (ev) {
                 var self = this,
-                    diffX = ev.left - self.get('startNodePos').left,
-                    diffY = ev.top - self.get('startNodePos').top;
+                    diffX = ev.left - startNodePos.left,
+                    diffY = ev.top - startNodePos.top;
                 if (S.inArray("y", direction)) {
                     editor.set("height", height + diffY);
                 }

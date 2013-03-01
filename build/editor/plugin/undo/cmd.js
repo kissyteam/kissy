@@ -1,15 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 17 17:28
+build time: Mar 1 22:08
 */
 /**
  * undo,redo manager for kissy editor
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
-    var arrayCompare = Editor.Utils.arrayCompare,
-        UA = S.UA,
+    var UA = S.UA,
         LIMIT = 30;
 
     /**
@@ -38,31 +37,9 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             var self = this,
                 thisContents = self.contents,
                 otherContents = otherImage.contents;
-
-            if (thisContents != otherContents) {
-                return false;
-            }
-
-            var bookmarksA = self.bookmarks,
-                bookmarksB = otherImage.bookmarks;
-
-            if (bookmarksA || bookmarksB) {
-                if (!bookmarksA || !bookmarksB || bookmarksA.length != bookmarksB.length)
-                    return false;
-
-                for (var i = 0; i < bookmarksA.length; i++) {
-                    var bookmarkA = bookmarksA[ i ],
-                        bookmarkB = bookmarksB[ i ];
-
-                    if (
-                        bookmarkA.startOffset != bookmarkB.startOffset ||
-                            bookmarkA.endOffset != bookmarkB.endOffset || !arrayCompare(bookmarkA.start, bookmarkB.start) || !arrayCompare(bookmarkA.end, bookmarkB.end)) {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
+            // 不比较书签！
+            // source mode -> wysiwyg mode 光标不保持
+            return thisContents == otherContents;
         }
     });
 
@@ -132,14 +109,21 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
         },
 
         _init: function () {
-            var self = this;
+            var self = this,
+                editor = self.editor;
             self._keyMonitor();
-            //先save一下,why??
-            //初始状态保存，异步，必须等use中已经 set 了编辑器中初始代码
-            //必须在从 textarea 复制到编辑区域前，use所有plugin，为了过滤插件生效
-            //而这段代码必须在从 textarea 复制到编辑区域后运行，所以设个延迟
             setTimeout(function () {
-                self.save();
+                // 只初始化保存一次，切换模式不保存
+                if (editor.get('mode') == Editor.WYSIWYG_MODE) {
+                    if (editor.isDocReady()) {
+                        self.save();
+                    } else {
+                        editor.on('docReady', function () {
+                            self.save();
+                            editor.detach('docReady', arguments.callee);
+                        });
+                    }
+                }
             }, 0);
         },
 
@@ -147,13 +131,13 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
          * 保存历史
          */
         save: function (buffer) {
+
             var editor = this.editor;
 
             // 代码模式下不和可视模式下混在一起
             if (editor.get("mode") != Editor.WYSIWYG_MODE) {
                 return;
             }
-
 
             if (!editor.get("document")) {
                 return;
@@ -166,21 +150,23 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
 
             var self = this,
                 history = self.history,
+                l = history.length,
                 index = self.index;
 
             //前面的历史抛弃
-            if (history.length > index + 1)
-                history.splice(index + 1, history.length - index - 1);
+            l = Math.min(l, index + 1);
 
-            var last = history[history.length - 1],
+            var last = history[l - 1],
                 current = new Snapshot(editor);
 
             if (!last || !last.equals(current)) {
-                if (history.length === LIMIT) {
+                history.length = l;
+                if (l === LIMIT) {
                     history.shift();
+                    l--;
                 }
                 history.push(current);
-                self.index = index = history.length - 1;
+                self.index = index = l;
                 editor.fire("afterSave", {history: history, index: index});
             }
         },
@@ -192,7 +178,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
 
             // 代码模式下不和可视模式下混在一起
             if (this.editor.get("mode") != Editor.WYSIWYG_MODE) {
-                return;
+                return undefined;
             }
 
             var self = this,
@@ -203,9 +189,9 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
 
             if (snapshot) {
                 editorDomBody.innerHTML = snapshot.contents;
-                if (snapshot.bookmarks)
+                if (snapshot.bookmarks) {
                     editor.getSelection().selectBookmarks(snapshot.bookmarks);
-                else if (UA['ie']) {
+                } else if (UA['ie']) {
                     // IE BUG: If I don't set the selection to *somewhere* after setting
                     // document contents, then IE would create an empty paragraph at the bottom
                     // the next time the document is modified.
@@ -219,7 +205,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                     selection.scrollIntoView();
                 }
                 self.index += d;
-                editor.fire(d > 0 ? "afterUndo" : "afterRedo", {
+                editor.fire(d < 0 ? "afterUndo" : "afterRedo", {
                     history: history,
                     index: self.index
                 });

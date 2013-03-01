@@ -6,9 +6,12 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
 
     var UndoBtn = Button.extend({
 
-        bindUI:function () {
+        __lock: true,
+
+        bindUI: function () {
             var self = this,
                 editor = self.get("editor");
+
             self.on("click", function () {
                 editor.execCommand("undo");
             });
@@ -16,20 +19,27 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
                 var index = ev.index;
                 //有状态可后退
                 if (index > 0) {
-                    self.set("disabled", false);
+                    self.set("disabled", self.__lock = false);
                 } else {
-                    self.set("disabled", true);
+                    self.set("disabled", self.__lock = true);
                 }
             });
         }
     }, {
-        ATTRS:{
-            mode:{
-                value:Editor.WYSIWYG_MODE
+        ATTRS: {
+            mode: {
+                value: Editor.WYSIWYG_MODE
             },
-            disabled:{
+            disabled: {
                 // 默认 disabled
-                value:true
+                value: true,
+                setter: function (v) {
+                    // wysiwyg mode invalid
+                    if (this.__lock) {
+                        v = true;
+                    }
+                    return v;
+                }
             }
         }
     });
@@ -37,7 +47,9 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
 
     var RedoBtn = Button.extend({
 
-        bindUI:function () {
+        __lock: true,
+
+        bindUI: function () {
             var self = this,
                 editor = self.get("editor");
             self.on("click", function () {
@@ -48,30 +60,38 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
                     index = ev.index;
                 //有状态可前进
                 if (index < history.length - 1) {
-                    self.set("disabled", false);
+                    self.set("disabled", self.__lock = false);
                 } else {
-                    self.set("disabled", true);
+                    self.set("disabled", self.__lock = true);
                 }
             });
         }
     }, {
-        mode:{
-            value:Editor.WYSIWYG_MODE
-        },
-        ATTRS:{
-            disabled:{
+
+        ATTRS: {
+            mode: {
+                value: Editor.WYSIWYG_MODE
+            },
+            disabled: {
                 // 默认 disabled
-                value:true
+                value: true,
+                setter: function (v) {
+                    // wysiwyg mode invalid
+                    if (this.__lock) {
+                        v = true;
+                    }
+                    return v;
+                }
             }
         }
     });
 
 
     return {
-        RedoBtn:RedoBtn,
-        UndoBtn:UndoBtn
+        RedoBtn: RedoBtn,
+        UndoBtn: UndoBtn
     };
 
 }, {
-    requires:['editor', '../button/']
+    requires: ['editor', '../button/']
 });

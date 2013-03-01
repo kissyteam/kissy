@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 17 17:28
+build time: Mar 1 22:08
 */
 /**
  * Set up editor constructor
@@ -1906,17 +1906,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     iframe = self.get("iframe"),
                     textarea = self.get("textarea");
                 if (v == WYSIWYG_MODE) {
-                    // 初始化时不保存历史
-                    if (rendered) {
-                        self.execCommand("save");
-                    }
-                    // recreate iframe need load time
-                    self.on("docReady", save = function () {
-                        if (rendered) {
-                            self.execCommand("save");
-                        }
-                        self.detach("docReady", save);
-                    });
                     self._setData(textarea.val());
                     textarea.hide();
                     self.fire("wysiwygMode");
@@ -2228,6 +2217,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 }
             },
 
+            isDocReady: function () {
+                return  this.__docReady;
+            },
+
             /**
              * Check whether selection has changed since last check point.
              */
@@ -2296,7 +2289,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     return undefined;
                 }
 
-                self.execCommand("save");
+                self.execCommand('save');
 
                 for (i = ranges.length - 1; i >= 0; i--) {
                     range = ranges[ i ];
@@ -2335,10 +2328,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
                 // only tag can scroll
                 if (clone && clone[0].nodeType == 1) {
-                    clone.scrollIntoView(undefined,{
-                        alignWithTop:false,
-                        allowHorizontalScroll:true,
-                        onlyScrollIfNeeded:true
+                    clone.scrollIntoView(undefined, {
+                        alignWithTop: false,
+                        allowHorizontalScroll: true,
+                        onlyScrollIfNeeded: true
                     });
                 }
                 saveLater.call(self);
@@ -2364,7 +2357,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 }
 
                 self.focus();
-                self.execCommand("save");
+                self.execCommand('save');
 
                 // ie9 仍然需要这样！
                 // ie9 标准 selection 有问题，连续插入不能定位光标到插入内容后面
@@ -2786,12 +2779,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     'parent.KISSY.Editor._initIFrame("' + id + '");' +
                     '</script>') :
                 ''
-
         });
     }
 
     var saveLater = S.buffer(function () {
-        this.execCommand("save");
+        this.execCommand('save');
     }, 50);
 
     function setUpIFrame(self, data) {
@@ -7552,15 +7544,17 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                 }
 
                 // Check if the current node can be a child of the style element.
-                if (!nodeName || ( dtd[ nodeName ]
-                    && ( currentNode._4e_position(lastNode) |
-                    ( KEP.POSITION_PRECEDING |
-                        KEP.POSITION_IDENTICAL |
-                        KEP.POSITION_IS_CONTAINED) )
-                    == ( KEP.POSITION_PRECEDING +
-                    KEP.POSITION_IDENTICAL +
-                    KEP.POSITION_IS_CONTAINED )
-                    && ( !def["childRule"] || def["childRule"](currentNode) ) )) {
+                if (!nodeName || (
+                    dtd[ nodeName ]&&
+                        ( currentNode._4e_position(lastNode) |
+                            ( KEP.POSITION_PRECEDING |
+                            KEP.POSITION_IDENTICAL |
+                            KEP.POSITION_IS_CONTAINED) )
+                            == ( KEP.POSITION_PRECEDING +
+                            KEP.POSITION_IDENTICAL +
+                            KEP.POSITION_IS_CONTAINED )&&
+                        ( !def["childRule"] || def["childRule"](currentNode) )
+                    )) {
                     var currentParent = currentNode.parent();
 
 
@@ -7693,7 +7687,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
                         }
                         //bug notice add by yiminghe@gmail.com
-                        //<span style="font-size:70px"><span style="font-size:30px">xcxx</span></span>
+                        //<span style="font-size:70px"><span style="font-size:30px">^xxx$</span></span>
                         //下一次格式xxx为70px
                         //var exit = FALSE;
                         for (styleName in def.styles) {
@@ -7750,7 +7744,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                  2.ctrl-a 设置字体大小 x
                  3.选中b设置字体大小 y
                  4.保持选中b,设置字体大小 x
-                 exptected: b 大小为 x
+                 expect: b 大小为 x
                  actual: b 大小为 y
                  */
                 else {

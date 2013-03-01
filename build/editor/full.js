@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 17 17:28
+build time: Mar 1 22:08
 */
 /**
  * Set up editor constructor
@@ -1906,17 +1906,6 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     iframe = self.get("iframe"),
                     textarea = self.get("textarea");
                 if (v == WYSIWYG_MODE) {
-                    // 初始化时不保存历史
-                    if (rendered) {
-                        self.execCommand("save");
-                    }
-                    // recreate iframe need load time
-                    self.on("docReady", save = function () {
-                        if (rendered) {
-                            self.execCommand("save");
-                        }
-                        self.detach("docReady", save);
-                    });
                     self._setData(textarea.val());
                     textarea.hide();
                     self.fire("wysiwygMode");
@@ -2228,6 +2217,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 }
             },
 
+            isDocReady: function () {
+                return  this.__docReady;
+            },
+
             /**
              * Check whether selection has changed since last check point.
              */
@@ -2296,7 +2289,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     return undefined;
                 }
 
-                self.execCommand("save");
+                self.execCommand('save');
 
                 for (i = ranges.length - 1; i >= 0; i--) {
                     range = ranges[ i ];
@@ -2335,10 +2328,10 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 // http://code.google.com/p/kissy/issues/detail?can=1&start=100&id=121
                 // only tag can scroll
                 if (clone && clone[0].nodeType == 1) {
-                    clone.scrollIntoView(undefined,{
-                        alignWithTop:false,
-                        allowHorizontalScroll:true,
-                        onlyScrollIfNeeded:true
+                    clone.scrollIntoView(undefined, {
+                        alignWithTop: false,
+                        allowHorizontalScroll: true,
+                        onlyScrollIfNeeded: true
                     });
                 }
                 saveLater.call(self);
@@ -2364,7 +2357,7 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                 }
 
                 self.focus();
-                self.execCommand("save");
+                self.execCommand('save');
 
                 // ie9 仍然需要这样！
                 // ie9 标准 selection 有问题，连续插入不能定位光标到插入内容后面
@@ -2786,12 +2779,11 @@ KISSY.add("editor", function (S, Editor, Utils, focusManager, Styles, zIndexMang
                     'parent.KISSY.Editor._initIFrame("' + id + '");' +
                     '</script>') :
                 ''
-
         });
     }
 
     var saveLater = S.buffer(function () {
-        this.execCommand("save");
+        this.execCommand('save');
     }, 50);
 
     function setUpIFrame(self, data) {
@@ -7552,15 +7544,17 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                 }
 
                 // Check if the current node can be a child of the style element.
-                if (!nodeName || ( dtd[ nodeName ]
-                    && ( currentNode._4e_position(lastNode) |
-                    ( KEP.POSITION_PRECEDING |
-                        KEP.POSITION_IDENTICAL |
-                        KEP.POSITION_IS_CONTAINED) )
-                    == ( KEP.POSITION_PRECEDING +
-                    KEP.POSITION_IDENTICAL +
-                    KEP.POSITION_IS_CONTAINED )
-                    && ( !def["childRule"] || def["childRule"](currentNode) ) )) {
+                if (!nodeName || (
+                    dtd[ nodeName ]&&
+                        ( currentNode._4e_position(lastNode) |
+                            ( KEP.POSITION_PRECEDING |
+                            KEP.POSITION_IDENTICAL |
+                            KEP.POSITION_IS_CONTAINED) )
+                            == ( KEP.POSITION_PRECEDING +
+                            KEP.POSITION_IDENTICAL +
+                            KEP.POSITION_IS_CONTAINED )&&
+                        ( !def["childRule"] || def["childRule"](currentNode) )
+                    )) {
                     var currentParent = currentNode.parent();
 
 
@@ -7693,7 +7687,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
 
                         }
                         //bug notice add by yiminghe@gmail.com
-                        //<span style="font-size:70px"><span style="font-size:30px">xcxx</span></span>
+                        //<span style="font-size:70px"><span style="font-size:30px">^xxx$</span></span>
                         //下一次格式xxx为70px
                         //var exit = FALSE;
                         for (styleName in def.styles) {
@@ -7750,7 +7744,7 @@ KISSY.add("editor/core/styles", function (S, Editor) {
                  2.ctrl-a 设置字体大小 x
                  3.选中b设置字体大小 y
                  4.保持选中b,设置字体大小 x
-                 exptected: b 大小为 x
+                 expect: b 大小为 x
                  actual: b 大小为 y
                  */
                 else {
@@ -9116,10 +9110,16 @@ KISSY.add("editor/plugin/back-color/cmd", function (S, cmd) {
         overrides:[
             { element:'*', styles:{ 'background-color':null } }
         ],
-        childRule:function () {
-            // 强制最里面
+        childRule:function (currentNode) {
+            // 除了嵌套背景，其他强制最里面
             // <span style='bgcolor:red'><span style='fontSize:100px'>123434</span></span>
-            return false;
+            return !!currentNode.style('background-color');
+
+            // 不完美
+            // 1. 123456 背景变黄
+            // 2. 345 字体变大
+            // or
+            // current 有 font-size 的孙子
         }
     };
 
@@ -14134,11 +14134,11 @@ KISSY.add("editor/plugin/menubutton/index", function (S, Editor, MenuButton) {
  */
 KISSY.add("editor/plugin/multiple-upload/index", function (S, Editor, DialogLoader) {
 
-    function multipleUpload(config) {
+    function MultipleUpload(config) {
         this.config = config || {};
     }
 
-    S.augment(multipleUpload, {
+    S.augment(MultipleUpload, {
         pluginRenderUI:function (editor) {
             var self = this;
             editor.addButton("multipleUpload", {
@@ -14154,7 +14154,7 @@ KISSY.add("editor/plugin/multiple-upload/index", function (S, Editor, DialogLoad
         }
     });
 
-    return multipleUpload;
+    return MultipleUpload;
 
 }, {
     requires:['editor', '../dialog-loader/']
@@ -14842,10 +14842,12 @@ this.config=config||{};
             });
 
             var d = new Draggable({
-                    node:resizer
+                    node:resizer,
+                    groups:false
                 }),
                 height = 0,
                 width = 0,
+                startNodePos,
                 heightEl = editor.get("el"),
                 widthEl = editor.get("el");
 
@@ -14853,12 +14855,13 @@ this.config=config||{};
                 height = heightEl.height();
                 width = widthEl.width();
                 editor.fire("resizeStart");
+                startNodePos=resizer.offset();
             });
 
             d.on("drag", function (ev) {
                 var self = this,
-                    diffX = ev.left - self.get('startNodePos').left,
-                    diffY = ev.top - self.get('startNodePos').top;
+                    diffX = ev.left - startNodePos.left,
+                    diffY = ev.top - startNodePos.top;
                 if (S.inArray("y", direction)) {
                     editor.set("height", height + diffY);
                 }
@@ -15721,9 +15724,12 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
 
     var UndoBtn = Button.extend({
 
-        bindUI:function () {
+        __lock: true,
+
+        bindUI: function () {
             var self = this,
                 editor = self.get("editor");
+
             self.on("click", function () {
                 editor.execCommand("undo");
             });
@@ -15731,20 +15737,27 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
                 var index = ev.index;
                 //有状态可后退
                 if (index > 0) {
-                    self.set("disabled", false);
+                    self.set("disabled", self.__lock = false);
                 } else {
-                    self.set("disabled", true);
+                    self.set("disabled", self.__lock = true);
                 }
             });
         }
     }, {
-        ATTRS:{
-            mode:{
-                value:Editor.WYSIWYG_MODE
+        ATTRS: {
+            mode: {
+                value: Editor.WYSIWYG_MODE
             },
-            disabled:{
+            disabled: {
                 // 默认 disabled
-                value:true
+                value: true,
+                setter: function (v) {
+                    // wysiwyg mode invalid
+                    if (this.__lock) {
+                        v = true;
+                    }
+                    return v;
+                }
             }
         }
     });
@@ -15752,7 +15765,9 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
 
     var RedoBtn = Button.extend({
 
-        bindUI:function () {
+        __lock: true,
+
+        bindUI: function () {
             var self = this,
                 editor = self.get("editor");
             self.on("click", function () {
@@ -15763,39 +15778,46 @@ KISSY.add("editor/plugin/undo/btn", function (S, Editor, Button) {
                     index = ev.index;
                 //有状态可前进
                 if (index < history.length - 1) {
-                    self.set("disabled", false);
+                    self.set("disabled", self.__lock = false);
                 } else {
-                    self.set("disabled", true);
+                    self.set("disabled", self.__lock = true);
                 }
             });
         }
     }, {
-        mode:{
-            value:Editor.WYSIWYG_MODE
-        },
-        ATTRS:{
-            disabled:{
+
+        ATTRS: {
+            mode: {
+                value: Editor.WYSIWYG_MODE
+            },
+            disabled: {
                 // 默认 disabled
-                value:true
+                value: true,
+                setter: function (v) {
+                    // wysiwyg mode invalid
+                    if (this.__lock) {
+                        v = true;
+                    }
+                    return v;
+                }
             }
         }
     });
 
 
     return {
-        RedoBtn:RedoBtn,
-        UndoBtn:UndoBtn
+        RedoBtn: RedoBtn,
+        UndoBtn: UndoBtn
     };
 
 }, {
-    requires:['editor', '../button/']
+    requires: ['editor', '../button/']
 });/**
  * undo,redo manager for kissy editor
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
-    var arrayCompare = Editor.Utils.arrayCompare,
-        UA = S.UA,
+    var UA = S.UA,
         LIMIT = 30;
 
     /**
@@ -15824,31 +15846,9 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
             var self = this,
                 thisContents = self.contents,
                 otherContents = otherImage.contents;
-
-            if (thisContents != otherContents) {
-                return false;
-            }
-
-            var bookmarksA = self.bookmarks,
-                bookmarksB = otherImage.bookmarks;
-
-            if (bookmarksA || bookmarksB) {
-                if (!bookmarksA || !bookmarksB || bookmarksA.length != bookmarksB.length)
-                    return false;
-
-                for (var i = 0; i < bookmarksA.length; i++) {
-                    var bookmarkA = bookmarksA[ i ],
-                        bookmarkB = bookmarksB[ i ];
-
-                    if (
-                        bookmarkA.startOffset != bookmarkB.startOffset ||
-                            bookmarkA.endOffset != bookmarkB.endOffset || !arrayCompare(bookmarkA.start, bookmarkB.start) || !arrayCompare(bookmarkA.end, bookmarkB.end)) {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
+            // 不比较书签！
+            // source mode -> wysiwyg mode 光标不保持
+            return thisContents == otherContents;
         }
     });
 
@@ -15918,14 +15918,21 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
         },
 
         _init: function () {
-            var self = this;
+            var self = this,
+                editor = self.editor;
             self._keyMonitor();
-            //先save一下,why??
-            //初始状态保存，异步，必须等use中已经 set 了编辑器中初始代码
-            //必须在从 textarea 复制到编辑区域前，use所有plugin，为了过滤插件生效
-            //而这段代码必须在从 textarea 复制到编辑区域后运行，所以设个延迟
             setTimeout(function () {
-                self.save();
+                // 只初始化保存一次，切换模式不保存
+                if (editor.get('mode') == Editor.WYSIWYG_MODE) {
+                    if (editor.isDocReady()) {
+                        self.save();
+                    } else {
+                        editor.on('docReady', function () {
+                            self.save();
+                            editor.detach('docReady', arguments.callee);
+                        });
+                    }
+                }
             }, 0);
         },
 
@@ -15933,13 +15940,13 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
          * 保存历史
          */
         save: function (buffer) {
+
             var editor = this.editor;
 
             // 代码模式下不和可视模式下混在一起
             if (editor.get("mode") != Editor.WYSIWYG_MODE) {
                 return;
             }
-
 
             if (!editor.get("document")) {
                 return;
@@ -15952,21 +15959,23 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
 
             var self = this,
                 history = self.history,
+                l = history.length,
                 index = self.index;
 
             //前面的历史抛弃
-            if (history.length > index + 1)
-                history.splice(index + 1, history.length - index - 1);
+            l = Math.min(l, index + 1);
 
-            var last = history[history.length - 1],
+            var last = history[l - 1],
                 current = new Snapshot(editor);
 
             if (!last || !last.equals(current)) {
-                if (history.length === LIMIT) {
+                history.length = l;
+                if (l === LIMIT) {
                     history.shift();
+                    l--;
                 }
                 history.push(current);
-                self.index = index = history.length - 1;
+                self.index = index = l;
                 editor.fire("afterSave", {history: history, index: index});
             }
         },
@@ -15978,7 +15987,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
 
             // 代码模式下不和可视模式下混在一起
             if (this.editor.get("mode") != Editor.WYSIWYG_MODE) {
-                return;
+                return undefined;
             }
 
             var self = this,
@@ -15989,9 +15998,9 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
 
             if (snapshot) {
                 editorDomBody.innerHTML = snapshot.contents;
-                if (snapshot.bookmarks)
+                if (snapshot.bookmarks) {
                     editor.getSelection().selectBookmarks(snapshot.bookmarks);
-                else if (UA['ie']) {
+                } else if (UA['ie']) {
                     // IE BUG: If I don't set the selection to *somewhere* after setting
                     // document contents, then IE would create an empty paragraph at the bottom
                     // the next time the document is modified.
@@ -16005,7 +16014,7 @@ KISSY.add("editor/plugin/undo/cmd", function (S, Editor) {
                     selection.scrollIntoView();
                 }
                 self.index += d;
-                editor.fire(d > 0 ? "afterUndo" : "afterRedo", {
+                editor.fire(d < 0 ? "afterUndo" : "afterRedo", {
                     history: history,
                     index: self.index
                 });
@@ -16054,28 +16063,28 @@ KISSY.add("editor/plugin/undo/index", function (S, Editor, Btn, cmd) {
     function undo() {
     }
 
-
     S.augment(undo, {
-        pluginRenderUI:function (editor) {
-            cmd.init(editor);
-
+        pluginRenderUI: function (editor) {
+            // 先 button 绑定事件
             editor.addButton("undo", {
-                mode:Editor.WYSIWYG_MODE,
-                tooltip:"撤销",
-                editor:editor
+                mode: Editor.WYSIWYG_MODE,
+                tooltip: "撤销",
+                editor: editor
             }, Btn.UndoBtn);
 
             editor.addButton("redo", {
-                mode:Editor.WYSIWYG_MODE,
-                tooltip:"重做",
-                editor:editor
+                mode: Editor.WYSIWYG_MODE,
+                tooltip: "重做",
+                editor: editor
             }, Btn.RedoBtn);
+            cmd.init(editor);
         }
     });
 
     return undo;
+
 }, {
-    requires:['editor', './btn', './cmd']
+    requires: ['editor', './btn', './cmd']
 });/**
  * ol command
  * @author yiminghe@gmail.com

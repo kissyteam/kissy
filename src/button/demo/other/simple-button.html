@@ -37,6 +37,11 @@
     <div id="button_container"></div>
     <label>禁用：<input type="checkbox" id='dis'/></label>
 
+
+    <h2>初始禁用</h2>
+
+    <div id="button_container2"></div>
+
     <h2>从已知元素生成</h2>
 
     <div id="exist" class="ks-button">渐进增强</div>
@@ -52,8 +57,7 @@
 <script src="../../../log.js"></script>
 <script>
 
-    KISSY.Config.tag = Math.random();
-    KISSY.use("node,button,component", function (S, Node, Button, Component) {
+    KISSY.use("node,button,component/base", function (S, Node, Button, Component) {
         // view
         // render to container : button_container
         // controller
@@ -71,6 +75,13 @@
                 log("button click");
             }, 0);
         });
+
+        new Button({
+            content: "disabled",
+            disabled:true,
+            describedby: "describe",
+            render: "#button_container2"
+        }).render();
 
         var dis = Node.one("#dis");
 
