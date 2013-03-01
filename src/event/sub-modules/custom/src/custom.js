@@ -14,20 +14,20 @@ KISSY.add('event/custom', function (S, Event, api, ObservableCustomEvent) {
         }
     });
 
-    var custom = S.mix({
+    var Custom = S.mix({
         _ObservableCustomEvent: ObservableCustomEvent,
         Target: Target
     }, api);
 
     S.mix(Event, {
         Target: Target,
-        custom: custom
+        Custom: Custom
     });
 
     // compatibility
     S.EventTarget = Target;
 
-    return custom;
+    return Custom;
 }, {
     requires: ['./base', './custom/api-impl', './custom/observable']
 });

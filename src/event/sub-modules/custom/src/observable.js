@@ -79,33 +79,34 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
                 type = self.type,
                 defaultFn = self.defaultFn,
                 i,
-                customEvent = eventData,
+                customEventObject = eventData,
                 gRet, ret;
 
             eventData.type = type;
 
-            if (!(customEvent instanceof  CustomEventObject)) {
-                customEvent.target = currentTarget;
-                customEvent = new CustomEventObject(customEvent);
+            if (!(customEventObject instanceof  CustomEventObject)) {
+                customEventObject.target = currentTarget;
+                customEventObject = new CustomEventObject(customEventObject);
             }
 
-            customEvent.currentTarget = currentTarget;
+            customEventObject.currentTarget = currentTarget;
 
-            ret = self.notify(customEvent);
+            ret = self.notify(customEventObject);
 
             if (gRet !== false) {
                 gRet = ret;
             }
 
-            if (bubbles) {
+            // gRet === false prevent
+            if (bubbles && !customEventObject.isPropagationStopped()) {
 
                 parents = api.getTargets(currentTarget, 1);
 
                 parentsLen = parents && parents.length || 0;
 
-                for (i = 0; i < parentsLen && !customEvent.isPropagationStopped(); i++) {
+                for (i = 0; i < parentsLen && !customEventObject.isPropagationStopped(); i++) {
 
-                    ret = api.fire(parents[i], type, customEvent);
+                    ret = api.fire(parents[i], type, customEventObject);
 
                     // false 优先返回
                     if (gRet !== false) {
@@ -115,12 +116,16 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
                 }
             }
 
-            if (defaultFn && !customEvent.isDefaultPrevented()) {
-                var lowestCustomEvent = ObservableCustomEvent.getCustomEvent(customEvent.target,
-                    customEvent.type);
+            // bubble first
+            // parent defaultFn first
+            // child defaultFn last
+            if (defaultFn && !customEventObject.isDefaultPrevented()) {
+                var lowestCustomEvent = ObservableCustomEvent.getCustomEvent(customEventObject.target,
+                    customEventObject.type);
                 if ((!self.defaultTargetOnly && !lowestCustomEvent.defaultTargetOnly) ||
-                    self == customEvent.target) {
-                    defaultFn.call(self);
+                    currentTarget == customEventObject.target) {
+                    // default value as final value if possible
+                    gRet = defaultFn.call(currentTarget, customEventObject);
                 }
             }
 
@@ -147,6 +152,7 @@ KISSY.add('event/custom/observable', function (S, api, CustomEventObserver, Cust
                     gRet = ret;
                 }
                 if (ret === false) {
+                    // not immediate stop
                     event.halt();
                 }
             }

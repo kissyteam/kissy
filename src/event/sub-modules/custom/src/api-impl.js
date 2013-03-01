@@ -59,7 +59,7 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
 
                     if (customEvent) {
 
-                        if (!customEvent.hasObserver()) {
+                        if (!customEvent.hasObserver() && !customEvent.defaultFn) {
 
                             if (customEvent.bubbles && !hasTargets || !customEvent.bubbles) {
                                 return;
@@ -99,6 +99,10 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
                 });
 
                 return target;
+            },
+
+            getCustomEvent:function(target,type,create){
+                return ObservableCustomEvent.getCustomEvent(target,type,create);
             },
 
             /**

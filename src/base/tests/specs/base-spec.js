@@ -1,5 +1,5 @@
 /**
- * @author lifesinger@gmail.com
+ * @author lifesinger@gmail.com, yiminghe@gmail.com
  */
 
 KISSY.use("base", function (S, Base) {
@@ -138,6 +138,47 @@ KISSY.use("base", function (S, Base) {
                 expect(ev.newVal).toBe(4);
             });
             a.set('attr3', 4);
+        });
+
+
+        it('can preventDefault beforeChange to prevent set', function () {
+            function A() {
+                Base.call(this);
+            }
+
+            S.extend(A, Base);
+
+            var a = new A();
+
+            // use 'return false' to cancel set
+            a.set('attr2', 2);
+            a.on('beforeAttr2Change', function (e) {
+                e.preventDefault();
+            });
+            a.set('attr2', 3);
+            expect(a.get('attr2')).toBe(2);
+        });
+
+
+        it('can stopImmediatePropagation beforeChange', function () {
+            function A() {
+                Base.call(this);
+            }
+
+            S.extend(A, Base);
+
+            var a = new A();
+
+            // use 'return false' to cancel set
+            a.set('attr2', 2);
+            a.on('beforeAttr2Change', function (e) {
+                e.stopImmediatePropagation();
+            });
+            a.on('beforeAttr2Change', function (e) {
+                e.preventDefault();
+            });
+            a.set('attr2', 3);
+            expect(a.get('attr2')).toBe(3);
         });
 
         it('transfer default value to value', function () {

@@ -11,8 +11,8 @@ KISSY.use("base", function (S, Base) {
             }
 
             a.ATTRS = {
-                x:{
-                    getter:function () {
+                x: {
+                    getter: function () {
                         return 1;
                     }
                 }
@@ -26,8 +26,8 @@ KISSY.use("base", function (S, Base) {
             }
 
             b.ATTRS = {
-                x:{
-                    value:2
+                x: {
+                    value: 2
                 }
             };
             S.extend(b, a);
@@ -46,8 +46,8 @@ KISSY.use("base", function (S, Base) {
             }
 
             a.ATTRS = {
-                tt:{
-                    validator:function (v) {
+                tt: {
+                    validator: function (v) {
                         return v > 1;
                     }
                 }
@@ -70,20 +70,23 @@ KISSY.use("base", function (S, Base) {
 
         it("support validators", function () {
 
+            var validatorCalled = 0;
+
             function Aa() {
                 Aa.superclass.constructor.apply(this, S.makeArray(arguments));
             }
 
             Aa.ATTRS = {
-                tt:{
-                    validator:function (v, name, all) {
+                tt: {
+                    validator: function (v, name, all) {
+                        validatorCalled++;
                         if (all && (v > all["t"])) {
                             return "tt>t!";
                         }
                     }
                 },
-                t:{
-                    validator:function (v) {
+                t: {
+                    validator: function (v) {
                         if (v < 0) {
                             return "t<0!";
                         }
@@ -97,36 +100,38 @@ KISSY.use("base", function (S, Base) {
             var t = new Aa(),
                 e1;
 
+            validatorCalled = 0;
             expect(t.set("t", -1, {
-                error:function (v) {
+                error: function (v) {
                     e1 = v;
                 }
             })).toBe(false);
-
+            expect(validatorCalled).toBe(0);
             expect(e1).toBe("t<0!");
             expect(t.get("t")).not.toBe(-1);
 
             var e2;
 
+            validatorCalled = 0;
             expect(t.set({
-                tt:2,
-                t:-1
+                tt: 2,
+                t: -1
             }, {
-                error:function (v) {
+                error: function (v) {
                     e2 = v;
                 }
             })).toBe(false);
-
+            expect(validatorCalled).toBe(1);
             expect(e2.sort()).toEqual(["t<0!", "tt>t!"].sort());
             expect(t.get("t")).not.toBe(-1);
             expect(t.get("tt")).not.toBe(2);
 
             var e3;
             expect(t.set({
-                tt:3,
-                t:4
+                tt: 3,
+                t: 4
             }, {
-                error:function (v) {
+                error: function (v) {
                     e3 = v;
                 }
             })).not.toBe(false);
@@ -144,14 +149,14 @@ KISSY.use("base", function (S, Base) {
             }
 
             a.ATTRS = {
-                tt:{
+                tt: {
                     // do not  use this in real world code
                     // forbid changing value in getter
-                    getter:function (v) {
-                        this.__getter=1;
+                    getter: function (v) {
+                        this.__getter = 1;
                         return v;
                     },
-                    setter:function (v) {
+                    setter: function (v) {
                         v.x.y++;
                         return v;
                     }
@@ -161,9 +166,9 @@ KISSY.use("base", function (S, Base) {
             S.extend(a, Base);
 
             var t = new a({
-                tt:{
-                    x:{
-                        y:1
+                tt: {
+                    x: {
+                        y: 1
                     }
                 }
             });
@@ -186,11 +191,11 @@ KISSY.use("base", function (S, Base) {
             expect(t.__getter).toBe(1);
 
             t.set("tt.x.y", 3);
-            t.__getter=0;
+            t.__getter = 0;
             expect(t.get("tt.x.y")).toBe(4);
             expect(t.__getter).toBe(1);
 
-            expect(ret).toEqual([2,3,2,4]);
+            expect(ret).toEqual([2, 3, 2, 4]);
         });
 
         it("set sub attr even if not exist attr", function () {
@@ -204,19 +209,20 @@ KISSY.use("base", function (S, Base) {
 
             a.set("x.y", 1);
 
-            expect(a.get("x")).toEqual({y:1});
+            expect(a.get("x")).toEqual({y: 1});
 
             expect(a.get("x.y")).toBe(1);
 
         });
-
+/*
+        // 1.4 does not support!
         it("set sub attr differently if declared previously", function () {
             function A() {
                 A.superclass.constructor.apply(this, S.makeArray(arguments));
             }
 
             A.ATTRS = {
-                "x.y":{}
+                "x.y": {}
             };
 
             S.extend(A, Base);
@@ -229,6 +235,7 @@ KISSY.use("base", function (S, Base) {
 
             expect(a.get("x.y")).toBe(1);
         });
+*/
 
         it("validator works for subAttrs", function () {
             (function () {
@@ -237,8 +244,8 @@ KISSY.use("base", function (S, Base) {
                 }
 
                 A.ATTRS = {
-                    "x.y":{
-                        validator:function (v) {
+                    "x": {
+                        validator: function (v) {
                             return v > 1;
                         }
                     }
@@ -248,24 +255,24 @@ KISSY.use("base", function (S, Base) {
 
                 var a = new A();
 
-                a.set("x.y", 2);
+                a.set("x", 2);
 
-                expect(a.get("x.y")).toBe(2);
+                expect(a.get("x")).toBe(2);
 
-                a.set("x.y", -1);
+                a.set("x", -1);
 
-                expect(a.get("x.y")).toBe(2);
+                expect(a.get("x")).toBe(2);
 
 
                 a = new A();
 
-                a.set({"x.y":2});
+                a.set({"x": 2});
 
-                expect(a.get("x.y")).toBe(2);
+                expect(a.get("x")).toBe(2);
 
-                a.set({"x.y":-1});
+                a.set({"x": -1});
 
-                expect(a.get("x.y")).toBe(2);
+                expect(a.get("x")).toBe(2);
             })();
 
             (function () {
@@ -274,8 +281,8 @@ KISSY.use("base", function (S, Base) {
                 }
 
                 A.ATTRS = {
-                    "x":{
-                        validator:function (v) {
+                    "x": {
+                        validator: function (v) {
                             return v.y > 10;
                         }
                     }
@@ -292,12 +299,12 @@ KISSY.use("base", function (S, Base) {
                 a = new A();
 
                 a.set({
-                    "x.y":20
+                    "x.y": 20
                 });
 
                 expect(a.get("x.y")).toBe(20);
 
-                a.set({"x.y":9});
+                a.set({"x.y": 9});
 
                 expect(a.get("x.y")).toBe(20);
             })();
@@ -310,13 +317,13 @@ KISSY.use("base", function (S, Base) {
 
             S.extend(a, Base);
 
-            var aa = new a({x:1, y:{z:1}}),
+            var aa = new a({x: 1, y: {z: 1}}),
                 ok = 0,
                 afterAttrChange = {};
 
             aa.on("*Change", function (e) {
-                expect(e.newVal).toEqual([11, {z:22}]);
-                expect(e.prevVal).toEqual([1, {z:1}]);
+                expect(e.newVal).toEqual([11, {z: 22}]);
+                expect(e.prevVal).toEqual([1, {z: 1}]);
                 expect(e.attrName).toEqual(["x", "y"]);
                 expect(e.subAttrName).toEqual(["x", "y.z"]);
                 ok++;
@@ -330,15 +337,15 @@ KISSY.use("base", function (S, Base) {
             });
             aa.on("afterYChange", function (e) {
                 expect(e.attrName).toBe("y");
-                expect(e.newVal).toEqual({z:22});
-                expect(e.prevVal).toEqual({z:1});
+                expect(e.newVal).toEqual({z: 22});
+                expect(e.prevVal).toEqual({z: 1});
                 expect(e.subAttrName).toBe("y.z");
                 afterAttrChange.y = 1;
             });
 
             aa.set({
-                x:11,
-                "y.z":22
+                x: 11,
+                "y.z": 22
             });
 
             expect(aa.get("x")).toBe(11);

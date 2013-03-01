@@ -3,12 +3,14 @@
  * attribute management
  * @author yiminghe@gmail.com, lifesinger@gmail.com
  */
-KISSY.add('base/attribute', function (S, undefined) {
+KISSY.add('base/attribute', function (S, EventCustom, undefined) {
 
     // atomic flag
     Attribute.INVALID = {};
 
     var INVALID = Attribute.INVALID;
+
+    var FALSE = false;
 
     function normalFn(host, method) {
         if (typeof method == 'string') {
@@ -17,10 +19,14 @@ KISSY.add('base/attribute', function (S, undefined) {
         return method;
     }
 
+    function whenAttrChangeEventName(when, name) {
+        return when + S.ucfirst(name) + 'Change';
+    }
+
     // fire attribute value change
     function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName) {
         attrName = attrName || name;
-        return self.fire(when + S.ucfirst(name) + 'Change', {
+        return self.fire(whenAttrChangeEventName(when, name), {
             attrName: attrName,
             subAttrName: subAttrName,
             prevVal: prevVal,
@@ -94,13 +100,10 @@ KISSY.add('base/attribute', function (S, undefined) {
         return s;
     }
 
-    function getPathNamePair(self, name) {
-        var declared = self.hasAttr(name), path;
+    function getPathNamePair(name) {
+        var path;
 
-        if (
-        // 声明过，那么 xx.yy 当做普通属性
-            !declared &&
-                name.indexOf('.') !== -1) {
+        if (name.indexOf('.') !== -1) {
             path = name.split('.');
             name = path.shift();
         }
@@ -124,19 +127,26 @@ KISSY.add('base/attribute', function (S, undefined) {
         return tmp;
     }
 
-    function setInternal(self, name, value, opts, attrs) {
-        opts = opts || {};
+    function prepareDefaultSetFn(self, name) {
+        var beforeChangeEventName = whenAttrChangeEventName('before', name),
+            customEvent = EventCustom.getCustomEvent(self, beforeChangeEventName, 1);
+        if (!customEvent.defaultFn) {
+            customEvent.defaultFn = defaultSetFn;
+        }
+    }
 
-        var ret,
-            path,
+    function setInternal(self, name, value, opts, attrs) {
+        var path,
             subVal,
             prevVal,
-            pathNamePair = getPathNamePair(self, name),
+            pathNamePair = getPathNamePair(name),
             fullName = name;
 
         name = pathNamePair.name;
         path = pathNamePair.path;
         prevVal = self.get(name);
+
+        prepareDefaultSetFn(self, name);
 
         if (path) {
             subVal = getValueByPath(prevVal, path);
@@ -151,16 +161,42 @@ KISSY.add('base/attribute', function (S, undefined) {
 
         value = getValueBySubValue(prevVal, path, value);
 
+        var beforeEventObject = {
+            attrName: name,
+            subAttrName: fullName,
+            prevVal: prevVal,
+            newVal: value,
+            _opts: opts,
+            _attrs: attrs
+        };
+
         // check before event
-        if (!opts['silent']) {
-            if (false === __fireAttrChange(self, 'before', name, prevVal, value, fullName)) {
-                return false;
+        if (opts['silent']) {
+            if (FALSE === defaultSetFn.call(self, beforeEventObject)) {
+                return FALSE;
+            }
+        } else {
+            if (FALSE === self.fire(whenAttrChangeEventName('before', name), beforeEventObject)) {
+                return FALSE;
             }
         }
-        // set it
-        ret = self.setInternal(name, value, opts);
 
-        if (ret === false) {
+        return self;
+    }
+
+    function defaultSetFn(e) {
+        var self = this,
+            value = e.newVal,
+            prevVal = e.prevVal,
+            name = e.attrName,
+            fullName = e.subAttrName,
+            attrs = e._attrs,
+            opts = e._opts;
+
+        // set it
+        var ret = self.setInternal(name, value);
+
+        if (ret === FALSE) {
             return ret;
         }
 
@@ -168,21 +204,22 @@ KISSY.add('base/attribute', function (S, undefined) {
         if (!opts['silent']) {
             value = getAttrVals(self)[name];
             __fireAttrChange(self, 'after', name, prevVal, value, fullName);
-            if (!attrs) {
-                __fireAttrChange(self,
-                    '', '*',
-                    [prevVal], [value],
-                    [fullName], [name]);
-            } else {
+            if (attrs) {
                 attrs.push({
                     prevVal: prevVal,
                     newVal: value,
                     attrName: name,
                     subAttrName: fullName
                 });
+            } else {
+                __fireAttrChange(self,
+                    '', '*',
+                    [prevVal], [value],
+                    [fullName], [name]);
             }
         }
-        return self;
+
+        return undefined;
     }
 
     /**
@@ -259,11 +296,12 @@ KISSY.add('base/attribute', function (S, undefined) {
         addAttr: function (name, attrConfig, override) {
             var self = this,
                 attrs = getAttrs(self),
+                attr,
                 cfg = S.clone(attrConfig);
-            if (!attrs[name]) {
-                attrs[name] = cfg;
+            if (attr = attrs[name]) {
+                S.mix(attr, cfg, override);
             } else {
-                S.mix(attrs[name], cfg, override);
+                attrs[name] = cfg;
             }
             return self;
         },
@@ -316,12 +354,14 @@ KISSY.add('base/attribute', function (S, undefined) {
          * @param [value] attribute 's value
          * @param {Object} [opts] some options
          * @param {Boolean} [opts.silent] whether fire change event
+         * @param {Function} [opts.error] error handler
          * @return {Boolean} whether pass validator
          */
         set: function (name, value, opts) {
             var self = this;
             if (S.isPlainObject(name)) {
                 opts = value;
+                opts = opts || {};
                 var all = Object(name),
                     attrs = [],
                     e,
@@ -334,10 +374,10 @@ KISSY.add('base/attribute', function (S, undefined) {
                     }
                 }
                 if (errors.length) {
-                    if (opts && opts.error) {
-                        opts.error(errors);
+                    if (opts['error']) {
+                        opts['error'](errors);
                     }
-                    return false;
+                    return FALSE;
                 }
                 for (name in all) {
                     setInternal(self, name, all[name], opts, attrs);
@@ -363,6 +403,16 @@ KISSY.add('base/attribute', function (S, undefined) {
                 }
                 return self;
             }
+            opts = opts || {};
+            // validator check
+            e = validate(self, name, value);
+
+            if (e !== undefined) {
+                if (opts['error']) {
+                    opts['error'](e);
+                }
+                return FALSE;
+            }
             return setInternal(self, name, value, opts);
         },
 
@@ -370,26 +420,15 @@ KISSY.add('base/attribute', function (S, undefined) {
          * internal use, no event involved, just set.
          * @protected
          */
-        setInternal: function (name, value, opts) {
+        setInternal: function (name, value) {
             var self = this,
-                setValue,
+                setValue = undefined,
             // if host does not have meta info corresponding to (name,value)
             // then register on demand in order to collect all data meta info
             // 一定要注册属性元数据，否则其他模块通过 _attrs 不能枚举到所有有效属性
             // 因为属性在声明注册前可以直接设置值
-                e,
                 attrConfig = ensureNonEmpty(getAttrs(self), name, true),
                 setter = attrConfig['setter'];
-
-            // validator check
-            e = validate(self, name, value);
-
-            if (e !== undefined) {
-                if (opts.error) {
-                    opts.error(e);
-                }
-                return false;
-            }
 
             // if setter has effect
             if (setter && (setter = normalFn(self, setter))) {
@@ -397,16 +436,17 @@ KISSY.add('base/attribute', function (S, undefined) {
             }
 
             if (setValue === INVALID) {
-                return false;
+                return FALSE;
             }
 
             if (setValue !== undefined) {
                 value = setValue;
             }
 
-
             // finally set
             getAttrVals(self)[name] = value;
+
+            return undefined;
         },
 
         /**
@@ -418,12 +458,11 @@ KISSY.add('base/attribute', function (S, undefined) {
             var self = this,
                 dot = '.',
                 path,
-                declared = self.hasAttr(name),
                 attrVals = getAttrVals(self),
                 attrConfig,
                 getter, ret;
 
-            if (!declared && name.indexOf(dot) !== -1) {
+            if (name.indexOf(dot) !== -1) {
                 path = name.split(dot);
                 name = path.shift();
             }
@@ -474,7 +513,8 @@ KISSY.add('base/attribute', function (S, undefined) {
                 }
             }
 
-            opts = name;
+            opts = /**@type Object
+             @ignore*/(name);
 
             var attrs = getAttrs(self),
                 values = {};
@@ -512,7 +552,7 @@ KISSY.add('base/attribute', function (S, undefined) {
     function validate(self, name, value, all) {
         var path, prevVal, pathNamePair;
 
-        pathNamePair = getPathNamePair(self, name);
+        pathNamePair = getPathNamePair(name);
 
         name = pathNamePair.name;
         path = pathNamePair.path;
@@ -535,6 +575,8 @@ KISSY.add('base/attribute', function (S, undefined) {
     }
 
     return Attribute;
+}, {
+    requires: ['event/custom']
 });
 
 /*
