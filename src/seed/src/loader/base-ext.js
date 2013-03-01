@@ -26,6 +26,11 @@
     }
 
     S.augment(Package, {
+
+        reset: function (cfg) {
+            S.mix(this, cfg);
+        },
+
         /**
          * Tag for package.
          * @return {String}

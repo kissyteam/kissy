@@ -68,7 +68,11 @@
                 cfg.baseUri = baseUri;
                 cfg.runtime = S;
                 delete cfg.path;
-                ps[name] = new Loader.Package(cfg);
+                if (ps[name]) {
+                    ps[name].reset(cfg);
+                } else {
+                    ps[name] = new Loader.Package(cfg);
+                }
             });
             return undefined;
         } else if (cfgs === false) {
