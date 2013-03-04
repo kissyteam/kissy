@@ -7,6 +7,7 @@ KISSY.add('component/base/box-render', function (S) {
 
     var $ = S.all,
         UA = S.UA,
+        elTpl='<div class="{cls}"></div>',
         doc = S.Env.host.document;
 
     function BoxRender() {
@@ -65,27 +66,23 @@ KISSY.add('component/base/box-render', function (S) {
         __createDom: function () {
             var self = this,
                 el,
-                css = self.getCssClassWithState(),
-                tagName,
+                cls = self.getCssClassWithState(),
                 contentEl;
             if (!(el = self.get('srcNode'))) {
                 contentEl = self.get('contentEl');
-                tagName = 'div';
-                el = $('<' + tagName + ' class="' +
-                    css + '">' + '</' + tagName + '>');
-
+                el = $(S.substitute(elTpl,{
+                    cls:cls
+                }));
                 if (contentEl) {
                     el.append(contentEl);
                 }
-
                 self.setInternal('el', el);
-
                 if (!contentEl) {
                     // 没取到,这里设下值, uiSet 时可以 set('content')  取到
                     self.setInternal('contentEl', el);
                 }
             } else {
-                el.addClass(css);
+                el.addClass(cls);
             }
         },
 

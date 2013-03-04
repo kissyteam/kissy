@@ -78,6 +78,10 @@ KISSY.add("overlay/extension/stdmod-render", function (S, Node) {
             createUI(this, "footer");
         },
 
+        getContentElement: function () {
+            return this.get('body');
+        },
+
         '_onSetBodyStyle': function (v) {
             this.get("body").css(v);
         },

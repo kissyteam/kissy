@@ -59,7 +59,7 @@ KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender) {
                 return el.one("." + this.get('prefixCls')+MENU_FILTER)
                     .one("." + this.get('prefixCls')+MENU_FILTER_LABEL)
             },
-            filterWrap:function (el) {
+            'filterWrap':function (el) {
                 return el.one("." + this.get('prefixCls')+MENU_FILTER);
             },
             menuContent:function (el) {

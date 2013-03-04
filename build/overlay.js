@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:02
+build time: Mar 4 11:53
 */
 /**
  * @ignore
@@ -38,7 +38,7 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mas
              *
              * Defaults to: false.
              *
-             * @cfg {boolean} focusable
+             * @cfg {Boolean} focusable
              * @protected
              */
             /**
@@ -53,7 +53,7 @@ KISSY.add("overlay/base", function (S, Component, Extension, Loading, Close, Mas
              *
              * Defaults to: true.
              *
-             * @cfg {boolean} allowTextSelection
+             * @cfg {Boolean} allowTextSelection
              * @protected
              */
             /**
@@ -1074,6 +1074,10 @@ KISSY.add("overlay/extension/stdmod-render", function (S, Node) {
             createUI(this, "header");
             createUI(this, "body");
             createUI(this, "footer");
+        },
+
+        getContentElement: function () {
+            return this.get('body');
         },
 
         '_onSetBodyStyle': function (v) {
