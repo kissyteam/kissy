@@ -16,20 +16,14 @@
         ],
     // nodejs
         doc = win.document || {},
+        documentMode = doc.documentMode,
         isTransitionSupported = false,
         transitionPrefix = '',
         documentElement = doc.documentElement,
         documentElementStyle,
     // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
         isTouchSupported = ('ontouchstart' in doc) && !(UA.phantomjs),
-        documentMode = doc.documentMode,
-        ie = documentMode || UA.ie,
-        isNativeJSONSupported = ((UA.nodejs && typeof global === 'object') ? global : win).JSON;
-
-    // ie 8.0.7600.16315@win7 json bug!
-    if (documentMode && documentMode < 9) {
-        isNativeJSONSupported = 0;
-    }
+        ie = documentMode || UA.ie;
 
     if (documentElement) {
         documentElementStyle = documentElement.style;
@@ -79,15 +73,6 @@
             return ( 'onhashchange' in win) && (!ie || ie > 7);
         },
 
-        /**
-         * whether support native json
-         * @method
-         * @return {Boolean}
-         */
-        isNativeJSONSupported: function () {
-            return isNativeJSONSupported;
-        },
-
         'isTransitionSupported': function () {
             return isTransitionSupported;
         },
@@ -96,5 +81,4 @@
             return transitionPrefix;
         }
     };
-
 })(KISSY);

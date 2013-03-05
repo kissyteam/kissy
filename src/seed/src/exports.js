@@ -23,6 +23,23 @@
         return S.Path
     });
 
+    var UA = S.UA,
+        Env = S.Env,
+        win = Env.host,
+        doc = win.document || {},
+        documentMode = doc.documentMode,
+        nativeJSON = ((UA.nodejs && typeof global === 'object') ? global : win).JSON;
+
+    // ie 8.0.7600.16315@win7 json bug!
+    if (documentMode && documentMode < 9) {
+        nativeJSON = null;
+    }
+
+    if (nativeJSON) {
+        KISSY.add('json', function () {
+            return S.JSON = nativeJSON;
+        });
+    }
 
     // exports for nodejs
     if (S.UA.nodejs) {

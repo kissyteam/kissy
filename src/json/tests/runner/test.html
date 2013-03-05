@@ -13,12 +13,18 @@
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
 
     <script src="/kissy/build/seed.js"></script>
-    <script src="../../sub-modules/facade/src/facade.js"></script>
-    <script src="../../sub-modules/json2/src/json2.js"></script>
+    <script>
+        delete KISSY.Env.mods['json'];
+    </script>
+    <script src="../../src/stringify.js"></script>
+    <script src="../../src/ast.js"></script>
+    <script src="../../src/parse.js"></script>
+    <script src="../../src/parser.js"></script>
+    <script src="../../src/json.js"></script>
     <script src="../specs/json-spec.js"></script>
 </head>
 <body>
-<h1>KISSY.Json Test Cases</h1>
+<h1>JSON Test Cases</h1>
 <script>
     KISSY.use('json', function () {
         jasmine.getEnv().addReporter(new jasmine.TrivialReporter());

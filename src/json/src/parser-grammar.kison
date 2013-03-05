@@ -1,0 +1,173 @@
+/**
+ * lalr grammar and lexer rules for json.
+ * @author yiminghe@gmail.com
+ */
+(function () {
+
+    return {
+        productions: [
+            {
+                symbol: 'value',
+                rhs: ['STRING'],
+                action: function () {
+                    return new this.yy.StringNode(this.$1);
+                }
+            },
+            {
+                symbol: 'value',
+                rhs: ['NUMBER'],
+                action: function () {
+                    return new this.yy.NumberNode(this.$1);
+                }
+            },
+            {
+                symbol: 'value',
+                rhs: ['object'],
+                action: function () {
+                    return this.$1;
+                }
+            },
+            {
+                symbol: 'value',
+                rhs: ['array'],
+                action: function () {
+                    return this.$1;
+                }
+            },
+            {
+                symbol: 'value',
+                rhs: ['TRUE'],
+                action: function () {
+                    return new this.yy.BooleanNode(true);
+                }
+            },
+            {
+                symbol: 'value',
+                rhs: ['FALSE'],
+                action: function () {
+                    return new this.yy.BooleanNode(false);
+                }
+            },
+            {
+                symbol: 'value',
+                rhs: ['NULL'],
+                action: function () {
+                    return new this.yy.ObjectNode(null);
+                }
+            },
+            {
+                symbol: 'elements',
+                rhs: ['value'],
+                action: function () {
+                    return [ this.$1 ];
+                }
+            },
+            {
+                symbol: 'elements',
+                rhs: ['elements', 'COMMA', 'value'],
+                action: function () {
+                    return this.$1[ this.$1.length ] = this.$3;
+                }
+            },
+            {
+                symbol: 'array',
+                rhs: ['LEFT_BRACKET', 'RIGHT_BRACKET'],
+                action: function () {
+                    return new this.yy.ArrayNode([]);
+                }
+            },
+            {
+                symbol: 'array',
+                rhs: ['LEFT_BRACKET', 'elements', 'RIGHT_BRACKET'],
+                action: function () {
+                    return new this.yy.ArrayNode(this.$2);
+                }
+            },
+            {
+                symbol: 'pair',
+                rhs: ['STRING', 'COLON', 'value'],
+                action: function () {
+                    return new this.yy.PairNode(this.$1, this.$3);
+                }
+            },
+            {
+                symbol: 'members',
+                rhs: ['pair'],
+                action: function () {
+                    return [ this.$1 ];
+                }
+            },
+            {
+                symbol: 'members',
+                rhs: ['members', 'COMMA', 'pair'],
+                action: function () {
+                    return this.$1[this.$1.length] = this.$3;
+                }
+            },
+            {
+                symbol: 'object',
+                rhs: ['LEFT_BRACE', 'RIGHT_BRACE'],
+                action: function () {
+                    return new this.yy.ObjectNode({});
+                }
+            },
+            {
+                symbol: 'object',
+                rhs: ['LEFT_BRACE', 'members', 'RIGHT_BRACE'],
+                action: function () {
+                    return new this.yy.ObjectNode(this.$2);
+                }
+            }
+        ],
+        lexer: {
+            rules: [
+                {
+                    // only allow double quote
+                    regexp: /^"(\\"|\\\\|\\\/|\\b|\\f|\\n|\\r|\\t|\\u[0-9a-zA-Z]{4}|[^\\"\x00-\x1f])*"/,
+                    token: 'STRING'
+                },
+                {
+                    regexp: /^,/,
+                    token: 'COMMA'
+                },
+                {
+                    regexp: /^:/,
+                    token: 'COLON'
+                },
+                {
+                    regexp: /^\[/,
+                    token: 'LEFT_BRACKET'
+                },
+                {
+                    regexp: /^\]/,
+                    token: 'RIGHT_BRACKET'
+                },
+                {
+                    regexp: /^\{/,
+                    token: 'LEFT_BRACE'
+                },
+                {
+                    regexp: /^\}/,
+                    token: 'RIGHT_BRACE'
+                },
+                {
+                    regexp: /^\d+(?:\.\d+)?(?:e-?\d+)?/i,
+                    token: 'NUMBER'
+                },
+                {
+                    regexp: /^true/,
+                    token: 'TRUE'
+                },
+                {
+                    regexp: /^false/,
+                    token: 'FALSE'
+                },
+                {
+                    regexp: /^null/,
+                    token: 'NULL'
+                }
+            ]
+        }
+
+    }
+})();
