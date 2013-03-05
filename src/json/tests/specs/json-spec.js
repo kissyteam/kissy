@@ -14,13 +14,15 @@ KISSY.use("json", function (S, JSON) {
                 expect(JSON.stringify(NaN)).toBe('null');
 
 
-                expect(JSON.stringify({'a': true})).toBe(J.stringify({'a': true}));
+                if (J) {
+                    expect(JSON.stringify({'a': true})).toBe(J.stringify({'a': true}));
 
-                expect(JSON.stringify(true)).toBe(J.stringify(true));
+                    expect(JSON.stringify(true)).toBe(J.stringify(true));
 
-                expect(JSON.stringify(null)).toBe(J.stringify(null));
-                expect(JSON.stringify(undefined)).toBe(J.stringify(undefined));
-                expect(JSON.stringify(NaN)).toBe(J.stringify(NaN));
+                    expect(JSON.stringify(null)).toBe(J.stringify(null));
+                    expect(JSON.stringify(undefined)).toBe(J.stringify(undefined));
+                    expect(JSON.stringify(NaN)).toBe(J.stringify(NaN));
+                }
             });
 
             describe('indent', function () {
@@ -41,11 +43,13 @@ KISSY.use("json", function (S, JSON) {
                         gap + '}' +
                         '\n}');
 
-                    expect(ret).toBe(J.stringify({
-                        'a': {
-                            b: 1
-                        }
-                    }, null, gap));
+                    if (J) {
+                        expect(ret).toBe(J.stringify({
+                            'a': {
+                                b: 1
+                            }
+                        }, null, gap));
+                    }
                 });
 
 
@@ -65,9 +69,11 @@ KISSY.use("json", function (S, JSON) {
                         gap + ']' +
                         '\n}');
 
-                    expect(ret).toBe(J.stringify({
-                        'a': [1]
-                    }, null, gap));
+                    if (J) {
+                        expect(ret).toBe(J.stringify({
+                            'a': [1]
+                        }, null, gap));
+                    }
                 });
 
 
@@ -88,11 +94,13 @@ KISSY.use("json", function (S, JSON) {
                         gap + '}' +
                         '\n}');
 
-                    expect(ret).toBe(J.stringify({
-                        'a': {
-                            b: 1
-                        }
-                    }, null, 2));
+                    if (J) {
+                        expect(ret).toBe(J.stringify({
+                            'a': {
+                                b: 1
+                            }
+                        }, null, 2));
+                    }
                 });
 
 
@@ -112,10 +120,11 @@ KISSY.use("json", function (S, JSON) {
                         gap + ']' +
                         '\n}');
 
-                    expect(ret).toBe(J.stringify({
-                        'a': [1]
-                    }, null, 2));
-
+                    if (J) {
+                        expect(ret).toBe(J.stringify({
+                            'a': [1]
+                        }, null, 2));
+                    }
                 });
             });
 
@@ -145,19 +154,21 @@ KISSY.use("json", function (S, JSON) {
                         gap + '}' +
                         '\n}');
 
-                    expect(ret).toBe(J.stringify({
-                        'a': {
-                            b: {
-                                z: 1
+                    if (J) {
+                        expect(ret).toBe(J.stringify({
+                            'a': {
+                                b: {
+                                    z: 1
+                                }
                             }
-                        }
-                    }, function (key, value) {
-                        if (key == 'b') {
-                            expect(value.z).toBe(1);
-                            return 1;
-                        }
-                        return value;
-                    }, 2));
+                        }, function (key, value) {
+                            if (key == 'b') {
+                                expect(value.z).toBe(1);
+                                return 1;
+                            }
+                            return value;
+                        }, 2));
+                    }
                 });
 
 
@@ -187,19 +198,21 @@ KISSY.use("json", function (S, JSON) {
                         gap + ']' +
                         '\n}');
 
-                    expect(ret).toBe(J.stringify({
-                        'a': [
-                            {
-                                z: 1
+                    if (J) {
+                        expect(ret).toBe(J.stringify({
+                            'a': [
+                                {
+                                    z: 1
+                                }
+                            ]
+                        }, function (key, value) {
+                            if (key === '0') {
+                                expect(value.z).toBe(1);
+                                return 1;
                             }
-                        ]
-                    }, function (key, value) {
-                        if (key === '0') {
-                            expect(value.z).toBe(1);
-                            return 1;
-                        }
-                        return value;
-                    }, 2));
+                            return value;
+                        }, 2));
+                    }
                 });
             });
         });
@@ -208,7 +221,6 @@ KISSY.use("json", function (S, JSON) {
 
             it('should parse a JSON string to the native JavaScript representation', function () {
 
-                debugger
                 expect(JSON.parse('{"test":1}')).toEqual({test: 1});
                 expect(JSON.parse('{}')).toEqual({});
                 expect(JSON.parse('\n{"test":1}')).toEqual({test: 1}); // 去除空白
