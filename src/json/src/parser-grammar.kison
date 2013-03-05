@@ -1,5 +1,6 @@
 /**
  * lalr grammar and lexer rules for json.
+ * refer: http://www.json.org/
  * @author yiminghe@gmail.com
  */
 (function () {
