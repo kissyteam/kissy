@@ -1,0 +1,352 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="viewport" content="width = device-width,initial-scale = 1.0">
+    <title>KISSY Editor Test</title>
+    <link href="http://a.tbcdn.cn/s/kissy/1.3.0rc/css/base.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/editor-common.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/elementpath.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/progressbar.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/smiley.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/upload.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/bubble.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/button.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/draft.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/editor.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/tab.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/table.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/select.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/resize-plugin.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/smiley.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/progressbar.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/overlay.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/menu.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/color.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/xiami.css" rel="stylesheet"/>
+    <link href="../src/editor/theme/cool/code.css" rel="stylesheet"/>
+</head>
+<body>
+<h1 style="font-size: 2em;text-align: center;margin: 2em;">Simple KISSY Editor</h1>
+
+
+<div style="width: 90%;margin: 20px auto;">
+    <p>
+        <label>标题: <input></label>
+    </p>
+
+    <div id="container">
+    </div>
+    <div style="margin: 20px 0;">
+        <button onclick="window.newEditor.destroy();">destroy</button>
+        <button onclick="preview();">预览</button>
+    </div>
+    <div id="previewEl" style="margin: 20px 0;">
+
+    </div>
+</div>
+
+
+<script src="/kissy/build/seed.js"></script>
+<script src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script src="../../../tools/utils/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<link type="text/css" rel="stylesheet"
+      href="../../../tools/utils/syntaxhighlighter_3.0.83/styles/shCoreDefault.css"/>
+
+<script src="dev.js"></script>
+<script>
+(function () {
+    KISSY.use(window.EDITOR_MOD || "editor", function (S, Editor) {
+
+        var cfg = S.mix({
+            // 是否初始聚焦
+            focused: true,
+            attachForm: true,
+            baseZIndex: 10000,
+            data:'我有初始值',
+            // 自定义样式
+            // customStyle:"p{line-height: 1.4;margin: 1.12em 0;padding: 0;}",
+            // 自定义外部样式
+            // customLink:["http://localhost/customLink.css","http://xx.com/y2.css"],
+            // render:"#container",
+            render: '#container',
+            width: '100%',
+            height: "400px"
+        }, window.EDITOR_CFG);
+
+        var plugins = ("source-area" +
+                ",code"+
+                ",separator" +
+                ",bold" +
+                ",italic," +
+                "font-family," +
+                "font-size," +
+                "strike-through," +
+                "underline," +
+                "separator," +
+                "checkbox-source-area" +
+                ",image" +
+                ",link" +
+                ",fore-color" +
+                ",back-color" +
+                ",resize" +
+                ",draft" +
+                ",undo" +
+                ",indent" +
+                ",outdent" +
+                ",unordered-list" +
+                ",ordered-list" +
+                ",element-path" +
+                ",page-break" +
+                ",preview" +
+                ",maximize" +
+                ",remove-format" +
+                ",heading" +
+                ",justify-left" +
+                ",justify-center" +
+                ",justify-right" +
+                ",table" +
+                ",smiley" +
+                ",flash" +
+                ",xiami-music" +
+                ",multiple-upload" +
+                ",video" +
+                ",drag-upload").split(",");
+
+        var fullPlugins = [];
+
+        S.each(plugins, function (p, i) {
+            fullPlugins[i] = "editor/plugin/" + p + "/";
+        });
+
+        var pluginConfig = {
+            link: {
+                target: "_blank"
+            },
+            "image": {
+                defaultMargin: 0,
+                //remote:false,
+                upload: {
+                    serverUrl: window.UPLOAD_SINGLE_URL || "upload.jss",
+                    serverParams: {
+                        waterMark: function () {
+                            return S.one("#ke_img_up_watermark_1")[0].checked;
+                        }
+                    },
+                    suffix: "png,jpg,jpeg,gif",
+                    fileInput: "Filedata",
+                    sizeLimit: 1000, //k
+                    extraHtml: "<p style='margin-top:10px;'><input type='checkbox' id='ke_img_up_watermark_1' checked='checked'> 图片加水印，防止别人盗用</p>"
+                }
+            },
+            "flash": {
+                "defaultWidth": "300",
+                "defaultHeight": "300"
+            },
+            "templates": [
+                {
+                    demo: "模板1效果演示html",
+                    html: "<div style='border:1px solid red'>模板1效果演示html</div><p></p>"
+                },
+                {
+                    demo: "模板2效果演示html",
+                    html: "<div style='border:1px solid red'>模板2效果演示html</div>"
+                }
+            ],
+            "font-size": {
+                matchElWidth: false,
+                menu: {
+                    children: [
+                        {
+                            value: "14px",
+                            textContent: "标准",
+                            elAttrs: {
+                                style: 'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                            },
+                            content: " <span style='font-size:14px'>标准</span>" +
+                                    "<span style='position:absolute;top:1px;right:3px;'>14px</span>"
+                        },
+                        {
+                            value: "16px",
+                            textContent: "大",
+                            elAttrs: {
+                                style: 'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                            },
+                            content: "" +
+                                    " <span style='font-size:16px'>大</span>" +
+                                    "<span style='position:absolute;top:1px;right:3px;'>16px</span>"
+                        },
+                        {
+                            value: "18px",
+                            textContent: "特大",
+                            elAttrs: {
+                                style: 'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                            },
+                            content: "" +
+                                    " <span style='font-size:18px'>特大</span>" +
+                                    "<span style='position:absolute;top:1px;right:3px;'>18px</span>"
+                        },
+                        {
+                            value: "20px",
+                            textContent: "极大",
+                            elAttrs: {
+                                style: 'position: relative; border: 1px solid #DDDDDD; margin: 2px; padding: 2px;'
+                            },
+                            content: "" +
+                                    " <span style='font-size:20px'>极大</span>" +
+                                    "<span style='position:absolute;top:1px;right:3px;'>20px</span>"
+                        }
+                    ],
+                    width: "125px"
+                }
+            },
+            "multiple-upload": {
+                serverUrl: "http://localhost/src/editor/demo/upload.jss",
+                serverParams: {
+                    waterMark: function () {
+                        return S.one("#ke_img_up_watermark_2")[0].checked;
+                    }
+                },
+                //previewSuffix:"_60x60",
+                "previewWidth": "80px",
+                sizeLimit: 1000, //k,, numberLimit:15,
+                extraHtml: "<p style='margin-top:10px;'>" +
+                        "<input type='checkbox' " +
+                        "style='vertical-align:middle;margin:0 5px;' " +
+                        "id='ke_img_up_watermark_2'>" +
+                        "<span style='vertical-align:middle;'>图片加水印，防止别人盗用</span></p>"
+            },
+            "video": {
+                urlCfg: [
+                    {
+                        reg: /tudou\.com/i,
+                        url: "http://bangpai.daily.taobao.net/json/getTudouVideo.htm",
+                        paramName: "url"
+                    }
+                ],
+                "urlTip": "请输入优酷网、土豆网、酷7网的视频播放页链接...",
+                "providers": [
+                    {
+                        // 允许白名单
+                        reg: /taohua\.com/i,
+                        //默认高宽
+                        width: 480,
+                        height: 400,
+                        detect: function (url) {
+                            return url;
+                        }
+                    },
+                    {
+                        reg: /youku\.com/i,
+                        width: 480,
+                        height: 400,
+                        detect: function (url) {
+                            var m = url.match(/id_([^.]+)\.html(\?[^?]+)?$/);
+                            if (m) {
+                                return "http://player.youku.com/player.php/sid/" + m[1] + "/v.swf";
+                            }
+                            m = url.match(/v_playlist\/([^.]+)\.html$/);
+                            if (m) {
+                                return;
+                                //return "http://player.youku.com/player.php/sid/" + m[1] + "/v.swf";
+                            }
+                            return url;
+                        }
+                    },
+                    {
+                        reg: /tudou\.com/i,
+                        width: 480,
+                        height: 400,
+                        detect: function (url) {
+                            return url;
+                        }
+                    },
+                    {
+                        reg: /ku6\.com/i,
+                        width: 480,
+                        height: 400,
+                        detect: function (url) {
+                            var m = url.match(/show[^\/]*\/([^\/]+)\.html(\?[^?]+)?$/);
+                            if (m) {
+                                return "http://player.ku6.com/refer/" + m[1] + "/v.swf";
+                            }
+                            return url;
+                        }
+                    }/*,
+                     {
+                     reg:/taobaocdn\.com/i,
+                     width:480,
+                     height:400,
+                     detect:function(url) {
+                     return url;
+                     }
+                     }*/
+                ]
+            },
+            "draft": {
+                // 当前编辑器的历史是否要单独保存到一个键值而不是公用
+                // saveKey:"xxx",
+                interval: 5,
+                limit: 10,
+                "helpHtml": "<div " +
+                        "style='width:200px;'>" +
+                        "<div style='padding:5px;'>草稿箱能够自动保存您最新编辑的内容，" +
+                        "如果发现内容丢失，" +
+                        "请选择恢复编辑历史</div></div>"
+            },
+            "resize": {
+                //direction:["y"]
+            },
+
+            "drag-upload": {
+                suffix: "png,jpg,jpeg,gif",
+                fileInput: "Filedata",
+                sizeLimit: 1000,
+                serverUrl: "upload.jss",
+                serverParams: {
+                    waterMark: function () {
+                        return true;
+                    }
+                }
+            }
+        };
+
+        KISSY.use(fullPlugins, function (S) {
+            var args = S.makeArray(arguments);
+
+            args.shift();
+
+            S.each(args, function (arg, i) {
+                var argStr = plugins[i], cfg;
+                if (cfg = pluginConfig[argStr]) {
+                    args[i] = new arg(cfg);
+                }
+            });
+
+            cfg.plugins = args;
+            var editor = new Editor(cfg);
+            editor.render();
+            editor.on("blur", function () {
+                S.log("editor blur");
+            });
+            editor.on("focus", function () {
+                S.log("editor focus");
+            });
+            editor.on("selectionChange", function (e) {
+                S.log("selectionChange : " + e.path.toString());
+            });
+
+            window.newEditor = editor;
+
+
+        });
+
+    });
+})();
+</script>
+</body>
+</html>
