@@ -388,7 +388,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
             return new this.yy.ContentNode(this.lexer.lineNumber, this.$1);
         }],
         [37, [3, 40, 8], function () {
-            if (this.$1[this.$1.length - 1] == '^') {
+            if (this.$1.charAt(this.$1.length - 1) == '^') {
                 this.$2.isInversed = 1;
             }
             return this.$2;
