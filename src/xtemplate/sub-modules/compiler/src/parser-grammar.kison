@@ -56,7 +56,7 @@
                 symbol: 'openBlock',
                 rhs: ['OPEN_BLOCK', 'inTpl', 'CLOSE'],
                 action: function () {
-                    if (this.$1[this.$1.length - 1] == '^') {
+                    if (this.$1.charAt(this.$1.length - 1) == '^') {
                         this.$2.isInversed = 1;
                     }
                     return this.$2;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Feb 28 18:33
+build time: Mar 5 12:07
 */
 /**
  * Ast node class for xtemplate
@@ -1100,7 +1100,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
             return new this.yy.ContentNode(this.lexer.lineNumber, this.$1);
         }],
         [37, [3, 40, 8], function () {
-            if (this.$1[this.$1.length - 1] == '^') {
+            if (this.$1.charAt(this.$1.length - 1) == '^') {
                 this.$2.isInversed = 1;
             }
             return this.$2;
