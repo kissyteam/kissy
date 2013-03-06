@@ -26,6 +26,7 @@ KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
                     // change in ie<9
                     // change = propertychange -> click
                     Event.on(el, 'propertychange', propertyChange);
+                    // click may not cause change! (eg: radio)
                     Event.on(el, 'click', onClick);
                 } else {
                     // other form elements use native , do not bubble

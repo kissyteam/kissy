@@ -1,16 +1,15 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 1 22:08
+build time: Mar 6 13:26
 */
 /**
  * flash dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay4E, MenuButton) {
+KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Dialog4E, MenuButton) {
     var CLS_FLASH = 'ke_flash',
         TYPE_FLASH = 'flash',
-        Dialog = Overlay4E.Dialog,
         TIP = "请输入如 http://www.xxx.com/xxx.swf",
         bodyHtml = "<div style='padding:20px 20px 0 20px'>" +
             "<p>" +
@@ -104,7 +103,7 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
         //建立弹出窗口
         _prepareShow: function () {
             var self = this;
-            self.dialog = new Dialog({
+            self.dialog = new Dialog4E({
                 headerContent: self._title,
                 bodyContent: self._bodyHtml,
                 footerContent: self._footHtml,
@@ -253,5 +252,5 @@ KISSY.add("editor/plugin/flash/dialog", function (S, Editor, flashUtils, Overlay
 
     return FlashDialog;
 }, {
-    requires: ['editor', '../flash-common/utils', '../overlay/', '../menubutton/']
+    requires: ['editor', '../flash-common/utils', '../dialog/', '../menubutton/']
 });

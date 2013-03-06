@@ -2,10 +2,9 @@
  * link dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
+KISSY.add("editor/plugin/link/dialog", function (S, Editor, Dialog4E, Utils) {
 
-    var Dialog = Overlay4E.Dialog,
-        _ke_saved_href = Utils._ke_saved_href,
+    var _ke_saved_href = Utils._ke_saved_href,
         bodyHtml = "<div style='padding:20px 20px 0 20px'>" +
             "<p>" +
             "<label>" +
@@ -57,7 +56,7 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
             var self = this,
                 editor=self.editor,
                 prefixCls=editor.get('prefixCls'),
-                d = new Dialog({
+                d = new Dialog4E({
                     width:500,
                     headerContent:"链接",
                     bodyContent: S.substitute(bodyHtml,{
@@ -132,5 +131,5 @@ KISSY.add("editor/plugin/link/dialog", function (S, Editor, Overlay4E, Utils) {
     });
     return LinkDialog;
 }, {
-    requires:['editor', '../overlay/', './utils']
+    requires:['editor', '../dialog/', './utils']
 });

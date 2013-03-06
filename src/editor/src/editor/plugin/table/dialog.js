@@ -2,14 +2,13 @@
  * table dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButton) {
+KISSY.add("editor/plugin/table/dialog", function (S, Editor, Dialog4E, MenuButton) {
     var Node = S.Node,
         DOM = S.DOM,
         UA = S.UA,
         trim = S.trim,
         showBorderClassName = "ke_show_border",
         collapseTableClass = "k-e-collapse-table",
-        Dialog = Overlay4E.Dialog,
         IN_SIZE = 6,
         alignStyle = 'margin:0 5px 0 0;',
         TABLE_HTML = "<div style='padding:20px 20px 10px 20px;'>" +
@@ -171,7 +170,7 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
         _tableInit: function () {
             var self = this,
                 prefixCls = self.editor.get('prefixCls'),
-                d = new Dialog({
+                d = new Dialog4E({
                     width: "500px",
                     mask: true,
                     headerContent: "表格", //属性",
@@ -477,5 +476,5 @@ KISSY.add("editor/plugin/table/dialog", function (S, Editor, Overlay4E, MenuButt
 
     return TableDialog;
 }, {
-    requires: ['editor', '../overlay/', '../menubutton/']
+    requires: ['editor', '../dialog/', '../menubutton/']
 });

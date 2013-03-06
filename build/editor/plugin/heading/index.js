@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 1 22:08
+build time: Mar 6 13:26
 */
 /**
  * Heading plugin for KISSY.

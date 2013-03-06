@@ -2,7 +2,7 @@
  * insert program code dialog
  * @author yiminghe@gmail.com
  */
-KISSY.add('editor/plugin/code/dialog', function (S, Editor, Overlay, MenuButton) {
+KISSY.add('editor/plugin/code/dialog', function (S, Editor, Dialog4E, MenuButton) {
 
     var xhtml_dtd = Editor.XHTML_DTD;
     var NodeType = S.DOM.NodeType;
@@ -88,7 +88,7 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Overlay, MenuButton)
                 prefixCls = self.editor.get('prefixCls') + 'editor-',
                 el,
                 d;
-            d = self.dialog = new Overlay.Dialog({
+            d = self.dialog = new Dialog4E({
                 width: 500,
                 mask: true,
                 headerContent: '插入代码',
@@ -170,5 +170,5 @@ KISSY.add('editor/plugin/code/dialog', function (S, Editor, Overlay, MenuButton)
 
     return CodeDialog;
 }, {
-    requires: ['editor', '../overlay/', 'menubutton']
+    requires: ['editor', '../dialog/', 'menubutton']
 });

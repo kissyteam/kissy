@@ -1,13 +1,13 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 1 22:08
+build time: Mar 6 13:26
 */
 /**
  * color picker
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/color/color-picker/dialog", function (S, Editor, Overlay4E) {
+KISSY.add("editor/plugin/color/color-picker/dialog", function (S, Editor, Dialog4E) {
     var map = S.map, DOM = S.DOM;
 
     //获取颜色数组
@@ -164,7 +164,7 @@ KISSY.add("editor/plugin/color/color-picker/dialog", function (S, Editor, Overla
                 editor = self.editor,
                 prefixCls = editor.get('prefixCls');
 
-            self.dialog = new Overlay4E.Dialog({
+            self.dialog = new Dialog4E({
                 mask: true,
                 headerContent: "颜色拾取器",
                 bodyContent: S.substitute(panelHtml, {
@@ -260,5 +260,5 @@ KISSY.add("editor/plugin/color/color-picker/dialog", function (S, Editor, Overla
 
     return ColorPicker;
 }, {
-    requires: ['editor', '../../overlay/']
+    requires: ['editor', '../../dialog/']
 });

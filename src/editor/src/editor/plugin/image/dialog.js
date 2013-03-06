@@ -2,7 +2,7 @@
  * image dialog (support upload and remote)
  * @author yiminghe@gmail.com
  */
-KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs, MenuButton) {
+KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Dialog4E, Tabs, MenuButton) {
     var dtd = Editor.XHTML_DTD,
         UA = S.UA,
         Node = KISSY.NodeList,
@@ -204,7 +204,7 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
             var self = this;
             var editor = self.editor,
                 prefixCls = editor.get('prefixCls') + 'editor-';
-            self.dialog = self.d = new Overlay4E.Dialog({
+            self.dialog = self.d = new Dialog4E({
                 width: 500,
                 headerContent: "图片",
                 bodyContent: S.substitute(IMAGE_DIALOG_BODY_HTML, {
@@ -629,5 +629,5 @@ KISSY.add("editor/plugin/image/dialog", function (S, IO, Editor, Overlay4E, Tabs
 
     return ImageDialog;
 }, {
-    requires: ['io', 'editor', '../overlay/', 'tabs', '../menubutton/']
+    requires: ['io', 'editor', '../dialog/', 'tabs', '../menubutton/']
 });

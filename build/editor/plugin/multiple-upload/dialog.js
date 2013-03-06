@@ -1,14 +1,14 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 1 22:08
+build time: Mar 6 13:26
 */
 /**
  * multiple-upload dialog
  * @author yiminghe@gmail.com
  */
 KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugin,
-                                                            ProgressBar, Overlay4E,
+                                                            ProgressBar, Dialog4E,
                                                             FlashBridge, localStorage,
                                                             SWF, undefined) {
 
@@ -20,7 +20,6 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
         PIC_NUM_LIMIT_WARNING = "系统将只保留 n 张",
         PIC_SIZE_LIMIT = 1000,
         PIC_SIZE_LIMIT_WARNING = "图片太大，请压缩至 n M以下",
-        Dialog = Overlay4E.Dialog,
         KEY = "Multiple-Upload-Save",
         swfSrc = Editor.Utils.debugUrl("plugin/uploader/uploader.longzang.swf"),
         name = "ks-editor-multipleUpload",
@@ -71,7 +70,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
                 }
             });
 
-            self.dialog = new Dialog({
+            self.dialog = new Dialog4E({
                 headerContent: "批量上传",
                 mask: false,
                 plugins: [
@@ -816,7 +815,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
     requires: ['editor',
         'component/plugin/drag',
         '../progressbar/',
-        '../overlay/',
+        '../dialog/',
         '../flash-bridge/',
         '../local-storage/',
         'swf']
