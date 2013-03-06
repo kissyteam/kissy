@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 6 20:27
+build time: Mar 6 23:34
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130306202726' will replace with current timestamp when compressing.
+         * NOTICE: '20130306233423' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130306202726',
+        __BUILD_TIME: '20130306233423',
         /**
          * KISSY Environment.
          * @private
@@ -5854,7 +5854,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130306202726'
+            tag: '20130306233423'
         }, getBaseInfo()));
     }
 
@@ -19098,7 +19098,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 1 15:54
+build time: Mar 6 23:23
 */
 /**
  * @ignore
@@ -19126,14 +19126,14 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
     }
 
     // fire attribute value change
-    function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName) {
+    function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName, data) {
         attrName = attrName || name;
-        return self.fire(whenAttrChangeEventName(when, name), {
+        return self.fire(whenAttrChangeEventName(when, name), S.mix({
             attrName: attrName,
             subAttrName: subAttrName,
             prevVal: prevVal,
             newVal: newVal
-        });
+        }, data));
     }
 
     function ensureNonEmpty(obj, name, create) {
@@ -19263,14 +19263,14 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
 
         value = getValueBySubValue(prevVal, path, value);
 
-        var beforeEventObject = {
+        var beforeEventObject = S.mix({
             attrName: name,
             subAttrName: fullName,
             prevVal: prevVal,
             newVal: value,
             _opts: opts,
             _attrs: attrs
-        };
+        }, opts.data);
 
         // check before event
         if (opts['silent']) {
@@ -19287,6 +19287,10 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
     }
 
     function defaultSetFn(e) {
+        // only consider itself, not bubbling!
+        if (e.target !== this) {
+            return;
+        }
         var self = this,
             value = e.newVal,
             prevVal = e.prevVal,
@@ -19305,7 +19309,7 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
         // fire after event
         if (!opts['silent']) {
             value = getAttrVals(self)[name];
-            __fireAttrChange(self, 'after', name, prevVal, value, fullName);
+            __fireAttrChange(self, 'after', name, prevVal, value, fullName, null,opts.data);
             if (attrs) {
                 attrs.push({
                     prevVal: prevVal,
@@ -19317,7 +19321,8 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
                 __fireAttrChange(self,
                     '', '*',
                     [prevVal], [value],
-                    [fullName], [name]);
+                    [fullName], [name],
+                    opts.data);
             }
         }
 
@@ -19501,7 +19506,8 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
                         prevVals,
                         newVals,
                         subAttrNames,
-                        attrNames);
+                        attrNames,
+                        opts.data);
                 }
                 return self;
             }
