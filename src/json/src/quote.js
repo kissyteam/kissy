@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * quote and unQuote for json
  * @author yiminghe@gmail.com
  */

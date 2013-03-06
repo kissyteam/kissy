@@ -125,10 +125,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
             }
         },
 
-        /**
-         * frame of animation
-         * @private
-         */
+        // frame of animation
         frame: function () {
             var self = this,
                 prop,

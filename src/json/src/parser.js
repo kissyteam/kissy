@@ -263,8 +263,7 @@ KISSY.add("json/parser", function () {
         'array': 17,
         'elementList': 18,
         'member': 19,
-        'memberList': 20,
-        'members': 21
+        'memberList': 20
     };
     parser.productions = [
         [13, [14]],
@@ -312,8 +311,9 @@ KISSY.add("json/parser", function () {
             ret[this.$1.key] = this.$1.value;
             return ret;
         }],
-        [20, [21, 3, 19], function () {
-            return this.$1[this.$3.key] = this.$3.value;
+        [20, [20, 3, 19], function () {
+            this.$1[this.$3.key] = this.$3.value;
+            return this.$1;
         }],
         [16, [7, 8], function () {
             return {};
@@ -341,14 +341,17 @@ KISSY.add("json/parser", function () {
                 '20': 17
             },
             '18': {
-                '15': 22,
+                '15': 23,
                 '16': 9,
                 '17': 10
             },
             '20': {
-                '15': 23,
+                '15': 24,
                 '16': 9,
                 '17': 10
+            },
+            '21': {
+                '19': 25
             }
         },
         'action': {
@@ -439,10 +442,12 @@ KISSY.add("json/parser", function () {
                 '8': [2, 15, 0]
             },
             '16': {
+                '3': [2, 13, 0],
                 '8': [2, 13, 0]
             },
             '17': {
-                '8': [1, 0, 21]
+                '3': [1, 0, 21],
+                '8': [1, 0, 22]
             },
             '18': {
                 '2': [1, 0, 1],
@@ -467,17 +472,25 @@ KISSY.add("json/parser", function () {
                 '11': [1, 0, 6]
             },
             '21': {
+                '2': [1, 0, 14]
+            },
+            '22': {
                 '1': [2, 16, 0],
                 '3': [2, 16, 0],
                 '6': [2, 16, 0],
                 '8': [2, 16, 0]
             },
-            '22': {
+            '23': {
                 '3': [2, 9, 0],
                 '6': [2, 9, 0]
             },
-            '23': {
+            '24': {
+                '3': [2, 12, 0],
                 '8': [2, 12, 0]
+            },
+            '25': {
+                '3': [2, 14, 0],
+                '8': [2, 14, 0]
             }
         }
     };

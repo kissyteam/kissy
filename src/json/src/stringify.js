@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * JSON.stringify for KISSY
  * @author yiminghe@gmail.com
  */
@@ -159,6 +160,7 @@ KISSY.add('json/stringify', function (S,Quote) {
     requires:['./quote']
 });
 /**
+ * @ignore
  * refer:
  *  - http://www.ecma-international.org/publications/standards/Ecma-262.htm
  *  - https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/JSON/stringify

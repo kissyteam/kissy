@@ -106,9 +106,10 @@
             },
             {
                 symbol: 'memberList',
-                rhs: ['members', 'COMMA', 'member'],
+                rhs: ['memberList', 'COMMA', 'member'],
                 action: function () {
-                    return this.$1[this.$3.key] = this.$3.value;
+                    this.$1[this.$3.key] = this.$3.value;
+                    return this.$1;
                 }
             },
             {

@@ -93,6 +93,51 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
      * @static
      */
 
+
+    /**
+     * stop this animation
+     * @param {Boolean} [finish] whether jump to the last position of this animation
+     * @chainable
+     * @method stop
+     * @member KISSY.Anim
+     */
+
+    /**
+     * start this animation
+     * @chainable
+     * @method run
+     * @member KISSY.Anim
+     */
+
+    /**
+     * resume current anim
+     * @chainable
+     * @method resume
+     * @member KISSY.Anim
+     */
+
+    /**
+     * pause current anim
+     * @chainable
+     * @method pause
+     * @member KISSY.Anim
+     */
+
+    /**
+     * whether this animation is running
+     * @return {Boolean}
+     * @method isRunning
+     * @member KISSY.Anim
+     */
+
+
+    /**
+     * whether this animation is paused
+     * @return {Boolean}
+     * @method isPaused
+     * @member KISSY.Anim
+     */
+
     S.each(['pause', 'resume'], function (action) {
         Anim[action] = function (el, queue) {
             if (
@@ -127,6 +172,16 @@ KISSY.add('anim/facade', function (S, DOM, AnimBase, TimerAnim, TransitionAnim) 
      */
     Anim.isPaused = Utils.isElPaused;
 
+    /**
+     * stop all the anims currently running
+     * @static
+     * @method stop
+     * @member KISSY.Anim
+     * @param {HTMLElement} el element which anim belongs to
+     * @param {Boolean} end whether jump to last position
+     * @param {Boolean} clearQueue whether clean current queue
+     * @param {String|Boolean} queueName current queue's name to be cleared
+     */
     Anim.stop = Utils.stopEl;
 
     Anim.Easing = TimerAnim.Easing;

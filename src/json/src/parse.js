@@ -1,4 +1,5 @@
 /**
+ * @ignore
  * JSON.parse for KISSY
  * @author yiminghe@gmail.com
  */
@@ -17,7 +18,7 @@ KISSY.add('json/parse', function (S, parser, Quote) {
                 len = val.length;
                 var newVal = [];
                 while (i < len) {
-                    newElement = walk(String(i), val, reviver);
+                    newElement = walk(val, String(i), reviver);
                     if (newElement !== undefined) {
                         newVal[newVal.length] = newElement;
                     }
@@ -26,8 +27,8 @@ KISSY.add('json/parse', function (S, parser, Quote) {
             } else {
                 var keys = S.keys(val);
                 for (i = 0, len = keys.length; i < len; i++) {
-                    var p = keys[len];
-                    newElement = walk(p, val, reviver);
+                    var p = keys[i];
+                    newElement = walk(val, p, reviver);
                     if (newElement === undefined) {
                         delete val[p];
                     } else {
@@ -55,6 +56,7 @@ KISSY.add('json/parse', function (S, parser, Quote) {
     requires: ['./parser', './quote']
 });
 /**
+ * @ignore
  * refer:
  *  - kison
  *  - http://www.ecma-international.org/publications/standards/Ecma-262.htm

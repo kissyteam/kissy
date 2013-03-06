@@ -1,22 +1,58 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 6 19:41
+build time: Mar 6 20:21
 */
 /**
+ * @ignore
  * JSON emulator for KISSY
  * @author yiminghe@gmail.com
  */
 KISSY.add('json', function (S, stringify, parse) {
 
+    /**
+     * The JSON object contains methods for converting values to JavaScript Object Notation (JSON)
+     * and for converting JSON to values.
+     * @class KISSY.JSON
+     * @singleton
+     */
     return S.JSON = {
+        /**
+         * Convert a value to JSON, optionally replacing values if a replacer function is specified,
+         * or optionally including only the specified properties if a replacer array is specified.
+         * @method
+         * @param value The value to convert to a JSON string.
+         * @param [replacer]
+         * The replacer parameter can be either a function or an array. As a function, it takes two parameters, the key and the value being stringified. Initially it gets called with an empty key representing the object being stringified, and it then gets called for each property on the object or array being stringified. It should return the value that should be added to the JSON string, as follows:
+
+         * - If you return a Number, the string corresponding to that number is used as the value for the property when added to the JSON string.
+         * - If you return a String, that string is used as the property's value when adding it to the JSON string.
+         * - If you return a Boolean, "true" or "false" is used as the property's value, as appropriate, when adding it to the JSON string.
+         * - If you return any other object, the object is recursively stringified into the JSON string, calling the replacer function on each property, unless the object is a function, in which case nothing is added to the JSON string.
+         * - If you return undefined, the property is not included in the output JSON string.
+         *
+         * **Note:** You cannot use the replacer function to remove values from an array. If you return undefined or a function then null is used instead.
+         *
+         * @param [space] space Causes the resulting string to be pretty-printed.
+         * The space argument may be used to control spacing in the final string.
+         * If it is a number, successive levels in the stringification will each be indented by this many space characters (up to 10).
+         * If it is a string, successive levels will indented by this string (or the first ten characters of it).
+         * @return {String}
+         */
         stringify: stringify,
+        /**
+         * Parse a string as JSON, optionally transforming the value produced by parsing.
+         * @param {String} text The string to parse as JSON.
+         * @param {Function} [reviver] If a function, prescribes how the value originally produced by parsing is transformed,
+         * before being returned.
+         */
         parse: parse
     };
 
 }, {
     requires: ['./json/stringify', './json/parse']
 });/**
+ * @ignore
  * JSON.parse for KISSY
  * @author yiminghe@gmail.com
  */
@@ -35,7 +71,7 @@ KISSY.add('json/parse', function (S, parser, Quote) {
                 len = val.length;
                 var newVal = [];
                 while (i < len) {
-                    newElement = walk(String(i), val, reviver);
+                    newElement = walk(val, String(i), reviver);
                     if (newElement !== undefined) {
                         newVal[newVal.length] = newElement;
                     }
@@ -44,8 +80,8 @@ KISSY.add('json/parse', function (S, parser, Quote) {
             } else {
                 var keys = S.keys(val);
                 for (i = 0, len = keys.length; i < len; i++) {
-                    var p = keys[len];
-                    newElement = walk(p, val, reviver);
+                    var p = keys[i];
+                    newElement = walk(val, p, reviver);
                     if (newElement === undefined) {
                         delete val[p];
                     } else {
@@ -73,6 +109,7 @@ KISSY.add('json/parse', function (S, parser, Quote) {
     requires: ['./parser', './quote']
 });
 /**
+ * @ignore
  * refer:
  *  - kison
  *  - http://www.ecma-international.org/publications/standards/Ecma-262.htm
@@ -344,8 +381,7 @@ KISSY.add("json/parser", function () {
         'array': 17,
         'elementList': 18,
         'member': 19,
-        'memberList': 20,
-        'members': 21
+        'memberList': 20
     };
     parser.productions = [
         [13, [14]],
@@ -393,8 +429,9 @@ KISSY.add("json/parser", function () {
             ret[this.$1.key] = this.$1.value;
             return ret;
         }],
-        [20, [21, 3, 19], function () {
-            return this.$1[this.$3.key] = this.$3.value;
+        [20, [20, 3, 19], function () {
+            this.$1[this.$3.key] = this.$3.value;
+            return this.$1;
         }],
         [16, [7, 8], function () {
             return {};
@@ -422,14 +459,17 @@ KISSY.add("json/parser", function () {
                 '20': 17
             },
             '18': {
-                '15': 22,
+                '15': 23,
                 '16': 9,
                 '17': 10
             },
             '20': {
-                '15': 23,
+                '15': 24,
                 '16': 9,
                 '17': 10
+            },
+            '21': {
+                '19': 25
             }
         },
         'action': {
@@ -520,10 +560,12 @@ KISSY.add("json/parser", function () {
                 '8': [2, 15, 0]
             },
             '16': {
+                '3': [2, 13, 0],
                 '8': [2, 13, 0]
             },
             '17': {
-                '8': [1, 0, 21]
+                '3': [1, 0, 21],
+                '8': [1, 0, 22]
             },
             '18': {
                 '2': [1, 0, 1],
@@ -548,17 +590,25 @@ KISSY.add("json/parser", function () {
                 '11': [1, 0, 6]
             },
             '21': {
+                '2': [1, 0, 14]
+            },
+            '22': {
                 '1': [2, 16, 0],
                 '3': [2, 16, 0],
                 '6': [2, 16, 0],
                 '8': [2, 16, 0]
             },
-            '22': {
+            '23': {
                 '3': [2, 9, 0],
                 '6': [2, 9, 0]
             },
-            '23': {
+            '24': {
+                '3': [2, 12, 0],
                 '8': [2, 12, 0]
+            },
+            '25': {
+                '3': [2, 14, 0],
+                '8': [2, 14, 0]
             }
         }
     };
@@ -677,6 +727,7 @@ KISSY.add("json/parser", function () {
     };
     return parser;;
 });/**
+ * @ignore
  * quote and unQuote for json
  * @author yiminghe@gmail.com
  */
@@ -721,6 +772,7 @@ KISSY.add('json/quote', function (S) {
         }
     };
 });/**
+ * @ignore
  * JSON.stringify for KISSY
  * @author yiminghe@gmail.com
  */
@@ -881,6 +933,7 @@ KISSY.add('json/stringify', function (S,Quote) {
     requires:['./quote']
 });
 /**
+ * @ignore
  * refer:
  *  - http://www.ecma-international.org/publications/standards/Ecma-262.htm
  *  - https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/JSON/stringify

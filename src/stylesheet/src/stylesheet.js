@@ -96,12 +96,10 @@ KISSY.add("stylesheet", function (S, DOM) {
          * @param {Object} css style declaration object. set value to "" to unset
          *
          * for example:
-         * <code>
          *      // set
          *      set("p",{color:'red'})
          *      // unset
          *      set("p",{color:''})
-         * </code>
          * @chainable
          */
         set: function (selectorText, css) {

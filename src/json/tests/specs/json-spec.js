@@ -219,41 +219,123 @@ KISSY.use("json", function (S, JSON) {
 
         describe('parse', function () {
 
-            it('allow whitespace',function(){
-                expect(JSON.parse('{"test": 1}')).toEqual({test: 1});
+            it('allow whitespace', function () {
+                var t = '{"test": 1,"t":2}',
+                    r = {test: 1, t: 2};
+                expect(JSON.parse(t)).toEqual(r);
+                if (J) {
+                    expect(J.parse(t)).toEqual(r);
+                }
             });
 
             it('should throw exception when encounter non-whitespace', function () {
+                var t = '{"x": x"2"}';
                 expect(function () {
-                    JSON.parse('{"x": x"2"}');
+                    JSON.parse(t);
                 }).toThrow();
+                if (J) {
+                    expect(function () {
+                        J.parse(t);
+                    }).toThrow();
+                }
             });
 
             it('should parse a JSON string to the native JavaScript representation', function () {
 
-                expect(JSON.parse('{"test":1}')).toEqual({test: 1});
-                expect(JSON.parse('{}')).toEqual({});
-                expect(JSON.parse('\n{"test":1}')).toEqual({test: 1}); // 去除空白
-
-                expect(JSON.parse(null)).toBeNull();
-
-                expect(JSON.parse('true')).toBe(true);
-                expect(JSON.parse(true)).toBe(true);
-                expect(JSON.parse('null')).toBe(null);
-
+                var r, t;
+                expect(JSON.parse(t = '{"test":1}')).toEqual(r = {test: 1});
+                if (J) {
+                    expect(J.parse(t)).toEqual(r);
+                }
+                expect(JSON.parse(t = '{}')).toEqual(r = {});
+                if (J) {
+                    expect(J.parse(t)).toEqual(r);
+                }
+                expect(JSON.parse(t = '\n{"test":1}')).toEqual(r = {test: 1}); // 去除空白
+                if (J) {
+                    expect(J.parse(t)).toEqual(r);
+                }
+                expect(JSON.parse(t = null)).toBeNull(r = null);
+                if (J) {
+                    expect(J.parse(t)).toEqual(r);
+                }
+                expect(JSON.parse(t = 'true')).toBe(r = true);
+                if (J) {
+                    expect(J.parse(t)).toEqual(r);
+                }
+                expect(JSON.parse(t = true)).toBe(r = true);
+                if (J) {
+                    expect(J.parse(t)).toEqual(r);
+                }
+                expect(JSON.parse(t = 'null')).toBe(r = null);
+                if (J) {
+                    expect(J.parse(t)).toEqual(r);
+                }
                 expect(
                     function () {
-                        JSON.parse('{a:1}');
+                        JSON.parse(t = '{a:1}');
                     }).toThrow();
+                if (J) {
+                    expect(
+                        function () {
+                            JSON.parse(t);
+                        }).toThrow();
+                }
 
+            });
+
+            it('reviver works', function () {
+                var t, f, r;
+                expect(JSON.parse(t = '{"test": 1,"t":2}', f = function (key, v) {
+                    if (key == 't') {
+                        return v + 1;
+                    }
+                    return v;
+                })).toEqual(r = {test: 1, t: 3});
+                if (J) {
+                    expect(J.parse(t, f)).toEqual(r);
+                }
+
+                expect(JSON.parse(t = '{"test": 1,"t":2}', f = function (key, v) {
+                    if (key == 't') {
+                        return undefined;
+                    }
+                    return v;
+                })).toEqual(r = {test: 1});
+                if (J) {
+                    expect(J.parse(t, f)).toEqual(r);
+                }
+
+                expect(JSON.parse(t = '{"test": {"t":{ "t3":4},"t2":4}}', f = function (key, v) {
+                    if (key == 't') {
+                        return 1;
+                    }
+                    if (key == 't2') {
+                        return v + 1;
+                    }
+                    return v;
+                })).toEqual(r = {test: {
+                        t: 1,
+                        t2: 5
+                    }});
+                if (J) {
+                    expect(J.parse(t, f)).toEqual(r);
+                }
             });
 
 
             // phantomjs allow \t
-            it('should throw exception when encounter \\t', function () {
+            it('should throw exception when encounter control character', function () {
+                var r;
                 expect(function () {
-                    JSON.parse('{"x":"\t"}');
+                    JSON.parse(t = '{"x":"\t"}');
                 }).toThrow();
+                if (J) {
+                    expect(
+                        function () {
+                            JSON.parse(t);
+                        }).toThrow();
+                }
             });
 
         });

@@ -128,8 +128,8 @@
 
         /**
          * Executes the supplied callback when the item with the supplied id is found.
-         * @param id <String> The id of the element, or an array of ids to look for.
-         * @param fn <Function> What to execute when the element is found.
+         * @param id {String} The id of the element, or an array of ids to look for.
+         * @param fn {Function} What to execute when the element is found.
          * @member KISSY
          */
         available: function (id, fn) {
