@@ -219,15 +219,23 @@ KISSY.use("json", function (S, JSON) {
 
         describe('parse', function () {
 
+            it('allow whitespace',function(){
+                expect(JSON.parse('{"test": 1}')).toEqual({test: 1});
+            });
+
+            it('should throw exception when encounter non-whitespace', function () {
+                expect(function () {
+                    JSON.parse('{"x": x"2"}');
+                }).toThrow();
+            });
+
             it('should parse a JSON string to the native JavaScript representation', function () {
 
                 expect(JSON.parse('{"test":1}')).toEqual({test: 1});
                 expect(JSON.parse('{}')).toEqual({});
                 expect(JSON.parse('\n{"test":1}')).toEqual({test: 1}); // 去除空白
 
-                expect(JSON.parse()).toBeNull();
                 expect(JSON.parse(null)).toBeNull();
-                expect(JSON.parse('')).toBeNull();
 
                 expect(JSON.parse('true')).toBe(true);
                 expect(JSON.parse(true)).toBe(true);
@@ -239,6 +247,7 @@ KISSY.use("json", function (S, JSON) {
                     }).toThrow();
 
             });
+
 
             // phantomjs allow \t
             it('should throw exception when encounter \\t', function () {

@@ -12,8 +12,6 @@
 </head>
 <body>
 <h1 style="font-size: 2em;text-align: center;margin: 2em;">Simple KISSY Editor</h1>
-
-
 <div style="width: 90%;margin: 20px auto;">
     <div id="container" class="ks-editor">
         <textarea class="ks-editor-textarea"><p>我有初始值</p></textarea>
@@ -22,10 +20,8 @@
 </div>
 <script src="/kissy/build/seed.js"></script>
 <script>
+    KISSY.config("combine", true);
     window.EDITOR_MOD = "editor/full";
-    window.EDITOR_CFG = {
-        mode:0
-    };
 </script>
 <script src="demo.js"></script>
 </body>

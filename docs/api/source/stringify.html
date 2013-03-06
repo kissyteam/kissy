@@ -1,16 +1,33 @@
-/**
- * JSON.stringify for KISSY
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * JSON.stringify for KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add('json/stringify', function (S,Quote) {
+KISSY.add('json/stringify', function (S) {
 
     function padding2(n) {
-        return n < 10 ? '0' + n : n;
+        return n &lt; 10 ? '0' + n : n;
     }
 
     function str(key, holder, replacerFunction, propertyList, gap, stack, indent) {
         var value = holder[key];
-        if (value && typeof value === 'object') {
+        if (value &amp;&amp; typeof value === 'object') {
             if (typeof value.toJSON === 'function') {
                 value = value.toJSON(key);
             } else if (value instanceof Date) {
@@ -33,7 +50,7 @@ KISSY.add('json/stringify', function (S,Quote) {
             case 'number':
                 return isFinite(value) ? String(value) : 'null';
             case 'string':
-                return Quote.quote(value);
+                return quote(value);
             case 'boolean':
                 return String(value);
             case 'object':
@@ -47,6 +64,35 @@ KISSY.add('json/stringify', function (S,Quote) {
         }
 
         return undefined;
+    }
+
+    var CONTROL_MAP = {
+        '\b': '\\b',
+        '\f': '\\f',
+        '\n': '\\n',
+        '\r': '\\r',
+        '\t': '\\t'
+    }, OTHER_CONTROL_REG = /[\x00-\x1f]/g;
+
+    function quote(value) {
+        var product = ['&quot;'],
+            i = 0,
+            C,
+            vLen = value.length;
+        for (; i &lt; vLen; i++) {
+            C = value.charAt(i);
+            if (C === '&quot;' || C === '\\') {
+                product[product.length] = '\\' + C;
+            } else if (C in CONTROL_MAP) {
+                product[product.length] = CONTROL_MAP[C];
+            } else if (C.match(OTHER_CONTROL_REG)) {
+                product[product.length] += '\\u' + ('0000' + C.charCodeAt(0).toString(16)).slice(-4);
+            } else {
+                product[product.length] = C;
+            }
+        }
+        product[product.length] = '&quot;';
+        return product.join('');
     }
 
     function jo(value, replacerFunction, propertyList, gap, stack, indent) {
@@ -63,11 +109,11 @@ KISSY.add('json/stringify', function (S,Quote) {
             k = S.keys(value);
         }
         var partial = [];
-        for (i = 0, kl = k.length; i < kl; i++) {
+        for (i = 0, kl = k.length; i &lt; kl; i++) {
             p = k[i];
             var strP = str(p, value, replacerFunction, propertyList, gap, stack, indent);
             if (strP !== undefined) {
-                var member = Quote.quote(p);
+                var member = quote(p);
                 member += ':';
                 if (gap) {
                     member += ' ';
@@ -83,7 +129,7 @@ KISSY.add('json/stringify', function (S,Quote) {
             if (!gap) {
                 ret = '{' + partial.join(',') + '}';
             } else {
-                var separator = ",\n" + indent;
+                var separator = &quot;,\n&quot; + indent;
                 var properties = partial.join(separator);
                 ret = '{\n' + indent + properties + '\n' + stepBack + '}';
             }
@@ -103,7 +149,7 @@ KISSY.add('json/stringify', function (S,Quote) {
         var partial = [];
         var len = value.length;
         var index = 0;
-        while (index < len) {
+        while (index &lt; len) {
             var strP = str(String(index), value, replacerFunction, propertyList, gap, stack, indent);
             if (strP === undefined) {
                 partial[partial.length] = 'null';
@@ -155,13 +201,13 @@ KISSY.add('json/stringify', function (S,Quote) {
 
     return stringify;
 
-},{
-    requires:['./quote']
 });
-/**
- * refer:
+<span id='global-property-'>/**
+</span> * refer:
  *  - http://www.ecma-international.org/publications/standards/Ecma-262.htm
  *  - https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/JSON/stringify
  *  - http://www.json.org/
  *  - http://www.ietf.org/rfc/rfc4627.txt
- */
+ */</pre>
+</body>
+</html>

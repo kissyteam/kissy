@@ -1,17 +1,58 @@
 /**
- * JSON.stringify for KISSY
+ * JSON.parse for KISSY
  * @author yiminghe@gmail.com
  */
-KISSY.add('json/parse', function (S,parser, ast) {
-    parser.yy = ast;
+KISSY.add('json/parse', function (S, parser, Quote) {
+    parser.yy = {
+        unQuote: Quote.unQuote
+    };
 
-    return function (str) {
-        var root = parser.parse(str);
-        S.log(root);
+    function walk(holder, name, reviver) {
+        var val = holder[name],
+            i, len, newElement;
+
+        if (typeof val === 'object') {
+            if (S.isArray(val)) {
+                i = 0;
+                len = val.length;
+                var newVal = [];
+                while (i < len) {
+                    newElement = walk(String(i), val, reviver);
+                    if (newElement !== undefined) {
+                        newVal[newVal.length] = newElement;
+                    }
+                }
+                val = newVal;
+            } else {
+                var keys = S.keys(val);
+                for (i = 0, len = keys.length; i < len; i++) {
+                    var p = keys[len];
+                    newElement = walk(p, val, reviver);
+                    if (newElement === undefined) {
+                        delete val[p];
+                    } else {
+                        val[p] = newElement;
+                    }
+                }
+            }
+        }
+
+        return reviver.call(holder, name, val);
+    }
+
+    return function (str, reviver) {
+        var root = parser.parse(String(str));
+        if (reviver) {
+            return walk({
+                '': root
+            }, '', reviver);
+        } else {
+            return root;
+        }
     };
 
 }, {
-    requires: ['./parser', './ast']
+    requires: ['./parser', './quote']
 });
 /**
  * refer:
