@@ -24,14 +24,14 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
     }
 
     // fire attribute value change
-    function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName) {
+    function __fireAttrChange(self, when, name, prevVal, newVal, subAttrName, attrName, data) {
         attrName = attrName || name;
-        return self.fire(whenAttrChangeEventName(when, name), {
+        return self.fire(whenAttrChangeEventName(when, name), S.mix({
             attrName: attrName,
             subAttrName: subAttrName,
             prevVal: prevVal,
             newVal: newVal
-        });
+        }, data));
     }
 
     function ensureNonEmpty(obj, name, create) {
@@ -161,14 +161,14 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
 
         value = getValueBySubValue(prevVal, path, value);
 
-        var beforeEventObject = {
+        var beforeEventObject = S.mix({
             attrName: name,
             subAttrName: fullName,
             prevVal: prevVal,
             newVal: value,
             _opts: opts,
             _attrs: attrs
-        };
+        }, opts.data);
 
         // check before event
         if (opts['silent']) {
@@ -185,6 +185,10 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
     }
 
     function defaultSetFn(e) {
+        // only consider itself, not bubbling!
+        if (e.target !== this) {
+            return;
+        }
         var self = this,
             value = e.newVal,
             prevVal = e.prevVal,
@@ -203,7 +207,7 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
         // fire after event
         if (!opts['silent']) {
             value = getAttrVals(self)[name];
-            __fireAttrChange(self, 'after', name, prevVal, value, fullName);
+            __fireAttrChange(self, 'after', name, prevVal, value, fullName, null,opts.data);
             if (attrs) {
                 attrs.push({
                     prevVal: prevVal,
@@ -215,7 +219,8 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
                 __fireAttrChange(self,
                     '', '*',
                     [prevVal], [value],
-                    [fullName], [name]);
+                    [fullName], [name],
+                    opts.data);
             }
         }
 
@@ -399,7 +404,8 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
                         prevVals,
                         newVals,
                         subAttrNames,
-                        attrNames);
+                        attrNames,
+                        opts.data);
                 }
                 return self;
             }

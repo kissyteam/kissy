@@ -7,8 +7,21 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
     var KeyCodes = Event.KeyCodes;
 
     function onMenuHide(e) {
-        this.set("highlightedItem", null);
-        e.stopPropagation();
+        if (this === e.target) {
+            this.set("highlightedItem", null);
+            e.stopPropagation();
+        }
+    }
+
+    function afterHighlightedChange(e) {
+        var self = this,
+            target = e.target;
+        if (e.target.isMenuItem && e.newVal) {
+            this.set("activeItem", target);
+            if (S.inArray(target, self.get('children'))) {
+                this.set("highlightedItem", target);
+            }
+        }
     }
 
     /**
@@ -21,10 +34,15 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
         _onSetHighlightedItem: function (v, ev) {
             var pre = ev && ev.prevVal;
             if (pre) {
-                pre.set("highlighted", false);
+                pre.set("highlighted", false,{
+                    data:{
+                       hideImmediate:1
+                    }
+                });
             }
-            v && v.set("highlighted", true);
-            this.set("activeItem", v);
+            if (v && this.get('focusable')) {
+                this.set('focused', true);
+            }
         },
 
         handleBlur: function (e) {
@@ -79,7 +97,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                 return undefined;
             }
 
-            var index, destIndex;
+            var index, destIndex, nextHighlighted;
 
             //自己处理了，不要向上处理，嵌套菜单情况
             switch (e.keyCode) {
@@ -92,13 +110,11 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
 
                 // home
                 case KeyCodes.HOME:
-                    this.set("highlightedItem",
-                        this._getNextEnabledHighlighted(0, 1));
+                    nextHighlighted = this._getNextEnabledHighlighted(0, 1);
                     break;
                 // end
                 case KeyCodes.END:
-                    this.set("highlightedItem",
-                        this._getNextEnabledHighlighted(len - 1, -1));
+                    nextHighlighted = this._getNextEnabledHighlighted(len - 1, -1);
                     break;
                 // up
                 case KeyCodes.UP:
@@ -108,8 +124,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                         index = S.indexOf(highlightedItem, children);
                         destIndex = (index - 1 + len) % len;
                     }
-                    this.set("highlightedItem",
-                        this._getNextEnabledHighlighted(destIndex, -1));
+                    nextHighlighted = this._getNextEnabledHighlighted(destIndex, -1);
                     break;
                 //down
                 case KeyCodes.DOWN:
@@ -119,19 +134,26 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                         index = S.indexOf(highlightedItem, children);
                         destIndex = (index + 1 + len) % len;
                     }
-                    this.set("highlightedItem",
-                        this._getNextEnabledHighlighted(destIndex, 1));
+                    nextHighlighted = this._getNextEnabledHighlighted(destIndex, 1);
                     break;
-                default:
-                    return undefined;
             }
-            return true;
+            if (nextHighlighted) {
+                nextHighlighted.set('highlighted', true, {
+                    data: {
+                        byKeyboard: 1
+                    }
+                });
+                return true;
+            } else {
+                return undefined;
+            }
         },
 
         bindUI: function () {
             var self = this;
             // 隐藏后，去掉高亮与当前
             self.on("hide", onMenuHide, self);
+            self.on('afterHighlightedChange', afterHighlightedChange, self);
         },
 
         /**

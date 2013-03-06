@@ -1,0 +1,212 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>KISSY DPL</title>
+    <link href="/kissy/src/css/src/dpl/base.css" rel="stylesheet"/>
+    <link href="/kissy/src/menu/assets/dpl.css" rel="stylesheet"/>
+    <style>
+        .func label {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>KISSY DPL</h1>
+
+    <div class="row">
+        <div class="span8">
+            <h2>索引</h2>
+
+            <div id="index">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="/kissy/build/seed.js"></script>
+<script src="../../src/submenu.js"></script>
+<script src="../../src/submenu-render.js"></script>
+<script src="../../src/base.js"></script>
+<script src="../../src/filtermenu-render.js"></script>
+<script src="../../src/filtermenu.js"></script>
+<script src="../../src/menu-render.js"></script>
+<script src="../../src/menu.js"></script>
+<script src="../../src/menuitem-render.js"></script>
+<script src="../../src/menuitem.js"></script>
+<script src="../../src/popupmenu-render.js"></script>
+<script src="../../src/popupmenu.js"></script>
+<script>
+    KISSY.use("menu", function (S, Menu) {
+
+
+        var $ = S.all;
+
+        new Menu({
+            width: 200,
+            render: '#index',
+            listeners: {
+                "click": function (e) {
+                    S.log(e.target.get('content'));
+                }
+            },
+            children: [
+                {
+                    content: "base",
+                    xclass: 'submenu',
+                    menu: {
+                        children: [
+                            {
+                                content: "css reset",
+                                href: 'demo/dpl/reset.html'
+                            },
+                            {
+                                content: "grids system",
+                                href: 'demo/dpl/grids.html',
+                                xclass: 'submenu',
+                                menu: {
+                                    children: [
+                                        {
+                                            content: '固定布局',
+                                            href: 'demo/dpl/grids/fixed.html'
+                                        },
+                                        {
+                                            content: '流式布局',
+                                            href: 'demo/dpl/grids/fluid.html'
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                content: 'fly-swing',
+                                xclass: 'submenu',
+                                menu: {
+                                    children: [
+                                        {
+                                            content: 'fly-swing demo',
+                                            href: 'demo/dpl/fly-swing/demo.html'
+                                        },
+                                        {
+                                            content: 'layout generator',
+                                            href: 'demo/dpl/fly-swing/css-generator.html'
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                content: "common",
+                                xclass: 'submenu',
+                                menu: {
+                                    children: [
+                                        {
+                                            content: 'ks-inline-block'
+                                        },
+                                        {
+                                            content: 'ks-shown'
+                                        },
+                                        {
+                                            content: '...'
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    content: 'simple ui',
+                    xclass: 'submenu',
+                    menu: {
+                        children: [
+                            {
+                                content: 'badges',
+                                href: 'demo/dpl/badges.html'
+                            },
+                            {
+                                content: 'forms',
+                                href: 'demo/dpl/forms.html'
+                            },
+                            {
+                                content: 'icons',
+                                href: 'demo/dpl/icons.html'
+                            },
+                            {
+                                content: 'labels',
+                                href: 'demo/dpl/labels.html'
+                            },
+                            {
+                                content: 'tables',
+                                href: 'demo/dpl/tables.html'
+                            }
+                        ]
+                    }
+                },
+                {
+                    content: 'complex ui',
+                    xclass: 'submenu',
+                    menu: {
+                        children: [
+                            {
+                                content: 'button',
+                                href: '../button/demo.html'
+                            },
+                            {
+                                content: 'calendar',
+                                href: '../calendar/demo.html'
+                            },
+                            {
+                                content: 'combobox',
+                                href: '../combobox/demo.html'
+                            },
+                            {
+                                content: 'editor',
+                                href: '../editor/demo/build/full.html'
+                            },
+                            {
+                                content: 'menu',
+                                href: '../menu/demo.html'
+                            },
+                            {
+                                content: 'menubutton',
+                                href: '../menubutton/demo.html'
+                            },
+                            {
+                                content: 'overlay',
+                                href: '../overlay/demo.html'
+                            },
+                            {
+                                content: 'split-button',
+                                href: '../split-button/demo.html'
+                            },
+
+                            {
+                                content: 'tabs',
+                                href: '../tabs/demo.html'
+                            },
+
+                            {
+                                content: 'toolbar',
+                                href: '../toolbar/demo.html'
+                            },
+
+                            {
+                                content: 'tree',
+                                href: '../tree/demo.html'
+                            }
+
+                        ]
+                    }
+                }
+            ]
+        }).render();
+    });
+</script>
+</body>
+</html>

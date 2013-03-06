@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:02
+build time: Mar 6 23:34
 */
 /**
  * @ignore
@@ -12,8 +12,21 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
     var KeyCodes = Event.KeyCodes;
 
     function onMenuHide(e) {
-        this.set("highlightedItem", null);
-        e.stopPropagation();
+        if (this === e.target) {
+            this.set("highlightedItem", null);
+            e.stopPropagation();
+        }
+    }
+
+    function afterHighlightedChange(e) {
+        var self = this,
+            target = e.target;
+        if (e.target.isMenuItem && e.newVal) {
+            this.set("activeItem", target);
+            if (S.inArray(target, self.get('children'))) {
+                this.set("highlightedItem", target);
+            }
+        }
     }
 
     /**
@@ -26,10 +39,15 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
         _onSetHighlightedItem: function (v, ev) {
             var pre = ev && ev.prevVal;
             if (pre) {
-                pre.set("highlighted", false);
+                pre.set("highlighted", false,{
+                    data:{
+                       hideImmediate:1
+                    }
+                });
             }
-            v && v.set("highlighted", true);
-            this.set("activeItem", v);
+            if (v && this.get('focusable')) {
+                this.set('focused', true);
+            }
         },
 
         handleBlur: function (e) {
@@ -84,7 +102,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                 return undefined;
             }
 
-            var index, destIndex;
+            var index, destIndex, nextHighlighted;
 
             //自己处理了，不要向上处理，嵌套菜单情况
             switch (e.keyCode) {
@@ -97,13 +115,11 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
 
                 // home
                 case KeyCodes.HOME:
-                    this.set("highlightedItem",
-                        this._getNextEnabledHighlighted(0, 1));
+                    nextHighlighted = this._getNextEnabledHighlighted(0, 1);
                     break;
                 // end
                 case KeyCodes.END:
-                    this.set("highlightedItem",
-                        this._getNextEnabledHighlighted(len - 1, -1));
+                    nextHighlighted = this._getNextEnabledHighlighted(len - 1, -1);
                     break;
                 // up
                 case KeyCodes.UP:
@@ -113,8 +129,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                         index = S.indexOf(highlightedItem, children);
                         destIndex = (index - 1 + len) % len;
                     }
-                    this.set("highlightedItem",
-                        this._getNextEnabledHighlighted(destIndex, -1));
+                    nextHighlighted = this._getNextEnabledHighlighted(destIndex, -1);
                     break;
                 //down
                 case KeyCodes.DOWN:
@@ -124,19 +139,26 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                         index = S.indexOf(highlightedItem, children);
                         destIndex = (index + 1 + len) % len;
                     }
-                    this.set("highlightedItem",
-                        this._getNextEnabledHighlighted(destIndex, 1));
+                    nextHighlighted = this._getNextEnabledHighlighted(destIndex, 1);
                     break;
-                default:
-                    return undefined;
             }
-            return true;
+            if (nextHighlighted) {
+                nextHighlighted.set('highlighted', true, {
+                    data: {
+                        byKeyboard: 1
+                    }
+                });
+                return true;
+            } else {
+                return undefined;
+            }
         },
 
         bindUI: function () {
             var self = this;
             // 隐藏后，去掉高亮与当前
             self.on("hide", onMenuHide, self);
+            self.on('afterHighlightedChange', afterHighlightedChange, self);
         },
 
         /**
@@ -280,7 +302,7 @@ KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender) {
                 return el.one("." + this.get('prefixCls')+MENU_FILTER)
                     .one("." + this.get('prefixCls')+MENU_FILTER_LABEL)
             },
-            filterWrap:function (el) {
+            'filterWrap':function (el) {
                 return el.one("." + this.get('prefixCls')+MENU_FILTER);
             },
             menuContent:function (el) {
@@ -708,183 +730,156 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
      */
     var MenuItem = Component.Controller.extend({
 
-            /**
-             * Handle mouseenter event. Make parent menu to highlight itself.
-             * Protected, should only be overridden by subclasses.
-             * @param {KISSY.Event.DOMEventObject} e Mouseenter event object.
-             * @protected
-             */
-            handleMouseEnter: function (e) {
-                // 父亲不允许自己处理
-                if (MenuItem.superclass.handleMouseEnter.call(this, e)) {
-                    return true;
-                }
-                this.get("parent").set("highlightedItem", this);
-            },
+        isMenuItem: 1,
 
-            /**
-             * Handle mouseleave event. Make parent menu to unhighlight itself.
-             * Protected, should only be overridden by subclasses.
-             * @param {KISSY.Event.DOMEventObject} e Mouseleave event object.
-             * @protected
-             *
-             */
-            handleMouseLeave: function (e) {
-                // 父亲不允许自己处理
-                if (MenuItem.superclass.handleMouseLeave.call(this, e)) {
-                    return true;
-                }
-                this.get("parent").set("highlightedItem", null);
-            },
-
-            // for ios, ios only has touchdown
-            handleMouseDown: function (e) {
-                // 父亲不允许自己处理
-                if (MenuItem.superclass.handleMouseDown.call(this, e)) {
-                    return true;
-                }
-                this.get("parent").set("highlightedItem", this);
-            },
-
-            /**
-             * Perform default action when click on enter on this menuitem.
-             * If selectable, then make it selected.
-             * If checkable, then toggle it.
-             * Finally fire click on its parent menu.
-             * @protected
-             */
-            performActionInternal: function () {
-                var self = this;
-                // 可选
-                if (self.get("selectable")) {
-                    self.set("selected", true);
-                }
-                // 可选中，取消选中
-                if (self.get("checkable")) {
-                    self.set("checked", !self.get("checked"));
-                }
-                self.fire("click");
+        // for ios, ios only has touchdown
+        handleMouseDown: function (e) {
+            // 父亲不允许自己处理
+            if (MenuItem.superclass.handleMouseDown.call(this, e)) {
                 return true;
+            }
+            this.set("highlighted", true);
+        },
+
+        /**
+         * Perform default action when click on enter on this menuitem.
+         * If selectable, then make it selected.
+         * If checkable, then toggle it.
+         * Finally fire click on its parent menu.
+         * @protected
+         */
+        performActionInternal: function () {
+            var self = this;
+            // 可选
+            if (self.get("selectable")) {
+                self.set("selected", true);
+            }
+            // 可选中，取消选中
+            if (self.get("checkable")) {
+                self.set("checked", !self.get("checked"));
+            }
+            self.fire("click");
+            return true;
+        },
+
+        _onSetHighlighted: function (v) {
+            // 是否要滚动到当前菜单项(横向，纵向)
+            if (v) {
+                var el = this.get("el"),
+                // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
+                // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
+                    p = el.parent(function (e) {
+                        return $(e).css("overflow") != "visible";
+                    }, this.get("parent").get("el").parent());
+                if (!p) {
+                    return;
+                }
+                el.scrollIntoView(p, {
+                    alignWithTop: true,
+                    allowHorizontalScroll: true,
+                    onlyScrollIfNeeded: true
+                });
+            }
+        },
+
+        /**
+         * Check whether this menu item contains specified element.
+         * @param {KISSY.NodeList} element Element to be tested.
+         * @protected
+         */
+        containsElement: function (element) {
+            return this.get('view') && this.get('view').containsElement(element);
+        }
+
+    }, {
+        ATTRS: {
+
+            focusable: {
+                value: false
             },
 
-            _onSetHighlighted: function (v) {
-                // 是否要滚动到当前菜单项(横向，纵向)
-                if (v) {
-                    var el = this.get("el"),
-                    // 找到向上路径上第一个可以滚动的容器，直到父组件节点（包括）
-                    // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
-                        p = el.parent(function (e) {
-                            return $(e).css("overflow") != "visible";
-                        }, this.get("parent").get("el").parent());
-                    if (!p) {
-                        return;
-                    }
-                    el.scrollIntoView(p,{
-                        alignWithTop:true,
-                        allowHorizontalScroll:true,
-                        onlyScrollIfNeeded:true
-                    });
-                }
+            handleMouseEvents: {
+                value: false
             },
 
             /**
-             * Check whether this menu item contains specified element.
-             * @param {KISSY.NodeList} element Element to be tested.
-             * @protected
+             * Whether the menu item is selectable or not.
+             * Set to true for option.
+             * @cfg {Boolean} selectable
              */
-            containsElement: function (element) {
-                return this.get('view') && this.get('view').containsElement(element);
+            /**
+             * @ignore
+             */
+            selectable: {
+                view: 1
+            },
+
+            /**
+             * Whether the menu item is checkable or not.
+             * Set to true for checkbox option.
+             * @cfg {Boolean} checkable
+             */
+            /**
+             * @ignore
+             */
+            checkable: {
+                view: 1
+            },
+
+            /**
+             * The value associated with the menu item.
+             * @cfg {*} value
+             */
+            /**
+             * The value associated with the menu item.
+             * @property value
+             * @type {*}
+             */
+            /**
+             * @ignore
+             */
+            value: {},
+
+            /**
+             * Whether the menu item is checked.
+             * @type {Boolean}
+             * @property checked
+             */
+            /**
+             * Whether the menu item is checked.
+             * @cfg {Boolean} checked
+             */
+            /**
+             * @ignore
+             */
+            checked: {
+                view: 1
+            },
+
+            /**
+             * Whether the menu item is selected.
+             * @type {Boolean}
+             * @property selected
+             */
+            /**
+             * Whether the menu item is selected.
+             * @cfg {Boolean} selected
+             */
+            /**
+             * @ignore
+             */
+            selected: {
+                view: 1
+            },
+
+            xrender: {
+                value: MenuItemRender
             }
-
-        }, {
-            ATTRS: {
-
-                focusable: {
-                    value: false
-                },
-
-                handleMouseEvents: {
-                    value: false
-                },
-
-                /**
-                 * Whether the menu item is selectable or not.
-                 * Set to true for option.
-                 * @cfg {Boolean} selectable
-                 */
-                /**
-                 * @ignore
-                 */
-                selectable: {
-                    view: 1
-                },
-
-                /**
-                 * Whether the menu item is checkable or not.
-                 * Set to true for checkbox option.
-                 * @cfg {Boolean} checkable
-                 */
-                /**
-                 * @ignore
-                 */
-                checkable: {
-                    view: 1
-                },
-
-                /**
-                 * The value associated with the menu item.
-                 * @cfg {*} value
-                 */
-                /**
-                 * The value associated with the menu item.
-                 * @property value
-                 * @type {*}
-                 */
-                /**
-                 * @ignore
-                 */
-                value: {},
-
-                /**
-                 * Whether the menu item is checked.
-                 * @type {Boolean}
-                 * @property checked
-                 */
-                /**
-                 * Whether the menu item is checked.
-                 * @cfg {Boolean} checked
-                 */
-                /**
-                 * @ignore
-                 */
-                checked: {
-                    view: 1
-                },
-
-                /**
-                 * Whether the menu item is selected.
-                 * @type {Boolean}
-                 * @property selected
-                 */
-                /**
-                 * Whether the menu item is selected.
-                 * @cfg {Boolean} selected
-                 */
-                /**
-                 * @ignore
-                 */
-                selected: {
-                    view: 1
-                },
-
-                xrender: {
-                    value: MenuItemRender
-                }
-            }
-        }, {
-            xclass: "menuitem",
-            priority: 10
-        });
+        }
+    }, {
+        xclass: "menuitem",
+        priority: 10
+    });
 
     return MenuItem;
 }, {
@@ -914,9 +909,6 @@ KISSY.add("menu/popupmenu", function (S,
                                       extension,
                                       Menu, PopupMenuRender) {
 
-    var autoHideOnMouseLeave = "autoHideOnMouseLeave";
-
-
     /**
      * Popup Menu.
      * xclass: 'popupmenu'.
@@ -931,20 +923,6 @@ KISSY.add("menu/popupmenu", function (S,
         extension.Align
     ],
         {
-            /**
-             * Handle mouseleave event.Make parent subMenu item unHighlighted.
-             * Protected, should only be overridden by subclasses.
-             * @protected
-             */
-            handleMouseLeave:function () {
-                var self = this;
-                if (!self.get(autoHideOnMouseLeave)) {
-                    return;
-                }
-                // 通知 submenu item buffer 层层检查，是否隐藏掉改子菜单以及子菜单的祖先菜单
-                self.get("parent").hideParentMenusBuffer();
-            },
-
             /**
              * Suppose it has focus (as a context menu), then it must hide when lose focus.
              * Protected, should only be overridden by subclasses.
@@ -967,16 +945,6 @@ KISSY.add("menu/popupmenu", function (S,
                 focusable:{
                     value:false
                 },
-                /**
-                 * Whether the popup menu hides when mouseleave.
-                 * Only valid for submenu.
-                 * Defaults to: false.
-                 * @cfg {Boolean} autoHideOnMouseLeave
-                 */
-                /**
-                 * @ignore
-                 */
-                autoHideOnMouseLeave:{},
 
                 xrender:{
                     value:PopupMenuRender
@@ -1039,10 +1007,16 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
  */
 KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender) {
 
+    function afterHighlightedChange(e) {
+        // 冒泡来的
+        if (e.target !== this && e.target.isMenuItem && e.newVal) {
+            this.set('highlighted', true);
+        }
+    }
+
     /* or precisely submenuitem */
 
     var KeyCodes = Event.KeyCodes,
-        doc = S.Env.host.document,
         MENU_DELAY = 0.15;
     /**
      * Class representing a submenu that can be added as an item to other menus.
@@ -1052,77 +1026,8 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
      */
     var SubMenu = MenuItem.extend([Component.DecorateChild], {
 
-            /**
-             * Bind sub menu events.
-             * Protected for subclass overridden.
-             * @protected
-             */
-            bindSubMenu: function () {
-                /**
-                 * 自己不是 menu，自己只是 menuitem，其所属的 menu 为 get("parent")
-                 */
-                var self = this,
-                    menu = self.get("menu"),
-                    parentMenu = self.get("parent");
-
-                //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
-                if (parentMenu) {
-
-                    parentMenu.on("hide", onParentHide, self);
-
-                    // if not bind doc click for parent menu
-                    // if already bind, then if parent menu hide, menu will hide too
-                    // !TODO 优化此处绑定！，不要特殊标记
-                    if (!parentMenu.__bindDocClickToHide) {
-                        // 绑到最根部
-                        Event.on(doc, "click", _onDocClick, self);
-                        parentMenu.__bindDocClickToHide = 1;
-                        // 绑到最根部
-                        menu.__bindDocClickToHide = 1;
-                    }
-
-                    // 通知父级菜单
-                    menu.on("afterActiveItemChange", function (ev) {
-                        parentMenu.set("activeItem", ev.newVal);
-                        ev.stopPropagation();
-                    });
-
-
-                    menu.on("afterHighlightedItemChange", function (ev) {
-                        if (ev.newVal) {
-                            // 1. 菜单再次高亮时，取消隐藏
-                            // 2. fix #160
-                            self.set("highlighted", true);
-                        }
-                        ev.stopPropagation();
-                    });
-
-                    // 只绑定一次
-                    self.bindSubMenu = S.noop;
-                }
-
-                // 访问子菜单，当前 submenu 不隐藏 menu
-                // leave submenuitem -> enter menuitem -> menu item highlight ->
-                // -> menu highlight -> beforeSubMenuHighlightChange ->
-
-                // menu render 后才会注册 afterHighlightedItemChange 到 _onSet
-                // 这里的 beforeSubMenuHighlightChange 比 afterHighlightedItemChange 先执行
-                // 保险点用 beforeHighlightedItemChange
-                menu.on("beforeHighlightedItemChange",
-                    beforeSubMenuHighlightChange, self);
-            },
-
-            handleMouseEnter: function (e) {
-                var self = this;
-                if (SubMenu.superclass.handleMouseEnter.call(self, e)) {
-                    return true;
-                }
-                // 两个作用
-                // 1. 停止孙子菜单的层层检查，导致 highlighted false 而 buffer 的隐藏
-                // 2. 停止本身 highlighted false 而 buffer 的隐藏
-                self.clearSubMenuTimers();
-                self.showTimer_ = S.later(showMenu, self.get("menuDelay") * 1000, false, self);
-                return undefined;
+            bindUI: function () {
+                this.on('afterHighlightedChange', afterHighlightedChange, this);
             },
 
             /**
@@ -1130,10 +1035,22 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              * accuracy when moving to sub menus.
              * @protected
              */
-            _onSetHighlighted: function (e) {
+            _onSetHighlighted: function (v, e) {
                 var self = this;
+                // sync
                 if (!e) {
-                    self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay") * 1000, false, self);
+                    return;
+                }
+                SubMenu.superclass._onSetHighlighted.apply(this, arguments);
+                if (!v) {
+                    if (e.hideImmediate) {
+                        hideMenu.call(self);
+                    } else {
+                        self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay") * 1000, false, self);
+                    }
+                } else if (!e.byKeyboard) {
+                    self.clearSubMenuTimers();
+                    self.showTimer_ = S.later(showMenu, self.get("menuDelay") * 1000, false, self);
                 }
             },
 
@@ -1188,7 +1105,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                         if (menu) {
                             var menuChildren = menu.get("children");
                             if (menuChildren[0]) {
-                                menu.set("highlightedItem", menuChildren[0]);
+                                menuChildren[0].set('highlighted', true);
                             }
                         }
                     }
@@ -1206,40 +1123,15 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 // left
                 else if (keyCode == KeyCodes.LEFT) {
                     hideMenu.call(self);
-                    // 隐藏后，当前激活项重回
-                    self.get("parent").set("activeItem", self);
+                    // 隐藏后，当前激活项重回，强制高亮事件
+                    self.fire('afterHighlightedChange', {
+                        newVal: true,
+                        byKeyboard: 1
+                    });
                 } else {
                     return undefined;
                 }
                 return true;
-            },
-
-            hideParentMenusBuffer: function () {
-                var self = this, parentMenu = self.get("parent");
-                self.dismissTimer_ = S.later(function () {
-                        var submenu = self,
-                            popupmenu = self.get("menu");
-                        while (popupmenu.get("autoHideOnMouseLeave")) {
-                            // 取消高亮，buffer 隐藏子菜单
-                            // 可能马上又移到上面，防止闪烁
-                            // 相当于强制 submenu mouseleave
-                            submenu.set("highlighted", false);
-                            // 原来的 submenu 在高亮
-                            // 表示越级选择 menu
-                            if (parentMenu.get("highlightedItem") != submenu) {
-                                break;
-                            }
-                            submenu = parentMenu.get("parent");
-                            if (!submenu) {
-                                break;
-                            }
-                            parentMenu = submenu.get("parent");
-                            popupmenu = submenu.get("menu");
-                        }
-                    },
-                    self.get("menuDelay") * 1000,
-                    false,
-                    self);
             },
 
             containsElement: function (element) {
@@ -1263,20 +1155,9 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
             destructor: function () {
                 var self = this,
-                    parentMenu = self.get("parent"),
                     menu = getMenu(self);
 
                 self.clearSubMenuTimers();
-
-                if (menu && menu.__bindDocClickToHide) {
-                    menu.__bindDocClickToHide = 0;
-                    Event.remove(doc, "click", _onDocClick, self);
-                }
-
-                //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
-                if (parentMenu) {
-                    parentMenu.detach("hide", onParentHide, self);
-                }
 
                 if (menu && menu.destroy) {
                     menu.destroy();
@@ -1351,31 +1232,17 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         return m;
     }
 
-    function _onDocClick(e) {
-        var self = this,
-            menu = getMenu(self),
-            target = e.target,
-            parentMenu = self.get("parent"),
-            el = self.get("el");
-
-        // only hide this menu, if click outside this menu and this menu's submenus
-        if (!parentMenu.containsElement(target)) {
-            menu && menu.hide();
-            // sub menuitem should also hide
-            self.get("parent").set("highlightedItem", null);
-        }
-    }
-
     function showMenu() {
         var self = this,
+            el,
+            align,
             menu = getMenu(self, 1);
         if (menu) {
-
-            // 保证显示前已经绑定好事件
-            self.bindSubMenu();
-
-            var align = S.clone(menu.get("align"));
-            align.node = self.get("el");
+            el = self.get('el');
+            align = menu.get("align");
+            delete align.node;
+            align = S.clone(align);
+            align.node = el;
             align.points = align.points || ['tr', 'tl'];
             menu.set("align", align);
             menu.show();
@@ -1385,8 +1252,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
              to allow the assist technology to follow the menu hierarchy
              and assist the user in determining context during menu navigation.
              */
-            self.get("el").attr("aria-haspopup",
-                menu.get("el").attr("id"));
+            el.attr("aria-haspopup", menu.get("el").attr("id"));
         }
     }
 
@@ -1395,30 +1261,6 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         if (menu) {
             menu.hide();
         }
-    }
-
-    /**
-     * Listens to the sub menus items and ensures that this menu item is selected
-     * while dismissing the others.  This handles the case when the user mouses
-     * over other items on their way to the sub menu.
-     * @param  e Highlight event to handle.
-     * @private
-     */
-    function beforeSubMenuHighlightChange(e) {
-        var self = this;
-        if (e.newVal) {
-            self.clearSubMenuTimers();
-            // superclass(menuitem).handleMouseLeave 已经把自己 highlight 去掉了
-            // 导致本类 _onSetHighlighted 调用，又把子菜单隐藏了
-            self.get("parent").set("highlightedItem", self);
-        }
-        e.stopPropagation();
-    }
-
-    function onParentHide(e) {
-        var menu = getMenu(this);
-        menu && menu.hide();
-        e.stopPropagation();
     }
 
     // # ------------------------------------ private end
