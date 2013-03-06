@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * menu where items can be filtered based on user keyboard input
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;menu/filtermenu&quot;, function (S, Component, Menu, FilterMenuRender) {
+
+    var HIT_CLS = &quot;menuitem-hit&quot;;
+
+    // 转义正则特殊字符,返回字符串用来构建正则表达式
+    function regExpEscape(s) {
+        return s.replace(/([-()\[\]{}+?*.$\^|,:#&lt;!\\])/g, '\\$1').
+            replace(/\x08/g, '\\x08');
+    }
+
+<span id='KISSY-Menu-FilterMenu'>    /**
+</span>     *
+     * Filter Menu for KISSY.
+     * xclass: 'filter-menu'.
+     * @extends KISSY.Menu
+     * @class KISSY.Menu.FilterMenu
+     */
+    var FilterMenu = Menu.extend([Component.DecorateChild], {
+            bindUI: function () {
+                var self = this,
+                    view = self.get(&quot;view&quot;),
+                    filterInput = view.get(&quot;filterInput&quot;);
+                /*监控键盘事件*/
+                filterInput.on(&quot;keyup&quot;, self.handleFilterEvent, self);
+            },
+
+            handleMouseEnter: function () {
+                var self = this;
+                FilterMenu.superclass.handleMouseEnter.apply(self, arguments);
+                // 权益解决,filter input focus 后会滚动到牌聚焦处,select 则不会
+                // 如果 filtermenu 的菜单项被滚轮滚到后面,点击触发不了,会向前滚动到 filter input
+                self.getKeyEventTarget()[0].select();
+            },
+
+            handleFilterEvent: function () {
+                var self = this,
+                    view = self.get(&quot;view&quot;),
+                    filterInput = view.get(&quot;filterInput&quot;),
+                    highlightedItem = self.get(&quot;highlightedItem&quot;);
+                /* 根据用户输入过滤 */
+                self.set(&quot;filterStr&quot;, filterInput.val());
+
+                // 如果没有高亮项或者高亮项因为过滤被隐藏了
+                // 默认选择符合条件的第一项
+                if (!highlightedItem || !highlightedItem.get(&quot;visible&quot;)) {
+                    self.set(&quot;highlightedItem&quot;,
+                        self._getNextEnabledHighlighted(0, 1));
+                }
+            },
+
+            '_onSetFilterStr': function (v) {
+                // 过滤条件变了立即过滤
+                this.filterItems(v);
+            },
+
+<span id='KISSY-Menu-FilterMenu-method-filterItems'>            /**
+</span>             * Specify how to filter items.
+             * @param {String} str User input.
+             */
+            filterItems: function (str) {
+                var self = this,
+                    prefixCls = self.get('prefixCls'),
+                    view = self.get(&quot;view&quot;),
+                    _labelEl = view.get(&quot;labelEl&quot;),
+                    filterInput = view.get(&quot;filterInput&quot;);
+
+                // 有过滤条件提示隐藏,否则提示显示
+                _labelEl[str ? &quot;hide&quot; : &quot;show&quot;]();
+
+                if (self.get(&quot;allowMultiple&quot;)) {
+                    var enteredItems = [],
+                        lastWord;
+                    // \uff0c =&gt; ，
+                    var match = str.match(/(.+)[,\uff0c]\s*([^\uff0c,]*)/);
+                    // 已经确认的项
+                    // , 号之前的项必定确认
+
+                    var items = [];
+
+                    if (match) {
+                        items = match[1].split(/[,\uff0c]/);
+                    }
+
+                    // 逗号结尾
+                    // 如果可以补全,那么补全最后一项为第一个高亮项
+                    if (/[,\uff0c]$/.test(str)) {
+                        enteredItems = [];
+                        if (match) {
+                            enteredItems = items;
+                            //待补全的项
+                            lastWord = items[items.length - 1];
+                            var item = self.get(&quot;highlightedItem&quot;),
+                                content = item &amp;&amp; item.get(&quot;content&quot;);
+                            // 有高亮而且最后一项不为空补全
+                            if (content &amp;&amp; content.indexOf(lastWord) &gt; -1
+                                &amp;&amp; lastWord) {
+                                enteredItems[enteredItems.length - 1] = content;
+                            }
+                            filterInput.val(enteredItems.join(&quot;,&quot;) + &quot;,&quot;);
+                        }
+                        str = '';
+                    } else {
+                        // 需要菜单过滤的过滤词,在最后一个 , 后面
+                        if (match) {
+                            str = match[2] || &quot;&quot;;
+                        }
+                        // 没有 , 则就是当前输入的
+                        // else{ str=str}
+
+                        //记录下
+                        enteredItems = items;
+                    }
+                    var oldEnteredItems = self.get(&quot;enteredItems&quot;);
+                    // 发生变化,长度变化和内容变化等同
+                    if (oldEnteredItems.length != enteredItems.length) {
+                        S.log(&quot;enteredItems : &quot;);
+                        S.log(enteredItems);
+                        self.set(&quot;enteredItems&quot;, enteredItems);
+                    }
+                }
+
+                var children = self.get(&quot;children&quot;),
+                    strExp = str &amp;&amp; new RegExp(regExpEscape(str), &quot;ig&quot;);
+
+                // 过滤所有子组件
+                S.each(children, function (c) {
+                    var content = c.get(&quot;content&quot;);
+                    if (!str) {
+                        // 没有过滤条件
+                        // 恢复原有内容
+                        // 显示出来
+                        c.get(&quot;el&quot;).html(content);
+                        c.set(&quot;visible&quot;, true);
+                    } else {
+                        if (content.indexOf(str) &gt; -1) {
+                            // 如果符合过滤项
+                            // 显示
+                            c.set(&quot;visible&quot;, true);
+                            // 匹配子串着重 wrap
+                            c.get(&quot;el&quot;).html(content.replace(strExp, function (m) {
+                                return &quot;&lt;span class='&quot; + prefixCls + HIT_CLS + &quot;'&gt;&quot; + m + &quot;&lt;&quot; + &quot;/span&gt;&quot;;
+                            }));
+                        } else {
+                            // 不符合
+                            // 隐藏
+                            c.set(&quot;visible&quot;, false);
+                        }
+                    }
+                });
+            },
+
+<span id='KISSY-Menu-FilterMenu-method-reset'>            /**
+</span>             * Reset user input.
+             */
+            reset: function () {
+                var self = this,
+                    view = self.get(&quot;view&quot;);
+                self.set(&quot;filterStr&quot;, &quot;&quot;);
+                self.set(&quot;enteredItems&quot;, []);
+                var filterInput = view &amp;&amp; view.get(&quot;filterInput&quot;);
+                filterInput &amp;&amp; filterInput.val(&quot;&quot;);
+            },
+
+            destructor: function () {
+                var view = this.get(&quot;view&quot;);
+                var filterInput = view &amp;&amp; view.get(&quot;filterInput&quot;);
+                filterInput &amp;&amp; filterInput.detach();
+            }
+
+        },
+        {
+            ATTRS: {
+
+                allowTextSelection: {
+                    value: true
+                },
+
+<span id='KISSY-Menu-FilterMenu-cfg-label'>                /**
+</span>                 * Hit info string
+                 * @cfg {String} label
+                 */
+<span id='global-property-label'>                /**
+</span>                 * @ignore
+                 */
+                label: {
+                    view: 1
+                },
+
+<span id='KISSY-Menu-FilterMenu-cfg-filterStr'>                /**
+</span>                 * Filter string
+                 * @cfg {String} filterStr
+                 */
+<span id='global-property-filterStr'>                /**
+</span>                 * @ignore
+                 */
+                filterStr: {
+                },
+
+<span id='global-property-enteredItems'>                /**
+</span>                 * user entered string list when allowMultiple.
+                 * @type {String[]}
+                 * @ignore
+                 */
+                enteredItems: {
+                    value: []
+                },
+
+<span id='KISSY-Menu-FilterMenu-cfg-allowMultiple'>                /**
+</span>                 * Whether to allow input multiple.
+                 * @cfg {Boolean} allowMultiple
+                 */
+<span id='global-property-allowMultiple'>                /**
+</span>                 * @ignore
+                 */
+                allowMultiple: {
+                    value: false
+                },
+
+                decorateChildCls: {
+                    valueFn: function () {
+                        return this.get(&quot;prefixCls&quot;) + &quot;menu-content&quot;
+                    }
+                },
+
+                xrender: {
+                    value: FilterMenuRender
+                }
+            }
+        }, {
+            xclass: 'filter-menu',
+            priority: 20
+        });
+
+    return FilterMenu;
+}, {
+    requires: ['component/base', './base', './filtermenu-render']
+});</pre>
+</body>
+</html>

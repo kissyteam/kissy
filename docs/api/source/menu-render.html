@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * render aria from menu according to current menuitem
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;menu/menu-render&quot;, function(S, Component) {
+
+    return Component.Render.extend({
+
+        renderUI:function() {
+            var el = this.get(&quot;el&quot;);
+            el .attr(&quot;role&quot;, &quot;menu&quot;)
+                .attr(&quot;aria-haspopup&quot;, true);
+            if (!el.attr(&quot;id&quot;)) {
+                el.attr(&quot;id&quot;, S.guid(&quot;ks-menu&quot;));
+            }
+        },
+
+        _onSetActiveItem:function(v) {
+            var el = this.get(&quot;el&quot;);
+            if (v) {
+                var menuItemEl = v.get(&quot;el&quot;),
+                    id = menuItemEl.attr(&quot;id&quot;);
+                el.attr(&quot;aria-activedescendant&quot;, id);
+                // 会打印重复 ，每个子菜单都会打印，然后冒泡至父菜单，再打印，和该 menuitem 所处层次有关系
+                //S.log(&quot;menu-render :&quot; + el.attr(&quot;id&quot;) + &quot; _onSetActiveItem : &quot; + v.get(&quot;content&quot;));
+            } else {
+                el.attr(&quot;aria-activedescendant&quot;, &quot;&quot;);
+                //S.log(&quot;menu-render :&quot; + el.attr(&quot;id&quot;) + &quot; _onSetActiveItem : &quot; + &quot;&quot;);
+            }
+        },
+
+        containsElement:function(element) {
+            var el = this.get(&quot;el&quot;);
+            return el[0] === element || el.contains(element);
+        }
+    }, {
+        ATTRS:{
+            activeItem:{}
+        }
+    });
+}, {
+    requires:['component/base']
+});</pre>
+</body>
+</html>

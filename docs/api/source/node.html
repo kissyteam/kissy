@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * node
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('node', function (S, Node) {
+    S.mix(S, {
+        Node: Node,
+        NodeList: Node,
+        one: Node.one,
+        all: Node.all
+    });
+    return Node;
+}, {
+    requires: [
+        'node/base',
+        'node/attach',
+        'node/override',
+        'node/anim'
+    ]
+});</pre>
+</body>
+</html>

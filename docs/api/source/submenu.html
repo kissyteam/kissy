@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * submenu controller for kissy, transfer item's keycode to menu
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;menu/submenu&quot;, function (S, Event, Component, MenuItem, SubMenuRender) {
+
+    /* or precisely submenuitem */
+
+    var KeyCodes = Event.KeyCodes,
+        doc = S.Env.host.document,
+        MENU_DELAY = 0.15;
+<span id='KISSY-Menu-SubMenu'>    /**
+</span>     * Class representing a submenu that can be added as an item to other menus.
+     * xclass: 'submenu'.
+     * @extends KISSY.Menu.Item
+     * @class KISSY.Menu.SubMenu
+     */
+    var SubMenu = MenuItem.extend([Component.DecorateChild], {
+
+<span id='KISSY-Menu-SubMenu-method-bindSubMenu'>            /**
+</span>             * Bind sub menu events.
+             * Protected for subclass overridden.
+             * @protected
+             */
+            bindSubMenu: function () {
+<span id='KISSY-Menu-SubMenu-property-self'>                /**
+</span>                 * 自己不是 menu，自己只是 menuitem，其所属的 menu 为 get(&quot;parent&quot;)
+                 */
+                var self = this,
+                    menu = self.get(&quot;menu&quot;),
+                    parentMenu = self.get(&quot;parent&quot;);
+
+                //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
+                if (parentMenu) {
+
+                    parentMenu.on(&quot;hide&quot;, onParentHide, self);
+
+                    // if not bind doc click for parent menu
+                    // if already bind, then if parent menu hide, menu will hide too
+                    // !TODO 优化此处绑定！，不要特殊标记
+                    if (!parentMenu.__bindDocClickToHide) {
+                        // 绑到最根部
+                        Event.on(doc, &quot;click&quot;, _onDocClick, self);
+                        parentMenu.__bindDocClickToHide = 1;
+                        // 绑到最根部
+                        menu.__bindDocClickToHide = 1;
+                    }
+
+                    // 通知父级菜单
+                    menu.on(&quot;afterActiveItemChange&quot;, function (ev) {
+                        parentMenu.set(&quot;activeItem&quot;, ev.newVal);
+                        ev.stopPropagation();
+                    });
+
+
+                    menu.on(&quot;afterHighlightedItemChange&quot;, function (ev) {
+                        if (ev.newVal) {
+                            // 1. 菜单再次高亮时，取消隐藏
+                            // 2. fix #160
+                            self.set(&quot;highlighted&quot;, true);
+                        }
+                        ev.stopPropagation();
+                    });
+
+                    // 只绑定一次
+                    self.bindSubMenu = S.noop;
+                }
+
+                // 访问子菜单，当前 submenu 不隐藏 menu
+                // leave submenuitem -&gt; enter menuitem -&gt; menu item highlight -&gt;
+                // -&gt; menu highlight -&gt; beforeSubMenuHighlightChange -&gt;
+
+                // menu render 后才会注册 afterHighlightedItemChange 到 _onSet
+                // 这里的 beforeSubMenuHighlightChange 比 afterHighlightedItemChange 先执行
+                // 保险点用 beforeHighlightedItemChange
+                menu.on(&quot;beforeHighlightedItemChange&quot;,
+                    beforeSubMenuHighlightChange, self);
+            },
+
+            handleMouseEnter: function (e) {
+                var self = this;
+                if (SubMenu.superclass.handleMouseEnter.call(self, e)) {
+                    return true;
+                }
+                // 两个作用
+                // 1. 停止孙子菜单的层层检查，导致 highlighted false 而 buffer 的隐藏
+                // 2. 停止本身 highlighted false 而 buffer 的隐藏
+                self.clearSubMenuTimers();
+                self.showTimer_ = S.later(showMenu, self.get(&quot;menuDelay&quot;) * 1000, false, self);
+                return undefined;
+            },
+
+<span id='KISSY-Menu-SubMenu-method-_onSetHighlighted'>            /**
+</span>             * Dismisses the submenu on a delay, with the result that the user needs less
+             * accuracy when moving to sub menus.
+             * @protected
+             */
+            _onSetHighlighted: function (e) {
+                var self = this;
+                if (!e) {
+                    self.dismissTimer_ = S.later(hideMenu, self.get(&quot;menuDelay&quot;) * 1000, false, self);
+                }
+            },
+
+<span id='KISSY-Menu-SubMenu-method-clearSubMenuTimers'>            /**
+</span>             * Clears the show and hide timers for the sub menu.
+             * @private
+             */
+            clearSubMenuTimers: function () {
+                var self = this,
+                    dismissTimer_,
+                    showTimer_;
+                if (dismissTimer_ = self.dismissTimer_) {
+                    dismissTimer_.cancel();
+                    self.dismissTimer_ = null;
+                }
+                if (showTimer_ = self.showTimer_) {
+                    showTimer_.cancel();
+                    self.showTimer_ = null;
+                }
+            },
+
+            // click ，立即显示
+            performActionInternal: function () {
+                var self = this;
+                self.clearSubMenuTimers();
+                showMenu.call(self);
+                //  trigger click event from menuitem
+                SubMenu.superclass.performActionInternal.apply(self, arguments);
+            },
+
+<span id='KISSY-Menu-SubMenu-method-handleKeydown'>            /**
+</span>             * Handles a key event that is passed to the menu item from its parent because
+             * it is highlighted.  If the right key is pressed the sub menu takes control
+             * and delegates further key events to its menu until it is dismissed OR the
+             * left key is pressed.
+             * Protected for subclass overridden.
+             * @param {KISSY.Event.DOMEventObject} e key event.
+             * @protected
+             * @return {Boolean|undefined} Whether the event was handled.
+             */
+            handleKeydown: function (e) {
+                var self = this,
+                    menu = getMenu(self),
+                    hasKeyboardControl_ = menu &amp;&amp; menu.get(&quot;visible&quot;),
+                    keyCode = e.keyCode;
+
+                if (!hasKeyboardControl_) {
+                    // right
+                    if (keyCode == KeyCodes.RIGHT) {
+                        showMenu.call(self);
+                        menu = getMenu(self);
+                        if (menu) {
+                            var menuChildren = menu.get(&quot;children&quot;);
+                            if (menuChildren[0]) {
+                                menu.set(&quot;highlightedItem&quot;, menuChildren[0]);
+                            }
+                        }
+                    }
+                    // enter as click
+                    else if (e.keyCode == Event.KeyCodes.ENTER) {
+                        return this.performActionInternal(e);
+                    }
+                    else {
+                        return undefined;
+                    }
+                } else if (menu.handleKeydown(e)) {
+                }
+                // The menu has control and the key hasn't yet been handled, on left arrow
+                // we turn off key control.
+                // left
+                else if (keyCode == KeyCodes.LEFT) {
+                    hideMenu.call(self);
+                    // 隐藏后，当前激活项重回
+                    self.get(&quot;parent&quot;).set(&quot;activeItem&quot;, self);
+                } else {
+                    return undefined;
+                }
+                return true;
+            },
+
+            hideParentMenusBuffer: function () {
+                var self = this, parentMenu = self.get(&quot;parent&quot;);
+                self.dismissTimer_ = S.later(function () {
+                        var submenu = self,
+                            popupmenu = self.get(&quot;menu&quot;);
+                        while (popupmenu.get(&quot;autoHideOnMouseLeave&quot;)) {
+                            // 取消高亮，buffer 隐藏子菜单
+                            // 可能马上又移到上面，防止闪烁
+                            // 相当于强制 submenu mouseleave
+                            submenu.set(&quot;highlighted&quot;, false);
+                            // 原来的 submenu 在高亮
+                            // 表示越级选择 menu
+                            if (parentMenu.get(&quot;highlightedItem&quot;) != submenu) {
+                                break;
+                            }
+                            submenu = parentMenu.get(&quot;parent&quot;);
+                            if (!submenu) {
+                                break;
+                            }
+                            parentMenu = submenu.get(&quot;parent&quot;);
+                            popupmenu = submenu.get(&quot;menu&quot;);
+                        }
+                    },
+                    self.get(&quot;menuDelay&quot;) * 1000,
+                    false,
+                    self);
+            },
+
+            containsElement: function (element) {
+                var menu = getMenu(this);
+                return menu &amp;&amp; menu.containsElement(element);
+            },
+
+            // 默认 addChild，这里里面的元素需要放到 menu 属性中
+            decorateChildrenInternal: function (UI, el) {
+                // 不能用 display:none
+                el.css(&quot;visibility&quot;, &quot;hidden&quot;);
+                var self = this,
+                    docBody = S.one(el[0].ownerDocument.body);
+                docBody.prepend(el);
+                var menu = new UI({
+                    srcNode: el,
+                    prefixCls: self.get(&quot;prefixCls&quot;)
+                });
+                self.setInternal(&quot;menu&quot;, menu);
+            },
+
+            destructor: function () {
+                var self = this,
+                    parentMenu = self.get(&quot;parent&quot;),
+                    menu = getMenu(self);
+
+                self.clearSubMenuTimers();
+
+                if (menu &amp;&amp; menu.__bindDocClickToHide) {
+                    menu.__bindDocClickToHide = 0;
+                    Event.remove(doc, &quot;click&quot;, _onDocClick, self);
+                }
+
+                //当改菜单项所属的菜单隐藏后，该菜单项关联的子菜单也要隐藏
+                if (parentMenu) {
+                    parentMenu.detach(&quot;hide&quot;, onParentHide, self);
+                }
+
+                if (menu &amp;&amp; menu.destroy) {
+                    menu.destroy();
+                }
+            }
+        },
+        {
+            ATTRS: {
+<span id='KISSY-Menu-SubMenu-cfg-menuDelay'>                /**
+</span>                 * The delay before opening the sub menu in seconds.  (This number is
+                 * arbitrary, it would be good to get some user studies or a designer to play
+                 * with some numbers).
+                 * Defaults to: 0.15
+                 * @cfg {Number} menuDelay
+                 */
+<span id='global-property-menuDelay'>                /**
+</span>                 * @ignore
+                 */
+                menuDelay: {
+                    value: MENU_DELAY
+                },
+<span id='KISSY-Menu-SubMenu-cfg-menu'>                /**
+</span>                 * Menu config or instance.
+                 * @cfg {KISSY.Menu|Object} menu
+                 */
+<span id='KISSY-Menu-SubMenu-property-menu'>                /**
+</span>                 * Menu config or instance.
+                 * @property menu
+                 * @type {KISSY.Menu|Object}
+                 */
+<span id='global-property-menu'>                /**
+</span>                 * @ignore
+                 */
+                menu: {
+                    setter: function (m) {
+                        if (m instanceof  Component.Controller) {
+                            m.setInternal(&quot;parent&quot;, this);
+                        }
+                    }
+                },
+
+                defaultChildXClass: {
+                    value: 'popupmenu'
+                },
+
+                decorateChildCls: {
+                    valueFn: function () {
+                        return this.get(&quot;prefixCls&quot;) + &quot;popupmenu&quot;
+                    }
+                },
+                xrender: {
+                    value: SubMenuRender
+                }
+            }
+        }, {
+            xclass: 'submenu',
+            priority: 20
+        });
+
+    // # -------------------------------- private start
+
+    function getMenu(self, init) {
+        var m = self.get(&quot;menu&quot;);
+        if (m &amp;&amp; !m.isController) {
+            if (init) {
+                m = Component.create(m, self);
+                self.setInternal(&quot;menu&quot;, m);
+            } else {
+                return null;
+            }
+        }
+        return m;
+    }
+
+    function _onDocClick(e) {
+        var self = this,
+            menu = getMenu(self),
+            target = e.target,
+            parentMenu = self.get(&quot;parent&quot;),
+            el = self.get(&quot;el&quot;);
+
+        // only hide this menu, if click outside this menu and this menu's submenus
+        if (!parentMenu.containsElement(target)) {
+            menu &amp;&amp; menu.hide();
+            // sub menuitem should also hide
+            self.get(&quot;parent&quot;).set(&quot;highlightedItem&quot;, null);
+        }
+    }
+
+    function showMenu() {
+        var self = this,
+            menu = getMenu(self, 1);
+        if (menu) {
+
+            // 保证显示前已经绑定好事件
+            self.bindSubMenu();
+
+            var align = S.clone(menu.get(&quot;align&quot;));
+            align.node = self.get(&quot;el&quot;);
+            align.points = align.points || ['tr', 'tl'];
+            menu.set(&quot;align&quot;, align);
+            menu.show();
+            /*
+             If activation of your menuitem produces a popup menu,
+             then the menuitem should have aria-haspopup set to the ID of the corresponding menu
+             to allow the assist technology to follow the menu hierarchy
+             and assist the user in determining context during menu navigation.
+             */
+            self.get(&quot;el&quot;).attr(&quot;aria-haspopup&quot;,
+                menu.get(&quot;el&quot;).attr(&quot;id&quot;));
+        }
+    }
+
+    function hideMenu() {
+        var menu = getMenu(this);
+        if (menu) {
+            menu.hide();
+        }
+    }
+
+<span id='KISSY-Menu-SubMenu-method-beforeSubMenuHighlightChange'>    /**
+</span>     * Listens to the sub menus items and ensures that this menu item is selected
+     * while dismissing the others.  This handles the case when the user mouses
+     * over other items on their way to the sub menu.
+     * @param  e Highlight event to handle.
+     * @private
+     */
+    function beforeSubMenuHighlightChange(e) {
+        var self = this;
+        if (e.newVal) {
+            self.clearSubMenuTimers();
+            // superclass(menuitem).handleMouseLeave 已经把自己 highlight 去掉了
+            // 导致本类 _onSetHighlighted 调用，又把子菜单隐藏了
+            self.get(&quot;parent&quot;).set(&quot;highlightedItem&quot;, self);
+        }
+        e.stopPropagation();
+    }
+
+    function onParentHide(e) {
+        var menu = getMenu(this);
+        menu &amp;&amp; menu.hide();
+        e.stopPropagation();
+    }
+
+    // # ------------------------------------ private end
+
+    return SubMenu;
+}, {
+    requires: ['event', 'component/base', './menuitem', './submenu-render']
+});</pre>
+</body>
+</html>

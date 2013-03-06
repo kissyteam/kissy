@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * close extension for kissy dialog
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;overlay/extension/close&quot;, function () {
+
+<span id='KISSY-Overlay-Extension-Close'>    /**
+</span>     * @class KISSY.Overlay.Extension.Close
+     * Close extension class. Represent a close button.
+     */
+    function Close() {
+    }
+
+    var HIDE = &quot;hide&quot;;
+
+    Close.ATTRS =    {
+<span id='KISSY-Overlay-Extension-Close-cfg-closable'>        /**
+</span>         * Whether close button is visible.
+         *
+         * Defaults to: true.
+         *
+         * @cfg {Boolean} closable
+         */
+<span id='KISSY-Overlay-Extension-Close-property-closable'>        /**
+</span>         * Whether close button is visible.
+         * @type {Boolean}
+         * @property closable
+         */
+<span id='global-property-closable'>        /**
+</span>         * @ignore
+         */
+        closable:{
+            view:1
+        },
+
+<span id='KISSY-Overlay-Extension-Close-property-closeBtn'>        /**
+</span>         * close button element.
+         * @type {KISSY.NodeList}
+         * @property closeBtn
+         * @readonly
+         */
+<span id='global-property-closeBtn'>        /**
+</span>         * @ignore
+         */
+        closeBtn:{
+            view:1
+        },
+
+<span id='KISSY-Overlay-Extension-Close-cfg-closeAction'>        /**
+</span>         * Whether to destroy or hide current element when click close button.
+         * Can set &quot;destroy&quot; to destroy it when click close button.
+         *
+         * Defaults to: &quot;hide&quot;.
+         *
+         * @cfg {String} closeAction
+         */
+<span id='global-property-closeAction'>        /**
+</span>         * @ignore
+         */
+        closeAction:{
+            value:HIDE
+        }
+    };
+
+    var actions = {
+        hide:HIDE,
+        destroy:&quot;destroy&quot;
+    };
+
+    // for augment, no need constructor
+    Close.prototype = {
+        _onSetClosable:function (v) {
+            var self = this;
+            if (v &amp;&amp; !self.__bindCloseEvent) {
+                self.__bindCloseEvent = 1;
+                self.get(&quot;closeBtn&quot;).on(&quot;click&quot;, function (ev) {
+                    self.close();
+                    ev.preventDefault();
+                });
+            }
+        },
+<span id='KISSY-Overlay-Extension-Close-method-close'>        /**
+</span>         * hide or destroy according to {@link KISSY.Overlay.Extension.Close#closeAction}
+         * @chainable
+         */
+        close:function(){
+            var self=this;
+            self[actions[self.get(&quot;closeAction&quot;)] || HIDE]();
+            return self;
+        },
+        __destructor:function () {
+            var btn = this.get(&quot;closeBtn&quot;);
+            btn &amp;&amp; btn.detach();
+        }
+    };
+    return Close;
+
+});</pre>
+</body>
+</html>

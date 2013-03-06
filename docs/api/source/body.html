@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Body for tab panels.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;tabs/body&quot;, function (S, Component) {
+
+    return Component.Container.extend({
+
+        renderUI: function () {
+            var self = this,
+                children = self.get(&quot;children&quot;);
+            S.each(children, function (c) {
+                if (c.get(&quot;selected&quot;)) {
+                    self.set(&quot;selectedPanel&quot;, c);
+                }
+            });
+        },
+
+        bindUI: function () {
+            this.on(&quot;afterSelectedPanelChange&quot;, function (e) {
+                if (e.newVal) {
+                    if (e.prevVal) {
+                        e.prevVal.set(&quot;selected&quot;, false);
+                    }
+                    e.newVal.set(&quot;selected&quot;, true);
+                }
+            });
+        }
+
+    }, {
+        ATTRS: {
+            selectedPanel: {
+            },
+            allowTextSelection: {
+                value: true
+            },
+            focusable: {
+                value: false
+            },
+            handleMouseEvents: {
+                value: false
+            },
+            delegateChildren: {
+                value: false
+            },
+            defaultChildXClass: {
+                value: 'tabs-panel'
+            }
+        }
+    }, {
+        xclass: 'tabs-body'
+    });
+
+}, {
+    requires: ['component/base']
+});</pre>
+</body>
+</html>

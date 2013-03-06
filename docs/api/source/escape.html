@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * escape of lang
+ * @author yiminghe@gmail.com
+ *
+ */
+(function (S, undefined) {
+    // IE doesn't include non-breaking-space (0xa0) in their \s character
+    // class (as required by section 7.2 of the ECMAScript spec), we explicitly
+    // include it in the regexp to enforce consistent cross-browser behavior.
+    var SEP = '&amp;',
+        EMPTY = '',
+        EQ = '=',
+        TRUE = true,
+    // FALSE = false,
+        HEX_BASE = 16,
+    // http://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet
+        htmlEntities = {
+            '&amp;amp;': '&amp;',
+            '&amp;gt;': '&gt;',
+            '&amp;lt;': '&lt;',
+            '&amp;#x60;': '`',
+            '&amp;#x2F;': '/',
+            '&amp;quot;': '&quot;',
+            '&amp;#x27;': &quot;'&quot;
+        },
+        reverseEntities = {},
+        escapeReg,
+        unEscapeReg,
+    // - # $ ^ * ( ) + [ ] { } | \ , . ?
+        escapeRegExp = /[\-#$\^*()+\[\]{}|\\,.?\s]/g;
+    (function () {
+        for (var k in htmlEntities) {
+            reverseEntities[htmlEntities[k]] = k;
+        }
+    })();
+
+    function isValidParamValue(val) {
+        var t = typeof val;
+        // If the type of val is null, undefined, number, string, boolean, return TRUE.
+        return val == null || (t !== 'object' &amp;&amp; t !== 'function');
+    }
+
+    function getEscapeReg() {
+        if (escapeReg) {
+            return escapeReg
+        }
+        var str = EMPTY;
+        S.each(htmlEntities, function (entity) {
+            str += entity + '|';
+        });
+        str = str.slice(0, -1);
+        return escapeReg = new RegExp(str, 'g');
+    }
+
+    function getUnEscapeReg() {
+        if (unEscapeReg) {
+            return unEscapeReg
+        }
+        var str = EMPTY;
+        S.each(reverseEntities, function (entity) {
+            str += entity + '|';
+        });
+        str += '&amp;#(\\d{1,5});';
+        return unEscapeReg = new RegExp(str, 'g');
+    }
+
+    S.mix(S, {
+
+<span id='KISSY-method-urlEncode'>        /**
+</span>         * Call encodeURIComponent to encode a url component
+         * @param {String} s part of url to be encoded.
+         * @return {String} encoded url part string.
+         * @member KISSY
+         */
+        urlEncode: function (s) {
+            return encodeURIComponent(String(s));
+        },
+
+<span id='KISSY-method-urlDecode'>        /**
+</span>         * Call decodeURIComponent to decode a url component
+         * and replace '+' with space.
+         * @param {String} s part of url to be decoded.
+         * @return {String} decoded url part string.
+         * @member KISSY
+         */
+        urlDecode: function (s) {
+            return decodeURIComponent(s.replace(/\+/g, ' '));
+        },
+
+<span id='KISSY-method-fromUnicode'>        /**
+</span>         * frequently used in taobao cookie about nick
+         * @member KISSY
+         * @return {String} un-unicode string.
+         */
+        fromUnicode: function (str) {
+            return str.replace(/\\u([a-f\d]{4})/ig, function (m, u) {
+                return  String.fromCharCode(parseInt(u, HEX_BASE));
+            });
+        },
+<span id='KISSY-method-escapeHTML'>        /**
+</span>         * get escaped string from html.
+         * only escape
+         *      &amp; &gt; &lt; ` / &quot; '
+         * refer:
+         *
+         * [http://yiminghe.javaeye.com/blog/788929](http://yiminghe.javaeye.com/blog/788929)
+         *
+         * [http://wonko.com/post/html-escaping](http://wonko.com/post/html-escaping)
+         * @param str {string} text2html show
+         * @member KISSY
+         * @return {String} escaped html
+         */
+        escapeHTML: function (str) {
+            return (str + '').replace(getEscapeReg(), function (m) {
+                return reverseEntities[m];
+            });
+        },
+
+<span id='KISSY-method-escapeRegExp'>        /**
+</span>         * get escaped regexp string for construct regexp.
+         * @param str
+         * @member KISSY
+         * @return {String} escaped regexp
+         */
+        escapeRegExp: function (str) {
+            return str.replace(escapeRegExp, '\\$&amp;');
+        },
+
+<span id='KISSY-method-unEscapeHTML'>        /**
+</span>         * un-escape html to string.
+         * only unescape
+         *      &amp;amp; &amp;lt; &amp;gt; &amp;#x60; &amp;#x2F; &amp;quot; &amp;#x27; &amp;#\d{1,5}
+         * @param str {string} html2text
+         * @member KISSY
+         * @return {String} un-escaped html
+         */
+        unEscapeHTML: function (str) {
+            return str.replace(getUnEscapeReg(), function (m, n) {
+                return htmlEntities[m] || String.fromCharCode(+n);
+            });
+        },
+<span id='KISSY-method-param'>        /**
+</span>         * Creates a serialized string of an array or object.
+         *
+         * for example:
+         *     @example
+         *     {foo: 1, bar: 2}    // -&gt; 'foo=1&amp;bar=2'
+         *     {foo: 1, bar: [2, 3]}    // -&gt; 'foo=1&amp;bar=2&amp;bar=3'
+         *     {foo: '', bar: 2}    // -&gt; 'foo=&amp;bar=2'
+         *     {foo: undefined, bar: 2}    // -&gt; 'foo=undefined&amp;bar=2'
+         *     {foo: TRUE, bar: 2}    // -&gt; 'foo=TRUE&amp;bar=2'
+         *
+         * @param {Object} o json data
+         * @param {String} [sep='&amp;'] separator between each pair of data
+         * @param {String} [eq='='] separator between key and value of data
+         * @param {Boolean} [serializeArray=true] whether add '[]' to array key of data
+         * @return {String}
+         * @member KISSY
+         */
+        param: function (o, sep, eq, serializeArray) {
+            if (!S.isPlainObject(o)) {
+                return EMPTY;
+            }
+            sep = sep || SEP;
+            eq = eq || EQ;
+            if (S.isUndefined(serializeArray)) {
+                serializeArray = TRUE;
+            }
+            var buf = [], key, i, v, len, val,
+                encode = S.urlEncode;
+            for (key in o) {
+
+                val = o[key];
+                key = encode(key);
+
+                // val is valid non-array value
+                if (isValidParamValue(val)) {
+                    buf.push(key);
+                    if (val !== undefined) {
+                        buf.push(eq, encode(val + EMPTY));
+                    }
+                    buf.push(sep);
+                }
+                // val is not empty array
+                else if (S.isArray(val) &amp;&amp; val.length) {
+                    for (i = 0, len = val.length; i &lt; len; ++i) {
+                        v = val[i];
+                        if (isValidParamValue(v)) {
+                            buf.push(key, (serializeArray ? encode('[]') : EMPTY));
+                            if (v !== undefined) {
+                                buf.push(eq, encode(v + EMPTY));
+                            }
+                            buf.push(sep);
+                        }
+                    }
+                }
+                // ignore other cases, including empty array, Function, RegExp, Date etc.
+
+            }
+            buf.pop();
+            return buf.join(EMPTY);
+        },
+
+<span id='KISSY-method-unparam'>        /**
+</span>         * Parses a URI-like query string and returns an object composed of parameter/value pairs.
+         *
+         * for example:
+         *      @example
+         *      'section=blog&amp;id=45'        // -&gt; {section: 'blog', id: '45'}
+         *      'section=blog&amp;tag=js&amp;tag=doc' // -&gt; {section: 'blog', tag: ['js', 'doc']}
+         *      'tag=ruby%20on%20rails'        // -&gt; {tag: 'ruby on rails'}
+         *      'id=45&amp;raw'        // -&gt; {id: '45', raw: ''}
+         * @param {String} str param string
+         * @param {String} [sep='&amp;'] separator between each pair of data
+         * @param {String} [eq='='] separator between key and value of data
+         * @return {Object} json data
+         * @member KISSY
+         */
+        unparam: function (str, sep, eq) {
+            if (typeof str != 'string' || !(str = S.trim(str))) {
+                return {};
+            }
+            sep = sep || SEP;
+            eq = eq || EQ;
+            var ret = {},
+                eqIndex,
+                decode = S.urlDecode,
+                pairs = str.split(sep),
+                key, val,
+                i = 0, len = pairs.length;
+
+            for (; i &lt; len; ++i) {
+                eqIndex = pairs[i].indexOf(eq);
+                if (eqIndex == -1) {
+                    key = decode(pairs[i]);
+                    val = undefined;
+                } else {
+                    // remember to decode key!
+                    key = decode(pairs[i].substring(0, eqIndex));
+                    val = pairs[i].substring(eqIndex + 1);
+                    try {
+                        val = decode(val);
+                    } catch (e) {
+                        S.log(e + 'decodeURIComponent error : ' + val, 'error');
+                    }
+                    if (S.endsWith(key, '[]')) {
+                        key = key.substring(0, key.length - 2);
+                    }
+                }
+                if (key in ret) {
+                    if (S.isArray(ret[key])) {
+                        ret[key].push(val);
+                    } else {
+                        ret[key] = [ret[key], val];
+                    }
+                } else {
+                    ret[key] = val;
+                }
+            }
+            return ret;
+        }
+    });
+})(KISSY);</pre>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * menu controller for kissy,accommodate menu items
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;menu/base&quot;, function (S, Event, Component, MenuRender) {
+    var KeyCodes = Event.KeyCodes;
+
+    function onMenuHide(e) {
+        this.set(&quot;highlightedItem&quot;, null);
+        e.stopPropagation();
+    }
+
+<span id='KISSY-Menu'>    /**
+</span>     * KISSY Menu.
+     * xclass: 'menu'.
+     * @class KISSY.Menu
+     * @extends KISSY.Component.Container
+     */
+    var Menu = Component.Container.extend({
+        _onSetHighlightedItem: function (v, ev) {
+            var pre = ev &amp;&amp; ev.prevVal;
+            if (pre) {
+                pre.set(&quot;highlighted&quot;, false);
+            }
+            v &amp;&amp; v.set(&quot;highlighted&quot;, true);
+            this.set(&quot;activeItem&quot;, v);
+        },
+
+        handleBlur: function (e) {
+            Menu.superclass.handleBlur.call(this, e);
+            this.set(&quot;highlightedItem&quot;, null);
+        },
+
+
+        //dir : -1 ,+1
+        //skip disabled items
+        _getNextEnabledHighlighted: function (index, dir) {
+            var children = this.get(&quot;children&quot;),
+                len = children.length,
+                o = index;
+            do {
+                var c = children[index];
+                if (!c.get(&quot;disabled&quot;) &amp;&amp; (c.get(&quot;visible&quot;) !== false)) {
+                    return children[index];
+                }
+                index = (index + dir + len) % len;
+            } while (index != o);
+            return undefined;
+        },
+
+<span id='KISSY-Menu-method-handleKeyEventInternal'>        /**
+</span>         * Attempts to handle a keyboard event;
+         * returns true if the event was handled,
+         * false otherwise.
+         * If the container is enabled, and a child is highlighted,
+         * calls the child controller's {@code handleKeydown} method to give the control
+         * a chance to handle the event first.
+         * Protected, should only be overridden by subclasses.
+         * @param {KISSY.Event.DOMEventObject} e Key event to handle.
+         * @return {Boolean} Whether the event was handled by the container (or one of
+         *     its children).
+         * @protected
+         *
+         */
+        handleKeyEventInternal: function (e) {
+
+            // Give the highlighted control the chance to handle the key event.
+            var highlightedItem = this.get(&quot;highlightedItem&quot;);
+
+            // 先看当前活跃 menuitem 是否要处理
+            if (highlightedItem &amp;&amp; highlightedItem.handleKeydown(e)) {
+                return true;
+            }
+
+            var children = this.get(&quot;children&quot;), len = children.length;
+
+            if (len === 0) {
+                return undefined;
+            }
+
+            var index, destIndex;
+
+            //自己处理了，不要向上处理，嵌套菜单情况
+            switch (e.keyCode) {
+                // esc
+                case KeyCodes.ESC:
+                    // TODO
+                    // focus 的话手动失去焦点
+                    return undefined;
+                    break;
+
+                // home
+                case KeyCodes.HOME:
+                    this.set(&quot;highlightedItem&quot;,
+                        this._getNextEnabledHighlighted(0, 1));
+                    break;
+                // end
+                case KeyCodes.END:
+                    this.set(&quot;highlightedItem&quot;,
+                        this._getNextEnabledHighlighted(len - 1, -1));
+                    break;
+                // up
+                case KeyCodes.UP:
+                    if (!highlightedItem) {
+                        destIndex = len - 1;
+                    } else {
+                        index = S.indexOf(highlightedItem, children);
+                        destIndex = (index - 1 + len) % len;
+                    }
+                    this.set(&quot;highlightedItem&quot;,
+                        this._getNextEnabledHighlighted(destIndex, -1));
+                    break;
+                //down
+                case KeyCodes.DOWN:
+                    if (!highlightedItem) {
+                        destIndex = 0;
+                    } else {
+                        index = S.indexOf(highlightedItem, children);
+                        destIndex = (index + 1 + len) % len;
+                    }
+                    this.set(&quot;highlightedItem&quot;,
+                        this._getNextEnabledHighlighted(destIndex, 1));
+                    break;
+                default:
+                    return undefined;
+            }
+            return true;
+        },
+
+        bindUI: function () {
+            var self = this;
+            // 隐藏后，去掉高亮与当前
+            self.on(&quot;hide&quot;, onMenuHide, self);
+        },
+
+<span id='KISSY-Menu-method-containsElement'>        /**
+</span>         * Whether this menu contains specified html element.
+         * @param {KISSY.NodeList} element html Element to be tested.
+         * @return {Boolean}
+         * @protected
+         */
+        containsElement: function (element) {
+            var self = this;
+
+            // 隐藏当然不包含了
+            // self.get(&quot;visible&quot;) === undefined 相当于 true
+            if (self.get(&quot;visible&quot;) === false || !self.get(&quot;view&quot;)) {
+                return false;
+            }
+
+            if (self.get(&quot;view&quot;).containsElement(element)) {
+                return true;
+            }
+
+            var children = self.get('children');
+
+            for (var i = 0, count = children.length; i &lt; count; i++) {
+                var child = children[i];
+                if (typeof child.containsElement == 'function' &amp;&amp;
+                    child.containsElement(element)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }, {
+        ATTRS: {
+<span id='KISSY-Menu-property-highlightedItem'>            /**
+</span>             * Current highlighted child menu item.
+             * @type {KISSY.Menu.Item}
+             * @property highlightedItem
+             */
+<span id='global-property-highlightedItem'>            /**
+</span>             * @ignore
+             */
+            highlightedItem: {},
+<span id='KISSY-Menu-property-activeItem'>            /**
+</span>             * Current active menu item.
+             * Maybe a descendant but not a child of current menu.
+             * @type {KISSY.Menu.Item}
+             * @property activeItem
+             */
+<span id='global-property-activeItem'>            /**
+</span>             * @ignore
+             */
+            activeItem: {
+                view: 1
+            },
+            xrender: {
+                value: MenuRender
+            },
+
+            defaultChildXClass: {
+                value: 'menuitem'
+            }
+        }
+    }, {
+        xclass: 'menu',
+        priority: 10
+    });
+
+    return Menu;
+
+}, {
+    requires: ['event', 'component/base', './menu-render', './submenu']
+});
+
+<span id='global-property-'>/**
+</span> * @ignore
+ * 普通菜单可聚焦
+ * 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
+ *
+ * TODO
+ *  - 去除 activeItem
+ **/</pre>
+</body>
+</html>

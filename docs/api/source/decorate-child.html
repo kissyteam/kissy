@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * decorate its children from one element
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;component/base/decorate-child&quot;, function (S, DecorateChildren) {
+    function DecorateChild() {
+
+    }
+
+    S.augment(DecorateChild, DecorateChildren, {
+        decorateInternal: function (element) {
+            var self = this;
+            // 不用 setInternal , 通知 view 更新
+            self.set(&quot;el&quot;, element);
+            var ui = self.get(&quot;decorateChildCls&quot;),
+                prefixCls = self.get('prefixCls'),
+                child = element.one(&quot;.&quot; + ui);
+            // 可以装饰?
+            if (child) {
+                var UI = self.findUIConstructorByNode(prefixCls, child, 1);
+                if (UI) {
+                    // 可以直接装饰
+                    self.decorateChildrenInternal(UI, child);
+                } else {
+                    // 装饰其子节点集合
+                    self.decorateChildren(child);
+                }
+            }
+        }
+    });
+
+    return DecorateChild;
+}, {
+    requires: ['./decorate-children']
+});</pre>
+</body>
+</html>

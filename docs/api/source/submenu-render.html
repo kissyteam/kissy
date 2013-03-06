@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * submenu render for kissy ,extend menuitem render with arrow
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;menu/submenu-render&quot;, function (S, MenuItemRender) {
+    var SubMenuRender,
+        CONTENT_TMPL = '&lt;span class=&quot;{prefixCls}menuitem-content&quot;&gt;&lt;' + '/span&gt;',
+        ARROW_TMPL = '&lt;span class=&quot;{prefixCls}submenu-arrow&quot;&gt;►&lt;' + '/span&gt;';
+
+    SubMenuRender = MenuItemRender.extend({
+        createDom: function () {
+            var self = this,
+                el = self.get(&quot;el&quot;);
+            el.attr(&quot;aria-haspopup&quot;, &quot;true&quot;)
+                .append(S.substitute(ARROW_TMPL, {
+                prefixCls: self.get('prefixCls')
+            }));
+        }
+    }, {
+        ATTRS: {
+            arrowEl: {},
+            contentEl: {
+                valueFn: function () {
+                    return S.all(S.substitute(CONTENT_TMPL, {
+                        prefixCls: this.get('prefixCls')
+                    }));
+                }
+            }
+        },
+        HTML_PARSER: {
+            contentEl: function (el) {
+                return el.children(&quot;.&quot; + this.get('prefixCls') + &quot;menuitem-content&quot;);
+            }
+        }
+    });
+
+    return SubMenuRender;
+}, {
+    requires: ['./menuitem-render']
+});</pre>
+</body>
+</html>

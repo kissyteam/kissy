@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * popup menu render
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;menu/popupmenu-render&quot;, function (S, extension, MenuRender) {
+
+    var UA= S.UA;
+
+    return MenuRender.extend([
+        extension.ContentBox.Render,
+        extension.Position.Render,
+        UA['ie'] === 6 ? extension.Shim.Render : null
+    ]);
+}, {
+    requires:['component/extension', './menu-render']
+});</pre>
+</body>
+</html>

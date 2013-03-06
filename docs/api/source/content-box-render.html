@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * 里层包裹层定义， 适合mask以及shim
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('component/extension/content-box-render', function (S, Node, DOM) {
+
+    function ContentBoxRender() {
+    }
+
+    ContentBoxRender.ATTRS = {
+        contentEl: {
+            // 不写 valueFn, 留待 createDom 处理
+        }
+    };
+
+    /*
+     ! contentEl 只能由组件动态生成
+     */
+    // for augment, no need constructor
+    ContentBoxRender.prototype = {
+        __createDom: function () {
+            var self = this,
+                contentEl,
+                el = self.get('el'),
+                contentCls = self.getCssClassWithState('contentbox'),
+                childNodes = el[0].childNodes,
+                css = self.getCssClassWithPrefix('contentbox') +
+                    (contentCls ? (' ' + contentCls) : contentCls),
+                c = childNodes.length &amp;&amp; DOM._nodeListToFragment(childNodes);
+
+            // 产生新的 contentEl
+            contentEl = Node.all('&lt;div class=&quot;' + css + '&quot;&gt;&lt;/div&gt;');
+
+            if (c) {
+                contentEl.append(c);
+            }
+
+            el.append(contentEl);
+
+            self.setInternal('contentEl', contentEl);
+        }
+    };
+
+    return ContentBoxRender;
+}, {
+    requires: ['node', 'dom']
+});</pre>
+</body>
+</html>

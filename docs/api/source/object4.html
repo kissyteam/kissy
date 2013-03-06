@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * simple custom event object for custom event mechanism.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/custom/object', function (S, Event) {
+
+<span id='KISSY-Event-CustomEventObject'>    /**
+</span>     * Do not new by yourself.
+     *
+     * Custom event object.
+     * @class KISSY.Event.CustomEventObject
+     * @param {Object} data data which will be mixed into custom event instance
+     * @extends KISSY.Event.Object
+     */
+    function CustomEventObject(data) {
+        CustomEventObject.superclass.constructor.call(this);
+        S.mix(this, data);
+<span id='KISSY-Event-CustomEventObject-property-target'>        /**
+</span>         * source target of current event
+         * @property  target
+         * @type {KISSY.Event.Target}
+         */
+<span id='KISSY-Event-CustomEventObject-property-currentTarget'>        /**
+</span>         * current target which processes current event
+         * @property currentTarget
+         * @type {KISSY.Event.Target}
+         */
+    }
+
+    S.extend(CustomEventObject, Event._Object);
+
+    return CustomEventObject;
+
+}, {
+    requires: ['event/base']
+});</pre>
+</body>
+</html>

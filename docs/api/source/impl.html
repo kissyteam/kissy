@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Setup component namespace.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;component/base/impl&quot;, function (S, UIBase, Manager) {
+<span id='KISSY-Component'>    /**
+</span>     * @class KISSY.Component
+     * @singleton
+     * Component infrastructure.
+     */
+    var Component = {
+        Manager: Manager,
+        UIBase: UIBase
+    };
+
+<span id='KISSY-Component-method-create'>    /**
+</span>     * Create a component instance using json with xclass.
+     * @param {Object} component Component's json notation with xclass attribute.
+     * @param {String} component.xclass Component to be newed 's xclass.
+     * @param {KISSY.Component.Controller} self Component From which new component generated will inherit prefixCls
+     * if component 's prefixCls is undefined.
+     * @member KISSY.Component
+     *
+     *  for example:
+     *
+     *      create({
+     *          xclass:'menu',
+     *          children:[{
+     *              xclass:'menuitem',
+     *              content:&quot;1&quot;
+     *          }]
+     *      })
+     */
+    Component.create = function (component, parent) {
+        var childConstructor, xclass;
+        if (component &amp;&amp; !component.isController &amp;&amp; !component.xclass) {
+            component.xclass = parent.get('defaultChildXClass');
+        }
+        if (component &amp;&amp; (xclass = component.xclass)) {
+            if (parent &amp;&amp; !component.prefixCls) {
+                component.prefixCls = parent.get(&quot;prefixCls&quot;);
+            }
+            childConstructor = Manager.getConstructorByXClass(xclass);
+            if (!childConstructor) {
+                S.error(&quot;can not find class by xclass desc : &quot; + xclass);
+            }
+            component = new childConstructor(component);
+        }
+        return component;
+    };
+
+    return Component;
+}, {
+    requires: ['./uibase', './manager']
+});</pre>
+</body>
+</html>

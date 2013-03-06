@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * Box
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('component/base/box-render', function (S) {
+
+    var $ = S.all,
+        UA = S.UA,
+        elTpl='&lt;div class=&quot;{cls}&quot;&gt;&lt;/div&gt;',
+        doc = S.Env.host.document;
+
+    function BoxRender() {
+    }
+
+    BoxRender.ATTRS = {
+        el: {},
+
+        // 构建时批量生成，不需要执行单个
+        elCls: {},
+
+        elStyle: {},
+
+        width: {},
+
+        height: {},
+
+        elAttrs: {},
+
+        content: {},
+
+        // renderBefore
+        elBefore: {},
+
+        render: {},
+
+        visible: {},
+
+        visibleMode: {},
+        // content 设置的内容节点,默认根节点
+        // 防止 content 节点和根节点不是同一个节点，例如 submenu
+        contentEl: {
+            valueFn: function () {
+                return this.get('el');
+            }
+        }
+    };
+
+    BoxRender.HTML_PARSER = {
+        el: function (srcNode) {
+            return srcNode;
+        },
+        content: function (el) {
+            var contentEl = this.get('contentEl') || el;
+            return contentEl.html();
+        }
+    };
+
+    // for augment, no need constructor
+    BoxRender.prototype = {
+<span id='global-method-__createDom'>        /**
+</span>         * @ignore
+         * 只负责建立节点，如果是 decorate 过来的，甚至内容会丢失
+         * 通过 render 来重建原有的内容
+         */
+        __createDom: function () {
+            var self = this,
+                el,
+                cls = self.getCssClassWithState(),
+                contentEl;
+            if (!(el = self.get('srcNode'))) {
+                contentEl = self.get('contentEl');
+                el = $(S.substitute(elTpl,{
+                    cls:cls
+                }));
+                if (contentEl) {
+                    el.append(contentEl);
+                }
+                self.setInternal('el', el);
+                if (!contentEl) {
+                    // 没取到,这里设下值, uiSet 时可以 set('content')  取到
+                    self.setInternal('contentEl', el);
+                }
+            } else {
+                el.addClass(cls);
+            }
+        },
+
+        __renderUI: function () {
+            var self = this;
+            // 新建的节点才需要摆放定位
+            if (!self.get('srcNode')) {
+                var render = self.get('render'),
+                    el = self.get('el'),
+                    renderBefore = self.get('elBefore');
+                if (renderBefore) {
+<span id='global-property-'>                    el.insertBefore(renderBefore, /**
+</span>                     @type Node
+                     @ignore
+                     */undefined);
+                } else if (render) {
+                    el.appendTo(render, undefined);
+                } else {
+                    el.appendTo(doc.body, undefined);
+                }
+            }
+        },
+
+        _onSetElAttrs: function (attrs) {
+            this.get('el').attr(attrs);
+        },
+
+        _onSetElCls: function (cls) {
+            this.get('el').addClass(cls);
+        },
+
+        _onSetElStyle: function (style) {
+            this.get('el').css(style);
+        },
+
+        '_onSetWidth': function (w) {
+            this.get('el').width(w);
+        },
+
+        _onSetHeight: function (h) {
+            var self = this;
+            self.get('el').height(h);
+        },
+
+        '_onSetContent': function (c) {
+            var self = this,
+                el = self.get('contentEl');
+            // srcNode 时不重新渲染 content
+            // 防止内部有改变，而 content 则是老的 html 内容
+            if (self.get('srcNode') &amp;&amp; !self.get('rendered')) {
+            } else {
+                if (typeof c == 'string') {
+                    el.html(c);
+                } else if (c) {
+                    el.empty().append(c);
+                }
+            }
+            // ie needs to set unselectable attribute recursively
+            if (UA.ie &lt; 9 &amp;&amp; !self.get('allowTextSelection')) {
+<span id='global-property-'>                el.unselectable(/**
+</span>                 @type HTMLElement
+                 @ignore
+                 */undefined);
+            }
+        },
+
+        _onSetVisible: function (visible) {
+            var self = this,
+                el = self.get('el'),
+                shownCls = self.getCssClassWithState('shown'),
+                hiddenCls = self.getCssClassWithState('hidden'),
+                visibleMode = self.get('visibleMode');
+            if (visible) {
+                el.removeClass(hiddenCls);
+                el.addClass(shownCls);
+            } else {
+                el.removeClass(shownCls);
+                el.addClass(hiddenCls);
+            }
+            //return;
+            // !TODO 兼容代码，去除，通过 css 控制隐藏属性
+            if (visibleMode == 'visibility') {
+                el.css('visibility', visible ? 'visible' : 'hidden');
+            } else {
+                el.css('display', visible ? '' : 'none');
+            }
+        },
+
+        __destructor: function () {
+            var el = this.get('el');
+            if (el) {
+                el.remove();
+            }
+        }
+    };
+
+    return BoxRender;
+}, {
+    requires: ['node']
+});
+</pre>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * storage for component
+ * @author yiminghe@gmail.com
+ */
+KISSY.add(&quot;component/base/manager&quot;, function (S) {
+    var uis = {
+        // 不带前缀 prefixCls
+        /*
+         &quot;menu&quot; :{
+         priority:0,
+         constructor:Menu
+         }
+         */
+    };
+
+    function getConstructorByXClass(cls) {
+        var cs = cls.split(/\s+/), p = -1, t, ui = null;
+        for (var i = 0; i &lt; cs.length; i++) {
+            var uic = uis[cs[i]];
+            if (uic &amp;&amp; (t = uic.priority) &gt; p) {
+                p = t;
+                ui = uic.constructor;
+            }
+        }
+        return ui;
+    }
+
+    function getXClassByConstructor(constructor) {
+        for (var u in uis) {
+            var ui = uis[u];
+            if (ui.constructor == constructor) {
+                return u;
+            }
+        }
+        return 0;
+    }
+
+    function setConstructorByXClass(cls, uic) {
+        if (S.isFunction(uic)) {
+            uis[cls] = {
+                constructor:uic,
+                priority:0
+            };
+        } else {
+            uic.priority = uic.priority || 0;
+            uis[cls] = uic;
+        }
+    }
+
+
+    function getCssClassWithPrefix(cls) {
+        var cs = S.trim(cls).split(/\s+/);
+        for (var i = 0; i &lt; cs.length; i++) {
+            if (cs[i]) {
+                cs[i] = this.get(&quot;prefixCls&quot;) + cs[i];
+            }
+        }
+        return cs.join(&quot; &quot;);
+    }
+
+
+    var componentInstances = {};
+
+<span id='KISSY-Component-Manager'>    /**
+</span>     * @class KISSY.Component.Manager
+     * @member Component
+     * @singleton
+     * Manage component metadata.
+     */
+    var Manager =  {
+
+        __instances:componentInstances,
+
+<span id='KISSY-Component-Manager-method-addComponent'>        /**
+</span>         * associate id with component
+         * @param {String} id
+         * @param {KISSY.Component.Controller} component
+         */
+        addComponent:function (id, component) {
+            componentInstances[id] = component;
+        },
+
+<span id='KISSY-Component-Manager-method-removeComponent'>        /**
+</span>         * remove association id with component
+         * @param {String} id
+         */
+        removeComponent:function (id) {
+            delete componentInstances[id];
+        },
+
+<span id='KISSY-Component-Manager-method-getComponent'>        /**
+</span>         * get component by id
+         * @param {String} id
+         * @return {KISSY.Component.Controller}
+         */
+        'getComponent':function (id) {
+            return componentInstances[id];
+        },
+
+<span id='KISSY-Component-Manager-method-getCssClassWithPrefix'>        /**
+</span>         * complete css by prefix prefixCls
+         * @return {String}
+         * @method
+         * @param {String} css
+         */
+        getCssClassWithPrefix:getCssClassWithPrefix,
+<span id='KISSY-Component-Manager-method-getXClassByConstructor'>        /**
+</span>         * Get css class name for this component constructor.
+         * @param {Function} constructor Component's constructor.
+         * @return {String}
+         * @method
+         */
+        getXClassByConstructor:getXClassByConstructor,
+<span id='KISSY-Component-Manager-method-getConstructorByXClass'>        /**
+</span>         * Get component constructor by css class name.
+         * @param {String} classNames Class names separated by space.
+         * @return {Function}
+         * @method
+         */
+        getConstructorByXClass:getConstructorByXClass,
+<span id='KISSY-Component-Manager-method-setConstructorByXClass'>        /**
+</span>         * Associate css class with component constructor.
+         * @param {String} className Component's class name.
+         * @param {Function} componentConstructor Component's constructor.
+         * @method
+         */
+        setConstructorByXClass:setConstructorByXClass
+    };
+
+    Manager.getCssClassWithPrefix = getCssClassWithPrefix;
+
+    return Manager;
+});</pre>
+</body>
+</html>

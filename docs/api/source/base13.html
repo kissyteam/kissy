@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * setup data structure for kissy loader
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+
+<span id='KISSY-Loader'>    /**
+</span>     * @class KISSY.Loader
+     * @private
+     * @mixins KISSY.Loader.Target
+     * This class should not be instantiated manually.
+     */
+    function Loader(runtime) {
+        this.runtime = runtime;
+<span id='KISSY-Loader-event-afterModAttached'>        /**
+</span>         * @event afterModAttached
+         * fired after a module is attached
+         * @param e
+         * @param {KISSY.Loader.Module} e.mod current module object
+         */
+    }
+
+<span id='KISSY-Loader-Status'>    /**
+</span>     * Loader Status Enum
+     * @enum {Number} KISSY.Loader.Status
+     */
+    Loader.Status = {
+<span id='KISSY-Loader-Status-property-INIT'>        /** init */
+</span>        'INIT': 0,
+<span id='KISSY-Loader-Status-property-LOADING'>        /** loading */
+</span>        'LOADING': 1,
+<span id='KISSY-Loader-Status-property-LOADED'>        /** loaded */
+</span>        'LOADED': 2,
+<span id='KISSY-Loader-Status-property-ERROR'>        /** error */
+</span>        'ERROR': 3,
+<span id='KISSY-Loader-Status-property-ATTACHED'>        /** attached */
+</span>        'ATTACHED': 4
+    };
+
+    S.Loader = Loader;
+
+    S.Loader.Status = Loader.Status;
+
+})(KISSY);
+/*
+ TODO: implement conditional loader
+ */</pre>
+</body>
+</html>

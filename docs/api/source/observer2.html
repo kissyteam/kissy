@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * observer for dom event.
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('event/dom/base/observer', function (S, special, Event) {
+
+<span id='KISSY-Event-DOMEventObserver'>    /**
+</span>     * observer for dom event
+     * @class KISSY.Event.DOMEventObserver
+     * @extends KISSY.Event.Observer
+     * @private
+     */
+    function DOMEventObserver(cfg) {
+        DOMEventObserver.superclass.constructor.apply(this, arguments);
+<span id='KISSY-Event-DOMEventObserver-cfg-selector'>        /**
+</span>         * filter selector string or function to find right element
+         * @cfg {String} selector
+         */
+<span id='KISSY-Event-DOMEventObserver-cfg-data'>        /**
+</span>         * extra data as second parameter of listener
+         * @cfg {*} data
+         */
+    }
+
+    S.extend(DOMEventObserver, Event._Observer, {
+
+        keys: ['fn', 'selector', 'data', 'context', 'originalType', 'groups', 'last'],
+
+        notifyInternal: function (event, ce) {
+            var self = this,
+                s, t, ret,
+                type = event.type;
+
+            // restore originalType if involving delegate/onFix handlers
+            if (self.originalType) {
+                event.type = self.originalType;
+            }
+
+            // context undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
+            if ((s = special[event.type]) &amp;&amp; s.handle) {
+                t = s.handle(event, self, ce);
+                // can handle
+                if (t &amp;&amp; t.length &gt; 0) {
+                    ret = t[0];
+                }
+            } else {
+                ret = self.simpleNotify(event, ce);
+            }
+
+            event.type = type;
+
+            return ret;
+        }
+
+    });
+
+    return DOMEventObserver;
+
+}, {
+    requires: ['./special', 'event/base']
+});</pre>
+</body>
+</html>

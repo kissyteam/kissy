@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * implement getScript for nodejs.
+ *  so loader need not to be changed.
+ * @author yiminghe@gmail.com
+ */
+(function (S) {
+
+    var fs = require('fs'),
+        vm = require('vm');
+
+    S.mix(S, {
+
+        getScript: function (url, success, charset) {
+
+            var error;
+
+            if (S.isPlainObject(success)) {
+                charset = success.charset;
+                error = success.error;
+                success = success.success;
+            }
+
+            if (S.startsWith(S.Path.extname(url).toLowerCase(), '.css')) {
+                S.log('node js can not load css: ' + url, 'warn');
+                success &amp;&amp; success();
+                return;
+            }
+
+            var uri = new S.Uri(url),
+                path = uri.getPath();
+
+            // S.log('nodejs get file from : '+path);
+
+            try {
+                var mod = fs.readFileSync(path, charset);
+                var fn = vm.runInThisContext('(function(KISSY){' + mod + '})', url);
+                fn(S);
+                success &amp;&amp; success();
+            } catch (e) {
+                S.log('in file: ' + url);
+                S.log(e.stack, 'error');
+                error &amp;&amp; error(e);
+            }
+
+        }
+
+    });
+
+})(KISSY);</pre>
+</body>
+</html>

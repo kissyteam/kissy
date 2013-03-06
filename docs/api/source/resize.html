@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>The source code</title>
+  <link href="../resources/prettify/prettify.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="../resources/prettify/prettify.js"></script>
+  <style type="text/css">
+    .highlight { display: block; background-color: #ddd; }
+  </style>
+  <script type="text/javascript">
+    function highlight() {
+      document.getElementById(location.hash.replace(/#/, "")).className = "highlight";
+    }
+  </script>
+</head>
+<body onload="prettyPrint(); highlight();">
+  <pre class="prettyprint lang-js"><span id='global-property-'>/**
+</span> * @ignore
+ * resize plugin for kissy component
+ * @author yiminghe@gmail.com
+ */
+KISSY.add('component/plugin/resize', function (S, Resize) {
+
+<span id='KISSY-Component-Plugin-Resize'>    /**
+</span>     * resize plugin for kissy component
+     *
+     *      @example
+     *      var o =new Overlay.Dialog({
+     *          plugins:[
+     *              new ResizePlugin({
+     *                  handles: ['t','tr']
+     *              })
+     *          ]
+     *      })
+     *      // or
+     *      o.plug(new ResizePlugin({
+     *          handles: ['t','tr']
+     *      });
+     *
+     *
+     * @class KISSY.Component.Plugin.Resize
+     * @extends KISSY.Resizable
+     */
+    return Resize.extend({
+        pluginBindUI: function (component) {
+            var el = component.get('el'),
+                self = this;
+            self.set('node', el);
+            // sync
+            self.on('resizeEnd', function () {
+                var offset = el.offset();
+                component.setInternal('xy', [offset.left, offset.top]);
+                component.setInternal('width', el.width());
+                component.setInternal('height', el.height());
+            });
+        },
+        pluginDestructor: function () {
+            this.destroy();
+        }
+    });
+
+}, {
+    requires: ['resizable']
+});</pre>
+</body>
+</html>
