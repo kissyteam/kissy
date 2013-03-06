@@ -31,8 +31,7 @@
                      includes="**/*.js" excludes="**/*-min.js"/>
             <fileset dir="${kissy.build.dir}/event/"
                      includes="**/*.js" excludes="**/*-min.js"/>
-            <fileset dir="${kissy.build.dir}/json/"
-                     includes="**/*.js" excludes="**/*-min.js"/>
+            <path path="${kissy.build.dir}/json.js"/>
             <path path="${kissy.build.dir}/io.js"/>
             <path path="${kissy.build.dir}/cookie.js"/>
             <path path="${kissy.build.dir}/base.js"/>
