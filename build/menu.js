@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 7 15:50
+build time: Mar 7 15:57
 */
 /**
  * @ignore
@@ -60,7 +60,8 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
         handleMouseEnter: function () {
             Menu.superclass.handleMouseEnter.apply(this, arguments);
             var rootMenu = this.getRootMenu();
-            if (rootMenu._popupAutoHideTimer) {
+            // maybe called by popupmenu, no submenu
+            if (rootMenu && rootMenu._popupAutoHideTimer) {
                 clearTimeout(rootMenu._popupAutoHideTimer);
                 rootMenu._popupAutoHideTimer = null;
             }
