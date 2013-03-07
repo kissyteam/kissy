@@ -198,7 +198,7 @@ KISSY.use("json", function (S, JSON) {
                         gap + ']' +
                         '\n}');
 
-                    if (J) {
+                    if (J&&!S.UA.phantomjs) {
                         expect(ret).toBe(J.stringify({
                             'a': [
                                 {
