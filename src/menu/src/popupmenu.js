@@ -31,14 +31,22 @@ KISSY.add("menu/popupmenu", function (S, extension, Menu, PopupMenuRender) {
                 return last === this ? null : last;
             },
 
-            handleMouseLeave: function () {
-                PopupMenu.superclass.handleMouseEnter.apply(this, arguments);
+            handleMouseLeave: function (e) {
+                PopupMenu.superclass.handleMouseLeave.apply(this, arguments);
+                // sub menuitem 有时不灵敏
+                var parent = this.get('parent');
+                if (parent && parent.isSubMenu) {
+                    parent.clearSubMenuTimers();
+                }
                 if (this.get('autoHideOnMouseLeave')) {
                     var rootMenu = this.getRootMenu();
                     if (rootMenu) {
                         clearTimeout(rootMenu._popupAutoHideTimer);
                         rootMenu._popupAutoHideTimer = setTimeout(function () {
-                            rootMenu.set('highlightedItem', null);
+                            var item;
+                            if (item = rootMenu.get('highlightedItem')) {
+                                item.set('highlighted', false);
+                            }
                         }, this.get('parent').get('menuDelay') * 1000);
                     }
                 }

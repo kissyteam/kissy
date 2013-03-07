@@ -19,10 +19,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
 
         // for ios, ios only has touchdown
         handleMouseDown: function (e) {
-            // 父亲不允许自己处理
-            if (MenuItem.superclass.handleMouseDown.call(this, e)) {
-                return true;
-            }
+            MenuItem.superclass.handleMouseDown.call(this, e);
             this.set("highlighted", true);
         },
 

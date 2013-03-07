@@ -7,14 +7,7 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
 
     var HIT_CLS = "menuitem-hit";
 
-    // 转义正则特殊字符,返回字符串用来构建正则表达式
-    function regExpEscape(s) {
-        return s.replace(/([-()\[\]{}+?*.$\^|,:#<!\\])/g, '\\$1').
-            replace(/\x08/g, '\\x08');
-    }
-
     /**
-     *
      * Filter Menu for KISSY.
      * xclass: 'filter-menu'.
      * @extends KISSY.Menu
@@ -26,7 +19,7 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
                     view = self.get("view"),
                     filterInput = view.get("filterInput");
                 /*监控键盘事件*/
-                filterInput.on("keyup", self.handleFilterEvent, self);
+                filterInput.on("valuechange", self.handleFilterEvent, self);
             },
 
             handleMouseEnter: function () {
@@ -40,16 +33,28 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
             handleFilterEvent: function () {
                 var self = this,
                     view = self.get("view"),
+                    str,
                     filterInput = view.get("filterInput"),
                     highlightedItem = self.get("highlightedItem");
                 /* 根据用户输入过滤 */
                 self.set("filterStr", filterInput.val());
+                str = filterInput.val();
+                if (self.get('allowMultiple')) {
+                    str = str.replace(/^.+,/, '');
+                    S.log(str);
+                }
 
+                if (!str && highlightedItem) {
+                    highlightedItem.set('highlighted', false);
+                }
+                // 尽量保持原始高亮
                 // 如果没有高亮项或者高亮项因为过滤被隐藏了
                 // 默认选择符合条件的第一项
-                if (!highlightedItem || !highlightedItem.get("visible")) {
-                    self.set("highlightedItem",
-                        self._getNextEnabledHighlighted(0, 1));
+                else if (str && (!highlightedItem || !highlightedItem.get("visible"))) {
+                    highlightedItem = self._getNextEnabledHighlighted(0, 1);
+                    if (highlightedItem) {
+                        highlightedItem.set('highlighted', true);
+                    }
                 }
             },
 
@@ -97,8 +102,7 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
                             var item = self.get("highlightedItem"),
                                 content = item && item.get("content");
                             // 有高亮而且最后一项不为空补全
-                            if (content && content.indexOf(lastWord) > -1
-                                && lastWord) {
+                            if (content && content.indexOf(lastWord) > -1 && lastWord) {
                                 enteredItems[enteredItems.length - 1] = content;
                             }
                             filterInput.val(enteredItems.join(",") + ",");
@@ -118,14 +122,14 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
                     var oldEnteredItems = self.get("enteredItems");
                     // 发生变化,长度变化和内容变化等同
                     if (oldEnteredItems.length != enteredItems.length) {
-                        S.log("enteredItems : ");
-                        S.log(enteredItems);
+                        // S.log("enteredItems : ");
+                        // S.log(enteredItems);
                         self.set("enteredItems", enteredItems);
                     }
                 }
 
                 var children = self.get("children"),
-                    strExp = str && new RegExp(regExpEscape(str), "ig");
+                    strExp = str && new RegExp(S.escapeRegExp(str), "ig");
 
                 // 过滤所有子组件
                 S.each(children, function (c) {
@@ -175,7 +179,6 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
         },
         {
             ATTRS: {
-
                 allowTextSelection: {
                     value: true
                 },

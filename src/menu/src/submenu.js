@@ -1,19 +1,33 @@
 /**
  * @ignore
- * submenu controller for kissy, transfer item's keycode to menu
+ * submenu controller for kissy, transfer item's keyCode to menu
  * @author yiminghe@gmail.com
  */
 KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender) {
 
     function afterHighlightedChange(e) {
-        // 冒泡来的
+        // hover 子菜单，保持该菜单项高亮
         if (e.target !== this && e.target.isMenuItem && e.newVal) {
+            clearSubMenuTimers(this);
             this.set('highlighted', true);
         }
     }
 
-    /* or precisely submenuitem */
+    // Clears the show and hide timers for the sub menu.
+    function clearSubMenuTimers(self) {
+        var dismissTimer_,
+            showTimer_;
+        if (dismissTimer_ = self.dismissTimer_) {
+            dismissTimer_.cancel();
+            self.dismissTimer_ = null;
+        }
+        if (showTimer_ = self.showTimer_) {
+            showTimer_.cancel();
+            self.showTimer_ = null;
+        }
+    }
 
+    /* or precisely subMenuItem */
     var KeyCodes = Event.KeyCodes,
         MENU_DELAY = 0.15;
     /**
@@ -24,10 +38,43 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
      */
     var SubMenu = MenuItem.extend([Component.DecorateChild], {
 
-            isSubMenu:1,
+            isSubMenu: 1,
+
+            clearSubMenuTimers: function () {
+                clearSubMenuTimers(this);
+            },
 
             bindUI: function () {
                 this.on('afterHighlightedChange', afterHighlightedChange, this);
+            },
+
+            handleMouseLeave: function () {
+                var self = this;
+                self.set('highlighted', false, {
+                    data: {
+                        fromMouse: 1
+                    }
+                });
+                clearSubMenuTimers(self);
+                var menu = getMenu(self);
+                if (menu && menu.get('visible')) {
+                    // 延迟 highlighted
+                    self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay") * 1000, false, self);
+                }
+            },
+
+            handleMouseEnter: function () {
+                var self = this;
+                self.set('highlighted', true, {
+                    data: {
+                        fromMouse: 1
+                    }
+                });
+                clearSubMenuTimers(self);
+                var menu = getMenu(self);
+                if (!menu || !menu.get('visible')) {
+                    self.showTimer_ = S.later(showMenu, self.get("menuDelay") * 1000, false, self);
+                }
             },
 
             /**
@@ -42,40 +89,19 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                     return;
                 }
                 SubMenu.superclass._onSetHighlighted.apply(this, arguments);
-                if (!v) {
-                    if (e.hideImmediate) {
-                        hideMenu.call(self);
-                    } else {
-                        self.dismissTimer_ = S.later(hideMenu, self.get("menuDelay") * 1000, false, self);
-                    }
-                } else if (!e.byKeyboard) {
-                    self.clearSubMenuTimers();
-                    self.showTimer_ = S.later(showMenu, self.get("menuDelay") * 1000, false, self);
+                if (e.fromMouse) {
+                    return;
                 }
-            },
-
-            /**
-             * Clears the show and hide timers for the sub menu.
-             * @private
-             */
-            clearSubMenuTimers: function () {
-                var self = this,
-                    dismissTimer_,
-                    showTimer_;
-                if (dismissTimer_ = self.dismissTimer_) {
-                    dismissTimer_.cancel();
-                    self.dismissTimer_ = null;
-                }
-                if (showTimer_ = self.showTimer_) {
-                    showTimer_.cancel();
-                    self.showTimer_ = null;
+                if (v && !e.fromKeyboard) {
+                    showMenu.call(self);
+                } else if (!v) {
+                    hideMenu.call(self);
                 }
             },
 
             // click ，立即显示
             performActionInternal: function () {
                 var self = this;
-                self.clearSubMenuTimers();
                 showMenu.call(self);
                 //  trigger click event from menuitem
                 SubMenu.superclass.performActionInternal.apply(self, arguments);
@@ -105,7 +131,11 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                         if (menu) {
                             var menuChildren = menu.get("children");
                             if (menuChildren[0]) {
-                                menuChildren[0].set('highlighted', true);
+                                menuChildren[0].set('highlighted', true, {
+                                    data: {
+                                        fromKeyboard: 1
+                                    }
+                                });
                             }
                         }
                     }
@@ -124,9 +154,11 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 else if (keyCode == KeyCodes.LEFT) {
                     hideMenu.call(self);
                     // 隐藏后，当前激活项重回，强制高亮事件
+                    // 通知 menu 更新 activeItem highlightedItem
+                    // byKeyboard 但是不弹出菜单
                     self.fire('afterHighlightedChange', {
                         newVal: true,
-                        byKeyboard: 1
+                        fromKeyboard: 1
                     });
                 } else {
                     return undefined;
@@ -157,7 +189,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 var self = this,
                     menu = getMenu(self);
 
-                self.clearSubMenuTimers();
+                clearSubMenuTimers(self);
 
                 if (menu && menu.destroy) {
                     menu.destroy();
@@ -193,7 +225,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                  */
                 menu: {
                     setter: function (m) {
-                        if (m instanceof  Component.Controller) {
+                        if (m && m.isController) {
                             m.setInternal("parent", this);
                         }
                     }

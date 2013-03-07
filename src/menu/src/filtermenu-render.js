@@ -22,12 +22,12 @@ KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender) {
         createDom:function () {
             var self = this;
             var prefixCls=self.get('prefixCls');
-            var contentEl = MenuRender.prototype.getContentElement.call(this);
+            var el = self.get('el');
             var filterWrap = self.get("filterWrap");
             if (!filterWrap) {
                 self.set("filterWrap",
                     filterWrap = $("<div class='" + prefixCls+MENU_FILTER + "'/>")
-                        .appendTo(contentEl, undefined));
+                        .appendTo(el, undefined));
             }
             if (!this.get("labelEl")) {
                 this.set("labelEl",
@@ -41,15 +41,13 @@ KISSY.add("menu/filtermenu-render", function (S, Node, MenuRender) {
             if (!self.get("menuContent")) {
                 self.set("menuContent",
                     $("<div class='" + prefixCls+MENU_CONTENT + "'/>")
-                        .appendTo(contentEl, undefined));
+                        .appendTo(el, undefined));
             }
         },
-
         '_onSetLabel':function (v) {
             this.get("labelEl").html(v);
         }
     }, {
-
         ATTRS:{
             label:{}
         },

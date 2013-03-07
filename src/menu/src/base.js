@@ -3,24 +3,27 @@
  * menu controller for kissy,accommodate menu items
  * @author yiminghe@gmail.com
  */
-KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
+KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
+
     var KeyCodes = Event.KeyCodes;
 
-    function onMenuHide(e) {
-        if (this === e.target) {
-            this.set("highlightedItem", null);
-            e.stopPropagation();
+    function afterHighlightedChange(e) {
+        var target = e.target;
+        if (e.target.isMenuItem && e.newVal) {
+            this.set("activeItem", target);
         }
     }
 
-    function afterHighlightedChange(e) {
-        var self = this,
-            target = e.target;
+    function beforeHighlightedChange(e) {
+        var target = e.target;
         if (e.target.isMenuItem && e.newVal) {
-            this.set("activeItem", target);
-            if (S.inArray(target, self.get('children'))) {
-                this.set("highlightedItem", target);
+            if (S.inArray(target, this.get('children'))) {
+                var h = this.get('highlightedItem');
+                if (h && target != h) {
+                    h.set('highlighted', false);
+                }
             }
+            this.set("activeItem", target);
         }
     }
 
@@ -34,17 +37,21 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
 
         isMenu: 1,
 
-        _onSetHighlightedItem: function (v, ev) {
-            var pre = ev && ev.prevVal;
-            if (pre) {
-                pre.set("highlighted", false, {
-                    data: {
-                        hideImmediate: 1
-                    }
-                });
+        _onSetVisible: function () {
+            Menu.superclass._onSetVisible.apply(this, arguments);
+            // 通知关闭子菜单
+            var h;
+            if (h = this.get('highlightedItem')) {
+                h.set('highlighted', false);
             }
-            if (v && this.get('focusable')) {
-                this.set('focused', true);
+        },
+
+        bindUI: function () {
+            var self = this;
+            // screen reader only listen to focusable el
+            self.on('beforeHighlightedChange', beforeHighlightedChange, self);
+            if (self.get('focusable')) {
+                self.on('afterHighlightedChange', afterHighlightedChange, self);
             }
         },
 
@@ -60,11 +67,17 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
                 clearTimeout(rootMenu._popupAutoHideTimer);
                 rootMenu._popupAutoHideTimer = null;
             }
+            if (this.get('focusable')) {
+                this.set('focused', true);
+            }
         },
 
         handleBlur: function (e) {
             Menu.superclass.handleBlur.call(this, e);
-            this.set("highlightedItem", null);
+            var item;
+            if (item = this.get('highlightedItem')) {
+                item.set('highlighted', false);
+            }
         },
 
 
@@ -93,7 +106,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
          * a chance to handle the event first.
          * Protected, should only be overridden by subclasses.
          * @param {KISSY.Event.DOMEventObject} e Key event to handle.
-         * @return {Boolean} Whether the event was handled by the container (or one of
+         * @return {Boolean|undefined} Whether the event was handled by the container (or one of
          *     its children).
          * @protected
          *
@@ -120,9 +133,11 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
             switch (e.keyCode) {
                 // esc
                 case KeyCodes.ESC:
-                    // TODO
-                    // focus 的话手动失去焦点
-                    return undefined;
+                    // 清除所有菜单
+                    var item;
+                    if (item = this.get('highlightedItem')) {
+                        item.set('highlighted', false);
+                    }
                     break;
 
                 // home
@@ -157,20 +172,13 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
             if (nextHighlighted) {
                 nextHighlighted.set('highlighted', true, {
                     data: {
-                        byKeyboard: 1
+                        fromKeyboard: 1
                     }
                 });
                 return true;
             } else {
                 return undefined;
             }
-        },
-
-        bindUI: function () {
-            var self = this;
-            // 隐藏后，去掉高亮与当前
-            self.on("hide", onMenuHide, self);
-            self.on('afterHighlightedChange', afterHighlightedChange, self);
         },
 
         /**
@@ -196,8 +204,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
 
             for (var i = 0, count = children.length; i < count; i++) {
                 var child = children[i];
-                if (typeof child.containsElement == 'function' &&
-                    child.containsElement(element)) {
+                if (child.containsElement && child.containsElement(element)) {
                     return true;
                 }
             }
@@ -214,7 +221,18 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
             /**
              * @ignore
              */
-            highlightedItem: {},
+            highlightedItem: {
+                // 统一存储，效率换取空间
+                getter: function () {
+                    var c, children = this.get('children');
+                    for (var i = 0; i < children.length; i++) {
+                        if ((c = children[i]).get('highlighted')) {
+                            return c;
+                        }
+                    }
+                    return undefined;
+                }
+            },
             /**
              * Current active menu item.
              * Maybe a descendant but not a child of current menu.
@@ -243,7 +261,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
     return Menu;
 
 }, {
-    requires: ['event', 'component/base', './menu-render', './submenu']
+    requires: ['event', 'component/base', './menu-render']
 });
 
 /**

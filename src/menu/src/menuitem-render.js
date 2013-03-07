@@ -25,7 +25,7 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
 
     return Component.Render.extend({
 
-        _createDom:function(){
+        createDom:function(){
             this.get('el').attr({
                 role: "menuitem",
                 id: S.guid("ks-menuitem")
@@ -47,14 +47,14 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
         },
 
         '_onSetSelectable': function (v) {
-            this.get("el").attr("role", v ? 'menuitemradio' : 'menuitem');
+            this.get("el").attr("role", v ? ('menuitem'+'radio') : 'menuitem');
         },
 
         '_onSetCheckable': function (v) {
             if (v) {
                 setUpCheckEl(this);
             }
-            this.get("el").attr("role", v ? 'menuitemcheckbox' : 'menuitem');
+            this.get("el").attr("role", v ? ('menuitem'+'checkbox') : 'menuitem');
         },
 
         containsElement: function (element) {
@@ -65,8 +65,6 @@ KISSY.add("menu/menuitem-render", function (S, Node, Component, undefined) {
         ATTRS: {
             checkable: {},
             selected: {},
-            // @inheritedDoc
-            // content:{},
             // 属性必须声明，否则无法和 _onSetChecked 绑定在一起
             checked: {}
         },
