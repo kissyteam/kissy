@@ -64,7 +64,7 @@
     position: relative;
     z-index: 10000;
 }
-.nav-menu .nav-submenu .ks-submenu-arrow {
+.nav-menu .nav-submenu .nav-submenu-arrow {
     position: absolute;
     top: 46%;
     top: 40%\9;
@@ -84,7 +84,7 @@
     transition: transform 0.2s ease-in;
 }
 
-.nav-menu .nav-submenu-hover .ks-submenu-arrow {
+.nav-menu .nav-submenu-hover .nav-submenu-arrow {
     -moz-transform: rotate(180deg);
     -moz-transform-origin: 50% 30%;
     -webkit-transform: rotate(180deg);

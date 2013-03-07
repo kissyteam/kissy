@@ -31,17 +31,33 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender) {
      * @extends KISSY.Component.Container
      */
     var Menu = Component.Container.extend({
+
+        isMenu: 1,
+
         _onSetHighlightedItem: function (v, ev) {
             var pre = ev && ev.prevVal;
             if (pre) {
-                pre.set("highlighted", false,{
-                    data:{
-                       hideImmediate:1
+                pre.set("highlighted", false, {
+                    data: {
+                        hideImmediate: 1
                     }
                 });
             }
             if (v && this.get('focusable')) {
                 this.set('focused', true);
+            }
+        },
+
+        getRootMenu: function () {
+            return this;
+        },
+
+        handleMouseEnter: function () {
+            Menu.superclass.handleMouseEnter.apply(this, arguments);
+            var rootMenu = this.getRootMenu();
+            if (rootMenu._popupAutoHideTimer) {
+                clearTimeout(rootMenu._popupAutoHideTimer);
+                rootMenu._popupAutoHideTimer = null;
             }
         },
 

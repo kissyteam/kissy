@@ -24,6 +24,8 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
      */
     var SubMenu = MenuItem.extend([Component.DecorateChild], {
 
+            isSubMenu:1,
+
             bindUI: function () {
                 this.on('afterHighlightedChange', afterHighlightedChange, this);
             },
