@@ -1,6 +1,6 @@
 KISSY.use("json", function (S, JSON) {
 
-    var J = window.JSON;
+    var J = ((S.UA.nodejs && typeof global === 'object') ? global : S.Env.host).JSON;
 
     describe('json', function () {
         describe('stringify', function () {
