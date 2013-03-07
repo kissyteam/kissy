@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Feb 17 17:29
+build time: Mar 7 13:02
 */
 /**
  * smiley button
