@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>右键菜单 + autoHideOnMouseLeave</title>
+    <link href="../assets/menu.css" rel="stylesheet"/>
+    <link href="../assets/menuitem.css" rel="stylesheet"/>
+    <link href="../assets/submenu.css" rel="stylesheet"/>
+    <link href="../assets/filtermenu.css" rel="stylesheet"/>
+    <style>
+        #menuTest {
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+<h1 style="text-align: center;">
+    右键菜单 + autoHideOnMouseLeave
+</h1>
+
+<div id="context" style="border: 1px solid red;
+width: 500px;height: 500px;
+margin:50px auto;">
+    在此区域点右键
+</div>
+<script src="/kissy/build/seed.js"></script>
+<script>
+
+
+    KISSY.use("menu,separator", function (S, Menu, Separator) {
+        var context = S.all("#context");
+        var sb = new Menu.PopupMenu({
+            autoHideOnMouseLeave: true,
+            elStyle: {
+                color: "red"
+            }
+        });
+        sb.addChild(new Menu.Item({
+
+            content: "submenuitem1"}));
+        sb.addChild(new Menu.Item({
+
+            content: "submenuitem2"}));
+
+        sb.addChild(new Separator());
+
+
+        var sb2 = new Menu.PopupMenu({
+            autoHideOnMouseLeave: true,
+            children: [
+                new Menu.Item({
+
+                    content: "submenuitem141"})
+            ],
+            // bug elStyle 无效
+            elStyle: {
+                color: "red"
+            }
+        });
+        sb2.addChild(new Menu.Item({
+
+            content: "submenuitem22"}));
+        var b2 = new Menu.SubMenu({
+
+            content: "sub-sub-menu",
+            menu: sb2
+        });
+        sb.addChild(b2);
+
+        var b = new Menu.SubMenu({
+
+            content: "submenu",
+            menu: sb
+        });
+
+        var menu = new Menu.PopupMenu({
+            autoHideOnMouseLeave: true,
+            // 接受键盘事件
+            focusable: 1,
+            children: [b, new Menu.Item({
+
+                content: "alone"})]
+        });
+
+
+        menu.on("click", function (e) {
+            context.html(e.target.get("content") + " clicked");
+        });
+
+        context.on("contextmenu", function (e) {
+            e.halt();
+            menu.render();
+            menu.set("xy", [e.pageX, e.pageY]);
+            menu.show();
+            // 接受键盘事件
+            menu.set("focused", true);
+        });
+
+
+    });
+
+</script>
+</body>
+</html>
