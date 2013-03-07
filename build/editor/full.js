@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 6 13:26
+build time: Mar 7 12:41
 */
 /**
  * Set up editor constructor
@@ -16456,4 +16456,4 @@ KISSY.add("editor/full", function (S, Editor) {
     return Editor;
 }, {
     requires:['editor']
-})
+});

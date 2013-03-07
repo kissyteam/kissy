@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 6 23:23
+build time: Mar 7 12:54
 */
 /**
  * @ignore
@@ -172,7 +172,8 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
             prevVal: prevVal,
             newVal: value,
             _opts: opts,
-            _attrs: attrs
+            _attrs: attrs,
+            target: self
         }, opts.data);
 
         // check before event
@@ -212,7 +213,7 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
         // fire after event
         if (!opts['silent']) {
             value = getAttrVals(self)[name];
-            __fireAttrChange(self, 'after', name, prevVal, value, fullName, null,opts.data);
+            __fireAttrChange(self, 'after', name, prevVal, value, fullName, null, opts.data);
             if (attrs) {
                 attrs.push({
                     prevVal: prevVal,

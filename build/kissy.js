@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 6 23:34
+build time: Mar 7 12:54
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130306233423' will replace with current timestamp when compressing.
+         * NOTICE: '20130307125412' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130306233423',
+        __BUILD_TIME: '20130307125412',
         /**
          * KISSY Environment.
          * @private
@@ -5854,7 +5854,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130306233423'
+            tag: '20130307125412'
         }, getBaseInfo()));
     }
 
@@ -12228,7 +12228,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:01
+build time: Mar 7 12:36
 */
 /**
  * @ignore
@@ -19098,7 +19098,7 @@ KISSY.add('cookie', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 6 23:23
+build time: Mar 7 12:54
 */
 /**
  * @ignore
@@ -19269,7 +19269,8 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
             prevVal: prevVal,
             newVal: value,
             _opts: opts,
-            _attrs: attrs
+            _attrs: attrs,
+            target: self
         }, opts.data);
 
         // check before event
@@ -19309,7 +19310,7 @@ KISSY.add('base/attribute', function (S, EventCustom, undefined) {
         // fire after event
         if (!opts['silent']) {
             value = getAttrVals(self)[name];
-            __fireAttrChange(self, 'after', name, prevVal, value, fullName, null,opts.data);
+            __fireAttrChange(self, 'after', name, prevVal, value, fullName, null, opts.data);
             if (attrs) {
                 attrs.push({
                     prevVal: prevVal,
