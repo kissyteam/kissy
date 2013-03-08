@@ -68,7 +68,8 @@
                 symbol: 'elementList',
                 rhs: ['elementList', 'COMMA', 'value'],
                 action: function () {
-                    return this.$1[ this.$1.length ] = this.$3;
+                    this.$1[ this.$1.length ] = this.$3;
+                    return this.$1;
                 }
             },
             {

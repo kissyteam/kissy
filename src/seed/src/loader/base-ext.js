@@ -292,6 +292,11 @@
         return name + min + extname;
     }
 
+    var systemPackage = new Loader.Package({
+        name: '',
+        runtime: S
+    });
+
     function getPackage(self, mod) {
         var modName = mod.name,
             packages = self.config('packages'),
@@ -308,7 +313,7 @@
 
         }
 
-        return packages[pName] || self.config('systemPackage');
+        return packages[pName] || systemPackage;
     }
 
 

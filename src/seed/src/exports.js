@@ -1,6 +1,7 @@
 /**
  * @ignore
- * export KISSY 's functionality to module system
+ * 1. export KISSY 's functionality to module system
+ * 2. export light-weighted json parse
  */
 (function (S) {
 
@@ -36,9 +37,38 @@
     }
 
     if (nativeJSON) {
-        KISSY.add('json', function () {
+        S.add('json', function () {
             return S.JSON = nativeJSON;
         });
+        // light weight json parse
+        S.parseJSON = function (data) {
+            return nativeJSON.parse(data);
+        };
+    } else {
+        // JSON RegExp
+        var INVALID_CHARS_REG = /^[\],:{}\s]*$/,
+            INVALID_BRACES_REG = /(?:^|:|,)(?:\s*\[)+/g,
+            INVALID_ESCAPES_REG = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g,
+            INVALID_TOKENS_REG = /"[^"\\\r\n]*"|true|false|null|-?(?:\d+\.|)\d+(?:[eE][+-]?\d+|)/g;
+        S.parseJSON = function (data) {
+            if (data === null) {
+                return data;
+            }
+            if (typeof data === "string") {
+                // for ie
+                data = S.trim(data);
+                if (data) {
+                    // from json2
+                    if (INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, "@")
+                        .replace(INVALID_TOKENS_REG, "]")
+                        .replace(INVALID_BRACES_REG, ""))) {
+
+                        return ( new Function("return " + data) )();
+                    }
+                }
+            }
+            return S.error("Invalid JSON: " + data);
+        };
     }
 
     // exports for nodejs

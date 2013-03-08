@@ -8,9 +8,10 @@
     <meta name="apple-touch-fullscreen" content="yes">
 </head>
 <body>
-<form enctype="multipart/form-data" id="t">
+<form id="t">
     <input name="test" value='1'/>
     <input name="test2" value='2'/>
+    <input name="testFile" type='file'/>
     <button id="upload">upload</button>
 </form>
 
@@ -34,6 +35,7 @@
         S.one('#upload').on('click',function(){
             io({
                 form: S.get('#t'),
+                type:'post',
                 dataType: 'html',
                 url: 'http://' + location.hostname + ':9999/kissy/src/io/tests/others/subdomain/upload-html.jss',
                 success: function (data) {

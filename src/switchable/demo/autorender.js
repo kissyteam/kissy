@@ -2,7 +2,7 @@
  * Switchable autorender Plugin
  * @author lifesinger@gmail.com
  */
-KISSY.add('switchable/autorender', function (S, DOM, JSON, Switchable) {
+KISSY.add('switchable/autorender', function (S, DOM, Switchable) {
 
     /**
      * 自动渲染 container 元素内的所有 Switchable 组件
@@ -20,7 +20,7 @@ KISSY.add('switchable/autorender', function (S, DOM, JSON, Switchable) {
                     if (config) {
                         config = config.replace(/'/g, '"');
                     }
-                    new (type == "Switchable" ? Switchable : Switchable[type])(elem, JSON.parse(config));
+                    new (type == "Switchable" ? Switchable : Switchable[type])(elem, S.parseJSON(config));
                 } catch (ex) {
                     S.log('Switchable.autoRender: ' + ex, 'warn');
                 }

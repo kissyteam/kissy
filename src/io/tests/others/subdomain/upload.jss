@@ -1,7 +1,8 @@
 module.exports = function (req, res) {
 
     setTimeout(function () {
-        var t = {}, query = req.body;
+        var t = {},
+            query = req.body;
         if (query.test) {
             t.test = query.test;
         }
@@ -22,6 +23,13 @@ module.exports = function (req, res) {
             '</head><body>';
         data += JSON.stringify(t);
         data += '</body></html>';
+        res.set('Expires', 'Mon, 26 Jul 1997 05:00:00 GMT');
+        res.set('Cache-Control', 'no-cache');
+        res.set('Pragma', 'no-cache');
+        res.set('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+        res.set('Access-Control-Allow-Credentials', 'true');
+        res.set('Access-Control-Allow-Origin', 'http://'+req.host+':8888');
+        res.set('Access-Control-Allow-Headers', 'origin, x-requested-with, yiminghe, content-type, accept, *');
         res.send(data);
     }, 10);
 

@@ -16,6 +16,8 @@
              * Checks to see whether two object are equals.
              * @param a 比较目标1
              * @param b 比较目标2
+             * @param [mismatchKeys] internal usage
+             * @param [mismatchValues] internal usage
              * @return {Boolean} a.equals(b)
              * @member KISSY
              */

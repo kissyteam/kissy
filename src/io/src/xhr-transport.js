@@ -28,7 +28,7 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
 
         self.io = io;
 
-        if (crossDomain) {
+        if (crossDomain && !XhrTransportBase.supportCORS) {
             // 跨子域
             if (isSubDomain(c.uri.getHostname())) {
                 // force to not use sub domain transport
@@ -42,8 +42,7 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
              使用 withCredentials 检测是否支持 CORS
              http://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/
              */
-            if (!XhrTransportBase.supportCORS &&
-                (String(xdrCfg.use) === 'flash' || !_XDomainRequest)) {
+            if ((String(xdrCfg.use) === 'flash' || !_XDomainRequest)) {
                 return new XdrFlashTransport(io);
             }
         }
@@ -63,7 +62,6 @@ KISSY.add('io/xhr-transport', function (S, IO, XhrTransportBase, SubDomainTransp
     });
 
     IO['setupTransport']('*', XhrTransport);
-
 
     return IO;
 }, {

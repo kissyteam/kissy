@@ -292,7 +292,8 @@ KISSY.add("json/parser", function () {
             return [this.$1];
         }],
         [18, [18, 3, 15], function () {
-            return this.$1[this.$1.length] = this.$3;
+            this.$1[this.$1.length] = this.$3;
+            return this.$1;
         }],
         [17, [5, 6], function () {
             return [];

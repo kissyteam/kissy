@@ -19,7 +19,7 @@ KISSY.add("note/mods/sync", function(S, mvc) {
       var index;
       var store = STORE || (window.localStorage ? window.localStorage.getItem(KEY) || [] : []);
       if(typeof store == "string") {
-        store = JSON.parse(store)
+        store = S.parseJSON(store)
       }
       var ret, id, error, i;
       switch(method) {

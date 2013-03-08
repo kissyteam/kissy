@@ -5,8 +5,6 @@
  */
 KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Gesture) {
 
-    'use strict';
-
     var key = S.guid('touch-handle'),
         Features = S.Features,
         MOVE_DELAY = 30,

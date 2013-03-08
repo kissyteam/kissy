@@ -2,7 +2,7 @@
  * basic test cases for kissy io
  * @author lijing00333@163.com, yiminghe@gmail.com
  */
-KISSY.use("json,io", function (S, JSON, IO) {
+KISSY.use("io", function (S,  IO) {
 
     describe('IO', function () {
 
@@ -341,7 +341,7 @@ KISSY.use("json,io", function (S, JSON, IO) {
                 IO.post('../data/interface.jss?t=post', function (data, status, xhr) {
                     ok = true;
                     expect(typeof data).toBe('string');
-                    var o = JSON.parse(data);
+                    var o = S.parseJSON(data);
                     expect(o).not.toBe(undefined);
                     expect(o['name']).toBe('test');
                     expect(xhr.responseText).toBe(data);
@@ -364,7 +364,7 @@ KISSY.use("json,io", function (S, JSON, IO) {
                     exp: '>,?/\%."`~'
                 }, function (data, textStatus, xhr) {
                     ok = true;
-                    var o = JSON.parse(data);
+                    var o = S.parseJSON(data);
                     expect(o).not.toBe(undefined);
                     expect(o['name']).toBe('test');
                     expect(o['company']).toBe('www.taobao.com');
@@ -387,7 +387,7 @@ KISSY.use("json,io", function (S, JSON, IO) {
                     function (data, textStatus, xhr) {
                         ok = true;
 
-                        var o = JSON.parse(data);
+                        var o = S.parseJSON(data);
                         expect(o).not.toBe(undefined);
                         expect(o['name']).toBe('test');
                         expect(o['company']).toBe('www.taobao.com');
@@ -682,7 +682,7 @@ KISSY.use("json,io", function (S, JSON, IO) {
                 IO.get('../data/interface.jss?t=get', function (data, textStatus, xhr) {
                     ok = true;
 
-                    var o = JSON.parse(data);
+                    var o = S.parseJSON(data);
                     expect(o).not.toBe(undefined);
                     expect(o['t']).toBe('get');
                     expect(o['name']).toBe('test');
@@ -703,7 +703,7 @@ KISSY.use("json,io", function (S, JSON, IO) {
 
                 IO.get('../data/interface.jss?t=get', {'data': 'hello'}, function (data) {
                     ok = true;
-                    var o = JSON.parse(data);
+                    var o = S.parseJSON(data);
                     expect(o['data']).toBe('hello');
                 });
 

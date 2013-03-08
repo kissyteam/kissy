@@ -34,7 +34,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
             },
             converters: {
                 text: {
-                    json: JSON.parse,
+                    json: S.parseJSON,
                     html: mirror,
                     text: mirror,
                     xml: S.parseXML
@@ -272,6 +272,7 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
      *
      * @cfg {Object} xhrFields
      * name-value to set to native xhr.set as xhrFields:{withCredentials:true}
+     * note: withCredentials defaults to true.
      *
      * @cfg {String} username
      * a username tobe used in response to HTTP access authentication request

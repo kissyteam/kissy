@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 7 12:54
+build time: Mar 8 23:03
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130307125412' will replace with current timestamp when compressing.
+         * NOTICE: '20130308230342' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130307125412',
+        __BUILD_TIME: '20130308230342',
         /**
          * KISSY Environment.
          * @private
@@ -1317,6 +1317,8 @@ var KISSY = (function (undefined) {
              * Checks to see whether two object are equals.
              * @param a 比较目标1
              * @param b 比较目标2
+             * @param [mismatchKeys] internal usage
+             * @param [mismatchValues] internal usage
              * @return {Boolean} a.equals(b)
              * @member KISSY
              */
@@ -4336,6 +4338,11 @@ var KISSY = (function (undefined) {
         return name + min + extname;
     }
 
+    var systemPackage = new Loader.Package({
+        name: '',
+        runtime: S
+    });
+
     function getPackage(self, mod) {
         var modName = mod.name,
             packages = self.config('packages'),
@@ -4352,7 +4359,7 @@ var KISSY = (function (undefined) {
 
         }
 
-        return packages[pName] || self.config('systemPackage');
+        return packages[pName] || systemPackage;
     }
 
 
@@ -5145,14 +5152,9 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130307125412'
+            tag: '20130308230342'
         }, getBaseInfo()));
     }
-
-    S.config('systemPackage', new Loader.Package({
-        name: '',
-        runtime: S
-    }));
 
     // Initializes loader.
     Env.mods = {}; // all added mods
@@ -5648,7 +5650,8 @@ config({
                 },KISSY.Features,KISSY.UA);
             /**
  * @ignore
- * export KISSY 's functionality to module system
+ * 1. export KISSY 's functionality to module system
+ * 2. export light-weighted json parse
  */
 (function (S) {
 
@@ -5684,9 +5687,38 @@ config({
     }
 
     if (nativeJSON) {
-        KISSY.add('json', function () {
+        S.add('json', function () {
             return S.JSON = nativeJSON;
         });
+        // light weight json parse
+        S.parseJSON = function (data) {
+            return nativeJSON.parse(data);
+        };
+    } else {
+        // JSON RegExp
+        var INVALID_CHARS_REG = /^[\],:{}\s]*$/,
+            INVALID_BRACES_REG = /(?:^|:|,)(?:\s*\[)+/g,
+            INVALID_ESCAPES_REG = /\\(?:["\\\/bfnrt]|u[\da-fA-F]{4})/g,
+            INVALID_TOKENS_REG = /"[^"\\\r\n]*"|true|false|null|-?(?:\d+\.|)\d+(?:[eE][+-]?\d+|)/g;
+        S.parseJSON = function (data) {
+            if (data === null) {
+                return data;
+            }
+            if (typeof data === "string") {
+                // for ie
+                data = S.trim(data);
+                if (data) {
+                    // from json2
+                    if (INVALID_CHARS_REG.test(data.replace(INVALID_ESCAPES_REG, "@")
+                        .replace(INVALID_TOKENS_REG, "]")
+                        .replace(INVALID_BRACES_REG, ""))) {
+
+                        return ( new Function("return " + data) )();
+                    }
+                }
+            }
+            return S.error("Invalid JSON: " + data);
+        };
     }
 
     // exports for nodejs

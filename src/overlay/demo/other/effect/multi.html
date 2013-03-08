@@ -225,7 +225,7 @@
     </div>
 </div>
 <script>
-    KISSY.use("node, overlay,json", function (S, Node, O) {
+    KISSY.use("node,overlay", function (S, Node, O) {
         var DOM = S.DOM, Event = S.Event;
         var elem = S.get('.J_TWidget');
 
@@ -233,7 +233,7 @@
 
         config = elem.getAttribute('data-widget-config');
         if (config) config = config.replace(/'/g, '"');
-        config = S.JSON.parse(config);
+        config = S.parseJSON(config);
 
         // 兼容之前没有markupType时的写法
         if (!('type' in config)) {

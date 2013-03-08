@@ -379,11 +379,12 @@ KISSY.use("ua,json,io,node", function (S, UA, JSON, io, Node) {
 
             S.log("should works for form file upload");
 
-            var f = $('<form id="f' + S.guid(S.now()) + '" method="post" enctype="multipart/form-data">' +
+            var f = $('<form id="f' + S.guid(S.now()) + '">' +
                 //php need []
                 '<input name="test4[]" value="t6"/>' +
                 '<input name="test4[]" value="t7"/>' +
                 '<input name="test5" value="t8"/>' +
+                '<input name="testFile" type="file"/>' +
                 '<select name="test[]" multiple>' +
                 '<option value="t1" selected>v</option>' +
                 '<option value="t2" selected>v2</option>' +
@@ -393,7 +394,7 @@ KISSY.use("ua,json,io,node", function (S, UA, JSON, io, Node) {
 
             var ok, d;
 
-            var xhr = io({
+            io({
                 url: '../others/form/upload.jss',
                 form: "#" + f.prop("id"),
                 type: 'post',
@@ -410,8 +411,6 @@ KISSY.use("ua,json,io,node", function (S, UA, JSON, io, Node) {
                     ok = true
                 }
             });
-
-            expect(xhr.iframe.nodeName.toLowerCase()).toBe("iframe");
 
             waitsFor(function () {
                 return ok;
@@ -441,8 +440,8 @@ KISSY.use("ua,json,io,node", function (S, UA, JSON, io, Node) {
                 '</select>' +
                 '</form>').appendTo("body");
 
-            var re = [], ok, d;
-            var xhr = io({
+            var ok, d;
+            io({
                 url: '../others/form/upload.jss',
                 form: "#" + f.prop("id"),
                 type: 'post',

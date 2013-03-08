@@ -56,7 +56,7 @@ KISSY.add('io/jsonp', function (S, IO) {
                 }
             });
 
-            converters = io.converters = io.converters || {};
+            converters = c.converters;
             converters.script = converters.script || {};
 
             // script -> jsonp ,jsonp need to see json not as script

@@ -1,6 +1,6 @@
 /**
  * @ignore
- * encapsulation of io object . as transaction object in yui3
+ * encapsulation of io object. as transaction object in yui3
  * @author yiminghe@gmail.com
  */
 KISSY.add('io/methods', function (S, IO, undefined) {
@@ -18,8 +18,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
         var text = io.responseText,
             xml = io.responseXML,
             c = io.config,
-            cConverts = c.converters,
-            xConverts = io.converters || {},
+            converts = c.converters,
             type,
             contentType,
             responseData,
@@ -51,20 +50,25 @@ KISSY.add('io/methods', function (S, IO, undefined) {
             // 服务器端没有告知（并且客户端没有 mimetype ）默认 text 类型
             dataType[0] = dataType[0] || 'text';
 
-            //获得合适的初始数据
-            if (dataType[0] == 'text' && text !== undefined) {
-                responseData = text;
+            // 获得合适的初始数据
+            for (var dataTypeIndex = 0; dataTypeIndex < dataType.length; dataTypeIndex++) {
+                if (dataType[dataTypeIndex] == 'text' && text !== undefined) {
+                    responseData = text;
+                    break;
+                }
+                // 有 xml 值才直接取，否则可能还要从 xml 转
+                else if (dataType[dataTypeIndex] == 'xml' && xml !== undefined) {
+                    responseData = xml;
+                    break;
+                }
             }
-            // 有 xml 值才直接取，否则可能还要从 xml 转
-            else if (dataType[0] == 'xml' && xml !== undefined) {
-                responseData = xml;
-            } else {
+
+            if (!responseData) {
                 var rawData = {text: text, xml: xml};
                 // 看能否从 text xml 转换到合适数据，并设置起始类型为 text/xml
                 S.each(['text', 'xml'], function (prevType) {
                     var type = dataType[0],
-                        converter = xConverts[prevType] && xConverts[prevType][type] ||
-                            cConverts[prevType] && cConverts[prevType][type];
+                        converter = converts[prevType] && converts[prevType][type];
                     if (converter && rawData[prevType]) {
                         dataType.unshift(prevType);
                         responseData = prevType == 'text' ? text : xml;
@@ -80,8 +84,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
         for (var i = 1; i < dataType.length; i++) {
             type = dataType[i];
 
-            var converter = xConverts[prevType] && xConverts[prevType][type] ||
-                cConverts[prevType] && cConverts[prevType][type];
+            var converter = converts[prevType] && converts[prevType][type];
 
             if (!converter) {
                 throw 'no covert for ' + prevType + ' => ' + type;
@@ -226,7 +229,7 @@ KISSY.add('io/methods', function (S, IO, undefined) {
                 var c = this.config,
                     uri = c.uri,
                     originalQuery = S.Uri.getComponents(c.url).query || "",
-                    url = uri.toString(c.serializeArray);
+                    url = uri.toString.call(uri,c.serializeArray);
 
                 return url + (originalQuery ?
                     ((uri.query.has() ? '&' : '?') + originalQuery) :

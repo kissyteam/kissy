@@ -5,24 +5,51 @@
  */
 KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
 
+    var win = S.Env.host,
+        slice = Array.prototype.slice,
+        FormData = win['FormData'];
+
     IO.on('start', function (e) {
         var io = e.io,
             form,
             d,
-            enctype,
             dataType,
             formParam,
             data,
             tmpForm,
             c = io.config;
+
         // serialize form if needed
         if (tmpForm = c.form) {
             form = DOM.get(tmpForm);
-            enctype = form['encoding'] || form.enctype;
             data = c.data;
+            var isUpload = false;
+            var files = {};
+
+            var inputs = DOM.query('input', form);
+            for (var i = 0, l = inputs.length; i < l; i++) {
+                var input = inputs[i];
+                if (input.type.toLowerCase() == 'file') {
+                    isUpload = true;
+                    if (!FormData) {
+                        break;
+                    }
+                    var selected = slice.call(input.files, 0);
+                    files[DOM.attr(input, 'name')] = selected.length > 1 ? selected : (selected[0]||null);
+                }
+            }
+
+            if (isUpload && FormData) {
+                c.files = c.files || {};
+                S.mix(c.files, files);
+                // browser set contentType automatically for FileData
+                delete c.contentType;
+            }
+
             // 上传有其他方法
-            if (enctype.toLowerCase() != 'multipart/form-data') {
+            if (!isUpload || FormData) {
                 // when get need encode
+                // when FormData exists, only collect non-file type input
                 formParam = FormSerializer.getFormData(form);
                 if (c.hasContent) {
                     formParam = S.param(formParam, undefined, undefined, c.serializeArray);
@@ -36,6 +63,7 @@ KISSY.add('io/form', function (S, IO, DOM, FormSerializer) {
                     c.uri.query.add(formParam);
                 }
             } else {
+                // for old-ie
                 dataType = c.dataType;
                 d = dataType[0];
                 if (d == '*') {

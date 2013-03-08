@@ -162,11 +162,6 @@
         }, getBaseInfo()));
     }
 
-    S.config('systemPackage', new Loader.Package({
-        name: '',
-        runtime: S
-    }));
-
     // Initializes loader.
     Env.mods = {}; // all added mods
     Env._loader = new Loader(S);

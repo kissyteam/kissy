@@ -198,7 +198,7 @@ KISSY.use("json", function (S, JSON) {
                         gap + ']' +
                         '\n}');
 
-                    if (J&&!S.UA.phantomjs) {
+                    if (J && !S.UA.phantomjs) {
                         expect(ret).toBe(J.stringify({
                             'a': [
                                 {
@@ -222,6 +222,15 @@ KISSY.use("json", function (S, JSON) {
             it('allow whitespace', function () {
                 var t = '{"test": 1,"t":2}',
                     r = {test: 1, t: 2};
+                expect(JSON.parse(t)).toEqual(r);
+                if (J) {
+                    expect(J.parse(t)).toEqual(r);
+                }
+            });
+
+            it('works for array', function () {
+                var t = "{\"test\":[\"t1\",\"t2\"]}" ,
+                    r = {test: ['t1', 't2']};
                 expect(JSON.parse(t)).toEqual(r);
                 if (J) {
                     expect(J.parse(t)).toEqual(r);

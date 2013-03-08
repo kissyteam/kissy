@@ -7,7 +7,7 @@ if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
 } else {
 
 
-    KISSY.use("ua,swf,dom,json", function (S, UA, SWF, DOM, JSON) {
+    KISSY.use("ua,swf,dom", function (S, UA, SWF, DOM) {
 
         function getFlashVars(swf) {
             if (DOM.nodeName(swf) == 'embed') {
@@ -141,7 +141,7 @@ if (KISSY.UA.mobile || KISSY.UA.phantomjs || location.protocol === 'file:') {
                     var swf = new SWF(config);
                     var flashvars = getFlashVars(swf.get('el'));
                     expect(flashvars.name1).toBe('http://taobao.com/?x=1&z=2');
-                    expect(JSON.parse(flashvars.name2).cpx.s).toBe('string');
+                    expect(S.parseJSON(flashvars.name2).cpx.s).toBe('string');
                     expect(swf.get('el').id).toEqual('test-flash-vars');
 
                     swf.destroy();

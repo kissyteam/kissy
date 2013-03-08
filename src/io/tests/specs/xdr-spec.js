@@ -3,9 +3,7 @@
  * @author yiminghe@gmail.com
  */
 
-
-
-KISSY.use("ua,json,io,node", function (S, UA, JSON, io, Node) {
+KISSY.use("ua,io,node", function (S, UA,  io, Node) {
     var $ = Node.all;
 
     describe("Xdr IO", function () {
@@ -141,14 +139,16 @@ KISSY.use("ua,json,io,node", function (S, UA, JSON, io, Node) {
 
 
         it("should support cross subdomain fileupload", function () {
-            var form = $('<form enctype="multipart/form-data">' +
+            var form = $('<form>' +
                 '<input name="test" value=\'1\'/>' +
                 '<input name="test2" value=\'2\'/>' +
+                '<input type="file" name="testFile"/>' +
                 '</form>').appendTo("body");
 
             var ok = 0;
 
             io({
+                type:'post',
                 form: form[0],
                 dataType: 'json',
                 url: 'http://' + host + ':9999/kissy/src/io/' +

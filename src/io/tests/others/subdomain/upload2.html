@@ -8,15 +8,16 @@
     <meta name="apple-touch-fullscreen" content="yes">
 </head>
 <body>
-<form enctype="multipart/form-data" id="t">
+<form  id="t">
     <input name="test" value='1'/>
     <input name="test2" value='2'/>
+    <input name="testFile" type="file"/>
 </form>
 <script src="/kissy/build/seed.js"></script>
 <script>
     document.domain = location.hostname;
 
-    S.use("core", function (S) {
+    KISSY.use("core", function (S) {
 
         var DOM = S.DOM, Event = S.Event, UA = S.UA;
 

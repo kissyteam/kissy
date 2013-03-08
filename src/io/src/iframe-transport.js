@@ -5,18 +5,32 @@
  */
 KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
 
-    'use strict';
-
     var doc = S.Env.host.document,
         OK_CODE = 200,
         ERROR_CODE = 500,
-        BREATH_INTERVAL = 30;
+        BREATH_INTERVAL = 30,
+        iframeConverter = S.clone(IO.getConfig().converters.text);
+
+    // https://github.com/kissyteam/kissy/issues/304
+    // returned data must be escaped by server for json dataType
+    // as data
+    // eg:
+    // <body>
+    // {
+    //    "&lt;a&gt;xx&lt;/a&gt;"
+    // }
+    // </body>
+    // text or html dataType is of same effect.
+    // same as normal ajax or html5 FileData
+    iframeConverter.json = function (str) {
+        return S.parseJSON(S.unEscapeHTML(str));
+    };
 
     // iframe 内的内容就是 body.innerText
     IO.setupConfig({
         converters: {
             // iframe 到其他类型的转化和 text 一样
-            iframe: IO.getConfig().converters.text,
+            iframe: iframeConverter,
             text: {
                 // fake type, just mirror
                 iframe: function (text) {
@@ -93,8 +107,8 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
                 target: DOM.attr(form, 'target') || '',
                 action: DOM.attr(form, 'action') || '',
                 // enctype 区分 iframe 与 serialize
-                //encoding:DOM.attr(form, 'encoding'),
-                //enctype:DOM.attr(form, 'enctype'),
+                encoding:DOM.attr(form, 'encoding'),
+                enctype:DOM.attr(form, 'enctype'),
                 method: DOM.attr(form, 'method')
             };
             self.form = form;
@@ -105,9 +119,9 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
             DOM.attr(form, {
                 target: iframe.id,
                 action: io._getUrlForSend(),
-                method: 'post'
-                //enctype:'multipart/form-data',
-                //encoding:'multipart/form-data'
+                method: 'post',
+                enctype:'multipart/form-data',
+                encoding:'multipart/form-data'
             });
 
             // unparam to kv map
@@ -139,7 +153,6 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
             var self = this,
                 form = self.form,
                 io = self.io,
-                dataType = io.config.dataType,
                 eventType = /**
                  @type String
                  @ignore*/event.type,
@@ -179,9 +192,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
                     // ie<9
                     if (iframeDoc && iframeDoc.body) {
                         // https://github.com/kissyteam/kissy/issues/304
-                        io.responseText = dataType[1] === 'html' ?
-                            S.trim(DOM.html(iframeDoc.body)) :
-                            S.trim(DOM.text(iframeDoc.body));
+                        io.responseText = DOM.html(iframeDoc.body);
                         // ie still can retrieve xml 's responseText
                         if (S.startsWith(io.responseText, '<?xml')) {
                             io.responseText = undefined;
