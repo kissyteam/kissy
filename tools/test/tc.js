@@ -2,11 +2,7 @@
 gen by gen-tc.js
 */
 module.exports=function(){ var tests=[];
-tests.push('/kissy/src/io/tests/runner/test-basic.html');
-
-tests.push('/kissy/src/io/tests/runner/test-xdr.html');
-
-tests.push('/kissy/src/io/tests/runner/test.html');
+tests.push('/kissy/src/anim/tests/runner/test-transition.html');
 
 tests.push('/kissy/src/anim/tests/runner/test.html');
 
@@ -55,6 +51,12 @@ tests.push('/kissy/src/event/sub-modules/dom/sub-modules/touch/tests/runner/test
 tests.push('/kissy/src/htmlparser/tests/runner/test.html');
 
 tests.push('/kissy/src/imagezoom/tests/runner/test.html');
+
+tests.push('/kissy/src/io/tests/runner/test-basic.html');
+
+tests.push('/kissy/src/io/tests/runner/test-xdr.html');
+
+tests.push('/kissy/src/io/tests/runner/test.html');
 
 tests.push('/kissy/src/json/tests/runner/test.html');
 
