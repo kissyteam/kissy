@@ -34,11 +34,10 @@
         S.one('#upload').on('click',function(){
             io({
                 form: S.get('#t'),
-                dataType: 'json', // 取 body.text
-                url: 'http://' + location.hostname + ':9999/kissy/src/io/tests/others/subdomain/upload.jss',
+                dataType: 'html',
+                url: 'http://' + location.hostname + ':9999/kissy/src/io/tests/others/subdomain/upload-html.jss',
                 success: function (data) {
-                    alert(data);
-                    alert(S.JSON.stringify(data));
+                    alert(data)
                 }
             });
         });

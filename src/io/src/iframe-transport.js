@@ -139,6 +139,7 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
             var self = this,
                 form = self.form,
                 io = self.io,
+                dataType = io.config.dataType,
                 eventType = /**
                  @type String
                  @ignore*/event.type,
@@ -177,7 +178,10 @@ KISSY.add('io/iframe-transport', function (S, DOM, Event, IO) {
                     iframeDoc = iframe.contentWindow.document;
                     // ie<9
                     if (iframeDoc && iframeDoc.body) {
-                        io.responseText = S.trim(DOM.text(iframeDoc.body));
+                        // https://github.com/kissyteam/kissy/issues/304
+                        io.responseText = dataType[1] === 'html' ?
+                            S.trim(DOM.html(iframeDoc.body)) :
+                            S.trim(DOM.text(iframeDoc.body));
                         // ie still can retrieve xml 's responseText
                         if (S.startsWith(io.responseText, '<?xml')) {
                             io.responseText = undefined;
