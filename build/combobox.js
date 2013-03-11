@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 11 23:28
+build time: Mar 11 23:44
 */
 /**
  * @ignore
@@ -527,6 +527,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
     function onMenuItemClick(e) {
         var item = e.target,
+            self=this,
             textContent;
         if (item.isMenuItem) {
             textContent = item.get('textContent');

@@ -522,6 +522,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
     function onMenuItemClick(e) {
         var item = e.target,
+            self=this,
             textContent;
         if (item.isMenuItem) {
             textContent = item.get('textContent');
