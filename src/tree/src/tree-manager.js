@@ -19,7 +19,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
 
         /**
          * Whether show root node.
-         * @defaulttrue.
+         * Defaults to: true.
          * @type {Boolean}
          */
         showRootNode: {

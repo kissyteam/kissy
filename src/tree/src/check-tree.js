@@ -11,10 +11,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
      * xclass: 'check-tree'.
      * @member Tree
      */
-    var CheckTree = CheckNode.extend([TreeManager], {
-        _onSetFocused: function () {
-            // check tree 没有 selectedItem 概念，也没有选中状态
-        }
+    return  CheckNode.extend([TreeManager], {
     }, {
         ATTRS: /**
          * @lends Tree.CheckTree#
@@ -36,8 +33,6 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
         xclass: 'check-tree',
         priority: 40
     });
-    return CheckTree;
-
 }, {
     requires: ['component/base', './check-node', './check-tree-render', './tree-manager']
 });

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:03
+build time: Mar 11 21:41
 */
 /**
  * root node represent a simple tree
@@ -278,10 +278,7 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
      * xclass: 'check-tree'.
      * @member Tree
      */
-    var CheckTree = CheckNode.extend([TreeManager], {
-        _onSetFocused: function () {
-            // check tree 没有 selectedItem 概念，也没有选中状态
-        }
+    return  CheckNode.extend([TreeManager], {
     }, {
         ATTRS: /**
          * @lends Tree.CheckTree#
@@ -303,8 +300,6 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
         xclass: 'check-tree',
         priority: 40
     });
-    return CheckTree;
-
 }, {
     requires: ['component/base', './check-node', './check-tree-render', './tree-manager']
 });/**
@@ -1032,7 +1027,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
 
         /**
          * Whether show root node.
-         * @defaulttrue.
+         * Defaults to: true.
          * @type {Boolean}
          */
         showRootNode: {
