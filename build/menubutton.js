@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 18 14:56
+build time: Mar 11 19:37
 */
 /**
  * combination of menu and button ,similar to native select
@@ -9,64 +9,8 @@ build time: Feb 18 14:56
  */
 KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, Component, undefined) {
 
-    var win = S.Env.host;
-
-    function getMenu(self, init) {
-        var m = self.get("menu");
-        if (m && !m.isController) {
-            if (init) {
-                m = Component.create(m, self);
-                self.setInternal("menu", m);
-            } else {
-                return null;
-            }
-        }
-        return m;
-    }
-
-    function reposition() {
-        var self = this,
-            alignCfg,
-            alignNode,
-            align,
-            menu = getMenu(self);
-        if (menu && menu.get("visible")) {
-            alignCfg = menu.get("align");
-            alignNode = alignCfg.node;
-            delete alignCfg.node;
-            align = S.clone(alignCfg);
-            align.node = alignNode || self.get("el");
-            S.mix(align, ALIGN, false);
-            menu.set("align", align);
-        }
-    }
-
-    function hideMenu(self) {
-        var menu = getMenu(self);
-        if (menu) {
-            menu.hide();
-        }
-    }
-
-    function showMenu(self) {
-        var el = self.get("el"),
-            menu = getMenu(self, 1);
-        // 保证显示前已经 bind 好 menu 事件
-        if (menu && !menu.get("visible")) {
-            // 先 render，监听 width 变化事件
-            menu.render();
-            self.bindMenu();
-            // 根据对齐的 el 自动调整大小
-            if (self.get("matchElWidth")) {
-                menu.set("width", $(menu.get("align").node || el).innerWidth());
-            }
-            menu.show();
-            reposition.call(self);
-            el.attr("aria-haspopup", menu.get("el").attr("id"));
-        }
-    }
-
     var $ = Node.all,
+        win = $(S.Env.host),
         KeyCodes = Node.KeyCodes,
         ALIGN = {
             points: ["bl", "tl"],
@@ -95,34 +39,11 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 }
             },
 
-            /**
-             * Bind menu to current component.
-             * Protected, should only be overridden by subclasses.
-             * @protected
-             */
-            bindMenu: function () {
-                var self = this,
-                    menu = self.get("menu");
-
-                menu.on("afterActiveItemChange", function (ev) {
-                    self.set("activeItem", ev.newVal);
-                });
-
-                self.__repositionBuffer = S.buffer(reposition, 50);
-
-                // 窗口改变大小，重新调整
-                $(win).on("resize", self.__repositionBuffer, self);
-
-                if (self.get("collapseOnClick")) {
-                    menu.on("click", function () {
-                        self.set("collapsed", true);
-                    });
-                }
-
-                /*
-                 只绑定事件一次
-                 */
-                self.bindMenu = S.noop;
+            bindUI: function () {
+                var self = this;
+                self.on('onMenuAfterActiveItemChange', onMenuAfterActiveItemChange, self);
+                win.on("resize", self.__repositionBuffer = S.buffer(reposition, 50), self);
+                self.on('click', onMenuItemClick, self);
             },
 
             /**
@@ -130,30 +51,31 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * If drop down menu is visible then handle event to menu.
              * Returns true if the event was handled, falsy otherwise.
              * Protected, should only be overridden by subclasses.
-             * @param {Event.Object} e key event to handle.
-             * @return {Boolean} True Whether the key event was handled.
+             * @param {KISSY.Event.DOMEventObject} e key event to handle.
+             * @return {Boolean|undefined} True Whether the key event was handled.
              * @protected
-             *
              */
             handleKeyEventInternal: function (e) {
                 var self = this,
+                    keyCode = e.keyCode,
+                    type = String(e.type),
                     menu = getMenu(self);
 
                 // space 只在 keyup 时处理
-                if (e.keyCode == KeyCodes.SPACE) {
+                if (keyCode == KeyCodes.SPACE) {
                     // Prevent page scrolling in Chrome.
                     e.preventDefault();
-                    if (e.type != "keyup") {
+                    if (type != "keyup") {
                         return undefined;
                     }
-                } else if (e.type != "keydown") {
+                } else if (type != "keydown") {
                     return undefined;
                 }
                 //转发给 menu 处理
                 if (menu && menu.get("visible")) {
                     var handledByMenu = menu.handleKeydown(e);
                     // esc
-                    if (e.keyCode == KeyCodes.ESC) {
+                    if (keyCode == KeyCodes.ESC) {
                         self.set("collapsed", true);
                         return true;
                     }
@@ -161,9 +83,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 }
 
                 // Menu is closed, and the user hit the down/up/space key; open menu.
-                if (e.keyCode == KeyCodes.SPACE ||
-                    e.keyCode == KeyCodes.DOWN ||
-                    e.keyCode == KeyCodes.UP) {
+                if (keyCode == KeyCodes.SPACE ||
+                    keyCode == KeyCodes.DOWN ||
+                    keyCode == KeyCodes.UP) {
                     self.set("collapsed", false);
                     return true;
                 }
@@ -185,7 +107,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             /**
              * Handles blur event.
              * When it loses keyboard focus, close the drop dow menu.
-             * @param {Event.Object} e Blur event.
+             * @param {KISSY.Event.DOMEventObject} e Blur event.
              * Protected, should only be overridden by subclasses.
              * @protected
              *
@@ -200,7 +122,8 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
             /**
              * Adds a new menu item at the end of the menu.
-             * @param {Menu.Item} item Menu item to add to the menu.
+             * @param {KISSY.Menu.Item} item Menu item to add to the menu.
+             * @param {Number} index position to insert
              */
             addItem: function (item, index) {
                 var menu = getMenu(this, 1);
@@ -209,7 +132,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
             /**
              * Remove a existing menu item from drop down menu.
-             * @param c {Menu.Item} Existing menu item.
+             * @param c {KISSY.Menu.Item} Existing menu item.
              * @param [destroy] {Boolean} Whether destroy removed menu item.
              */
             removeItem: function (c, destroy) {
@@ -298,7 +221,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             {
                 /**
                  * Current active menu item.
-                 * @type {Menu.Item}
+                 * @type {KISSY.Menu.Item}
                  */
                 activeItem: {
                     view: 1
@@ -363,6 +286,70 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             xclass: 'menu-button',
             priority: 20
         });
+
+    function onMenuItemClick(e) {
+        if (e.target.isMenuItem && this.get('collapseOnClick')) {
+            this.set("collapsed", true);
+        }
+    }
+
+    function onMenuAfterActiveItemChange(e) {
+        if (e.target.isMenu) {
+            this.set("activeItem", e.newVal);
+        }
+    }
+
+    function getMenu(self, init) {
+        var m = self.get("menu");
+        if (m && !m.isController) {
+            if (init) {
+                m = Component.create(m, self);
+                self.setInternal("menu", m);
+            } else {
+                return null;
+            }
+        }
+        return m;
+    }
+
+    function reposition() {
+        var self = this,
+            alignCfg,
+            alignNode,
+            align,
+            menu = getMenu(self);
+        if (menu && menu.get("visible")) {
+            alignCfg = menu.get("align");
+            alignNode = alignCfg.node;
+            delete alignCfg.node;
+            align = S.clone(alignCfg);
+            align.node = alignNode || self.get("el");
+            S.mix(align, ALIGN, false);
+            menu.set("align", align);
+        }
+    }
+
+    function hideMenu(self) {
+        var menu = getMenu(self);
+        if (menu) {
+            menu.hide();
+        }
+    }
+
+    function showMenu(self) {
+        var el = self.get("el"),
+            menu = getMenu(self, 1);
+        // 保证显示前已经 bind 好 menu 事件
+        if (menu && !menu.get("visible")) {
+            // 根据对齐的 el 自动调整大小
+            if (self.get("matchElWidth")) {
+                menu.set("width", $(menu.get("align").node || el).innerWidth());
+            }
+            menu.show();
+            reposition.call(self);
+            el.attr("aria-haspopup", menu.get("el").attr("id"));
+        }
+    }
 
     return MenuButton;
 }, {
@@ -459,47 +446,34 @@ KISSY.add("menubutton/option", function (S, Menu) {
      * @member MenuButton
      * @extends Menu.Item
      */
-    var Option = MenuItem.extend(
-        /**
+    return MenuItem.extend({}, {
+        ATTRS: /**
          * @lends MenuButton.Option.prototype
          */
         {
             /**
-             * Handle blur event.
+             * Whether this option can be selected.
+             * Defaults to: true.
+             * @type {Boolean}
              */
-            handleBlur:function () {
-                return Option.superclass.handleBlur.apply(this, arguments);
-            }
-        }, {
-            ATTRS:/**
-             * @lends MenuButton.Option.prototype
+            selectable: {
+                value: true
+            },
+
+            /**
+             * String will be used as select 's content if selected.
+             * @type {String}
              */
-            {
-                /**
-                 * Whether this option can be selected.
-                 * Defaults to: true.
-                 * @type {Boolean}
-                 */
-                selectable:{
-                    value:true
-                },
+            textContent: {
 
-                /**
-                 * String will be used as select 's content if selected.
-                 * @type {String}
-                 */
-                textContent:{
-
-                }
             }
-        }, {
-            xclass:'option',
-            priority:10
-        });
-
-    return Option;
+        }
+    }, {
+        xclass: 'option',
+        priority: 10
+    });
 }, {
-    requires:['menu']
+    requires: ['menu']
 });/**
  * manage a list of single-select options
  * @author yiminghe@gmail.com
@@ -521,7 +495,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
         return null;
     }
 
-    // c : Option
+    // c: Option
     // c.get("value")
     // c: Object
     // c.value
@@ -532,7 +506,6 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 if ((v = c.get("value")) === undefined) {
                     v = c.get("textContent") || c.get("content");
                 }
-
             } else {
                 if ((v = c.value) === undefined) {
                     v = c.textContent || c.content;
@@ -557,14 +530,19 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
      *  different from menubutton by highlighting the currently selected option
      *  on open menu.
      */
-    function _handleMenuShow() {
+    function _handleMenuShow(e) {
         var self = this,
             selectedItem = getSelectedItem(self),
             m = self.get("menu");
-        m.set("highlightedItem", selectedItem || m.getChildAt(0));
-        // 初始化选中
-        if (selectedItem) {
-            selectedItem.set("selected", true);
+        if (e.target === m) {
+            var item = selectedItem || m.getChildAt(0);
+            if (item) {
+                item.set('highlighted', true);
+            }
+            // 初始化选中
+            if (selectedItem) {
+                selectedItem.set("selected", true);
+            }
         }
     }
 
@@ -583,15 +561,15 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
      * Protected, should only be overridden by subclasses.
      * @protected
      *
-     * @param {Event.Object} e
+     * @param {KISSY.Event.DOMEventObject} e
      */
     function handleMenuClick(e) {
         var self = this,
             target = e.target;
-        if (target instanceof  Menu.Item) {
+        if (target.isMenuItem) {
             var newValue = getItemValue(target),
                 oldValue = self.get("value");
-            self.set("value", getItemValue(target));
+            self.set("value", newValue);
             if (newValue != oldValue) {
                 self.fire("change", {
                     prevVal: oldValue,
@@ -618,16 +596,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
         {
             bindUI: function () {
                 this.on("click", handleMenuClick, this);
-            },
-
-            /**
-             * Bind menu to current Select. When menu shows, set highlightedItem to current selectedItem.
-             * @protected
-             */
-            bindMenu: function () {
-                var self = this;
-                Select.superclass.bindMenu.call(self);
-                self.get("menu").on("show", _handleMenuShow, self);
+                this.on('show', _handleMenuShow, this);
             },
 
             /**
@@ -659,7 +628,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 _updateCaption(self);
             },
 
-            _onSetDefaultCaption: function () {
+            '_onSetDefaultCaption': function () {
                 _updateCaption(this);
             }
         },
@@ -708,7 +677,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
                 options.each(function (option) {
                     var item = {
-                        xclass:'option',
+                        xclass: 'option',
                         content: option.text(),
                         elCls: option.attr("class"),
                         value: option.val()

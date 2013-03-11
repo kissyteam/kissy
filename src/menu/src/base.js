@@ -7,16 +7,9 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
 
     var KeyCodes = Event.KeyCodes;
 
-    function afterHighlightedChange(e) {
-        var target = e.target;
-        if (e.target.isMenuItem && e.newVal) {
-            this.set("activeItem", target);
-        }
-    }
-
     function beforeHighlightedChange(e) {
         var target = e.target;
-        if (e.target.isMenuItem && e.newVal) {
+        if (target.isMenuItem && e.newVal) {
             if (S.inArray(target, this.get('children'))) {
                 var h = this.get('highlightedItem');
                 if (h && target != h) {
@@ -37,22 +30,24 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
 
         isMenu: 1,
 
-        _onSetVisible: function () {
-            Menu.superclass._onSetVisible.apply(this, arguments);
-            // 通知关闭子菜单
+        clearAllHighlighted: function () {
             var h;
             if (h = this.get('highlightedItem')) {
                 h.set('highlighted', false);
+            }
+            this.set('activeItem', null);
+        },
+
+        _onSetVisible: function (v) {
+            Menu.superclass._onSetVisible.apply(this, arguments);
+            if (!v) {
+                this.clearAllHighlighted();
             }
         },
 
         bindUI: function () {
             var self = this;
-            // screen reader only listen to focusable el
             self.on('beforeHighlightedChange', beforeHighlightedChange, self);
-            if (self.get('focusable')) {
-                self.on('afterHighlightedChange', afterHighlightedChange, self);
-            }
         },
 
         getRootMenu: function () {
@@ -74,12 +69,8 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
 
         handleBlur: function (e) {
             Menu.superclass.handleBlur.call(this, e);
-            var item;
-            if (item = this.get('highlightedItem')) {
-                item.set('highlighted', false);
-            }
+            this.clearAllHighlighted();
         },
-
 
         //dir : -1 ,+1
         //skip disabled items
@@ -134,10 +125,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
                 // esc
                 case KeyCodes.ESC:
                     // 清除所有菜单
-                    var item;
-                    if (item = this.get('highlightedItem')) {
-                        item.set('highlighted', false);
-                    }
+                    this.clearAllHighlighted();
                     break;
 
                 // home

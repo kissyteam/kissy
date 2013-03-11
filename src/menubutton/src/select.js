@@ -19,7 +19,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
         return null;
     }
 
-    // c : Option
+    // c: Option
     // c.get("value")
     // c: Object
     // c.value
@@ -30,7 +30,6 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 if ((v = c.get("value")) === undefined) {
                     v = c.get("textContent") || c.get("content");
                 }
-
             } else {
                 if ((v = c.value) === undefined) {
                     v = c.textContent || c.content;
@@ -55,14 +54,19 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
      *  different from menubutton by highlighting the currently selected option
      *  on open menu.
      */
-    function _handleMenuShow() {
+    function _handleMenuShow(e) {
         var self = this,
             selectedItem = getSelectedItem(self),
             m = self.get("menu");
-        m.set("highlightedItem", selectedItem || m.getChildAt(0));
-        // 初始化选中
-        if (selectedItem) {
-            selectedItem.set("selected", true);
+        if (e.target === m) {
+            var item = selectedItem || m.getChildAt(0);
+            if (item) {
+                item.set('highlighted', true);
+            }
+            // 初始化选中
+            if (selectedItem) {
+                selectedItem.set("selected", true);
+            }
         }
     }
 
@@ -81,15 +85,15 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
      * Protected, should only be overridden by subclasses.
      * @protected
      *
-     * @param {Event.Object} e
+     * @param {KISSY.Event.DOMEventObject} e
      */
     function handleMenuClick(e) {
         var self = this,
             target = e.target;
-        if (target instanceof  Menu.Item) {
+        if (target.isMenuItem) {
             var newValue = getItemValue(target),
                 oldValue = self.get("value");
-            self.set("value", getItemValue(target));
+            self.set("value", newValue);
             if (newValue != oldValue) {
                 self.fire("change", {
                     prevVal: oldValue,
@@ -116,16 +120,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
         {
             bindUI: function () {
                 this.on("click", handleMenuClick, this);
-            },
-
-            /**
-             * Bind menu to current Select. When menu shows, set highlightedItem to current selectedItem.
-             * @protected
-             */
-            bindMenu: function () {
-                var self = this;
-                Select.superclass.bindMenu.call(self);
-                self.get("menu").on("show", _handleMenuShow, self);
+                this.on('show', _handleMenuShow, this);
             },
 
             /**
@@ -157,7 +152,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
                 _updateCaption(self);
             },
 
-            _onSetDefaultCaption: function () {
+            '_onSetDefaultCaption': function () {
                 _updateCaption(this);
             }
         },
@@ -206,7 +201,7 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
 
                 options.each(function (option) {
                     var item = {
-                        xclass:'option',
+                        xclass: 'option',
                         content: option.text(),
                         elCls: option.attr("class"),
                         value: option.val()

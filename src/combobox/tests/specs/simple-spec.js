@@ -168,7 +168,6 @@ KISSY.use("combobox", function (S, ComboBox) {
                 // 入项和第一个提示项 textContent 一样，那么第一个高亮
                 expect(S.indexOf(menu.get("activeItem"), menu.get('children')))
                     .toBe(0);
-
             });
 
             waits(100);

@@ -12,45 +12,32 @@ KISSY.add("menubutton/option", function (S, Menu) {
      * @member MenuButton
      * @extends Menu.Item
      */
-    var Option = MenuItem.extend(
-        /**
+    return MenuItem.extend({}, {
+        ATTRS: /**
          * @lends MenuButton.Option.prototype
          */
         {
             /**
-             * Handle blur event.
+             * Whether this option can be selected.
+             * Defaults to: true.
+             * @type {Boolean}
              */
-            handleBlur:function () {
-                return Option.superclass.handleBlur.apply(this, arguments);
-            }
-        }, {
-            ATTRS:/**
-             * @lends MenuButton.Option.prototype
+            selectable: {
+                value: true
+            },
+
+            /**
+             * String will be used as select 's content if selected.
+             * @type {String}
              */
-            {
-                /**
-                 * Whether this option can be selected.
-                 * Defaults to: true.
-                 * @type {Boolean}
-                 */
-                selectable:{
-                    value:true
-                },
+            textContent: {
 
-                /**
-                 * String will be used as select 's content if selected.
-                 * @type {String}
-                 */
-                textContent:{
-
-                }
             }
-        }, {
-            xclass:'option',
-            priority:10
-        });
-
-    return Option;
+        }
+    }, {
+        xclass: 'option',
+        priority: 10
+    });
 }, {
-    requires:['menu']
+    requires: ['menu']
 });

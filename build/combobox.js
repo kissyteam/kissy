@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 18 14:59
+build time: Mar 11 18:18
 */
 /**
  * @ignore
@@ -76,6 +76,13 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                  * @param e.prevVal previous value
                  */
 
+                self.on('click', onMenuItemClick, self);
+
+                // need a handler for each instance
+                // or else will not register duplicate handler
+                win.on("resize", self.__repositionBuffer = S.buffer(reposition, 50), self);
+
+                self.on('afterRenderUI', onMenuAfterRenderUI, self);
             },
 
             /**
@@ -103,7 +110,9 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             'alignInternal': function () {
                 var self = this,
                     menu = self.get("menu"),
-                    align = S.clone(menu.get("align"));
+                    align = menu.get("align");
+                delete align.node;
+                align = S.clone(align);
                 align.node = self.get("el");
                 S.mix(align, ALIGN, false);
                 menu.set("align", align);
@@ -262,45 +271,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 } else {
                     callback(false, val);
                 }
-            },
-
-            bindMenu: function () {
-                var self = this,
-                    el,
-                    contentEl,
-                    menu = self.get("menu");
-
-                menu.on("click", function (e) {
-                    var item = e.target,
-                        textContent = item.get('textContent');
-                    // stop valuechange event
-                    self._stopNotify = 1;
-                    self['setValueInternal'](textContent);
-                    self._savedInputValue = textContent;
-                    self.set("collapsed", true);
-                    setTimeout(
-                        function () {
-                            self._stopNotify = 0;
-                        },
-                        // valuechange interval, hack
-                        50
-                    );
-                });
-
-                // need a handler for each instance
-                // or else will not register duplicate handler
-                win.on("resize", self.__repositionBuffer = S.buffer(reposition, 50), self);
-
-                el = menu.get("el");
-                contentEl = menu.get("contentEl");
-
-                // menu has input!
-                el.on("focusout", delayHide, self);
-                el.on("focusin", clearDismissTimer, self);
-
-                contentEl.on("mouseover", onMenuMouseOver, self);
-
-                self.bindMenu = S.noop;
             },
 
             /**
@@ -540,6 +510,38 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
     // #----------------------- private start
 
+    function onMenuAfterRenderUI(e) {
+        var self = this,
+            el,
+            contentEl,
+            menu = self.get("menu");
+        if (e.target == menu) {
+            el = menu.get("el");
+            contentEl = menu.get("contentEl");
+            // menu has input!
+            el.on("focusout", delayHide, self);
+            el.on("focusin", clearDismissTimer, self);
+            contentEl.on("mouseover", onMenuMouseOver, self);
+        }
+    }
+
+    function onMenuItemClick(e) {
+        var item = e.target,
+            textContent;
+        if (item.isMenuItem) {
+            textContent = item.get('textContent');
+            // stop valuechange event
+            self._stopNotify = 1;
+            self['setValueInternal'](textContent);
+            self._savedInputValue = textContent;
+            self.set("collapsed", true);
+            // valuechange interval, hack
+            setTimeout(function () {
+                self._stopNotify = 0;
+            }, 50);
+        }
+    }
+
     function onMenuMouseOver() {
         var self = this;
         // trigger el focus
@@ -613,10 +615,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
         clearDismissTimer.call(self);
 
         if (menu && !menu.get("visible")) {
-            // 先 render，监听 width 变化事件
-            menu.render();
-            self.bindMenu();
-            // 根据 el 自动调整大小
             if (self.get("matchElWidth")) {
                 menu.set("width", el.innerWidth());
             }
@@ -654,7 +652,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
         menu.removeChildren(true);
 
-        menu.set("highlightedItem", null);
+        menu.clearAllHighlighted();
 
         if (data && data.length) {
             for (i = 0; i < data.length; i++) {
@@ -666,7 +664,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             val = self['getValueInternal']();
             for (i = 0; i < children.length; i++) {
                 if (children[i].get("textContent") == val) {
-                    menu.set("highlightedItem", children[i]);
+                    children[i].set('highlighted', true);
                     matchVal = true;
                     break;
                 }
@@ -675,7 +673,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
             if (!matchVal && self.get("autoHighlightFirst")) {
                 for (i = 0; i < children.length; i++) {
                     if (!children[i].get("disabled")) {
-                        menu.set("highlightedItem", children[i]);
+                        children[i].set('highlighted', true);
                         break;
                     }
                 }
