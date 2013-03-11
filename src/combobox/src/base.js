@@ -647,7 +647,9 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
         menu.removeChildren(true);
 
-        menu.clearAllHighlighted();
+        if (menu.get('highlightedItem')) {
+            menu.get('highlightedItem').set('highlighted', false);
+        }
 
         if (data && data.length) {
             for (i = 0; i < data.length; i++) {

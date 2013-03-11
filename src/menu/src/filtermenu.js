@@ -41,7 +41,6 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
                 str = filterInput.val();
                 if (self.get('allowMultiple')) {
                     str = str.replace(/^.+,/, '');
-                    S.log(str);
                 }
 
                 if (!str && highlightedItem) {

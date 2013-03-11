@@ -9,7 +9,13 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         // hover 子菜单，保持该菜单项高亮
         if (e.target !== this && e.target.isMenuItem && e.newVal) {
             clearSubMenuTimers(this);
+            // 注意由于延迟，此时 highlighted 为 false，根 menu activeItem 为子菜单的  e.target
+            var activeItem = this.get('parent').get('activeItem');
+            // 会导致 activeItem 向上一层到 submenu
+            // in case change activeItem
             this.set('highlighted', true);
+            // 恢复为子菜单的  e.target
+            this.get('parent').set('activeItem', activeItem);
         }
     }
 
@@ -153,13 +159,8 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 // left
                 else if (keyCode == KeyCodes.LEFT) {
                     hideMenu.call(self);
-                    // 隐藏后，当前激活项重回，强制高亮事件
-                    // 通知 menu 更新 activeItem highlightedItem
-                    // byKeyboard 但是不弹出菜单
-                    self.fire('afterHighlightedChange', {
-                        newVal: true,
-                        fromKeyboard: 1
-                    });
+                    // 回复父菜单 activeItem 为 submenu，之前为 子菜单 activeItem
+                    self.get('parent').set('activeItem', self);
                 } else {
                     return undefined;
                 }

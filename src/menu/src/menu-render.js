@@ -18,6 +18,7 @@ KISSY.add("menu/menu-render", function(S, Component) {
 
         _onSetActiveItem:function(v) {
             var el = this.get("el");
+
             if (v) {
                 var menuItemEl = v.get("el"),
                     id = menuItemEl.attr("id");

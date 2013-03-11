@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 11 19:36
+build time: Mar 11 23:40
 */
 /**
  * @ignore
@@ -12,19 +12,6 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
 
     var KeyCodes = Event.KeyCodes;
 
-    function beforeHighlightedChange(e) {
-        var target = e.target;
-        if (target.isMenuItem && e.newVal) {
-            if (S.inArray(target, this.get('children'))) {
-                var h = this.get('highlightedItem');
-                if (h && target != h) {
-                    h.set('highlighted', false);
-                }
-            }
-            this.set("activeItem", target);
-        }
-    }
-
     /**
      * KISSY Menu.
      * xclass: 'menu'.
@@ -32,27 +19,40 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
      * @extends KISSY.Component.Container
      */
     var Menu = Component.Container.extend({
-
         isMenu: 1,
 
-        clearAllHighlighted: function () {
-            var h;
-            if (h = this.get('highlightedItem')) {
-                h.set('highlighted', false);
+
+        // 只能允许一个方向，这个属性只是为了记录和排他性选择
+        // 只允许调用 menuItem 的 set('highlighted')
+        // 不允许调用 menu 的 set('highlightedItem')，内部调用时防止循环更新
+        _onSetHighlightedItem: function (v, ev) {
+            var highlightedItem;
+            // ignore v == null
+            // do not use set('highlightedItem',null) for api
+            // use this.get('highlightedItem').set('highlighted', false);
+            if (v && (highlightedItem = ev.prevVal)) {
+                // in case set highlightedItem null again
+                highlightedItem.set('highlighted', false, {
+                    data: {
+                        byPassSetHighlightedItem: 1
+                    }
+                });
             }
-            this.set('activeItem', null);
+            // 大部分情况和 highlight 相同，当子菜单键盘隐藏时，需回复为 submenu
+            this.set('activeItem', v);
         },
 
-        _onSetVisible: function (v) {
+        _onSetVisible: function (v, e) {
             Menu.superclass._onSetVisible.apply(this, arguments);
-            if (!v) {
-                this.clearAllHighlighted();
+            var highlightedItem;
+            if (!v && (highlightedItem = this.get('highlightedItem'))) {
+                highlightedItem.set('highlighted', false);
             }
         },
 
         bindUI: function () {
             var self = this;
-            self.on('beforeHighlightedChange', beforeHighlightedChange, self);
+            self.on('afterActiveItemChange', afterActiveItemChange, self);
         },
 
         getRootMenu: function () {
@@ -74,7 +74,10 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
 
         handleBlur: function (e) {
             Menu.superclass.handleBlur.call(this, e);
-            this.clearAllHighlighted();
+            var highlightedItem;
+            if (highlightedItem = this.get('highlightedItem')) {
+                highlightedItem.set('highlighted', false);
+            }
         },
 
         //dir : -1 ,+1
@@ -111,7 +114,6 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
 
             // Give the highlighted control the chance to handle the key event.
             var highlightedItem = this.get("highlightedItem");
-
             // 先看当前活跃 menuitem 是否要处理
             if (highlightedItem && highlightedItem.handleKeydown(e)) {
                 return true;
@@ -130,7 +132,9 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
                 // esc
                 case KeyCodes.ESC:
                     // 清除所有菜单
-                    this.clearAllHighlighted();
+                    if (highlightedItem = this.get('highlightedItem')) {
+                        highlightedItem.set('highlighted', false);
+                    }
                     break;
 
                 // home
@@ -210,33 +214,26 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
              * Current highlighted child menu item.
              * @type {KISSY.Menu.Item}
              * @property highlightedItem
+             * @readonly
              */
             /**
              * @ignore
              */
             highlightedItem: {
-                // 统一存储，效率换取空间
-                getter: function () {
-                    var c, children = this.get('children');
-                    for (var i = 0; i < children.length; i++) {
-                        if ((c = children[i]).get('highlighted')) {
-                            return c;
-                        }
-                    }
-                    return undefined;
-                }
+                value: null
             },
             /**
              * Current active menu item.
              * Maybe a descendant but not a child of current menu.
              * @type {KISSY.Menu.Item}
              * @property activeItem
+             * @readonly
              */
             /**
              * @ignore
              */
             activeItem: {
-                view: 1
+                value: null
             },
             xrender: {
                 value: MenuRender
@@ -250,6 +247,14 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
         xclass: 'menu',
         priority: 10
     });
+
+    function afterActiveItemChange(e) {
+        var activeItem = e.newVal;
+        if (e.target != this) {
+            this.setInternal('activeItem', activeItem);
+        }
+        this.get('view').set('activeItem', activeItem);
+    }
 
     return Menu;
 
@@ -381,7 +386,6 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
                 str = filterInput.val();
                 if (self.get('allowMultiple')) {
                     str = str.replace(/^.+,/, '');
-                    S.log(str);
                 }
 
                 if (!str && highlightedItem) {
@@ -602,6 +606,7 @@ KISSY.add("menu/menu-render", function(S, Component) {
 
         _onSetActiveItem:function(v) {
             var el = this.get("el");
+
             if (v) {
                 var menuItemEl = v.get("el"),
                     id = menuItemEl.attr("id");
@@ -781,7 +786,14 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
             return true;
         },
 
-        _onSetHighlighted: function (v) {
+        // 只允许调用 menuItem 的 set('highlighted')
+        // 不允许调用 menu 的 set('highlightedItem')
+        _onSetHighlighted: function (v, e) {
+            if (e && e.byPassSetHighlightedItem) {
+
+            } else {
+                this.get('parent').set('highlightedItem', v ? this : null);
+            }
             // 是否要滚动到当前菜单项(横向，纵向)
             if (v) {
                 var el = this.get("el"),
@@ -1074,7 +1086,13 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
         // hover 子菜单，保持该菜单项高亮
         if (e.target !== this && e.target.isMenuItem && e.newVal) {
             clearSubMenuTimers(this);
+            // 注意由于延迟，此时 highlighted 为 false，根 menu activeItem 为子菜单的  e.target
+            var activeItem = this.get('parent').get('activeItem');
+            // 会导致 activeItem 向上一层到 submenu
+            // in case change activeItem
             this.set('highlighted', true);
+            // 恢复为子菜单的  e.target
+            this.get('parent').set('activeItem', activeItem);
         }
     }
 
@@ -1218,13 +1236,8 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 // left
                 else if (keyCode == KeyCodes.LEFT) {
                     hideMenu.call(self);
-                    // 隐藏后，当前激活项重回，强制高亮事件
-                    // 通知 menu 更新 activeItem highlightedItem
-                    // byKeyboard 但是不弹出菜单
-                    self.fire('afterHighlightedChange', {
-                        newVal: true,
-                        fromKeyboard: 1
-                    });
+                    // 回复父菜单 activeItem 为 submenu，之前为 子菜单 activeItem
+                    self.get('parent').set('activeItem', self);
                 } else {
                     return undefined;
                 }

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 11 21:41
+build time: Mar 11 23:40
 */
 /**
  * root node represent a simple tree
@@ -537,6 +537,15 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
          */
         {
 
+
+            _onSetSelected: function (v, e) {
+                var tree = this.get("tree");
+                if (e && e.byPassSetTreeSelectedItem) {
+                } else {
+                    tree.set('selectedItem', v ? this : null);
+                }
+            },
+
             syncUI: function () {
                 // 集中设置样式
                 refreshCss(this);
@@ -648,8 +657,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
              * Select current tree node.
              */
             select: function () {
-                var self = this;
-                self.get("tree").set("selectedItem", self);
+                this.set('selected', true);
             },
 
             performActionInternal: function (e) {
@@ -659,7 +667,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                     tree = self.get("tree");
                 tree.get("el")[0].focus();
                 if (target.equals(self.get("expandIconEl"))) {
-                        self.set("expanded", !expanded);
+                    self.set("expanded", !expanded);
                 } else {
                     self.select();
                     self.fire("click");
@@ -849,8 +857,8 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 },
 
                 decorateChildCls: {
-                    valueFn:function(){
-                        return this.get('prefixCls')+'tree-children';
+                    valueFn: function () {
+                        return this.get('prefixCls') + 'tree-children';
                     }
                 },
 
@@ -1109,10 +1117,14 @@ KISSY.add("tree/tree-manager", function (S, Event) {
 
         // 单选
         '_onSetSelectedItem': function (n, ev) {
-            if (ev.prevVal) {
-                ev.prevVal.set("selected", false);
+            // 仅用于排他性
+            if (n && ev.prevVal) {
+                ev.prevVal.set("selected", false, {
+                    data: {
+                        byPassSetTreeSelectedItem: 1
+                    }
+                });
             }
-            n.set("selected", true);
         },
 
         _onSetFocused: function (v) {

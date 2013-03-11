@@ -28,7 +28,8 @@ KISSY.add("tree/tree-manager", function (S, Event) {
         },
         /**
          * Current selected tree node.
-         * @type {Tree.Node}
+         * @type {KISSY.Tree.Node}
+         * @readonly
          */
         selectedItem: {},
 
@@ -101,10 +102,14 @@ KISSY.add("tree/tree-manager", function (S, Event) {
 
         // 单选
         '_onSetSelectedItem': function (n, ev) {
-            if (ev.prevVal) {
-                ev.prevVal.set("selected", false);
+            // 仅用于排他性
+            if (n && ev.prevVal) {
+                ev.prevVal.set("selected", false, {
+                    data: {
+                        byPassSetTreeSelectedItem: 1
+                    }
+                });
             }
-            n.set("selected", true);
         },
 
         _onSetFocused: function (v) {

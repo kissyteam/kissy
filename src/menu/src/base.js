@@ -7,19 +7,6 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
 
     var KeyCodes = Event.KeyCodes;
 
-    function beforeHighlightedChange(e) {
-        var target = e.target;
-        if (target.isMenuItem && e.newVal) {
-            if (S.inArray(target, this.get('children'))) {
-                var h = this.get('highlightedItem');
-                if (h && target != h) {
-                    h.set('highlighted', false);
-                }
-            }
-            this.set("activeItem", target);
-        }
-    }
-
     /**
      * KISSY Menu.
      * xclass: 'menu'.
@@ -27,27 +14,40 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
      * @extends KISSY.Component.Container
      */
     var Menu = Component.Container.extend({
-
         isMenu: 1,
 
-        clearAllHighlighted: function () {
-            var h;
-            if (h = this.get('highlightedItem')) {
-                h.set('highlighted', false);
+
+        // 只能允许一个方向，这个属性只是为了记录和排他性选择
+        // 只允许调用 menuItem 的 set('highlighted')
+        // 不允许调用 menu 的 set('highlightedItem')，内部调用时防止循环更新
+        _onSetHighlightedItem: function (v, ev) {
+            var highlightedItem;
+            // ignore v == null
+            // do not use set('highlightedItem',null) for api
+            // use this.get('highlightedItem').set('highlighted', false);
+            if (v && (highlightedItem = ev.prevVal)) {
+                // in case set highlightedItem null again
+                highlightedItem.set('highlighted', false, {
+                    data: {
+                        byPassSetHighlightedItem: 1
+                    }
+                });
             }
-            this.set('activeItem', null);
+            // 大部分情况和 highlight 相同，当子菜单键盘隐藏时，需回复为 submenu
+            this.set('activeItem', v);
         },
 
-        _onSetVisible: function (v) {
+        _onSetVisible: function (v, e) {
             Menu.superclass._onSetVisible.apply(this, arguments);
-            if (!v) {
-                this.clearAllHighlighted();
+            var highlightedItem;
+            if (!v && (highlightedItem = this.get('highlightedItem'))) {
+                highlightedItem.set('highlighted', false);
             }
         },
 
         bindUI: function () {
             var self = this;
-            self.on('beforeHighlightedChange', beforeHighlightedChange, self);
+            self.on('afterActiveItemChange', afterActiveItemChange, self);
         },
 
         getRootMenu: function () {
@@ -69,7 +69,10 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
 
         handleBlur: function (e) {
             Menu.superclass.handleBlur.call(this, e);
-            this.clearAllHighlighted();
+            var highlightedItem;
+            if (highlightedItem = this.get('highlightedItem')) {
+                highlightedItem.set('highlighted', false);
+            }
         },
 
         //dir : -1 ,+1
@@ -106,7 +109,6 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
 
             // Give the highlighted control the chance to handle the key event.
             var highlightedItem = this.get("highlightedItem");
-
             // 先看当前活跃 menuitem 是否要处理
             if (highlightedItem && highlightedItem.handleKeydown(e)) {
                 return true;
@@ -125,7 +127,9 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
                 // esc
                 case KeyCodes.ESC:
                     // 清除所有菜单
-                    this.clearAllHighlighted();
+                    if (highlightedItem = this.get('highlightedItem')) {
+                        highlightedItem.set('highlighted', false);
+                    }
                     break;
 
                 // home
@@ -205,33 +209,26 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
              * Current highlighted child menu item.
              * @type {KISSY.Menu.Item}
              * @property highlightedItem
+             * @readonly
              */
             /**
              * @ignore
              */
             highlightedItem: {
-                // 统一存储，效率换取空间
-                getter: function () {
-                    var c, children = this.get('children');
-                    for (var i = 0; i < children.length; i++) {
-                        if ((c = children[i]).get('highlighted')) {
-                            return c;
-                        }
-                    }
-                    return undefined;
-                }
+                value: null
             },
             /**
              * Current active menu item.
              * Maybe a descendant but not a child of current menu.
              * @type {KISSY.Menu.Item}
              * @property activeItem
+             * @readonly
              */
             /**
              * @ignore
              */
             activeItem: {
-                view: 1
+                value: null
             },
             xrender: {
                 value: MenuRender
@@ -245,6 +242,14 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
         xclass: 'menu',
         priority: 10
     });
+
+    function afterActiveItemChange(e) {
+        var activeItem = e.newVal;
+        if (e.target != this) {
+            this.setInternal('activeItem', activeItem);
+        }
+        this.get('view').set('activeItem', activeItem);
+    }
 
     return Menu;
 

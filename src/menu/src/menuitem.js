@@ -44,7 +44,14 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
             return true;
         },
 
-        _onSetHighlighted: function (v) {
+        // 只允许调用 menuItem 的 set('highlighted')
+        // 不允许调用 menu 的 set('highlightedItem')
+        _onSetHighlighted: function (v, e) {
+            if (e && e.byPassSetHighlightedItem) {
+
+            } else {
+                this.get('parent').set('highlightedItem', v ? this : null);
+            }
             // 是否要滚动到当前菜单项(横向，纵向)
             if (v) {
                 var el = this.get("el"),

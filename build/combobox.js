@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 11 18:18
+build time: Mar 11 23:28
 */
 /**
  * @ignore
@@ -652,7 +652,9 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
         menu.removeChildren(true);
 
-        menu.clearAllHighlighted();
+        if (menu.get('highlightedItem')) {
+            menu.get('highlightedItem').set('highlighted', false);
+        }
 
         if (data && data.length) {
             for (i = 0; i < data.length; i++) {

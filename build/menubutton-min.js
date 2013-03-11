@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 11 19:37
+build time: Mar 11 23:40
 */
 KISSY.add("menubutton/base",function(d,f,j,p,h,l,i){function m(c){c.target.isMenuItem&&this.get("collapseOnClick")&&this.set("collapsed",!0)}function q(c){c.target.isMenu&&this.set("activeItem",c.newVal)}function g(c,a){var b=c.get("menu");if(b&&!b.isController)if(a)b=l.create(b,c),c.setInternal("menu",b);else return null;return b}function n(){var c,a,e=g(this);e&&e.get("visible")&&(c=e.get("align"),a=c.node,delete c.node,c=d.clone(c),c.node=a||this.get("el"),d.mix(c,b,!1),e.set("align",c))}var o=
 f.all,k=o(d.Env.host),a=f.KeyCodes,b={points:["bl","tl"],overflow:{adjustX:1,adjustY:1}},e=j.extend([l.DecorateChild],{_onSetCollapsed:function(c){if(c)(c=g(this))&&c.hide();else{var c=this.get("el"),a=g(this,1);a&&!a.get("visible")&&(this.get("matchElWidth")&&a.set("width",o(a.get("align").node||c).innerWidth()),a.show(),n.call(this),c.attr("aria-haspopup",a.get("el").attr("id")))}},bindUI:function(){this.on("onMenuAfterActiveItemChange",q,this);k.on("resize",this.__repositionBuffer=d.buffer(n,50),
