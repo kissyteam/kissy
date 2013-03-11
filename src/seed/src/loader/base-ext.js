@@ -118,7 +118,7 @@
          * Set the value of current module
          * @param v value to be set
          */
-        setValue: function (v) {
+        'setValue': function (v) {
             this.value = v;
         },
 
@@ -231,9 +231,10 @@
          * @return {KISSY.Loader.Module[]}
          */
         'getRequiredMods': function () {
-            var self = this, mods = self.runtime.Env.mods;
+            var self = this,
+                runtime = self.runtime;
             return S.map(self.getNormalizedRequires(), function (r) {
-                return mods[r];
+                return Utils.createModuleInfo(runtime, r);
             });
         },
 
