@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Mar 7 13:02
+build time: Mar 11 10:34
 */
 /**
  * Set up editor constructor
@@ -11835,8 +11835,8 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
             v;
         for (i = 0; i < elements.length; i++) {
             element = elements[ i ];
-            if (element[0] == elementPath.block[0] ||
-                element[0] == elementPath.blockLimit[0]) {
+            if (elementPath.block && element[0] == elementPath.block[0] ||
+                elementPath.blockLimit && element[0] == elementPath.blockLimit[0]) {
                 continue;
             }
             v = getValueFromSingle(element, styleObj);
@@ -11848,11 +11848,11 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
     }
 
     return {
-        addButtonCmd:function (editor, cmdType, style) {
+        addButtonCmd: function (editor, cmdType, style) {
             var queryCmd = getQueryCmd(cmdType);
             if (!editor.hasCommand(cmdType)) {
                 editor.addCommand(cmdType, {
-                    exec:function (editor, effect) {
+                    exec: function (editor, effect) {
                         var doc = editor.get("document")[0];
                         editor.execCommand("save");
                         var checked = editor.queryCommandValue(cmdType);
@@ -11867,7 +11867,7 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
                 });
 
                 editor.addCommand(queryCmd, {
-                    exec:function (editor) {
+                    exec: function (editor) {
                         var selection = editor.getSelection();
                         if (selection && !selection.isInvalid) {
                             var startElement = selection.getStartElement(),
@@ -11879,15 +11879,15 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
             }
         },
 
-        addSelectCmd:function (editor, cmdType, styleObj) {
+        addSelectCmd: function (editor, cmdType, styleObj) {
             var queryCmd = getQueryCmd(cmdType);
             if (!editor.hasCommand(cmdType)) {
                 editor.addCommand(cmdType, {
-                    exec:function (editor, value) {
+                    exec: function (editor, value) {
                         editor.focus();
                         var currentValue = editor.queryCommandValue(cmdType) || "";
                         var style = new Editor.Style(styleObj, {
-                                value:value
+                                value: value
                             }),
                             doc = editor.get("document")[0];
                         editor.execCommand("save");
@@ -11900,7 +11900,7 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
                     }
                 });
                 editor.addCommand(queryCmd, {
-                    exec:function (editor) {
+                    exec: function (editor) {
                         var selection = editor.getSelection();
                         if (selection && !selection.isInvalid) {
                             var startElement = selection.getStartElement();
@@ -11913,7 +11913,7 @@ KISSY.add("editor/plugin/font/cmd", function (S, Editor) {
         }
     };
 }, {
-    requires:['editor']
+    requires: ['editor']
 });/**
  * font formatting for kissy editor
  * @author yiminghe@gmail.com

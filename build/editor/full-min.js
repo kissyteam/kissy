@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Mar 7 13:02
+build time: Mar 11 10:34
 */
 /*
  thanks to CKSource's intelligent work on CKEditor
@@ -257,7 +257,7 @@ KISSY.add("editor/plugin/font-size/index",function(d,g,j,i){function f(a){this.c
 "./cmd"]});
 KISSY.add("editor/plugin/font/cmd",function(d,g){function j(d,a){var c=d.nodeName();if(a.element!=c)return!1;var e=a.styles,b,g;for(g in e)if(b=d.style(g))return b;e=a.overrides;for(g=0;g<e.length;g++)if(b=e[g],b.element==c){var h=b.attributes,i;for(i in h)if(b=d.attr(i))return b}return!1}var i=g.Utils.getQueryCmd;return{addButtonCmd:function(d,a,c){var e=i(a);d.hasCommand(a)||(d.addCommand(a,{exec:function(b){var e=b.get("document")[0];b.execCommand("save");b.queryCommandValue(a)?c.remove(e):c.apply(e);
 b.execCommand("save");b.notifySelectionChange()}}),d.addCommand(e,{exec:function(a){if((a=a.getSelection())&&!a.isInvalid)return a=a.getStartElement(),a=new g.ElementPath(a),c.checkActive(a)}}))},addSelectCmd:function(d,a,c){var e=i(a);d.hasCommand(a)||(d.addCommand(a,{exec:function(b,e){b.focus();var d=b.queryCommandValue(a)||"",f=new g.Style(c,{value:e}),i=b.get("document")[0];b.execCommand("save");e.toLowerCase()==d.toLowerCase()?f.remove(i):f.apply(i);b.execCommand("save")}}),d.addCommand(e,{exec:function(a){if((a=
-a.getSelection())&&!a.isInvalid){var a=a.getStartElement(),a=new g.ElementPath(a),e=a.elements,d,f,i;for(f=0;f<e.length;f++)if(d=e[f],!(d[0]==a.block[0]||d[0]==a.blockLimit[0]))if(i=j(d,c),!1!==i)break;return i}}}))}}},{requires:["editor"]});
+a.getSelection())&&!a.isInvalid){var a=a.getStartElement(),a=new g.ElementPath(a),e=a.elements,d,f,i;for(f=0;f<e.length;f++)if(d=e[f],!(a.block&&d[0]==a.block[0]||a.blockLimit&&d[0]==a.blockLimit[0]))if(i=j(d,c),!1!==i)break;return i}}}))}}},{requires:["editor"]});
 KISSY.add("editor/plugin/font/ui",function(d,g,j,i){d=i.Select.extend({initializer:function(){var d=this,a=d.get("editor");d.on("click",function(c){var c=c.target.get("value"),e=d.get("cmdType");a.execCommand(e,c)});a.on("selectionChange",function(){if(a.get("mode")!=g.SOURCE_MODE){var c=d.get("cmdType"),e=d.get("menu");if(e=e.get&&e.get("children")){c=a.queryCommandValue(c);if(!1!==c)for(var c=(c+"").toLowerCase(),b=0;b<e.length;b++){var i=e[b].get("value");if(c==i.toLowerCase()){d.set("value",i);
 return}}d.set("value",null)}}})}});return{Button:j.extend({initializer:function(){var d=this,a=d.get("editor"),c=d.get("cmdType");d.on("click",function(){d.get("checked")?a.execCommand(c):a.execCommand(c,!1);a.focus()});a.on("selectionChange",function(){if(a.get("mode")!=g.SOURCE_MODE){var c=d.get("cmdType");a.queryCommandValue(c)?d.set("checked",!0):d.set("checked",!1)}})}},{ATTRS:{checkable:{value:!0},mode:{value:g.WYSIWYG_MODE}}}),Select:d}},{requires:["editor","../button/","../menubutton/"]});
 KISSY.add("editor/plugin/fore-color/cmd",function(d,g){var j={element:"span",styles:{color:"#(color)"},overrides:[{element:"font",attributes:{color:null}}],childRule:function(d){return!("a"==d.nodeName()||d.all("a").length)}};return{init:function(d){d.hasCommand("foreColor")||d.addCommand("foreColor",{exec:function(d,a){d.execCommand("save");g.applyColor(d,a,j);d.execCommand("save")}})}}},{requires:["../color/cmd"]});
