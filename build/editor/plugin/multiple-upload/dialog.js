@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 7 12:41
+build time: Mar 11 10:34
 */
 /**
  * multiple-upload dialog
@@ -501,7 +501,7 @@ KISSY.add("editor/plugin/multiple-upload/dialog", function (S, Editor, DragPlugi
 
             if (!data) return;
             try {
-                data = JSON.parse(data);
+                data = S.parseJSON(data);
             } catch (ex) {
                 S.log("multiUpload _onUploadCompleteData error :");
                 S.log(ex);

@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 7 12:41
+build time: Mar 11 10:34
 */
 KISSY.add("editor/plugin/flash-common/baseClass",function(e,k,m,n,f,g){function d(){d.superclass.constructor.apply(this,arguments);this._init()}var l=e.Node;d.ATTRS={cls:{},type:{},label:{value:"\u5728\u65b0\u7a97\u53e3\u67e5\u770b"},bubbleId:{},contextMenuId:{},contextMenuHandlers:{}};e.extend(d,e.Base,{_init:function(){var a=this,c=a.get("cls"),b=a.get("editor"),d=b.get("prefixCls"),j=[],f=a.get("bubbleId"),g=a.get("contextMenuId"),h=a.get("contextMenuHandlers");e.each(h,function(a,b){j.push({content:b})});b.addContextMenu(g,
 "."+c,{width:"120px",children:j,listeners:{click:function(a){a=a.target.get("content");h[a]&&h[a].call(this)}}});b.addBubble(f,function(a){return a.hasClass(c,void 0)&&a},{listeners:{afterRenderUI:function(){var c=this,i=c.get("contentEl");i.html(e.substitute(' <a class="{prefixCls}editor-bubble-url" target="_blank" href="#">{label}</a>   |    <span class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-change">\u7f16\u8f91</span>   |    <span class="{prefixCls}editor-bubble-link {prefixCls}editor-bubble-remove">\u5220\u9664</span>',

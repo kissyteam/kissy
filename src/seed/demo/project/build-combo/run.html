@@ -1,0 +1,23 @@
+<head>
+<script src="/kissy/build/seed.js" data-config="{combine:true}"></script>
+<script src="./deps.js"></script>
+<script src="../import-style.js"></script>
+<script>
+    KISSY.config({
+        'packages': {
+            biz: {
+                base: './'
+            }
+        }
+    });
+    importStyle('biz/page/run');
+    // block use
+</script>
+<script>
+    KISSY.use('biz/page/run', function (S, run) {
+        S.ready(function () {
+            S.all('body').text(run);
+        });
+    });
+</script>
+</head>
