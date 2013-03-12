@@ -21,6 +21,7 @@
         transitionPrefix = '',
         documentElement = doc.documentElement,
         documentElementStyle,
+        isClassListSupported = true,
     // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
         isTouchSupported = ('ontouchstart' in doc) && !(UA.phantomjs),
         ie = documentMode || UA.ie;
@@ -37,6 +38,7 @@
                 }
             });
         }
+        isClassListSupported = 'classList' in documentElement;
     }
 
     /**
@@ -75,6 +77,10 @@
 
         'isTransitionSupported': function () {
             return isTransitionSupported;
+        },
+
+        'isClassListSupported': function () {
+            return isClassListSupported
         },
 
         'getCss3Prefix': function () {

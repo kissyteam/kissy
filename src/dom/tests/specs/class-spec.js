@@ -137,8 +137,15 @@ KISSY.use("dom,core", function (S, DOM) {
             DOM.toggleClass(a, 'link2');
             expect(DOM.hasClass(a, 'link2')).toBe(false);
 
+            //DOM.toggleClass(a, '.link2',false);
+            //expect(DOM.hasClass(a, 'link2')).toBe(false);
+
+
             DOM.toggleClass(a, '.link2');
             expect(DOM.hasClass(a, 'link2')).toBe(true);
+
+            // DOM.toggleClass(a, '.link2',true);
+            // expect(DOM.hasClass(a, 'link2')).toBe(true);
         });
     });
 });

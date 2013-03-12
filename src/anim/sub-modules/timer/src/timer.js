@@ -79,6 +79,8 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
 
             // 取得单位，并对单个属性构建 Fx 对象
             for (prop in _propsData) {
+
+
                 _propData = _propsData[prop];
 
                 // 自定义
@@ -86,6 +88,9 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                     _propData.fx.prop = prop;
                     continue;
                 }
+
+                // https://github.com/kissyteam/kissy/issues/310
+                var hasFrom = 'from' in _propData, fromValue = _propData.from, parsed;
 
                 val = _propData.value;
                 propCfg = {
@@ -95,7 +100,15 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                 };
                 fx = Fx.getFx(propCfg);
                 to = val;
-                from = fx.cur();
+
+                if (hasFrom) {
+                    from = isNaN(parsed = parseFloat(fromValue)) ?
+                        !fromValue || fromValue === 'auto' ? 0 : fromValue
+                        : parsed;
+                } else {
+                    from = fx.cur();
+                }
+
                 val += '';
                 unit = '';
                 parts = val.match(NUMBER_REG);
@@ -105,7 +118,7 @@ KISSY.add('anim/timer', function (S, DOM, Event, AnimBase, Easing, AM, Fx, SHORT
                     unit = parts[3];
 
                     // 有单位但单位不是 px
-                    if (unit && unit !== 'px') {
+                    if (!hasFrom && unit && unit !== 'px') {
                         DOM.css(el, prop, val);
                         from = (to / fx.cur()) * from;
                         DOM.css(el, prop, from + unit);
