@@ -31,7 +31,6 @@
     function getDescriptorFromUserAgent(ua) {
         var EMPTY = '',
             os,
-            MOBILE = 'mobile',
             core = EMPTY,
             shell = EMPTY, m,
             IE_DETECT_RANGE = [6, 9],
@@ -216,7 +215,7 @@
 
                 // Apple Mobile
                 if (/ Mobile\//.test(ua) && ua.match(/iPad|iPod|iPhone/)) {
-                    UA[MOBILE] = 'apple'; // iPad, iPhone or iPod Touch
+                    UA.mobile = 'apple'; // iPad, iPhone or iPod Touch
 
                     m = ua.match(/OS ([^\s]*)/);
                     if (m && m[1]) {
@@ -238,7 +237,7 @@
                 }
                 // Other WebKit Mobile Browsers
                 else if ((m = ua.match(/NokiaN[^\/]*|Android \d\.\d|webOS\/\d\.\d/))) {
-                    UA[MOBILE] = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
+                    UA.mobile = m[0].toLowerCase(); // Nokia N-series, Android, webOS, ex: NokiaN95
                 }
 
                 if ((m = ua.match(/PhantomJS\/([^\s]*)/)) && m[1]) {
@@ -262,13 +261,13 @@
 
                         // Opera Mini
                         if ((m = ua.match(/Opera Mini[^;]*/)) && m) {
-                            UA[MOBILE] = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
+                            UA.mobile = m[0].toLowerCase(); // ex: Opera Mini/2.0.4509/1316
                         }
                         // Opera Mobile
                         // ex: Opera/9.80 (Windows NT 6.1; Opera Mobi/49; U; en) Presto/2.4.18 Version/10.00
                         // issue: 由于 Opera Mobile 有 Version/ 字段，可能会与 Opera 混淆，同时对于 Opera Mobile 的版本号也比较混乱
                         else if ((m = ua.match(/Opera Mobi[^;]*/)) && m) {
-                            UA[MOBILE] = m[0];
+                            UA.mobile = m[0];
                         }
                     }
 
