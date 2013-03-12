@@ -125,7 +125,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 expect(children[0].get("textContent")).toBe("21");
                 expect(children[0].get("value")).toBe("21");
                 // 输入项和提示项 textContent 不一样，默认不高亮
-                expect(menu.get("activeItem")).toBeFalsy();
+                expect(menu.get("highlightedItem")).toBeFalsy();
                 t.blur();
             });
             waits(100);
@@ -166,7 +166,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 expect(children[2].get("value")).toBe("31");
 
                 // 入项和第一个提示项 textContent 一样，那么第一个高亮
-                expect(S.indexOf(menu.get("activeItem"), menu.get('children')))
+                expect(S.indexOf(menu.get("highlightedItem"), menu.get('children')))
                     .toBe(0);
             });
 
@@ -203,7 +203,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
                 // 第一个高亮
-                expect(S.indexOf(menu.get("activeItem"), children)).toBe(0);
+                expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(0);
 
                 jasmine.simulate(t, "keydown", {
                     keyCode: KeyCodes.DOWN
@@ -215,7 +215,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
                 // 第二个高亮
-                expect(S.indexOf(menu.get("activeItem"), children)).toBe(1);
+                expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(1);
 
                 // 先把 textContent 放到里面
                 expect(t.value).toBe(children[1].get("textContent"));
@@ -230,7 +230,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
                 // 第3个高亮
-                expect(S.indexOf(menu.get("activeItem"), children)).toBe(2);
+                expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(2);
                 jasmine.simulate(t, "keydown", {
                     keyCode: KeyCodes.DOWN
                 });
@@ -241,7 +241,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
                 // 第1个高亮
-                expect(S.indexOf(menu.get("activeItem"), children)).toBe(0);
+                expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(0);
                 t.blur();
             });
             waits(100);
@@ -272,7 +272,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                     var menu = comboBox.get("menu");
                     var children = menu.get("children");
                     // 第一个高亮
-                    expect(S.indexOf(menu.get("activeItem"), children)).toBe(0);
+                    expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(0);
 
                     jasmine.simulate(children[1].get("el")[0], "mouseover", {
                         relatedTarget: children[0].get("el")[0]
@@ -284,7 +284,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                     var menu = comboBox.get("menu");
                     var children = menu.get("children");
                     // 第二个高亮
-                    expect(S.indexOf(menu.get("activeItem"), children)).toBe(1);
+                    expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(1);
                     t.blur();
                 });
                 waits(100);
@@ -324,7 +324,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
                 // 第二个高亮
-                expect(S.indexOf(menu.get("activeItem"), children)).toBe(1);
+                expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(1);
 
                 jasmine.simulate(t, "keydown", {
                     keyCode: KeyCodes.ENTER
@@ -373,7 +373,7 @@ KISSY.use("combobox", function (S, ComboBox) {
                 var menu = comboBox.get("menu");
                 var children = menu.get("children");
                 // 第二个高亮
-                expect(S.indexOf(menu.get("activeItem"), children)).toBe(1);
+                expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(1);
                 expect(t.value).toBe(children[1].get("textContent"));
                 jasmine.simulate(t, "keydown", {
                     keyCode: KeyCodes.ESC

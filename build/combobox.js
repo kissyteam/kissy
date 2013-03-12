@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 11 23:44
+build time: Mar 12 15:03
 */
 /**
  * @ignore
@@ -176,7 +176,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 var self = this,
                     updateInputOnDownUp,
                     input,
-                    activeItem,
+                    highlightedItem,
                     handledByMenu,
                     menu = getMenu(self);
 
@@ -214,19 +214,19 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                         return true;
                     }
 
-                    activeItem = menu.get("activeItem");
+                    highlightedItem = menu.get("highlightedItem");
 
                     if (updateInputOnDownUp &&
                         S.inArray(e.keyCode, [KeyCodes.DOWN, KeyCodes.UP])) {
                         // update menu's active value to input just for show
-                        this.setValueInternal(activeItem.get("textContent"));
+                        this.setValueInternal(highlightedItem.get("textContent"));
                     }
 
                     // tab
                     // if menu is open and an menuitem is highlighted, see as click/enter
-                    if (e.keyCode == KeyCodes.TAB && activeItem) {
+                    if (e.keyCode == KeyCodes.TAB && highlightedItem) {
                         // click activeItem
-                        activeItem.performActionInternal();
+                        highlightedItem.performActionInternal();
                         // only prevent focus change in multiple mode
                         if (self.get("multiple")) {
                             return true;
