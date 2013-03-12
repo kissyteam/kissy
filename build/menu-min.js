@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 11 23:40
+build time: Mar 12 13:48
 */
 KISSY.add("menu/base",function(h,b,e,g,c){function a(a){var c=a.newVal;a.target!=this&&this.setInternal("activeItem",c);this.get("view").set("activeItem",c)}var f=b.KeyCodes,d=e.Container.extend({isMenu:1,_onSetHighlightedItem:function(a,c){var f;a&&(f=c.prevVal)&&f.set("highlighted",!1,{data:{byPassSetHighlightedItem:1}});this.set("activeItem",a)},_onSetVisible:function(a,c){d.superclass._onSetVisible.apply(this,arguments);var f;!a&&(f=this.get("highlightedItem"))&&f.set("highlighted",!1)},bindUI:function(){this.on("afterActiveItemChange",
 a,this)},getRootMenu:function(){return this},handleMouseEnter:function(){d.superclass.handleMouseEnter.apply(this,arguments);var a=this.getRootMenu();a&&a._popupAutoHideTimer&&(clearTimeout(a._popupAutoHideTimer),a._popupAutoHideTimer=null);this.get("focusable")&&this.set("focused",!0)},handleBlur:function(a){d.superclass.handleBlur.call(this,a);var c;(c=this.get("highlightedItem"))&&c.set("highlighted",!1)},_getNextEnabledHighlighted:function(a,f){var d=this.get("children"),e=d.length,i=a;do{var n=

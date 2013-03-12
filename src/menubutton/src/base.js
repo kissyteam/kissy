@@ -26,6 +26,8 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
          * @lends MenuButton.prototype
          */
         {
+            isMenuButton:1,
+
             _onSetCollapsed: function (v) {
                 if (v) {
                     hideMenu(this);

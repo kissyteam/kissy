@@ -13,6 +13,8 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
      */
     var Button = Component.Controller.extend({
 
+        isButton: 1,
+
         bindUI: function () {
             this.get("el").on("keyup", this.handleKeyEventInternal, this);
         },

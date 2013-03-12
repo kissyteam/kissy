@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:03
+build time: Mar 12 13:49
 */
 /**
  * Toolbar for KISSY.
@@ -41,49 +41,32 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
 
     function afterCollapsedChange(e) {
         var self = this;
-        if (e.target != self) {
-            if (e.newVal) {
-                self.set("expandedItem", null);
-            } else {
-                self.set("expandedItem", e.target);
-            }
+        if (e.newVal) {
+            self.set("expandedItem", null);
+        } else {
+            self.set("expandedItem", e.target);
         }
     }
 
     function afterHighlightedChange(e) {
         var self = this,
-            el = self.get('el')[0],
             expandedItem,
-            highlightedItem,
-            t = e.target;
+            children,
+            target = e.target;
+        if (self !== target && (target.isMenuItem|| target.isButton)) {
 
-        // child events but not grandchild
-        if (S.inArray(t, self.get('children'))) {
-
-            // S.log(t);
-            // S.log(e.newVal);
-
-            // only process highlighted
-            // in case menubutton=>false, menu=>true
             if (e.newVal) {
-                if (t.get('el')[0].ownerDocument.activeElement != el) {
-                    el.focus();
+                children = self.get('children');
+                if (expandedItem = self.get('expandedItem') && S.inArray(target, children)) {
+                    // in case collapse false modify highlightedItem
+                    self.set('expandedItem', target.isMenuButton ? target : null);
                 }
-                highlightedItem = self.get('highlightedItem');
-                // clear for last status
-                if (highlightedItem && highlightedItem != t) {
-                    highlightedItem.set('highlighted', false);
-                }
-                self.set("highlightedItem", t);
-                // 保持扩展状态，只不过扩展的 item 变了
-                if ((expandedItem = self.get("expandedItem")) &&
-                    expandedItem.hasAttr("collapsed") &&
-                    expandedItem != t) {
-                    expandedItem.set("collapsed", true);
-                    t.set("collapsed", false);
+                self.set("highlightedItem", target);
+            } else {
+                if (!e.byPassSetToolbarHighlightedItem) {
+                    self.set('highlightedItem', null);
                 }
             }
-
         }
     }
 
@@ -91,6 +74,17 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
         // 交给容器代理
         c.set("handleMouseEvents", false);
         c.set("focusable", false);
+    }
+
+    function getChildByHighlightedItem(toolbar) {
+        var children = toolbar.get('children'), i, child;
+        for (i = 0; i < children.length; i++) {
+            child = children[i];
+            if (child.get('highlighted') || (child.isMenuButton && !child.get('collapsed'))) {
+                return child;
+            }
+        }
+        return null;
     }
 
     /**
@@ -116,9 +110,24 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                 this.get("el").attr("role", "toolbar");
             },
 
-            _onSetHighlightedItem: function (item) {
-                var id, self = this, itemEl, el = self.get('el');
+            _onSetHighlightedItem: function (item, e) {
+                var id, itemEl,
+                    self = this,
+                    prevVal = e && e.prevVal,
+                    children = self.get('children'),
+                    el = self.get('el');
+                // only clear children's status
+                if (prevVal && S.inArray(prevVal, children)) {
+                    prevVal.set('highlighted', false, {
+                        data: {
+                            byPassSetToolbarHighlightedItem: 1
+                        }
+                    });
+                }
                 if (item) {
+                    if (el[0].ownerDocument.activeElement != el[0]) {
+                        el[0].focus();
+                    }
                     itemEl = item.get('el');
                     id = itemEl.attr("id");
                     if (!id) {
@@ -127,6 +136,15 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                     el.attr("aria-activedescendant", id);
                 } else {
                     el.attr("aria-activedescendant", "");
+                }
+            },
+
+            '_onSetExpandedItem': function (v, e) {
+                if (e && e.prevVal) {
+                    e.prevVal.set('collapsed', true);
+                }
+                if (v) {
+                    v.set('collapsed', false);
                 }
             },
 
@@ -143,13 +161,10 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                 var self = this,
                     highlightedItem,
                     expandedItem;
-                if (expandedItem = self.get("expandedItem")) {
-                    expandedItem.set("collapsed", true);
-                }
+                self.set("expandedItem", null);
                 // clear for afterHighlightedChange
                 if (highlightedItem = self.get("highlightedItem")) {
-                    highlightedItem.set('highlighted',false);
-                    self.set("highlightedItem", null);
+                    highlightedItem.set('highlighted', false);
                 }
             },
 
@@ -209,10 +224,10 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
 
             handleKeyEventInternal: function (e) {
                 var self = this,
-                    current = self.get("highlightedItem"),
-                    nextHighlightedItem = self.getNextItemByKeyEventInternal(e, current);
+                    currentChild = getChildByHighlightedItem(self),
+                    nextHighlightedItem = self.getNextItemByKeyEventInternal(e, currentChild);
 
-                if (S.isBoolean(nextHighlightedItem)) {
+                if (typeof nextHighlightedItem == 'boolean') {
                     return nextHighlightedItem;
                 }
 

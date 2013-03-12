@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 11 23:40
+build time: Mar 12 13:48
 */
 /**
  * combination of menu and button ,similar to native select
@@ -31,6 +31,8 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
          * @lends MenuButton.prototype
          */
         {
+            isMenuButton:1,
+
             _onSetCollapsed: function (v) {
                 if (v) {
                     hideMenu(this);

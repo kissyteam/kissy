@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 1 20:26
+build time: Mar 12 13:48
 */
 /**
  * @ignore
@@ -17,6 +17,8 @@ KISSY.add("button/base", function (S, Event, Component, ButtonRender) {
      * @class KISSY.Button
      */
     var Button = Component.Controller.extend({
+
+        isButton: 1,
 
         bindUI: function () {
             this.get("el").on("keyup", this.handleKeyEventInternal, this);
