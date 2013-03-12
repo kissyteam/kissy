@@ -229,8 +229,8 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
     });
 
     // capture bubbling
-    function afterHighlightedItemChange(e){
-        this.get('view').set('activeItem', e.newVal);
+    function afterHighlightedItemChange(e) {
+        this.get('view').setAriaActiveDescendant(e.newVal);
     }
 
     return Menu;

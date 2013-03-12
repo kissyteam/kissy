@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 12 15:00
+build time: Mar 12 15:09
 */
 /**
  * @ignore
@@ -234,8 +234,8 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
     });
 
     // capture bubbling
-    function afterHighlightedItemChange(e){
-        this.get('view').set('activeItem', e.newVal);
+    function afterHighlightedItemChange(e) {
+        this.get('view').setAriaActiveDescendant(e.newVal);
     }
 
     return Menu;
@@ -586,7 +586,7 @@ KISSY.add("menu/menu-render", function(S, Component) {
             }
         },
 
-        _onSetActiveItem:function(v) {
+        setAriaActiveDescendant:function(v) {
             var el = this.get("el");
 
             if (v) {
@@ -604,10 +604,6 @@ KISSY.add("menu/menu-render", function(S, Component) {
         containsElement:function(element) {
             var el = this.get("el");
             return el[0] === element || el.contains(element);
-        }
-    }, {
-        ATTRS:{
-            activeItem:{}
         }
     });
 }, {

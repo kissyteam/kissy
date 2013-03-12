@@ -220,7 +220,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     // tab
                     // if menu is open and an menuitem is highlighted, see as click/enter
                     if (e.keyCode == KeyCodes.TAB && highlightedItem) {
-                        // click activeItem
+                        // click highlightedItem
                         highlightedItem.performActionInternal();
                         // only prevent focus change in multiple mode
                         if (self.get("multiple")) {

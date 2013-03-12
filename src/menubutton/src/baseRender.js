@@ -22,8 +22,8 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
             var self = this,
                 el = self.get("el");
             el.append(S.substitute(DROP_TMPL, {
-                prefixCls: this.get('prefixCls')
-            }))
+                    prefixCls: this.get('prefixCls')
+                }))
                 //带有 menu
                 .attr("aria-haspopup", true);
         },
@@ -35,7 +35,7 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
             el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
         },
 
-        _onSetActiveItem: function (v) {
+        setAriaActiveDescendant: function (v) {
             this.get("el").attr("aria-activedescendant",
                 (v && v.get("el").attr("id")) || "");
         }
@@ -47,8 +47,6 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
                         prefixCls: this.get('prefixCls')
                     }));
                 }
-            },
-            activeItem: {
             },
             collapsed: {
                 value: true

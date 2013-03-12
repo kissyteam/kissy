@@ -38,7 +38,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
             bindUI: function () {
                 var self = this;
-                self.on('onMenuAfterActiveItemChange', onMenuAfterActiveItemChange, self);
+                self.on('afterHighlightedItemChange', onMenuAfterHighlightedItemChange, self);
                 win.on("resize", self.__repositionBuffer = S.buffer(reposition, 50), self);
                 self.on('click', onMenuItemClick, self);
             },
@@ -216,13 +216,6 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @lends MenuButton.prototype
              */
             {
-                /**
-                 * Current active menu item.
-                 * @type {KISSY.Menu.Item}
-                 */
-                activeItem: {
-                    view: 1
-                },
 
                 /**
                  * Whether drop down menu is same width with button.
@@ -290,9 +283,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         }
     }
 
-    function onMenuAfterActiveItemChange(e) {
+    function onMenuAfterHighlightedItemChange(e) {
         if (e.target.isMenu) {
-            this.set("activeItem", e.newVal);
+            this.get('view').setAriaActiveDescendant(e.newVal);
         }
     }
 

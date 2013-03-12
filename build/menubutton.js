@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 12 13:48
+build time: Mar 12 15:09
 */
 /**
  * combination of menu and button ,similar to native select
@@ -43,7 +43,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
 
             bindUI: function () {
                 var self = this;
-                self.on('onMenuAfterActiveItemChange', onMenuAfterActiveItemChange, self);
+                self.on('afterHighlightedItemChange', onMenuAfterHighlightedItemChange, self);
                 win.on("resize", self.__repositionBuffer = S.buffer(reposition, 50), self);
                 self.on('click', onMenuItemClick, self);
             },
@@ -221,13 +221,6 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
              * @lends MenuButton.prototype
              */
             {
-                /**
-                 * Current active menu item.
-                 * @type {KISSY.Menu.Item}
-                 */
-                activeItem: {
-                    view: 1
-                },
 
                 /**
                  * Whether drop down menu is same width with button.
@@ -295,9 +288,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
         }
     }
 
-    function onMenuAfterActiveItemChange(e) {
+    function onMenuAfterHighlightedItemChange(e) {
         if (e.target.isMenu) {
-            this.set("activeItem", e.newVal);
+            this.get('view').setAriaActiveDescendant(e.newVal);
         }
     }
 
@@ -380,8 +373,8 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
             var self = this,
                 el = self.get("el");
             el.append(S.substitute(DROP_TMPL, {
-                prefixCls: this.get('prefixCls')
-            }))
+                    prefixCls: this.get('prefixCls')
+                }))
                 //带有 menu
                 .attr("aria-haspopup", true);
         },
@@ -393,7 +386,7 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
             el[v ? 'removeClass' : 'addClass'](cls).attr("aria-expanded", !v);
         },
 
-        _onSetActiveItem: function (v) {
+        setAriaActiveDescendant: function (v) {
             this.get("el").attr("aria-activedescendant",
                 (v && v.get("el").attr("id")) || "");
         }
@@ -405,8 +398,6 @@ KISSY.add("menubutton/baseRender", function (S, Button) {
                         prefixCls: this.get('prefixCls')
                     }));
                 }
-            },
-            activeItem: {
             },
             collapsed: {
                 value: true
