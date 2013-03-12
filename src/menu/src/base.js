@@ -33,8 +33,6 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
                     }
                 });
             }
-            // 大部分情况和 highlight 相同，当子菜单键盘隐藏时，需回复为 submenu
-            this.set('activeItem', v);
         },
 
         _onSetVisible: function (v, e) {
@@ -47,7 +45,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
 
         bindUI: function () {
             var self = this;
-            self.on('afterActiveItemChange', afterActiveItemChange, self);
+            self.on('afterHighlightedItemChange', afterHighlightedItemChange, self);
         },
 
         getRootMenu: function () {
@@ -217,19 +215,6 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
             highlightedItem: {
                 value: null
             },
-            /**
-             * Current active menu item.
-             * Maybe a descendant but not a child of current menu.
-             * @type {KISSY.Menu.Item}
-             * @property activeItem
-             * @readonly
-             */
-            /**
-             * @ignore
-             */
-            activeItem: {
-                value: null
-            },
             xrender: {
                 value: MenuRender
             },
@@ -243,12 +228,9 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
         priority: 10
     });
 
-    function afterActiveItemChange(e) {
-        var activeItem = e.newVal;
-        if (e.target != this) {
-            this.setInternal('activeItem', activeItem);
-        }
-        this.get('view').set('activeItem', activeItem);
+    // capture bubbling
+    function afterHighlightedItemChange(e){
+        this.get('view').set('activeItem', e.newVal);
     }
 
     return Menu;
@@ -263,5 +245,5 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
  * 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
  *
  * TODO
- *  - 去除 activeItem
+ *  - 去除 activeItem. done@2013-03-12
  **/

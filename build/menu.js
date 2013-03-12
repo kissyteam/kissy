@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 12 13:48
+build time: Mar 12 15:00
 */
 /**
  * @ignore
@@ -38,8 +38,6 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
                     }
                 });
             }
-            // 大部分情况和 highlight 相同，当子菜单键盘隐藏时，需回复为 submenu
-            this.set('activeItem', v);
         },
 
         _onSetVisible: function (v, e) {
@@ -52,7 +50,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
 
         bindUI: function () {
             var self = this;
-            self.on('afterActiveItemChange', afterActiveItemChange, self);
+            self.on('afterHighlightedItemChange', afterHighlightedItemChange, self);
         },
 
         getRootMenu: function () {
@@ -222,19 +220,6 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
             highlightedItem: {
                 value: null
             },
-            /**
-             * Current active menu item.
-             * Maybe a descendant but not a child of current menu.
-             * @type {KISSY.Menu.Item}
-             * @property activeItem
-             * @readonly
-             */
-            /**
-             * @ignore
-             */
-            activeItem: {
-                value: null
-            },
             xrender: {
                 value: MenuRender
             },
@@ -248,12 +233,9 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
         priority: 10
     });
 
-    function afterActiveItemChange(e) {
-        var activeItem = e.newVal;
-        if (e.target != this) {
-            this.setInternal('activeItem', activeItem);
-        }
-        this.get('view').set('activeItem', activeItem);
+    // capture bubbling
+    function afterHighlightedItemChange(e){
+        this.get('view').set('activeItem', e.newVal);
     }
 
     return Menu;
@@ -268,7 +250,7 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
  * 通过 tab 聚焦到菜单的根节点，通过上下左右操作子菜单项
  *
  * TODO
- *  - 去除 activeItem
+ *  - 去除 activeItem. done@2013-03-12
  **//**
  * @ignore
  * filter menu render
@@ -1083,16 +1065,16 @@ KISSY.add("menu/submenu-render", function (S, MenuItemRender) {
 KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender) {
 
     function afterHighlightedChange(e) {
+        var target = e.target;
         // hover 子菜单，保持该菜单项高亮
-        if (e.target !== this && e.target.isMenuItem && e.newVal) {
+        if (target !== this && target.isMenuItem && e.newVal) {
             clearSubMenuTimers(this);
-            // 注意由于延迟，此时 highlighted 为 false，根 menu activeItem 为子菜单的  e.target
-            var activeItem = this.get('parent').get('activeItem');
-            // 会导致 activeItem 向上一层到 submenu
-            // in case change activeItem
-            this.set('highlighted', true);
-            // 恢复为子菜单的  e.target
-            this.get('parent').set('activeItem', activeItem);
+            if (!this.get('highlighted')) {
+                this.set('highlighted', true);
+                // refresh highlightedItem of parent menu
+                target.set('highlighted', false);
+                target.set('highlighted', true);
+            }
         }
     }
 
@@ -1203,6 +1185,8 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
             handleKeydown: function (e) {
                 var self = this,
                     menu = getMenu(self),
+                    menuChildren,
+                    menuChild,
                     hasKeyboardControl_ = menu && menu.get("visible"),
                     keyCode = e.keyCode;
 
@@ -1212,9 +1196,9 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                         showMenu.call(self);
                         menu = getMenu(self);
                         if (menu) {
-                            var menuChildren = menu.get("children");
-                            if (menuChildren[0]) {
-                                menuChildren[0].set('highlighted', true, {
+                            menuChildren = menu.get("children");
+                            if (menuChild = menuChildren[0]) {
+                                menuChild.set('highlighted', true, {
                                     data: {
                                         fromKeyboard: 1
                                     }
@@ -1235,9 +1219,13 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 // we turn off key control.
                 // left
                 else if (keyCode == KeyCodes.LEFT) {
-                    hideMenu.call(self);
-                    // 回复父菜单 activeItem 为 submenu，之前为 子菜单 activeItem
-                    self.get('parent').set('activeItem', self);
+                    // refresh highlightedItem of parent menu
+                    self.set('highlighted', false);
+                    self.set('highlighted', true, {
+                        data: {
+                            fromKeyboard: 1
+                        }
+                    });
                 } else {
                     return undefined;
                 }
