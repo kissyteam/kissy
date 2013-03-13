@@ -135,6 +135,9 @@ KISSY.add('dom/base/class', function (S, DOM) {
 });
 
 /*
+ http://jsperf.com/kissy-classlist-vs-classname 17157:14741
+ http://jsperf.com/kissy-1-3-vs-jquery-on-dom-class 15721:15223
+
  NOTES:
  - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
  - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
