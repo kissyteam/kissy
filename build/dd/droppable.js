@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 26 11:38
+build time: Mar 13 22:06
 */
 /**
  * @ignore
@@ -204,6 +204,9 @@ KISSY.add('dd/droppable/base', function (S, Node, RichBase, DD) {
                 DDM._unRegDrop(this);
             }
         }, {
+
+            name: 'Droppable',
+
             ATTRS: {
                 /**
                  * droppable element

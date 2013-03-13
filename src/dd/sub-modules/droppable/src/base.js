@@ -199,6 +199,9 @@ KISSY.add('dd/droppable/base', function (S, Node, RichBase, DD) {
                 DDM._unRegDrop(this);
             }
         }, {
+
+            name: 'Droppable',
+
             ATTRS: {
                 /**
                  * droppable element

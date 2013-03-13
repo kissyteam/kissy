@@ -9,7 +9,6 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         getNodeName = DOM.nodeName,
         doc = WINDOW.document,
         STYLE = 'style',
-        FLOAT = 'float',
         RE_MARGIN = /^margin/,
         WIDTH = 'width',
         HEIGHT = 'height',
@@ -29,19 +28,19 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             'zoom': 1
         },
         rmsPrefix = /^-ms-/,
-        RE_DASH = /-([a-z])/ig,
-        CAMEL_CASE_FN = function (all, letter) {
-            return letter.toUpperCase();
-        },
     // 考虑 ie9 ...
         R_UPPER = /([A-Z]|^ms)/g,
         EMPTY = '',
         DEFAULT_UNIT = 'px',
         CUSTOM_STYLES = {},
-        cssProps = {},
-        defaultDisplay = {};
-
-    cssProps[FLOAT] = 'cssFloat';
+        cssProps = {
+            float: 'cssFloat'
+        },
+        defaultDisplay = {},
+        RE_DASH = /-([a-z])/ig,
+        CAMEL_CASE_FN = function (all, letter) {
+            return letter.toUpperCase();
+        };
 
     function camelCase(name) {
         // fix #92, ms!
@@ -194,7 +193,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                             ret = DOM._getComputedStyle(elem, name);
                         }
                     }
-                    return ret === undefined ? '' : ret;
+                    return (ret === undefined) ? '' : ret;
                 }
                 // setter
                 else {

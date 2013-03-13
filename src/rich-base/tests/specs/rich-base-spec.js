@@ -14,7 +14,11 @@ KISSY.use('rich-base', function (S, RichBase) {
                 destructor: function () {
                     destructorCalled++;
                 }
+            },{
+                name:'TestTT'
             });
+
+            expect(T.toString().indexOf('TestTT')).not.toBe(-1);
 
             var t = new T();
 

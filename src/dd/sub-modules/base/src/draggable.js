@@ -486,6 +486,9 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
 
 
     }, {
+
+        name: 'Draggable',
+
         ATTRS: {
 
 

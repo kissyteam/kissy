@@ -8,7 +8,15 @@ KISSY.add('rich-base', function (S, Base) {
     var ATTRS = 'ATTRS',
         ucfirst = S.ucfirst,
         ON_SET = '_onSet',
-        noop = S.noop;
+        noop = S.noop,
+        RE_DASH = /(?:^|-)([a-z])/ig,
+        CAMEL_CASE_FN = function (all, letter) {
+            return letter.toUpperCase();
+        };
+
+    function CamelCase(name) {
+        return name.replace(RE_DASH, CAMEL_CASE_FN);
+    }
 
     /**
      * infrastructure for create plugin/extension-enabled class
@@ -362,37 +370,34 @@ KISSY.add('rich-base', function (S, Base) {
          */
         extend: function extend(extensions, px, sx) {
             var baseClass = this,
-                name = "RichBaseDerived",
-                t,
-                C,
-                args = S.makeArray(arguments);
+                name,
+                C;
 
-            if (extensions == null || S.isObject(extensions)) {
+            if (!S.isArray(extensions)) {
                 sx = px;
                 px = extensions;
                 extensions = [];
             }
 
-            if (typeof (t = args[args.length - 1]) == 'string') {
-                name = t;
-            }
+            sx = sx || {};
+
+            name = sx.name || 'RichBaseDerived';
 
             px = px || {};
             if (px.hasOwnProperty('constructor')) {
                 C = px.constructor;
             } else {
-                C = function () {
-                    C.superclass.constructor.apply(this, arguments);
-                };
                 // debug mode, give the right name for constructor
                 // refer : http://limu.iteye.com/blog/1136712
                 if (S.Config.debug) {
-                    eval("C=function " + name.replace(/[-./]/g, "_") +
-                        "(){ C.superclass.constructor.apply(this, arguments);}");
+                    eval("C = function " + CamelCase(name) + "(){ " +
+                        "C.superclass.constructor.apply(this, arguments);}");
+                } else {
+                    C = function () {
+                        C.superclass.constructor.apply(this, arguments);
+                    };
                 }
             }
-
-            C.name = name;
 
             S.extend(C, baseClass, px, sx);
 

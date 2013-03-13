@@ -1,9 +1,23 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:02
+build time: Mar 13 22:07
 */
 /**
+ * separator render def
+ * @author yiminghe@gmail.com
+ */
+KISSY.add("separator/separator-render", function (S, Component) {
+
+    return Component.Render.extend({
+        createDom:function () {
+            this.get("el").attr("role", "separator");
+        }
+    });
+
+}, {
+    requires:['component/base']
+});/**
  * separator def
  * @author yiminghe@gmail.com
  */
@@ -51,19 +65,5 @@ KISSY.add("separator", function (S, Component, SeparatorRender) {
     return Separator;
 
 }, {
-    requires:['component/base', 'separator/separatorRender']
-});/**
- * separator render def
- * @author yiminghe@gmail.com
- */
-KISSY.add("separator/separatorRender", function (S, Component) {
-
-    return Component.Render.extend({
-        createDom:function () {
-            this.get("el").attr("role", "separator");
-        }
-    });
-
-}, {
-    requires:['component/base']
+    requires:['component/base', 'separator/separator-render']
 });

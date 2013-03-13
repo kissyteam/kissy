@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Feb 26 11:49
+build time: Mar 13 22:07
 */
 /**
  * @ignore
@@ -96,7 +96,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
                 dd = dds[hc] = new Draggable({
                     node: el,
                     cursor: null,
-                    groups:false
+                    groups: false
                 });
             (function (hc, dd) {
                 var startEdgePos;
@@ -179,6 +179,9 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
         }
 
     }, {
+
+        name: 'Resizable',
+
         ATTRS: {
             /**
              * KISSY Node to be resizable.

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 13 21:17
+build time: Mar 13 22:12
 */
 /**
  * @ignore
@@ -2090,6 +2090,8 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
         }
     }, {
 
+        name: 'UIBase',
+
         ATTRS: {
             /**
              * Whether this component is rendered.
@@ -2167,12 +2169,13 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
             var args = S.makeArray(arguments),
                 baseClass = this,
                 parsers = {},
+                xclass,
                 newClass,
-                last = args[args.length - 1];
+                argsLen = args.length,
+                last = args[argsLen - 1];
 
-            if (last.xclass) {
-                args.pop();
-                args.push(last.xclass);
+            if (xclass = last.xclass) {
+                args[argsLen - 2].name = xclass;
             }
 
             newClass = originalExtend.apply(baseClass, args);
@@ -2191,8 +2194,8 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
                 newClass[HTML_PARSER] = parsers;
             }
 
-            if (last.xclass) {
-                Manager.setConstructorByXClass(last.xclass, {
+            if (xclass) {
+                Manager.setConstructorByXClass(xclass, {
                     constructor: newClass,
                     priority: last.priority
                 });

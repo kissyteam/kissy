@@ -91,7 +91,7 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
                 dd = dds[hc] = new Draggable({
                     node: el,
                     cursor: null,
-                    groups:false
+                    groups: false
                 });
             (function (hc, dd) {
                 var startEdgePos;
@@ -174,6 +174,9 @@ KISSY.add("resizable", function (S, Node, RichBase, DD, undefined) {
         }
 
     }, {
+
+        name: 'Resizable',
+
         ATTRS: {
             /**
              * KISSY Node to be resizable.

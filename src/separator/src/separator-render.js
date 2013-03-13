@@ -2,7 +2,7 @@
  * separator render def
  * @author yiminghe@gmail.com
  */
-KISSY.add("separator/separatorRender", function (S, Component) {
+KISSY.add("separator/separator-render", function (S, Component) {
 
     return Component.Render.extend({
         createDom:function () {
