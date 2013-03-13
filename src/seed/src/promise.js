@@ -8,13 +8,10 @@
     var PROMISE_VALUE = '__promise_value',
         PROMISE_PENDINGS = '__promise_pendings';
 
-    /**
-     * two effects:
-     * 1. call fulfilled with immediate value
-     * 2. push fulfilled in right promise
-     * @ignore
-     * @param fulfilled
-     * @param rejected
+    /*
+     two effects:
+     1. call fulfilled with immediate value
+     2. push fulfilled in right promise
      */
     function promiseWhen(promise, fulfilled, rejected) {
         // simply call rejected
@@ -71,13 +68,13 @@
          * fulfill defer object's promise
          * note: can only be called once
          * @param value defer object's value
-         * @return defer object's promise
+         * @return {KISSY.Promise} defer object's promise
          */
         resolve: function (value) {
             var promise = this.promise,
                 pendings;
             if (!(pendings = promise[PROMISE_PENDINGS])) {
-                return undefined;
+                return null;
             }
             // set current promise 's resolved value
             // maybe a promise or instant value
@@ -92,7 +89,7 @@
         /**
          * reject defer object's promise
          * @param reason
-         * @return defer object's promise
+         * @return {KISSY.Promise} defer object's promise
          */
         reject: function (reason) {
             return this.resolve(new Reject(reason));
@@ -180,7 +177,7 @@
         if (self[PROMISE_VALUE] instanceof Promise) {
             S.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
         }
-        return undefined;
+        return self;
     }
 
     S.extend(Reject, Promise);
@@ -350,7 +347,7 @@
             all: function (promises) {
                 var count = promises.length;
                 if (!count) {
-                    return promises;
+                    return null;
                 }
                 var defer = Defer();
                 for (var i = 0; i < promises.length; i++) {
