@@ -180,16 +180,11 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
             // 默认 addChild，这里里面的元素需要放到 menu 属性中
             decorateChildrenInternal: function (UI, el) {
-                // 不能用 display:none
-                el.css("visibility", "hidden");
-                var self = this,
-                    docBody = S.one(el[0].ownerDocument.body);
-                docBody.prepend(el);
-                var menu = new UI({
-                    srcNode: el,
-                    prefixCls: self.get("prefixCls")
-                });
-                self.setInternal("menu", menu);
+                // 不能用 display:none , menu 的隐藏是靠 visibility
+                // eg: menu.show(); menu.hide();
+                el.css("visibility", "hidden").prependTo(el[0].ownerDocument.body);
+                var self = this;
+                self.setInternal("menu", SubMenu.superclass.decorateChildrenInternal.apply(self, UI,el,self.get('menu')));
             },
 
             destructor: function () {
@@ -233,19 +228,19 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 menu: {
                     setter: function (m) {
                         if (m && m.isController) {
-                            m.setInternal("parent", this);
+                            m.setInternal('parent', this);
                         }
                     }
                 },
 
-                defaultChildXClass: {
-                    value: 'popupmenu'
+                defaultChildCfg: {
+                    value: {
+                        xclass: 'popupmenu'
+                    }
                 },
 
                 decorateChildCls: {
-                    valueFn: function () {
-                        return this.get("prefixCls") + "popupmenu"
-                    }
+                    value:'popupmenu'
                 },
                 xrender: {
                     value: SubMenuRender

@@ -244,8 +244,10 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                 // 当前的扩展项，切换高亮项时如要把以前的扩展项收起，并展开当前的高亮项
                 expandedItem: {
                 },
-                defaultChildXClass: {
-                    value: 'button'
+                defaultChildCfg: {
+                    value: {
+                        xclass:'button'
+                    }
                 }
             }
         }, {

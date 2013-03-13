@@ -25,8 +25,10 @@ KISSY.add("tree/check-tree", function (S, Component, CheckNode, CheckTreeRender,
                 value: CheckTreeRender
             },
 
-            defaultChildXClass: {
-                value: 'check-tree-node'
+            defaultChildCfg: {
+                value: {
+                    xclass:'check-tree-node'
+                }
             }
         }
     }, {

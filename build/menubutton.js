@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 12 15:09
+build time: Mar 13 21:18
 */
 /**
  * combination of menu and button ,similar to native select
@@ -31,7 +31,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
          * @lends MenuButton.prototype
          */
         {
-            isMenuButton:1,
+            isMenuButton: 1,
 
             _onSetCollapsed: function (v) {
                 if (v) {
@@ -187,17 +187,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             decorateChildrenInternal: function (UI, el) {
                 // 不能用 display:none , menu 的隐藏是靠 visibility
                 // eg: menu.show(); menu.hide();
-                var self = this,
-                // decorate menu 配置了参数
-                    menuCfg = self.get("menu"),
-                    menu,
-                    docBody = S.one(el[0].ownerDocument.body);
-                docBody.prepend(el);
-                menu = new UI(S.mix({
-                    srcNode: el,
-                    prefixCls: self.get("prefixCls")
-                }, menuCfg));
-                self.setInternal("menu", menu);
+                el.css("visibility", "hidden").prependTo(el[0].ownerDocument.body);
+                var self = this;
+                self.setInternal("menu", MenuButton.superclass.decorateChildrenInternal.apply(self, UI,el,self.get('menu')));
             },
 
             destructor: function () {
@@ -245,9 +237,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                  * @private
                  */
                 decorateChildCls: {
-                    valueFn: function () {
-                        return this.get("prefixCls") + "popupmenu"
-                    }
+                    value:'popupmenu'
                 },
                 /**
                  * Drop down menu associated with this menubutton.
@@ -255,15 +245,17 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                  */
                 menu: {
                     value: {},
-                    setter: function (v) {
-                        if (v instanceof Menu) {
-                            v.setInternal("parent", this);
+                    setter:function(m){
+                        if(m&& m.isController){
+                            m.setInternal('parent',this);
                         }
                     }
                 },
 
-                defaultChildXClass: {
-                    value: 'popupmenu'
+                defaultChildCfg: {
+                    value: {
+                        xclass: 'popupmenu'
+                    }
                 },
 
                 /**

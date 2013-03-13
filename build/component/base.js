@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 4 11:52
+build time: Mar 13 21:17
 */
 /**
  * @ignore
@@ -533,14 +533,13 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
         self.create();
         var contentEl = self.getContentElement();
         c = Component.create(c, self);
-        c.setInternal("parent", self);
         // set 通知 view 也更新对应属性
         c.set("render", contentEl);
         c.set("elBefore", renderBefore);
         // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
         // 子组件和 parent 组件一起渲染
         // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
-        c.create(undefined);
+        c.create();
         return c;
     }
 
@@ -652,6 +651,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @protected
              */
             initializer: function () {
+                var defaultChildCfg = this.get('defaultChildCfg');
+                defaultChildCfg.prefixCls = defaultChildCfg.prefixCls || this.get('prefixCls');
                 // initialize view
                 this.setInternal("view", constructView(this));
             },
@@ -664,10 +665,10 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 var self = this,
                     el,
                     view = self.get("view");
-                view.create(undefined);
+                view.create();
                 el = view.getKeyEventTarget();
                 if (!self.get("allowTextSelection")) {
-                    el.unselectable(undefined);
+                    el.unselectable();
                 }
             },
 
@@ -1215,14 +1216,16 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 },
 
                 /**
-                 * default child xclass
+                 * default child config
                  * @protected
-                 * @cfg {String} defaultChildXClass
+                 * @cfg {String} defaultChildCfg
                  */
                 /**
                  * @ignore
                  */
-                defaultChildXClass: {}
+                defaultChildCfg: {
+                    value: {}
+                }
             }
         }, {
             xclass: 'controller'
@@ -1296,15 +1299,14 @@ KISSY.add("component/base/decorate-child", function (S, DecorateChildren) {
             var self = this;
             // 不用 setInternal , 通知 view 更新
             self.set("el", element);
-            var ui = self.get("decorateChildCls"),
-                prefixCls = self.get('prefixCls'),
-                child = element.one("." + ui);
+            var prefixCls = self.get('defaultChildCfg').xclass,
+                child = element.one("." + (prefixCls + elf.get("decorateChildCls")));
             // 可以装饰?
             if (child) {
-                var UI = self.findUIConstructorByNode(prefixCls, child, 1);
-                if (UI) {
+                var ChildUI = self.findChildConstructorFromNode(prefixCls, child);
+                if (ChildUI) {
                     // 可以直接装饰
-                    self.decorateChildrenInternal(UI, child);
+                    self.decorateChildrenInternal(ChildUI, child);
                 } else {
                     // 装饰其子节点集合
                     self.decorateChildren(child);
@@ -1348,29 +1350,26 @@ KISSY.add("component/base/decorate-children", function (S, Manager) {
          * @protected
          * @param prefixCls
          * @param {KISSY.NodeList} childNode Child component's root node.
-         * @param ignoreError
-         * @param defaultChildXClass
          */
-        findUIConstructorByNode: function (prefixCls,childNode, ignoreError, defaultChildXClass) {
+        findChildConstructorFromNode: function (prefixCls, childNode) {
             var cls = childNode[0].className || "";
             // 过滤掉特定前缀
-            cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
-            var UI = Manager.getConstructorByXClass(cls) ||
-                defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass);
-            if (!UI && !ignoreError) {
-                S.log(childNode);
-                S.error("can not find ui " + cls + " from this markup");
+            if (cls) {
+                cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
+                return Manager.getConstructorByXClass(cls);
             }
-            return UI;
+            return null;
         },
 
-        // 生成一个组件
-        decorateChildrenInternal: function (UI, c) {
+        // 生成一个子组件
+        decorateChildrenInternal: function (ChildUI, childNode, childConfig) {
             var self = this;
-            self.addChild(new UI({
-                srcNode: c,
-                prefixCls: self.get("prefixCls")
-            }));
+            // html_parser 值优先
+            childConfig = S.merge(self.get('defaultChildCfg'), childConfig, {
+                srcNode: childNode
+            });
+            delete childConfig.xclass;
+            return self.addChild(new ChildUI(childConfig));
         },
 
         /**
@@ -1381,12 +1380,14 @@ KISSY.add("component/base/decorate-children", function (S, Manager) {
          */
         decorateChildren: function (el) {
             var self = this,
-                prefixCls=self.get('prefixCls'),
-                defaultChildXClass = self.get('defaultChildXClass'),
+                defaultChildCfg = self.get('defaultChildCfg'),
+                prefixCls = defaultChildCfg.prefixCls,
+                defaultChildXClass = self.get('defaultChildCfg').xclass,
                 children = el.children();
             children.each(function (c) {
-                var UI = self.findUIConstructorByNode(prefixCls,c, 0, defaultChildXClass);
-                self.decorateChildrenInternal(UI, c);
+                var ChildUI = self.findChildConstructorFromNode(prefixCls, c) ||
+                    defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass);
+                self.decorateChildrenInternal(ChildUI, c);
             });
         }
     });
@@ -1532,18 +1533,18 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
      */
     Component.create = function (component, parent) {
         var childConstructor, xclass;
-        if (component && !component.isController && !component.xclass) {
-            component.xclass = parent.get('defaultChildXClass');
+        if (component && !component.isController && parent) {
+            S.mix(component, parent.get('defaultChildCfg'), false);
         }
-        if (component && (xclass = component.xclass)) {
-            if (parent && !component.prefixCls) {
-                component.prefixCls = parent.get("prefixCls");
-            }
+        if (component && !component.isController && (xclass = component.xclass)) {
             childConstructor = Manager.getConstructorByXClass(xclass);
             if (!childConstructor) {
                 S.error("can not find class by xclass desc : " + xclass);
             }
             component = new childConstructor(component);
+        }
+        if (component && component.isController && parent) {
+            component.setInternal('parent', parent);
         }
         return component;
     };
@@ -1848,9 +1849,11 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
     function applyParser(srcNode, parser) {
         var self = this,
             p, v,
+            ret,
             userConfig = self.userConfig || {};
 
         // 从 parser 中，默默设置属性，不触发事件
+        // html parser 优先
         for (p in parser) {
             // 用户设置过那么这里不从 dom 节点取
             // 用户设置 > html parser > default value
@@ -1858,7 +1861,11 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
                 v = parser[p];
                 // 函数
                 if (S.isFunction(v)) {
-                    self.setInternal(p, v.call(self, srcNode));
+                    // html parser 放弃
+                    ret = v.call(self, srcNode);
+                    if (ret !== undefined) {
+                        self.setInternal(p, ret);
+                    }
                 }
                 // 单选选择器
                 else if (typeof v == 'string') {

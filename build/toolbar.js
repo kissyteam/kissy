@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 12 13:49
+build time: Mar 13 21:18
 */
 /**
  * Toolbar for KISSY.
@@ -249,8 +249,10 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                 // 当前的扩展项，切换高亮项时如要把以前的扩展项收起，并展开当前的高亮项
                 expandedItem: {
                 },
-                defaultChildXClass: {
-                    value: 'button'
+                defaultChildCfg: {
+                    value: {
+                        xclass:'button'
+                    }
                 }
             }
         }, {

@@ -71,8 +71,10 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
             changeType: {
                 value: "click"
             },
-            defaultChildXClass: {
-                value: 'tabs-tab'
+            defaultChildCfg: {
+                value: {
+                    xclass:'tabs-tab'
+                }
             }
         }
     }, {

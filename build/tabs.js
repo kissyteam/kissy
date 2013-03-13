@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:03
+build time: Mar 13 21:18
 */
 /**
  * @ignore
@@ -76,8 +76,10 @@ KISSY.add("tabs/bar", function (S, Toolbar) {
             changeType: {
                 value: "click"
             },
-            defaultChildXClass: {
-                value: 'tabs-tab'
+            defaultChildCfg: {
+                value: {
+                    xclass:'tabs-tab'
+                }
             }
         }
     }, {
@@ -150,8 +152,10 @@ KISSY.add("tabs/body", function (S, Component) {
             delegateChildren: {
                 value: false
             },
-            defaultChildXClass: {
-                value: 'tabs-panel'
+            defaultChildCfg: {
+                value: {
+                    xclass:'tabs-panel'
+                }
             }
         }
     }, {

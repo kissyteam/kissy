@@ -13,15 +13,14 @@ KISSY.add("component/base/decorate-child", function (S, DecorateChildren) {
             var self = this;
             // 不用 setInternal , 通知 view 更新
             self.set("el", element);
-            var ui = self.get("decorateChildCls"),
-                prefixCls = self.get('prefixCls'),
-                child = element.one("." + ui);
+            var prefixCls = self.get('defaultChildCfg').xclass,
+                child = element.one("." + (prefixCls + elf.get("decorateChildCls")));
             // 可以装饰?
             if (child) {
-                var UI = self.findUIConstructorByNode(prefixCls, child, 1);
-                if (UI) {
+                var ChildUI = self.findChildConstructorFromNode(prefixCls, child);
+                if (ChildUI) {
                     // 可以直接装饰
-                    self.decorateChildrenInternal(UI, child);
+                    self.decorateChildrenInternal(ChildUI, child);
                 } else {
                     // 装饰其子节点集合
                     self.decorateChildren(child);

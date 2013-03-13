@@ -30,29 +30,26 @@ KISSY.add("component/base/decorate-children", function (S, Manager) {
          * @protected
          * @param prefixCls
          * @param {KISSY.NodeList} childNode Child component's root node.
-         * @param ignoreError
-         * @param defaultChildXClass
          */
-        findUIConstructorByNode: function (prefixCls,childNode, ignoreError, defaultChildXClass) {
+        findChildConstructorFromNode: function (prefixCls, childNode) {
             var cls = childNode[0].className || "";
             // 过滤掉特定前缀
-            cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
-            var UI = Manager.getConstructorByXClass(cls) ||
-                defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass);
-            if (!UI && !ignoreError) {
-                S.log(childNode);
-                S.error("can not find ui " + cls + " from this markup");
+            if (cls) {
+                cls = cls.replace(new RegExp("\\b" + prefixCls, "ig"), "");
+                return Manager.getConstructorByXClass(cls);
             }
-            return UI;
+            return null;
         },
 
-        // 生成一个组件
-        decorateChildrenInternal: function (UI, c) {
+        // 生成一个子组件
+        decorateChildrenInternal: function (ChildUI, childNode, childConfig) {
             var self = this;
-            self.addChild(new UI({
-                srcNode: c,
-                prefixCls: self.get("prefixCls")
-            }));
+            // html_parser 值优先
+            childConfig = S.merge(self.get('defaultChildCfg'), childConfig, {
+                srcNode: childNode
+            });
+            delete childConfig.xclass;
+            return self.addChild(new ChildUI(childConfig));
         },
 
         /**
@@ -63,12 +60,14 @@ KISSY.add("component/base/decorate-children", function (S, Manager) {
          */
         decorateChildren: function (el) {
             var self = this,
-                prefixCls=self.get('prefixCls'),
-                defaultChildXClass = self.get('defaultChildXClass'),
+                defaultChildCfg = self.get('defaultChildCfg'),
+                prefixCls = defaultChildCfg.prefixCls,
+                defaultChildXClass = self.get('defaultChildCfg').xclass,
                 children = el.children();
             children.each(function (c) {
-                var UI = self.findUIConstructorByNode(prefixCls,c, 0, defaultChildXClass);
-                self.decorateChildrenInternal(UI, c);
+                var ChildUI = self.findChildConstructorFromNode(prefixCls, c) ||
+                    defaultChildXClass && Manager.getConstructorByXClass(defaultChildXClass);
+                self.decorateChildrenInternal(ChildUI, c);
             });
         }
     });

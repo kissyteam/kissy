@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 12 15:09
+build time: Mar 13 21:17
 */
 /**
  * @ignore
@@ -224,8 +224,10 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
                 value: MenuRender
             },
 
-            defaultChildXClass: {
-                value: 'menuitem'
+            defaultChildCfg: {
+                value: {
+                    xclass:'menuitem'
+                }
             }
         }
     }, {
@@ -551,9 +553,7 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
                 },
 
                 decorateChildCls: {
-                    valueFn: function () {
-                        return this.get("prefixCls") + "menu-content"
-                    }
+                    value: 'menu-content'
                 },
 
                 xrender: {
@@ -588,16 +588,13 @@ KISSY.add("menu/menu-render", function(S, Component) {
 
         setAriaActiveDescendant:function(v) {
             var el = this.get("el");
-
             if (v) {
                 var menuItemEl = v.get("el"),
                     id = menuItemEl.attr("id");
                 el.attr("aria-activedescendant", id);
                 // 会打印重复 ，每个子菜单都会打印，然后冒泡至父菜单，再打印，和该 menuitem 所处层次有关系
-                //S.log("menu-render :" + el.attr("id") + " _onSetActiveItem : " + v.get("content"));
             } else {
                 el.attr("aria-activedescendant", "");
-                //S.log("menu-render :" + el.attr("id") + " _onSetActiveItem : " + "");
             }
         },
 
@@ -779,7 +776,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
                     p = el.parent(function (e) {
                         return $(e).css("overflow") != "visible";
-                    }, this.get("parent").get("el").parent());
+                    }, this.get('parent').get("el").parent());
                 if (!p) {
                     return;
                 }
@@ -1235,16 +1232,11 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
 
             // 默认 addChild，这里里面的元素需要放到 menu 属性中
             decorateChildrenInternal: function (UI, el) {
-                // 不能用 display:none
-                el.css("visibility", "hidden");
-                var self = this,
-                    docBody = S.one(el[0].ownerDocument.body);
-                docBody.prepend(el);
-                var menu = new UI({
-                    srcNode: el,
-                    prefixCls: self.get("prefixCls")
-                });
-                self.setInternal("menu", menu);
+                // 不能用 display:none , menu 的隐藏是靠 visibility
+                // eg: menu.show(); menu.hide();
+                el.css("visibility", "hidden").prependTo(el[0].ownerDocument.body);
+                var self = this;
+                self.setInternal("menu", SubMenu.superclass.decorateChildrenInternal.apply(self, UI,el,self.get('menu')));
             },
 
             destructor: function () {
@@ -1288,19 +1280,19 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 menu: {
                     setter: function (m) {
                         if (m && m.isController) {
-                            m.setInternal("parent", this);
+                            m.setInternal('parent', this);
                         }
                     }
                 },
 
-                defaultChildXClass: {
-                    value: 'popupmenu'
+                defaultChildCfg: {
+                    value: {
+                        xclass: 'popupmenu'
+                    }
                 },
 
                 decorateChildCls: {
-                    valueFn: function () {
-                        return this.get("prefixCls") + "popupmenu"
-                    }
+                    value:'popupmenu'
                 },
                 xrender: {
                     value: SubMenuRender

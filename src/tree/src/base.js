@@ -22,9 +22,10 @@ KISSY.add("tree/base", function (S, Component, TreeNode, TreeRender, TreeManager
             xrender: {
                 value: TreeRender
             },
-
-            defaultChildXClass: {
-                value: 'tree-node'
+            defaultChildCfg: {
+                value: {
+                    xclass:'tree-node'
+                }
             }
         }
     }, {

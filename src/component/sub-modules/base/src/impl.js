@@ -34,18 +34,18 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
      */
     Component.create = function (component, parent) {
         var childConstructor, xclass;
-        if (component && !component.isController && !component.xclass) {
-            component.xclass = parent.get('defaultChildXClass');
+        if (component && !component.isController && parent) {
+            S.mix(component, parent.get('defaultChildCfg'), false);
         }
-        if (component && (xclass = component.xclass)) {
-            if (parent && !component.prefixCls) {
-                component.prefixCls = parent.get("prefixCls");
-            }
+        if (component && !component.isController && (xclass = component.xclass)) {
             childConstructor = Manager.getConstructorByXClass(xclass);
             if (!childConstructor) {
                 S.error("can not find class by xclass desc : " + xclass);
             }
             component = new childConstructor(component);
+        }
+        if (component && component.isController && parent) {
+            component.setInternal('parent', parent);
         }
         return component;
     };

@@ -219,8 +219,10 @@ KISSY.add("menu/base", function (S, Event, Component, MenuRender, undefined) {
                 value: MenuRender
             },
 
-            defaultChildXClass: {
-                value: 'menuitem'
+            defaultChildCfg: {
+                value: {
+                    xclass:'menuitem'
+                }
             }
         }
     }, {

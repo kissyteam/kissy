@@ -401,14 +401,16 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                 menu: {
                     value: {},
                     setter: function (m) {
-                        if (m && m['isController']) {
-                            m.setInternal("parent", this);
+                        if (m && m.isController) {
+                            m.setInternal('parent', this);
                         }
                     }
                 },
 
-                defaultChildXClass: {
-                    value: 'popupmenu'
+                defaultChildCfg: {
+                    value: {
+                        xclass: 'popupmenu'
+                    }
                 },
 
                 /**
@@ -522,7 +524,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
     function onMenuItemClick(e) {
         var item = e.target,
-            self=this,
+            self = this,
             textContent;
         if (item.isMenuItem) {
             textContent = item.get('textContent');
@@ -562,7 +564,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
     function getMenu(self, init) {
         var m = self.get("menu");
-        if (m && !m['isController']) {
+        if (m && !m.isController) {
             if (init) {
                 m = Component.create(m, self);
                 self.setInternal("menu", m);

@@ -224,9 +224,7 @@ KISSY.add("menu/filtermenu", function (S, Component, Menu, FilterMenuRender) {
                 },
 
                 decorateChildCls: {
-                    valueFn: function () {
-                        return this.get("prefixCls") + "menu-content"
-                    }
+                    value: 'menu-content'
                 },
 
                 xrender: {

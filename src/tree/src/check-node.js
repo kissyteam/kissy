@@ -51,7 +51,7 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
 
         _onSetCheckState: function (s) {
             var self = this,
-                parent = self.get("parent"),
+                parent = self.get('parent'),
                 checkCount,
                 i,
                 c,
@@ -119,8 +119,10 @@ KISSY.add("tree/check-node", function (S, Node, TreeNode, CheckNodeRender) {
                 value: CheckNodeRender
             },
 
-            defaultChildXClass: {
-                value: 'check-tree-node'
+            defaultChildCfg: {
+                value: {
+                    xclass:'check-tree-node'
+                }
             }
         }
     }, {

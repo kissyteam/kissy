@@ -34,9 +34,11 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
     function applyParser(srcNode, parser) {
         var self = this,
             p, v,
+            ret,
             userConfig = self.userConfig || {};
 
         // 从 parser 中，默默设置属性，不触发事件
+        // html parser 优先
         for (p in parser) {
             // 用户设置过那么这里不从 dom 节点取
             // 用户设置 > html parser > default value
@@ -44,7 +46,11 @@ KISSY.add('component/base/uibase', function (S, RichBase, Node, Manager, undefin
                 v = parser[p];
                 // 函数
                 if (S.isFunction(v)) {
-                    self.setInternal(p, v.call(self, srcNode));
+                    // html parser 放弃
+                    ret = v.call(self, srcNode);
+                    if (ret !== undefined) {
+                        self.setInternal(p, ret);
+                    }
                 }
                 // 单选选择器
                 else if (typeof v == 'string') {

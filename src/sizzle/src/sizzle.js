@@ -790,7 +790,7 @@ KISSY.add('sizzle', function () {
                 return elem.selected === true;
             },
 
-            "parent": function (elem) {
+            'parent': function (elem) {
                 return !Expr.pseudos["empty"](elem);
             },
 

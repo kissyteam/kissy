@@ -37,14 +37,13 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
         self.create();
         var contentEl = self.getContentElement();
         c = Component.create(c, self);
-        c.setInternal("parent", self);
         // set 通知 view 也更新对应属性
         c.set("render", contentEl);
         c.set("elBefore", renderBefore);
         // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
         // 子组件和 parent 组件一起渲染
         // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
-        c.create(undefined);
+        c.create();
         return c;
     }
 
@@ -156,6 +155,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @protected
              */
             initializer: function () {
+                var defaultChildCfg = this.get('defaultChildCfg');
+                defaultChildCfg.prefixCls = defaultChildCfg.prefixCls || this.get('prefixCls');
                 // initialize view
                 this.setInternal("view", constructView(this));
             },
@@ -168,10 +169,10 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 var self = this,
                     el,
                     view = self.get("view");
-                view.create(undefined);
+                view.create();
                 el = view.getKeyEventTarget();
                 if (!self.get("allowTextSelection")) {
-                    el.unselectable(undefined);
+                    el.unselectable();
                 }
             },
 
@@ -719,14 +720,16 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 },
 
                 /**
-                 * default child xclass
+                 * default child config
                  * @protected
-                 * @cfg {String} defaultChildXClass
+                 * @cfg {String} defaultChildCfg
                  */
                 /**
                  * @ignore
                  */
-                defaultChildXClass: {}
+                defaultChildCfg: {
+                    value: {}
+                }
             }
         }, {
             xclass: 'controller'

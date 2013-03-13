@@ -59,7 +59,7 @@ KISSY.add("menu/menuitem", function (S, Component, MenuItemRender) {
                 // 找不到就放弃，为效率考虑不考虑 parent 的嵌套可滚动 div
                     p = el.parent(function (e) {
                         return $(e).css("overflow") != "visible";
-                    }, this.get("parent").get("el").parent());
+                    }, this.get('parent').get("el").parent());
                 if (!p) {
                     return;
                 }

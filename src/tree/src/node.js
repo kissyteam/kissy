@@ -80,7 +80,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                         if (expanded && (children.length || isLeaf === false)) {
                             self.set("expanded", false);
                         } else {
-                            nodeToBeSelected = self.get("parent");
+                            nodeToBeSelected = self.get('parent');
                         }
                         break;
 
@@ -110,7 +110,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
 
             next: function () {
                 var self = this,
-                    parent = self.get("parent"),
+                    parent = self.get('parent'),
                     siblings,
                     index;
                 if (!parent) {
@@ -126,7 +126,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
 
             prev: function () {
                 var self = this,
-                    parent = self.get("parent"),
+                    parent = self.get('parent'),
                     siblings,
                     index;
                 if (!parent) {
@@ -159,14 +159,6 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                     self.select();
                     self.fire("click");
                 }
-            },
-
-            decorateChildrenInternal: function (UI, c) {
-                var self = this;
-                self.addChild(new UI({
-                    srcNode: c,
-                    prefixCls: self.get("prefixCls")
-                }));
             },
 
             /**
@@ -325,7 +317,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                     getter: function () {
                         var from = this;
                         while (from && !from.isTree) {
-                            from = from.get("parent");
+                            from = from.get('parent');
                         }
                         return from;
                     }
@@ -344,13 +336,13 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 },
 
                 decorateChildCls: {
-                    valueFn: function () {
-                        return this.get('prefixCls') + 'tree-children';
-                    }
+                    value: 'tree-children'
                 },
 
-                defaultChildXClass: {
-                    value: 'tree-node'
+                defaultChildCfg: {
+                    value: {
+                        xclass: 'tree-node'
+                    }
                 }
             }
         }, {
@@ -379,7 +371,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
     }
 
     function isNodeSingleOrLast(self) {
-        var parent = self.get("parent"),
+        var parent = self.get('parent'),
             children = parent && parent.get("children"),
             lastChild = children && children[children.length - 1];
 
@@ -410,7 +402,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
     function getPreviousVisibleNode(self) {
         var prev = self.prev();
         if (!prev) {
-            prev = self.get("parent");
+            prev = self.get('parent');
         } else {
             prev = getLastVisibleDescendant(prev);
         }
@@ -429,7 +421,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
         // 深度遍历的下一个
         n = self.next();
         parent = self;
-        while (!n && (parent = parent.get("parent"))) {
+        while (!n && (parent = parent.get('parent'))) {
             n = parent.next();
         }
         return n;
