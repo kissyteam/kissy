@@ -228,8 +228,9 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
 
         bindUI: function () {
             var self = this,
+                contentEl = self.get('contentEl'),
                 dd = self.dd = new DD.Draggable({
-                    node: self.get('contentEl'),
+                    node: contentEl,
                     groups: false,
                     // allow nested scrollview
                     halt: true
@@ -239,6 +240,7 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
                 .on('dragend', self._onDragEnd, self);
 
             self.get('el').on(Event.Gesture.start, self._onGestureStart, self);
+            contentEl.on(Event.Gesture.start, self._onGestureStart, self);
         },
 
 

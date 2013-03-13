@@ -131,9 +131,10 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
         },
 
         _clearHideTimer: function () {
-            if (this._hideTimer) {
-                clearTimeout(this._hideTimer);
-                this._hideTimer = null;
+            var self = this;
+            if (self._hideTimer) {
+                clearTimeout(self._hideTimer);
+                self._hideTimer = null;
             }
         },
 
@@ -189,8 +190,9 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
         },
 
         _onScrollEnd: function (e) {
-            if (this.get('axis') == e.axis) {
-                this._startHideTimer();
+            var self = this;
+            if (self._hideFn && self.get('axis') == e.axis) {
+                self._startHideTimer();
             }
         },
 
