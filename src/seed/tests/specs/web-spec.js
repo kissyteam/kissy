@@ -1,10 +1,8 @@
 describe('web.js', function () {
-
     var S = KISSY,
         host = S.Env.host,
         fn = function () {
         };
-
 
     it('S.isWindow', function () {
         expect(S.isWindow(host)).toBe(true);
@@ -83,7 +81,6 @@ describe('web.js', function () {
             });
         });
     });
-
 
     it('S.available', function () {
         var ret, t;
