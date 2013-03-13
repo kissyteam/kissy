@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 12 21:52
+build time: Mar 13 14:56
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130312215159' will replace with current timestamp when compressing.
+         * NOTICE: '20130313145558' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130312215159',
+        __BUILD_TIME: '20130313145558',
         /**
          * KISSY Environment.
          * @private
@@ -1770,13 +1770,10 @@ var KISSY = (function (undefined) {
     var PROMISE_VALUE = '__promise_value',
         PROMISE_PENDINGS = '__promise_pendings';
 
-    /**
-     * two effects:
-     * 1. call fulfilled with immediate value
-     * 2. push fulfilled in right promise
-     * @ignore
-     * @param fulfilled
-     * @param rejected
+    /*
+     two effects:
+     1. call fulfilled with immediate value
+     2. push fulfilled in right promise
      */
     function promiseWhen(promise, fulfilled, rejected) {
         // simply call rejected
@@ -1833,13 +1830,13 @@ var KISSY = (function (undefined) {
          * fulfill defer object's promise
          * note: can only be called once
          * @param value defer object's value
-         * @return defer object's promise
+         * @return {KISSY.Promise} defer object's promise
          */
         resolve: function (value) {
             var promise = this.promise,
                 pendings;
             if (!(pendings = promise[PROMISE_PENDINGS])) {
-                return undefined;
+                return null;
             }
             // set current promise 's resolved value
             // maybe a promise or instant value
@@ -1854,7 +1851,7 @@ var KISSY = (function (undefined) {
         /**
          * reject defer object's promise
          * @param reason
-         * @return defer object's promise
+         * @return {KISSY.Promise} defer object's promise
          */
         reject: function (reason) {
             return this.resolve(new Reject(reason));
@@ -1887,9 +1884,9 @@ var KISSY = (function (undefined) {
         /**
          * register callbacks when this promise object is resolved
          * @param {Function} fulfilled called when resolved successfully,pass a resolved value to this function and
-         * return a value (could be promise object) for the new promise's resolved value.
+         * return a value (could be promise object) for the new promise 's resolved value.
          * @param {Function} [rejected] called when error occurs,pass error reason to this function and
-         * return a new reason for the new promise's error reason
+         * return a new reason for the new promise 's error reason
          * @return {KISSY.Promise} a new promise object
          */
         then: function (fulfilled, rejected) {
@@ -1916,6 +1913,31 @@ var KISSY = (function (undefined) {
                 return callback(reason, false);
             });
         },
+
+        /**
+         * register callbacks when this promise object is resolved,
+         * and throw error at next event loop if promise
+         * (current instance if no fulfilled and rejected parameter or
+         * new instance caused by call this.then(fulfilled, rejected))
+         * fails.
+         * @param {Function} [fulfilled] called when resolved successfully,pass a resolved value to this function and
+         * return a value (could be promise object) for the new promise 's resolved value.
+         * @param {Function} [rejected] called when error occurs,pass error reason to this function and
+         * return a new reason for the new promise 's error reason
+         */
+        done: function (fulfilled, rejected) {
+            var self = this,
+                onUnhandledError = function (error) {
+                    setTimeout(function () {
+                        throw error;
+                    }, 0);
+                },
+                promiseToHandle = fulfilled || rejected ?
+                    self.then(fulfilled, rejected) :
+                    self;
+            promiseToHandle.fail(onUnhandledError);
+        },
+
         /**
          * whether the given object is a resolved promise
          * if it is resolved with another promise,
@@ -1942,7 +1964,7 @@ var KISSY = (function (undefined) {
         if (self[PROMISE_VALUE] instanceof Promise) {
             S.error('assert.not(this.__promise_value instanceof promise) in Reject constructor');
         }
-        return undefined;
+        return self;
     }
 
     S.extend(Reject, Promise);
@@ -2053,9 +2075,9 @@ var KISSY = (function (undefined) {
              * or call fulfilled callback directly when obj is not a promise object
              * @param {KISSY.Promise|*} obj a promise object or value of any type
              * @param {Function} fulfilled called when obj resolved successfully,pass a resolved value to this function and
-             * return a value (could be promise object) for the new promise's resolved value.
+             * return a value (could be promise object) for the new promise 's resolved value.
              * @param {Function} [rejected] called when error occurs in obj,pass error reason to this function and
-             * return a new reason for the new promise's error reason
+             * return a new reason for the new promise 's error reason
              * @return {KISSY.Promise} a new promise object
              *
              * for example:
@@ -2112,7 +2134,7 @@ var KISSY = (function (undefined) {
             all: function (promises) {
                 var count = promises.length;
                 if (!count) {
-                    return promises;
+                    return null;
                 }
                 var defer = Defer();
                 for (var i = 0; i < promises.length; i++) {
@@ -5867,7 +5889,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130312215159'
+            tag: '20130313145558'
         }, getBaseInfo()));
     }
 
@@ -6002,7 +6024,7 @@ var KISSY = (function (undefined) {
          */
         ready: function (fn) {
 
-            readyPromise.then(fn);
+            readyPromise.done(fn);
 
             return this;
         },

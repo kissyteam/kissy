@@ -432,7 +432,8 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
             };
         }
 
-        self.then(genHandler('success'), genHandler('error'));
+        // fix: easy error report
+        self.done(genHandler('success'), genHandler('error'));
 
         self.fin(genHandler('complete'));
 

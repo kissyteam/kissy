@@ -1,0 +1,17 @@
+<script  src="/kissy/build/seed-min.js"></script>
+<script >
+    KISSY.use("io", function (S, io) {
+
+        var promise = io({
+            url:'../../data/io-json.jss',
+            dataType:'json',
+            success:function () {
+                throw new Error("haha !");
+            },
+            error:function(){
+                alert(1);
+            }
+        });
+
+    });
+</script>

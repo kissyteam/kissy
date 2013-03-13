@@ -122,9 +122,9 @@
         /**
          * register callbacks when this promise object is resolved
          * @param {Function} fulfilled called when resolved successfully,pass a resolved value to this function and
-         * return a value (could be promise object) for the new promise's resolved value.
+         * return a value (could be promise object) for the new promise 's resolved value.
          * @param {Function} [rejected] called when error occurs,pass error reason to this function and
-         * return a new reason for the new promise's error reason
+         * return a new reason for the new promise 's error reason
          * @return {KISSY.Promise} a new promise object
          */
         then: function (fulfilled, rejected) {
@@ -151,6 +151,31 @@
                 return callback(reason, false);
             });
         },
+
+        /**
+         * register callbacks when this promise object is resolved,
+         * and throw error at next event loop if promise
+         * (current instance if no fulfilled and rejected parameter or
+         * new instance caused by call this.then(fulfilled, rejected))
+         * fails.
+         * @param {Function} [fulfilled] called when resolved successfully,pass a resolved value to this function and
+         * return a value (could be promise object) for the new promise 's resolved value.
+         * @param {Function} [rejected] called when error occurs,pass error reason to this function and
+         * return a new reason for the new promise 's error reason
+         */
+        done: function (fulfilled, rejected) {
+            var self = this,
+                onUnhandledError = function (error) {
+                    setTimeout(function () {
+                        throw error;
+                    }, 0);
+                },
+                promiseToHandle = fulfilled || rejected ?
+                    self.then(fulfilled, rejected) :
+                    self;
+            promiseToHandle.fail(onUnhandledError);
+        },
+
         /**
          * whether the given object is a resolved promise
          * if it is resolved with another promise,
@@ -288,9 +313,9 @@
              * or call fulfilled callback directly when obj is not a promise object
              * @param {KISSY.Promise|*} obj a promise object or value of any type
              * @param {Function} fulfilled called when obj resolved successfully,pass a resolved value to this function and
-             * return a value (could be promise object) for the new promise's resolved value.
+             * return a value (could be promise object) for the new promise 's resolved value.
              * @param {Function} [rejected] called when error occurs in obj,pass error reason to this function and
-             * return a new reason for the new promise's error reason
+             * return a new reason for the new promise 's error reason
              * @return {KISSY.Promise} a new promise object
              *
              * for example:

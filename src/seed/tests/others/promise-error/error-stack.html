@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <script src="/kissy/build/seed-min.js"></script>
+    <script>
+
+        function a1() {
+            a2();
+        }
+
+        function a2() {
+            a3();
+        }
+
+        function a3() {
+            throw new Error('a3 error');
+        }
+
+        KISSY.ready(function () {
+            a1();
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

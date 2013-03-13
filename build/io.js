@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 8 23:03
+build time: Mar 13 14:53
 */
 /**
  * @ignore
@@ -437,7 +437,8 @@ KISSY.add('io/base', function (S, JSON, Event, undefined) {
             };
         }
 
-        self.then(genHandler('success'), genHandler('error'));
+        // fix: easy error report
+        self.done(genHandler('success'), genHandler('error'));
 
         self.fin(genHandler('complete'));
 

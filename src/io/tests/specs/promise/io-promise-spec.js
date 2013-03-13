@@ -9,13 +9,13 @@ KISSY.use("io", function (S, io) {
         it('context should works as before', function () {
             var c = {}, ok = 0;
             io({
-                url:URL,
-                context:c,
-                data:{
-                    x:99
+                url: URL,
+                context: c,
+                data: {
+                    x: 99
                 },
-                dataType:'json',
-                success:function (d) {
+                dataType: 'json',
+                success: function (d) {
                     expect(d.x).toBe('99');
                     expect(this).toBe(c);
                     ok = 1;
@@ -29,12 +29,12 @@ KISSY.use("io", function (S, io) {
         it('should support then differently', function () {
             var ok = 0,
                 r = io({
-                    url:URL,
-                    context:{},
-                    data:{
-                        x:99
+                    url: URL,
+                    context: {},
+                    data: {
+                        x: 99
                     },
-                    dataType:'json'
+                    dataType: 'json'
                 });
             r.then(function (v) {
                 // S.log(arguments);
@@ -57,12 +57,12 @@ KISSY.use("io", function (S, io) {
         it('should support fail differently', function () {
             var ok = 0,
                 r = io({
-                    url:'404',
-                    context:{},
-                    data:{
-                        x:99
+                    url: '404',
+                    context: {},
+                    data: {
+                        x: 99
                     },
-                    dataType:'json'
+                    dataType: 'json'
                 });
             r.then(function () {
             }, function (v) {
@@ -88,12 +88,12 @@ KISSY.use("io", function (S, io) {
 
         it("should support chained value", function () {
             var r = io({
-                url:URL,
-                context:{},
-                data:{
-                    x:99
+                url: URL,
+                context: {},
+                data: {
+                    x: 99
                 },
-                dataType:'json'
+                dataType: 'json'
             }), v2;
 
             r.then(
@@ -110,32 +110,29 @@ KISSY.use("io", function (S, io) {
             runs(function () {
                 expect(v2).toBe(100);
             });
-
         });
 
         it("should support nested promise", function () {
             var r = io({
-                url:URL,
-                context:{},
-                data:{
-                    x:99
+                url: URL,
+                context: {},
+                data: {
+                    x: 99
                 },
-                dataType:'json'
+                dataType: 'json'
             }), ret;
 
             r.then(function (v) {
                 expect(v[0].x).toBe('99');
                 return io({
-                    url:URL,
-                    context:{},
-                    data:{
-                        x:101
+                    url: URL,
+                    context: {},
+                    data: {
+                        x: 101
                     },
-                    dataType:'json'
+                    dataType: 'json'
                 });
-            })
-
-                .then(function (v) {
+            }).then(function (v) {
                     expect(v[0].x).toBe('101');
                     ret = 1;
                 });
@@ -145,24 +142,86 @@ KISSY.use("io", function (S, io) {
             }, 2000);
         });
 
+        it('then will catch then error', function () {
+            var errorCalled = '';
+            var completeCalled = 0;
+            io({
+                url: URL,
+                data: {
+                    x: 99
+                },
+                dataType: 'json'
+            }).then(function () {
+                    throw new Error('haha')
+                }).then(function () {
+                    completeCalled = 1;
+                }, function (e) {
+                    errorCalled = e.message;
+                    completeCalled = 1;
+                });
+
+            waitsFor(function () {
+                return completeCalled
+            });
+
+            waits(30);
+
+            runs(function () {
+                expect(errorCalled).toBe('haha');
+            });
+        });
+
+        it('then will not catch success config error', function () {
+            var errorCalled = '';
+            var completeCalled = 0;
+            io({
+                url: URL,
+                data: {
+                    x: 99
+                },
+                dataType: 'json',
+                success: function () {
+                    throw new Error('haha')
+                },
+                complete: function () {
+                    completeCalled = 1;
+                }
+            }).then(function () {
+                    completeCalled = 1;
+                }, function (e) {
+                    errorCalled = e.message;
+                    completeCalled = 1;
+                });
+
+            waitsFor(function () {
+                return completeCalled
+            });
+
+            waits(30);
+
+            runs(function () {
+                expect(errorCalled).toBe('');
+            });
+        });
+
         it("should support Promise.all", function () {
 
             var r = io({
-                url:URL,
-                context:{},
-                data:{
-                    x:99
+                url: URL,
+                context: {},
+                data: {
+                    x: 99
                 },
-                dataType:'json'
+                dataType: 'json'
             });
 
             var r2 = io({
-                url:URL,
-                context:{},
-                data:{
-                    x:101
+                url: URL,
+                context: {},
+                data: {
+                    x: 101
                 },
-                dataType:'json'
+                dataType: 'json'
             });
 
             var ret;

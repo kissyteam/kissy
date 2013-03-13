@@ -121,7 +121,7 @@
          */
         ready: function (fn) {
 
-            readyPromise.then(fn);
+            readyPromise.done(fn);
 
             return this;
         },
