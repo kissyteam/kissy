@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 13 21:18
+build time: Mar 13 22:29
 */
 /**
  * combination of menu and button ,similar to native select
@@ -189,7 +189,8 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                 // eg: menu.show(); menu.hide();
                 el.css("visibility", "hidden").prependTo(el[0].ownerDocument.body);
                 var self = this;
-                self.setInternal("menu", MenuButton.superclass.decorateChildrenInternal.apply(self, UI,el,self.get('menu')));
+                self.setInternal("menu",
+                    Component.DecorateChild.prototype.decorateChildrenInternal.call(self, UI, el, self.get('menu')));
             },
 
             destructor: function () {
@@ -237,7 +238,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                  * @private
                  */
                 decorateChildCls: {
-                    value:'popupmenu'
+                    value: 'popupmenu'
                 },
                 /**
                  * Drop down menu associated with this menubutton.
@@ -245,9 +246,9 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
                  */
                 menu: {
                     value: {},
-                    setter:function(m){
-                        if(m&& m.isController){
-                            m.setInternal('parent',this);
+                    setter: function (m) {
+                        if (m && m.isController) {
+                            m.setInternal('parent', this);
                         }
                     }
                 },

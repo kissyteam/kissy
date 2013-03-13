@@ -13,8 +13,8 @@ KISSY.add("component/base/decorate-child", function (S, DecorateChildren) {
             var self = this;
             // 不用 setInternal , 通知 view 更新
             self.set("el", element);
-            var prefixCls = self.get('defaultChildCfg').xclass,
-                child = element.one("." + (prefixCls + elf.get("decorateChildCls")));
+            var prefixCls = self.get('defaultChildCfg').prefixCls,
+                child = element.one("." + (prefixCls + self.get("decorateChildCls")));
             // 可以装饰?
             if (child) {
                 var ChildUI = self.findChildConstructorFromNode(prefixCls, child);

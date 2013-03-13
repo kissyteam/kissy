@@ -184,7 +184,8 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 // eg: menu.show(); menu.hide();
                 el.css("visibility", "hidden").prependTo(el[0].ownerDocument.body);
                 var self = this;
-                self.setInternal("menu", SubMenu.superclass.decorateChildrenInternal.apply(self, UI,el,self.get('menu')));
+                self.setInternal("menu",
+                    Component.DecorateChild.prototype.decorateChildrenInternal.call(self, UI, el, self.get('menu')));
             },
 
             destructor: function () {
@@ -240,7 +241,7 @@ KISSY.add("menu/submenu", function (S, Event, Component, MenuItem, SubMenuRender
                 },
 
                 decorateChildCls: {
-                    value:'popupmenu'
+                    value: 'popupmenu'
                 },
                 xrender: {
                     value: SubMenuRender
