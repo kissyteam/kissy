@@ -1,0 +1,14 @@
+<script src="/kissy/build/seed.js" charset="utf-8"></script>
+<script>
+    KISSY.config({
+        modules: {
+            'jsonp/data': {
+                fullpath:'./data.jss?test=haha'
+            }
+        }
+    });
+
+    KISSY.use('jsonp/data,json', function (S, data, JSON) {
+        alert(JSON.stringify(data));
+    });
+</script>
