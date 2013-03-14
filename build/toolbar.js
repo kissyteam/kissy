@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 13 21:18
+build time: Mar 14 22:19
 */
 /**
  * Toolbar for KISSY.
@@ -53,7 +53,7 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
             expandedItem,
             children,
             target = e.target;
-        if (self !== target && (target.isMenuItem|| target.isButton)) {
+        if (self !== target && (target.isMenuItem || target.isButton)) {
 
             if (e.newVal) {
                 children = self.get('children');
@@ -68,12 +68,6 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                 }
             }
         }
-    }
-
-    function processChild(c) {
-        // 交给容器代理
-        c.set("handleMouseEvents", false);
-        c.set("focusable", false);
     }
 
     function getChildByHighlightedItem(toolbar) {
@@ -99,13 +93,6 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
          * @lends Toolbar#
          */
         {
-
-            addChild: function () {
-                var c = Toolbar.superclass.addChild.apply(this, arguments);
-                processChild(c);
-                return c;
-            },
-
             createDom: function () {
                 this.get("el").attr("role", "toolbar");
             },
@@ -251,7 +238,9 @@ KISSY.add("toolbar", function (S, Component, Node, Separator, undefined) {
                 },
                 defaultChildCfg: {
                     value: {
-                        xclass:'button'
+                        xclass: 'button',
+                        handleMouseEvents: false,
+                        focusable: false
                     }
                 }
             }
