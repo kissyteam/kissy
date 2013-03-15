@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 1 15:50
+build time: Mar 15 12:59
 */
 /**
  * @ignore
@@ -147,7 +147,6 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
              * @ignore
              */
             on: function (target, type, fn, context) {
-                type = trim(type);
                 _Utils.batchForType(function (type, fn, context) {
                     var cfg = _Utils.normalizeParam(type, fn, context),
                         customEvent;
@@ -164,7 +163,6 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
              * @ignore
              */
             detach: function (target, type, fn, context) {
-                type = trim(type);
                 _Utils.batchForType(function (type, fn, context) {
                     var cfg = _Utils.normalizeParam(type, fn, context),
                         customEvents,

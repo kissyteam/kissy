@@ -142,7 +142,6 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
              * @ignore
              */
             on: function (target, type, fn, context) {
-                type = trim(type);
                 _Utils.batchForType(function (type, fn, context) {
                     var cfg = _Utils.normalizeParam(type, fn, context),
                         customEvent;
@@ -159,7 +158,6 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
              * @ignore
              */
             detach: function (target, type, fn, context) {
-                type = trim(type);
                 _Utils.batchForType(function (type, fn, context) {
                     var cfg = _Utils.normalizeParam(type, fn, context),
                         customEvents,

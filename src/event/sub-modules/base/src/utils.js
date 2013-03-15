@@ -10,6 +10,10 @@ KISSY.add('event/base/utils', function (S) {
     return {
 
         splitAndRun: splitAndRun = function (type, fn) {
+            if (S.isArray(type)) {
+                S.each(type, fn);
+                return;
+            }
             type = S.trim(type);
             if (type.indexOf(' ') == -1) {
                 fn(type);
@@ -45,12 +49,23 @@ KISSY.add('event/base/utils', function (S) {
         batchForType: function (fn, num) {
             var args = S.makeArray(arguments),
                 types = args[2 + num];
-            splitAndRun(types, function (type) {
-                var args2 = [].concat(args);
-                args2.splice(0, 2);
-                args2[num] = type;
-                fn.apply(null, args2);
-            });
+            // in case null
+            if (types && typeof types == 'object') {
+                S.each(types, function (value, type) {
+                    var args2 = [].concat(args);
+                    args2.splice(0, 2);
+                    args2[num] = type;
+                    args2[num + 1] = value;
+                    fn.apply(null, args2);
+                });
+            } else {
+                splitAndRun(types, function (type) {
+                    var args2 = [].concat(args);
+                    args2.splice(0, 2);
+                    args2[num] = type;
+                    fn.apply(null, args2);
+                });
+            }
         },
 
         getTypedGroups: getTypedGroups = function (type) {

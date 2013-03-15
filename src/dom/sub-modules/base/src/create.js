@@ -7,6 +7,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
         NodeType = DOM.NodeType,
+        slice = [].slice,
         UA = S.UA,
         ie = UA['ie'],
         DIV = 'div',
@@ -26,7 +27,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
     }
 
     function cleanData(els) {
-        var Event = S.require('event/dom');
+        var Event = S.require('event/dom/base');
         if (Event) {
             Event.detach(els);
         }
@@ -137,7 +138,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 div: defaultCreator
             },
 
-            _defaultCreator:defaultCreator,
+            _defaultCreator: defaultCreator,
 
             /**
              * Get the HTML contents of the first element in the set of matched elements.
@@ -175,8 +176,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                     // faster
                     // fix #103,some html element can not be set through innerHTML
                     if (!htmlString.match(/<(?:script|style|link)/i) &&
-                        (!lostLeadingWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) &&
-                        !creatorsMap[ (htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase() ]) {
+                        (!lostLeadingWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) && !creatorsMap[ (htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase() ]) {
 
                         try {
                             for (i = els.length - 1; i >= 0; i--) {
@@ -233,6 +233,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                             DEFAULT_DIV;
                         holder.innerHTML = '';
                         holder.appendChild(DOM.clone(el, true));
+                        holder.appendChild(DOM.clone(el, true));
                         return holder.innerHTML;
                     }
                 } else {
@@ -262,19 +263,22 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
             remove: function (selector, keepData) {
                 var el,
                     els = DOM.query(selector),
-                    elChildren,
+                    all,
+                    parent,
+                    Event = S.require('event/dom/base'),
                     i;
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
                     if (!keepData && el.nodeType == NodeType.ELEMENT_NODE) {
-                        // 清理数据
-                        elChildren = getElementsByTagName(el, '*');
-                        cleanData(elChildren);
-                        cleanData(el);
+                        all = slice.call(getElementsByTagName(el, '*'), 0);
+                        all.push(el);
+                        DOM.removeData(all);
+                        if (Event) {
+                            Event.detach(all);
+                        }
                     }
-
-                    if (el.parentNode) {
-                        el.parentNode.removeChild(el);
+                    if (parent = el.parentNode) {
+                        parent.removeChild(el);
                     }
                 }
             },

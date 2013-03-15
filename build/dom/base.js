@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 12 21:51
+build time: Mar 15 12:59
 */
 /**
  * @ignore
@@ -941,6 +941,9 @@ KISSY.add('dom/base/class', function (S, DOM) {
 });
 
 /*
+ http://jsperf.com/kissy-classlist-vs-classname 17157:14741
+ http://jsperf.com/kissy-1-3-vs-jquery-on-dom-class 15721:15223
+
  NOTES:
  - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
  - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
@@ -954,6 +957,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
         NodeType = DOM.NodeType,
+        slice = [].slice,
         UA = S.UA,
         ie = UA['ie'],
         DIV = 'div',
@@ -973,7 +977,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
     }
 
     function cleanData(els) {
-        var Event = S.require('event/dom');
+        var Event = S.require('event/dom/base');
         if (Event) {
             Event.detach(els);
         }
@@ -1084,7 +1088,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 div: defaultCreator
             },
 
-            _defaultCreator:defaultCreator,
+            _defaultCreator: defaultCreator,
 
             /**
              * Get the HTML contents of the first element in the set of matched elements.
@@ -1122,8 +1126,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                     // faster
                     // fix #103,some html element can not be set through innerHTML
                     if (!htmlString.match(/<(?:script|style|link)/i) &&
-                        (!lostLeadingWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) &&
-                        !creatorsMap[ (htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase() ]) {
+                        (!lostLeadingWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) && !creatorsMap[ (htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase() ]) {
 
                         try {
                             for (i = els.length - 1; i >= 0; i--) {
@@ -1180,6 +1183,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                             DEFAULT_DIV;
                         holder.innerHTML = '';
                         holder.appendChild(DOM.clone(el, true));
+                        holder.appendChild(DOM.clone(el, true));
                         return holder.innerHTML;
                     }
                 } else {
@@ -1209,19 +1213,22 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
             remove: function (selector, keepData) {
                 var el,
                     els = DOM.query(selector),
-                    elChildren,
+                    all,
+                    parent,
+                    Event = S.require('event/dom/base'),
                     i;
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
                     if (!keepData && el.nodeType == NodeType.ELEMENT_NODE) {
-                        // 清理数据
-                        elChildren = getElementsByTagName(el, '*');
-                        cleanData(elChildren);
-                        cleanData(el);
+                        all = slice.call(getElementsByTagName(el, '*'), 0);
+                        all.push(el);
+                        DOM.removeData(all);
+                        if (Event) {
+                            Event.detach(all);
+                        }
                     }
-
-                    if (el.parentNode) {
-                        el.parentNode.removeChild(el);
+                    if (parent = el.parentNode) {
+                        parent.removeChild(el);
                     }
                 }
             },
@@ -3045,7 +3052,6 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         getNodeName = DOM.nodeName,
         doc = WINDOW.document,
         STYLE = 'style',
-        FLOAT = 'float',
         RE_MARGIN = /^margin/,
         WIDTH = 'width',
         HEIGHT = 'height',
@@ -3065,19 +3071,19 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             'zoom': 1
         },
         rmsPrefix = /^-ms-/,
-        RE_DASH = /-([a-z])/ig,
-        CAMEL_CASE_FN = function (all, letter) {
-            return letter.toUpperCase();
-        },
     // 考虑 ie9 ...
         R_UPPER = /([A-Z]|^ms)/g,
         EMPTY = '',
         DEFAULT_UNIT = 'px',
         CUSTOM_STYLES = {},
-        cssProps = {},
-        defaultDisplay = {};
-
-    cssProps[FLOAT] = 'cssFloat';
+        cssProps = {
+            float: 'cssFloat'
+        },
+        defaultDisplay = {},
+        RE_DASH = /-([a-z])/ig,
+        CAMEL_CASE_FN = function (all, letter) {
+            return letter.toUpperCase();
+        };
 
     function camelCase(name) {
         // fix #92, ms!
@@ -3230,7 +3236,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                             ret = DOM._getComputedStyle(elem, name);
                         }
                     }
-                    return ret === undefined ? '' : ret;
+                    return (ret === undefined) ? '' : ret;
                 }
                 // setter
                 else {

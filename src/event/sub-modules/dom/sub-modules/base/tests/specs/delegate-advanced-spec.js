@@ -170,6 +170,7 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
             Event.delegate("#delegateAdvanced", "focus", "input", function () {
                 ret.push(5);
             });
+
             Event.undelegate("#delegateAdvanced", null, "input");
             DOM.get("#delegateAdvanced2").click();
             waits(100);

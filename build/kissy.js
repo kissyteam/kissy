@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 13 14:56
+build time: Mar 15 13:12
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130313145558' will replace with current timestamp when compressing.
+         * NOTICE: '20130315131218' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130313145558',
+        __BUILD_TIME: '20130315131218',
         /**
          * KISSY Environment.
          * @private
@@ -5889,7 +5889,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130313145558'
+            tag: '20130315131218'
         }, getBaseInfo()));
     }
 
@@ -6491,7 +6491,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 12 21:51
+build time: Mar 15 12:59
 */
 /**
  * @ignore
@@ -7431,6 +7431,9 @@ KISSY.add('dom/base/class', function (S, DOM) {
 });
 
 /*
+ http://jsperf.com/kissy-classlist-vs-classname 17157:14741
+ http://jsperf.com/kissy-1-3-vs-jquery-on-dom-class 15721:15223
+
  NOTES:
  - hasClass/addClass/removeClass 的逻辑和 jQuery 保持一致
  - toggleClass 不支持 value 为 undefined 的情形（jQuery 支持）
@@ -7444,6 +7447,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
         NodeType = DOM.NodeType,
+        slice = [].slice,
         UA = S.UA,
         ie = UA['ie'],
         DIV = 'div',
@@ -7463,7 +7467,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
     }
 
     function cleanData(els) {
-        var Event = S.require('event/dom');
+        var Event = S.require('event/dom/base');
         if (Event) {
             Event.detach(els);
         }
@@ -7574,7 +7578,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 div: defaultCreator
             },
 
-            _defaultCreator:defaultCreator,
+            _defaultCreator: defaultCreator,
 
             /**
              * Get the HTML contents of the first element in the set of matched elements.
@@ -7612,8 +7616,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                     // faster
                     // fix #103,some html element can not be set through innerHTML
                     if (!htmlString.match(/<(?:script|style|link)/i) &&
-                        (!lostLeadingWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) &&
-                        !creatorsMap[ (htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase() ]) {
+                        (!lostLeadingWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) && !creatorsMap[ (htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase() ]) {
 
                         try {
                             for (i = els.length - 1; i >= 0; i--) {
@@ -7670,6 +7673,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                             DEFAULT_DIV;
                         holder.innerHTML = '';
                         holder.appendChild(DOM.clone(el, true));
+                        holder.appendChild(DOM.clone(el, true));
                         return holder.innerHTML;
                     }
                 } else {
@@ -7699,19 +7703,22 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
             remove: function (selector, keepData) {
                 var el,
                     els = DOM.query(selector),
-                    elChildren,
+                    all,
+                    parent,
+                    Event = S.require('event/dom/base'),
                     i;
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
                     if (!keepData && el.nodeType == NodeType.ELEMENT_NODE) {
-                        // 清理数据
-                        elChildren = getElementsByTagName(el, '*');
-                        cleanData(elChildren);
-                        cleanData(el);
+                        all = slice.call(getElementsByTagName(el, '*'), 0);
+                        all.push(el);
+                        DOM.removeData(all);
+                        if (Event) {
+                            Event.detach(all);
+                        }
                     }
-
-                    if (el.parentNode) {
-                        el.parentNode.removeChild(el);
+                    if (parent = el.parentNode) {
+                        parent.removeChild(el);
                     }
                 }
             },
@@ -9535,7 +9542,6 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         getNodeName = DOM.nodeName,
         doc = WINDOW.document,
         STYLE = 'style',
-        FLOAT = 'float',
         RE_MARGIN = /^margin/,
         WIDTH = 'width',
         HEIGHT = 'height',
@@ -9555,19 +9561,19 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
             'zoom': 1
         },
         rmsPrefix = /^-ms-/,
-        RE_DASH = /-([a-z])/ig,
-        CAMEL_CASE_FN = function (all, letter) {
-            return letter.toUpperCase();
-        },
     // 考虑 ie9 ...
         R_UPPER = /([A-Z]|^ms)/g,
         EMPTY = '',
         DEFAULT_UNIT = 'px',
         CUSTOM_STYLES = {},
-        cssProps = {},
-        defaultDisplay = {};
-
-    cssProps[FLOAT] = 'cssFloat';
+        cssProps = {
+            float: 'cssFloat'
+        },
+        defaultDisplay = {},
+        RE_DASH = /-([a-z])/ig,
+        CAMEL_CASE_FN = function (all, letter) {
+            return letter.toUpperCase();
+        };
 
     function camelCase(name) {
         // fix #92, ms!
@@ -9720,7 +9726,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                             ret = DOM._getComputedStyle(elem, name);
                         }
                     }
-                    return ret === undefined ? '' : ret;
+                    return (ret === undefined) ? '' : ret;
                 }
                 // setter
                 else {
@@ -11308,7 +11314,7 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:01
+build time: Mar 15 13:10
 */
 /**
  * @ignore
@@ -11655,6 +11661,10 @@ KISSY.add('event/base/utils', function (S) {
     return {
 
         splitAndRun: splitAndRun = function (type, fn) {
+            if (S.isArray(type)) {
+                S.each(type, fn);
+                return;
+            }
             type = S.trim(type);
             if (type.indexOf(' ') == -1) {
                 fn(type);
@@ -11690,12 +11700,23 @@ KISSY.add('event/base/utils', function (S) {
         batchForType: function (fn, num) {
             var args = S.makeArray(arguments),
                 types = args[2 + num];
-            splitAndRun(types, function (type) {
-                var args2 = [].concat(args);
-                args2.splice(0, 2);
-                args2[num] = type;
-                fn.apply(null, args2);
-            });
+            // in case null
+            if (types && typeof types == 'object') {
+                S.each(types, function (value, type) {
+                    var args2 = [].concat(args);
+                    args2.splice(0, 2);
+                    args2[num] = type;
+                    args2[num + 1] = value;
+                    fn.apply(null, args2);
+                });
+            } else {
+                splitAndRun(types, function (type) {
+                    var args2 = [].concat(args);
+                    args2.splice(0, 2);
+                    args2[num] = type;
+                    fn.apply(null, args2);
+                });
+            }
         },
 
         getTypedGroups: getTypedGroups = function (type) {
@@ -11725,7 +11746,7 @@ KISSY.add('event/base/utils', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 1 15:50
+build time: Mar 15 12:59
 */
 /**
  * @ignore
@@ -11871,7 +11892,6 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
              * @ignore
              */
             on: function (target, type, fn, context) {
-                type = trim(type);
                 _Utils.batchForType(function (type, fn, context) {
                     var cfg = _Utils.normalizeParam(type, fn, context),
                         customEvent;
@@ -11888,7 +11908,6 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
              * @ignore
              */
             detach: function (target, type, fn, context) {
-                type = trim(type);
                 _Utils.batchForType(function (type, fn, context) {
                     var cfg = _Utils.normalizeParam(type, fn, context),
                         customEvents,
@@ -12348,7 +12367,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 7 12:36
+build time: Mar 15 13:03
 */
 /**
  * @ignore
@@ -12484,7 +12503,6 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
          */
         add: function (targets, type, fn, context) {
-            type = S.trim(type);
             // data : 附加在回调后面的数据，delegate 检查使用
             // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
             targets = DOM.query(targets);
@@ -12504,8 +12522,10 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
          * @param targets KISSY selector
          * @member KISSY.Event
-         * @param {String} [type] The type of event to remove.
+         * @param {String|Boolean} [type] The type of event to remove.
          * use space to separate multiple event types.
+         * or
+         * whether to remove all events from  descendants nodes.
          * @param [fn] {Function|Object} The event listener or event description object.
          * @param {Function} fn.fn The event listener
          * @param {Function} [fn.context] The context (this reference) in which the handler function is executed.
@@ -12515,20 +12535,32 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          */
         remove: function (targets, type, fn, context) {
 
-            type = S.trim(type);
-
+            var realType = type;
+            if (type === true) {
+                realType = '';
+            }
             targets = DOM.query(targets);
 
-            _Utils.batchForType(function (targets, type, fn, context) {
-                var cfg = _Utils.normalizeParam(type, fn, context), i;
+            _Utils.batchForType(function (targets, singleType, fn, context) {
+                var cfg = _Utils.normalizeParam(singleType, fn, context),
+                    i,
+                    j,
+                    elChildren,
+                    t;
 
-                type = cfg.type;
+                singleType = cfg.type;
 
                 for (i = targets.length - 1; i >= 0; i--) {
-                    removeInternal(targets[i], type, cfg);
+                    t = targets[i];
+                    removeInternal(t, singleType, cfg);
+                    if (type === true) {
+                        elChildren = t.getElementsByTagName('*');
+                        for (j = elChildren.length - 1; j >= 0; j--) {
+                            removeInternal(elChildren[j]);
+                        }
+                    }
                 }
-            }, 1, targets, type, fn, context);
-
+            }, 1, targets, realType, fn, context);
 
             return targets;
 
@@ -12668,7 +12700,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
             events = eventDesc.events;
             S.each(events, function (customEvent, type) {
                 S.each(customEvent.observers, function (observer) {
-                    // scope undefined
+                    // context undefined
                     // 不能 this 写死在 handlers 中
                     // 否则不能保证 clone 时的 this
                     addInternal(dest, type, observer);
@@ -14484,7 +14516,7 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:01
+build time: Mar 15 12:59
 */
 /**
  * @ignore
@@ -14546,7 +14578,7 @@ KISSY.add('event/dom/focusin', function (S, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:01
+build time: Mar 15 12:59
 */
 /**
  * @ignore
@@ -14787,7 +14819,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:01
+build time: Mar 15 12:59
 */
 /**
  * @ignore
@@ -14817,6 +14849,7 @@ KISSY.add('event/dom/ie/change', function (S, Event, DOM) {
                     // change in ie<9
                     // change = propertychange -> click
                     Event.on(el, 'propertychange', propertyChange);
+                    // click may not cause change! (eg: radio)
                     Event.on(el, 'click', onClick);
                 } else {
                     // other form elements use native , do not bubble
@@ -14983,7 +15016,7 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:01
+build time: Mar 15 12:59
 */
 /**
  * @ignore
@@ -15077,7 +15110,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:01
+build time: Mar 15 12:59
 */
 /**
  * @ignore
@@ -15226,8 +15259,6 @@ KISSY.add('event/dom/touch/handle-map', function () {
  */
 KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Gesture) {
 
-    'use strict';
-
     var key = S.guid('touch-handle'),
         Features = S.Features,
         MOVE_DELAY = 30,
@@ -15237,10 +15268,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
     touchEvents[Gesture.start] = 'onTouchStart';
     touchEvents[Gesture.move] = 'onTouchMove';
     touchEvents[Gesture.end] = 'onTouchEnd';
-
-    if (Gesture.start !== 'mousedown') {
-        touchEvents.touchcancel = 'onTouchEnd';
-    }
+    touchEvents['touchcancel'] = 'onTouchEnd';
 
     function DocumentHandler(doc) {
 

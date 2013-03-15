@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:01
+build time: Mar 15 12:59
 */
 /**
  * @ignore
@@ -150,8 +150,6 @@ KISSY.add('event/dom/touch/handle-map', function () {
  */
 KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Gesture) {
 
-    'use strict';
-
     var key = S.guid('touch-handle'),
         Features = S.Features,
         MOVE_DELAY = 30,
@@ -161,10 +159,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
     touchEvents[Gesture.start] = 'onTouchStart';
     touchEvents[Gesture.move] = 'onTouchMove';
     touchEvents[Gesture.end] = 'onTouchEnd';
-
-    if (Gesture.start !== 'mousedown') {
-        touchEvents.touchcancel = 'onTouchEnd';
-    }
+    touchEvents['touchcancel'] = 'onTouchEnd';
 
     function DocumentHandler(doc) {
 

@@ -330,7 +330,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
                 });
             });
 
-            it('should reomve all the event handler of the specified element', function () {
+            it('should remove all the event handler of the specified element', function () {
                 var h = DOM.get('#link-h');
 
                 var result = [];
@@ -353,8 +353,50 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
                     expect(result.join(SEP)).toEqual([].join(SEP));
                 });
             });
-        });
 
+
+            it('call remove event from descendants', function () {
+
+                var bar = DOM.get('#bar'),
+                    foo = DOM.get('#foo'),
+                    bard = 0,
+                    food = 0;
+
+                Event.on(bar, {
+                    'o': {
+                        fn: function () {
+                            bard = 1;
+                        }
+                    }
+                });
+
+                Event.on(foo, {
+                    'w': {
+                        fn: function () {
+                            food = 1;
+                        }
+                    }
+                });
+
+                Event.fire(bar,'o');
+                Event.fire(foo,'w');
+
+                expect(bard).toBe(1);
+                expect(food).toBe(1);
+
+                bard=0;
+                food=0;
+
+                Event.detach(foo,true);
+
+                Event.fire(bar,'o');
+                Event.fire(foo,'w');
+
+                expect(bard).toBe(0);
+                expect(food).toBe(0);
+
+            });
+        });
 
 
         describe('event handler context', function () {

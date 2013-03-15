@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 7 12:36
+build time: Mar 15 13:03
 */
 /**
  * @ignore
@@ -137,7 +137,6 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * @param {Object} [context] The context (this reference) in which the handler function is executed.
          */
         add: function (targets, type, fn, context) {
-            type = S.trim(type);
             // data : 附加在回调后面的数据，delegate 检查使用
             // remove 时 data 相等(指向同一对象或者定义了 equals 比较函数)
             targets = DOM.query(targets);
@@ -157,8 +156,10 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * Detach an event or set of events from an element. similar to removeEventListener in DOM3 Events
          * @param targets KISSY selector
          * @member KISSY.Event
-         * @param {String} [type] The type of event to remove.
+         * @param {String|Boolean} [type] The type of event to remove.
          * use space to separate multiple event types.
+         * or
+         * whether to remove all events from  descendants nodes.
          * @param [fn] {Function|Object} The event listener or event description object.
          * @param {Function} fn.fn The event listener
          * @param {Function} [fn.context] The context (this reference) in which the handler function is executed.
@@ -168,20 +169,32 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          */
         remove: function (targets, type, fn, context) {
 
-            type = S.trim(type);
-
+            var realType = type;
+            if (type === true) {
+                realType = '';
+            }
             targets = DOM.query(targets);
 
-            _Utils.batchForType(function (targets, type, fn, context) {
-                var cfg = _Utils.normalizeParam(type, fn, context), i;
+            _Utils.batchForType(function (targets, singleType, fn, context) {
+                var cfg = _Utils.normalizeParam(singleType, fn, context),
+                    i,
+                    j,
+                    elChildren,
+                    t;
 
-                type = cfg.type;
+                singleType = cfg.type;
 
                 for (i = targets.length - 1; i >= 0; i--) {
-                    removeInternal(targets[i], type, cfg);
+                    t = targets[i];
+                    removeInternal(t, singleType, cfg);
+                    if (type === true) {
+                        elChildren = t.getElementsByTagName('*');
+                        for (j = elChildren.length - 1; j >= 0; j--) {
+                            removeInternal(elChildren[j]);
+                        }
+                    }
                 }
-            }, 1, targets, type, fn, context);
-
+            }, 1, targets, realType, fn, context);
 
             return targets;
 
@@ -321,7 +334,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
             events = eventDesc.events;
             S.each(events, function (customEvent, type) {
                 S.each(customEvent.observers, function (observer) {
-                    // scope undefined
+                    // context undefined
                     // 不能 this 写死在 handlers 中
                     // 否则不能保证 clone 时的 this
                     addInternal(dest, type, observer);
