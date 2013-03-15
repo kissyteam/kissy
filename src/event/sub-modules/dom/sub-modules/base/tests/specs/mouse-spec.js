@@ -52,8 +52,12 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 var outerCount = 0, innerCount = 0, type = 'mouseover';
 
 
-                Event.on(outer, 'mouseenter', function () {
+                Event.on(outer, 'mouseenter', function (e) {
                     outerCount++;
+                    setTimeout(function(){
+                        // https://github.com/kissyteam/kissy/issues/302
+                        expect(e.type).toBe('mouseover');
+                    },0);
                 });
 
                 Event.on(inner, 'mouseenter', function () {

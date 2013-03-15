@@ -11,9 +11,7 @@ KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
     ], function (o) {
         special[o.name] = {
             // fix #75
-            onFix: o.fix,
-            // all browser need
-            delegateFix: o.fix,
+            typeFix: o.fix,
             handle: function (event, observer, ce) {
                 var currentTarget = event.currentTarget,
                     relatedTarget = event.relatedTarget;

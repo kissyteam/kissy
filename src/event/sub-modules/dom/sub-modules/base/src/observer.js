@@ -30,15 +30,17 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
         notifyInternal: function (event, ce) {
             var self = this,
                 s, t, ret,
-                type = event.type;
+                type = event.type,
+                originalType;
 
-            // restore originalType if involving delegate/onFix handlers
-            if (self.originalType) {
-                event.type = self.originalType;
+            if (originalType = self.originalType) {
+                event.type = originalType;
+            } else {
+                originalType = type;
             }
 
             // context undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
-            if ((s = special[event.type]) && s.handle) {
+            if ((s = special[originalType]) && s.handle) {
                 t = s.handle(event, self, ce);
                 // can handle
                 if (t && t.length > 0) {
@@ -48,6 +50,7 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
                 ret = self.simpleNotify(event, ce);
             }
 
+            // notify other mousemove listener
             event.type = type;
 
             return ret;

@@ -7,25 +7,16 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
     var _Utils = Event._Utils;
 
     function fixType(cfg, type) {
-        var s = special[type] || {};
-        // in case overwritten by delegateFix/onFix in special events
-        // (mouseenter/leave,focusin/out)
+        var s = special[type] || {},
+            typeFix;
 
-        if (!cfg.originalType) {
-            if (cfg.selector) {
-                if (s['delegateFix']) {
-                    cfg.originalType = type;
-                    type = s['delegateFix'];
-                }
-            } else {
-                // when on mouseenter, it's actually on mouseover,
-                // and observers is saved with mouseover!
-                // TODO need evaluate!
-                if (s['onFix']) {
-                    cfg.originalType = type;
-                    type = s['onFix'];
-                }
-            }
+        // in case overwritten by typeFix in special events
+        // (mouseenter/leave,focusin/out)
+        if (!cfg.originalType && (typeFix = s.typeFix)) {
+            // when on mouseenter, it's actually on mouseover,
+            // and observers is saved with mouseover!
+            cfg.originalType = type;
+            type = typeFix;
         }
 
         return type;
@@ -252,8 +243,6 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
             eventData.synthetic = 1;
 
             _Utils.splitAndRun(eventType, function (eventType) {
-                // protect event type
-                eventData.type = eventType;
 
                 var r,
                     i,
@@ -266,7 +255,18 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                     _ks_groups = _Utils.getGroupsRe(_ks_groups);
                 }
 
+                // mouseenter
                 eventType = typedGroups[0];
+                var s = special[eventType];
+
+                var originalType = eventType;
+
+                // where observers lie
+                // mouseenter observer lies on mouseover
+                if (s && s.typeFix) {
+                    // mousemove
+                    originalType = s.typeFix;
+                }
 
                 S.mix(eventData, {
                     type: eventType,
@@ -277,13 +277,12 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     target = targets[i];
-                    customEvent = ObservableDOMEvent
-                        .getCustomEvent(target, eventType);
+                    customEvent = ObservableDOMEvent.getCustomEvent(target, originalType);
                     // bubbling
                     // html dom event defaults to bubble
                     if (!onlyHandlers && !customEvent) {
                         customEvent = new ObservableDOMEvent({
-                            type: eventType,
+                            type: originalType,
                             currentTarget: target
                         });
                     }

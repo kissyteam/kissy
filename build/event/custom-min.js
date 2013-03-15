@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 17:56
+build time: Mar 15 18:59
 */
 KISSY.add("event/custom/api-impl",function(e,k,g,i){var h=g._Utils,l=h.splitAndRun;return e.mix(k,{fire:function(b,c,a){var d=void 0,m=k.getTargets(b,1),n=m&&m.length,a=a||{};l(c,function(m){var f,m=h.getTypedGroups(m);f=m[1];m=m[0];f&&(f=h.getGroupsRe(f),a._ks_groups=f);if((f=i.getCustomEvent(b,m))||n){if(f){if(!f.hasObserver()&&!f.defaultFn&&(f.bubbles&&!n||!f.bubbles))return}else f=new i({currentTarget:b,type:m});m=f.fire(a);!1!==d&&(d=m)}});return d},publish:function(b,c,a){var d;l(c,function(m){d=
 i.getCustomEvent(b,m,1);e.mix(d,a)});return b},getCustomEvent:function(b,c,a){return i.getCustomEvent(b,c,a)},addTarget:function(b,c){var a=k.getTargets(b);e.inArray(c,a)||a.push(c);return b},removeTarget:function(b,c){var a=k.getTargets(b),d=e.indexOf(c,a);-1!=d&&a.splice(d,1);return b},getTargets:function(b,c){c||(b["__~ks_bubble_targets"]=b["__~ks_bubble_targets"]||[]);return b["__~ks_bubble_targets"]},on:function(b,c,a,d){h.batchForType(function(a,d,c){d=h.normalizeParam(a,d,c);a=d.type;if(a=

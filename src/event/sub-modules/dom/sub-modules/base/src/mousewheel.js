@@ -8,8 +8,7 @@ KISSY.add('event/dom/base/mousewheel', function (S, special) {
     var UA = S.UA, MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
 
     special['mousewheel'] = {
-        onFix: MOUSE_WHEEL,
-        delegateFix: MOUSE_WHEEL
+        typeFix: MOUSE_WHEEL
     };
 
 }, {
