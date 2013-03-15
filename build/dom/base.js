@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 12:59
+build time: Mar 15 14:12
 */
 /**
  * @ignore
@@ -3077,7 +3077,7 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
         DEFAULT_UNIT = 'px',
         CUSTOM_STYLES = {},
         cssProps = {
-            float: 'cssFloat'
+            'float': 'cssFloat'
         },
         defaultDisplay = {},
         RE_DASH = /-([a-z])/ig,
