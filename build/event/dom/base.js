@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 16:58
+build time: Mar 15 17:56
 */
 /**
  * @ignore
@@ -81,7 +81,6 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
         if (!customEvent) {
             customEvent = events[type] = new ObservableDOMEvent({
                 type: type,
-                fn: handle,
                 currentTarget: currentTarget
             });
 

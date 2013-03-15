@@ -76,7 +76,6 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
         if (!customEvent) {
             customEvent = events[type] = new ObservableDOMEvent({
                 type: type,
-                fn: handle,
                 currentTarget: currentTarget
             });
 
