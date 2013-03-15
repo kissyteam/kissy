@@ -360,12 +360,19 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
                 var bar = DOM.get('#bar'),
                     foo = DOM.get('#foo'),
                     bard = 0,
-                    food = 0;
+                    bard1 = 0,
+                    food = 0,
+                    food1 = 0;
 
                 Event.on(bar, {
                     'o': {
                         fn: function () {
                             bard = 1;
+                        }
+                    },
+                    'o1':{
+                        fn: function () {
+                            bard1 = 1;
                         }
                     }
                 });
@@ -375,25 +382,68 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
                         fn: function () {
                             food = 1;
                         }
+                    },
+                    'w1':{
+                        fn: function () {
+                            food1 = 1;
+                        }
                     }
                 });
 
                 Event.fire(bar,'o');
                 Event.fire(foo,'w');
+                Event.fire(bar,'o1');
+                Event.fire(foo,'w1');
 
                 expect(bard).toBe(1);
                 expect(food).toBe(1);
+                expect(bard1).toBe(1);
+                expect(food1).toBe(1);
 
                 bard=0;
                 food=0;
+                bard1=0;
+                food1=0;
 
-                Event.detach(foo,true);
+                Event.detach(foo,{
+                    'o':{
+                        deep:true
+                    },
+                    'w':{
+                        deep:true
+                    }
+                });
 
                 Event.fire(bar,'o');
                 Event.fire(foo,'w');
+                Event.fire(bar,'o1');
+                Event.fire(foo,'w1');
 
                 expect(bard).toBe(0);
                 expect(food).toBe(0);
+                expect(bard1).toBe(1);
+                expect(food1).toBe(1);
+
+                bard=0;
+                food=0;
+                bard1=0;
+                food1=0;
+
+                Event.detach(foo,{
+                    '':{
+                        deep:true
+                    }
+                });
+
+                Event.fire(bar,'o');
+                Event.fire(foo,'w');
+                Event.fire(bar,'o1');
+                Event.fire(foo,'w1');
+
+                expect(bard).toBe(0);
+                expect(food).toBe(0);
+                expect(bard1).toBe(0);
+                expect(food1).toBe(0);
 
             });
         });

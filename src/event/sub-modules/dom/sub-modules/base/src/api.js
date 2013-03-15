@@ -154,7 +154,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * @param {String|Boolean} [type] The type of event to remove.
          * use space to separate multiple event types.
          * or
-         * whether to remove all events from  descendants nodes.
+         * whether to remove all events from descendants nodes.
          * @param [fn] {Function|Object} The event listener or event description object.
          * @param {Function} fn.fn The event listener
          * @param {Function} [fn.context] The context (this reference) in which the handler function is executed.
@@ -164,13 +164,10 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          */
         remove: function (targets, type, fn, context) {
 
-            var realType = type;
-            if (type === true) {
-                realType = '';
-            }
             targets = DOM.query(targets);
 
             _Utils.batchForType(function (targets, singleType, fn, context) {
+
                 var cfg = _Utils.normalizeParam(singleType, fn, context),
                     i,
                     j,
@@ -182,14 +179,16 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                 for (i = targets.length - 1; i >= 0; i--) {
                     t = targets[i];
                     removeInternal(t, singleType, cfg);
-                    if (type === true) {
+                    // deep remove
+                    if (cfg.deep) {
                         elChildren = t.getElementsByTagName('*');
                         for (j = elChildren.length - 1; j >= 0; j--) {
-                            removeInternal(elChildren[j]);
+                            removeInternal(elChildren[j], singleType, cfg);
                         }
                     }
                 }
-            }, 1, targets, realType, fn, context);
+
+            }, 1, targets, type, fn, context);
 
             return targets;
 
