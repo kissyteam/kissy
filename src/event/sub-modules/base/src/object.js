@@ -17,7 +17,10 @@ KISSY.add('event/base/object', function (S, undefined) {
      * KISSY 's base event object for custom and dom event.
      */
     function EventObject() {
-        this.timeStamp = S.now();
+
+        var self = this;
+
+        self.timeStamp = S.now();
         /**
          * target
          * @property target

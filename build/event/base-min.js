@@ -1,10 +1,10 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 16:58
+build time: Mar 15 17:20
 */
 KISSY.add("event/base",function(c,e,d,a,b){return c.Event={_Utils:e,_Object:d,_Observer:a,_ObservableEvent:b}},{requires:["./base/utils","./base/object","./base/observer","./base/observable"]});
-KISSY.add("event/base/object",function(c,e){function d(){this.timeStamp=c.now();self.target=e;self.currentTarget=e}var a=function(){return!1},b=function(){return!0};d.prototype={constructor:d,isDefaultPrevented:a,isPropagationStopped:a,isImmediatePropagationStopped:a,preventDefault:function(){this.isDefaultPrevented=b},stopPropagation:function(){this.isPropagationStopped=b},stopImmediatePropagation:function(){this.isImmediatePropagationStopped=b;this.stopPropagation()},halt:function(a){a?this.stopImmediatePropagation():
+KISSY.add("event/base/object",function(c,e){function d(){this.timeStamp=c.now();this.currentTarget=this.target=e}var a=function(){return!1},b=function(){return!0};d.prototype={constructor:d,isDefaultPrevented:a,isPropagationStopped:a,isImmediatePropagationStopped:a,preventDefault:function(){this.isDefaultPrevented=b},stopPropagation:function(){this.isPropagationStopped=b},stopImmediatePropagation:function(){this.isImmediatePropagationStopped=b;this.stopPropagation()},halt:function(a){a?this.stopImmediatePropagation():
 this.stopPropagation();this.preventDefault()}};return d});
 KISSY.add("event/base/observable",function(c){function e(d){this.currentTarget=null;c.mix(this,d);this.reset()}e.prototype={constructor:e,hasObserver:function(){return!!this.observers.length},reset:function(){this.observers=[]},removeObserver:function(d){var a,b=this.observers,g=b.length;for(a=0;a<g;a++)if(b[a]==d){b.splice(a,1);break}this.checkMemory()},checkMemory:function(){},findObserver:function(d){var a=this.observers,b;for(b=a.length-1;0<=b;--b)if(d.equals(a[b]))return b;return-1}};return e});
 KISSY.add("event/base/observer",function(c,e){function d(a){c.mix(this,a)}d.prototype={constructor:d,equals:function(a){var b=this;return!!c.reduce(b.keys,function(d,c){return d&&b[c]===a[c]},1)},simpleNotify:function(a,b){var c;c=this.fn.call(this.context||b.currentTarget,a,this.data);this.once&&b.removeObserver(this);return c},notifyInternal:function(a,b){return this.simpleNotify(a,b)},notify:function(a,b){var c;if((c=a._ks_groups)&&(!this.groups||!this.groups.match(c)))return e;c=this.notifyInternal(a,
