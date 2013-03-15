@@ -316,7 +316,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
             events = eventDesc.events;
             S.each(events, function (customEvent, type) {
                 S.each(customEvent.observers, function (observer) {
-                    // scope undefined
+                    // context undefined
                     // 不能 this 写死在 handlers 中
                     // 否则不能保证 clone 时的 this
                     addInternal(dest, type, observer);

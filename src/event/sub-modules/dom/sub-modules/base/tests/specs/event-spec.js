@@ -285,20 +285,20 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             });
 
 
-            it('should remove the specified event handler function and scope.', function () {
+            it('should remove the specified event handler function and context.', function () {
                 var f = DOM.get('#link-f');
 
                 Event.detach(f);
 
-                var result = [], scope = {};
+                var result = [], context = {};
 
                 function foo() {
                     result = HAPPENED;
                 }
 
-                Event.on(f, 'click', foo, scope);
+                Event.on(f, 'click', foo, context);
 
-                Event.remove(f, 'click', foo, scope);
+                Event.remove(f, 'click', foo, context);
 
                 // click f
                 result = null;
@@ -357,9 +357,9 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
 
 
 
-        describe('event handler scope', function () {
+        describe('event handler context', function () {
 
-            it('should treat the element itself as the scope.', function () {
+            it('should treat the element itself as the context.', function () {
 
                 var foo = DOM.get('#foo');
 
@@ -371,7 +371,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
                 simulate(foo, 'click');
             });
 
-            it('should support using custom object as the scope.', function () {
+            it('should support using custom object as the context.', function () {
 
                 var bar = DOM.get('#bar'),
                     TEST = {
@@ -383,7 +383,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
                 }, TEST);
             });
 
-            it('should guarantee separate event adding function keeps separate scope.', function () {
+            it('should guarantee separate event adding function keeps separate context.', function () {
                 Event.on(doc, 'click', handler, {id: FIRST});
                 Event.on(doc, 'click', handler, {id: SECOND});
                 var result = [];
@@ -402,7 +402,7 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
             });
 
 
-            it('should guarantee separate event adding function keeps separate scope with multiple event.', function () {
+            it('should guarantee separate event adding function keeps separate context with multiple event.', function () {
                 Event.detach(doc);
                 var re = [];
 
