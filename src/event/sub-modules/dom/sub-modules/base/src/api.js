@@ -5,6 +5,7 @@
  */
 KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, ObservableDOMEvent, DOMEventObject) {
     var _Utils = Event._Utils;
+    var ELEMENT_NODE = DOM.NodeType.ELEMENT_NODE;
 
     function fixType(cfg, type) {
         var s = special[type] || {};
@@ -137,10 +138,13 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
             targets = DOM.query(targets);
 
             _Utils.batchForType(function (targets, type, fn, context) {
-                var cfg = _Utils.normalizeParam(type, fn, context), i;
+                var cfg = _Utils.normalizeParam(type, fn, context), i, t;
                 type = cfg.type;
                 for (i = targets.length - 1; i >= 0; i--) {
-                    addInternal(targets[i], type, cfg);
+                    t = targets[i];
+                    if (t.nodeType == ELEMENT_NODE) {
+                        addInternal(t, type, cfg);
+                    }
                 }
             }, 1, targets, type, fn, context);
 
@@ -178,12 +182,14 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     t = targets[i];
-                    removeInternal(t, singleType, cfg);
-                    // deep remove
-                    if (cfg.deep) {
-                        elChildren = t.getElementsByTagName('*');
-                        for (j = elChildren.length - 1; j >= 0; j--) {
-                            removeInternal(elChildren[j], singleType, cfg);
+                    if (t.nodeType == ELEMENT_NODE) {
+                        removeInternal(t, singleType, cfg);
+                        // deep remove
+                        if (cfg.deep) {
+                            elChildren = t.getElementsByTagName('*');
+                            for (j = elChildren.length - 1; j >= 0; j--) {
+                                removeInternal(elChildren[j], singleType, cfg);
+                            }
                         }
                     }
                 }
@@ -275,20 +281,23 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     target = targets[i];
-                    customEvent = ObservableDOMEvent
-                        .getCustomEvent(target, eventType);
-                    // bubbling
-                    // html dom event defaults to bubble
-                    if (!onlyHandlers && !customEvent) {
-                        customEvent = new ObservableDOMEvent({
-                            type: eventType,
-                            currentTarget: target
-                        });
-                    }
-                    if (customEvent) {
-                        r = customEvent.fire(eventData, onlyHandlers);
-                        if (ret !== false) {
-                            ret = r;
+
+                    if (target.nodeType == ELEMENT_NODE) {
+                        customEvent = ObservableDOMEvent
+                            .getCustomEvent(target, eventType);
+                        // bubbling
+                        // html dom event defaults to bubble
+                        if (!onlyHandlers && !customEvent) {
+                            customEvent = new ObservableDOMEvent({
+                                type: eventType,
+                                currentTarget: target
+                            });
+                        }
+                        if (customEvent) {
+                            r = customEvent.fire(eventData, onlyHandlers);
+                            if (ret !== false) {
+                                ret = r;
+                            }
                         }
                     }
                 }
