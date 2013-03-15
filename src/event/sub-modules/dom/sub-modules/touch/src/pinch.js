@@ -67,7 +67,7 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
             handle: p
         };
 
-    function preventTwoFinger(e) {
+    function prevent(e) {
         // android can not throttle
         // need preventDefault always
         if (!e.touches || e.touches.length == 2) {
@@ -77,11 +77,17 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
 
     eventHandleMap[PINCH] = {
         handle: p,
-        setup: function () {
-            Event.on(this, Gesture.move, preventTwoFinger);
+        add: function (observer) {
+            if (observer.preventDefaultMove !== false) {
+                Event.on(this, Gesture.move, observer.__preventPinchDefault = function (e) {
+                    prevent(e)
+                });
+            }
         },
-        tearDown: function () {
-            Event.detach(this, Gesture.move, preventTwoFinger);
+        remove: function (observer) {
+            if (observer.__preventPinchDefault) {
+                Event.detach(this, Gesture.move, observer.__preventPinchDefault);
+            }
         }
     };
 

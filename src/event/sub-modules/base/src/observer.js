@@ -3,7 +3,7 @@
  * observer for event.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/observer', function (S) {
+KISSY.add('event/base/observer', function (S, undefined) {
 
     /**
      * KISSY 's base observer for handle user-specified function
@@ -56,11 +56,9 @@ KISSY.add('event/base/observer', function (S) {
          */
         simpleNotify: function (event, ce) {
             var ret, self = this;
-            ret = self.fn.call(
-                self.context || ce.currentTarget,
-                event, self.data
-            );
+            ret = self.fn.call(self.context || ce.currentTarget, event, self.data);
             if (self.once) {
+                //noinspection JSUnresolvedFunction
                 ce.removeObserver(self);
             }
             return ret;
@@ -89,7 +87,7 @@ KISSY.add('event/base/observer', function (S) {
 
             // handler's group does not match specified groups (at fire step)
             if (_ks_groups && (!self.groups || !(self.groups.match(_ks_groups)))) {
-                return;
+                return undefined;
             }
 
             ret = self.notifyInternal(event, ce);

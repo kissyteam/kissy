@@ -13,6 +13,7 @@ KISSY.add('event/base/observable', function (S) {
      */
     function ObservableEvent(cfg) {
         var self = this;
+        self.currentTarget = null;
         S.mix(self, cfg);
         self.reset();
         /**
@@ -44,6 +45,7 @@ KISSY.add('event/base/observable', function (S) {
         /**
          * remove one observer from current event's observers
          * @param {KISSY.Event.Observer} s
+         * @memberOf KISSY.Event.ObservableEvent.prototype
          */
         removeObserver: function (s) {
             var self = this,

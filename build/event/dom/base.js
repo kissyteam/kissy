@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 14:51
+build time: Mar 15 16:58
 */
 /**
  * @ignore
@@ -10,7 +10,6 @@ build time: Mar 15 14:51
  */
 KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, ObservableDOMEvent, DOMEventObject) {
     var _Utils = Event._Utils;
-    var ELEMENT_NODE = DOM.NodeType.ELEMENT_NODE;
 
     function fixType(cfg, type) {
         var s = special[type] || {};
@@ -59,7 +58,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                     currentTarget = handle.currentTarget;
                 if (ObservableDOMEvent.triggeredEvent == type ||
                     typeof KISSY == 'undefined') {
-                    return;
+                    return undefined;
                 }
                 customEvent = ObservableDOMEvent.getCustomEvent(currentTarget, type);
                 if (customEvent) {
@@ -67,6 +66,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                     event = new DOMEventObject(event);
                     return customEvent.notify(event);
                 }
+                return undefined;
             };
             handle.currentTarget = currentTarget;
         }
@@ -147,9 +147,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                 type = cfg.type;
                 for (i = targets.length - 1; i >= 0; i--) {
                     t = targets[i];
-                    if (t.nodeType == ELEMENT_NODE) {
-                        addInternal(t, type, cfg);
-                    }
+                    addInternal(t, type, cfg);
                 }
             }, 1, targets, type, fn, context);
 
@@ -187,14 +185,12 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     t = targets[i];
-                    if (t.nodeType == ELEMENT_NODE) {
-                        removeInternal(t, singleType, cfg);
-                        // deep remove
-                        if (cfg.deep) {
-                            elChildren = t.getElementsByTagName('*');
-                            for (j = elChildren.length - 1; j >= 0; j--) {
-                                removeInternal(elChildren[j], singleType, cfg);
-                            }
+                    removeInternal(t, singleType, cfg);
+                    // deep remove
+                    if (cfg.deep && t.getElementsByTagName) {
+                        elChildren = t.getElementsByTagName('*');
+                        for (j = elChildren.length - 1; j >= 0; j--) {
+                            removeInternal(elChildren[j], singleType, cfg);
                         }
                     }
                 }
@@ -246,6 +242,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * @member KISSY.Event
          * @param {String} eventType event type
          * @param [eventData] additional event data
+         * @param {Boolean} [onlyHandlers] for internal usage
          * @return {*} return false if one of custom event 's observers (include bubbled) else
          * return last value of custom event 's observers (include bubbled) 's return value.
          */
@@ -286,23 +283,20 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     target = targets[i];
-
-                    if (target.nodeType == ELEMENT_NODE) {
-                        customEvent = ObservableDOMEvent
-                            .getCustomEvent(target, eventType);
-                        // bubbling
-                        // html dom event defaults to bubble
-                        if (!onlyHandlers && !customEvent) {
-                            customEvent = new ObservableDOMEvent({
-                                type: eventType,
-                                currentTarget: target
-                            });
-                        }
-                        if (customEvent) {
-                            r = customEvent.fire(eventData, onlyHandlers);
-                            if (ret !== false) {
-                                ret = r;
-                            }
+                    customEvent = ObservableDOMEvent
+                        .getCustomEvent(target, eventType);
+                    // bubbling
+                    // html dom event defaults to bubble
+                    if (!onlyHandlers && !customEvent) {
+                        customEvent = new ObservableDOMEvent({
+                            type: eventType,
+                            currentTarget: target
+                        });
+                    }
+                    if (customEvent) {
+                        r = customEvent.fire(eventData, onlyHandlers);
+                        if (ret !== false) {
+                            ret = r;
                         }
                     }
                 }
@@ -1266,6 +1260,10 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
              * @property scale
              */
             self.scale = undefined;
+
+            self.target = undefined;
+
+            self.currentTarget = undefined;
         }
 
         DOMEventObject.superclass.constructor.call(self);
@@ -1445,7 +1443,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
     // compatibility
     // Event.Object = S.EventObject = DOMEventObject;
 
-    Event.DOMEventObject=DOMEventObject;
+    Event.DOMEventObject = DOMEventObject;
 
     return DOMEventObject;
 
@@ -1592,6 +1590,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 currentTargetObservers: observers.slice(delegateCount)
             });
 
+            //noinspection JSUnresolvedFunction
             for (i = 0, len = allObservers.length; !event.isPropagationStopped() && i < len; ++i) {
 
                 observerObj = allObservers[i];
@@ -1599,6 +1598,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 currentTarget0 = observerObj.currentTarget;
                 event.currentTarget = currentTarget0;
 
+                //noinspection JSUnresolvedFunction
                 for (j = 0; !event.isImmediatePropagationStopped() && j < currentTargetObservers.length; j++) {
 
                     currentTargetObserver = currentTargetObservers[j];
@@ -1622,6 +1622,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
         /**
          * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
          * @param {Object|KISSY.Event.DOMEventObject} [event] additional event data
+         * @param {Boolean} [onlyHandlers] for internal usage
          * @return {*} return false if one of custom event 's observers (include bubbled) else
          * return last value of custom event 's observers (include bubbled) 's return value.
          */
@@ -1630,7 +1631,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             event = event || {};
 
             var self = this,
-                eventType = self.type,
+                eventType = String(self.type),
                 s = special[eventType];
 
             // TODO bug: when fire mouseenter, it also fire mouseover in firefox/chrome
@@ -1643,7 +1644,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 currentTarget = self.currentTarget,
                 ret = true;
 
-            event.type = eventType;
+            event['type'] = eventType;
 
             if (!(event instanceof DOMEventObject)) {
                 eventData = event;
@@ -1681,7 +1682,8 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
 
             // bubble up dom tree
             do {
-                event.currentTarget = cur;
+                event['currentTarget'] = cur;
+
                 customEvent = ObservableDOMEvent.getCustomEvent(cur, eventType);
                 // default bubble for html node
                 if (customEvent) {
@@ -1756,7 +1758,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             // clone event
                 observer = cfg instanceof DOMEventObserver ? cfg : new DOMEventObserver(cfg);
 
-            if (self.findObserver(observer) == -1) {
+            if (self.findObserver(/**@type KISSY.Event.DOMEventObserver*/observer) == -1) {
                 // 增加 listener
                 if (observer.selector) {
                     observers.splice(self.delegateCount, 0, observer);
@@ -1909,7 +1911,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             return events[type];
         }
 
-        return undefined;
+        return null;
     };
 
 

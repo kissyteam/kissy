@@ -141,13 +141,9 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         addDocumentHandle: function (el, event) {
             var win = DOM.getWindow(el.ownerDocument || el),
                 doc = win.document,
-                setup = eventHandleMap[event].setup,
                 handle = DOM.data(doc, key);
             if (!handle) {
                 DOM.data(doc, key, handle = new DocumentHandler(doc));
-            }
-            if (setup) {
-                setup.call(el, event);
             }
             handle.addEventHandle(event);
         },
@@ -155,11 +151,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         removeDocumentHandle: function (el, event) {
             var win = DOM.getWindow(el.ownerDocument || el),
                 doc = win.document,
-                tearDown = eventHandleMap[event].tearDown,
                 handle = DOM.data(doc, key);
-            if (tearDown) {
-                tearDown.call(el, event);
-            }
             if (handle) {
                 handle.removeEventHandle(event);
                 if (S.isEmptyObject(handle.eventHandle)) {

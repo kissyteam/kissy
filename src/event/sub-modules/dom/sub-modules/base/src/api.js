@@ -5,7 +5,6 @@
  */
 KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, ObservableDOMEvent, DOMEventObject) {
     var _Utils = Event._Utils;
-    var ELEMENT_NODE = DOM.NodeType.ELEMENT_NODE;
 
     function fixType(cfg, type) {
         var s = special[type] || {};
@@ -54,7 +53,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                     currentTarget = handle.currentTarget;
                 if (ObservableDOMEvent.triggeredEvent == type ||
                     typeof KISSY == 'undefined') {
-                    return;
+                    return undefined;
                 }
                 customEvent = ObservableDOMEvent.getCustomEvent(currentTarget, type);
                 if (customEvent) {
@@ -62,6 +61,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                     event = new DOMEventObject(event);
                     return customEvent.notify(event);
                 }
+                return undefined;
             };
             handle.currentTarget = currentTarget;
         }
@@ -142,9 +142,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                 type = cfg.type;
                 for (i = targets.length - 1; i >= 0; i--) {
                     t = targets[i];
-                    if (t.nodeType == ELEMENT_NODE) {
-                        addInternal(t, type, cfg);
-                    }
+                    addInternal(t, type, cfg);
                 }
             }, 1, targets, type, fn, context);
 
@@ -182,14 +180,12 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     t = targets[i];
-                    if (t.nodeType == ELEMENT_NODE) {
-                        removeInternal(t, singleType, cfg);
-                        // deep remove
-                        if (cfg.deep) {
-                            elChildren = t.getElementsByTagName('*');
-                            for (j = elChildren.length - 1; j >= 0; j--) {
-                                removeInternal(elChildren[j], singleType, cfg);
-                            }
+                    removeInternal(t, singleType, cfg);
+                    // deep remove
+                    if (cfg.deep && t.getElementsByTagName) {
+                        elChildren = t.getElementsByTagName('*');
+                        for (j = elChildren.length - 1; j >= 0; j--) {
+                            removeInternal(elChildren[j], singleType, cfg);
                         }
                     }
                 }
@@ -241,6 +237,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * @member KISSY.Event
          * @param {String} eventType event type
          * @param [eventData] additional event data
+         * @param {Boolean} [onlyHandlers] for internal usage
          * @return {*} return false if one of custom event 's observers (include bubbled) else
          * return last value of custom event 's observers (include bubbled) 's return value.
          */
@@ -281,23 +278,20 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     target = targets[i];
-
-                    if (target.nodeType == ELEMENT_NODE) {
-                        customEvent = ObservableDOMEvent
-                            .getCustomEvent(target, eventType);
-                        // bubbling
-                        // html dom event defaults to bubble
-                        if (!onlyHandlers && !customEvent) {
-                            customEvent = new ObservableDOMEvent({
-                                type: eventType,
-                                currentTarget: target
-                            });
-                        }
-                        if (customEvent) {
-                            r = customEvent.fire(eventData, onlyHandlers);
-                            if (ret !== false) {
-                                ret = r;
-                            }
+                    customEvent = ObservableDOMEvent
+                        .getCustomEvent(target, eventType);
+                    // bubbling
+                    // html dom event defaults to bubble
+                    if (!onlyHandlers && !customEvent) {
+                        customEvent = new ObservableDOMEvent({
+                            type: eventType,
+                            currentTarget: target
+                        });
+                    }
+                    if (customEvent) {
+                        r = customEvent.fire(eventData, onlyHandlers);
+                        if (ret !== false) {
+                            ret = r;
                         }
                     }
                 }

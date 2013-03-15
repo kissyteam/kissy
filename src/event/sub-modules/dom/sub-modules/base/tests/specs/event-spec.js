@@ -487,12 +487,11 @@ KISSY.use("dom,event/dom/base,ua", function (S, DOM, Event, UA) {
                 // click the document twice
                 simulate(doc, 'click');
                 simulate(doc, 'click');
-                waits(0);
+                waits(10);
                 runs(function () {
                     expect(result[1]).not.toEqual(result[2]);
                 });
             });
-
 
             it('should guarantee separate event adding function keeps separate context with multiple event.', function () {
                 Event.detach(doc);

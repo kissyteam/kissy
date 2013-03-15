@@ -117,6 +117,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 currentTargetObservers: observers.slice(delegateCount)
             });
 
+            //noinspection JSUnresolvedFunction
             for (i = 0, len = allObservers.length; !event.isPropagationStopped() && i < len; ++i) {
 
                 observerObj = allObservers[i];
@@ -124,6 +125,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 currentTarget0 = observerObj.currentTarget;
                 event.currentTarget = currentTarget0;
 
+                //noinspection JSUnresolvedFunction
                 for (j = 0; !event.isImmediatePropagationStopped() && j < currentTargetObservers.length; j++) {
 
                     currentTargetObserver = currentTargetObservers[j];
@@ -147,6 +149,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
         /**
          * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
          * @param {Object|KISSY.Event.DOMEventObject} [event] additional event data
+         * @param {Boolean} [onlyHandlers] for internal usage
          * @return {*} return false if one of custom event 's observers (include bubbled) else
          * return last value of custom event 's observers (include bubbled) 's return value.
          */
@@ -155,7 +158,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             event = event || {};
 
             var self = this,
-                eventType = self.type,
+                eventType = String(self.type),
                 s = special[eventType];
 
             // TODO bug: when fire mouseenter, it also fire mouseover in firefox/chrome
@@ -168,7 +171,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 currentTarget = self.currentTarget,
                 ret = true;
 
-            event.type = eventType;
+            event['type'] = eventType;
 
             if (!(event instanceof DOMEventObject)) {
                 eventData = event;
@@ -206,7 +209,8 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
 
             // bubble up dom tree
             do {
-                event.currentTarget = cur;
+                event['currentTarget'] = cur;
+
                 customEvent = ObservableDOMEvent.getCustomEvent(cur, eventType);
                 // default bubble for html node
                 if (customEvent) {
@@ -281,7 +285,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             // clone event
                 observer = cfg instanceof DOMEventObserver ? cfg : new DOMEventObserver(cfg);
 
-            if (self.findObserver(observer) == -1) {
+            if (self.findObserver(/**@type KISSY.Event.DOMEventObserver*/observer) == -1) {
                 // 增加 listener
                 if (observer.selector) {
                     observers.splice(self.delegateCount, 0, observer);
@@ -434,7 +438,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             return events[type];
         }
 
-        return undefined;
+        return null;
     };
 
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 12:59
+build time: Mar 15 17:01
 */
 /**
  * @ignore
@@ -286,13 +286,9 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         addDocumentHandle: function (el, event) {
             var win = DOM.getWindow(el.ownerDocument || el),
                 doc = win.document,
-                setup = eventHandleMap[event].setup,
                 handle = DOM.data(doc, key);
             if (!handle) {
                 DOM.data(doc, key, handle = new DocumentHandler(doc));
-            }
-            if (setup) {
-                setup.call(el, event);
             }
             handle.addEventHandle(event);
         },
@@ -300,11 +296,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         removeDocumentHandle: function (el, event) {
             var win = DOM.getWindow(el.ownerDocument || el),
                 doc = win.document,
-                tearDown = eventHandleMap[event].tearDown,
                 handle = DOM.data(doc, key);
-            if (tearDown) {
-                tearDown.call(el, event);
-            }
             if (handle) {
                 handle.removeEventHandle(event);
                 if (S.isEmptyObject(handle.eventHandle)) {
@@ -480,7 +472,7 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
             handle: p
         };
 
-    function preventTwoFinger(e) {
+    function prevent(e) {
         // android can not throttle
         // need preventDefault always
         if (!e.touches || e.touches.length == 2) {
@@ -490,11 +482,17 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
 
     eventHandleMap[PINCH] = {
         handle: p,
-        setup: function () {
-            Event.on(this, Gesture.move, preventTwoFinger);
+        add: function (observer) {
+            if (observer.preventDefaultMove !== false) {
+                Event.on(this, Gesture.move, observer.__preventPinchDefault = function (e) {
+                    prevent(e)
+                });
+            }
         },
-        tearDown: function () {
-            Event.detach(this, Gesture.move, preventTwoFinger);
+        remove: function (observer) {
+            if (observer.__preventPinchDefault) {
+                Event.detach(this, Gesture.move, observer.__preventPinchDefault);
+            }
         }
     };
 
@@ -587,7 +585,7 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
         }
     });
 
-    function preventTwoFinger(e) {
+    function prevent(e) {
         // android can not throttle
         // need preventDefault always
         if (!e.touches || e.touches.length == 2) {
@@ -604,11 +602,17 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
 
     eventHandleMap[ROTATE] = {
         handle: r,
-        setup: function () {
-            Event.on(this, Gesture.move, preventTwoFinger);
+        add: function (observer) {
+            if (observer.preventDefaultMove !== false) {
+                Event.on(this, Gesture.move, observer.__preventRotateDefault = function (e) {
+                    prevent(e)
+                });
+            }
         },
-        tearDown: function () {
-            Event.detach(this, Gesture.move, preventTwoFinger);
+        remove: function (observer) {
+            if (observer.__preventRotateDefault) {
+                Event.detach(this, Gesture.move, observer.__preventRotateDefault);
+            }
         }
     };
 
@@ -789,12 +793,18 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     }
 
     eventHandleMap[event] = {
-        setup: function () {
+        add: function (observer) {
             // prevent native scroll
-            Event.on(this, Gesture.move, prevent);
+            if (observer.preventDefaultMove !== false) {
+                Event.on(this, Gesture.move, observer.__preventSwipeDefault = function (e) {
+                    prevent(e)
+                });
+            }
         },
-        tearDown: function () {
-            Event.detach(this, Gesture.move, prevent);
+        remove: function (observer) {
+            if (observer.__preventSwipeDefault) {
+                Event.detach(this, Gesture.move, observer.__preventSwipeDefault);
+            }
         },
         handle: new Swipe()
     };
@@ -922,18 +932,46 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch
  */
 KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHandle) {
 
-    var Special = EventDomBase._Special;
+    function setupExtra(event) {
+        setup.call(this,event);
+        eventHandleMap[event].setup.apply(this, arguments);
+    }
 
-    var specialEvent = {
-        setup: function (event) {
-            eventHandle.addDocumentHandle(this, event);
-        },
-        tearDown: function (event) {
-            eventHandle.removeDocumentHandle(this, event);
-        }
-    }, e;
+    function setup(event) {
+        eventHandle.addDocumentHandle(this, event);
+    }
+
+    function tearDownExtra(event) {
+        tearDown.call(this,event);
+        eventHandleMap[event].tearDown.apply(this, arguments);
+    }
+
+    function tearDown(event) {
+        eventHandle.removeDocumentHandle(this, event);
+    }
+
+    var Special = EventDomBase._Special,
+        specialEvent, e, eventHandleValue;
 
     for (e in eventHandleMap) {
+        specialEvent = {};
+        eventHandleValue = eventHandleMap[e];
+        if (eventHandleValue.setup) {
+            specialEvent.setup = setupExtra;
+        } else {
+            specialEvent.setup = setup;
+        }
+        if (eventHandleValue.tearDown) {
+            specialEvent.tearDown = tearDownExtra;
+        } else {
+            specialEvent.tearDown = tearDown;
+        }
+        if (eventHandleValue.add) {
+            specialEvent.add = eventHandleValue.add;
+        }
+        if (eventHandleValue.remove) {
+            specialEvent.remove = eventHandleValue.remove;
+        }
         Special[e] = specialEvent;
     }
 

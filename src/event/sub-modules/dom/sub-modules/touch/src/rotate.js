@@ -83,7 +83,7 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
         }
     });
 
-    function preventTwoFinger(e) {
+    function prevent(e) {
         // android can not throttle
         // need preventDefault always
         if (!e.touches || e.touches.length == 2) {
@@ -100,11 +100,17 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
 
     eventHandleMap[ROTATE] = {
         handle: r,
-        setup: function () {
-            Event.on(this, Gesture.move, preventTwoFinger);
+        add: function (observer) {
+            if (observer.preventDefaultMove !== false) {
+                Event.on(this, Gesture.move, observer.__preventRotateDefault = function (e) {
+                    prevent(e)
+                });
+            }
         },
-        tearDown: function () {
-            Event.detach(this, Gesture.move, preventTwoFinger);
+        remove: function (observer) {
+            if (observer.__preventRotateDefault) {
+                Event.detach(this, Gesture.move, observer.__preventRotateDefault);
+            }
         }
     };
 

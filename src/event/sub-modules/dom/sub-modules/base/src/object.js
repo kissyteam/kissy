@@ -228,6 +228,10 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
              * @property scale
              */
             self.scale = undefined;
+
+            self.target = undefined;
+
+            self.currentTarget = undefined;
         }
 
         DOMEventObject.superclass.constructor.call(self);
@@ -407,7 +411,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
     // compatibility
     // Event.Object = S.EventObject = DOMEventObject;
 
-    Event.DOMEventObject=DOMEventObject;
+    Event.DOMEventObject = DOMEventObject;
 
     return DOMEventObject;
 

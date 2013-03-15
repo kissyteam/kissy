@@ -23,7 +23,23 @@
      overflow: hidden;
      border: 1px solid red;
      ">
+    do not cause native scroll
 </div>
+<br>
+
+<div id="t2"
+     class='placeholder'
+     style="
+     width: 200px;
+     height: 200px;
+     overflow: hidden;
+     border: 1px solid red;
+     ">
+    cause native scroll
+</div>
+
+<br>
+<button id="remove">remove</button>
 <div style="height: 900px;"></div>
 <script src="../../src/handle.js"></script>
 <script src="../../src/multi-touch.js"></script>
@@ -43,12 +59,26 @@
 
         var $ = S.all;
 
-        $('.placeholder').html('<a href="http://www.g.cn">google</a> ' +
+        $('.placeholder').append('<p><a href="http://www.g.cn">google</a></p> ' +
                 new Array(2).join('<p> ' + (new Array(2).join('h')) + '  </p>'));
 
 
-        Event.on('#t', "swipe", function (e) {
+        Event.on('#t', "swipe.test", function (e) {
             log(e.type + ' : ' + e.direction + ' : ' + e.duration + ' : ' + e.distance);
+        });
+
+        Event.on('#t2', "swipe.test", {
+            fn: function (e) {
+                log(e.type + ' : ' + e.direction + ' : ' + e.duration + ' : ' + e.distance);
+            },
+            preventDefaultMove: false
+        });
+
+        $('#remove').on('click',function(){
+
+            Event.detach('#t','.test');
+            Event.detach('#t2','.test');
+
         });
 
     });

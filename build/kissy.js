@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 14:52
+build time: Mar 15 17:01
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130315145218' will replace with current timestamp when compressing.
+         * NOTICE: '20130315170118' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130315145218',
+        __BUILD_TIME: '20130315170118',
         /**
          * KISSY Environment.
          * @private
@@ -5889,7 +5889,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130315145218'
+            tag: '20130315170118'
         }, getBaseInfo()));
     }
 
@@ -11314,7 +11314,7 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 13:10
+build time: Mar 15 16:58
 */
 /**
  * @ignore
@@ -11360,11 +11360,11 @@ KISSY.add('event/base', function (S, Utils, Object, Observer, ObservableEvent) {
  * base event object for custom and dom event.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/object', function (S) {
+KISSY.add('event/base/object', function (S, undefined) {
 
-    var FALSE_FN = function () {
+    var FALSE_FN = function f_f() {
         return false;
-    }, TRUE_FN = function () {
+    }, TRUE_FN = function t_f() {
         return true;
     };
 
@@ -11376,9 +11376,22 @@ KISSY.add('event/base/object', function (S) {
     function EventObject() {
         this.timeStamp = S.now();
         /**
+         * target
+         * @property target
+         * @member KISSY.Event.Object
+         */
+        self.target = undefined;
+        /**
+         * currentTarget
+         * @property currentTarget
+         * @member KISSY.Event.Object
+         */
+        self.currentTarget = undefined;
+        /**
          * current event type
          * @property type
          * @type {String}
+         * @member KISSY.Event.Object
          */
     }
 
@@ -11387,21 +11400,25 @@ KISSY.add('event/base/object', function (S) {
         /**
          * Flag for preventDefault that is modified during fire event. if it is true, the default behavior for this event will be executed.
          * @method
+         * @member KISSY.Event.Object
          */
         isDefaultPrevented: FALSE_FN,
         /**
          * Flag for stopPropagation that is modified during fire event. true means to stop propagation to bubble targets.
          * @method
+         * @member KISSY.Event.Object
          */
         isPropagationStopped: FALSE_FN,
         /**
          * Flag for stopImmediatePropagation that is modified during fire event. true means to stop propagation to bubble targets and other listener.
          * @method
+         * @member KISSY.Event.Object
          */
         isImmediatePropagationStopped: FALSE_FN,
 
         /**
          * Prevents the event's default behavior
+         * @member KISSY.Event.Object
          */
         preventDefault: function () {
             this.isDefaultPrevented = TRUE_FN;
@@ -11409,6 +11426,7 @@ KISSY.add('event/base/object', function (S) {
 
         /**
          * Stops the propagation to the next bubble target
+         * @member KISSY.Event.Object
          */
         stopPropagation: function () {
             this.isPropagationStopped = TRUE_FN;
@@ -11418,6 +11436,7 @@ KISSY.add('event/base/object', function (S) {
          * Stops the propagation to the next bubble target and
          * prevents any additional listeners from being executed
          * on the current target.
+         * @member KISSY.Event.Object
          */
         stopImmediatePropagation: function () {
             var self = this;
@@ -11431,6 +11450,7 @@ KISSY.add('event/base/object', function (S) {
          * Stops the event propagation and prevents the default
          * event behavior.
          * @param  {Boolean} [immediate] if true additional listeners on the current target will not be executed
+         * @member KISSY.Event.Object
          */
         halt: function (immediate) {
             var self = this;
@@ -11460,6 +11480,7 @@ KISSY.add('event/base/observable', function (S) {
      */
     function ObservableEvent(cfg) {
         var self = this;
+        self.currentTarget = null;
         S.mix(self, cfg);
         self.reset();
         /**
@@ -11491,6 +11512,7 @@ KISSY.add('event/base/observable', function (S) {
         /**
          * remove one observer from current event's observers
          * @param {KISSY.Event.Observer} s
+         * @memberOf KISSY.Event.ObservableEvent.prototype
          */
         removeObserver: function (s) {
             var self = this,
@@ -11546,7 +11568,7 @@ KISSY.add('event/base/observable', function (S) {
  * observer for event.
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/base/observer', function (S) {
+KISSY.add('event/base/observer', function (S, undefined) {
 
     /**
      * KISSY 's base observer for handle user-specified function
@@ -11599,11 +11621,9 @@ KISSY.add('event/base/observer', function (S) {
          */
         simpleNotify: function (event, ce) {
             var ret, self = this;
-            ret = self.fn.call(
-                self.context || ce.currentTarget,
-                event, self.data
-            );
+            ret = self.fn.call(self.context || ce.currentTarget, event, self.data);
             if (self.once) {
+                //noinspection JSUnresolvedFunction
                 ce.removeObserver(self);
             }
             return ret;
@@ -11632,7 +11652,7 @@ KISSY.add('event/base/observer', function (S) {
 
             // handler's group does not match specified groups (at fire step)
             if (_ks_groups && (!self.groups || !(self.groups.match(_ks_groups)))) {
-                return;
+                return undefined;
             }
 
             ret = self.notifyInternal(event, ce);
@@ -11746,7 +11766,7 @@ KISSY.add('event/base/utils', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 12:59
+build time: Mar 15 16:58
 */
 /**
  * @ignore
@@ -12367,7 +12387,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 14:51
+build time: Mar 15 16:58
 */
 /**
  * @ignore
@@ -12376,7 +12396,6 @@ build time: Mar 15 14:51
  */
 KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, ObservableDOMEvent, DOMEventObject) {
     var _Utils = Event._Utils;
-    var ELEMENT_NODE = DOM.NodeType.ELEMENT_NODE;
 
     function fixType(cfg, type) {
         var s = special[type] || {};
@@ -12425,7 +12444,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                     currentTarget = handle.currentTarget;
                 if (ObservableDOMEvent.triggeredEvent == type ||
                     typeof KISSY == 'undefined') {
-                    return;
+                    return undefined;
                 }
                 customEvent = ObservableDOMEvent.getCustomEvent(currentTarget, type);
                 if (customEvent) {
@@ -12433,6 +12452,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                     event = new DOMEventObject(event);
                     return customEvent.notify(event);
                 }
+                return undefined;
             };
             handle.currentTarget = currentTarget;
         }
@@ -12513,9 +12533,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                 type = cfg.type;
                 for (i = targets.length - 1; i >= 0; i--) {
                     t = targets[i];
-                    if (t.nodeType == ELEMENT_NODE) {
-                        addInternal(t, type, cfg);
-                    }
+                    addInternal(t, type, cfg);
                 }
             }, 1, targets, type, fn, context);
 
@@ -12553,14 +12571,12 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     t = targets[i];
-                    if (t.nodeType == ELEMENT_NODE) {
-                        removeInternal(t, singleType, cfg);
-                        // deep remove
-                        if (cfg.deep) {
-                            elChildren = t.getElementsByTagName('*');
-                            for (j = elChildren.length - 1; j >= 0; j--) {
-                                removeInternal(elChildren[j], singleType, cfg);
-                            }
+                    removeInternal(t, singleType, cfg);
+                    // deep remove
+                    if (cfg.deep && t.getElementsByTagName) {
+                        elChildren = t.getElementsByTagName('*');
+                        for (j = elChildren.length - 1; j >= 0; j--) {
+                            removeInternal(elChildren[j], singleType, cfg);
                         }
                     }
                 }
@@ -12612,6 +12628,7 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
          * @member KISSY.Event
          * @param {String} eventType event type
          * @param [eventData] additional event data
+         * @param {Boolean} [onlyHandlers] for internal usage
          * @return {*} return false if one of custom event 's observers (include bubbled) else
          * return last value of custom event 's observers (include bubbled) 's return value.
          */
@@ -12652,23 +12669,20 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     target = targets[i];
-
-                    if (target.nodeType == ELEMENT_NODE) {
-                        customEvent = ObservableDOMEvent
-                            .getCustomEvent(target, eventType);
-                        // bubbling
-                        // html dom event defaults to bubble
-                        if (!onlyHandlers && !customEvent) {
-                            customEvent = new ObservableDOMEvent({
-                                type: eventType,
-                                currentTarget: target
-                            });
-                        }
-                        if (customEvent) {
-                            r = customEvent.fire(eventData, onlyHandlers);
-                            if (ret !== false) {
-                                ret = r;
-                            }
+                    customEvent = ObservableDOMEvent
+                        .getCustomEvent(target, eventType);
+                    // bubbling
+                    // html dom event defaults to bubble
+                    if (!onlyHandlers && !customEvent) {
+                        customEvent = new ObservableDOMEvent({
+                            type: eventType,
+                            currentTarget: target
+                        });
+                    }
+                    if (customEvent) {
+                        r = customEvent.fire(eventData, onlyHandlers);
+                        if (ret !== false) {
+                            ret = r;
                         }
                     }
                 }
@@ -13632,6 +13646,10 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
              * @property scale
              */
             self.scale = undefined;
+
+            self.target = undefined;
+
+            self.currentTarget = undefined;
         }
 
         DOMEventObject.superclass.constructor.call(self);
@@ -13811,7 +13829,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
     // compatibility
     // Event.Object = S.EventObject = DOMEventObject;
 
-    Event.DOMEventObject=DOMEventObject;
+    Event.DOMEventObject = DOMEventObject;
 
     return DOMEventObject;
 
@@ -13958,6 +13976,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 currentTargetObservers: observers.slice(delegateCount)
             });
 
+            //noinspection JSUnresolvedFunction
             for (i = 0, len = allObservers.length; !event.isPropagationStopped() && i < len; ++i) {
 
                 observerObj = allObservers[i];
@@ -13965,6 +13984,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 currentTarget0 = observerObj.currentTarget;
                 event.currentTarget = currentTarget0;
 
+                //noinspection JSUnresolvedFunction
                 for (j = 0; !event.isImmediatePropagationStopped() && j < currentTargetObservers.length; j++) {
 
                     currentTargetObserver = currentTargetObservers[j];
@@ -13988,6 +14008,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
         /**
          * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
          * @param {Object|KISSY.Event.DOMEventObject} [event] additional event data
+         * @param {Boolean} [onlyHandlers] for internal usage
          * @return {*} return false if one of custom event 's observers (include bubbled) else
          * return last value of custom event 's observers (include bubbled) 's return value.
          */
@@ -13996,7 +14017,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             event = event || {};
 
             var self = this,
-                eventType = self.type,
+                eventType = String(self.type),
                 s = special[eventType];
 
             // TODO bug: when fire mouseenter, it also fire mouseover in firefox/chrome
@@ -14009,7 +14030,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 currentTarget = self.currentTarget,
                 ret = true;
 
-            event.type = eventType;
+            event['type'] = eventType;
 
             if (!(event instanceof DOMEventObject)) {
                 eventData = event;
@@ -14047,7 +14068,8 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
 
             // bubble up dom tree
             do {
-                event.currentTarget = cur;
+                event['currentTarget'] = cur;
+
                 customEvent = ObservableDOMEvent.getCustomEvent(cur, eventType);
                 // default bubble for html node
                 if (customEvent) {
@@ -14122,7 +14144,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             // clone event
                 observer = cfg instanceof DOMEventObserver ? cfg : new DOMEventObserver(cfg);
 
-            if (self.findObserver(observer) == -1) {
+            if (self.findObserver(/**@type KISSY.Event.DOMEventObserver*/observer) == -1) {
                 // 增加 listener
                 if (observer.selector) {
                     observers.splice(self.delegateCount, 0, observer);
@@ -14275,7 +14297,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             return events[type];
         }
 
-        return undefined;
+        return null;
     };
 
 
@@ -14524,7 +14546,7 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 12:59
+build time: Mar 15 16:58
 */
 /**
  * @ignore
@@ -14586,7 +14608,7 @@ KISSY.add('event/dom/focusin', function (S, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 12:59
+build time: Mar 15 16:59
 */
 /**
  * @ignore
@@ -14827,7 +14849,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 12:59
+build time: Mar 15 16:59
 */
 /**
  * @ignore
@@ -15024,7 +15046,7 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 12:59
+build time: Mar 15 16:59
 */
 /**
  * @ignore
@@ -15118,7 +15140,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 12:59
+build time: Mar 15 17:01
 */
 /**
  * @ignore
@@ -15403,13 +15425,9 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         addDocumentHandle: function (el, event) {
             var win = DOM.getWindow(el.ownerDocument || el),
                 doc = win.document,
-                setup = eventHandleMap[event].setup,
                 handle = DOM.data(doc, key);
             if (!handle) {
                 DOM.data(doc, key, handle = new DocumentHandler(doc));
-            }
-            if (setup) {
-                setup.call(el, event);
             }
             handle.addEventHandle(event);
         },
@@ -15417,11 +15435,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         removeDocumentHandle: function (el, event) {
             var win = DOM.getWindow(el.ownerDocument || el),
                 doc = win.document,
-                tearDown = eventHandleMap[event].tearDown,
                 handle = DOM.data(doc, key);
-            if (tearDown) {
-                tearDown.call(el, event);
-            }
             if (handle) {
                 handle.removeEventHandle(event);
                 if (S.isEmptyObject(handle.eventHandle)) {
@@ -15597,7 +15611,7 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
             handle: p
         };
 
-    function preventTwoFinger(e) {
+    function prevent(e) {
         // android can not throttle
         // need preventDefault always
         if (!e.touches || e.touches.length == 2) {
@@ -15607,11 +15621,17 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
 
     eventHandleMap[PINCH] = {
         handle: p,
-        setup: function () {
-            Event.on(this, Gesture.move, preventTwoFinger);
+        add: function (observer) {
+            if (observer.preventDefaultMove !== false) {
+                Event.on(this, Gesture.move, observer.__preventPinchDefault = function (e) {
+                    prevent(e)
+                });
+            }
         },
-        tearDown: function () {
-            Event.detach(this, Gesture.move, preventTwoFinger);
+        remove: function (observer) {
+            if (observer.__preventPinchDefault) {
+                Event.detach(this, Gesture.move, observer.__preventPinchDefault);
+            }
         }
     };
 
@@ -15704,7 +15724,7 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
         }
     });
 
-    function preventTwoFinger(e) {
+    function prevent(e) {
         // android can not throttle
         // need preventDefault always
         if (!e.touches || e.touches.length == 2) {
@@ -15721,11 +15741,17 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
 
     eventHandleMap[ROTATE] = {
         handle: r,
-        setup: function () {
-            Event.on(this, Gesture.move, preventTwoFinger);
+        add: function (observer) {
+            if (observer.preventDefaultMove !== false) {
+                Event.on(this, Gesture.move, observer.__preventRotateDefault = function (e) {
+                    prevent(e)
+                });
+            }
         },
-        tearDown: function () {
-            Event.detach(this, Gesture.move, preventTwoFinger);
+        remove: function (observer) {
+            if (observer.__preventRotateDefault) {
+                Event.detach(this, Gesture.move, observer.__preventRotateDefault);
+            }
         }
     };
 
@@ -15906,12 +15932,18 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     }
 
     eventHandleMap[event] = {
-        setup: function () {
+        add: function (observer) {
             // prevent native scroll
-            Event.on(this, Gesture.move, prevent);
+            if (observer.preventDefaultMove !== false) {
+                Event.on(this, Gesture.move, observer.__preventSwipeDefault = function (e) {
+                    prevent(e)
+                });
+            }
         },
-        tearDown: function () {
-            Event.detach(this, Gesture.move, prevent);
+        remove: function (observer) {
+            if (observer.__preventSwipeDefault) {
+                Event.detach(this, Gesture.move, observer.__preventSwipeDefault);
+            }
         },
         handle: new Swipe()
     };
@@ -16039,18 +16071,46 @@ KISSY.add('event/dom/touch/tap', function (S, eventHandleMap, Event, SingleTouch
  */
 KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHandle) {
 
-    var Special = EventDomBase._Special;
+    function setupExtra(event) {
+        setup.call(this,event);
+        eventHandleMap[event].setup.apply(this, arguments);
+    }
 
-    var specialEvent = {
-        setup: function (event) {
-            eventHandle.addDocumentHandle(this, event);
-        },
-        tearDown: function (event) {
-            eventHandle.removeDocumentHandle(this, event);
-        }
-    }, e;
+    function setup(event) {
+        eventHandle.addDocumentHandle(this, event);
+    }
+
+    function tearDownExtra(event) {
+        tearDown.call(this,event);
+        eventHandleMap[event].tearDown.apply(this, arguments);
+    }
+
+    function tearDown(event) {
+        eventHandle.removeDocumentHandle(this, event);
+    }
+
+    var Special = EventDomBase._Special,
+        specialEvent, e, eventHandleValue;
 
     for (e in eventHandleMap) {
+        specialEvent = {};
+        eventHandleValue = eventHandleMap[e];
+        if (eventHandleValue.setup) {
+            specialEvent.setup = setupExtra;
+        } else {
+            specialEvent.setup = setup;
+        }
+        if (eventHandleValue.tearDown) {
+            specialEvent.tearDown = tearDownExtra;
+        } else {
+            specialEvent.tearDown = tearDown;
+        }
+        if (eventHandleValue.add) {
+            specialEvent.add = eventHandleValue.add;
+        }
+        if (eventHandleValue.remove) {
+            specialEvent.remove = eventHandleValue.remove;
+        }
         Special[e] = specialEvent;
     }
 
