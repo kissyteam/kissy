@@ -4,8 +4,15 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/special', function (S, Event) {
-    var undefined = undefined;
+    var undefined = undefined,
+        UA = S.UA,
+        MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
+
     return {
+
+        mousewheel: {
+            typeFix: MOUSE_WHEEL
+        },
 
         load: {
             // defaults to bubbles as custom event
