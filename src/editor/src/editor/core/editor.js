@@ -439,6 +439,24 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
             },
 
             /**
+             * Get selected html content of current editor
+             * @return {undefined|String}
+             */
+            'getSelectedHtml': function () {
+                var self = this,
+                    range = self.getSelection().getRanges()[0],
+                    contents,
+                    html;
+                if (range) {
+                    contents = range.cloneContents();
+                    html = self.get('document')[0].createElement('div');
+                    html.appendChild(contents);
+                    html = html.innerHTML;
+                }
+                return html;
+            },
+
+            /**
              * Make current editor has focus
              */
             focus: function () {
