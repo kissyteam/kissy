@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 18 12:00
+build time: Mar 18 12:22
 */
 /**
  * @ignore
@@ -1526,7 +1526,8 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             /*
              DOM3 Events: EventListenerList objects in the DOM are live. ??
              */
-            var target = event['target'],
+            var target = event.target,
+                eventType = event['type'],
                 self = this,
                 currentTarget = self.currentTarget,
                 observers = self.observers,
@@ -1544,23 +1545,30 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 observer;
 
             // collect delegated observers and corresponding element
-            // by jq
-            // Avoid disabled elements in IE (#6911)
-            // non-left-click bubbling in Firefox (#3861),firefox 8 fix it
-            if (delegateCount && !target.disabled) {
+            if (delegateCount && target.nodeType) {
                 while (target != currentTarget) {
-                    currentTargetObservers = [];
-                    for (i = 0; i < delegateCount; i++) {
-                        observer = observers[i];
-                        if (DOM.test(target, observer.selector)) {
-                            currentTargetObservers.push(observer);
+                    if (target.disabled !== true || eventType !== "click") {
+                        var cachedMatch = {},
+                            matched, key, selector;
+                        currentTargetObservers = [];
+                        for (i = 0; i < delegateCount; i++) {
+                            observer = observers[i];
+                            selector = observer.selector;
+                            key = selector + '';
+                            matched = cachedMatch[key];
+                            if (matched === undefined) {
+                                matched = cachedMatch[key] = DOM.test(target, selector);
+                            }
+                            if (matched) {
+                                currentTargetObservers.push(observer);
+                            }
                         }
-                    }
-                    if (currentTargetObservers.length) {
-                        allObservers.push({
-                            currentTarget: target,
-                            'currentTargetObservers': currentTargetObservers
-                        });
+                        if (currentTargetObservers.length) {
+                            allObservers.push({
+                                currentTarget: target,
+                                'currentTargetObservers': currentTargetObservers
+                            });
+                        }
                     }
                     target = target.parentNode || currentTarget;
                 }
@@ -1568,13 +1576,15 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
 
             // root node's observers is placed at end position of add observers
             // in case child node stopPropagation of root node's observers
-            allObservers.push({
-                currentTarget: currentTarget,
-                // http://www.w3.org/TR/dom/#dispatching-events
-                // Let listeners be a static list of the event listeners
-                // associated with the object for which these steps are run.
-                currentTargetObservers: observers.slice(delegateCount)
-            });
+            if (delegateCount < observers.length) {
+                allObservers.push({
+                    currentTarget: currentTarget,
+                    // http://www.w3.org/TR/dom/#dispatching-events
+                    // Let listeners be a static list of the event listeners
+                    // associated with the object for which these steps are run.
+                    currentTargetObservers: observers.slice(delegateCount)
+                });
+            }
 
             //noinspection JSUnresolvedFunction
             for (i = 0, len = allObservers.length; !event.isPropagationStopped() && i < len; ++i) {
@@ -1683,8 +1693,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                             (
                                 eventType !== 'focus' && eventType !== 'blur') ||
                                 currentTarget.offsetWidth !== 0
-                            ) &&
-                        !S.isWindow(currentTarget)) {
+                            ) && !S.isWindow(currentTarget)) {
                         // 记录当前 trigger 触发
                         ObservableDOMEvent.triggeredEvent = eventType;
 
