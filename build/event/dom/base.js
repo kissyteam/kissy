@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 18 12:22
+build time: Mar 18 12:48
 */
 /**
  * @ignore
@@ -1619,20 +1619,23 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
          * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
          * @param {Object|KISSY.Event.DOMEventObject} [event] additional event data
          * @param {Boolean} [onlyHandlers] for internal usage
-         * @return {*} return false if one of custom event 's observers (include bubbled) else
-         * return last value of custom event 's observers (include bubbled) 's return value.
          */
         fire: function (event, onlyHandlers/*internal usage*/) {
 
             event = event || {};
 
             var self = this,
-                eventType = String(self.type);
-
-            var customEvent,
+                eventType = String(self.type),
+                customEvent,
                 eventData,
-                currentTarget = self.currentTarget,
-                ret = true;
+                currentTarget = self.currentTarget;
+
+            // use native click for correct check state order
+            if (String(currentTarget.type) == 'checkbox' &&
+                currentTarget.click && DOM.nodeName(currentTarget) == 'input') {
+                currentTarget.click();
+                return;
+            }
 
             if (!(event instanceof DOMEventObject)) {
                 eventData = event;
@@ -1647,7 +1650,6 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             // but we can not call event.halt()
             // because handle will check event.isPropagationStopped
             var cur = currentTarget,
-                t,
                 win = DOM.getWindow(cur.ownerDocument || cur),
                 curDocument = win.document,
                 eventPath = [],
@@ -1659,10 +1661,8 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             do {
                 eventPath.push(cur);
                 // Bubble up to document, then to window
-                cur = cur.parentNode ||
-                    cur.ownerDocument ||
-                    (cur === curDocument) && win;
-            } while (cur);
+                cur = cur.parentNode || cur.ownerDocument || (cur === curDocument) && win;
+            } while (!onlyHandlers && cur);
 
             cur = eventPath[eventPathIndex];
 
@@ -1672,10 +1672,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 customEvent = ObservableDOMEvent.getCustomEvent(cur, eventType);
                 // default bubble for html node
                 if (customEvent) {
-                    t = customEvent.notify(event);
-                    if (ret !== false) {
-                        ret = t;
-                    }
+                    customEvent.notify(event);
                 }
                 cur = eventPath[++eventPathIndex];
             } while (!onlyHandlers && cur && !event.isPropagationStopped());
@@ -1708,7 +1705,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
 
                 ObservableDOMEvent.triggeredEvent = '';
             }
-            return ret;
+
         },
 
         /**
