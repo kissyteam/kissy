@@ -184,6 +184,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 eventData = event;
                 event = new DOMEventObject({
                     currentTarget: currentTarget,
+                    type: eventType,
                     target: currentTarget
                 });
                 S.mix(event, eventData);

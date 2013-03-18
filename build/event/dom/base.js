@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 18 20:07
+build time: Mar 18 20:13
 */
 /**
  * @ignore
@@ -1195,7 +1195,8 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
      * @param originalEvent native dom event
      */
     function DOMEventObject(originalEvent) {
-        var self = this;
+        var self = this,
+            type = originalEvent.type;
 
         if ('@DEBUG@') {
             /**
@@ -1415,8 +1416,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
                 originalEvent['getPreventDefault'] && originalEvent['getPreventDefault']()
             ) ? retTrue : retFalse;
 
-        var type = originalEvent.type,
-            fixFn = null,
+        var fixFn = null,
             l,
             prop,
             props = commonProps.concat();
@@ -1449,6 +1449,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
         if (fixFn) {
             fixFn(self, originalEvent);
         }
+
     }
 
     S.extend(DOMEventObject, Event._Object, {
@@ -1702,6 +1703,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 eventData = event;
                 event = new DOMEventObject({
                     currentTarget: currentTarget,
+                    type: eventType,
                     target: currentTarget
                 });
                 S.mix(event, eventData);

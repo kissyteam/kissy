@@ -177,7 +177,8 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
      * @param originalEvent native dom event
      */
     function DOMEventObject(originalEvent) {
-        var self = this;
+        var self = this,
+            type = originalEvent.type;
 
         if ('@DEBUG@') {
             /**
@@ -397,8 +398,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
                 originalEvent['getPreventDefault'] && originalEvent['getPreventDefault']()
             ) ? retTrue : retFalse;
 
-        var type = originalEvent.type,
-            fixFn = null,
+        var fixFn = null,
             l,
             prop,
             props = commonProps.concat();
@@ -431,6 +431,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
         if (fixFn) {
             fixFn(self, originalEvent);
         }
+
     }
 
     S.extend(DOMEventObject, Event._Object, {
