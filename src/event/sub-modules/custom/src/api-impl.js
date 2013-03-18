@@ -4,8 +4,7 @@
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEvent) {
-    var trim = S.trim,
-        _Utils = Event._Utils,
+    var _Utils = Event._Utils,
         splitAndRun = _Utils.splitAndRun,
         KS_BUBBLE_TARGETS = '__~ks_bubble_targets';
 
@@ -37,16 +36,11 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
 
                 splitAndRun(type, function (type) {
 
-                    var r2, customEvent,
-                        typedGroups = _Utils.getTypedGroups(type),
-                        _ks_groups = typedGroups[1];
+                    var r2, customEvent;
 
-                    type = typedGroups[0];
+                    _Utils.fillGroupsForEvent(type,eventData);
 
-                    if (_ks_groups) {
-                        _ks_groups = _Utils.getGroupsRe(_ks_groups);
-                        eventData._ks_groups = _ks_groups;
-                    }
+                    type = eventData.type;
 
                     // default bubble true
                     // if bubble false, it must has customEvent structure set already

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 18:59
+build time: Mar 18 12:00
 */
 /**
  * @ignore
@@ -366,7 +366,24 @@ KISSY.add('event/base/observer', function (S, undefined) {
  */
 KISSY.add('event/base/utils', function (S) {
 
-    var getTypedGroups, splitAndRun;
+    var splitAndRun, getGroupsRe;
+
+    function getTypedGroups(type) {
+        if (type.indexOf('.') < 0) {
+            return [type, ''];
+        }
+        var m = type.match(/([^.]+)?(\..+)?$/),
+            t = m[1],
+            ret = [t],
+            gs = m[2];
+        if (gs) {
+            gs = gs.split('.').sort();
+            ret.push(gs.join('.'));
+        } else {
+            ret.push('');
+        }
+        return ret;
+    }
 
     return {
 
@@ -429,24 +446,19 @@ KISSY.add('event/base/utils', function (S) {
             }
         },
 
-        getTypedGroups: getTypedGroups = function (type) {
-            if (type.indexOf('.') < 0) {
-                return [type, ''];
+        fillGroupsForEvent: function (type, eventData) {
+            var typedGroups = getTypedGroups(type),
+                _ks_groups = typedGroups[1];
+
+            if (_ks_groups) {
+                _ks_groups = getGroupsRe(_ks_groups);
+                eventData._ks_groups = _ks_groups;
             }
-            var m = type.match(/([^.]+)?(\..+)?$/),
-                t = m[1],
-                ret = [t],
-                gs = m[2];
-            if (gs) {
-                gs = gs.split('.').sort();
-                ret.push(gs.join('.'));
-            } else {
-                ret.push('');
-            }
-            return ret;
+
+            eventData.type = typedGroups[0];
         },
 
-        getGroupsRe: function (groups) {
+        getGroupsRe: getGroupsRe = function (groups) {
             return new RegExp(groups.split('.').join('.*\\.') + '(?:\\.|$)');
         }
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 18:59
+build time: Mar 18 12:00
 */
 /**
  * @ignore
@@ -252,16 +252,12 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                 var r,
                     i,
                     target,
-                    customEvent,
-                    typedGroups = _Utils.getTypedGroups(eventType),
-                    _ks_groups = typedGroups[1];
+                    customEvent;
 
-                if (_ks_groups) {
-                    _ks_groups = _Utils.getGroupsRe(_ks_groups);
-                }
+                _Utils.fillGroupsForEvent(eventType, eventData);
 
                 // mouseenter
-                eventType = typedGroups[0];
+                eventType = eventData.type;
                 var s = special[eventType];
 
                 var originalType = eventType;
@@ -272,11 +268,6 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
                     // mousemove
                     originalType = s.typeFix;
                 }
-
-                S.mix(eventData, {
-                    type: eventType,
-                    _ks_groups: _ks_groups
-                });
 
                 targets = DOM.query(targets);
 
