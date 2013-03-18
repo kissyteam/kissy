@@ -5,23 +5,114 @@
 KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
     describe("focus", function () {
 
-        it('fired focus in correct order', function () {
+        it('fired in correct order', function () {
 
-            var n = DOM.create("<div class='outer'>" +
+            var outer = DOM.create("<div class='outer'>" +
                 "<div class='inner'>" +
                 "<input type='input'/>" +
                 "</div>" +
-                "</div>"), ret;
+                "</div>");
 
-            DOM.append(n,'body');
+            DOM.append(outer, 'body');
 
-            Event.fire(n, "mouseenter", {
-                relatedTarget: document
+            var inner = DOM.get('.inner', outer);
+            var input = DOM.get('input', inner);
+
+            var ret = [];
+
+            Event.on(outer, 'focusin', function () {
+                ret.push('outer');
             });
 
-            expect(ret).toBe(1);
+            Event.on(inner, 'focusin', function () {
+                ret.push('inner');
+            });
 
-            expect(Event._ObservableDOMEvent.getCustomEvents(n)).toBe(undefined);
+            Event.on(input, 'focusin', function () {
+                ret.push('input focusin');
+            });
+
+            Event.on(input, 'focus', function () {
+                ret.push('input focus');
+            });
+
+            input.focus();
+
+            waits(100);
+
+            runs(function () {
+                expect(document.activeElement).toBe(input);
+                expect(ret).toEqual(['input focusin', 'inner', 'outer', 'input focus']);
+                ret = [];
+            });
+            waits(100);
+            runs(function () {
+                Event.fire(input, 'focus');
+            });
+
+            runs(function () {
+                expect(document.activeElement).toBe(input);
+                expect(ret).toEqual(['input focusin', 'inner', 'outer', 'input focus']);
+                ret = [];
+                DOM.remove(outer);
+            });
+
+        });
+
+
+        it('fired handlers in correct order', function () {
+
+            var outer = DOM.create("<div class='outer'>" +
+                "<div class='inner'>" +
+                "<input type='input'/>" +
+                "</div>" +
+                "</div>");
+
+            DOM.append(outer, 'body');
+
+            var inner = DOM.get('.inner', outer);
+            var input = DOM.get('input', inner);
+
+            var ret = [];
+
+            Event.on(outer, 'focusin', function () {
+                ret.push('outer');
+            });
+
+            Event.on(inner, 'focusin', function () {
+                ret.push('inner');
+            });
+
+            Event.on(input, 'focusin', function () {
+                ret.push('input focusin');
+            });
+
+            Event.on(input, 'focus', function () {
+                ret.push('input focus');
+            });
+
+            document.body.focus();
+
+            Event.fireHandler(input, 'focus');
+
+            waits(100);
+
+            runs(function () {
+                expect(document.activeElement).not.toBe(input);
+                expect(ret).toEqual(['input focus']);
+                ret = [];
+            });
+            waits(100);
+            runs(function () {
+                Event.fireHandler(input, 'focus');
+            });
+
+            runs(function () {
+                expect(document.activeElement).not.toBe(input);
+                expect(ret).toEqual(['input focus']);
+                ret = [];
+                DOM.remove(outer);
+            });
 
         });
 

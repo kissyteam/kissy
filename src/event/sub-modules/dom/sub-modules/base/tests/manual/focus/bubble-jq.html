@@ -30,7 +30,9 @@
         $('#t').on('focus', function () {
             console.log('t focus: ' + (document.activeElement.nodeName));
         });
-        $('#t').on('focusin', function () {
+        $('#t').on('focusin', function (e) {
+            e.stopPropagation();
+            e.preventDefault();
             console.log('t focusin: ' + (document.activeElement.nodeName));
         });
         $('#o').on('click', function () {

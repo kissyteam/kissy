@@ -13,9 +13,10 @@ KISSY.add('event/dom/base/special', function (S, Event) {
         },
         click: {
             // use native click for correct check state order
-            fire: function () {
+            fire: function (onlyHandlers) {
                 var target = this;
-                if (String(target.type) === "checkbox" && target.click && target.nodeName.toLowerCase() == 'input') {
+                if (!onlyHandlers && String(target.type) === "checkbox" &&
+                    target.click && target.nodeName.toLowerCase() == 'input') {
                     target.click();
                     return false;
                 }
@@ -25,13 +26,15 @@ KISSY.add('event/dom/base/special', function (S, Event) {
         focus: {
             bubbles: false,
             // guarantee fire focusin first
-            preFire: function () {
-                Event.fire(this, 'focusin');
+            preFire: function (event, onlyHandlers) {
+                if (!onlyHandlers) {
+                    Event.fire(this, 'focusin');
+                }
             },
             // guarantee fire blur first
-            fire: function () {
+            fire: function (onlyHandlers) {
                 var target = this;
-                if (target.ownerDocument) {
+                if (!onlyHandlers && target.ownerDocument) {
                     if (target !== target.ownerDocument.activeElement && target.focus) {
                         target.focus();
                         return false;
@@ -43,13 +46,15 @@ KISSY.add('event/dom/base/special', function (S, Event) {
         blur: {
             bubbles: false,
             // guarantee fire focusout first
-            preFire: function () {
-                Event.fire(this, 'focusout');
+            preFire: function (event, onlyHandlers) {
+                if (!onlyHandlers) {
+                    Event.fire(this, 'focusout');
+                }
             },
             // guarantee fire blur first
-            fire: function () {
+            fire: function (onlyHandlers) {
                 var target = this;
-                if (target.ownerDocument) {
+                if (!onlyHandlers && target.ownerDocument) {
                     if (target === target.ownerDocument.activeElement && target.blur) {
                         target.blur();
                         return false;

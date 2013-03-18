@@ -10,7 +10,8 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
     // 如果相同，那么证明已经 fire 过了，不要再次触发了
     var _Utils = Event._Utils;
 
-    var FOCUS_BLUR_REG=/^focus|blur$/;
+    var FOCUS_BLUR_REG = /^focus|blur$/;
+
     /**
      * custom event for dom
      * @param {Object} cfg
@@ -175,7 +176,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 currentTarget = self.currentTarget;
 
             // special fire for click/focus/blur
-            if (specialEvent.fire && specialEvent.fire.call(currentTarget) === false) {
+            if (specialEvent.fire && specialEvent.fire.call(currentTarget, onlyHandlers) === false) {
                 return;
             }
 
@@ -188,7 +189,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 S.mix(event, eventData);
             }
 
-            if (specialEvent.preFire && specialEvent.preFire.call(currentTarget,event) === false) {
+            if (specialEvent.preFire && specialEvent.preFire.call(currentTarget, event, onlyHandlers) === false) {
                 return;
             }
 

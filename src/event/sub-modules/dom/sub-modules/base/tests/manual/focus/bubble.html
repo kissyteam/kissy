@@ -30,6 +30,7 @@
             });
             $('#t2').on('focusin', function (e) {
                 //console.log('e.x in t2 focusin: '+(e.x));
+
                 console.log('t2 focusin: ' + (document.activeElement.nodeName));
             });
 
@@ -37,6 +38,7 @@
             $('#t').on('focusin', function (e) {
                 //e.x=1;
                 //console.log('e.x in t focusin: '+(e.x));
+                e.halt();
                 console.log('t focusin: ' + (document.activeElement.nodeName));
             });
             $('#o').on('click', function () {

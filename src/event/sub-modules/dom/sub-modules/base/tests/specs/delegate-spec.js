@@ -151,17 +151,14 @@ KISSY.use("dom,event/dom/base", function (S, DOM, Event) {
                 ret.push(this.id);
             }
 
-            Event.delegate(S.get('#test-delegate'), "focus", ".xx", test);
+            Event.delegate(S.get('#test-delegate'), "click", ".xx", test);
             var a = S.get('#test-delegate-b');
             // support native dom event
 
-            Event.fire(a, "focus");
+            Event.fire(a, "click");
             waits(10);
 
-
             runs(function () {
-                //console.log(document.activeElement.nodeName);
-                expect(document.activeElement).toBe(a);
                 expect(ret + "").toBe([a.id,
                     'test-delegate-inner',
                     'test-delegate',

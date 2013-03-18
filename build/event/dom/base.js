@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 18 17:39
+build time: Mar 18 18:41
 */
 /**
  * @ignore
@@ -1469,7 +1469,8 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
     // 如果相同，那么证明已经 fire 过了，不要再次触发了
     var _Utils = Event._Utils;
 
-    var FOCUS_BLUR_REG=/^focus|blur$/;
+    var FOCUS_BLUR_REG = /^focus|blur$/;
+
     /**
      * custom event for dom
      * @param {Object} cfg
@@ -1634,7 +1635,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 currentTarget = self.currentTarget;
 
             // special fire for click/focus/blur
-            if (specialEvent.fire && specialEvent.fire.call(currentTarget) === false) {
+            if (specialEvent.fire && specialEvent.fire.call(currentTarget, onlyHandlers) === false) {
                 return;
             }
 
@@ -1647,7 +1648,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 S.mix(event, eventData);
             }
 
-            if (specialEvent.preFire && specialEvent.preFire.call(currentTarget,event) === false) {
+            if (specialEvent.preFire && specialEvent.preFire.call(currentTarget, event, onlyHandlers) === false) {
                 return;
             }
 
@@ -1965,9 +1966,10 @@ KISSY.add('event/dom/base/special', function (S, Event) {
         },
         click: {
             // use native click for correct check state order
-            fire: function () {
+            fire: function (onlyHandlers) {
                 var target = this;
-                if (String(target.type) === "checkbox" && target.click && target.nodeName.toLowerCase() == 'input') {
+                if (!onlyHandlers && String(target.type) === "checkbox" &&
+                    target.click && target.nodeName.toLowerCase() == 'input') {
                     target.click();
                     return false;
                 }
@@ -1977,13 +1979,15 @@ KISSY.add('event/dom/base/special', function (S, Event) {
         focus: {
             bubbles: false,
             // guarantee fire focusin first
-            preFire: function () {
-                Event.fire(this, 'focusin');
+            preFire: function (event, onlyHandlers) {
+                if (!onlyHandlers) {
+                    Event.fire(this, 'focusin');
+                }
             },
             // guarantee fire blur first
-            fire: function () {
+            fire: function (onlyHandlers) {
                 var target = this;
-                if (target.ownerDocument) {
+                if (!onlyHandlers && target.ownerDocument) {
                     if (target !== target.ownerDocument.activeElement && target.focus) {
                         target.focus();
                         return false;
@@ -1995,13 +1999,15 @@ KISSY.add('event/dom/base/special', function (S, Event) {
         blur: {
             bubbles: false,
             // guarantee fire focusout first
-            preFire: function () {
-                Event.fire(this, 'focusout');
+            preFire: function (event, onlyHandlers) {
+                if (!onlyHandlers) {
+                    Event.fire(this, 'focusout');
+                }
             },
             // guarantee fire blur first
-            fire: function () {
+            fire: function (onlyHandlers) {
                 var target = this;
-                if (target.ownerDocument) {
+                if (!onlyHandlers && target.ownerDocument) {
                     if (target === target.ownerDocument.activeElement && target.blur) {
                         target.blur();
                         return false;
