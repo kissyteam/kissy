@@ -313,18 +313,22 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector  Matched elements.
              */
             unselectable: function (selector) {
-                var _els = DOM.query(selector), elem, j,
+                var _els = DOM.query(selector),
+                    elem,
+                    j,
                     e,
                     i = 0,
                     excludes,
+                    style,
                     els;
                 for (j = _els.length - 1; j >= 0; j--) {
                     elem = _els[j];
-                    elem[STYLE]['UserSelect'] = 'none';
+                    style = elem[STYLE];
+                    style['UserSelect'] = 'none';
                     if (UA['gecko']) {
-                        elem[STYLE]['MozUserSelect'] = 'none';
+                        style['MozUserSelect'] = 'none';
                     } else if (UA['webkit']) {
-                        elem[STYLE]['WebkitUserSelect'] = 'none';
+                        style['WebkitUserSelect'] = 'none';
                     } else if (UA['ie'] || UA['opera']) {
                         els = elem.getElementsByTagName('*');
                         elem.setAttribute('unselectable', 'on');
@@ -335,7 +339,6 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                             }
                         }
                     }
-
                 }
             },
 

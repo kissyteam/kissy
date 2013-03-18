@@ -3,7 +3,7 @@
  * special house for special events
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/special', function () {
+KISSY.add('event/dom/base/special', function (S, Event) {
     var undefined = undefined;
     return {
 
@@ -24,6 +24,10 @@ KISSY.add('event/dom/base/special', function () {
         },
         focus: {
             bubbles: false,
+            // guarantee fire focusin first
+            preFire: function () {
+                Event.fire(this, 'focusin');
+            },
             // guarantee fire blur first
             fire: function () {
                 var target = this;
@@ -38,6 +42,10 @@ KISSY.add('event/dom/base/special', function () {
         },
         blur: {
             bubbles: false,
+            // guarantee fire focusout first
+            preFire: function () {
+                Event.fire(this, 'focusout');
+            },
             // guarantee fire blur first
             fire: function () {
                 var target = this;
@@ -52,4 +60,6 @@ KISSY.add('event/dom/base/special', function () {
         }
 
     };
+}, {
+    requires: ['event/base']
 });

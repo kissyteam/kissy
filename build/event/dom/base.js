@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 18 13:59
+build time: Mar 18 17:39
 */
 /**
  * @ignore
@@ -1469,6 +1469,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
     // 如果相同，那么证明已经 fire 过了，不要再次触发了
     var _Utils = Event._Utils;
 
+    var FOCUS_BLUR_REG=/^focus|blur$/;
     /**
      * custom event for dom
      * @param {Object} cfg
@@ -1632,6 +1633,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 bubbles = specialEvent.bubbles !== false,
                 currentTarget = self.currentTarget;
 
+            // special fire for click/focus/blur
             if (specialEvent.fire && specialEvent.fire.call(currentTarget) === false) {
                 return;
             }
@@ -1643,6 +1645,10 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                     target: currentTarget
                 });
                 S.mix(event, eventData);
+            }
+
+            if (specialEvent.preFire && specialEvent.preFire.call(currentTarget,event) === false) {
+                return;
             }
 
             // onlyHandlers is equal to event.halt()
@@ -1949,9 +1955,10 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
  * special house for special events
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/special', function () {
+KISSY.add('event/dom/base/special', function (S, Event) {
     var undefined = undefined;
     return {
+
         load: {
             // defaults to bubbles as custom event
             bubbles: false
@@ -1969,6 +1976,10 @@ KISSY.add('event/dom/base/special', function () {
         },
         focus: {
             bubbles: false,
+            // guarantee fire focusin first
+            preFire: function () {
+                Event.fire(this, 'focusin');
+            },
             // guarantee fire blur first
             fire: function () {
                 var target = this;
@@ -1983,6 +1994,10 @@ KISSY.add('event/dom/base/special', function () {
         },
         blur: {
             bubbles: false,
+            // guarantee fire focusout first
+            preFire: function () {
+                Event.fire(this, 'focusout');
+            },
             // guarantee fire blur first
             fire: function () {
                 var target = this;
@@ -1997,6 +2012,8 @@ KISSY.add('event/dom/base/special', function () {
         }
 
     };
+}, {
+    requires: ['event/base']
 });/**
  * @ignore
  * utils for event
