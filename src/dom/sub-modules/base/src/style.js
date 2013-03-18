@@ -320,10 +320,11 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     els;
                 for (j = _els.length - 1; j >= 0; j--) {
                     elem = _els[j];
+                    elem[STYLE]['UserSelect'] = 'none';
                     if (UA['gecko']) {
                         elem[STYLE]['MozUserSelect'] = 'none';
                     } else if (UA['webkit']) {
-                        elem[STYLE]['KhtmlUserSelect'] = 'none';
+                        elem[STYLE]['WebkitUserSelect'] = 'none';
                     } else if (UA['ie'] || UA['opera']) {
                         els = elem.getElementsByTagName('*');
                         elem.setAttribute('unselectable', 'on');

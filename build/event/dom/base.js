@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 18 12:48
+build time: Mar 18 13:59
 */
 /**
  * @ignore
@@ -1628,12 +1628,11 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 eventType = String(self.type),
                 customEvent,
                 eventData,
+                specialEvent = special[eventType] || {},
+                bubbles = specialEvent.bubbles !== false,
                 currentTarget = self.currentTarget;
 
-            // use native click for correct check state order
-            if (String(currentTarget.type) == 'checkbox' &&
-                currentTarget.click && DOM.nodeName(currentTarget) == 'input') {
-                currentTarget.click();
+            if (specialEvent.fire && specialEvent.fire.call(currentTarget) === false) {
                 return;
             }
 
@@ -1662,7 +1661,7 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 eventPath.push(cur);
                 // Bubble up to document, then to window
                 cur = cur.parentNode || cur.ownerDocument || (cur === curDocument) && win;
-            } while (!onlyHandlers && cur);
+            } while (!onlyHandlers && cur && bubbles);
 
             cur = eventPath[eventPathIndex];
 
@@ -1678,19 +1677,12 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             } while (!onlyHandlers && cur && !event.isPropagationStopped());
 
             if (!onlyHandlers && !event.isDefaultPrevented()) {
-
                 // now all browser support click
                 // https://developer.mozilla.org/en-US/docs/DOM/element.click
                 try {
                     // execute default action on dom node
-                    // so exclude window
-                    // exclude focus/blue on hidden element
-                    if (currentTarget[ eventType ] &&
-                        (
-                            (
-                                eventType !== 'focus' && eventType !== 'blur') ||
-                                currentTarget.offsetWidth !== 0
-                            ) && !S.isWindow(currentTarget)) {
+                    // exclude window
+                    if (currentTarget[ eventType ] && !S.isWindow(currentTarget)) {
                         // 记录当前 trigger 触发
                         ObservableDOMEvent.triggeredEvent = eventType;
 
@@ -1958,7 +1950,53 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/special', function () {
-    return {};
+    var undefined = undefined;
+    return {
+        load: {
+            // defaults to bubbles as custom event
+            bubbles: false
+        },
+        click: {
+            // use native click for correct check state order
+            fire: function () {
+                var target = this;
+                if (String(target.type) === "checkbox" && target.click && target.nodeName.toLowerCase() == 'input') {
+                    target.click();
+                    return false;
+                }
+                return undefined;
+            }
+        },
+        focus: {
+            bubbles: false,
+            // guarantee fire blur first
+            fire: function () {
+                var target = this;
+                if (target.ownerDocument) {
+                    if (target !== target.ownerDocument.activeElement && target.focus) {
+                        target.focus();
+                        return false;
+                    }
+                }
+                return undefined;
+            }
+        },
+        blur: {
+            bubbles: false,
+            // guarantee fire blur first
+            fire: function () {
+                var target = this;
+                if (target.ownerDocument) {
+                    if (target === target.ownerDocument.activeElement && target.blur) {
+                        target.blur();
+                        return false;
+                    }
+                }
+                return undefined;
+            }
+        }
+
+    };
 });/**
  * @ignore
  * utils for event
