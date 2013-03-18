@@ -5,16 +5,159 @@
  */
 KISSY.add('event/dom/base/object', function (S, Event, undefined) {
 
-    var doc = S.Env.host.document,
+    var DOCUMENT = S.Env.host.document,
         TRUE = true,
         FALSE = false,
-        props = ('type altKey attrChange attrName bubbles button cancelable ' +
-            'charCode clientX clientY ctrlKey currentTarget data detail ' +
-            'eventPhase fromElement handler keyCode metaKey ' +
-            'newValue offsetX offsetY pageX pageY prevValue ' +
-            'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
-            'target toElement view wheelDelta which axis ' +
-            'changedTouches touches targetTouches rotation scale').split(' ');
+        commonProps = [
+            'altKey', 'bubbles', 'cancelable',
+            'ctrlKey', 'currentTarget', 'eventPhase',
+            'metaKey', 'shiftKey', 'target',
+            'timeStamp', 'view', 'type'
+        ],
+        eventNormalizers = [
+            {
+                reg: /^key/,
+                props: ['char', 'charCode', 'key', 'keyCode', 'which'],
+                fix: function (event, originalEvent) {
+                    if (event.which == null) {
+                        event.which = originalEvent.charCode != null ? originalEvent.charCode : originalEvent.keyCode;
+                    }
+
+                    // add metaKey to non-Mac browsers (use ctrl for PC 's and Meta for Macs)
+                    if (event.metaKey === undefined) {
+                        event.metaKey = event.ctrlKey;
+                    }
+                }
+            },
+            {
+                reg: /^touch/,
+                props: ['touches', 'changedTouches', 'targetTouches']
+            },
+            {
+                reg: /^gesturechange$/i,
+                props: ['rotation', 'scale']
+            },
+            {
+                reg: /^mousewheel$/,
+                fix: function (event, originalEvent) {
+                    var deltaX,
+                        deltaY,
+                        delta,
+                        wheelDelta = originalEvent.wheelDelta,
+                        axis = originalEvent.axis,
+                        wheelDeltaY = originalEvent['wheelDeltaY'],
+                        wheelDeltaX = originalEvent['wheelDeltaX'],
+                        detail = originalEvent.detail;
+
+                    // ie/webkit
+                    if (wheelDelta) {
+                        delta = wheelDelta / 120;
+                    }
+
+                    // gecko
+                    if (detail) {
+                        // press control e.detail == 1 else e.detail == 3
+                        delta = -(detail % 3 == 0 ? detail / 3 : detail);
+                    }
+
+                    // Gecko
+                    if (axis !== undefined) {
+                        if (axis === e['HORIZONTAL_AXIS']) {
+                            deltaY = 0;
+                            deltaX = -1 * delta;
+                        } else if (axis === e['VERTICAL_AXIS']) {
+                            deltaX = 0;
+                            deltaY = delta;
+                        }
+                    }
+
+                    // Webkit
+                    if (wheelDeltaY !== undefined) {
+                        deltaY = wheelDeltaY / 120;
+                    }
+                    if (wheelDeltaX !== undefined) {
+                        deltaX = -1 * wheelDeltaX / 120;
+                    }
+
+                    // 默认 deltaY (ie)
+                    if (!deltaX && !deltaY) {
+                        deltaY = delta;
+                    }
+
+                    if (deltaX !== undefined) {
+                        /**
+                         * deltaX of mousewheel event
+                         * @property deltaX
+                         */
+                        event.deltaX = deltaX;
+                    }
+
+                    if (deltaY !== undefined) {
+                        /**
+                         * deltaY of mousewheel event
+                         * @property deltaY
+                         */
+                        event.deltaY = deltaY;
+                    }
+
+                    if (delta !== undefined) {
+                        /**
+                         * delta of mousewheel event
+                         * @property delta
+                         */
+                        event.delta = delta;
+                    }
+                }
+            },
+            {
+                reg: /^(?:mouse|contextmenu)|click/,
+                props: [
+                    'buttons', 'clientX', 'clientY', 'button',
+                    'offsetX', 'relatedTarget', 'which',
+                    'fromElement', 'toElement', 'offsetY',
+                    'pageX', 'pageY', 'screenX', 'screenY'
+                ],
+                fix: function (event, originalEvent) {
+                    var eventDoc, doc, body,
+                        target = event.target,
+                        button = originalEvent.button;
+
+                    // Calculate pageX/Y if missing and clientX/Y available
+                    if (event.pageX == null && originalEvent.clientX != null) {
+                        eventDoc = target.ownerDocument || DOCUMENT;
+                        doc = eventDoc.documentElement;
+                        body = eventDoc.body;
+                        event.pageX = originalEvent.clientX +
+                            ( doc && doc.scrollLeft || body && body.scrollLeft || 0 ) -
+                            ( doc && doc.clientLeft || body && body.clientLeft || 0 );
+                        event.pageY = originalEvent.clientY +
+                            ( doc && doc.scrollTop || body && body.scrollTop || 0 ) -
+                            ( doc && doc.clientTop || body && body.clientTop || 0 );
+                    }
+
+                    // which for click: 1 === left; 2 === middle; 3 === right
+                    // do not use button
+                    if (!event.which && button !== undefined) {
+                        event.which = ( button & 1 ? 1 : ( button & 2 ? 3 : ( button & 4 ? 2 : 0 ) ) );
+                    }
+
+                    // add relatedTarget, if necessary
+                    if (!event.relatedTarget && event.fromElement) {
+                        event.relatedTarget = (event.fromElement === target) ? event.toElement : event.fromElement;
+                    }
+
+                    return event;
+                }
+            }
+        ];
+
+    function retTrue() {
+        return TRUE;
+    }
+
+    function retFalse() {
+        return FALSE;
+    }
 
     /**
      * Do not new by yourself.
@@ -31,9 +174,9 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
      *
      * @class KISSY.Event.DOMEventObject
      * @extends KISSY.Event.Object
-     * @param domEvent native dom event
+     * @param originalEvent native dom event
      */
-    function DOMEventObject(domEvent) {
+    function DOMEventObject(originalEvent) {
         var self = this;
 
         if ('@DEBUG@') {
@@ -229,40 +372,45 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
              */
             self.scale = undefined;
 
-            self.target = undefined;
+            /**
+             * source html node of current event
+             * @property target
+             * @type {HTMLElement}
+             */
+            self.target = null;
 
-            self.currentTarget = undefined;
+            /**
+             * current htm node which processes current event
+             * @property currentTarget
+             * @type {HTMLElement}
+             */
+            self.currentTarget = null;
         }
 
         DOMEventObject.superclass.constructor.call(self);
-        self.originalEvent = domEvent;
-        // in case dom event has been mark as default prevented by lower dom node
-        self.isDefaultPrevented = ( domEvent['defaultPrevented'] || domEvent.returnValue === FALSE ||
-            domEvent['getPreventDefault'] && domEvent['getPreventDefault']() ) ? function () {
-            return TRUE;
-        } : function () {
-            return FALSE;
-        };
-        fix(self);
-        fixMouseWheel(self);
-        /**
-         * source html node of current event
-         * @property target
-         * @type {HTMLElement}
-         */
-        /**
-         * current htm node which processes current event
-         * @property currentTarget
-         * @type {HTMLElement}
-         */
-    }
 
-    function fix(self) {
-        var originalEvent = self.originalEvent,
-            l = props.length,
+        self.originalEvent = originalEvent;
+
+        // in case dom event has been mark as default prevented by lower dom node
+        self.isDefaultPrevented = (
+            originalEvent['defaultPrevented'] || originalEvent.returnValue === FALSE ||
+                originalEvent['getPreventDefault'] && originalEvent['getPreventDefault']()
+            ) ? retTrue : retFalse;
+
+        var type = originalEvent.type,
+            fixFn = null,
+            l,
             prop,
-            ct = originalEvent.currentTarget,
-            ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
+            props = commonProps.concat();
+
+        S.each(eventNormalizers, function (normalizer) {
+            if (type.match(normalizer.reg)) {
+                props = props.concat(normalizer.props);
+                fixFn = normalizer.fix;
+            }
+        });
+
+        l = props.length;
 
         // clone properties of the original event object
         while (l) {
@@ -272,7 +420,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
 
         // fix target property, if necessary
         if (!self.target) {
-            self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
+            self.target = self.srcElement || DOCUMENT; // srcElement might not be defined either
         }
 
         // check if target is a text node (safari)
@@ -280,96 +428,8 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
             self.target = self.target.parentNode;
         }
 
-        // add relatedTarget, if necessary
-        if (!self.relatedTarget && self.fromElement) {
-            self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
-        }
-
-        // calculate pageX/Y if missing and clientX/Y available
-        if (self.pageX === undefined && self.clientX !== undefined) {
-            var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
-            self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
-            self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
-        }
-
-        // add which for key events
-        if (self.which === undefined) {
-            self.which = (self.charCode === undefined) ? self.keyCode : self.charCode;
-        }
-
-        // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
-        if (self.metaKey === undefined) {
-            self.metaKey = self.ctrlKey;
-        }
-
-        // add which for click: 1 === left; 2 === middle; 3 === right
-        // Note: button is not normalized, so don't use it
-        if (!self.which && self.button !== undefined) {
-            self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
-        }
-    }
-
-    function fixMouseWheel(e) {
-        var deltaX,
-            deltaY,
-            delta,
-            detail = e.detail;
-
-        // ie/webkit
-        if (e.wheelDelta) {
-            delta = e.wheelDelta / 120;
-        }
-
-        // gecko
-        if (e.detail) {
-            // press control e.detail == 1 else e.detail == 3
-            delta = -(detail % 3 == 0 ? detail / 3 : detail);
-        }
-
-        // Gecko
-        if (e.axis !== undefined) {
-            if (e.axis === e['HORIZONTAL_AXIS']) {
-                deltaY = 0;
-                deltaX = -1 * delta;
-            } else if (e.axis === e['VERTICAL_AXIS']) {
-                deltaX = 0;
-                deltaY = delta;
-            }
-        }
-
-        // Webkit
-        if (e['wheelDeltaY'] !== undefined) {
-            deltaY = e['wheelDeltaY'] / 120;
-        }
-        if (e['wheelDeltaX'] !== undefined) {
-            deltaX = -1 * e['wheelDeltaX'] / 120;
-        }
-
-        // 默认 deltaY (ie)
-        if (!deltaX && !deltaY) {
-            deltaY = delta;
-        }
-
-        if (deltaX !== undefined ||
-            deltaY !== undefined ||
-            delta !== undefined) {
-            S.mix(e, {
-                /**
-                 * deltaY of mousewheel event
-                 * @property deltaY
-                 */
-                deltaY: deltaY,
-                /**
-                 * delta of mousewheel event
-                 * @property delta
-                 */
-                delta: delta,
-                /**
-                 * deltaX of mousewheel event
-                 * @property deltaX
-                 */
-                deltaX: deltaX
-            });
+        if (fixFn) {
+            fixFn(self, originalEvent);
         }
     }
 
@@ -378,7 +438,8 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
         constructor: DOMEventObject,
 
         preventDefault: function () {
-            var e = this.originalEvent;
+            var self = this,
+                e = self.originalEvent;
 
             // if preventDefault exists run it on the original event
             if (e.preventDefault) {
@@ -389,11 +450,12 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
                 e.returnValue = FALSE;
             }
 
-            DOMEventObject.superclass.preventDefault.call(this);
+            DOMEventObject.superclass.preventDefault.call(self);
         },
 
         stopPropagation: function () {
-            var e = this.originalEvent;
+            var self = this,
+                e = self.originalEvent;
 
             // if stopPropagation exists run it on the original event
             if (e.stopPropagation) {
@@ -404,12 +466,9 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
                 e.cancelBubble = TRUE;
             }
 
-            DOMEventObject.superclass.stopPropagation.call(this);
+            DOMEventObject.superclass.stopPropagation.call(self);
         }
     });
-
-    // compatibility
-    // Event.Object = S.EventObject = DOMEventObject;
 
     Event.DOMEventObject = DOMEventObject;
 
