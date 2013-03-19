@@ -37,6 +37,7 @@
         t.removeAttribute('checked');
         console.log(t.getAttribute('checked'));
         console.log(t.checked);
+        console.log(!!(t.getAttributeNode('checked')&&t.getAttributeNode('checked').specified));
         console.log("t.checked=true");
         t.checked = true;
         console.log(t.getAttribute('checked'));
