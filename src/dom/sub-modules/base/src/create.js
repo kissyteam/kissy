@@ -7,7 +7,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
         NodeType = DOM.NodeType,
-        slice = [].slice,
+        slice = Array.prototype.slice,
         UA = S.UA,
         ie = UA['ie'],
         DIV = 'div',
@@ -270,7 +270,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
                     if (!keepData && el.nodeType == NodeType.ELEMENT_NODE) {
-                        all = slice.call(getElementsByTagName(el, '*'), 0);
+                        all = S.makeArray(getElementsByTagName(el, '*'));
                         all.push(el);
                         DOM.removeData(all);
                         if (Event) {

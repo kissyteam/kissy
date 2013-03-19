@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 19 11:13
+build time: Mar 19 18:19
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130319111306' will replace with current timestamp when compressing.
+         * NOTICE: '20130319181847' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130319111306',
+        __BUILD_TIME: '20130319181847',
         /**
          * KISSY Environment.
          * @private
@@ -5889,7 +5889,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130319111306'
+            tag: '20130319181847'
         }, getBaseInfo()));
     }
 
@@ -6491,7 +6491,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 18 13:59
+build time: Mar 19 18:18
 */
 /**
  * @ignore
@@ -7447,7 +7447,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
 
     var doc = S.Env.host.document,
         NodeType = DOM.NodeType,
-        slice = [].slice,
+        slice = Array.prototype.slice,
         UA = S.UA,
         ie = UA['ie'],
         DIV = 'div',
@@ -7710,7 +7710,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                 for (i = els.length - 1; i >= 0; i--) {
                     el = els[i];
                     if (!keepData && el.nodeType == NodeType.ELEMENT_NODE) {
-                        all = slice.call(getElementsByTagName(el, '*'), 0);
+                        all = S.makeArray(getElementsByTagName(el, '*'));
                         all.push(el);
                         DOM.removeData(all);
                         if (Event) {
@@ -9846,18 +9846,22 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
              * @param {HTMLElement[]|String|HTMLElement} selector  Matched elements.
              */
             unselectable: function (selector) {
-                var _els = DOM.query(selector), elem, j,
+                var _els = DOM.query(selector),
+                    elem,
+                    j,
                     e,
                     i = 0,
                     excludes,
+                    style,
                     els;
                 for (j = _els.length - 1; j >= 0; j--) {
                     elem = _els[j];
-                    elem[STYLE]['UserSelect'] = 'none';
+                    style = elem[STYLE];
+                    style['UserSelect'] = 'none';
                     if (UA['gecko']) {
-                        elem[STYLE]['MozUserSelect'] = 'none';
+                        style['MozUserSelect'] = 'none';
                     } else if (UA['webkit']) {
-                        elem[STYLE]['WebkitUserSelect'] = 'none';
+                        style['WebkitUserSelect'] = 'none';
                     } else if (UA['ie'] || UA['opera']) {
                         els = elem.getElementsByTagName('*');
                         elem.setAttribute('unselectable', 'on');
@@ -9868,7 +9872,6 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                             }
                         }
                     }
-
                 }
             },
 

@@ -28,7 +28,7 @@ KISSY.use("dom,core", function (S, DOM) {
             new Array(20).join('<p>x</p>') +
             '</div>',
 
-        iframeTpl = '<iframe src="../others/test-dom-offset-iframe.html"\
+        iframeTpl = '<iframe src="../others/offset/test-dom-offset-iframe.html"\
         id="test-iframe"\
         style="border:1px solid black; "\
         width="200"\

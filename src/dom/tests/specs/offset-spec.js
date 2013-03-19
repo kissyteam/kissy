@@ -9,7 +9,7 @@ KISSY.use("dom,core", function (S, DOM) {
 
     describe("offset", function () {
 
-        var iframeTpl = '<iframe src="../others/test-dom-offset-iframe.html"\
+        var iframeTpl = '<iframe src="../others/offset/test-dom-offset-iframe.html"\
         id="test-iframe"\
         style="border:1px solid black; "\
         width="200"\

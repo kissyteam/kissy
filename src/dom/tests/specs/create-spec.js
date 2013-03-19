@@ -107,7 +107,7 @@ KISSY.use("dom,core", function (S, DOM) {
                 expect(window.g_sethtml2).toBeUndefined();
 
                 // src js
-                DOM.html(t, '<script src="../others/test-dom-create.js"><\/script>we', true);
+                DOM.html(t, '<script src="../others/create/test-dom-create.js"><\/script>we', true);
             });
 
             waitsFor(function () {
