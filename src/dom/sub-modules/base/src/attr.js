@@ -350,10 +350,6 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                     return undefined;
                 }
 
-                if (!(name = S.trim(name))) {
-                    return undefined;
-                }
-
                 // attr functions
                 if (pass && attrFn[name]) {
                     return DOM[name](selector, val);
@@ -378,7 +374,6 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                 } else {
                     attrNormalizer = attrHooks[name];
                 }
-
 
                 if (val === undefined) {
                     if (el && el.nodeType === NodeType.ELEMENT_NODE) {
