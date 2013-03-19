@@ -589,6 +589,12 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
 });
 /*
  NOTES:
+ yiminghe@gmail.com: 2013-03-19
+ - boolean property 和 attribute ie 和其他浏览器不一致，统一为类似 ie8：
+    - attr('checked',string) == .checked=true setAttribute('checked','checked') // ie8 相同 setAttribute()
+    - attr('checked',false) == removeAttr('check') // ie8 不同, setAttribute ie8 相当于 .checked=true setAttribute('checked','checked')
+    - removeAttr('checked') == .checked=false removeAttribute('checked') // ie8 removeAttribute 相同
+
  yiminghe@gmail.com: 2012-11-27
  - 拆分 ie attr，条件加载
 

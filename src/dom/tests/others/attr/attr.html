@@ -6,7 +6,8 @@
 <input id='t2' type='checkbox' my='xx'/>
 <input id='t' type='checkbox' checked/>
 <script>
-    window.onload = function(){
+    window.onload = function () {
+
         // ie67 不区分 attr/prop
         // setAttribute('checked','checked') 相当于 .checked=true
         // setAttribute('checked','') 相当于 .checked=false
@@ -17,8 +18,9 @@
         // 但是 .checked 不设置 setAttribute
 
         // ie9+ 完全分离
-        var t=document.getElementById('t');
-        var t2=document.getElementById('t2');
+        var t = document.getElementById('t');
+        var t2 = document.getElementById('t2');
+        t.checked = true;
         console.log("t2.my");
         console.log(t2.my);
         console.log("t2");
@@ -32,19 +34,27 @@
         console.log(t.getAttribute('checked'));
         console.log(t.checked);
         console.log("t.checked=true");
-        t.checked=true;
+        t.checked = true;
         console.log(t.getAttribute('checked'));
         console.log(t.checked);
         console.log("t.checked=false");
-        t.checked=false;
+        t.checked = false;
         console.log(t.getAttribute('checked'));
         console.log(t.checked);
         console.log("t.setAttribute checked checked");
-        t.setAttribute('checked','checked');
+        t.setAttribute('checked', 'checked');
         console.log(t.getAttribute('checked'));
         console.log(t.checked);
         console.log("t.setAttribute ''");
-        t.setAttribute('checked','');
+        t.setAttribute('checked', '');
+        console.log(t.getAttribute('checked'));
+        console.log(t.checked);
+        console.log("t.setAttribute checked checked");
+        console.log("t.checked=true");
+        t.setAttribute('checked', 'checked');
+        t.checked=true;
+        console.log("t.setAttribute false");
+        t.setAttribute('checked', false);
         console.log(t.getAttribute('checked'));
         console.log(t.checked);
     };
