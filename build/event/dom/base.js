@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 18 20:13
+build time: Mar 19 11:12
 */
 /**
  * @ignore
@@ -380,7 +380,6 @@ KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Sp
         './base/special',
         './base/api',
         './base/mouseenter',
-        './base/mousewheel',
         './base/valuechange']
 });
 
@@ -1002,21 +1001,6 @@ KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
  - fire('mouseenter') 可以的，直接执行 mouseenter 的 handlers 用户回调数组
  */
 /**
- * @ignore
- * normalize mousewheel in gecko
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/base/mousewheel', function (S, special) {
-
-    var UA = S.UA, MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
-
-    special['mousewheel'] = {
-        typeFix: MOUSE_WHEEL
-    };
-
-}, {
-    requires: ['./special']
-});/**
  * @ignore
  * event object for dom
  * @author yiminghe@gmail.com
@@ -2018,8 +2002,15 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/special', function (S, Event) {
-    var undefined = undefined;
+    var undefined = undefined,
+        UA = S.UA,
+        MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
+
     return {
+
+        mousewheel: {
+            typeFix: MOUSE_WHEEL
+        },
 
         load: {
             // defaults to bubbles as custom event

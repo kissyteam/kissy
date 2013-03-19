@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 17:21
+build time: Mar 19 11:13
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130315172056' will replace with current timestamp when compressing.
+         * NOTICE: '20130319111306' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130315172056',
+        __BUILD_TIME: '20130319111306',
         /**
          * KISSY Environment.
          * @private
@@ -5889,7 +5889,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130315172056'
+            tag: '20130319111306'
         }, getBaseInfo()));
     }
 
@@ -6491,7 +6491,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 14:12
+build time: Mar 18 13:59
 */
 /**
  * @ignore
@@ -9853,10 +9853,11 @@ KISSY.add('dom/base/style', function (S, DOM, undefined) {
                     els;
                 for (j = _els.length - 1; j >= 0; j--) {
                     elem = _els[j];
+                    elem[STYLE]['UserSelect'] = 'none';
                     if (UA['gecko']) {
                         elem[STYLE]['MozUserSelect'] = 'none';
                     } else if (UA['webkit']) {
-                        elem[STYLE]['KhtmlUserSelect'] = 'none';
+                        elem[STYLE]['WebkitUserSelect'] = 'none';
                     } else if (UA['ie'] || UA['opera']) {
                         els = elem.getElementsByTagName('*');
                         elem.setAttribute('unselectable', 'on');
@@ -11314,7 +11315,7 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 17:20
+build time: Mar 19 11:12
 */
 /**
  * @ignore
@@ -11679,7 +11680,24 @@ KISSY.add('event/base/observer', function (S, undefined) {
  */
 KISSY.add('event/base/utils', function (S) {
 
-    var getTypedGroups, splitAndRun;
+    var splitAndRun, getGroupsRe;
+
+    function getTypedGroups(type) {
+        if (type.indexOf('.') < 0) {
+            return [type, ''];
+        }
+        var m = type.match(/([^.]+)?(\..+)?$/),
+            t = m[1],
+            ret = [t],
+            gs = m[2];
+        if (gs) {
+            gs = gs.split('.').sort();
+            ret.push(gs.join('.'));
+        } else {
+            ret.push('');
+        }
+        return ret;
+    }
 
     return {
 
@@ -11742,24 +11760,19 @@ KISSY.add('event/base/utils', function (S) {
             }
         },
 
-        getTypedGroups: getTypedGroups = function (type) {
-            if (type.indexOf('.') < 0) {
-                return [type, ''];
+        fillGroupsForEvent: function (type, eventData) {
+            var typedGroups = getTypedGroups(type),
+                _ks_groups = typedGroups[1];
+
+            if (_ks_groups) {
+                _ks_groups = getGroupsRe(_ks_groups);
+                eventData._ks_groups = _ks_groups;
             }
-            var m = type.match(/([^.]+)?(\..+)?$/),
-                t = m[1],
-                ret = [t],
-                gs = m[2];
-            if (gs) {
-                gs = gs.split('.').sort();
-                ret.push(gs.join('.'));
-            } else {
-                ret.push('');
-            }
-            return ret;
+
+            eventData.type = typedGroups[0];
         },
 
-        getGroupsRe: function (groups) {
+        getGroupsRe: getGroupsRe = function (groups) {
             return new RegExp(groups.split('.').join('.*\\.') + '(?:\\.|$)');
         }
 
@@ -11769,7 +11782,7 @@ KISSY.add('event/base/utils', function (S) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 16:58
+build time: Mar 19 11:12
 */
 /**
  * @ignore
@@ -11777,8 +11790,7 @@ build time: Mar 15 16:58
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEvent) {
-    var trim = S.trim,
-        _Utils = Event._Utils,
+    var _Utils = Event._Utils,
         splitAndRun = _Utils.splitAndRun,
         KS_BUBBLE_TARGETS = '__~ks_bubble_targets';
 
@@ -11810,16 +11822,11 @@ KISSY.add('event/custom/api-impl', function (S, api, Event, ObservableCustomEven
 
                 splitAndRun(type, function (type) {
 
-                    var r2, customEvent,
-                        typedGroups = _Utils.getTypedGroups(type),
-                        _ks_groups = typedGroups[1];
+                    var r2, customEvent;
 
-                    type = typedGroups[0];
+                    _Utils.fillGroupsForEvent(type,eventData);
 
-                    if (_ks_groups) {
-                        _ks_groups = _Utils.getGroupsRe(_ks_groups);
-                        eventData._ks_groups = _ks_groups;
-                    }
+                    type = eventData.type;
 
                     // default bubble true
                     // if bubble false, it must has customEvent structure set already
@@ -12390,7 +12397,7 @@ KISSY.add('event/custom/observer', function (S, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 16:58
+build time: Mar 19 11:12
 */
 /**
  * @ignore
@@ -12401,25 +12408,16 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
     var _Utils = Event._Utils;
 
     function fixType(cfg, type) {
-        var s = special[type] || {};
-        // in case overwritten by delegateFix/onFix in special events
-        // (mouseenter/leave,focusin/out)
+        var s = special[type] || {},
+            typeFix;
 
-        if (!cfg.originalType) {
-            if (cfg.selector) {
-                if (s['delegateFix']) {
-                    cfg.originalType = type;
-                    type = s['delegateFix'];
-                }
-            } else {
-                // when on mouseenter, it's actually on mouseover,
-                // and observers is saved with mouseover!
-                // TODO need evaluate!
-                if (s['onFix']) {
-                    cfg.originalType = type;
-                    type = s['onFix'];
-                }
-            }
+        // in case overwritten by typeFix in special events
+        // (mouseenter/leave,focusin/out)
+        if (!cfg.originalType && (typeFix = s.typeFix)) {
+            // when on mouseenter, it's actually on mouseover,
+            // and observers is saved with mouseover!
+            cfg.originalType = type;
+            type = typeFix;
         }
 
         return type;
@@ -12470,7 +12468,6 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
         if (!customEvent) {
             customEvent = events[type] = new ObservableDOMEvent({
                 type: type,
-                fn: handle,
                 currentTarget: currentTarget
             });
 
@@ -12647,38 +12644,37 @@ KISSY.add('event/dom/base/api', function (S, Event, DOM, special, Utils, Observa
             eventData.synthetic = 1;
 
             _Utils.splitAndRun(eventType, function (eventType) {
-                // protect event type
-                eventData.type = eventType;
 
                 var r,
                     i,
                     target,
-                    customEvent,
-                    typedGroups = _Utils.getTypedGroups(eventType),
-                    _ks_groups = typedGroups[1];
+                    customEvent;
 
-                if (_ks_groups) {
-                    _ks_groups = _Utils.getGroupsRe(_ks_groups);
+                _Utils.fillGroupsForEvent(eventType, eventData);
+
+                // mouseenter
+                eventType = eventData.type;
+                var s = special[eventType];
+
+                var originalType = eventType;
+
+                // where observers lie
+                // mouseenter observer lies on mouseover
+                if (s && s.typeFix) {
+                    // mousemove
+                    originalType = s.typeFix;
                 }
-
-                eventType = typedGroups[0];
-
-                S.mix(eventData, {
-                    type: eventType,
-                    _ks_groups: _ks_groups
-                });
 
                 targets = DOM.query(targets);
 
                 for (i = targets.length - 1; i >= 0; i--) {
                     target = targets[i];
-                    customEvent = ObservableDOMEvent
-                        .getCustomEvent(target, eventType);
+                    customEvent = ObservableDOMEvent.getCustomEvent(target, originalType);
                     // bubbling
                     // html dom event defaults to bubble
                     if (!onlyHandlers && !customEvent) {
                         customEvent = new ObservableDOMEvent({
-                            type: eventType,
+                            type: originalType,
                             currentTarget: target
                         });
                     }
@@ -12780,7 +12776,6 @@ KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Sp
         './base/special',
         './base/api',
         './base/mouseenter',
-        './base/mousewheel',
         './base/valuechange']
 });
 
@@ -13363,9 +13358,7 @@ KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
     ], function (o) {
         special[o.name] = {
             // fix #75
-            onFix: o.fix,
-            // all browser need
-            delegateFix: o.fix,
+            typeFix: o.fix,
             handle: function (event, observer, ce) {
                 var currentTarget = event.currentTarget,
                     relatedTarget = event.relatedTarget;
@@ -13405,37 +13398,164 @@ KISSY.add('event/dom/base/mouseenter', function (S, Event, DOM, special) {
  */
 /**
  * @ignore
- * normalize mousewheel in gecko
- * @author yiminghe@gmail.com
- */
-KISSY.add('event/dom/base/mousewheel', function (S, special) {
-
-    var UA = S.UA, MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
-
-    special['mousewheel'] = {
-        onFix: MOUSE_WHEEL,
-        delegateFix: MOUSE_WHEEL
-    };
-
-}, {
-    requires: ['./special']
-});/**
- * @ignore
  * event object for dom
  * @author yiminghe@gmail.com
  */
 KISSY.add('event/dom/base/object', function (S, Event, undefined) {
 
-    var doc = S.Env.host.document,
+    var DOCUMENT = S.Env.host.document,
         TRUE = true,
         FALSE = false,
-        props = ('type altKey attrChange attrName bubbles button cancelable ' +
-            'charCode clientX clientY ctrlKey currentTarget data detail ' +
-            'eventPhase fromElement handler keyCode metaKey ' +
-            'newValue offsetX offsetY pageX pageY prevValue ' +
-            'relatedNode relatedTarget screenX screenY shiftKey srcElement ' +
-            'target toElement view wheelDelta which axis ' +
-            'changedTouches touches targetTouches rotation scale').split(' ');
+        commonProps = [
+            'altKey', 'bubbles', 'cancelable',
+            'ctrlKey', 'currentTarget', 'eventPhase',
+            'metaKey', 'shiftKey', 'target',
+            'timeStamp', 'view', 'type'
+        ],
+        eventNormalizers = [
+            {
+                reg: /^key/,
+                props: ['char', 'charCode', 'key', 'keyCode', 'which'],
+                fix: function (event, originalEvent) {
+                    if (event.which == null) {
+                        event.which = originalEvent.charCode != null ? originalEvent.charCode : originalEvent.keyCode;
+                    }
+
+                    // add metaKey to non-Mac browsers (use ctrl for PC 's and Meta for Macs)
+                    if (event.metaKey === undefined) {
+                        event.metaKey = event.ctrlKey;
+                    }
+                }
+            },
+            {
+                reg: /^touch/,
+                props: ['touches', 'changedTouches', 'targetTouches']
+            },
+            {
+                reg: /^gesturechange$/i,
+                props: ['rotation', 'scale']
+            },
+            {
+                reg: /^mousewheel$/,
+                fix: function (event, originalEvent) {
+                    var deltaX,
+                        deltaY,
+                        delta,
+                        wheelDelta = originalEvent.wheelDelta,
+                        axis = originalEvent.axis,
+                        wheelDeltaY = originalEvent['wheelDeltaY'],
+                        wheelDeltaX = originalEvent['wheelDeltaX'],
+                        detail = originalEvent.detail;
+
+                    // ie/webkit
+                    if (wheelDelta) {
+                        delta = wheelDelta / 120;
+                    }
+
+                    // gecko
+                    if (detail) {
+                        // press control e.detail == 1 else e.detail == 3
+                        delta = -(detail % 3 == 0 ? detail / 3 : detail);
+                    }
+
+                    // Gecko
+                    if (axis !== undefined) {
+                        if (axis === e['HORIZONTAL_AXIS']) {
+                            deltaY = 0;
+                            deltaX = -1 * delta;
+                        } else if (axis === e['VERTICAL_AXIS']) {
+                            deltaX = 0;
+                            deltaY = delta;
+                        }
+                    }
+
+                    // Webkit
+                    if (wheelDeltaY !== undefined) {
+                        deltaY = wheelDeltaY / 120;
+                    }
+                    if (wheelDeltaX !== undefined) {
+                        deltaX = -1 * wheelDeltaX / 120;
+                    }
+
+                    // 默认 deltaY (ie)
+                    if (!deltaX && !deltaY) {
+                        deltaY = delta;
+                    }
+
+                    if (deltaX !== undefined) {
+                        /**
+                         * deltaX of mousewheel event
+                         * @property deltaX
+                         */
+                        event.deltaX = deltaX;
+                    }
+
+                    if (deltaY !== undefined) {
+                        /**
+                         * deltaY of mousewheel event
+                         * @property deltaY
+                         */
+                        event.deltaY = deltaY;
+                    }
+
+                    if (delta !== undefined) {
+                        /**
+                         * delta of mousewheel event
+                         * @property delta
+                         */
+                        event.delta = delta;
+                    }
+                }
+            },
+            {
+                reg: /^(?:mouse|contextmenu)|click/,
+                props: [
+                    'buttons', 'clientX', 'clientY', 'button',
+                    'offsetX', 'relatedTarget', 'which',
+                    'fromElement', 'toElement', 'offsetY',
+                    'pageX', 'pageY', 'screenX', 'screenY'
+                ],
+                fix: function (event, originalEvent) {
+                    var eventDoc, doc, body,
+                        target = event.target,
+                        button = originalEvent.button;
+
+                    // Calculate pageX/Y if missing and clientX/Y available
+                    if (event.pageX == null && originalEvent.clientX != null) {
+                        eventDoc = target.ownerDocument || DOCUMENT;
+                        doc = eventDoc.documentElement;
+                        body = eventDoc.body;
+                        event.pageX = originalEvent.clientX +
+                            ( doc && doc.scrollLeft || body && body.scrollLeft || 0 ) -
+                            ( doc && doc.clientLeft || body && body.clientLeft || 0 );
+                        event.pageY = originalEvent.clientY +
+                            ( doc && doc.scrollTop || body && body.scrollTop || 0 ) -
+                            ( doc && doc.clientTop || body && body.clientTop || 0 );
+                    }
+
+                    // which for click: 1 === left; 2 === middle; 3 === right
+                    // do not use button
+                    if (!event.which && button !== undefined) {
+                        event.which = ( button & 1 ? 1 : ( button & 2 ? 3 : ( button & 4 ? 2 : 0 ) ) );
+                    }
+
+                    // add relatedTarget, if necessary
+                    if (!event.relatedTarget && event.fromElement) {
+                        event.relatedTarget = (event.fromElement === target) ? event.toElement : event.fromElement;
+                    }
+
+                    return event;
+                }
+            }
+        ];
+
+    function retTrue() {
+        return TRUE;
+    }
+
+    function retFalse() {
+        return FALSE;
+    }
 
     /**
      * Do not new by yourself.
@@ -13452,10 +13572,11 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
      *
      * @class KISSY.Event.DOMEventObject
      * @extends KISSY.Event.Object
-     * @param domEvent native dom event
+     * @param originalEvent native dom event
      */
-    function DOMEventObject(domEvent) {
-        var self = this;
+    function DOMEventObject(originalEvent) {
+        var self = this,
+            type = originalEvent.type;
 
         if ('@DEBUG@') {
             /**
@@ -13650,40 +13771,44 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
              */
             self.scale = undefined;
 
-            self.target = undefined;
+            /**
+             * source html node of current event
+             * @property target
+             * @type {HTMLElement}
+             */
+            self.target = null;
 
-            self.currentTarget = undefined;
+            /**
+             * current htm node which processes current event
+             * @property currentTarget
+             * @type {HTMLElement}
+             */
+            self.currentTarget = null;
         }
 
         DOMEventObject.superclass.constructor.call(self);
-        self.originalEvent = domEvent;
-        // in case dom event has been mark as default prevented by lower dom node
-        self.isDefaultPrevented = ( domEvent['defaultPrevented'] || domEvent.returnValue === FALSE ||
-            domEvent['getPreventDefault'] && domEvent['getPreventDefault']() ) ? function () {
-            return TRUE;
-        } : function () {
-            return FALSE;
-        };
-        fix(self);
-        fixMouseWheel(self);
-        /**
-         * source html node of current event
-         * @property target
-         * @type {HTMLElement}
-         */
-        /**
-         * current htm node which processes current event
-         * @property currentTarget
-         * @type {HTMLElement}
-         */
-    }
 
-    function fix(self) {
-        var originalEvent = self.originalEvent,
-            l = props.length,
+        self.originalEvent = originalEvent;
+
+        // in case dom event has been mark as default prevented by lower dom node
+        self.isDefaultPrevented = (
+            originalEvent['defaultPrevented'] || originalEvent.returnValue === FALSE ||
+                originalEvent['getPreventDefault'] && originalEvent['getPreventDefault']()
+            ) ? retTrue : retFalse;
+
+        var fixFn = null,
+            l,
             prop,
-            ct = originalEvent.currentTarget,
-            ownerDoc = (ct.nodeType === 9) ? ct : (ct.ownerDocument || doc); // support iframe
+            props = commonProps.concat();
+
+        S.each(eventNormalizers, function (normalizer) {
+            if (type.match(normalizer.reg)) {
+                props = props.concat(normalizer.props);
+                fixFn = normalizer.fix;
+            }
+        });
+
+        l = props.length;
 
         // clone properties of the original event object
         while (l) {
@@ -13693,7 +13818,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
 
         // fix target property, if necessary
         if (!self.target) {
-            self.target = self.srcElement || ownerDoc; // srcElement might not be defined either
+            self.target = self.srcElement || DOCUMENT; // srcElement might not be defined either
         }
 
         // check if target is a text node (safari)
@@ -13701,97 +13826,10 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
             self.target = self.target.parentNode;
         }
 
-        // add relatedTarget, if necessary
-        if (!self.relatedTarget && self.fromElement) {
-            self.relatedTarget = (self.fromElement === self.target) ? self.toElement : self.fromElement;
+        if (fixFn) {
+            fixFn(self, originalEvent);
         }
 
-        // calculate pageX/Y if missing and clientX/Y available
-        if (self.pageX === undefined && self.clientX !== undefined) {
-            var docEl = ownerDoc.documentElement, bd = ownerDoc.body;
-            self.pageX = self.clientX + (docEl && docEl.scrollLeft || bd && bd.scrollLeft || 0) - (docEl && docEl.clientLeft || bd && bd.clientLeft || 0);
-            self.pageY = self.clientY + (docEl && docEl.scrollTop || bd && bd.scrollTop || 0) - (docEl && docEl.clientTop || bd && bd.clientTop || 0);
-        }
-
-        // add which for key events
-        if (self.which === undefined) {
-            self.which = (self.charCode === undefined) ? self.keyCode : self.charCode;
-        }
-
-        // add metaKey to non-Mac browsers (use ctrl for PC's and Meta for Macs)
-        if (self.metaKey === undefined) {
-            self.metaKey = self.ctrlKey;
-        }
-
-        // add which for click: 1 === left; 2 === middle; 3 === right
-        // Note: button is not normalized, so don't use it
-        if (!self.which && self.button !== undefined) {
-            self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : ( self.button & 4 ? 2 : 0)));
-        }
-    }
-
-    function fixMouseWheel(e) {
-        var deltaX,
-            deltaY,
-            delta,
-            detail = e.detail;
-
-        // ie/webkit
-        if (e.wheelDelta) {
-            delta = e.wheelDelta / 120;
-        }
-
-        // gecko
-        if (e.detail) {
-            // press control e.detail == 1 else e.detail == 3
-            delta = -(detail % 3 == 0 ? detail / 3 : detail);
-        }
-
-        // Gecko
-        if (e.axis !== undefined) {
-            if (e.axis === e['HORIZONTAL_AXIS']) {
-                deltaY = 0;
-                deltaX = -1 * delta;
-            } else if (e.axis === e['VERTICAL_AXIS']) {
-                deltaX = 0;
-                deltaY = delta;
-            }
-        }
-
-        // Webkit
-        if (e['wheelDeltaY'] !== undefined) {
-            deltaY = e['wheelDeltaY'] / 120;
-        }
-        if (e['wheelDeltaX'] !== undefined) {
-            deltaX = -1 * e['wheelDeltaX'] / 120;
-        }
-
-        // 默认 deltaY (ie)
-        if (!deltaX && !deltaY) {
-            deltaY = delta;
-        }
-
-        if (deltaX !== undefined ||
-            deltaY !== undefined ||
-            delta !== undefined) {
-            S.mix(e, {
-                /**
-                 * deltaY of mousewheel event
-                 * @property deltaY
-                 */
-                deltaY: deltaY,
-                /**
-                 * delta of mousewheel event
-                 * @property delta
-                 */
-                delta: delta,
-                /**
-                 * deltaX of mousewheel event
-                 * @property deltaX
-                 */
-                deltaX: deltaX
-            });
-        }
     }
 
     S.extend(DOMEventObject, Event._Object, {
@@ -13799,7 +13837,8 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
         constructor: DOMEventObject,
 
         preventDefault: function () {
-            var e = this.originalEvent;
+            var self = this,
+                e = self.originalEvent;
 
             // if preventDefault exists run it on the original event
             if (e.preventDefault) {
@@ -13810,11 +13849,12 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
                 e.returnValue = FALSE;
             }
 
-            DOMEventObject.superclass.preventDefault.call(this);
+            DOMEventObject.superclass.preventDefault.call(self);
         },
 
         stopPropagation: function () {
-            var e = this.originalEvent;
+            var self = this,
+                e = self.originalEvent;
 
             // if stopPropagation exists run it on the original event
             if (e.stopPropagation) {
@@ -13825,12 +13865,9 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
                 e.cancelBubble = TRUE;
             }
 
-            DOMEventObject.superclass.stopPropagation.call(this);
+            DOMEventObject.superclass.stopPropagation.call(self);
         }
     });
-
-    // compatibility
-    // Event.Object = S.EventObject = DOMEventObject;
 
     Event.DOMEventObject = DOMEventObject;
 
@@ -13871,6 +13908,8 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
     // 再在浏览器通知的系统 eventHandler 中检查
     // 如果相同，那么证明已经 fire 过了，不要再次触发了
     var _Utils = Event._Utils;
+
+    var FOCUS_BLUR_REG = /^focus|blur$/;
 
     /**
      * custom event for dom
@@ -13929,7 +13968,8 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             /*
              DOM3 Events: EventListenerList objects in the DOM are live. ??
              */
-            var target = event['target'],
+            var target = event.target,
+                eventType = event['type'],
                 self = this,
                 currentTarget = self.currentTarget,
                 observers = self.observers,
@@ -13947,23 +13987,30 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                 observer;
 
             // collect delegated observers and corresponding element
-            // by jq
-            // Avoid disabled elements in IE (#6911)
-            // non-left-click bubbling in Firefox (#3861),firefox 8 fix it
-            if (delegateCount && !target.disabled) {
+            if (delegateCount && target.nodeType) {
                 while (target != currentTarget) {
-                    currentTargetObservers = [];
-                    for (i = 0; i < delegateCount; i++) {
-                        observer = observers[i];
-                        if (DOM.test(target, observer.selector)) {
-                            currentTargetObservers.push(observer);
+                    if (target.disabled !== true || eventType !== "click") {
+                        var cachedMatch = {},
+                            matched, key, selector;
+                        currentTargetObservers = [];
+                        for (i = 0; i < delegateCount; i++) {
+                            observer = observers[i];
+                            selector = observer.selector;
+                            key = selector + '';
+                            matched = cachedMatch[key];
+                            if (matched === undefined) {
+                                matched = cachedMatch[key] = DOM.test(target, selector);
+                            }
+                            if (matched) {
+                                currentTargetObservers.push(observer);
+                            }
                         }
-                    }
-                    if (currentTargetObservers.length) {
-                        allObservers.push({
-                            currentTarget: target,
-                            'currentTargetObservers': currentTargetObservers
-                        });
+                        if (currentTargetObservers.length) {
+                            allObservers.push({
+                                currentTarget: target,
+                                'currentTargetObservers': currentTargetObservers
+                            });
+                        }
                     }
                     target = target.parentNode || currentTarget;
                 }
@@ -13971,13 +14018,15 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
 
             // root node's observers is placed at end position of add observers
             // in case child node stopPropagation of root node's observers
-            allObservers.push({
-                currentTarget: currentTarget,
-                // http://www.w3.org/TR/dom/#dispatching-events
-                // Let listeners be a static list of the event listeners
-                // associated with the object for which these steps are run.
-                currentTargetObservers: observers.slice(delegateCount)
-            });
+            if (delegateCount < observers.length) {
+                allObservers.push({
+                    currentTarget: currentTarget,
+                    // http://www.w3.org/TR/dom/#dispatching-events
+                    // Let listeners be a static list of the event listeners
+                    // associated with the object for which these steps are run.
+                    currentTargetObservers: observers.slice(delegateCount)
+                });
+            }
 
             //noinspection JSUnresolvedFunction
             for (i = 0, len = allObservers.length; !event.isPropagationStopped() && i < len; ++i) {
@@ -14012,8 +14061,6 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
          * fire dom event from bottom to up , emulate dispatchEvent in DOM3 Events
          * @param {Object|KISSY.Event.DOMEventObject} [event] additional event data
          * @param {Boolean} [onlyHandlers] for internal usage
-         * @return {*} return false if one of custom event 's observers (include bubbled) else
-         * return last value of custom event 's observers (include bubbled) 's return value.
          */
         fire: function (event, onlyHandlers/*internal usage*/) {
 
@@ -14021,40 +14068,39 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
 
             var self = this,
                 eventType = String(self.type),
-                s = special[eventType];
-
-            // TODO bug: when fire mouseenter, it also fire mouseover in firefox/chrome
-            if (s && s['onFix']) {
-                eventType = s['onFix'];
-            }
-
-            var customEvent,
+                customEvent,
                 eventData,
-                currentTarget = self.currentTarget,
-                ret = true;
+                specialEvent = special[eventType] || {},
+                bubbles = specialEvent.bubbles !== false,
+                currentTarget = self.currentTarget;
 
-            event['type'] = eventType;
+            // special fire for click/focus/blur
+            if (specialEvent.fire && specialEvent.fire.call(currentTarget, onlyHandlers) === false) {
+                return;
+            }
 
             if (!(event instanceof DOMEventObject)) {
                 eventData = event;
                 event = new DOMEventObject({
                     currentTarget: currentTarget,
+                    type: eventType,
                     target: currentTarget
                 });
                 S.mix(event, eventData);
+            }
+
+            if (specialEvent.preFire && specialEvent.preFire.call(currentTarget, event, onlyHandlers) === false) {
+                return;
             }
 
             // onlyHandlers is equal to event.halt()
             // but we can not call event.halt()
             // because handle will check event.isPropagationStopped
             var cur = currentTarget,
-                t,
                 win = DOM.getWindow(cur.ownerDocument || cur),
                 curDocument = win.document,
                 eventPath = [],
-                eventPathIndex = 0,
-                ontype = 'on' + eventType;
-
+                eventPathIndex = 0;
 
             // http://www.w3.org/TR/dom/#dispatching-events
             // let event path be a static ordered list of all its ancestors in tree order,
@@ -14062,58 +14108,29 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
             do {
                 eventPath.push(cur);
                 // Bubble up to document, then to window
-                cur = cur.parentNode ||
-                    cur.ownerDocument ||
-                    (cur === curDocument) && win;
-            } while (cur);
+                cur = cur.parentNode || cur.ownerDocument || (cur === curDocument) && win;
+            } while (!onlyHandlers && cur && bubbles);
 
             cur = eventPath[eventPathIndex];
 
             // bubble up dom tree
             do {
                 event['currentTarget'] = cur;
-
                 customEvent = ObservableDOMEvent.getCustomEvent(cur, eventType);
                 // default bubble for html node
                 if (customEvent) {
-                    t = customEvent.notify(event);
-                    if (ret !== false) {
-                        ret = t;
-                    }
+                    customEvent.notify(event);
                 }
-                // Trigger an inline bound script
-                if (cur[ ontype ] && cur[ ontype ].call(cur) === false) {
-                    event.preventDefault();
-                }
-
                 cur = eventPath[++eventPathIndex];
             } while (!onlyHandlers && cur && !event.isPropagationStopped());
 
             if (!onlyHandlers && !event.isDefaultPrevented()) {
-
                 // now all browser support click
                 // https://developer.mozilla.org/en-US/docs/DOM/element.click
-
-                var old;
-
                 try {
                     // execute default action on dom node
-                    // so exclude window
-                    // exclude focus/blue on hidden element
-                    if (ontype && currentTarget[ eventType ] &&
-                        (
-                            (
-                                eventType !== 'focus' && eventType !== 'blur') ||
-                                currentTarget.offsetWidth !== 0
-                            ) &&
-                        !S.isWindow(currentTarget)) {
-                        // Don't re-trigger an onFOO event when we call its FOO() method
-                        old = currentTarget[ ontype ];
-
-                        if (old) {
-                            currentTarget[ ontype ] = null;
-                        }
-
+                    // exclude window
+                    if (currentTarget[ eventType ] && !S.isWindow(currentTarget)) {
                         // 记录当前 trigger 触发
                         ObservableDOMEvent.triggeredEvent = eventType;
 
@@ -14126,14 +14143,9 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
                     S.log(eError);
                 }
 
-                if (old) {
-                    currentTarget[ ontype ] = old;
-                }
-
                 ObservableDOMEvent.triggeredEvent = '';
-
             }
-            return ret;
+
         },
 
         /**
@@ -14348,15 +14360,17 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
         notifyInternal: function (event, ce) {
             var self = this,
                 s, t, ret,
-                type = event.type;
+                type = event.type,
+                originalType;
 
-            // restore originalType if involving delegate/onFix handlers
-            if (self.originalType) {
-                event.type = self.originalType;
+            if (originalType = self.originalType) {
+                event.type = originalType;
+            } else {
+                originalType = type;
             }
 
             // context undefined 时不能写死在 listener 中，否则不能保证 clone 时的 this
-            if ((s = special[event.type]) && s.handle) {
+            if ((s = special[originalType]) && s.handle) {
                 t = s.handle(event, self, ce);
                 // can handle
                 if (t && t.length > 0) {
@@ -14366,6 +14380,7 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
                 ret = self.simpleNotify(event, ce);
             }
 
+            // notify other mousemove listener
             event.type = type;
 
             return ret;
@@ -14382,8 +14397,77 @@ KISSY.add('event/dom/base/observer', function (S, special, Event) {
  * special house for special events
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/base/special', function () {
-    return {};
+KISSY.add('event/dom/base/special', function (S, Event) {
+    var undefined = undefined,
+        UA = S.UA,
+        MOUSE_WHEEL = UA.gecko ? 'DOMMouseScroll' : 'mousewheel';
+
+    return {
+
+        mousewheel: {
+            typeFix: MOUSE_WHEEL
+        },
+
+        load: {
+            // defaults to bubbles as custom event
+            bubbles: false
+        },
+        click: {
+            // use native click for correct check state order
+            fire: function (onlyHandlers) {
+                var target = this;
+                if (!onlyHandlers && String(target.type) === "checkbox" &&
+                    target.click && target.nodeName.toLowerCase() == 'input') {
+                    target.click();
+                    return false;
+                }
+                return undefined;
+            }
+        },
+        focus: {
+            bubbles: false,
+            // guarantee fire focusin first
+            preFire: function (event, onlyHandlers) {
+                if (!onlyHandlers) {
+                    Event.fire(this, 'focusin');
+                }
+            },
+            // guarantee fire blur first
+            fire: function (onlyHandlers) {
+                var target = this;
+                if (!onlyHandlers && target.ownerDocument) {
+                    if (target !== target.ownerDocument.activeElement && target.focus) {
+                        target.focus();
+                        return false;
+                    }
+                }
+                return undefined;
+            }
+        },
+        blur: {
+            bubbles: false,
+            // guarantee fire focusout first
+            preFire: function (event, onlyHandlers) {
+                if (!onlyHandlers) {
+                    Event.fire(this, 'focusout');
+                }
+            },
+            // guarantee fire blur first
+            fire: function (onlyHandlers) {
+                var target = this;
+                if (!onlyHandlers && target.ownerDocument) {
+                    if (target === target.ownerDocument.activeElement && target.blur) {
+                        target.blur();
+                        return false;
+                    }
+                }
+                return undefined;
+            }
+        }
+
+    };
+}, {
+    requires: ['event/base']
 });/**
  * @ignore
  * utils for event
@@ -14549,7 +14633,7 @@ KISSY.add('event/dom/base/valuechange', function (S, Event, DOM, special) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 16:58
+build time: Mar 19 11:12
 */
 /**
  * @ignore
@@ -14611,7 +14695,7 @@ KISSY.add('event/dom/focusin', function (S, Event) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 16:59
+build time: Mar 19 11:12
 */
 /**
  * @ignore
@@ -14852,7 +14936,7 @@ KISSY.add('event/dom/hashchange', function (S, Event, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 16:59
+build time: Mar 19 11:12
 */
 /**
  * @ignore
@@ -15049,7 +15133,7 @@ KISSY.add('event/dom/ie/submit', function (S, Event, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 16:59
+build time: Mar 19 11:12
 */
 /**
  * @ignore
@@ -15143,7 +15227,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 15 17:01
+build time: Mar 19 11:12
 */
 /**
  * @ignore

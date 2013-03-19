@@ -20,7 +20,6 @@ KISSY.add('event/dom/base', function (S, Event, KeyCodes, _DOMUtils, Gesture, Sp
         './base/special',
         './base/api',
         './base/mouseenter',
-        './base/mousewheel',
         './base/valuechange']
 });
 
