@@ -1,0 +1,308 @@
+/**
+ * lalr grammar and lexer rules for css selector.
+ * refer: http://www.w3.org/TR/selectors/
+ * @author yiminghe@gmail.com
+ */
+(function () {
+    var escape = '(?:\\\\[^\\n\\r\\f0-9a-f])';
+
+    var nmstart = '(?:[\\w]|' + escape + ')';
+
+    var nmchar = '(?:[\\w\\d-]|' + escape + ')';
+
+    var indent = '(?:' + nmstart + nmchar + '*)';
+
+    var name = '(?:' + nmchar + '+)';
+
+    var w = '(?:[\\t\\r\\n\\f\\x20]*)';
+
+    var s = '(?:[\\t\\r\\n\\f\\x20]+)';
+
+    return {
+        productions: [
+            {
+                symbol: 'selectors_group',
+                rhs: ['selector']
+            },
+            {
+                symbol: 'selectors_group',
+                rhs: ['selectors_group', 'COMMA', 'selector']
+            },
+            {
+                symbol: 'selector',
+                rhs: ['simple_selector_sequence']
+            },
+            {
+                symbol: 'selector',
+                rhs: ['selector', 'combinator', 'simple_selector_sequence']
+            },
+            {
+                symbol: 'selector',
+                rhs: ['selector', 'simple_selector_sequence']
+            },
+            {
+                symbol: 'combinator',
+                rhs: ['PLUS']
+            },
+            {
+                symbol: 'combinator',
+                rhs: ['GREATER']
+            },
+            {
+                symbol: 'combinator',
+                rhs: ['TILDE']
+            },
+            {
+                symbol: 'type_selector',
+                rhs: ['INDENT']
+            },
+            {
+                symbol: 'type_selector',
+                rhs: ['INDENT']
+            },
+
+
+            {
+                symbol: 'attrib_match',
+                rhs: ['PREFIX_MATCH']
+            },
+            {
+                symbol: 'attrib_match',
+                rhs: ['SUFFIX_MATCH']
+            },
+            {
+                symbol: 'attrib_match',
+                rhs: ['SUBSTRING_MATCH']
+            },
+            {
+                symbol: 'attrib_match',
+                rhs: ['ALL_MATCH']
+            },
+            {
+                symbol: 'attrib_match',
+                rhs: ['INCLUDES']
+            },
+            {
+                symbol: 'attrib_match',
+                rhs: ['DASH_MATCH']
+            },
+
+
+            {
+                symbol: 'attrib',
+                rhs: ['LEFT_BRACKET', 'INDENT', 'RIGHT_BRACKET']
+            },
+            {
+                symbol: 'attrib',
+                rhs: ['LEFT_BRACKET', 'INDENT', 'attrib_match', 'INDENT', 'RIGHT_BRACKET']
+            },
+            {
+                symbol: 'attrib',
+                rhs: ['LEFT_BRACKET', 'INDENT', 'attrib_match', 'STRING', 'RIGHT_BRACKET']
+            },
+
+            {
+                symbol: 'pseudo',
+                rhs: ['COLON', 'INDENT']
+            },
+            {
+                symbol: 'functional_pseudo',
+                rhs: ['FUNCTION', 'EXPRESSION', 'RIGHT_PARENTHESES']
+            },
+            {
+                symbol: 'pseudo',
+                rhs: ['COLON', 'functional_pseudo ']
+            },
+
+            {
+                symbol: 'negation',
+                rhs: ['NOT', 'negation_arg', 'RIGHT_PARENTHESES']
+            },
+            {
+                symbol: 'negation_arg',
+                rhs: ['type_selector']
+            },
+            {
+                symbol: 'negation_arg',
+                rhs: ['UNIVERSAL']
+            },
+            {
+                symbol: 'negation_arg',
+                rhs: ['HASH']
+            },
+            {
+                symbol: 'negation_arg',
+                rhs: ['CLASS']
+            },
+            {
+                symbol: 'negation_arg',
+                rhs: ['attrib']
+            },
+            {
+                symbol: 'negation_arg',
+                rhs: ['pseudo']
+            },
+
+
+            {
+                symbol: 'suffix_selector',
+                rhs: ['HASH']
+            },
+            {
+                symbol: 'suffix_selector',
+                rhs: ['CLASS']
+            },
+            {
+                symbol: 'suffix_selector',
+                rhs: ['attrib']
+            },
+            {
+                symbol: 'suffix_selector',
+                rhs: ['pseudo']
+            },
+            {
+                symbol: 'suffix_selector',
+                rhs: ['negation']
+            },
+            {
+                symbol: 'suffix_selectors',
+                rhs: ['suffix_selector']
+            },
+            {
+                symbol: 'suffix_selectors',
+                rhs: ['suffix_selector', 'suffix_selector']
+            },
+            {
+                symbol: 'simple_selector_sequence',
+                rhs: ['UNIVERSAL']
+            },
+            {
+                symbol: 'simple_selector_sequence',
+                rhs: ['type_selector']
+            },
+            {
+                symbol: 'simple_selector_sequence',
+                rhs: ['suffix_selectors']
+            },
+            {
+                symbol: 'simple_selector_sequence',
+                rhs: ['UNIVERSAL', 'suffix_selectors']
+            },
+            {
+                symbol: 'simple_selector_sequence',
+                rhs: ['type_selector', 'suffix_selectors']
+            }
+
+        ],
+        lexer: {
+            rules: [
+
+                {
+                    regexp: new RegExp('^' + '[' + w),
+                    token: 'LEFT_BRACKET'
+                },
+                {
+                    regexp: new RegExp('^' + w + ']'),
+                    token: 'RIGHT_BRACKET'
+                },
+                {
+                    regexp: new RegExp('^' + w + '~=' + w),
+                    token: 'INCLUDES'
+                },
+                {
+                    regexp: new RegExp('^' + w + '\\|=' + w),
+                    token: 'DASH_MATCH'
+                },
+                {
+                    regexp: new RegExp('^' + w + '\\^=' + w),
+                    token: 'PREFIX_MATCH'
+                },
+                {
+                    regexp: new RegExp('^' + w + '\\$=' + w),
+                    token: 'SUFFIX_MATCH'
+                },
+                {
+                    regexp: new RegExp('^' + w + '\\*=' + w),
+                    token: 'SUBSTRING_MATCH'
+                },
+                {
+                    regexp: new RegExp('^' + w + '\\=' + w),
+                    token: 'ALL_MATCH'
+                },
+                {
+                    regexp: new RegExp('^' + indent + '(' + w),
+                    token: 'FUNCTION',
+                    action: function () {
+                        this.pushState('f');
+                    }
+                },
+                {
+                    state: ['t'],
+                    regexp: /^((\+-)?\d+)|(((\+-)?\d+?n)((\+-)?\d+)?)|even|odd/,
+                    token: 'EXPRESSION',
+                    action:function(){
+                        this.popState();
+                    }
+                },
+                {
+                    regexp: new RegExp('^' + w + '\\)'),
+                    token: 'RIGHT_PARENTHESES'
+                },
+                {
+                    regexp: new RegExp('^:not(' + w),
+                    token: 'NOT'
+                },
+                {
+                    regexp: new RegExp('^' + indent),
+                    token: 'INDENT'
+                },
+                {
+                    regexp: /^"(\\"|[^"])*"/,
+                    token: 'STRING'
+                },
+                {
+                    regexp: /^'(\\'|[^'])*'/,
+                    token: 'STRING'
+                },
+                {
+                    regexp: new RegExp('^#' + name),
+                    token: 'HASH'
+                },
+                {
+                    regexp: new RegExp('^.' + indent),
+                    token: 'CLASS'
+                },
+
+                {
+                    regexp: new RegExp('^' + w + ',' + w),
+                    token: 'COMMA'
+                },
+                {
+                    regexp: /^:/,
+                    token: 'COLON'
+                },
+                {
+                    regexp: new RegExp('^' + w + '+' + w),
+                    token: 'PLUS'
+                },
+                {
+                    regexp: new RegExp('^' + w + '>' + w),
+                    token: 'GREATER'
+                },
+                {
+                    regexp: new RegExp('^' + w + '~' + w),
+                    token: 'TILDE'
+                },
+                {
+                    regexp: new RegExp('^' + s),
+                    token: 'S'
+                },
+                {
+                    regexp: /^./,
+                    token: 'INVALID'
+                }
+            ]
+        }
+
+    }
+})();
