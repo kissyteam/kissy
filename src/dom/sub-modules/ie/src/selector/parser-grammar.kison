@@ -186,7 +186,7 @@
                 action: function () {
                     return {
                         pseudo: {
-                            function: this.$2
+                            fn: this.$2
                         }
                     };
                 }

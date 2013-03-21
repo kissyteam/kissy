@@ -406,7 +406,7 @@ KISSY.add("dom/ie/selector/parser", function () {
         [35, [18, 10], function () {
             return {
                 pseudo: {
-                    function: this.$2
+                    fn: this.$2
                 }
             };
         }],
