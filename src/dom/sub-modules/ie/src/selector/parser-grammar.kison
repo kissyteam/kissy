@@ -20,26 +20,40 @@
 
     return {
         productions: [
+            // ---------------------- selectors_group
             {
                 symbol: 'selectors_group',
-                rhs: ['selector']
+                rhs: ['selector'],
+                action: function () {
+                    return [this.$1];
+                }
             },
             {
                 symbol: 'selectors_group',
-                rhs: ['selectors_group', 'COMMA', 'selector']
+                rhs: ['selectors_group', 'COMMA', 'selector'],
+                action: function () {
+                    this.$1.push(this.$3);
+                }
             },
+
+            // ---------------------- selector
             {
                 symbol: 'selector',
                 rhs: ['simple_selector_sequence']
             },
             {
                 symbol: 'selector',
-                rhs: ['selector', 'combinator', 'simple_selector_sequence']
+                rhs: ['selector', 'combinator', 'simple_selector_sequence'],
+                action: function () {
+                    // LinkedList
+                    this.$1.nextCombinator = this.$3.prevCombinator = this.$2;
+                    this.$3.prev = this.$1;
+                    this.$1.next = this.$3;
+                    return this.$3;
+                }
             },
-            {
-                symbol: 'selector',
-                rhs: ['selector', 'simple_selector_sequence']
-            },
+
+            // ---------------------- combinator
             {
                 symbol: 'combinator',
                 rhs: ['PLUS']
@@ -53,15 +67,54 @@
                 rhs: ['TILDE']
             },
             {
+                symbol: 'combinator',
+                rhs: ['S'],
+                action: function () {
+                    return ' ';
+                }
+            },
+
+            // ---------------------- type_selector
+            {
                 symbol: 'type_selector',
-                rhs: ['INDENT']
+                rhs: ['INDENT'],
+                action: function () {
+                    return {
+                        tagName: this.$1
+                    };
+                }
             },
             {
                 symbol: 'type_selector',
-                rhs: ['INDENT']
+                rhs: ['UNIVERSAL'],
+                action: function () {
+                    return {
+                        tagName: this.$1
+                    };
+                }
             },
 
+            {
+                symbol: 'id_selector',
+                rhs: ['HASH'],
+                action: function () {
+                    return {
+                        id: this.$1
+                    };
+                }
+            },
 
+            {
+                symbol: 'class_selector',
+                rhs: ['CLASS'],
+                action: function () {
+                    return {
+                        cls: this.$1
+                    };
+                }
+            },
+
+            // ---------------------- attrib_match
             {
                 symbol: 'attrib_match',
                 rhs: ['PREFIX_MATCH']
@@ -87,36 +140,78 @@
                 rhs: ['DASH_MATCH']
             },
 
+            // ---------------------- attrib
+            {
+                symbol: 'attrib',
+                rhs: ['LEFT_BRACKET', 'INDENT', 'RIGHT_BRACKET'],
+                action: function () {
+                    return {
+                        attrib: {
+                            indent: this.$2
+                        }
+                    };
+                }
+            },
+            {
+                symbol: 'attrib',
+                rhs: ['LEFT_BRACKET', 'INDENT', 'attrib_match', 'INDENT', 'RIGHT_BRACKET'],
+                action: function () {
+                    return {
+                        attrib: {
+                            indent: this.$2,
+                            match: this.$3,
+                            value: this.$4
+                        }
+                    };
+                }
+            },
+            {
+                symbol: 'attrib',
+                rhs: ['LEFT_BRACKET', 'INDENT', 'attrib_match', 'STRING', 'RIGHT_BRACKET'],
+                action: function () {
+                    return {
+                        attrib: {
+                            indent: this.$2,
+                            match: this.$3,
+                            value: this.$4
+                        }
+                    };
+                }
+            },
 
-            {
-                symbol: 'attrib',
-                rhs: ['LEFT_BRACKET', 'INDENT', 'RIGHT_BRACKET']
-            },
-            {
-                symbol: 'attrib',
-                rhs: ['LEFT_BRACKET', 'INDENT', 'attrib_match', 'INDENT', 'RIGHT_BRACKET']
-            },
-            {
-                symbol: 'attrib',
-                rhs: ['LEFT_BRACKET', 'INDENT', 'attrib_match', 'STRING', 'RIGHT_BRACKET']
-            },
-
+            // ---------------------- pseudo
             {
                 symbol: 'pseudo',
-                rhs: ['COLON', 'INDENT']
-            },
-            {
-                symbol: 'functional_pseudo',
-                rhs: ['FUNCTION', 'EXPRESSION', 'RIGHT_PARENTHESES']
+                rhs: ['COLON', 'FUNCTION'],
+                action: function () {
+                    return {
+                        pseudo: {
+                            function: this.$2
+                        }
+                    };
+                }
             },
             {
                 symbol: 'pseudo',
-                rhs: ['COLON', 'functional_pseudo ']
+                rhs: ['COLON', 'INDENT'],
+                action: function () {
+                    return {
+                        pseudo: {
+                            indent: this.$2
+                        }
+                    };
+                }
             },
 
+            // ---------------------- negation
             {
                 symbol: 'negation',
-                rhs: ['NOT', 'negation_arg', 'RIGHT_PARENTHESES']
+                rhs: ['NOT', 'negation_arg', 'RIGHT_PARENTHESES'],
+                action: function () {
+                    return {
+                        negation: this.$2
+                    };
+                }
             },
             {
                 symbol: 'negation_arg',
@@ -124,15 +219,11 @@
             },
             {
                 symbol: 'negation_arg',
-                rhs: ['UNIVERSAL']
+                rhs: ['id_selector']
             },
             {
                 symbol: 'negation_arg',
-                rhs: ['HASH']
-            },
-            {
-                symbol: 'negation_arg',
-                rhs: ['CLASS']
+                rhs: ['class_selector']
             },
             {
                 symbol: 'negation_arg',
@@ -143,14 +234,14 @@
                 rhs: ['pseudo']
             },
 
-
+            // ---------------------- suffix_selector
             {
                 symbol: 'suffix_selector',
-                rhs: ['HASH']
+                rhs: ['id_selector']
             },
             {
                 symbol: 'suffix_selector',
-                rhs: ['CLASS']
+                rhs: ['class_selector']
             },
             {
                 symbol: 'suffix_selector',
@@ -166,91 +257,122 @@
             },
             {
                 symbol: 'suffix_selectors',
-                rhs: ['suffix_selector']
+                rhs: ['suffix_selector'],
+                action: function () {
+                    return [ this.$1 ];
+                }
             },
             {
                 symbol: 'suffix_selectors',
-                rhs: ['suffix_selector', 'suffix_selector']
+                rhs: ['suffix_selectors', 'suffix_selector'],
+                action: function () {
+                    this.$1.push(this.$2);
+                }
             },
-            {
-                symbol: 'simple_selector_sequence',
-                rhs: ['UNIVERSAL']
-            },
+
+            // ---------------------- simple_selector_sequence
             {
                 symbol: 'simple_selector_sequence',
                 rhs: ['type_selector']
             },
             {
                 symbol: 'simple_selector_sequence',
-                rhs: ['suffix_selectors']
+                rhs: ['suffix_selectors'],
+                action: function () {
+                    return {
+                        suffix: this.$1
+                    };
+                }
             },
             {
                 symbol: 'simple_selector_sequence',
-                rhs: ['UNIVERSAL', 'suffix_selectors']
-            },
-            {
-                symbol: 'simple_selector_sequence',
-                rhs: ['type_selector', 'suffix_selectors']
+                rhs: ['type_selector', 'suffix_selectors'],
+                action: function () {
+                    var ret = {};
+                    ret.tagName = this.$1.tagName;
+                    ret.suffix = this.$2;
+                    return ret;
+                }
             }
-
         ],
         lexer: {
             rules: [
-
                 {
-                    regexp: new RegExp('^' + '[' + w),
-                    token: 'LEFT_BRACKET'
-                },
-                {
-                    regexp: new RegExp('^' + w + ']'),
-                    token: 'RIGHT_BRACKET'
-                },
-                {
-                    regexp: new RegExp('^' + w + '~=' + w),
-                    token: 'INCLUDES'
-                },
-                {
-                    regexp: new RegExp('^' + w + '\\|=' + w),
-                    token: 'DASH_MATCH'
-                },
-                {
-                    regexp: new RegExp('^' + w + '\\^=' + w),
-                    token: 'PREFIX_MATCH'
-                },
-                {
-                    regexp: new RegExp('^' + w + '\\$=' + w),
-                    token: 'SUFFIX_MATCH'
-                },
-                {
-                    regexp: new RegExp('^' + w + '\\*=' + w),
-                    token: 'SUBSTRING_MATCH'
-                },
-                {
-                    regexp: new RegExp('^' + w + '\\=' + w),
-                    token: 'ALL_MATCH'
-                },
-                {
-                    regexp: new RegExp('^' + indent + '(' + w),
-                    token: 'FUNCTION',
+                    regexp: new RegExp('^' + '\\[' + w),
+                    token: 'LEFT_BRACKET',
                     action: function () {
-                        this.pushState('f');
+                        this.text = KISSY.trim(this.text);
                     }
                 },
                 {
-                    state: ['t'],
-                    regexp: /^((\+-)?\d+)|(((\+-)?\d+?n)((\+-)?\d+)?)|even|odd/,
-                    token: 'EXPRESSION',
-                    action:function(){
-                        this.popState();
+                    regexp: new RegExp('^' + w + '\\]'),
+                    token: 'RIGHT_BRACKET',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
+                    }
+                },
+                {
+                    regexp: new RegExp('^' + w + '~=' + w),
+                    token: 'INCLUDES',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
+                    }
+                },
+                {
+                    regexp: new RegExp('^' + w + '\\|=' + w),
+                    token: 'DASH_MATCH',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
+                    }
+                },
+                {
+                    regexp: new RegExp('^' + w + '\\^=' + w),
+                    token: 'PREFIX_MATCH',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
+                    }
+                },
+                {
+                    regexp: new RegExp('^' + w + '\\$=' + w),
+                    token: 'SUFFIX_MATCH',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
+                    }
+                },
+                {
+                    regexp: new RegExp('^' + w + '\\*=' + w),
+                    token: 'SUBSTRING_MATCH',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
+                    }
+                },
+                {
+                    regexp: new RegExp('^' + w + '\\=' + w),
+                    token: 'ALL_MATCH',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
+                    }
+                },
+                {
+                    regexp: new RegExp('^' + indent + '\\('+w+'[^\\)]*' + w+'\\)'),
+                    token: 'FUNCTION',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
                     }
                 },
                 {
                     regexp: new RegExp('^' + w + '\\)'),
-                    token: 'RIGHT_PARENTHESES'
+                    token: 'RIGHT_PARENTHESES',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
+                    }
                 },
                 {
-                    regexp: new RegExp('^:not(' + w),
-                    token: 'NOT'
+                    regexp: new RegExp('^:not\\(' + w),
+                    token: 'NOT',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
+                    }
                 },
                 {
                     regexp: new RegExp('^' + indent),
@@ -258,40 +380,62 @@
                 },
                 {
                     regexp: /^"(\\"|[^"])*"/,
-                    token: 'STRING'
+                    token: 'STRING',
+                    action: function () {
+                        this.text = this.text.slice(1, -1).replace(/\\"/g, '"');
+                    }
                 },
                 {
                     regexp: /^'(\\'|[^'])*'/,
-                    token: 'STRING'
+                    token: 'STRING',
+                    action: function () {
+                        this.text = this.text.slice(1, -1).replace(/\\'/g, "'");
+                    }
                 },
                 {
                     regexp: new RegExp('^#' + name),
                     token: 'HASH'
                 },
                 {
-                    regexp: new RegExp('^.' + indent),
+                    regexp: new RegExp('^\\.' + indent),
                     token: 'CLASS'
                 },
 
                 {
                     regexp: new RegExp('^' + w + ',' + w),
-                    token: 'COMMA'
+                    token: 'COMMA',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
+                    }
                 },
                 {
-                    regexp: /^:/,
+                    regexp: /^::?/,
                     token: 'COLON'
                 },
                 {
-                    regexp: new RegExp('^' + w + '+' + w),
-                    token: 'PLUS'
+                    regexp: new RegExp('^' + w + '\\+' + w),
+                    token: 'PLUS',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
+                    }
                 },
                 {
                     regexp: new RegExp('^' + w + '>' + w),
-                    token: 'GREATER'
+                    token: 'GREATER',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
+                    }
                 },
                 {
                     regexp: new RegExp('^' + w + '~' + w),
-                    token: 'TILDE'
+                    token: 'TILDE',
+                    action: function () {
+                        this.text = KISSY.trim(this.text);
+                    }
+                },
+                {
+                    regexp: /^\*/,
+                    token: 'UNIVERSAL'
                 },
                 {
                     regexp: new RegExp('^' + s),

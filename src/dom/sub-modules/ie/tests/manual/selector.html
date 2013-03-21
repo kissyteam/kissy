@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body>
+<script src="/kissy/build/seed.js"></script>
+<script src="../../src/selector/index.js"></script>
+<script src="../../src/selector/parser.js"></script>
+<script>
+    KISSY.use('dom/ie/selector/', function (S, selector) {
+        var str;
+
+        var tests = [], ts;
+
+        // # simple selectors
+        // ## type selector
+        tests.push({
+            title: 'type selector',
+            ts: ts = []
+        });
+        ts.push('p');
+
+
+        // ## Universal selector
+        tests.push({
+            title: 'Universal selector',
+            ts: ts = []
+        });
+        ts.push.call(ts, '*', '*[hreflang|=en]', '*.warning', '*#myid');
+
+
+        // ## Attribute selectors
+        tests.push({
+            title: 'Attribute selectors',
+            ts: ts = []
+        });
+        ts.push.call(ts, 'h1[title]',
+                'span[class="example"]',
+                'a[rel~="copyright"]',
+                'a[href="http://www.w3.org/"]',
+                'a[hreflang=fr]',
+                'a[hreflang|="en"]',
+                'DIALOGUE[character=romeo]',
+                'DIALOGUE[character=juliet]',
+                'object[type^="image/"]',
+                'a[href$=".html"]',
+                'p[title*="hello"]');
+
+        // ## Class selectors
+        tests.push({
+            title: 'Class selectors',
+            ts: ts = []
+        });
+        ts.push.call(ts, '*.pastoral', '.pastoral', 'H1.pastoral', 'p.pastoral.marine');
+
+        // ## ID selectors
+        tests.push({
+            title: 'ID selectors',
+            ts: ts = []
+        });
+        ts.push.call(ts, 'h1#chapter1', '#chapter1', '*#z98y');
+
+        // ## Pseudo-classes
+        tests.push({
+            title: 'Pseudo-classes',
+            ts: ts = []
+        });
+        ts.push.call(ts, 'a.external:visited', 'a:link', 'a:visited', 'a:hover', 'a:active', 'a:focus', 'a:focus:hover',
+                'p.note:target', '*:target', '*:target::before',
+                'html:lang(fr-be)', 'html:lang(de)', ':lang(fr-be) > q', ':lang(de) > q',
+                'input:enabled', 'input:disabled', 'input:checked',
+                ':root', 'tr:nth-child(2n+1)', 'tr:nth-child(odd)', 'tr:nth-child(2n+0)', 'tr:nth-child(even)',
+                'p:nth-child(4n+1)', 'p:nth-child(4n+2)', 'p:nth-child(4n+3)', 'p:nth-child(4n+4)',
+                ':nth-child(10n-1)', ':nth-child(10n+9)', ':nth-child(10n+1)',
+                'foo:nth-child(0n+5)', 'foo:nth-child(5)', 'bar:nth-child(1n+0)',
+                'bar:nth-child(n+0)', 'bar:nth-child(n)', 'bar', ':nth-child( +3n - 2 )', 'tr:nth-child(2n+0)',
+                'tr:nth-child(2n)', ':nth-child( 3n + 1 )', ':nth-child( -n+ 6)', ':nth-child( +6 )',
+                'tr:nth-last-child(-n+2)', 'foo:nth-last-child(odd)',
+                'img:nth-of-type(2n+1)', 'img:nth-of-type(2n)',
+                'body > h2:nth-of-type(n+2):nth-last-of-type(n+2)',
+                'body > h2:not(:first-of-type):not(:last-of-type)',
+                'div > p:first-child',
+                '* > a:first-child',
+                'a:first-child',
+                'ol > li:last-child',
+                'dl dt:first-of-type',
+                'tr > td:last-of-type',
+                ':only-child',
+                ':only-of-type',
+                ':empty pseudo-class'
+        );
+
+        // ## The negation pseudo-class
+        tests.push({
+            title: 'The negation pseudo-class',
+            ts: ts = []
+        });
+        ts.push.call(ts, 'button:not([DISABLED])', '*:not(FOO)', '*:not(:link):not(:visited)');
+
+        // ## Pseudo-elements
+        tests.push({
+            title: 'Pseudo-elements',
+            ts: ts = []
+        });
+        ts.push.call(ts, 'p::first-line', 'p::first-letter', 'p::before', 'p::after');
+
+        // ## Descendant combinator
+        tests.push({
+            title: 'Descendant combinator',
+            ts: ts = []
+        });
+        ts.push.call(ts, 'h1 em', 'div * p', 'div p *[href]');
+
+        // ## Child combinators
+        tests.push({
+            title: 'Child combinators',
+            ts: ts = []
+        });
+        ts.push.call(ts, 'body > p', 'div ol>li p');
+
+        // ## Sibling  combinators
+        tests.push({
+            title: 'Sibling  combinators',
+            ts: ts = []
+        });
+        ts.push.call(ts, 'math + p', 'h1.opener + h2', 'h1 ~ pre');
+
+        S.each(tests, function (obj) {
+            var ts = obj.ts;
+            S.log('*********************'+obj.title,'info');
+            S.each(ts, function (t) {
+                S.log(t);
+                S.log(selector.parse(t));
+            });
+        });
+    });
+</script>
+</body>
+</html>

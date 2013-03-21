@@ -563,13 +563,13 @@ KISSY.add("json/parser", function () {
                     reducedAction = production.action || production[2],
                     reducedRhs = production.rhs || production[1],
                     len = reducedRhs.length,
-                    i,
-                    ret,
+                    i = 0,
+                    ret = undefined,
                     $$ = valueStack[valueStack.length - len]; // default to $$ = $1
 
                 self.$$ = $$;
 
-                for (i = 0; i < len; i++) {
+                for (; i < len; i++) {
                     self["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
                 }
 

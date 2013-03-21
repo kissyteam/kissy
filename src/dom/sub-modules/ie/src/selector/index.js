@@ -2,8 +2,17 @@
  * css3 selector engine for ie6-8
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/selector/index',function(){
+KISSY.add('dom/ie/selector/index', function (S, parser) {
 
+    return {
+        parse: function (str) {
+            var selector = parser.parse(str);
+            return selector;
+        }
+    };
+
+}, {
+    requires: ['./parser']
 });
 /**
  * refer

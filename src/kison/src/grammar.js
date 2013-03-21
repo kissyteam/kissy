@@ -430,7 +430,7 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                         for (var k = 0; k < one.get("items").length; k++) {
                             one.get("items")[k]
                                 .addLookAhead(two.get("items")[k]
-                                .get("lookAhead"));
+                                    .get("lookAhead"));
                         }
 
                         var oneGotos = one.get("gotos");
@@ -703,13 +703,13 @@ KISSY.add("kison/grammar", function (S, Base, Utils, Item, ItemSet, NonTerminal,
                         reducedAction = production.action || production[2],
                         reducedRhs = production.rhs || production[1],
                         len = reducedRhs.length,
-                        i,
-                        ret,
+                        i = 0,
+                        ret = undefined,
                         $$ = valueStack[valueStack.length - len]; // default to $$ = $1
 
                     self.$$ = $$;
 
-                    for (i = 0; i < len; i++) {
+                    for (; i < len; i++) {
                         self["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
                     }
 
