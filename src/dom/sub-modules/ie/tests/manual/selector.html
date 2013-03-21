@@ -127,6 +127,14 @@
         });
         ts.push.call(ts, 'math + p', 'h1.opener + h2', 'h1 ~ pre');
 
+
+        // ## Groups of selectors
+        tests.push({
+            title: 'Groups of selectors',
+            ts: ts = []
+        });
+        ts.push.call(ts, 'p,div', 'p div , span');
+
         S.each(tests, function (obj) {
             var ts = obj.ts;
             S.log('*********************'+obj.title,'info');
