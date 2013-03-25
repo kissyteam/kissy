@@ -1,0 +1,11 @@
+<project name="scrollview/drag.build" default="build" basedir=".">
+    <description>scrollview/drag Build File</description>
+
+    <property name="component.name" value="scrollview/drag"/>
+
+    <import file="../../../../tools/build-xml/common.xml"/>
+
+    <target name="build" depends="common-build.build">
+    </target>
+</project>
+

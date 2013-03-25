@@ -70,13 +70,8 @@
             height: expression(document.documentElement.clientHeight-48-45);
         }
 
-        #wrapper ul {
-            list-style: none;
-            padding: 0;
+        #wrapper p {
             margin: 0;
-        }
-
-        #wrapper li {
             padding: 0 10px;
             height: 40px;
             line-height: 40px;
@@ -92,8 +87,8 @@
 <div id="header">KISSY ScrollView</div>
 <div id="wrapper">
 
-    <ul id="thelist">
-    </ul>
+    <div id="thelist">
+    </div>
 
 </div>
 
@@ -110,18 +105,30 @@
 
 <script>
 
+    // 本 demo 会在 ie10 模拟 ie7 下白屏，原因不明，请设置
+    // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
     KISSY.use('scrollview,scrollview/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
         S.ready(function () {
+
+            var num=new S.Uri(location.href).getQuery().get('num')||'41';
+
+            num=parseInt(num);
+
             var str = '';
-            for (var i = 1; i < 41; i++) {
-                str += '<li>line ' + i + '</li>'
+            for (var i = 1; i < num; i++) {
+                str += '<p>line ' + i + '</p>'
             }
             S.all('#thelist').html(str);
+
             window.scrollview = new ScrollView({
                 srcNode: '#wrapper',
-                plugins: [new ScrollbarPlugin({
-                })]
+                plugins: [new ScrollbarPlugin({})]
             }).render();
+
+            S.all(window).on('resize orientationchange', S.UA.ie < 9 ?
+                    S.buffer(scrollview.sync, 30) :
+                    scrollview.sync, scrollview);
         });
     });
 </script>
