@@ -343,3 +343,13 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
 }, {
     requires: ['./base', 'dd/base', 'event']
 });
+
+/**
+ * @ignore
+ * refer
+ * - https://developers.google.com/mobile/articles/webapp_fixed_ui
+ * - http://yuilibrary.com/yui/docs/scrollview/
+ * - http://docs.sencha.com/touch/2-1/#!/api/Ext.dataview.List
+ * - http://cubiq.org/iscroll-4
+ * - http://developer.apple.com/library/ios/#documentation/uikit/reference/UIScrollView_Class/Reference/UIScrollView.html
+ */
