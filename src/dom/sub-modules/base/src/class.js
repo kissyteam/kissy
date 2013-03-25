@@ -11,7 +11,16 @@ KISSY.add('dom/base/class', function (S, DOM) {
 
     function strToArray(str) {
         str = S.trim(str || '');
-        return str.split(RE_SPLIT);
+        var arr = str.split(RE_SPLIT),
+            newArr = [], v,
+            l = arr.length,
+            i = 0;
+        for (; i < l; i++) {
+            if (v = arr[i]) {
+                newArr.push(v);
+            }
+        }
+        return newArr;
     }
 
     function batchClassList(method) {

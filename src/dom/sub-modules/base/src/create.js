@@ -16,7 +16,8 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
         R_XHTML_TAG = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
         RE_TAG = /<([\w:]+)/,
         R_LEADING_WHITESPACE = /^\s+/,
-        lostLeadingWhitespace = ie && ie < 9,
+        R_TAIL_WHITESPACE = /\s+$/,
+        lostLeadingTailWhitespace = ie && ie < 9,
         R_HTML = /<|&#?\w+;/,
         supportOuterHTML = doc && 'outerHTML' in doc.documentElement,
         RE_SIMPLE_TAG = /^<(\w+)\s*\/?>(?:<\/\1>)?$/;
@@ -110,10 +111,14 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
 
                     holder = (creators[tag] || defaultCreator)(html, context);
                     // ie 把前缀空白吃掉了
-                    if (lostLeadingWhitespace &&
+                    if (lostLeadingTailWhitespace &&
                         (whitespaceMatch = html.match(R_LEADING_WHITESPACE))) {
                         holder.insertBefore(context.createTextNode(whitespaceMatch[0]),
                             holder.firstChild);
+                    }
+                    if (lostLeadingTailWhitespace && /\S/.test(html) &&
+                        (whitespaceMatch = html.match(R_TAIL_WHITESPACE))) {
+                        holder.appendChild(context.createTextNode(whitespaceMatch[0]));
                     }
 
                     nodes = holder.childNodes;
@@ -176,7 +181,7 @@ KISSY.add('dom/base/create', function (S, DOM, undefined) {
                     // faster
                     // fix #103,some html element can not be set through innerHTML
                     if (!htmlString.match(/<(?:script|style|link)/i) &&
-                        (!lostLeadingWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) && !creatorsMap[ (htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase() ]) {
+                        (!lostLeadingTailWhitespace || !htmlString.match(R_LEADING_WHITESPACE)) && !creatorsMap[ (htmlString.match(RE_TAG) || ['', ''])[1].toLowerCase() ]) {
 
                         try {
                             for (i = els.length - 1; i >= 0; i--) {

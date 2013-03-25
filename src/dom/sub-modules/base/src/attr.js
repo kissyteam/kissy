@@ -8,8 +8,6 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
     var doc = S.Env.host.document,
         NodeType = DOM.NodeType,
         docElement = doc && doc.documentElement,
-        TEXT = docElement && docElement.textContent === undefined ?
-            'innerText' : 'textContent',
         EMPTY = '',
         nodeName = DOM.nodeName,
         R_BOOLEAN = /^(?:autofocus|autoplay|async|checked|controls|defer|disabled|hidden|loop|multiple|open|readonly|required|scoped|selected)$/i,
@@ -114,7 +112,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                         ret,
                         i,
                         len,
-                        one = elem.type === 'select-one';
+                        one = (String(elem.type) === 'select-one');
 
                     // Nothing was selected
                     if (index < 0) {
@@ -164,6 +162,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
                 if (S.isArray(value)) {
                     return elem.checked = S.inArray(DOM.val(elem), value);
                 }
+                return undefined;
             }
         };
     });
@@ -301,7 +300,8 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
              * @param {HTMLElement[]|HTMLElement|String} selector matched elements
              * @param {String|Object} name The name of the attribute to set. or A map of attribute-value pairs to set.
              * @param [val] A value to set for the attribute.
-             * @return {String}
+             * @param [pass] internal use by anim
+             * @return {String|undefined}
              */
             attr: function (selector, name, val, /*internal use by anim/fx*/pass) {
                 /*
@@ -546,35 +546,31 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
              * @return {String|undefined}
              */
             text: function (selector, val) {
-                var el, els, i;
+                var el, els, i, nodeType;
                 // getter
                 if (val === undefined) {
                     // supports css selector/Node/NodeList
                     el = DOM.get(selector);
-
-                    // only gets value on supported nodes
-                    if (el.nodeType == NodeType.ELEMENT_NODE) {
-                        return el[TEXT] || EMPTY;
-                    }
-                    else if (el.nodeType == NodeType.TEXT_NODE) {
-                        return el.nodeValue;
-                    }
-                    return undefined;
-                }
-                // setter
-                else {
+                    return DOM._getText(el);
+                } else {
                     els = DOM.query(selector);
                     for (i = els.length - 1; i >= 0; i--) {
                         el = els[i];
-                        if (el.nodeType == NodeType.ELEMENT_NODE) {
-                            el[TEXT] = val;
+                        nodeType = el.nodeType;
+                        if (nodeType == NodeType.ELEMENT_NODE) {
+                            DOM.empty(el);
+                            el.appendChild(el.ownerDocument.createTextNode(val));
                         }
-                        else if (el.nodeType == NodeType.TEXT_NODE) {
+                        else if (nodeType == NodeType.TEXT_NODE || nodeType == NodeType.CDATA_SECTION_NODE) {
                             el.nodeValue = val;
                         }
                     }
                 }
                 return undefined;
+            },
+
+            _getText: function (el) {
+                return el.textContent;
             }
         });
 
@@ -586,9 +582,9 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
  NOTES:
  yiminghe@gmail.com: 2013-03-19
  - boolean property 和 attribute ie 和其他浏览器不一致，统一为类似 ie8：
-    - attr('checked',string) == .checked=true setAttribute('checked','checked') // ie8 相同 setAttribute()
-    - attr('checked',false) == removeAttr('check') // ie8 不同, setAttribute ie8 相当于 .checked=true setAttribute('checked','checked')
-    - removeAttr('checked') == .checked=false removeAttribute('checked') // ie8 removeAttribute 相同
+ - attr('checked',string) == .checked=true setAttribute('checked','checked') // ie8 相同 setAttribute()
+ - attr('checked',false) == removeAttr('check') // ie8 不同, setAttribute ie8 相当于 .checked=true setAttribute('checked','checked')
+ - removeAttr('checked') == .checked=false removeAttribute('checked') // ie8 removeAttribute 相同
 
  yiminghe@gmail.com: 2012-11-27
  - 拆分 ie attr，条件加载

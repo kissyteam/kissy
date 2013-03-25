@@ -113,6 +113,23 @@ KISSY.add('dom/ie/attr', function (S, DOM) {
         }
     };
 
+
+    function getText(el) {
+        var ret = "",
+            nodeType = el.nodeType;
+
+        if (nodeType === DOM.NodeType.ELEMENT_NODE) {
+            for (el = el.firstChild; el; el = el.nextSibling) {
+                ret += getText(el);
+            }
+        } else if (nodeType == NodeType.TEXT_NODE || nodeType == NodeType.CDATA_SECTION_NODE) {
+            ret += el.nodeValue;
+        }
+        return ret;
+    }
+
+    DOM._getText = getText;
+
     return DOM;
 }, {
     requires: ['dom/base']

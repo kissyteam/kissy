@@ -347,6 +347,11 @@ KISSY.use("dom,core", function (S, DOM) {
                 DOM.text(div, 'hello, are you ok?');
                 expect(DOM.text(div)).toBe('hello, are you ok?');
             });
+
+            it("should get text correctly", function () {
+                DOM.html(div, '\t<p>1</p><p>2</p>\t');
+                expect(DOM.text(div)).toBe('\t12\t');
+            });
         });
 
 
