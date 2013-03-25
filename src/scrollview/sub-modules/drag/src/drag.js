@@ -189,6 +189,7 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
                 // big -> small
                 // 1 -> 0
                 var frictionFactor = Math.exp(deltaTime * ALPHA);
+                // 1 - e^-t
                 value = parseInt(startScroll + velocity * (1 - frictionFactor) / (-THETA));
                 if (value > minScroll && value < maxScroll) {
                     // inertia
@@ -214,6 +215,7 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
                 // bounce
                 var theta = (deltaTime / ACCELERATION),
                 // long tail hump
+                // t * e^-t
                     powTime = theta * Math.exp(-SPRING_TENSION * theta);
                 value = parseInt(velocity * powTime);
                 if (value === 0) {
