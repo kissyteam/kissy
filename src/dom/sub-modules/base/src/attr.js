@@ -570,9 +570,7 @@ KISSY.add('dom/base/attr', function (S, DOM, undefined) {
             },
 
             _getText: function (el) {
-                var nodeType = el.nodeType;
-                return nodeType == NodeType.ELEMENT_NODE ? el.textContent :
-                    (nodeType == NodeType.TEXT_NODE || nodeType == NodeType.CDATA_SECTION_NODE ? el.nodeValue : '');
+                return el.textContent;
             }
         });
 
