@@ -1119,5 +1119,5 @@ KISSY.add("dom/ie/selector/parser", function () {
         return undefined;
 
     };
-    return parser;;
+    return parser;
 });

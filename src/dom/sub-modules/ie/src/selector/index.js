@@ -2,11 +2,13 @@
  * css3 selector engine for ie6-8
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/selector/index', function (S, parser) {
+KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
 
     // ident === identifier
 
-    var document = S.Env.host.document;
+    var document = S.Env.host.document,
+        caches = {},
+        aNPlusB = /^(?:([+-]?\d+)n)?([+-]?\d+)$/;
 
     function getAttrValue(el, attr) {
         var node = el.getAttributeNode(attr);
@@ -17,7 +19,25 @@ KISSY.add('dom/ie/selector/index', function (S, parser) {
         }
     }
 
-    var n_reg = /^(?:([+-]?\d+)n)?([+-]?\d+)$/;
+    function getElementsByTagName(name, context) {
+        var nodes = context.getElementsByTagName(name);
+        if (name === '*') {
+            var ret = [],
+                len = nodes.length,
+                n,
+                index = 0,
+                i = 0;
+            for (; i < len; i++) {
+                n = nodes[i];
+                if (n.nodeType == 1) {
+                    ret[index++] = n;
+                }
+            }
+            return ret;
+        } else {
+            return nodes;
+        }
+    }
 
     function getAb(param) {
         var a = 0,
@@ -32,7 +52,7 @@ KISSY.add('dom/ie/selector/index', function (S, parser) {
         } else if (param == 'even') {
             a = 2;
             b = 0;
-        } else if (match = param.match(n_reg)) {
+        } else if (match = param.match(aNPlusB)) {
             a = parseInt(match[1]) || 0;
             b = parseInt(match[2]) || 0;
         }
@@ -169,6 +189,19 @@ KISSY.add('dom/ie/selector/index', function (S, parser) {
                 }
             }
             return 0;
+        },
+        'lang': function (el, lang) {
+            var elLang;
+            do {
+                if (elLang = el.lang) {
+                    elLang = elLang.toLowerCase();
+                    return elLang === lang || elLang.indexOf(lang + "-") === 0;
+                }
+            } while ((el = el.parentNode) && el.nodeType === 1);
+            return 0;
+        },
+        'not': function (el, negation_arg) {
+            return !matchExpr[negation_arg.t](el, negation_arg.value);
         }
     };
 
@@ -182,7 +215,8 @@ KISSY.add('dom/ie/selector/index', function (S, parser) {
             for (; index < len; index++) {
                 child = childNodes[index];
                 nodeType = child.nodeType;
-                // only element nodes and content nodes (such as DOM [DOM-LEVEL-3-CORE] text nodes, CDATA nodes, and entity references
+                // only element nodes and content nodes
+                // (such as DOM [DOM-LEVEL-3-CORE] text nodes, CDATA nodes, and entity references
                 if (nodeType == 1 || nodeType == 3 || nodeType == 4 || nodeType == 5) {
                     return 0;
                 }
@@ -212,7 +246,22 @@ KISSY.add('dom/ie/selector/index', function (S, parser) {
         },
         'focus': function (el) {
             var doc = el.ownerDocument;
-            return el === doc.activeElement && (!doc.hasFocus || doc.hasFocus()) && !!(el.type || el.href || ~el.tabIndex);
+            return el === doc.activeElement &&
+                (!doc['hasFocus'] || doc['hasFocus']()) && !!(el.type || el.href || el.tabIndex >= 0);
+        },
+        'target': function (el) {
+            var hash = location.hash;
+            return hash && hash.slice(1) === getAttrValue(el, 'id');
+        },
+        'enabled': function (el) {
+            return !el.disabled;
+        },
+        'disabled': function (el) {
+            return el.disabled;
+        },
+        'checked': function (el) {
+            var nodeName = el.nodeName.toLowerCase();
+            return (nodeName === "input" && el.checked) || (nodeName === "option" && el.selected);
         }
     };
 
@@ -238,6 +287,9 @@ KISSY.add('dom/ie/selector/index', function (S, parser) {
     };
 
     var matchExpr = {
+        'tag': function (el, value) {
+            return value == '*' || el.nodeName.toLowerCase() == value.toLowerCase();
+        },
         'cls': function (el, value) {
             return (' ' + el.className + ' ').indexOf(' ' + value + ' ') != -1;
         },
@@ -272,55 +324,132 @@ KISSY.add('dom/ie/selector/index', function (S, parser) {
         }
     };
 
+    var relativeExpr = {
+        '>': {
+            dir: 'parentNode',
+            immediate: 1
+        },
+        ' ': {
+            dir: 'parentNode'
+        },
+        '+': {
+            dir: 'previousSibling',
+            immediate: 1
+        },
+        '~': {
+            dir: 'previousSibling'
+        }
+    };
 
-    return  function (str) {
-        var selector = parser.parse(str),
+    DOM._compareNodeOrder = function (a, b) {
+        return a.sourceIndex - b.sourceIndex;
+    };
+
+    function matches(str, seeds) {
+        return DOM._selectInternal(str, null, seeds);
+    }
+
+    DOM._matchesInternal = matches;
+
+    function select(str, context, seeds) {
+
+        if (!caches[str]) {
+            caches[str] = parser.parse(str);
+        }
+
+        var selector = caches[str],
             groupIndex = 0,
             groupLen = selector.length,
-            group;
+            group,
+            ret = [];
 
-        var ret = [];
-
+        context = context || document;
 
         for (; groupIndex < groupLen; groupIndex++) {
 
             group = selector[groupIndex];
-            var suffix = group.suffix;
-            var id = null;
-            if (suffix) {
-                var suffixIndex = 0, suffixLen = suffix.length;
-                for (; suffixIndex < suffixLen; suffixIndex++) {
-                    var singleSuffix = suffix[suffixIndex];
-                    if (singleSuffix.t == 'id') {
-                        id = singleSuffix.value;
-                        break;
+
+            var suffix = group.suffix,
+                suffixIndex,
+                suffixLen,
+                seedsIndex,
+                seedsLen,
+                id = null;
+
+            if (!seeds) {
+                if (suffix) {
+                    suffixIndex = 0;
+                    suffixLen = suffix.length;
+                    for (; suffixIndex < suffixLen; suffixIndex++) {
+                        var singleSuffix = suffix[suffixIndex];
+                        if (singleSuffix.t == 'id') {
+                            id = singleSuffix.value;
+                            break;
+                        }
                     }
+                }
+
+                if (id) {
+                    // id bug
+                    // https://github.com/kissyteam/kissy/issues/67
+                    var contextNotInDom = (context != document && !document.contains(context)),
+                        tmp = contextNotInDom ? null : document.getElementById(id);
+                    if (contextNotInDom || getAttrValue(tmp, 'id') != id) {
+                        var tmps = getElementsByTagName('*', context),
+                            tmpLen = tmps.length,
+                            tmpI = 0;
+                        for (; tmpI < tmpLen; tmpI++) {
+                            tmp = tmps[tmpI];
+                            if (getAttrValue(tmp, 'id') == id) {
+                                seeds = [tmp];
+                                break;
+                            }
+                        }
+                        if (tmpI === tmpLen) {
+                            seeds = [];
+                        }
+                    } else {
+                        if (context !== document && tmp) {
+                            tmp = context.contains(tmp) ? tmp : null;
+                        }
+                        if (tmp) {
+                            seeds = [tmp];
+                        } else {
+                            seeds = [];
+                        }
+                    }
+                } else {
+                    seeds = getElementsByTagName(group.value || '*', context);
                 }
             }
 
-            var seeds;
-            if (id) {
-                seeds = [document.getElementById(id)];
-            } else {
-                seeds = document.getElementsByTagName(group.value || '*');
-            }
+            seedsIndex = 0;
+            seedsLen = seeds.length;
 
-            var seedsIndex = 0, seedsLen = seeds.length;
+            if (!seedsLen) {
+                continue;
+            }
 
             for (; seedsIndex < seedsLen; seedsIndex++) {
                 var seed = seeds[seedsIndex],
-                    original = seed;
-                var match = group;
+                    original = seed,
+                    match = group;
+
                 while (seed && match) {
-                    var matched = 1;
+                    var matched = 1,
+                        matchSuffix = match.suffix,
+                        matchSuffixLen,
+                        nextRelativeOp,
+                        relativeOp,
+                        matchSuffixIndex;
+
                     if (match.t == 'tag') {
-                        matched &= match.value == '*' || seed.nodeName.toLowerCase() == match.value.toLowerCase();
+                        matched &= matchExpr['tag'](seed, match.value);
                     }
 
-                    var matchSuffix = match.suffix;
                     if (matched && matchSuffix) {
-                        var matchSuffixLen = matchSuffix.length,
-                            matchSuffixIndex = 0;
+                        matchSuffixLen = matchSuffix.length;
+                        matchSuffixIndex = 0;
 
                         for (; matched && matchSuffixIndex < matchSuffixLen; matchSuffixIndex++) {
                             var singleMatchSuffix = matchSuffix[matchSuffixIndex],
@@ -331,11 +460,15 @@ KISSY.add('dom/ie/selector/index', function (S, parser) {
                         }
                     }
 
-                    if ((seed == original || match.nextCombinator == '>') && !matched) {
+                    nextRelativeOp = relativeExpr[match.nextCombinator] || {};
+                    relativeOp = relativeExpr[match.prevCombinator];
+
+                    if ((seed == original || nextRelativeOp.immediate) && !matched) {
                         break;
                     }
-
-                    seed = seed.parentNode;
+                    if (relativeOp) {
+                        seed = seed[relativeOp.dir];
+                    }
                     if (matched) {
                         match = match.prev;
                     }
@@ -346,11 +479,19 @@ KISSY.add('dom/ie/selector/index', function (S, parser) {
                 }
             }
         }
+
         return ret;
+    }
+
+    DOM._selectInternal = select;
+
+    return {
+        select: select,
+        matches: matches
     };
 
 }, {
-    requires: ['./parser']
+    requires: ['./parser', 'dom/base']
 });
 /**
  * refer

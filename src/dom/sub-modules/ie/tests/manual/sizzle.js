@@ -4,7 +4,7 @@
  * Released under the MIT license
  * http://sizzlejs.com/
  */
-KISSY.add('sizzle', function () {
+(function () {
 
     var cachedruns,
         assertGetIdNotName,
@@ -1706,6 +1706,6 @@ KISSY.add('sizzle', function () {
     Expr.setFilters = new setFilters();
 
 // EXPOSE
-    return Sizzle;
-});
+    window.Sizzle = Sizzle;
+})();
 

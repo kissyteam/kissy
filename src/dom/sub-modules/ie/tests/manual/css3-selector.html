@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
 </head>
 <body>
-<div id="#t">
+<div id="t">
     <div class="inner">
         <form>
             <div>
@@ -30,10 +30,16 @@
 <script src="/kissy/build/seed.js"></script>
 <script src="../../src/selector/index.js"></script>
 <script src="../../src/selector/parser.js"></script>
+<script src="sizzle.js"></script>
 <script>
-    KISSY.use('dom/ie/selector/', function (S, selector) {
-        debugger
-        var els = selector('#t > .inner form ul > li.my');
+    KISSY.use('dom/ie/selector/', function (S, engine) {
+        var start= S.now();
+        var els = engine.select('#t > .inner form ul > li.my');
+        S.log(S.now()-start);
+        S.log(els);
+        start= S.now();
+         els = Sizzle('#t > .inner form ul > li.my');
+        S.log(S.now()-start);
         S.log(els);
     });
 </script>
