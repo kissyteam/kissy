@@ -44,8 +44,37 @@ KISSY.use('dom/ie/selector/', function (S, engine) {
         return r;
     }
 
-    describe("element", function () {
+    var createWithFriesXML = function() {
+        var string = '<?xml version="1.0" encoding="UTF-8"?> \
+	<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" \
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema" \
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"> \
+		<soap:Body> \
+			<jsconf xmlns="http://www.example.com/ns1"> \
+				<response xmlns:ab="http://www.example.com/ns2"> \
+					<meta> \
+						<component id="seite1" class="component"> \
+							<properties xmlns:cd="http://www.example.com/ns3"> \
+								<property name="prop1"> \
+									<thing /> \
+									<value>1</value> \
+								</property> \
+								<property name="prop2"> \
+									<thing att="something" /> \
+								</property> \
+								<foo_bar>foo</foo_bar> \
+							</properties> \
+						</component> \
+					</meta> \
+				</response> \
+			</jsconf> \
+		</soap:Body> \
+	</soap:Envelope>';
 
+        return jQuery.parseXML(string);
+    };
+
+    describe("element", function () {
 
         var form = document.getElementById("form");
 
@@ -62,7 +91,6 @@ KISSY.use('dom/ie/selector/', function (S, engine) {
             }
             expect(good).toBeTruthy();
         });
-
 
         t("Element Selector", "html", ["html"]);
         t("Element Selector", "body", ["body"]);
@@ -125,41 +153,42 @@ expect(select("select", form)).toEqual(q("select1", "select2", "select3", "selec
         });
 
         it("Escaped commas do not get treated with an id in element-rooted QSA",function(){
-
+            expect(select("div em, em\\,", siblingTest)).toEqual([]);
         });
-        
-        deepEqual(Sizzle("div em, em\\,", siblingTest), [], "Escaped commas do not get treated with an id in element-rooted QSA");
 
-        var iframe = document.getElementById("iframe"),
-            iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        iframeDoc.open();
-        iframeDoc.write("<body><p id='foo'>bar</p></body>");
-        iframeDoc.close();
-        deepEqual(
-            Sizzle("p:contains(bar)", iframeDoc),
-            [ iframeDoc.getElementById("foo") ],
-            "Other document as context"
-        );
+        it("Other document as context",function(){
+            var iframe = document.getElementById("iframe"),
+                iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            iframeDoc.open();
+            iframeDoc.write("<body><p id='foo'>bar</p></body>");
+            iframeDoc.close();
+            expect(select("p:contains(bar)", iframeDoc)).toEqual([ iframeDoc.getElementById("foo") ]);
+        });
 
-        var html = "";
-        for (i = 0; i < 100; i++) {
-            html = "<div>" + html + "</div>";
-        }
-        html = jQuery(html).appendTo(document.body);
-        ok(!!Sizzle("body div div div").length, "No stack or performance problems with large amounts of descendents");
-        ok(!!Sizzle("body>div div div").length, "No stack or performance problems with large amounts of descendents");
-        html.remove();
+        it("No stack or performance problems with large amounts of descendents",function(){
+            var html = "";
+            for (var i = 0; i < 100; i++) {
+                html = "<div>" + html + "</div>";
+            }
+            html = jQuery(html).appendTo(document.body);
 
-        // Real use case would be using .watch in browsers with window.watch (see Issue #157)
+            expect(select("body div div div").length).toBeGreaterThan(0);
+            expect(select("body>div div div").length).toBeGreaterThan(0);
+
+            html.remove();
+        });
+
         q("qunit-fixture")[0].appendChild(document.createElement("toString")).id = "toString";
         t("Element name matches Object.prototype property", "toString#toString", ["toString"]);
     });
 
-    test("XML Document Selectors", function () {
+    describe("XML Document Selectors", function () {
         var xml = createWithFriesXML();
-        expect(10);
 
-        equal(Sizzle("foo_bar", xml).length, 1, "Element Selector with underscore");
+        it("Element Selector with underscore",function(){
+           expect(select("foo_bar", xml).length).toBe(1);
+        });
+
         equal(Sizzle(".component", xml).length, 1, "Class selector");
         equal(Sizzle("[class*=component]", xml).length, 1, "Attribute selector for class");
         equal(Sizzle("property[name=prop2]", xml).length, 1, "Attribute selector with name");

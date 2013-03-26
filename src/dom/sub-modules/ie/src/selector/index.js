@@ -75,6 +75,11 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
         return undefined;
     }
 
+    function isXML(elem) {
+        var documentElement = elem && (elem.ownerDocument || elem).documentElement;
+        return documentElement ? documentElement.nodeName.toLowerCase() !== "html" : false;
+    }
+
     var pseudoFnExpr = {
         'nth-child': function (el, param) {
             var ab = getAb(param),
@@ -361,9 +366,12 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
             groupIndex = 0,
             groupLen = selector.length,
             group,
+            isContextXML,
             ret = [];
 
         context = context || document;
+
+        isContextXML = isXML(context);
 
         for (; groupIndex < groupLen; groupIndex++) {
 
@@ -377,7 +385,7 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
                 id = null;
 
             if (!seeds) {
-                if (suffix) {
+                if (suffix && !isContextXML) {
                     suffixIndex = 0;
                     suffixLen = suffix.length;
                     for (; suffixIndex < suffixLen; suffixIndex++) {
