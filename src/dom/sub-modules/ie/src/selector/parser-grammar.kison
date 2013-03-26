@@ -10,7 +10,7 @@
 
     var nmchar = '(?:[\\w\\d-]|' + escape + ')';
 
-    var indent = '(?:' + nmstart + nmchar + '*)';
+    var ident = '(?:' + nmstart + nmchar + '*)';
 
     var name = '(?:' + nmchar + '+)';
 
@@ -77,10 +77,11 @@
             // ---------------------- type_selector
             {
                 symbol: 'type_selector',
-                rhs: ['INDENT'],
+                rhs: ['IDENT'],
                 action: function () {
                     return {
-                        tagName: this.$1
+                        t: 'tag',
+                        value: this.$1
                     };
                 }
             },
@@ -89,7 +90,8 @@
                 rhs: ['UNIVERSAL'],
                 action: function () {
                     return {
-                        tagName: this.$1
+                        t: 'tag',
+                        value: this.$1
                     };
                 }
             },
@@ -99,7 +101,8 @@
                 rhs: ['HASH'],
                 action: function () {
                     return {
-                        id: this.$1
+                        t: 'id',
+                        value: this.$1
                     };
                 }
             },
@@ -109,7 +112,8 @@
                 rhs: ['CLASS'],
                 action: function () {
                     return {
-                        cls: this.$1
+                        t: 'cls',
+                        value: this.$1
                     };
                 }
             },
@@ -143,22 +147,24 @@
             // ---------------------- attrib
             {
                 symbol: 'attrib',
-                rhs: ['LEFT_BRACKET', 'INDENT', 'RIGHT_BRACKET'],
+                rhs: ['LEFT_BRACKET', 'IDENT', 'RIGHT_BRACKET'],
                 action: function () {
                     return {
-                        attrib: {
-                            indent: this.$2
+                        t: 'attrib',
+                        value: {
+                            ident: this.$2
                         }
                     };
                 }
             },
             {
                 symbol: 'attrib',
-                rhs: ['LEFT_BRACKET', 'INDENT', 'attrib_match', 'INDENT', 'RIGHT_BRACKET'],
+                rhs: ['LEFT_BRACKET', 'IDENT', 'attrib_match', 'IDENT', 'RIGHT_BRACKET'],
                 action: function () {
                     return {
-                        attrib: {
-                            indent: this.$2,
+                        t: 'attrib',
+                        value: {
+                            ident: this.$2,
                             match: this.$3,
                             value: this.$4
                         }
@@ -167,11 +173,12 @@
             },
             {
                 symbol: 'attrib',
-                rhs: ['LEFT_BRACKET', 'INDENT', 'attrib_match', 'STRING', 'RIGHT_BRACKET'],
+                rhs: ['LEFT_BRACKET', 'IDENT', 'attrib_match', 'STRING', 'RIGHT_BRACKET'],
                 action: function () {
                     return {
-                        attrib: {
-                            indent: this.$2,
+                        t: 'attrib',
+                        value: {
+                            ident: this.$2,
                             match: this.$3,
                             value: this.$4
                         }
@@ -182,22 +189,25 @@
             // ---------------------- pseudo
             {
                 symbol: 'pseudo',
-                rhs: ['COLON', 'FUNCTION'],
+                rhs: ['COLON', 'FUNCTION', 'PARAMETER', 'RIGHT_PARENTHESES'],
                 action: function () {
                     return {
-                        pseudo: {
-                            fn: this.$2
+                        t: 'pseudo',
+                        value: {
+                            fn: this.$2,
+                            param: this.$3
                         }
                     };
                 }
             },
             {
                 symbol: 'pseudo',
-                rhs: ['COLON', 'INDENT'],
+                rhs: ['COLON', 'IDENT'],
                 action: function () {
                     return {
-                        pseudo: {
-                            indent: this.$2
+                        t: 'pseudo',
+                        value: {
+                            ident: this.$2
                         }
                     };
                 }
@@ -209,7 +219,8 @@
                 rhs: ['NOT', 'negation_arg', 'RIGHT_PARENTHESES'],
                 action: function () {
                     return {
-                        negation: this.$2
+                        t: 'negation',
+                        value: this.$2
                     };
                 }
             },
@@ -288,10 +299,11 @@
                 symbol: 'simple_selector_sequence',
                 rhs: ['type_selector', 'suffix_selectors'],
                 action: function () {
-                    var ret = {};
-                    ret.tagName = this.$1.tagName;
-                    ret.suffix = this.$2;
-                    return ret;
+                    return {
+                        t: 'tag',
+                        value: this.$1.value,
+                        suffix: this.$2
+                    };
                 }
             }
         ],
@@ -354,10 +366,19 @@
                     }
                 },
                 {
-                    regexp: new RegExp('^' + indent + '\\('+w+'[^\\)]*' + w+'\\)'),
+                    regexp: new RegExp('^' + ident + '\\('),
                     token: 'FUNCTION',
                     action: function () {
-                        this.text = KISSY.trim(this.text);
+                        this.text = KISSY.trim(this.text).slice(0, -1);
+                        this.pushState('fn');
+                    }
+                },
+                {
+                    state: ['fn'],
+                    regexp: /[^\)]*/,
+                    token: 'PARAMETER',
+                    action: function () {
+                        this.popState();
                     }
                 },
                 {
@@ -375,8 +396,8 @@
                     }
                 },
                 {
-                    regexp: new RegExp('^' + indent),
-                    token: 'INDENT'
+                    regexp: new RegExp('^' + ident),
+                    token: 'IDENT'
                 },
                 {
                     regexp: /^"(\\"|[^"])*"/,
@@ -394,11 +415,17 @@
                 },
                 {
                     regexp: new RegExp('^#' + name),
-                    token: 'HASH'
+                    token: 'HASH',
+                    action: function () {
+                        this.text = this.text.slice(1);
+                    }
                 },
                 {
-                    regexp: new RegExp('^\\.' + indent),
-                    token: 'CLASS'
+                    regexp: new RegExp('^\\.' + ident),
+                    token: 'CLASS',
+                    action: function () {
+                        this.text = this.text.slice(1);
+                    }
                 },
 
                 {
