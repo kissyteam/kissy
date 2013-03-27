@@ -399,35 +399,46 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
     // x > y + q y+q y>z
     // x>y+q y>z
     function foundMatchFromHead(el, head, limitMatch) {
+        // 关键：
+        // el 之前的元素与 limitMatch 以前已经完全匹配
+
         // no need to match head
-        var curMatch = head.prev;
-        var originalLimitMatch = limitMatch;
+        var headLimit = head;
+        var curMatch = limitMatch;
+        var curDir = relativeExpr[limitMatch.nextCombinator].dir;
         // x y y z
         // x y > z
         // ------------
         // x y q y q y z
         // x>y>q y>z
-        while (curMatch && relativeExpr[curMatch.nextCombinator].immediate) {
-            curMatch = curMatch.prev;
-        }
-        while (limitMatch && relativeExpr[limitMatch.nextCombinator].immediate) {
-            limitMatch = limitMatch.next;
-        }
-        if (!limitMatch || !curMatch) {
-            return 0;
-        }
-        if (limitMatch.order > curMatch.order) {
-            return 0;
-        }
-        if (limitMatch != originalLimitMatch) {
-            limitMatch = limitMatch.prev;
-        }
-        //  dichotomy algorithm?
-        while (curMatch && curMatch != limitMatch) {
+        var relativeOp;
+        do {
+            // e r t a b c
+            // x>b>c
+            if (headLimit == limitMatch) {
+                return -1;
+            }
+            headLimit = headLimit.prev;
+            relativeOp = relativeExpr[headLimit.nextCombinator];
+        } while (relativeOp.immediate || relativeOp.dir != curDir);
+
+        do {
+            // x y n~q y n~q y z
+            // x>y>n~q y>z
+            curMatch = curMatch.next;
+            relativeOp = relativeExpr[curMatch.nextCombinator];
+            // x y n~q x y n y n~q y z
+            // x>y>n~q y>z
+            if (curMatch == headLimit) {
+                return 0;
+            }
+        } while (relativeOp.immediate || relativeOp.dir != curDir);
+
+        while (curMatch != headLimit) {
             if (singleMatch(el, curMatch)) {
                 return curMatch.prev;
             }
-            curMatch = curMatch.prev;
+            curMatch = curMatch.next;
         }
         return 0;
     }
@@ -522,9 +533,6 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
                 while (el) {
                     var matched = singleMatch(el, match);
 
-                    var nextRelativeOp = relativeExpr[match.nextCombinator];
-
-                    // seed == original === !nextRelativeOp
                     if (el == seed && !matched) {
                         break;
                     }
@@ -537,6 +545,8 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
                             break;
                         }
                     } else {
+                        // currentEl is not match with current single selector match
+                        var nextRelativeOp = relativeExpr[match.nextCombinator];
                         // retreat
                         if (nextRelativeOp.immediate) {
                             var nextMatch = foundMatchFromHead(el, group, match);
@@ -545,6 +555,8 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
                             if (nextMatch === 0) {
                                 // has to continue
                                 el = el[nextRelativeOp.dir];
+                            } else if (nextMatch === -1) {
+                                break;
                             } else {
                                 // x y y z
                                 // x>y z
