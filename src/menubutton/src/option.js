@@ -5,17 +5,13 @@
 KISSY.add("menubutton/option", function (S, Menu) {
     var MenuItem = Menu.Item;
     /**
-     * @name Option
-     * @class
      * Option for Select component.
      * xclass: 'option'.
-     * @member MenuButton
-     * @extends Menu.Item
+     * @class KISSY.MenuButton.Option
+     * @extends KISSY.Menu.Item
      */
     return MenuItem.extend({}, {
-        ATTRS: /**
-         * @lends MenuButton.Option.prototype
-         */
+        ATTRS:
         {
             /**
              * Whether this option can be selected.

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 13 22:29
+build time: Mar 27 13:44
 */
 /**
  * combination of menu and button ,similar to native select
@@ -20,11 +20,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             }
         };
     /**
-     * @class
      * A menu button component, consist of a button and a drop down popup menu.
      * xclass: 'menu-button'.
-     * @name MenuButton
-     * @extends Button
+     * @class KISSY.MenuButton
+     * @extends KISSY.Button
      */
     var MenuButton = Button.extend([Component.DecorateChild],
         /**
@@ -135,7 +134,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             /**
              * Remove a existing menu item from drop down menu.
              * @param c {KISSY.Menu.Item} Existing menu item.
-             * @param [destroy] {Boolean} Whether destroy removed menu item.
+             * @param [destroy=true] {Boolean} Whether destroy removed menu item.
              */
             removeItem: function (c, destroy) {
                 /**
@@ -425,17 +424,13 @@ KISSY.add("menubutton", function(S, MenuButton, MenuButtonRender, Select, Option
 KISSY.add("menubutton/option", function (S, Menu) {
     var MenuItem = Menu.Item;
     /**
-     * @name Option
-     * @class
      * Option for Select component.
      * xclass: 'option'.
-     * @member MenuButton
-     * @extends Menu.Item
+     * @class KISSY.MenuButton.Option
+     * @extends KISSY.Menu.Item
      */
     return MenuItem.extend({}, {
-        ATTRS: /**
-         * @lends MenuButton.Option.prototype
-         */
+        ATTRS:
         {
             /**
              * Whether this option can be selected.
@@ -598,9 +593,10 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
             /**
              * Remove specified item from current select.
              * If specified item is selectedItem, then set selectedItem to null.
-             *
+             * @param c {KISSY.MenuButton.Option} Existing menu item.
+             * @param [destroy=true] {Boolean} Whether destroy removed menu item.
              */
-            removeItem: function (c) {
+            removeItem: function (c,destroy) {
                 var self = this;
                 Select.superclass.removeItem.apply(self, arguments);
                 if (c.get("value") == self.get("value")) {

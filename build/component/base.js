@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 13 22:24
+build time: Mar 27 13:44
 */
 /**
  * @ignore
@@ -801,7 +801,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * clean up the child component's DOM.
              *
              * @param {KISSY.Component.Controller} c The child component to be removed.
-             * @param {Boolean} [destroy=false] If true,
+             * @param {Boolean} [destroy=true] If true,
              * calls ``destroy()`` on the removed child component.
              * @return {KISSY.Component.Controller} The removed component.
              */
@@ -812,9 +812,8 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 if (index != -1) {
                     children.splice(index, 1);
                 }
-                if (destroy &&
-                    // c is still json
-                    c['destroy']) {
+                // c is still json
+                if ((destroy || destroy === undefined) && c['destroy']) {
                     c['destroy']();
                 }
                 return c;

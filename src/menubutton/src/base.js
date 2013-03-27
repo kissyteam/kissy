@@ -15,11 +15,10 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             }
         };
     /**
-     * @class
      * A menu button component, consist of a button and a drop down popup menu.
      * xclass: 'menu-button'.
-     * @name MenuButton
-     * @extends Button
+     * @class KISSY.MenuButton
+     * @extends KISSY.Button
      */
     var MenuButton = Button.extend([Component.DecorateChild],
         /**
@@ -130,7 +129,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             /**
              * Remove a existing menu item from drop down menu.
              * @param c {KISSY.Menu.Item} Existing menu item.
-             * @param [destroy] {Boolean} Whether destroy removed menu item.
+             * @param [destroy=true] {Boolean} Whether destroy removed menu item.
              */
             removeItem: function (c, destroy) {
                 /**

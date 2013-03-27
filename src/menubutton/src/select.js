@@ -136,9 +136,10 @@ KISSY.add("menubutton/select", function (S, Node, MenuButton, Menu, Option, unde
             /**
              * Remove specified item from current select.
              * If specified item is selectedItem, then set selectedItem to null.
-             *
+             * @param c {KISSY.MenuButton.Option} Existing menu item.
+             * @param [destroy=true] {Boolean} Whether destroy removed menu item.
              */
-            removeItem: function (c) {
+            removeItem: function (c,destroy) {
                 var self = this;
                 Select.superclass.removeItem.apply(self, arguments);
                 if (c.get("value") == self.get("value")) {
