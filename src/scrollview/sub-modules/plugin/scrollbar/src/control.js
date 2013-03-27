@@ -321,9 +321,6 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
             focusable: {
                 value: false
             },
-            visibleMode: {
-                value: 'visibility'
-            },
             xrender: {
                 value: ScrollBarRender
             }

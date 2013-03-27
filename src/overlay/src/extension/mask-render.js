@@ -77,11 +77,11 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
         __syncUI: function () {
             var self = this;
             if (self.get('mask')) {
-                self.ksSetMaskVisible(self.get('visible'), 1);
+                self.ksSetMaskVisible(self.get('visible'));
             }
         },
 
-        ksSetMaskVisible: function (shown, hideInline) {
+        ksSetMaskVisible: function (shown) {
             var self = this,
                 shownCls = self.getCssClassWithState('mask-shown'),
                 maskNode = self.get('maskNode'),
@@ -90,10 +90,6 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
                 maskNode.removeClass(hiddenCls).addClass(shownCls);
             } else {
                 maskNode.removeClass(shownCls).addClass(hiddenCls);
-
-            }
-            if (!hideInline) {
-                maskNode.css('visibility', shown ? 'visible' : 'hidden');
             }
         },
 

@@ -167,18 +167,6 @@ KISSY.add('component/base/box', function () {
         },
 
         /**
-         * component's visibleMode,use css "display" or "visibility" to show this component
-         * @cfg {String} visibleMode
-         */
-        /**
-         * @ignore
-         */
-        visibleMode: {
-            view: 1,
-            value: 'display'
-        },
-
-        /**
          * whether this component is visible after created.
          *
          * will add css class {prefix}{component}-hidden

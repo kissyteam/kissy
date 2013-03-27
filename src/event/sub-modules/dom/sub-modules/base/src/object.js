@@ -110,7 +110,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
                 }
             },
             {
-                reg: /^(?:mouse|contextmenu)|click/,
+                reg: /^mouse|contextmenu|click/,
                 props: [
                     'buttons', 'clientX', 'clientY', 'button',
                     'offsetX', 'relatedTarget', 'which',
@@ -420,7 +420,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
 
         // fix target property, if necessary
         if (!self.target) {
-            self.target = self.srcElement || DOCUMENT; // srcElement might not be defined either
+            self.target = originalEvent.srcElement || DOCUMENT; // srcElement might not be defined either
         }
 
         // check if target is a text node (safari)

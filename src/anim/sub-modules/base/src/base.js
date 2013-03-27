@@ -89,6 +89,32 @@ KISSY.add('anim/base', function (S, DOM, Utils, EventCustom, Q) {
             });
 
             if (el.nodeType == NodeType.ELEMENT_NODE) {
+
+                // 放在前面，设置 overflow hidden，否则后面 ie6  取 width/height 初值导致错误
+                // <div style='width:0'><div style='width:100px'></div></div>
+                if (props.width || props.height) {
+                    // Make sure that nothing sneaks out
+                    // Record all 3 overflow attributes because IE does not
+                    // change the overflow attribute when overflowX and
+                    // overflowY are set to the same value
+                    var elStyle = el.style;
+                    S.mix(_backupProps, {
+                        overflow: elStyle.overflow,
+                        'overflow-x': elStyle.overflowX,
+                        'overflow-y': elStyle.overflowY
+                    });
+                    elStyle.overflow = 'hidden';
+                    // inline element should has layout/inline-block
+                    if (DOM.css(el, 'display') === 'inline' &&
+                        DOM.css(el, 'float') === 'none') {
+                        if (S.UA['ie']) {
+                            elStyle.zoom = 1;
+                        } else {
+                            elStyle.display = 'inline-block';
+                        }
+                    }
+                }
+
                 var exit, hidden;
                 hidden = (DOM.css(el, 'display') === 'none');
                 S.each(_propsData, function (_propData, prop) {

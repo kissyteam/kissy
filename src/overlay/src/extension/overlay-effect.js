@@ -17,7 +17,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
             ghost = el.clone(true);
 
         ghost.css({
-            visibility: '',
+            visibility: 'visible',
             overflow: HIDDEN
         }).addClass(self.get('prefixCls') + 'overlay-ghost');
 
@@ -70,7 +70,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
             complete: function () {
                 self.__effectGhost = null;
                 ghost.remove();
-                el.css('visibility', show ? VISIBLE : HIDDEN);
+                el.css('visibility','');
                 callback();
             }
         });
@@ -92,8 +92,6 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
         }
         var duration = effectCfg.duration,
             easing = effectCfg.easing,
-        // need to get before stop, in case anim 's complete function change it
-            originalVisibility = el.css('visibility'),
             index = show ? 1 : 0;
         // 队列中的也要移去
         // run complete fn to restore window's original height
@@ -110,7 +108,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
                 // need compute coordinates when show, so do not use display none for hide
                 "display": BLOCK,
                 // restore to box-render _onSetVisible
-                "visibility": originalVisibility
+                "visibility": ''
             });
             callback();
         }, easing);

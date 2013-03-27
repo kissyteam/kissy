@@ -46,9 +46,10 @@ header,
 hgroup,
 nav,
 section,
-summary {
+summary{
   display: block;
 }
+
 /*
  * Corrects `inline-block` display not defined in IE6/7/8/9 & FF3.
  */
@@ -649,7 +650,7 @@ table {
   clear: both;
 }
 /*
-淘宝采用�?6 种栅格布局�?
+淘宝采用�?6 种栅格布局�?
 950                  .grid-m
 190    750           .grid-s5m0
 750    190           .grid-m0s5

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 4 11:53
+build time: Mar 27 18:24
 */
 /**
  * @ignore
@@ -668,11 +668,11 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
         __syncUI: function () {
             var self = this;
             if (self.get('mask')) {
-                self.ksSetMaskVisible(self.get('visible'), 1);
+                self.ksSetMaskVisible(self.get('visible'));
             }
         },
 
-        ksSetMaskVisible: function (shown, hideInline) {
+        ksSetMaskVisible: function (shown) {
             var self = this,
                 shownCls = self.getCssClassWithState('mask-shown'),
                 maskNode = self.get('maskNode'),
@@ -681,10 +681,6 @@ KISSY.add("overlay/extension/mask-render", function (S, Node) {
                 maskNode.removeClass(hiddenCls).addClass(shownCls);
             } else {
                 maskNode.removeClass(shownCls).addClass(hiddenCls);
-
-            }
-            if (!hideInline) {
-                maskNode.css('visibility', shown ? 'visible' : 'hidden');
             }
         },
 
@@ -763,7 +759,7 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
         }
 
         // no inline style, leave it to anim(fadeIn/Out)
-        view.ksSetMaskVisible(show, 1);
+        view.ksSetMaskVisible(show);
 
         var duration = mask.duration,
             easing = mask.easing,
@@ -773,11 +769,13 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
         // run complete fn to restore window's original height
         el.stop(1, 1);
 
-        el.css('display', show ? NONE: 'block');
+        el.css('display', show ? NONE : 'block');
 
         m = effect + effects[effect][index];
 
-        el[m](duration, null, easing);
+        el[m](duration, function () {
+            el.css('display', '');
+        }, easing);
     }
 
     // for augment, no need constructor
@@ -827,7 +825,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
             ghost = el.clone(true);
 
         ghost.css({
-            visibility: '',
+            visibility: 'visible',
             overflow: HIDDEN
         }).addClass(self.get('prefixCls') + 'overlay-ghost');
 
@@ -880,7 +878,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
             complete: function () {
                 self.__effectGhost = null;
                 ghost.remove();
-                el.css('visibility', show ? VISIBLE : HIDDEN);
+                el.css('visibility','');
                 callback();
             }
         });
@@ -902,8 +900,6 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
         }
         var duration = effectCfg.duration,
             easing = effectCfg.easing,
-        // need to get before stop, in case anim 's complete function change it
-            originalVisibility = el.css('visibility'),
             index = show ? 1 : 0;
         // 队列中的也要移去
         // run complete fn to restore window's original height
@@ -920,7 +916,7 @@ KISSY.add('overlay/extension/overlay-effect', function (S) {
                 // need compute coordinates when show, so do not use display none for hide
                 "display": BLOCK,
                 // restore to box-render _onSetVisible
-                "visibility": originalVisibility
+                "visibility": ''
             });
             callback();
         }, easing);
@@ -1327,7 +1323,6 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                     timer.cancel();
                     timer = undefined;
                 }
-
                 self._setHiddenTimer();
             };
 

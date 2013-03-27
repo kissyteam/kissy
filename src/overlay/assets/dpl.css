@@ -17,10 +17,26 @@
   position: absolute;
   left: -9999px;
   top: -9999px;
-  visibility: hidden;
   outline: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+.ks-overlay-hidden {
+    visibility: hidden;
+}
+
+.ks-overlay-mask-hidden {
+    display: none;
+}
+
+.ks-overlay-shown {
+    visibility: visible;
+}
+
+.ks-overlay-mask-shown{
+    display: block;
+}
+
 .ks-ext-close {
   display: inline-block;
   *display: inline;
@@ -128,7 +144,6 @@
   position: absolute;
   left: -9999px;
   top: -9999px;
-  visibility: hidden;
   z-index: 1050;
   background-color: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.3);

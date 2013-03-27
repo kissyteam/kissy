@@ -9,7 +9,7 @@
 <title>KISSY Overlay&Popup</title>
 
 <script src="/kissy/build/seed.js"></script>
-
+    <link rel="stylesheet" href="/kissy/build/css/dpl/base.css"/>
 <link rel="stylesheet" href="assets/cool.css"/>
 </head>
 <body>
@@ -38,16 +38,21 @@
         <style>
             .popup {
                 position: absolute;
+                left: -9999px;
+                top:-9999px;
                 z-index: 50;
-                border-collapse: collapse;
-                visibility: hidden;
                 background: transparent;
                 border: none;
             }
 
             .popup td.corner {
-                height: 15px;
-                width: 19px;
+                height: 13px;
+                width: 17px;
+                font-size: 0;
+                line-height: 0;
+            }
+            .popup td.center {
+                background-color: #ffffff;
             }
 
             .popup td#topleft {
@@ -129,7 +134,7 @@
 
                 <tr>
                     <td class="left"></td>
-                    <td>
+                    <td class="center">
 
                         <table class="popup-contents">
                             <tr>
@@ -164,7 +169,7 @@
 
                 <tr>
                     <td id="bottomleft" class="corner"></td>
-                    <td class="bottom"><img src="./assets/bubble-tail2.png" width="30" height="29" alt="popup tail"/></td>
+                    <td class="bottom"><img src="./assets/bubble-tail2.png" width="30" height="27" alt="popup tail"/></td>
                     <td class="corner" id="bottomright"></td>
                 </tr>
             </table>

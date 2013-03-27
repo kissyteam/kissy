@@ -114,7 +114,7 @@ KISSY.add('dd/plugin/constrain', function (S, Base, Node) {
              * @ignore
              */
             constrain: {
-                value: WIN,
+                value: $(WIN),
                 setter: function (v) {
                     if (v) {
                         if (v === true) {

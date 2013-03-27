@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 27 13:44
+build time: Mar 27 18:36
 */
 /**
  * combination of menu and button ,similar to native select
@@ -186,7 +186,7 @@ KISSY.add("menubutton/base", function (S, Node, Button, MenuButtonRender, Menu, 
             decorateChildrenInternal: function (UI, el) {
                 // 不能用 display:none , menu 的隐藏是靠 visibility
                 // eg: menu.show(); menu.hide();
-                el.css("visibility", "hidden").prependTo(el[0].ownerDocument.body);
+                el.css("top", "-9999").prependTo(el[0].ownerDocument.body);
                 var self = this;
                 self.setInternal("menu",
                     Component.DecorateChild.prototype.decorateChildrenInternal.call(self, UI, el, self.get('menu')));

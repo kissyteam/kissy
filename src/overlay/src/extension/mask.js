@@ -61,7 +61,7 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
         }
 
         // no inline style, leave it to anim(fadeIn/Out)
-        view.ksSetMaskVisible(show, 1);
+        view.ksSetMaskVisible(show);
 
         var duration = mask.duration,
             easing = mask.easing,
@@ -71,11 +71,13 @@ KISSY.add("overlay/extension/mask", function (S, Event) {
         // run complete fn to restore window's original height
         el.stop(1, 1);
 
-        el.css('display', show ? NONE: 'block');
+        el.css('display', show ? NONE : 'block');
 
         m = effect + effects[effect][index];
 
-        el[m](duration, null, easing);
+        el[m](duration, function () {
+            el.css('display', '');
+        }, easing);
     }
 
     // for augment, no need constructor

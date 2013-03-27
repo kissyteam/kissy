@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 25 15:07
+build time: Mar 27 15:18
 */
 /**
  * scrollbar for KISSY scrollview
@@ -325,9 +325,6 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
             },
             focusable: {
                 value: false
-            },
-            visibleMode: {
-                value: 'visibility'
             },
             xrender: {
                 value: ScrollBarRender

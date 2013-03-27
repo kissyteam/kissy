@@ -230,7 +230,7 @@
                 d.plug(new DragPlugin({
                     handlers: ['.ks-stdmod-header']
                 }).plug(new ConstrainPlugin({
-                    node: window
+                    constrain: window
                 })));
                 Node.one('#btn3').on('click', function () {
                     d.show();

@@ -29,7 +29,6 @@
   position: absolute;
   left: -9999px;
   top: -9999px;
-  visibility: hidden;
   z-index: 1050;
   background-color: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.3);

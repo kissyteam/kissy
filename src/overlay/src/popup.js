@@ -48,7 +48,6 @@ KISSY.add('overlay/popup', function (S, Overlay, undefined) {
                     timer.cancel();
                     timer = undefined;
                 }
-
                 self._setHiddenTimer();
             };
 

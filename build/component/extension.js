@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 22:55
+build time: Mar 27 15:18
 */
 /**
  * @ignore
@@ -701,15 +701,6 @@ KISSY.add("component/extension/position", function (S) {
          */
         visible: {
             value: false
-        },
-
-        /**
-         * @ignore
-         * see {@link KISSY.Component.Extension.Box#cfg-visibleMode}.
-         * Defaults to: "visibility"
-         */
-        visibleMode: {
-            value: "visibility"
         }
     };
 

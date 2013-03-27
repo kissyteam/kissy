@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 22:56
+build time: Mar 27 18:14
 */
 /**
  * @ignore
@@ -119,7 +119,7 @@ KISSY.add('dd/plugin/constrain', function (S, Base, Node) {
              * @ignore
              */
             constrain: {
-                value: WIN,
+                value: $(WIN),
                 setter: function (v) {
                     if (v) {
                         if (v === true) {

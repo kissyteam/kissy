@@ -6,6 +6,22 @@
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+.ks-overlay-hidden {
+    visibility: hidden;
+}
+
+.ks-overlay-mask-hidden {
+    display: none;
+}
+
+.ks-overlay-shown {
+    visibility: visible;
+}
+
+.ks-overlay-mask-shown{
+    display: block;
+}
+
 .ks-dialog, .ks-popup {
     background-color: #FBFBFB;
     border: 1px solid #ACB4BE;

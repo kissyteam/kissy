@@ -17,7 +17,7 @@
     <button id="t2" class="ks-button">open dialog with mask anim</button>
 </div>
 <script>
-
+        var S=KISSY;
         var start = S.now();
         S.use("overlay", function (S, Overlay) {
             alert("loaded: " + (S.now() - start));
@@ -34,11 +34,11 @@
             });
 
             o.on('show', function () {
-                S.log('show');
+                S.log('show event');
             });
 
             o.on('hide', function () {
-                S.log('hide');
+                S.log('hide event');
             });
 
             S.all("#t2").on("click", function () {

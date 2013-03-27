@@ -61,6 +61,15 @@
   left: -9999px;
   top: -9999px;
 }
+
+.ks-popupmenu-shown{
+    visibility: visible;
+}
+
+.ks-popupmenu-hidden{
+    visibility: hidden;
+}
+
 .ks-menu {
   outline: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);

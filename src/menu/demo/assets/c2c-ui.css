@@ -124,6 +124,14 @@
     top: -9999px;
 }
 
+.c2c-popupmenu-shown{
+    visibility: visible;
+}
+
+.c2c-popupmenu-hidden{
+    visibility: hidden;
+}
+
 .c2c-menu {
     background: #fff;
     border: 1px solid #ffad33;

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 27 13:44
+build time: Mar 27 15:18
 */
 /**
  * @ignore
@@ -69,7 +69,6 @@ KISSY.add('component/base/box-render', function (S) {
 
         visible: {},
 
-        visibleMode: {},
         // content 设置的内容节点,默认根节点
         // 防止 content 节点和根节点不是同一个节点，例如 submenu
         contentEl: {
@@ -186,21 +185,13 @@ KISSY.add('component/base/box-render', function (S) {
             var self = this,
                 el = self.get('el'),
                 shownCls = self.getCssClassWithState('shown'),
-                hiddenCls = self.getCssClassWithState('hidden'),
-                visibleMode = self.get('visibleMode');
+                hiddenCls = self.getCssClassWithState('hidden');
             if (visible) {
                 el.removeClass(hiddenCls);
                 el.addClass(shownCls);
             } else {
                 el.removeClass(shownCls);
                 el.addClass(hiddenCls);
-            }
-            //return;
-            // !TODO 兼容代码，去除，通过 css 控制隐藏属性
-            if (visibleMode == 'visibility') {
-                el.css('visibility', visible ? 'visible' : 'hidden');
-            } else {
-                el.css('display', visible ? '' : 'none');
             }
         },
 
@@ -382,18 +373,6 @@ KISSY.add('component/base/box', function () {
          */
         render: {
             view: 1
-        },
-
-        /**
-         * component's visibleMode,use css "display" or "visibility" to show this component
-         * @cfg {String} visibleMode
-         */
-        /**
-         * @ignore
-         */
-        visibleMode: {
-            view: 1,
-            value: 'display'
         },
 
         /**

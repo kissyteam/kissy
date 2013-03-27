@@ -96,15 +96,6 @@ KISSY.add("component/extension/position", function (S) {
          */
         visible: {
             value: false
-        },
-
-        /**
-         * @ignore
-         * see {@link KISSY.Component.Extension.Box#cfg-visibleMode}.
-         * Defaults to: "visibility"
-         */
-        visibleMode: {
-            value: "visibility"
         }
     };
 

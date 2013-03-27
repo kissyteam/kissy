@@ -42,9 +42,10 @@ header,
 hgroup,
 nav,
 section,
-summary {
+summary{
   display: block;
 }
+
 /*
  * Corrects `inline-block` display not defined in IE6/7/8/9 & FF3.
  */

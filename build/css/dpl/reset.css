@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 22:56
+build time: Mar 27 18:19
 */
 /**
 * KISSY New DPL CSS Reset Based on
@@ -47,9 +47,10 @@ header,
 hgroup,
 nav,
 section,
-summary {
+summary{
   display: block;
 }
+
 /*
  * Corrects `inline-block` display not defined in IE6/7/8/9 & FF3.
  */
