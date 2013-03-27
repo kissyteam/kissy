@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body>
+<div id="hard1">
+    <div class="x">
+        <div class="y">
+            <div class="y">
+                <div class="z">
+                    x y y z<br>
+                    x>y z
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="hard2">
+    <div class="x">
+        <div class="y">
+            <div class="q">
+                <div class="n">
+                    <div class="n">
+                        <div class="n">
+                            <div class="n">
+                                <div class="n">
+                                    <div class="n">
+                                        <div class="n">
+                                            <div class="y">
+                                                <div class="q">
+                                                    <div class="y">
+                                                        <div class="z">
+                                                            x y q n n y q y z<br>
+                                                            x>y>q y>z
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/kissy/build/seed.js"></script>
+<script src="../../src/selector/index.js"></script>
+<script src="../../src/selector/parser.js"></script>
+<script src="sizzle.js"></script>
+<script>
+    KISSY.use('dom/ie/selector/', function (S, engine) {
+        var start = S.now();
+        var els = engine.select('.x>.y div.z', document.getElementById('hard1'));
+        S.log(S.now() - start);
+        S.log(els);
+        start = S.now();
+        els = Sizzle('.x>.y .z', document.getElementById('hard1'));
+        S.log(S.now() - start);
+        S.log(els);
+
+
+        start = S.now();
+        els = engine.select('.x>.y>.q .y>div.z', document.getElementById('hard2'));
+        S.log(S.now() - start);
+        S.log(els);
+        start = S.now();
+        els = Sizzle('.x>.y>.q .y>div.z', document.getElementById('hard2'));
+        S.log(S.now() - start);
+        S.log(els);
+    });
+</script>
+</body>
+</html>

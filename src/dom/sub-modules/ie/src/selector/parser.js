@@ -350,7 +350,10 @@ KISSY.add("dom/ie/selector/parser", function () {
         [28, [29]],
         [28, [28, 30, 29], function () {
             // LinkedList
+            var order;
             this.$1.nextCombinator = this.$3.prevCombinator = this.$2;
+            order = this.$3.order = this.$3.order || 0;
+            this.$1.order = order + 1;
             this.$3.prev = this.$1;
             this.$1.next = this.$3;
             return this.$3;

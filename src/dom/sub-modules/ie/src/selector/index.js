@@ -356,6 +356,82 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
 
     DOM._matchesInternal = matches;
 
+    function singleMatch(el, match) {
+        var matched = 1,
+            matchSuffix = match.suffix,
+            matchSuffixLen,
+            matchSuffixIndex;
+
+        if (match.t == 'tag') {
+            matched &= matchExpr['tag'](el, match.value);
+        }
+
+        if (matched && matchSuffix) {
+            matchSuffixLen = matchSuffix.length;
+            matchSuffixIndex = 0;
+            for (; matched && matchSuffixIndex < matchSuffixLen; matchSuffixIndex++) {
+                var singleMatchSuffix = matchSuffix[matchSuffixIndex],
+                    singleMatchSuffixType = singleMatchSuffix.t;
+                if (matchExpr[singleMatchSuffixType]) {
+                    matched &= matchExpr[singleMatchSuffixType](el, singleMatchSuffix.value);
+                }
+            }
+        }
+
+        return matched;
+    }
+
+    // x y y z
+    // x > y z
+
+    // ---------------
+
+    // x q y q y z
+    // x y > q y > z
+
+    // ---------------
+
+    // x y q y q y z
+    // x > y > q y > z
+
+
+    // --------------------------
+    // x > y + q y+q y>z
+    // x>y+q y>z
+    function foundMatchFromHead(el, head, limitMatch) {
+        // no need to match head
+        var curMatch = head.prev;
+        var originalLimitMatch = limitMatch;
+        // x y y z
+        // x y > z
+        // ------------
+        // x y q y q y z
+        // x>y>q y>z
+        while (curMatch && relativeExpr[curMatch.nextCombinator].immediate) {
+            curMatch = curMatch.prev;
+        }
+        while (limitMatch && relativeExpr[limitMatch.nextCombinator].immediate) {
+            limitMatch = limitMatch.next;
+        }
+        if (!limitMatch || !curMatch) {
+            return 0;
+        }
+        if (limitMatch.order > curMatch.order) {
+            return 0;
+        }
+        if (limitMatch != originalLimitMatch) {
+            limitMatch = limitMatch.prev;
+        }
+        //  dichotomy algorithm?
+        while (curMatch && curMatch != limitMatch) {
+            if (singleMatch(el, curMatch)) {
+                return curMatch.prev;
+            }
+            curMatch = curMatch.prev;
+        }
+        return 0;
+    }
+
     function select(str, context, seeds) {
 
         if (!caches[str]) {
@@ -439,51 +515,51 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
             }
 
             for (; seedsIndex < seedsLen; seedsIndex++) {
-                var seed = seeds[seedsIndex],
-                    original = seed,
+                var el = seeds[seedsIndex],
+                    seed = el,
                     match = group;
 
-                while (seed && match) {
-                    var matched = 1,
-                        matchSuffix = match.suffix,
-                        matchSuffixLen,
-                        nextRelativeOp,
-                        relativeOp,
-                        matchSuffixIndex;
+                while (el) {
+                    var matched = singleMatch(el, match);
 
-                    if (match.t == 'tag') {
-                        matched &= matchExpr['tag'](seed, match.value);
-                    }
+                    var nextRelativeOp = relativeExpr[match.nextCombinator];
 
-                    if (matched && matchSuffix) {
-                        matchSuffixLen = matchSuffix.length;
-                        matchSuffixIndex = 0;
-
-                        for (; matched && matchSuffixIndex < matchSuffixLen; matchSuffixIndex++) {
-                            var singleMatchSuffix = matchSuffix[matchSuffixIndex],
-                                singleMatchSuffixType = singleMatchSuffix.t;
-                            if (matchExpr[singleMatchSuffixType]) {
-                                matched &= matchExpr[singleMatchSuffixType](seed, singleMatchSuffix.value);
-                            }
-                        }
-                    }
-
-                    nextRelativeOp = relativeExpr[match.nextCombinator] || {};
-                    relativeOp = relativeExpr[match.prevCombinator];
-
-                    if ((seed == original || nextRelativeOp.immediate) && !matched) {
+                    // seed == original === !nextRelativeOp
+                    if (el == seed && !matched) {
                         break;
                     }
-                    if (relativeOp) {
-                        seed = seed[relativeOp.dir];
-                    }
+
                     if (matched) {
                         match = match.prev;
+                        if (match) {
+                            el = el[relativeExpr[match.nextCombinator].dir];
+                        } else {
+                            break;
+                        }
+                    } else {
+                        // retreat
+                        if (nextRelativeOp.immediate) {
+                            var nextMatch = foundMatchFromHead(el, group, match);
+                            // x y q n n y q y z
+                            // x>y>q y>z
+                            if (nextMatch === 0) {
+                                // has to continue
+                                el = el[nextRelativeOp.dir];
+                            } else {
+                                // x y y z
+                                // x>y z
+                                match = nextMatch;
+                                el = el[relativeExpr[match.nextCombinator].dir];
+                            }
+                        } else {
+                            el = el[nextRelativeOp.dir];
+                        }
                     }
                 }
 
+                // no match remains
                 if (!match) {
-                    ret.push(original);
+                    ret.push(seed);
                 }
             }
         }

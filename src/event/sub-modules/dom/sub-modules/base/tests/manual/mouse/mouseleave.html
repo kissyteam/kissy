@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+<div class='inner' id='i4' style='width:300px;height:300px;border:1px solid green;'>
+    i4
+    <div class='inner' id='i3' style='width:200px;height:200px;border:1px solid red;margin:50px;'>
+        #i3.inner
+        <div class='inner' id='i1' style='width:100px;height:100px;border:1px solid black;margin:50px;'>
+            #i1.inner : try mouse
+        </div>
+    </div>
+</div>
+<hr/>
+<div id='log'></div>
+<script src="/kissy/build/seed.js"></script>
+
+<script>
+
+    KISSY.use("node", function (S, Node) {
+        var $ = Node.all;
+        $('#i4').on('mouseleave', function (e) {
+            $('#log').append(e.type + " : " + e.target.id + "<br/>");
+        });
+    });
+</script>
+
+</body>
+</html>

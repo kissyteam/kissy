@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+</head>
+<body>
+<div id="x">
+    <span class="x">
+
+    </span>
+</div>
+<script src="/kissy/build/seed.js"></script>
+<script src="../../src/selector/index.js"></script>
+<script src="../../src/selector/parser.js"></script>
+<script>
+    KISSY.use('dom/ie/selector/', function (S, selector) {
+        console.log('ie');
+        var els=selector.select('#x .x',document.getElementById('x'));
+        console.log(els);
+    });
+    console.log('querySelectorAll');
+    console.log(document.getElementById('x').querySelectorAll('#x .x'));
+</script>
+</body>
+</html>
