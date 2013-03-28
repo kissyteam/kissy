@@ -873,7 +873,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
                 }
                 if (S.config('debug')) {
-                    expect(S.startsWith(info, 'parse error at line 3:\n' +
+                    expect(S.startsWith(info, 'Syntax error at line 3:\n' +
                         '{{#if title}} shoot\n\n' +
                         '--------------------^\n' +
                         'expect'));
@@ -951,7 +951,7 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                         //S.log('!'+e.replace(/\n/g,'\\n').replace(/\r/g,'\\r')+'!');
                         throw e;
                     }
-                }).toThrow('parse error at line 3:\n' +
+                }).toThrow('Syntax error at line 3:\n' +
                         'expect {{/if}} not {{/with}}');
 
             });

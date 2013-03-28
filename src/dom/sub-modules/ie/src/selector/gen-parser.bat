@@ -1,1 +1,0 @@
-kissy-kison -g parser-grammar.kison -m dom/ie/selector/parser

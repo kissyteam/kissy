@@ -9,7 +9,9 @@ KISSY.add('dom/base/selector', function (S, DOM) {
         isArray = S.isArray,
         makeArray = S.makeArray,
         isNodeList = DOM._isNodeList,
+        SPACE = ' ',
         push = Array.prototype.push,
+        RE_QUERY = /^(?:#([\w-]+))?\s*([\w-]+|\*)?\.?([\w-]+)?$/,
         trim = S.trim;
 
     function query_each(f) {
@@ -27,9 +29,8 @@ KISSY.add('dom/base/selector', function (S, DOM) {
 
         var ret,
             i,
-            simpleContext,
             isSelectorString = typeof selector == 'string',
-            contexts = (!context && (simpleContext = 1)) ? [doc] : query(context);
+            contexts = context ? query(context) : [doc];
 
         // 常见的空
         if (!selector) {
@@ -37,12 +38,21 @@ KISSY.add('dom/base/selector', function (S, DOM) {
         } else if (isSelectorString) {
             selector = trim(selector);
             // shortcut
-            if (simpleContext && selector == 'body') {
-                ret = [doc.body]
+            if (contexts.length == 1 && contexts[0] == doc && selector == 'body') {
+                ret = [ doc.body ]
+            } else {
+                ret = [];
+                for (i = 0; i < contexts.length; i++) {
+                    push.apply(ret, DOM._selectInternal(selector, contexts[i]));
+                }
+                // multiple contexts unique
+                if (ret.length > 1 && (contexts.length > 1 && isSelectorString)) {
+                    DOM.unique(ret);
+                }
             }
         }
         // 不写 context，就是包装一下
-        else if (simpleContext) {
+        else {
             // 1.常见的单个元素
             // DOM.query(document.getElementById('xx'))
             if (selector['nodeType'] || selector['setTimeout']) {
@@ -70,21 +80,25 @@ KISSY.add('dom/base/selector', function (S, DOM) {
             }
         }
 
-        if (!ret) {
-            ret = [];
-            for (i = 0; i < contexts.length; i++) {
-                push.apply(ret, DOM._selectInternal(selector, contexts[i]));
-            }
-            // multiple contexts unique
-            if (ret.length > 1 && (contexts.length > 1 && isSelectorString)) {
-                DOM.unique(ret);
-            }
-        }
-
         // attach each method
         ret.each = query_each;
 
         return ret;
+    }
+
+    function hasSingleClass(el, cls) {
+        // consider xml
+        var className = el && (el.className || getAttr(el, 'class'));
+        return className && (SPACE + className + SPACE).indexOf(SPACE + cls + SPACE) > -1;
+    }
+
+    function getAttr(el, name) {
+        var ret = el && el.getAttributeNode(name);
+        return ret && ret.nodeValue;
+    }
+
+    function isTag(el, value) {
+        return value == '*' || el.nodeName.toLowerCase() === value.toLowerCase();
     }
 
     S.mix(DOM,
@@ -100,6 +114,31 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                 }
 
                 return a.compareDocumentPosition(b) & 4 ? -1 : 1;
+            },
+
+            _isTag: isTag,
+
+            _getAttr: getAttr,
+
+            _hasSingleClass: hasSingleClass,
+
+            _matchesInternal: function (str, seeds) {
+                var ret = [],
+                    i = 0,
+                    matches = makeArray(doc.querySelectorAll(str)),
+                    n,
+                    len = seeds.length;
+                for (; i < len; i++) {
+                    n = seeds[i];
+                    if (matches.indexOf(n) != -1) {
+                        ret.push(n);
+                    }
+                }
+                return ret;
+            },
+
+            _selectInternal: function (str, context) {
+                return makeArray(context.querySelectorAll(str));
             },
 
             /**
@@ -168,6 +207,7 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                         while (i < len) {
                             if (elements[i] === elements[ i - 1 ]) {
                                 elements.splice(i, 1);
+                                --len;
                             } else {
                                 i++;
                             }
@@ -188,7 +228,40 @@ KISSY.add('dom/base/selector', function (S, DOM) {
              */
             filter: function (selector, filter, context) {
                 var elems = query(selector, context),
+                    id,
+                    tag,
+                    match,
+                    cls,
                     ret = [];
+
+                if (typeof filter == 'string' && (filter = trim(filter)) &&
+                    (match = RE_QUERY.exec(filter))) {
+                    id = match[1];
+                    tag = match[2];
+                    cls = match[3];
+                    if (!id) {
+                        filter = function (elem) {
+                            var tagRe = true,
+                                clsRe = true;
+
+                            // 指定 tag 才进行判断
+                            if (tag) {
+                                tagRe = elem.nodeName.toLowerCase() == tag.toLowerCase();
+                            }
+
+                            // 指定 cls 才进行判断
+                            if (cls) {
+                                clsRe = hasSingleClass(elem, cls);
+                            }
+
+                            return clsRe && tagRe;
+                        }
+                    } else if (id && !tag && !cls) {
+                        filter = function (elem) {
+                            return getAttr(elem, 'id') == id;
+                        };
+                    }
+                }
 
                 if (S.isFunction(filter)) {
                     ret = S.filter(elems, filter);
@@ -197,25 +270,6 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                 }
 
                 return ret;
-            },
-
-            _matchesInternal: function (str, seeds) {
-                var ret = [],
-                    i = 0,
-                    matches = doc.querySelectorAll(str),
-                    n,
-                    len = seeds.length;
-                for (; i < len; i++) {
-                    n = seeds[i];
-                    if (matches.indexOf(n) != -1) {
-                        ret.push(n);
-                    }
-                }
-                return ret;
-            },
-
-            _selectInternal: function (str, context) {
-                return makeArray(context.querySelectorAll(str));
             },
 
             /**

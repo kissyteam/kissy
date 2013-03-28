@@ -27,7 +27,7 @@ KISSY.add("xtemplate/compiler/ast", function (S) {
         var closeParts = close['parts'], self = this, e;
         // no close tag
         if (!S.equals(tpl.path['parts'], closeParts)) {
-            e = ("parse error at line " +
+            e = ("Syntax error at line " +
                 lineNumber +
                 ":\n" + "expect {{/" +
                 tpl.path['parts'] +

@@ -2,7 +2,7 @@
  * css3 selector tc modified from Sizzle
  * @author yiminghe@gmail.com
  */
-KISSY.use('dom/ie/selector/', function (S, engine) {
+KISSY.use('dom/selector', function (S, engine) {
 
     var select = engine.select;
 
@@ -30,7 +30,7 @@ KISSY.use('dom/ie/selector/', function (S, engine) {
                 });
                 var context = document.getElementById('hard' + index);
                 expect(select(s, context)).toEqual(Sizzle(s, context));
-
+                node.remove();
             });
         });
     });

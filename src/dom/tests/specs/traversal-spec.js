@@ -4,7 +4,7 @@
  */
 KISSY.use("dom,core", function (S, DOM) {
 
-    var $= S.all;
+    var $ = S.all;
 
     var tpl = '<div id="test-children" class="test-parent">\
         <p id="test-next"><a>1</a></p>\
@@ -37,10 +37,7 @@ KISSY.use("dom,core", function (S, DOM) {
             expect(DOM.parent(t, 'EM')).not.toBeNull();
             expect(DOM.parent(t, '.test-p').tagName.toLowerCase()).toBe('p');
             // Unsupported selector: p.test-p em
-            expect(
-                function () {
-                    DOM.parent(t, 'p.test-p em')
-                }).toThrow(undefined);
+            expect(DOM.parent(t, 'p.test-p em').className).toBe('test-em');
             expect(DOM.parent(t,
                 function (elem) {
                     return elem.tagName.toLowerCase() === 'p';

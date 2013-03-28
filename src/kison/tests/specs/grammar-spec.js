@@ -245,7 +245,7 @@ KISSY.use("kison", function (S, Kison) {
 
             expect(function () {
                 new Function(grammar.genCode())().parse("dc");
-            }).toThrow('parse error at line 1:\ndc\n--^\n' +
+            }).toThrow('Syntax error at line 1:\ndc\n--^\n' +
                 'expect c, d');
 
         });
@@ -298,7 +298,7 @@ KISSY.use("kison", function (S, Kison) {
                 new Function(grammar.genCode({
                     compressSymbol: 1
                 }))().parse("dc");
-            }).toThrow('parse error at line 1:\ndc\n--^\n' +
+            }).toThrow('Syntax error at line 1:\ndc\n--^\n' +
                 'expect c, d');
 
         });

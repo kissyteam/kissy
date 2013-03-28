@@ -178,9 +178,9 @@ KISSY.use("dom,core", function (S, DOM) {
             var cj = jQuery(".context-test");
             expect(r = cj.length).toBe(3);
 
-            expect(r = S.query(c3, ".context-test").length).toBe(2);
+            expect(r = S.query(c3).length).toBe(3);
             expect(r = S.query(".context-test-3", c).length).toBe(2);
-            expect(r = S.query(c3, c).length).toBe(2);
+            expect(r = S.query(c3).length).toBe(3);
             expect(r = S.query(".context-test-3", ".context-test").length).toBe(2);
 
             /*jquery contrast test*/

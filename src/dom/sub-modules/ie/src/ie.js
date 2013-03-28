@@ -9,7 +9,6 @@ KISSY.add('dom/ie', function (S, DOM) {
         './ie/attr',
         './ie/create',
         './ie/insertion',
-        './ie/selector/',
         './ie/style',
         './ie/traversal',
         './ie/input-selection'

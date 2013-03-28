@@ -2,29 +2,55 @@
  * css3 selector engine for ie6-8
  * @author yiminghe@gmail.com
  */
-KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
+KISSY.add('dom/selector', function (S, parser, DOM) {
 
     // ident === identifier
 
     var document = S.Env.host.document,
         SELECTOR_KEY = 'data-ks-selector-id',
         caches = {},
+        isContextXML,
         uuid = 0,
         subMatchesCache = {},
-        aNPlusB = /^(?:([+-]?\d+)n)?([+-]?\d+)$/;
+        getAttr = DOM._getAttr,
+        hasSingleClass = DOM._hasSingleClass,
+        isTag = DOM._isTag,
+        aNPlusB = /^(([+-]?(?:\d+)?)?n)?([+-]?\d+)?$/;
+
+    // CSS escapes http://www.w3.org/TR/CSS21/syndata.html#escaped-characters
+    var unescape = /\\([\da-fA-F]{1,6}[\x20\t\r\n\f]?|.)/g,
+        unescapeFn = function (_, escaped) {
+            var high = "0x" + escaped - 0x10000;
+            // NaN means non-codepoint
+            return isNaN(high) ?
+                escaped :
+                // BMP codepoint
+                high < 0 ?
+                    String.fromCharCode(high + 0x10000) :
+                    // Supplemental Plane codepoint (surrogate pair)
+                    String.fromCharCode(high >> 10 | 0xD800, high & 0x3FF | 0xDC00);
+        };
+
+    function unEscape(str) {
+        return str.replace(unescape, unescapeFn);
+    }
+
+    parser.lexer.yy = {
+        unEscape: unEscape,
+        unEscapeStr: function (str) {
+            return this.unEscape(str.slice(1, -1));
+        }
+    };
 
     function resetStatus() {
-        uuid = 0;
         subMatchesCache = {};
     }
 
-    function getAttrValue(el, attr) {
-        var node = el.getAttributeNode(attr);
-        if (!node || !node.specified) {
-            return null;
-        } else {
-            return node.nodeValue;
-        }
+    function dir(el, dir) {
+        do {
+            el = el[dir];
+        } while (el && el.nodeType != 1);
+        return el;
     }
 
     function getElementsByTagName(name, context) {
@@ -60,9 +86,20 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
         } else if (param == 'even') {
             a = 2;
             b = 0;
-        } else if (match = param.match(aNPlusB)) {
-            a = parseInt(match[1]) || 0;
-            b = parseInt(match[2]) || 0;
+        } else if (match = param.replace(/\s/g, '').match(aNPlusB)) {
+            if (match[1]) {
+                a = parseInt(match[2]);
+                if (isNaN(a)) {
+                    if (match[2] == '-') {
+                        a = -1;
+                    } else {
+                        a = 1;
+                    }
+                }
+            } else {
+                a = 0;
+            }
+            b = parseInt(match[3]) || 0;
         }
         return {
             a: a,
@@ -205,13 +242,16 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
         },
         'lang': function (el, lang) {
             var elLang;
+            lang = unEscape(lang.toLowerCase());
             do {
-                if (elLang = el.lang) {
+                if (elLang = (isContextXML ?
+                    el.getAttribute("xml:lang") || el.getAttribute("lang") :
+                    el.lang)) {
                     elLang = elLang.toLowerCase();
                     return elLang === lang || elLang.indexOf(lang + "-") === 0;
                 }
             } while ((el = el.parentNode) && el.nodeType === 1);
-            return 0;
+            return false;
         },
         'not': function (el, negation_arg) {
             return !matchExpr[negation_arg.t](el, negation_arg.value);
@@ -264,7 +304,7 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
         },
         'target': function (el) {
             var hash = location.hash;
-            return hash && hash.slice(1) === getAttrValue(el, 'id');
+            return hash && hash.slice(1) === getAttr(el, 'id');
         },
         'enabled': function (el) {
             return !el.disabled;
@@ -280,19 +320,22 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
 
     var attribExpr = {
         '~=': function (elValue, value) {
+            if (!value || value.indexOf(' ') > -1) {
+                return 0;
+            }
             return (' ' + elValue + ' ').indexOf(' ' + value + ' ') != -1;
         },
         '|=': function (elValue, value) {
             return (' ' + elValue).indexOf(' ' + value + '-') != -1;
         },
         '^=': function (elValue, value) {
-            return S.startsWith(elValue, value);
+            return value && S.startsWith(elValue, value);
         },
         '$=': function (elValue, value) {
-            return S.endsWith(elValue, value);
+            return value && S.endsWith(elValue, value);
         },
         '*=': function (elValue, value) {
-            return elValue.indexOf(value) != -1;
+            return value && elValue.indexOf(value) != -1;
         },
         '=': function (elValue, value) {
             return elValue === value;
@@ -300,17 +343,13 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
     };
 
     var matchExpr = {
-        'tag': function (el, value) {
-            return value == '*' || el.nodeName.toLowerCase() == value.toLowerCase();
-        },
-        'cls': function (el, value) {
-            return (' ' + el.className + ' ').indexOf(' ' + value + ' ') != -1;
-        },
+        'tag': isTag,
+        'cls': hasSingleClass,
         'id': function (el, value) {
-            return getAttrValue(el, 'id') === value;
+            return getAttr(el, 'id') === value;
         },
         'attrib': function (el, value) {
-            var elValue = getAttrValue(el, value.ident);
+            var elValue = getAttr(el, value.ident);
             var match = value.match;
             if (!match && elValue !== null) {
                 return 1;
@@ -320,17 +359,23 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
                 }
                 var matchFn = attribExpr[match];
                 if (matchFn) {
-                    return matchFn(elValue, value);
+                    return matchFn(elValue, value.value);
                 }
             }
             return 0;
         },
         'pseudo': function (el, value) {
-            var fn, ident;
-            if (fn = value.fn) {
-                return pseudoFnExpr[fn](el, value.param)
+            var fn, fnStr, ident;
+            if (fnStr = value.fn) {
+                if (!(fn = pseudoFnExpr[fnStr])) {
+                    throw new SyntaxError('Syntax error: not support pseudo: ' + fnStr);
+                }
+                return fn(el, value.param)
             }
             if (ident = value.ident) {
+                if (!pseudoIdentExpr[ident]) {
+                    throw new SyntaxError('Syntax error: not support pseudo: ' + ident);
+                }
                 return pseudoIdentExpr[ident](el);
             }
             return 0;
@@ -354,9 +399,11 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
         }
     };
 
-    DOM._compareNodeOrder = function (a, b) {
-        return a.sourceIndex - b.sourceIndex;
-    };
+    if ('sourceIndex' in document.documentElement) {
+        DOM._compareNodeOrder = function (a, b) {
+            return a.sourceIndex - b.sourceIndex;
+        };
+    }
 
     function matches(str, seeds) {
         return DOM._selectInternal(str, null, seeds);
@@ -369,6 +416,10 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
             return true;
         }
         if (!el) {
+            return false;
+        }
+
+        if (el.nodeType === 9) {
             return false;
         }
 
@@ -412,7 +463,7 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
                     return true;
                 }
                 relativeOp = relativeExpr[match.nextCombinator];
-                el = el[relativeOp.dir];
+                el = dir(el, relativeOp.dir);
                 if (!relativeOp.immediate) {
                     return {
                         // advance for non-immediate
@@ -425,13 +476,13 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
                 if (relativeOp.immediate) {
                     // retreat but advance startEl
                     return {
-                        el: startEl[relativeExpr[startMatch.nextCombinator].dir],
+                        el: dir(startEl, relativeExpr[startMatch.nextCombinator].dir),
                         match: startMatch
                     };
                 } else {
                     // advance (before immediate match + jump unmatched)
                     return {
-                        el: el && el[relativeOp.dir],
+                        el: el && dir(el, relativeOp.dir),
                         match: match
                     }
                 }
@@ -440,7 +491,7 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
 
         // only occur when match immediate
         return {
-            el: startEl[relativeExpr[startMatch.nextCombinator].dir],
+            el: dir(startEl, relativeExpr[startMatch.nextCombinator].dir),
             match: startMatch
         };
     }
@@ -459,9 +510,11 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
                 return true;
             }
             relativeOp = relativeExpr[cur.nextCombinator];
-            el = el[relativeOp.dir];
-        } while (relativeOp.immediate);
-
+            el = dir(el, relativeOp.dir);
+        } while (el && relativeOp.immediate);
+        if (!el) {
+            return null;
+        }
         return {
             el: el,
             match: cur
@@ -474,7 +527,7 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
         if (!(selectorId = el[SELECTOR_KEY])) {
             selectorId = el[SELECTOR_KEY] = (+new Date()) + '_' + (++uuid);
         }
-        matchKey = selectorId + '_' + match.order;
+        matchKey = selectorId + '_' + (match.order || 0);
         if (matchKey in subMatchesCache) {
             return subMatchesCache[matchKey];
         }
@@ -493,7 +546,7 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
                 if (matchSub(el, match)) {
                     return true;
                 }
-                el = el[relativeExpr[match.nextCombinator].dir];
+                el = dir(el, relativeExpr[match.nextCombinator].dir);
             }
             return false;
         }
@@ -504,20 +557,22 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
             caches[str] = parser.parse(str);
         }
 
-        resetStatus();
-
         var selector = caches[str],
             groupIndex = 0,
             groupLen = selector.length,
             group,
-            isContextXML,
             ret = [];
 
+        if (seeds) {
+            context = context || seeds[0].ownerDocument;
+        }
         context = context || document;
 
         isContextXML = isXML(context);
 
         for (; groupIndex < groupLen; groupIndex++) {
+
+            resetStatus();
 
             group = selector[groupIndex];
 
@@ -525,10 +580,11 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
                 suffixIndex,
                 suffixLen,
                 seedsIndex,
+                mySeeds = seeds,
                 seedsLen,
                 id = null;
 
-            if (!seeds) {
+            if (!mySeeds) {
                 if (suffix && !isContextXML) {
                     suffixIndex = 0;
                     suffixLen = suffix.length;
@@ -544,46 +600,46 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
                 if (id) {
                     // id bug
                     // https://github.com/kissyteam/kissy/issues/67
-                    var contextNotInDom = (context != document && !document.contains(context)),
+                    var contextNotInDom = (context != document && !DOM._contains(document, context)),
                         tmp = contextNotInDom ? null : document.getElementById(id);
-                    if (contextNotInDom || getAttrValue(tmp, 'id') != id) {
+                    if (contextNotInDom || getAttr(tmp, 'id') != id) {
                         var tmps = getElementsByTagName('*', context),
                             tmpLen = tmps.length,
                             tmpI = 0;
                         for (; tmpI < tmpLen; tmpI++) {
                             tmp = tmps[tmpI];
-                            if (getAttrValue(tmp, 'id') == id) {
-                                seeds = [tmp];
+                            if (getAttr(tmp, 'id') == id) {
+                                mySeeds = [tmp];
                                 break;
                             }
                         }
                         if (tmpI === tmpLen) {
-                            seeds = [];
+                            mySeeds = [];
                         }
                     } else {
                         if (context !== document && tmp) {
-                            tmp = context.contains(tmp) ? tmp : null;
+                            tmp = DOM._contains(context, tmp) ? tmp : null;
                         }
                         if (tmp) {
-                            seeds = [tmp];
+                            mySeeds = [tmp];
                         } else {
-                            seeds = [];
+                            mySeeds = [];
                         }
                     }
                 } else {
-                    seeds = getElementsByTagName(group.value || '*', context);
+                    mySeeds = getElementsByTagName(group.value || '*', context);
                 }
             }
 
             seedsIndex = 0;
-            seedsLen = seeds.length;
+            seedsLen = mySeeds.length;
 
             if (!seedsLen) {
                 continue;
             }
 
             for (; seedsIndex < seedsLen; seedsIndex++) {
-                var seed = seeds[seedsIndex];
+                var seed = mySeeds[seedsIndex];
                 var matchHead = findFixedMatchFromHead(seed, group);
                 if (matchHead === true) {
                     ret.push(seed);
@@ -593,6 +649,10 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
                     }
                 }
             }
+        }
+
+        if (groupLen > 1) {
+            ret = DOM.unique(ret);
         }
 
         return ret;
@@ -606,7 +666,7 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
     };
 
 }, {
-    requires: ['./parser', 'dom/base']
+    requires: ['./selector/parser', 'dom/base','dom/ie']
 });
 /**
  * note 2013-03-28

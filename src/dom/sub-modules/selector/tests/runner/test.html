@@ -13,6 +13,7 @@
     <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
     <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
     <script src="/kissy/tools/third-party/jquery.js" charset="utf-8"></script>
+    <script src="/kissy/tools/third-party/sizzle.js" charset="utf-8"></script>
     <script>
         $.noConflict();
     </script>
@@ -24,15 +25,24 @@
     </style>
 </head>
 <body id="body">
-<h1>KISSY css3 selector Test Cases</h1>
-<!-- Test HTML -->
-<dl id="dl" style="position:absolute;top:-32767px;left:-32767px;width:1px">
+<h1 id="qunit-header">KISSY css3 selector Test Suite</h1>
+
+<h2 id="qunit-banner"></h2>
+
+<div id="qunit-testrunner-toolbar"></div>
+<h2 id="qunit-userAgent"></h2>
+
+
+<!-- this iframe is outside the #qunit-fixture so it won't reload constantly wasting time, but it means the tests must be "safe" and clean up after themselves -->
+<iframe id="loadediframe" name="loadediframe" style="display:none;"></iframe>
+<dl id="dl" style="position:absolute;top:-32767px;left:-32767px;">
 <div id="qunit-fixture">
 <p id="firstp">See <a id="simon1" href="http://simon.incutio.com/archive/2003/03/25/#getElementsBySelector"
                       rel="bookmark">this blog entry</a> for more information.</p>
 
 <p id="ap">
-    Here are some [links] in a normal paragraph: <a id="google" href="http://www.google.com/" title="Google!">Google</a>,
+    Here are some [links] in a normal paragraph:
+    <a id="google" href="http://www.google.com/" title="Google!">Google</a>,
     <a id="groups" href="http://groups.google.com/" class="GROUPS">Google Groups (Link)</a>.
     This link has <code id="code1"><a href="http://smin" id="anchor1">class="blog"</a></code>:
     <a href="http://diveintomark.org/" class="blog" hreflang="en" id="mark">diveintomark</a>
@@ -49,16 +59,19 @@
             href="http://simon.incutio.com/" class="blog link" id="simon">Simon Willison's Weblog</a></p>
 
 </div>
+
+<!-- Test HTML -->
 <div id="nothiddendiv" style="height:1px;background:white;" class="nothiddendiv">
     <div id="nothiddendivchild"></div>
 </div>
+
 <span id="name+value"></span>
 
 <p id="first">Try them out:</p>
 <ul id="firstUL"></ul>
 <ol id="empty"><!-- comment --></ol>
-<form id="form">
-    <label id="label-for">Action:</label>
+<form id="form" action="formaction">
+    <label for="action" id="label-for">Action:</label>
     <input type="text" name="action" value="Test" id="text1" maxlength="30"/>
     <input type="text" name="text2" value="Test" id="text2" disabled="disabled"/>
     <input type="radio" name="radio1" id="radio1" value="on"/>
@@ -255,9 +268,9 @@
 </div>
 </dl>
 <br id="last"/>
-<script src="../../src/selector/parser.js"></script>
-<script src="../../src/selector/index.js"></script>
-<script src="../specs/selector-spec.js"></script>
+<script src="../../src/parser.js"></script>
+<script src="../../src/selector.js"></script>
+<script src="../specs/sizzle-spec.js"></script>
 <script>
     window.onload = function () {
         // let tc run first
