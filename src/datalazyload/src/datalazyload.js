@@ -14,15 +14,24 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         SCROLL = 'scroll',
         TOUCH_MOVE = "touchmove",
         RESIZE = 'resize',
-        DURATION = 100;
+        DURATION = 100,
+
+        webpSupportMeta = {
+            detected: false,
+            supported: false
+        };
 
     // 加载图片 src
-    var loadImgSrc = function (img, flag) {
+    var loadImgSrc = function (img, flag, webpDetect, webpFilter) {
         flag = flag || IMG_SRC_DATA;
         var dataSrc = img.getAttribute(flag);
 
         if (dataSrc && img.src != dataSrc) {
-            img.src = dataSrc;
+            if (webpDetect && webpSupportMeta.supported && S.isFunction(webpFilter)) {
+                img.src = webpFilter(dataSrc, img);
+            } else {
+                img.src = dataSrc;
+            }
             img.removeAttribute(flag);
         }
     };
@@ -234,6 +243,39 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
          */
         autoDestroy: {
             value: true
+        },
+
+        /**
+         * 是否检测 webp 格式图片的支持
+         * 设置为 true 并且支持的情况则条用 webpFilter 函数
+         * default: flase
+         * @cfg {Boolean} webpDetect
+         */
+        webpDetect: {
+            value: false
+        },
+
+        /**
+         * 启用 webpDetect 后, src 的过滤函数, 决定哪些图片使用 webp 格式
+         * 默认为 淘宝 cdn webp 处理(taobaocdn.com 域下的非 .gif 的图片)
+         * @cfg {Function} webpFilter
+         *
+         * @param {String} 图片地址
+         * @param {HTMLElement} img 对象
+         * @return {String} 过滤后的 webp 图片地址, 不需要过滤需返回原来地址
+         */
+        webpFilter: {
+            value: function(dataSrc, img) {
+                  var ret = '';
+                  // 默认淘宝 cdn
+                  if (dataSrc.indexOf('taobaocdn.com') !== -1 && dataSrc.indexOf('.gif') === -1) {
+                      ret = dataSrc + '_.webp';
+                  } else {
+                      ret = dataSrc;
+                  }
+
+                  return ret;
+            }
         }
     };
 
@@ -306,10 +348,19 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 placeholder = self.get("placeholder"),
                 autoDestroy = self.get("autoDestroy"),
             // 加载延迟项
-                loadItems = function () {
+                _loadItems = function() {
                     self['_loadItems']();
                     if (autoDestroy && self['_isLoadAllLazyElements']()) {
                         self.destroy();
+                    }
+                },
+                loadItems = function () {
+                    if (self.get('webpDetect')) {
+                        checkWebpSupport(function() {
+                            _loadItems()
+                        });
+                    } else {
+                        _loadItems()
                     }
                 };
 
@@ -373,7 +424,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             var self = this;
             self._images = S.filter(self._images, function (img) {
                 if (elementInViewport(img, windowRegion, containerRegion)) {
-                    return loadImgSrc(img);
+                    return loadImgSrc(img, undefined, self.get('webpDetect'), self.get('webpFilter'));
                 } else {
                     return true;
                 }
@@ -643,36 +694,85 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
      * @param {HTMLElement[]} containers Containers with in which lazy loaded elements are loaded.
      * @param {String} type Type of lazy loaded element. "img" or "textarea"
      * @param {String} [flag] flag which will be searched to find lazy loaded elements from containers.
+     * @param {Boolean} whether detect browser webp format support
+     * @param {Function} 
      * Default "data-ks-lazyload-custom" for img attribute and "ks-lazyload-custom" for textarea css class.
      */
-    function loadCustomLazyData(containers, type, flag) {
-        if (type === 'img-src') {
-            type = 'img';
+    function loadCustomLazyData(containers, type, flag, webpDetect, webpFilter) {
+        if (webpDetect) {
+            webpFilter = webpFilter || DataLazyload.ATTRS.webpFilter;
+            checkWebpSupport(load);
+        } else {
+            load();
         }
 
-        // 支持数组
-        if (!S.isArray(containers)) {
-            containers = [DOM.get(containers)];
-        }
-
-        var imgFlag = flag || (IMG_SRC_DATA + CUSTOM),
-            areaFlag = flag || (AREA_DATA_CLS + CUSTOM);
-
-        S.each(containers, function (container) {
-            // 遍历处理
-            if (type == 'img') {
-                DOM.query('img', container).each(function (img) {
-                    loadImgSrc(img, imgFlag);
-                });
-            } else {
-                DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
-                    loadAreaData(textarea, true);
-                });
+        function load() {
+            if (type === 'img-src') {
+                type = 'img';
             }
-        });
+
+            // 支持数组
+            if (!S.isArray(containers)) {
+                containers = [DOM.get(containers)];
+            }
+
+            var imgFlag = flag || (IMG_SRC_DATA + CUSTOM),
+                areaFlag = flag || (AREA_DATA_CLS + CUSTOM);
+
+            S.each(containers, function (container) {
+                // 遍历处理
+                if (type == 'img') {
+                    DOM.query('img', container).each(function (img) {
+                        loadImgSrc(img, imgFlag, webpDetect, webpFilter);
+                    });
+                } else {
+                    DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
+                        loadAreaData(textarea, true);
+                    });
+                }
+            });
+        }
     }
 
     DataLazyload.loadCustomLazyData = loadCustomLazyData;
+
+
+    /**
+     * check browser webp format support
+     * @ignore
+     * @method
+     *
+     * @param {Function} callback with first param{Boolean} telling whether webp is supported
+     */
+    function checkWebpSupport(callback) {
+        if (webpSupportMeta.detected) {
+            callback(webpSupportMeta.supported);
+        } else {
+            var imgElem,
+                webp_src = "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAAAQAgCdASoEAAQAAAcIhYWIhYSIgIIADA1gAAUAAAEAAAEAAP7%2F2fIAAAAA";
+
+            imgElem = DOM.create('<img>');
+            Event.on(imgElem, 'load error', function(evt) {
+                if (evt.type == 'load') {
+                  // 图片大小检测
+                  if (this.width === 4) {
+                      webpSupportMeta.supported = true;
+                  } else {
+                      webpSupportMeta.supported = false;
+                  }
+                } else if (evt.type == 'error') {
+                    webpSupportMeta.supported = false;
+                }
+
+                webpSupportMeta.detected = true;
+                callback(webpSupportMeta.supported);
+            });
+            DOM.attr(imgElem, "src", webp_src);
+        }
+    }
+
+    DataLazyload.checkWebpSupport = checkWebpSupport;
+
 
     S.DataLazyload = DataLazyload;
 
