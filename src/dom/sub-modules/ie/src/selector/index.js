@@ -9,12 +9,12 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
     var document = S.Env.host.document,
         SELECTOR_KEY = 'data-ks-selector-id',
         caches = {},
-        uuid = 1,
+        uuid = 0,
         subMatchesCache = {},
         aNPlusB = /^(?:([+-]?\d+)n)?([+-]?\d+)$/;
 
     function resetStatus() {
-        uuid = 1;
+        uuid = 0;
         subMatchesCache = {};
     }
 
@@ -472,7 +472,7 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
         var selectorId,
             matchKey;
         if (!(selectorId = el[SELECTOR_KEY])) {
-            selectorId = el[SELECTOR_KEY] = uuid++;
+            selectorId = el[SELECTOR_KEY] = (+new Date()) + '_' + (++uuid);
         }
         matchKey = selectorId + '_' + match.order;
         if (matchKey in subMatchesCache) {
