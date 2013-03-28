@@ -749,7 +749,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             callback(webpSupportMeta.supported);
         } else {
             var imgElem,
-                webp_src = "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAAAQAgCdASoEAAQAAAcIhYWIhYSIgIIADA1gAAUAAAEAAAEAAP7%2F2fIAAAAA";
+                webpSrc = "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAAAQAgCdASoEAAQAAAcIhYWIhYSIgIIADA1gAAUAAAEAAAEAAP7%2F2fIAAAAA";
 
             imgElem = DOM.create('<img>');
             Event.on(imgElem, 'load error', function(evt) {
@@ -767,7 +767,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 webpSupportMeta.detected = true;
                 callback(webpSupportMeta.supported);
             });
-            DOM.attr(imgElem, "src", webp_src);
+            DOM.attr(imgElem, "src", webpSrc);
         }
     }
 
@@ -833,7 +833,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  *
  * UPDATE LOG:
- *   - 2012-01-07 myhere.2009@gmail.com add support for webp
+ *   - 2013-03-28 myhere.2009@gmail.com add support for webp
  *   - 2012-01-07 yiminghe@gmail.com optimize for performance
  *   - 2012-04-27 yiminghe@gmail.com refactor to extend base, add removeCallback/addElements ...
  *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textarea 可设置高度，宽度
