@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+<title>KISSY DataLazyload Module lazy load demo</title>
+<style>
+    .mod {
+        height: 400px;
+        border: 1px solid red;
+        margin: 20px;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+</style>
+</head>
+<body>
+<div>
+  <p style="height:170px"><img data-ks-lazyload="http://img03.taobaocdn.com/tps/i3/T1prVTXpVcXXa6XtY7-490-170.png" /></p>
+  <p style="height:170px"><img data-ks-lazyload="http://i.mmcdn.cn/simba/img/T1DspSXrNeXXb1upjX.jpg" /></p>
+  <p style="height:170px"><img data-ks-lazyload="http://i.mmcdn.cn/simba/img/T1Cl4vXpJbXXb1upjX.jpg" /></p>
+  <p style="height:170px"><img data-ks-lazyload="http://img02.taobaocdn.com/tps/i2/T1OfNTXyleXXa6XtY7-490-170.png" /></p>
+  <p style="height:170px"><img data-ks-lazyload="http://i.mmcdn.cn/simba/img/T1WRNBXthbXXb1upjX.jpg" /></p>
+
+
+  <p><img data-ks-lazyload="http://img01.taobaocdn.com/tps/i1/T1Pk2NXe8hXXXH_oTs-96-96.gif" /></p>
+  <p><img data-ks-lazyload="http://img02.taobaocdn.com/tps/i2/T1zqNUXAdcXXaCwpjX.png" /></p>
+  <p><img data-ks-lazyload="http://img01.taobaocdn.com/tps/i1/T1H50UXAlcXXaCwpjX.png" /></p>
+  <p><img data-ks-lazyload="http://img02.taobaocdn.com/tps/i2/T15OhHXwhbXXcE7fze-700-320.png" /></p>
+  <p><img data-ks-lazyload="http://img02.taobaocdn.com/tps/i2/T15OhHXwhbXXcE7fze-700-320.png" /></p>
+  <p><img data-ks-lazyload="http://img01.taobaocdn.com/tps/i1/T1qPRVXuJcXXaCwpjX.png" /></p>
+</div>
+
+
+<script src="/kissy/build/seed.js"></script>
+<script src="../src/datalazyload.js"></script>
+<script>
+KISSY.use('datalazyload,core', function (S, DataLazyload) {
+  DataLazyload({
+    webpDetect: true
+    // webpFilter: function(src) {
+    //   return src;
+    // }
+  })
+});
+</script>
+</body>
+</html>
