@@ -46,7 +46,7 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                     push.apply(ret, DOM._selectInternal(selector, contexts[i]));
                 }
                 // multiple contexts unique
-                if (ret.length > 1 && (contexts.length > 1 && isSelectorString)) {
+                if (ret.length > 1 && contexts.length > 1) {
                     DOM.unique(ret);
                 }
             }
