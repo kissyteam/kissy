@@ -7,8 +7,16 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
     // ident === identifier
 
     var document = S.Env.host.document,
+        SELECTOR_KEY = 'data-ks-selector-id',
         caches = {},
+        uuid = 1,
+        subMatchesCache = {},
         aNPlusB = /^(?:([+-]?\d+)n)?([+-]?\d+)$/;
+
+    function resetStatus() {
+        uuid = 1;
+        subMatchesCache = {};
+    }
 
     function getAttrValue(el, attr) {
         var node = el.getAttributeNode(attr);
@@ -357,6 +365,13 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
     DOM._matchesInternal = matches;
 
     function singleMatch(el, match) {
+        if (!match) {
+            return true;
+        }
+        if (!el) {
+            return false;
+        }
+
         var matched = 1,
             matchSuffix = match.suffix,
             matchSuffixLen,
@@ -381,73 +396,115 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
         return matched;
     }
 
-    // x y y z
-    // x > y z
-
-    // ---------------
-
-    // x q y q y z
-    // x y > q y > z
-
-    // ---------------
-
-    // x y q y q y z
-    // x > y > q y > z
-
-
-    // --------------------------
-    // x > y + q y+q y>z
-    // x>y+q y>z
-    function foundMatchFromHead(el, head, limitMatch) {
-        // 关键：
-        // el 之前的元素与 limitMatch 以前已经完全匹配
-
-        // no need to match head
-        var headLimit = head;
-        var curMatch = limitMatch;
-        var curDir = relativeExpr[limitMatch.nextCombinator].dir;
-        // x y y z
-        // x y > z
-        // ------------
-        // x y q y q y z
-        // x>y>q y>z
-        var relativeOp;
-        do {
-            // e r t a b c
-            // x>b>c
-            if (headLimit == limitMatch) {
-                return -1;
-            }
-            headLimit = headLimit.prev;
-            relativeOp = relativeExpr[headLimit.nextCombinator];
-        } while (relativeOp.immediate || relativeOp.dir != curDir);
+    // match by adjacent immediate single selector match
+    function matchImmediate(el, match) {
+        var matched = 1,
+            startEl = el,
+            relativeOp,
+            startMatch = match;
 
         do {
-            // x y n~q y n~q y z
-            // x>y>n~q y>z
-            curMatch = curMatch.next;
-            relativeOp = relativeExpr[curMatch.nextCombinator];
-            // x y n~q x y n y n~q y z
-            // x>y>n~q y>z
-            if (curMatch == headLimit) {
-                return 0;
+            matched &= singleMatch(el, match);
+            if (matched) {
+                // advance
+                match = match && match.prev;
+                if (!match) {
+                    return true;
+                }
+                relativeOp = relativeExpr[match.nextCombinator];
+                el = el[relativeOp.dir];
+                if (!relativeOp.immediate) {
+                    return {
+                        // advance for non-immediate
+                        el: el,
+                        match: match
+                    }
+                }
+            } else {
+                relativeOp = relativeExpr[match.nextCombinator];
+                if (relativeOp.immediate) {
+                    // retreat but advance startEl
+                    return {
+                        el: startEl[relativeExpr[startMatch.nextCombinator].dir],
+                        match: startMatch
+                    };
+                } else {
+                    // advance (before immediate match + jump unmatched)
+                    return {
+                        el: el && el[relativeOp.dir],
+                        match: match
+                    }
+                }
             }
-        } while (relativeOp.immediate || relativeOp.dir != curDir);
+        } while (el);
 
-        while (curMatch != headLimit) {
-            if (singleMatch(el, curMatch)) {
-                return curMatch.prev;
+        // only occur when match immediate
+        return {
+            el: startEl[relativeExpr[startMatch.nextCombinator].dir],
+            match: startMatch
+        };
+    }
+
+    // find fixed part, fixed with seeds
+    function findFixedMatchFromHead(el, head) {
+        var relativeOp,
+            cur = head;
+
+        do {
+            if (!singleMatch(el, cur)) {
+                return null;
             }
-            curMatch = curMatch.next;
+            cur = cur.prev;
+            if (!cur) {
+                return true;
+            }
+            relativeOp = relativeExpr[cur.nextCombinator];
+            el = el[relativeOp.dir];
+        } while (relativeOp.immediate);
+
+        return {
+            el: el,
+            match: cur
+        };
+    }
+
+    function matchSub(el, match) {
+        var selectorId,
+            matchKey;
+        if (!(selectorId = el[SELECTOR_KEY])) {
+            selectorId = el[SELECTOR_KEY] = uuid++;
         }
-        return 0;
+        matchKey = selectorId + '_' + match.order;
+        if (matchKey in subMatchesCache) {
+            return subMatchesCache[matchKey];
+        }
+        return subMatchesCache[matchKey] = matchSubInternal(el, match);
+    }
+
+    // recursive match by sub selector string from right to left grouped by immediate selectors
+    function matchSubInternal(el, match) {
+        var matchImmediateRet = matchImmediate(el, match);
+        if (matchImmediateRet === true) {
+            return true;
+        } else {
+            el = matchImmediateRet.el;
+            match = matchImmediateRet.match;
+            while (el) {
+                if (matchSub(el, match)) {
+                    return true;
+                }
+                el = el[relativeExpr[match.nextCombinator].dir];
+            }
+            return false;
+        }
     }
 
     function select(str, context, seeds) {
-
         if (!caches[str]) {
             caches[str] = parser.parse(str);
         }
+
+        resetStatus();
 
         var selector = caches[str],
             groupIndex = 0,
@@ -526,52 +583,14 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
             }
 
             for (; seedsIndex < seedsLen; seedsIndex++) {
-                var el = seeds[seedsIndex],
-                    seed = el,
-                    match = group;
-
-                while (el) {
-                    var matched = singleMatch(el, match);
-
-                    if (el == seed && !matched) {
-                        break;
-                    }
-
-                    if (matched) {
-                        match = match.prev;
-                        if (match) {
-                            el = el[relativeExpr[match.nextCombinator].dir];
-                        } else {
-                            break;
-                        }
-                    } else {
-                        // currentEl is not match with current single selector match
-                        var nextRelativeOp = relativeExpr[match.nextCombinator];
-                        // retreat
-                        if (nextRelativeOp.immediate) {
-                            var nextMatch = foundMatchFromHead(el, group, match);
-                            // x y q n n y q y z
-                            // x>y>q y>z
-                            if (nextMatch === 0) {
-                                // has to continue
-                                el = el[nextRelativeOp.dir];
-                            } else if (nextMatch === -1) {
-                                break;
-                            } else {
-                                // x y y z
-                                // x>y z
-                                match = nextMatch;
-                                el = el[relativeExpr[match.nextCombinator].dir];
-                            }
-                        } else {
-                            el = el[nextRelativeOp.dir];
-                        }
-                    }
-                }
-
-                // no match remains
-                if (!match) {
+                var seed = seeds[seedsIndex];
+                var matchHead = findFixedMatchFromHead(seed, group);
+                if (matchHead === true) {
                     ret.push(seed);
+                } else if (matchHead) {
+                    if (matchSub(matchHead.el, matchHead.match)) {
+                        ret.push(seed);
+                    }
                 }
             }
         }
@@ -590,6 +609,9 @@ KISSY.add('dom/ie/selector/index', function (S, parser, DOM) {
     requires: ['./parser', 'dom/base']
 });
 /**
+ * note 2013-03-28
+ *  - use recursive call to replace backtracking algorithm
+ *
  * refer
  *  - http://www.w3.org/TR/selectors/
  *  - http://www.impressivewebs.com/browser-support-css3-selectors/
