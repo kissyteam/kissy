@@ -28,12 +28,21 @@
         UA.core = core;
     }
 
+    function getIEVersion(ua) {
+        var m;
+        if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
+            return numberify(m[1]);
+        }
+        return 0;
+    }
+
     function getDescriptorFromUserAgent(ua) {
         var EMPTY = '',
             os,
             core = EMPTY,
             shell = EMPTY, m,
             IE_DETECT_RANGE = [6, 9],
+            ieVersion,
             v,
             end,
             VERSION_PLACEHOLDER = '{{version}}',
@@ -199,6 +208,12 @@
                 }
             }
 
+            // https://github.com/kissyteam/kissy/issues/321
+            // win8 embed app
+            if (!UA.ie && (ieVersion = getIEVersion(ua))) {
+                UA[shell = 'ie'] = ieVersion;
+            }
+
         } else {
             // WebKit
             if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
@@ -276,8 +291,8 @@
                     // MSIE
                     // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
                     // and analysis tools in nodejs
-                    if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
-                        UA[shell = 'ie'] = numberify(m[1]);
+                    if (ieVersion = getIEVersion(ua)) {
+                        UA[shell = 'ie'] = ieVersion;
                         setTridentVersion(ua, UA);
                         // NOT WebKit, Presto or IE
                     } else {
