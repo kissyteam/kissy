@@ -4,6 +4,8 @@
  */
 KISSY.add('dom/selector', function (S, parser, DOM) {
 
+    S.log('use KISSY css3 selector');
+
     // ident === identifier
 
     var document = S.Env.host.document,
@@ -54,23 +56,17 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
     }
 
     function getElementsByTagName(name, context) {
-        var nodes = context.getElementsByTagName(name);
-        if (name === '*') {
-            var ret = [],
-                len = nodes.length,
-                n,
-                index = 0,
-                i = 0;
-            for (; i < len; i++) {
-                n = nodes[i];
-                if (n.nodeType == 1) {
-                    ret[index++] = n;
-                }
+        var nodes = context.getElementsByTagName(name),
+            needFilter = name == '*',
+            ret = [],
+            i = 0,
+            el;
+        while (el = nodes[i++]) {
+            if (!needFilter || el.nodeType === 1) {
+                ret.push(el);
             }
-            return ret;
-        } else {
-            return nodes;
         }
+        return ret;
     }
 
     function getAb(param) {
@@ -349,17 +345,21 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
             return getAttr(el, 'id') === value;
         },
         'attrib': function (el, value) {
-            var elValue = getAttr(el, value.ident);
+            var name = value.ident;
+            if (!isContextXML) {
+                name = name.toLowerCase();
+            }
+            var elValue = getAttr(el, name);
             var match = value.match;
-            if (!match && elValue !== null) {
+            if (!match && elValue !== undefined) {
                 return 1;
             } else if (match) {
-                if (elValue === null) {
+                if (elValue === undefined) {
                     return 0;
                 }
                 var matchFn = attribExpr[match];
                 if (matchFn) {
-                    return matchFn(elValue, value.value);
+                    return matchFn(elValue + '', value.value + '');
                 }
             }
             return 0;
@@ -521,12 +521,25 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
         };
     }
 
-    function matchSub(el, match) {
-        var selectorId,
-            matchKey;
-        if (!(selectorId = el[SELECTOR_KEY])) {
-            selectorId = el[SELECTOR_KEY] = (+new Date()) + '_' + (++uuid);
+    function genId(el) {
+        var selectorId;
+
+        if (isContextXML) {
+            if (!(selectorId = el.getAttribute(SELECTOR_KEY))) {
+                el.setAttribute(SELECTOR_KEY, selectorId = (+new Date() + '_' + (++uuid)));
+            }
+        } else {
+            if (!(selectorId = el[SELECTOR_KEY])) {
+                selectorId = el[SELECTOR_KEY] = (+new Date()) + '_' + (++uuid);
+            }
         }
+
+        return selectorId;
+    }
+
+    function matchSub(el, match) {
+        var selectorId = genId(el),
+            matchKey;
         matchKey = selectorId + '_' + (match.order || 0);
         if (matchKey in subMatchesCache) {
             return subMatchesCache[matchKey];
@@ -666,7 +679,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
     };
 
 }, {
-    requires: ['./selector/parser', 'dom/base','dom/ie']
+    requires: ['./selector/parser', 'dom/base', 'dom/ie']
 });
 /**
  * note 2013-03-28

@@ -94,7 +94,10 @@ KISSY.add('dom/base/selector', function (S, DOM) {
 
     function getAttr(el, name) {
         var ret = el && el.getAttributeNode(name);
-        return ret && ret.nodeValue;
+        if (ret && ret.specified) {
+            return ret.nodeValue;
+        }
+        return undefined;
     }
 
     function isTag(el, value) {
@@ -246,7 +249,7 @@ KISSY.add('dom/base/selector', function (S, DOM) {
 
                             // 指定 tag 才进行判断
                             if (tag) {
-                                tagRe = elem.nodeName.toLowerCase() == tag.toLowerCase();
+                                tagRe = isTag(elem, tag);
                             }
 
                             // 指定 cls 才进行判断

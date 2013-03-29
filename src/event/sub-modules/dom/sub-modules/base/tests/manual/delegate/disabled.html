@@ -29,7 +29,7 @@
     var S = KISSY;
 
     if (1) {
-        S.use("dom,event/dom,sizzle", function (S, DOM, Event) {
+        S.use("dom,event/dom", function (S, DOM, Event) {
             var t;
             Event.on("#b1", "click", function () {
                 S.log("KISSY click on #b1");
@@ -40,9 +40,6 @@
             Event.delegate("#a", "click", ".c", t = function (e) {
                 S.log("KISSY delegate-click on #a .c");
                 e.stopImmediatePropagation();
-            });
-            Event.delegate("#a", "click", ":button", function (e) {
-                S.log("KISSY delegate-click on #a :button");
             });
             Event.delegate("#a", "click", ".b", function (e) {
                 S.log("KISSY delegate-click on #a .b");

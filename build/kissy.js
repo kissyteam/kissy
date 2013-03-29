@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 29 03:01
+build time: Mar 29 17:25
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130329030133' will replace with current timestamp when compressing.
+         * NOTICE: '20130329172534' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130329030133',
+        __BUILD_TIME: '20130329172534',
         /**
          * KISSY Environment.
          * @private
@@ -3104,12 +3104,21 @@ var KISSY = (function (undefined) {
         UA.core = core;
     }
 
+    function getIEVersion(ua) {
+        var m;
+        if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
+            return numberify(m[1]);
+        }
+        return 0;
+    }
+
     function getDescriptorFromUserAgent(ua) {
         var EMPTY = '',
             os,
             core = EMPTY,
             shell = EMPTY, m,
             IE_DETECT_RANGE = [6, 9],
+            ieVersion,
             v,
             end,
             VERSION_PLACEHOLDER = '{{version}}',
@@ -3275,6 +3284,12 @@ var KISSY = (function (undefined) {
                 }
             }
 
+            // https://github.com/kissyteam/kissy/issues/321
+            // win8 embed app
+            if (!UA.ie && (ieVersion = getIEVersion(ua))) {
+                UA[shell = 'ie'] = ieVersion;
+            }
+
         } else {
             // WebKit
             if ((m = ua.match(/AppleWebKit\/([\d.]*)/)) && m[1]) {
@@ -3352,8 +3367,8 @@ var KISSY = (function (undefined) {
                     // MSIE
                     // 由于最开始已经使用了 IE 条件注释判断，因此落到这里的唯一可能性只有 IE10+
                     // and analysis tools in nodejs
-                    if ((m = ua.match(/MSIE\s([^;]*)/)) && m[1]) {
-                        UA[shell = 'ie'] = numberify(m[1]);
+                    if (ieVersion = getIEVersion(ua)) {
+                        UA[shell = 'ie'] = ieVersion;
                         setTridentVersion(ua, UA);
                         // NOT WebKit, Presto or IE
                     } else {
@@ -3476,28 +3491,34 @@ var KISSY = (function (undefined) {
     // nodejs
         doc = win.document || {},
         documentMode = doc.documentMode,
-        isTransitionSupported = false,
+        isTransitionSupportedState = false,
         transitionPrefix = '',
         documentElement = doc.documentElement,
         documentElementStyle,
-        isClassListSupported = true,
+        isClassListSupportedState = true,
+        isQuerySelectorSupportedState = false,
     // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
-        isTouchSupported = ('ontouchstart' in doc) && !(UA.phantomjs),
+        isTouchSupportedState = ('ontouchstart' in doc) && !(UA.phantomjs),
         ie = documentMode || UA.ie;
 
     if (documentElement) {
+        if (documentElement.querySelector &&
+            // broken ie8
+            ie != 8) {
+            isQuerySelectorSupportedState = true;
+        }
         documentElementStyle = documentElement.style;
         if ('transition' in documentElementStyle) {
-            isTransitionSupported = true;
+            isTransitionSupportedState = true;
         } else {
             S.each(VENDORS, function (val) {
                 if ((val + 'Transition') in documentElementStyle) {
                     transitionPrefix = val;
-                    isTransitionSupported = true;
+                    isTransitionSupportedState = true;
                 }
             });
         }
-        isClassListSupported = 'classList' in documentElement;
+        isClassListSupportedState = 'classList' in documentElement;
     }
 
     /**
@@ -3520,7 +3541,7 @@ var KISSY = (function (undefined) {
          * @return {Boolean}
          */
         isTouchSupported: function () {
-            return isTouchSupported;
+            return isTouchSupportedState;
         },
 
         isDeviceMotionSupported: function () {
@@ -3535,11 +3556,19 @@ var KISSY = (function (undefined) {
         },
 
         'isTransitionSupported': function () {
-            return isTransitionSupported;
+            return isTransitionSupportedState;
         },
 
         'isClassListSupported': function () {
-            return isClassListSupported
+            return isClassListSupportedState
+        },
+
+        'isQuerySelectorSupported': function () {
+            return isQuerySelectorSupportedState;
+        },
+
+        'isIELessThan': function (v) {
+            return ie && ie < v;
         },
 
         'getCss3Prefix': function () {
@@ -5889,7 +5918,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130329030133'
+            tag: '20130329172534'
         }, getBaseInfo()));
     }
 
@@ -6050,7 +6079,7 @@ var KISSY = (function (undefined) {
 
     function fireReady() {
         // nodejs
-        if (doc) {
+        if (doc && !UA.nodejs) {
             removeEventListener(win, LOAD_EVENT, fireReady);
         }
         readyDefer.resolve(S);
@@ -6249,9 +6278,10 @@ config({
 });
 config({
     "dom": {
-        "alias": ['dom/base',
-            UA.ie < 9 ? 'dom/ie' : '',
-            UA.ie < 9 ? 'dom/selector' : '',
+        "alias": [
+            'dom/base',
+            Features.isIELessThan(9) ? 'dom/ie' : '',
+            !Features.isQuerySelectorSupported() ? 'dom/selector' : '',
             Features.isClassListSupported() ? '' : 'dom/class-list'
         ]
     }
@@ -6265,7 +6295,7 @@ config({
 });
 /*Generated by KISSY Module Compiler*/
 config({
-'dom/selector': {requires: ['dom/base']}
+'dom/selector': {requires: ['dom/base','dom/ie']}
 });
 config({
 'editor/full': {requires: ['editor','menubutton','overlay','dd/base','swf']}
@@ -6289,7 +6319,7 @@ config({
             Features.isTouchSupported() ? 'event/dom/touch' : '',
             Features.isDeviceMotionSupported() ? 'event/dom/shake' : '',
             Features.isHashChangeSupported() ? '' : 'event/dom/hashchange',
-            UA.ie < 9 ? 'event/dom/ie' : '',
+            Features.isIELessThan(9) ? 'event/dom/ie' : '',
             UA.ie ? '' : 'event/dom/focusin'
         ]
     }
@@ -6511,7 +6541,7 @@ config({
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 29 03:01
+build time: Mar 29 16:38
 */
 /**
  * @ignore
@@ -9046,7 +9076,7 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                     push.apply(ret, DOM._selectInternal(selector, contexts[i]));
                 }
                 // multiple contexts unique
-                if (ret.length > 1 && (contexts.length > 1 && isSelectorString)) {
+                if (ret.length > 1 && contexts.length > 1) {
                     DOM.unique(ret);
                 }
             }
@@ -9094,7 +9124,10 @@ KISSY.add('dom/base/selector', function (S, DOM) {
 
     function getAttr(el, name) {
         var ret = el && el.getAttributeNode(name);
-        return ret && ret.nodeValue;
+        if (ret && ret.specified) {
+            return ret.nodeValue;
+        }
+        return undefined;
     }
 
     function isTag(el, value) {
@@ -11032,7 +11065,7 @@ KISSY.add('dom/ie/traversal', function (S, DOM) {
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 29 02:34
+build time: Mar 29 17:06
 */
 /*
   Generated by kissy-kison.*/
@@ -12156,6 +12189,8 @@ KISSY.add("dom/selector/parser", function () {
  */
 KISSY.add('dom/selector', function (S, parser, DOM) {
 
+    S.log('use KISSY css3 selector');
+
     // ident === identifier
 
     var document = S.Env.host.document,
@@ -12206,23 +12241,17 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
     }
 
     function getElementsByTagName(name, context) {
-        var nodes = context.getElementsByTagName(name);
-        if (name === '*') {
-            var ret = [],
-                len = nodes.length,
-                n,
-                index = 0,
-                i = 0;
-            for (; i < len; i++) {
-                n = nodes[i];
-                if (n.nodeType == 1) {
-                    ret[index++] = n;
-                }
+        var nodes = context.getElementsByTagName(name),
+            needFilter = name == '*',
+            ret = [],
+            i = 0,
+            el;
+        while (el = nodes[i++]) {
+            if (!needFilter || el.nodeType === 1) {
+                ret.push(el);
             }
-            return ret;
-        } else {
-            return nodes;
         }
+        return ret;
     }
 
     function getAb(param) {
@@ -12501,17 +12530,21 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
             return getAttr(el, 'id') === value;
         },
         'attrib': function (el, value) {
-            var elValue = getAttr(el, value.ident);
+            var name = value.ident;
+            if (!isContextXML) {
+                name = name.toLowerCase();
+            }
+            var elValue = getAttr(el, name);
             var match = value.match;
-            if (!match && elValue !== null) {
+            if (!match && elValue !== undefined) {
                 return 1;
             } else if (match) {
-                if (elValue === null) {
+                if (elValue === undefined) {
                     return 0;
                 }
                 var matchFn = attribExpr[match];
                 if (matchFn) {
-                    return matchFn(elValue, value.value);
+                    return matchFn(elValue + '', value.value + '');
                 }
             }
             return 0;
@@ -12673,12 +12706,25 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
         };
     }
 
-    function matchSub(el, match) {
-        var selectorId,
-            matchKey;
-        if (!(selectorId = el[SELECTOR_KEY])) {
-            selectorId = el[SELECTOR_KEY] = (+new Date()) + '_' + (++uuid);
+    function genId(el) {
+        var selectorId;
+
+        if (isContextXML) {
+            if (!(selectorId = el.getAttribute(SELECTOR_KEY))) {
+                el.setAttribute(SELECTOR_KEY, selectorId = (+new Date() + '_' + (++uuid)));
+            }
+        } else {
+            if (!(selectorId = el[SELECTOR_KEY])) {
+                selectorId = el[SELECTOR_KEY] = (+new Date()) + '_' + (++uuid);
+            }
         }
+
+        return selectorId;
+    }
+
+    function matchSub(el, match) {
+        var selectorId = genId(el),
+            matchKey;
         matchKey = selectorId + '_' + (match.order || 0);
         if (matchKey in subMatchesCache) {
             return subMatchesCache[matchKey];
@@ -12752,7 +12798,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                 if (id) {
                     // id bug
                     // https://github.com/kissyteam/kissy/issues/67
-                    var contextNotInDom = (context != document && !document.contains(context)),
+                    var contextNotInDom = (context != document && !DOM._contains(document, context)),
                         tmp = contextNotInDom ? null : document.getElementById(id);
                     if (contextNotInDom || getAttr(tmp, 'id') != id) {
                         var tmps = getElementsByTagName('*', context),
@@ -12770,7 +12816,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
                         }
                     } else {
                         if (context !== document && tmp) {
-                            tmp = context.contains(tmp) ? tmp : null;
+                            tmp = DOM._contains(context, tmp) ? tmp : null;
                         }
                         if (tmp) {
                             mySeeds = [tmp];
@@ -12818,7 +12864,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
     };
 
 }, {
-    requires: ['./selector/parser', 'dom/base']
+    requires: ['./selector/parser', 'dom/base', 'dom/ie']
 });
 /**
  * note 2013-03-28

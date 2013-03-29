@@ -17,28 +17,34 @@
     // nodejs
         doc = win.document || {},
         documentMode = doc.documentMode,
-        isTransitionSupported = false,
+        isTransitionSupportedState = false,
         transitionPrefix = '',
         documentElement = doc.documentElement,
         documentElementStyle,
-        isClassListSupported = true,
+        isClassListSupportedState = true,
+        isQuerySelectorSupportedState = false,
     // phantomjs issue: http://code.google.com/p/phantomjs/issues/detail?id=375
-        isTouchSupported = ('ontouchstart' in doc) && !(UA.phantomjs),
+        isTouchSupportedState = ('ontouchstart' in doc) && !(UA.phantomjs),
         ie = documentMode || UA.ie;
 
     if (documentElement) {
+        if (documentElement.querySelector &&
+            // broken ie8
+            ie != 8) {
+            isQuerySelectorSupportedState = true;
+        }
         documentElementStyle = documentElement.style;
         if ('transition' in documentElementStyle) {
-            isTransitionSupported = true;
+            isTransitionSupportedState = true;
         } else {
             S.each(VENDORS, function (val) {
                 if ((val + 'Transition') in documentElementStyle) {
                     transitionPrefix = val;
-                    isTransitionSupported = true;
+                    isTransitionSupportedState = true;
                 }
             });
         }
-        isClassListSupported = 'classList' in documentElement;
+        isClassListSupportedState = 'classList' in documentElement;
     }
 
     /**
@@ -61,7 +67,7 @@
          * @return {Boolean}
          */
         isTouchSupported: function () {
-            return isTouchSupported;
+            return isTouchSupportedState;
         },
 
         isDeviceMotionSupported: function () {
@@ -76,11 +82,19 @@
         },
 
         'isTransitionSupported': function () {
-            return isTransitionSupported;
+            return isTransitionSupportedState;
         },
 
         'isClassListSupported': function () {
-            return isClassListSupported
+            return isClassListSupportedState
+        },
+
+        'isQuerySelectorSupported': function () {
+            return isQuerySelectorSupportedState;
+        },
+
+        'isIELessThan': function (v) {
+            return ie && ie < v;
         },
 
         'getCss3Prefix': function () {

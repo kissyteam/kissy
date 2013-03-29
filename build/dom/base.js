@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 29 03:01
+build time: Mar 29 16:38
 */
 /**
  * @ignore
@@ -2536,7 +2536,7 @@ KISSY.add('dom/base/selector', function (S, DOM) {
                     push.apply(ret, DOM._selectInternal(selector, contexts[i]));
                 }
                 // multiple contexts unique
-                if (ret.length > 1 && (contexts.length > 1 && isSelectorString)) {
+                if (ret.length > 1 && contexts.length > 1) {
                     DOM.unique(ret);
                 }
             }
@@ -2584,7 +2584,10 @@ KISSY.add('dom/base/selector', function (S, DOM) {
 
     function getAttr(el, name) {
         var ret = el && el.getAttributeNode(name);
-        return ret && ret.nodeValue;
+        if (ret && ret.specified) {
+            return ret.nodeValue;
+        }
+        return undefined;
     }
 
     function isTag(el, value) {

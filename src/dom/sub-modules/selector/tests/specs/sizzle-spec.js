@@ -6,12 +6,13 @@ KISSY.use('dom/selector', function (S, engine) {
 
     var select = engine.select;
     var matches = engine.matches;
+    var ieVersion = S.UA.ie;
 
     var it = function (name, fn) {
         var self;
         window.it(name, function () {
             S.log('******************: ' + name);
-            if (name == 'Seeded nth-child') {
+            if (name == 'input[type=search]0') {
 //                debugger
             }
             fn.call(self);
@@ -135,6 +136,7 @@ KISSY.use('dom/selector', function (S, engine) {
         var form = document.getElementById("form");
 
         it('Select all', function () {
+
             expect(select("*").length).toBeGreaterThan(30);
         });
 
@@ -553,9 +555,9 @@ KISSY.use('dom/selector', function (S, engine) {
         t("Multiple combinators selects all levels", "#siblingTest > em *", ["siblingchild", "siblinggrandchild", "siblinggreatgrandchild"]);
         t("Multiple sibling combinators doesn't miss general siblings", "#siblingTest > em:first-child + em ~ span", ["siblingspan"]);
 
-        equal(select("#listWithTabIndex").length, 1, "Parent div for next test is found via ID (#8310)");
-        equal(select("#__sizzle__").length, 0, "Make sure the temporary id assigned by sizzle is cleared out (#8310)");
-        equal(select("#listWithTabIndex").length, 1, "Parent div for previous test is still found via ID (#8310)");
+        equal(select("#listWithTabIndex").length, 1, "Parent div for next test is found via ID ");
+        equal(select("#__sizzle__").length, 0, "Make sure the temporary id assigned is cleared out");
+        equal(select("#listWithTabIndex").length, 1, "Parent div for previous test is still found via ID");
 
         t("Verify deep class selector", "div.blah > p > a", []);
 
@@ -574,15 +576,21 @@ KISSY.use('dom/selector', function (S, engine) {
         t("Attribute Exists4", "#qunit-fixture [title]", ["google", "text1"]);
         t("Attribute Exists5", "#qunit-fixture a[ title ]", ["google"]);
 
-        t("Boolean attribute exists1", "#select2 option[selected]", ["option2d"]);
-        t("Boolean attribute equals2", "#select2 option[selected='selected']", ["option2d"]);
+        if (!ieVersion || ieVersion > 8) {
+            // TODO ie67
+            t("Boolean attribute exists0", "#option2d[selected]", ["option2d"]);
+            t("Boolean attribute exists1", "#select2 option[selected]", ["option2d"]);
+            t("Boolean attribute equals2", "#select2 option[selected='selected']", ["option2d"]);
+        }
 
         t("Attribute Equals1", "#qunit-fixture a[rel='bookmark']", ["simon1"]);
         t("Attribute Equals2", "#qunit-fixture a[rel='bookmark']", ["simon1"]);
         t("Attribute Equals3", "#qunit-fixture a[rel=bookmark]", ["simon1"]);
         t("Attribute Equals4", "#qunit-fixture a[href='http://www.google.com/']", ["google"]);
         t("Attribute Equals5", "#qunit-fixture a[ rel = 'bookmark' ]", ["simon1"]);
-        t("Attribute Equals6 Number", "#qunit-fixture option[value=1]", ["option1b", "option2b", "option3b", "option4b", "option5c"]);
+        t("Attribute Equals6 Number", "#qunit-fixture option[value=1]",
+            ["option1b", "option2b", "option3b", "option4b", "option5c"]);
+        t("Attribute Equals8 Number", "#foodWithNegativeTabIndex[tabIndex='-1']", ["foodWithNegativeTabIndex"]);
         t("Attribute Equals7 Number", "#qunit-fixture li[tabIndex='-1']", ["foodWithNegativeTabIndex"]);
 
         document.getElementById("anchor2").href = "#2";
@@ -675,8 +683,15 @@ KISSY.use('dom/selector', function (S, engine) {
         // It was too much code to fix Safari 5.x Supplemental Plane crashes (see ba5f09fa404379a87370ec905ffa47f8ac40aaa3)
         // t( "Long numeric escape (non-BMP)", "input[data-attr='\\01D306A']", ["attrbad_unicode"] );
 
-        t("input[type=text]", "#form input[type=text]", ["text1", "text2", "hidden2", "name"]);
-        t("input[type=search]", "#form input[type=search]", ["search"]);
+        if (!ieVersion || ieVersion > 8) {
+            if (!ieVersion || ieVersion > 9) {
+                t("input[type=search]0", "#search[type=search]", ["search"]);
+                t("input[type=text]", "#form input[type=text]", ["text1", "text2", "hidden2", "name"]);
+                t("input[type=search]", "#form input[type=search]", ["search"]);
+            } else {
+                t("input[type=text]", "#form input[type=text]", ["text1", "text2", "hidden2", "name", "search"]);
+            }
+        }
 
         // #3279
         div = document.createElement("div");
@@ -754,12 +769,12 @@ KISSY.use('dom/selector', function (S, engine) {
         t("Nth-of-type(2n+1)", "#ap :nth-of-type(2n+1)", ["google", "code1", "anchor1", "mark"]);
         t("Nth-of-type(odd)", "#ap :nth-of-type(odd)", ["google", "code1", "anchor1", "mark"]);
 
-        if (document.querySelectorAll) {
-            it("Nth-of-type(-n+2)", function () {
-                expect(select("#qunit-fixture > :nth-of-type(-n+2)", null, select('#qunit-fixture > *')))
-                    .toEqual(S.makeArray(document.querySelectorAll("#qunit-fixture > :nth-of-type(-n+2)")));
-            });
-        }
+
+        it("Nth-of-type(-n+2)", function () {
+            expect(select("#qunit-fixture > :nth-of-type(-n+2)", null, select('#qunit-fixture > *')))
+                .toEqual(S.makeArray(Sizzle("#qunit-fixture > :nth-of-type(-n+2)")));
+        });
+
     });
 
     describe("pseudo - nth-last-of-type", function () {
