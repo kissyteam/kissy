@@ -668,7 +668,27 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                     value: S.config('component/prefixCls') || 'ks-',
                     view: 1
                 },
+                /**
+                 * This component's prefix xclass. Only be uesd in cfg.
+                 * To use this property as 'xclass' when not specified 'xclass' and 'xtype'
+                 * @cfg {String} prefixXClass
+                 */
+                /**
+                 * @ignore
+                 */
+                prefixXClass : {
 
+                },
+                /**
+                 * This component's xtype, xclass = prefixXClass + xtype.
+                 * @cfg {String} prefixXClass
+                 */
+                /**
+                 * @ignore
+                 */
+                xtype : {
+
+                },
                 /**
                  * This component's parent component.
                  * @type {KISSY.Component.Controller}

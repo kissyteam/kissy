@@ -98,4 +98,82 @@ KISSY.use("component/base", function (S, Component) {
         });
     });
 
+    describe("xclass",function(){
+
+        var A = Component.Controller.extend({
+
+        },{
+            ATTRS : {
+                defaultChildCfg : {
+                    value : {
+                        prefixXClass : 'a-b'
+                    }
+                }
+            }
+        },{
+            xclass : 'a'
+        });
+
+        var B = Component.Controller.extend({},{
+            xclass : 'a-b'
+        });
+
+        var C = B.extend({
+
+        },{
+            xclass : 'a-b-c'
+        });
+
+        var D = B.extend({
+
+        },{
+            xclass : 'a-b-d'
+        });
+
+
+        it('only xclass',function(){
+            var a = new A({
+                children : [
+                    {xclass : 'a-b-d'}
+                ]            
+            });
+            a.render();
+            var children = a.get('children');
+            expect(children[0] instanceof D).toBe(true);
+        });
+
+        it('only prefixXClass',function(){
+            var a = new A({
+                children : [
+                    {}
+                ]            
+            });
+            a.render();
+            var children = a.get('children');
+            expect(children[0] instanceof B).toBe(true);
+        });
+
+        it('prefixXClass + xtype',function(){
+            var a = new A({
+                children : [
+                    {xtype : 'c'}
+                ]            
+            });
+            a.render();
+            var children = a.get('children');
+            expect(children[0] instanceof C).toBe(true);
+        });
+
+        it('xclass and prefixXClass + xtype',function(){
+            var a = new A({
+                children : [
+                    {xtype : 'c',xclass : 'a-b-d'}
+                ]            
+            });
+            a.render();
+            var children = a.get('children');
+            expect(children[0] instanceof D).toBe(true);
+        });
+    });
+
 });

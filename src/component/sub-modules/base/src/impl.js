@@ -36,6 +36,12 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
         var childConstructor, xclass;
         if (component && !component.isController && parent) {
             S.mix(component, parent.get('defaultChildCfg'), false);
+            if(!component.xclass && component.prefixXClass){
+                component.xclass = component.prefixXClass;
+                if(component.xtype){
+                    component.xclass += '-' + component.xtype;
+                }
+            }
         }
         if (component && !component.isController && (xclass = component.xclass)) {
             childConstructor = Manager.getConstructorByXClass(xclass);

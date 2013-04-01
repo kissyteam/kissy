@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 27 15:18
+build time: Apr 1 19:16
 */
 /**
  * @ignore
@@ -1143,7 +1143,27 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                     value: S.config('component/prefixCls') || 'ks-',
                     view: 1
                 },
+                /**
+                 * This component's prefix xclass. Only be uesd in cfg.
+                 * To use this property as 'xclass' when not specified 'xclass' and 'xtype'
+                 * @cfg {String} prefixXClass
+                 */
+                /**
+                 * @ignore
+                 */
+                prefixXClass : {
 
+                },
+                /**
+                 * This component's xtype, xclass = prefixXClass + xtype.
+                 * @cfg {String} prefixXClass
+                 */
+                /**
+                 * @ignore
+                 */
+                xtype : {
+
+                },
                 /**
                  * This component's parent component.
                  * @type {KISSY.Component.Controller}
@@ -1513,6 +1533,12 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
         var childConstructor, xclass;
         if (component && !component.isController && parent) {
             S.mix(component, parent.get('defaultChildCfg'), false);
+            if(!component.xclass && component.prefixXClass){
+                component.xclass = component.prefixXClass;
+                if(component.xtype){
+                    component.xclass += '-' + component.xtype;
+                }
+            }
         }
         if (component && !component.isController && (xclass = component.xclass)) {
             childConstructor = Manager.getConstructorByXClass(xclass);
