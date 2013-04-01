@@ -10,8 +10,6 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
     // 如果相同，那么证明已经 fire 过了，不要再次触发了
     var _Utils = Event._Utils;
 
-    var FOCUS_BLUR_REG = /^focus|blur$/;
-
     /**
      * custom event for dom
      * @param {Object} cfg

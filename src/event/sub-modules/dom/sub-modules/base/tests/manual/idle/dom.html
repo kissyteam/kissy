@@ -1,0 +1,50 @@
+<script type="text/javascript" src="/kissy/build/kissy.js"></script>
+<script type="text/javascript">
+    var S = KISSY,
+            Event = S.Event;
+
+    (function () {
+        Event._Special.idle = {
+            setup: function () {
+                if (this !== window) {
+                    return;
+                }
+                Event.on(document, 'keydown mousemove touchstart touchmove', check);
+            },
+            tearDown: function () {
+                Event.detach(document, 'keydown mousemove touchstart touchmove', check);
+            },
+            add: function (observer) {
+                idleThreshold = observer.idleThreshold || idleThreshold;
+            }
+        };
+
+        var idleTimer,
+                idleThreshold = 10000,
+                idleIndex = 0;
+
+        function check() {
+            if (idleTimer) {
+                clearTimeout(idleTimer);
+            }
+            var lastIdleTime = S.now();
+            idleTimer = setTimeout(function () {
+                idleTimer = null;
+                Event.fire(window, 'idle', {
+                    idleIndex: ++idleIndex,
+                    idleTime: S.now() - lastIdleTime
+                });
+            }, idleThreshold);
+        }
+    })();
+
+
+    Event.on(window, 'idle', {
+        fn: function (e) {
+            S.log('idle!');
+            S.log(e.idleIndex);
+            S.log(e.idleTime);
+        },
+        idleThreshold: 1000
+    });
+</script>
