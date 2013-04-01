@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 25 15:07
+build time: Apr 1 20:36
 */
 /**
  * allow body to drag
@@ -194,6 +194,7 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
                 // big -> small
                 // 1 -> 0
                 var frictionFactor = Math.exp(deltaTime * ALPHA);
+                // 1 - e^-t
                 value = parseInt(startScroll + velocity * (1 - frictionFactor) / (-THETA));
                 if (value > minScroll && value < maxScroll) {
                     // inertia
@@ -219,6 +220,7 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
                 // bounce
                 var theta = (deltaTime / ACCELERATION),
                 // long tail hump
+                // t * e^-t
                     powTime = theta * Math.exp(-SPRING_TENSION * theta);
                 value = parseInt(velocity * powTime);
                 if (value === 0) {
@@ -348,3 +350,13 @@ KISSY.add('scrollview/drag', function (S, ScrollViewBase, DD, Event) {
 }, {
     requires: ['./base', 'dd/base', 'event']
 });
+
+/**
+ * @ignore
+ * refer
+ * - https://developers.google.com/mobile/articles/webapp_fixed_ui
+ * - http://yuilibrary.com/yui/docs/scrollview/
+ * - http://docs.sencha.com/touch/2-1/#!/api/Ext.dataview.List
+ * - http://cubiq.org/iscroll-4
+ * - http://developer.apple.com/library/ios/#documentation/uikit/reference/UIScrollView_Class/Reference/UIScrollView.html
+ */

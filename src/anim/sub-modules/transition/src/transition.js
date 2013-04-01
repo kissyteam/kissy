@@ -11,7 +11,7 @@ KISSY.add('anim/transition', function (S, DOM, Event, AnimBase) {
         })
     }
 
-    var vendorPrefix = S.Features.getCss3Prefix();
+    var vendorPrefix = S.Features.getTransitionPrefix();
     var TRANSITION_END_EVENT = vendorPrefix ?
         (vendorPrefix.toLowerCase() + 'TransitionEnd') :
         'transitionend';

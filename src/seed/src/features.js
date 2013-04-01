@@ -19,6 +19,8 @@
         documentMode = doc.documentMode,
         isTransitionSupportedState = false,
         transitionPrefix = '',
+        isTransformSupportedState = false,
+        transformPrefix = '',
         documentElement = doc.documentElement,
         documentElementStyle,
         isClassListSupportedState = true,
@@ -41,6 +43,10 @@
                 if ((val + 'Transition') in documentElementStyle) {
                     transitionPrefix = val;
                     isTransitionSupportedState = true;
+                }
+                if ((val + 'Transform') in documentElementStyle) {
+                    transformPrefix = val;
+                    isTransformSupportedState = true;
                 }
             });
         }
@@ -85,6 +91,10 @@
             return isTransitionSupportedState;
         },
 
+        'isTransformSupported': function () {
+            return isTransformSupportedState;
+        },
+
         'isClassListSupported': function () {
             return isClassListSupportedState
         },
@@ -97,8 +107,11 @@
             return ie && ie < v;
         },
 
-        'getCss3Prefix': function () {
+        'getTransitionPrefix': function () {
             return transitionPrefix;
+        },
+        'getTransformPrefix': function () {
+            return transformPrefix;
         }
     };
 })(KISSY);

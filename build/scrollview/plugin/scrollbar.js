@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 27 15:18
+build time: Apr 1 20:36
 */
 /**
  * scrollbar for KISSY scrollview
@@ -377,8 +377,8 @@ KISSY.add('scrollview/plugin/scrollbar/render', function (S, Component) {
     }
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
-    var supportCss3 = S.Features.isTransitionSupported();
-    var css3Prefix = S.Features.getCss3Prefix();
+    var supportCss3 = S.Features.isTransformSupported();
+    var css3Prefix = S.Features.getTransformPrefix();
 
     var methods = {
 

@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 1 16:57
+build time: Apr 1 20:37
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130401165650' will replace with current timestamp when compressing.
+         * NOTICE: '20130401203654' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130401165650',
+        __BUILD_TIME: '20130401203654',
         /**
          * KISSY Environment.
          * @private
@@ -3493,6 +3493,8 @@ var KISSY = (function (undefined) {
         documentMode = doc.documentMode,
         isTransitionSupportedState = false,
         transitionPrefix = '',
+        isTransformSupportedState = false,
+        transformPrefix = '',
         documentElement = doc.documentElement,
         documentElementStyle,
         isClassListSupportedState = true,
@@ -3515,6 +3517,10 @@ var KISSY = (function (undefined) {
                 if ((val + 'Transition') in documentElementStyle) {
                     transitionPrefix = val;
                     isTransitionSupportedState = true;
+                }
+                if ((val + 'Transform') in documentElementStyle) {
+                    transformPrefix = val;
+                    isTransformSupportedState = true;
                 }
             });
         }
@@ -3559,6 +3565,10 @@ var KISSY = (function (undefined) {
             return isTransitionSupportedState;
         },
 
+        'isTransformSupported': function () {
+            return isTransformSupportedState;
+        },
+
         'isClassListSupported': function () {
             return isClassListSupportedState
         },
@@ -3571,8 +3581,11 @@ var KISSY = (function (undefined) {
             return ie && ie < v;
         },
 
-        'getCss3Prefix': function () {
+        'getTransitionPrefix': function () {
             return transitionPrefix;
+        },
+        'getTransformPrefix': function () {
+            return transformPrefix;
         }
     };
 })(KISSY);/**
@@ -5918,7 +5931,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130401165650'
+            tag: '20130401203654'
         }, getBaseInfo()));
     }
 

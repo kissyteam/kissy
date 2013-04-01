@@ -5,8 +5,8 @@
 KISSY.add('scrollview/base/render', function (S, Component, Extension) {
 
     // http://www.html5rocks.com/en/tutorials/speed/html5/
-    var supportCss3 = S.Features.isTransitionSupported();
-    var css3Prefix = S.Features.getCss3Prefix();
+    var supportCss3 = S.Features.isTransformSupported();
+    var css3Prefix = S.Features.getTransformPrefix();
 
     var methods = {
 
