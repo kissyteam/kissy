@@ -121,37 +121,37 @@
                     });
                     delete jsCssCallbacks[url];
                 },
-                useNative = !css;
+                useNative = 'onload' in node;
 
-            if (css) {
-                if (isOldWebKit) {
-                    useNative = false;
-                } else {
-                    useNative = 'onload' in node;
+            if (css && isOldWebKit) {
+                useNative = false;
+            }
+
+            function onload() {
+                var readyState = node.readyState;
+                if (!readyState ||
+                    readyState == "loaded" ||
+                    readyState == "complete") {
+                    node.onreadystatechange = node.onload = null;
+                    end(0)
                 }
             }
 
             //标准浏览器 css and all script
             if (useNative) {
-                node.onload = node.onreadystatechange = function () {
-                    var readyState = node.readyState;
-                    if (!readyState ||
-                        readyState == "loaded" ||
-                        readyState == "complete") {
-                        node.onreadystatechange = node.onload = null;
-                        end(0)
-                    }
-                };
+                node.onload = onload;
                 node.onerror = function () {
                     node.onerror = null;
                     end(1);
                 };
             }
             // old chrome/firefox for css
-            else {
+            else if (css) {
                 utils.pollCss(node, function () {
                     end(0);
                 });
+            } else {
+                node.onreadystatechange = onload;
             }
 
             if (timeout) {

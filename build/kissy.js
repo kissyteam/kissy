@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 1 12:53
+build time: Apr 1 16:57
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130401125302' will replace with current timestamp when compressing.
+         * NOTICE: '20130401165650' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130401125302',
+        __BUILD_TIME: '20130401165650',
         /**
          * KISSY Environment.
          * @private
@@ -4657,37 +4657,37 @@ var KISSY = (function (undefined) {
                     });
                     delete jsCssCallbacks[url];
                 },
-                useNative = !css;
+                useNative = 'onload' in node;
 
-            if (css) {
-                if (isOldWebKit) {
-                    useNative = false;
-                } else {
-                    useNative = 'onload' in node;
+            if (css && isOldWebKit) {
+                useNative = false;
+            }
+
+            function onload() {
+                var readyState = node.readyState;
+                if (!readyState ||
+                    readyState == "loaded" ||
+                    readyState == "complete") {
+                    node.onreadystatechange = node.onload = null;
+                    end(0)
                 }
             }
 
             //标准浏览器 css and all script
             if (useNative) {
-                node.onload = node.onreadystatechange = function () {
-                    var readyState = node.readyState;
-                    if (!readyState ||
-                        readyState == "loaded" ||
-                        readyState == "complete") {
-                        node.onreadystatechange = node.onload = null;
-                        end(0)
-                    }
-                };
+                node.onload = onload;
                 node.onerror = function () {
                     node.onerror = null;
                     end(1);
                 };
             }
             // old chrome/firefox for css
-            else {
+            else if (css) {
                 utils.pollCss(node, function () {
                     end(0);
                 });
+            } else {
+                node.onreadystatechange = onload;
             }
 
             if (timeout) {
@@ -5918,7 +5918,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130401125302'
+            tag: '20130401165650'
         }, getBaseInfo()));
     }
 
