@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 5 12:05
+build time: Apr 1 12:27
 */
 /**
  * Ast node class for xtemplate
@@ -32,7 +32,7 @@ KISSY.add("xtemplate/compiler/ast", function (S) {
         var closeParts = close['parts'], self = this, e;
         // no close tag
         if (!S.equals(tpl.path['parts'], closeParts)) {
-            e = ("parse error at line " +
+            e = ("Syntax error at line " +
                 lineNumber +
                 ":\n" + "expect {{/" +
                 tpl.path['parts'] +
@@ -2613,7 +2613,7 @@ KISSY.add("xtemplate/compiler/parser", function () {
                         expected.push(self.lexer.mapReverseSymbol(symbol));
                     });
                 }
-                error = "parse error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", ");
+                error = "Syntax error at line " + lexer.lineNumber + ":\n" + lexer.showDebugInfo() + "\n" + "expect " + expected.join(", ");
                 S.error(error);
                 return false;
             }
@@ -2641,13 +2641,13 @@ KISSY.add("xtemplate/compiler/parser", function () {
                     reducedAction = production.action || production[2],
                     reducedRhs = production.rhs || production[1],
                     len = reducedRhs.length,
-                    i,
-                    ret,
+                    i = 0,
+                    ret = undefined,
                     $$ = valueStack[valueStack.length - len]; // default to $$ = $1
 
                 self.$$ = $$;
 
-                for (i = 0; i < len; i++) {
+                for (; i < len; i++) {
                     self["$" + (len - i)] = valueStack[valueStack.length - 1 - i];
                 }
 
