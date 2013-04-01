@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>Test Runner</title>
+    <link rel="stylesheet" href="/kissy/tools/jasmine/jasmine.css">
+    <script src="/kissy/tools/jasmine/jasmine.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine-html.js"></script>
+    <script src="/kissy/tools/jasmine/jasmine.console_reporter.js"></script>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="../../src/datalazyload.js"></script>
+    <script src="../specs/webp-spec.js"></script>
+    <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+<h1>KISSY Datalazyload Test Cases</h1>
+<script>
+    KISSY.use('core,datalazyload', function () {
+        setTimeout(function () {
+            jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+            jasmine.getEnv().addReporter(new jasmine.ConsoleReporter());
+            jasmine.getEnv().execute(function () {
+                jasmine.kissyNext(this.results().failedCount);
+            });
+        }, 100);
+    });
+</script>
+</body>
+</html>
+

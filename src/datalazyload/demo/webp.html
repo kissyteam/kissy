@@ -22,7 +22,8 @@
 </style>
 </head>
 <body>
-<div>
+<h1>启用 webp</h1>
+<div id="J_webpEnabled">
   <p style="height:170px"><img data-ks-lazyload="http://img03.taobaocdn.com/tps/i3/T1prVTXpVcXXa6XtY7-490-170.png" /></p>
   <p style="height:170px"><img data-ks-lazyload="http://i.mmcdn.cn/simba/img/T1DspSXrNeXXb1upjX.jpg" /></p>
   <p style="height:170px"><img data-ks-lazyload="http://i.mmcdn.cn/simba/img/T1Cl4vXpJbXXb1upjX.jpg" /></p>
@@ -38,18 +39,42 @@
   <p><img data-ks-lazyload="http://img01.taobaocdn.com/tps/i1/T1qPRVXuJcXXaCwpjX.png" /></p>
 </div>
 
+<h1>未启用 webp</h1>
+<div id="J_WebpDisabled">
+  <p style="height:170px"><img data-ks-lazyload="http://img04.taobaocdn.com/tps/i4/T1bLB0XthaXXa6XtY7-490-170.png" /></p>
+  <p style="height:170px"><img data-ks-lazyload="http://i.mmcdn.cn/simba/img/T1ooNGXv4cXXb1upjX.jpg" /></p>
+  <p style="height:170px"><img data-ks-lazyload="http://i.mmcdn.cn/simba/img/T1CudZXz8bXXb1upjX.jpg" /></p>
+  <p style="height:170px"><img data-ks-lazyload="http://i.mmcdn.cn/simba/img/T1i5JBXDheXXb1upjX.jpg" /></p>
+  <p style="height:170px"><img data-ks-lazyload="http://img01.taobaocdn.com/tps/i1/T1wJB0Xx4aXXa6XtY7-490-170.png" /></p>
+</div>
 
 <script src="/kissy/build/seed.js"></script>
 <script src="../src/datalazyload.js"></script>
 <script>
+// 启用 webp
 KISSY.use('datalazyload,core', function (S, DataLazyload) {
-  DataLazyload({
-    webpDetect: true
-    // webpFilter: function(src) {
-    //   return src;
-    // }
-  })
+  DataLazyload('#J_webpEnabled', {
+    webpDetect: true,
+    webpFilter: function(dataSrc) {
+      var ret = '';
+      // 处理 taobaocdn 下 .jpg&.png 图片
+      if (dataSrc.indexOf('taobaocdn.com') != -1 &&
+          (dataSrc.indexOf('.jpg') != -1 || dataSrc.indexOf('.png') != -1)) {
+          ret = dataSrc + '_.webp';
+      } else {
+          ret = dataSrc;
+      }
+
+      return ret;
+    }
+  });
+});
+
+// 未启用 webp
+KISSY.use('datalazyload,core', function (S, DataLazyload) {
+  DataLazyload('#J_WebpDisabled');
 });
 </script>
 </body>
 </html>
+

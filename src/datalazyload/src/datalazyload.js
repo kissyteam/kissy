@@ -257,7 +257,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
 
         /**
          * 启用 webpDetect 后, src 的过滤函数, 决定哪些图片使用 webp 格式
-         * 默认为 淘宝 cdn webp 处理(taobaocdn.com 域下的 png|jpg 的图片)
+         * 默认为 webp 处理规则: 给 png|jpg 图片加 _.webp 后缀
          * @cfg {Function} webpFilter
          *
          * @param {String} 图片地址
@@ -267,9 +267,8 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         webpFilter: {
             value: function(dataSrc, img) {
                   var ret = '';
-                  // 默认淘宝 cdn
-                  if (dataSrc.indexOf('taobaocdn.com') != -1 &&
-                      (dataSrc.indexOf('.jpg') != -1 || dataSrc.indexOf('.png') != -1)) {
+                  // 默认处理 .jpg&.png 图片
+                  if ((dataSrc.indexOf('.jpg') != -1 || dataSrc.indexOf('.png') != -1)) {
                       ret = dataSrc + '_.webp';
                   } else {
                       ret = dataSrc;
