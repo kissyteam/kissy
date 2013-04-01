@@ -47,8 +47,7 @@ html, body {
 // 启用 webp
 KISSY.use('datalazyload,core', function (S, DataLazyload) {
     DataLazyload('#J_webpEnabled', {
-        webpDetect: true,
-        webpFilter: function(dataSrc) {
+        ifSupportWebp: function(dataSrc) {
             var ret = '';
             // 处理 taobaocdn 下 .jpg&.png 图片
             if (dataSrc.indexOf('taobaocdn.com') != -1 &&

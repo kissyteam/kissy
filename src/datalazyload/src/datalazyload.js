@@ -22,16 +22,34 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         };
 
     // 加载图片 src
-    var loadImgSrc = function (img, flag, webpDetect, webpFilter) {
+    var loadImgSrc = function (img, flag, ifSupportWebp) {
         flag = flag || IMG_SRC_DATA;
-        var dataSrc = img.getAttribute(flag);
+        var dataSrc = img.getAttribute(flag),
+            realSrc = '';
 
         if (dataSrc && img.src != dataSrc) {
-            if (webpDetect && webpSupportMeta.supported && S.isFunction(webpFilter)) {
-                img.src = webpFilter(dataSrc, img);
+            if (ifSupportWebp && webpSupportMeta.supported) {
+                if (S.isFunction(ifSupportWebp)) {
+                    realSrc = ifSupportWebp(dataSrc, img);
+                } else if (S.isArray(ifSupportWebp)){
+                    var i,
+                        len = ifSupportWebp.length,
+                        rule;
+                    for(i = 0; i < len; i++) {
+                        rule = ifSupportWebp[i];
+                        if (dataSrc.match(rule[0])) {
+                            realSrc = dataSrc.replace(rule[0], rule[1]);
+                            break;
+                        }
+                    }
+                }
             } else {
-                img.src = dataSrc;
+                realSrc = dataSrc;
             }
+            if (!realSrc) {
+                realSrc = dataSrc;
+            }
+            img.src = realSrc;
             img.removeAttribute(flag);
         }
     };
@@ -246,36 +264,12 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         },
 
         /**
-         * 是否检测 webp 格式图片的支持
-         * 设置为 true 并且支持的情况则条用 webpFilter 函数
-         * default: flase
-         * @cfg {Boolean} webpDetect
+         * 是否检测 webp 格式图片的支持, 如果支持这对图片地址进行处理
+         * default: null
+         * @cfg {Array|Function} ifSupportWebp
          */
-        webpDetect: {
-            value: false
-        },
-
-        /**
-         * 启用 webpDetect 后, src 的过滤函数, 决定哪些图片使用 webp 格式
-         * 默认为 webp 处理规则: 给 png|jpg 图片加 _.webp 后缀
-         * @cfg {Function} webpFilter
-         *
-         * @param {String} 图片地址
-         * @param {HTMLElement} img 对象
-         * @return {String} 过滤后的 webp 图片地址, 不需要过滤需返回原来地址
-         */
-        webpFilter: {
-            value: function(dataSrc, img) {
-                  var ret = '';
-                  // 默认处理 .jpg&.png 图片
-                  if ((dataSrc.indexOf('.jpg') != -1 || dataSrc.indexOf('.png') != -1)) {
-                      ret = dataSrc + '_.webp';
-                  } else {
-                      ret = dataSrc;
-                  }
-
-                  return ret;
-            }
+        ifSupportWebp: {
+            value: null
         }
     };
 
@@ -355,7 +349,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                     }
                 },
                 loadItems = function () {
-                    if (self.get('webpDetect')) {
+                    if (self.get('ifSupportWebp')) {
                         checkWebpSupport(function() {
                             _loadItems()
                         });
@@ -424,7 +418,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             var self = this;
             self._images = S.filter(self._images, function (img) {
                 if (elementInViewport(img, windowRegion, containerRegion)) {
-                    return loadImgSrc(img, undefined, self.get('webpDetect'), self.get('webpFilter'));
+                    return loadImgSrc(img, undefined, self.get('ifSupportWebp'));
                 } else {
                     return true;
                 }
@@ -694,13 +688,11 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
      * @param {HTMLElement[]} containers Containers with in which lazy loaded elements are loaded.
      * @param {String} type Type of lazy loaded element. "img" or "textarea"
      * @param {String} [flag] flag which will be searched to find lazy loaded elements from containers.
-     * @param {Boolean} whether detect browser webp format support
-     * @param {Function} 
+     * @param {Array|Function} ifSupportWebp, img src transformer when browser support webp image format
      * Default "data-ks-lazyload-custom" for img attribute and "ks-lazyload-custom" for textarea css class.
      */
-    function loadCustomLazyData(containers, type, flag, webpDetect, webpFilter) {
-        if (webpDetect) {
-            webpFilter = webpFilter || DataLazyload.ATTRS.webpFilter.value;
+    function loadCustomLazyData(containers, type, flag, ifSupportWebp) {
+        if (ifSupportWebp) {
             checkWebpSupport(load);
         } else {
             load();
@@ -723,7 +715,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 // 遍历处理
                 if (type == 'img') {
                     DOM.query('img', container).each(function (img) {
-                        loadImgSrc(img, imgFlag, webpDetect, webpFilter);
+                        loadImgSrc(img, imgFlag, ifSupportWebp);
                     });
                 } else {
                     DOM.query('textarea.' + areaFlag, container).each(function (textarea) {

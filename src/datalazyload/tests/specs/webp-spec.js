@@ -19,32 +19,24 @@ KISSY.use('datalazyload,dom,node', function (S, DataLazyload, DOM, Node) {
                     var diff = 200;
                     var viewportHeight = DOM.viewportHeight();
 
-
                     var img = $('<img style="position:absolute;">').appendTo('body');
                     img.css({
                         top: viewportHeight + diff+step
                     });
-
                     img.attr('data-ks-lazyload', realSrc);
+
+                    var img2 = img.clone().appendTo('body');
+                    var img2Src = 'http://i.mmcdn.cn/simba/img/T1DspSXrNeXXb1upjX.jpg';
+                    img2.attr('data-ks-lazyload', img2Src);
 
                     var newImg = new Image();
                     newImg.src = 'http://a.tbcdn.cn/kissy/1.0.0/build/imglazyload/spaceball.gif';
 
                     var d = new DataLazyload({
                         diff: diff,
-                        webpDetect: true,
-                        webpFilter: function(dataSrc) {
-                          var ret = '';
-                          // 处理 taobaocdn 下 .jpg&.png 图片
-                          if (dataSrc.indexOf('taobaocdn.com') != -1 &&
-                              (dataSrc.indexOf('.jpg') != -1 || dataSrc.indexOf('.png') != -1)) {
-                              ret = dataSrc + '_.webp';
-                          } else {
-                              ret = dataSrc;
-                          }
-
-                          return ret;
-                        }
+                        ifSupportWebp: [
+                            [/^(.+?(?:taobaocdn.com).+?)\.(png|jpg)$/, '$1.$2_.webp']
+                        ]
                     });
 
                     waitsFor(function () {
@@ -71,6 +63,8 @@ KISSY.use('datalazyload,dom,node', function (S, DataLazyload, DOM, Node) {
                             } else {
                                 expect(img.attr('src')).toBe(realSrc);
                             }
+                            expect(img2.attr('src')).toBe(img2Src);
+
                             expect(d._destroyed).toBeTruthy();
                         });
                     });
@@ -102,8 +96,7 @@ KISSY.use('datalazyload,dom,node', function (S, DataLazyload, DOM, Node) {
 
                     var d = new DataLazyload({
                         diff: diff,
-                        webpDetect: true,
-                        webpFilter: function(dataSrc) {
+                        ifSupportWebp: function(dataSrc) {
                           var ret = '';
                           // 处理 taobaocdn 下 .jpg&.png 图片
                           if (dataSrc.indexOf('taobaocdn.com') != -1 &&
