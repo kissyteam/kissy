@@ -1,5 +1,11 @@
+<h1>
+    source code
+</h1>
+<textarea rows="55" cols="150" id="code">
+
+</textarea>
 <script type="text/javascript" src="/kissy/build/kissy.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" id="script">
     var S = KISSY,
             Event = S.Event;
 
@@ -47,4 +53,10 @@
         },
         idleThreshold: 1000
     });
+
+
+</script>
+
+<script type="text/javascript">
+    S.one('#code').val(S.one('#script').text());
 </script>
