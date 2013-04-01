@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 1 20:45
+build time: Apr 1 21:41
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130401204517' will replace with current timestamp when compressing.
+         * NOTICE: '20130401214147' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130401204517',
+        __BUILD_TIME: '20130401214147',
         /**
          * KISSY Environment.
          * @private
@@ -200,7 +200,7 @@ var KISSY = (function (undefined) {
         EMPTY = '',
         ObjectCreate = Object.create,
     // error in native ie678, not in simulated ie9
-        hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
+        hasEnumBug = !({toString: 1}['propertyIsEnumerable']('toString')),
         enumProperties = [
             'constructor',
             'hasOwnProperty',
@@ -221,9 +221,6 @@ var KISSY = (function (undefined) {
          * @member KISSY
          */
         stamp: function (o, readOnly, marker) {
-            if (!o) {
-                return o
-            }
             marker = marker || STAMP_MARKER;
             var guid = o[marker];
             if (guid) {
@@ -273,9 +270,9 @@ var KISSY = (function (undefined) {
          * @param {Object} s the object need to augment
          * @param {Boolean|Object} [ov=TRUE] whether overwrite existing property or config.
          * @param {Boolean} [ov.overwrite=TRUE] whether overwrite existing property.
-         * @param {String[]} [ov.whitelist] array of white-list properties
+         * @param {String[]|Function} [ov.whitelist] array of white-list properties
          * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
-         * @param {String[]} [wl] array of white-list properties
+         * @param {String[]|Function} [wl] array of white-list properties
          * @param [deep=false] {Boolean} whether recursive mix if encounter object.
          * @return {Object} the augmented object
          * @member KISSY
@@ -289,10 +286,21 @@ var KISSY = (function (undefined) {
          */
         mix: function (r, s, ov, wl, deep) {
             if (typeof ov === 'object') {
-                wl = ov['whitelist'];
+                wl = /**
+                 @ignore
+                 @type {String[]|Function}
+                 */ov['whitelist'];
                 deep = ov['deep'];
                 ov = ov['overwrite'];
             }
+
+            if (wl && !S.isFunction(wl)) {
+                var originalWl = wl;
+                wl = function (name, val) {
+                    return S.inArray(name, originalWl) ? val : undefined;
+                };
+            }
+
             var cache = [],
                 c,
                 i = 0;
@@ -455,7 +463,7 @@ var KISSY = (function (undefined) {
             ov = TRUE;
         }
 
-        var i = 0, p, keys, len;
+        var i, p, keys, len;
 
         // 记录循环标志
         s[MIX_CIRCULAR_DETECTION] = r;
@@ -463,24 +471,14 @@ var KISSY = (function (undefined) {
         // 记录被记录了循环标志的对像
         cache.push(s);
 
-        if (wl) {
-            len = wl.length;
-            for (i = 0; i < len; i++) {
-                p = wl[i];
-                if (p in s) {
-                    _mix(p, r, s, ov, wl, deep, cache);
-                }
-            }
-        } else {
-            // mix all properties
-            keys = S.keys(s);
-            len = keys.length;
-            for (i = 0; i < len; i++) {
-                p = keys[i];
-                if (p != MIX_CIRCULAR_DETECTION) {
-                    // no hasOwnProperty judge!
-                    _mix(p, r, s, ov, wl, deep, cache);
-                }
+        // mix all properties
+        keys = S.keys(s);
+        len = keys.length;
+        for (i = 0; i < len; i++) {
+            p = keys[i];
+            if (p != MIX_CIRCULAR_DETECTION) {
+                // no hasOwnProperty judge!
+                _mix(p, r, s, ov, wl, deep, cache);
             }
         }
 
@@ -501,6 +499,9 @@ var KISSY = (function (undefined) {
                     r[p] = target;
                 }
                 return;
+            }
+            if (wl) {
+                src = wl.call(s, p, src);
             }
             // 来源是数组和对象，并且要求深度 mix
             if (deep && src && (S.isArray(src) || S.isPlainObject(src))) {
@@ -5223,7 +5224,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130401204517'
+            tag: '20130401214147'
         }, getBaseInfo()));
     }
 

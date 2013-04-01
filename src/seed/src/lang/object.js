@@ -13,7 +13,7 @@
         EMPTY = '',
         ObjectCreate = Object.create,
     // error in native ie678, not in simulated ie9
-        hasEnumBug = !({toString: 1}.propertyIsEnumerable('toString')),
+        hasEnumBug = !({toString: 1}['propertyIsEnumerable']('toString')),
         enumProperties = [
             'constructor',
             'hasOwnProperty',
@@ -34,9 +34,6 @@
          * @member KISSY
          */
         stamp: function (o, readOnly, marker) {
-            if (!o) {
-                return o
-            }
             marker = marker || STAMP_MARKER;
             var guid = o[marker];
             if (guid) {
@@ -86,9 +83,9 @@
          * @param {Object} s the object need to augment
          * @param {Boolean|Object} [ov=TRUE] whether overwrite existing property or config.
          * @param {Boolean} [ov.overwrite=TRUE] whether overwrite existing property.
-         * @param {String[]} [ov.whitelist] array of white-list properties
+         * @param {String[]|Function} [ov.whitelist] array of white-list properties
          * @param {Boolean}[ov.deep=false] whether recursive mix if encounter object.
-         * @param {String[]} [wl] array of white-list properties
+         * @param {String[]|Function} [wl] array of white-list properties
          * @param [deep=false] {Boolean} whether recursive mix if encounter object.
          * @return {Object} the augmented object
          * @member KISSY
@@ -102,10 +99,21 @@
          */
         mix: function (r, s, ov, wl, deep) {
             if (typeof ov === 'object') {
-                wl = ov['whitelist'];
+                wl = /**
+                 @ignore
+                 @type {String[]|Function}
+                 */ov['whitelist'];
                 deep = ov['deep'];
                 ov = ov['overwrite'];
             }
+
+            if (wl && !S.isFunction(wl)) {
+                var originalWl = wl;
+                wl = function (name, val) {
+                    return S.inArray(name, originalWl) ? val : undefined;
+                };
+            }
+
             var cache = [],
                 c,
                 i = 0;
@@ -268,7 +276,7 @@
             ov = TRUE;
         }
 
-        var i = 0, p, keys, len;
+        var i, p, keys, len;
 
         // 记录循环标志
         s[MIX_CIRCULAR_DETECTION] = r;
@@ -276,24 +284,14 @@
         // 记录被记录了循环标志的对像
         cache.push(s);
 
-        if (wl) {
-            len = wl.length;
-            for (i = 0; i < len; i++) {
-                p = wl[i];
-                if (p in s) {
-                    _mix(p, r, s, ov, wl, deep, cache);
-                }
-            }
-        } else {
-            // mix all properties
-            keys = S.keys(s);
-            len = keys.length;
-            for (i = 0; i < len; i++) {
-                p = keys[i];
-                if (p != MIX_CIRCULAR_DETECTION) {
-                    // no hasOwnProperty judge!
-                    _mix(p, r, s, ov, wl, deep, cache);
-                }
+        // mix all properties
+        keys = S.keys(s);
+        len = keys.length;
+        for (i = 0; i < len; i++) {
+            p = keys[i];
+            if (p != MIX_CIRCULAR_DETECTION) {
+                // no hasOwnProperty judge!
+                _mix(p, r, s, ov, wl, deep, cache);
             }
         }
 
@@ -314,6 +312,9 @@
                     r[p] = target;
                 }
                 return;
+            }
+            if (wl) {
+                src = wl.call(s, p, src);
             }
             // 来源是数组和对象，并且要求深度 mix
             if (deep && src && (S.isArray(src) || S.isPlainObject(src))) {

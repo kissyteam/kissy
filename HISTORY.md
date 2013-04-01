@@ -47,6 +47,7 @@ History:
 
     data-config parse 为 json 传入 config
 
+ - [!] KISSY.mix 深度 mix 时白名单参数递归作用于子对象
  - [x] KISSY.add(fn) fn 中 this 为模块对象
  - [!] KISSY.add(name,fn); fn 不会立即执行，只有 name 被 use 或 require 时才会执行
  - [*] Support tag for individual module : #110

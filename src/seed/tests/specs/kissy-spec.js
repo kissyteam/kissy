@@ -227,6 +227,91 @@ describe('kissy.js', function () {
 
         });
 
+        describe('whitelist', function () {
+            it('works for deep', function () {
+                var a = {};
+                var b = {
+                    b1: 1,
+                    b2: {
+                        b22: 22
+                    }
+                };
+                S.mix(a, b, true, ["b1", "b2"], true);
+
+                expect(a).toEqual({
+                    b1: 1,
+                    b2: {}
+                });
+
+
+                a = {};
+                b = {
+                    b1: 1,
+                    b2: {
+                        b2: 22
+                    }
+                };
+                S.mix(a, b, true, ["b1", "b2"], true);
+
+                expect(a).toEqual({
+                    b1: 1,
+                    b2: {
+                        b2: 22
+                    }
+                });
+            });
+
+            it('can be a function filter child', function () {
+                var a = {},
+                    b = {
+                        b1: 1,
+                        b2: {
+                            b2: 22
+                        }
+                    };
+                S.mix(a, b, {
+                    deep: true,
+                    whitelist: function (name, v) {
+                        if (name == 'b1') {
+                            return v;
+                        }
+                        if (this.b1 && name == 'b2') {
+                            return v;
+                        }
+                        return undefined;
+                    }});
+
+                expect(a).toEqual({
+                    b1: 1,
+                    b2: {}
+                });
+            });
+
+            it('can be a function filter parent', function () {
+                var a = {},
+                    b = {
+                        b1: 1,
+                        b2: {
+                            b2: 22
+                        }
+                    };
+                S.mix(a, b, {
+                    deep: true,
+                    whitelist: function (name, v) {
+                        if (this.b1 && name == 'b2') {
+                            return undefined;
+                        }
+                        return v;
+                    }
+                });
+
+                expect(a).toEqual({
+                    b1: 1
+                });
+            });
+        });
+
+
     });
 
     it('S.merge', function () {
