@@ -10,15 +10,16 @@
             Event = S.Event;
 
     (function () {
+        var events = 'keydown mousemove touchstart touchmove mousewheel';
         Event._Special.idle = {
             setup: function () {
                 if (this !== window) {
                     return;
                 }
-                Event.on(document, 'keydown mousemove touchstart touchmove', check);
+                Event.on(document, events, check);
             },
             tearDown: function () {
-                Event.detach(document, 'keydown mousemove touchstart touchmove', check);
+                Event.detach(document, events, check);
             },
             add: function (observer) {
                 idleThreshold = observer.idleThreshold || idleThreshold;
