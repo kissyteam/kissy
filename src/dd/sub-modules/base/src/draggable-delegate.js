@@ -6,7 +6,7 @@
 KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, Event) {
 
     var PREFIX_CLS = DDM.PREFIX_CLS,
-        DRAG_START_EVENT = Event.Gesture.start;
+        DRAG_START_EVENT = Draggable.DRAG_START_EVENT;
 
     /*
      父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点

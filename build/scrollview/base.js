@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 1 20:36
+build time: Apr 1 22:38
 */
 /**
  * scrollview controller
@@ -162,9 +162,9 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
             var self = this,
                 domEl = this.get('el')[0],
                 domContentEl = this.get('contentEl')[0],
-                scrollHeight = Math.max(domEl.scrollHeight, domContentEl.offsetHeight),
-            // contentEl[0].scrollWidth is same with el.innerWidth()!
-                scrollWidth = Math.max(domEl.scrollWidth, domContentEl.offsetWidth) ,
+            // wierd ...
+                scrollHeight = Math.max(domEl.scrollHeight, domContentEl.scrollHeight),
+                scrollWidth = Math.max(domEl.scrollWidth, domContentEl.scrollWidth) ,
                 clientHeight = domEl.clientHeight,
                 _allowScroll,
                 clientWidth = domEl.clientWidth;
@@ -258,7 +258,7 @@ KISSY.add('scrollview/base', function (S, DOM, Component, Extension, Render, Eve
     });
 
 }, {
-    requires: ['dom','component/base', 'component/extension', './base/render', 'event']
+    requires: ['dom', 'component/base', 'component/extension', './base/render', 'event']
 });/**
  * scrollview render
  * @author yiminghe@gmail.com

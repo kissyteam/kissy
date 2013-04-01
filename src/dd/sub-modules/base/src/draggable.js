@@ -7,23 +7,21 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
 
     var UA = S.UA,
         $ = Node.all,
-        each = S.each,
-        DRAG_START_EVENT = Event.Gesture.start,
-        ie = UA['ie'],
         Features = S.Features,
         isTouchSupported = Features.isTouchSupported(),
+        each = S.each,
+    // !! use singleTouchStart in touch to normalize gesture event
+        DRAG_START_EVENT = isTouchSupported ? 'singleTouchStart' : Event.Gesture.start,
+        ie = UA['ie'],
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
         doc = S.Env.host.document;
-
 
     /**
      * @class KISSY.DD.Draggable
      * @extends KISSY.RichBase
      * Provide abilities to make specified node draggable
      */
-
-
     var Draggable = RichBase.extend({
 
         initializer: function () {
@@ -243,6 +241,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                     self.setInternal('activeHandler', handler);
                     return false;
                 }
+                return undefined;
             });
             return ret;
         },
@@ -283,9 +282,9 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             // in touch device
             // prevent touchdown
             // will prevent text selection and link click
-            if (!isTouchSupported) {
-                ev.preventDefault();
-            }
+            // if (!isTouchSupported) {
+            ev.preventDefault();
+            // }
 
             var mx = ev.pageX,
                 my = ev.pageY;
@@ -489,6 +488,8 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
 
         name: 'Draggable',
 
+        DRAG_START_EVENT: DRAG_START_EVENT,
+
         ATTRS: {
 
 
@@ -513,6 +514,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                     if (!(v instanceof Node)) {
                         return $(v);
                     }
+                    return undefined;
                 }
             },
 

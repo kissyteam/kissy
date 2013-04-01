@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 1 20:36
+build time: Apr 1 22:38
 */
 /**
  * allow body to drag

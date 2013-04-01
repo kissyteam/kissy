@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <title>KISSY ScrollView</title>
+    <script src="/kissy/build/seed.js"></script>
+    <script src="/kissy/src/log.js"></script>
+    <link rel="stylesheet" href="../../../../assets/dpl.css">
+    <style>
+        body, ul, li {
+            padding: 0;
+            margin: 0;
+            border: 0;
+        }
+
+        .pic-viewer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<script src="../../../base/src/base.js"></script>
+<script src="../../../base/src/render.js"></script>
+<script src="../../../drag/src/drag.js"></script>
+
+<script src="../src/render.js"></script>
+<script src="../src/control.js"></script>
+<script src="../src/scrollbar.js"></script>
+
+<script>
+
+    // 本 demo 会在 ie10 模拟 ie7 下白屏，原因不明，请设置
+    // <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    KISSY.use('scrollview/drag,scrollview/plugin/scrollbar', function (S, ScrollView, ScrollbarPlugin) {
+        S.ready(function () {
+            var egg = 'http://img01.taobaocdn.com/tps/i1/T1I7N3XphaXXazKpz.-1920-1200.jpg';
+            window.scrollview = new ScrollView({
+                content: '<img id="t" src="http://img03.taobaocdn.com/tps/i3/T1icl2XxVfXXazKpz.-1920-1200.jpg"' +
+                        ' width="1920" height="1200"/>',
+                elCls: 'pic-viewer',
+                plugins: [new ScrollbarPlugin({})]
+            }).render();
+
+            var t= S.get('#t');
+
+            S.all(document).on('doubleTap', function () {
+                t.src = egg;
+            });
+            
+            S.all(window).on('resize orientationchange', S.UA.ie < 9 ?
+                    S.buffer(scrollview.sync, 30) :
+                    scrollview.sync, scrollview);
+        });
+    });
+</script>
+</body>

@@ -195,7 +195,7 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
                 self._startHideTimer();
             }
         },
-
+        // percentage matters!
         afterScrollChange: function (e) {
             // only show when scroll
             var self = this,

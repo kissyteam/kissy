@@ -22,6 +22,8 @@
 <div id='t2' style='border:1px solid red;width:100px;height:100px;margin:10px'>
     t2t2t2t2t 2t2t2t2t2t 2t2t2t2t 2t2t2
 </div>
+
+<button id="detach">detach t2</button>
 <div style="height: 900px;"></div>
 <script src="../../src/handle.js"></script>
 <script src="../../src/multi-touch.js"></script>
@@ -35,19 +37,23 @@
 <script src="../../src/tap-hold.js"></script>
 <script src="../../src/tap.js"></script>
 <script src="../../src/touch.js"></script>
-
+<script src="../../src/single-touch-start.js"></script>
 <script>
 
     KISSY.use('event,node', function (S, Event) {
 
-        var $ = S.all;
+        var $ = S.all,t;
 
         Event.on('#t', "click tap", function (e) {
             log("t: " + e.type);
         });
 
-        Event.on('#t2', "tap", function (e) {
+        Event.on('#t2', "tap", t=function (e) {
             log("t2: " + e.type);
+        });
+
+        Event.on('#detach', 'click', function () {
+            Event.detach('#t2', "tap", t);
         });
 
     });

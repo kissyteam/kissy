@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 13 22:06
+build time: Apr 2 00:03
 */
 /**
  * @ignore
@@ -33,6 +33,7 @@ KISSY.add('dd/base', function (S, DDM, Draggable, DraggableDelegate) {
 KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
 
     var UA = S.UA,
+        Features = S.Features,
         win = S.Env.host,
         doc = win.document,
         ie6 = UA['ie'] === 6,
@@ -47,7 +48,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         Gesture = Event.Gesture,
         CURRENT_TARGET = 'currentTarget',
         DRAG_MOVE_EVENT = Gesture.move,
-        DRAG_END_EVENT = Gesture.end+' touchcancel';
+        DRAG_END_EVENT = Gesture.end + ' touchcancel';
 
     /**
      * @class KISSY.DD.DDM
@@ -564,10 +565,10 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
      normal event between devices
      */
     ddm._normalEvent = function (e) {
-        var type= String(e.type),
-            touches = type == 'touchend'||type == 'touchcancel' ? e.changedTouches : e.touches,
+        var type = String(e.type),
+            touches = type == 'touchend' || type == 'touchcancel' ? e.changedTouches : e.touches,
             touch;
-        if (touches) {
+        if (Features.isTouchSupported() && touches) {
             if (touches.length != 1) {
                 return undefined;
             }
@@ -593,7 +594,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
 KISSY.add('dd/base/draggable-delegate', function (S, DDM, Draggable, DOM, Node, Event) {
 
     var PREFIX_CLS = DDM.PREFIX_CLS,
-        DRAG_START_EVENT = Event.Gesture.start;
+        DRAG_START_EVENT = Draggable.DRAG_START_EVENT;
 
     /*
      父容器监听 mousedown，找到合适的拖动 handlers 以及拖动节点
@@ -763,23 +764,21 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
 
     var UA = S.UA,
         $ = Node.all,
-        each = S.each,
-        DRAG_START_EVENT = Event.Gesture.start,
-        ie = UA['ie'],
         Features = S.Features,
         isTouchSupported = Features.isTouchSupported(),
+        each = S.each,
+    // !! use singleTouchStart in touch to normalize gesture event
+        DRAG_START_EVENT = isTouchSupported ? 'singleTouchStart' : Event.Gesture.start,
+        ie = UA['ie'],
         NULL = null,
         PREFIX_CLS = DDM.PREFIX_CLS,
         doc = S.Env.host.document;
-
 
     /**
      * @class KISSY.DD.Draggable
      * @extends KISSY.RichBase
      * Provide abilities to make specified node draggable
      */
-
-
     var Draggable = RichBase.extend({
 
         initializer: function () {
@@ -999,6 +998,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                     self.setInternal('activeHandler', handler);
                     return false;
                 }
+                return undefined;
             });
             return ret;
         },
@@ -1039,9 +1039,9 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
             // in touch device
             // prevent touchdown
             // will prevent text selection and link click
-            if (!isTouchSupported) {
-                ev.preventDefault();
-            }
+            // if (!isTouchSupported) {
+            ev.preventDefault();
+            // }
 
             var mx = ev.pageX,
                 my = ev.pageY;
@@ -1245,6 +1245,8 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
 
         name: 'Draggable',
 
+        DRAG_START_EVENT: DRAG_START_EVENT,
+
         ATTRS: {
 
 
@@ -1269,6 +1271,7 @@ KISSY.add('dd/base/draggable', function (S, Node, RichBase, DDM, Event) {
                     if (!(v instanceof Node)) {
                         return $(v);
                     }
+                    return undefined;
                 }
             },
 

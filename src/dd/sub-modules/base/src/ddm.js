@@ -6,6 +6,7 @@
 KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
 
     var UA = S.UA,
+        Features = S.Features,
         win = S.Env.host,
         doc = win.document,
         ie6 = UA['ie'] === 6,
@@ -20,7 +21,7 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
         Gesture = Event.Gesture,
         CURRENT_TARGET = 'currentTarget',
         DRAG_MOVE_EVENT = Gesture.move,
-        DRAG_END_EVENT = Gesture.end+' touchcancel';
+        DRAG_END_EVENT = Gesture.end + ' touchcancel';
 
     /**
      * @class KISSY.DD.DDM
@@ -537,10 +538,10 @@ KISSY.add('dd/base/ddm', function (S, DOM, Event, Node, Base) {
      normal event between devices
      */
     ddm._normalEvent = function (e) {
-        var type= String(e.type),
-            touches = type == 'touchend'||type == 'touchcancel' ? e.changedTouches : e.touches,
+        var type = String(e.type),
+            touches = type == 'touchend' || type == 'touchcancel' ? e.changedTouches : e.touches,
             touch;
-        if (touches) {
+        if (Features.isTouchSupported() && touches) {
             if (touches.length != 1) {
                 return undefined;
             }

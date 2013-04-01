@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 1 20:36
+build time: Apr 1 22:38
 */
 /**
  * scrollbar for KISSY scrollview
@@ -200,7 +200,7 @@ KISSY.add('scrollview/plugin/scrollbar/control', function (S, Event, DD, Compone
                 self._startHideTimer();
             }
         },
-
+        // percentage matters!
         afterScrollChange: function (e) {
             // only show when scroll
             var self = this,
