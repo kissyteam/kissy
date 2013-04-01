@@ -9,6 +9,7 @@
         win = Env.host,
         UA = S.UA,
         VENDORS = [
+            '',
             'Webkit',
             'Moz',
             'O',
@@ -36,20 +37,20 @@
             isQuerySelectorSupportedState = true;
         }
         documentElementStyle = documentElement.style;
-        if ('transition' in documentElementStyle) {
-            isTransitionSupportedState = true;
-        } else {
-            S.each(VENDORS, function (val) {
-                if ((val + 'Transition') in documentElementStyle) {
-                    transitionPrefix = val;
-                    isTransitionSupportedState = true;
-                }
-                if ((val + 'Transform') in documentElementStyle) {
-                    transformPrefix = val;
-                    isTransformSupportedState = true;
-                }
-            });
-        }
+
+        S.each(VENDORS, function (val) {
+            var transition = val ? val + 'Transition' : 'transition',
+                transform = val ? val + 'Transform' : 'transform';
+            if (transition in documentElementStyle) {
+                transitionPrefix = val;
+                isTransitionSupportedState = true;
+            }
+            if (transform in documentElementStyle) {
+                transformPrefix = val;
+                isTransformSupportedState = true;
+            }
+        });
+
         isClassListSupportedState = 'classList' in documentElement;
     }
 

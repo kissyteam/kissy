@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 1 20:37
+build time: Apr 1 20:45
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130401203654' will replace with current timestamp when compressing.
+         * NOTICE: '20130401204517' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130401203654',
+        __BUILD_TIME: '20130401204517',
         /**
          * KISSY Environment.
          * @private
@@ -3483,6 +3483,7 @@ var KISSY = (function (undefined) {
         win = Env.host,
         UA = S.UA,
         VENDORS = [
+            '',
             'Webkit',
             'Moz',
             'O',
@@ -3510,20 +3511,20 @@ var KISSY = (function (undefined) {
             isQuerySelectorSupportedState = true;
         }
         documentElementStyle = documentElement.style;
-        if ('transition' in documentElementStyle) {
-            isTransitionSupportedState = true;
-        } else {
-            S.each(VENDORS, function (val) {
-                if ((val + 'Transition') in documentElementStyle) {
-                    transitionPrefix = val;
-                    isTransitionSupportedState = true;
-                }
-                if ((val + 'Transform') in documentElementStyle) {
-                    transformPrefix = val;
-                    isTransformSupportedState = true;
-                }
-            });
-        }
+
+        S.each(VENDORS, function (val) {
+            var transition = val ? val + 'Transition' : 'transition',
+                transform = val ? val + 'Transform' : 'transform';
+            if (transition in documentElementStyle) {
+                transitionPrefix = val;
+                isTransitionSupportedState = true;
+            }
+            if (transform in documentElementStyle) {
+                transformPrefix = val;
+                isTransformSupportedState = true;
+            }
+        });
+
         isClassListSupportedState = 'classList' in documentElement;
     }
 
@@ -5222,7 +5223,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130401203654'
+            tag: '20130401204517'
         }, getBaseInfo()));
     }
 
