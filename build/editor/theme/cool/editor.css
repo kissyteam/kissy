@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 11 10:34
+build time: Apr 2 19:14
 */
 /**
 ks-editor-post ，编辑器内容外部包装容器
@@ -1027,6 +1027,14 @@ menu style for kissy editor ,include contextmenu and select menu
     box-shadow: 0px 1px 1px rgb(228, 228, 228);
 }
 
+.ks-editor-popupmenu-hidden {
+    visibility: hidden;
+}
+
+.ks-editor-popupmenu-shown {
+    visibility: visible;
+}
+
 .ks-editor-menuitem {
     margin: 0;
     border-width: 0;
@@ -1034,7 +1042,7 @@ menu style for kissy editor ,include contextmenu and select menu
     white-space: nowrap;
     /*ie6 can hover*/
     position: relative;
-    zoom:1;
+    zoom: 1;
 }
 
 .ks-editor-menuitem-hover, .ks-editor-option-selected {
@@ -1048,6 +1056,22 @@ menu style for kissy editor ,include contextmenu and select menu
     top: -9999px;
     outline: none;
     overflow: hidden;
+}
+
+.ks-editor-overlay-hidden{
+    visibility: hidden;
+}
+
+.ks-editor-overlay-shown{
+    visibility: visible;
+}
+
+.ks-editor-overlay-mask-hidden {
+    visibility: hidden;
+}
+
+.ks-editor-overlay-mask-shown {
+    visibility: visible;
 }
 
 .ks-editor-dialog label,

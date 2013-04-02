@@ -104,7 +104,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
             others.on("click", function (ev) {
                 ev.halt();
                 colorWin.hide();
-                DialogLoader.useDialog(editor, "color/color-picker", self);
+                DialogLoader.useDialog(editor, "color/color-picker", undefined, self);
             });
             self._prepare = self._show;
             self._show();
@@ -169,7 +169,7 @@ KISSY.add("editor/plugin/color/btn", function (S, Editor, Button, Overlay4E, Dia
     ColorButton.init = function (editor, cfg) {
         var prefix = editor.get('prefixCls') + 'editor-toolbar-',
             cmdType = cfg.cmdType,
-            defaultColor=cfg.defaultColor,
+            defaultColor = cfg.defaultColor,
             tooltip = cfg.tooltip;
 
         var button = editor.addButton(cmdType, {

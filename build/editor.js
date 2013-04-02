@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 11 10:34
+build time: Apr 2 19:14
 */
 /**
  * Set up editor constructor
@@ -2118,6 +2118,24 @@ KISSY.add('editor', function (S, Editor, Utils, focusManager, Styles, zIndexMang
              */
             getSelection: function () {
                 return Editor.Selection.getSelection(this.get('document')[0]);
+            },
+
+            /**
+             * Get selected html content of current editor
+             * @return {undefined|String}
+             */
+            'getSelectedHtml': function () {
+                var self = this,
+                    range = self.getSelection().getRanges()[0],
+                    contents,
+                    html;
+                if (range) {
+                    contents = range.cloneContents();
+                    html = self.get('document')[0].createElement('div');
+                    html.appendChild(contents);
+                    html = html.innerHTML;
+                }
+                return html;
             },
 
             /**

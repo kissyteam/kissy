@@ -1,7 +1,7 @@
 /*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 11 10:34
+build time: Apr 2 19:14
 */
 KISSY.add("editor/plugin/undo/cmd",function(f,g){function h(a){var c=a.get("document")[0].body.innerHTML,b;c&&(b=a.getSelection());this.contents=c;this.bookmarks=b&&b.createBookmarks2(!0)}function i(a){this.history=[];this.index=-1;this.editor=a;this.bufferRunner=f.buffer(this.save,500,this);this._init()}var j=f.UA;f.augment(h,{equals:function(a){return this.contents==a.contents}});var k={16:1,17:1,18:1},l={37:1,38:1,39:1,40:1,33:1,34:1};f.augment(i,{_keyMonitor:function(){var a=this,c=a.editor;c.docReady(function(){c.get("document").on("keydown",
 function(b){var d=b.keyCode;d in l||d in k||(90===d&&(b.ctrlKey||b.metaKey)?(!1!==c.fire("beforeRedo")&&a.restore(-1),b.halt()):89===d&&(b.ctrlKey||b.metaKey)?(!1!==c.fire("beforeUndo")&&a.restore(1),b.halt()):!1!==c.fire("beforeSave",{buffer:1})&&a.save(1))})})},_init:function(){var a=this,c=a.editor;a._keyMonitor();setTimeout(function(){if(c.get("mode")==g.WYSIWYG_MODE)if(c.isDocReady())a.save();else c.on("docReady",function(){a.save();c.detach("docReady",arguments.callee)})},0)},save:function(a){var c=

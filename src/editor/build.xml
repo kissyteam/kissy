@@ -60,20 +60,7 @@
         </move>
     </target>
 
-    <target name="editor-full">
-        <concat destfile="${component.src.dir.tmp}/full.js">
-            <path location="${component.src.dir.tmp}/editor-pkg.js"/>
-            <fileset dir="${component.src.dir.tmp}/plugin/"
-                     excludes="**/dialog.js,**/dynamic/**/*.js"
-                     includes="**/*.js"/>
-            <filterchain>
-                <deletecharacters chars="${bom}"/>
-            </filterchain>
-            <path location="${component.src.dir}/editor/full.js"/>
-        </concat>
-    </target>
-
-    <target name="editor" depends="editor-prepare,editor-js,editor-css,editor-full">
+    <target name="editor" depends="editor-prepare,editor-js,editor-css">
 
     </target>
 
