@@ -54,7 +54,7 @@
             S.all(document).on('doubleTap', function () {
                 t.src = egg;
             });
-            
+
             S.all(window).on('resize orientationchange', S.UA.ie < 9 ?
                     S.buffer(scrollview.sync, 30) :
                     scrollview.sync, scrollview);

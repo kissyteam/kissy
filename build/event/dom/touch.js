@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 2 00:02
+build time: Apr 2 10:57
 */
 /**
  * @ignore
@@ -500,17 +500,11 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
 
     eventHandleMap[PINCH] = {
         handle: p,
-        add: function (observer) {
-            if (observer.preventDefaultMove !== false) {
-                Event.on(this, Gesture.move, observer.__preventPinchDefault = function (e) {
-                    prevent(e)
-                });
-            }
+        add: function () {
+            Event.on(this, Gesture.move, prevent);
         },
-        remove: function (observer) {
-            if (observer.__preventPinchDefault) {
-                Event.detach(this, Gesture.move, observer.__preventPinchDefault);
-            }
+        remove: function () {
+            Event.detach(this, Gesture.move, prevent);
         }
     };
 
@@ -620,17 +614,11 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
 
     eventHandleMap[ROTATE] = {
         handle: r,
-        add: function (observer) {
-            if (observer.preventDefaultMove !== false) {
-                Event.on(this, Gesture.move, observer.__preventRotateDefault = function (e) {
-                    prevent(e)
-                });
-            }
+        add: function () {
+            Event.on(this, Gesture.move, prevent);
         },
-        remove: function (observer) {
-            if (observer.__preventRotateDefault) {
-                Event.detach(this, Gesture.move, observer.__preventRotateDefault);
-            }
+        remove: function () {
+            Event.detach(this, Gesture.move, prevent);
         }
     };
 
@@ -853,7 +841,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     eventHandleMap[event] = {
         add: function (observer) {
             // prevent native scroll
-            if (observer.preventDefaultMove !== false) {
+            if (observer.preventDefaultMove === true) {
                 Event.on(this, Gesture.move, observer.__preventSwipeDefault = function (e) {
                     prevent(e)
                 });

@@ -100,17 +100,11 @@ KISSY.add('event/dom/touch/rotate', function (S, eventHandleMap, MultiTouch, Eve
 
     eventHandleMap[ROTATE] = {
         handle: r,
-        add: function (observer) {
-            if (observer.preventDefaultMove !== false) {
-                Event.on(this, Gesture.move, observer.__preventRotateDefault = function (e) {
-                    prevent(e)
-                });
-            }
+        add: function () {
+            Event.on(this, Gesture.move, prevent);
         },
-        remove: function (observer) {
-            if (observer.__preventRotateDefault) {
-                Event.detach(this, Gesture.move, observer.__preventRotateDefault);
-            }
+        remove: function () {
+            Event.detach(this, Gesture.move, prevent);
         }
     };
 

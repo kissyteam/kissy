@@ -77,17 +77,11 @@ KISSY.add('event/dom/touch/pinch', function (S, eventHandleMap, Event, MultiTouc
 
     eventHandleMap[PINCH] = {
         handle: p,
-        add: function (observer) {
-            if (observer.preventDefaultMove !== false) {
-                Event.on(this, Gesture.move, observer.__preventPinchDefault = function (e) {
-                    prevent(e)
-                });
-            }
+        add: function () {
+            Event.on(this, Gesture.move, prevent);
         },
-        remove: function (observer) {
-            if (observer.__preventPinchDefault) {
-                Event.detach(this, Gesture.move, observer.__preventPinchDefault);
-            }
+        remove: function () {
+            Event.detach(this, Gesture.move, prevent);
         }
     };
 

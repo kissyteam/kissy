@@ -64,21 +64,22 @@
                 new Array(2).join('<p> ' + (new Array(2).join('h')) + '  </p>'));
 
 
-        Event.on('#t', "swipe.test", function (e) {
+        Event.on('#t', "swipe.test", {fn: function (e) {
             log(e.type + ' : ' + e.direction + ' : ' + e.duration + ' : ' + e.distance);
+        },
+            preventDefaultMove: true
         });
 
         Event.on('#t2', "swipe.test", {
             fn: function (e) {
                 log(e.type + ' : ' + e.direction + ' : ' + e.duration + ' : ' + e.distance);
-            },
-            preventDefaultMove: false
+            }
         });
 
-        $('#remove').on('click',function(){
+        $('#remove').on('click', function () {
 
-            Event.detach('#t','.test');
-            Event.detach('#t2','.test');
+            Event.detach('#t', '.test');
+            Event.detach('#t2', '.test');
 
         });
 
