@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Apr 2 11:11
+build time: Apr 2 18:06
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130402111056' will replace with current timestamp when compressing.
+         * NOTICE: '20130402180552' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130402111056',
+        __BUILD_TIME: '20130402180552',
         /**
          * KISSY Environment.
          * @private
@@ -5828,7 +5828,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130402111056'
+            tag: '20130402180552'
         }, getBaseInfo()));
     }
 
@@ -14803,7 +14803,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Apr 2 11:09
+build time: Apr 2 18:05
 */
 /**
  * @ignore
@@ -15463,13 +15463,95 @@ KISSY.add('event/dom/touch/single-touch', function (S) {
  * gesture swipe inspired by sencha touch
  * @author yiminghe@gmail.com
  */
-KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTouch, Gesture) {
+KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTouch) {
 
-    var event = 'swipe';
+    var event = 'swipe', ingEvent = 'swiping';
 
     var MAX_DURATION = 1000,
         MAX_OFFSET = 35,
         MIN_DISTANCE = 50;
+
+    function fire(self, e, ing) {
+        var touches = e.changedTouches,
+            touch = touches[0],
+            x = touch.pageX,
+            y = touch.pageY,
+            deltaX = x - self.startX,
+            deltaY = y - self.startY,
+            absDeltaX = Math.abs(deltaX),
+            absDeltaY = Math.abs(deltaY),
+            distance,
+            direction;
+
+        if (ing) {
+            if (self.isVertical && self.isHorizontal) {
+                if (absDeltaY > absDeltaX) {
+                    self.isHorizontal = 0;
+                } else {
+                    self.isVertical = 0;
+                }
+            }
+        } else {
+            if (self.isVertical && absDeltaY < MIN_DISTANCE) {
+                self.isVertical = 0;
+            }
+
+            if (self.isHorizontal && absDeltaX < MIN_DISTANCE) {
+                self.isHorizontal = 0;
+            }
+        }
+
+        if (self.isHorizontal) {
+            direction = deltaX < 0 ? 'left' : 'right';
+            distance = absDeltaX;
+        } else if (self.isVertical) {
+            direction = deltaY < 0 ? 'up' : 'down';
+            distance = absDeltaY;
+        } else {
+            return false;
+        }
+
+        Event.fire(e.target, ing ? ingEvent : event, {
+            originalEvent: e.originalEvent,
+            /**
+             *
+             * native touch property **only for touch event**.
+             *
+             * @property touch
+             * @member KISSY.Event.DOMEventObject
+             */
+            touch: touch,
+            /**
+             *
+             * direction property **only for event swipe/singleTap/doubleTap**.
+             *
+             * can be one of 'up' 'down' 'left' 'right'
+             * @property {String} direction
+             * @member KISSY.Event.DOMEventObject
+             */
+            direction: direction,
+            /**
+             *
+             * distance property **only for event swipe**.
+             *
+             * the distance swipe gesture costs
+             * @property {Number} distance
+             * @member KISSY.Event.DOMEventObject
+             */
+            distance: distance,
+            /**
+             *
+             * duration property **only for touch event**.
+             *
+             * the duration swipe gesture costs
+             * @property {Number} duration
+             * @member KISSY.Event.DOMEventObject
+             */
+            duration: (e.timeStamp - self.startTime) / 1000
+        });
+
+        return undefined;
+    }
 
     function Swipe() {
     }
@@ -15493,6 +15575,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
             if (e.type.indexOf('mouse') != -1) {
                 e.preventDefault();
             }
+            return undefined;
         },
 
         onTouchMove: function (e) {
@@ -15500,8 +15583,10 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
                 touch = e.changedTouches[0],
                 x = touch.pageX,
                 y = touch.pageY,
-                absDeltaX = Math.abs(x - self.startX),
-                absDeltaY = Math.abs(y - self.startY),
+                deltaX = x - self.startX,
+                deltaY = y - self.startY,
+                absDeltaX = Math.abs(deltaX),
+                absDeltaY = Math.abs(deltaY),
                 time = e.timeStamp;
 
             if (time - self.startTime > MAX_DURATION) {
@@ -15516,9 +15601,7 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
                 self.isHorizontal = 0;
             }
 
-            if (!self.isHorizontal && !self.isVertical) {
-                return false;
-            }
+            return fire(self, e, 1);
         },
 
         onTouchEnd: function (e) {
@@ -15527,90 +15610,19 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
                 return false;
             }
 
-            var touches = e.changedTouches,
-                touch = touches[0],
-                x = touch.pageX,
-                y = touch.pageY,
-                deltaX = x - self.startX,
-                deltaY = y - self.startY,
-                absDeltaX = Math.abs(deltaX),
-                absDeltaY = Math.abs(deltaY),
-                distance,
-                direction;
-
-            if (self.isVertical && absDeltaY < MIN_DISTANCE) {
-                self.isVertical = 0;
-            }
-
-            if (self.isHorizontal && absDeltaX < MIN_DISTANCE) {
-                self.isHorizontal = 0;
-            }
-
-            if (self.isHorizontal) {
-                direction = deltaX < 0 ? 'left' : 'right';
-                distance = absDeltaX;
-            } else if (self.isVertical) {
-                direction = deltaY < 0 ? 'up' : 'down';
-                distance = absDeltaY;
-            } else {
-                return false;
-            }
-
-            Event.fire(e.target, event, {
-                /**
-                 *
-                 * native touch property **only for touch event**.
-                 *
-                 * @property touch
-                 * @member KISSY.Event.DOMEventObject
-                 */
-                touch: touch,
-                /**
-                 *
-                 * direction property **only for event swipe/singleTap/doubleTap**.
-                 *
-                 * can be one of 'up' 'down' 'left' 'right'
-                 * @property {String} direction
-                 * @member KISSY.Event.DOMEventObject
-                 */
-                direction: direction,
-                /**
-                 *
-                 * distance property **only for event swipe**.
-                 *
-                 * the distance swipe gesture costs
-                 * @property {Number} distance
-                 * @member KISSY.Event.DOMEventObject
-                 */
-                distance: distance,
-                /**
-                 *
-                 * duration property **only for touch event**.
-                 *
-                 * the duration swipe gesture costs
-                 * @property {Number} duration
-                 * @member KISSY.Event.DOMEventObject
-                 */
-                duration: (e.timeStamp - self.startTime) / 1000
-            });
+            return fire(self, e, 0);
         }
 
     });
 
-    function prevent(e) {
-        if (!e.touches || e.touches.length == 1) {
-            e.preventDefault();
-        }
-    }
-
-    eventHandleMap[event] = {
+    eventHandleMap[event] = eventHandleMap[ingEvent] = {
         handle: new Swipe()
     };
 
     return Swipe;
 
 }, {
-    requires: ['./handle-map', 'event/dom/base', './single-touch', './gesture']
+    requires: ['./handle-map', 'event/dom/base', './single-touch']
 });/**
  * @ignore
  * fired when tap and hold for more than 1s
