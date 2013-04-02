@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Mar 28 19:20
+build time: Apr 2 11:37
 */
 /**
  * @ignore
@@ -1041,6 +1041,7 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
             },
             {
                 reg: /^mousewheel$/,
+                props: [],
                 fix: function (event, originalEvent) {
                     var deltaX,
                         deltaY,
@@ -1182,213 +1183,207 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
         var self = this,
             type = originalEvent.type;
 
-        if ('@DEBUG@') {
-            /**
-             * altKey
-             * @property altKey
-             */
-            self.altKey = undefined;
-            /**
-             * attrChange
-             * @property attrChange
-             */
-            self.attrChange = undefined;
-            /**
-             * attrName
-             * @property attrName
-             */
-            self.attrName = undefined;
-            /**
-             * bubbles
-             * @property bubbles
-             */
-            self.bubbles = undefined;
-            /**
-             * button
-             * @property button
-             */
-            self.button = undefined;
-            /**
-             * cancelable
-             * @property cancelable
-             */
-            self.cancelable = undefined;
-            /**
-             * charCode
-             * @property charCode
-             */
-            self.charCode = undefined;
-            /**
-             * clientX
-             * @property clientX
-             */
-            self.clientX = undefined;
-            /**
-             * clientY
-             * @property clientY
-             */
-            self.clientY = undefined;
-            /**
-             * ctrlKey
-             * @property ctrlKey
-             */
-            self.ctrlKey = undefined;
-            /**
-             * data
-             * @property data
-             */
-            self.data = undefined;
-            /**
-             * detail
-             * @property detail
-             */
-            self.detail = undefined;
-            /**
-             * eventPhase
-             * @property eventPhase
-             */
-            self.eventPhase = undefined;
-            /**
-             * fromElement
-             * @property fromElement
-             */
-            self.fromElement = undefined;
-            /**
-             * handler
-             * @property handler
-             */
-            self.handler = undefined;
-            /**
-             * keyCode
-             * @property keyCode
-             */
-            self.keyCode = undefined;
-            /**
-             * metaKey
-             * @property metaKey
-             */
-            self.metaKey = undefined;
-            /**
-             * newValue
-             * @property newValue
-             */
-            self.newValue = undefined;
-            /**
-             * offsetX
-             * @property offsetX
-             */
-            self.offsetX = undefined;
-            /**
-             * offsetY
-             * @property offsetY
-             */
-            self.offsetY = undefined;
-            /**
-             * pageX
-             * @property pageX
-             */
-            self.pageX = undefined;
-            /**
-             * pageY
-             * @property pageY
-             */
-            self.pageY = undefined;
-            /**
-             * prevValue
-             * @property prevValue
-             */
-            self.prevValue = undefined;
-            /**
-             * relatedNode
-             * @property relatedNode
-             */
-            self.relatedNode = undefined;
-            /**
-             * relatedTarget
-             * @property relatedTarget
-             */
-            self.relatedTarget = undefined;
-            /**
-             * screenX
-             * @property screenX
-             */
-            self.screenX = undefined;
-            /**
-             * screenY
-             * @property screenY
-             */
-            self.screenY = undefined;
-            /**
-             * shiftKey
-             * @property shiftKey
-             */
-            self.shiftKey = undefined;
-            /**
-             * srcElement
-             * @property srcElement
-             */
-            self.srcElement = undefined;
+        /**
+         * altKey
+         * @property altKey
+         */
 
-            /**
-             * toElement
-             * @property toElement
-             */
-            self.toElement = undefined;
-            /**
-             * view
-             * @property view
-             */
-            self.view = undefined;
-            /**
-             * wheelDelta
-             * @property wheelDelta
-             */
-            self.wheelDelta = undefined;
-            /**
-             * which
-             * @property which
-             */
-            self.which = undefined;
-            /**
-             * changedTouches
-             * @property changedTouches
-             */
-            self.changedTouches = undefined;
-            /**
-             * touches
-             * @property touches
-             */
-            self.touches = undefined;
-            /**
-             * targetTouches
-             * @property targetTouches
-             */
-            self.targetTouches = undefined;
-            /**
-             * rotation
-             * @property rotation
-             */
-            self.rotation = undefined;
-            /**
-             * scale
-             * @property scale
-             */
-            self.scale = undefined;
+        /**
+         * attrChange
+         * @property attrChange
+         */
 
-            /**
-             * source html node of current event
-             * @property target
-             * @type {HTMLElement}
-             */
-            self.target = null;
+        /**
+         * attrName
+         * @property attrName
+         */
 
-            /**
-             * current htm node which processes current event
-             * @property currentTarget
-             * @type {HTMLElement}
-             */
-            self.currentTarget = null;
-        }
+        /**
+         * bubbles
+         * @property bubbles
+         */
+
+        /**
+         * button
+         * @property button
+         */
+
+        /**
+         * cancelable
+         * @property cancelable
+         */
+
+        /**
+         * charCode
+         * @property charCode
+         */
+
+        /**
+         * clientX
+         * @property clientX
+         */
+
+        /**
+         * clientY
+         * @property clientY
+         */
+
+        /**
+         * ctrlKey
+         * @property ctrlKey
+         */
+
+        /**
+         * data
+         * @property data
+         */
+
+        /**
+         * detail
+         * @property detail
+         */
+
+        /**
+         * eventPhase
+         * @property eventPhase
+         */
+
+        /**
+         * fromElement
+         * @property fromElement
+         */
+
+        /**
+         * handler
+         * @property handler
+         */
+
+        /**
+         * keyCode
+         * @property keyCode
+         */
+
+        /**
+         * metaKey
+         * @property metaKey
+         */
+
+        /**
+         * newValue
+         * @property newValue
+         */
+
+        /**
+         * offsetX
+         * @property offsetX
+         */
+
+        /**
+         * offsetY
+         * @property offsetY
+         */
+
+        /**
+         * pageX
+         * @property pageX
+         */
+
+        /**
+         * pageY
+         * @property pageY
+         */
+
+        /**
+         * prevValue
+         * @property prevValue
+         */
+
+        /**
+         * relatedNode
+         * @property relatedNode
+         */
+
+        /**
+         * relatedTarget
+         * @property relatedTarget
+         */
+
+        /**
+         * screenX
+         * @property screenX
+         */
+
+        /**
+         * screenY
+         * @property screenY
+         */
+
+        /**
+         * shiftKey
+         * @property shiftKey
+         */
+
+        /**
+         * srcElement
+         * @property srcElement
+         */
+
+        /**
+         * toElement
+         * @property toElement
+         */
+
+        /**
+         * view
+         * @property view
+         */
+
+        /**
+         * wheelDelta
+         * @property wheelDelta
+         */
+
+        /**
+         * which
+         * @property which
+         */
+
+        /**
+         * changedTouches
+         * @property changedTouches
+         */
+
+        /**
+         * touches
+         * @property touches
+         */
+
+        /**
+         * targetTouches
+         * @property targetTouches
+         */
+
+        /**
+         * rotation
+         * @property rotation
+         */
+
+        /**
+         * scale
+         * @property scale
+         */
+
+        /**
+         * source html node of current event
+         * @property target
+         * @type {HTMLElement}
+         */
+
+        /**
+         * current htm node which processes current event
+         * @property currentTarget
+         * @type {HTMLElement}
+         */
 
         DOMEventObject.superclass.constructor.call(self);
 
@@ -1409,7 +1404,9 @@ KISSY.add('event/dom/base/object', function (S, Event, undefined) {
             if (type.match(normalizer.reg)) {
                 props = props.concat(normalizer.props);
                 fixFn = normalizer.fix;
+                return false;
             }
+            return undefined;
         });
 
         l = props.length;
@@ -1512,8 +1509,6 @@ KISSY.add('event/dom/base/observable', function (S, DOM, special, Utils, DOMEven
     // 再在浏览器通知的系统 eventHandler 中检查
     // 如果相同，那么证明已经 fire 过了，不要再次触发了
     var _Utils = Event._Utils;
-
-    var FOCUS_BLUR_REG = /^focus|blur$/;
 
     /**
      * custom event for dom

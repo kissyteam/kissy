@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Jan 31 23:02
+build time: Apr 2 11:49
 */
 /**
  * collection of models
@@ -427,7 +427,6 @@ KISSY.add("mvc/model", function (S, Base) {
                     }
                     for (var l in lists) {
                         lists[l].remove(self, opts);
-                        self.removeFromCollection(lists[l]);
                     }
                     self.fire("destroy");
                     success && success.apply(this, arguments);

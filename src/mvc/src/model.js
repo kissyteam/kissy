@@ -113,7 +113,6 @@ KISSY.add("mvc/model", function (S, Base) {
                     }
                     for (var l in lists) {
                         lists[l].remove(self, opts);
-                        self.removeFromCollection(lists[l]);
                     }
                     self.fire("destroy");
                     success && success.apply(this, arguments);
