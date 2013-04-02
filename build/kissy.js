@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Mar 11 12:19
+build time: Apr 2 11:11
 */
 /**
  * @ignore
@@ -39,11 +39,11 @@ var KISSY = (function (undefined) {
 
         /**
          * The build time of the library.
-         * NOTICE: '20130311121947' will replace with current timestamp when compressing.
+         * NOTICE: '20130402111056' will replace with current timestamp when compressing.
          * @private
          * @type {String}
          */
-        __BUILD_TIME: '20130311121947',
+        __BUILD_TIME: '20130402111056',
         /**
          * KISSY Environment.
          * @private
@@ -5828,7 +5828,7 @@ var KISSY = (function (undefined) {
             // file limit number for a single combo url
             comboMaxFileNum: 40,
             charset: 'utf-8',
-            tag: '20130311121947'
+            tag: '20130402111056'
         }, getBaseInfo()));
     }
 
@@ -14803,7 +14803,7 @@ KISSY.add('event/dom/shake', function (S, EventDomBase, undefined) {
 /*
 Copyright 2013, KISSY UI Library v1.30
 MIT Licensed
-build time: Jan 28 14:33
+build time: Apr 2 11:09
 */
 /**
  * @ignore
@@ -15027,7 +15027,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
                 self = this,
                 eventHandle = self.eventHandle;
             for (e in eventHandle) {
-                h = eventHandle[e];
+                h = eventHandle[e].handle;
                 h.isActive = 1;
             }
             self.callEventHandle('onTouchStart', event);
@@ -15045,7 +15045,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
             if (event) {
                 for (e in eventHandle) {
                     // event processor shared by multiple events
-                    h = eventHandle[e];
+                    h = eventHandle[e].handle;
                     if (h.processed) {
                         continue;
                     }
@@ -15056,7 +15056,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
                 }
 
                 for (e in eventHandle) {
-                    h = eventHandle[e];
+                    h = eventHandle[e].handle;
                     h.processed = 0;
                 }
             }
@@ -15064,14 +15064,27 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
 
         addEventHandle: function (event) {
             var self = this,
+                eventHandle = self.eventHandle,
                 handle = eventHandleMap[event].handle;
-            if (!self.eventHandle[event]) {
-                self.eventHandle[event] = handle;
+            if (eventHandle[event]) {
+                eventHandle[event].count++;
+            } else {
+                eventHandle[event] = {
+                    count: 1,
+                    handle: handle
+                };
             }
         },
 
         'removeEventHandle': function (event) {
-            delete this.eventHandle[event];
+            var eventHandle = this.eventHandle;
+            if (eventHandle[event]) {
+                eventHandle[event].count--;
+                if (!eventHandle[event].count) {
+                    delete eventHandle[event];
+                }
+            }
+
         },
 
         destroy: function () {
@@ -15591,13 +15604,6 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
     }
 
     eventHandleMap[event] = {
-        setup: function () {
-            // prevent native scroll
-            Event.on(this, Gesture.move, prevent);
-        },
-        tearDown: function () {
-            Event.detach(this, Gesture.move, prevent);
-        },
         handle: new Swipe()
     };
 

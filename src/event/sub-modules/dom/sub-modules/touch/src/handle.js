@@ -80,7 +80,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
                 self = this,
                 eventHandle = self.eventHandle;
             for (e in eventHandle) {
-                h = eventHandle[e];
+                h = eventHandle[e].handle;
                 h.isActive = 1;
             }
             self.callEventHandle('onTouchStart', event);
@@ -98,7 +98,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
             if (event) {
                 for (e in eventHandle) {
                     // event processor shared by multiple events
-                    h = eventHandle[e];
+                    h = eventHandle[e].handle;
                     if (h.processed) {
                         continue;
                     }
@@ -109,7 +109,7 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
                 }
 
                 for (e in eventHandle) {
-                    h = eventHandle[e];
+                    h = eventHandle[e].handle;
                     h.processed = 0;
                 }
             }
@@ -117,14 +117,27 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
 
         addEventHandle: function (event) {
             var self = this,
+                eventHandle = self.eventHandle,
                 handle = eventHandleMap[event].handle;
-            if (!self.eventHandle[event]) {
-                self.eventHandle[event] = handle;
+            if (eventHandle[event]) {
+                eventHandle[event].count++;
+            } else {
+                eventHandle[event] = {
+                    count: 1,
+                    handle: handle
+                };
             }
         },
 
         'removeEventHandle': function (event) {
-            delete this.eventHandle[event];
+            var eventHandle = this.eventHandle;
+            if (eventHandle[event]) {
+                eventHandle[event].count--;
+                if (!eventHandle[event].count) {
+                    delete eventHandle[event];
+                }
+            }
+
         },
 
         destroy: function () {
