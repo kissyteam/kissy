@@ -6,7 +6,7 @@
 KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHandle) {
 
     function setupExtra(event) {
-        setup.call(this,event);
+        setup.call(this, event);
         eventHandleMap[event].setup.apply(this, arguments);
     }
 
@@ -15,7 +15,7 @@ KISSY.add('event/dom/touch', function (S, EventDomBase, eventHandleMap, eventHan
     }
 
     function tearDownExtra(event) {
-        tearDown.call(this,event);
+        tearDown.call(this, event);
         eventHandleMap[event].tearDown.apply(this, arguments);
     }
 

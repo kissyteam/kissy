@@ -29,11 +29,6 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
 
     }
 
-    // 一个应用 一个 document 只需要注册一个 move
-    var throttleTouchMove = S.throttle(function (e) {
-        this.callEventHandle('onTouchMove', e);
-    }, MOVE_DELAY);
-
     DocumentHandler.prototype = {
 
         constructor: DocumentHandler,
@@ -69,7 +64,8 @@ KISSY.add('event/dom/touch/handle', function (S, DOM, eventHandleMap, Event, Ges
         },
 
         onTouchMove: function (e) {
-            throttleTouchMove.call(this, e);
+            // no throttle! to allow preventDefault
+            this.callEventHandle('onTouchMove', e);
         },
 
         onTouchStart: function (event) {

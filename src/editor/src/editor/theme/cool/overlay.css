@@ -7,6 +7,22 @@
     overflow: hidden;
 }
 
+.ks-editor-overlay-hidden{
+    visibility: hidden;
+}
+
+.ks-editor-overlay-shown{
+    visibility: visible;
+}
+
+.ks-editor-overlay-mask-hidden {
+    visibility: hidden;
+}
+
+.ks-editor-overlay-mask-shown {
+    visibility: visible;
+}
+
 .ks-editor-dialog label,
 .ks-editor-dialog input{
     vertical-align: middle;

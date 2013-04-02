@@ -66,6 +66,13 @@
             }
         }
     }
+    
+    function getRequiredMods(self) {
+            var runtime = self.runtime;
+            return S.map(self.getNormalizedRequires(), function (r) {
+                return Utils.createModuleInfo(runtime, r);
+            });
+        },
 
     function collectCss(mod, cssList, stack) {
         if (S.inArray(mod, stack)) {
@@ -79,7 +86,7 @@
             }
             return;
         }
-        var requires = mod.getRequiredMods();
+        var requires = getRequiredMods(mod);
         stack.push(mod);
         S.each(requires, function (r) {
             collectCss(r, cssList, stack);

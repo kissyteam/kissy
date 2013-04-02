@@ -5,68 +5,13 @@
  */
 KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTouch, Gesture) {
 
-    var event = 'swipe';
+        var event = 'swipe', ingEvent = 'swiping';
 
-    var MAX_DURATION = 1000,
-        MAX_OFFSET = 35,
-        MIN_DISTANCE = 50;
+        var MAX_DURATION = 1000,
+            MAX_OFFSET = 35,
+            MIN_DISTANCE = 50;
 
-    function Swipe() {
-    }
-
-    S.extend(Swipe, SingleTouch, {
-
-        onTouchStart: function (e) {
-            var self = this;
-            if (Swipe.superclass.onTouchStart.apply(self, arguments) === false) {
-                return false;
-            }
-            var touch = e.touches[0];
-            self.startTime = e.timeStamp;
-
-            self.isHorizontal = 1;
-            self.isVertical = 1;
-
-            self.startX = touch.pageX;
-            this.startY = touch.pageY;
-
-            if (e.type.indexOf('mouse') != -1) {
-                e.preventDefault();
-            }
-        },
-
-        onTouchMove: function (e) {
-            var self = this,
-                touch = e.changedTouches[0],
-                x = touch.pageX,
-                y = touch.pageY,
-                absDeltaX = Math.abs(x - self.startX),
-                absDeltaY = Math.abs(y - self.startY),
-                time = e.timeStamp;
-
-            if (time - self.startTime > MAX_DURATION) {
-                return false;
-            }
-
-            if (self.isVertical && absDeltaX > MAX_OFFSET) {
-                self.isVertical = 0;
-            }
-
-            if (self.isHorizontal && absDeltaY > MAX_OFFSET) {
-                self.isHorizontal = 0;
-            }
-
-            if (!self.isHorizontal && !self.isVertical) {
-                return false;
-            }
-        },
-
-        onTouchEnd: function (e) {
-            var self = this;
-            if (self.onTouchMove(e) === false) {
-                return false;
-            }
-
+        function fire(self, e, ing) {
             var touches = e.changedTouches,
                 touch = touches[0],
                 x = touch.pageX,
@@ -78,12 +23,22 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
                 distance,
                 direction;
 
-            if (self.isVertical && absDeltaY < MIN_DISTANCE) {
-                self.isVertical = 0;
-            }
+            if (ing) {
+                if (self.isVertical && self.isHorizontal) {
+                    if (absDeltaY > absDeltaX) {
+                        self.isHorizontal = 0;
+                    } else {
+                        self.isVertical = 0;
+                    }
+                }
+            } else {
+                if (self.isVertical && absDeltaY < MIN_DISTANCE) {
+                    self.isVertical = 0;
+                }
 
-            if (self.isHorizontal && absDeltaX < MIN_DISTANCE) {
-                self.isHorizontal = 0;
+                if (self.isHorizontal && absDeltaX < MIN_DISTANCE) {
+                    self.isHorizontal = 0;
+                }
             }
 
             if (self.isHorizontal) {
@@ -92,11 +47,12 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
             } else if (self.isVertical) {
                 direction = deltaY < 0 ? 'up' : 'down';
                 distance = absDeltaY;
-            } else {
+            }else{
                 return false;
             }
 
-            Event.fire(e.target, event, {
+            Event.fire(e.target, ing ? ingEvent : event, {
+                originalEvent: e.originalEvent,
                 /**
                  *
                  * native touch property **only for touch event**.
@@ -133,35 +89,83 @@ KISSY.add('event/dom/touch/swipe', function (S, eventHandleMap, Event, SingleTou
                  */
                 duration: (e.timeStamp - self.startTime) / 1000
             });
+
+            return undefined;
         }
 
-    });
-
-    function prevent(e) {
-        if (!e.touches || e.touches.length == 1) {
-            e.preventDefault();
+        function Swipe() {
         }
+
+        S.extend(Swipe, SingleTouch, {
+
+            onTouchStart: function (e) {
+                var self = this;
+                if (Swipe.superclass.onTouchStart.apply(self, arguments) === false) {
+                    return false;
+                }
+                var touch = e.touches[0];
+                self.startTime = e.timeStamp;
+
+                self.isHorizontal = 1;
+                self.isVertical = 1;
+
+                self.startX = touch.pageX;
+                this.startY = touch.pageY;
+
+                if (e.type.indexOf('mouse') != -1) {
+                    e.preventDefault();
+                }
+                return undefined;
+            },
+
+            onTouchMove: function (e) {
+                var self = this,
+                    touch = e.changedTouches[0],
+                    x = touch.pageX,
+                    y = touch.pageY,
+                    deltaX = x - self.startX,
+                    deltaY = y - self.startY,
+                    absDeltaX = Math.abs(deltaX),
+                    absDeltaY = Math.abs(deltaY),
+                    time = e.timeStamp;
+
+                if (time - self.startTime > MAX_DURATION) {
+                    return false;
+                }
+
+                if (self.isVertical && absDeltaX > MAX_OFFSET) {
+                    self.isVertical = 0;
+                }
+
+                if (self.isHorizontal && absDeltaY > MAX_OFFSET) {
+                    self.isHorizontal = 0;
+                }
+
+                return fire(self, e, 1);
+            },
+
+            onTouchEnd: function (e) {
+                var self = this;
+                if (self.onTouchMove(e) === false) {
+                    return false;
+                }
+
+                return fire(self, e, 0);
+            }
+
+        });
+
+        eventHandleMap[event] = eventHandleMap[ingEvent] = {
+            handle: new Swipe()
+        };
+
+        return Swipe;
+
     }
 
-    eventHandleMap[event] = {
-        add: function (observer) {
-            // prevent native scroll
-            if (observer.preventDefaultMove === true) {
-                Event.on(this, Gesture.move, observer.__preventSwipeDefault = function (e) {
-                    prevent(e)
-                });
-            }
-        },
-        remove: function (observer) {
-            if (observer.__preventSwipeDefault) {
-                Event.detach(this, Gesture.move, observer.__preventSwipeDefault);
-            }
-        },
-        handle: new Swipe()
-    };
-
-    return Swipe;
-
-}, {
-    requires: ['./handle-map', 'event/dom/base', './single-touch', './gesture']
-});
+    ,
+    {
+        requires: ['./handle-map', 'event/dom/base', './single-touch', './gesture']
+    }
+)
+;
