@@ -14,15 +14,42 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
         SCROLL = 'scroll',
         TOUCH_MOVE = "touchmove",
         RESIZE = 'resize',
-        DURATION = 100;
+        DURATION = 100,
+
+        webpSupportMeta = {
+            detected: false,
+            supported: false
+        };
 
     // 加载图片 src
-    var loadImgSrc = function (img, flag) {
+    var loadImgSrc = function (img, flag, ifSupportWebp) {
         flag = flag || IMG_SRC_DATA;
-        var dataSrc = img.getAttribute(flag);
+        var dataSrc = img.getAttribute(flag),
+            realSrc = '';
 
         if (dataSrc && img.src != dataSrc) {
-            img.src = dataSrc;
+            if (ifSupportWebp && webpSupportMeta.supported) {
+                if (S.isFunction(ifSupportWebp)) {
+                    realSrc = ifSupportWebp(dataSrc, img);
+                } else if (S.isArray(ifSupportWebp)){
+                    var i,
+                        len = ifSupportWebp.length,
+                        rule;
+                    for(i = 0; i < len; i++) {
+                        rule = ifSupportWebp[i];
+                        if (dataSrc.match(rule[0])) {
+                            realSrc = dataSrc.replace(rule[0], rule[1]);
+                            break;
+                        }
+                    }
+                }
+            } else {
+                realSrc = dataSrc;
+            }
+            if (!realSrc) {
+                realSrc = dataSrc;
+            }
+            img.src = realSrc;
             img.removeAttribute(flag);
         }
     };
@@ -234,6 +261,15 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
          */
         autoDestroy: {
             value: true
+        },
+
+        /**
+         * 是否检测 webp 格式图片的支持, 如果支持这对图片地址进行处理
+         * default: null
+         * @cfg {Array|Function} ifSupportWebp
+         */
+        ifSupportWebp: {
+            value: null
         }
     };
 
@@ -306,10 +342,19 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
                 placeholder = self.get("placeholder"),
                 autoDestroy = self.get("autoDestroy"),
             // 加载延迟项
-                loadItems = function () {
+                _loadItems = function() {
                     self['_loadItems']();
                     if (autoDestroy && self['_isLoadAllLazyElements']()) {
                         self.destroy();
+                    }
+                },
+                loadItems = function () {
+                    if (self.get('ifSupportWebp')) {
+                        checkWebpSupport(function() {
+                            _loadItems()
+                        });
+                    } else {
+                        _loadItems()
                     }
                 };
 
@@ -373,7 +418,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
             var self = this;
             self._images = S.filter(self._images, function (img) {
                 if (elementInViewport(img, windowRegion, containerRegion)) {
-                    return loadImgSrc(img);
+                    return loadImgSrc(img, undefined, self.get('ifSupportWebp'));
                 } else {
                     return true;
                 }
@@ -643,36 +688,83 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
      * @param {HTMLElement[]} containers Containers with in which lazy loaded elements are loaded.
      * @param {String} type Type of lazy loaded element. "img" or "textarea"
      * @param {String} [flag] flag which will be searched to find lazy loaded elements from containers.
+     * @param {Array|Function} ifSupportWebp, img src transformer when browser support webp image format
      * Default "data-ks-lazyload-custom" for img attribute and "ks-lazyload-custom" for textarea css class.
      */
-    function loadCustomLazyData(containers, type, flag) {
-        if (type === 'img-src') {
-            type = 'img';
+    function loadCustomLazyData(containers, type, flag, ifSupportWebp) {
+        if (ifSupportWebp) {
+            checkWebpSupport(load);
+        } else {
+            load();
         }
 
-        // 支持数组
-        if (!S.isArray(containers)) {
-            containers = [DOM.get(containers)];
-        }
-
-        var imgFlag = flag || (IMG_SRC_DATA + CUSTOM),
-            areaFlag = flag || (AREA_DATA_CLS + CUSTOM);
-
-        S.each(containers, function (container) {
-            // 遍历处理
-            if (type == 'img') {
-                DOM.query('img', container).each(function (img) {
-                    loadImgSrc(img, imgFlag);
-                });
-            } else {
-                DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
-                    loadAreaData(textarea, true);
-                });
+        function load() {
+            if (type === 'img-src') {
+                type = 'img';
             }
-        });
+
+            // 支持数组
+            if (!S.isArray(containers)) {
+                containers = [DOM.get(containers)];
+            }
+
+            var imgFlag = flag || (IMG_SRC_DATA + CUSTOM),
+                areaFlag = flag || (AREA_DATA_CLS + CUSTOM);
+
+            S.each(containers, function (container) {
+                // 遍历处理
+                if (type == 'img') {
+                    DOM.query('img', container).each(function (img) {
+                        loadImgSrc(img, imgFlag, ifSupportWebp);
+                    });
+                } else {
+                    DOM.query('textarea.' + areaFlag, container).each(function (textarea) {
+                        loadAreaData(textarea, true);
+                    });
+                }
+            });
+        }
     }
 
     DataLazyload.loadCustomLazyData = loadCustomLazyData;
+
+
+    /**
+     * check browser webp format support
+     * @ignore
+     * @method
+     *
+     * @param {Function} callback with first param{Boolean} telling whether webp is supported
+     */
+    function checkWebpSupport(callback) {
+        if (webpSupportMeta.detected) {
+            callback(webpSupportMeta.supported);
+        } else {
+            var imgElem,
+                webpSrc = "data:image/webp;base64,UklGRjgAAABXRUJQVlA4ICwAAAAQAgCdASoEAAQAAAcIhYWIhYSIgIIADA1gAAUAAAEAAAEAAP7%2F2fIAAAAA";
+
+            imgElem = DOM.create('<img>');
+            Event.on(imgElem, 'load error', function(evt) {
+                if (evt.type == 'load') {
+                  // 图片大小检测
+                  if (this.width === 4) {
+                      webpSupportMeta.supported = true;
+                  } else {
+                      webpSupportMeta.supported = false;
+                  }
+                } else if (evt.type == 'error') {
+                    webpSupportMeta.supported = false;
+                }
+
+                webpSupportMeta.detected = true;
+                callback(webpSupportMeta.supported);
+            });
+            DOM.attr(imgElem, "src", webpSrc);
+        }
+    }
+
+    DataLazyload.checkWebpSupport = checkWebpSupport;
+
 
     S.DataLazyload = DataLazyload;
 
@@ -733,6 +825,7 @@ KISSY.add('datalazyload', function (S, DOM, Event, Base, undefined) {
  *   - [取消] 加载时的 loading 图（对于未设定大小的图片，很难完美处理[参考资料 4]）
  *
  * UPDATE LOG:
+ *   - 2013-03-28 myhere.2009@gmail.com add support for webp
  *   - 2012-01-07 yiminghe@gmail.com optimize for performance
  *   - 2012-04-27 yiminghe@gmail.com refactor to extend base, add removeCallback/addElements ...
  *   - 2012-04-27 yiminghe@gmail.com 检查是否在视窗内改做判断区域相交，textarea 可设置高度，宽度
