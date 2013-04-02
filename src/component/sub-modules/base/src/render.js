@@ -4,13 +4,13 @@
  * @author yiminghe@gmail.com
  * refer: http://martinfowler.com/eaaDev/uiArchs.html
  */
-KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Manager) {
+KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Manager,TplRender) {
 
     /**
      * @ignore
      * Base Render class for KISSY Component.
      */
-    return UIBase.extend([BoxRender], {
+    return UIBase.extend([BoxRender,TplRender], {
 
         /**
          * Get all css class name to be applied to the root element of this component for given state.
@@ -125,5 +125,5 @@ KISSY.add("component/base/render", function (S, BoxRender, Component, UIBase, Ma
         }
     });
 }, {
-    requires: ['./box-render', './impl', './uibase', './manager']
+    requires: ['./box-render', './impl', './uibase', './manager','./tpl-render']
 });
