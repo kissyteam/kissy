@@ -423,11 +423,10 @@
                         } else {
                             self.pushState('t');
                         }
-                        // only return when has content
-                        if (self.text = text) {
-                            return 'CONTENT';
-                        }
-                        return undefined;
+                        // https://github.com/kissyteam/kissy/issues/330
+                        // return even empty
+                        self.text = text;
+                        return 'CONTENT';
                     }
                 },
                 {

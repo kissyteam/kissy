@@ -242,11 +242,10 @@ KISSY.add("xtemplate/compiler/parser", function () {
                 } else {
                     self.pushState('t');
                 }
-                // only return when has content
-                if (self.text = text) {
-                    return 'CONTENT';
-                }
-                return undefined;
+                // https://github.com/kissyteam/kissy/issues/330
+                // return even empty
+                self.text = text;
+                return 'CONTENT';
             }],
             [2, /^[\s\S]+/, 0],
             [2, /^[\s\S]{2,}?(?:(?={{)|$)/, function () {

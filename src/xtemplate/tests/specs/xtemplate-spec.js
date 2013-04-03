@@ -8,6 +8,22 @@ KISSY.use('xtemplate', function (S, XTemplate) {
 
         describe('feature', function () {
 
+            it('not allow empty content', function () {
+                var tpl = '';
+
+                var data = {
+                    title: 'o'
+                };
+
+                try {
+                    new XTemplate(tpl, {
+                        name: 'tpl-empty-content'
+                    }).render(data);
+                } catch (e) {
+                    expect(e.message.indexOf('Syntax error') != -1).toBeTruthy();
+                }
+            });
+
             it('support {{variable}}', function () {
 
                 var tpl = 'this is class="t" {{title}}!';
@@ -138,6 +154,37 @@ KISSY.use('xtemplate', function (S, XTemplate) {
             });
 
             describe('each', function () {
+
+                it('allow empty content', function () {
+                    var tpl = '{{#each l}}{{/each}}';
+
+                    var data = {
+                        x: [
+                            {
+                                title: 5
+                            }
+                        ]
+                    };
+
+                    var render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('');
+
+
+                    tpl = '{{#each x}}{{/each}}';
+
+                    data = {
+                        x: [
+                            {
+                                title: 5
+                            }
+                        ]
+                    };
+
+                    render = new XTemplate(tpl).render(data);
+
+                    expect(render).toBe('');
+                });
 
                 it('ignore if not found', function () {
                     var tpl = '{{#each l}}{{title}}{{/each}}';
