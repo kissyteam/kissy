@@ -100,6 +100,43 @@ KISSY.use('xtemplate', function (S, XTemplate) {
                     'not has title2');
             });
 
+            it('support negative for if args', function () {
+                var tpl = '{{#if n===-1}}-1{{else}}1{{/if}}';
+
+                var data = {
+                    n: -1
+                };
+
+                var render = new XTemplate(tpl).render(data);
+
+                expect(render).toBe('-1');
+
+                tpl = '{{#if n===--1}}-1{{else}}1{{/if}}';
+
+                data = {
+                    n: 1
+                };
+
+                try {
+                    new XTemplate(tpl).render(data);
+                } catch (e) {
+                    expect(e.message.indexOf('Syntax error') > -1).toBeTruthy();
+                }
+
+
+                tpl = '{{#if n===0--1}}1{{else}}-1{{/if}}';
+
+                data = {
+                    n: 1
+                };
+
+                try {
+                    new XTemplate(tpl).render(data);
+                } catch (e) {
+                    expect(e.message.indexOf('Syntax error') > -1).toBeTruthy();
+                }
+            });
+
             describe('each', function () {
 
                 it('ignore if not found', function () {

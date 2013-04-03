@@ -314,6 +314,14 @@
 
             {
                 symbol: 'PrimaryExpression',
+                rhs: ['MINUS', 'NUMBER'],
+                action: function () {
+                    return new this.yy.NumberNode(this.lexer.lineNumber, 0 - this.$2);
+                }
+            },
+
+            {
+                symbol: 'PrimaryExpression',
                 rhs: ['BOOLEAN'],
                 action: function () {
                     return new this.yy.BooleanNode(this.lexer.lineNumber, this.$1);
