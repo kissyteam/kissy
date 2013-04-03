@@ -30,6 +30,7 @@ KISSY.use("combobox", function (S, ComboBox) {
             dataSource: new ComboBox.LocalDataSource({
                 data: data
             }),
+            inputValue: '2',
             format: function (q, data) {
                 var ret = [];
                 S.each(data, function (d) {
@@ -44,6 +45,28 @@ KISSY.use("combobox", function (S, ComboBox) {
         comboBox.render();
 
         var t = comboBox.get("input")[0];
+
+        it('show autocomplete menu when press down key', function () {
+
+            expect(t.value).toBe("2");
+
+            jasmine.simulate(t, "keydown", {
+                keyCode: KeyCodes.DOWN
+            });
+
+
+            waits(100);
+            runs(function () {
+                var menu = comboBox.get("menu");
+                expect(menu.get).not.toBeFalsy();
+                var children = menu.get("children");
+                expect(children.length).toBe(1);
+                expect(children[0].get('textContent')).toBe('21');
+                expect(S.indexOf(menu.get("highlightedItem"), children)).toBe(-1);
+                document.body.focus();
+            });
+            waits(100);
+        });
 
         it("show menu with right alignment when input value " +
             "and hide when lose focus", function () {

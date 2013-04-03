@@ -22,6 +22,7 @@
             <input style="width:100%;height:100%;" aria-haspopup="true"
                    aria-combobox="list" role="combobox" combobox="off"
                    class="ks-combobox-input" tabindex="0"
+                   value="a"
                    id="inp"
                     />
         </div>
@@ -81,6 +82,7 @@
                 dataSource:new ComboBox.LocalDataSource({
                     data:data
                 }),
+                inputValue:'a',
                 hasTrigger:false,
                 maxItemCount:2,
                 format:function (query, data) {
