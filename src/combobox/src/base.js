@@ -166,10 +166,6 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     handledByMenu,
                     menu = getMenu(self);
 
-                if (!menu) {
-                    return undefined;
-                }
-
                 input = self.get("input");
                 updateInputOnDownUp = self.get("updateInputOnDownUp");
 
@@ -187,7 +183,7 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
                     }
                 }
 
-                if (menu.get("visible")) {
+                if (menu && menu.get("visible")) {
                     handledByMenu = menu['handleKeydown'](e);
 
                     // esc
@@ -231,14 +227,12 @@ KISSY.add("combobox/base", function (S, Node, Component, ComboBoxRender, Menu, u
 
             syncUI: function () {
                 var self = this,
-                    input ,
-                    inputValue;
-                if (self.get("placeholder")) {
-                    input = self.get("input");
+                    input = self.get("input"),
                     inputValue = self.get("inputValue");
-                    if (inputValue != undefined) {
-                        input.val(inputValue);
-                    }
+                if (inputValue != undefined) {
+                    input.val(inputValue);
+                }
+                if (self.get("placeholder")) {
                     if (!input.val()) {
                         self.get("placeholderEl").show();
                     }
