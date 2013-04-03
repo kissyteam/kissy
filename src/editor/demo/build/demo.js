@@ -162,7 +162,7 @@
                 urlCfg: [
                     {
                         reg: /tudou\.com/i,
-                        url: "http://bangpai.daily.taobao.net/json/getTudouVideo.htm",
+                        url: "http://bangpai.taobao.com/json/getTudouVideo.htm",
                         paramName: "url"
                     }
                 ],
