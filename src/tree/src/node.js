@@ -168,7 +168,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 TreeNode.superclass.renderChildren.apply(self, arguments);
                 // only sync child sub tree at root node
                 if (self === self.get('tree')) {
-                    registerToTree(self, self,-1);
+                    registerToTree(self, self, -1);
                 }
             },
 
@@ -183,7 +183,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 // node.add(subTree);
                 // only sync child sub tree if parent is rendered
                 if (self.get('rendered')) {
-                    registerToTree(self, c,self.get('depth'));
+                    registerToTree(self, c, self.get('depth'));
                 }
                 return c;
             },
@@ -431,7 +431,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
         }
     }
 
-    function registerToTree(self, c,depth) {
+    function registerToTree(self, c, depth) {
         var tree = self.get("tree");
         if (tree) {
             recursiveRegister(tree, c, "_register", depth + 1);
@@ -445,13 +445,10 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
             c.set("depth", setDepth);
         }
         S.each(c.get("children"), function (child) {
-            // xclass 的情况，在对应 xclass render 时自然会处理
-            if (child.isController) {
-                if (typeof setDepth == 'number') {
-                    recursiveRegister(tree, child, action, setDepth + 1);
-                } else {
-                    recursiveRegister(tree, child, action);
-                }
+            if (typeof setDepth == 'number') {
+                recursiveRegister(tree, child, action, setDepth + 1);
+            } else {
+                recursiveRegister(tree, child, action);
             }
         });
     }
@@ -461,14 +458,10 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
             len = self.get('children').length;
         refreshCss(self);
         S.each(children, function (c, index) {
-            // 一个 c 初始化成功了
-            // 可能其他 c 仍是 { xclass }
-            if (c.get && c.get('rendered')) {
-                refreshCss(c);
-                var el = c.get("el");
-                el.attr("aria-posinset", index + 1);
-                el.attr("aria-setsize", len);
-            }
+            refreshCss(c);
+            var el = c.get("el");
+            el.attr("aria-posinset", index + 1);
+            el.attr("aria-setsize", len);
         });
     }
 

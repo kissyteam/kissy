@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 7 23:49
+build time: Apr 8 00:14
 */
 /**
  * @ignore
@@ -652,7 +652,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             renderChildren: function () {
                 var i,
                     self = this,
-                    c,
                     children = self.get("children");
                 for (i = 0; i < children.length; i++) {
                     self.renderChild(children[i], i);
@@ -749,6 +748,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 if (index === undefined) {
                     index = children.length;
                 }
+                c = Component.create(c, self);
                 children.splice(index, 0, c);
                 if (self.get('rendered')) {
                     c = self.renderChild(c, index);
@@ -757,14 +757,14 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             },
 
             renderChild: function (c, childIndex) {
-                if (!c.get || !c.get('rendered')) {
-                    var self = this,
-                        elBefore,
-                        contentEl;
+                var self = this,
+                    elBefore,
+                    contentEl;
+                c = Component.create(c, self);
+                if (!c.get('rendered')) {
                     // 生成父组件的 dom 结构
                     self.create();
                     contentEl = self.getContentElement();
-                    c = Component.create(c, self);
                     elBefore = contentEl[0].children[childIndex];
                     // set 通知 view 也更新对应属性
                     if (elBefore) {
@@ -1540,25 +1540,28 @@ KISSY.add("component/base/impl", function (S, UIBase, Manager) {
      *      })
      */
     Component.create = function (component, parent) {
-        var childConstructor, xclass;
-        if (component && !component.isController && parent) {
-            S.mix(component, parent.get('defaultChildCfg'), false);
-            if(!component.xclass && component.prefixXClass){
-                component.xclass = component.prefixXClass;
-                if(component.xtype){
-                    component.xclass += '-' + component.xtype;
+        var childConstructor,
+            xclass;
+        if (component) {
+            if (!component.isController && parent) {
+                S.mix(component, parent.get('defaultChildCfg'), false);
+                if (!component.xclass && component.prefixXClass) {
+                    component.xclass = component.prefixXClass;
+                    if (component.xtype) {
+                        component.xclass += '-' + component.xtype;
+                    }
                 }
             }
-        }
-        if (component && !component.isController && (xclass = component.xclass)) {
-            childConstructor = Manager.getConstructorByXClass(xclass);
-            if (!childConstructor) {
-                S.error("can not find class by xclass desc : " + xclass);
+            if (!component.isController && (xclass = component.xclass)) {
+                childConstructor = Manager.getConstructorByXClass(xclass);
+                if (!childConstructor) {
+                    S.error("can not find class by xclass desc : " + xclass);
+                }
+                component = new childConstructor(component);
             }
-            component = new childConstructor(component);
-        }
-        if (component && component.isController && parent) {
-            component.setInternal('parent', parent);
+            if (component.isController && parent) {
+                component.setInternal('parent', parent);
+            }
         }
         return component;
     };

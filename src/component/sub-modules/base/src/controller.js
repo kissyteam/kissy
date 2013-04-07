@@ -177,7 +177,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             renderChildren: function () {
                 var i,
                     self = this,
-                    c,
                     children = self.get("children");
                 for (i = 0; i < children.length; i++) {
                     self.renderChild(children[i], i);
@@ -274,6 +273,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 if (index === undefined) {
                     index = children.length;
                 }
+                c = Component.create(c, self);
                 children.splice(index, 0, c);
                 if (self.get('rendered')) {
                     c = self.renderChild(c, index);
@@ -282,14 +282,14 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
             },
 
             renderChild: function (c, childIndex) {
-                if (!c.get || !c.get('rendered')) {
-                    var self = this,
-                        elBefore,
-                        contentEl;
+                var self = this,
+                    elBefore,
+                    contentEl;
+                c = Component.create(c, self);
+                if (!c.get('rendered')) {
                     // 生成父组件的 dom 结构
                     self.create();
                     contentEl = self.getContentElement();
-                    c = Component.create(c, self);
                     elBefore = contentEl[0].children[childIndex];
                     // set 通知 view 也更新对应属性
                     if (elBefore) {

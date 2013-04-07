@@ -1,7 +1,7 @@
 ﻿/*
 Copyright 2013, KISSY UI Library v1.40dev
 MIT Licensed
-build time: Apr 7 23:49
+build time: Apr 8 00:14
 */
 /**
  * root node represent a simple tree
@@ -439,7 +439,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
         },
 
         '_onSetDepth': function (v) {
-            // S.log(this.get('content') + ' set depth: ' + v);
+            S.log(this.get('content') + ' set depth: ' + v);
             this.get("el").attr("aria-level", v);
         },
 
@@ -688,7 +688,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 TreeNode.superclass.renderChildren.apply(self, arguments);
                 // only sync child sub tree at root node
                 if (self === self.get('tree')) {
-                    registerToTree(self, self,-1);
+                    registerToTree(self, self, -1);
                 }
             },
 
@@ -703,7 +703,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
                 // node.add(subTree);
                 // only sync child sub tree if parent is rendered
                 if (self.get('rendered')) {
-                    registerToTree(self, c,self.get('depth'));
+                    registerToTree(self, c, self.get('depth'));
                 }
                 return c;
             },
@@ -951,7 +951,7 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
         }
     }
 
-    function registerToTree(self, c,depth) {
+    function registerToTree(self, c, depth) {
         var tree = self.get("tree");
         if (tree) {
             recursiveRegister(tree, c, "_register", depth + 1);
@@ -965,13 +965,10 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
             c.set("depth", setDepth);
         }
         S.each(c.get("children"), function (child) {
-            // xclass 的情况，在对应 xclass render 时自然会处理
-            if (child.isController) {
-                if (typeof setDepth == 'number') {
-                    recursiveRegister(tree, child, action, setDepth + 1);
-                } else {
-                    recursiveRegister(tree, child, action);
-                }
+            if (typeof setDepth == 'number') {
+                recursiveRegister(tree, child, action, setDepth + 1);
+            } else {
+                recursiveRegister(tree, child, action);
             }
         });
     }
@@ -981,14 +978,10 @@ KISSY.add("tree/node", function (S, Node, Component, TreeNodeRender) {
             len = self.get('children').length;
         refreshCss(self);
         S.each(children, function (c, index) {
-            // 一个 c 初始化成功了
-            // 可能其他 c 仍是 { xclass }
-            if (c.get && c.get('rendered')) {
-                refreshCss(c);
-                var el = c.get("el");
-                el.attr("aria-posinset", index + 1);
-                el.attr("aria-setsize", len);
-            }
+            refreshCss(c);
+            var el = c.get("el");
+            el.attr("aria-posinset", index + 1);
+            el.attr("aria-setsize", len);
         });
     }
 
@@ -1090,7 +1083,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
             if (!c.__isRegisted) {
                 getAllNodes(this)[getIdFromNode(c)] = c;
                 c.__isRegisted = 1;
-                // S.log("_register for " + c.get("content"));
+                S.log("_register for " + c.get("content"));
             }
         },
 
@@ -1098,7 +1091,7 @@ KISSY.add("tree/tree-manager", function (S, Event) {
             if (c.__isRegisted) {
                 delete getAllNodes(this)[getIdFromNode(c)];
                 c.__isRegisted = 0;
-                // S.log("_unRegister for " + c.get("content"));
+                S.log("_unRegister for " + c.get("content"));
             }
         },
 
