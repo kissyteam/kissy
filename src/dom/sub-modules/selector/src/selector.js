@@ -9,7 +9,7 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
     // ident === identifier
 
     var document = S.Env.host.document,
-        SELECTOR_KEY = 'data-ks-selector-id',
+        EXPANDO_SELECTOR_KEY = '_ks_data_selector_id_',
         caches = {},
         isContextXML,
         uuid = 0,
@@ -525,12 +525,12 @@ KISSY.add('dom/selector', function (S, parser, DOM) {
         var selectorId;
 
         if (isContextXML) {
-            if (!(selectorId = el.getAttribute(SELECTOR_KEY))) {
-                el.setAttribute(SELECTOR_KEY, selectorId = (+new Date() + '_' + (++uuid)));
+            if (!(selectorId = el.getAttribute(EXPANDO_SELECTOR_KEY))) {
+                el.setAttribute(EXPANDO_SELECTOR_KEY, selectorId = (+new Date() + '_' + (++uuid)));
             }
         } else {
-            if (!(selectorId = el[SELECTOR_KEY])) {
-                selectorId = el[SELECTOR_KEY] = (+new Date()) + '_' + (++uuid);
+            if (!(selectorId = el[EXPANDO_SELECTOR_KEY])) {
+                selectorId = el[EXPANDO_SELECTOR_KEY] = (+new Date()) + '_' + (++uuid);
             }
         }
 
