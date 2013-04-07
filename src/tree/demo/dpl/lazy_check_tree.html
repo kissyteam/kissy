@@ -97,10 +97,11 @@
                 var node = e.target;
                 if (!node.get("children").length) {
                     var c = getNode(data, node.get("content")).children;
+                    var nodeCheckState = node.get("checkState");
                     S.each(c, function (v) {
                         node.addChild(new Tree.CheckNode({
                             isLeaf: !(v.children && v.children.length),
-                            checkState: node.get("checkState") == CheckNode.CHECK ? CheckNode.CHECK : CheckNode.EMPTY,
+                            checkState: nodeCheckState == CheckNode.CHECK ? CheckNode.CHECK : CheckNode.EMPTY,
                             content: v.content
                         }));
                     });

@@ -32,21 +32,6 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
         };
     }
 
-    function initChild(self, c, renderBefore) {
-        // 生成父组件的 dom 结构
-        self.create();
-        var contentEl = self.getContentElement();
-        c = Component.create(c, self);
-        // set 通知 view 也更新对应属性
-        c.set("render", contentEl);
-        c.set("elBefore", renderBefore);
-        // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
-        // 子组件和 parent 组件一起渲染
-        // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
-        c.create();
-        return c;
-    }
-
     /**
      * 不使用 valueFn，
      * 只有 render 时需要找到默认，其他时候不需要，防止莫名其妙初始化
@@ -155,10 +140,12 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              * @protected
              */
             initializer: function () {
-                var defaultChildCfg = this.get('defaultChildCfg');
-                defaultChildCfg.prefixCls = defaultChildCfg.prefixCls || this.get('prefixCls');
+                var self = this,
+                    defaultChildCfg = self.get('defaultChildCfg');
+                defaultChildCfg.prefixCls = defaultChildCfg.prefixCls ||
+                    self.get('prefixCls');
                 // initialize view
-                this.setInternal("view", constructView(this));
+                self.setInternal("view", constructView(self));
             },
 
             /**
@@ -182,14 +169,18 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              *
              */
             renderUI: function () {
-                var self = this, i, children, child;
+                var self = this;
                 self.get("view").render();
-                // then render my children
-                children = self.get("children").concat();
-                self.get("children").length = 0;
+                self.renderChildren();
+            },
+
+            renderChildren: function () {
+                var i,
+                    self = this,
+                    c,
+                    children = self.get("children");
                 for (i = 0; i < children.length; i++) {
-                    child = self.addChild(children[i]);
-                    child.render();
+                    self.renderChild(children[i], i);
                 }
             },
 
@@ -279,18 +270,37 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
              */
             addChild: function (c, index) {
                 var self = this,
-                    children = self.get("children"),
-                    renderBefore;
+                    children = self.get("children");
                 if (index === undefined) {
                     index = children.length;
                 }
-                renderBefore = children[index] && children[index].get("el") || null;
-                c = initChild(self, c, renderBefore);
                 children.splice(index, 0, c);
-                // 先 create 占位 再 render
-                // 防止 render 逻辑里读 parent.get("children") 不同步
-                // 如果 parent 已经渲染好了子组件也要立即渲染，就 创建 dom ，绑定事件
-                if (self.get("rendered")) {
+                if (self.get('rendered')) {
+                    c = self.renderChild(c, index);
+                }
+                return c;
+            },
+
+            renderChild: function (c, childIndex) {
+                if (!c.get || !c.get('rendered')) {
+                    var self = this,
+                        elBefore,
+                        contentEl;
+                    // 生成父组件的 dom 结构
+                    self.create();
+                    contentEl = self.getContentElement();
+                    c = Component.create(c, self);
+                    elBefore = contentEl[0].children[childIndex];
+                    // set 通知 view 也更新对应属性
+                    if (elBefore) {
+                        c.set("elBefore", elBefore);
+                    } else {
+                        c.set("render", contentEl);
+                    }
+                    self.get('children')[childIndex] = c;
+                    // 如果 parent 也没渲染，子组件 create 出来和 parent 节点关联
+                    // 子组件和 parent 组件一起渲染
+                    // 之前设好属性，view ，logic 同步还没 bind ,create 不是 render ，还没有 bindUI
                     c.render();
                 }
                 return c;
@@ -676,7 +686,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 /**
                  * @ignore
                  */
-                prefixXClass : {
+                prefixXClass: {
 
                 },
                 /**
@@ -686,7 +696,7 @@ KISSY.add("component/base/controller", function (S, Box, Event, Component, UIBas
                 /**
                  * @ignore
                  */
-                xtype : {
+                xtype: {
 
                 },
                 /**

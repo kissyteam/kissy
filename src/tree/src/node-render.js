@@ -130,6 +130,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
         },
 
         '_onSetDepth': function (v) {
+            // S.log(this.get('content') + ' set depth: ' + v);
             this.get("el").attr("aria-level", v);
         },
 
@@ -165,9 +166,7 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
                 value: false
             },
             rowEl: {},
-            depth: {
-                value: 0
-            },
+            depth: {},
             contentEl: {
                 valueFn: function () {
                     return $("<span id='" + S.guid("ks-tree-node") +
@@ -185,14 +184,17 @@ KISSY.add("tree/node-render", function (S, Node, Component) {
             contentEl: function (el) {
                 return el.children("." + this.getCssClassWithPrefix(CONTENT_EL_CLS));
             },
+            content: function (el) {
+                return el.children("." + this.getCssClassWithPrefix(CONTENT_EL_CLS)).html();
+            },
             isLeaf: function (el) {
                 var self = this;
                 if (el.hasClass(self.getCssClassWithPrefix("tree-node-leaf"))) {
                     return true;
-                }
-                if (el.hasClass(self.getCssClassWithPrefix("tree-node-folder"))) {
+                } else if (el.hasClass(self.getCssClassWithPrefix("tree-node-folder"))) {
                     return false;
                 }
+                return undefined;
             },
             expanded: function (el) {
                 var children = el.one("." + this.get('prefixCls') + "tree-children");
